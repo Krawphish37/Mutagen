@@ -53,10 +53,13 @@ public sealed class LoadOrderImporter<TMod> : ILoadOrderImporter<TMod>
     {
         var loList = LoadOrderListingsProvider.Get().ToList();
         param ??= BinaryReadParameters.Default;
-        param = param with
+        if (param.MasterFlagsLookup == null)
         {
-            MasterFlagsLookup = _masterFlagsLookupProvider.Get(loList)
-        };
+            param = param with
+            {
+                MasterFlagsLookup = _masterFlagsLookupProvider.Get(loList)
+            };
+        }
 
         var results = new (ModKey ModKey, int ModIndex, TryGet<TMod> Mod, bool Enabled)[loList.Count];
         try
