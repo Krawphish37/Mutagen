@@ -105,4 +105,73 @@ public class AssetTestsSkyrim
 	    weather.CloudTextures[2]!.GivenPath.ShouldBe("Test\\Renamed.dds");
 	    mapping.Keys.Single().GivenPath.ShouldBe("Test\\Shared.dds");
     }
+
+    [Theory]
+    [InlineData(AssetLinkQuery.Inferred)]
+    [InlineData(AssetLinkQuery.Resolved)]
+    [InlineData(AssetLinkQuery.Inferred | AssetLinkQuery.Resolved)]
+    public void RemapAssetLinksSkipsListedListWhenNotQueried(AssetLinkQuery query)
+    {
+	    var soundDescriptor = new SoundDescriptor(FormKey.Null, SkyrimRelease.SkyrimSE);
+	    soundDescriptor.SoundFiles.Add(new AssetLink<SkyrimSoundAssetType>("Sound/fx/old.wav"));
+
+	    soundDescriptor.RemapAssetLinks(new Dictionary<IAssetLinkGetter, string>
+	    {
+		    { new AssetLink<SkyrimSoundAssetType>("Sound/fx/old.wav"), "Sound/fx/new.wav" },
+	    }, query, null);
+
+	    soundDescriptor.SoundFiles[0].GivenPath.ShouldBe("Sound/fx/old.wav");
+    }
+
+    [Theory]
+    [InlineData(AssetLinkQuery.Inferred)]
+    [InlineData(AssetLinkQuery.Resolved)]
+    [InlineData(AssetLinkQuery.Inferred | AssetLinkQuery.Resolved)]
+    public void RemapAssetLinksSkipsListedArrayWhenNotQueried(AssetLinkQuery query)
+    {
+	    var weather = new Weather(FormKey.Null, SkyrimRelease.SkyrimSE);
+	    weather.CloudTextures[0] = new AssetLink<SkyrimTextureAssetType>("Textures/sky/old.dds");
+
+	    weather.RemapAssetLinks(new Dictionary<IAssetLinkGetter, string>
+	    {
+		    { new AssetLink<SkyrimTextureAssetType>("Textures/sky/old.dds"), "Textures/sky/new.dds" },
+	    }, query, null);
+
+	    weather.CloudTextures[0]!.GivenPath.ShouldBe("Textures/sky/old.dds");
+    }
+
+    [Fact]
+    public void RemapInferredAssetLinksSkipsListedList()
+    {
+	    var mod = new SkyrimMod(ModKey.FromNameAndExtension("Test.esp"), SkyrimRelease.SkyrimSE);
+	    var soundDescriptor = mod.SoundDescriptors.AddNew();
+	    soundDescriptor.SoundFiles.Add(new AssetLink<SkyrimSoundAssetType>("Sound/fx/old.wav"));
+
+	    mod.RemapInferredAssetLinks(new Dictionary<IAssetLinkGetter, string>
+	    {
+		    { new AssetLink<SkyrimSoundAssetType>("Sound/fx/old.wav"), "Sound/fx/new.wav" },
+	    });
+
+	    soundDescriptor.SoundFiles[0].GivenPath.ShouldBe("Sound/fx/old.wav");
+    }
+
+    [Fact]
+    public void RemapListedAssetLinksRemapsListedListAndArray()
+    {
+	    var soundDescriptor = new SoundDescriptor(FormKey.Null, SkyrimRelease.SkyrimSE);
+	    soundDescriptor.SoundFiles.Add(new AssetLink<SkyrimSoundAssetType>("Sound/fx/old.wav"));
+	    var weather = new Weather(FormKey.Null, SkyrimRelease.SkyrimSE);
+	    weather.CloudTextures[0] = new AssetLink<SkyrimTextureAssetType>("Textures/sky/old.dds");
+	    var mapping = new Dictionary<IAssetLinkGetter, string>
+	    {
+		    { new AssetLink<SkyrimSoundAssetType>("Sound/fx/old.wav"), "Sound/fx/new.wav" },
+		    { new AssetLink<SkyrimTextureAssetType>("Textures/sky/old.dds"), "Textures/sky/new.dds" },
+	    };
+
+	    soundDescriptor.RemapListedAssetLinks(mapping);
+	    weather.RemapListedAssetLinks(mapping);
+
+	    soundDescriptor.SoundFiles[0].GivenPath.ShouldBe("Sound/fx/new.wav");
+	    weather.CloudTextures[0]!.GivenPath.ShouldBe("Textures/sky/new.dds");
+    }
 }
