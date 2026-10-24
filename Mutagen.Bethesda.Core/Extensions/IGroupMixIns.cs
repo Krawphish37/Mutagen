@@ -18,6 +18,7 @@ public static class IGroupMixIns
     public static TMajor AddNew<TMajor>(this IGroup<TMajor> group, FormKey formKey)
         where TMajor : IMajorRecord
     {
+        MajorRecordInstantiator.ThrowIfAbstract(group.ContainedRecordRegistration.ClassType);
         var ret = MajorRecordInstantiator<TMajor>.Activator(
             formKey,
             group.SourceMod.GameRelease);
@@ -33,6 +34,7 @@ public static class IGroupMixIns
     /// <returns>New record already added to the Group</returns>
     public static IMajorRecord AddNew(this IGroup group, FormKey formKey)
     {
+        MajorRecordInstantiator.ThrowIfAbstract(group.ContainedRecordRegistration.ClassType);
         var ret = MajorRecordInstantiator.Activator(
             formKey,
             group.SourceMod.GameRelease,
@@ -50,6 +52,7 @@ public static class IGroupMixIns
     public static TMajor AddNew<TMajor>(this IGroup<TMajor> group)
         where TMajor : IMajorRecord
     {
+        MajorRecordInstantiator.ThrowIfAbstract(group.ContainedRecordRegistration.ClassType);
         var ret = MajorRecordInstantiator<TMajor>.Activator(
             group.SourceMod.GetNextFormKey(),
             group.SourceMod.GameRelease);
@@ -65,6 +68,7 @@ public static class IGroupMixIns
     /// <returns>New record already added to the Group</returns>
     public static IMajorRecord AddNew(this IGroup group)
     {
+        MajorRecordInstantiator.ThrowIfAbstract(group.ContainedRecordRegistration.ClassType);
         var ret = MajorRecordInstantiator.Activator(
             group.SourceMod.GetNextFormKey(),
             group.SourceMod.GameRelease,
@@ -83,6 +87,7 @@ public static class IGroupMixIns
     public static TMajor AddNew<TMajor>(this IGroup<TMajor> group, string? editorID)
         where TMajor : IMajorRecord
     {
+        MajorRecordInstantiator.ThrowIfAbstract(group.ContainedRecordRegistration.ClassType);
         var ret = MajorRecordInstantiator<TMajor>.Activator(
             group.SourceMod.GetNextFormKey(editorID),
             group.SourceMod.GameRelease);
@@ -100,6 +105,7 @@ public static class IGroupMixIns
     /// <returns>New record already added to the Group</returns>
     public static IMajorRecord AddNew(this IGroup group, string? editorID)
     {
+        MajorRecordInstantiator.ThrowIfAbstract(group.ContainedRecordRegistration.ClassType);
         var ret = MajorRecordInstantiator.Activator(
             group.SourceMod.GetNextFormKey(editorID),
             group.SourceMod.GameRelease,
