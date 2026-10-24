@@ -75,10 +75,36 @@ internal static class InterfaceEnumerationHelper
             return true;
         }
         
-        interfaces = inheritingTypes.Registrations.SelectMany(t => obj.EnumerateMajorRecords(inheritingTypes.Setter ? t.SetterType : t.GetterType, throwIfUnknown: false));
+        interfaces = inheritingTypes.Registrations.SelectMany(t =>
+        {
+            var registrationType = inheritingTypes.Setter ? t.SetterType : t.GetterType;
+            var records = obj.EnumerateMajorRecords(registrationType, throwIfUnknown: false);
+            if (!RequiresTypeFilter(linkInterface, registrationType)) return records;
+            return records.Where(linkInterface.IsInstanceOfType);
+        });
         return true;
     }
     
+    /// <summary>
+    /// Inheriting interface mappings (ex: IWeaponModificationGetter) point to the registration of the
+    /// abstract base class that owns the group (ex: AObjectModification).  Records enumerated from such a
+    /// registration are not all of the queried type, and need to be filtered
+    /// </summary>
+    internal static bool RequiresTypeFilter(Type queriedType, Type registrationType)
+    {
+        return !queriedType.IsAssignableFrom(registrationType);
+    }
+
+    /// <summary>
+    /// Returns the getter type that records enumerated from a mapping's registration must be filtered to,
+    /// or null if every record of that registration already matches
+    /// </summary>
+    internal static Type? GetGetterTypeFilter(InterfaceMappingResult mapping, ILoquiRegistration registration)
+    {
+        var queriedType = mapping.Types.Getter;
+        return RequiresTypeFilter(queriedType, registration.GetterType) ? queriedType : null;
+    }
+
     public static bool TryEnumerateLinkContextsFor<T, TMod, TModGetter>(
         GameCategory category,
         T obj, 
@@ -167,7 +193,13 @@ internal static class InterfaceEnumerationHelper
         }
         
         interfaces = inheritingTypes.Registrations
-            .SelectMany(t => getter(linkCache, inheritingTypes.Setter ? t.SetterType : t.GetterType, throwIfUnknown: false));
+            .SelectMany(t =>
+            {
+                var registrationType = inheritingTypes.Setter ? t.SetterType : t.GetterType;
+                var contexts = getter(linkCache, registrationType, throwIfUnknown: false);
+                if (!RequiresTypeFilter(linkInterface, registrationType)) return contexts;
+                return contexts.Where(x => linkInterface.IsInstanceOfType(x.Record));
+            });
         return true;
     }
 

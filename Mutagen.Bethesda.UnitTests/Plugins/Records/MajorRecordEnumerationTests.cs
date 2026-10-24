@@ -273,6 +273,21 @@ public abstract class AMajorRecordEnumerationTests
     }
 
     [Theory, MutagenModAutoData(GameRelease.SkyrimSE)]
+    public void EnumerateInheritingClassesSkipsSiblings(SkyrimMod mod)
+    {
+        var globalInt = mod.Globals.AddNewInt();
+        var globalFloat = mod.Globals.AddNewFloat();
+        var globalShort = mod.Globals.AddNewShort();
+        var conv = ConvertMod(mod);
+        Assert.Equal(Getter ? 0 : 3, RunTest<IGlobal, IGlobal>(conv).Count());
+        Assert.Equal(3, RunTest<IGlobal, IGlobalGetter>(conv).Count());
+        Assert.Equal(Getter ? 0 : 1, RunTest<IGlobalInt, IGlobalInt>(conv).Count());
+        Assert.Equal(globalInt.FormKey, Assert.Single(RunTest<IGlobalInt, IGlobalIntGetter>(conv)).FormKey);
+        Assert.Equal(globalFloat.FormKey, Assert.Single(RunTest<IGlobalFloat, IGlobalFloatGetter>(conv)).FormKey);
+        Assert.Equal(globalShort.FormKey, Assert.Single(RunTest<IGlobalShort, IGlobalShortGetter>(conv)).FormKey);
+    }
+
+    [Theory, MutagenModAutoData(GameRelease.SkyrimSE)]
     public void EnumerateLooseInterfaceClasses(SkyrimMod mod, Tree tree)
     {
         var conv = ConvertMod(mod);
