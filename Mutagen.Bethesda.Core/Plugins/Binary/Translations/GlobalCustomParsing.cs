@@ -60,9 +60,11 @@ internal static class GlobalCustomParsing
 
         frame.Reader.Position = initialPos + frame.MetaData.Constants.MajorConstants.TypeAndLengthLength;
 
-        // Read data
-        var fltv = majorMeta.FindSubrecord(FLTV);
-        g.RawFloat = fltv.AsFloat();
+        // Read data.  FLTV is optional, as Data is nullable
+        if (majorMeta.TryFindSubrecord(FLTV, out var fltv))
+        {
+            g.RawFloat = fltv.AsFloat();
+        }
 
         // Skip to end
         frame.Reader.Position = initialPos + majorMeta.TotalLength;
