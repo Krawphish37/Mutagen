@@ -241,6 +241,206 @@ public class WriteOptionsTests
             .ShouldEqualEnumerable(someMaster);
     }
 
+    [Theory, MutagenModAutoData(GameRelease.SkyrimSE)]
+    public async Task DisallowedLowerRangeFormIDThrowsWithoutRecordCount(
+        IFileSystem fileSystem,
+        ModPath existingModPath)
+    {
+        SkyrimMod mod = new SkyrimMod(TestConstants.PluginModKey, SkyrimRelease.SkyrimSE,
+            forceUseLowerFormIDRanges: true);
+        var npc = mod.Npcs.AddNew();
+        npc.FormKey.ID.ShouldEqual(0);
+        await Assert.ThrowsAsync<LowerFormKeyRangeDisallowedException>(async () =>
+        {
+            await mod.BeginWrite
+                .ToPath(existingModPath)
+                .WithNoLoadOrder()
+                .NoModKeySync()
+                .WithRecordCount(RecordCountOption.NoCheck)
+                .ThrowIfLowerRangeDisallowed()
+                .WithFileSystem(fileSystem)
+                .WriteAsync();
+        });
+    }
+
+    [Theory, MutagenModAutoData(GameRelease.SkyrimSE)]
+    public async Task DisallowedLowerRangeFormIDPlaceholderWithoutRecordCount(
+        IFileSystem fileSystem,
+        ModPath existingModPath,
+        ModKey modKey)
+    {
+        SkyrimMod mod = new SkyrimMod(TestConstants.PluginModKey, SkyrimRelease.SkyrimSE,
+            forceUseLowerFormIDRanges: true);
+        var npc = mod.Npcs.AddNew();
+        npc.FormKey.ID.ShouldEqual(0);
+        await mod.BeginWrite
+            .ToPath(existingModPath)
+            .WithNoLoadOrder()
+            .NoModKeySync()
+            .WithRecordCount(RecordCountOption.NoCheck)
+            .WithPlaceholderMasterIfLowerRangeDisallowed(modKey)
+            .WithFileSystem(fileSystem)
+            .WriteAsync();
+        using var reimport = SkyrimMod.Create(SkyrimRelease.SkyrimSE)
+            .FromPath(existingModPath)
+            .WithFileSystem(fileSystem)
+            .Construct();
+        reimport.MasterReferences.Select(x => x.Master).ShouldEqualEnumerable(modKey);
+    }
+
+    [Theory, MutagenModAutoData(GameRelease.SkyrimSE)]
+    public async Task LowerRangeFormIDWithMasterDoesNotThrow(
+        IFileSystem fileSystem,
+        ModPath existingModPath,
+        ModKey someMaster)
+    {
+        SkyrimMod mod = new SkyrimMod(TestConstants.PluginModKey, SkyrimRelease.SkyrimSE,
+            forceUseLowerFormIDRanges: true);
+        var formList = mod.FormLists.AddNew();
+        formList.FormKey.ID.ShouldEqual(0);
+        formList.Items.Add(FormKey.Factory($"000800:{someMaster}"));
+
+        await mod.BeginWrite
+            .ToPath(existingModPath)
+            .WithNoLoadOrder()
+            .NoModKeySync()
+            .ThrowIfLowerRangeDisallowed()
+            .WithFileSystem(fileSystem)
+            .WriteAsync();
+
+        using var reimport = SkyrimMod.Create(SkyrimRelease.SkyrimSE)
+            .FromPath(existingModPath)
+            .WithFileSystem(fileSystem)
+            .Construct();
+        reimport.MasterReferences
+            .Select(x => x.Master)
+            .ShouldEqualEnumerable(someMaster);
+        reimport.FormLists.Select(x => x.FormKey.ID).ShouldEqualEnumerable(formList.FormKey.ID);
+    }
+
+    [Theory, MutagenModAutoData(GameRelease.SkyrimSE)]
+    public async Task DisallowedLowerRangeFormIDPlaceholderIgnoresNullLink(
+        IFileSystem fileSystem,
+        ModPath existingModPath,
+        ModKey placeholderModKey)
+    {
+        SkyrimMod mod = new SkyrimMod(TestConstants.PluginModKey, SkyrimRelease.SkyrimSE,
+            forceUseLowerFormIDRanges: true);
+        var formList = mod.FormLists.AddNew();
+        formList.FormKey.ID.ShouldEqual(0);
+        formList.Items.Add(FormKey.Null);
+
+        await mod.BeginWrite
+            .ToPath(existingModPath)
+            .WithNoLoadOrder()
+            .NoModKeySync()
+            .NoNullFormIDStandardization()
+            .WithPlaceholderMasterIfLowerRangeDisallowed(placeholderModKey)
+            .WithFileSystem(fileSystem)
+            .WriteAsync();
+
+        using var reimport = SkyrimMod.Create(SkyrimRelease.SkyrimSE)
+            .FromPath(existingModPath)
+            .WithFileSystem(fileSystem)
+            .Construct();
+        reimport.MasterReferences
+            .Select(x => x.Master)
+            .ShouldEqualEnumerable(placeholderModKey);
+    }
+
+    [Theory, MutagenAutoData]
+    public async Task StarfieldDisallowedLowerRangeFormIDThrowsWithoutRecordCount(
+        IFileSystem fileSystem,
+        ModPath existingModPath)
+    {
+        StarfieldMod mod = new StarfieldMod(TestConstants.PluginModKey, StarfieldRelease.Starfield,
+            forceUseLowerFormIDRanges: true);
+        mod.Keywords.AddNew(new FormKey(mod.ModKey, 0x500));
+        await Assert.ThrowsAsync<LowerFormKeyRangeDisallowedException>(async () =>
+        {
+            await mod.BeginWrite
+                .ToPath(existingModPath)
+                .WithNoLoadOrder()
+                .NoModKeySync()
+                .WithRecordCount(RecordCountOption.NoCheck)
+                .ThrowIfLowerRangeDisallowed()
+                .WithFileSystem(fileSystem)
+                .WriteAsync();
+        });
+    }
+
+    [Theory, MutagenModAutoData(GameRelease.SkyrimSE)]
+    public async Task BaseMasterLowerRangeFormIDWithoutMasters(
+        IFileSystem fileSystem,
+        ModPath existingModPath)
+    {
+        var modKey = ModKey.FromFileName("Skyrim.esm");
+        SkyrimMod mod = new SkyrimMod(modKey, SkyrimRelease.SkyrimSE,
+            forceUseLowerFormIDRanges: true);
+        mod.Keywords.AddNew(new FormKey(modKey, 0x14));
+        await mod.BeginWrite
+            .ToPath(existingModPath)
+            .WithNoLoadOrder()
+            .NoModKeySync()
+            .WithFileSystem(fileSystem)
+            .WriteAsync();
+        using var reimport = SkyrimMod.Create(SkyrimRelease.SkyrimSE)
+            .FromPath(existingModPath)
+            .WithFileSystem(fileSystem)
+            .Construct();
+        reimport.MasterReferences.ShouldBeEmpty();
+        reimport.Keywords.Select(x => x.FormKey.ID).ShouldEqualEnumerable(0x14u);
+    }
+
+    [Theory, MutagenModAutoData(GameRelease.SkyrimSE)]
+    public async Task BaseMasterLowerRangeFormIDWithoutMastersOrRecordCount(
+        IFileSystem fileSystem,
+        ModPath existingModPath)
+    {
+        var modKey = ModKey.FromFileName("Skyrim.esm");
+        SkyrimMod mod = new SkyrimMod(modKey, SkyrimRelease.SkyrimSE,
+            forceUseLowerFormIDRanges: true);
+        mod.Keywords.AddNew(new FormKey(modKey, 0x14));
+        await mod.BeginWrite
+            .ToPath(existingModPath)
+            .WithNoLoadOrder()
+            .NoModKeySync()
+            .WithMastersListContent(MastersListContentOption.NoCheck)
+            .WithRecordCount(RecordCountOption.NoCheck)
+            .WithFileSystem(fileSystem)
+            .WriteAsync();
+        using var reimport = SkyrimMod.Create(SkyrimRelease.SkyrimSE)
+            .FromPath(existingModPath)
+            .WithFileSystem(fileSystem)
+            .Construct();
+        reimport.MasterReferences.ShouldBeEmpty();
+    }
+
+    [Theory, MutagenAutoData]
+    public async Task StarfieldBaseMasterLowerRangeFormIDWithoutMastersDoesNotThrow(
+        IFileSystem fileSystem,
+        ModPath existingModPath)
+    {
+        var modKey = ModKey.FromFileName("Starfield.esm");
+        StarfieldMod mod = new StarfieldMod(modKey, StarfieldRelease.Starfield,
+            forceUseLowerFormIDRanges: true);
+        mod.Keywords.AddNew(new FormKey(modKey, 0x27));
+        await mod.BeginWrite
+            .ToPath(existingModPath)
+            .WithNoLoadOrder()
+            .NoModKeySync()
+            .WithRecordCount(RecordCountOption.NoCheck)
+            .ThrowIfLowerRangeDisallowed()
+            .WithFileSystem(fileSystem)
+            .WriteAsync();
+        using var reimport = StarfieldMod.Create(StarfieldRelease.Starfield)
+            .FromPath(existingModPath)
+            .WithNoLoadOrder()
+            .WithFileSystem(fileSystem)
+            .Construct();
+        reimport.MasterReferences.ShouldBeEmpty();
+    }
+
     [Theory, MutagenAutoData]
     public async Task LightMasterFormIDCompactionThrows(
         IFileSystem fileSystem,
