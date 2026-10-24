@@ -330,10 +330,11 @@ internal static class PluginUtilityTranslation
             frame: frame);
         while (!frame.Complete)
         {
-            var nextRecordType = HeaderTranslation.GetNextSubrecordType(
-                reader: frame.Reader,
-                contentLength: out var contentLength);
-            var finalPos = frame.Position + contentLength;
+            // Group contents are major records and subgroups, whose lengths are 4 bytes wide
+            var nextHeader = frame.Reader.GetVariableHeader(subRecords: false);
+            var nextRecordType = nextHeader.RecordType;
+            var contentLength = checked((int)nextHeader.ContentLength);
+            var finalPos = frame.Position + nextHeader.TotalLength;
             var parsed = fillTyped(
                 record: record,
                 frame: frame,
