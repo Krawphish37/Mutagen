@@ -407,7 +407,10 @@ public class MultiModFileSplitter : IMultiModFileSplitter
         var newNeeded = MastersForIndex(newIndex);
         if (newNeeded.Count > masterLimit)
         {
-            throw new TooManyMastersException(inputMod.ModKey, newNeeded.ToArray());
+            throw new TooManyMastersException(
+                inputMod.ModKey,
+                newNeeded.ToArray(),
+                $"{inputMod.ModKey} has a record that needs too many masters on its own. {newNeeded.Count} masters, but the limit is {masterLimit}.");
         }
         if (fullMasterLimit != null)
         {
