@@ -292,6 +292,7 @@ partial class WeaponBinaryOverlay
     // DNAM Flags overlay: combine Flags1 (offset 0xC, 1 byte) and Flags2 (offset 0x38, 4 bytes)
     public partial Weapon.WeaponFlag GetFlagsCustom()
     {
+        if (!_DNAMLocation.HasValue) return default;
         var flags1 = (uint)_recordData[_FlagsLocation];
         var flags2 = (uint)System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(
             _recordData.Slice(_FlagsLocation + 0x2C, 4));

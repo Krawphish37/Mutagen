@@ -270,6 +270,7 @@ partial class NpcBinaryOverlay
 
     public partial Npc.Flag GetFlagsCustom()
     {
+        if (!_ACBSLocation.HasValue) return default;
         uint rawFlags = BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_FlagsLocation));
         // Clear out PcLevelMult flag, as that information is kept in the field type above
         rawFlags &= ~NpcBinaryCreateTranslation.PcLevelMultFlag;
@@ -278,6 +279,7 @@ partial class NpcBinaryOverlay
 
     public partial IANpcLevelGetter GetLevelCustom()
     {
+        if (!_ACBSLocation.HasValue) return new NpcLevel();
         uint rawFlags = BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_FlagsLocation));
         if (Enums.HasFlag(rawFlags, NpcBinaryCreateTranslation.PcLevelMultFlag))
         {
