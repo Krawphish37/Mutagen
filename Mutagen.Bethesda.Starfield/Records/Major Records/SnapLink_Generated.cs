@@ -1128,6 +1128,7 @@ namespace Mutagen.Bethesda.Starfield
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ISnapLinkItemGetter>.Instance.Write(
                 writer: writer,
                 items: item.Links,
+                countLengthLength: 4,
                 transl: (MutagenWriter subWriter, ISnapLinkItemGetter subItem, TypedWriteParams conv) =>
                 {
                     var Item = subItem;
@@ -1172,6 +1173,7 @@ namespace Mutagen.Bethesda.Starfield
             item.LinkedReference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.Links.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SnapLinkItem>.Instance.Parse(
+                    amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: SnapLinkItem.TryCreateFromBinary));
         }
@@ -1242,7 +1244,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public IFormLinkGetter<IPlacedObjectGetter> LinkedReference => FormLinkBinaryTranslation.Instance.OverlayFactory<IPlacedObjectGetter>(_package, _structData.Span.Slice(0x0, 0x4));
         #region Links
-        public IReadOnlyList<ISnapLinkItemGetter> Links => BinaryOverlayList.FactoryByLazyParse<ISnapLinkItemGetter>(_structData.Slice(0x4), _package, (s, p) => SnapLinkItemBinaryOverlay.SnapLinkItemFactory(s, p));
+        public IReadOnlyList<ISnapLinkItemGetter> Links => BinaryOverlayList.FactoryByCountLength<ISnapLinkItemGetter>(_structData.Slice(0x4), _package, 8, countLength: 4, (s, p) => SnapLinkItemBinaryOverlay.SnapLinkItemFactory(s, p));
         protected int LinksEndingPos;
         #endregion
         partial void CustomFactoryEnd(
@@ -1265,7 +1267,7 @@ namespace Mutagen.Bethesda.Starfield
             SnapLinkBinaryOverlay ret,
             BinaryOverlayFactoryPackage package)
         {
-            ret.LinksEndingPos = ret._structData.Length;
+            ret.LinksEndingPos = 0x4 + BinaryPrimitives.ReadInt32LittleEndian(ret._structData.Slice(0x4)) * 8 + 4;
         }
 
         public static ISnapLinkGetter SnapLinkFactory(

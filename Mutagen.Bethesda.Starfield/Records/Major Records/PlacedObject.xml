@@ -76,7 +76,7 @@
       <RefList name="LinkedReferences" refName="LinkedReferences" />
       <Bool name="IsLinkedRefTransient" boolAsMarker="XLKT" />
       <FormLink name="XLIB" recordType="XLIB" refName="LeveledItem" unknown="true" />
-      <RefList name="SnapLinks" refName="SnapLink" recordType="XSL1" />
+      <RefList name="SnapLinks" refName="SnapLink" recordType="XSL1" counterLength="4" />
       <FormLink name="EncounterZone" recordType="XEZN" refName="Location" />
       <Float name="GeometryDirtinessScale" recordType="XGDS" />
       <RefDirect name="Lock" refName="LockData" />
@@ -216,7 +216,7 @@
   <Object name="SnapLink" objType="Subrecord" >
     <Fields>
       <FormLink name="LinkedReference" refName="PlacedObject" />
-      <RefList name="Links" refName="SnapLinkItem" />
+      <RefList name="Links" refName="SnapLinkItem" counterLength="4" />
     </Fields>
   </Object>
   <Object name="SnapLinkItem" objType="Subrecord" >

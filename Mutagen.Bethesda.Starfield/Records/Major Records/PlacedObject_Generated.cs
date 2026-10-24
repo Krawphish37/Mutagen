@@ -9321,6 +9321,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 items: item.SnapLinks,
                 recordType: translationParams.ConvertToCustom(RecordTypes.XSL1),
+                countLengthLength: 4,
                 transl: (MutagenWriter subWriter, ISnapLinkGetter subItem, TypedWriteParams conv) =>
                 {
                     var Item = subItem;
@@ -9943,7 +9944,8 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SnapLinks = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SnapLink>.Instance.Parse(
-                            reader: frame.SpawnWithLength(contentLength),
+                            amount: checked((int)frame.ReadUInt32()),
+                            reader: frame,
                             transl: SnapLink.TryCreateFromBinary)
                         .CastExtendedList<SnapLink>();
                     return (int)PlacedObject_FieldIndex.SnapLinks;
@@ -10912,10 +10914,12 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.XSL1:
                 {
-                    this.SnapLinks = BinaryOverlayList.FactoryByLazyParseWithTrigger<ISnapLinkGetter>(
+                    stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
+                    var count = stream.ReadUInt32();
+                    this.SnapLinks = BinaryOverlayList.FactoryByCount<ISnapLinkGetter>(
                         stream: stream,
                         package: _package,
-                        finalPos: finalPos,
+                        count: count,
                         getter: (s, p) => SnapLinkBinaryOverlay.SnapLinkFactory(s, p));
                     return (int)PlacedObject_FieldIndex.SnapLinks;
                 }
