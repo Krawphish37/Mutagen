@@ -1814,42 +1814,42 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _SNAMLocation;
         #region OuterConeAngleDegrees
         private int _OuterConeAngleDegreesLocation => _SNAMLocation!.Value.Min;
-        private bool _OuterConeAngleDegrees_IsSet => _SNAMLocation.HasValue;
+        private bool _OuterConeAngleDegrees_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _OuterConeAngleDegreesLocation + 1 >= 4;
         public Single OuterConeAngleDegrees => _OuterConeAngleDegrees_IsSet ? _recordData.Slice(_OuterConeAngleDegreesLocation, 4).Float() : default(Single);
         #endregion
         #region InnerConeAngleDegrees
         private int _InnerConeAngleDegreesLocation => _SNAMLocation!.Value.Min + 0x4;
-        private bool _InnerConeAngleDegrees_IsSet => _SNAMLocation.HasValue;
+        private bool _InnerConeAngleDegrees_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _InnerConeAngleDegreesLocation + 1 >= 4;
         public Single InnerConeAngleDegrees => _InnerConeAngleDegrees_IsSet ? _recordData.Slice(_InnerConeAngleDegreesLocation, 4).Float() : default(Single);
         #endregion
         #region SteeringDegreesPerSec
         private int _SteeringDegreesPerSecLocation => _SNAMLocation!.Value.Min + 0x8;
-        private bool _SteeringDegreesPerSec_IsSet => _SNAMLocation.HasValue;
+        private bool _SteeringDegreesPerSec_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _SteeringDegreesPerSecLocation + 1 >= 4;
         public Single SteeringDegreesPerSec => _SteeringDegreesPerSec_IsSet ? _recordData.Slice(_SteeringDegreesPerSecLocation, 4).Float() : default(Single);
         #endregion
         #region SnapSteeringMultiplierOuterRing
         private int _SnapSteeringMultiplierOuterRingLocation => _SNAMLocation!.Value.Min + 0xC;
-        private bool _SnapSteeringMultiplierOuterRing_IsSet => _SNAMLocation.HasValue;
+        private bool _SnapSteeringMultiplierOuterRing_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _SnapSteeringMultiplierOuterRingLocation + 1 >= 4;
         public Single SnapSteeringMultiplierOuterRing => _SnapSteeringMultiplierOuterRing_IsSet ? _recordData.Slice(_SnapSteeringMultiplierOuterRingLocation, 4).Float() : default(Single);
         #endregion
         #region SnapSteeringMultiplierInnerRing
         private int _SnapSteeringMultiplierInnerRingLocation => _SNAMLocation!.Value.Min + 0x10;
-        private bool _SnapSteeringMultiplierInnerRing_IsSet => _SNAMLocation.HasValue;
+        private bool _SnapSteeringMultiplierInnerRing_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _SnapSteeringMultiplierInnerRingLocation + 1 >= 4;
         public Single SnapSteeringMultiplierInnerRing => _SnapSteeringMultiplierInnerRing_IsSet ? _recordData.Slice(_SnapSteeringMultiplierInnerRingLocation, 4).Float() : default(Single);
         #endregion
         #region MaxAimAssistDistance
         private int _MaxAimAssistDistanceLocation => _SNAMLocation!.Value.Min + 0x14;
-        private bool _MaxAimAssistDistance_IsSet => _SNAMLocation.HasValue;
+        private bool _MaxAimAssistDistance_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _MaxAimAssistDistanceLocation + 1 >= 4;
         public Single MaxAimAssistDistance => _MaxAimAssistDistance_IsSet ? _recordData.Slice(_MaxAimAssistDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeAimAssistEnabled
         private int _MeleeAimAssistEnabledLocation => _SNAMLocation!.Value.Min + 0x18;
-        private bool _MeleeAimAssistEnabled_IsSet => _SNAMLocation.HasValue;
+        private bool _MeleeAimAssistEnabled_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _MeleeAimAssistEnabledLocation + 1 >= 1;
         public Boolean MeleeAimAssistEnabled => _MeleeAimAssistEnabled_IsSet ? _recordData.Slice(_MeleeAimAssistEnabledLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region Unknown
         private int _UnknownLocation => _SNAMLocation!.Value.Min + 0x19;
-        private bool _Unknown_IsSet => _SNAMLocation.HasValue;
+        private bool _Unknown_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public Single Unknown => _Unknown_IsSet ? _recordData.Slice(_UnknownLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

@@ -2016,32 +2016,32 @@ namespace Mutagen.Bethesda.Fallout4
         public BendableSpline.DNAMDataType DNAMDataTypeState { get; private set; }
         #region DefaultNumberOfTiles
         private int _DefaultNumberOfTilesLocation => _DNAMLocation!.Value.Min;
-        private bool _DefaultNumberOfTiles_IsSet => _DNAMLocation.HasValue;
+        private bool _DefaultNumberOfTiles_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DefaultNumberOfTilesLocation + 1 >= 4;
         public Single DefaultNumberOfTiles => _DefaultNumberOfTiles_IsSet ? _recordData.Slice(_DefaultNumberOfTilesLocation, 4).Float() : default(Single);
         #endregion
         #region DefaultNumberOfSlices
         private int _DefaultNumberOfSlicesLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _DefaultNumberOfSlices_IsSet => _DNAMLocation.HasValue;
+        private bool _DefaultNumberOfSlices_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DefaultNumberOfSlicesLocation + 1 >= 2;
         public UInt16 DefaultNumberOfSlices => _DefaultNumberOfSlices_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_DefaultNumberOfSlicesLocation, 2)) : default(UInt16);
         #endregion
         #region DefaultNumberOfTilesIsRelativeToLength
         private int _DefaultNumberOfTilesIsRelativeToLengthLocation => _DNAMLocation!.Value.Min + 0x6;
-        private bool _DefaultNumberOfTilesIsRelativeToLength_IsSet => _DNAMLocation.HasValue;
+        private bool _DefaultNumberOfTilesIsRelativeToLength_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DefaultNumberOfTilesIsRelativeToLengthLocation + 1 >= 2;
         public Boolean DefaultNumberOfTilesIsRelativeToLength => _DefaultNumberOfTilesIsRelativeToLength_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_DefaultNumberOfTilesIsRelativeToLengthLocation, 2)) >= 1 : default(Boolean);
         #endregion
         #region DefaultColor
         private int _DefaultColorLocation => _DNAMLocation!.Value.Min + 0x8;
-        private bool _DefaultColor_IsSet => _DNAMLocation.HasValue;
+        private bool _DefaultColor_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DefaultColorLocation + 1 >= 16;
         public Color DefaultColor => _DefaultColor_IsSet ? _recordData.Slice(_DefaultColorLocation, 16).ReadColor(ColorBinaryType.AlphaFloat) : default(Color);
         #endregion
         #region WindSensibility
         private int _WindSensibilityLocation => _DNAMLocation!.Value.Min + 0x18;
-        private bool _WindSensibility_IsSet => _DNAMLocation.HasValue;
+        private bool _WindSensibility_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _WindSensibilityLocation + 1 >= 4;
         public Single WindSensibility => _WindSensibility_IsSet ? _recordData.Slice(_WindSensibilityLocation, 4).Float() : default(Single);
         #endregion
         #region WindFlexibility
         private int _WindFlexibilityLocation => _DNAMLocation!.Value.Min + 0x1C;
-        private bool _WindFlexibility_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(BendableSpline.DNAMDataType.Break0);
+        private bool _WindFlexibility_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(BendableSpline.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _WindFlexibilityLocation + 1 >= 4;
         public Single WindFlexibility => _WindFlexibility_IsSet ? _recordData.Slice(_WindFlexibilityLocation, 4).Float() : default(Single);
         #endregion
         #region Texture

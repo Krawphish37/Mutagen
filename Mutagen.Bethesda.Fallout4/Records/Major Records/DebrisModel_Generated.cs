@@ -1372,7 +1372,7 @@ namespace Mutagen.Bethesda.Fallout4
         public DebrisModel.DATADataType DATADataTypeState { get; private set; }
         #region Percentage
         private int _PercentageLocation => _DATALocation!.Value.Min;
-        private bool _Percentage_IsSet => _DATALocation.HasValue;
+        private bool _Percentage_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PercentageLocation + 1 >= 1;
         public Byte Percentage => _Percentage_IsSet ? _recordData.Span[_PercentageLocation] : default;
         #endregion
         #region ModelFilename
@@ -1381,7 +1381,7 @@ namespace Mutagen.Bethesda.Fallout4
         #endregion
         #region Flags
         private int _FlagsLocation => ModelFilenameEndingPos;
-        private bool _Flags_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(DebrisModel.DATADataType.Break0);
+        private bool _Flags_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(DebrisModel.DATADataType.Break0) && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public DebrisModel.Flag Flags => _Flags_IsSet ? (DebrisModel.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region TextureFileHashes

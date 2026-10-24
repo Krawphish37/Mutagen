@@ -1286,22 +1286,22 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DATALocation;
         #region Unknown1
         private int _Unknown1Location => _DATALocation!.Value.Min;
-        private bool _Unknown1_IsSet => _DATALocation.HasValue;
+        private bool _Unknown1_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Unknown1Location + 1 >= 8;
         public UInt64 Unknown1 => _Unknown1_IsSet ? BinaryPrimitives.ReadUInt64LittleEndian(_recordData.Slice(_Unknown1Location, 8)) : default(UInt64);
         #endregion
         #region MassInSm
         private int _MassInSmLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _MassInSm_IsSet => _DATALocation.HasValue;
+        private bool _MassInSm_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MassInSmLocation + 1 >= 4;
         public Single MassInSm => _MassInSm_IsSet ? _recordData.Slice(_MassInSmLocation, 4).Float() / 1.98847E+30f : default(Single);
         #endregion
         #region RadiusInKm
         private int _RadiusInKmLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _RadiusInKm_IsSet => _DATALocation.HasValue;
+        private bool _RadiusInKm_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RadiusInKmLocation + 1 >= 4;
         public Single RadiusInKm => _RadiusInKm_IsSet ? _recordData.Slice(_RadiusInKmLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown2
         private int _Unknown2Location => _DATALocation!.Value.Min + 0x10;
-        private bool _Unknown2_IsSet => _DATALocation.HasValue;
+        private bool _Unknown2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Unknown2Location + 1 >= 4;
         public Single Unknown2 => _Unknown2_IsSet ? _recordData.Slice(_Unknown2Location, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

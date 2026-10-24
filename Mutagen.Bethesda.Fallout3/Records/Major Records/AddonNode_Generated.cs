@@ -1886,12 +1886,12 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DNAMLocation;
         #region MasterParticleSystemCap
         private int _MasterParticleSystemCapLocation => _DNAMLocation!.Value.Min;
-        private bool _MasterParticleSystemCap_IsSet => _DNAMLocation.HasValue;
+        private bool _MasterParticleSystemCap_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MasterParticleSystemCapLocation + 1 >= 2;
         public UInt16 MasterParticleSystemCap => _MasterParticleSystemCap_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_MasterParticleSystemCapLocation, 2)) : default(UInt16);
         #endregion
         #region Unknown
         private int _UnknownLocation => _DNAMLocation!.Value.Min + 0x2;
-        private bool _Unknown_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _UnknownLocation + 1 >= 2;
         public UInt16 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_UnknownLocation, 2)) : default(UInt16);
         #endregion
         partial void CustomFactoryEnd(

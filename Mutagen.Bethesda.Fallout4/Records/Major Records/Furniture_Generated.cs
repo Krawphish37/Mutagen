@@ -4948,12 +4948,12 @@ namespace Mutagen.Bethesda.Fallout4
         public Furniture.WBDTDataType WBDTDataTypeState { get; private set; }
         #region BenchType
         private int _BenchTypeLocation => _WBDTLocation!.Value.Min;
-        private bool _BenchType_IsSet => _WBDTLocation.HasValue;
+        private bool _BenchType_IsSet => _WBDTLocation.HasValue && _WBDTLocation!.Value.Max - _BenchTypeLocation + 1 >= 1;
         public Furniture.BenchTypes BenchType => _BenchType_IsSet ? (Furniture.BenchTypes)_recordData.Span.Slice(_BenchTypeLocation, 0x1)[0] : default;
         #endregion
         #region UsesSkill
         private int _UsesSkillLocation => _WBDTLocation!.Value.Min + 0x1;
-        private bool _UsesSkill_IsSet => _WBDTLocation.HasValue && !WBDTDataTypeState.HasFlag(Furniture.WBDTDataType.Break0);
+        private bool _UsesSkill_IsSet => _WBDTLocation.HasValue && !WBDTDataTypeState.HasFlag(Furniture.WBDTDataType.Break0) && _WBDTLocation!.Value.Max - _UsesSkillLocation + 1 >= 1;
         public Skill? UsesSkill
         {
             get

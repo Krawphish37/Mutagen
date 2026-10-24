@@ -2117,12 +2117,12 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _ANAMLocation;
         #region ParentAnimation
         private int _ParentAnimationLocation => _ANAMLocation!.Value.Min;
-        private bool _ParentAnimation_IsSet => _ANAMLocation.HasValue;
+        private bool _ParentAnimation_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _ParentAnimationLocation + 1 >= 4;
         public IFormLinkGetter<IIdleRelationGetter> ParentAnimation => _ParentAnimation_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IIdleRelationGetter>(_package, _recordData.Span.Slice(_ParentAnimationLocation, 0x4), isSet: _ParentAnimation_IsSet) : FormLink<IIdleRelationGetter>.Null;
         #endregion
         #region PreviousAnimation
         private int _PreviousAnimationLocation => _ANAMLocation!.Value.Min + 0x4;
-        private bool _PreviousAnimation_IsSet => _ANAMLocation.HasValue;
+        private bool _PreviousAnimation_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _PreviousAnimationLocation + 1 >= 4;
         public IFormLinkGetter<IIdleRelationGetter> PreviousAnimation => _PreviousAnimation_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IIdleRelationGetter>(_package, _recordData.Span.Slice(_PreviousAnimationLocation, 0x4), isSet: _PreviousAnimation_IsSet) : FormLink<IIdleRelationGetter>.Null;
         #endregion
         #region Flags

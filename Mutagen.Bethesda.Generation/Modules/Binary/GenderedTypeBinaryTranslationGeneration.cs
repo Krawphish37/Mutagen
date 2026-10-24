@@ -470,7 +470,7 @@ public class GenderedTypeBinaryTranslationGeneration : BinaryTranslationGenerati
             else
             {
                 DataBinaryTranslationGeneration.GenerateWrapperExtraMembers(sb, dataType, objGen, typeGen,
-                    passedLengthAccessor);
+                    passedLengthAccessor, expectedLength: subLen * 2);
                 sb.AppendLine(
                     $"public IGenderedItemGetter<{gendered.SubTypeGeneration.TypeName(getter: true, needsCovariance: true)}>{(typeGen.Nullable ? "?" : null)} {typeGen.Name}");
                 using (sb.CurlyBrace())

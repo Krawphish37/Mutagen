@@ -1733,42 +1733,42 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DSTDLocation;
         #region HealthPercent
         private int _HealthPercentLocation => _DSTDLocation!.Value.Min;
-        private bool _HealthPercent_IsSet => _DSTDLocation.HasValue;
+        private bool _HealthPercent_IsSet => _DSTDLocation.HasValue && _DSTDLocation!.Value.Max - _HealthPercentLocation + 1 >= 1;
         public Byte HealthPercent => _HealthPercent_IsSet ? _recordData.Span[_HealthPercentLocation] : default;
         #endregion
         #region Index
         private int _IndexLocation => _DSTDLocation!.Value.Min + 0x1;
-        private bool _Index_IsSet => _DSTDLocation.HasValue;
+        private bool _Index_IsSet => _DSTDLocation.HasValue && _DSTDLocation!.Value.Max - _IndexLocation + 1 >= 1;
         public Byte Index => _Index_IsSet ? _recordData.Span[_IndexLocation] : default;
         #endregion
         #region ModelDamageStage
         private int _ModelDamageStageLocation => _DSTDLocation!.Value.Min + 0x2;
-        private bool _ModelDamageStage_IsSet => _DSTDLocation.HasValue;
+        private bool _ModelDamageStage_IsSet => _DSTDLocation.HasValue && _DSTDLocation!.Value.Max - _ModelDamageStageLocation + 1 >= 1;
         public Byte ModelDamageStage => _ModelDamageStage_IsSet ? _recordData.Span[_ModelDamageStageLocation] : default;
         #endregion
         #region Flags
         private int _FlagsLocation => _DSTDLocation!.Value.Min + 0x3;
-        private bool _Flags_IsSet => _DSTDLocation.HasValue;
+        private bool _Flags_IsSet => _DSTDLocation.HasValue && _DSTDLocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public Destructible.DestructionStageDataFlag Flags => _Flags_IsSet ? (Destructible.DestructionStageDataFlag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region SelfDamagePerSecond
         private int _SelfDamagePerSecondLocation => _DSTDLocation!.Value.Min + 0x4;
-        private bool _SelfDamagePerSecond_IsSet => _DSTDLocation.HasValue;
+        private bool _SelfDamagePerSecond_IsSet => _DSTDLocation.HasValue && _DSTDLocation!.Value.Max - _SelfDamagePerSecondLocation + 1 >= 4;
         public Int32 SelfDamagePerSecond => _SelfDamagePerSecond_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_SelfDamagePerSecondLocation, 4)) : default(Int32);
         #endregion
         #region Explosion
         private int _ExplosionLocation => _DSTDLocation!.Value.Min + 0x8;
-        private bool _Explosion_IsSet => _DSTDLocation.HasValue;
+        private bool _Explosion_IsSet => _DSTDLocation.HasValue && _DSTDLocation!.Value.Max - _ExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> Explosion => _Explosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_ExplosionLocation, 0x4), isSet: _Explosion_IsSet) : FormLink<IExplosionGetter>.Null;
         #endregion
         #region Debris
         private int _DebrisLocation => _DSTDLocation!.Value.Min + 0xC;
-        private bool _Debris_IsSet => _DSTDLocation.HasValue;
+        private bool _Debris_IsSet => _DSTDLocation.HasValue && _DSTDLocation!.Value.Max - _DebrisLocation + 1 >= 4;
         public IFormLinkGetter<IDebrisGetter> Debris => _Debris_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IDebrisGetter>(_package, _recordData.Span.Slice(_DebrisLocation, 0x4), isSet: _Debris_IsSet) : FormLink<IDebrisGetter>.Null;
         #endregion
         #region DebrisCount
         private int _DebrisCountLocation => _DSTDLocation!.Value.Min + 0x10;
-        private bool _DebrisCount_IsSet => _DSTDLocation.HasValue;
+        private bool _DebrisCount_IsSet => _DSTDLocation.HasValue && _DSTDLocation!.Value.Max - _DebrisCountLocation + 1 >= 4;
         public Int32 DebrisCount => _DebrisCount_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_DebrisCountLocation, 4)) : default(Int32);
         #endregion
         #region SequenceName

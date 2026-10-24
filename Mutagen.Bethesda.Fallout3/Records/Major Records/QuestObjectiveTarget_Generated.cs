@@ -1407,12 +1407,12 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _QSTALocation;
         #region Target
         private int _TargetLocation => _QSTALocation!.Value.Min;
-        private bool _Target_IsSet => _QSTALocation.HasValue;
+        private bool _Target_IsSet => _QSTALocation.HasValue && _QSTALocation!.Value.Max - _TargetLocation + 1 >= 4;
         public IFormLinkGetter<IPlacedGetter> Target => _Target_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IPlacedGetter>(_package, _recordData.Span.Slice(_TargetLocation, 0x4), isSet: _Target_IsSet) : FormLink<IPlacedGetter>.Null;
         #endregion
         #region CompassMarkerIgnoresLocks
         private int _CompassMarkerIgnoresLocksLocation => _QSTALocation!.Value.Min + 0x4;
-        private bool _CompassMarkerIgnoresLocks_IsSet => _QSTALocation.HasValue;
+        private bool _CompassMarkerIgnoresLocks_IsSet => _QSTALocation.HasValue && _QSTALocation!.Value.Max - _CompassMarkerIgnoresLocksLocation + 1 >= 1;
         public Boolean CompassMarkerIgnoresLocks => _CompassMarkerIgnoresLocks_IsSet ? _recordData.Slice(_CompassMarkerIgnoresLocksLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region Unused

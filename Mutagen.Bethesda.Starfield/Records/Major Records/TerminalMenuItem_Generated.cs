@@ -1891,12 +1891,12 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region UnusedISET
         private int _UnusedISETLocation => _ISETLocation!.Value.Min + 0x2;
-        private bool _UnusedISET_IsSet => _ISETLocation.HasValue;
+        private bool _UnusedISET_IsSet => _ISETLocation.HasValue && _ISETLocation!.Value.Max - _UnusedISETLocation + 1 >= 2;
         public UInt16 UnusedISET => _UnusedISET_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_UnusedISETLocation, 2)) : default(UInt16);
         #endregion
         #region Flags
         private int _FlagsLocation => _ISETLocation!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _ISETLocation.HasValue;
+        private bool _Flags_IsSet => _ISETLocation.HasValue && _ISETLocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public TerminalMenuItem.Flag Flags => _Flags_IsSet ? (TerminalMenuItem.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region UnusedISET2

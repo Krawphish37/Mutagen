@@ -2110,17 +2110,17 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _TRDALocation;
         #region Emotion
         private int _EmotionLocation => _TRDALocation!.Value.Min;
-        private bool _Emotion_IsSet => _TRDALocation.HasValue;
+        private bool _Emotion_IsSet => _TRDALocation.HasValue && _TRDALocation!.Value.Max - _EmotionLocation + 1 >= 4;
         public IFormLinkGetter<IKeywordGetter> Emotion => _Emotion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _recordData.Span.Slice(_EmotionLocation, 0x4), isSet: _Emotion_IsSet, maxIsNull: true) : FormLink<IKeywordGetter>.Null;
         #endregion
         #region WEMFile
         private int _WEMFileLocation => _TRDALocation!.Value.Min + 0x4;
-        private bool _WEMFile_IsSet => _TRDALocation.HasValue;
+        private bool _WEMFile_IsSet => _TRDALocation.HasValue && _TRDALocation!.Value.Max - _WEMFileLocation + 1 >= 4;
         public UInt32 WEMFile => _WEMFile_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WEMFileLocation, 4)) : default(UInt32);
         #endregion
         #region EmotionOut
         private int _EmotionOutLocation => _TRDALocation!.Value.Min + 0x8;
-        private bool _EmotionOut_IsSet => _TRDALocation.HasValue;
+        private bool _EmotionOut_IsSet => _TRDALocation.HasValue && _TRDALocation!.Value.Max - _EmotionOutLocation + 1 >= 4;
         public Single EmotionOut => _EmotionOut_IsSet ? _recordData.Slice(_EmotionOutLocation, 4).Float() : default(Single);
         #endregion
         public IReadOnlyList<IDialogResponseTROTGetter> TROTs { get; private set; } = [];

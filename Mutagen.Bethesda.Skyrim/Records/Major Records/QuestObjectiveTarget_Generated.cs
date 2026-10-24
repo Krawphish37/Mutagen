@@ -1340,12 +1340,12 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _QSTALocation;
         #region AliasID
         private int _AliasIDLocation => _QSTALocation!.Value.Min;
-        private bool _AliasID_IsSet => _QSTALocation.HasValue;
+        private bool _AliasID_IsSet => _QSTALocation.HasValue && _QSTALocation!.Value.Max - _AliasIDLocation + 1 >= 4;
         public Int32 AliasID => _AliasID_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_AliasIDLocation, 4)) : default(Int32);
         #endregion
         #region Flags
         private int _FlagsLocation => _QSTALocation!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _QSTALocation.HasValue;
+        private bool _Flags_IsSet => _QSTALocation.HasValue && _QSTALocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Quest.TargetFlag Flags => _Flags_IsSet ? (Quest.TargetFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         public IReadOnlyList<IConditionGetter> Conditions { get; private set; } = [];

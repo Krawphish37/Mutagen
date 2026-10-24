@@ -2805,83 +2805,83 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DNAMLocation;
         #region EdgeEffectFallOff
         private int _EdgeEffectFallOffLocation => _DNAMLocation!.Value.Min;
-        private bool _EdgeEffectFallOff_IsSet => _DNAMLocation.HasValue;
+        private bool _EdgeEffectFallOff_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _EdgeEffectFallOffLocation + 1 >= 4;
         public Single EdgeEffectFallOff => _EdgeEffectFallOff_IsSet ? _recordData.Slice(_EdgeEffectFallOffLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectColor
         private int _EdgeEffectColorLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _EdgeEffectColor_IsSet => _DNAMLocation.HasValue;
+        private bool _EdgeEffectColor_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _EdgeEffectColorLocation + 1 >= 4;
         public Color EdgeEffectColor => _EdgeEffectColor_IsSet ? _recordData.Slice(_EdgeEffectColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region EdgeEffectAlphaFadeInTime
         private int _EdgeEffectAlphaFadeInTimeLocation => _DNAMLocation!.Value.Min + 0x8;
-        private bool _EdgeEffectAlphaFadeInTime_IsSet => _DNAMLocation.HasValue;
+        private bool _EdgeEffectAlphaFadeInTime_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _EdgeEffectAlphaFadeInTimeLocation + 1 >= 4;
         public Single EdgeEffectAlphaFadeInTime => _EdgeEffectAlphaFadeInTime_IsSet ? _recordData.Slice(_EdgeEffectAlphaFadeInTimeLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectFullAlphaTime
         private int _EdgeEffectFullAlphaTimeLocation => _DNAMLocation!.Value.Min + 0xC;
-        private bool _EdgeEffectFullAlphaTime_IsSet => _DNAMLocation.HasValue;
+        private bool _EdgeEffectFullAlphaTime_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _EdgeEffectFullAlphaTimeLocation + 1 >= 4;
         public Single EdgeEffectFullAlphaTime => _EdgeEffectFullAlphaTime_IsSet ? _recordData.Slice(_EdgeEffectFullAlphaTimeLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectAlphaFadeOutTime
         private int _EdgeEffectAlphaFadeOutTimeLocation => _DNAMLocation!.Value.Min + 0x10;
-        private bool _EdgeEffectAlphaFadeOutTime_IsSet => _DNAMLocation.HasValue;
+        private bool _EdgeEffectAlphaFadeOutTime_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _EdgeEffectAlphaFadeOutTimeLocation + 1 >= 4;
         public Single EdgeEffectAlphaFadeOutTime => _EdgeEffectAlphaFadeOutTime_IsSet ? _recordData.Slice(_EdgeEffectAlphaFadeOutTimeLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectPersistentAlphaRatio
         private int _EdgeEffectPersistentAlphaRatioLocation => _DNAMLocation!.Value.Min + 0x14;
-        private bool _EdgeEffectPersistentAlphaRatio_IsSet => _DNAMLocation.HasValue;
+        private bool _EdgeEffectPersistentAlphaRatio_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _EdgeEffectPersistentAlphaRatioLocation + 1 >= 4;
         public Percent EdgeEffectPersistentAlphaRatio => _EdgeEffectPersistentAlphaRatio_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_EdgeEffectPersistentAlphaRatioLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region EdgeEffectAlphaPulseAmplitude
         private int _EdgeEffectAlphaPulseAmplitudeLocation => _DNAMLocation!.Value.Min + 0x18;
-        private bool _EdgeEffectAlphaPulseAmplitude_IsSet => _DNAMLocation.HasValue;
+        private bool _EdgeEffectAlphaPulseAmplitude_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _EdgeEffectAlphaPulseAmplitudeLocation + 1 >= 4;
         public Single EdgeEffectAlphaPulseAmplitude => _EdgeEffectAlphaPulseAmplitude_IsSet ? _recordData.Slice(_EdgeEffectAlphaPulseAmplitudeLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectAlphaPulseFrequency
         private int _EdgeEffectAlphaPulseFrequencyLocation => _DNAMLocation!.Value.Min + 0x1C;
-        private bool _EdgeEffectAlphaPulseFrequency_IsSet => _DNAMLocation.HasValue;
+        private bool _EdgeEffectAlphaPulseFrequency_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _EdgeEffectAlphaPulseFrequencyLocation + 1 >= 4;
         public Single EdgeEffectAlphaPulseFrequency => _EdgeEffectAlphaPulseFrequency_IsSet ? _recordData.Slice(_EdgeEffectAlphaPulseFrequencyLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectFullAlphaRatio
         private int _EdgeEffectFullAlphaRatioLocation => _DNAMLocation!.Value.Min + 0x20;
-        private bool _EdgeEffectFullAlphaRatio_IsSet => _DNAMLocation.HasValue;
+        private bool _EdgeEffectFullAlphaRatio_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _EdgeEffectFullAlphaRatioLocation + 1 >= 4;
         public Percent EdgeEffectFullAlphaRatio => _EdgeEffectFullAlphaRatio_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_EdgeEffectFullAlphaRatioLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region HolesAlphaTestAnimationStartTime
         private int _HolesAlphaTestAnimationStartTimeLocation => _DNAMLocation!.Value.Min + 0x24;
-        private bool _HolesAlphaTestAnimationStartTime_IsSet => _DNAMLocation.HasValue;
+        private bool _HolesAlphaTestAnimationStartTime_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _HolesAlphaTestAnimationStartTimeLocation + 1 >= 4;
         public Single HolesAlphaTestAnimationStartTime => _HolesAlphaTestAnimationStartTime_IsSet ? _recordData.Slice(_HolesAlphaTestAnimationStartTimeLocation, 4).Float() : default(Single);
         #endregion
         #region HolesAlphaTestAnimationStopTime
         private int _HolesAlphaTestAnimationStopTimeLocation => _DNAMLocation!.Value.Min + 0x28;
-        private bool _HolesAlphaTestAnimationStopTime_IsSet => _DNAMLocation.HasValue;
+        private bool _HolesAlphaTestAnimationStopTime_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _HolesAlphaTestAnimationStopTimeLocation + 1 >= 4;
         public Single HolesAlphaTestAnimationStopTime => _HolesAlphaTestAnimationStopTime_IsSet ? _recordData.Slice(_HolesAlphaTestAnimationStopTimeLocation, 4).Float() : default(Single);
         #endregion
         #region HolesAlphaTestAnimationStartValue
         private int _HolesAlphaTestAnimationStartValueLocation => _DNAMLocation!.Value.Min + 0x2C;
-        private bool _HolesAlphaTestAnimationStartValue_IsSet => _DNAMLocation.HasValue;
+        private bool _HolesAlphaTestAnimationStartValue_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _HolesAlphaTestAnimationStartValueLocation + 1 >= 4;
         public Single HolesAlphaTestAnimationStartValue => _HolesAlphaTestAnimationStartValue_IsSet ? _recordData.Slice(_HolesAlphaTestAnimationStartValueLocation, 4).Float() : default(Single);
         #endregion
         #region HolesAlphaTestAnimationStopValue
         private int _HolesAlphaTestAnimationStopValueLocation => _DNAMLocation!.Value.Min + 0x30;
-        private bool _HolesAlphaTestAnimationStopValue_IsSet => _DNAMLocation.HasValue;
+        private bool _HolesAlphaTestAnimationStopValue_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _HolesAlphaTestAnimationStopValueLocation + 1 >= 4;
         public Single HolesAlphaTestAnimationStopValue => _HolesAlphaTestAnimationStopValue_IsSet ? _recordData.Slice(_HolesAlphaTestAnimationStopValueLocation, 4).Float() : default(Single);
         #endregion
         #region Sounds
         private int _SoundsLocation => _DNAMLocation!.Value.Min + 0x34;
-        private bool _Sounds_IsSet => _DNAMLocation.HasValue;
+        private bool _Sounds_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SoundsLocation + 1 >= 1;
         private ISoundReferenceGetter? _Sounds => _Sounds_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_SoundsLocation), _package) : default;
         public ISoundReferenceGetter Sounds => _Sounds ?? new SoundReference();
         #endregion
         #region BoneDepth
         private int _BoneDepthLocation => _DNAMLocation!.Value.Min + 0x5C;
-        private bool _BoneDepth_IsSet => _DNAMLocation.HasValue;
+        private bool _BoneDepth_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _BoneDepthLocation + 1 >= 1;
         public SByte BoneDepth => _BoneDepth_IsSet ? (sbyte)_recordData.Slice(_BoneDepthLocation, 1)[0] : default(SByte);
         #endregion
         #region Flags
         private int _FlagsLocation => _DNAMLocation!.Value.Min + 0x5D;
-        private bool _Flags_IsSet => _DNAMLocation.HasValue;
+        private bool _Flags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public EffectShader.Flag Flags => _Flags_IsSet ? (EffectShader.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         public IModelGetter? Model { get; private set; }

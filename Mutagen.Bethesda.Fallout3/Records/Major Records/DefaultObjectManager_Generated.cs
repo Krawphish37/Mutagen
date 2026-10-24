@@ -3651,184 +3651,184 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region Stimpak
         private int _StimpakLocation => _DATALocation!.Value.Min;
-        private bool _Stimpak_IsSet => _DATALocation.HasValue;
+        private bool _Stimpak_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _StimpakLocation + 1 >= 4;
         public IFormLinkGetter<IIngestibleGetter> Stimpak => _Stimpak_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IIngestibleGetter>(_package, _recordData.Span.Slice(_StimpakLocation, 0x4), isSet: _Stimpak_IsSet) : FormLink<IIngestibleGetter>.Null;
         #endregion
         #region SuperStimpak
         private int _SuperStimpakLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _SuperStimpak_IsSet => _DATALocation.HasValue;
+        private bool _SuperStimpak_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SuperStimpakLocation + 1 >= 4;
         public IFormLinkGetter<IIngestibleGetter> SuperStimpak => _SuperStimpak_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IIngestibleGetter>(_package, _recordData.Span.Slice(_SuperStimpakLocation, 0x4), isSet: _SuperStimpak_IsSet) : FormLink<IIngestibleGetter>.Null;
         #endregion
         #region RadX
         private int _RadXLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _RadX_IsSet => _DATALocation.HasValue;
+        private bool _RadX_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RadXLocation + 1 >= 4;
         public IFormLinkGetter<IIngestibleGetter> RadX => _RadX_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IIngestibleGetter>(_package, _recordData.Span.Slice(_RadXLocation, 0x4), isSet: _RadX_IsSet) : FormLink<IIngestibleGetter>.Null;
         #endregion
         #region RadAway
         private int _RadAwayLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _RadAway_IsSet => _DATALocation.HasValue;
+        private bool _RadAway_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RadAwayLocation + 1 >= 4;
         public IFormLinkGetter<IIngestibleGetter> RadAway => _RadAway_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IIngestibleGetter>(_package, _recordData.Span.Slice(_RadAwayLocation, 0x4), isSet: _RadAway_IsSet) : FormLink<IIngestibleGetter>.Null;
         #endregion
         #region Morphine
         private int _MorphineLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _Morphine_IsSet => _DATALocation.HasValue;
+        private bool _Morphine_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MorphineLocation + 1 >= 4;
         public IFormLinkGetter<IIngestibleGetter> Morphine => _Morphine_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IIngestibleGetter>(_package, _recordData.Span.Slice(_MorphineLocation, 0x4), isSet: _Morphine_IsSet) : FormLink<IIngestibleGetter>.Null;
         #endregion
         #region PerkParalysis
         private int _PerkParalysisLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _PerkParalysis_IsSet => _DATALocation.HasValue;
+        private bool _PerkParalysis_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PerkParalysisLocation + 1 >= 4;
         public IFormLinkGetter<ISpellGetter> PerkParalysis => _PerkParalysis_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_PerkParalysisLocation, 0x4), isSet: _PerkParalysis_IsSet) : FormLink<ISpellGetter>.Null;
         #endregion
         #region PlayerFaction
         private int _PlayerFactionLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _PlayerFaction_IsSet => _DATALocation.HasValue;
+        private bool _PlayerFaction_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PlayerFactionLocation + 1 >= 4;
         public IFormLinkGetter<IFactionGetter> PlayerFaction => _PlayerFaction_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IFactionGetter>(_package, _recordData.Span.Slice(_PlayerFactionLocation, 0x4), isSet: _PlayerFaction_IsSet) : FormLink<IFactionGetter>.Null;
         #endregion
         #region MysteriousStrangerNpc
         private int _MysteriousStrangerNpcLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _MysteriousStrangerNpc_IsSet => _DATALocation.HasValue;
+        private bool _MysteriousStrangerNpc_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MysteriousStrangerNpcLocation + 1 >= 4;
         public IFormLinkGetter<INpcGetter> MysteriousStrangerNpc => _MysteriousStrangerNpc_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<INpcGetter>(_package, _recordData.Span.Slice(_MysteriousStrangerNpcLocation, 0x4), isSet: _MysteriousStrangerNpc_IsSet) : FormLink<INpcGetter>.Null;
         #endregion
         #region MysteriousStrangerFaction
         private int _MysteriousStrangerFactionLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _MysteriousStrangerFaction_IsSet => _DATALocation.HasValue;
+        private bool _MysteriousStrangerFaction_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MysteriousStrangerFactionLocation + 1 >= 4;
         public IFormLinkGetter<IFactionGetter> MysteriousStrangerFaction => _MysteriousStrangerFaction_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IFactionGetter>(_package, _recordData.Span.Slice(_MysteriousStrangerFactionLocation, 0x4), isSet: _MysteriousStrangerFaction_IsSet) : FormLink<IFactionGetter>.Null;
         #endregion
         #region DefaultMusic
         private int _DefaultMusicLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _DefaultMusic_IsSet => _DATALocation.HasValue;
+        private bool _DefaultMusic_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DefaultMusicLocation + 1 >= 4;
         public IFormLinkGetter<IMusicTypeGetter> DefaultMusic => _DefaultMusic_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IMusicTypeGetter>(_package, _recordData.Span.Slice(_DefaultMusicLocation, 0x4), isSet: _DefaultMusic_IsSet) : FormLink<IMusicTypeGetter>.Null;
         #endregion
         #region BattleMusic
         private int _BattleMusicLocation => _DATALocation!.Value.Min + 0x28;
-        private bool _BattleMusic_IsSet => _DATALocation.HasValue;
+        private bool _BattleMusic_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BattleMusicLocation + 1 >= 4;
         public IFormLinkGetter<IMusicTypeGetter> BattleMusic => _BattleMusic_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IMusicTypeGetter>(_package, _recordData.Span.Slice(_BattleMusicLocation, 0x4), isSet: _BattleMusic_IsSet) : FormLink<IMusicTypeGetter>.Null;
         #endregion
         #region DeathMusic
         private int _DeathMusicLocation => _DATALocation!.Value.Min + 0x2C;
-        private bool _DeathMusic_IsSet => _DATALocation.HasValue;
+        private bool _DeathMusic_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DeathMusicLocation + 1 >= 4;
         public IFormLinkGetter<IMusicTypeGetter> DeathMusic => _DeathMusic_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IMusicTypeGetter>(_package, _recordData.Span.Slice(_DeathMusicLocation, 0x4), isSet: _DeathMusic_IsSet) : FormLink<IMusicTypeGetter>.Null;
         #endregion
         #region SuccessMusic
         private int _SuccessMusicLocation => _DATALocation!.Value.Min + 0x30;
-        private bool _SuccessMusic_IsSet => _DATALocation.HasValue;
+        private bool _SuccessMusic_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SuccessMusicLocation + 1 >= 4;
         public IFormLinkGetter<IMusicTypeGetter> SuccessMusic => _SuccessMusic_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IMusicTypeGetter>(_package, _recordData.Span.Slice(_SuccessMusicLocation, 0x4), isSet: _SuccessMusic_IsSet) : FormLink<IMusicTypeGetter>.Null;
         #endregion
         #region LevelUpMusic
         private int _LevelUpMusicLocation => _DATALocation!.Value.Min + 0x34;
-        private bool _LevelUpMusic_IsSet => _DATALocation.HasValue;
+        private bool _LevelUpMusic_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LevelUpMusicLocation + 1 >= 4;
         public IFormLinkGetter<IMusicTypeGetter> LevelUpMusic => _LevelUpMusic_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IMusicTypeGetter>(_package, _recordData.Span.Slice(_LevelUpMusicLocation, 0x4), isSet: _LevelUpMusic_IsSet) : FormLink<IMusicTypeGetter>.Null;
         #endregion
         #region PlayerVoiceMale
         private int _PlayerVoiceMaleLocation => _DATALocation!.Value.Min + 0x38;
-        private bool _PlayerVoiceMale_IsSet => _DATALocation.HasValue;
+        private bool _PlayerVoiceMale_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PlayerVoiceMaleLocation + 1 >= 4;
         public IFormLinkGetter<IVoiceTypeGetter> PlayerVoiceMale => _PlayerVoiceMale_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IVoiceTypeGetter>(_package, _recordData.Span.Slice(_PlayerVoiceMaleLocation, 0x4), isSet: _PlayerVoiceMale_IsSet) : FormLink<IVoiceTypeGetter>.Null;
         #endregion
         #region PlayerVoiceMaleChild
         private int _PlayerVoiceMaleChildLocation => _DATALocation!.Value.Min + 0x3C;
-        private bool _PlayerVoiceMaleChild_IsSet => _DATALocation.HasValue;
+        private bool _PlayerVoiceMaleChild_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PlayerVoiceMaleChildLocation + 1 >= 4;
         public IFormLinkGetter<IVoiceTypeGetter> PlayerVoiceMaleChild => _PlayerVoiceMaleChild_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IVoiceTypeGetter>(_package, _recordData.Span.Slice(_PlayerVoiceMaleChildLocation, 0x4), isSet: _PlayerVoiceMaleChild_IsSet) : FormLink<IVoiceTypeGetter>.Null;
         #endregion
         #region PlayerVoiceFemale
         private int _PlayerVoiceFemaleLocation => _DATALocation!.Value.Min + 0x40;
-        private bool _PlayerVoiceFemale_IsSet => _DATALocation.HasValue;
+        private bool _PlayerVoiceFemale_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PlayerVoiceFemaleLocation + 1 >= 4;
         public IFormLinkGetter<IVoiceTypeGetter> PlayerVoiceFemale => _PlayerVoiceFemale_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IVoiceTypeGetter>(_package, _recordData.Span.Slice(_PlayerVoiceFemaleLocation, 0x4), isSet: _PlayerVoiceFemale_IsSet) : FormLink<IVoiceTypeGetter>.Null;
         #endregion
         #region PlayerVoiceFemaleChild
         private int _PlayerVoiceFemaleChildLocation => _DATALocation!.Value.Min + 0x44;
-        private bool _PlayerVoiceFemaleChild_IsSet => _DATALocation.HasValue;
+        private bool _PlayerVoiceFemaleChild_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PlayerVoiceFemaleChildLocation + 1 >= 4;
         public IFormLinkGetter<IVoiceTypeGetter> PlayerVoiceFemaleChild => _PlayerVoiceFemaleChild_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IVoiceTypeGetter>(_package, _recordData.Span.Slice(_PlayerVoiceFemaleChildLocation, 0x4), isSet: _PlayerVoiceFemaleChild_IsSet) : FormLink<IVoiceTypeGetter>.Null;
         #endregion
         #region EatPackageDefaultFood
         private int _EatPackageDefaultFoodLocation => _DATALocation!.Value.Min + 0x48;
-        private bool _EatPackageDefaultFood_IsSet => _DATALocation.HasValue;
+        private bool _EatPackageDefaultFood_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EatPackageDefaultFoodLocation + 1 >= 4;
         public IFormLinkGetter<IFormListGetter> EatPackageDefaultFood => _EatPackageDefaultFood_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IFormListGetter>(_package, _recordData.Span.Slice(_EatPackageDefaultFoodLocation, 0x4), isSet: _EatPackageDefaultFood_IsSet) : FormLink<IFormListGetter>.Null;
         #endregion
         #region EveryActorAbility
         private int _EveryActorAbilityLocation => _DATALocation!.Value.Min + 0x4C;
-        private bool _EveryActorAbility_IsSet => _DATALocation.HasValue;
+        private bool _EveryActorAbility_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EveryActorAbilityLocation + 1 >= 4;
         public IFormLinkGetter<ISpellGetter> EveryActorAbility => _EveryActorAbility_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_EveryActorAbilityLocation, 0x4), isSet: _EveryActorAbility_IsSet) : FormLink<ISpellGetter>.Null;
         #endregion
         #region DrugWearsOffImageSpace
         private int _DrugWearsOffImageSpaceLocation => _DATALocation!.Value.Min + 0x50;
-        private bool _DrugWearsOffImageSpace_IsSet => _DATALocation.HasValue;
+        private bool _DrugWearsOffImageSpace_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DrugWearsOffImageSpaceLocation + 1 >= 4;
         public IFormLinkGetter<IImageSpaceAdapterGetter> DrugWearsOffImageSpace => _DrugWearsOffImageSpace_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImageSpaceAdapterGetter>(_package, _recordData.Span.Slice(_DrugWearsOffImageSpaceLocation, 0x4), isSet: _DrugWearsOffImageSpace_IsSet) : FormLink<IImageSpaceAdapterGetter>.Null;
         #endregion
         #region DoctorsBag
         private int _DoctorsBagLocation => _DATALocation!.Value.Min + 0x54;
-        private bool _DoctorsBag_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _DoctorsBag_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _DoctorsBagLocation + 1 >= 4;
         public IFormLinkGetter<IIngestibleGetter> DoctorsBag => _DoctorsBag_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IIngestibleGetter>(_package, _recordData.Span.Slice(_DoctorsBagLocation, 0x4), isSet: _DoctorsBag_IsSet) : FormLink<IIngestibleGetter>.Null;
         int DoctorsBagModHeaderVersioningOffset => _package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0;
         #endregion
         #region MissFortuneNpc
         private int _MissFortuneNpcLocation => _DATALocation!.Value.Min + DoctorsBagModHeaderVersioningOffset + 0x58;
-        private bool _MissFortuneNpc_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _MissFortuneNpc_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _MissFortuneNpcLocation + 1 >= 4;
         public IFormLinkGetter<INpcGetter> MissFortuneNpc => _MissFortuneNpc_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<INpcGetter>(_package, _recordData.Span.Slice(_MissFortuneNpcLocation, 0x4), isSet: _MissFortuneNpc_IsSet) : FormLink<INpcGetter>.Null;
         int MissFortuneNpcModHeaderVersioningOffset => DoctorsBagModHeaderVersioningOffset + (_package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0);
         #endregion
         #region MissFortuneFaction
         private int _MissFortuneFactionLocation => _DATALocation!.Value.Min + MissFortuneNpcModHeaderVersioningOffset + 0x5C;
-        private bool _MissFortuneFaction_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _MissFortuneFaction_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _MissFortuneFactionLocation + 1 >= 4;
         public IFormLinkGetter<IFactionGetter> MissFortuneFaction => _MissFortuneFaction_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IFactionGetter>(_package, _recordData.Span.Slice(_MissFortuneFactionLocation, 0x4), isSet: _MissFortuneFaction_IsSet) : FormLink<IFactionGetter>.Null;
         int MissFortuneFactionModHeaderVersioningOffset => MissFortuneNpcModHeaderVersioningOffset + (_package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0);
         #endregion
         #region MeltdownExplosion
         private int _MeltdownExplosionLocation => _DATALocation!.Value.Min + MissFortuneFactionModHeaderVersioningOffset + 0x60;
-        private bool _MeltdownExplosion_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _MeltdownExplosion_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _MeltdownExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> MeltdownExplosion => _MeltdownExplosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_MeltdownExplosionLocation, 0x4), isSet: _MeltdownExplosion_IsSet) : FormLink<IExplosionGetter>.Null;
         int MeltdownExplosionModHeaderVersioningOffset => MissFortuneFactionModHeaderVersioningOffset + (_package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0);
         #endregion
         #region UnarmedForwardPa
         private int _UnarmedForwardPaLocation => _DATALocation!.Value.Min + MeltdownExplosionModHeaderVersioningOffset + 0x64;
-        private bool _UnarmedForwardPa_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _UnarmedForwardPa_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _UnarmedForwardPaLocation + 1 >= 4;
         public IFormLinkGetter<ISpellGetter> UnarmedForwardPa => _UnarmedForwardPa_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_UnarmedForwardPaLocation, 0x4), isSet: _UnarmedForwardPa_IsSet) : FormLink<ISpellGetter>.Null;
         int UnarmedForwardPaModHeaderVersioningOffset => MeltdownExplosionModHeaderVersioningOffset + (_package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0);
         #endregion
         #region UnarmedBackwardPa
         private int _UnarmedBackwardPaLocation => _DATALocation!.Value.Min + UnarmedForwardPaModHeaderVersioningOffset + 0x68;
-        private bool _UnarmedBackwardPa_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _UnarmedBackwardPa_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _UnarmedBackwardPaLocation + 1 >= 4;
         public IFormLinkGetter<ISpellGetter> UnarmedBackwardPa => _UnarmedBackwardPa_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_UnarmedBackwardPaLocation, 0x4), isSet: _UnarmedBackwardPa_IsSet) : FormLink<ISpellGetter>.Null;
         int UnarmedBackwardPaModHeaderVersioningOffset => UnarmedForwardPaModHeaderVersioningOffset + (_package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0);
         #endregion
         #region UnarmedLeftPa
         private int _UnarmedLeftPaLocation => _DATALocation!.Value.Min + UnarmedBackwardPaModHeaderVersioningOffset + 0x6C;
-        private bool _UnarmedLeftPa_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _UnarmedLeftPa_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _UnarmedLeftPaLocation + 1 >= 4;
         public IFormLinkGetter<ISpellGetter> UnarmedLeftPa => _UnarmedLeftPa_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_UnarmedLeftPaLocation, 0x4), isSet: _UnarmedLeftPa_IsSet) : FormLink<ISpellGetter>.Null;
         int UnarmedLeftPaModHeaderVersioningOffset => UnarmedBackwardPaModHeaderVersioningOffset + (_package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0);
         #endregion
         #region UnarmedRightPa
         private int _UnarmedRightPaLocation => _DATALocation!.Value.Min + UnarmedLeftPaModHeaderVersioningOffset + 0x70;
-        private bool _UnarmedRightPa_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _UnarmedRightPa_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _UnarmedRightPaLocation + 1 >= 4;
         public IFormLinkGetter<ISpellGetter> UnarmedRightPa => _UnarmedRightPa_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_UnarmedRightPaLocation, 0x4), isSet: _UnarmedRightPa_IsSet) : FormLink<ISpellGetter>.Null;
         int UnarmedRightPaModHeaderVersioningOffset => UnarmedLeftPaModHeaderVersioningOffset + (_package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0);
         #endregion
         #region UnarmedCrouchPa
         private int _UnarmedCrouchPaLocation => _DATALocation!.Value.Min + UnarmedRightPaModHeaderVersioningOffset + 0x74;
-        private bool _UnarmedCrouchPa_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _UnarmedCrouchPa_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _UnarmedCrouchPaLocation + 1 >= 4;
         public IFormLinkGetter<ISpellGetter> UnarmedCrouchPa => _UnarmedCrouchPa_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_UnarmedCrouchPaLocation, 0x4), isSet: _UnarmedCrouchPa_IsSet) : FormLink<ISpellGetter>.Null;
         int UnarmedCrouchPaModHeaderVersioningOffset => UnarmedRightPaModHeaderVersioningOffset + (_package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0);
         #endregion
         #region UnarmedCounterPa
         private int _UnarmedCounterPaLocation => _DATALocation!.Value.Min + UnarmedCrouchPaModHeaderVersioningOffset + 0x78;
-        private bool _UnarmedCounterPa_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _UnarmedCounterPa_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _UnarmedCounterPaLocation + 1 >= 4;
         public IFormLinkGetter<ISpellGetter> UnarmedCounterPa => _UnarmedCounterPa_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_UnarmedCounterPaLocation, 0x4), isSet: _UnarmedCounterPa_IsSet) : FormLink<ISpellGetter>.Null;
         int UnarmedCounterPaModHeaderVersioningOffset => UnarmedCrouchPaModHeaderVersioningOffset + (_package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0);
         #endregion
         #region SpotterEffect
         private int _SpotterEffectLocation => _DATALocation!.Value.Min + UnarmedCounterPaModHeaderVersioningOffset + 0x7C;
-        private bool _SpotterEffect_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _SpotterEffect_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _SpotterEffectLocation + 1 >= 4;
         public IFormLinkGetter<IEffectShaderGetter> SpotterEffect => _SpotterEffect_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IEffectShaderGetter>(_package, _recordData.Span.Slice(_SpotterEffectLocation, 0x4), isSet: _SpotterEffect_IsSet) : FormLink<IEffectShaderGetter>.Null;
         int SpotterEffectModHeaderVersioningOffset => UnarmedCounterPaModHeaderVersioningOffset + (_package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0);
         #endregion
         #region ItemDetectedEffect
         private int _ItemDetectedEffectLocation => _DATALocation!.Value.Min + SpotterEffectModHeaderVersioningOffset + 0x80;
-        private bool _ItemDetectedEffect_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _ItemDetectedEffect_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _ItemDetectedEffectLocation + 1 >= 4;
         public IFormLinkGetter<IEffectShaderGetter> ItemDetectedEffect => _ItemDetectedEffect_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IEffectShaderGetter>(_package, _recordData.Span.Slice(_ItemDetectedEffectLocation, 0x4), isSet: _ItemDetectedEffect_IsSet) : FormLink<IEffectShaderGetter>.Null;
         int ItemDetectedEffectModHeaderVersioningOffset => SpotterEffectModHeaderVersioningOffset + (_package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0);
         #endregion
         #region CateyeMobileEffect
         private int _CateyeMobileEffectLocation => _DATALocation!.Value.Min + ItemDetectedEffectModHeaderVersioningOffset + 0x84;
-        private bool _CateyeMobileEffect_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f;
+        private bool _CateyeMobileEffect_IsSet => _DATALocation.HasValue && _package.MetaData.ModHeaderVersion!.Value >= 1.32f && _DATALocation!.Value.Max - _CateyeMobileEffectLocation + 1 >= 4;
         public IFormLinkGetter<IEffectShaderGetter> CateyeMobileEffect => _CateyeMobileEffect_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IEffectShaderGetter>(_package, _recordData.Span.Slice(_CateyeMobileEffectLocation, 0x4), isSet: _CateyeMobileEffect_IsSet) : FormLink<IEffectShaderGetter>.Null;
         int CateyeMobileEffectModHeaderVersioningOffset => ItemDetectedEffectModHeaderVersioningOffset + (_package.MetaData.ModHeaderVersion!.Value < 1.32f ? -4 : 0);
         #endregion

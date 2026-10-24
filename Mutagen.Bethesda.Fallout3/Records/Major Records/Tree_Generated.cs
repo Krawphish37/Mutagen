@@ -2723,53 +2723,53 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _CNAMLocation;
         #region LeafCurvature
         private int _LeafCurvatureLocation => _CNAMLocation!.Value.Min;
-        private bool _LeafCurvature_IsSet => _CNAMLocation.HasValue;
+        private bool _LeafCurvature_IsSet => _CNAMLocation.HasValue && _CNAMLocation!.Value.Max - _LeafCurvatureLocation + 1 >= 4;
         public Single LeafCurvature => _LeafCurvature_IsSet ? _recordData.Slice(_LeafCurvatureLocation, 4).Float() : default(Single);
         #endregion
         #region MinimumLeafAngle
         private int _MinimumLeafAngleLocation => _CNAMLocation!.Value.Min + 0x4;
-        private bool _MinimumLeafAngle_IsSet => _CNAMLocation.HasValue;
+        private bool _MinimumLeafAngle_IsSet => _CNAMLocation.HasValue && _CNAMLocation!.Value.Max - _MinimumLeafAngleLocation + 1 >= 4;
         public Single MinimumLeafAngle => _MinimumLeafAngle_IsSet ? _recordData.Slice(_MinimumLeafAngleLocation, 4).Float() : default(Single);
         #endregion
         #region MaximumLeafAngle
         private int _MaximumLeafAngleLocation => _CNAMLocation!.Value.Min + 0x8;
-        private bool _MaximumLeafAngle_IsSet => _CNAMLocation.HasValue;
+        private bool _MaximumLeafAngle_IsSet => _CNAMLocation.HasValue && _CNAMLocation!.Value.Max - _MaximumLeafAngleLocation + 1 >= 4;
         public Single MaximumLeafAngle => _MaximumLeafAngle_IsSet ? _recordData.Slice(_MaximumLeafAngleLocation, 4).Float() : default(Single);
         #endregion
         #region BranchDimmingValue
         private int _BranchDimmingValueLocation => _CNAMLocation!.Value.Min + 0xC;
-        private bool _BranchDimmingValue_IsSet => _CNAMLocation.HasValue;
+        private bool _BranchDimmingValue_IsSet => _CNAMLocation.HasValue && _CNAMLocation!.Value.Max - _BranchDimmingValueLocation + 1 >= 4;
         public Single BranchDimmingValue => _BranchDimmingValue_IsSet ? _recordData.Slice(_BranchDimmingValueLocation, 4).Float() : default(Single);
         #endregion
         #region LeafDimmingValue
         private int _LeafDimmingValueLocation => _CNAMLocation!.Value.Min + 0x10;
-        private bool _LeafDimmingValue_IsSet => _CNAMLocation.HasValue;
+        private bool _LeafDimmingValue_IsSet => _CNAMLocation.HasValue && _CNAMLocation!.Value.Max - _LeafDimmingValueLocation + 1 >= 4;
         public Single LeafDimmingValue => _LeafDimmingValue_IsSet ? _recordData.Slice(_LeafDimmingValueLocation, 4).Float() : default(Single);
         #endregion
         #region ShadowRadius
         private int _ShadowRadiusLocation => _CNAMLocation!.Value.Min + 0x14;
-        private bool _ShadowRadius_IsSet => _CNAMLocation.HasValue;
+        private bool _ShadowRadius_IsSet => _CNAMLocation.HasValue && _CNAMLocation!.Value.Max - _ShadowRadiusLocation + 1 >= 4;
         public Int32 ShadowRadius => _ShadowRadius_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_ShadowRadiusLocation, 4)) : default(Int32);
         #endregion
         #region RockSpeed
         private int _RockSpeedLocation => _CNAMLocation!.Value.Min + 0x18;
-        private bool _RockSpeed_IsSet => _CNAMLocation.HasValue;
+        private bool _RockSpeed_IsSet => _CNAMLocation.HasValue && _CNAMLocation!.Value.Max - _RockSpeedLocation + 1 >= 4;
         public Single RockSpeed => _RockSpeed_IsSet ? _recordData.Slice(_RockSpeedLocation, 4).Float() : default(Single);
         #endregion
         #region RustleSpeed
         private int _RustleSpeedLocation => _CNAMLocation!.Value.Min + 0x1C;
-        private bool _RustleSpeed_IsSet => _CNAMLocation.HasValue;
+        private bool _RustleSpeed_IsSet => _CNAMLocation.HasValue && _CNAMLocation!.Value.Max - _RustleSpeedLocation + 1 >= 4;
         public Single RustleSpeed => _RustleSpeed_IsSet ? _recordData.Slice(_RustleSpeedLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _BNAMLocation;
         #region Width
         private int _WidthLocation => _BNAMLocation!.Value.Min;
-        private bool _Width_IsSet => _BNAMLocation.HasValue;
+        private bool _Width_IsSet => _BNAMLocation.HasValue && _BNAMLocation!.Value.Max - _WidthLocation + 1 >= 4;
         public Single Width => _Width_IsSet ? _recordData.Slice(_WidthLocation, 4).Float() : default(Single);
         #endregion
         #region Height
         private int _HeightLocation => _BNAMLocation!.Value.Min + 0x4;
-        private bool _Height_IsSet => _BNAMLocation.HasValue;
+        private bool _Height_IsSet => _BNAMLocation.HasValue && _BNAMLocation!.Value.Max - _HeightLocation + 1 >= 4;
         public Single Height => _Height_IsSet ? _recordData.Slice(_HeightLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

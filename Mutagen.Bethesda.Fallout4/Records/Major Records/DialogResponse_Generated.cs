@@ -2096,22 +2096,22 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _TRDALocation;
         #region Emotion
         private int _EmotionLocation => _TRDALocation!.Value.Min;
-        private bool _Emotion_IsSet => _TRDALocation.HasValue;
+        private bool _Emotion_IsSet => _TRDALocation.HasValue && _TRDALocation!.Value.Max - _EmotionLocation + 1 >= 4;
         public IFormLinkGetter<IKeywordGetter> Emotion => _Emotion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _recordData.Span.Slice(_EmotionLocation, 0x4), isSet: _Emotion_IsSet) : FormLink<IKeywordGetter>.Null;
         #endregion
         #region ResponseNumber
         private int _ResponseNumberLocation => _TRDALocation!.Value.Min + 0x4;
-        private bool _ResponseNumber_IsSet => _TRDALocation.HasValue;
+        private bool _ResponseNumber_IsSet => _TRDALocation.HasValue && _TRDALocation!.Value.Max - _ResponseNumberLocation + 1 >= 1;
         public Byte ResponseNumber => _ResponseNumber_IsSet ? _recordData.Span[_ResponseNumberLocation] : default;
         #endregion
         #region Sound
         private int _SoundLocation => _TRDALocation!.Value.Min + 0x5;
-        private bool _Sound_IsSet => _TRDALocation.HasValue;
+        private bool _Sound_IsSet => _TRDALocation.HasValue && _TRDALocation!.Value.Max - _SoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundDescriptorGetter> Sound => _Sound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundDescriptorGetter>(_package, _recordData.Span.Slice(_SoundLocation, 0x4), isSet: _Sound_IsSet) : FormLink<ISoundDescriptorGetter>.Null;
         #endregion
         #region Unknown
         private int _UnknownLocation => _TRDALocation!.Value.Min + 0x9;
-        private bool _Unknown_IsSet => _TRDALocation.HasValue;
+        private bool _Unknown_IsSet => _TRDALocation.HasValue && _TRDALocation!.Value.Max - _UnknownLocation + 1 >= 1;
         public Byte Unknown => _Unknown_IsSet ? _recordData.Span[_UnknownLocation] : default;
         #endregion
         #region InterruptPercentage
@@ -2122,12 +2122,12 @@ namespace Mutagen.Bethesda.Fallout4
         #endregion
         #region CameraTargetAlias
         private int _CameraTargetAliasLocation => InterruptPercentageEndingPos;
-        private bool _CameraTargetAlias_IsSet => _TRDALocation.HasValue;
+        private bool _CameraTargetAlias_IsSet => _TRDALocation.HasValue && _TRDALocation!.Value.Max - _CameraTargetAliasLocation + 1 >= 4;
         public Int32 CameraTargetAlias => _CameraTargetAlias_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_CameraTargetAliasLocation, 4)) : default(Int32);
         #endregion
         #region CameraLocationAlias
         private int _CameraLocationAliasLocation => InterruptPercentageEndingPos + 0x4;
-        private bool _CameraLocationAlias_IsSet => _TRDALocation.HasValue;
+        private bool _CameraLocationAlias_IsSet => _TRDALocation.HasValue && _TRDALocation!.Value.Max - _CameraLocationAliasLocation + 1 >= 4;
         public Int32 CameraLocationAlias => _CameraLocationAlias_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_CameraLocationAliasLocation, 4)) : default(Int32);
         #endregion
         #region Text

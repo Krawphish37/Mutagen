@@ -1352,17 +1352,17 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _GPODLocation;
         #region Min
         private int _MinLocation => _GPODLocation!.Value.Min;
-        private bool _Min_IsSet => _GPODLocation.HasValue;
+        private bool _Min_IsSet => _GPODLocation.HasValue && _GPODLocation!.Value.Max - _MinLocation + 1 >= 4;
         public Single Min => _Min_IsSet ? _recordData.Slice(_MinLocation, 4).Float() : default(Single);
         #endregion
         #region Max
         private int _MaxLocation => _GPODLocation!.Value.Min + 0x4;
-        private bool _Max_IsSet => _GPODLocation.HasValue;
+        private bool _Max_IsSet => _GPODLocation.HasValue && _GPODLocation!.Value.Max - _MaxLocation + 1 >= 4;
         public Single Max => _Max_IsSet ? _recordData.Slice(_MaxLocation, 4).Float() : default(Single);
         #endregion
         #region Step
         private int _StepLocation => _GPODLocation!.Value.Min + 0x8;
-        private bool _Step_IsSet => _GPODLocation.HasValue;
+        private bool _Step_IsSet => _GPODLocation.HasValue && _GPODLocation!.Value.Max - _StepLocation + 1 >= 4;
         public Single Step => _Step_IsSet ? _recordData.Slice(_StepLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

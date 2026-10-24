@@ -5475,12 +5475,12 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _CSTDLocation;
         #region StandardManeuverDecisionDodgeChance
         private int _StandardManeuverDecisionDodgeChanceLocation => _CSTDLocation!.Value.Min;
-        private bool _StandardManeuverDecisionDodgeChance_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardManeuverDecisionDodgeChance_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardManeuverDecisionDodgeChanceLocation + 1 >= 1;
         public Percent StandardManeuverDecisionDodgeChance => _StandardManeuverDecisionDodgeChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_StandardManeuverDecisionDodgeChanceLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region StandardManeuverDecisionLeftRightChance
         private int _StandardManeuverDecisionLeftRightChanceLocation => _CSTDLocation!.Value.Min + 0x1;
-        private bool _StandardManeuverDecisionLeftRightChance_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardManeuverDecisionLeftRightChance_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardManeuverDecisionLeftRightChanceLocation + 1 >= 1;
         public Percent StandardManeuverDecisionLeftRightChance => _StandardManeuverDecisionLeftRightChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_StandardManeuverDecisionLeftRightChanceLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region StandardUnused1
@@ -5490,52 +5490,52 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region StandardManeuverDecisionDodgeLRTimerMin
         private int _StandardManeuverDecisionDodgeLRTimerMinLocation => _CSTDLocation!.Value.Min + 0x4;
-        private bool _StandardManeuverDecisionDodgeLRTimerMin_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardManeuverDecisionDodgeLRTimerMin_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardManeuverDecisionDodgeLRTimerMinLocation + 1 >= 4;
         public Single StandardManeuverDecisionDodgeLRTimerMin => _StandardManeuverDecisionDodgeLRTimerMin_IsSet ? _recordData.Slice(_StandardManeuverDecisionDodgeLRTimerMinLocation, 4).Float() : default(Single);
         #endregion
         #region StandardManeuverDecisionDodgeLRTimerMax
         private int _StandardManeuverDecisionDodgeLRTimerMaxLocation => _CSTDLocation!.Value.Min + 0x8;
-        private bool _StandardManeuverDecisionDodgeLRTimerMax_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardManeuverDecisionDodgeLRTimerMax_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardManeuverDecisionDodgeLRTimerMaxLocation + 1 >= 4;
         public Single StandardManeuverDecisionDodgeLRTimerMax => _StandardManeuverDecisionDodgeLRTimerMax_IsSet ? _recordData.Slice(_StandardManeuverDecisionDodgeLRTimerMaxLocation, 4).Float() : default(Single);
         #endregion
         #region StandardManeuverDecisionDodgeForwardTimerMin
         private int _StandardManeuverDecisionDodgeForwardTimerMinLocation => _CSTDLocation!.Value.Min + 0xC;
-        private bool _StandardManeuverDecisionDodgeForwardTimerMin_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardManeuverDecisionDodgeForwardTimerMin_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardManeuverDecisionDodgeForwardTimerMinLocation + 1 >= 4;
         public Single StandardManeuverDecisionDodgeForwardTimerMin => _StandardManeuverDecisionDodgeForwardTimerMin_IsSet ? _recordData.Slice(_StandardManeuverDecisionDodgeForwardTimerMinLocation, 4).Float() : default(Single);
         #endregion
         #region StandardManeuverDecisionDodgeForwardTimerMax
         private int _StandardManeuverDecisionDodgeForwardTimerMaxLocation => _CSTDLocation!.Value.Min + 0x10;
-        private bool _StandardManeuverDecisionDodgeForwardTimerMax_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardManeuverDecisionDodgeForwardTimerMax_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardManeuverDecisionDodgeForwardTimerMaxLocation + 1 >= 4;
         public Single StandardManeuverDecisionDodgeForwardTimerMax => _StandardManeuverDecisionDodgeForwardTimerMax_IsSet ? _recordData.Slice(_StandardManeuverDecisionDodgeForwardTimerMaxLocation, 4).Float() : default(Single);
         #endregion
         #region StandardManeuverDecisionDodgeBackTimerMin
         private int _StandardManeuverDecisionDodgeBackTimerMinLocation => _CSTDLocation!.Value.Min + 0x14;
-        private bool _StandardManeuverDecisionDodgeBackTimerMin_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardManeuverDecisionDodgeBackTimerMin_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardManeuverDecisionDodgeBackTimerMinLocation + 1 >= 4;
         public Single StandardManeuverDecisionDodgeBackTimerMin => _StandardManeuverDecisionDodgeBackTimerMin_IsSet ? _recordData.Slice(_StandardManeuverDecisionDodgeBackTimerMinLocation, 4).Float() : default(Single);
         #endregion
         #region StandardManeuverDecisionDodgeBackTimerMax
         private int _StandardManeuverDecisionDodgeBackTimerMaxLocation => _CSTDLocation!.Value.Min + 0x18;
-        private bool _StandardManeuverDecisionDodgeBackTimerMax_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardManeuverDecisionDodgeBackTimerMax_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardManeuverDecisionDodgeBackTimerMaxLocation + 1 >= 4;
         public Single StandardManeuverDecisionDodgeBackTimerMax => _StandardManeuverDecisionDodgeBackTimerMax_IsSet ? _recordData.Slice(_StandardManeuverDecisionDodgeBackTimerMaxLocation, 4).Float() : default(Single);
         #endregion
         #region StandardManeuverDecisionIdleTimerMin
         private int _StandardManeuverDecisionIdleTimerMinLocation => _CSTDLocation!.Value.Min + 0x1C;
-        private bool _StandardManeuverDecisionIdleTimerMin_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardManeuverDecisionIdleTimerMin_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardManeuverDecisionIdleTimerMinLocation + 1 >= 4;
         public Single StandardManeuverDecisionIdleTimerMin => _StandardManeuverDecisionIdleTimerMin_IsSet ? _recordData.Slice(_StandardManeuverDecisionIdleTimerMinLocation, 4).Float() : default(Single);
         #endregion
         #region StandardManeuverDecisionIdleTimerMax
         private int _StandardManeuverDecisionIdleTimerMaxLocation => _CSTDLocation!.Value.Min + 0x20;
-        private bool _StandardManeuverDecisionIdleTimerMax_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardManeuverDecisionIdleTimerMax_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardManeuverDecisionIdleTimerMaxLocation + 1 >= 4;
         public Single StandardManeuverDecisionIdleTimerMax => _StandardManeuverDecisionIdleTimerMax_IsSet ? _recordData.Slice(_StandardManeuverDecisionIdleTimerMaxLocation, 4).Float() : default(Single);
         #endregion
         #region StandardMeleeDecisionBlockChance
         private int _StandardMeleeDecisionBlockChanceLocation => _CSTDLocation!.Value.Min + 0x24;
-        private bool _StandardMeleeDecisionBlockChance_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionBlockChance_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionBlockChanceLocation + 1 >= 1;
         public Percent StandardMeleeDecisionBlockChance => _StandardMeleeDecisionBlockChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_StandardMeleeDecisionBlockChanceLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region StandardMeleeDecisionAttackChance
         private int _StandardMeleeDecisionAttackChanceLocation => _CSTDLocation!.Value.Min + 0x25;
-        private bool _StandardMeleeDecisionAttackChance_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionAttackChance_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionAttackChanceLocation + 1 >= 1;
         public Percent StandardMeleeDecisionAttackChance => _StandardMeleeDecisionAttackChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_StandardMeleeDecisionAttackChanceLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region StandardUnused2
@@ -5545,22 +5545,22 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region StandardMeleeDecisionRecoilStaggerBonusToAttack
         private int _StandardMeleeDecisionRecoilStaggerBonusToAttackLocation => _CSTDLocation!.Value.Min + 0x28;
-        private bool _StandardMeleeDecisionRecoilStaggerBonusToAttack_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionRecoilStaggerBonusToAttack_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionRecoilStaggerBonusToAttackLocation + 1 >= 4;
         public Single StandardMeleeDecisionRecoilStaggerBonusToAttack => _StandardMeleeDecisionRecoilStaggerBonusToAttack_IsSet ? _recordData.Slice(_StandardMeleeDecisionRecoilStaggerBonusToAttackLocation, 4).Float() : default(Single);
         #endregion
         #region StandardMeleeDecisionUnconsciousBonusToAttack
         private int _StandardMeleeDecisionUnconsciousBonusToAttackLocation => _CSTDLocation!.Value.Min + 0x2C;
-        private bool _StandardMeleeDecisionUnconsciousBonusToAttack_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionUnconsciousBonusToAttack_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionUnconsciousBonusToAttackLocation + 1 >= 4;
         public Single StandardMeleeDecisionUnconsciousBonusToAttack => _StandardMeleeDecisionUnconsciousBonusToAttack_IsSet ? _recordData.Slice(_StandardMeleeDecisionUnconsciousBonusToAttackLocation, 4).Float() : default(Single);
         #endregion
         #region StandardMeleeDecisionHandToHandBonusToAttack
         private int _StandardMeleeDecisionHandToHandBonusToAttackLocation => _CSTDLocation!.Value.Min + 0x30;
-        private bool _StandardMeleeDecisionHandToHandBonusToAttack_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionHandToHandBonusToAttack_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionHandToHandBonusToAttackLocation + 1 >= 4;
         public Single StandardMeleeDecisionHandToHandBonusToAttack => _StandardMeleeDecisionHandToHandBonusToAttack_IsSet ? _recordData.Slice(_StandardMeleeDecisionHandToHandBonusToAttackLocation, 4).Float() : default(Single);
         #endregion
         #region StandardMeleeDecisionPowerAttackChance
         private int _StandardMeleeDecisionPowerAttackChanceLocation => _CSTDLocation!.Value.Min + 0x34;
-        private bool _StandardMeleeDecisionPowerAttackChance_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionPowerAttackChance_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionPowerAttackChanceLocation + 1 >= 1;
         public Percent StandardMeleeDecisionPowerAttackChance => _StandardMeleeDecisionPowerAttackChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_StandardMeleeDecisionPowerAttackChanceLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region StandardUnused3
@@ -5570,37 +5570,37 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region StandardMeleeDecisionRecoilStaggerBonusToPowerAttack
         private int _StandardMeleeDecisionRecoilStaggerBonusToPowerAttackLocation => _CSTDLocation!.Value.Min + 0x38;
-        private bool _StandardMeleeDecisionRecoilStaggerBonusToPowerAttack_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionRecoilStaggerBonusToPowerAttack_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionRecoilStaggerBonusToPowerAttackLocation + 1 >= 4;
         public Single StandardMeleeDecisionRecoilStaggerBonusToPowerAttack => _StandardMeleeDecisionRecoilStaggerBonusToPowerAttack_IsSet ? _recordData.Slice(_StandardMeleeDecisionRecoilStaggerBonusToPowerAttackLocation, 4).Float() : default(Single);
         #endregion
         #region StandardMeleeDecisionUnconsciousBonusToPowerAttack
         private int _StandardMeleeDecisionUnconsciousBonusToPowerAttackLocation => _CSTDLocation!.Value.Min + 0x3C;
-        private bool _StandardMeleeDecisionUnconsciousBonusToPowerAttack_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionUnconsciousBonusToPowerAttack_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionUnconsciousBonusToPowerAttackLocation + 1 >= 4;
         public Single StandardMeleeDecisionUnconsciousBonusToPowerAttack => _StandardMeleeDecisionUnconsciousBonusToPowerAttack_IsSet ? _recordData.Slice(_StandardMeleeDecisionUnconsciousBonusToPowerAttackLocation, 4).Float() : default(Single);
         #endregion
         #region StandardMeleeDecisionPowerAttackNormal
         private int _StandardMeleeDecisionPowerAttackNormalLocation => _CSTDLocation!.Value.Min + 0x40;
-        private bool _StandardMeleeDecisionPowerAttackNormal_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionPowerAttackNormal_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionPowerAttackNormalLocation + 1 >= 1;
         public Byte StandardMeleeDecisionPowerAttackNormal => _StandardMeleeDecisionPowerAttackNormal_IsSet ? _recordData.Span[_StandardMeleeDecisionPowerAttackNormalLocation] : default;
         #endregion
         #region StandardMeleeDecisionPowerAttackForward
         private int _StandardMeleeDecisionPowerAttackForwardLocation => _CSTDLocation!.Value.Min + 0x41;
-        private bool _StandardMeleeDecisionPowerAttackForward_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionPowerAttackForward_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionPowerAttackForwardLocation + 1 >= 1;
         public Byte StandardMeleeDecisionPowerAttackForward => _StandardMeleeDecisionPowerAttackForward_IsSet ? _recordData.Span[_StandardMeleeDecisionPowerAttackForwardLocation] : default;
         #endregion
         #region StandardMeleeDecisionPowerAttackBack
         private int _StandardMeleeDecisionPowerAttackBackLocation => _CSTDLocation!.Value.Min + 0x42;
-        private bool _StandardMeleeDecisionPowerAttackBack_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionPowerAttackBack_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionPowerAttackBackLocation + 1 >= 1;
         public Byte StandardMeleeDecisionPowerAttackBack => _StandardMeleeDecisionPowerAttackBack_IsSet ? _recordData.Span[_StandardMeleeDecisionPowerAttackBackLocation] : default;
         #endregion
         #region StandardMeleeDecisionPowerAttackLeft
         private int _StandardMeleeDecisionPowerAttackLeftLocation => _CSTDLocation!.Value.Min + 0x43;
-        private bool _StandardMeleeDecisionPowerAttackLeft_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionPowerAttackLeft_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionPowerAttackLeftLocation + 1 >= 1;
         public Byte StandardMeleeDecisionPowerAttackLeft => _StandardMeleeDecisionPowerAttackLeft_IsSet ? _recordData.Span[_StandardMeleeDecisionPowerAttackLeftLocation] : default;
         #endregion
         #region StandardMeleeDecisionPowerAttackRight
         private int _StandardMeleeDecisionPowerAttackRightLocation => _CSTDLocation!.Value.Min + 0x44;
-        private bool _StandardMeleeDecisionPowerAttackRight_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionPowerAttackRight_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionPowerAttackRightLocation + 1 >= 1;
         public Byte StandardMeleeDecisionPowerAttackRight => _StandardMeleeDecisionPowerAttackRight_IsSet ? _recordData.Span[_StandardMeleeDecisionPowerAttackRightLocation] : default;
         #endregion
         #region StandardUnused4
@@ -5610,17 +5610,17 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region StandardMeleeDecisionHoldTimerMin
         private int _StandardMeleeDecisionHoldTimerMinLocation => _CSTDLocation!.Value.Min + 0x48;
-        private bool _StandardMeleeDecisionHoldTimerMin_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionHoldTimerMin_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionHoldTimerMinLocation + 1 >= 4;
         public Single StandardMeleeDecisionHoldTimerMin => _StandardMeleeDecisionHoldTimerMin_IsSet ? _recordData.Slice(_StandardMeleeDecisionHoldTimerMinLocation, 4).Float() : default(Single);
         #endregion
         #region StandardMeleeDecisionHoldTimerMax
         private int _StandardMeleeDecisionHoldTimerMaxLocation => _CSTDLocation!.Value.Min + 0x4C;
-        private bool _StandardMeleeDecisionHoldTimerMax_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionHoldTimerMax_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionHoldTimerMaxLocation + 1 >= 4;
         public Single StandardMeleeDecisionHoldTimerMax => _StandardMeleeDecisionHoldTimerMax_IsSet ? _recordData.Slice(_StandardMeleeDecisionHoldTimerMaxLocation, 4).Float() : default(Single);
         #endregion
         #region StandardFlags
         private int _StandardFlagsLocation => _CSTDLocation!.Value.Min + 0x50;
-        private bool _StandardFlags_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardFlags_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardFlagsLocation + 1 >= 2;
         public CombatStyle.Flag StandardFlags => _StandardFlags_IsSet ? (CombatStyle.Flag)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_StandardFlagsLocation, 0x2)) : default;
         #endregion
         #region StandardUnused5
@@ -5630,12 +5630,12 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region StandardMeleeDecisionAcrobaticDodgeChance
         private int _StandardMeleeDecisionAcrobaticDodgeChanceLocation => _CSTDLocation!.Value.Min + 0x54;
-        private bool _StandardMeleeDecisionAcrobaticDodgeChance_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionAcrobaticDodgeChance_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionAcrobaticDodgeChanceLocation + 1 >= 1;
         public Percent StandardMeleeDecisionAcrobaticDodgeChance => _StandardMeleeDecisionAcrobaticDodgeChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_StandardMeleeDecisionAcrobaticDodgeChanceLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region StandardMeleeDecisionRushingAttackChance
         private int _StandardMeleeDecisionRushingAttackChanceLocation => _CSTDLocation!.Value.Min + 0x55;
-        private bool _StandardMeleeDecisionRushingAttackChance_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionRushingAttackChance_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionRushingAttackChanceLocation + 1 >= 1;
         public Percent StandardMeleeDecisionRushingAttackChance => _StandardMeleeDecisionRushingAttackChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_StandardMeleeDecisionRushingAttackChanceLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region StandardUnused6
@@ -5645,159 +5645,159 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region StandardMeleeDecisionRushingAttackDistanceMult
         private int _StandardMeleeDecisionRushingAttackDistanceMultLocation => _CSTDLocation!.Value.Min + 0x58;
-        private bool _StandardMeleeDecisionRushingAttackDistanceMult_IsSet => _CSTDLocation.HasValue;
+        private bool _StandardMeleeDecisionRushingAttackDistanceMult_IsSet => _CSTDLocation.HasValue && _CSTDLocation!.Value.Max - _StandardMeleeDecisionRushingAttackDistanceMultLocation + 1 >= 4;
         public Single StandardMeleeDecisionRushingAttackDistanceMult => _StandardMeleeDecisionRushingAttackDistanceMult_IsSet ? _recordData.Slice(_StandardMeleeDecisionRushingAttackDistanceMultLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _CSADLocation;
         #region AdvancedDodgeFatigueModMult
         private int _AdvancedDodgeFatigueModMultLocation => _CSADLocation!.Value.Min;
-        private bool _AdvancedDodgeFatigueModMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedDodgeFatigueModMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedDodgeFatigueModMultLocation + 1 >= 4;
         public Single AdvancedDodgeFatigueModMult => _AdvancedDodgeFatigueModMult_IsSet ? _recordData.Slice(_AdvancedDodgeFatigueModMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedDodgeFatigueModBase
         private int _AdvancedDodgeFatigueModBaseLocation => _CSADLocation!.Value.Min + 0x4;
-        private bool _AdvancedDodgeFatigueModBase_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedDodgeFatigueModBase_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedDodgeFatigueModBaseLocation + 1 >= 4;
         public Single AdvancedDodgeFatigueModBase => _AdvancedDodgeFatigueModBase_IsSet ? _recordData.Slice(_AdvancedDodgeFatigueModBaseLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedEncumbSpeedModBase
         private int _AdvancedEncumbSpeedModBaseLocation => _CSADLocation!.Value.Min + 0x8;
-        private bool _AdvancedEncumbSpeedModBase_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedEncumbSpeedModBase_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedEncumbSpeedModBaseLocation + 1 >= 4;
         public Single AdvancedEncumbSpeedModBase => _AdvancedEncumbSpeedModBase_IsSet ? _recordData.Slice(_AdvancedEncumbSpeedModBaseLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedEncumbSpeedModMult
         private int _AdvancedEncumbSpeedModMultLocation => _CSADLocation!.Value.Min + 0xC;
-        private bool _AdvancedEncumbSpeedModMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedEncumbSpeedModMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedEncumbSpeedModMultLocation + 1 >= 4;
         public Single AdvancedEncumbSpeedModMult => _AdvancedEncumbSpeedModMult_IsSet ? _recordData.Slice(_AdvancedEncumbSpeedModMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedDodgeWhileUnderAttackMult
         private int _AdvancedDodgeWhileUnderAttackMultLocation => _CSADLocation!.Value.Min + 0x10;
-        private bool _AdvancedDodgeWhileUnderAttackMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedDodgeWhileUnderAttackMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedDodgeWhileUnderAttackMultLocation + 1 >= 4;
         public Single AdvancedDodgeWhileUnderAttackMult => _AdvancedDodgeWhileUnderAttackMult_IsSet ? _recordData.Slice(_AdvancedDodgeWhileUnderAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedDodgeNotUnderAttackMult
         private int _AdvancedDodgeNotUnderAttackMultLocation => _CSADLocation!.Value.Min + 0x14;
-        private bool _AdvancedDodgeNotUnderAttackMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedDodgeNotUnderAttackMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedDodgeNotUnderAttackMultLocation + 1 >= 4;
         public Single AdvancedDodgeNotUnderAttackMult => _AdvancedDodgeNotUnderAttackMult_IsSet ? _recordData.Slice(_AdvancedDodgeNotUnderAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedDodgeBackWhileUnderAttackMult
         private int _AdvancedDodgeBackWhileUnderAttackMultLocation => _CSADLocation!.Value.Min + 0x18;
-        private bool _AdvancedDodgeBackWhileUnderAttackMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedDodgeBackWhileUnderAttackMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedDodgeBackWhileUnderAttackMultLocation + 1 >= 4;
         public Single AdvancedDodgeBackWhileUnderAttackMult => _AdvancedDodgeBackWhileUnderAttackMult_IsSet ? _recordData.Slice(_AdvancedDodgeBackWhileUnderAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedDodgeBackNotUnderAttackMult
         private int _AdvancedDodgeBackNotUnderAttackMultLocation => _CSADLocation!.Value.Min + 0x1C;
-        private bool _AdvancedDodgeBackNotUnderAttackMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedDodgeBackNotUnderAttackMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedDodgeBackNotUnderAttackMultLocation + 1 >= 4;
         public Single AdvancedDodgeBackNotUnderAttackMult => _AdvancedDodgeBackNotUnderAttackMult_IsSet ? _recordData.Slice(_AdvancedDodgeBackNotUnderAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedDodgeForwardWhileAttackingMult
         private int _AdvancedDodgeForwardWhileAttackingMultLocation => _CSADLocation!.Value.Min + 0x20;
-        private bool _AdvancedDodgeForwardWhileAttackingMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedDodgeForwardWhileAttackingMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedDodgeForwardWhileAttackingMultLocation + 1 >= 4;
         public Single AdvancedDodgeForwardWhileAttackingMult => _AdvancedDodgeForwardWhileAttackingMult_IsSet ? _recordData.Slice(_AdvancedDodgeForwardWhileAttackingMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedDodgeForwardNotAttackingMult
         private int _AdvancedDodgeForwardNotAttackingMultLocation => _CSADLocation!.Value.Min + 0x24;
-        private bool _AdvancedDodgeForwardNotAttackingMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedDodgeForwardNotAttackingMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedDodgeForwardNotAttackingMultLocation + 1 >= 4;
         public Single AdvancedDodgeForwardNotAttackingMult => _AdvancedDodgeForwardNotAttackingMult_IsSet ? _recordData.Slice(_AdvancedDodgeForwardNotAttackingMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedBlockSkillModifierMult
         private int _AdvancedBlockSkillModifierMultLocation => _CSADLocation!.Value.Min + 0x28;
-        private bool _AdvancedBlockSkillModifierMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedBlockSkillModifierMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedBlockSkillModifierMultLocation + 1 >= 4;
         public Single AdvancedBlockSkillModifierMult => _AdvancedBlockSkillModifierMult_IsSet ? _recordData.Slice(_AdvancedBlockSkillModifierMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedBlockSkillModifierBase
         private int _AdvancedBlockSkillModifierBaseLocation => _CSADLocation!.Value.Min + 0x2C;
-        private bool _AdvancedBlockSkillModifierBase_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedBlockSkillModifierBase_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedBlockSkillModifierBaseLocation + 1 >= 4;
         public Single AdvancedBlockSkillModifierBase => _AdvancedBlockSkillModifierBase_IsSet ? _recordData.Slice(_AdvancedBlockSkillModifierBaseLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedBlockWhileUnderAttackMult
         private int _AdvancedBlockWhileUnderAttackMultLocation => _CSADLocation!.Value.Min + 0x30;
-        private bool _AdvancedBlockWhileUnderAttackMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedBlockWhileUnderAttackMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedBlockWhileUnderAttackMultLocation + 1 >= 4;
         public Single AdvancedBlockWhileUnderAttackMult => _AdvancedBlockWhileUnderAttackMult_IsSet ? _recordData.Slice(_AdvancedBlockWhileUnderAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedBlockNotUnderAttackMult
         private int _AdvancedBlockNotUnderAttackMultLocation => _CSADLocation!.Value.Min + 0x34;
-        private bool _AdvancedBlockNotUnderAttackMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedBlockNotUnderAttackMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedBlockNotUnderAttackMultLocation + 1 >= 4;
         public Single AdvancedBlockNotUnderAttackMult => _AdvancedBlockNotUnderAttackMult_IsSet ? _recordData.Slice(_AdvancedBlockNotUnderAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedAttackSkillModifierMult
         private int _AdvancedAttackSkillModifierMultLocation => _CSADLocation!.Value.Min + 0x38;
-        private bool _AdvancedAttackSkillModifierMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedAttackSkillModifierMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedAttackSkillModifierMultLocation + 1 >= 4;
         public Single AdvancedAttackSkillModifierMult => _AdvancedAttackSkillModifierMult_IsSet ? _recordData.Slice(_AdvancedAttackSkillModifierMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedAttackSkillModifierBase
         private int _AdvancedAttackSkillModifierBaseLocation => _CSADLocation!.Value.Min + 0x3C;
-        private bool _AdvancedAttackSkillModifierBase_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedAttackSkillModifierBase_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedAttackSkillModifierBaseLocation + 1 >= 4;
         public Single AdvancedAttackSkillModifierBase => _AdvancedAttackSkillModifierBase_IsSet ? _recordData.Slice(_AdvancedAttackSkillModifierBaseLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedAttackWhileUnderAttackMult
         private int _AdvancedAttackWhileUnderAttackMultLocation => _CSADLocation!.Value.Min + 0x40;
-        private bool _AdvancedAttackWhileUnderAttackMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedAttackWhileUnderAttackMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedAttackWhileUnderAttackMultLocation + 1 >= 4;
         public Single AdvancedAttackWhileUnderAttackMult => _AdvancedAttackWhileUnderAttackMult_IsSet ? _recordData.Slice(_AdvancedAttackWhileUnderAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedAttackNotUnderAttackMult
         private int _AdvancedAttackNotUnderAttackMultLocation => _CSADLocation!.Value.Min + 0x44;
-        private bool _AdvancedAttackNotUnderAttackMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedAttackNotUnderAttackMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedAttackNotUnderAttackMultLocation + 1 >= 4;
         public Single AdvancedAttackNotUnderAttackMult => _AdvancedAttackNotUnderAttackMult_IsSet ? _recordData.Slice(_AdvancedAttackNotUnderAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedAttackDuringBlockMult
         private int _AdvancedAttackDuringBlockMultLocation => _CSADLocation!.Value.Min + 0x48;
-        private bool _AdvancedAttackDuringBlockMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedAttackDuringBlockMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedAttackDuringBlockMultLocation + 1 >= 4;
         public Single AdvancedAttackDuringBlockMult => _AdvancedAttackDuringBlockMult_IsSet ? _recordData.Slice(_AdvancedAttackDuringBlockMultLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedPowerAttackFatigueModBase
         private int _AdvancedPowerAttackFatigueModBaseLocation => _CSADLocation!.Value.Min + 0x4C;
-        private bool _AdvancedPowerAttackFatigueModBase_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedPowerAttackFatigueModBase_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedPowerAttackFatigueModBaseLocation + 1 >= 4;
         public Single AdvancedPowerAttackFatigueModBase => _AdvancedPowerAttackFatigueModBase_IsSet ? _recordData.Slice(_AdvancedPowerAttackFatigueModBaseLocation, 4).Float() : default(Single);
         #endregion
         #region AdvancedPowerAttackFatigueModMult
         private int _AdvancedPowerAttackFatigueModMultLocation => _CSADLocation!.Value.Min + 0x50;
-        private bool _AdvancedPowerAttackFatigueModMult_IsSet => _CSADLocation.HasValue;
+        private bool _AdvancedPowerAttackFatigueModMult_IsSet => _CSADLocation.HasValue && _CSADLocation!.Value.Max - _AdvancedPowerAttackFatigueModMultLocation + 1 >= 4;
         public Single AdvancedPowerAttackFatigueModMult => _AdvancedPowerAttackFatigueModMult_IsSet ? _recordData.Slice(_AdvancedPowerAttackFatigueModMultLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _CSSDLocation;
         #region SimpleCoverSearchRadius
         private int _SimpleCoverSearchRadiusLocation => _CSSDLocation!.Value.Min;
-        private bool _SimpleCoverSearchRadius_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleCoverSearchRadius_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleCoverSearchRadiusLocation + 1 >= 4;
         public Single SimpleCoverSearchRadius => _SimpleCoverSearchRadius_IsSet ? _recordData.Slice(_SimpleCoverSearchRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleTakeCoverChance
         private int _SimpleTakeCoverChanceLocation => _CSSDLocation!.Value.Min + 0x4;
-        private bool _SimpleTakeCoverChance_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleTakeCoverChance_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleTakeCoverChanceLocation + 1 >= 4;
         public Single SimpleTakeCoverChance => _SimpleTakeCoverChance_IsSet ? _recordData.Slice(_SimpleTakeCoverChanceLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleWaitTimerMin
         private int _SimpleWaitTimerMinLocation => _CSSDLocation!.Value.Min + 0x8;
-        private bool _SimpleWaitTimerMin_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleWaitTimerMin_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleWaitTimerMinLocation + 1 >= 4;
         public Single SimpleWaitTimerMin => _SimpleWaitTimerMin_IsSet ? _recordData.Slice(_SimpleWaitTimerMinLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleWaitTimerMax
         private int _SimpleWaitTimerMaxLocation => _CSSDLocation!.Value.Min + 0xC;
-        private bool _SimpleWaitTimerMax_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleWaitTimerMax_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleWaitTimerMaxLocation + 1 >= 4;
         public Single SimpleWaitTimerMax => _SimpleWaitTimerMax_IsSet ? _recordData.Slice(_SimpleWaitTimerMaxLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleWaitToFireTimerMin
         private int _SimpleWaitToFireTimerMinLocation => _CSSDLocation!.Value.Min + 0x10;
-        private bool _SimpleWaitToFireTimerMin_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleWaitToFireTimerMin_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleWaitToFireTimerMinLocation + 1 >= 4;
         public Single SimpleWaitToFireTimerMin => _SimpleWaitToFireTimerMin_IsSet ? _recordData.Slice(_SimpleWaitToFireTimerMinLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleWaitToFireTimerMax
         private int _SimpleWaitToFireTimerMaxLocation => _CSSDLocation!.Value.Min + 0x14;
-        private bool _SimpleWaitToFireTimerMax_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleWaitToFireTimerMax_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleWaitToFireTimerMaxLocation + 1 >= 4;
         public Single SimpleWaitToFireTimerMax => _SimpleWaitToFireTimerMax_IsSet ? _recordData.Slice(_SimpleWaitToFireTimerMaxLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleFireTimerMin
         private int _SimpleFireTimerMinLocation => _CSSDLocation!.Value.Min + 0x18;
-        private bool _SimpleFireTimerMin_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleFireTimerMin_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleFireTimerMinLocation + 1 >= 4;
         public Single SimpleFireTimerMin => _SimpleFireTimerMin_IsSet ? _recordData.Slice(_SimpleFireTimerMinLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleFireTimerMax
         private int _SimpleFireTimerMaxLocation => _CSSDLocation!.Value.Min + 0x1C;
-        private bool _SimpleFireTimerMax_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleFireTimerMax_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleFireTimerMaxLocation + 1 >= 4;
         public Single SimpleFireTimerMax => _SimpleFireTimerMax_IsSet ? _recordData.Slice(_SimpleFireTimerMaxLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleRangedWeaponRangeMultMin
         private int _SimpleRangedWeaponRangeMultMinLocation => _CSSDLocation!.Value.Min + 0x20;
-        private bool _SimpleRangedWeaponRangeMultMin_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleRangedWeaponRangeMultMin_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleRangedWeaponRangeMultMinLocation + 1 >= 4;
         public Single SimpleRangedWeaponRangeMultMin => _SimpleRangedWeaponRangeMultMin_IsSet ? _recordData.Slice(_SimpleRangedWeaponRangeMultMinLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleUnused
@@ -5807,32 +5807,32 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region SimpleWeaponRestrictions
         private int _SimpleWeaponRestrictionsLocation => _CSSDLocation!.Value.Min + 0x28;
-        private bool _SimpleWeaponRestrictions_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleWeaponRestrictions_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleWeaponRestrictionsLocation + 1 >= 4;
         public CombatStyle.WeaponRestriction SimpleWeaponRestrictions => _SimpleWeaponRestrictions_IsSet ? (CombatStyle.WeaponRestriction)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SimpleWeaponRestrictionsLocation, 0x4)) : default;
         #endregion
         #region SimpleRangedWeaponRangeMultMax
         private int _SimpleRangedWeaponRangeMultMaxLocation => _CSSDLocation!.Value.Min + 0x2C;
-        private bool _SimpleRangedWeaponRangeMultMax_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleRangedWeaponRangeMultMax_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleRangedWeaponRangeMultMaxLocation + 1 >= 4;
         public Single SimpleRangedWeaponRangeMultMax => _SimpleRangedWeaponRangeMultMax_IsSet ? _recordData.Slice(_SimpleRangedWeaponRangeMultMaxLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleMaxTargetingFov
         private int _SimpleMaxTargetingFovLocation => _CSSDLocation!.Value.Min + 0x30;
-        private bool _SimpleMaxTargetingFov_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleMaxTargetingFov_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleMaxTargetingFovLocation + 1 >= 4;
         public Single SimpleMaxTargetingFov => _SimpleMaxTargetingFov_IsSet ? _recordData.Slice(_SimpleMaxTargetingFovLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleCombatRadius
         private int _SimpleCombatRadiusLocation => _CSSDLocation!.Value.Min + 0x34;
-        private bool _SimpleCombatRadius_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleCombatRadius_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleCombatRadiusLocation + 1 >= 4;
         public Single SimpleCombatRadius => _SimpleCombatRadius_IsSet ? _recordData.Slice(_SimpleCombatRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleSemiAutoFiringDelayMultMin
         private int _SimpleSemiAutoFiringDelayMultMinLocation => _CSSDLocation!.Value.Min + 0x38;
-        private bool _SimpleSemiAutoFiringDelayMultMin_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleSemiAutoFiringDelayMultMin_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleSemiAutoFiringDelayMultMinLocation + 1 >= 4;
         public Single SimpleSemiAutoFiringDelayMultMin => _SimpleSemiAutoFiringDelayMultMin_IsSet ? _recordData.Slice(_SimpleSemiAutoFiringDelayMultMinLocation, 4).Float() : default(Single);
         #endregion
         #region SimpleSemiAutoFiringDelayMultMax
         private int _SimpleSemiAutoFiringDelayMultMaxLocation => _CSSDLocation!.Value.Min + 0x3C;
-        private bool _SimpleSemiAutoFiringDelayMultMax_IsSet => _CSSDLocation.HasValue;
+        private bool _SimpleSemiAutoFiringDelayMultMax_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SimpleSemiAutoFiringDelayMultMaxLocation + 1 >= 4;
         public Single SimpleSemiAutoFiringDelayMultMax => _SimpleSemiAutoFiringDelayMultMax_IsSet ? _recordData.Slice(_SimpleSemiAutoFiringDelayMultMaxLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

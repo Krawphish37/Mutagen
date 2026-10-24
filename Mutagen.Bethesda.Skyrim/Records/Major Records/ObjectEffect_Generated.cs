@@ -2450,47 +2450,47 @@ namespace Mutagen.Bethesda.Skyrim
         public ObjectEffect.ENITDataType ENITDataTypeState { get; private set; }
         #region EnchantmentCost
         private int _EnchantmentCostLocation => _ENITLocation!.Value.Min;
-        private bool _EnchantmentCost_IsSet => _ENITLocation.HasValue;
+        private bool _EnchantmentCost_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _EnchantmentCostLocation + 1 >= 4;
         public UInt32 EnchantmentCost => _EnchantmentCost_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_EnchantmentCostLocation, 4)) : default(UInt32);
         #endregion
         #region Flags
         private int _FlagsLocation => _ENITLocation!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _ENITLocation.HasValue;
+        private bool _Flags_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public ObjectEffect.Flag Flags => _Flags_IsSet ? (ObjectEffect.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region CastType
         private int _CastTypeLocation => _ENITLocation!.Value.Min + 0x8;
-        private bool _CastType_IsSet => _ENITLocation.HasValue;
+        private bool _CastType_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _CastTypeLocation + 1 >= 4;
         public CastType CastType => _CastType_IsSet ? (CastType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_CastTypeLocation, 0x4)) : default;
         #endregion
         #region EnchantmentAmount
         private int _EnchantmentAmountLocation => _ENITLocation!.Value.Min + 0xC;
-        private bool _EnchantmentAmount_IsSet => _ENITLocation.HasValue;
+        private bool _EnchantmentAmount_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _EnchantmentAmountLocation + 1 >= 4;
         public Int32 EnchantmentAmount => _EnchantmentAmount_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_EnchantmentAmountLocation, 4)) : default(Int32);
         #endregion
         #region TargetType
         private int _TargetTypeLocation => _ENITLocation!.Value.Min + 0x10;
-        private bool _TargetType_IsSet => _ENITLocation.HasValue;
+        private bool _TargetType_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _TargetTypeLocation + 1 >= 4;
         public TargetType TargetType => _TargetType_IsSet ? (TargetType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TargetTypeLocation, 0x4)) : default;
         #endregion
         #region EnchantType
         private int _EnchantTypeLocation => _ENITLocation!.Value.Min + 0x14;
-        private bool _EnchantType_IsSet => _ENITLocation.HasValue;
+        private bool _EnchantType_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _EnchantTypeLocation + 1 >= 4;
         public ObjectEffect.EnchantTypeEnum EnchantType => _EnchantType_IsSet ? (ObjectEffect.EnchantTypeEnum)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_EnchantTypeLocation, 0x4)) : default;
         #endregion
         #region ChargeTime
         private int _ChargeTimeLocation => _ENITLocation!.Value.Min + 0x18;
-        private bool _ChargeTime_IsSet => _ENITLocation.HasValue;
+        private bool _ChargeTime_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _ChargeTimeLocation + 1 >= 4;
         public Single ChargeTime => _ChargeTime_IsSet ? _recordData.Slice(_ChargeTimeLocation, 4).Float() : default(Single);
         #endregion
         #region BaseEnchantment
         private int _BaseEnchantmentLocation => _ENITLocation!.Value.Min + 0x1C;
-        private bool _BaseEnchantment_IsSet => _ENITLocation.HasValue;
+        private bool _BaseEnchantment_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _BaseEnchantmentLocation + 1 >= 4;
         public IFormLinkGetter<IObjectEffectGetter> BaseEnchantment => _BaseEnchantment_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IObjectEffectGetter>(_package, _recordData.Span.Slice(_BaseEnchantmentLocation, 0x4), isSet: _BaseEnchantment_IsSet) : FormLink<IObjectEffectGetter>.Null;
         #endregion
         #region WornRestrictions
         private int _WornRestrictionsLocation => _ENITLocation!.Value.Min + 0x20;
-        private bool _WornRestrictions_IsSet => _ENITLocation.HasValue && !ENITDataTypeState.HasFlag(ObjectEffect.ENITDataType.Break0);
+        private bool _WornRestrictions_IsSet => _ENITLocation.HasValue && !ENITDataTypeState.HasFlag(ObjectEffect.ENITDataType.Break0) && _ENITLocation!.Value.Max - _WornRestrictionsLocation + 1 >= 4;
         public IFormLinkGetter<IFormListGetter> WornRestrictions => _WornRestrictions_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IFormListGetter>(_package, _recordData.Span.Slice(_WornRestrictionsLocation, 0x4), isSet: _WornRestrictions_IsSet) : FormLink<IFormListGetter>.Null;
         #endregion
         public IReadOnlyList<IEffectGetter> Effects { get; private set; } = [];

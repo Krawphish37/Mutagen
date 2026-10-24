@@ -3547,12 +3547,12 @@ namespace Mutagen.Bethesda.Fallout3
         public DialogTopic.DATADataType DATADataTypeState { get; private set; }
         #region Type
         private int _TypeLocation => _DATALocation!.Value.Min;
-        private bool _Type_IsSet => _DATALocation.HasValue;
+        private bool _Type_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TypeLocation + 1 >= 1;
         public DialogTopic.TopicType Type => _Type_IsSet ? (DialogTopic.TopicType)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default;
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x1;
-        private bool _Flags_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(DialogTopic.DATADataType.Break0);
+        private bool _Flags_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(DialogTopic.DATADataType.Break0) && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public DialogTopic.TopicFlag Flags => _Flags_IsSet ? (DialogTopic.TopicFlag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         public IReadOnlyList<IFormLinkGetter<IDialogResponsesGetter>>? InfoOrderMastersOnly { get; private set; }

@@ -3171,72 +3171,72 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DATALocation;
         #region Action
         private int _ActionLocation => _DATALocation!.Value.Min;
-        private bool _Action_IsSet => _DATALocation.HasValue;
+        private bool _Action_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ActionLocation + 1 >= 4;
         public CameraShot.ActionType Action => _Action_IsSet ? (CameraShot.ActionType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ActionLocation, 0x4)) : default;
         #endregion
         #region Location
         private int _LocationLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Location_IsSet => _DATALocation.HasValue;
+        private bool _Location_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LocationLocation + 1 >= 4;
         public CameraShot.LocationType Location => _Location_IsSet ? (CameraShot.LocationType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_LocationLocation, 0x4)) : default;
         #endregion
         #region Target
         private int _TargetLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Target_IsSet => _DATALocation.HasValue;
+        private bool _Target_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TargetLocation + 1 >= 4;
         public CameraShot.LocationType Target => _Target_IsSet ? (CameraShot.LocationType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TargetLocation, 0x4)) : default;
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public CameraShot.Flag Flags => _Flags_IsSet ? (CameraShot.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region TimeMultiplierPlayer
         private int _TimeMultiplierPlayerLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _TimeMultiplierPlayer_IsSet => _DATALocation.HasValue;
+        private bool _TimeMultiplierPlayer_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TimeMultiplierPlayerLocation + 1 >= 4;
         public Single TimeMultiplierPlayer => _TimeMultiplierPlayer_IsSet ? _recordData.Slice(_TimeMultiplierPlayerLocation, 4).Float() : default(Single);
         #endregion
         #region TimeMultiplierTarget
         private int _TimeMultiplierTargetLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _TimeMultiplierTarget_IsSet => _DATALocation.HasValue;
+        private bool _TimeMultiplierTarget_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TimeMultiplierTargetLocation + 1 >= 4;
         public Single TimeMultiplierTarget => _TimeMultiplierTarget_IsSet ? _recordData.Slice(_TimeMultiplierTargetLocation, 4).Float() : default(Single);
         #endregion
         #region TimeMultiplierGlobal
         private int _TimeMultiplierGlobalLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _TimeMultiplierGlobal_IsSet => _DATALocation.HasValue;
+        private bool _TimeMultiplierGlobal_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TimeMultiplierGlobalLocation + 1 >= 4;
         public Single TimeMultiplierGlobal => _TimeMultiplierGlobal_IsSet ? _recordData.Slice(_TimeMultiplierGlobalLocation, 4).Float() : default(Single);
         #endregion
         #region MaxTime
         private int _MaxTimeLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _MaxTime_IsSet => _DATALocation.HasValue;
+        private bool _MaxTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MaxTimeLocation + 1 >= 4;
         public Single MaxTime => _MaxTime_IsSet ? _recordData.Slice(_MaxTimeLocation, 4).Float() : default(Single);
         #endregion
         #region MinTime
         private int _MinTimeLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _MinTime_IsSet => _DATALocation.HasValue;
+        private bool _MinTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MinTimeLocation + 1 >= 4;
         public Single MinTime => _MinTime_IsSet ? _recordData.Slice(_MinTimeLocation, 4).Float() : default(Single);
         #endregion
         #region TargetPercentBetweenActors
         private int _TargetPercentBetweenActorsLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _TargetPercentBetweenActors_IsSet => _DATALocation.HasValue;
+        private bool _TargetPercentBetweenActors_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TargetPercentBetweenActorsLocation + 1 >= 4;
         public Single TargetPercentBetweenActors => _TargetPercentBetweenActors_IsSet ? _recordData.Slice(_TargetPercentBetweenActorsLocation, 4).Float() : default(Single);
         #endregion
         #region NearTargetDistance
         private int _NearTargetDistanceLocation => _DATALocation!.Value.Min + 0x28;
-        private bool _NearTargetDistance_IsSet => _DATALocation.HasValue;
+        private bool _NearTargetDistance_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _NearTargetDistanceLocation + 1 >= 4;
         public Single NearTargetDistance => _NearTargetDistance_IsSet ? _recordData.Slice(_NearTargetDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region LocationSpring
         private int _LocationSpringLocation => _DATALocation!.Value.Min + 0x2C;
-        private bool _LocationSpring_IsSet => _DATALocation.HasValue;
+        private bool _LocationSpring_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LocationSpringLocation + 1 >= 4;
         public Single LocationSpring => _LocationSpring_IsSet ? _recordData.Slice(_LocationSpringLocation, 4).Float() : default(Single);
         #endregion
         #region TargetSpring
         private int _TargetSpringLocation => _DATALocation!.Value.Min + 0x30;
-        private bool _TargetSpring_IsSet => _DATALocation.HasValue;
+        private bool _TargetSpring_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TargetSpringLocation + 1 >= 4;
         public Single TargetSpring => _TargetSpring_IsSet ? _recordData.Slice(_TargetSpringLocation, 4).Float() : default(Single);
         #endregion
         #region RotationOffset
         private int _RotationOffsetLocation => _DATALocation!.Value.Min + 0x34;
-        private bool _RotationOffset_IsSet => _DATALocation.HasValue;
+        private bool _RotationOffset_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RotationOffsetLocation + 1 >= 12;
         public P3Float RotationOffset => _RotationOffset_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_RotationOffsetLocation, 12)) : default(P3Float);
         #endregion
         #region ImageSpaceModifier

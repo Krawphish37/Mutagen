@@ -10544,44 +10544,44 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region Value
         private int _ValueLocation => _DATALocation!.Value.Min;
-        private bool _Value_IsSet => _DATALocation.HasValue;
+        private bool _Value_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ValueLocation + 1 >= 4;
         public Int32 Value => _Value_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_ValueLocation, 4)) : default(Int32);
         #endregion
         #region Health
         private int _HealthLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Health_IsSet => _DATALocation.HasValue;
+        private bool _Health_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HealthLocation + 1 >= 4;
         public Int32 Health => _Health_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_HealthLocation, 4)) : default(Int32);
         #endregion
         #region Weight
         private int _WeightLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Weight_IsSet => _DATALocation.HasValue;
+        private bool _Weight_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _WeightLocation + 1 >= 4;
         public Single Weight => _Weight_IsSet ? _recordData.Slice(_WeightLocation, 4).Float() : default(Single);
         #endregion
         #region BaseDamage
         private int _BaseDamageLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _BaseDamage_IsSet => _DATALocation.HasValue;
+        private bool _BaseDamage_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BaseDamageLocation + 1 >= 2;
         public Int16 BaseDamage => _BaseDamage_IsSet ? BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_BaseDamageLocation, 2)) : default(Int16);
         #endregion
         #region ClipSize
         private int _ClipSizeLocation => _DATALocation!.Value.Min + 0xE;
-        private bool _ClipSize_IsSet => _DATALocation.HasValue;
+        private bool _ClipSize_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ClipSizeLocation + 1 >= 1;
         public Byte ClipSize => _ClipSize_IsSet ? _recordData.Span[_ClipSizeLocation] : default;
         #endregion
         private RangeInt32? _DNAMLocation;
         public Weapon.DNAMDataType DNAMDataTypeState { get; private set; }
         #region AnimationType
         private int _AnimationTypeLocation => _DNAMLocation!.Value.Min;
-        private bool _AnimationType_IsSet => _DNAMLocation.HasValue;
+        private bool _AnimationType_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AnimationTypeLocation + 1 >= 4;
         public Weapon.WeaponAnimationType AnimationType => _AnimationType_IsSet ? (Weapon.WeaponAnimationType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_AnimationTypeLocation, 0x4)) : default;
         #endregion
         #region AnimationMultiplier
         private int _AnimationMultiplierLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _AnimationMultiplier_IsSet => _DNAMLocation.HasValue;
+        private bool _AnimationMultiplier_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AnimationMultiplierLocation + 1 >= 4;
         public Single AnimationMultiplier => _AnimationMultiplier_IsSet ? _recordData.Slice(_AnimationMultiplierLocation, 4).Float() : default(Single);
         #endregion
         #region Reach
         private int _ReachLocation => _DNAMLocation!.Value.Min + 0x8;
-        private bool _Reach_IsSet => _DNAMLocation.HasValue;
+        private bool _Reach_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ReachLocation + 1 >= 4;
         public Single Reach => _Reach_IsSet ? _recordData.Slice(_ReachLocation, 4).Float() : default(Single);
         #endregion
         #region Flags
@@ -10591,82 +10591,82 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region GripAnimation
         private int _GripAnimationLocation => _DNAMLocation!.Value.Min + 0xD;
-        private bool _GripAnimation_IsSet => _DNAMLocation.HasValue;
+        private bool _GripAnimation_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _GripAnimationLocation + 1 >= 1;
         public Byte GripAnimation => _GripAnimation_IsSet ? _recordData.Span[_GripAnimationLocation] : default;
         #endregion
         #region AmmoUse
         private int _AmmoUseLocation => _DNAMLocation!.Value.Min + 0xE;
-        private bool _AmmoUse_IsSet => _DNAMLocation.HasValue;
+        private bool _AmmoUse_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AmmoUseLocation + 1 >= 1;
         public Byte AmmoUse => _AmmoUse_IsSet ? _recordData.Span[_AmmoUseLocation] : default;
         #endregion
         #region ReloadAnimation
         private int _ReloadAnimationLocation => _DNAMLocation!.Value.Min + 0xF;
-        private bool _ReloadAnimation_IsSet => _DNAMLocation.HasValue;
+        private bool _ReloadAnimation_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ReloadAnimationLocation + 1 >= 1;
         public Weapon.ReloadAnim ReloadAnimation => _ReloadAnimation_IsSet ? (Weapon.ReloadAnim)_recordData.Span.Slice(_ReloadAnimationLocation, 0x1)[0] : default;
         #endregion
         #region MinSpread
         private int _MinSpreadLocation => _DNAMLocation!.Value.Min + 0x10;
-        private bool _MinSpread_IsSet => _DNAMLocation.HasValue;
+        private bool _MinSpread_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MinSpreadLocation + 1 >= 4;
         public Single MinSpread => _MinSpread_IsSet ? _recordData.Slice(_MinSpreadLocation, 4).Float() : default(Single);
         #endregion
         #region Spread
         private int _SpreadLocation => _DNAMLocation!.Value.Min + 0x14;
-        private bool _Spread_IsSet => _DNAMLocation.HasValue;
+        private bool _Spread_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SpreadLocation + 1 >= 4;
         public Single Spread => _Spread_IsSet ? _recordData.Slice(_SpreadLocation, 4).Float() : default(Single);
         #endregion
         #region DnamUnused1
         private int _DnamUnused1Location => _DNAMLocation!.Value.Min + 0x18;
-        private bool _DnamUnused1_IsSet => _DNAMLocation.HasValue;
+        private bool _DnamUnused1_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DnamUnused1Location + 1 >= 4;
         public UInt32 DnamUnused1 => _DnamUnused1_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_DnamUnused1Location, 4)) : default(UInt32);
         #endregion
         #region SightFov
         private int _SightFovLocation => _DNAMLocation!.Value.Min + 0x1C;
-        private bool _SightFov_IsSet => _DNAMLocation.HasValue;
+        private bool _SightFov_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SightFovLocation + 1 >= 4;
         public Single SightFov => _SightFov_IsSet ? _recordData.Slice(_SightFovLocation, 4).Float() : default(Single);
         #endregion
         #region DnamUnused2
         private int _DnamUnused2Location => _DNAMLocation!.Value.Min + 0x20;
-        private bool _DnamUnused2_IsSet => _DNAMLocation.HasValue;
+        private bool _DnamUnused2_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DnamUnused2Location + 1 >= 4;
         public UInt32 DnamUnused2 => _DnamUnused2_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_DnamUnused2Location, 4)) : default(UInt32);
         #endregion
         #region Projectile
         private int _ProjectileLocation => _DNAMLocation!.Value.Min + 0x24;
-        private bool _Projectile_IsSet => _DNAMLocation.HasValue;
+        private bool _Projectile_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ProjectileLocation + 1 >= 4;
         public IFormLinkGetter<IProjectileGetter> Projectile => _Projectile_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IProjectileGetter>(_package, _recordData.Span.Slice(_ProjectileLocation, 0x4), isSet: _Projectile_IsSet) : FormLink<IProjectileGetter>.Null;
         #endregion
         #region BaseVatsToHitChance
         private int _BaseVatsToHitChanceLocation => _DNAMLocation!.Value.Min + 0x28;
-        private bool _BaseVatsToHitChance_IsSet => _DNAMLocation.HasValue;
+        private bool _BaseVatsToHitChance_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _BaseVatsToHitChanceLocation + 1 >= 1;
         public Byte BaseVatsToHitChance => _BaseVatsToHitChance_IsSet ? _recordData.Span[_BaseVatsToHitChanceLocation] : default;
         #endregion
         #region AttackAnimation
         private int _AttackAnimationLocation => _DNAMLocation!.Value.Min + 0x29;
-        private bool _AttackAnimation_IsSet => _DNAMLocation.HasValue;
+        private bool _AttackAnimation_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AttackAnimationLocation + 1 >= 1;
         public Weapon.AttackAnim AttackAnimation => _AttackAnimation_IsSet ? (Weapon.AttackAnim)_recordData.Span.Slice(_AttackAnimationLocation, 0x1)[0] : default;
         #endregion
         #region ProjectileCount
         private int _ProjectileCountLocation => _DNAMLocation!.Value.Min + 0x2A;
-        private bool _ProjectileCount_IsSet => _DNAMLocation.HasValue;
+        private bool _ProjectileCount_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ProjectileCountLocation + 1 >= 1;
         public Byte ProjectileCount => _ProjectileCount_IsSet ? _recordData.Span[_ProjectileCountLocation] : default;
         #endregion
         #region EmbeddedWeaponActorValue
         private int _EmbeddedWeaponActorValueLocation => _DNAMLocation!.Value.Min + 0x2B;
-        private bool _EmbeddedWeaponActorValue_IsSet => _DNAMLocation.HasValue;
+        private bool _EmbeddedWeaponActorValue_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _EmbeddedWeaponActorValueLocation + 1 >= 1;
         public Weapon.EmbeddedWeaponAV EmbeddedWeaponActorValue => _EmbeddedWeaponActorValue_IsSet ? (Weapon.EmbeddedWeaponAV)_recordData.Span.Slice(_EmbeddedWeaponActorValueLocation, 0x1)[0] : default;
         #endregion
         #region MinRange
         private int _MinRangeLocation => _DNAMLocation!.Value.Min + 0x2C;
-        private bool _MinRange_IsSet => _DNAMLocation.HasValue;
+        private bool _MinRange_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MinRangeLocation + 1 >= 4;
         public Single MinRange => _MinRange_IsSet ? _recordData.Slice(_MinRangeLocation, 4).Float() : default(Single);
         #endregion
         #region MaxRange
         private int _MaxRangeLocation => _DNAMLocation!.Value.Min + 0x30;
-        private bool _MaxRange_IsSet => _DNAMLocation.HasValue;
+        private bool _MaxRange_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MaxRangeLocation + 1 >= 4;
         public Single MaxRange => _MaxRange_IsSet ? _recordData.Slice(_MaxRangeLocation, 4).Float() : default(Single);
         #endregion
         #region OnHit
         private int _OnHitLocation => _DNAMLocation!.Value.Min + 0x34;
-        private bool _OnHit_IsSet => _DNAMLocation.HasValue;
+        private bool _OnHit_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _OnHitLocation + 1 >= 4;
         public Weapon.WeaponOnHit OnHit => _OnHit_IsSet ? (Weapon.WeaponOnHit)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_OnHitLocation, 0x4)) : default;
         #endregion
         #region Flags2
@@ -10678,218 +10678,218 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region AnimationAttackMultiplier
         private int _AnimationAttackMultiplierLocation => _DNAMLocation!.Value.Min + 0x3C;
-        private bool _AnimationAttackMultiplier_IsSet => _DNAMLocation.HasValue;
+        private bool _AnimationAttackMultiplier_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AnimationAttackMultiplierLocation + 1 >= 4;
         public Single AnimationAttackMultiplier => _AnimationAttackMultiplier_IsSet ? _recordData.Slice(_AnimationAttackMultiplierLocation, 4).Float() : default(Single);
         #endregion
         #region FireRate
         private int _FireRateLocation => _DNAMLocation!.Value.Min + 0x40;
-        private bool _FireRate_IsSet => _DNAMLocation.HasValue;
+        private bool _FireRate_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FireRateLocation + 1 >= 4;
         public Single FireRate => _FireRate_IsSet ? _recordData.Slice(_FireRateLocation, 4).Float() : default(Single);
         #endregion
         #region OverrideActionPoints
         private int _OverrideActionPointsLocation => _DNAMLocation!.Value.Min + 0x44;
-        private bool _OverrideActionPoints_IsSet => _DNAMLocation.HasValue;
+        private bool _OverrideActionPoints_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _OverrideActionPointsLocation + 1 >= 4;
         public Single OverrideActionPoints => _OverrideActionPoints_IsSet ? _recordData.Slice(_OverrideActionPointsLocation, 4).Float() : default(Single);
         #endregion
         #region RumbleLeftMotorStrength
         private int _RumbleLeftMotorStrengthLocation => _DNAMLocation!.Value.Min + 0x48;
-        private bool _RumbleLeftMotorStrength_IsSet => _DNAMLocation.HasValue;
+        private bool _RumbleLeftMotorStrength_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _RumbleLeftMotorStrengthLocation + 1 >= 4;
         public Single RumbleLeftMotorStrength => _RumbleLeftMotorStrength_IsSet ? _recordData.Slice(_RumbleLeftMotorStrengthLocation, 4).Float() : default(Single);
         #endregion
         #region RumbleRightMotorStrength
         private int _RumbleRightMotorStrengthLocation => _DNAMLocation!.Value.Min + 0x4C;
-        private bool _RumbleRightMotorStrength_IsSet => _DNAMLocation.HasValue;
+        private bool _RumbleRightMotorStrength_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _RumbleRightMotorStrengthLocation + 1 >= 4;
         public Single RumbleRightMotorStrength => _RumbleRightMotorStrength_IsSet ? _recordData.Slice(_RumbleRightMotorStrengthLocation, 4).Float() : default(Single);
         #endregion
         #region RumbleDuration
         private int _RumbleDurationLocation => _DNAMLocation!.Value.Min + 0x50;
-        private bool _RumbleDuration_IsSet => _DNAMLocation.HasValue;
+        private bool _RumbleDuration_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _RumbleDurationLocation + 1 >= 4;
         public Single RumbleDuration => _RumbleDuration_IsSet ? _recordData.Slice(_RumbleDurationLocation, 4).Float() : default(Single);
         #endregion
         #region OverrideDamageToWeaponMult
         private int _OverrideDamageToWeaponMultLocation => _DNAMLocation!.Value.Min + 0x54;
-        private bool _OverrideDamageToWeaponMult_IsSet => _DNAMLocation.HasValue;
+        private bool _OverrideDamageToWeaponMult_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _OverrideDamageToWeaponMultLocation + 1 >= 4;
         public Single OverrideDamageToWeaponMult => _OverrideDamageToWeaponMult_IsSet ? _recordData.Slice(_OverrideDamageToWeaponMultLocation, 4).Float() : default(Single);
         #endregion
         #region AttackShotsPerSec
         private int _AttackShotsPerSecLocation => _DNAMLocation!.Value.Min + 0x58;
-        private bool _AttackShotsPerSec_IsSet => _DNAMLocation.HasValue;
+        private bool _AttackShotsPerSec_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AttackShotsPerSecLocation + 1 >= 4;
         public Single AttackShotsPerSec => _AttackShotsPerSec_IsSet ? _recordData.Slice(_AttackShotsPerSecLocation, 4).Float() : default(Single);
         #endregion
         #region ReloadTime
         private int _ReloadTimeLocation => _DNAMLocation!.Value.Min + 0x5C;
-        private bool _ReloadTime_IsSet => _DNAMLocation.HasValue;
+        private bool _ReloadTime_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ReloadTimeLocation + 1 >= 4;
         public Single ReloadTime => _ReloadTime_IsSet ? _recordData.Slice(_ReloadTimeLocation, 4).Float() : default(Single);
         #endregion
         #region JamTime
         private int _JamTimeLocation => _DNAMLocation!.Value.Min + 0x60;
-        private bool _JamTime_IsSet => _DNAMLocation.HasValue;
+        private bool _JamTime_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _JamTimeLocation + 1 >= 4;
         public Single JamTime => _JamTime_IsSet ? _recordData.Slice(_JamTimeLocation, 4).Float() : default(Single);
         #endregion
         #region AimArc
         private int _AimArcLocation => _DNAMLocation!.Value.Min + 0x64;
-        private bool _AimArc_IsSet => _DNAMLocation.HasValue;
+        private bool _AimArc_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AimArcLocation + 1 >= 4;
         public Single AimArc => _AimArc_IsSet ? _recordData.Slice(_AimArcLocation, 4).Float() : default(Single);
         #endregion
         #region Skill
         private int _SkillLocation => _DNAMLocation!.Value.Min + 0x68;
-        private bool _Skill_IsSet => _DNAMLocation.HasValue;
+        private bool _Skill_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SkillLocation + 1 >= 4;
         public Int32 Skill => _Skill_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_SkillLocation, 4)) : default(Int32);
         #endregion
         #region RumblePattern
         private int _RumblePatternLocation => _DNAMLocation!.Value.Min + 0x6C;
-        private bool _RumblePattern_IsSet => _DNAMLocation.HasValue;
+        private bool _RumblePattern_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _RumblePatternLocation + 1 >= 4;
         public Weapon.WeaponRumblePattern RumblePattern => _RumblePattern_IsSet ? (Weapon.WeaponRumblePattern)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_RumblePatternLocation, 0x4)) : default;
         #endregion
         #region RumbleWavelength
         private int _RumbleWavelengthLocation => _DNAMLocation!.Value.Min + 0x70;
-        private bool _RumbleWavelength_IsSet => _DNAMLocation.HasValue;
+        private bool _RumbleWavelength_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _RumbleWavelengthLocation + 1 >= 4;
         public Single RumbleWavelength => _RumbleWavelength_IsSet ? _recordData.Slice(_RumbleWavelengthLocation, 4).Float() : default(Single);
         #endregion
         #region LimbDamageMult
         private int _LimbDamageMultLocation => _DNAMLocation!.Value.Min + 0x74;
-        private bool _LimbDamageMult_IsSet => _DNAMLocation.HasValue;
+        private bool _LimbDamageMult_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _LimbDamageMultLocation + 1 >= 4;
         public Single LimbDamageMult => _LimbDamageMult_IsSet ? _recordData.Slice(_LimbDamageMultLocation, 4).Float() : default(Single);
         #endregion
         #region ResistType
         private int _ResistTypeLocation => _DNAMLocation!.Value.Min + 0x78;
-        private bool _ResistType_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break0);
+        private bool _ResistType_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _ResistTypeLocation + 1 >= 4;
         public Int32 ResistType => _ResistType_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_ResistTypeLocation, 4)) : default(Int32);
         #endregion
         #region SightUsage
         private int _SightUsageLocation => _DNAMLocation!.Value.Min + 0x7C;
-        private bool _SightUsage_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break1);
+        private bool _SightUsage_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break1) && _DNAMLocation!.Value.Max - _SightUsageLocation + 1 >= 4;
         public Single SightUsage => _SightUsage_IsSet ? _recordData.Slice(_SightUsageLocation, 4).Float() : default(Single);
         #endregion
         #region SemiAutomaticFireDelayMin
         private int _SemiAutomaticFireDelayMinLocation => _DNAMLocation!.Value.Min + 0x80;
-        private bool _SemiAutomaticFireDelayMin_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break1);
+        private bool _SemiAutomaticFireDelayMin_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break1) && _DNAMLocation!.Value.Max - _SemiAutomaticFireDelayMinLocation + 1 >= 4;
         public Single SemiAutomaticFireDelayMin => _SemiAutomaticFireDelayMin_IsSet ? _recordData.Slice(_SemiAutomaticFireDelayMinLocation, 4).Float() : default(Single);
         #endregion
         #region SemiAutomaticFireDelayMax
         private int _SemiAutomaticFireDelayMaxLocation => _DNAMLocation!.Value.Min + 0x84;
-        private bool _SemiAutomaticFireDelayMax_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break1);
+        private bool _SemiAutomaticFireDelayMax_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break1) && _DNAMLocation!.Value.Max - _SemiAutomaticFireDelayMaxLocation + 1 >= 4;
         public Single SemiAutomaticFireDelayMax => _SemiAutomaticFireDelayMax_IsSet ? _recordData.Slice(_SemiAutomaticFireDelayMaxLocation, 4).Float() : default(Single);
         #endregion
         #region DnamUnknownFloat
         private int _DnamUnknownFloatLocation => _DNAMLocation!.Value.Min + 0x88;
-        private bool _DnamUnknownFloat_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2);
+        private bool _DnamUnknownFloat_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2) && _DNAMLocation!.Value.Max - _DnamUnknownFloatLocation + 1 >= 4;
         public Single DnamUnknownFloat => _DnamUnknownFloat_IsSet ? _recordData.Slice(_DnamUnknownFloatLocation, 4).Float() : default(Single);
         #endregion
         #region EffectMod1
         private int _EffectMod1Location => _DNAMLocation!.Value.Min + 0x8C;
-        private bool _EffectMod1_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2);
+        private bool _EffectMod1_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2) && _DNAMLocation!.Value.Max - _EffectMod1Location + 1 >= 4;
         public Weapon.ModEffect EffectMod1 => _EffectMod1_IsSet ? (Weapon.ModEffect)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_EffectMod1Location, 0x4)) : default;
         #endregion
         #region EffectMod2
         private int _EffectMod2Location => _DNAMLocation!.Value.Min + 0x90;
-        private bool _EffectMod2_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2);
+        private bool _EffectMod2_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2) && _DNAMLocation!.Value.Max - _EffectMod2Location + 1 >= 4;
         public Weapon.ModEffect EffectMod2 => _EffectMod2_IsSet ? (Weapon.ModEffect)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_EffectMod2Location, 0x4)) : default;
         #endregion
         #region EffectMod3
         private int _EffectMod3Location => _DNAMLocation!.Value.Min + 0x94;
-        private bool _EffectMod3_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2);
+        private bool _EffectMod3_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2) && _DNAMLocation!.Value.Max - _EffectMod3Location + 1 >= 4;
         public Weapon.ModEffect EffectMod3 => _EffectMod3_IsSet ? (Weapon.ModEffect)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_EffectMod3Location, 0x4)) : default;
         #endregion
         #region ValueAMod1
         private int _ValueAMod1Location => _DNAMLocation!.Value.Min + 0x98;
-        private bool _ValueAMod1_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2);
+        private bool _ValueAMod1_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2) && _DNAMLocation!.Value.Max - _ValueAMod1Location + 1 >= 4;
         public Single ValueAMod1 => _ValueAMod1_IsSet ? _recordData.Slice(_ValueAMod1Location, 4).Float() : default(Single);
         #endregion
         #region ValueAMod2
         private int _ValueAMod2Location => _DNAMLocation!.Value.Min + 0x9C;
-        private bool _ValueAMod2_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2);
+        private bool _ValueAMod2_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2) && _DNAMLocation!.Value.Max - _ValueAMod2Location + 1 >= 4;
         public Single ValueAMod2 => _ValueAMod2_IsSet ? _recordData.Slice(_ValueAMod2Location, 4).Float() : default(Single);
         #endregion
         #region ValueAMod3
         private int _ValueAMod3Location => _DNAMLocation!.Value.Min + 0xA0;
-        private bool _ValueAMod3_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2);
+        private bool _ValueAMod3_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break2) && _DNAMLocation!.Value.Max - _ValueAMod3Location + 1 >= 4;
         public Single ValueAMod3 => _ValueAMod3_IsSet ? _recordData.Slice(_ValueAMod3Location, 4).Float() : default(Single);
         #endregion
         #region PowerAttackAnimationOverride
         private int _PowerAttackAnimationOverrideLocation => _DNAMLocation!.Value.Min + 0xA4;
-        private bool _PowerAttackAnimationOverride_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break3);
+        private bool _PowerAttackAnimationOverride_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break3) && _DNAMLocation!.Value.Max - _PowerAttackAnimationOverrideLocation + 1 >= 4;
         public Weapon.PowerAttackAnim PowerAttackAnimationOverride => _PowerAttackAnimationOverride_IsSet ? (Weapon.PowerAttackAnim)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_PowerAttackAnimationOverrideLocation, 0x4)) : default;
         #endregion
         #region StrengthReq
         private int _StrengthReqLocation => _DNAMLocation!.Value.Min + 0xA8;
-        private bool _StrengthReq_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break3);
+        private bool _StrengthReq_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break3) && _DNAMLocation!.Value.Max - _StrengthReqLocation + 1 >= 4;
         public UInt32 StrengthReq => _StrengthReq_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_StrengthReqLocation, 4)) : default(UInt32);
         #endregion
         #region DnamUnknown1
         private int _DnamUnknown1Location => _DNAMLocation!.Value.Min + 0xAC;
-        private bool _DnamUnknown1_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break4);
+        private bool _DnamUnknown1_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break4) && _DNAMLocation!.Value.Max - _DnamUnknown1Location + 1 >= 1;
         public Byte DnamUnknown1 => _DnamUnknown1_IsSet ? _recordData.Span[_DnamUnknown1Location] : default;
         #endregion
         #region ReloadAnimationMod
         private int _ReloadAnimationModLocation => _DNAMLocation!.Value.Min + 0xAD;
-        private bool _ReloadAnimationMod_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break4);
+        private bool _ReloadAnimationMod_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break4) && _DNAMLocation!.Value.Max - _ReloadAnimationModLocation + 1 >= 1;
         public Weapon.ReloadAnim ReloadAnimationMod => _ReloadAnimationMod_IsSet ? (Weapon.ReloadAnim)_recordData.Span.Slice(_ReloadAnimationModLocation, 0x1)[0] : default;
         #endregion
         #region DnamUnknown2
         private int _DnamUnknown2Location => _DNAMLocation!.Value.Min + 0xAE;
-        private bool _DnamUnknown2_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break4);
+        private bool _DnamUnknown2_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break4) && _DNAMLocation!.Value.Max - _DnamUnknown2Location + 1 >= 2;
         public UInt16 DnamUnknown2 => _DnamUnknown2_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_DnamUnknown2Location, 2)) : default(UInt16);
         #endregion
         #region RegenRate
         private int _RegenRateLocation => _DNAMLocation!.Value.Min + 0xB0;
-        private bool _RegenRate_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break4);
+        private bool _RegenRate_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break4) && _DNAMLocation!.Value.Max - _RegenRateLocation + 1 >= 4;
         public Single RegenRate => _RegenRate_IsSet ? _recordData.Slice(_RegenRateLocation, 4).Float() : default(Single);
         #endregion
         #region KillImpulse
         private int _KillImpulseLocation => _DNAMLocation!.Value.Min + 0xB4;
-        private bool _KillImpulse_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break5);
+        private bool _KillImpulse_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break5) && _DNAMLocation!.Value.Max - _KillImpulseLocation + 1 >= 4;
         public Single KillImpulse => _KillImpulse_IsSet ? _recordData.Slice(_KillImpulseLocation, 4).Float() : default(Single);
         #endregion
         #region ValueBMod1
         private int _ValueBMod1Location => _DNAMLocation!.Value.Min + 0xB8;
-        private bool _ValueBMod1_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break5);
+        private bool _ValueBMod1_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break5) && _DNAMLocation!.Value.Max - _ValueBMod1Location + 1 >= 4;
         public Single ValueBMod1 => _ValueBMod1_IsSet ? _recordData.Slice(_ValueBMod1Location, 4).Float() : default(Single);
         #endregion
         #region ValueBMod2
         private int _ValueBMod2Location => _DNAMLocation!.Value.Min + 0xBC;
-        private bool _ValueBMod2_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break5);
+        private bool _ValueBMod2_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break5) && _DNAMLocation!.Value.Max - _ValueBMod2Location + 1 >= 4;
         public Single ValueBMod2 => _ValueBMod2_IsSet ? _recordData.Slice(_ValueBMod2Location, 4).Float() : default(Single);
         #endregion
         #region ValueBMod3
         private int _ValueBMod3Location => _DNAMLocation!.Value.Min + 0xC0;
-        private bool _ValueBMod3_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break5);
+        private bool _ValueBMod3_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break5) && _DNAMLocation!.Value.Max - _ValueBMod3Location + 1 >= 4;
         public Single ValueBMod3 => _ValueBMod3_IsSet ? _recordData.Slice(_ValueBMod3Location, 4).Float() : default(Single);
         #endregion
         #region ImpulseDist
         private int _ImpulseDistLocation => _DNAMLocation!.Value.Min + 0xC4;
-        private bool _ImpulseDist_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break6);
+        private bool _ImpulseDist_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break6) && _DNAMLocation!.Value.Max - _ImpulseDistLocation + 1 >= 4;
         public Single ImpulseDist => _ImpulseDist_IsSet ? _recordData.Slice(_ImpulseDistLocation, 4).Float() : default(Single);
         #endregion
         #region SkillReq
         private int _SkillReqLocation => _DNAMLocation!.Value.Min + 0xC8;
-        private bool _SkillReq_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break7);
+        private bool _SkillReq_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Weapon.DNAMDataType.Break7) && _DNAMLocation!.Value.Max - _SkillReqLocation + 1 >= 4;
         public UInt32 SkillReq => _SkillReq_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_SkillReqLocation, 4)) : default(UInt32);
         #endregion
         private RangeInt32? _CRDTLocation;
         #region CriticalDamage
         private int _CriticalDamageLocation => _CRDTLocation!.Value.Min;
-        private bool _CriticalDamage_IsSet => _CRDTLocation.HasValue;
+        private bool _CriticalDamage_IsSet => _CRDTLocation.HasValue && _CRDTLocation!.Value.Max - _CriticalDamageLocation + 1 >= 2;
         public UInt16 CriticalDamage => _CriticalDamage_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_CriticalDamageLocation, 2)) : default(UInt16);
         #endregion
         #region CrdtUnused1
         private int _CrdtUnused1Location => _CRDTLocation!.Value.Min + 0x2;
-        private bool _CrdtUnused1_IsSet => _CRDTLocation.HasValue;
+        private bool _CrdtUnused1_IsSet => _CRDTLocation.HasValue && _CRDTLocation!.Value.Max - _CrdtUnused1Location + 1 >= 2;
         public UInt16 CrdtUnused1 => _CrdtUnused1_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_CrdtUnused1Location, 2)) : default(UInt16);
         #endregion
         #region CriticalPercentMult
         private int _CriticalPercentMultLocation => _CRDTLocation!.Value.Min + 0x4;
-        private bool _CriticalPercentMult_IsSet => _CRDTLocation.HasValue;
+        private bool _CriticalPercentMult_IsSet => _CRDTLocation.HasValue && _CRDTLocation!.Value.Max - _CriticalPercentMultLocation + 1 >= 4;
         public Single CriticalPercentMult => _CriticalPercentMult_IsSet ? _recordData.Slice(_CriticalPercentMultLocation, 4).Float() : default(Single);
         #endregion
         #region CriticalOnDeath
         private int _CriticalOnDeathLocation => _CRDTLocation!.Value.Min + 0x8;
-        private bool _CriticalOnDeath_IsSet => _CRDTLocation.HasValue;
+        private bool _CriticalOnDeath_IsSet => _CRDTLocation.HasValue && _CRDTLocation!.Value.Max - _CriticalOnDeathLocation + 1 >= 4;
         public Boolean CriticalOnDeath => _CriticalOnDeath_IsSet ? _recordData.Slice(_CriticalOnDeathLocation, 4)[0] >= 1 : default(Boolean);
         #endregion
         #region CriticalEffect
         private int _CriticalEffectLocation => _CRDTLocation!.Value.Min + 0xC;
-        private bool _CriticalEffect_IsSet => _CRDTLocation.HasValue;
+        private bool _CriticalEffect_IsSet => _CRDTLocation.HasValue && _CRDTLocation!.Value.Max - _CriticalEffectLocation + 1 >= 4;
         public IFormLinkGetter<ISpellGetter> CriticalEffect => _CriticalEffect_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_CriticalEffectLocation, 0x4), isSet: _CriticalEffect_IsSet) : FormLink<ISpellGetter>.Null;
         #endregion
         #region Vats

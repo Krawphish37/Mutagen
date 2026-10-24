@@ -4540,33 +4540,33 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DATALocation;
         #region Value
         private int _ValueLocation => _DATALocation!.Value.Min;
-        private bool _Value_IsSet => _DATALocation.HasValue;
+        private bool _Value_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ValueLocation + 1 >= 4;
         public Int32 Value => _Value_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_ValueLocation, 4)) : default(Int32);
         #endregion
         #region Weight
         private int _WeightLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Weight_IsSet => _DATALocation.HasValue;
+        private bool _Weight_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _WeightLocation + 1 >= 4;
         public Single Weight => _Weight_IsSet ? _recordData.Slice(_WeightLocation, 4).Float() : default(Single);
         #endregion
         #region Health
         private int _HealthLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Health_IsSet => _DATALocation.HasValue;
+        private bool _Health_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HealthLocation + 1 >= 4;
         public UInt32 Health => _Health_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_HealthLocation, 4)) : default(UInt32);
         #endregion
         private RangeInt32? _FNAMLocation;
         #region ArmorRating
         private int _ArmorRatingLocation => _FNAMLocation!.Value.Min;
-        private bool _ArmorRating_IsSet => _FNAMLocation.HasValue;
+        private bool _ArmorRating_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _ArmorRatingLocation + 1 >= 2;
         public UInt16 ArmorRating => _ArmorRating_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_ArmorRatingLocation, 2)) : default(UInt16);
         #endregion
         #region BaseAddonIndex
         private int _BaseAddonIndexLocation => _FNAMLocation!.Value.Min + 0x2;
-        private bool _BaseAddonIndex_IsSet => _FNAMLocation.HasValue;
+        private bool _BaseAddonIndex_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _BaseAddonIndexLocation + 1 >= 2;
         public UInt16 BaseAddonIndex => _BaseAddonIndex_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_BaseAddonIndexLocation, 2)) : default(UInt16);
         #endregion
         #region StaggerRating
         private int _StaggerRatingLocation => _FNAMLocation!.Value.Min + 0x4;
-        private bool _StaggerRating_IsSet => _FNAMLocation.HasValue;
+        private bool _StaggerRating_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _StaggerRatingLocation + 1 >= 1;
         public Byte StaggerRating => _StaggerRating_IsSet ? _recordData.Span[_StaggerRatingLocation] : default;
         #endregion
         #region Unused

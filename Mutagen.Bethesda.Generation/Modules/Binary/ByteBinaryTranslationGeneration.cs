@@ -79,7 +79,7 @@ public class ByteBinaryTranslationGeneration : PrimitiveBinaryTranslationGenerat
             }
             else
             {
-                DataBinaryTranslationGeneration.GenerateWrapperExtraMembers(sb, dataType, objGen, typeGen, passedLengthAccessor);
+                DataBinaryTranslationGeneration.GenerateWrapperExtraMembers(sb, dataType, objGen, typeGen, passedLengthAccessor, expectedLength: 1);
                 sb.AppendLine($"public {typeGen.TypeName(getter: true)} {typeGen.Name} => _{typeGen.Name}_IsSet ? {recordDataAccessor}.Span[_{typeGen.Name}Location] : default;");
             }
         }

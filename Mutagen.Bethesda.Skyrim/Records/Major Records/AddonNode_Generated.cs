@@ -1947,12 +1947,12 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _DNAMLocation;
         #region MasterParticleSystemCap
         private int _MasterParticleSystemCapLocation => _DNAMLocation!.Value.Min;
-        private bool _MasterParticleSystemCap_IsSet => _DNAMLocation.HasValue;
+        private bool _MasterParticleSystemCap_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MasterParticleSystemCapLocation + 1 >= 2;
         public UInt16 MasterParticleSystemCap => _MasterParticleSystemCap_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_MasterParticleSystemCapLocation, 2)) : default(UInt16);
         #endregion
         #region Flags
         private int _FlagsLocation => _DNAMLocation!.Value.Min + 0x2;
-        private bool _Flags_IsSet => _DNAMLocation.HasValue;
+        private bool _Flags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlagsLocation + 1 >= 2;
         public AddonNode.Flag Flags => _Flags_IsSet ? (AddonNode.Flag)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x2)) : default;
         #endregion
         partial void CustomFactoryEnd(

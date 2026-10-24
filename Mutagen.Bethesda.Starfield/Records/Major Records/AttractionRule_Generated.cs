@@ -1859,32 +1859,32 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _AOR2Location;
         #region Radius
         private int _RadiusLocation => _AOR2Location!.Value.Min;
-        private bool _Radius_IsSet => _AOR2Location.HasValue;
+        private bool _Radius_IsSet => _AOR2Location.HasValue && _AOR2Location!.Value.Max - _RadiusLocation + 1 >= 4;
         public Single Radius => _Radius_IsSet ? _recordData.Slice(_RadiusLocation, 4).Float() : default(Single);
         #endregion
         #region MinDelay
         private int _MinDelayLocation => _AOR2Location!.Value.Min + 0x4;
-        private bool _MinDelay_IsSet => _AOR2Location.HasValue;
+        private bool _MinDelay_IsSet => _AOR2Location.HasValue && _AOR2Location!.Value.Max - _MinDelayLocation + 1 >= 4;
         public Single MinDelay => _MinDelay_IsSet ? _recordData.Slice(_MinDelayLocation, 4).Float() : default(Single);
         #endregion
         #region MaxDelay
         private int _MaxDelayLocation => _AOR2Location!.Value.Min + 0x8;
-        private bool _MaxDelay_IsSet => _AOR2Location.HasValue;
+        private bool _MaxDelay_IsSet => _AOR2Location.HasValue && _AOR2Location!.Value.Max - _MaxDelayLocation + 1 >= 4;
         public Single MaxDelay => _MaxDelay_IsSet ? _recordData.Slice(_MaxDelayLocation, 4).Float() : default(Single);
         #endregion
         #region RequiresLineOfSight
         private int _RequiresLineOfSightLocation => _AOR2Location!.Value.Min + 0xC;
-        private bool _RequiresLineOfSight_IsSet => _AOR2Location.HasValue;
+        private bool _RequiresLineOfSight_IsSet => _AOR2Location.HasValue && _AOR2Location!.Value.Max - _RequiresLineOfSightLocation + 1 >= 1;
         public Boolean RequiresLineOfSight => _RequiresLineOfSight_IsSet ? _recordData.Slice(_RequiresLineOfSightLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region IsCombatTarget
         private int _IsCombatTargetLocation => _AOR2Location!.Value.Min + 0xD;
-        private bool _IsCombatTarget_IsSet => _AOR2Location.HasValue;
+        private bool _IsCombatTarget_IsSet => _AOR2Location.HasValue && _AOR2Location!.Value.Max - _IsCombatTargetLocation + 1 >= 1;
         public Boolean IsCombatTarget => _IsCombatTarget_IsSet ? _recordData.Slice(_IsCombatTargetLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region Unused
         private int _UnusedLocation => _AOR2Location!.Value.Min + 0xE;
-        private bool _Unused_IsSet => _AOR2Location.HasValue;
+        private bool _Unused_IsSet => _AOR2Location.HasValue && _AOR2Location!.Value.Max - _UnusedLocation + 1 >= 2;
         public UInt16 Unused => _Unused_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_UnusedLocation, 2)) : default(UInt16);
         #endregion
         partial void CustomFactoryEnd(

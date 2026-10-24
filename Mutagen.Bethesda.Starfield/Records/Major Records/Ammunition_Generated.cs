@@ -3344,33 +3344,33 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DATALocation;
         #region Value
         private int _ValueLocation => _DATALocation!.Value.Min;
-        private bool _Value_IsSet => _DATALocation.HasValue;
+        private bool _Value_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ValueLocation + 1 >= 4;
         public UInt32 Value => _Value_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ValueLocation, 4)) : default(UInt32);
         #endregion
         #region Weight
         private int _WeightLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Weight_IsSet => _DATALocation.HasValue;
+        private bool _Weight_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _WeightLocation + 1 >= 4;
         public Single Weight => _Weight_IsSet ? _recordData.Slice(_WeightLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _DNAMLocation;
         #region Projectile
         private int _ProjectileLocation => _DNAMLocation!.Value.Min;
-        private bool _Projectile_IsSet => _DNAMLocation.HasValue;
+        private bool _Projectile_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ProjectileLocation + 1 >= 4;
         public IFormLinkGetter<IProjectileGetter> Projectile => _Projectile_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IProjectileGetter>(_package, _recordData.Span.Slice(_ProjectileLocation, 0x4), isSet: _Projectile_IsSet) : FormLink<IProjectileGetter>.Null;
         #endregion
         #region Flags
         private int _FlagsLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _DNAMLocation.HasValue;
+        private bool _Flags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Ammunition.Flag Flags => _Flags_IsSet ? (Ammunition.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Damage
         private int _DamageLocation => _DNAMLocation!.Value.Min + 0x8;
-        private bool _Damage_IsSet => _DNAMLocation.HasValue;
+        private bool _Damage_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DamageLocation + 1 >= 4;
         public Single Damage => _Damage_IsSet ? _recordData.Slice(_DamageLocation, 4).Float() : default(Single);
         #endregion
         #region Health
         private int _HealthLocation => _DNAMLocation!.Value.Min + 0xC;
-        private bool _Health_IsSet => _DNAMLocation.HasValue;
+        private bool _Health_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _HealthLocation + 1 >= 4;
         public UInt32 Health => _Health_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_HealthLocation, 4)) : default(UInt32);
         #endregion
         #region ShortName

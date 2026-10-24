@@ -1882,32 +1882,32 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _DATALocation;
         #region Projectile
         private int _ProjectileLocation => _DATALocation!.Value.Min;
-        private bool _Projectile_IsSet => _DATALocation.HasValue;
+        private bool _Projectile_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ProjectileLocation + 1 >= 4;
         public IFormLinkGetter<IProjectileGetter> Projectile => _Projectile_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IProjectileGetter>(_package, _recordData.Span.Slice(_ProjectileLocation, 0x4), isSet: _Projectile_IsSet) : FormLink<IProjectileGetter>.Null;
         #endregion
         #region Explosion
         private int _ExplosionLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Explosion_IsSet => _DATALocation.HasValue;
+        private bool _Explosion_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> Explosion => _Explosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_ExplosionLocation, 0x4), isSet: _Explosion_IsSet) : FormLink<IExplosionGetter>.Null;
         #endregion
         #region EffectShader
         private int _EffectShaderLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _EffectShader_IsSet => _DATALocation.HasValue;
+        private bool _EffectShader_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EffectShaderLocation + 1 >= 4;
         public IFormLinkGetter<IEffectShaderGetter> EffectShader => _EffectShader_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IEffectShaderGetter>(_package, _recordData.Span.Slice(_EffectShaderLocation, 0x4), isSet: _EffectShader_IsSet) : FormLink<IEffectShaderGetter>.Null;
         #endregion
         #region HitEffectArt
         private int _HitEffectArtLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _HitEffectArt_IsSet => _DATALocation.HasValue;
+        private bool _HitEffectArt_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HitEffectArtLocation + 1 >= 4;
         public IFormLinkGetter<IArtObjectGetter> HitEffectArt => _HitEffectArt_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IArtObjectGetter>(_package, _recordData.Span.Slice(_HitEffectArtLocation, 0x4), isSet: _HitEffectArt_IsSet) : FormLink<IArtObjectGetter>.Null;
         #endregion
         #region ImpactDataSet
         private int _ImpactDataSetLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _ImpactDataSet_IsSet => _DATALocation.HasValue;
+        private bool _ImpactDataSet_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ImpactDataSetLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> ImpactDataSet => _ImpactDataSet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_ImpactDataSetLocation, 0x4), isSet: _ImpactDataSet_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region InheritScale
         private int _InheritScaleLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _InheritScale_IsSet => _DATALocation.HasValue;
+        private bool _InheritScale_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _InheritScaleLocation + 1 >= 4;
         public DualCastData.InheritScaleType InheritScale => _InheritScale_IsSet ? (DualCastData.InheritScaleType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_InheritScaleLocation, 0x4)) : default;
         #endregion
         partial void CustomFactoryEnd(

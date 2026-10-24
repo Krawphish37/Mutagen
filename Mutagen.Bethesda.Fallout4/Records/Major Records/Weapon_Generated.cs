@@ -7177,182 +7177,182 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DNAMLocation;
         #region Ammo
         private int _AmmoLocation => _DNAMLocation!.Value.Min;
-        private bool _Ammo_IsSet => _DNAMLocation.HasValue;
+        private bool _Ammo_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AmmoLocation + 1 >= 4;
         public IFormLinkGetter<IAmmunitionGetter> Ammo => _Ammo_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IAmmunitionGetter>(_package, _recordData.Span.Slice(_AmmoLocation, 0x4), isSet: _Ammo_IsSet) : FormLink<IAmmunitionGetter>.Null;
         #endregion
         #region Speed
         private int _SpeedLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _Speed_IsSet => _DNAMLocation.HasValue;
+        private bool _Speed_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SpeedLocation + 1 >= 4;
         public Single Speed => _Speed_IsSet ? _recordData.Slice(_SpeedLocation, 4).Float() : default(Single);
         #endregion
         #region ReloadSpeed
         private int _ReloadSpeedLocation => _DNAMLocation!.Value.Min + 0x8;
-        private bool _ReloadSpeed_IsSet => _DNAMLocation.HasValue;
+        private bool _ReloadSpeed_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ReloadSpeedLocation + 1 >= 4;
         public Single ReloadSpeed => _ReloadSpeed_IsSet ? _recordData.Slice(_ReloadSpeedLocation, 4).Float() : default(Single);
         #endregion
         #region Reach
         private int _ReachLocation => _DNAMLocation!.Value.Min + 0xC;
-        private bool _Reach_IsSet => _DNAMLocation.HasValue;
+        private bool _Reach_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ReachLocation + 1 >= 4;
         public Single Reach => _Reach_IsSet ? _recordData.Slice(_ReachLocation, 4).Float() : default(Single);
         #endregion
         #region MinRange
         private int _MinRangeLocation => _DNAMLocation!.Value.Min + 0x10;
-        private bool _MinRange_IsSet => _DNAMLocation.HasValue;
+        private bool _MinRange_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MinRangeLocation + 1 >= 4;
         public Single MinRange => _MinRange_IsSet ? _recordData.Slice(_MinRangeLocation, 4).Float() : default(Single);
         #endregion
         #region MaxRange
         private int _MaxRangeLocation => _DNAMLocation!.Value.Min + 0x14;
-        private bool _MaxRange_IsSet => _DNAMLocation.HasValue;
+        private bool _MaxRange_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MaxRangeLocation + 1 >= 4;
         public Single MaxRange => _MaxRange_IsSet ? _recordData.Slice(_MaxRangeLocation, 4).Float() : default(Single);
         #endregion
         #region AttackDelay
         private int _AttackDelayLocation => _DNAMLocation!.Value.Min + 0x18;
-        private bool _AttackDelay_IsSet => _DNAMLocation.HasValue;
+        private bool _AttackDelay_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AttackDelayLocation + 1 >= 4;
         public Single AttackDelay => _AttackDelay_IsSet ? _recordData.Slice(_AttackDelayLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown
         private int _UnknownLocation => _DNAMLocation!.Value.Min + 0x1C;
-        private bool _Unknown_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public Single Unknown => _Unknown_IsSet ? _recordData.Slice(_UnknownLocation, 4).Float() : default(Single);
         #endregion
         #region DamageOutOfRangeMult
         private int _DamageOutOfRangeMultLocation => _DNAMLocation!.Value.Min + 0x20;
-        private bool _DamageOutOfRangeMult_IsSet => _DNAMLocation.HasValue;
+        private bool _DamageOutOfRangeMult_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DamageOutOfRangeMultLocation + 1 >= 4;
         public Single DamageOutOfRangeMult => _DamageOutOfRangeMult_IsSet ? _recordData.Slice(_DamageOutOfRangeMultLocation, 4).Float() : default(Single);
         #endregion
         #region OnHit
         private int _OnHitLocation => _DNAMLocation!.Value.Min + 0x24;
-        private bool _OnHit_IsSet => _DNAMLocation.HasValue;
+        private bool _OnHit_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _OnHitLocation + 1 >= 4;
         public Weapon.HitBehavior OnHit => _OnHit_IsSet ? (Weapon.HitBehavior)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_OnHitLocation, 0x4)) : default;
         #endregion
         #region Skill
         private int _SkillLocation => _DNAMLocation!.Value.Min + 0x28;
-        private bool _Skill_IsSet => _DNAMLocation.HasValue;
+        private bool _Skill_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SkillLocation + 1 >= 4;
         public IFormLinkGetter<IActorValueInformationGetter> Skill => _Skill_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IActorValueInformationGetter>(_package, _recordData.Span.Slice(_SkillLocation, 0x4), isSet: _Skill_IsSet) : FormLink<IActorValueInformationGetter>.Null;
         #endregion
         #region Resist
         private int _ResistLocation => _DNAMLocation!.Value.Min + 0x2C;
-        private bool _Resist_IsSet => _DNAMLocation.HasValue;
+        private bool _Resist_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ResistLocation + 1 >= 4;
         public IFormLinkGetter<IActorValueInformationGetter> Resist => _Resist_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IActorValueInformationGetter>(_package, _recordData.Span.Slice(_ResistLocation, 0x4), isSet: _Resist_IsSet) : FormLink<IActorValueInformationGetter>.Null;
         #endregion
         #region Flags
         private int _FlagsLocation => _DNAMLocation!.Value.Min + 0x30;
-        private bool _Flags_IsSet => _DNAMLocation.HasValue;
+        private bool _Flags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Weapon.Flag Flags => _Flags_IsSet ? (Weapon.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Capacity
         private int _CapacityLocation => _DNAMLocation!.Value.Min + 0x34;
-        private bool _Capacity_IsSet => _DNAMLocation.HasValue;
+        private bool _Capacity_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _CapacityLocation + 1 >= 2;
         public UInt16 Capacity => _Capacity_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_CapacityLocation, 2)) : default(UInt16);
         #endregion
         #region AnimationType
         private int _AnimationTypeLocation => _DNAMLocation!.Value.Min + 0x36;
-        private bool _AnimationType_IsSet => _DNAMLocation.HasValue;
+        private bool _AnimationType_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AnimationTypeLocation + 1 >= 1;
         public Weapon.AnimationTypes AnimationType => _AnimationType_IsSet ? (Weapon.AnimationTypes)_recordData.Span.Slice(_AnimationTypeLocation, 0x1)[0] : default;
         #endregion
         #region SecondaryDamage
         private int _SecondaryDamageLocation => _DNAMLocation!.Value.Min + 0x37;
-        private bool _SecondaryDamage_IsSet => _DNAMLocation.HasValue;
+        private bool _SecondaryDamage_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SecondaryDamageLocation + 1 >= 4;
         public Single SecondaryDamage => _SecondaryDamage_IsSet ? _recordData.Slice(_SecondaryDamageLocation, 4).Float() : default(Single);
         #endregion
         #region Weight
         private int _WeightLocation => _DNAMLocation!.Value.Min + 0x3B;
-        private bool _Weight_IsSet => _DNAMLocation.HasValue;
+        private bool _Weight_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _WeightLocation + 1 >= 4;
         public Single Weight => _Weight_IsSet ? _recordData.Slice(_WeightLocation, 4).Float() : default(Single);
         #endregion
         #region Value
         private int _ValueLocation => _DNAMLocation!.Value.Min + 0x3F;
-        private bool _Value_IsSet => _DNAMLocation.HasValue;
+        private bool _Value_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ValueLocation + 1 >= 4;
         public UInt32 Value => _Value_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ValueLocation, 4)) : default(UInt32);
         #endregion
         #region BaseDamage
         private int _BaseDamageLocation => _DNAMLocation!.Value.Min + 0x43;
-        private bool _BaseDamage_IsSet => _DNAMLocation.HasValue;
+        private bool _BaseDamage_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _BaseDamageLocation + 1 >= 2;
         public UInt16 BaseDamage => _BaseDamage_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_BaseDamageLocation, 2)) : default(UInt16);
         #endregion
         #region SoundLevel
         private int _SoundLevelLocation => _DNAMLocation!.Value.Min + 0x45;
-        private bool _SoundLevel_IsSet => _DNAMLocation.HasValue;
+        private bool _SoundLevel_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SoundLevelLocation + 1 >= 4;
         public SoundLevel SoundLevel => _SoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SoundLevelLocation, 0x4)) : default;
         #endregion
         #region AttackSound
         private int _AttackSoundLocation => _DNAMLocation!.Value.Min + 0x49;
-        private bool _AttackSound_IsSet => _DNAMLocation.HasValue;
+        private bool _AttackSound_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AttackSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundDescriptorGetter> AttackSound => _AttackSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundDescriptorGetter>(_package, _recordData.Span.Slice(_AttackSoundLocation, 0x4), isSet: _AttackSound_IsSet) : FormLink<ISoundDescriptorGetter>.Null;
         #endregion
         #region Attack2dSound
         private int _Attack2dSoundLocation => _DNAMLocation!.Value.Min + 0x4D;
-        private bool _Attack2dSound_IsSet => _DNAMLocation.HasValue;
+        private bool _Attack2dSound_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _Attack2dSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundDescriptorGetter> Attack2dSound => _Attack2dSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundDescriptorGetter>(_package, _recordData.Span.Slice(_Attack2dSoundLocation, 0x4), isSet: _Attack2dSound_IsSet) : FormLink<ISoundDescriptorGetter>.Null;
         #endregion
         #region AttackLoopSound
         private int _AttackLoopSoundLocation => _DNAMLocation!.Value.Min + 0x51;
-        private bool _AttackLoopSound_IsSet => _DNAMLocation.HasValue;
+        private bool _AttackLoopSound_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AttackLoopSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundDescriptorGetter> AttackLoopSound => _AttackLoopSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundDescriptorGetter>(_package, _recordData.Span.Slice(_AttackLoopSoundLocation, 0x4), isSet: _AttackLoopSound_IsSet) : FormLink<ISoundDescriptorGetter>.Null;
         #endregion
         #region AttackFailSound
         private int _AttackFailSoundLocation => _DNAMLocation!.Value.Min + 0x55;
-        private bool _AttackFailSound_IsSet => _DNAMLocation.HasValue;
+        private bool _AttackFailSound_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AttackFailSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundDescriptorGetter> AttackFailSound => _AttackFailSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundDescriptorGetter>(_package, _recordData.Span.Slice(_AttackFailSoundLocation, 0x4), isSet: _AttackFailSound_IsSet) : FormLink<ISoundDescriptorGetter>.Null;
         #endregion
         #region IdleSound
         private int _IdleSoundLocation => _DNAMLocation!.Value.Min + 0x59;
-        private bool _IdleSound_IsSet => _DNAMLocation.HasValue;
+        private bool _IdleSound_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _IdleSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundDescriptorGetter> IdleSound => _IdleSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundDescriptorGetter>(_package, _recordData.Span.Slice(_IdleSoundLocation, 0x4), isSet: _IdleSound_IsSet) : FormLink<ISoundDescriptorGetter>.Null;
         #endregion
         #region EquipSound
         private int _EquipSoundLocation => _DNAMLocation!.Value.Min + 0x5D;
-        private bool _EquipSound_IsSet => _DNAMLocation.HasValue;
+        private bool _EquipSound_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _EquipSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundDescriptorGetter> EquipSound => _EquipSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundDescriptorGetter>(_package, _recordData.Span.Slice(_EquipSoundLocation, 0x4), isSet: _EquipSound_IsSet) : FormLink<ISoundDescriptorGetter>.Null;
         #endregion
         #region UnequipSound
         private int _UnequipSoundLocation => _DNAMLocation!.Value.Min + 0x61;
-        private bool _UnequipSound_IsSet => _DNAMLocation.HasValue;
+        private bool _UnequipSound_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _UnequipSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundDescriptorGetter> UnequipSound => _UnequipSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundDescriptorGetter>(_package, _recordData.Span.Slice(_UnequipSoundLocation, 0x4), isSet: _UnequipSound_IsSet) : FormLink<ISoundDescriptorGetter>.Null;
         #endregion
         #region FastEquipSound
         private int _FastEquipSoundLocation => _DNAMLocation!.Value.Min + 0x65;
-        private bool _FastEquipSound_IsSet => _DNAMLocation.HasValue;
+        private bool _FastEquipSound_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FastEquipSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundDescriptorGetter> FastEquipSound => _FastEquipSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundDescriptorGetter>(_package, _recordData.Span.Slice(_FastEquipSoundLocation, 0x4), isSet: _FastEquipSound_IsSet) : FormLink<ISoundDescriptorGetter>.Null;
         #endregion
         #region AccuracyBonus
         private int _AccuracyBonusLocation => _DNAMLocation!.Value.Min + 0x69;
-        private bool _AccuracyBonus_IsSet => _DNAMLocation.HasValue;
+        private bool _AccuracyBonus_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AccuracyBonusLocation + 1 >= 1;
         public Byte AccuracyBonus => _AccuracyBonus_IsSet ? _recordData.Span[_AccuracyBonusLocation] : default;
         #endregion
         #region AnimationAttackSeconds
         private int _AnimationAttackSecondsLocation => _DNAMLocation!.Value.Min + 0x6A;
-        private bool _AnimationAttackSeconds_IsSet => _DNAMLocation.HasValue;
+        private bool _AnimationAttackSeconds_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AnimationAttackSecondsLocation + 1 >= 4;
         public Single AnimationAttackSeconds => _AnimationAttackSeconds_IsSet ? _recordData.Slice(_AnimationAttackSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown2
         private int _Unknown2Location => _DNAMLocation!.Value.Min + 0x6E;
-        private bool _Unknown2_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown2_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _Unknown2Location + 1 >= 2;
         public UInt16 Unknown2 => _Unknown2_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_Unknown2Location, 2)) : default(UInt16);
         #endregion
         #region ActionPointCost
         private int _ActionPointCostLocation => _DNAMLocation!.Value.Min + 0x70;
-        private bool _ActionPointCost_IsSet => _DNAMLocation.HasValue;
+        private bool _ActionPointCost_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ActionPointCostLocation + 1 >= 4;
         public Single ActionPointCost => _ActionPointCost_IsSet ? _recordData.Slice(_ActionPointCostLocation, 4).Float() : default(Single);
         #endregion
         #region FullPowerSeconds
         private int _FullPowerSecondsLocation => _DNAMLocation!.Value.Min + 0x74;
-        private bool _FullPowerSeconds_IsSet => _DNAMLocation.HasValue;
+        private bool _FullPowerSeconds_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FullPowerSecondsLocation + 1 >= 4;
         public Single FullPowerSeconds => _FullPowerSeconds_IsSet ? _recordData.Slice(_FullPowerSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region MinPowerPerShot
         private int _MinPowerPerShotLocation => _DNAMLocation!.Value.Min + 0x78;
-        private bool _MinPowerPerShot_IsSet => _DNAMLocation.HasValue;
+        private bool _MinPowerPerShot_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MinPowerPerShotLocation + 1 >= 4;
         public Single MinPowerPerShot => _MinPowerPerShot_IsSet ? _recordData.Slice(_MinPowerPerShotLocation, 4).Float() : default(Single);
         #endregion
         #region Stagger
         private int _StaggerLocation => _DNAMLocation!.Value.Min + 0x7C;
-        private bool _Stagger_IsSet => _DNAMLocation.HasValue;
+        private bool _Stagger_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _StaggerLocation + 1 >= 4;
         public Stagger Stagger => _Stagger_IsSet ? (Stagger)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_StaggerLocation, 0x4)) : default;
         #endregion
         #region Unknown3
         private int _Unknown3Location => _DNAMLocation!.Value.Min + 0x80;
-        private bool _Unknown3_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown3_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _Unknown3Location + 1 >= 4;
         public Int32 Unknown3 => _Unknown3_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_Unknown3Location, 4)) : default(Int32);
         #endregion
         #region ExtraData
@@ -7362,17 +7362,17 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _CRDTLocation;
         #region CritDamageMult
         private int _CritDamageMultLocation => _CRDTLocation!.Value.Min;
-        private bool _CritDamageMult_IsSet => _CRDTLocation.HasValue;
+        private bool _CritDamageMult_IsSet => _CRDTLocation.HasValue && _CRDTLocation!.Value.Max - _CritDamageMultLocation + 1 >= 4;
         public Single CritDamageMult => _CritDamageMult_IsSet ? _recordData.Slice(_CritDamageMultLocation, 4).Float() : default(Single);
         #endregion
         #region CritChargeBonus
         private int _CritChargeBonusLocation => _CRDTLocation!.Value.Min + 0x4;
-        private bool _CritChargeBonus_IsSet => _CRDTLocation.HasValue;
+        private bool _CritChargeBonus_IsSet => _CRDTLocation.HasValue && _CRDTLocation!.Value.Max - _CritChargeBonusLocation + 1 >= 4;
         public Single CritChargeBonus => _CritChargeBonus_IsSet ? _recordData.Slice(_CritChargeBonusLocation, 4).Float() : default(Single);
         #endregion
         #region CritEffect
         private int _CritEffectLocation => _CRDTLocation!.Value.Min + 0x8;
-        private bool _CritEffect_IsSet => _CRDTLocation.HasValue;
+        private bool _CritEffect_IsSet => _CRDTLocation.HasValue && _CRDTLocation!.Value.Max - _CritEffectLocation + 1 >= 4;
         public IFormLinkGetter<ISpellGetter> CritEffect => _CritEffect_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_CritEffectLocation, 0x4), isSet: _CritEffect_IsSet) : FormLink<ISpellGetter>.Null;
         #endregion
         #region ImpactDataSet

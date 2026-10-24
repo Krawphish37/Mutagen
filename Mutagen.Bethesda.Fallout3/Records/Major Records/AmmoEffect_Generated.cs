@@ -1667,17 +1667,17 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region Type
         private int _TypeLocation => _DATALocation!.Value.Min;
-        private bool _Type_IsSet => _DATALocation.HasValue;
+        private bool _Type_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TypeLocation + 1 >= 4;
         public AmmoEffect.AmmoEffectType Type => _Type_IsSet ? (AmmoEffect.AmmoEffectType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default;
         #endregion
         #region Operation
         private int _OperationLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Operation_IsSet => _DATALocation.HasValue;
+        private bool _Operation_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _OperationLocation + 1 >= 4;
         public AmmoEffect.AmmoEffectOperation Operation => _Operation_IsSet ? (AmmoEffect.AmmoEffectOperation)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_OperationLocation, 0x4)) : default;
         #endregion
         #region Value
         private int _ValueLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Value_IsSet => _DATALocation.HasValue;
+        private bool _Value_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ValueLocation + 1 >= 4;
         public Single Value => _Value_IsSet ? _recordData.Slice(_ValueLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

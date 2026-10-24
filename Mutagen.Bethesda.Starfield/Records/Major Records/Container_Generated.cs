@@ -4415,7 +4415,7 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DATALocation;
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public Container.Flag Flags => _Flags_IsSet ? (Container.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region Keywords

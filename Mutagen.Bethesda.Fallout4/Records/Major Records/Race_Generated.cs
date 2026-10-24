@@ -9449,7 +9449,7 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DATALocation;
         #region Height
         private int _HeightLocation => _DATALocation!.Value.Min;
-        private bool _Height_IsSet => _DATALocation.HasValue;
+        private bool _Height_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HeightLocation + 1 >= 8;
         public IGenderedItemGetter<Single> Height
         {
             get
@@ -9464,7 +9464,7 @@ namespace Mutagen.Bethesda.Fallout4
         #endregion
         #region DefaultWeight
         private int _DefaultWeightLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _DefaultWeight_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 109;
+        private bool _DefaultWeight_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 109 && _DATALocation!.Value.Max - _DefaultWeightLocation + 1 >= 24;
         public IGenderedItemGetter<IRaceWeightGetter> DefaultWeight
         {
             get
@@ -9485,17 +9485,17 @@ namespace Mutagen.Bethesda.Fallout4
         #endregion
         #region AccelerationRate
         private int _AccelerationRateLocation => _DATALocation!.Value.Min + DefaultWeightVersioningOffset + 0x24;
-        private bool _AccelerationRate_IsSet => _DATALocation.HasValue;
+        private bool _AccelerationRate_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AccelerationRateLocation + 1 >= 4;
         public Single AccelerationRate => _AccelerationRate_IsSet ? _recordData.Slice(_AccelerationRateLocation, 4).Float() : default(Single);
         #endregion
         #region DecelerationRate
         private int _DecelerationRateLocation => _DATALocation!.Value.Min + DefaultWeightVersioningOffset + 0x28;
-        private bool _DecelerationRate_IsSet => _DATALocation.HasValue;
+        private bool _DecelerationRate_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DecelerationRateLocation + 1 >= 4;
         public Single DecelerationRate => _DecelerationRate_IsSet ? _recordData.Slice(_DecelerationRateLocation, 4).Float() : default(Single);
         #endregion
         #region Size
         private int _SizeLocation => _DATALocation!.Value.Min + DefaultWeightVersioningOffset + 0x2C;
-        private bool _Size_IsSet => _DATALocation.HasValue;
+        private bool _Size_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SizeLocation + 1 >= 4;
         public Size Size => _Size_IsSet ? (Size)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SizeLocation, 0x4)) : default;
         #endregion
         #region Unknown
@@ -9505,43 +9505,43 @@ namespace Mutagen.Bethesda.Fallout4
         #endregion
         #region InjuredHealthPercent
         private int _InjuredHealthPercentLocation => _DATALocation!.Value.Min + DefaultWeightVersioningOffset + 0x38;
-        private bool _InjuredHealthPercent_IsSet => _DATALocation.HasValue;
+        private bool _InjuredHealthPercent_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _InjuredHealthPercentLocation + 1 >= 4;
         public Single InjuredHealthPercent => _InjuredHealthPercent_IsSet ? _recordData.Slice(_InjuredHealthPercentLocation, 4).Float() : default(Single);
         #endregion
         #region ShieldBipedObject
         private int _ShieldBipedObjectLocation => _DATALocation!.Value.Min + DefaultWeightVersioningOffset + 0x3C;
-        private bool _ShieldBipedObject_IsSet => _DATALocation.HasValue;
+        private bool _ShieldBipedObject_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ShieldBipedObjectLocation + 1 >= 4;
         public BipedObject ShieldBipedObject => _ShieldBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ShieldBipedObjectLocation, 0x4)) : default;
         #endregion
         #region BeardBipedObject
         private int _BeardBipedObjectLocation => _DATALocation!.Value.Min + DefaultWeightVersioningOffset + 0x40;
-        private bool _BeardBipedObject_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 124;
+        private bool _BeardBipedObject_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 124 && _DATALocation!.Value.Max - _BeardBipedObjectLocation + 1 >= 4;
         public BipedObject BeardBipedObject => _BeardBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_BeardBipedObjectLocation, 0x4)) : default;
         int BeardBipedObjectVersioningOffset => DefaultWeightVersioningOffset + (_package.FormVersion!.FormVersion!.Value < 124 ? -4 : 0);
         #endregion
         #region BodyBipedObject
         private int _BodyBipedObjectLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x44;
-        private bool _BodyBipedObject_IsSet => _DATALocation.HasValue;
+        private bool _BodyBipedObject_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BodyBipedObjectLocation + 1 >= 4;
         public BipedObject BodyBipedObject => _BodyBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_BodyBipedObjectLocation, 0x4)) : default;
         #endregion
         #region AimAngleTolerance
         private int _AimAngleToleranceLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x48;
-        private bool _AimAngleTolerance_IsSet => _DATALocation.HasValue;
+        private bool _AimAngleTolerance_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AimAngleToleranceLocation + 1 >= 4;
         public Single AimAngleTolerance => _AimAngleTolerance_IsSet ? _recordData.Slice(_AimAngleToleranceLocation, 4).Float() : default(Single);
         #endregion
         #region FlightRadius
         private int _FlightRadiusLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x4C;
-        private bool _FlightRadius_IsSet => _DATALocation.HasValue;
+        private bool _FlightRadius_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlightRadiusLocation + 1 >= 4;
         public Single FlightRadius => _FlightRadius_IsSet ? _recordData.Slice(_FlightRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region AngularAccelerationRate
         private int _AngularAccelerationRateLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x50;
-        private bool _AngularAccelerationRate_IsSet => _DATALocation.HasValue;
+        private bool _AngularAccelerationRate_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AngularAccelerationRateLocation + 1 >= 4;
         public Single AngularAccelerationRate => _AngularAccelerationRate_IsSet ? _recordData.Slice(_AngularAccelerationRateLocation, 4).Float() : default(Single);
         #endregion
         #region AngularTolerance
         private int _AngularToleranceLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x54;
-        private bool _AngularTolerance_IsSet => _DATALocation.HasValue;
+        private bool _AngularTolerance_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AngularToleranceLocation + 1 >= 4;
         public Single AngularTolerance => _AngularTolerance_IsSet ? _recordData.Slice(_AngularToleranceLocation, 4).Float() : default(Single);
         #endregion
         #region Flags2
@@ -9558,125 +9558,125 @@ namespace Mutagen.Bethesda.Fallout4
         #endregion
         #region PipboyBipedObject
         private int _PipboyBipedObjectLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x80;
-        private bool _PipboyBipedObject_IsSet => _DATALocation.HasValue;
+        private bool _PipboyBipedObject_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PipboyBipedObjectLocation + 1 >= 4;
         public BipedObject PipboyBipedObject => _PipboyBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_PipboyBipedObjectLocation, 0x4)) : default;
         #endregion
         #region XPValue
         private int _XPValueLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x84;
-        private bool _XPValue_IsSet => _DATALocation.HasValue;
+        private bool _XPValue_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _XPValueLocation + 1 >= 2;
         public Int16 XPValue => _XPValue_IsSet ? BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_XPValueLocation, 2)) : default(Int16);
         #endregion
         #region SeverableDebrisScale
         private int _SeverableDebrisScaleLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x86;
-        private bool _SeverableDebrisScale_IsSet => _DATALocation.HasValue;
+        private bool _SeverableDebrisScale_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SeverableDebrisScaleLocation + 1 >= 4;
         public Single SeverableDebrisScale => _SeverableDebrisScale_IsSet ? _recordData.Slice(_SeverableDebrisScaleLocation, 4).Float() : default(Single);
         #endregion
         #region SeverableDebrisCount
         private int _SeverableDebrisCountLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x8A;
-        private bool _SeverableDebrisCount_IsSet => _DATALocation.HasValue;
+        private bool _SeverableDebrisCount_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SeverableDebrisCountLocation + 1 >= 1;
         public Byte SeverableDebrisCount => _SeverableDebrisCount_IsSet ? _recordData.Span[_SeverableDebrisCountLocation] : default;
         #endregion
         #region SeverableDecalCount
         private int _SeverableDecalCountLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x8B;
-        private bool _SeverableDecalCount_IsSet => _DATALocation.HasValue;
+        private bool _SeverableDecalCount_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SeverableDecalCountLocation + 1 >= 1;
         public Byte SeverableDecalCount => _SeverableDecalCount_IsSet ? _recordData.Span[_SeverableDecalCountLocation] : default;
         #endregion
         #region ExplodableDebrisScale
         private int _ExplodableDebrisScaleLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x8C;
-        private bool _ExplodableDebrisScale_IsSet => _DATALocation.HasValue;
+        private bool _ExplodableDebrisScale_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ExplodableDebrisScaleLocation + 1 >= 4;
         public Single ExplodableDebrisScale => _ExplodableDebrisScale_IsSet ? _recordData.Slice(_ExplodableDebrisScaleLocation, 4).Float() : default(Single);
         #endregion
         #region ExplodableDebrisCount
         private int _ExplodableDebrisCountLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x90;
-        private bool _ExplodableDebrisCount_IsSet => _DATALocation.HasValue;
+        private bool _ExplodableDebrisCount_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ExplodableDebrisCountLocation + 1 >= 1;
         public Byte ExplodableDebrisCount => _ExplodableDebrisCount_IsSet ? _recordData.Span[_ExplodableDebrisCountLocation] : default;
         #endregion
         #region ExplodableDecalCount
         private int _ExplodableDecalCountLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x91;
-        private bool _ExplodableDecalCount_IsSet => _DATALocation.HasValue;
+        private bool _ExplodableDecalCount_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ExplodableDecalCountLocation + 1 >= 1;
         public Byte ExplodableDecalCount => _ExplodableDecalCount_IsSet ? _recordData.Span[_ExplodableDecalCountLocation] : default;
         #endregion
         #region SeverableExplosion
         private int _SeverableExplosionLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x92;
-        private bool _SeverableExplosion_IsSet => _DATALocation.HasValue;
+        private bool _SeverableExplosion_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SeverableExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> SeverableExplosion => _SeverableExplosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_SeverableExplosionLocation, 0x4), isSet: _SeverableExplosion_IsSet) : FormLink<IExplosionGetter>.Null;
         #endregion
         #region SeverableDebris
         private int _SeverableDebrisLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x96;
-        private bool _SeverableDebris_IsSet => _DATALocation.HasValue;
+        private bool _SeverableDebris_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SeverableDebrisLocation + 1 >= 4;
         public IFormLinkGetter<IDebrisGetter> SeverableDebris => _SeverableDebris_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IDebrisGetter>(_package, _recordData.Span.Slice(_SeverableDebrisLocation, 0x4), isSet: _SeverableDebris_IsSet) : FormLink<IDebrisGetter>.Null;
         #endregion
         #region SeverableImpactDataSet
         private int _SeverableImpactDataSetLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x9A;
-        private bool _SeverableImpactDataSet_IsSet => _DATALocation.HasValue;
+        private bool _SeverableImpactDataSet_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SeverableImpactDataSetLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> SeverableImpactDataSet => _SeverableImpactDataSet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_SeverableImpactDataSetLocation, 0x4), isSet: _SeverableImpactDataSet_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region ExplodableExplosion
         private int _ExplodableExplosionLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x9E;
-        private bool _ExplodableExplosion_IsSet => _DATALocation.HasValue;
+        private bool _ExplodableExplosion_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ExplodableExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> ExplodableExplosion => _ExplodableExplosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_ExplodableExplosionLocation, 0x4), isSet: _ExplodableExplosion_IsSet) : FormLink<IExplosionGetter>.Null;
         #endregion
         #region ExplodableDebris
         private int _ExplodableDebrisLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0xA2;
-        private bool _ExplodableDebris_IsSet => _DATALocation.HasValue;
+        private bool _ExplodableDebris_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ExplodableDebrisLocation + 1 >= 4;
         public IFormLinkGetter<IDebrisGetter> ExplodableDebris => _ExplodableDebris_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IDebrisGetter>(_package, _recordData.Span.Slice(_ExplodableDebrisLocation, 0x4), isSet: _ExplodableDebris_IsSet) : FormLink<IDebrisGetter>.Null;
         #endregion
         #region ExplodableImpactDataSet
         private int _ExplodableImpactDataSetLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0xA6;
-        private bool _ExplodableImpactDataSet_IsSet => _DATALocation.HasValue;
+        private bool _ExplodableImpactDataSet_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ExplodableImpactDataSetLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> ExplodableImpactDataSet => _ExplodableImpactDataSet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_ExplodableImpactDataSetLocation, 0x4), isSet: _ExplodableImpactDataSet_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region OnCrippleDebrisScale
         private int _OnCrippleDebrisScaleLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0xAA;
-        private bool _OnCrippleDebrisScale_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 96;
+        private bool _OnCrippleDebrisScale_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 96 && _DATALocation!.Value.Max - _OnCrippleDebrisScaleLocation + 1 >= 4;
         public Single OnCrippleDebrisScale => _OnCrippleDebrisScale_IsSet ? _recordData.Slice(_OnCrippleDebrisScaleLocation, 4).Float() : default(Single);
         int OnCrippleDebrisScaleVersioningOffset => BeardBipedObjectVersioningOffset + (_package.FormVersion!.FormVersion!.Value < 96 ? -4 : 0);
         #endregion
         #region OnCrippleDebrisCount
         private int _OnCrippleDebrisCountLocation => _DATALocation!.Value.Min + OnCrippleDebrisScaleVersioningOffset + 0xAE;
-        private bool _OnCrippleDebrisCount_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 96;
+        private bool _OnCrippleDebrisCount_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 96 && _DATALocation!.Value.Max - _OnCrippleDebrisCountLocation + 1 >= 1;
         public Byte OnCrippleDebrisCount => _OnCrippleDebrisCount_IsSet ? _recordData.Span[_OnCrippleDebrisCountLocation] : default;
         int OnCrippleDebrisCountVersioningOffset => OnCrippleDebrisScaleVersioningOffset + (_package.FormVersion!.FormVersion!.Value < 96 ? -1 : 0);
         #endregion
         #region OnCrippleDecalCount
         private int _OnCrippleDecalCountLocation => _DATALocation!.Value.Min + OnCrippleDebrisCountVersioningOffset + 0xAF;
-        private bool _OnCrippleDecalCount_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 96;
+        private bool _OnCrippleDecalCount_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 96 && _DATALocation!.Value.Max - _OnCrippleDecalCountLocation + 1 >= 1;
         public Byte OnCrippleDecalCount => _OnCrippleDecalCount_IsSet ? _recordData.Span[_OnCrippleDecalCountLocation] : default;
         int OnCrippleDecalCountVersioningOffset => OnCrippleDebrisCountVersioningOffset + (_package.FormVersion!.FormVersion!.Value < 96 ? -1 : 0);
         #endregion
         #region OnCrippleExplosion
         private int _OnCrippleExplosionLocation => _DATALocation!.Value.Min + OnCrippleDecalCountVersioningOffset + 0xB0;
-        private bool _OnCrippleExplosion_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 96;
+        private bool _OnCrippleExplosion_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 96 && _DATALocation!.Value.Max - _OnCrippleExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> OnCrippleExplosion => _OnCrippleExplosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_OnCrippleExplosionLocation, 0x4), isSet: _OnCrippleExplosion_IsSet) : FormLink<IExplosionGetter>.Null;
         int OnCrippleExplosionVersioningOffset => OnCrippleDecalCountVersioningOffset + (_package.FormVersion!.FormVersion!.Value < 96 ? -4 : 0);
         #endregion
         #region OnCrippleDebris
         private int _OnCrippleDebrisLocation => _DATALocation!.Value.Min + OnCrippleExplosionVersioningOffset + 0xB4;
-        private bool _OnCrippleDebris_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 96;
+        private bool _OnCrippleDebris_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 96 && _DATALocation!.Value.Max - _OnCrippleDebrisLocation + 1 >= 4;
         public IFormLinkGetter<IDebrisGetter> OnCrippleDebris => _OnCrippleDebris_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IDebrisGetter>(_package, _recordData.Span.Slice(_OnCrippleDebrisLocation, 0x4), isSet: _OnCrippleDebris_IsSet) : FormLink<IDebrisGetter>.Null;
         int OnCrippleDebrisVersioningOffset => OnCrippleExplosionVersioningOffset + (_package.FormVersion!.FormVersion!.Value < 96 ? -4 : 0);
         #endregion
         #region OnCrippleImpactDataSet
         private int _OnCrippleImpactDataSetLocation => _DATALocation!.Value.Min + OnCrippleDebrisVersioningOffset + 0xB8;
-        private bool _OnCrippleImpactDataSet_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 96;
+        private bool _OnCrippleImpactDataSet_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 96 && _DATALocation!.Value.Max - _OnCrippleImpactDataSetLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> OnCrippleImpactDataSet => _OnCrippleImpactDataSet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_OnCrippleImpactDataSetLocation, 0x4), isSet: _OnCrippleImpactDataSet_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         int OnCrippleImpactDataSetVersioningOffset => OnCrippleDebrisVersioningOffset + (_package.FormVersion!.FormVersion!.Value < 96 ? -4 : 0);
         #endregion
         #region ExplodableSubsegmentExplosion
         private int _ExplodableSubsegmentExplosionLocation => _DATALocation!.Value.Min + OnCrippleImpactDataSetVersioningOffset + 0xBC;
-        private bool _ExplodableSubsegmentExplosion_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 118;
+        private bool _ExplodableSubsegmentExplosion_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 118 && _DATALocation!.Value.Max - _ExplodableSubsegmentExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> ExplodableSubsegmentExplosion => _ExplodableSubsegmentExplosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_ExplodableSubsegmentExplosionLocation, 0x4), isSet: _ExplodableSubsegmentExplosion_IsSet) : FormLink<IExplosionGetter>.Null;
         int ExplodableSubsegmentExplosionVersioningOffset => OnCrippleImpactDataSetVersioningOffset + (_package.FormVersion!.FormVersion!.Value < 118 ? -4 : 0);
         #endregion
         #region OrientationLimitsPitch
         private int _OrientationLimitsPitchLocation => _DATALocation!.Value.Min + ExplodableSubsegmentExplosionVersioningOffset + 0xC0;
-        private bool _OrientationLimitsPitch_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 98;
+        private bool _OrientationLimitsPitch_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 98 && _DATALocation!.Value.Max - _OrientationLimitsPitchLocation + 1 >= 4;
         public Single OrientationLimitsPitch => _OrientationLimitsPitch_IsSet ? _recordData.Slice(_OrientationLimitsPitchLocation, 4).Float() : default(Single);
         int OrientationLimitsPitchVersioningOffset => ExplodableSubsegmentExplosionVersioningOffset + (_package.FormVersion!.FormVersion!.Value < 98 ? -4 : 0);
         #endregion
         #region OrientationLimitsRoll
         private int _OrientationLimitsRollLocation => _DATALocation!.Value.Min + OrientationLimitsPitchVersioningOffset + 0xC4;
-        private bool _OrientationLimitsRoll_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 98;
+        private bool _OrientationLimitsRoll_IsSet => _DATALocation.HasValue && _package.FormVersion!.FormVersion!.Value >= 98 && _DATALocation!.Value.Max - _OrientationLimitsRollLocation + 1 >= 4;
         public Single OrientationLimitsRoll => _OrientationLimitsRoll_IsSet ? _recordData.Slice(_OrientationLimitsRollLocation, 4).Float() : default(Single);
         int OrientationLimitsRollVersioningOffset => OrientationLimitsPitchVersioningOffset + (_package.FormVersion!.FormVersion!.Value < 98 ? -4 : 0);
         #endregion

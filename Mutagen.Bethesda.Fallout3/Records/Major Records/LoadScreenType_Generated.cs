@@ -2377,57 +2377,57 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region Type
         private int _TypeLocation => _DATALocation!.Value.Min;
-        private bool _Type_IsSet => _DATALocation.HasValue;
+        private bool _Type_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TypeLocation + 1 >= 4;
         public LoadScreenType.LoadScreenTypeEnum Type => _Type_IsSet ? (LoadScreenType.LoadScreenTypeEnum)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default;
         #endregion
         #region X
         private int _XLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _X_IsSet => _DATALocation.HasValue;
+        private bool _X_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _XLocation + 1 >= 4;
         public UInt32 X => _X_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_XLocation, 4)) : default(UInt32);
         #endregion
         #region Y
         private int _YLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Y_IsSet => _DATALocation.HasValue;
+        private bool _Y_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _YLocation + 1 >= 4;
         public UInt32 Y => _Y_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_YLocation, 4)) : default(UInt32);
         #endregion
         #region Width
         private int _WidthLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _Width_IsSet => _DATALocation.HasValue;
+        private bool _Width_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _WidthLocation + 1 >= 4;
         public UInt32 Width => _Width_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WidthLocation, 4)) : default(UInt32);
         #endregion
         #region Height
         private int _HeightLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _Height_IsSet => _DATALocation.HasValue;
+        private bool _Height_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HeightLocation + 1 >= 4;
         public UInt32 Height => _Height_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_HeightLocation, 4)) : default(UInt32);
         #endregion
         #region Orientation
         private int _OrientationLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _Orientation_IsSet => _DATALocation.HasValue;
+        private bool _Orientation_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _OrientationLocation + 1 >= 4;
         public Single Orientation => _Orientation_IsSet ? _recordData.Slice(_OrientationLocation, 4).Float() : default(Single);
         #endregion
         #region Font
         private int _FontLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _Font_IsSet => _DATALocation.HasValue;
+        private bool _Font_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FontLocation + 1 >= 4;
         public LoadScreenType.LoadScreenItemEnum Font => _Font_IsSet ? (LoadScreenType.LoadScreenItemEnum)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FontLocation, 0x4)) : default;
         #endregion
         #region FontColorR
         private int _FontColorRLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _FontColorR_IsSet => _DATALocation.HasValue;
+        private bool _FontColorR_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FontColorRLocation + 1 >= 4;
         public Single FontColorR => _FontColorR_IsSet ? _recordData.Slice(_FontColorRLocation, 4).Float() : default(Single);
         #endregion
         #region FontColorG
         private int _FontColorGLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _FontColorG_IsSet => _DATALocation.HasValue;
+        private bool _FontColorG_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FontColorGLocation + 1 >= 4;
         public Single FontColorG => _FontColorG_IsSet ? _recordData.Slice(_FontColorGLocation, 4).Float() : default(Single);
         #endregion
         #region FontColorB
         private int _FontColorBLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _FontColorB_IsSet => _DATALocation.HasValue;
+        private bool _FontColorB_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FontColorBLocation + 1 >= 4;
         public Single FontColorB => _FontColorB_IsSet ? _recordData.Slice(_FontColorBLocation, 4).Float() : default(Single);
         #endregion
         #region Alignment
         private int _AlignmentLocation => _DATALocation!.Value.Min + 0x28;
-        private bool _Alignment_IsSet => _DATALocation.HasValue;
+        private bool _Alignment_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AlignmentLocation + 1 >= 4;
         public LoadScreenType.LoadScreenAlignment Alignment => _Alignment_IsSet ? (LoadScreenType.LoadScreenAlignment)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_AlignmentLocation, 0x4)) : default;
         #endregion
         #region Unknown1
@@ -2437,32 +2437,32 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region Font2
         private int _Font2Location => _DATALocation!.Value.Min + 0x40;
-        private bool _Font2_IsSet => _DATALocation.HasValue;
+        private bool _Font2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Font2Location + 1 >= 4;
         public LoadScreenType.LoadScreenItemEnum Font2 => _Font2_IsSet ? (LoadScreenType.LoadScreenItemEnum)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_Font2Location, 0x4)) : default;
         #endregion
         #region Font2ColorR
         private int _Font2ColorRLocation => _DATALocation!.Value.Min + 0x44;
-        private bool _Font2ColorR_IsSet => _DATALocation.HasValue;
+        private bool _Font2ColorR_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Font2ColorRLocation + 1 >= 4;
         public Single Font2ColorR => _Font2ColorR_IsSet ? _recordData.Slice(_Font2ColorRLocation, 4).Float() : default(Single);
         #endregion
         #region Font2ColorG
         private int _Font2ColorGLocation => _DATALocation!.Value.Min + 0x48;
-        private bool _Font2ColorG_IsSet => _DATALocation.HasValue;
+        private bool _Font2ColorG_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Font2ColorGLocation + 1 >= 4;
         public Single Font2ColorG => _Font2ColorG_IsSet ? _recordData.Slice(_Font2ColorGLocation, 4).Float() : default(Single);
         #endregion
         #region Font2ColorB
         private int _Font2ColorBLocation => _DATALocation!.Value.Min + 0x4C;
-        private bool _Font2ColorB_IsSet => _DATALocation.HasValue;
+        private bool _Font2ColorB_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Font2ColorBLocation + 1 >= 4;
         public Single Font2ColorB => _Font2ColorB_IsSet ? _recordData.Slice(_Font2ColorBLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown2
         private int _Unknown2Location => _DATALocation!.Value.Min + 0x50;
-        private bool _Unknown2_IsSet => _DATALocation.HasValue;
+        private bool _Unknown2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Unknown2Location + 1 >= 4;
         public Int32 Unknown2 => _Unknown2_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_Unknown2Location, 4)) : default(Int32);
         #endregion
         #region Stats
         private int _StatsLocation => _DATALocation!.Value.Min + 0x54;
-        private bool _Stats_IsSet => _DATALocation.HasValue;
+        private bool _Stats_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _StatsLocation + 1 >= 4;
         public LoadScreenType.LoadScreenItemEnum Stats => _Stats_IsSet ? (LoadScreenType.LoadScreenItemEnum)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_StatsLocation, 0x4)) : default;
         #endregion
         partial void CustomFactoryEnd(

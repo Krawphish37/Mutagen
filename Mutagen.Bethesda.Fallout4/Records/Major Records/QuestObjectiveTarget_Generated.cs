@@ -1487,17 +1487,17 @@ namespace Mutagen.Bethesda.Fallout4
         public QuestObjectiveTarget.QSTADataType QSTADataTypeState { get; private set; }
         #region AliasID
         private int _AliasIDLocation => _QSTALocation!.Value.Min;
-        private bool _AliasID_IsSet => _QSTALocation.HasValue;
+        private bool _AliasID_IsSet => _QSTALocation.HasValue && _QSTALocation!.Value.Max - _AliasIDLocation + 1 >= 4;
         public Int32 AliasID => _AliasID_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_AliasIDLocation, 4)) : default(Int32);
         #endregion
         #region Flags
         private int _FlagsLocation => _QSTALocation!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _QSTALocation.HasValue;
+        private bool _Flags_IsSet => _QSTALocation.HasValue && _QSTALocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Quest.TargetFlag Flags => _Flags_IsSet ? (Quest.TargetFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Keyword
         private int _KeywordLocation => _QSTALocation!.Value.Min + 0x8;
-        private bool _Keyword_IsSet => _QSTALocation.HasValue && !QSTADataTypeState.HasFlag(QuestObjectiveTarget.QSTADataType.Break0);
+        private bool _Keyword_IsSet => _QSTALocation.HasValue && !QSTADataTypeState.HasFlag(QuestObjectiveTarget.QSTADataType.Break0) && _QSTALocation!.Value.Max - _KeywordLocation + 1 >= 4;
         public IFormLinkGetter<IKeywordGetter> Keyword => _Keyword_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _recordData.Span.Slice(_KeywordLocation, 0x4), isSet: _Keyword_IsSet) : FormLink<IKeywordGetter>.Null;
         #endregion
         public IReadOnlyList<IConditionGetter> Conditions { get; private set; } = [];

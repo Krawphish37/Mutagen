@@ -2737,67 +2737,67 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region Force
         private int _ForceLocation => _DATALocation!.Value.Min;
-        private bool _Force_IsSet => _DATALocation.HasValue;
+        private bool _Force_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ForceLocation + 1 >= 4;
         public Single Force => _Force_IsSet ? _recordData.Slice(_ForceLocation, 4).Float() : default(Single);
         #endregion
         #region Damage
         private int _DamageLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Damage_IsSet => _DATALocation.HasValue;
+        private bool _Damage_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DamageLocation + 1 >= 4;
         public Single Damage => _Damage_IsSet ? _recordData.Slice(_DamageLocation, 4).Float() : default(Single);
         #endregion
         #region Radius
         private int _RadiusLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Radius_IsSet => _DATALocation.HasValue;
+        private bool _Radius_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RadiusLocation + 1 >= 4;
         public Single Radius => _Radius_IsSet ? _recordData.Slice(_RadiusLocation, 4).Float() : default(Single);
         #endregion
         #region Light
         private int _LightLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _Light_IsSet => _DATALocation.HasValue;
+        private bool _Light_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LightLocation + 1 >= 4;
         public IFormLinkGetter<ILightGetter> Light => _Light_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILightGetter>(_package, _recordData.Span.Slice(_LightLocation, 0x4), isSet: _Light_IsSet) : FormLink<ILightGetter>.Null;
         #endregion
         #region Sound1
         private int _Sound1Location => _DATALocation!.Value.Min + 0x10;
-        private bool _Sound1_IsSet => _DATALocation.HasValue;
+        private bool _Sound1_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Sound1Location + 1 >= 4;
         public IFormLinkGetter<ISoundGetter> Sound1 => _Sound1_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundGetter>(_package, _recordData.Span.Slice(_Sound1Location, 0x4), isSet: _Sound1_IsSet) : FormLink<ISoundGetter>.Null;
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Explosion.Flag Flags => _Flags_IsSet ? (Explosion.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region ISRadius
         private int _ISRadiusLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _ISRadius_IsSet => _DATALocation.HasValue;
+        private bool _ISRadius_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ISRadiusLocation + 1 >= 4;
         public Single ISRadius => _ISRadius_IsSet ? _recordData.Slice(_ISRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region ImpactDataSet
         private int _ImpactDataSetLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _ImpactDataSet_IsSet => _DATALocation.HasValue;
+        private bool _ImpactDataSet_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ImpactDataSetLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> ImpactDataSet => _ImpactDataSet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_ImpactDataSetLocation, 0x4), isSet: _ImpactDataSet_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region Sound2
         private int _Sound2Location => _DATALocation!.Value.Min + 0x20;
-        private bool _Sound2_IsSet => _DATALocation.HasValue;
+        private bool _Sound2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Sound2Location + 1 >= 4;
         public IFormLinkGetter<ISoundGetter> Sound2 => _Sound2_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundGetter>(_package, _recordData.Span.Slice(_Sound2Location, 0x4), isSet: _Sound2_IsSet) : FormLink<ISoundGetter>.Null;
         #endregion
         #region RadiationLevel
         private int _RadiationLevelLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _RadiationLevel_IsSet => _DATALocation.HasValue;
+        private bool _RadiationLevel_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RadiationLevelLocation + 1 >= 4;
         public Single RadiationLevel => _RadiationLevel_IsSet ? _recordData.Slice(_RadiationLevelLocation, 4).Float() : default(Single);
         #endregion
         #region RadiationDissipationTime
         private int _RadiationDissipationTimeLocation => _DATALocation!.Value.Min + 0x28;
-        private bool _RadiationDissipationTime_IsSet => _DATALocation.HasValue;
+        private bool _RadiationDissipationTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RadiationDissipationTimeLocation + 1 >= 4;
         public Single RadiationDissipationTime => _RadiationDissipationTime_IsSet ? _recordData.Slice(_RadiationDissipationTimeLocation, 4).Float() : default(Single);
         #endregion
         #region RadiationRadius
         private int _RadiationRadiusLocation => _DATALocation!.Value.Min + 0x2C;
-        private bool _RadiationRadius_IsSet => _DATALocation.HasValue;
+        private bool _RadiationRadius_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RadiationRadiusLocation + 1 >= 4;
         public Single RadiationRadius => _RadiationRadius_IsSet ? _recordData.Slice(_RadiationRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region SoundLevel
         private int _SoundLevelLocation => _DATALocation!.Value.Min + 0x30;
-        private bool _SoundLevel_IsSet => _DATALocation.HasValue;
+        private bool _SoundLevel_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SoundLevelLocation + 1 >= 4;
         public SoundLevel SoundLevel => _SoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SoundLevelLocation, 0x4)) : default;
         #endregion
         #region PlacedImpactObject

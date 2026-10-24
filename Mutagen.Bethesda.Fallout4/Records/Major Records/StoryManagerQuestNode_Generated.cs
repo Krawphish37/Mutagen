@@ -2018,12 +2018,12 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DNAMLocation;
         #region Flags
         private int _FlagsLocation => _DNAMLocation!.Value.Min;
-        private bool _Flags_IsSet => _DNAMLocation.HasValue;
+        private bool _Flags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlagsLocation + 1 >= 2;
         public AStoryManagerNode.Flag Flags => _Flags_IsSet ? (AStoryManagerNode.Flag)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x2)) : default;
         #endregion
         #region QuestFlags
         private int _QuestFlagsLocation => _DNAMLocation!.Value.Min + 0x2;
-        private bool _QuestFlags_IsSet => _DNAMLocation.HasValue;
+        private bool _QuestFlags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _QuestFlagsLocation + 1 >= 2;
         public StoryManagerQuestNode.QuestFlag QuestFlags => _QuestFlags_IsSet ? (StoryManagerQuestNode.QuestFlag)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_QuestFlagsLocation, 0x2)) : default;
         #endregion
         #region MaxConcurrentQuests

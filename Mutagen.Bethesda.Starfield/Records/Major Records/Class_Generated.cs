@@ -2075,7 +2075,7 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DATALocation;
         #region Unknown
         private int _UnknownLocation => _DATALocation!.Value.Min;
-        private bool _Unknown_IsSet => _DATALocation.HasValue;
+        private bool _Unknown_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
         #endregion
         partial void CustomFactoryEnd(

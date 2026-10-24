@@ -5572,62 +5572,62 @@ namespace Mutagen.Bethesda.Fallout3
         public Npc.DATADataType DATADataTypeState { get; private set; }
         #region BaseHealth
         private int _BaseHealthLocation => _DATALocation!.Value.Min;
-        private bool _BaseHealth_IsSet => _DATALocation.HasValue;
+        private bool _BaseHealth_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BaseHealthLocation + 1 >= 4;
         public Int32 BaseHealth => _BaseHealth_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_BaseHealthLocation, 4)) : default(Int32);
         #endregion
         #region Strength
         private int _StrengthLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Strength_IsSet => _DATALocation.HasValue;
+        private bool _Strength_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _StrengthLocation + 1 >= 1;
         public Byte Strength => _Strength_IsSet ? _recordData.Span[_StrengthLocation] : default;
         #endregion
         #region Perception
         private int _PerceptionLocation => _DATALocation!.Value.Min + 0x5;
-        private bool _Perception_IsSet => _DATALocation.HasValue;
+        private bool _Perception_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PerceptionLocation + 1 >= 1;
         public Byte Perception => _Perception_IsSet ? _recordData.Span[_PerceptionLocation] : default;
         #endregion
         #region Endurance
         private int _EnduranceLocation => _DATALocation!.Value.Min + 0x6;
-        private bool _Endurance_IsSet => _DATALocation.HasValue;
+        private bool _Endurance_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EnduranceLocation + 1 >= 1;
         public Byte Endurance => _Endurance_IsSet ? _recordData.Span[_EnduranceLocation] : default;
         #endregion
         #region Charisma
         private int _CharismaLocation => _DATALocation!.Value.Min + 0x7;
-        private bool _Charisma_IsSet => _DATALocation.HasValue;
+        private bool _Charisma_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CharismaLocation + 1 >= 1;
         public Byte Charisma => _Charisma_IsSet ? _recordData.Span[_CharismaLocation] : default;
         #endregion
         #region Intelligence
         private int _IntelligenceLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Intelligence_IsSet => _DATALocation.HasValue;
+        private bool _Intelligence_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _IntelligenceLocation + 1 >= 1;
         public Byte Intelligence => _Intelligence_IsSet ? _recordData.Span[_IntelligenceLocation] : default;
         #endregion
         #region Agility
         private int _AgilityLocation => _DATALocation!.Value.Min + 0x9;
-        private bool _Agility_IsSet => _DATALocation.HasValue;
+        private bool _Agility_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AgilityLocation + 1 >= 1;
         public Byte Agility => _Agility_IsSet ? _recordData.Span[_AgilityLocation] : default;
         #endregion
         #region Luck
         private int _LuckLocation => _DATALocation!.Value.Min + 0xA;
-        private bool _Luck_IsSet => _DATALocation.HasValue;
+        private bool _Luck_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LuckLocation + 1 >= 1;
         public Byte Luck => _Luck_IsSet ? _recordData.Span[_LuckLocation] : default;
         #endregion
         #region Unused1
         private int _Unused1Location => _DATALocation!.Value.Min + 0xB;
-        private bool _Unused1_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(Npc.DATADataType.Break0);
+        private bool _Unused1_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(Npc.DATADataType.Break0) && _DATALocation!.Value.Max - _Unused1Location + 1 >= 4;
         public UInt32 Unused1 => _Unused1_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_Unused1Location, 4)) : default(UInt32);
         #endregion
         #region Unused2
         private int _Unused2Location => _DATALocation!.Value.Min + 0xF;
-        private bool _Unused2_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(Npc.DATADataType.Break0);
+        private bool _Unused2_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(Npc.DATADataType.Break0) && _DATALocation!.Value.Max - _Unused2Location + 1 >= 4;
         public UInt32 Unused2 => _Unused2_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_Unused2Location, 4)) : default(UInt32);
         #endregion
         #region Unused3
         private int _Unused3Location => _DATALocation!.Value.Min + 0x13;
-        private bool _Unused3_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(Npc.DATADataType.Break0);
+        private bool _Unused3_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(Npc.DATADataType.Break0) && _DATALocation!.Value.Max - _Unused3Location + 1 >= 4;
         public UInt32 Unused3 => _Unused3_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_Unused3Location, 4)) : default(UInt32);
         #endregion
         #region Unused4
         private int _Unused4Location => _DATALocation!.Value.Min + 0x17;
-        private bool _Unused4_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(Npc.DATADataType.Break0);
+        private bool _Unused4_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(Npc.DATADataType.Break0) && _DATALocation!.Value.Max - _Unused4Location + 1 >= 2;
         public UInt16 Unused4 => _Unused4_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_Unused4Location, 2)) : default(UInt16);
         #endregion
         #region PlayerSkills

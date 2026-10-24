@@ -3362,12 +3362,12 @@ namespace Mutagen.Bethesda.Skyrim
         #endregion
         #region Type
         private int _TypeLocation => _DATALocation!.Value.Min + 0x1;
-        private bool _Type_IsSet => _DATALocation.HasValue;
+        private bool _Type_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TypeLocation + 1 >= 1;
         public Book.BookType Type => _Type_IsSet ? (Book.BookType)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default;
         #endregion
         #region Unused
         private int _UnusedLocation => _DATALocation!.Value.Min + 0x2;
-        private bool _Unused_IsSet => _DATALocation.HasValue;
+        private bool _Unused_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnusedLocation + 1 >= 2;
         public UInt16 Unused => _Unused_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_UnusedLocation, 2)) : default(UInt16);
         #endregion
         #region Teaches
@@ -3377,12 +3377,12 @@ namespace Mutagen.Bethesda.Skyrim
         #endregion
         #region Value
         private int _ValueLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Value_IsSet => _DATALocation.HasValue;
+        private bool _Value_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ValueLocation + 1 >= 4;
         public UInt32 Value => _Value_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ValueLocation, 4)) : default(UInt32);
         #endregion
         #region Weight
         private int _WeightLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _Weight_IsSet => _DATALocation.HasValue;
+        private bool _Weight_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _WeightLocation + 1 >= 4;
         public Single Weight => _Weight_IsSet ? _recordData.Slice(_WeightLocation, 4).Float() : default(Single);
         #endregion
         #region InventoryArt

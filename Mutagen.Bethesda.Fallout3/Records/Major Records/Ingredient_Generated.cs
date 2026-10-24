@@ -2451,12 +2451,12 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _ENITLocation;
         #region Value
         private int _ValueLocation => _ENITLocation!.Value.Min;
-        private bool _Value_IsSet => _ENITLocation.HasValue;
+        private bool _Value_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _ValueLocation + 1 >= 4;
         public Int32 Value => _Value_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_ValueLocation, 4)) : default(Int32);
         #endregion
         #region Flags
         private int _FlagsLocation => _ENITLocation!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _ENITLocation.HasValue;
+        private bool _Flags_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Ingredient.IngredientFlag Flags => _Flags_IsSet ? (Ingredient.IngredientFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         public IReadOnlyList<IEffectGetter> Effects { get; private set; } = [];

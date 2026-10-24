@@ -3972,32 +3972,32 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DNAMLocation;
         #region WeaponAdjust
         private int _WeaponAdjustLocation => _DNAMLocation!.Value.Min;
-        private bool _WeaponAdjust_IsSet => _DNAMLocation.HasValue;
+        private bool _WeaponAdjust_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _WeaponAdjustLocation + 1 >= 4;
         public Single WeaponAdjust => _WeaponAdjust_IsSet ? _recordData.Slice(_WeaponAdjustLocation, 4).Float() : default(Single);
         #endregion
         #region MalePriority
         private int _MalePriorityLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _MalePriority_IsSet => _DNAMLocation.HasValue;
+        private bool _MalePriority_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MalePriorityLocation + 1 >= 1;
         public Byte MalePriority => _MalePriority_IsSet ? _recordData.Span[_MalePriorityLocation] : default;
         #endregion
         #region FemalePriority
         private int _FemalePriorityLocation => _DNAMLocation!.Value.Min + 0x5;
-        private bool _FemalePriority_IsSet => _DNAMLocation.HasValue;
+        private bool _FemalePriority_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FemalePriorityLocation + 1 >= 1;
         public Byte FemalePriority => _FemalePriority_IsSet ? _recordData.Span[_FemalePriorityLocation] : default;
         #endregion
         #region Unknown
         private int _UnknownLocation => _DNAMLocation!.Value.Min + 0x6;
-        private bool _Unknown_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _UnknownLocation + 1 >= 2;
         public UInt16 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_UnknownLocation, 2)) : default(UInt16);
         #endregion
         #region DetectionSoundValue
         private int _DetectionSoundValueLocation => _DNAMLocation!.Value.Min + 0x8;
-        private bool _DetectionSoundValue_IsSet => _DNAMLocation.HasValue;
+        private bool _DetectionSoundValue_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DetectionSoundValueLocation + 1 >= 1;
         public Byte DetectionSoundValue => _DetectionSoundValue_IsSet ? _recordData.Span[_DetectionSoundValueLocation] : default;
         #endregion
         #region HealthBarOffset
         private int _HealthBarOffsetLocation => _DNAMLocation!.Value.Min + 0x9;
-        private bool _HealthBarOffset_IsSet => _DNAMLocation.HasValue;
+        private bool _HealthBarOffset_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _HealthBarOffsetLocation + 1 >= 4;
         public Single HealthBarOffset => _HealthBarOffset_IsSet ? _recordData.Slice(_HealthBarOffsetLocation, 4).Float() : default(Single);
         #endregion
         #region WorldModel

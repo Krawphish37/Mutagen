@@ -5250,112 +5250,112 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _PRODLocation;
         #region Flags
         private int _FlagsLocation => _PRODLocation!.Value.Min;
-        private bool _Flags_IsSet => _PRODLocation.HasValue;
+        private bool _Flags_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _FlagsLocation + 1 >= 2;
         public Projectile.Flag Flags => _Flags_IsSet ? (Projectile.Flag)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x2)) : default;
         #endregion
         #region Type
         private int _TypeLocation => _PRODLocation!.Value.Min + 0x2;
-        private bool _Type_IsSet => _PRODLocation.HasValue;
+        private bool _Type_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _TypeLocation + 1 >= 2;
         public Projectile.TypeEnum Type => _Type_IsSet ? (Projectile.TypeEnum)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x2)) : default;
         #endregion
         #region Gravity
         private int _GravityLocation => _PRODLocation!.Value.Min + 0x4;
-        private bool _Gravity_IsSet => _PRODLocation.HasValue;
+        private bool _Gravity_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _GravityLocation + 1 >= 4;
         public Single Gravity => _Gravity_IsSet ? _recordData.Slice(_GravityLocation, 4).Float() : default(Single);
         #endregion
         #region Speed
         private int _SpeedLocation => _PRODLocation!.Value.Min + 0x8;
-        private bool _Speed_IsSet => _PRODLocation.HasValue;
+        private bool _Speed_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _SpeedLocation + 1 >= 4;
         public Single Speed => _Speed_IsSet ? _recordData.Slice(_SpeedLocation, 4).Float() : default(Single);
         #endregion
         #region Range
         private int _RangeLocation => _PRODLocation!.Value.Min + 0xC;
-        private bool _Range_IsSet => _PRODLocation.HasValue;
+        private bool _Range_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _RangeLocation + 1 >= 4;
         public Single Range => _Range_IsSet ? _recordData.Slice(_RangeLocation, 4).Float() : default(Single);
         #endregion
         #region Light
         private int _LightLocation => _PRODLocation!.Value.Min + 0x10;
-        private bool _Light_IsSet => _PRODLocation.HasValue;
+        private bool _Light_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _LightLocation + 1 >= 4;
         public IFormLinkGetter<ILightGetter> Light => _Light_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILightGetter>(_package, _recordData.Span.Slice(_LightLocation, 0x4), isSet: _Light_IsSet) : FormLink<ILightGetter>.Null;
         #endregion
         #region MuzzleFlash
         private int _MuzzleFlashLocation => _PRODLocation!.Value.Min + 0x14;
-        private bool _MuzzleFlash_IsSet => _PRODLocation.HasValue;
+        private bool _MuzzleFlash_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _MuzzleFlashLocation + 1 >= 4;
         public IFormLinkGetter<ILightGetter> MuzzleFlash => _MuzzleFlash_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILightGetter>(_package, _recordData.Span.Slice(_MuzzleFlashLocation, 0x4), isSet: _MuzzleFlash_IsSet) : FormLink<ILightGetter>.Null;
         #endregion
         #region ExplosionAltTriggerProximity
         private int _ExplosionAltTriggerProximityLocation => _PRODLocation!.Value.Min + 0x18;
-        private bool _ExplosionAltTriggerProximity_IsSet => _PRODLocation.HasValue;
+        private bool _ExplosionAltTriggerProximity_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ExplosionAltTriggerProximityLocation + 1 >= 4;
         public Single ExplosionAltTriggerProximity => _ExplosionAltTriggerProximity_IsSet ? _recordData.Slice(_ExplosionAltTriggerProximityLocation, 4).Float() : default(Single);
         #endregion
         #region ExplosionAltTriggerTimer
         private int _ExplosionAltTriggerTimerLocation => _PRODLocation!.Value.Min + 0x1C;
-        private bool _ExplosionAltTriggerTimer_IsSet => _PRODLocation.HasValue;
+        private bool _ExplosionAltTriggerTimer_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ExplosionAltTriggerTimerLocation + 1 >= 4;
         public Single ExplosionAltTriggerTimer => _ExplosionAltTriggerTimer_IsSet ? _recordData.Slice(_ExplosionAltTriggerTimerLocation, 4).Float() : default(Single);
         #endregion
         #region Explosion
         private int _ExplosionLocation => _PRODLocation!.Value.Min + 0x20;
-        private bool _Explosion_IsSet => _PRODLocation.HasValue;
+        private bool _Explosion_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> Explosion => _Explosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_ExplosionLocation, 0x4), isSet: _Explosion_IsSet) : FormLink<IExplosionGetter>.Null;
         #endregion
         #region MuzzleFlashDuration
         private int _MuzzleFlashDurationLocation => _PRODLocation!.Value.Min + 0x24;
-        private bool _MuzzleFlashDuration_IsSet => _PRODLocation.HasValue;
+        private bool _MuzzleFlashDuration_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _MuzzleFlashDurationLocation + 1 >= 4;
         public Single MuzzleFlashDuration => _MuzzleFlashDuration_IsSet ? _recordData.Slice(_MuzzleFlashDurationLocation, 4).Float() : default(Single);
         #endregion
         #region FadeDuration
         private int _FadeDurationLocation => _PRODLocation!.Value.Min + 0x28;
-        private bool _FadeDuration_IsSet => _PRODLocation.HasValue;
+        private bool _FadeDuration_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _FadeDurationLocation + 1 >= 4;
         public Single FadeDuration => _FadeDuration_IsSet ? _recordData.Slice(_FadeDurationLocation, 4).Float() : default(Single);
         #endregion
         #region ImpactForce
         private int _ImpactForceLocation => _PRODLocation!.Value.Min + 0x2C;
-        private bool _ImpactForce_IsSet => _PRODLocation.HasValue;
+        private bool _ImpactForce_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ImpactForceLocation + 1 >= 4;
         public Single ImpactForce => _ImpactForce_IsSet ? _recordData.Slice(_ImpactForceLocation, 4).Float() : default(Single);
         #endregion
         #region DefaultWeaponSource
         private int _DefaultWeaponSourceLocation => _PRODLocation!.Value.Min + 0x30;
-        private bool _DefaultWeaponSource_IsSet => _PRODLocation.HasValue;
+        private bool _DefaultWeaponSource_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _DefaultWeaponSourceLocation + 1 >= 4;
         public IFormLinkGetter<IWeaponGetter> DefaultWeaponSource => _DefaultWeaponSource_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IWeaponGetter>(_package, _recordData.Span.Slice(_DefaultWeaponSourceLocation, 0x4), isSet: _DefaultWeaponSource_IsSet) : FormLink<IWeaponGetter>.Null;
         #endregion
         #region ConeSpread
         private int _ConeSpreadLocation => _PRODLocation!.Value.Min + 0x34;
-        private bool _ConeSpread_IsSet => _PRODLocation.HasValue;
+        private bool _ConeSpread_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ConeSpreadLocation + 1 >= 4;
         public Single ConeSpread => _ConeSpread_IsSet ? _recordData.Slice(_ConeSpreadLocation, 4).Float() : default(Single);
         #endregion
         #region CollisionRadius
         private int _CollisionRadiusLocation => _PRODLocation!.Value.Min + 0x38;
-        private bool _CollisionRadius_IsSet => _PRODLocation.HasValue;
+        private bool _CollisionRadius_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _CollisionRadiusLocation + 1 >= 4;
         public Single CollisionRadius => _CollisionRadius_IsSet ? _recordData.Slice(_CollisionRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region Lifetime
         private int _LifetimeLocation => _PRODLocation!.Value.Min + 0x3C;
-        private bool _Lifetime_IsSet => _PRODLocation.HasValue;
+        private bool _Lifetime_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _LifetimeLocation + 1 >= 4;
         public Single Lifetime => _Lifetime_IsSet ? _recordData.Slice(_LifetimeLocation, 4).Float() : default(Single);
         #endregion
         #region RelaunchInterval
         private int _RelaunchIntervalLocation => _PRODLocation!.Value.Min + 0x40;
-        private bool _RelaunchInterval_IsSet => _PRODLocation.HasValue;
+        private bool _RelaunchInterval_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _RelaunchIntervalLocation + 1 >= 4;
         public Single RelaunchInterval => _RelaunchInterval_IsSet ? _recordData.Slice(_RelaunchIntervalLocation, 4).Float() : default(Single);
         #endregion
         #region DecalData
         private int _DecalDataLocation => _PRODLocation!.Value.Min + 0x44;
-        private bool _DecalData_IsSet => _PRODLocation.HasValue;
+        private bool _DecalData_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _DecalDataLocation + 1 >= 4;
         public IFormLinkGetter<ITextureSetGetter> DecalData => _DecalData_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ITextureSetGetter>(_package, _recordData.Span.Slice(_DecalDataLocation, 0x4), isSet: _DecalData_IsSet) : FormLink<ITextureSetGetter>.Null;
         #endregion
         #region CollisionLayer
         private int _CollisionLayerLocation => _PRODLocation!.Value.Min + 0x48;
-        private bool _CollisionLayer_IsSet => _PRODLocation.HasValue;
+        private bool _CollisionLayer_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _CollisionLayerLocation + 1 >= 4;
         public IFormLinkGetter<ICollisionLayerGetter> CollisionLayer => _CollisionLayer_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ICollisionLayerGetter>(_package, _recordData.Span.Slice(_CollisionLayerLocation, 0x4), isSet: _CollisionLayer_IsSet) : FormLink<ICollisionLayerGetter>.Null;
         #endregion
         #region TracerFrequency
         private int _TracerFrequencyLocation => _PRODLocation!.Value.Min + 0x4C;
-        private bool _TracerFrequency_IsSet => _PRODLocation.HasValue;
+        private bool _TracerFrequency_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _TracerFrequencyLocation + 1 >= 1;
         public Byte TracerFrequency => _TracerFrequency_IsSet ? _recordData.Span[_TracerFrequencyLocation] : default;
         #endregion
         #region UnknownPROD1
         private int _UnknownPROD1Location => _PRODLocation!.Value.Min + 0x4D;
-        private bool _UnknownPROD1_IsSet => _PRODLocation.HasValue;
+        private bool _UnknownPROD1_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _UnknownPROD1Location + 1 >= 4;
         public UInt32 UnknownPROD1 => _UnknownPROD1_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_UnknownPROD1Location, 4)) : default(UInt32);
         #endregion
         #region UnknownPRODString1
@@ -5366,17 +5366,17 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region UnknownPROD2
         private int _UnknownPROD2Location => UnknownPRODString1EndingPos;
-        private bool _UnknownPROD2_IsSet => _PRODLocation.HasValue;
+        private bool _UnknownPROD2_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _UnknownPROD2Location + 1 >= 4;
         public Single UnknownPROD2 => _UnknownPROD2_IsSet ? _recordData.Slice(_UnknownPROD2Location, 4).Float() : default(Single);
         #endregion
         #region UnknownPROD3
         private int _UnknownPROD3Location => UnknownPRODString1EndingPos + 0x4;
-        private bool _UnknownPROD3_IsSet => _PRODLocation.HasValue;
+        private bool _UnknownPROD3_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _UnknownPROD3Location + 1 >= 4;
         public UInt32 UnknownPROD3 => _UnknownPROD3_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_UnknownPROD3Location, 4)) : default(UInt32);
         #endregion
         #region UnknownPROD4
         private int _UnknownPROD4Location => UnknownPRODString1EndingPos + 0x8;
-        private bool _UnknownPROD4_IsSet => _PRODLocation.HasValue;
+        private bool _UnknownPROD4_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _UnknownPROD4Location + 1 >= 1;
         public Byte UnknownPROD4 => _UnknownPROD4_IsSet ? _recordData.Span[_UnknownPROD4Location] : default;
         #endregion
         #region UnknownPRODString2
@@ -5387,22 +5387,22 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region UnknownPROD5
         private int _UnknownPROD5Location => UnknownPRODString2EndingPos;
-        private bool _UnknownPROD5_IsSet => _PRODLocation.HasValue;
+        private bool _UnknownPROD5_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _UnknownPROD5Location + 1 >= 4;
         public Single UnknownPROD5 => _UnknownPROD5_IsSet ? _recordData.Slice(_UnknownPROD5Location, 4).Float() : default(Single);
         #endregion
         #region UnknownPROD6
         private int _UnknownPROD6Location => UnknownPRODString2EndingPos + 0x4;
-        private bool _UnknownPROD6_IsSet => _PRODLocation.HasValue;
+        private bool _UnknownPROD6_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _UnknownPROD6Location + 1 >= 4;
         public Single UnknownPROD6 => _UnknownPROD6_IsSet ? _recordData.Slice(_UnknownPROD6Location, 4).Float() : default(Single);
         #endregion
         #region UnknownPROD7
         private int _UnknownPROD7Location => UnknownPRODString2EndingPos + 0x8;
-        private bool _UnknownPROD7_IsSet => _PRODLocation.HasValue;
+        private bool _UnknownPROD7_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _UnknownPROD7Location + 1 >= 4;
         public Single UnknownPROD7 => _UnknownPROD7_IsSet ? _recordData.Slice(_UnknownPROD7Location, 4).Float() : default(Single);
         #endregion
         #region UnknownPROD8
         private int _UnknownPROD8Location => UnknownPRODString2EndingPos + 0xC;
-        private bool _UnknownPROD8_IsSet => _PRODLocation.HasValue;
+        private bool _UnknownPROD8_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _UnknownPROD8Location + 1 >= 4;
         public Single UnknownPROD8 => _UnknownPROD8_IsSet ? _recordData.Slice(_UnknownPROD8Location, 4).Float() : default(Single);
         #endregion
         #region MuzzleFlashModel

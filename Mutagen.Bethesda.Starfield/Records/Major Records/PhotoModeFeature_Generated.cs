@@ -2043,37 +2043,37 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _FNAMLocation;
         #region FeatureType
         private int _FeatureTypeLocation => _FNAMLocation!.Value.Min;
-        private bool _FeatureType_IsSet => _FNAMLocation.HasValue;
+        private bool _FeatureType_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _FeatureTypeLocation + 1 >= 1;
         public PhotoModeFeature.Mode FeatureType => _FeatureType_IsSet ? (PhotoModeFeature.Mode)_recordData.Span.Slice(_FeatureTypeLocation, 0x1)[0] : default;
         #endregion
         #region XOffset
         private int _XOffsetLocation => _FNAMLocation!.Value.Min + 0x1;
-        private bool _XOffset_IsSet => _FNAMLocation.HasValue;
+        private bool _XOffset_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _XOffsetLocation + 1 >= 4;
         public Single XOffset => _XOffset_IsSet ? _recordData.Slice(_XOffsetLocation, 4).Float() : default(Single);
         #endregion
         #region YOffset
         private int _YOffsetLocation => _FNAMLocation!.Value.Min + 0x5;
-        private bool _YOffset_IsSet => _FNAMLocation.HasValue;
+        private bool _YOffset_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _YOffsetLocation + 1 >= 4;
         public Single YOffset => _YOffset_IsSet ? _recordData.Slice(_YOffsetLocation, 4).Float() : default(Single);
         #endregion
         #region UnknownFNAM1
         private int _UnknownFNAM1Location => _FNAMLocation!.Value.Min + 0x9;
-        private bool _UnknownFNAM1_IsSet => _FNAMLocation.HasValue;
+        private bool _UnknownFNAM1_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _UnknownFNAM1Location + 1 >= 8;
         public Int64 UnknownFNAM1 => _UnknownFNAM1_IsSet ? BinaryPrimitives.ReadInt64LittleEndian(_recordData.Slice(_UnknownFNAM1Location, 8)) : default(Int64);
         #endregion
         #region Width
         private int _WidthLocation => _FNAMLocation!.Value.Min + 0x11;
-        private bool _Width_IsSet => _FNAMLocation.HasValue;
+        private bool _Width_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _WidthLocation + 1 >= 4;
         public UInt32 Width => _Width_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WidthLocation, 4)) : default(UInt32);
         #endregion
         #region Height
         private int _HeightLocation => _FNAMLocation!.Value.Min + 0x15;
-        private bool _Height_IsSet => _FNAMLocation.HasValue;
+        private bool _Height_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _HeightLocation + 1 >= 4;
         public UInt32 Height => _Height_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_HeightLocation, 4)) : default(UInt32);
         #endregion
         #region UnknownFNAM2
         private int _UnknownFNAM2Location => _FNAMLocation!.Value.Min + 0x19;
-        private bool _UnknownFNAM2_IsSet => _FNAMLocation.HasValue;
+        private bool _UnknownFNAM2_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _UnknownFNAM2Location + 1 >= 4;
         public UInt32 UnknownFNAM2 => _UnknownFNAM2_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_UnknownFNAM2Location, 4)) : default(UInt32);
         #endregion
         #region Texture

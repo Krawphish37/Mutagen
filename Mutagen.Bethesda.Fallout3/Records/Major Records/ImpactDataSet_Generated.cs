@@ -2244,62 +2244,62 @@ namespace Mutagen.Bethesda.Fallout3
         public ImpactDataSet.DATADataType DATADataTypeState { get; private set; }
         #region Stone
         private int _StoneLocation => _DATALocation!.Value.Min;
-        private bool _Stone_IsSet => _DATALocation.HasValue;
+        private bool _Stone_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _StoneLocation + 1 >= 4;
         public IFormLinkGetter<IImpactGetter> Stone => _Stone_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactGetter>(_package, _recordData.Span.Slice(_StoneLocation, 0x4), isSet: _Stone_IsSet) : FormLink<IImpactGetter>.Null;
         #endregion
         #region Dirt
         private int _DirtLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Dirt_IsSet => _DATALocation.HasValue;
+        private bool _Dirt_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DirtLocation + 1 >= 4;
         public IFormLinkGetter<IImpactGetter> Dirt => _Dirt_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactGetter>(_package, _recordData.Span.Slice(_DirtLocation, 0x4), isSet: _Dirt_IsSet) : FormLink<IImpactGetter>.Null;
         #endregion
         #region Grass
         private int _GrassLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Grass_IsSet => _DATALocation.HasValue;
+        private bool _Grass_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _GrassLocation + 1 >= 4;
         public IFormLinkGetter<IImpactGetter> Grass => _Grass_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactGetter>(_package, _recordData.Span.Slice(_GrassLocation, 0x4), isSet: _Grass_IsSet) : FormLink<IImpactGetter>.Null;
         #endregion
         #region Glass
         private int _GlassLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _Glass_IsSet => _DATALocation.HasValue;
+        private bool _Glass_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _GlassLocation + 1 >= 4;
         public IFormLinkGetter<IImpactGetter> Glass => _Glass_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactGetter>(_package, _recordData.Span.Slice(_GlassLocation, 0x4), isSet: _Glass_IsSet) : FormLink<IImpactGetter>.Null;
         #endregion
         #region Metal
         private int _MetalLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _Metal_IsSet => _DATALocation.HasValue;
+        private bool _Metal_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MetalLocation + 1 >= 4;
         public IFormLinkGetter<IImpactGetter> Metal => _Metal_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactGetter>(_package, _recordData.Span.Slice(_MetalLocation, 0x4), isSet: _Metal_IsSet) : FormLink<IImpactGetter>.Null;
         #endregion
         #region Wood
         private int _WoodLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _Wood_IsSet => _DATALocation.HasValue;
+        private bool _Wood_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _WoodLocation + 1 >= 4;
         public IFormLinkGetter<IImpactGetter> Wood => _Wood_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactGetter>(_package, _recordData.Span.Slice(_WoodLocation, 0x4), isSet: _Wood_IsSet) : FormLink<IImpactGetter>.Null;
         #endregion
         #region Organic
         private int _OrganicLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _Organic_IsSet => _DATALocation.HasValue;
+        private bool _Organic_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _OrganicLocation + 1 >= 4;
         public IFormLinkGetter<IImpactGetter> Organic => _Organic_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactGetter>(_package, _recordData.Span.Slice(_OrganicLocation, 0x4), isSet: _Organic_IsSet) : FormLink<IImpactGetter>.Null;
         #endregion
         #region Cloth
         private int _ClothLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _Cloth_IsSet => _DATALocation.HasValue;
+        private bool _Cloth_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ClothLocation + 1 >= 4;
         public IFormLinkGetter<IImpactGetter> Cloth => _Cloth_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactGetter>(_package, _recordData.Span.Slice(_ClothLocation, 0x4), isSet: _Cloth_IsSet) : FormLink<IImpactGetter>.Null;
         #endregion
         #region Water
         private int _WaterLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _Water_IsSet => _DATALocation.HasValue;
+        private bool _Water_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _WaterLocation + 1 >= 4;
         public IFormLinkGetter<IImpactGetter> Water => _Water_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactGetter>(_package, _recordData.Span.Slice(_WaterLocation, 0x4), isSet: _Water_IsSet) : FormLink<IImpactGetter>.Null;
         #endregion
         #region HollowMetal
         private int _HollowMetalLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _HollowMetal_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(ImpactDataSet.DATADataType.Break0);
+        private bool _HollowMetal_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(ImpactDataSet.DATADataType.Break0) && _DATALocation!.Value.Max - _HollowMetalLocation + 1 >= 4;
         public IFormLinkGetter<IImpactGetter> HollowMetal => _HollowMetal_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactGetter>(_package, _recordData.Span.Slice(_HollowMetalLocation, 0x4), isSet: _HollowMetal_IsSet) : FormLink<IImpactGetter>.Null;
         #endregion
         #region OrganicBug
         private int _OrganicBugLocation => _DATALocation!.Value.Min + 0x28;
-        private bool _OrganicBug_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(ImpactDataSet.DATADataType.Break1);
+        private bool _OrganicBug_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(ImpactDataSet.DATADataType.Break1) && _DATALocation!.Value.Max - _OrganicBugLocation + 1 >= 4;
         public IFormLinkGetter<IImpactGetter> OrganicBug => _OrganicBug_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactGetter>(_package, _recordData.Span.Slice(_OrganicBugLocation, 0x4), isSet: _OrganicBug_IsSet) : FormLink<IImpactGetter>.Null;
         #endregion
         #region OrganicGlow
         private int _OrganicGlowLocation => _DATALocation!.Value.Min + 0x2C;
-        private bool _OrganicGlow_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(ImpactDataSet.DATADataType.Break2);
+        private bool _OrganicGlow_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(ImpactDataSet.DATADataType.Break2) && _DATALocation!.Value.Max - _OrganicGlowLocation + 1 >= 4;
         public IFormLinkGetter<IImpactGetter> OrganicGlow => _OrganicGlow_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactGetter>(_package, _recordData.Span.Slice(_OrganicGlowLocation, 0x4), isSet: _OrganicGlow_IsSet) : FormLink<IImpactGetter>.Null;
         #endregion
         partial void CustomFactoryEnd(

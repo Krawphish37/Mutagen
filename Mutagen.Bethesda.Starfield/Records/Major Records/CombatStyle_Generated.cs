@@ -8247,555 +8247,555 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _CSGDLocation;
         #region OffensiveMult
         private int _OffensiveMultLocation => _CSGDLocation!.Value.Min;
-        private bool _OffensiveMult_IsSet => _CSGDLocation.HasValue;
+        private bool _OffensiveMult_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _OffensiveMultLocation + 1 >= 4;
         public Percent OffensiveMult => _OffensiveMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_OffensiveMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region DefensiveMult
         private int _DefensiveMultLocation => _CSGDLocation!.Value.Min + 0x4;
-        private bool _DefensiveMult_IsSet => _CSGDLocation.HasValue;
+        private bool _DefensiveMult_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _DefensiveMultLocation + 1 >= 4;
         public Percent DefensiveMult => _DefensiveMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_DefensiveMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region GroupOffensiveMult
         private int _GroupOffensiveMultLocation => _CSGDLocation!.Value.Min + 0x8;
-        private bool _GroupOffensiveMult_IsSet => _CSGDLocation.HasValue;
+        private bool _GroupOffensiveMult_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _GroupOffensiveMultLocation + 1 >= 4;
         public Percent GroupOffensiveMult => _GroupOffensiveMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_GroupOffensiveMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region EquipmentScoreMultMelee
         private int _EquipmentScoreMultMeleeLocation => _CSGDLocation!.Value.Min + 0xC;
-        private bool _EquipmentScoreMultMelee_IsSet => _CSGDLocation.HasValue;
+        private bool _EquipmentScoreMultMelee_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EquipmentScoreMultMeleeLocation + 1 >= 4;
         public Single EquipmentScoreMultMelee => _EquipmentScoreMultMelee_IsSet ? _recordData.Slice(_EquipmentScoreMultMeleeLocation, 4).Float() : default(Single);
         #endregion
         #region EquipmentScoreMultMagic
         private int _EquipmentScoreMultMagicLocation => _CSGDLocation!.Value.Min + 0x10;
-        private bool _EquipmentScoreMultMagic_IsSet => _CSGDLocation.HasValue;
+        private bool _EquipmentScoreMultMagic_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EquipmentScoreMultMagicLocation + 1 >= 4;
         public Single EquipmentScoreMultMagic => _EquipmentScoreMultMagic_IsSet ? _recordData.Slice(_EquipmentScoreMultMagicLocation, 4).Float() : default(Single);
         #endregion
         #region EquipmentScoreMultRanged
         private int _EquipmentScoreMultRangedLocation => _CSGDLocation!.Value.Min + 0x14;
-        private bool _EquipmentScoreMultRanged_IsSet => _CSGDLocation.HasValue;
+        private bool _EquipmentScoreMultRanged_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EquipmentScoreMultRangedLocation + 1 >= 4;
         public Single EquipmentScoreMultRanged => _EquipmentScoreMultRanged_IsSet ? _recordData.Slice(_EquipmentScoreMultRangedLocation, 4).Float() : default(Single);
         #endregion
         #region EquipmentScoreMultShout
         private int _EquipmentScoreMultShoutLocation => _CSGDLocation!.Value.Min + 0x18;
-        private bool _EquipmentScoreMultShout_IsSet => _CSGDLocation.HasValue;
+        private bool _EquipmentScoreMultShout_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EquipmentScoreMultShoutLocation + 1 >= 4;
         public Single EquipmentScoreMultShout => _EquipmentScoreMultShout_IsSet ? _recordData.Slice(_EquipmentScoreMultShoutLocation, 4).Float() : default(Single);
         #endregion
         #region EquipmentScoreMultUnarmed
         private int _EquipmentScoreMultUnarmedLocation => _CSGDLocation!.Value.Min + 0x1C;
-        private bool _EquipmentScoreMultUnarmed_IsSet => _CSGDLocation.HasValue;
+        private bool _EquipmentScoreMultUnarmed_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EquipmentScoreMultUnarmedLocation + 1 >= 4;
         public Single EquipmentScoreMultUnarmed => _EquipmentScoreMultUnarmed_IsSet ? _recordData.Slice(_EquipmentScoreMultUnarmedLocation, 4).Float() : default(Single);
         #endregion
         #region EquipmentScoreMultStaff
         private int _EquipmentScoreMultStaffLocation => _CSGDLocation!.Value.Min + 0x20;
-        private bool _EquipmentScoreMultStaff_IsSet => _CSGDLocation.HasValue;
+        private bool _EquipmentScoreMultStaff_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EquipmentScoreMultStaffLocation + 1 >= 4;
         public Single EquipmentScoreMultStaff => _EquipmentScoreMultStaff_IsSet ? _recordData.Slice(_EquipmentScoreMultStaffLocation, 4).Float() : default(Single);
         #endregion
         #region AvoidThreatChance
         private int _AvoidThreatChanceLocation => _CSGDLocation!.Value.Min + 0x24;
-        private bool _AvoidThreatChance_IsSet => _CSGDLocation.HasValue;
+        private bool _AvoidThreatChance_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _AvoidThreatChanceLocation + 1 >= 4;
         public Percent AvoidThreatChance => _AvoidThreatChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_AvoidThreatChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region DodgeThreadChance
         private int _DodgeThreadChanceLocation => _CSGDLocation!.Value.Min + 0x28;
-        private bool _DodgeThreadChance_IsSet => _CSGDLocation.HasValue;
+        private bool _DodgeThreadChance_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _DodgeThreadChanceLocation + 1 >= 4;
         public Percent DodgeThreadChance => _DodgeThreadChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_DodgeThreadChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region EvadeThreatChance
         private int _EvadeThreatChanceLocation => _CSGDLocation!.Value.Min + 0x2C;
-        private bool _EvadeThreatChance_IsSet => _CSGDLocation.HasValue;
+        private bool _EvadeThreatChance_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EvadeThreatChanceLocation + 1 >= 4;
         public Percent EvadeThreatChance => _EvadeThreatChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_EvadeThreatChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region HealAllyDistance
         private int _HealAllyDistanceLocation => _CSGDLocation!.Value.Min + 0x30;
-        private bool _HealAllyDistance_IsSet => _CSGDLocation.HasValue;
+        private bool _HealAllyDistance_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _HealAllyDistanceLocation + 1 >= 4;
         public Single HealAllyDistance => _HealAllyDistance_IsSet ? _recordData.Slice(_HealAllyDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region JumpCostMult
         private int _JumpCostMultLocation => _CSGDLocation!.Value.Min + 0x34;
-        private bool _JumpCostMult_IsSet => _CSGDLocation.HasValue;
+        private bool _JumpCostMult_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _JumpCostMultLocation + 1 >= 4;
         public Single JumpCostMult => _JumpCostMult_IsSet ? _recordData.Slice(_JumpCostMultLocation, 4).Float() : default(Single);
         #endregion
         #region TauntDelayMult
         private int _TauntDelayMultLocation => _CSGDLocation!.Value.Min + 0x38;
-        private bool _TauntDelayMult_IsSet => _CSGDLocation.HasValue;
+        private bool _TauntDelayMult_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _TauntDelayMultLocation + 1 >= 4;
         public Single TauntDelayMult => _TauntDelayMult_IsSet ? _recordData.Slice(_TauntDelayMultLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _CSMELocation;
         #region MeleeAttackStaggeredMult
         private int _MeleeAttackStaggeredMultLocation => _CSMELocation!.Value.Min;
-        private bool _MeleeAttackStaggeredMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeAttackStaggeredMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeAttackStaggeredMultLocation + 1 >= 4;
         public Single MeleeAttackStaggeredMult => _MeleeAttackStaggeredMult_IsSet ? _recordData.Slice(_MeleeAttackStaggeredMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleePowerAttackStaggeredMult
         private int _MeleePowerAttackStaggeredMultLocation => _CSMELocation!.Value.Min + 0x4;
-        private bool _MeleePowerAttackStaggeredMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleePowerAttackStaggeredMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleePowerAttackStaggeredMultLocation + 1 >= 4;
         public Single MeleePowerAttackStaggeredMult => _MeleePowerAttackStaggeredMult_IsSet ? _recordData.Slice(_MeleePowerAttackStaggeredMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleePowerAttackBlockingMult
         private int _MeleePowerAttackBlockingMultLocation => _CSMELocation!.Value.Min + 0x8;
-        private bool _MeleePowerAttackBlockingMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleePowerAttackBlockingMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleePowerAttackBlockingMultLocation + 1 >= 4;
         public Single MeleePowerAttackBlockingMult => _MeleePowerAttackBlockingMult_IsSet ? _recordData.Slice(_MeleePowerAttackBlockingMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeBashMult
         private int _MeleeBashMultLocation => _CSMELocation!.Value.Min + 0xC;
-        private bool _MeleeBashMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeBashMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeBashMultLocation + 1 >= 4;
         public Single MeleeBashMult => _MeleeBashMult_IsSet ? _recordData.Slice(_MeleeBashMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeBashRecoilMult
         private int _MeleeBashRecoilMultLocation => _CSMELocation!.Value.Min + 0x10;
-        private bool _MeleeBashRecoilMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeBashRecoilMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeBashRecoilMultLocation + 1 >= 4;
         public Single MeleeBashRecoilMult => _MeleeBashRecoilMult_IsSet ? _recordData.Slice(_MeleeBashRecoilMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeBashAttackMult
         private int _MeleeBashAttackMultLocation => _CSMELocation!.Value.Min + 0x14;
-        private bool _MeleeBashAttackMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeBashAttackMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeBashAttackMultLocation + 1 >= 4;
         public Single MeleeBashAttackMult => _MeleeBashAttackMult_IsSet ? _recordData.Slice(_MeleeBashAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeBashPowerAttackMult
         private int _MeleeBashPowerAttackMultLocation => _CSMELocation!.Value.Min + 0x18;
-        private bool _MeleeBashPowerAttackMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeBashPowerAttackMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeBashPowerAttackMultLocation + 1 >= 4;
         public Single MeleeBashPowerAttackMult => _MeleeBashPowerAttackMult_IsSet ? _recordData.Slice(_MeleeBashPowerAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeSpecialAttackMult
         private int _MeleeSpecialAttackMultLocation => _CSMELocation!.Value.Min + 0x1C;
-        private bool _MeleeSpecialAttackMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeSpecialAttackMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeSpecialAttackMultLocation + 1 >= 4;
         public Single MeleeSpecialAttackMult => _MeleeSpecialAttackMult_IsSet ? _recordData.Slice(_MeleeSpecialAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeBlockWhenStaggeredMult
         private int _MeleeBlockWhenStaggeredMultLocation => _CSMELocation!.Value.Min + 0x20;
-        private bool _MeleeBlockWhenStaggeredMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeBlockWhenStaggeredMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeBlockWhenStaggeredMultLocation + 1 >= 4;
         public Single MeleeBlockWhenStaggeredMult => _MeleeBlockWhenStaggeredMult_IsSet ? _recordData.Slice(_MeleeBlockWhenStaggeredMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeAttackWhenStaggeredMult
         private int _MeleeAttackWhenStaggeredMultLocation => _CSMELocation!.Value.Min + 0x24;
-        private bool _MeleeAttackWhenStaggeredMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeAttackWhenStaggeredMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeAttackWhenStaggeredMultLocation + 1 >= 4;
         public Single MeleeAttackWhenStaggeredMult => _MeleeAttackWhenStaggeredMult_IsSet ? _recordData.Slice(_MeleeAttackWhenStaggeredMultLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _CSRALocation;
         #region RangedAccuracyMult
         private int _RangedAccuracyMultLocation => _CSRALocation!.Value.Min;
-        private bool _RangedAccuracyMult_IsSet => _CSRALocation.HasValue;
+        private bool _RangedAccuracyMult_IsSet => _CSRALocation.HasValue && _CSRALocation!.Value.Max - _RangedAccuracyMultLocation + 1 >= 4;
         public Percent RangedAccuracyMult => _RangedAccuracyMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_RangedAccuracyMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region RangedThrowMult
         private int _RangedThrowMultLocation => _CSRALocation!.Value.Min + 0x4;
-        private bool _RangedThrowMult_IsSet => _CSRALocation.HasValue;
+        private bool _RangedThrowMult_IsSet => _CSRALocation.HasValue && _CSRALocation!.Value.Max - _RangedThrowMultLocation + 1 >= 4;
         public Percent RangedThrowMult => _RangedThrowMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_RangedThrowMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region RangedGrenadeAdvancedThrowingMult
         private int _RangedGrenadeAdvancedThrowingMultLocation => _CSRALocation!.Value.Min + 0x8;
-        private bool _RangedGrenadeAdvancedThrowingMult_IsSet => _CSRALocation.HasValue;
+        private bool _RangedGrenadeAdvancedThrowingMult_IsSet => _CSRALocation.HasValue && _CSRALocation!.Value.Max - _RangedGrenadeAdvancedThrowingMultLocation + 1 >= 4;
         public Percent RangedGrenadeAdvancedThrowingMult => _RangedGrenadeAdvancedThrowingMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_RangedGrenadeAdvancedThrowingMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region RangedGrenadeFlashTargetMult
         private int _RangedGrenadeFlashTargetMultLocation => _CSRALocation!.Value.Min + 0xC;
-        private bool _RangedGrenadeFlashTargetMult_IsSet => _CSRALocation.HasValue;
+        private bool _RangedGrenadeFlashTargetMult_IsSet => _CSRALocation.HasValue && _CSRALocation!.Value.Max - _RangedGrenadeFlashTargetMultLocation + 1 >= 4;
         public Percent RangedGrenadeFlashTargetMult => _RangedGrenadeFlashTargetMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_RangedGrenadeFlashTargetMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region RangedGrenadeThrowAtGroupMult
         private int _RangedGrenadeThrowAtGroupMultLocation => _CSRALocation!.Value.Min + 0x10;
-        private bool _RangedGrenadeThrowAtGroupMult_IsSet => _CSRALocation.HasValue;
+        private bool _RangedGrenadeThrowAtGroupMult_IsSet => _CSRALocation.HasValue && _CSRALocation!.Value.Max - _RangedGrenadeThrowAtGroupMultLocation + 1 >= 4;
         public Percent RangedGrenadeThrowAtGroupMult => _RangedGrenadeThrowAtGroupMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_RangedGrenadeThrowAtGroupMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region RangedGrenadeCloseRangeAttackChanceMult
         private int _RangedGrenadeCloseRangeAttackChanceMultLocation => _CSRALocation!.Value.Min + 0x14;
-        private bool _RangedGrenadeCloseRangeAttackChanceMult_IsSet => _CSRALocation.HasValue;
+        private bool _RangedGrenadeCloseRangeAttackChanceMult_IsSet => _CSRALocation.HasValue && _CSRALocation!.Value.Max - _RangedGrenadeCloseRangeAttackChanceMultLocation + 1 >= 4;
         public Percent RangedGrenadeCloseRangeAttackChanceMult => _RangedGrenadeCloseRangeAttackChanceMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_RangedGrenadeCloseRangeAttackChanceMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         private RangeInt32? _CSCRLocation;
         #region CloseRangeDuelingCircleMult
         private int _CloseRangeDuelingCircleMultLocation => _CSCRLocation!.Value.Min;
-        private bool _CloseRangeDuelingCircleMult_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeDuelingCircleMult_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeDuelingCircleMultLocation + 1 >= 4;
         public Percent CloseRangeDuelingCircleMult => _CloseRangeDuelingCircleMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeDuelingCircleMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region CloseRangeDuelingFallbackMult
         private int _CloseRangeDuelingFallbackMultLocation => _CSCRLocation!.Value.Min + 0x4;
-        private bool _CloseRangeDuelingFallbackMult_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeDuelingFallbackMult_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeDuelingFallbackMultLocation + 1 >= 4;
         public Percent CloseRangeDuelingFallbackMult => _CloseRangeDuelingFallbackMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeDuelingFallbackMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region CloseRangeFlankDistance
         private int _CloseRangeFlankDistanceLocation => _CSCRLocation!.Value.Min + 0x8;
-        private bool _CloseRangeFlankDistance_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeFlankDistance_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeFlankDistanceLocation + 1 >= 4;
         public Percent CloseRangeFlankDistance => _CloseRangeFlankDistance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeFlankDistanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region CloseRangeFlankingStalkTime
         private int _CloseRangeFlankingStalkTimeLocation => _CSCRLocation!.Value.Min + 0xC;
-        private bool _CloseRangeFlankingStalkTime_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeFlankingStalkTime_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeFlankingStalkTimeLocation + 1 >= 4;
         public Percent CloseRangeFlankingStalkTime => _CloseRangeFlankingStalkTime_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeFlankingStalkTimeLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region CloseRangeChargeDistance
         private int _CloseRangeChargeDistanceLocation => _CSCRLocation!.Value.Min + 0x10;
-        private bool _CloseRangeChargeDistance_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeChargeDistance_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeChargeDistanceLocation + 1 >= 4;
         public Percent CloseRangeChargeDistance => _CloseRangeChargeDistance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeChargeDistanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region CloseRangeChargingThrowProbability
         private int _CloseRangeChargingThrowProbabilityLocation => _CSCRLocation!.Value.Min + 0x14;
-        private bool _CloseRangeChargingThrowProbability_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeChargingThrowProbability_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeChargingThrowProbabilityLocation + 1 >= 4;
         public Percent CloseRangeChargingThrowProbability => _CloseRangeChargingThrowProbability_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeChargingThrowProbabilityLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region CloseRangeChargingSprintFastProbability
         private int _CloseRangeChargingSprintFastProbabilityLocation => _CSCRLocation!.Value.Min + 0x18;
-        private bool _CloseRangeChargingSprintFastProbability_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeChargingSprintFastProbability_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeChargingSprintFastProbabilityLocation + 1 >= 4;
         public Percent CloseRangeChargingSprintFastProbability => _CloseRangeChargingSprintFastProbability_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeChargingSprintFastProbabilityLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region CloseRangeChargingSideswipeProbability
         private int _CloseRangeChargingSideswipeProbabilityLocation => _CSCRLocation!.Value.Min + 0x1C;
-        private bool _CloseRangeChargingSideswipeProbability_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeChargingSideswipeProbability_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeChargingSideswipeProbabilityLocation + 1 >= 4;
         public Percent CloseRangeChargingSideswipeProbability => _CloseRangeChargingSideswipeProbability_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeChargingSideswipeProbabilityLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region CloseRangeChargingDisengageProbability
         private int _CloseRangeChargingDisengageProbabilityLocation => _CSCRLocation!.Value.Min + 0x20;
-        private bool _CloseRangeChargingDisengageProbability_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeChargingDisengageProbability_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeChargingDisengageProbabilityLocation + 1 >= 4;
         public Percent CloseRangeChargingDisengageProbability => _CloseRangeChargingDisengageProbability_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeChargingDisengageProbabilityLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region CloseRangeChargingThrowMaxTargets
         private int _CloseRangeChargingThrowMaxTargetsLocation => _CSCRLocation!.Value.Min + 0x24;
-        private bool _CloseRangeChargingThrowMaxTargets_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeChargingThrowMaxTargets_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeChargingThrowMaxTargetsLocation + 1 >= 4;
         public UInt32 CloseRangeChargingThrowMaxTargets => _CloseRangeChargingThrowMaxTargets_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_CloseRangeChargingThrowMaxTargetsLocation, 4)) : default(UInt32);
         #endregion
         #region CloseRangeFlankingVariance
         private int _CloseRangeFlankingVarianceLocation => _CSCRLocation!.Value.Min + 0x28;
-        private bool _CloseRangeFlankingVariance_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeFlankingVariance_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeFlankingVarianceLocation + 1 >= 4;
         public Percent CloseRangeFlankingVariance => _CloseRangeFlankingVariance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeFlankingVarianceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region CloseRangeRetreatChance
         private int _CloseRangeRetreatChanceLocation => _CSCRLocation!.Value.Min + 0x2C;
-        private bool _CloseRangeRetreatChance_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeRetreatChance_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeRetreatChanceLocation + 1 >= 4;
         public Percent CloseRangeRetreatChance => _CloseRangeRetreatChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeRetreatChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region CloseRangeRetreatDistanceMult
         private int _CloseRangeRetreatDistanceMultLocation => _CSCRLocation!.Value.Min + 0x30;
-        private bool _CloseRangeRetreatDistanceMult_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeRetreatDistanceMult_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeRetreatDistanceMultLocation + 1 >= 4;
         public Percent CloseRangeRetreatDistanceMult => _CloseRangeRetreatDistanceMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeRetreatDistanceMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         private RangeInt32? _CSLRLocation;
         #region LongRangeStrafeMult
         private int _LongRangeStrafeMultLocation => _CSLRLocation!.Value.Min;
-        private bool _LongRangeStrafeMult_IsSet => _CSLRLocation.HasValue;
+        private bool _LongRangeStrafeMult_IsSet => _CSLRLocation.HasValue && _CSLRLocation!.Value.Max - _LongRangeStrafeMultLocation + 1 >= 4;
         public Percent LongRangeStrafeMult => _LongRangeStrafeMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeStrafeMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region LongRangeAdjustRangeMult
         private int _LongRangeAdjustRangeMultLocation => _CSLRLocation!.Value.Min + 0x4;
-        private bool _LongRangeAdjustRangeMult_IsSet => _CSLRLocation.HasValue;
+        private bool _LongRangeAdjustRangeMult_IsSet => _CSLRLocation.HasValue && _CSLRLocation!.Value.Max - _LongRangeAdjustRangeMultLocation + 1 >= 4;
         public Percent LongRangeAdjustRangeMult => _LongRangeAdjustRangeMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeAdjustRangeMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region LongRangeCrouchMult
         private int _LongRangeCrouchMultLocation => _CSLRLocation!.Value.Min + 0x8;
-        private bool _LongRangeCrouchMult_IsSet => _CSLRLocation.HasValue;
+        private bool _LongRangeCrouchMult_IsSet => _CSLRLocation.HasValue && _CSLRLocation!.Value.Max - _LongRangeCrouchMultLocation + 1 >= 4;
         public Percent LongRangeCrouchMult => _LongRangeCrouchMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeCrouchMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region LongRangeWaitMult
         private int _LongRangeWaitMultLocation => _CSLRLocation!.Value.Min + 0xC;
-        private bool _LongRangeWaitMult_IsSet => _CSLRLocation.HasValue;
+        private bool _LongRangeWaitMult_IsSet => _CSLRLocation.HasValue && _CSLRLocation!.Value.Max - _LongRangeWaitMultLocation + 1 >= 4;
         public Percent LongRangeWaitMult => _LongRangeWaitMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeWaitMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region LongRangeRangeMult
         private int _LongRangeRangeMultLocation => _CSLRLocation!.Value.Min + 0x10;
-        private bool _LongRangeRangeMult_IsSet => _CSLRLocation.HasValue;
+        private bool _LongRangeRangeMult_IsSet => _CSLRLocation.HasValue && _CSLRLocation!.Value.Max - _LongRangeRangeMultLocation + 1 >= 4;
         public Percent LongRangeRangeMult => _LongRangeRangeMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeRangeMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region LongRangeProvideSuppressiveFireMult
         private int _LongRangeProvideSuppressiveFireMultLocation => _CSLRLocation!.Value.Min + 0x14;
-        private bool _LongRangeProvideSuppressiveFireMult_IsSet => _CSLRLocation.HasValue;
+        private bool _LongRangeProvideSuppressiveFireMult_IsSet => _CSLRLocation.HasValue && _CSLRLocation!.Value.Max - _LongRangeProvideSuppressiveFireMultLocation + 1 >= 4;
         public Percent LongRangeProvideSuppressiveFireMult => _LongRangeProvideSuppressiveFireMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeProvideSuppressiveFireMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region LongRangeRetreatChance
         private int _LongRangeRetreatChanceLocation => _CSLRLocation!.Value.Min + 0x18;
-        private bool _LongRangeRetreatChance_IsSet => _CSLRLocation.HasValue;
+        private bool _LongRangeRetreatChance_IsSet => _CSLRLocation.HasValue && _CSLRLocation!.Value.Max - _LongRangeRetreatChanceLocation + 1 >= 4;
         public Percent LongRangeRetreatChance => _LongRangeRetreatChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeRetreatChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region LongRangeRetreatHideTimeMult
         private int _LongRangeRetreatHideTimeMultLocation => _CSLRLocation!.Value.Min + 0x1C;
-        private bool _LongRangeRetreatHideTimeMult_IsSet => _CSLRLocation.HasValue;
+        private bool _LongRangeRetreatHideTimeMult_IsSet => _CSLRLocation.HasValue && _CSLRLocation!.Value.Max - _LongRangeRetreatHideTimeMultLocation + 1 >= 4;
         public Percent LongRangeRetreatHideTimeMult => _LongRangeRetreatHideTimeMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeRetreatHideTimeMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region LongRangeRetreatDistanceMult
         private int _LongRangeRetreatDistanceMultLocation => _CSLRLocation!.Value.Min + 0x20;
-        private bool _LongRangeRetreatDistanceMult_IsSet => _CSLRLocation.HasValue;
+        private bool _LongRangeRetreatDistanceMult_IsSet => _CSLRLocation.HasValue && _CSLRLocation!.Value.Max - _LongRangeRetreatDistanceMultLocation + 1 >= 4;
         public Percent LongRangeRetreatDistanceMult => _LongRangeRetreatDistanceMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeRetreatDistanceMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         private RangeInt32? _CSCVLocation;
         #region CoverSearchDistanceMult
         private int _CoverSearchDistanceMultLocation => _CSCVLocation!.Value.Min;
-        private bool _CoverSearchDistanceMult_IsSet => _CSCVLocation.HasValue;
+        private bool _CoverSearchDistanceMult_IsSet => _CSCVLocation.HasValue && _CSCVLocation!.Value.Max - _CoverSearchDistanceMultLocation + 1 >= 4;
         public Percent CoverSearchDistanceMult => _CoverSearchDistanceMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CoverSearchDistanceMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region CoverSearchSuppressionSensitivity
         private int _CoverSearchSuppressionSensitivityLocation => _CSCVLocation!.Value.Min + 0x4;
-        private bool _CoverSearchSuppressionSensitivity_IsSet => _CSCVLocation.HasValue;
+        private bool _CoverSearchSuppressionSensitivity_IsSet => _CSCVLocation.HasValue && _CSCVLocation!.Value.Max - _CoverSearchSuppressionSensitivityLocation + 1 >= 4;
         public Percent CoverSearchSuppressionSensitivity => _CoverSearchSuppressionSensitivity_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CoverSearchSuppressionSensitivityLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         private RangeInt32? _CSFLLocation;
         #region FlightHoverChance
         private int _FlightHoverChanceLocation => _CSFLLocation!.Value.Min;
-        private bool _FlightHoverChance_IsSet => _CSFLLocation.HasValue;
+        private bool _FlightHoverChance_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _FlightHoverChanceLocation + 1 >= 4;
         public Percent FlightHoverChance => _FlightHoverChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightHoverChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region FlightDiveBombChance
         private int _FlightDiveBombChanceLocation => _CSFLLocation!.Value.Min + 0x4;
-        private bool _FlightDiveBombChance_IsSet => _CSFLLocation.HasValue;
+        private bool _FlightDiveBombChance_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _FlightDiveBombChanceLocation + 1 >= 4;
         public Percent FlightDiveBombChance => _FlightDiveBombChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightDiveBombChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region FlightGroundAttackChance
         private int _FlightGroundAttackChanceLocation => _CSFLLocation!.Value.Min + 0x8;
-        private bool _FlightGroundAttackChance_IsSet => _CSFLLocation.HasValue;
+        private bool _FlightGroundAttackChance_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _FlightGroundAttackChanceLocation + 1 >= 4;
         public Percent FlightGroundAttackChance => _FlightGroundAttackChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightGroundAttackChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region FlightHoverTime
         private int _FlightHoverTimeLocation => _CSFLLocation!.Value.Min + 0xC;
-        private bool _FlightHoverTime_IsSet => _CSFLLocation.HasValue;
+        private bool _FlightHoverTime_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _FlightHoverTimeLocation + 1 >= 4;
         public Percent FlightHoverTime => _FlightHoverTime_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightHoverTimeLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region FlightGroundAttackTime
         private int _FlightGroundAttackTimeLocation => _CSFLLocation!.Value.Min + 0x10;
-        private bool _FlightGroundAttackTime_IsSet => _CSFLLocation.HasValue;
+        private bool _FlightGroundAttackTime_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _FlightGroundAttackTimeLocation + 1 >= 4;
         public Percent FlightGroundAttackTime => _FlightGroundAttackTime_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightGroundAttackTimeLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region FlightPerchAttackChance
         private int _FlightPerchAttackChanceLocation => _CSFLLocation!.Value.Min + 0x14;
-        private bool _FlightPerchAttackChance_IsSet => _CSFLLocation.HasValue;
+        private bool _FlightPerchAttackChance_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _FlightPerchAttackChanceLocation + 1 >= 4;
         public Percent FlightPerchAttackChance => _FlightPerchAttackChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightPerchAttackChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region FlightPerchAttackTime
         private int _FlightPerchAttackTimeLocation => _CSFLLocation!.Value.Min + 0x18;
-        private bool _FlightPerchAttackTime_IsSet => _CSFLLocation.HasValue;
+        private bool _FlightPerchAttackTime_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _FlightPerchAttackTimeLocation + 1 >= 4;
         public Percent FlightPerchAttackTime => _FlightPerchAttackTime_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightPerchAttackTimeLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region FlightFlyingAttackChance
         private int _FlightFlyingAttackChanceLocation => _CSFLLocation!.Value.Min + 0x1C;
-        private bool _FlightFlyingAttackChance_IsSet => _CSFLLocation.HasValue;
+        private bool _FlightFlyingAttackChance_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _FlightFlyingAttackChanceLocation + 1 >= 4;
         public Percent FlightFlyingAttackChance => _FlightFlyingAttackChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightFlyingAttackChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         private RangeInt32? _CSTNLocation;
         #region TunnelCostMult
         private int _TunnelCostMultLocation => _CSTNLocation!.Value.Min;
-        private bool _TunnelCostMult_IsSet => _CSTNLocation.HasValue;
+        private bool _TunnelCostMult_IsSet => _CSTNLocation.HasValue && _CSTNLocation!.Value.Max - _TunnelCostMultLocation + 1 >= 4;
         public Single TunnelCostMult => _TunnelCostMult_IsSet ? _recordData.Slice(_TunnelCostMultLocation, 4).Float() : default(Single);
         #endregion
         #region TunnelChance
         private int _TunnelChanceLocation => _CSTNLocation!.Value.Min + 0x4;
-        private bool _TunnelChance_IsSet => _CSTNLocation.HasValue;
+        private bool _TunnelChance_IsSet => _CSTNLocation.HasValue && _CSTNLocation!.Value.Max - _TunnelChanceLocation + 1 >= 4;
         public Percent TunnelChance => _TunnelChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_TunnelChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region TunnelMaxDistance
         private int _TunnelMaxDistanceLocation => _CSTNLocation!.Value.Min + 0x8;
-        private bool _TunnelMaxDistance_IsSet => _CSTNLocation.HasValue;
+        private bool _TunnelMaxDistance_IsSet => _CSTNLocation.HasValue && _CSTNLocation!.Value.Max - _TunnelMaxDistanceLocation + 1 >= 4;
         public Single TunnelMaxDistance => _TunnelMaxDistance_IsSet ? _recordData.Slice(_TunnelMaxDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region TunnelSpeedMult
         private int _TunnelSpeedMultLocation => _CSTNLocation!.Value.Min + 0xC;
-        private bool _TunnelSpeedMult_IsSet => _CSTNLocation.HasValue;
+        private bool _TunnelSpeedMult_IsSet => _CSTNLocation.HasValue && _CSTNLocation!.Value.Max - _TunnelSpeedMultLocation + 1 >= 4;
         public Single TunnelSpeedMult => _TunnelSpeedMult_IsSet ? _recordData.Slice(_TunnelSpeedMultLocation, 4).Float() : default(Single);
         #endregion
         #region TunnelMinTime
         private int _TunnelMinTimeLocation => _CSTNLocation!.Value.Min + 0x10;
-        private bool _TunnelMinTime_IsSet => _CSTNLocation.HasValue;
+        private bool _TunnelMinTime_IsSet => _CSTNLocation.HasValue && _CSTNLocation!.Value.Max - _TunnelMinTimeLocation + 1 >= 4;
         public Single TunnelMinTime => _TunnelMinTime_IsSet ? _recordData.Slice(_TunnelMinTimeLocation, 4).Float() : default(Single);
         #endregion
         #region TunnelMaxTime
         private int _TunnelMaxTimeLocation => _CSTNLocation!.Value.Min + 0x14;
-        private bool _TunnelMaxTime_IsSet => _CSTNLocation.HasValue;
+        private bool _TunnelMaxTime_IsSet => _CSTNLocation.HasValue && _CSTNLocation!.Value.Max - _TunnelMaxTimeLocation + 1 >= 4;
         public Single TunnelMaxTime => _TunnelMaxTime_IsSet ? _recordData.Slice(_TunnelMaxTimeLocation, 4).Float() : default(Single);
         #endregion
         #region TunnelMaximumTime
         private int _TunnelMaximumTimeLocation => _CSTNLocation!.Value.Min + 0x18;
-        private bool _TunnelMaximumTime_IsSet => _CSTNLocation.HasValue;
+        private bool _TunnelMaximumTime_IsSet => _CSTNLocation.HasValue && _CSTNLocation!.Value.Max - _TunnelMaximumTimeLocation + 1 >= 4;
         public Single TunnelMaximumTime => _TunnelMaximumTime_IsSet ? _recordData.Slice(_TunnelMaximumTimeLocation, 4).Float() : default(Single);
         #endregion
         #region TunnelCooldown
         private int _TunnelCooldownLocation => _CSTNLocation!.Value.Min + 0x1C;
-        private bool _TunnelCooldown_IsSet => _CSTNLocation.HasValue;
+        private bool _TunnelCooldown_IsSet => _CSTNLocation.HasValue && _CSTNLocation!.Value.Max - _TunnelCooldownLocation + 1 >= 4;
         public Single TunnelCooldown => _TunnelCooldown_IsSet ? _recordData.Slice(_TunnelCooldownLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _CSSGLocation;
         #region SpaceGeneralPilotSkill
         private int _SpaceGeneralPilotSkillLocation => _CSSGLocation!.Value.Min;
-        private bool _SpaceGeneralPilotSkill_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralPilotSkill_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralPilotSkillLocation + 1 >= 4;
         public Percent SpaceGeneralPilotSkill => _SpaceGeneralPilotSkill_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralPilotSkillLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralAccuracy
         private int _SpaceGeneralAccuracyLocation => _CSSGLocation!.Value.Min + 0x4;
-        private bool _SpaceGeneralAccuracy_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralAccuracy_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralAccuracyLocation + 1 >= 4;
         public Percent SpaceGeneralAccuracy => _SpaceGeneralAccuracy_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralAccuracyLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralTargetShield
         private int _SpaceGeneralTargetShieldLocation => _CSSGLocation!.Value.Min + 0x8;
-        private bool _SpaceGeneralTargetShield_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralTargetShield_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralTargetShieldLocation + 1 >= 4;
         public Percent SpaceGeneralTargetShield => _SpaceGeneralTargetShield_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralTargetShieldLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralAdjustment
         private int _SpaceGeneralAdjustmentLocation => _CSSGLocation!.Value.Min + 0xC;
-        private bool _SpaceGeneralAdjustment_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralAdjustment_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralAdjustmentLocation + 1 >= 4;
         public Single SpaceGeneralAdjustment => _SpaceGeneralAdjustment_IsSet ? _recordData.Slice(_SpaceGeneralAdjustmentLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralEngageManeuverChanceDirectAttack
         private int _SpaceGeneralEngageManeuverChanceDirectAttackLocation => _CSSGLocation!.Value.Min + 0x10;
-        private bool _SpaceGeneralEngageManeuverChanceDirectAttack_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralEngageManeuverChanceDirectAttack_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralEngageManeuverChanceDirectAttackLocation + 1 >= 4;
         public Percent SpaceGeneralEngageManeuverChanceDirectAttack => _SpaceGeneralEngageManeuverChanceDirectAttack_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEngageManeuverChanceDirectAttackLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralEngageManeuverChancePass
         private int _SpaceGeneralEngageManeuverChancePassLocation => _CSSGLocation!.Value.Min + 0x14;
-        private bool _SpaceGeneralEngageManeuverChancePass_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralEngageManeuverChancePass_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralEngageManeuverChancePassLocation + 1 >= 4;
         public Percent SpaceGeneralEngageManeuverChancePass => _SpaceGeneralEngageManeuverChancePass_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEngageManeuverChancePassLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralEngageManeuverChanceLeadTurn
         private int _SpaceGeneralEngageManeuverChanceLeadTurnLocation => _CSSGLocation!.Value.Min + 0x18;
-        private bool _SpaceGeneralEngageManeuverChanceLeadTurn_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralEngageManeuverChanceLeadTurn_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralEngageManeuverChanceLeadTurnLocation + 1 >= 4;
         public Percent SpaceGeneralEngageManeuverChanceLeadTurn => _SpaceGeneralEngageManeuverChanceLeadTurn_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEngageManeuverChanceLeadTurnLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralEngageManeuverChanceSlideTurn
         private int _SpaceGeneralEngageManeuverChanceSlideTurnLocation => _CSSGLocation!.Value.Min + 0x1C;
-        private bool _SpaceGeneralEngageManeuverChanceSlideTurn_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralEngageManeuverChanceSlideTurn_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralEngageManeuverChanceSlideTurnLocation + 1 >= 4;
         public Percent SpaceGeneralEngageManeuverChanceSlideTurn => _SpaceGeneralEngageManeuverChanceSlideTurn_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEngageManeuverChanceSlideTurnLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralEngageManeuverChanceBarrelRoll
         private int _SpaceGeneralEngageManeuverChanceBarrelRollLocation => _CSSGLocation!.Value.Min + 0x20;
-        private bool _SpaceGeneralEngageManeuverChanceBarrelRoll_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralEngageManeuverChanceBarrelRoll_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralEngageManeuverChanceBarrelRollLocation + 1 >= 4;
         public Percent SpaceGeneralEngageManeuverChanceBarrelRoll => _SpaceGeneralEngageManeuverChanceBarrelRoll_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEngageManeuverChanceBarrelRollLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralEvadeManeuverChanceBreak
         private int _SpaceGeneralEvadeManeuverChanceBreakLocation => _CSSGLocation!.Value.Min + 0x24;
-        private bool _SpaceGeneralEvadeManeuverChanceBreak_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralEvadeManeuverChanceBreak_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralEvadeManeuverChanceBreakLocation + 1 >= 4;
         public Percent SpaceGeneralEvadeManeuverChanceBreak => _SpaceGeneralEvadeManeuverChanceBreak_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEvadeManeuverChanceBreakLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralEvadeManeuverChanceScissors
         private int _SpaceGeneralEvadeManeuverChanceScissorsLocation => _CSSGLocation!.Value.Min + 0x28;
-        private bool _SpaceGeneralEvadeManeuverChanceScissors_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralEvadeManeuverChanceScissors_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralEvadeManeuverChanceScissorsLocation + 1 >= 4;
         public Percent SpaceGeneralEvadeManeuverChanceScissors => _SpaceGeneralEvadeManeuverChanceScissors_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEvadeManeuverChanceScissorsLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralEvadeManeuverChanceCut
         private int _SpaceGeneralEvadeManeuverChanceCutLocation => _CSSGLocation!.Value.Min + 0x2C;
-        private bool _SpaceGeneralEvadeManeuverChanceCut_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralEvadeManeuverChanceCut_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralEvadeManeuverChanceCutLocation + 1 >= 4;
         public Percent SpaceGeneralEvadeManeuverChanceCut => _SpaceGeneralEvadeManeuverChanceCut_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEvadeManeuverChanceCutLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralEvadeManeuverChanceBoost
         private int _SpaceGeneralEvadeManeuverChanceBoostLocation => _CSSGLocation!.Value.Min + 0x30;
-        private bool _SpaceGeneralEvadeManeuverChanceBoost_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralEvadeManeuverChanceBoost_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralEvadeManeuverChanceBoostLocation + 1 >= 4;
         public Percent SpaceGeneralEvadeManeuverChanceBoost => _SpaceGeneralEvadeManeuverChanceBoost_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEvadeManeuverChanceBoostLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralAcquireManeuverChanceSliceback
         private int _SpaceGeneralAcquireManeuverChanceSlicebackLocation => _CSSGLocation!.Value.Min + 0x34;
-        private bool _SpaceGeneralAcquireManeuverChanceSliceback_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralAcquireManeuverChanceSliceback_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralAcquireManeuverChanceSlicebackLocation + 1 >= 4;
         public Percent SpaceGeneralAcquireManeuverChanceSliceback => _SpaceGeneralAcquireManeuverChanceSliceback_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralAcquireManeuverChanceSlicebackLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralAcquireManeuverChanceStrafeTurn
         private int _SpaceGeneralAcquireManeuverChanceStrafeTurnLocation => _CSSGLocation!.Value.Min + 0x38;
-        private bool _SpaceGeneralAcquireManeuverChanceStrafeTurn_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralAcquireManeuverChanceStrafeTurn_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralAcquireManeuverChanceStrafeTurnLocation + 1 >= 4;
         public Percent SpaceGeneralAcquireManeuverChanceStrafeTurn => _SpaceGeneralAcquireManeuverChanceStrafeTurn_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralAcquireManeuverChanceStrafeTurnLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralAcquireManeuverChanceAcquire
         private int _SpaceGeneralAcquireManeuverChanceAcquireLocation => _CSSGLocation!.Value.Min + 0x3C;
-        private bool _SpaceGeneralAcquireManeuverChanceAcquire_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralAcquireManeuverChanceAcquire_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralAcquireManeuverChanceAcquireLocation + 1 >= 4;
         public Percent SpaceGeneralAcquireManeuverChanceAcquire => _SpaceGeneralAcquireManeuverChanceAcquire_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralAcquireManeuverChanceAcquireLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralAcquireManeuverChanceTurn
         private int _SpaceGeneralAcquireManeuverChanceTurnLocation => _CSSGLocation!.Value.Min + 0x40;
-        private bool _SpaceGeneralAcquireManeuverChanceTurn_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralAcquireManeuverChanceTurn_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralAcquireManeuverChanceTurnLocation + 1 >= 4;
         public Percent SpaceGeneralAcquireManeuverChanceTurn => _SpaceGeneralAcquireManeuverChanceTurn_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralAcquireManeuverChanceTurnLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralDisengageManeuverChance
         private int _SpaceGeneralDisengageManeuverChanceLocation => _CSSGLocation!.Value.Min + 0x44;
-        private bool _SpaceGeneralDisengageManeuverChance_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralDisengageManeuverChance_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralDisengageManeuverChanceLocation + 1 >= 4;
         public Percent SpaceGeneralDisengageManeuverChance => _SpaceGeneralDisengageManeuverChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralDisengageManeuverChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceGeneralMissileSeekingStrength
         private int _SpaceGeneralMissileSeekingStrengthLocation => _CSSGLocation!.Value.Min + 0x48;
-        private bool _SpaceGeneralMissileSeekingStrength_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralMissileSeekingStrength_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralMissileSeekingStrengthLocation + 1 >= 4;
         public Single SpaceGeneralMissileSeekingStrength => _SpaceGeneralMissileSeekingStrength_IsSet ? _recordData.Slice(_SpaceGeneralMissileSeekingStrengthLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralMinTimeBetweenBoosts
         private int _SpaceGeneralMinTimeBetweenBoostsLocation => _CSSGLocation!.Value.Min + 0x4C;
-        private bool _SpaceGeneralMinTimeBetweenBoosts_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralMinTimeBetweenBoosts_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralMinTimeBetweenBoostsLocation + 1 >= 4;
         public Single SpaceGeneralMinTimeBetweenBoosts => _SpaceGeneralMinTimeBetweenBoosts_IsSet ? _recordData.Slice(_SpaceGeneralMinTimeBetweenBoostsLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralCombatStrafing
         private int _SpaceGeneralCombatStrafingLocation => _CSSGLocation!.Value.Min + 0x50;
-        private bool _SpaceGeneralCombatStrafing_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralCombatStrafing_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralCombatStrafingLocation + 1 >= 1;
         public Boolean SpaceGeneralCombatStrafing => _SpaceGeneralCombatStrafing_IsSet ? _recordData.Slice(_SpaceGeneralCombatStrafingLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region SpaceGeneralRollsDuringBoost
         private int _SpaceGeneralRollsDuringBoostLocation => _CSSGLocation!.Value.Min + 0x51;
-        private bool _SpaceGeneralRollsDuringBoost_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralRollsDuringBoost_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralRollsDuringBoostLocation + 1 >= 1;
         public Boolean SpaceGeneralRollsDuringBoost => _SpaceGeneralRollsDuringBoost_IsSet ? _recordData.Slice(_SpaceGeneralRollsDuringBoostLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region UnknownCSSG
         private int _UnknownCSSGLocation => _CSSGLocation!.Value.Min + 0x52;
-        private bool _UnknownCSSG_IsSet => _CSSGLocation.HasValue;
+        private bool _UnknownCSSG_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _UnknownCSSGLocation + 1 >= 2;
         public Int16 UnknownCSSG => _UnknownCSSG_IsSet ? BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_UnknownCSSGLocation, 2)) : default(Int16);
         #endregion
         #region SpaceGeneralPowerWeighting
         private int _SpaceGeneralPowerWeightingLocation => _CSSGLocation!.Value.Min + 0x54;
-        private bool _SpaceGeneralPowerWeighting_IsSet => _CSSGLocation.HasValue;
+        private bool _SpaceGeneralPowerWeighting_IsSet => _CSSGLocation.HasValue && _CSSGLocation!.Value.Max - _SpaceGeneralPowerWeightingLocation + 1 >= 1;
         private ICombatStylePowerWeightingGetter? _SpaceGeneralPowerWeighting => _SpaceGeneralPowerWeighting_IsSet ? CombatStylePowerWeightingBinaryOverlay.CombatStylePowerWeightingFactory(_recordData.Slice(_SpaceGeneralPowerWeightingLocation), _package) : default;
         public ICombatStylePowerWeightingGetter SpaceGeneralPowerWeighting => _SpaceGeneralPowerWeighting ?? new CombatStylePowerWeighting();
         #endregion
         private RangeInt32? _CSSMLocation;
         #region SpaceManeuverTypesMaxTime
         private int _SpaceManeuverTypesMaxTimeLocation => _CSSMLocation!.Value.Min;
-        private bool _SpaceManeuverTypesMaxTime_IsSet => _CSSMLocation.HasValue;
+        private bool _SpaceManeuverTypesMaxTime_IsSet => _CSSMLocation.HasValue && _CSSMLocation!.Value.Max - _SpaceManeuverTypesMaxTimeLocation + 1 >= 1;
         private ICombatStyleManeuverTimingGetter? _SpaceManeuverTypesMaxTime => _SpaceManeuverTypesMaxTime_IsSet ? CombatStyleManeuverTimingBinaryOverlay.CombatStyleManeuverTimingFactory(_recordData.Slice(_SpaceManeuverTypesMaxTimeLocation), _package) : default;
         public ICombatStyleManeuverTimingGetter SpaceManeuverTypesMaxTime => _SpaceManeuverTypesMaxTime ?? new CombatStyleManeuverTiming();
         #endregion
         #region SpaceManeuverTypesReentryDelays
         private int _SpaceManeuverTypesReentryDelaysLocation => _CSSMLocation!.Value.Min + 0x20;
-        private bool _SpaceManeuverTypesReentryDelays_IsSet => _CSSMLocation.HasValue;
+        private bool _SpaceManeuverTypesReentryDelays_IsSet => _CSSMLocation.HasValue && _CSSMLocation!.Value.Max - _SpaceManeuverTypesReentryDelaysLocation + 1 >= 1;
         private ICombatStyleManeuverTimingGetter? _SpaceManeuverTypesReentryDelays => _SpaceManeuverTypesReentryDelays_IsSet ? CombatStyleManeuverTimingBinaryOverlay.CombatStyleManeuverTimingFactory(_recordData.Slice(_SpaceManeuverTypesReentryDelaysLocation), _package) : default;
         public ICombatStyleManeuverTimingGetter SpaceManeuverTypesReentryDelays => _SpaceManeuverTypesReentryDelays ?? new CombatStyleManeuverTiming();
         #endregion
         private RangeInt32? _CSSRLocation;
         #region SpaceRepairDamageThreshold
         private int _SpaceRepairDamageThresholdLocation => _CSSRLocation!.Value.Min;
-        private bool _SpaceRepairDamageThreshold_IsSet => _CSSRLocation.HasValue;
+        private bool _SpaceRepairDamageThreshold_IsSet => _CSSRLocation.HasValue && _CSSRLocation!.Value.Max - _SpaceRepairDamageThresholdLocation + 1 >= 4;
         public Percent SpaceRepairDamageThreshold => _SpaceRepairDamageThreshold_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceRepairDamageThresholdLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceRepairFarawayDistance
         private int _SpaceRepairFarawayDistanceLocation => _CSSRLocation!.Value.Min + 0x4;
-        private bool _SpaceRepairFarawayDistance_IsSet => _CSSRLocation.HasValue;
+        private bool _SpaceRepairFarawayDistance_IsSet => _CSSRLocation.HasValue && _CSSRLocation!.Value.Max - _SpaceRepairFarawayDistanceLocation + 1 >= 4;
         public Percent SpaceRepairFarawayDistance => _SpaceRepairFarawayDistance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceRepairFarawayDistanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceRepairPowerToUse
         private int _SpaceRepairPowerToUseLocation => _CSSRLocation!.Value.Min + 0x8;
-        private bool _SpaceRepairPowerToUse_IsSet => _CSSRLocation.HasValue;
+        private bool _SpaceRepairPowerToUse_IsSet => _CSSRLocation.HasValue && _CSSRLocation!.Value.Max - _SpaceRepairPowerToUseLocation + 1 >= 4;
         public Percent SpaceRepairPowerToUse => _SpaceRepairPowerToUse_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceRepairPowerToUseLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceRepairInClosePowerWeightingTables
         private int _SpaceRepairInClosePowerWeightingTablesLocation => _CSSRLocation!.Value.Min + 0xC;
-        private bool _SpaceRepairInClosePowerWeightingTables_IsSet => _CSSRLocation.HasValue;
+        private bool _SpaceRepairInClosePowerWeightingTables_IsSet => _CSSRLocation.HasValue && _CSSRLocation!.Value.Max - _SpaceRepairInClosePowerWeightingTablesLocation + 1 >= 1;
         private ICombatStylePowerWeightingGetter? _SpaceRepairInClosePowerWeightingTables => _SpaceRepairInClosePowerWeightingTables_IsSet ? CombatStylePowerWeightingBinaryOverlay.CombatStylePowerWeightingFactory(_recordData.Slice(_SpaceRepairInClosePowerWeightingTablesLocation), _package) : default;
         public ICombatStylePowerWeightingGetter SpaceRepairInClosePowerWeightingTables => _SpaceRepairInClosePowerWeightingTables ?? new CombatStylePowerWeighting();
         #endregion
         #region SpaceRepairFarawayPowerWeightingTables
         private int _SpaceRepairFarawayPowerWeightingTablesLocation => _CSSRLocation!.Value.Min + 0x30;
-        private bool _SpaceRepairFarawayPowerWeightingTables_IsSet => _CSSRLocation.HasValue;
+        private bool _SpaceRepairFarawayPowerWeightingTables_IsSet => _CSSRLocation.HasValue && _CSSRLocation!.Value.Max - _SpaceRepairFarawayPowerWeightingTablesLocation + 1 >= 1;
         private ICombatStylePowerWeightingGetter? _SpaceRepairFarawayPowerWeightingTables => _SpaceRepairFarawayPowerWeightingTables_IsSet ? CombatStylePowerWeightingBinaryOverlay.CombatStylePowerWeightingFactory(_recordData.Slice(_SpaceRepairFarawayPowerWeightingTablesLocation), _package) : default;
         public ICombatStylePowerWeightingGetter SpaceRepairFarawayPowerWeightingTables => _SpaceRepairFarawayPowerWeightingTables ?? new CombatStylePowerWeighting();
         #endregion
         private RangeInt32? _CSSALocation;
         #region SpaceApproachingMinDistance
         private int _SpaceApproachingMinDistanceLocation => _CSSALocation!.Value.Min;
-        private bool _SpaceApproachingMinDistance_IsSet => _CSSALocation.HasValue;
+        private bool _SpaceApproachingMinDistance_IsSet => _CSSALocation.HasValue && _CSSALocation!.Value.Max - _SpaceApproachingMinDistanceLocation + 1 >= 4;
         public Percent SpaceApproachingMinDistance => _SpaceApproachingMinDistance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceApproachingMinDistanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region SpaceApproachingWeighting
         private int _SpaceApproachingWeightingLocation => _CSSALocation!.Value.Min + 0x4;
-        private bool _SpaceApproachingWeighting_IsSet => _CSSALocation.HasValue;
+        private bool _SpaceApproachingWeighting_IsSet => _CSSALocation.HasValue && _CSSALocation!.Value.Max - _SpaceApproachingWeightingLocation + 1 >= 1;
         private ICombatStylePowerWeightingGetter? _SpaceApproachingWeighting => _SpaceApproachingWeighting_IsSet ? CombatStylePowerWeightingBinaryOverlay.CombatStylePowerWeightingFactory(_recordData.Slice(_SpaceApproachingWeightingLocation), _package) : default;
         public ICombatStylePowerWeightingGetter SpaceApproachingWeighting => _SpaceApproachingWeighting ?? new CombatStylePowerWeighting();
         #endregion
         private RangeInt32? _CSSDLocation;
         #region SpaceDetectionRating1
         private int _SpaceDetectionRating1Location => _CSSDLocation!.Value.Min;
-        private bool _SpaceDetectionRating1_IsSet => _CSSDLocation.HasValue;
+        private bool _SpaceDetectionRating1_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SpaceDetectionRating1Location + 1 >= 4;
         public Single SpaceDetectionRating1 => _SpaceDetectionRating1_IsSet ? _recordData.Slice(_SpaceDetectionRating1Location, 4).Float() : default(Single);
         #endregion
         #region SpaceDetectionRating2
         private int _SpaceDetectionRating2Location => _CSSDLocation!.Value.Min + 0x4;
-        private bool _SpaceDetectionRating2_IsSet => _CSSDLocation.HasValue;
+        private bool _SpaceDetectionRating2_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SpaceDetectionRating2Location + 1 >= 4;
         public Single SpaceDetectionRating2 => _SpaceDetectionRating2_IsSet ? _recordData.Slice(_SpaceDetectionRating2Location, 4).Float() : default(Single);
         #endregion
         #region SpaceDetectionRating3
         private int _SpaceDetectionRating3Location => _CSSDLocation!.Value.Min + 0x8;
-        private bool _SpaceDetectionRating3_IsSet => _CSSDLocation.HasValue;
+        private bool _SpaceDetectionRating3_IsSet => _CSSDLocation.HasValue && _CSSDLocation!.Value.Max - _SpaceDetectionRating3Location + 1 >= 4;
         public Single SpaceDetectionRating3 => _SpaceDetectionRating3_IsSet ? _recordData.Slice(_SpaceDetectionRating3Location, 4).Float() : default(Single);
         #endregion
         #region Flags

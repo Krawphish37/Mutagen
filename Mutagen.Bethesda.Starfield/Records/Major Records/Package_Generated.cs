@@ -3860,63 +3860,63 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _PKDTLocation;
         #region Flags
         private int _FlagsLocation => _PKDTLocation!.Value.Min;
-        private bool _Flags_IsSet => _PKDTLocation.HasValue;
+        private bool _Flags_IsSet => _PKDTLocation.HasValue && _PKDTLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Package.Flag Flags => _Flags_IsSet ? (Package.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Type
         private int _TypeLocation => _PKDTLocation!.Value.Min + 0x4;
-        private bool _Type_IsSet => _PKDTLocation.HasValue;
+        private bool _Type_IsSet => _PKDTLocation.HasValue && _PKDTLocation!.Value.Max - _TypeLocation + 1 >= 1;
         public Package.Types Type => _Type_IsSet ? (Package.Types)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default;
         #endregion
         #region InterruptOverride
         private int _InterruptOverrideLocation => _PKDTLocation!.Value.Min + 0x5;
-        private bool _InterruptOverride_IsSet => _PKDTLocation.HasValue;
+        private bool _InterruptOverride_IsSet => _PKDTLocation.HasValue && _PKDTLocation!.Value.Max - _InterruptOverrideLocation + 1 >= 1;
         public Package.Interrupt InterruptOverride => _InterruptOverride_IsSet ? (Package.Interrupt)_recordData.Span.Slice(_InterruptOverrideLocation, 0x1)[0] : default;
         #endregion
         #region PreferredSpeed
         private int _PreferredSpeedLocation => _PKDTLocation!.Value.Min + 0x6;
-        private bool _PreferredSpeed_IsSet => _PKDTLocation.HasValue;
+        private bool _PreferredSpeed_IsSet => _PKDTLocation.HasValue && _PKDTLocation!.Value.Max - _PreferredSpeedLocation + 1 >= 1;
         public Package.Speed PreferredSpeed => _PreferredSpeed_IsSet ? (Package.Speed)_recordData.Span.Slice(_PreferredSpeedLocation, 0x1)[0] : default;
         #endregion
         #region Unknown
         private int _UnknownLocation => _PKDTLocation!.Value.Min + 0x7;
-        private bool _Unknown_IsSet => _PKDTLocation.HasValue;
+        private bool _Unknown_IsSet => _PKDTLocation.HasValue && _PKDTLocation!.Value.Max - _UnknownLocation + 1 >= 1;
         public Byte Unknown => _Unknown_IsSet ? _recordData.Span[_UnknownLocation] : default;
         #endregion
         #region InterruptFlags
         private int _InterruptFlagsLocation => _PKDTLocation!.Value.Min + 0x8;
-        private bool _InterruptFlags_IsSet => _PKDTLocation.HasValue;
+        private bool _InterruptFlags_IsSet => _PKDTLocation.HasValue && _PKDTLocation!.Value.Max - _InterruptFlagsLocation + 1 >= 2;
         public Package.InterruptFlag InterruptFlags => _InterruptFlags_IsSet ? (Package.InterruptFlag)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_InterruptFlagsLocation, 0x2)) : default;
         #endregion
         #region Unknown2
         private int _Unknown2Location => _PKDTLocation!.Value.Min + 0xA;
-        private bool _Unknown2_IsSet => _PKDTLocation.HasValue;
+        private bool _Unknown2_IsSet => _PKDTLocation.HasValue && _PKDTLocation!.Value.Max - _Unknown2Location + 1 >= 2;
         public UInt16 Unknown2 => _Unknown2_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_Unknown2Location, 2)) : default(UInt16);
         #endregion
         private RangeInt32? _PSDTLocation;
         #region ScheduleMonth
         private int _ScheduleMonthLocation => _PSDTLocation!.Value.Min;
-        private bool _ScheduleMonth_IsSet => _PSDTLocation.HasValue;
+        private bool _ScheduleMonth_IsSet => _PSDTLocation.HasValue && _PSDTLocation!.Value.Max - _ScheduleMonthLocation + 1 >= 1;
         public SByte ScheduleMonth => _ScheduleMonth_IsSet ? (sbyte)_recordData.Slice(_ScheduleMonthLocation, 1)[0] : default(SByte);
         #endregion
         #region ScheduleDayOfWeek
         private int _ScheduleDayOfWeekLocation => _PSDTLocation!.Value.Min + 0x1;
-        private bool _ScheduleDayOfWeek_IsSet => _PSDTLocation.HasValue;
+        private bool _ScheduleDayOfWeek_IsSet => _PSDTLocation.HasValue && _PSDTLocation!.Value.Max - _ScheduleDayOfWeekLocation + 1 >= 1;
         public Package.DayOfWeek ScheduleDayOfWeek => _ScheduleDayOfWeek_IsSet ? (Package.DayOfWeek)_recordData.Span.Slice(_ScheduleDayOfWeekLocation, 0x1)[0] : default;
         #endregion
         #region ScheduleDate
         private int _ScheduleDateLocation => _PSDTLocation!.Value.Min + 0x2;
-        private bool _ScheduleDate_IsSet => _PSDTLocation.HasValue;
+        private bool _ScheduleDate_IsSet => _PSDTLocation.HasValue && _PSDTLocation!.Value.Max - _ScheduleDateLocation + 1 >= 1;
         public Byte ScheduleDate => _ScheduleDate_IsSet ? _recordData.Span[_ScheduleDateLocation] : default;
         #endregion
         #region ScheduleHour
         private int _ScheduleHourLocation => _PSDTLocation!.Value.Min + 0x3;
-        private bool _ScheduleHour_IsSet => _PSDTLocation.HasValue;
+        private bool _ScheduleHour_IsSet => _PSDTLocation.HasValue && _PSDTLocation!.Value.Max - _ScheduleHourLocation + 1 >= 1;
         public SByte ScheduleHour => _ScheduleHour_IsSet ? (sbyte)_recordData.Slice(_ScheduleHourLocation, 1)[0] : default(SByte);
         #endregion
         #region ScheduleMinute
         private int _ScheduleMinuteLocation => _PSDTLocation!.Value.Min + 0x4;
-        private bool _ScheduleMinute_IsSet => _PSDTLocation.HasValue;
+        private bool _ScheduleMinute_IsSet => _PSDTLocation.HasValue && _PSDTLocation!.Value.Max - _ScheduleMinuteLocation + 1 >= 1;
         public SByte ScheduleMinute => _ScheduleMinute_IsSet ? (sbyte)_recordData.Slice(_ScheduleMinuteLocation, 1)[0] : default(SByte);
         #endregion
         #region Unknown3
@@ -3926,7 +3926,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region ScheduleDurationInMinutes
         private int _ScheduleDurationInMinutesLocation => _PSDTLocation!.Value.Min + 0x8;
-        private bool _ScheduleDurationInMinutes_IsSet => _PSDTLocation.HasValue;
+        private bool _ScheduleDurationInMinutes_IsSet => _PSDTLocation.HasValue && _PSDTLocation!.Value.Max - _ScheduleDurationInMinutesLocation + 1 >= 4;
         public Int32 ScheduleDurationInMinutes => _ScheduleDurationInMinutes_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_ScheduleDurationInMinutesLocation, 4)) : default(Int32);
         #endregion
         public IReadOnlyList<IConditionGetter> Conditions { get; private set; } = [];

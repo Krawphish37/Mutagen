@@ -4273,44 +4273,44 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region Value
         private int _ValueLocation => _DATALocation!.Value.Min;
-        private bool _Value_IsSet => _DATALocation.HasValue;
+        private bool _Value_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ValueLocation + 1 >= 4;
         public Int32 Value => _Value_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_ValueLocation, 4)) : default(Int32);
         #endregion
         #region Health
         private int _HealthLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Health_IsSet => _DATALocation.HasValue;
+        private bool _Health_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HealthLocation + 1 >= 4;
         public Int32 Health => _Health_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_HealthLocation, 4)) : default(Int32);
         #endregion
         #region Weight
         private int _WeightLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Weight_IsSet => _DATALocation.HasValue;
+        private bool _Weight_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _WeightLocation + 1 >= 4;
         public Single Weight => _Weight_IsSet ? _recordData.Slice(_WeightLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _DNAMLocation;
         public Armor.DNAMDataType DNAMDataTypeState { get; private set; }
         #region DamageResistance
         private int _DamageResistanceLocation => _DNAMLocation!.Value.Min;
-        private bool _DamageResistance_IsSet => _DNAMLocation.HasValue;
+        private bool _DamageResistance_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DamageResistanceLocation + 1 >= 2;
         public Int16 DamageResistance => _DamageResistance_IsSet ? BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_DamageResistanceLocation, 2)) : default(Int16);
         #endregion
         #region DnamSlot1
         private int _DnamSlot1Location => _DNAMLocation!.Value.Min + 0x2;
-        private bool _DnamSlot1_IsSet => _DNAMLocation.HasValue;
+        private bool _DnamSlot1_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DnamSlot1Location + 1 >= 2;
         public UInt16 DnamSlot1 => _DnamSlot1_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_DnamSlot1Location, 2)) : default(UInt16);
         #endregion
         #region DamageThreshold
         private int _DamageThresholdLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _DamageThreshold_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Armor.DNAMDataType.Break0);
+        private bool _DamageThreshold_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Armor.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _DamageThresholdLocation + 1 >= 4;
         public Single DamageThreshold => _DamageThreshold_IsSet ? _recordData.Slice(_DamageThresholdLocation, 4).Float() : default(Single);
         #endregion
         #region DnamSlot2
         private int _DnamSlot2Location => _DNAMLocation!.Value.Min + 0x8;
-        private bool _DnamSlot2_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Armor.DNAMDataType.Break0);
+        private bool _DnamSlot2_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Armor.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _DnamSlot2Location + 1 >= 2;
         public UInt16 DnamSlot2 => _DnamSlot2_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_DnamSlot2Location, 2)) : default(UInt16);
         #endregion
         #region DnamUnused
         private int _DnamUnusedLocation => _DNAMLocation!.Value.Min + 0xA;
-        private bool _DnamUnused_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Armor.DNAMDataType.Break0);
+        private bool _DnamUnused_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Armor.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _DnamUnusedLocation + 1 >= 2;
         public UInt16 DnamUnused => _DnamUnused_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_DnamUnusedLocation, 2)) : default(UInt16);
         #endregion
         #region OverridesAnimationSounds

@@ -1563,17 +1563,17 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _DATALocation;
         #region EffectArt
         private int _EffectArtLocation => _DATALocation!.Value.Min;
-        private bool _EffectArt_IsSet => _DATALocation.HasValue;
+        private bool _EffectArt_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EffectArtLocation + 1 >= 4;
         public IFormLinkGetter<IArtObjectGetter> EffectArt => _EffectArt_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IArtObjectGetter>(_package, _recordData.Span.Slice(_EffectArtLocation, 0x4), isSet: _EffectArt_IsSet) : FormLink<IArtObjectGetter>.Null;
         #endregion
         #region Shader
         private int _ShaderLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Shader_IsSet => _DATALocation.HasValue;
+        private bool _Shader_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ShaderLocation + 1 >= 4;
         public IFormLinkGetter<IEffectShaderGetter> Shader => _Shader_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IEffectShaderGetter>(_package, _recordData.Span.Slice(_ShaderLocation, 0x4), isSet: _Shader_IsSet) : FormLink<IEffectShaderGetter>.Null;
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public VisualEffect.Flag Flags => _Flags_IsSet ? (VisualEffect.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         partial void CustomFactoryEnd(

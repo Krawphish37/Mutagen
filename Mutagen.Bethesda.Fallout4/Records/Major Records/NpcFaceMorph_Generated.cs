@@ -1377,27 +1377,27 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _FMRSLocation;
         #region Position
         private int _PositionLocation => _FMRSLocation!.Value.Min;
-        private bool _Position_IsSet => _FMRSLocation.HasValue;
+        private bool _Position_IsSet => _FMRSLocation.HasValue && _FMRSLocation!.Value.Max - _PositionLocation + 1 >= 12;
         public P3Float Position => _Position_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_PositionLocation, 12)) : default(P3Float);
         #endregion
         #region Rotation
         private int _RotationLocation => _FMRSLocation!.Value.Min + 0xC;
-        private bool _Rotation_IsSet => _FMRSLocation.HasValue;
+        private bool _Rotation_IsSet => _FMRSLocation.HasValue && _FMRSLocation!.Value.Max - _RotationLocation + 1 >= 12;
         public P3Float Rotation => _Rotation_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_RotationLocation, 12)) : default(P3Float);
         #endregion
         #region Scale
         private int _ScaleLocation => _FMRSLocation!.Value.Min + 0x18;
-        private bool _Scale_IsSet => _FMRSLocation.HasValue;
+        private bool _Scale_IsSet => _FMRSLocation.HasValue && _FMRSLocation!.Value.Max - _ScaleLocation + 1 >= 4;
         public Single Scale => _Scale_IsSet ? _recordData.Slice(_ScaleLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown1
         private int _Unknown1Location => _FMRSLocation!.Value.Min + 0x1C;
-        private bool _Unknown1_IsSet => _FMRSLocation.HasValue;
+        private bool _Unknown1_IsSet => _FMRSLocation.HasValue && _FMRSLocation!.Value.Max - _Unknown1Location + 1 >= 4;
         public Single Unknown1 => _Unknown1_IsSet ? _recordData.Slice(_Unknown1Location, 4).Float() : default(Single);
         #endregion
         #region Unknown2
         private int _Unknown2Location => _FMRSLocation!.Value.Min + 0x20;
-        private bool _Unknown2_IsSet => _FMRSLocation.HasValue;
+        private bool _Unknown2_IsSet => _FMRSLocation.HasValue && _FMRSLocation!.Value.Max - _Unknown2Location + 1 >= 4;
         public Single Unknown2 => _Unknown2_IsSet ? _recordData.Slice(_Unknown2Location, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

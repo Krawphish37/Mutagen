@@ -1977,12 +1977,12 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DATALocation;
         #region Unknown
         private int _UnknownLocation => _DATALocation!.Value.Min;
-        private bool _Unknown_IsSet => _DATALocation.HasValue;
+        private bool _Unknown_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
         #endregion
         #region BleedoutDefault
         private int _BleedoutDefaultLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _BleedoutDefault_IsSet => _DATALocation.HasValue;
+        private bool _BleedoutDefault_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BleedoutDefaultLocation + 1 >= 4;
         public Single BleedoutDefault => _BleedoutDefault_IsSet ? _recordData.Slice(_BleedoutDefaultLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

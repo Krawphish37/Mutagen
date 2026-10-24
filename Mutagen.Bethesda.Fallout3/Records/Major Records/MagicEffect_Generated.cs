@@ -3001,12 +3001,12 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public MagicEffect.MagicFlag Flags => _Flags_IsSet ? (MagicEffect.MagicFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region BaseCost
         private int _BaseCostLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _BaseCost_IsSet => _DATALocation.HasValue;
+        private bool _BaseCost_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BaseCostLocation + 1 >= 4;
         public Single BaseCost => _BaseCost_IsSet ? _recordData.Slice(_BaseCostLocation, 4).Float() : default(Single);
         #endregion
         #region AssociatedItem
@@ -3018,67 +3018,67 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region Unused
         private int _UnusedLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _Unused_IsSet => _DATALocation.HasValue;
+        private bool _Unused_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnusedLocation + 1 >= 4;
         public Int32 Unused => _Unused_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnusedLocation, 4)) : default(Int32);
         #endregion
         #region Resistance
         private int _ResistanceLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _Resistance_IsSet => _DATALocation.HasValue;
+        private bool _Resistance_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ResistanceLocation + 1 >= 4;
         public ActorValue Resistance => _Resistance_IsSet ? (ActorValue)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ResistanceLocation, 0x4)) : default;
         #endregion
         #region CounterEffectCount
         private int _CounterEffectCountLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _CounterEffectCount_IsSet => _DATALocation.HasValue;
+        private bool _CounterEffectCount_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CounterEffectCountLocation + 1 >= 4;
         public UInt32 CounterEffectCount => _CounterEffectCount_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_CounterEffectCountLocation, 4)) : default(UInt32);
         #endregion
         #region Light
         private int _LightLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _Light_IsSet => _DATALocation.HasValue;
+        private bool _Light_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LightLocation + 1 >= 4;
         public IFormLinkGetter<ILightGetter> Light => _Light_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILightGetter>(_package, _recordData.Span.Slice(_LightLocation, 0x4), isSet: _Light_IsSet) : FormLink<ILightGetter>.Null;
         #endregion
         #region ProjectileSpeed
         private int _ProjectileSpeedLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _ProjectileSpeed_IsSet => _DATALocation.HasValue;
+        private bool _ProjectileSpeed_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ProjectileSpeedLocation + 1 >= 4;
         public Single ProjectileSpeed => _ProjectileSpeed_IsSet ? _recordData.Slice(_ProjectileSpeedLocation, 4).Float() : default(Single);
         #endregion
         #region EffectShader
         private int _EffectShaderLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _EffectShader_IsSet => _DATALocation.HasValue;
+        private bool _EffectShader_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EffectShaderLocation + 1 >= 4;
         public IFormLinkGetter<IEffectShaderGetter> EffectShader => _EffectShader_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IEffectShaderGetter>(_package, _recordData.Span.Slice(_EffectShaderLocation, 0x4), isSet: _EffectShader_IsSet) : FormLink<IEffectShaderGetter>.Null;
         #endregion
         #region ObjectDisplayShader
         private int _ObjectDisplayShaderLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _ObjectDisplayShader_IsSet => _DATALocation.HasValue;
+        private bool _ObjectDisplayShader_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ObjectDisplayShaderLocation + 1 >= 4;
         public IFormLinkGetter<IEffectShaderGetter> ObjectDisplayShader => _ObjectDisplayShader_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IEffectShaderGetter>(_package, _recordData.Span.Slice(_ObjectDisplayShaderLocation, 0x4), isSet: _ObjectDisplayShader_IsSet) : FormLink<IEffectShaderGetter>.Null;
         #endregion
         #region EffectSound
         private int _EffectSoundLocation => _DATALocation!.Value.Min + 0x28;
-        private bool _EffectSound_IsSet => _DATALocation.HasValue;
+        private bool _EffectSound_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EffectSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundGetter> EffectSound => _EffectSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundGetter>(_package, _recordData.Span.Slice(_EffectSoundLocation, 0x4), isSet: _EffectSound_IsSet) : FormLink<ISoundGetter>.Null;
         #endregion
         #region BoltSound
         private int _BoltSoundLocation => _DATALocation!.Value.Min + 0x2C;
-        private bool _BoltSound_IsSet => _DATALocation.HasValue;
+        private bool _BoltSound_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BoltSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundGetter> BoltSound => _BoltSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundGetter>(_package, _recordData.Span.Slice(_BoltSoundLocation, 0x4), isSet: _BoltSound_IsSet) : FormLink<ISoundGetter>.Null;
         #endregion
         #region HitSound
         private int _HitSoundLocation => _DATALocation!.Value.Min + 0x30;
-        private bool _HitSound_IsSet => _DATALocation.HasValue;
+        private bool _HitSound_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HitSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundGetter> HitSound => _HitSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundGetter>(_package, _recordData.Span.Slice(_HitSoundLocation, 0x4), isSet: _HitSound_IsSet) : FormLink<ISoundGetter>.Null;
         #endregion
         #region AreaSound
         private int _AreaSoundLocation => _DATALocation!.Value.Min + 0x34;
-        private bool _AreaSound_IsSet => _DATALocation.HasValue;
+        private bool _AreaSound_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AreaSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundGetter> AreaSound => _AreaSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundGetter>(_package, _recordData.Span.Slice(_AreaSoundLocation, 0x4), isSet: _AreaSound_IsSet) : FormLink<ISoundGetter>.Null;
         #endregion
         #region ConstantEffectEnchantmentFactor
         private int _ConstantEffectEnchantmentFactorLocation => _DATALocation!.Value.Min + 0x38;
-        private bool _ConstantEffectEnchantmentFactor_IsSet => _DATALocation.HasValue;
+        private bool _ConstantEffectEnchantmentFactor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ConstantEffectEnchantmentFactorLocation + 1 >= 4;
         public Single ConstantEffectEnchantmentFactor => _ConstantEffectEnchantmentFactor_IsSet ? _recordData.Slice(_ConstantEffectEnchantmentFactorLocation, 4).Float() : default(Single);
         #endregion
         #region ConstantEffectBarterFactor
         private int _ConstantEffectBarterFactorLocation => _DATALocation!.Value.Min + 0x3C;
-        private bool _ConstantEffectBarterFactor_IsSet => _DATALocation.HasValue;
+        private bool _ConstantEffectBarterFactor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ConstantEffectBarterFactorLocation + 1 >= 4;
         public Single ConstantEffectBarterFactor => _ConstantEffectBarterFactor_IsSet ? _recordData.Slice(_ConstantEffectBarterFactorLocation, 4).Float() : default(Single);
         #endregion
         #region Archetype

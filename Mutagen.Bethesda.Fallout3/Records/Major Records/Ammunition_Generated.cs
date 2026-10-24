@@ -2992,22 +2992,22 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region Speed
         private int _SpeedLocation => _DATALocation!.Value.Min;
-        private bool _Speed_IsSet => _DATALocation.HasValue;
+        private bool _Speed_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SpeedLocation + 1 >= 4;
         public Single Speed => _Speed_IsSet ? _recordData.Slice(_SpeedLocation, 4).Float() : default(Single);
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Ammunition.AmmoFlag Flags => _Flags_IsSet ? (Ammunition.AmmoFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Value
         private int _ValueLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Value_IsSet => _DATALocation.HasValue;
+        private bool _Value_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ValueLocation + 1 >= 4;
         public Int32 Value => _Value_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_ValueLocation, 4)) : default(Int32);
         #endregion
         #region ClipRounds
         private int _ClipRoundsLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _ClipRounds_IsSet => _DATALocation.HasValue;
+        private bool _ClipRounds_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ClipRoundsLocation + 1 >= 1;
         public Byte ClipRounds => _ClipRounds_IsSet ? _recordData.Span[_ClipRoundsLocation] : default;
         #endregion
         #region ExtraData

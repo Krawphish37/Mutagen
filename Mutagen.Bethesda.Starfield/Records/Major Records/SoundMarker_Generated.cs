@@ -2255,12 +2255,12 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DEVTLocation;
         #region Unknown
         private int _UnknownLocation => _DEVTLocation!.Value.Min;
-        private bool _Unknown_IsSet => _DEVTLocation.HasValue;
+        private bool _Unknown_IsSet => _DEVTLocation.HasValue && _DEVTLocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
         #endregion
         #region Unknown2
         private int _Unknown2Location => _DEVTLocation!.Value.Min + 0x4;
-        private bool _Unknown2_IsSet => _DEVTLocation.HasValue;
+        private bool _Unknown2_IsSet => _DEVTLocation.HasValue && _DEVTLocation!.Value.Max - _Unknown2Location + 1 >= 4;
         public Single Unknown2 => _Unknown2_IsSet ? _recordData.Slice(_Unknown2Location, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

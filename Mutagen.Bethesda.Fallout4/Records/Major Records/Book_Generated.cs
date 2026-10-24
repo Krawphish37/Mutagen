@@ -3420,12 +3420,12 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DATALocation;
         #region Value
         private int _ValueLocation => _DATALocation!.Value.Min;
-        private bool _Value_IsSet => _DATALocation.HasValue;
+        private bool _Value_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ValueLocation + 1 >= 4;
         public UInt32 Value => _Value_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ValueLocation, 4)) : default(UInt32);
         #endregion
         #region Weight
         private int _WeightLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Weight_IsSet => _DATALocation.HasValue;
+        private bool _Weight_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _WeightLocation + 1 >= 4;
         public Single Weight => _Weight_IsSet ? _recordData.Slice(_WeightLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _DNAMLocation;
@@ -3441,12 +3441,12 @@ namespace Mutagen.Bethesda.Fallout4
         #endregion
         #region TextOffsetX
         private int _TextOffsetXLocation => _DNAMLocation!.Value.Min + 0x5;
-        private bool _TextOffsetX_IsSet => _DNAMLocation.HasValue;
+        private bool _TextOffsetX_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _TextOffsetXLocation + 1 >= 4;
         public UInt32 TextOffsetX => _TextOffsetX_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_TextOffsetXLocation, 4)) : default(UInt32);
         #endregion
         #region TextOffsetY
         private int _TextOffsetYLocation => _DNAMLocation!.Value.Min + 0x9;
-        private bool _TextOffsetY_IsSet => _DNAMLocation.HasValue;
+        private bool _TextOffsetY_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _TextOffsetYLocation + 1 >= 4;
         public UInt32 TextOffsetY => _TextOffsetY_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_TextOffsetYLocation, 4)) : default(UInt32);
         #endregion
         #region Description

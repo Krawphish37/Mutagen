@@ -2420,7 +2420,7 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _ANAMLocation;
         #region ActivateSightOnSightedMode
         private int _ActivateSightOnSightedModeLocation => _ANAMLocation!.Value.Min;
-        private bool _ActivateSightOnSightedMode_IsSet => _ANAMLocation.HasValue;
+        private bool _ActivateSightOnSightedMode_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _ActivateSightOnSightedModeLocation + 1 >= 1;
         public Boolean ActivateSightOnSightedMode => _ActivateSightOnSightedMode_IsSet ? _recordData.Slice(_ActivateSightOnSightedModeLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region OpticalSightAttachNode
@@ -2431,62 +2431,62 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region DelayBeforeSightActivation
         private int _DelayBeforeSightActivationLocation => OpticalSightAttachNodeEndingPos;
-        private bool _DelayBeforeSightActivation_IsSet => _ANAMLocation.HasValue;
+        private bool _DelayBeforeSightActivation_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _DelayBeforeSightActivationLocation + 1 >= 4;
         public Single DelayBeforeSightActivation => _DelayBeforeSightActivation_IsSet ? _recordData.Slice(_DelayBeforeSightActivationLocation, 4).Float() : default(Single);
         #endregion
         #region DelayBeforeSightDeactivation
         private int _DelayBeforeSightDeactivationLocation => OpticalSightAttachNodeEndingPos + 0x4;
-        private bool _DelayBeforeSightDeactivation_IsSet => _ANAMLocation.HasValue;
+        private bool _DelayBeforeSightDeactivation_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _DelayBeforeSightDeactivationLocation + 1 >= 4;
         public Single DelayBeforeSightDeactivation => _DelayBeforeSightDeactivation_IsSet ? _recordData.Slice(_DelayBeforeSightDeactivationLocation, 4).Float() : default(Single);
         #endregion
         #region OpticalSightLight
         private int _OpticalSightLightLocation => OpticalSightAttachNodeEndingPos + 0x8;
-        private bool _OpticalSightLight_IsSet => _ANAMLocation.HasValue;
+        private bool _OpticalSightLight_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _OpticalSightLightLocation + 1 >= 4;
         public IFormLinkGetter<ILightGetter> OpticalSightLight => _OpticalSightLight_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILightGetter>(_package, _recordData.Span.Slice(_OpticalSightLightLocation, 0x4), isSet: _OpticalSightLight_IsSet) : FormLink<ILightGetter>.Null;
         #endregion
         #region FocalPointDistance
         private int _FocalPointDistanceLocation => OpticalSightAttachNodeEndingPos + 0xC;
-        private bool _FocalPointDistance_IsSet => _ANAMLocation.HasValue;
+        private bool _FocalPointDistance_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _FocalPointDistanceLocation + 1 >= 4;
         public Single FocalPointDistance => _FocalPointDistance_IsSet ? _recordData.Slice(_FocalPointDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region FocalPointDistanceDuringAiming
         private int _FocalPointDistanceDuringAimingLocation => OpticalSightAttachNodeEndingPos + 0x10;
-        private bool _FocalPointDistanceDuringAiming_IsSet => _ANAMLocation.HasValue;
+        private bool _FocalPointDistanceDuringAiming_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _FocalPointDistanceDuringAimingLocation + 1 >= 4;
         public Single FocalPointDistanceDuringAiming => _FocalPointDistanceDuringAiming_IsSet ? _recordData.Slice(_FocalPointDistanceDuringAimingLocation, 4).Float() : default(Single);
         #endregion
         #region DelayBetweenShots
         private int _DelayBetweenShotsLocation => OpticalSightAttachNodeEndingPos + 0x14;
-        private bool _DelayBetweenShots_IsSet => _ANAMLocation.HasValue;
+        private bool _DelayBetweenShots_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _DelayBetweenShotsLocation + 1 >= 4;
         public Single DelayBetweenShots => _DelayBetweenShots_IsSet ? _recordData.Slice(_DelayBetweenShotsLocation, 4).Float() : default(Single);
         #endregion
         #region LaserArtObject
         private int _LaserArtObjectLocation => OpticalSightAttachNodeEndingPos + 0x18;
-        private bool _LaserArtObject_IsSet => _ANAMLocation.HasValue;
+        private bool _LaserArtObject_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _LaserArtObjectLocation + 1 >= 4;
         public IFormLinkGetter<IArtObjectGetter> LaserArtObject => _LaserArtObject_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IArtObjectGetter>(_package, _recordData.Span.Slice(_LaserArtObjectLocation, 0x4), isSet: _LaserArtObject_IsSet) : FormLink<IArtObjectGetter>.Null;
         #endregion
         #region LaserDotArtObject
         private int _LaserDotArtObjectLocation => OpticalSightAttachNodeEndingPos + 0x1C;
-        private bool _LaserDotArtObject_IsSet => _ANAMLocation.HasValue;
+        private bool _LaserDotArtObject_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _LaserDotArtObjectLocation + 1 >= 4;
         public IFormLinkGetter<IArtObjectGetter> LaserDotArtObject => _LaserDotArtObject_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IArtObjectGetter>(_package, _recordData.Span.Slice(_LaserDotArtObjectLocation, 0x4), isSet: _LaserDotArtObject_IsSet) : FormLink<IArtObjectGetter>.Null;
         #endregion
         #region MaxLaserPointerDistance
         private int _MaxLaserPointerDistanceLocation => OpticalSightAttachNodeEndingPos + 0x20;
-        private bool _MaxLaserPointerDistance_IsSet => _ANAMLocation.HasValue;
+        private bool _MaxLaserPointerDistance_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _MaxLaserPointerDistanceLocation + 1 >= 4;
         public Single MaxLaserPointerDistance => _MaxLaserPointerDistance_IsSet ? _recordData.Slice(_MaxLaserPointerDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region SightControlsFiringDirection
         private int _SightControlsFiringDirectionLocation => OpticalSightAttachNodeEndingPos + 0x24;
-        private bool _SightControlsFiringDirection_IsSet => _ANAMLocation.HasValue;
+        private bool _SightControlsFiringDirection_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _SightControlsFiringDirectionLocation + 1 >= 1;
         public Boolean SightControlsFiringDirection => _SightControlsFiringDirection_IsSet ? _recordData.Slice(_SightControlsFiringDirectionLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region ActivateSightOnNonSightedMode
         private int _ActivateSightOnNonSightedModeLocation => OpticalSightAttachNodeEndingPos + 0x25;
-        private bool _ActivateSightOnNonSightedMode_IsSet => _ANAMLocation.HasValue;
+        private bool _ActivateSightOnNonSightedMode_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _ActivateSightOnNonSightedModeLocation + 1 >= 1;
         public Boolean ActivateSightOnNonSightedMode => _ActivateSightOnNonSightedMode_IsSet ? _recordData.Slice(_ActivateSightOnNonSightedModeLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region ActivateSightOnScopedMode
         private int _ActivateSightOnScopedModeLocation => OpticalSightAttachNodeEndingPos + 0x26;
-        private bool _ActivateSightOnScopedMode_IsSet => _ANAMLocation.HasValue;
+        private bool _ActivateSightOnScopedMode_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _ActivateSightOnScopedModeLocation + 1 >= 1;
         public Boolean ActivateSightOnScopedMode => _ActivateSightOnScopedMode_IsSet ? _recordData.Slice(_ActivateSightOnScopedModeLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         partial void CustomFactoryEnd(

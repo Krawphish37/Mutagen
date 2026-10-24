@@ -1934,12 +1934,12 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _ANAMLocation;
         #region Parent
         private int _ParentLocation => _ANAMLocation!.Value.Min;
-        private bool _Parent_IsSet => _ANAMLocation.HasValue;
+        private bool _Parent_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _ParentLocation + 1 >= 4;
         public IFormLinkGetter<ICameraPathGetter> Parent => _Parent_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ICameraPathGetter>(_package, _recordData.Span.Slice(_ParentLocation, 0x4), isSet: _Parent_IsSet) : FormLink<ICameraPathGetter>.Null;
         #endregion
         #region Previous
         private int _PreviousLocation => _ANAMLocation!.Value.Min + 0x4;
-        private bool _Previous_IsSet => _ANAMLocation.HasValue;
+        private bool _Previous_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _PreviousLocation + 1 >= 4;
         public IFormLinkGetter<ICameraPathGetter> Previous => _Previous_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ICameraPathGetter>(_package, _recordData.Span.Slice(_PreviousLocation, 0x4), isSet: _Previous_IsSet) : FormLink<ICameraPathGetter>.Null;
         #endregion
         #region Zoom

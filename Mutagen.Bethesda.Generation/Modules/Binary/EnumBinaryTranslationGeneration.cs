@@ -204,7 +204,7 @@ public class EnumBinaryTranslationGeneration : BinaryTranslationGeneration
 
         if (dataType != null)
         {
-            DataBinaryTranslationGeneration.GenerateWrapperExtraMembers(sb, dataType, objGen, typeGen, passedLengthAccessor);
+            DataBinaryTranslationGeneration.GenerateWrapperExtraMembers(sb, dataType, objGen, typeGen, passedLengthAccessor, expectedLength: eType.ByteLength);
         }
 
         bool isSetCheck = dataType != null || data.HasVersioning || data.HasModHeaderVersioning;

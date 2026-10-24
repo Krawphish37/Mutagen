@@ -2054,12 +2054,12 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _TETILocation;
         #region Slot
         private int _SlotLocation => _TETILocation!.Value.Min;
-        private bool _Slot_IsSet => _TETILocation.HasValue;
+        private bool _Slot_IsSet => _TETILocation.HasValue && _TETILocation!.Value.Max - _SlotLocation + 1 >= 2;
         public TintTemplateOption.TintSlot Slot => _Slot_IsSet ? (TintTemplateOption.TintSlot)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_SlotLocation, 0x2)) : default;
         #endregion
         #region Index
         private int _IndexLocation => _TETILocation!.Value.Min + 0x2;
-        private bool _Index_IsSet => _TETILocation.HasValue;
+        private bool _Index_IsSet => _TETILocation.HasValue && _TETILocation!.Value.Max - _IndexLocation + 1 >= 2;
         public UInt16 Index => _Index_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_IndexLocation, 2)) : default(UInt16);
         #endregion
         #region Name

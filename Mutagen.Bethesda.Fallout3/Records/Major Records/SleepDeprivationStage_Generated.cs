@@ -1482,12 +1482,12 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region TriggerThreshold
         private int _TriggerThresholdLocation => _DATALocation!.Value.Min;
-        private bool _TriggerThreshold_IsSet => _DATALocation.HasValue;
+        private bool _TriggerThreshold_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TriggerThresholdLocation + 1 >= 4;
         public UInt32 TriggerThreshold => _TriggerThreshold_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_TriggerThresholdLocation, 4)) : default(UInt32);
         #endregion
         #region ActorEffect
         private int _ActorEffectLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _ActorEffect_IsSet => _DATALocation.HasValue;
+        private bool _ActorEffect_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ActorEffectLocation + 1 >= 4;
         public IFormLinkGetter<ISpellGetter> ActorEffect => _ActorEffect_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_ActorEffectLocation, 0x4), isSet: _ActorEffect_IsSet) : FormLink<ISpellGetter>.Null;
         #endregion
         partial void CustomFactoryEnd(

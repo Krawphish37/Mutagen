@@ -2685,27 +2685,27 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _DATALocation;
         #region Trait
         private int _TraitLocation => _DATALocation!.Value.Min;
-        private bool _Trait_IsSet => _DATALocation.HasValue;
+        private bool _Trait_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TraitLocation + 1 >= 1;
         public Boolean Trait => _Trait_IsSet ? _recordData.Slice(_TraitLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region Level
         private int _LevelLocation => _DATALocation!.Value.Min + 0x1;
-        private bool _Level_IsSet => _DATALocation.HasValue;
+        private bool _Level_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LevelLocation + 1 >= 1;
         public Byte Level => _Level_IsSet ? _recordData.Span[_LevelLocation] : default;
         #endregion
         #region NumRanks
         private int _NumRanksLocation => _DATALocation!.Value.Min + 0x2;
-        private bool _NumRanks_IsSet => _DATALocation.HasValue;
+        private bool _NumRanks_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _NumRanksLocation + 1 >= 1;
         public Byte NumRanks => _NumRanks_IsSet ? _recordData.Span[_NumRanksLocation] : default;
         #endregion
         #region Playable
         private int _PlayableLocation => _DATALocation!.Value.Min + 0x3;
-        private bool _Playable_IsSet => _DATALocation.HasValue;
+        private bool _Playable_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PlayableLocation + 1 >= 1;
         public Boolean Playable => _Playable_IsSet ? _recordData.Slice(_PlayableLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region Hidden
         private int _HiddenLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Hidden_IsSet => _DATALocation.HasValue;
+        private bool _Hidden_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HiddenLocation + 1 >= 1;
         public Boolean Hidden => _Hidden_IsSet ? _recordData.Slice(_HiddenLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region NextPerk

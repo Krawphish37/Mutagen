@@ -2035,62 +2035,62 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _DATALocation;
         #region DecayMilliseconds
         private int _DecayMillisecondsLocation => _DATALocation!.Value.Min;
-        private bool _DecayMilliseconds_IsSet => _DATALocation.HasValue;
+        private bool _DecayMilliseconds_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DecayMillisecondsLocation + 1 >= 2;
         public UInt16 DecayMilliseconds => _DecayMilliseconds_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_DecayMillisecondsLocation, 2)) : default(UInt16);
         #endregion
         #region HfReferenceHertz
         private int _HfReferenceHertzLocation => _DATALocation!.Value.Min + 0x2;
-        private bool _HfReferenceHertz_IsSet => _DATALocation.HasValue;
+        private bool _HfReferenceHertz_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HfReferenceHertzLocation + 1 >= 2;
         public UInt16 HfReferenceHertz => _HfReferenceHertz_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_HfReferenceHertzLocation, 2)) : default(UInt16);
         #endregion
         #region RoomFilter
         private int _RoomFilterLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _RoomFilter_IsSet => _DATALocation.HasValue;
+        private bool _RoomFilter_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RoomFilterLocation + 1 >= 1;
         public SByte RoomFilter => _RoomFilter_IsSet ? (sbyte)_recordData.Slice(_RoomFilterLocation, 1)[0] : default(SByte);
         #endregion
         #region RoomHfFilter
         private int _RoomHfFilterLocation => _DATALocation!.Value.Min + 0x5;
-        private bool _RoomHfFilter_IsSet => _DATALocation.HasValue;
+        private bool _RoomHfFilter_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RoomHfFilterLocation + 1 >= 1;
         public SByte RoomHfFilter => _RoomHfFilter_IsSet ? (sbyte)_recordData.Slice(_RoomHfFilterLocation, 1)[0] : default(SByte);
         #endregion
         #region Reflections
         private int _ReflectionsLocation => _DATALocation!.Value.Min + 0x6;
-        private bool _Reflections_IsSet => _DATALocation.HasValue;
+        private bool _Reflections_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ReflectionsLocation + 1 >= 1;
         public SByte Reflections => _Reflections_IsSet ? (sbyte)_recordData.Slice(_ReflectionsLocation, 1)[0] : default(SByte);
         #endregion
         #region ReverbAmp
         private int _ReverbAmpLocation => _DATALocation!.Value.Min + 0x7;
-        private bool _ReverbAmp_IsSet => _DATALocation.HasValue;
+        private bool _ReverbAmp_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ReverbAmpLocation + 1 >= 1;
         public SByte ReverbAmp => _ReverbAmp_IsSet ? (sbyte)_recordData.Slice(_ReverbAmpLocation, 1)[0] : default(SByte);
         #endregion
         #region DecayHfRatio
         private int _DecayHfRatioLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _DecayHfRatio_IsSet => _DATALocation.HasValue;
+        private bool _DecayHfRatio_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DecayHfRatioLocation + 1 >= 1;
         public Single DecayHfRatio => _DecayHfRatio_IsSet ? FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.GetFloat(_recordData.Slice(_DecayHfRatioLocation, 1), FloatIntegerType.Byte, multiplier: null, divisor: 100f) : default(Single);
         #endregion
         #region ReflectDelayMS
         private int _ReflectDelayMSLocation => _DATALocation!.Value.Min + 0x9;
-        private bool _ReflectDelayMS_IsSet => _DATALocation.HasValue;
+        private bool _ReflectDelayMS_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ReflectDelayMSLocation + 1 >= 1;
         public Byte ReflectDelayMS => _ReflectDelayMS_IsSet ? _recordData.Span[_ReflectDelayMSLocation] : default;
         #endregion
         #region ReverbDelayMS
         private int _ReverbDelayMSLocation => _DATALocation!.Value.Min + 0xA;
-        private bool _ReverbDelayMS_IsSet => _DATALocation.HasValue;
+        private bool _ReverbDelayMS_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ReverbDelayMSLocation + 1 >= 1;
         public Byte ReverbDelayMS => _ReverbDelayMS_IsSet ? _recordData.Span[_ReverbDelayMSLocation] : default;
         #endregion
         #region DiffusionPercent
         private int _DiffusionPercentLocation => _DATALocation!.Value.Min + 0xB;
-        private bool _DiffusionPercent_IsSet => _DATALocation.HasValue;
+        private bool _DiffusionPercent_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DiffusionPercentLocation + 1 >= 1;
         public Percent DiffusionPercent => _DiffusionPercent_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_DiffusionPercentLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region DensityPercent
         private int _DensityPercentLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _DensityPercent_IsSet => _DATALocation.HasValue;
+        private bool _DensityPercent_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DensityPercentLocation + 1 >= 1;
         public Percent DensityPercent => _DensityPercent_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_DensityPercentLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region Unknown
         private int _UnknownLocation => _DATALocation!.Value.Min + 0xD;
-        private bool _Unknown_IsSet => _DATALocation.HasValue;
+        private bool _Unknown_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownLocation + 1 >= 1;
         public Byte Unknown => _Unknown_IsSet ? _recordData.Span[_UnknownLocation] : default;
         #endregion
         partial void CustomFactoryEnd(
