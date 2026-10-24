@@ -266,8 +266,8 @@ partial class ObjectTemplateBinaryOverlay<T>
         return (int)ObjectTemplate_FieldIndex.Properties;
     }
 
-    public ushort LevelMin => _recordData[_obtsLoc!.Value + 8];
-    public ushort LevelMax => _recordData[_obtsLoc!.Value + 10];
+    public ushort LevelMin => BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_obtsLoc!.Value + 8));
+    public ushort LevelMax => BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_obtsLoc!.Value + 10));
     public short AddonIndex => BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_obtsLoc!.Value + 12));
     public bool Default => _recordData[_obtsLoc!.Value + 14] > 0;
     public IReadOnlyList<IFormLinkGetter<IKeywordGetter>> Keywords { get; private set; } = null!;
