@@ -3558,10 +3558,10 @@ namespace Mutagen.Bethesda.Skyrim
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.NoiseLayerOneTexture?.Relink(mapping);
-                obj.NoiseLayerTwoTexture?.Relink(mapping);
-                obj.NoiseLayerThreeTexture?.Relink(mapping);
-                obj.FlowNormalsNoiseTexture?.Relink(mapping);
+                obj.NoiseLayerOneTexture = obj.NoiseLayerOneTexture?.RelinkToNew(mapping);
+                obj.NoiseLayerTwoTexture = obj.NoiseLayerTwoTexture?.RelinkToNew(mapping);
+                obj.NoiseLayerThreeTexture = obj.NoiseLayerThreeTexture?.RelinkToNew(mapping);
+                obj.FlowNormalsNoiseTexture = obj.FlowNormalsNoiseTexture?.RelinkToNew(mapping);
             }
         }
         

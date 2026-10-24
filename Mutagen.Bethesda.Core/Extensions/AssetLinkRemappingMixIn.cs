@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Mutagen.Bethesda.Assets;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Assets;
@@ -28,7 +29,55 @@ public static class AssetLinkRemappingMixIn
         }
         return link;
     }
-    
+
+    /// <summary>
+    /// Returns a new AssetLink pointing to the mapped path, or the given link if it is not mapped.<br />
+    /// The given link is never modified, so it stays valid as a key of the mapping
+    /// (which may have been built from a record's own links) while other links are looked up.
+    /// </summary>
+    public static AssetLink<TAssetType> RelinkToNew<TAssetType>(this AssetLink<TAssetType> link, IReadOnlyDictionary<IAssetLinkGetter, string> mapping)
+        where TAssetType : class, IAssetType
+    {
+        if (mapping.TryGetValue(link, out var replacement))
+        {
+            var clone = new AssetLink<TAssetType>();
+            clone.GivenPath = replacement;
+            return clone;
+        }
+        return link;
+    }
+
+    [return: NotNullIfNotNull(nameof(link))]
+    private static IAssetLink<TAssetType>? RelinkToNew<TAssetType>(this IAssetLink<TAssetType>? link, IReadOnlyDictionary<IAssetLinkGetter, string> mapping)
+        where TAssetType : class, IAssetType
+    {
+        if (link != null && mapping.TryGetValue(link, out var replacement))
+        {
+            var clone = new AssetLink<TAssetType>();
+            clone.GivenPath = replacement;
+            return clone;
+        }
+        return link;
+    }
+
+    public static void RemapListedAssetLinks<TAssetType>(this IList<IAssetLink<TAssetType>> linkList, IReadOnlyDictionary<IAssetLinkGetter, string> mapping)
+        where TAssetType : class, IAssetType
+    {
+        for (int i = 0; i < linkList.Count; i++)
+        {
+            linkList[i] = linkList[i].RelinkToNew(mapping);
+        }
+    }
+
+    public static void RemapListedAssetLinks<TAssetType>(this IAssetLink<TAssetType>?[] linkArray, IReadOnlyDictionary<IAssetLinkGetter, string> mapping)
+        where TAssetType : class, IAssetType
+    {
+        for (int i = 0; i < linkArray.Length; i++)
+        {
+            linkArray[i] = linkArray[i].RelinkToNew(mapping);
+        }
+    }
+
     public static void RemapListedAssetLinks<TLinkType, TAssetType>(this IList<TLinkType> linkList, IReadOnlyDictionary<IAssetLinkGetter, string> mapping)
         where TLinkType : IAssetLink<TLinkType, TAssetType>, new()
         where TAssetType : IAssetType

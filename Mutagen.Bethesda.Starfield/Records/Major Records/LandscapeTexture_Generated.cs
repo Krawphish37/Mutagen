@@ -1055,7 +1055,7 @@ namespace Mutagen.Bethesda.Starfield
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.MaterialPath?.Relink(mapping);
+                obj.MaterialPath = obj.MaterialPath?.RelinkToNew(mapping);
             }
         }
         

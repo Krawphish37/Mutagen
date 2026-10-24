@@ -1316,8 +1316,8 @@ namespace Mutagen.Bethesda.Skyrim
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.SunTexture?.Relink(mapping);
-                obj.SunGlareTexture?.Relink(mapping);
+                obj.SunTexture = obj.SunTexture?.RelinkToNew(mapping);
+                obj.SunGlareTexture = obj.SunGlareTexture?.RelinkToNew(mapping);
             }
             obj.Model?.RemapAssetLinks(mapping, queryCategories, linkCache);
         }

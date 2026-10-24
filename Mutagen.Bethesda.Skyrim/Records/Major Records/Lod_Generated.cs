@@ -838,10 +838,10 @@ namespace Mutagen.Bethesda.Skyrim
         {
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.Level0.Relink(mapping);
-                obj.Level1.Relink(mapping);
-                obj.Level2.Relink(mapping);
-                obj.Level3.Relink(mapping);
+                obj.Level0 = obj.Level0.RelinkToNew(mapping);
+                obj.Level1 = obj.Level1.RelinkToNew(mapping);
+                obj.Level2 = obj.Level2.RelinkToNew(mapping);
+                obj.Level3 = obj.Level3.RelinkToNew(mapping);
             }
         }
         

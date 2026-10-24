@@ -1188,12 +1188,12 @@ namespace Mutagen.Bethesda.Fallout3
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.BaseImage?.Relink(mapping);
-                obj.NormalMap?.Relink(mapping);
-                obj.EnvironmentMapMask?.Relink(mapping);
-                obj.GlowMap?.Relink(mapping);
-                obj.ParallaxMap?.Relink(mapping);
-                obj.EnvironmentMap?.Relink(mapping);
+                obj.BaseImage = obj.BaseImage?.RelinkToNew(mapping);
+                obj.NormalMap = obj.NormalMap?.RelinkToNew(mapping);
+                obj.EnvironmentMapMask = obj.EnvironmentMapMask?.RelinkToNew(mapping);
+                obj.GlowMap = obj.GlowMap?.RelinkToNew(mapping);
+                obj.ParallaxMap = obj.ParallaxMap?.RelinkToNew(mapping);
+                obj.EnvironmentMap = obj.EnvironmentMap?.RelinkToNew(mapping);
             }
         }
         

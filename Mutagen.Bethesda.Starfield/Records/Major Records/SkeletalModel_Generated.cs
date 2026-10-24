@@ -901,8 +901,8 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.Rig?.Relink(mapping);
-                obj.AnimationRoot?.Relink(mapping);
+                obj.Rig = obj.Rig?.RelinkToNew(mapping);
+                obj.AnimationRoot = obj.AnimationRoot?.RelinkToNew(mapping);
             }
             obj.Model?.RemapAssetLinks(mapping, queryCategories, linkCache);
         }

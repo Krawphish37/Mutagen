@@ -973,7 +973,7 @@ namespace Mutagen.Bethesda.Skyrim
         {
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.FileName?.Relink(mapping);
+                obj.FileName = obj.FileName?.RelinkToNew(mapping);
             }
         }
         

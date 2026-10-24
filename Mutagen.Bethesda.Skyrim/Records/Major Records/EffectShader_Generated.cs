@@ -5023,11 +5023,11 @@ namespace Mutagen.Bethesda.Skyrim
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.FillTexture?.Relink(mapping);
-                obj.ParticleShaderTexture?.Relink(mapping);
-                obj.HolesTexture?.Relink(mapping);
-                obj.MembranePaletteTexture?.Relink(mapping);
-                obj.ParticlePaletteTexture?.Relink(mapping);
+                obj.FillTexture = obj.FillTexture?.RelinkToNew(mapping);
+                obj.ParticleShaderTexture = obj.ParticleShaderTexture?.RelinkToNew(mapping);
+                obj.HolesTexture = obj.HolesTexture?.RelinkToNew(mapping);
+                obj.MembranePaletteTexture = obj.MembranePaletteTexture?.RelinkToNew(mapping);
+                obj.ParticlePaletteTexture = obj.ParticlePaletteTexture?.RelinkToNew(mapping);
             }
         }
         

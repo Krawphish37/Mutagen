@@ -817,7 +817,7 @@ namespace Mutagen.Bethesda.Skyrim
         {
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.Texture?.Relink(mapping);
+                obj.Texture = obj.Texture?.RelinkToNew(mapping);
             }
         }
         

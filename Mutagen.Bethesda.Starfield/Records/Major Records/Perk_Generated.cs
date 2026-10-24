@@ -1522,7 +1522,7 @@ namespace Mutagen.Bethesda.Starfield
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.PerkIcon?.Relink(mapping);
+                obj.PerkIcon = obj.PerkIcon?.RelinkToNew(mapping);
             }
         }
         

@@ -440,7 +440,7 @@ public class ContainedAssetLinksModule : AContainedLinksModule<AssetLinkType>
             {
                 if (field is AssetLinkType)
                 {
-                    subFg.AppendLine($"obj.{field.Name}{field.NullChar}.Relink(mapping);");
+                    subFg.AppendLine($"obj.{field.Name} = obj.{field.Name}{field.NullChar}.RelinkToNew(mapping);");
                 }
                 else if (field is WrapperType cont)
                 {
@@ -450,10 +450,10 @@ public class ContainedAssetLinksModule : AContainedLinksModule<AssetLinkType>
                         fg.AppendLine(
                             $"obj.{field.Name}{field.NullChar}.ForEach(x => x{contLoqui.NullChar}.{nameof(IAssetLinkContainer.RemapAssetLinks)}(mapping, queryCategories, linkCache));");
                     }
-                    else if (cont.SubTypeGeneration is AssetLinkType subAsset)
+                    else if (cont.SubTypeGeneration is AssetLinkType)
                     {
                         fg.AppendLine(
-                            $"obj.{field.Name}{field.NullChar}.ForEach(x => x{subAsset.NullChar}.Relink(mapping));");
+                            $"obj.{field.Name}{field.NullChar}.RemapListedAssetLinks(mapping);");
                     }
                 }
                 else if (field is DictType dict)

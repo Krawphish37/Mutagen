@@ -1322,7 +1322,7 @@ namespace Mutagen.Bethesda.Skyrim
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.ParticleTexture?.Relink(mapping);
+                obj.ParticleTexture = obj.ParticleTexture?.RelinkToNew(mapping);
             }
         }
         
