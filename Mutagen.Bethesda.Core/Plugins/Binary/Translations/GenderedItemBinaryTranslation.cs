@@ -90,24 +90,41 @@ internal sealed class GenderedItemBinaryTranslation
         BinaryMasterParseDelegate<TItem> transl,
         RecordTypeConverter femaleRecordConverter,
         RecordTypeConverter? maleRecordConverter = null,
-        bool shortCircuit = true)
+        bool shortCircuit = true,
+        IGenderedItemGetter<TItem?>? existing = null,
+        BinaryMasterFillDelegate<TItem>? fill = null)
         where TItem : class
     {
-        if (!transl(frame, out var male, new TypedParseParams(
-                lengthOverride: null,
-                recordTypeConverter: maleRecordConverter,
-                doNotShortCircuit: !shortCircuit)))
-        {
-            male = null;
-        }
-        if (!transl(frame, out var female, new TypedParseParams(
-                lengthOverride: null,
-                recordTypeConverter: femaleRecordConverter,
-                doNotShortCircuit: !shortCircuit)))
-        {
-            female = null;
-        }
+        var male = ParseHalf(frame, transl, fill, existing?.Male, new TypedParseParams(
+            lengthOverride: null,
+            recordTypeConverter: maleRecordConverter,
+            doNotShortCircuit: !shortCircuit));
+        var female = ParseHalf(frame, transl, fill, existing?.Female, new TypedParseParams(
+            lengthOverride: null,
+            recordTypeConverter: femaleRecordConverter,
+            doNotShortCircuit: !shortCircuit));
         return new GenderedItem<TItem?>(male, female);
+    }
+
+    private static TItem? ParseHalf<TItem>(
+        MutagenFrame frame,
+        BinaryMasterParseDelegate<TItem> transl,
+        BinaryMasterFillDelegate<TItem>? fill,
+        TItem? held,
+        TypedParseParams translationParams)
+        where TItem : class
+    {
+        if (held != null && fill != null)
+        {
+            // The field was triggered again later in the record, so add to the half already read
+            fill(frame, held, translationParams);
+            return held;
+        }
+        if (!transl(frame, out var item, translationParams))
+        {
+            return null;
+        }
+        return item;
     }
 
     public static GenderedItem<TItem> ParseRequired<TItem>(

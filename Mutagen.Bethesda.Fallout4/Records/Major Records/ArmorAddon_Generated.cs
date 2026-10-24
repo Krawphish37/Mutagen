@@ -2742,7 +2742,9 @@ namespace Mutagen.Bethesda.Fallout4
                         femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
                         maleRecordConverter: ArmorAddon_Registration.WorldModelMaleConverter,
                         shortCircuit: false,
-                        transl: Model.TryCreateFromBinary);
+                        transl: Model.TryCreateFromBinary,
+                        existing: item.WorldModel,
+                        fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                     return (int)ArmorAddon_FieldIndex.WorldModel;
                 }
                 case RecordTypeInts.MOD4:
@@ -2759,7 +2761,9 @@ namespace Mutagen.Bethesda.Fallout4
                         femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
                         maleRecordConverter: ArmorAddon_Registration.FirstPersonModelMaleConverter,
                         shortCircuit: false,
-                        transl: Model.TryCreateFromBinary);
+                        transl: Model.TryCreateFromBinary,
+                        existing: item.FirstPersonModel,
+                        fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                     return (int)ArmorAddon_FieldIndex.FirstPersonModel;
                 }
                 case RecordTypeInts.NAM0:
@@ -3057,7 +3061,9 @@ namespace Mutagen.Bethesda.Fallout4
                         creator: static (s, p, r) => ModelBinaryOverlay.ModelFactory(s, p, r),
                         femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
                         maleRecordConverter: ArmorAddon_Registration.WorldModelMaleConverter,
-                        shortCircuit: false);
+                        shortCircuit: false,
+                        existing: _WorldModelOverlay,
+                        merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                     return (int)ArmorAddon_FieldIndex.WorldModel;
                 }
                 case RecordTypeInts.MOD4:
@@ -3075,7 +3081,9 @@ namespace Mutagen.Bethesda.Fallout4
                         creator: static (s, p, r) => ModelBinaryOverlay.ModelFactory(s, p, r),
                         femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
                         maleRecordConverter: ArmorAddon_Registration.FirstPersonModelMaleConverter,
-                        shortCircuit: false);
+                        shortCircuit: false,
+                        existing: _FirstPersonModelOverlay,
+                        merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                     return (int)ArmorAddon_FieldIndex.FirstPersonModel;
                 }
                 case RecordTypeInts.NAM0:

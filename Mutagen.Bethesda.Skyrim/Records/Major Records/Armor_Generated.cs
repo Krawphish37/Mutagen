@@ -3487,7 +3487,9 @@ namespace Mutagen.Bethesda.Skyrim
                         frame: frame,
                         femaleRecordConverter: Armor_Registration.WorldModelFemaleConverter,
                         maleRecordConverter: Armor_Registration.WorldModelMaleConverter,
-                        transl: ArmorModel.TryCreateFromBinary);
+                        transl: ArmorModel.TryCreateFromBinary,
+                        existing: item.WorldModel,
+                        fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                     return (int)Armor_FieldIndex.WorldModel;
                 }
                 case RecordTypeInts.BODT:
@@ -3892,7 +3894,9 @@ namespace Mutagen.Bethesda.Skyrim
                         stream: stream,
                         creator: static (s, p, r) => ArmorModelBinaryOverlay.ArmorModelFactory(s, p, r),
                         femaleRecordConverter: Armor_Registration.WorldModelFemaleConverter,
-                        maleRecordConverter: Armor_Registration.WorldModelMaleConverter);
+                        maleRecordConverter: Armor_Registration.WorldModelMaleConverter,
+                        existing: _WorldModelOverlay,
+                        merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                     return (int)Armor_FieldIndex.WorldModel;
                 }
                 case RecordTypeInts.BODT:

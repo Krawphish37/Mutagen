@@ -26,6 +26,11 @@ internal static class PluginUtilityTranslation
         [MaybeNullWhen(false)] out TItem item,
         TypedParseParams translationParams);
 
+    internal delegate void BinaryMasterFillDelegate<TItem>(
+        MutagenFrame reader,
+        TItem item,
+        TypedParseParams translationParams);
+
     internal delegate bool BinarySubParseRecordDelegate<TItem>(
         MutagenFrame reader,
         RecordType header,

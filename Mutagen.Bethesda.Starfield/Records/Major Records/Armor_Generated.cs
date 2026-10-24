@@ -4786,7 +4786,9 @@ namespace Mutagen.Bethesda.Starfield
                         frame: frame,
                         femaleRecordConverter: Armor_Registration.WorldModelFemaleConverter,
                         maleRecordConverter: Armor_Registration.WorldModelMaleConverter,
-                        transl: Model.TryCreateFromBinary);
+                        transl: Model.TryCreateFromBinary,
+                        existing: item.WorldModel,
+                        fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                     return (int)Armor_FieldIndex.WorldModel;
                 }
                 case RecordTypeInts.BO64:
@@ -5274,7 +5276,9 @@ namespace Mutagen.Bethesda.Starfield
                         creator: static (s, p, r) => ModelBinaryOverlay.ModelFactory(s, p, r),
                         femaleRecordConverter: Armor_Registration.WorldModelFemaleConverter,
                         maleRecordConverter: Armor_Registration.WorldModelMaleConverter,
-                        parseNonConvertedItems: true);
+                        parseNonConvertedItems: true,
+                        existing: _WorldModelOverlay,
+                        merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                     return (int)Armor_FieldIndex.WorldModel;
                 }
                 case RecordTypeInts.BO64:

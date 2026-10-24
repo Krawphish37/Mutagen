@@ -3681,7 +3681,9 @@ namespace Mutagen.Bethesda.Starfield
                             frame: frame,
                             femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
                             maleRecordConverter: ArmorAddon_Registration.WorldModelMaleConverter,
-                            transl: Model.TryCreateFromBinary);
+                            transl: Model.TryCreateFromBinary,
+                            existing: item.WorldModel,
+                            fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                         return new ParseResult((int)ArmorAddon_FieldIndex.WorldModel, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.WorldModel)
@@ -3690,7 +3692,9 @@ namespace Mutagen.Bethesda.Starfield
                             frame: frame,
                             femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
                             maleRecordConverter: ArmorAddon_Registration.FirstPersonModelMaleConverter,
-                            transl: Model.TryCreateFromBinary);
+                            transl: Model.TryCreateFromBinary,
+                            existing: item.FirstPersonModel,
+                            fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                         return new ParseResult((int)ArmorAddon_FieldIndex.FirstPersonModel, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.AltSkeleton)
@@ -3711,14 +3715,18 @@ namespace Mutagen.Bethesda.Starfield
                                     frame: frame,
                                     femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
                                     maleRecordConverter: ArmorAddon_Registration.WorldModelMaleConverter,
-                                    transl: Model.TryCreateFromBinary);
+                                    transl: Model.TryCreateFromBinary,
+                                    existing: item.WorldModel,
+                                    fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                                 return new ParseResult((int)ArmorAddon_FieldIndex.WorldModel, nextRecordType);
                             case 1:
                                 item.FirstPersonModel = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<Model>(
                                     frame: frame,
                                     femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
                                     maleRecordConverter: ArmorAddon_Registration.FirstPersonModelMaleConverter,
-                                    transl: Model.TryCreateFromBinary);
+                                    transl: Model.TryCreateFromBinary,
+                                    existing: item.FirstPersonModel,
+                                    fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                                 return new ParseResult((int)ArmorAddon_FieldIndex.FirstPersonModel, nextRecordType);
                             case 2:
                                 item.ExtraLightLayers.SetTo(
@@ -3747,7 +3755,9 @@ namespace Mutagen.Bethesda.Starfield
                         frame: frame,
                         femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
                         maleRecordConverter: ArmorAddon_Registration.FirstPersonModelMaleConverter,
-                        transl: Model.TryCreateFromBinary);
+                        transl: Model.TryCreateFromBinary,
+                        existing: item.FirstPersonModel,
+                        fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                     return (int)ArmorAddon_FieldIndex.FirstPersonModel;
                 }
                 case RecordTypeInts.MOD6:
@@ -3770,7 +3780,9 @@ namespace Mutagen.Bethesda.Starfield
                         frame: frame,
                         femaleRecordConverter: ArmorAddon_Registration.SkinTextureFemaleConverter,
                         shortCircuit: false,
-                        transl: ArmorAddonSkinTexture.TryCreateFromBinary);
+                        transl: ArmorAddonSkinTexture.TryCreateFromBinary,
+                        existing: item.SkinTexture,
+                        fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                     return (int)ArmorAddon_FieldIndex.SkinTexture;
                 }
                 case RecordTypeInts.NAM6:
@@ -3782,7 +3794,9 @@ namespace Mutagen.Bethesda.Starfield
                         frame: frame,
                         femaleRecordConverter: ArmorAddon_Registration.MorphsFemaleConverter,
                         shortCircuit: false,
-                        transl: ArmorAddonMorph.TryCreateFromBinary);
+                        transl: ArmorAddonMorph.TryCreateFromBinary,
+                        existing: item.Morphs,
+                        fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                     return (int)ArmorAddon_FieldIndex.Morphs;
                 }
                 case RecordTypeInts.MODL:
@@ -4157,7 +4171,9 @@ namespace Mutagen.Bethesda.Starfield
                             creator: static (s, p, r) => ModelBinaryOverlay.ModelFactory(s, p, r),
                             femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
                             maleRecordConverter: ArmorAddon_Registration.WorldModelMaleConverter,
-                            parseNonConvertedItems: true);
+                            parseNonConvertedItems: true,
+                            existing: _WorldModelOverlay,
+                            merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                         return new ParseResult((int)ArmorAddon_FieldIndex.WorldModel, type);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.WorldModel)
@@ -4168,7 +4184,9 @@ namespace Mutagen.Bethesda.Starfield
                             creator: static (s, p, r) => ModelBinaryOverlay.ModelFactory(s, p, r),
                             femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
                             maleRecordConverter: ArmorAddon_Registration.FirstPersonModelMaleConverter,
-                            parseNonConvertedItems: true);
+                            parseNonConvertedItems: true,
+                            existing: _FirstPersonModelOverlay,
+                            merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                         return new ParseResult((int)ArmorAddon_FieldIndex.FirstPersonModel, type);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.AltSkeleton)
@@ -4197,7 +4215,9 @@ namespace Mutagen.Bethesda.Starfield
                                     creator: static (s, p, r) => ModelBinaryOverlay.ModelFactory(s, p, r),
                                     femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
                                     maleRecordConverter: ArmorAddon_Registration.WorldModelMaleConverter,
-                                    parseNonConvertedItems: true);
+                                    parseNonConvertedItems: true,
+                                    existing: _WorldModelOverlay,
+                                    merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                                 return new ParseResult((int)ArmorAddon_FieldIndex.WorldModel, type);
                             }
                             case 1:
@@ -4208,7 +4228,9 @@ namespace Mutagen.Bethesda.Starfield
                                     creator: static (s, p, r) => ModelBinaryOverlay.ModelFactory(s, p, r),
                                     femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
                                     maleRecordConverter: ArmorAddon_Registration.FirstPersonModelMaleConverter,
-                                    parseNonConvertedItems: true);
+                                    parseNonConvertedItems: true,
+                                    existing: _FirstPersonModelOverlay,
+                                    merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                                 return new ParseResult((int)ArmorAddon_FieldIndex.FirstPersonModel, type);
                             }
                             case 2:
@@ -4247,7 +4269,9 @@ namespace Mutagen.Bethesda.Starfield
                         creator: static (s, p, r) => ModelBinaryOverlay.ModelFactory(s, p, r),
                         femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
                         maleRecordConverter: ArmorAddon_Registration.FirstPersonModelMaleConverter,
-                        parseNonConvertedItems: true);
+                        parseNonConvertedItems: true,
+                        existing: _FirstPersonModelOverlay,
+                        merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                     return (int)ArmorAddon_FieldIndex.FirstPersonModel;
                 }
                 case RecordTypeInts.MOD6:
@@ -4271,7 +4295,9 @@ namespace Mutagen.Bethesda.Starfield
                         stream: stream,
                         creator: static (s, p, r) => ArmorAddonSkinTextureBinaryOverlay.ArmorAddonSkinTextureFactory(s, p, r),
                         femaleRecordConverter: ArmorAddon_Registration.SkinTextureFemaleConverter,
-                        shortCircuit: false);
+                        shortCircuit: false,
+                        existing: _SkinTextureOverlay,
+                        merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                     return (int)ArmorAddon_FieldIndex.SkinTexture;
                 }
                 case RecordTypeInts.NAM6:
@@ -4284,7 +4310,9 @@ namespace Mutagen.Bethesda.Starfield
                         stream: stream,
                         creator: static (s, p, r) => ArmorAddonMorphBinaryOverlay.ArmorAddonMorphFactory(s, p, r),
                         femaleRecordConverter: ArmorAddon_Registration.MorphsFemaleConverter,
-                        shortCircuit: false);
+                        shortCircuit: false,
+                        existing: _MorphsOverlay,
+                        merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                     return (int)ArmorAddon_FieldIndex.Morphs;
                 }
                 case RecordTypeInts.MODL:

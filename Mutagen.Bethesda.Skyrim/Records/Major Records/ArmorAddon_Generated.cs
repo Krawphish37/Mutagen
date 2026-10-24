@@ -2707,7 +2707,9 @@ namespace Mutagen.Bethesda.Skyrim
                         frame: frame,
                         femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
                         maleRecordConverter: ArmorAddon_Registration.WorldModelMaleConverter,
-                        transl: Model.TryCreateFromBinary);
+                        transl: Model.TryCreateFromBinary,
+                        existing: item.WorldModel,
+                        fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                     return (int)ArmorAddon_FieldIndex.WorldModel;
                 }
                 case RecordTypeInts.MOD4:
@@ -2717,7 +2719,9 @@ namespace Mutagen.Bethesda.Skyrim
                         frame: frame,
                         femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
                         maleRecordConverter: ArmorAddon_Registration.FirstPersonModelMaleConverter,
-                        transl: Model.TryCreateFromBinary);
+                        transl: Model.TryCreateFromBinary,
+                        existing: item.FirstPersonModel,
+                        fill: static (r, i, p) => i.CopyInFromBinary(r, p));
                     return (int)ArmorAddon_FieldIndex.FirstPersonModel;
                 }
                 case RecordTypeInts.NAM0:
@@ -3003,7 +3007,9 @@ namespace Mutagen.Bethesda.Skyrim
                         stream: stream,
                         creator: static (s, p, r) => ModelBinaryOverlay.ModelFactory(s, p, r),
                         femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
-                        maleRecordConverter: ArmorAddon_Registration.WorldModelMaleConverter);
+                        maleRecordConverter: ArmorAddon_Registration.WorldModelMaleConverter,
+                        existing: _WorldModelOverlay,
+                        merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                     return (int)ArmorAddon_FieldIndex.WorldModel;
                 }
                 case RecordTypeInts.MOD4:
@@ -3014,7 +3020,9 @@ namespace Mutagen.Bethesda.Skyrim
                         stream: stream,
                         creator: static (s, p, r) => ModelBinaryOverlay.ModelFactory(s, p, r),
                         femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
-                        maleRecordConverter: ArmorAddon_Registration.FirstPersonModelMaleConverter);
+                        maleRecordConverter: ArmorAddon_Registration.FirstPersonModelMaleConverter,
+                        existing: _FirstPersonModelOverlay,
+                        merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
                     return (int)ArmorAddon_FieldIndex.FirstPersonModel;
                 }
                 case RecordTypeInts.NAM0:
