@@ -10,6 +10,10 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 
 - FormList
 - Npc
+### IBindableEquipment
+
+- Armor
+- Weapon
 ### IComplexLocation
 
 - Cell
@@ -28,10 +32,6 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 - Scroll
 - SoulGem
 - Weapon
-### IDialog
-
-- DialogResponses
-- DialogTopic
 ### IEffectRecord
 
 - ObjectEffect
@@ -40,6 +40,46 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 
 - Light
 - Region
+### IExplodeSpawn
+
+- AcousticSpace
+- Activator
+- AddonNode
+- AlchemicalApparatus
+- Ammunition
+- Armor
+- ArmorAddon
+- ArtObject
+- Book
+- Container
+- Door
+- DualCastData
+- Explosion
+- Flora
+- Furniture
+- Grass
+- Hazard
+- IdleMarker
+- Ingestible
+- Ingredient
+- Key
+- LeveledItem
+- LeveledNpc
+- LeveledSpell
+- Light
+- MoveableStatic
+- Npc
+- ObjectEffect
+- Projectile
+- Scroll
+- SoulGem
+- SoundMarker
+- Spell
+- Static
+- TalkingActivator
+- TextureSet
+- Tree
+- Weapon
 ### IHarvestTarget
 
 - Ingestible
@@ -65,27 +105,45 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 - Scroll
 - SoulGem
 - Weapon
+### IItemOrList
+
+- AlchemicalApparatus
+- Ammunition
+- Armor
+- Book
+- FormList
+- Ingestible
+- Ingredient
+- Key
+- LeveledItem
+- Light
+- MiscItem
+- Scroll
+- SoulGem
+- Weapon
 ### IKeywordLinkedReference
 
 - APlacedTrap
 - Keyword
 - PlacedNpc
 - PlacedObject
-### ILinkedReference
+### IKnowable
 
-- APlacedTrap
-- PlacedNpc
-- PlacedObject
-### ILocationRecord
-
-- Location
-- LocationReferenceType
-### ILocationTargetable
-
-- Door
-- PlacedNpc
-- PlacedObject
+- MagicEffect
+- ObjectEffect
+- WordOfPower
 ### ILockList
+
+- FormList
+- Npc
+### IMagicItem
+
+- Ingestible
+- Ingredient
+- ObjectEffect
+- Scroll
+- Spell
+### INpcOrList
 
 - FormList
 - Npc
@@ -126,10 +184,39 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 ### IOwner
 
 - Faction
-- PlacedNpc
+- Npc
+### IPlaceableObject
+
+- AcousticSpace
+- Activator
+- AddonNode
+- AlchemicalApparatus
+- Ammunition
+- Armor
+- ArtObject
+- Book
+- Container
+- Door
+- Flora
+- Furniture
+- IdleMarker
+- Ingestible
+- Ingredient
+- Key
+- Light
+- MiscItem
+- MoveableStatic
+- Scroll
+- SoulGem
+- SoundMarker
+- Spell
+- Static
+- TalkingActivator
+- TextureSet
+- Tree
+- Weapon
 ### IPlaced
 
-- APlaced
 - APlacedTrap
 - PlacedNpc
 - PlacedObject
@@ -145,6 +232,36 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 
 - Hazard
 - Projectile
+### IReferenceableObject
+
+- AcousticSpace
+- Activator
+- AlchemicalApparatus
+- Ammunition
+- Armor
+- Book
+- Container
+- Door
+- Flora
+- Furniture
+- Hazard
+- IdleMarker
+- Ingestible
+- Ingredient
+- Key
+- Light
+- MiscItem
+- MoveableStatic
+- Npc
+- Scroll
+- SoulGem
+- SoundMarker
+- Spell
+- Static
+- TalkingActivator
+- TextureSet
+- Tree
+- Weapon
 ### IRegionTarget
 
 - Flora
@@ -160,62 +277,116 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 
 - SoundDescriptor
 - SoundMarker
-### ISpellSpawn
+### ISpellOrList
+
+- FormList
+- Spell
+### ISpellRecord
 
 - LeveledSpell
+- Shout
 - Spell
+### IVoiceTypeOrList
+
+- FormList
+- VoiceType
+### IWeaponOrList
+
+- FormList
+- Weapon
+### IWorldspaceOrList
+
+- FormList
+- Worldspace
 ## Concrete Classes to Interfaces
+### AcousticSpace
+
+- IExplodeSpawn
+- IPlaceableObject
+- IReferenceableObject
 ### ActionRecord
 
 - IIdleRelation
 ### Activator
 
+- IExplodeSpawn
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
+### AddonNode
+
+- IExplodeSpawn
+- IPlaceableObject
 ### AlchemicalApparatus
 
 - IConstructible
+- IExplodeSpawn
 - IItem
+- IItemOrList
+- IPlaceableObject
+- IReferenceableObject
 ### Ammunition
 
 - IConstructible
+- IExplodeSpawn
 - IItem
+- IItemOrList
 - IObjectId
-### APlaced
-
-- IPlaced
+- IPlaceableObject
+- IReferenceableObject
 ### APlacedTrap
 
 - IKeywordLinkedReference
-- ILinkedReference
 - IPlaced
 - IPlacedThing
 ### Armor
 
+- IBindableEquipment
 - IConstructible
+- IExplodeSpawn
 - IItem
+- IItemOrList
 - IObjectId
 - IOutfitTarget
+- IPlaceableObject
+- IReferenceableObject
+### ArmorAddon
+
+- IExplodeSpawn
+### ArtObject
+
+- IExplodeSpawn
+- IPlaceableObject
 ### Book
 
 - IConstructible
+- IExplodeSpawn
 - IItem
+- IItemOrList
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
 ### Cell
 
 - IComplexLocation
 ### Container
 
+- IExplodeSpawn
 - IObjectId
-### DialogResponses
-
-- IDialog
-### DialogTopic
-
-- IDialog
+- IPlaceableObject
+- IReferenceableObject
 ### Door
 
-- ILocationTargetable
+- IExplodeSpawn
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
+### DualCastData
+
+- IExplodeSpawn
+### Explosion
+
+- IExplodeSpawn
 ### Faction
 
 - IObjectId
@@ -223,40 +394,74 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 - IRelatable
 ### Flora
 
+- IExplodeSpawn
+- IPlaceableObject
+- IReferenceableObject
 - IRegionTarget
 ### FormList
 
 - IAliasVoiceType
+- IItemOrList
 - ILockList
+- INpcOrList
 - IObjectId
+- ISpellOrList
+- IVoiceTypeOrList
+- IWeaponOrList
+- IWorldspaceOrList
 ### Furniture
 
+- IExplodeSpawn
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
+### Grass
+
+- IExplodeSpawn
 ### Hazard
 
+- IExplodeSpawn
 - IPlacedTrapTarget
+- IReferenceableObject
 ### IdleAnimation
 
 - IIdleRelation
 ### IdleMarker
 
+- IExplodeSpawn
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
 ### Ingestible
 
 - IConstructible
+- IExplodeSpawn
 - IHarvestTarget
 - IItem
+- IItemOrList
+- IMagicItem
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
 ### Ingredient
 
 - IConstructible
+- IExplodeSpawn
 - IHarvestTarget
 - IItem
+- IItemOrList
+- IMagicItem
+- IPlaceableObject
+- IReferenceableObject
 ### Key
 
 - IConstructible
+- IExplodeSpawn
 - IItem
+- IItemOrList
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
 ### Keyword
 
 - IKeywordLinkedReference
@@ -265,64 +470,78 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 - IRegionTarget
 ### LeveledItem
 
+- IExplodeSpawn
 - IHarvestTarget
 - IItem
+- IItemOrList
 - IOutfitTarget
 ### LeveledNpc
 
+- IExplodeSpawn
 - INpcSpawn
 ### LeveledSpell
 
-- ISpellSpawn
+- IExplodeSpawn
+- ISpellRecord
 ### Light
 
 - IConstructible
 - IEmittance
+- IExplodeSpawn
 - IItem
+- IItemOrList
 - IObjectId
-### Location
+- IPlaceableObject
+- IReferenceableObject
+### MagicEffect
 
-- ILocationRecord
-### LocationReferenceType
-
-- ILocationRecord
+- IKnowable
 ### MiscItem
 
 - IConstructible
 - IHarvestTarget
 - IItem
+- IItemOrList
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
 ### MoveableStatic
 
+- IExplodeSpawn
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
 - IRegionTarget
 ### Npc
 
 - IAliasVoiceType
+- IExplodeSpawn
 - ILockList
+- INpcOrList
 - INpcSpawn
 - IObjectId
+- IOwner
+- IReferenceableObject
 ### ObjectEffect
 
 - IEffectRecord
+- IExplodeSpawn
+- IKnowable
+- IMagicItem
 ### PlacedNpc
 
 - IKeywordLinkedReference
-- ILinkedReference
-- ILocationTargetable
-- IOwner
 - IPlaced
 - IPlacedSimple
 ### PlacedObject
 
 - IKeywordLinkedReference
-- ILinkedReference
-- ILocationTargetable
 - IPlaced
 - IPlacedSimple
 - IPlacedThing
 ### Projectile
 
+- IExplodeSpawn
 - IObjectId
 - IPlacedTrapTarget
 ### Race
@@ -334,42 +553,87 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 ### Scroll
 
 - IConstructible
+- IExplodeSpawn
 - IItem
+- IItemOrList
+- IMagicItem
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
 ### Shout
 
 - IObjectId
+- ISpellRecord
 ### SoulGem
 
 - IConstructible
+- IExplodeSpawn
 - IItem
+- IItemOrList
+- IPlaceableObject
+- IReferenceableObject
 ### SoundDescriptor
 
 - ISound
 ### SoundMarker
 
+- IExplodeSpawn
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
 - ISound
 ### Spell
 
 - IEffectRecord
+- IExplodeSpawn
+- IMagicItem
 - IObjectId
-- ISpellSpawn
+- IPlaceableObject
+- IReferenceableObject
+- ISpellOrList
+- ISpellRecord
 ### Static
 
+- IExplodeSpawn
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
 - IRegionTarget
+### TalkingActivator
+
+- IExplodeSpawn
+- IPlaceableObject
+- IReferenceableObject
 ### TextureSet
 
+- IExplodeSpawn
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
 ### Tree
 
+- IExplodeSpawn
+- IPlaceableObject
+- IReferenceableObject
 - IRegionTarget
+### VoiceType
+
+- IVoiceTypeOrList
 ### Weapon
 
+- IBindableEquipment
 - IConstructible
+- IExplodeSpawn
 - IItem
+- IItemOrList
 - IObjectId
+- IPlaceableObject
+- IReferenceableObject
+- IWeaponOrList
+### WordOfPower
+
+- IKnowable
 ### Worldspace
 
 - IComplexLocation
+- IWorldspaceOrList
