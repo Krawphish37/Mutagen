@@ -58,7 +58,7 @@
       <ByteArray name="XFLG" recordType="XFLG" unknown="true" />
       <RefDirect name="LightFlicker" refName="PlacedObjectLightFlicker" />
       <RefDirect name="MapMarker" refName="PlacedObjectMapMarker" markerType="XMRK" />
-      <Bool name="LightLayerData" recordType="XLLD" byteLength="4" />
+      <Enum name="LightLayerData" enumName="Light.LightLayer" recordType="XLLD" byteLength="4" />
       <Bool name="LightStaticShadowMap" recordType="XLSM" byteLength="4" />
       <Float name="LightVolumetricData" recordType="XLVD" />
       <Float name="LightRadiusFalloutExponent" recordType="XRFE" />
