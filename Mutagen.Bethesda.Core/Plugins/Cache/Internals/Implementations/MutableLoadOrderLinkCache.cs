@@ -53,10 +53,10 @@ public sealed class MutableLoadOrderLinkCache : ILinkCache
     }
 
     /// <inheritdoc />
-    public IReadOnlyList<IModGetter> ListedOrder { get; }
+    public IReadOnlyList<IModGetter> ListedOrder { get; private set; }
 
     /// <inheritdoc />
-    public IReadOnlyList<IModGetter> PriorityOrder { get; }
+    public IReadOnlyList<IModGetter> PriorityOrder { get; private set; }
 
     private void CheckDisposal()
     {
@@ -278,6 +278,8 @@ public sealed class MutableLoadOrderLinkCache : ILinkCache
         var mutableCache = mod.ToUntypedMutableLinkCache();
         _mutableMods.Add(mutableCache);
         _mutableModsByKey.TryAdd(mutableCache.SourceMod.ModKey, mutableCache);
+        ListedOrder = ListedOrder.Append(mutableCache.SourceMod).ToArray();
+        PriorityOrder = ListedOrder.Reverse().ToArray();
     }
     
     /// <inheritdoc />
@@ -1163,10 +1165,10 @@ public sealed class MutableLoadOrderLinkCache<TMod, TModGetter> : ILinkCache<TMo
     }
 
     /// <inheritdoc />
-    public IReadOnlyList<IModGetter> ListedOrder { get; }
+    public IReadOnlyList<IModGetter> ListedOrder { get; private set; }
 
     /// <inheritdoc />
-    public IReadOnlyList<IModGetter> PriorityOrder { get; }
+    public IReadOnlyList<IModGetter> PriorityOrder { get; private set; }
 
     private void CheckDisposal()
     {
@@ -1388,6 +1390,8 @@ public sealed class MutableLoadOrderLinkCache<TMod, TModGetter> : ILinkCache<TMo
         var mutableCache = mod.ToMutableLinkCache<TMod, TModGetter>();
         _mutableMods.Add(mutableCache);
         _mutableModsByKey.TryAdd(mutableCache.SourceMod.ModKey, mutableCache);
+        ListedOrder = ListedOrder.Append(mutableCache.SourceMod).ToArray();
+        PriorityOrder = ListedOrder.Reverse().ToArray();
     }
 
     /// <inheritdoc />
