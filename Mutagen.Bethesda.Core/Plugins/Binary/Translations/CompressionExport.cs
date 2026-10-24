@@ -2,13 +2,14 @@
 using System.IO.Compression;
 using System.Reactive.Disposables;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
-using Noggog;
 
 namespace Mutagen.Bethesda.Plugins.Binary.Translations;
 
 public readonly struct CompressionExport : IDisposable
 {
-    private readonly MemoryTributary _tributary = new();
+    // One per compressed record written, and most records are small.
+    // MemoryStream grows with the content, where MemoryTributary allocates a 64 KB block on first write
+    private readonly MemoryStream _tributary = new();
     
     /// <summary>
     /// Writer being tracked
