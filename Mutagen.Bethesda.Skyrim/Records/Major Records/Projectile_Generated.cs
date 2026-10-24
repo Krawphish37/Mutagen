@@ -2222,7 +2222,7 @@ namespace Mutagen.Bethesda.Skyrim
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.MuzzleFlashModel.Relink(mapping);
+                obj.MuzzleFlashModel = obj.MuzzleFlashModel.RelinkToNew(mapping);
             }
             obj.Model?.RemapAssetLinks(mapping, queryCategories, linkCache);
             obj.Destructible?.RemapAssetLinks(mapping, queryCategories, linkCache);

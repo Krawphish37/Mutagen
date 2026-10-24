@@ -3041,12 +3041,12 @@ namespace Mutagen.Bethesda.Skyrim
             obj.SubCells.ForEach(x => x.RemapAssetLinks(mapping, queryCategories, linkCache));
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.MapImage?.Relink(mapping);
-                obj.CanopyShadow?.Relink(mapping);
-                obj.WaterNoiseTexture?.Relink(mapping);
-                obj.HdLodDiffuseTexture?.Relink(mapping);
-                obj.HdLodNormalTexture?.Relink(mapping);
-                obj.WaterEnvironmentMap?.Relink(mapping);
+                obj.MapImage = obj.MapImage?.RelinkToNew(mapping);
+                obj.CanopyShadow = obj.CanopyShadow?.RelinkToNew(mapping);
+                obj.WaterNoiseTexture = obj.WaterNoiseTexture?.RelinkToNew(mapping);
+                obj.HdLodDiffuseTexture = obj.HdLodDiffuseTexture?.RelinkToNew(mapping);
+                obj.HdLodNormalTexture = obj.HdLodNormalTexture?.RelinkToNew(mapping);
+                obj.WaterEnvironmentMap = obj.WaterEnvironmentMap?.RelinkToNew(mapping);
             }
             obj.CloudModel?.RemapAssetLinks(mapping, queryCategories, linkCache);
             obj.TopCell?.RemapAssetLinks(mapping, queryCategories, linkCache);

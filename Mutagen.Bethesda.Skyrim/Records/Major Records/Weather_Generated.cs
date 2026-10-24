@@ -3648,7 +3648,7 @@ namespace Mutagen.Bethesda.Skyrim
             AssetLinkQuery queryCategories)
         {
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
-            obj.CloudTextures.ForEach(x => x?.Relink(mapping));
+            obj.CloudTextures.RemapListedAssetLinks(mapping);
             obj.Aurora?.RemapAssetLinks(mapping, queryCategories, linkCache);
         }
         

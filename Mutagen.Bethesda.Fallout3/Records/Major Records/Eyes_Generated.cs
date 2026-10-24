@@ -916,7 +916,7 @@ namespace Mutagen.Bethesda.Fallout3
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.Icon?.Relink(mapping);
+                obj.Icon = obj.Icon?.RelinkToNew(mapping);
             }
         }
         

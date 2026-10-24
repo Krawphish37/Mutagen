@@ -1383,8 +1383,8 @@ namespace Mutagen.Bethesda.Skyrim
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.TrackFilename?.Relink(mapping);
-                obj.FinaleFilename?.Relink(mapping);
+                obj.TrackFilename = obj.TrackFilename?.RelinkToNew(mapping);
+                obj.FinaleFilename = obj.FinaleFilename?.RelinkToNew(mapping);
             }
         }
         

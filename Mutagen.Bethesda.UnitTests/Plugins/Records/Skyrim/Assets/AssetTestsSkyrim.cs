@@ -43,4 +43,66 @@ public class AssetTestsSkyrim
 		XXX
 		""");
     }
+
+    private static Dictionary<IAssetLinkGetter, string> MapOwnLinks(IAssetLinkContainer container, string to)
+    {
+	    var mapping = new Dictionary<IAssetLinkGetter, string>();
+	    foreach (var link in container.EnumerateListedAssetLinks())
+	    {
+		    mapping.TryAdd(link, to);
+	    }
+	    return mapping;
+    }
+
+    [Fact]
+    public void RemapListedFieldsWithOwnLinksAsKeys()
+    {
+	    var lod = new Lod
+	    {
+		    Level0 = new AssetLink<SkyrimModelAssetType>("Test\\Shared.nif"),
+		    Level1 = new AssetLink<SkyrimModelAssetType>("Test\\Shared.nif"),
+		    Level2 = new AssetLink<SkyrimModelAssetType>("Test\\Shared.nif"),
+		    Level3 = new AssetLink<SkyrimModelAssetType>("Test\\Other.nif"),
+	    };
+	    var mapping = MapOwnLinks(lod, "Test\\Renamed.nif");
+	    mapping.Remove(new AssetLink<SkyrimModelAssetType>("Test\\Other.nif"));
+
+	    lod.RemapListedAssetLinks(mapping);
+
+	    lod.Level0.GivenPath.ShouldBe("Test\\Renamed.nif");
+	    lod.Level1.GivenPath.ShouldBe("Test\\Renamed.nif");
+	    lod.Level2.GivenPath.ShouldBe("Test\\Renamed.nif");
+	    lod.Level3.GivenPath.ShouldBe("Test\\Other.nif");
+	    mapping.Keys.Single().GivenPath.ShouldBe("Test\\Shared.nif");
+    }
+
+    [Fact]
+    public void RemapListedListWithOwnLinksAsKeys()
+    {
+	    var sound = new SoundDescriptor(FormKey.Null, SkyrimRelease.SkyrimSE);
+	    sound.SoundFiles.Add(new AssetLink<SkyrimSoundAssetType>("Test\\Shared.wav"));
+	    sound.SoundFiles.Add(new AssetLink<SkyrimSoundAssetType>("Test\\Shared.wav"));
+	    var mapping = MapOwnLinks(sound, "Test\\Renamed.wav");
+
+	    sound.RemapListedAssetLinks(mapping);
+
+	    sound.SoundFiles.Select(x => x.GivenPath).ShouldBe(new[] { "Test\\Renamed.wav", "Test\\Renamed.wav" });
+	    mapping.Keys.Single().GivenPath.ShouldBe("Test\\Shared.wav");
+    }
+
+    [Fact]
+    public void RemapListedArrayWithOwnLinksAsKeys()
+    {
+	    var weather = new Weather(FormKey.Null, SkyrimRelease.SkyrimSE);
+	    weather.CloudTextures[0] = new AssetLink<SkyrimTextureAssetType>("Test\\Shared.dds");
+	    weather.CloudTextures[2] = new AssetLink<SkyrimTextureAssetType>("Test\\Shared.dds");
+	    var mapping = MapOwnLinks(weather, "Test\\Renamed.dds");
+
+	    weather.RemapListedAssetLinks(mapping);
+
+	    weather.CloudTextures[0]!.GivenPath.ShouldBe("Test\\Renamed.dds");
+	    weather.CloudTextures[1].ShouldBeNull();
+	    weather.CloudTextures[2]!.GivenPath.ShouldBe("Test\\Renamed.dds");
+	    mapping.Keys.Single().GivenPath.ShouldBe("Test\\Shared.dds");
+    }
 }

@@ -1282,7 +1282,7 @@ namespace Mutagen.Bethesda.Skyrim
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.CameraPath?.Relink(mapping);
+                obj.CameraPath = obj.CameraPath?.RelinkToNew(mapping);
             }
             obj.Icons?.RemapAssetLinks(mapping, queryCategories, linkCache);
         }

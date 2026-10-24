@@ -1293,14 +1293,14 @@ namespace Mutagen.Bethesda.Skyrim
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.Diffuse?.Relink(mapping);
-                obj.NormalOrGloss?.Relink(mapping);
-                obj.EnvironmentMaskOrSubsurfaceTint?.Relink(mapping);
-                obj.GlowOrDetailMap?.Relink(mapping);
-                obj.Height?.Relink(mapping);
-                obj.Environment?.Relink(mapping);
-                obj.Multilayer?.Relink(mapping);
-                obj.BacklightMaskOrSpecular?.Relink(mapping);
+                obj.Diffuse = obj.Diffuse?.RelinkToNew(mapping);
+                obj.NormalOrGloss = obj.NormalOrGloss?.RelinkToNew(mapping);
+                obj.EnvironmentMaskOrSubsurfaceTint = obj.EnvironmentMaskOrSubsurfaceTint?.RelinkToNew(mapping);
+                obj.GlowOrDetailMap = obj.GlowOrDetailMap?.RelinkToNew(mapping);
+                obj.Height = obj.Height?.RelinkToNew(mapping);
+                obj.Environment = obj.Environment?.RelinkToNew(mapping);
+                obj.Multilayer = obj.Multilayer?.RelinkToNew(mapping);
+                obj.BacklightMaskOrSpecular = obj.BacklightMaskOrSpecular?.RelinkToNew(mapping);
             }
         }
         
