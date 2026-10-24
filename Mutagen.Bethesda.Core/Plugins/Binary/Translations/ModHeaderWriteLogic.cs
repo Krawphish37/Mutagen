@@ -21,6 +21,7 @@ internal sealed class ModHeaderWriteLogic
 
     private readonly ModKey _modKey;
     private readonly Dictionary<ModKey, FormKey?> _modKeys = new();
+    private bool _usesOwnFormKeys;
     private uint _numRecords;
     private uint? _nextFormID;
     private readonly HashSet<FormKey> _formKeyUniqueness = new();
@@ -174,7 +175,14 @@ internal sealed class ModHeaderWriteLogic
             mod.GetMasterStyle(),
             writer.MetaData.MasterReferences,
             masterFlagLookup);
-        
+
+        if (_usesOwnFormKeys
+            && writer.MetaData.SeparatedMasterPackage is SeparatedMasterPackage separated)
+        {
+            // Refuse up front if the mod's own FormIDs will not fit, rather than partway through the records
+            separated.CheckOwnIndexFits();
+        }
+
         modHeader.MasterReferences.SetTo(writer.MetaData.MasterReferences!.Masters.Select(m => m.DeepCopy()));
     }
 
@@ -219,13 +227,21 @@ internal sealed class ModHeaderWriteLogic
                 _recordIterationActions.Add(maj =>
                 {
                     var formKey = maj.FormKey;
-                    if (mod.ModKey == formKey.ModKey) return;
+                    if (mod.ModKey == formKey.ModKey)
+                    {
+                        _usesOwnFormKeys = true;
+                        return;
+                    }
                     if (_params.CleanNulls && formKey.IsNull) return;
                     _modKeys[formKey.ModKey] = formKey;
                 });
                 _formLinkIterationActions.Add((maj, formLink) =>
                 {
-                    if (mod.ModKey == formLink.FormKey.ModKey) return;
+                    if (mod.ModKey == formLink.FormKey.ModKey)
+                    {
+                        _usesOwnFormKeys = true;
+                        return;
+                    }
                     if (_params.CleanNulls && formLink.FormKey.IsNull) return;
                     _modKeys[formLink.FormKey.ModKey] = maj;
                 });
