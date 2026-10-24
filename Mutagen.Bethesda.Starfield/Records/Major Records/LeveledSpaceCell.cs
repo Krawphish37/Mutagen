@@ -45,7 +45,7 @@ partial class LeveledSpaceCellBinaryWriteTranslation
         using var s = HeaderExport.Subrecord(writer, RecordTypes.LVLD);
         if (formVersion < LeveledSpaceCellBinaryCreateTranslation.FloatChanceNoneVersion)
         {
-            writer.Write((byte)(chanceNone * 255));
+            writer.Write((byte)Math.Round(chanceNone * 255));
         }
         else
         {

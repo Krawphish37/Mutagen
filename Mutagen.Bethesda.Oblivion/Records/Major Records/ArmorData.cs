@@ -26,7 +26,7 @@ partial class ArmorDataBinaryWriteTranslation
     {
         UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
             writer,
-            (ushort)(item.ArmorValue * 100));
+            (ushort)Math.Round(item.ArmorValue * 100));
     }
 }
 
