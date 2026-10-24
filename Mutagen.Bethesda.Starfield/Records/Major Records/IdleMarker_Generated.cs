@@ -1070,6 +1070,7 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IIdleMarker :
         IAssetLinkContainer,
         IBaseObject,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         IIdleMarkerGetter,
@@ -1077,6 +1078,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IIdleMarkerInternal>,
         IModeled,
         IObjectBounded,
+        IPlaceableObject,
         IScripted,
         IStarfieldMajorRecordInternal
     {
@@ -1122,6 +1124,7 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         IKeywordedGetter<IKeywordGetter>,
@@ -1129,6 +1132,7 @@ namespace Mutagen.Bethesda.Starfield
         IMapsToGetter<IIdleMarkerGetter>,
         IModeledGetter,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter
     {
         static new ILoquiRegistration StaticRegistration => IdleMarker_Registration.Instance;

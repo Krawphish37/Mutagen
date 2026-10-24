@@ -28,6 +28,8 @@
     </Fields>
     <LinkInterface>IItem</LinkInterface>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
     <!-- CITC/CTDA/CIS1/CIS2 consumed by ConditionalEntries custom binary handler -->
     <AdditionalContainedRecordType>CITC</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>CTDA</AdditionalContainedRecordType>

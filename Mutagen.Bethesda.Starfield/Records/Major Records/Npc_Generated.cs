@@ -5102,9 +5102,11 @@ namespace Mutagen.Bethesda.Starfield
 
     #region Interface
     public partial interface INpc :
+        IAliasVoiceType,
         IAssetLinkContainer,
         IBaseObject,
         IConstructibleObjectTarget,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHasVoiceType,
         IHaveVirtualMachineAdapter,
@@ -5118,6 +5120,7 @@ namespace Mutagen.Bethesda.Starfield
         INpcTemplateTarget,
         IObjectBounded,
         IOwner,
+        IPlaceableObject,
         IScripted,
         IStarfieldMajorRecordInternal,
         ITranslatedNamed,
@@ -5239,10 +5242,12 @@ namespace Mutagen.Bethesda.Starfield
     [AssociatedRecordTypesAttribute(Mutagen.Bethesda.Starfield.Internals.RecordTypeInts.NPC_)]
     public partial interface INpcGetter :
         IStarfieldMajorRecordGetter,
+        IAliasVoiceTypeGetter,
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
         IConstructibleObjectTargetGetter,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHasVoiceTypeGetter,
         IHaveVirtualMachineAdapterGetter,
@@ -5256,6 +5261,7 @@ namespace Mutagen.Bethesda.Starfield
         INpcTemplateTargetGetter,
         IObjectBoundedGetter,
         IOwnerGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter,
         ITranslatedNamedGetter,
         ITranslatedNamedRequiredGetter

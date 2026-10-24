@@ -1149,6 +1149,7 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainer,
         IBaseObject,
         IBiomeMarkerGetter,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         IKeyworded<IKeywordGetter>,
@@ -1156,6 +1157,7 @@ namespace Mutagen.Bethesda.Starfield
         IModeled,
         INpcTemplateTarget,
         IObjectBounded,
+        IPlaceableObject,
         IScripted,
         IStarfieldMajorRecordInternal
     {
@@ -1197,6 +1199,7 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         IKeywordedGetter<IKeywordGetter>,
@@ -1205,6 +1208,7 @@ namespace Mutagen.Bethesda.Starfield
         IModeledGetter,
         INpcTemplateTargetGetter,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter
     {
         static new ILoquiRegistration StaticRegistration => BiomeMarker_Registration.Instance;

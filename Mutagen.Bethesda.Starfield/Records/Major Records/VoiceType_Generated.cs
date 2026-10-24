@@ -611,6 +611,7 @@ namespace Mutagen.Bethesda.Starfield
 
     #region Interface
     public partial interface IVoiceType :
+        IAliasVoiceType,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         ILoquiObjectSetter<IVoiceTypeInternal>,
@@ -638,6 +639,7 @@ namespace Mutagen.Bethesda.Starfield
     [AssociatedRecordTypesAttribute(Mutagen.Bethesda.Starfield.Internals.RecordTypeInts.VTYP)]
     public partial interface IVoiceTypeGetter :
         IStarfieldMajorRecordGetter,
+        IAliasVoiceTypeGetter,
         IBinaryItem,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,

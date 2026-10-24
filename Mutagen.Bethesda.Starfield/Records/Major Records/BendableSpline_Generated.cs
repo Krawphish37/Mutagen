@@ -988,10 +988,12 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainer,
         IBaseObject,
         IBendableSplineGetter,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         ILoquiObjectSetter<IBendableSplineInternal>,
         IObjectBoundedOptional,
+        IPlaceableObject,
         IScripted,
         IStarfieldMajorRecordInternal
     {
@@ -1028,11 +1030,13 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         ILoquiObject<IBendableSplineGetter>,
         IMapsToGetter<IBendableSplineGetter>,
         IObjectBoundedOptionalGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter
     {
         static new ILoquiRegistration StaticRegistration => BendableSpline_Registration.Instance;

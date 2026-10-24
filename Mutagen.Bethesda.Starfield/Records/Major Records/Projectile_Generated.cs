@@ -2390,6 +2390,7 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IProjectile :
         IAssetLinkContainer,
         IBaseObject,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHasDestructible,
         IHaveVirtualMachineAdapter,
@@ -2398,6 +2399,7 @@ namespace Mutagen.Bethesda.Starfield
         INamed,
         INamedRequired,
         IObjectBounded,
+        IPlaceableObject,
         IProjectileGetter,
         IScripted,
         IStarfieldMajorRecordInternal,
@@ -2483,6 +2485,7 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHasDestructibleGetter,
         IHaveVirtualMachineAdapterGetter,
@@ -2492,6 +2495,7 @@ namespace Mutagen.Bethesda.Starfield
         INamedGetter,
         INamedRequiredGetter,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter,
         ITranslatedNamedGetter,
         ITranslatedNamedRequiredGetter

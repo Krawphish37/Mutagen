@@ -10,7 +10,7 @@ using Mutagen.Bethesda;
 namespace Mutagen.Bethesda.Starfield
 {
     /// <summary>
-    /// Implemented by: [Faction]
+    /// Implemented by: [Faction, FormList, Npc, VoiceType]
     /// </summary>
     public partial interface IAliasVoiceType :
         IAliasVoiceTypeGetter,
@@ -19,7 +19,7 @@ namespace Mutagen.Bethesda.Starfield
     }
 
     /// <summary>
-    /// Implemented by: [Faction]
+    /// Implemented by: [Faction, FormList, Npc, VoiceType]
     /// </summary>
     public partial interface IAliasVoiceTypeGetter : IStarfieldMajorRecordGetter
     {

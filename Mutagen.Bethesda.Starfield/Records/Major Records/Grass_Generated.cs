@@ -1246,11 +1246,13 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IGrass :
         IAssetLinkContainer,
         IBaseObject,
+        IExplodeSpawn,
         IFormLinkContainer,
         IGrassGetter,
         ILoquiObjectSetter<IGrassInternal>,
         IModeled,
         IObjectBounded,
+        IPlaceableObject,
         IStarfieldMajorRecordInternal
     {
         /// <summary>
@@ -1294,11 +1296,13 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         ILoquiObject<IGrassGetter>,
         IMapsToGetter<IGrassGetter>,
         IModeledGetter,
-        IObjectBoundedGetter
+        IObjectBoundedGetter,
+        IPlaceableObjectGetter
     {
         static new ILoquiRegistration StaticRegistration => Grass_Registration.Instance;
         #region ObjectBounds

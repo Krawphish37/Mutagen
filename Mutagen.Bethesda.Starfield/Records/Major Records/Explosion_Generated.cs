@@ -1819,6 +1819,7 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IExplosion :
         IAssetLinkContainer,
         IBaseObject,
+        IExplodeSpawn,
         IExplosionGetter,
         IFormLinkContainer,
         ILoquiObjectSetter<IExplosionInternal>,
@@ -1826,6 +1827,7 @@ namespace Mutagen.Bethesda.Starfield
         INamed,
         INamedRequired,
         IObjectBounded,
+        IPlaceableObject,
         IStarfieldMajorRecordInternal,
         ITranslatedNamed,
         ITranslatedNamedRequired
@@ -1886,6 +1888,7 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         ILoquiObject<IExplosionGetter>,
         IMapsToGetter<IExplosionGetter>,
@@ -1893,6 +1896,7 @@ namespace Mutagen.Bethesda.Starfield
         INamedGetter,
         INamedRequiredGetter,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         ITranslatedNamedGetter,
         ITranslatedNamedRequiredGetter
     {

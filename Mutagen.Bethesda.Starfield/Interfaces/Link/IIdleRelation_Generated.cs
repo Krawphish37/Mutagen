@@ -10,7 +10,7 @@ using Mutagen.Bethesda;
 namespace Mutagen.Bethesda.Starfield
 {
     /// <summary>
-    /// Implemented by: [ActionRecord]
+    /// Implemented by: [ActionRecord, IdleAnimation]
     /// </summary>
     public partial interface IIdleRelation :
         IIdleRelationGetter,
@@ -19,7 +19,7 @@ namespace Mutagen.Bethesda.Starfield
     }
 
     /// <summary>
-    /// Implemented by: [ActionRecord]
+    /// Implemented by: [ActionRecord, IdleAnimation]
     /// </summary>
     public partial interface IIdleRelationGetter : IStarfieldMajorRecordGetter
     {

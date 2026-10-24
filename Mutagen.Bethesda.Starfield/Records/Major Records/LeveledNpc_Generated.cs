@@ -1343,6 +1343,7 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface ILeveledNpc :
         IAssetLinkContainer,
         IBaseObject,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         ILeveledNpcGetter,
@@ -1351,6 +1352,7 @@ namespace Mutagen.Bethesda.Starfield
         INpcSpawn,
         INpcTemplateTarget,
         IObjectBounded,
+        IPlaceableObject,
         IScripted,
         IStarfieldMajorRecordInternal
     {
@@ -1397,6 +1399,7 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         ILoquiObject<ILeveledNpcGetter>,
@@ -1405,6 +1408,7 @@ namespace Mutagen.Bethesda.Starfield
         INpcSpawnGetter,
         INpcTemplateTargetGetter,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter
     {
         static new ILoquiRegistration StaticRegistration => LeveledNpc_Registration.Instance;

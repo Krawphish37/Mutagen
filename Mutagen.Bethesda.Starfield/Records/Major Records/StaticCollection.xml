@@ -13,6 +13,8 @@
       <RefList name="Parts" refName="StaticPart" />
     </Fields>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
   </Object>
   <Object name="StaticPart" objType="Subrecord">
     <Fields>

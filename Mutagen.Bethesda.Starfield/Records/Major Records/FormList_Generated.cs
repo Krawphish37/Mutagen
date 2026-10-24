@@ -884,14 +884,17 @@ namespace Mutagen.Bethesda.Starfield
 
     #region Interface
     public partial interface IFormList :
+        IAliasVoiceType,
         IAssetLinkContainer,
         IBaseObject,
         IConstructibleObjectTarget,
+        IExplodeSpawn,
         IFormLinkContainer,
         IFormListGetter,
         ILoquiObjectSetter<IFormListInternal>,
         INamed,
         INamedRequired,
+        IPlaceableObject,
         IStarfieldMajorRecordInternal,
         ITranslatedNamed,
         ITranslatedNamedRequired,
@@ -917,15 +920,18 @@ namespace Mutagen.Bethesda.Starfield
     [AssociatedRecordTypesAttribute(Mutagen.Bethesda.Starfield.Internals.RecordTypeInts.FLST)]
     public partial interface IFormListGetter :
         IStarfieldMajorRecordGetter,
+        IAliasVoiceTypeGetter,
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
         IConstructibleObjectTargetGetter,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         ILoquiObject<IFormListGetter>,
         IMapsToGetter<IFormListGetter>,
         INamedGetter,
         INamedRequiredGetter,
+        IPlaceableObjectGetter,
         ITranslatedNamedGetter,
         ITranslatedNamedRequiredGetter,
         IVoiceTypeOrListGetter

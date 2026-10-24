@@ -43,5 +43,7 @@
       <RefList name="DamageType" refName="DamageTypeValue" recordType="DAMA" />
     </Fields>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
   </Object>
 </Loqui>

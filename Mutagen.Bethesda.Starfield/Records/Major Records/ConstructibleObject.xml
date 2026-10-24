@@ -37,6 +37,8 @@
     </Fields>
     <LinkInterface>IResourceTarget</LinkInterface>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
     <LinkInterface>IResearchResourceTarget</LinkInterface>
   </Object>
   <Object name="ConstructibleObjectComponent" objType="Subrecord">

@@ -1107,12 +1107,14 @@ namespace Mutagen.Bethesda.Starfield
         IArtObjectGetter,
         IAssetLinkContainer,
         IBaseObject,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         IKeyworded<IKeywordGetter>,
         ILoquiObjectSetter<IArtObjectInternal>,
         IModeled,
         IObjectBounded,
+        IPlaceableObject,
         IScripted,
         IStarfieldMajorRecordInternal
     {
@@ -1155,6 +1157,7 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         IKeywordedGetter<IKeywordGetter>,
@@ -1162,6 +1165,7 @@ namespace Mutagen.Bethesda.Starfield
         IMapsToGetter<IArtObjectGetter>,
         IModeledGetter,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter
     {
         static new ILoquiRegistration StaticRegistration => ArtObject_Registration.Instance;

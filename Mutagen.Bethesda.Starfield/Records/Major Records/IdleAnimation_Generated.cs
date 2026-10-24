@@ -840,6 +840,7 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IIdleAnimation :
         IFormLinkContainer,
         IIdleAnimationGetter,
+        IIdleRelation,
         ILoquiObjectSetter<IIdleAnimationInternal>,
         INamed,
         INamedRequired,
@@ -872,6 +873,7 @@ namespace Mutagen.Bethesda.Starfield
         IStarfieldMajorRecordGetter,
         IBinaryItem,
         IFormLinkContainerGetter,
+        IIdleRelationGetter,
         ILoquiObject<IIdleAnimationGetter>,
         IMapsToGetter<IIdleAnimationGetter>,
         INamedGetter,

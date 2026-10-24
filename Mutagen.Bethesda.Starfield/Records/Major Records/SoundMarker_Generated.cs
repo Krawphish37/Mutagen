@@ -851,11 +851,13 @@ namespace Mutagen.Bethesda.Starfield
     #region Interface
     public partial interface ISoundMarker :
         IBaseObject,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         IKeyworded<IKeywordGetter>,
         ILoquiObjectSetter<ISoundMarkerInternal>,
         IObjectBounded,
+        IPlaceableObject,
         IScripted,
         ISoundMarkerGetter,
         IStarfieldMajorRecordInternal
@@ -891,12 +893,14 @@ namespace Mutagen.Bethesda.Starfield
         IStarfieldMajorRecordGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         IKeywordedGetter<IKeywordGetter>,
         ILoquiObject<ISoundMarkerGetter>,
         IMapsToGetter<ISoundMarkerGetter>,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter
     {
         static new ILoquiRegistration StaticRegistration => SoundMarker_Registration.Instance;

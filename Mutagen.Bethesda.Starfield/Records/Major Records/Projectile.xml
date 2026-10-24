@@ -57,5 +57,7 @@
       <FormLink name="CurveTable" refName="CurveTable" recordType="NAM3" />
     </Fields>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
   </Object>
 </Loqui>

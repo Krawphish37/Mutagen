@@ -28,6 +28,8 @@
     </Fields>
     <LinkInterface>IConstructibleObjectTarget</LinkInterface>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
     <AdditionalContainedRecordType>NONE</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>AA00</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>AA01</AdditionalContainedRecordType>

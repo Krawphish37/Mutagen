@@ -22,5 +22,7 @@
       <FormLink name="EffectShader" refName="EffectShader" recordType="ENAM" />
     </Fields>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
   </Object>
 </Loqui>
