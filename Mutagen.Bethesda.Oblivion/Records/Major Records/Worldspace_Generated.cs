@@ -3305,13 +3305,21 @@ namespace Mutagen.Bethesda.Oblivion
         }
         
         #region Duplicate
+        private static readonly Worldspace.TranslationMask DuplicateMask = new(defaultOn: true)
+        {
+            Road = false,
+            TopCell = false,
+            SubCells = false,
+        };
+        private static readonly TranslationCrystal DuplicateCrystal = DuplicateMask.GetCrystal();
+        
         public Worldspace Duplicate(
             IWorldspaceGetter item,
             FormKey formKey,
             TranslationCrystal? copyMask)
         {
             var newRec = new Worldspace(formKey, default(OblivionRelease));
-            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask);
+            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask ?? DuplicateCrystal);
             return newRec;
         }
         

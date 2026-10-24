@@ -2039,13 +2039,19 @@ namespace Mutagen.Bethesda.Oblivion
         }
         
         #region Duplicate
+        private static readonly DialogTopic.TranslationMask DuplicateMask = new(defaultOn: true)
+        {
+            Items = false,
+        };
+        private static readonly TranslationCrystal DuplicateCrystal = DuplicateMask.GetCrystal();
+        
         public DialogTopic Duplicate(
             IDialogTopicGetter item,
             FormKey formKey,
             TranslationCrystal? copyMask)
         {
             var newRec = new DialogTopic(formKey, default(OblivionRelease));
-            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask);
+            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask ?? DuplicateCrystal);
             return newRec;
         }
         

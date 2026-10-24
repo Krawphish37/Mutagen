@@ -1,8 +1,10 @@
 using Loqui.Generation;
 using Loqui.Internal;
 using Mutagen.Bethesda.Plugins;
+using Noggog;
 using Noggog.StructuredStrings;
 using Noggog.StructuredStrings.CSharp;
+using DictType = Mutagen.Bethesda.Generation.Fields.DictType;
 
 namespace Mutagen.Bethesda.Generation.Modules.Plugin;
 
@@ -71,6 +73,24 @@ public class DuplicateModule : GenerationModule
         if (!await obj.IsMajorRecord()) return;
         using (sb.Region("Duplicate"))
         {
+            var nestedRecordFields = obj.Abstract ? new List<TypeGeneration>() : await GetNestedMajorRecordFields(obj);
+            if (nestedRecordFields.Count > 0)
+            {
+                // Nested major records keep their own FormKeys when copied, so a duplicate
+                // would carry them along as overrides of the source's children.
+                // By default, only the record itself is duplicated
+                sb.AppendLine($"private static readonly {obj.Name}.TranslationMask DuplicateMask = new(defaultOn: true)");
+                using (sb.CurlyBrace(appendSemiColon: true))
+                {
+                    foreach (var field in nestedRecordFields)
+                    {
+                        sb.AppendLine($"{field.Name} = false,");
+                    }
+                }
+                sb.AppendLine($"private static readonly TranslationCrystal DuplicateCrystal = DuplicateMask.GetCrystal();");
+                sb.AppendLine();
+            }
+
             using (var args = sb.Function(
                        $"public{obj.Virtual()}{obj.Name} Duplicate{obj.GetGenericTypes(MaskType.Normal, MaskType.NormalGetter)}"))
             {
@@ -90,7 +110,7 @@ public class DuplicateModule : GenerationModule
                     var hasFormVersion = obj.GetObjectData().GameCategory?.HasFormVersion() ?? false;
                     var multipleGameReleases = obj.GetObjectData().HasMultipleReleases;
                     sb.AppendLine($"var newRec = new {obj.Name}(formKey{(hasFormVersion ? $", item.FormVersion" : (multipleGameReleases ? $", default({obj.GetObjectData().GameCategory}Release)" : string.Empty))});");
-                    sb.AppendLine($"newRec.DeepCopyIn(item, default({nameof(ErrorMaskBuilder)}?), copyMask);");
+                    sb.AppendLine($"newRec.DeepCopyIn(item, default({nameof(ErrorMaskBuilder)}?), copyMask{(nestedRecordFields.Count > 0 ? " ?? DuplicateCrystal" : null)});");
                     sb.AppendLine("return newRec;");
                 }
             }
@@ -119,5 +139,28 @@ public class DuplicateModule : GenerationModule
                 sb.AppendLine();
             }
         }
+    }
+
+    /// <summary>
+    /// Fields of a major record that hold other major records (Cell refs, Quest scenes, DialogTopic responses, etc)
+    /// </summary>
+    private static async Task<List<TypeGeneration>> GetNestedMajorRecordFields(ObjectGeneration obj)
+    {
+        var ret = new List<TypeGeneration>();
+        foreach (var field in obj.IterateFields(includeBaseClass: true))
+        {
+            if (field.GetFieldData().Circular) continue;
+            LoquiType loqui = field switch
+            {
+                LoquiType l => l,
+                ContainerType cont => cont.SubTypeGeneration as LoquiType,
+                DictType dict => dict.ValueTypeGen as LoquiType,
+                _ => null
+            };
+            if (loqui == null) continue;
+            if (await MajorRecordModule.HasMajorRecords(loqui, includeBaseClass: true) != Case.Yes) continue;
+            ret.Add(field);
+        }
+        return ret;
     }
 }

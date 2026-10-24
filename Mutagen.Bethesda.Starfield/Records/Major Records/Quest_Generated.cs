@@ -5546,13 +5546,21 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         #region Duplicate
+        private static readonly Quest.TranslationMask DuplicateMask = new(defaultOn: true)
+        {
+            DialogBranches = false,
+            DialogTopics = false,
+            Scenes = false,
+        };
+        private static readonly TranslationCrystal DuplicateCrystal = DuplicateMask.GetCrystal();
+        
         public Quest Duplicate(
             IQuestGetter item,
             FormKey formKey,
             TranslationCrystal? copyMask)
         {
             var newRec = new Quest(formKey, item.FormVersion);
-            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask);
+            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask ?? DuplicateCrystal);
             return newRec;
         }
         

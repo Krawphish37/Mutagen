@@ -5494,13 +5494,21 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         #region Duplicate
+        private static readonly Cell.TranslationMask DuplicateMask = new(defaultOn: true)
+        {
+            NavigationMeshes = false,
+            Persistent = false,
+            Temporary = false,
+        };
+        private static readonly TranslationCrystal DuplicateCrystal = DuplicateMask.GetCrystal();
+        
         public Cell Duplicate(
             ICellGetter item,
             FormKey formKey,
             TranslationCrystal? copyMask)
         {
             var newRec = new Cell(formKey, item.FormVersion);
-            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask);
+            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask ?? DuplicateCrystal);
             return newRec;
         }
         

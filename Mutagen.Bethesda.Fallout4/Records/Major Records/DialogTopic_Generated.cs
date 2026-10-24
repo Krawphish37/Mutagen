@@ -2366,13 +2366,19 @@ namespace Mutagen.Bethesda.Fallout4
         }
         
         #region Duplicate
+        private static readonly DialogTopic.TranslationMask DuplicateMask = new(defaultOn: true)
+        {
+            Responses = false,
+        };
+        private static readonly TranslationCrystal DuplicateCrystal = DuplicateMask.GetCrystal();
+        
         public DialogTopic Duplicate(
             IDialogTopicGetter item,
             FormKey formKey,
             TranslationCrystal? copyMask)
         {
             var newRec = new DialogTopic(formKey, item.FormVersion);
-            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask);
+            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask ?? DuplicateCrystal);
             return newRec;
         }
         
