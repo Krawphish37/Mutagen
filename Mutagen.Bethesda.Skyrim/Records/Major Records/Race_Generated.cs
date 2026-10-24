@@ -5692,7 +5692,7 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.Starting) ?? true))
             {
-                if (!lhs.Starting.SequenceEqualNullable(rhs.Starting)) return false;
+                if (!lhs.Starting.DictEqualsNullable(rhs.Starting)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.BaseCarryWeight) ?? true))
             {
@@ -5732,7 +5732,7 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.Regen) ?? true))
             {
-                if (!lhs.Regen.SequenceEqualNullable(rhs.Regen)) return false;
+                if (!lhs.Regen.DictEqualsNullable(rhs.Regen)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.UnarmedDamage) ?? true))
             {
@@ -5852,7 +5852,7 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.BipedObjectNames) ?? true))
             {
-                if (!lhs.BipedObjectNames.SequenceEqualNullable(rhs.BipedObjectNames)) return false;
+                if (!lhs.BipedObjectNames.DictEqualsNullable(rhs.BipedObjectNames)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.MovementTypes) ?? true))
             {
