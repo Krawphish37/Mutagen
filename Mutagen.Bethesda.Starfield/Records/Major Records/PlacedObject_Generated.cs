@@ -513,9 +513,9 @@ namespace Mutagen.Bethesda.Starfield
         IPlacedObjectMapMarkerGetter? IPlacedObjectGetter.MapMarker => this.MapMarker;
         #endregion
         #region LightLayerData
-        public Boolean? LightLayerData { get; set; }
+        public Light.LightLayer? LightLayerData { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Boolean? IPlacedObjectGetter.LightLayerData => this.LightLayerData;
+        Light.LightLayer? IPlacedObjectGetter.LightLayerData => this.LightLayerData;
         #endregion
         #region LightStaticShadowMap
         public Boolean? LightStaticShadowMap { get; set; }
@@ -4764,7 +4764,7 @@ namespace Mutagen.Bethesda.Starfield
         new MemorySlice<Byte>? XFLG { get; set; }
         new PlacedObjectLightFlicker? LightFlicker { get; set; }
         new PlacedObjectMapMarker? MapMarker { get; set; }
-        new Boolean? LightLayerData { get; set; }
+        new Light.LightLayer? LightLayerData { get; set; }
         new Boolean? LightStaticShadowMap { get; set; }
         new Single? LightVolumetricData { get; set; }
         new Single? LightRadiusFalloutExponent { get; set; }
@@ -4883,7 +4883,7 @@ namespace Mutagen.Bethesda.Starfield
         ReadOnlyMemorySlice<Byte>? XFLG { get; }
         IPlacedObjectLightFlickerGetter? LightFlicker { get; }
         IPlacedObjectMapMarkerGetter? MapMarker { get; }
-        Boolean? LightLayerData { get; }
+        Light.LightLayer? LightLayerData { get; }
         Boolean? LightStaticShadowMap { get; }
         Single? LightVolumetricData { get; }
         Single? LightRadiusFalloutExponent { get; }
@@ -9217,11 +9217,11 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     translationParams: translationParams);
             }
-            BooleanBinaryTranslation<MutagenFrame>.Instance.WriteNullable(
-                writer: writer,
-                item: item.LightLayerData,
-                header: translationParams.ConvertToCustom(RecordTypes.XLLD),
-                byteLength: 4);
+            EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.LightLayerData,
+                length: 4,
+                header: translationParams.ConvertToCustom(RecordTypes.XLLD));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteNullable(
                 writer: writer,
                 item: item.LightStaticShadowMap,
@@ -9822,9 +9822,9 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XLLD:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.LightLayerData = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
-                        reader: frame.SpawnWithLength(contentLength),
-                        byteLength: 4);
+                    item.LightLayerData = EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
                     return (int)PlacedObject_FieldIndex.LightLayerData;
                 }
                 case RecordTypeInts.XLSM:
@@ -10290,7 +10290,7 @@ namespace Mutagen.Bethesda.Starfield
         public IPlacedObjectMapMarkerGetter? MapMarker { get; private set; }
         #region LightLayerData
         private int? _LightLayerDataLocation;
-        public Boolean? LightLayerData => _LightLayerDataLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _LightLayerDataLocation.Value, _package.MetaData.Constants)) >= 1 : default(Boolean?);
+        public Light.LightLayer? LightLayerData => EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_LightLayerDataLocation, _recordData, _package, 4);
         #endregion
         #region LightStaticShadowMap
         private int? _LightStaticShadowMapLocation;
