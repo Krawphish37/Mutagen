@@ -3252,26 +3252,17 @@ namespace Mutagen.Bethesda.Oblivion
                     yield break;
                 case "IPlacedGetter":
                 case "IPlaced":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.VisibleWhenDistant)
+                    foreach (var subItem in obj.VisibleWhenDistant.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
                     yield break;
                 case "Landscape":
@@ -3288,26 +3279,17 @@ namespace Mutagen.Bethesda.Oblivion
                             }
                         }
                     }
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.VisibleWhenDistant)
+                    foreach (var subItem in obj.VisibleWhenDistant.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
                     yield break;
                 case "PathGrid":
@@ -3329,78 +3311,51 @@ namespace Mutagen.Bethesda.Oblivion
                 case "IPlacedCreatureGetter":
                 case "IPlacedCreature":
                 case "IPlacedCreatureInternal":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.VisibleWhenDistant)
+                    foreach (var subItem in obj.VisibleWhenDistant.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
                     yield break;
                 case "PlacedNpc":
                 case "IPlacedNpcGetter":
                 case "IPlacedNpc":
                 case "IPlacedNpcInternal":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.VisibleWhenDistant)
+                    foreach (var subItem in obj.VisibleWhenDistant.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
                     yield break;
                 case "PlacedObject":
                 case "IPlacedObjectGetter":
                 case "IPlacedObject":
                 case "IPlacedObjectInternal":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.VisibleWhenDistant)
+                    foreach (var subItem in obj.VisibleWhenDistant.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
                     yield break;
                 default:
@@ -3602,80 +3557,71 @@ namespace Mutagen.Bethesda.Oblivion
                     yield break;
                 case "IPlacedGetter":
                 case "IPlaced":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Persistent.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Persistent.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Temporary.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Temporary.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.VisibleWhenDistant)
+                    foreach (var subItem in obj.VisibleWhenDistant.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.VisibleWhenDistant.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.VisibleWhenDistant.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).VisibleWhenDistant.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.VisibleWhenDistant.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.VisibleWhenDistant.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).VisibleWhenDistant.Add(dup);
+                                return dup;
+                            });
                     }
                     yield break;
                 case "Landscape":
@@ -3706,80 +3652,71 @@ namespace Mutagen.Bethesda.Oblivion
                                 });
                         }
                     }
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Persistent.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Persistent.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Temporary.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Temporary.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.VisibleWhenDistant)
+                    foreach (var subItem in obj.VisibleWhenDistant.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.VisibleWhenDistant.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.VisibleWhenDistant.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).VisibleWhenDistant.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.VisibleWhenDistant.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.VisibleWhenDistant.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).VisibleWhenDistant.Add(dup);
+                                return dup;
+                            });
                     }
                     yield break;
                 case "PathGrid":
@@ -3815,240 +3752,213 @@ namespace Mutagen.Bethesda.Oblivion
                 case "IPlacedCreatureGetter":
                 case "IPlacedCreature":
                 case "IPlacedCreatureInternal":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Persistent.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Persistent.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Temporary.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Temporary.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.VisibleWhenDistant)
+                    foreach (var subItem in obj.VisibleWhenDistant.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.VisibleWhenDistant.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.VisibleWhenDistant.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).VisibleWhenDistant.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.VisibleWhenDistant.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.VisibleWhenDistant.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).VisibleWhenDistant.Add(dup);
+                                return dup;
+                            });
                     }
                     yield break;
                 case "PlacedNpc":
                 case "IPlacedNpcGetter":
                 case "IPlacedNpc":
                 case "IPlacedNpcInternal":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Persistent.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Persistent.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Temporary.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Temporary.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.VisibleWhenDistant)
+                    foreach (var subItem in obj.VisibleWhenDistant.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.VisibleWhenDistant.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.VisibleWhenDistant.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).VisibleWhenDistant.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.VisibleWhenDistant.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.VisibleWhenDistant.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).VisibleWhenDistant.Add(dup);
+                                return dup;
+                            });
                     }
                     yield break;
                 case "PlacedObject":
                 case "IPlacedObjectGetter":
                 case "IPlacedObject":
                 case "IPlacedObjectInternal":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Persistent.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Persistent.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Temporary.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Temporary.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.VisibleWhenDistant)
+                    foreach (var subItem in obj.VisibleWhenDistant.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.VisibleWhenDistant.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.VisibleWhenDistant.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).VisibleWhenDistant.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IOblivionMod, IOblivionModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.VisibleWhenDistant.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.VisibleWhenDistant.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).VisibleWhenDistant.Add(dup);
+                                return dup;
+                            });
                     }
                     yield break;
                 default:

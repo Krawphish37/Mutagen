@@ -906,7 +906,9 @@ public class MajorRecordContextEnumerationModule : GenerationModule
                     switch (await MajorRecordModule.HasMajorRecords(contLoqui, includeBaseClass: true))
                     {
                         case Case.Yes:
-                            fieldGen.AppendLine($"foreach (var subItem in {accessor}.{field.Name}{(field.Nullable ? ".EmptyIfNull()" : null)})");
+                            // Lets lists that know their items' types skip the others without constructing them
+                            var filterByList = includeType && contLoqui.RefType == LoquiType.LoquiRefType.Interface;
+                            fieldGen.AppendLine($"foreach (var subItem in {accessor}.{field.Name}{(field.Nullable ? ".EmptyIfNull()" : null)}{(filterByList ? ".WhereAssignableTo(type)" : null)})");
                             using (fieldGen.CurlyBrace())
                             {
                                 await LoquiTypeHandler(
@@ -916,7 +918,7 @@ public class MajorRecordContextEnumerationModule : GenerationModule
                                     contLoqui,
                                     generic: "TMajor",
                                     includeType: includeType,
-                                    checkType: includeType,
+                                    checkType: includeType && !filterByList,
                                     addGetOrAddArg: (args) =>
                                     {
                                         args.Add(subFg =>

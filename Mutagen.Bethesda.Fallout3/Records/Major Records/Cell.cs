@@ -503,6 +503,32 @@ partial class CellBinaryOverlay
                     }
                 }
 
+                Type TypicalType(
+                    ReadOnlyMemorySlice<byte> span,
+                    BinaryOverlayFactoryPackage package)
+                {
+                    var majorMeta = package.MetaData.Constants.MajorRecordHeader(span);
+                    switch (majorMeta.RecordType.TypeInt)
+                    {
+                        case RecordTypeInts.ACRE:
+                            return typeof(PlacedCreatureBinaryOverlay);
+                        case RecordTypeInts.ACHR:
+                            return typeof(PlacedNpcBinaryOverlay);
+                        case RecordTypeInts.REFR:
+                            return typeof(PlacedObjectBinaryOverlay);
+                        case RecordTypeInts.PGRE:
+                            return typeof(PlacedGrenadeBinaryOverlay);
+                        case RecordTypeInts.PMIS:
+                            return typeof(PlacedMissileBinaryOverlay);
+                        case RecordTypeInts.PBEA:
+                            return typeof(PlacedBeamBinaryOverlay);
+                        case RecordTypeInts.SCOL:
+                            return typeof(PlacedObjectBinaryOverlay);
+                        default:
+                            throw new NotImplementedException();
+                    }
+                }
+
                 GroupTypeEnum type = (GroupTypeEnum)subGroupMeta.GroupType;
                 switch (type)
                 {
@@ -514,6 +540,7 @@ partial class CellBinaryOverlay
                             contentSpan,
                             _package,
                             getter: TypicalGetter,
+                            typeGetter: TypicalType,
                             locs: ParseLocationsRecordPerTrigger(
                                 stream: new OverlayStream(contentSpan, _package),
                                 triggers: TypicalPlacedTypes,
@@ -576,6 +603,7 @@ partial class CellBinaryOverlay
                             contentSpan,
                             _package,
                             getter: TypicalGetter,
+                            typeGetter: TypicalType,
                             locs: ret.ToArray());
                         break;
                     }
@@ -587,6 +615,7 @@ partial class CellBinaryOverlay
                             contentSpan,
                             _package,
                             getter: TypicalGetter,
+                            typeGetter: TypicalType,
                             locs: ParseLocationsRecordPerTrigger(
                                 stream: new OverlayStream(contentSpan, _package),
                                 triggers: TypicalPlacedTypes,

@@ -5,6 +5,7 @@ using System.Collections;
 using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
 using Mutagen.Bethesda.Plugins.Internals;
+using Mutagen.Bethesda.Plugins.Records.Mapping;
 
 namespace Mutagen.Bethesda.Plugins.Binary.Overlay;
 
@@ -22,7 +23,27 @@ internal abstract class BinaryOverlayList
             getter,
             locs);
     }
-    
+
+    /// <summary>
+    /// Creates a list of items that can be of several types. <br/>
+    /// typeGetter must return the runtime type that getter would construct for the same span,
+    /// so that a typed enumeration can skip the other items without constructing them.
+    /// </summary>
+    public static IReadOnlyList<T> FactoryByArray<T>(
+        ReadOnlyMemorySlice<byte> mem,
+        BinaryOverlayFactoryPackage package,
+        PluginBinaryOverlay.SpanFactory<T> getter,
+        PluginBinaryOverlay.SpanFactory<Type> typeGetter,
+        IReadOnlyList<int> locs)
+    {
+        return new BinaryOverlayListByTypedLocationArray<T>(
+            mem,
+            package,
+            getter,
+            typeGetter,
+            locs);
+    }
+
     public static IReadOnlyList<T> FactoryBySubrecordArray<T>(
         ReadOnlyMemorySlice<byte> mem,
         BinaryOverlayFactoryPackage package,
@@ -655,10 +676,10 @@ internal abstract class BinaryOverlayList
 
     private class BinaryOverlayListByLocationArray<T> : IReadOnlyList<T>
     {
-        private IReadOnlyList<int> _locations;
-        BinaryOverlayFactoryPackage _package;
-        private ReadOnlyMemorySlice<byte> _mem;
-        private PluginBinaryOverlay.SpanFactory<T> _getter;
+        protected IReadOnlyList<int> _locations;
+        protected BinaryOverlayFactoryPackage _package;
+        protected ReadOnlyMemorySlice<byte> _mem;
+        protected PluginBinaryOverlay.SpanFactory<T> _getter;
 
         public BinaryOverlayListByLocationArray(
             ReadOnlyMemorySlice<byte> mem,
@@ -685,6 +706,40 @@ internal abstract class BinaryOverlayList
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+
+    private sealed class BinaryOverlayListByTypedLocationArray<T> : BinaryOverlayListByLocationArray<T>, IAssignableTypeEnumerable<T>
+    {
+        private readonly PluginBinaryOverlay.SpanFactory<Type> _typeGetter;
+
+        public BinaryOverlayListByTypedLocationArray(
+            ReadOnlyMemorySlice<byte> mem,
+            BinaryOverlayFactoryPackage package,
+            PluginBinaryOverlay.SpanFactory<T> getter,
+            PluginBinaryOverlay.SpanFactory<Type> typeGetter,
+            IReadOnlyList<int> locs)
+            : base(mem, package, getter, locs)
+        {
+            _typeGetter = typeGetter;
+        }
+
+        public IEnumerable<T> WhereAssignableTo(Type type)
+        {
+            Type? lastItemType = null;
+            bool lastAssignable = false;
+            for (int i = 0; i < _locations.Count; i++)
+            {
+                var span = _mem.Slice(_locations[i]);
+                var itemType = _typeGetter(span, _package);
+                if (!ReferenceEquals(itemType, lastItemType))
+                {
+                    lastItemType = itemType;
+                    lastAssignable = type.IsAssignableFrom(itemType);
+                }
+                if (!lastAssignable) continue;
+                yield return _getter(span, _package);
+            }
+        }
     }
 
     private class BinaryOverlayListBySubrecordLocationArray<T> : IReadOnlyList<T>
