@@ -1419,7 +1419,8 @@ public sealed class ImmutableLoadOrderLinkCache<TMod, TModGetter> : ILinkCache<T
         ResolveTarget target = ResolveTarget.Winner)
         where TMajor : class, IMajorRecordQueryableGetter
     {
-        if (TryResolveContext(formKey, typeof(TMajor), out var resolve, target))
+        if (TryResolveContext(formKey, typeof(TMajor), out var resolve, target)
+            && resolve.Record is TMajor)
         {
             majorRec = resolve.AsType<IMajorRecordQueryableGetter, TMajor>();
             return true;
@@ -1441,7 +1442,8 @@ public sealed class ImmutableLoadOrderLinkCache<TMod, TModGetter> : ILinkCache<T
     public bool TryResolveSimpleContext<TMajor>(string editorId, [MaybeNullWhen(false)] out IModContext<TMajor> majorRec) 
         where TMajor : class, IMajorRecordQueryableGetter
     {
-        if (TryResolveContext(editorId, typeof(TMajor), out var resolve))
+        if (TryResolveContext(editorId, typeof(TMajor), out var resolve)
+            && resolve.Record is TMajor)
         {
             majorRec = resolve.AsType<IMajorRecordQueryableGetter, TMajor>();
             return true;
@@ -1527,21 +1529,24 @@ public sealed class ImmutableLoadOrderLinkCache<TMod, TModGetter> : ILinkCache<T
     public IModContext<TMajor> ResolveSimpleContext<TMajor>(FormKey formKey, ResolveTarget target = ResolveTarget.Winner) 
         where TMajor : class, IMajorRecordQueryableGetter
     {
-        return ResolveContext(formKey, typeof(TMajor), target).AsType<IMajorRecordQueryableGetter, TMajor>();
+        if (TryResolveSimpleContext<TMajor>(formKey, out var commonRec, target)) return commonRec;
+        throw new MissingRecordException(formKey, typeof(TMajor));
     }
 
     /// <inheritdoc />
     public IModContext<TMajor> ResolveSimpleContext<TMajor>(IFormLinkGetter<TMajor> formLink, ResolveTarget target = ResolveTarget.Winner)
         where TMajor : class, IMajorRecordGetter
     {
-        return ResolveContext(formLink.FormKey, typeof(TMajor), target).AsType<IMajorRecordQueryableGetter, TMajor>();
+        if (TryResolveSimpleContext<TMajor>(formLink.FormKey, out var commonRec, target)) return commonRec;
+        throw new MissingRecordException(formLink.FormKey, typeof(TMajor));
     }
 
     /// <inheritdoc />
     public IModContext<TMajor> ResolveSimpleContext<TMajor>(string editorId) 
         where TMajor : class, IMajorRecordQueryableGetter
     {
-        return ResolveContext(editorId, typeof(TMajor)).AsType<IMajorRecordQueryableGetter, TMajor>();
+        if (TryResolveSimpleContext<TMajor>(editorId, out var commonRec)) return commonRec;
+        throw new MissingRecordException(editorId, typeof(TMajor));
     }
 
     /// <inheritdoc />

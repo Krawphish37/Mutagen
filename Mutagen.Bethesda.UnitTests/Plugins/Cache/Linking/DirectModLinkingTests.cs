@@ -377,6 +377,43 @@ public partial class ALinkingTests
     [Theory]
     [InlineData(LinkCachePreferences.RetentionType.OnlyIdentifiers)]
     [InlineData(LinkCachePreferences.RetentionType.WholeRecord)]
+    public void DirectReadOnlyMechanicsClassFormFirst(LinkCachePreferences.RetentionType cacheType)
+    {
+        var wrapper = SkyrimMod.CreateFromBinaryOverlay(TestDataPathing.SkyrimTestMod, SkyrimRelease.SkyrimSE);
+        var (style, package) = GetLinkCache(wrapper, cacheType);
+        // Query the class and setter forms first; they share one cache with the getter form
+        WrapPotentialThrow(cacheType, style, null, () =>
+        {
+            Assert.False(package.TryResolve<Npc>(TestFileFormKey, out var rec));
+        });
+        WrapPotentialThrow(cacheType, style, null, () =>
+        {
+            Assert.False(package.TryResolve<INpc>(TestFileEditorID, out var rec));
+        });
+        package.TryResolveIdentifier<Npc>(TestFileFormKey, out _);
+        package.TryResolveIdentifier<INpc>(TestFileEditorID, out _);
+
+        // The getter form still sees the read-only records
+        WrapPotentialThrow(cacheType, style, null, () =>
+        {
+            Assert.True(package.TryResolve<INpcGetter>(TestFileFormKey, out var rec));
+        });
+        WrapPotentialThrow(cacheType, style, null, () =>
+        {
+            Assert.True(package.TryResolve<INpcGetter>(TestFileEditorID, out var rec));
+        });
+        Assert.True(package.TryResolveIdentifier<INpcGetter>(TestFileFormKey, out var edid));
+        Assert.Equal(TestFileEditorID, edid);
+        Assert.True(package.TryResolveIdentifier<INpcGetter>(TestFileEditorID, out var formKey));
+        Assert.Equal(TestFileFormKey, formKey);
+        Assert.Equal(
+            new[] { TestFileFormKey, TestFileFormKey2 }.OrderBy(x => x.ID),
+            package.AllIdentifiers<INpcGetter>().Select(x => x.FormKey).OrderBy(x => x.ID));
+    }
+
+    [Theory]
+    [InlineData(LinkCachePreferences.RetentionType.OnlyIdentifiers)]
+    [InlineData(LinkCachePreferences.RetentionType.WholeRecord)]
     public void EditorIdCaseDifferences(LinkCachePreferences.RetentionType cacheType)
     {
         var wrapper = SkyrimMod.CreateFromBinaryOverlay(TestDataPathing.SkyrimTestMod, SkyrimRelease.SkyrimSE);
