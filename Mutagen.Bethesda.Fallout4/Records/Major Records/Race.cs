@@ -202,8 +202,19 @@ partial class RaceBinaryOverlay
     private int? _faceFxPhonemesLoc;
     public IFaceFxPhonemesGetter FaceFxPhonemes => GetFaceFx();
 
-    public IReadOnlyDictionary<BipedObject, IBipedObjectDataGetter> BipedObjects { get; private set; } =
-        DictionaryExt.Empty<BipedObject, IBipedObjectDataGetter>();
+    private IReadOnlyDictionary<BipedObject, IBipedObjectDataGetter>? _bipedObjects;
+    public IReadOnlyDictionary<BipedObject, IBipedObjectDataGetter> BipedObjects => _bipedObjects ??= GetDefaultBipedObjects();
+
+    private static IReadOnlyDictionary<BipedObject, IBipedObjectDataGetter> GetDefaultBipedObjects()
+    {
+        // Mirror the mutable class, which fills every biped object slot on construction
+        var dict = new Dictionary<BipedObject, BipedObjectData>();
+        for (int i = 0; i < RaceBinaryCreateTranslation.NumBipedObjectNames; i++)
+        {
+            dict[(BipedObject)i] = new BipedObjectData();
+        }
+        return dict.Covariant<BipedObject, BipedObjectData, IBipedObjectDataGetter>();
+    }
 
     private GenderedItem<IReadOnlyList<IBoneGetter>?>? _boneData;
     public IGenderedItemGetter<IReadOnlyList<IBoneGetter>?> BoneData => _boneData ?? new GenderedItem<IReadOnlyList<IBoneGetter>?>(null, null);
@@ -253,7 +264,7 @@ partial class RaceBinaryOverlay
     {
         var dict = new Dictionary<BipedObject, BipedObjectData>();
         RaceBinaryCreateTranslation.FillBinaryBipedObjectsDictionary(stream, FormVersion, dict);
-        BipedObjects = dict.Covariant<BipedObject, BipedObjectData, IBipedObjectDataGetter>();
+        _bipedObjects = dict.Covariant<BipedObject, BipedObjectData, IBipedObjectDataGetter>();
     }
 
     public partial ParseResult FaceFxPhonemesListingParsingCustomParse(OverlayStream stream, int offset, PreviousParse lastParsed)
@@ -308,7 +319,7 @@ partial class RaceBinaryWriteTranslation
         for (int i = 0; i < RaceBinaryCreateTranslation.NumBipedObjectNames; i++)
         {
             using var name = HeaderExport.Subrecord(writer, RecordTypes.NAME);
-            StringBinaryTranslation.Instance.Write(writer, bipedObjs[(BipedObject)i].Name, StringBinaryType.NullTerminate);
+            StringBinaryTranslation.Instance.Write(writer, bipedObjs.GetValueOrDefault((BipedObject)i)?.Name ?? string.Empty, StringBinaryType.NullTerminate);
         }
                 
         using var rbpc = HeaderExport.Subrecord(writer, RecordTypes.RBPC);
@@ -322,7 +333,7 @@ partial class RaceBinaryWriteTranslation
 
             for (int i = 0; i < RaceBinaryCreateTranslation.NumBipedObjectNames; i++)
             {
-                var cond = bipedObjs[(BipedObject)i].Conditions;
+                var cond = bipedObjs.GetValueOrDefault((BipedObject)i)?.Conditions ?? FormLinkGetter<IActorValueInformationGetter>.Null;
                 writer.Write(dict[cond.FormKey]);
             }
         }
@@ -330,7 +341,7 @@ partial class RaceBinaryWriteTranslation
         {
             for (int i = 0; i < RaceBinaryCreateTranslation.NumBipedObjectNames; i++)
             {
-                FormLinkBinaryTranslation.Instance.Write(writer, bipedObjs[(BipedObject)i].Conditions);
+                FormLinkBinaryTranslation.Instance.Write(writer, bipedObjs.GetValueOrDefault((BipedObject)i)?.Conditions ?? FormLinkGetter<IActorValueInformationGetter>.Null);
             }
         }
     }
