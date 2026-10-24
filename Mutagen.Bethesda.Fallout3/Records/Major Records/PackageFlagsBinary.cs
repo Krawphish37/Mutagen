@@ -81,19 +81,20 @@ partial class PackageBinaryOverlay
         _isRepeatableLocation = (ushort)(stream.Position - offset);
     }
 
-    private ReadOnlyMemorySlice<byte> _pkdtContent;
+    private ReadOnlyMemorySlice<byte>? _pkdtContent;
     private IAPackageFlagsGetter? _flags;
 
-    public Package.Flag GeneralFlags => (Package.Flag)BinaryPrimitives.ReadUInt32LittleEndian(_pkdtContent);
-    public Byte Unused => _pkdtContent[5];
-    public Package.BehaviorFlag BehaviorFlags => (Package.BehaviorFlag)BinaryPrimitives.ReadUInt16LittleEndian(_pkdtContent.Slice(6));
-    public UInt16? Unused2 => _pkdtContent.Length >= 12 ? BinaryPrimitives.ReadUInt16LittleEndian(_pkdtContent.Slice(10)) : default(ushort?);
+    public Package.Flag GeneralFlags => _pkdtContent is { } c ? (Package.Flag)BinaryPrimitives.ReadUInt32LittleEndian(c) : default;
+    public Byte Unused => _pkdtContent is { } c ? c[5] : default;
+    public Package.BehaviorFlag BehaviorFlags => _pkdtContent is { } c ? (Package.BehaviorFlag)BinaryPrimitives.ReadUInt16LittleEndian(c.Slice(6)) : default;
+    public UInt16? Unused2 => _pkdtContent is { Length: >= 12 } c ? BinaryPrimitives.ReadUInt16LittleEndian(c.Slice(10)) : default(ushort?);
     public IAPackageFlagsGetter? Flags => _flags;
 
     partial void FlagsCustomParse(OverlayStream stream, int finalPos, int offset);
     partial void FlagsCustomParse(OverlayStream stream, int finalPos, int offset)
     {
-        _pkdtContent = stream.ReadSubrecord().Content;
-        _flags = APackageFlags.Create(_pkdtContent);
+        var content = stream.ReadSubrecord().Content;
+        _pkdtContent = content;
+        _flags = APackageFlags.Create(content);
     }
 }

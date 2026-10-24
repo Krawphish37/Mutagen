@@ -507,7 +507,7 @@ partial class PackageBinaryOverlay
     ReadOnlyMemorySlice<Byte> _xnam;
     public partial ReadOnlyMemorySlice<Byte> GetXnamMarkerCustom() => _xnam;
 
-    FormLink<IPackageGetter> _packageTemplate = null!;
+    IFormLinkGetter<IPackageGetter> _packageTemplate = FormLink<IPackageGetter>.Null;
     public partial IFormLinkGetter<IPackageGetter> GetPackageTemplateCustom() => _packageTemplate;
 
     partial void PackageTemplateCustomParse(
@@ -517,7 +517,7 @@ partial class PackageBinaryOverlay
     {
         var pkcu = stream.ReadSubrecord();
         var count = checked((int)BinaryPrimitives.ReadUInt32LittleEndian(pkcu.Content));
-        _packageTemplate = FormKeyBinaryTranslation.Instance.Parse(pkcu.Content.Slice(4), _package.MetaData.MasterReferences);
+        _packageTemplate = new FormLink<IPackageGetter>(FormKeyBinaryTranslation.Instance.Parse(pkcu.Content.Slice(4), _package.MetaData.MasterReferences));
         DataInputVersion = BinaryPrimitives.ReadInt32LittleEndian(pkcu.Content.Slice(8));
 
         PackageBinaryCreateTranslation.FillPackageData(
