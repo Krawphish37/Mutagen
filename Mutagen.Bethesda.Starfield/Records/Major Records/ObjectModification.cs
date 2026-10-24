@@ -342,7 +342,7 @@ partial class AObjectModificationBinaryOverlay
                     _package,
                     itemLength: 24,
                     count: propertyCount,
-                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<Container.Property>.ReadProperty(stream.MetaData.MasterReferences, s));
+                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<Container.Property>.ReadProperty(stream.MetaData, s));
                 break;
             case ObjectModificationBinaryOverlay obj:
                 obj.Properties = BinaryOverlayList.FactoryByCount(
