@@ -103,6 +103,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
                 TItem VirtualMachineAdapter,
+                TItem Components,
                 TItem Emittance,
                 TItem RagdollData,
                 TItem ReferenceGroup,
@@ -132,6 +133,7 @@ namespace Mutagen.Bethesda.Starfield
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags,
                 VirtualMachineAdapter: VirtualMachineAdapter,
+                Components: Components,
                 Emittance: Emittance,
                 RagdollData: RagdollData,
                 ReferenceGroup: ReferenceGroup,
@@ -730,26 +732,27 @@ namespace Mutagen.Bethesda.Starfield
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
         VirtualMachineAdapter = 7,
-        Emittance = 8,
-        RagdollData = 9,
-        ReferenceGroup = 10,
-        SourcePackIn = 11,
-        IgnoredBySandbox = 12,
-        OwnerFactionRank = 13,
-        LinkedReferences = 14,
-        IsLinkedRefTransient = 15,
-        Ownership = 16,
-        EncounterLocation = 17,
-        Layer = 18,
-        HeadTrackingWeight = 19,
-        LocationRefTypes = 20,
-        EnableParent = 21,
-        ActivationPoint = 22,
-        Scale = 23,
-        Position = 24,
-        Rotation = 25,
-        Comments = 26,
-        Projectile = 27,
+        Components = 8,
+        Emittance = 9,
+        RagdollData = 10,
+        ReferenceGroup = 11,
+        SourcePackIn = 12,
+        IgnoredBySandbox = 13,
+        OwnerFactionRank = 14,
+        LinkedReferences = 15,
+        IsLinkedRefTransient = 16,
+        Ownership = 17,
+        EncounterLocation = 18,
+        Layer = 19,
+        HeadTrackingWeight = 20,
+        LocationRefTypes = 21,
+        EnableParent = 22,
+        ActivationPoint = 23,
+        Scale = 24,
+        Position = 25,
+        Rotation = 26,
+        Comments = 27,
+        Projectile = 28,
     }
     #endregion
 
@@ -762,7 +765,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 29;
 
         public static readonly Type MaskType = typeof(PlacedBeam.Mask<>);
 
@@ -1012,6 +1015,8 @@ namespace Mutagen.Bethesda.Starfield
                 case APlacedTrap_FieldIndex.StarfieldMajorRecordFlags:
                     return (PlacedBeam_FieldIndex)((int)index);
                 case APlacedTrap_FieldIndex.VirtualMachineAdapter:
+                    return (PlacedBeam_FieldIndex)((int)index);
+                case APlacedTrap_FieldIndex.Components:
                     return (PlacedBeam_FieldIndex)((int)index);
                 case APlacedTrap_FieldIndex.Emittance:
                     return (PlacedBeam_FieldIndex)((int)index);

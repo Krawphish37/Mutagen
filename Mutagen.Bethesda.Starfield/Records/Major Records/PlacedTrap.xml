@@ -3,6 +3,7 @@
   <Object name="APlacedTrap" baseClass="StarfieldMajorRecord" abstract="true" objType="Record" majorFlag="true">
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX"/>
+      <RefList name="Components" refName="AComponent" />
       <CustomLogic name="TrapForm" byteLength="4" recordType="NAME"/>
       <FormLink name="Emittance" recordType="XEMI">
         <Interface>IEmittance</Interface>
