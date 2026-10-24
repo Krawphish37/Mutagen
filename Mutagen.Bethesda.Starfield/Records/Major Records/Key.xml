@@ -32,6 +32,7 @@
       <String name="ShortName" recordType="NNAM" translated="Normal" />
     </Fields>
     <LinkInterface>IItem</LinkInterface>
+    <LinkInterface>IBaseObject</LinkInterface>
     <LinkInterface>IResearchResourceTarget</LinkInterface>
     <LinkInterface>IPlaceableObject</LinkInterface>
     <LinkInterface>IExplodeSpawn</LinkInterface>

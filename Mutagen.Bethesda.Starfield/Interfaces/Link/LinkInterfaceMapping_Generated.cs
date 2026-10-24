@@ -62,6 +62,7 @@ internal class StarfieldLinkInterfaceMapping : IInterfaceMapping
                 Hazard_Registration.Instance,
                 IdleMarker_Registration.Instance,
                 Ingestible_Registration.Instance,
+                Key_Registration.Instance,
                 LegendaryItem_Registration.Instance,
                 LeveledItem_Registration.Instance,
                 LeveledNpc_Registration.Instance,
