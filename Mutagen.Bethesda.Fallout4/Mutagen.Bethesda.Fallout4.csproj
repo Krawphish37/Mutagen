@@ -1826,7 +1826,6 @@
     <Compile Include="Records\Major Records\StaticPlacement_Generated.cs">
       <DependentUpon>StaticCollection.xml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Link\ILinkedReference_Generated.cs" />
     <Compile Include="Interfaces\Link\ILockList_Generated.cs" />
     <Compile Include="Records\Common Subrecords\LinkedReferences_Generated.cs">
       <DependentUpon>LinkedReferences.xml</DependentUpon>
@@ -2241,7 +2240,6 @@
     <Compile Include="Records\Major Records\DefaultObjectUse_Generated.cs">
       <DependentUpon>DefaultObjectManager.xml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Link\IStoryManagerItem_Generated.cs" />
     <Compile Include="Records\Major Records\AStoryManagerNode_Generated.cs">
       <DependentUpon>StoryManagerNodes.xml</DependentUpon>
     </Compile>
