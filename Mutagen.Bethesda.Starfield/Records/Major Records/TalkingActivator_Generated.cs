@@ -2386,7 +2386,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XALGitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -2399,10 +2402,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Destructibleitem);
             }
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.MarkerColor is {} MarkerColoritem)
             {
-                hash.Add(MarkerColoritem);
+                hash.Add(MarkerColoritem.ToArgb());
             }
             if (item.FNAM is {} FNAMitem)
             {

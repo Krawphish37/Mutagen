@@ -1544,6 +1544,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Interface
     public partial interface IKey :
         IAssetLinkContainer,
+        IBaseObject,
         IExplodeSpawn,
         IFormLinkContainer,
         IHasDestructible,
@@ -1615,6 +1616,7 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IKeyGetter :
         IStarfieldMajorRecordGetter,
         IAssetLinkContainerGetter,
+        IBaseObjectGetter,
         IBinaryItem,
         IExplodeSpawnGetter,
         IFormLinkContainerGetter,

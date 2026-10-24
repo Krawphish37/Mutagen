@@ -1468,7 +1468,10 @@ namespace Mutagen.Bethesda.Skyrim
             AssetLinkQuery queryCategories)
         {
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
-            obj.SoundFiles.RemapListedAssetLinks(mapping);
+            if (queryCategories.HasFlag(AssetLinkQuery.Listed))
+            {
+                obj.SoundFiles.RemapListedAssetLinks(mapping);
+            }
         }
         
         #endregion

@@ -3648,7 +3648,10 @@ namespace Mutagen.Bethesda.Skyrim
             AssetLinkQuery queryCategories)
         {
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
-            obj.CloudTextures.RemapListedAssetLinks(mapping);
+            if (queryCategories.HasFlag(AssetLinkQuery.Listed))
+            {
+                obj.CloudTextures.RemapListedAssetLinks(mapping);
+            }
             obj.Aurora?.RemapAssetLinks(mapping, queryCategories, linkCache);
         }
         

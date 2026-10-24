@@ -287,6 +287,11 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
+        #region NextAliasID
+        public UInt32? NextAliasID { get; set; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        UInt32? IQuestGetter.NextAliasID => this.NextAliasID;
+        #endregion
         #region Aliases
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ExtendedList<AQuestAlias>? _Aliases;
@@ -462,6 +467,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.UnusedConditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
                 this.Stages = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, QuestStage.Mask<TItem>?>>?>(initialValue, []);
                 this.Objectives = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, QuestObjective.Mask<TItem>?>>?>(initialValue, []);
+                this.NextAliasID = initialValue;
                 this.Aliases = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AQuestAlias.Mask<TItem>?>>?>(initialValue, []);
                 this.QuestGroup = initialValue;
                 this.SwfFile = initialValue;
@@ -503,6 +509,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem UnusedConditions,
                 TItem Stages,
                 TItem Objectives,
+                TItem NextAliasID,
                 TItem Aliases,
                 TItem QuestGroup,
                 TItem SwfFile,
@@ -543,6 +550,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.UnusedConditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(UnusedConditions, []);
                 this.Stages = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, QuestStage.Mask<TItem>?>>?>(Stages, []);
                 this.Objectives = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, QuestObjective.Mask<TItem>?>>?>(Objectives, []);
+                this.NextAliasID = NextAliasID;
                 this.Aliases = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AQuestAlias.Mask<TItem>?>>?>(Aliases, []);
                 this.QuestGroup = QuestGroup;
                 this.SwfFile = SwfFile;
@@ -585,6 +593,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? UnusedConditions;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, QuestStage.Mask<TItem>?>>?>? Stages;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, QuestObjective.Mask<TItem>?>>?>? Objectives;
+            public TItem NextAliasID;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AQuestAlias.Mask<TItem>?>>?>? Aliases;
             public TItem QuestGroup;
             public TItem SwfFile;
@@ -629,6 +638,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.UnusedConditions, rhs.UnusedConditions)) return false;
                 if (!object.Equals(this.Stages, rhs.Stages)) return false;
                 if (!object.Equals(this.Objectives, rhs.Objectives)) return false;
+                if (!object.Equals(this.NextAliasID, rhs.NextAliasID)) return false;
                 if (!object.Equals(this.Aliases, rhs.Aliases)) return false;
                 if (!object.Equals(this.QuestGroup, rhs.QuestGroup)) return false;
                 if (!object.Equals(this.SwfFile, rhs.SwfFile)) return false;
@@ -665,6 +675,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.UnusedConditions);
                 hash.Add(this.Stages);
                 hash.Add(this.Objectives);
+                hash.Add(this.NextAliasID);
                 hash.Add(this.Aliases);
                 hash.Add(this.QuestGroup);
                 hash.Add(this.SwfFile);
@@ -789,6 +800,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (!eval(this.NextAliasID)) return false;
                 if (this.Aliases != null)
                 {
                     if (!eval(this.Aliases.Overall)) return false;
@@ -976,6 +988,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (eval(this.NextAliasID)) return true;
                 if (this.Aliases != null)
                 {
                     if (eval(this.Aliases.Overall)) return true;
@@ -1183,6 +1196,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                obj.NextAliasID = eval(this.NextAliasID);
                 if (Aliases != null)
                 {
                     obj.Aliases = new MaskItem<R, IEnumerable<MaskItemIndexed<R, AQuestAlias.Mask<R>?>>?>(eval(this.Aliases.Overall), []);
@@ -1478,6 +1492,10 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
+                    if (printMask?.NextAliasID ?? true)
+                    {
+                        sb.AppendItem(NextAliasID, "NextAliasID");
+                    }
                     if ((printMask?.Aliases?.Overall ?? true)
                         && Aliases is {} AliasesItem)
                     {
@@ -1651,6 +1669,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? UnusedConditions;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestStage.ErrorMask?>>?>? Stages;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestObjective.ErrorMask?>>?>? Objectives;
+            public Exception? NextAliasID;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AQuestAlias.ErrorMask?>>?>? Aliases;
             public Exception? QuestGroup;
             public Exception? SwfFile;
@@ -1708,6 +1727,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Stages;
                     case Quest_FieldIndex.Objectives:
                         return Objectives;
+                    case Quest_FieldIndex.NextAliasID:
+                        return NextAliasID;
                     case Quest_FieldIndex.Aliases:
                         return Aliases;
                     case Quest_FieldIndex.QuestGroup:
@@ -1797,6 +1818,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case Quest_FieldIndex.Objectives:
                         this.Objectives = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestObjective.ErrorMask?>>?>(ex, null);
+                        break;
+                    case Quest_FieldIndex.NextAliasID:
+                        this.NextAliasID = ex;
                         break;
                     case Quest_FieldIndex.Aliases:
                         this.Aliases = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AQuestAlias.ErrorMask?>>?>(ex, null);
@@ -1902,6 +1926,9 @@ namespace Mutagen.Bethesda.Starfield
                     case Quest_FieldIndex.Objectives:
                         this.Objectives = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestObjective.ErrorMask?>>?>)obj;
                         break;
+                    case Quest_FieldIndex.NextAliasID:
+                        this.NextAliasID = (Exception?)obj;
+                        break;
                     case Quest_FieldIndex.Aliases:
                         this.Aliases = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AQuestAlias.ErrorMask?>>?>)obj;
                         break;
@@ -1968,6 +1995,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (UnusedConditions != null) return true;
                 if (Stages != null) return true;
                 if (Objectives != null) return true;
+                if (NextAliasID != null) return true;
                 if (Aliases != null) return true;
                 if (QuestGroup != null) return true;
                 if (SwfFile != null) return true;
@@ -2166,6 +2194,9 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                {
+                    sb.AppendItem(NextAliasID, "NextAliasID");
+                }
                 if (Aliases is {} AliasesItem)
                 {
                     sb.AppendLine("Aliases =>");
@@ -2323,6 +2354,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.UnusedConditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.UnusedConditions?.Overall, rhs.UnusedConditions?.Overall), Noggog.ExceptionExt.Combine(this.UnusedConditions?.Specific, rhs.UnusedConditions?.Specific));
                 ret.Stages = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestStage.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Stages?.Overall, rhs.Stages?.Overall), Noggog.ExceptionExt.Combine(this.Stages?.Specific, rhs.Stages?.Specific));
                 ret.Objectives = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestObjective.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Objectives?.Overall, rhs.Objectives?.Overall), Noggog.ExceptionExt.Combine(this.Objectives?.Specific, rhs.Objectives?.Specific));
+                ret.NextAliasID = this.NextAliasID.Combine(rhs.NextAliasID);
                 ret.Aliases = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AQuestAlias.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Aliases?.Overall, rhs.Aliases?.Overall), Noggog.ExceptionExt.Combine(this.Aliases?.Specific, rhs.Aliases?.Specific));
                 ret.QuestGroup = this.QuestGroup.Combine(rhs.QuestGroup);
                 ret.SwfFile = this.SwfFile.Combine(rhs.SwfFile);
@@ -2376,6 +2408,7 @@ namespace Mutagen.Bethesda.Starfield
             public Condition.TranslationMask? UnusedConditions;
             public QuestStage.TranslationMask? Stages;
             public QuestObjective.TranslationMask? Objectives;
+            public bool NextAliasID;
             public AQuestAlias.TranslationMask? Aliases;
             public bool QuestGroup;
             public bool SwfFile;
@@ -2408,6 +2441,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.TextDisplayGlobals = defaultOn;
                 this.Filter = defaultOn;
                 this.Summary = defaultOn;
+                this.NextAliasID = defaultOn;
                 this.QuestGroup = defaultOn;
                 this.SwfFile = defaultOn;
                 this.MissionTypeKeyword = defaultOn;
@@ -2441,6 +2475,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((UnusedConditions == null ? DefaultOn : !UnusedConditions.GetCrystal().CopyNothing, UnusedConditions?.GetCrystal()));
                 ret.Add((Stages == null ? DefaultOn : !Stages.GetCrystal().CopyNothing, Stages?.GetCrystal()));
                 ret.Add((Objectives == null ? DefaultOn : !Objectives.GetCrystal().CopyNothing, Objectives?.GetCrystal()));
+                ret.Add((NextAliasID, null));
                 ret.Add((Aliases == null ? DefaultOn : !Aliases.GetCrystal().CopyNothing, Aliases?.GetCrystal()));
                 ret.Add((QuestGroup, null));
                 ret.Add((SwfFile, null));
@@ -2680,6 +2715,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<Condition>? UnusedConditions { get; set; }
         new ExtendedList<QuestStage> Stages { get; }
         new ExtendedList<QuestObjective> Objectives { get; }
+        new UInt32? NextAliasID { get; set; }
         new ExtendedList<AQuestAlias>? Aliases { get; set; }
         new IFormLinkNullable<IKeywordGetter> QuestGroup { get; set; }
         new String? SwfFile { get; set; }
@@ -2754,6 +2790,7 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IConditionGetter>? UnusedConditions { get; }
         IReadOnlyList<IQuestStageGetter> Stages { get; }
         IReadOnlyList<IQuestObjectiveGetter> Objectives { get; }
+        UInt32? NextAliasID { get; }
         IReadOnlyList<IAQuestAliasGetter>? Aliases { get; }
         IFormLinkNullableGetter<IKeywordGetter> QuestGroup { get; }
         String? SwfFile { get; }
@@ -3196,19 +3233,20 @@ namespace Mutagen.Bethesda.Starfield
         UnusedConditions = 22,
         Stages = 23,
         Objectives = 24,
-        Aliases = 25,
-        QuestGroup = 26,
-        SwfFile = 27,
-        MissionTypeKeyword = 28,
-        MissionBoardDescription = 29,
-        MissionBoardInfoPanels = 30,
-        Keywords = 31,
-        ScriptComment = 32,
-        Timestamp = 33,
-        Unknown = 34,
-        DialogBranches = 35,
-        DialogTopics = 36,
-        Scenes = 37,
+        NextAliasID = 25,
+        Aliases = 26,
+        QuestGroup = 27,
+        SwfFile = 28,
+        MissionTypeKeyword = 29,
+        MissionBoardDescription = 30,
+        MissionBoardInfoPanels = 31,
+        Keywords = 32,
+        ScriptComment = 33,
+        Timestamp = 34,
+        Unknown = 35,
+        DialogBranches = 36,
+        DialogTopics = 37,
+        Scenes = 38,
     }
     #endregion
 
@@ -3219,9 +3257,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 31;
+        public const ushort AdditionalFieldCount = 32;
 
-        public const ushort FieldCount = 38;
+        public const ushort FieldCount = 39;
 
         public static readonly Type MaskType = typeof(Quest.Mask<>);
 
@@ -3605,6 +3643,7 @@ namespace Mutagen.Bethesda.Starfield
             item.UnusedConditions = null;
             item.Stages.Clear();
             item.Objectives.Clear();
+            item.NextAliasID = default;
             item.Aliases = null;
             item.QuestGroup.Clear();
             item.SwfFile = default;
@@ -4162,6 +4201,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Objectives,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
+            ret.NextAliasID = item.NextAliasID == rhs.NextAliasID;
             ret.Aliases = item.Aliases.CollectionEqualsHelper(
                 rhs.Aliases,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -4391,6 +4431,11 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+            }
+            if ((printMask?.NextAliasID ?? true)
+                && item.NextAliasID is {} NextAliasIDItem)
+            {
+                sb.AppendItem(NextAliasIDItem, "NextAliasID");
             }
             if ((printMask?.Aliases?.Overall ?? true)
                 && item.Aliases is {} AliasesItem)
@@ -4639,6 +4684,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Objectives.SequenceEqual(rhs.Objectives, (l, r) => ((QuestObjectiveCommon)((IQuestObjectiveGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Quest_FieldIndex.Objectives)))) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)Quest_FieldIndex.NextAliasID) ?? true))
+            {
+                if (lhs.NextAliasID != rhs.NextAliasID) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)Quest_FieldIndex.Aliases) ?? true))
             {
                 if (!lhs.Aliases.SequenceEqualNullable(rhs.Aliases, (l, r) => ((AQuestAliasCommon)((IAQuestAliasGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Quest_FieldIndex.Aliases)))) return false;
@@ -4781,6 +4830,10 @@ namespace Mutagen.Bethesda.Starfield
             foreach (var subItem in item.Objectives)
             {
                 hash.Add(subItem);
+            }
+            if (item.NextAliasID is {} NextAliasIDitem)
+            {
+                hash.Add(NextAliasIDitem);
             }
             if (item.Aliases is {} Aliasesitem)
             {
@@ -5907,6 +5960,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     errorMask?.PopIndex();
                 }
+            }
+            if ((copyMask?.GetShouldTranslate((int)Quest_FieldIndex.NextAliasID) ?? true))
+            {
+                item.NextAliasID = rhs.NextAliasID;
             }
             if ((copyMask?.GetShouldTranslate((int)Quest_FieldIndex.Aliases) ?? true))
             {

@@ -33,6 +33,7 @@ public partial class RecordTypes
     public static readonly RecordType ATMO = new(0x4F4D5441);
     public static readonly RecordType AVIF = new(0x46495641);
     public static readonly RecordType AVMD = new(0x444D5641);
+    public static readonly RecordType BFCB = new(0x42434642);
     public static readonly RecordType BIOM = new(0x4D4F4942);
     public static readonly RecordType BMMO = new(0x4F4D4D42);
     public static readonly RecordType BMOD = new(0x444F4D42);

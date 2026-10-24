@@ -35,6 +35,7 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 - Hazard
 - IdleMarker
 - Ingestible
+- Key
 - LegendaryItem
 - LeveledItem
 - LeveledNpc
@@ -53,6 +54,7 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 - Spell
 - Static
 - StaticCollection
+- TalkingActivator
 - Terminal
 - TextureSet
 - Water
@@ -167,6 +169,7 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 - MiscItem
 - MoveableStatic
 - ProjectedDecal
+- Resource
 - Static
 - Weapon
 ### IKeywordLinkedReference
@@ -470,6 +473,7 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 - IResearchResourceTarget
 - IStaticTarget
 ### Key
+- IBaseObject
 - IExplodeSpawn
 - IItem
 - IPlaceableObject
@@ -592,6 +596,7 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 ### Resource
 - IBaseObject
 - IExplodeSpawn
+- IItem
 - IPlaceableObject
 - IResearchResourceTarget
 ### SoundEchoMarker
@@ -619,6 +624,8 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 - IBaseObject
 - IExplodeSpawn
 - IPlaceableObject
+### TalkingActivator
+- IBaseObject
 ### Terminal
 - IBaseObject
 - IConstructibleObjectTarget

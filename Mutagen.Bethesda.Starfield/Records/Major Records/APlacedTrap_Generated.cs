@@ -2504,7 +2504,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Emittance);
             if (item.RagdollData is {} RagdollDataitem)
             {

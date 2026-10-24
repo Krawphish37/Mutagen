@@ -1389,7 +1389,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.AddBytes(ENAMItem);
             }
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
