@@ -1821,8 +1821,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.BNAM) ?? true))
             {
-                if (!ObjectExt.NullSame(lhs.BNAM, rhs.BNAM)) return false;
-                if (!MemoryExtensions.SequenceEqual<Single>(lhs.BNAM!.Value.Span!, rhs.BNAM!.Value.Span!)) return false;
+                if (!MemorySliceExt.SequenceEqual(lhs.BNAM, rhs.BNAM)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.NextNodeID) ?? true))
             {
