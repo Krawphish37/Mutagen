@@ -391,6 +391,8 @@ internal sealed class ModHeaderWriteLogic
 
     private void AddDisallowedLowerFormIDs()
     {
+        // Base masters are allowed to own the lower range without any masters
+        if (Implicits.Get(_mod.GameRelease).BaseMasters.Contains(_modKey)) return;
         switch (_params.LowerRangeDisallowedHandler)
         {
             case NoCheckIfLowerRangeDisallowed:
@@ -410,8 +412,9 @@ internal sealed class ModHeaderWriteLogic
 
     private void HandleDisallowedLowerFormIDs()
     {
-        if (_numRecords == 0) return;
         if (_disallowedLowerFormKey == null) return;
+        // Lower range is only disallowed when there are no masters
+        if (HasOutgoingMasters()) return;
 
         switch (_params.LowerRangeDisallowedHandler)
         {
@@ -420,7 +423,6 @@ internal sealed class ModHeaderWriteLogic
             case ThrowIfLowerRangeDisallowed:
                 throw new LowerFormKeyRangeDisallowedException(_disallowedLowerFormKey.Value);
             case AddPlaceholderMasterIfLowerRangeDisallowed placeholder:
-                if (_modKeys.Count > 0) return;
                 if (placeholder.ModKey == null)
                 {
                     throw new LowerFormKeyRangeDisallowedException(_disallowedLowerFormKey.Value);
@@ -428,6 +430,17 @@ internal sealed class ModHeaderWriteLogic
                 _modKeys[placeholder.ModKey.Value] = null;
                 break;
         }
+    }
+
+    private bool HasOutgoingMasters()
+    {
+        // Mirrors ConstructWriteMasters, which drops the mod itself and the null ModKey
+        foreach (var modKey in _modKeys.Keys)
+        {
+            if (modKey == _modKey || modKey.IsNull) continue;
+            return true;
+        }
+        return false;
     }
 
     #endregion
