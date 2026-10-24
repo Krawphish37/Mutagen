@@ -1415,26 +1415,34 @@ public sealed class ImmutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, T
 
     public bool TryResolveSimpleContext(FormKey formKey, [MaybeNullWhen(false)] out IModContext<IMajorRecordGetter> majorRec, ResolveTarget target = ResolveTarget.Winner)
     {
-        if (TryResolveContext(formKey, out var context, target))
+        CheckDisposal();
+
+        if (formKey.IsNull)
         {
-            majorRec = context;
-            return true;
+            majorRec = default;
+            return false;
         }
 
-        majorRec = default;
-        return false;
+        if (target == ResolveTarget.Origin
+            && formKey.ModKey != _sourceMod.ModKey)
+        {
+            majorRec = default;
+            return false;
+        }
+
+        return _formKeyContexts.TryResolveUntypedSimpleContext(formKey, out majorRec);
     }
 
     public bool TryResolveSimpleContext(string editorId, [MaybeNullWhen(false)] out IModContext<IMajorRecordGetter> majorRec)
     {
-        if (TryResolveContext(editorId, out var context))
-        {
-            majorRec = context;
-            return true;
-        }
+        CheckDisposal();
 
-        majorRec = default;
-        return false;
+        if (editorId.IsNullOrWhitespace())
+        {
+            majorRec = default;
+            return false;
+        }
+        return _editorIdContexts.TryResolveUntypedSimpleContext(editorId, out majorRec);
     }
 
     public bool TryResolveSimpleContext<TMajor>(
@@ -1567,7 +1575,10 @@ public sealed class ImmutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, T
 
     public IEnumerable<IModContext<IMajorRecordGetter>> ResolveAllSimpleContexts(FormKey formKey, ResolveTarget target)
     {
-        return ResolveAllContexts(formKey, target);
+        if (TryResolveSimpleContext(formKey, out var rec, target))
+        {
+            yield return rec;
+        }
     }
 
     /// <inheritdoc />

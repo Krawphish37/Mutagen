@@ -145,6 +145,10 @@ internal sealed class ImmutableModLinkCacheContextCategory<TMod, TModGetter, TKe
 
     public bool TryResolveUntypedContext(TKey key, [MaybeNullWhen(false)] out IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter> majorRec)
     {
+        if (_parent._simple)
+        {
+            throw new ArgumentException("Queried for record on a simple cache");
+        }
         return _untypedContexts.Value.TryGetValue(key, out majorRec);
     }
 
