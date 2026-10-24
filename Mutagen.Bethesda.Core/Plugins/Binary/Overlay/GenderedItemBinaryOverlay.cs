@@ -8,8 +8,10 @@ using Noggog.StructuredStrings;
 
 namespace Mutagen.Bethesda.Plugins.Binary.Overlay;
 
-internal sealed class GenderedItemBinaryOverlay<T> : PluginBinaryOverlay, IGenderedItemGetter<T>
+internal sealed class GenderedItemBinaryOverlay<T> : IGenderedItemGetter<T>
 {
+    private readonly ReadOnlyMemorySlice<byte> _recordData;
+    private readonly BinaryOverlayFactoryPackage _package;
     private readonly int? _male;
     private readonly int? _female;
     private readonly T _fallback;
@@ -27,8 +29,9 @@ internal sealed class GenderedItemBinaryOverlay<T> : PluginBinaryOverlay, IGende
         int? female,
         Func<ReadOnlyMemorySlice<byte>, BinaryOverlayFactoryPackage, T> creator,
         T fallback)
-        : base(new MemoryPair(bytes, bytes), package)
     {
+        _recordData = bytes;
+        _package = package;
         _male = male;
         _female = female;
         _creator = creator;
