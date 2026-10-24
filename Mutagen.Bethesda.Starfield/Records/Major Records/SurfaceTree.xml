@@ -3,17 +3,20 @@
   <Object name="SurfaceTree" recordType="SFTR" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <RefList name="Components" refName="AComponent" />
-      <ByteArray name="CNAM" recordType="CNAM" unknown="true" nullable="False" />
-      <ByteArray name="DNAM" recordType="DNAM" unknown="true" nullable="False" />
-      <Array name="SurfacePatterns" recordType="FNAM" nullable="False" overflowRecordType="XXXX" fixedSize="65536" >
+      <!-- The two FNAM grids and the two GNAM blocks are told apart only by their order.
+           SurfacePatterns2 written without SurfacePatterns reads back as SurfacePatterns,
+           and GNAM2 written without SurfacePatterns2 reads back as GNAM. -->
+      <ByteArray name="CNAM" recordType="CNAM" unknown="true" />
+      <ByteArray name="DNAM" recordType="DNAM" unknown="true" />
+      <Array name="SurfacePatterns" recordType="FNAM" overflowRecordType="XXXX" fixedSize="65536" >
         <FormLink refName="SurfacePattern" />
       </Array>
       <ByteArray name="GNAM" recordType="GNAM" unknown="true" overflowRecordType="XXXX" fixedSize="65536"/>
-      <Array name="SurfacePatterns2" recordType="FNAM" nullable="False" overflowRecordType="XXXX" fixedSize="65536" >
+      <Array name="SurfacePatterns2" recordType="FNAM" overflowRecordType="XXXX" fixedSize="65536" >
         <FormLink refName="SurfacePattern" />
       </Array>
       <ByteArray name="GNAM2" recordType="GNAM" unknown="true" overflowRecordType="XXXX" fixedSize="65536"/>
-      <String name="Filter" recordType="NAM1" nullable="False" />
+      <String name="Filter" recordType="NAM1" />
     </Fields>
   </Object>
 </Loqui>
