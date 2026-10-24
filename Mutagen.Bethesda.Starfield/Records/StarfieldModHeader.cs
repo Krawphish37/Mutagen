@@ -8,7 +8,7 @@ using Mutagen.Bethesda.Plugins;
 
 namespace Mutagen.Bethesda.Starfield;
 
-public partial class StarfieldModHeader
+public partial class StarfieldModHeader : IModHeaderInteriorCellCount
 {
     [Flags]
     public enum HeaderFlag
@@ -61,6 +61,18 @@ public partial class StarfieldModHeader
             this.OverriddenForms ??= new();
             this.OverriddenForms.SetTo(formKeys.Select(f => f.ToLink<IStarfieldMajorRecordGetter>()));
         }
+    }
+
+    void IModHeaderInteriorCellCount.SyncInteriorCellCount(IModGetter mod)
+    {
+        if (mod is not IStarfieldModGetter starfieldMod) return;
+        // Every cell in the top level CELL group counts, overrides and deleted cells included
+        var count = starfieldMod.Cells.Records
+            .SelectMany(block => block.SubBlocks)
+            .Sum(subBlock => subBlock.Cells.Count);
+        // Leave the subrecord out if there are no interior cells and it was not there to begin with
+        if (count == 0 && this.InteriorCellCount == null) return;
+        this.InteriorCellCount = count;
     }
 }
 

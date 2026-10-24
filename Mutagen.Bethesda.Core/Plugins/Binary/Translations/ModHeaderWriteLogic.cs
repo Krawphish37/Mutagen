@@ -159,6 +159,7 @@ internal sealed class ModHeaderWriteLogic
         HandleDisallowedLowerFormIDs(); 
         SetOutgoingMasters(writer, mod, modHeader, masterFlagLookup);
         SetNumRecords(mod, modHeader);
+        SetInteriorCellCount(mod, modHeader);
         SetNextFormID(mod, modHeader);
         SetOverriddenForms(modHeader);
     }
@@ -197,6 +198,13 @@ internal sealed class ModHeaderWriteLogic
             // Can't use raw count, as more gets considered in this tally
             modHeader.NumRecords = mod.GetRecordCount();
         }
+    }
+
+    private void SetInteriorCellCount(IModGetter mod, IModHeaderCommon modHeader)
+    {
+        if (_params.RecordCount == RecordCountOption.NoCheck) return;
+        if (modHeader is not IModHeaderInteriorCellCount interiorCellCount) return;
+        interiorCellCount.SyncInteriorCellCount(mod);
     }
 
     #region Master Content Sync Logic
