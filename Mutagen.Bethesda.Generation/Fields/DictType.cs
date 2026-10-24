@@ -47,7 +47,9 @@ public class DictType : Loqui.Generation.DictType
 
     public override void GenerateForHash(StructuredStringBuilder sb, Accessor accessor, string hashResultAccessor)
     {
-        // Equals compares the entries, so hash the entries rather than the dictionary object itself
+        // Equals compares the entries, so hash the entries rather than the dictionary object itself.
+        // Entries are summed so the hash does not depend on enumeration order, as key/value dictionaries
+        // can be equal with their entries added in a different order
         if (this.Nullable)
         {
             sb.AppendLine($"if ({accessor} is {{}} {this.Name}item)");
@@ -55,12 +57,13 @@ public class DictType : Loqui.Generation.DictType
         }
         using (sb.CurlyBrace(doIt: this.Nullable))
         {
+            sb.AppendLine($"var {this.Name}Hash = 0;");
             sb.AppendLine($"foreach (var subItem in {accessor})");
             using (sb.CurlyBrace())
             {
-                sb.AppendLine($"{hashResultAccessor}.Add(subItem.Key);");
-                sb.AppendLine($"{hashResultAccessor}.Add(subItem.Value);");
+                sb.AppendLine($"{this.Name}Hash += HashCode.Combine(subItem.Key, subItem.Value);");
             }
+            sb.AppendLine($"{hashResultAccessor}.Add({this.Name}Hash);");
         }
     }
 }

@@ -5158,11 +5158,12 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.BipedObjects is {} BipedObjectsitem)
             {
+                var BipedObjectsHash = 0;
                 foreach (var subItem in BipedObjectsitem)
                 {
-                    hash.Add(subItem.Key);
-                    hash.Add(subItem.Value);
+                    BipedObjectsHash += HashCode.Combine(subItem.Key, subItem.Value);
                 }
+                hash.Add(BipedObjectsHash);
             }
             foreach (var subItem in item.MovementDataOverrides)
             {

@@ -1083,11 +1083,12 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Type);
             hash.Add(item.LastModified);
             hash.Add(item.Unknown);
+            var RecordCacheHash = 0;
             foreach (var subItem in item.RecordCache)
             {
-                hash.Add(subItem.Key);
-                hash.Add(subItem.Value);
+                RecordCacheHash += HashCode.Combine(subItem.Key, subItem.Value);
             }
+            hash.Add(RecordCacheHash);
             return hash.ToHashCode();
         }
         
