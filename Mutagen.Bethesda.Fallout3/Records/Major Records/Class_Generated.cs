@@ -1684,11 +1684,12 @@ namespace Mutagen.Bethesda.Fallout3
             }
             hash.Add(item.MaxTrainingLevel);
             hash.Add(item.Unknown);
+            var AttributesHash = 0;
             foreach (var subItem in item.Attributes)
             {
-                hash.Add(subItem.Key);
-                hash.Add(subItem.Value);
+                AttributesHash += HashCode.Combine(subItem.Key, subItem.Value);
             }
+            hash.Add(AttributesHash);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -2936,11 +2936,12 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.AnimationFlavor);
             hash.Add(item.PackageTemplate);
             hash.Add(item.DataInputVersion);
+            var DataHash = 0;
             foreach (var subItem in item.Data)
             {
-                hash.Add(subItem.Key);
-                hash.Add(subItem.Value);
+                DataHash += HashCode.Combine(subItem.Key, subItem.Value);
             }
+            hash.Add(DataHash);
             hash.Add(item.PackageGroup);
             foreach (var subItem in item.ProcedureTree)
             {

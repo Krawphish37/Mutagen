@@ -2718,11 +2718,12 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.OwnerQuest);
             hash.Add(item.PackageTemplate);
             hash.Add(item.DataInputVersion);
+            var DataHash = 0;
             foreach (var subItem in item.Data)
             {
-                hash.Add(subItem.Key);
-                hash.Add(subItem.Value);
+                DataHash += HashCode.Combine(subItem.Key, subItem.Value);
             }
+            hash.Add(DataHash);
             hash.AddBytes(item.XnamMarker);
             foreach (var subItem in item.ProcedureTree)
             {

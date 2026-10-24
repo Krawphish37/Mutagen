@@ -5981,11 +5981,12 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(HashCode.Combine(item.Height.Male, item.Height.Female));
             hash.Add(HashCode.Combine(item.Weight.Male, item.Weight.Female));
             hash.Add(item.Flags);
+            var StartingHash = 0;
             foreach (var subItem in item.Starting)
             {
-                hash.Add(subItem.Key);
-                hash.Add(subItem.Value);
+                StartingHash += HashCode.Combine(subItem.Key, subItem.Value);
             }
+            hash.Add(StartingHash);
             hash.Add(item.BaseCarryWeight);
             hash.Add(item.BaseMass);
             hash.Add(item.AccelerationRate);
@@ -5995,11 +5996,12 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.HairBipedObject);
             hash.Add(item.InjuredHealthPercent);
             hash.Add(item.ShieldBipedObject);
+            var RegenHash = 0;
             foreach (var subItem in item.Regen)
             {
-                hash.Add(subItem.Key);
-                hash.Add(subItem.Value);
+                RegenHash += HashCode.Combine(subItem.Key, subItem.Value);
             }
+            hash.Add(RegenHash);
             hash.Add(item.UnarmedDamage);
             hash.Add(item.UnarmedReach);
             hash.Add(item.BodyBipedObject);
@@ -6060,11 +6062,12 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.CloseLootSound);
             if (item.BipedObjectNames is {} BipedObjectNamesitem)
             {
+                var BipedObjectNamesHash = 0;
                 foreach (var subItem in BipedObjectNamesitem)
                 {
-                    hash.Add(subItem.Key);
-                    hash.Add(subItem.Value);
+                    BipedObjectNamesHash += HashCode.Combine(subItem.Key, subItem.Value);
                 }
+                hash.Add(BipedObjectNamesHash);
             }
             foreach (var subItem in item.MovementTypes)
             {
