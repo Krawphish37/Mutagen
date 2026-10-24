@@ -2881,7 +2881,7 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         if (obj.TopCell is {} APlacedTrapTopCellitem)
                         {
-                            APlacedTrapTopCellitem.Remove(keys, type, throwIfUnknown);
+                            APlacedTrapTopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -2896,7 +2896,11 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         if (obj.TopCell is {} TopCellitem)
                         {
-                            TopCellitem.Remove(keys, type, throwIfUnknown);
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
+                            if (keys.Contains(TopCellitem.FormKey))
+                            {
+                                obj.TopCell = null;
+                            }
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -2916,7 +2920,7 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         if (obj.TopCell is {} TopCellitem)
                         {
-                            TopCellitem.Remove(keys, type, throwIfUnknown);
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -2929,7 +2933,7 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         if (obj.TopCell is {} TopCellitem)
                         {
-                            TopCellitem.Remove(keys, type, throwIfUnknown);
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -2942,7 +2946,7 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         if (obj.TopCell is {} TopCellitem)
                         {
-                            TopCellitem.Remove(keys, type, throwIfUnknown);
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -2955,7 +2959,7 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         if (obj.TopCell is {} TopCellitem)
                         {
-                            TopCellitem.Remove(keys, type, throwIfUnknown);
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -2968,7 +2972,7 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         if (obj.TopCell is {} TopCellitem)
                         {
-                            TopCellitem.Remove(keys, type, throwIfUnknown);
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -2981,7 +2985,7 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         if (obj.TopCell is {} TopCellitem)
                         {
-                            TopCellitem.Remove(keys, type, throwIfUnknown);
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -2996,7 +3000,7 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         if (obj.TopCell is {} LandscapeTopCellitem)
                         {
-                            LandscapeTopCellitem.Remove(keys, type, throwIfUnknown);
+                            LandscapeTopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -3011,7 +3015,7 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         if (obj.TopCell is {} NavigationMeshTopCellitem)
                         {
-                            NavigationMeshTopCellitem.Remove(keys, type, throwIfUnknown);
+                            NavigationMeshTopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -3026,7 +3030,7 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         if (obj.TopCell is {} PlacedNpcTopCellitem)
                         {
-                            PlacedNpcTopCellitem.Remove(keys, type, throwIfUnknown);
+                            PlacedNpcTopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -3041,7 +3045,7 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         if (obj.TopCell is {} PlacedObjectTopCellitem)
                         {
-                            PlacedObjectTopCellitem.Remove(keys, type, throwIfUnknown);
+                            PlacedObjectTopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -3062,6 +3066,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case "IWorldspaceGridReference":
                     break;
                 default:
+                    if (InterfaceEnumerationHelper.TryRemoveInterfaceRecordsFor(GameCategory.Fallout4, obj, keys, type))
+                    {
+                        break;
+                    }
                     if (throwIfUnknown)
                     {
                         throw new ArgumentException($"Unknown major record type: {type}");

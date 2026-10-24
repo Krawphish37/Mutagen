@@ -1151,6 +1151,10 @@ namespace Mutagen.Bethesda.Skyrim
                     this.Remove(obj, keys);
                     break;
                 default:
+                    if (InterfaceEnumerationHelper.TryRemoveInterfaceRecordsFor(GameCategory.Skyrim, obj, keys, type))
+                    {
+                        break;
+                    }
                     if (throwIfUnknown)
                     {
                         throw new ArgumentException($"Unknown major record type: {type}");

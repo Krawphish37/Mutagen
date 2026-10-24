@@ -1,6 +1,8 @@
 using Loqui.Generation;
+using Mutagen.Bethesda.Generation.Modules.Aspects;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Records;
+using Mutagen.Bethesda.Plugins.Records.Mapping;
 using Noggog;
 using Mutagen.Bethesda.Generation.Fields;
 using Noggog.StructuredStrings;
@@ -27,14 +29,19 @@ public class MajorRecordRemovalModule : GenerationModule
     {
         if (!onlyGetter)
         {
+            // A keyed group's own Remove calls only remove its top level records, so these go to
+            // the generated removal, which also removes the records within them
+            var untypedRemove = obj.IterateFields().Any(f => f is DictType { Mode: DictMode.KeyedValue })
+                ? $"{obj.MixInClassName}.Remove(this, "
+                : "this.Remove(";
             sb.AppendLine("[DebuggerStepThrough]");
-            sb.AppendLine($"void {nameof(IMajorRecordEnumerable)}.Remove({nameof(FormKey)} formKey) => this.Remove(formKey);");
+            sb.AppendLine($"void {nameof(IMajorRecordEnumerable)}.Remove({nameof(FormKey)} formKey) => {untypedRemove}formKey);");
             sb.AppendLine("#pragma warning disable CS0618 // Type or member is obsolete");
             sb.AppendLine("[DebuggerStepThrough]");
-            sb.AppendLine($"void {nameof(IMajorRecordEnumerable)}.Remove(HashSet<{nameof(FormKey)}> formKeys) => this.Remove(formKeys);");
+            sb.AppendLine($"void {nameof(IMajorRecordEnumerable)}.Remove(HashSet<{nameof(FormKey)}> formKeys) => {untypedRemove}formKeys);");
             sb.AppendLine("#pragma warning restore CS0618");
             sb.AppendLine("[DebuggerStepThrough]");
-            sb.AppendLine($"void {nameof(IMajorRecordEnumerable)}.Remove(IEnumerable<{nameof(FormKey)}> formKeys) => this.Remove(formKeys);");
+            sb.AppendLine($"void {nameof(IMajorRecordEnumerable)}.Remove(IEnumerable<{nameof(FormKey)}> formKeys) => {untypedRemove}formKeys);");
             sb.AppendLine("[DebuggerStepThrough]");
             sb.AppendLine($"void {nameof(IMajorRecordEnumerable)}.Remove(IEnumerable<{nameof(IFormLinkIdentifier)}> formLinks) => this.Remove(formLinks);");
             sb.AppendLine("[DebuggerStepThrough]");
@@ -385,6 +392,17 @@ public class MajorRecordRemovalModule : GenerationModule
                     {
                         sb.AppendLine($"{fieldAccessor}{loqui.NullChar}.Remove(keys);");
                     }
+                    // A group's own Remove only removes its top level records, so the records within
+                    // them, such as cells within worldspaces or topics within quests, are removed here
+                    if (field is GroupType groupType
+                        && await MajorRecordModule.HasMajorRecordsInTree(groupType.GetGroupTarget(), includeBaseClass: true) != Case.No)
+                    {
+                        sb.AppendLine($"foreach (var item in {fieldAccessor}.RecordCache.Items)");
+                        using (sb.CurlyBrace())
+                        {
+                            sb.AppendLine("item.Remove(keys);");
+                        }
+                    }
                     var isMajorRecord = loqui.TargetObjectGeneration != null && await loqui.TargetObjectGeneration.IsMajorRecord();
                     if (isMajorRecord)
                     {
@@ -429,6 +447,15 @@ public class MajorRecordRemovalModule : GenerationModule
                             case Case.No:
                             default:
                                 break;
+                        }
+                    }
+                    // Records within the remaining records, such as cells within worldspaces or topics within quests
+                    if (await MajorRecordModule.HasMajorRecords(dictLoqui, includeBaseClass: true, includeSelf: false) != Case.No)
+                    {
+                        sb.AppendLine($"foreach (var item in {accessor}.{field.Name}.Items)");
+                        using (sb.CurlyBrace())
+                        {
+                            sb.AppendLine("item.Remove(keys);");
                         }
                     }
                 }
@@ -510,7 +537,11 @@ public class MajorRecordRemovalModule : GenerationModule
                 }
                 using (sb.IncreaseDepth())
                 {
-                    sb.AppendLine($"if (!{obj.RegistrationName}.SetterType.IsAssignableFrom(obj.GetType())) return;");
+                    // A generic object's registered setter type is open, so is never assignable from the object
+                    if (obj.Generics.Count == 0)
+                    {
+                        sb.AppendLine($"if (!{obj.RegistrationName}.SetterType.IsAssignableFrom(obj.GetType())) return;");
+                    }
                     sb.AppendLine("this.Remove(obj, keys);");
                     sb.AppendLine("break;");
                 }
@@ -755,6 +786,16 @@ public class MajorRecordRemovalModule : GenerationModule
                     }
                     else
                     {
+                        // Link and aspect interfaces not listed above, as the enumeration does
+                        if (LinkInterfaceModule.ObjectMappings.TryGetValue(obj.ProtoGen.Protocol, out _)
+                            || AspectInterfaceModule.ObjectMappings.TryGetValue(obj.ProtoGen.Protocol, out _))
+                        {
+                            sb.AppendLine($"if ({nameof(InterfaceEnumerationHelper)}.TryRemoveInterfaceRecordsFor(GameCategory.{obj.ProtoGen.Protocol.Namespace}, {accessor}, keys, type))");
+                            using (sb.CurlyBrace())
+                            {
+                                sb.AppendLine("break;");
+                            }
+                        }
                         sb.AppendLine("if (throwIfUnknown)");
                         using (sb.CurlyBrace())
                         {
@@ -834,7 +875,16 @@ public class MajorRecordRemovalModule : GenerationModule
                 return;
             }
             var subFg = new StructuredStringBuilder();
-            subFg.AppendLine($"{fieldAccessor}.Remove(keys, type, throwIfUnknown);");
+            // The record within does not need to know the type itself (ex: a Cell asked to remove Cells)
+            subFg.AppendLine($"{fieldAccessor}.Remove(keys, type, throwIfUnknown: false);");
+            if (removeSelf && loqui.Nullable)
+            {
+                subFg.AppendLine($"if (keys.Contains({fieldAccessor}.FormKey))");
+                using (subFg.CurlyBrace())
+                {
+                    subFg.AppendLine($"{accessor}.{loqui.Name} = null;");
+                }
+            }
             if (loqui.Singleton
                 || !loqui.Nullable)
             {

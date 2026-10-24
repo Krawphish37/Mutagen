@@ -105,6 +105,40 @@ internal static class InterfaceEnumerationHelper
         return RequiresTypeFilter(queriedType, registration.GetterType) ? queriedType : null;
     }
 
+    /// <summary>
+    /// Removes the records of the given keys that are of a link, aspect or other mapped interface type,
+    /// by removing them as the record types that implement it
+    /// </summary>
+    /// <returns>False if the type is not a mapped interface</returns>
+    public static bool TryRemoveInterfaceRecordsFor<T>(
+        GameCategory category,
+        T obj,
+        HashSet<FormKey> keys,
+        Type linkInterface)
+        where T : IMajorRecordEnumerable
+    {
+        if (!MetaInterfaceMapping.Instance.TryGetRegistrationsForInterface(category, linkInterface, out var inheritingTypes))
+        {
+            return false;
+        }
+
+        foreach (var registration in inheritingTypes.Registrations)
+        {
+            var type = inheritingTypes.Setter ? registration.SetterType : registration.GetterType;
+            if (type == linkInterface) continue;
+            // Collected first, as removal alters what is being enumerated.  A registration can be an abstract
+            // base class (ex: AObjectModification for IWeaponModificationGetter), so records are checked
+            // to be of the asked type
+            var toRemove = obj.EnumerateMajorRecords(type, throwIfUnknown: false)
+                .Where(r => keys.Contains(r.FormKey) && linkInterface.IsInstanceOfType(r))
+                .Select(r => r.FormKey)
+                .ToHashSet();
+            if (toRemove.Count == 0) continue;
+            obj.Remove(toRemove, type, throwIfUnknown: false);
+        }
+        return true;
+    }
+
     public static bool TryEnumerateLinkContextsFor<T, TMod, TModGetter>(
         GameCategory category,
         T obj, 

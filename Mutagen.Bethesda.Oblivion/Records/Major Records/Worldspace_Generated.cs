@@ -1867,7 +1867,11 @@ namespace Mutagen.Bethesda.Oblivion
                     {
                         if (obj.TopCell is {} TopCellitem)
                         {
-                            TopCellitem.Remove(keys, type, throwIfUnknown);
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
+                            if (keys.Contains(TopCellitem.FormKey))
+                            {
+                                obj.TopCell = null;
+                            }
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -1880,7 +1884,7 @@ namespace Mutagen.Bethesda.Oblivion
                     {
                         if (obj.TopCell is {} TopCellitem)
                         {
-                            TopCellitem.Remove(keys, type, throwIfUnknown);
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -1895,7 +1899,7 @@ namespace Mutagen.Bethesda.Oblivion
                     {
                         if (obj.TopCell is {} LandscapeTopCellitem)
                         {
-                            LandscapeTopCellitem.Remove(keys, type, throwIfUnknown);
+                            LandscapeTopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -1910,7 +1914,7 @@ namespace Mutagen.Bethesda.Oblivion
                     {
                         if (obj.TopCell is {} PathGridTopCellitem)
                         {
-                            PathGridTopCellitem.Remove(keys, type, throwIfUnknown);
+                            PathGridTopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -1925,7 +1929,7 @@ namespace Mutagen.Bethesda.Oblivion
                     {
                         if (obj.TopCell is {} PlacedCreatureTopCellitem)
                         {
-                            PlacedCreatureTopCellitem.Remove(keys, type, throwIfUnknown);
+                            PlacedCreatureTopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -1940,7 +1944,7 @@ namespace Mutagen.Bethesda.Oblivion
                     {
                         if (obj.TopCell is {} PlacedNpcTopCellitem)
                         {
-                            PlacedNpcTopCellitem.Remove(keys, type, throwIfUnknown);
+                            PlacedNpcTopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -1955,7 +1959,7 @@ namespace Mutagen.Bethesda.Oblivion
                     {
                         if (obj.TopCell is {} PlacedObjectTopCellitem)
                         {
-                            PlacedObjectTopCellitem.Remove(keys, type, throwIfUnknown);
+                            PlacedObjectTopCellitem.Remove(keys, type, throwIfUnknown: false);
                         }
                     }
                     foreach (var subItem in obj.SubCells)
@@ -1970,7 +1974,11 @@ namespace Mutagen.Bethesda.Oblivion
                     {
                         if (obj.Road is {} Roaditem)
                         {
-                            Roaditem.Remove(keys, type, throwIfUnknown);
+                            Roaditem.Remove(keys, type, throwIfUnknown: false);
+                            if (keys.Contains(Roaditem.FormKey))
+                            {
+                                obj.Road = null;
+                            }
                         }
                     }
                     break;
@@ -1983,6 +1991,10 @@ namespace Mutagen.Bethesda.Oblivion
                     }
                     break;
                 default:
+                    if (InterfaceEnumerationHelper.TryRemoveInterfaceRecordsFor(GameCategory.Oblivion, obj, keys, type))
+                    {
+                        break;
+                    }
                     if (throwIfUnknown)
                     {
                         throw new ArgumentException($"Unknown major record type: {type}");

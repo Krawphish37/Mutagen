@@ -127,13 +127,13 @@ namespace Mutagen.Bethesda.Oblivion
         [DebuggerStepThrough]
         IEnumerable<IMajorRecord> IMajorRecordEnumerable.EnumerateMajorRecords(Type? type, bool throwIfUnknown) => this.EnumerateMajorRecords(type: type, throwIfUnknown: throwIfUnknown);
         [DebuggerStepThrough]
-        void IMajorRecordEnumerable.Remove(FormKey formKey) => this.Remove(formKey);
+        void IMajorRecordEnumerable.Remove(FormKey formKey) => OblivionGroupMixIn.Remove(this, formKey);
         #pragma warning disable CS0618 // Type or member is obsolete
         [DebuggerStepThrough]
-        void IMajorRecordEnumerable.Remove(HashSet<FormKey> formKeys) => this.Remove(formKeys);
+        void IMajorRecordEnumerable.Remove(HashSet<FormKey> formKeys) => OblivionGroupMixIn.Remove(this, formKeys);
         #pragma warning restore CS0618
         [DebuggerStepThrough]
-        void IMajorRecordEnumerable.Remove(IEnumerable<FormKey> formKeys) => this.Remove(formKeys);
+        void IMajorRecordEnumerable.Remove(IEnumerable<FormKey> formKeys) => OblivionGroupMixIn.Remove(this, formKeys);
         [DebuggerStepThrough]
         void IMajorRecordEnumerable.Remove(IEnumerable<IFormLinkIdentifier> formLinks) => this.Remove(formLinks);
         [DebuggerStepThrough]
@@ -853,6 +853,10 @@ namespace Mutagen.Bethesda.Oblivion
             HashSet<FormKey> keys)
         {
             obj.RecordCache.Remove(keys);
+            foreach (var item in obj.RecordCache.Items)
+            {
+                item.Remove(keys);
+            }
         }
         
         public void Remove(
@@ -869,7 +873,6 @@ namespace Mutagen.Bethesda.Oblivion
                 case "OblivionMajorRecord":
                 case "IMajorRecordGetter":
                 case "IOblivionMajorRecordGetter":
-                    if (!OblivionGroup_Registration.SetterType.IsAssignableFrom(obj.GetType())) return;
                     this.Remove(obj, keys);
                     break;
                 default:

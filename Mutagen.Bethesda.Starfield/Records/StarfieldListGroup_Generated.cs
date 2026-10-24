@@ -879,7 +879,6 @@ namespace Mutagen.Bethesda.Starfield
                 case "StarfieldMajorRecord":
                 case "IMajorRecordGetter":
                 case "IStarfieldMajorRecordGetter":
-                    if (!StarfieldListGroup_Registration.SetterType.IsAssignableFrom(obj.GetType())) return;
                     this.Remove(obj, keys);
                     break;
                 default:

@@ -2032,6 +2032,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case "IDialogTopicAssociatedQuest":
                     break;
                 default:
+                    if (InterfaceEnumerationHelper.TryRemoveInterfaceRecordsFor(GameCategory.Fallout3, obj, keys, type))
+                    {
+                        break;
+                    }
                     if (throwIfUnknown)
                     {
                         throw new ArgumentException($"Unknown major record type: {type}");
