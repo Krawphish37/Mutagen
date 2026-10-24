@@ -7188,6 +7188,9 @@ namespace Mutagen.Bethesda.Oblivion
                 case "IGameSettingGetter":
                 case "IGameSetting":
                 case "IGameSettingInternal":
+                case "GameSettingInt":
+                case "GameSettingFloat":
+                case "GameSettingString":
                     foreach (var item in obj.GameSettings.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -7197,6 +7200,10 @@ namespace Mutagen.Bethesda.Oblivion
                 case "IGlobalGetter":
                 case "IGlobal":
                 case "IGlobalInternal":
+                case "GlobalInt":
+                case "GlobalShort":
+                case "GlobalFloat":
+                case "GlobalUnknown":
                     foreach (var item in obj.Globals.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -8499,6 +8506,9 @@ namespace Mutagen.Bethesda.Oblivion
                 case "IGameSettingGetter":
                 case "IGameSetting":
                 case "IGameSettingInternal":
+                case "GameSettingInt":
+                case "GameSettingFloat":
+                case "GameSettingString":
                     foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<IOblivionMod, IOblivionModGetter, GameSetting, IGameSettingGetter>(
                         srcGroup: obj.GameSettings,
                         type: type,
@@ -8513,6 +8523,10 @@ namespace Mutagen.Bethesda.Oblivion
                 case "IGlobalGetter":
                 case "IGlobal":
                 case "IGlobalInternal":
+                case "GlobalInt":
+                case "GlobalShort":
+                case "GlobalFloat":
+                case "GlobalUnknown":
                     foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<IOblivionMod, IOblivionModGetter, Global, IGlobalGetter>(
                         srcGroup: obj.Globals,
                         type: type,

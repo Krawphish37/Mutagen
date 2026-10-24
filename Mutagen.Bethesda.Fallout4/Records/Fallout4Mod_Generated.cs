@@ -13812,6 +13812,8 @@ namespace Mutagen.Bethesda.Fallout4
                 case "IADamageTypeGetter":
                 case "IADamageType":
                 case "IADamageTypeInternal":
+                case "DamageType":
+                case "DamageTypeIndexed":
                     foreach (var item in obj.DamageTypes.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -13866,6 +13868,11 @@ namespace Mutagen.Bethesda.Fallout4
                 case "IAObjectModificationGetter":
                 case "IAObjectModification":
                 case "IAObjectModificationInternal":
+                case "ArmorModification":
+                case "NpcModification":
+                case "WeaponModification":
+                case "ObjectModification":
+                case "UnknownObjectModification":
                     foreach (var item in obj.ObjectModifications.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -13875,6 +13882,14 @@ namespace Mutagen.Bethesda.Fallout4
                 case "IAPlacedTrapGetter":
                 case "IAPlacedTrap":
                 case "IAPlacedTrapInternal":
+                case "PlacedArrow":
+                case "PlacedBeam":
+                case "PlacedFlame":
+                case "PlacedCone":
+                case "PlacedBarrier":
+                case "PlacedTrap":
+                case "PlacedHazard":
+                case "PlacedMissile":
                     foreach (var item in obj.Cells.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -14243,6 +14258,11 @@ namespace Mutagen.Bethesda.Fallout4
                 case "IGameSettingGetter":
                 case "IGameSetting":
                 case "IGameSettingInternal":
+                case "GameSettingInt":
+                case "GameSettingFloat":
+                case "GameSettingString":
+                case "GameSettingBool":
+                case "GameSettingUInt":
                     foreach (var item in obj.GameSettings.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -14252,6 +14272,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case "IGlobalGetter":
                 case "IGlobal":
                 case "IGlobalInternal":
+                case "GlobalInt":
+                case "GlobalShort":
+                case "GlobalFloat":
+                case "GlobalBool":
                     foreach (var item in obj.Globals.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -16284,6 +16308,8 @@ namespace Mutagen.Bethesda.Fallout4
                 case "IADamageTypeGetter":
                 case "IADamageType":
                 case "IADamageTypeInternal":
+                case "DamageType":
+                case "DamageTypeIndexed":
                     foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<IFallout4Mod, IFallout4ModGetter, ADamageType, IADamageTypeGetter>(
                         srcGroup: obj.DamageTypes,
                         type: type,
@@ -16368,6 +16394,11 @@ namespace Mutagen.Bethesda.Fallout4
                 case "IAObjectModificationGetter":
                 case "IAObjectModification":
                 case "IAObjectModificationInternal":
+                case "ArmorModification":
+                case "NpcModification":
+                case "WeaponModification":
+                case "ObjectModification":
+                case "UnknownObjectModification":
                     foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<IFallout4Mod, IFallout4ModGetter, AObjectModification, IAObjectModificationGetter>(
                         srcGroup: obj.ObjectModifications,
                         type: type,
@@ -16382,6 +16413,14 @@ namespace Mutagen.Bethesda.Fallout4
                 case "IAPlacedTrapGetter":
                 case "IAPlacedTrap":
                 case "IAPlacedTrapInternal":
+                case "PlacedArrow":
+                case "PlacedBeam":
+                case "PlacedFlame":
+                case "PlacedCone":
+                case "PlacedBarrier":
+                case "PlacedTrap":
+                case "PlacedHazard":
+                case "PlacedMissile":
                     foreach (var item in obj.Cells.EnumerateMajorRecordContexts(
                         linkCache: linkCache,
                         type: type,
@@ -16990,6 +17029,11 @@ namespace Mutagen.Bethesda.Fallout4
                 case "IGameSettingGetter":
                 case "IGameSetting":
                 case "IGameSettingInternal":
+                case "GameSettingInt":
+                case "GameSettingFloat":
+                case "GameSettingString":
+                case "GameSettingBool":
+                case "GameSettingUInt":
                     foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<IFallout4Mod, IFallout4ModGetter, GameSetting, IGameSettingGetter>(
                         srcGroup: obj.GameSettings,
                         type: type,
@@ -17004,6 +17048,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case "IGlobalGetter":
                 case "IGlobal":
                 case "IGlobalInternal":
+                case "GlobalInt":
+                case "GlobalShort":
+                case "GlobalFloat":
+                case "GlobalBool":
                     foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<IFallout4Mod, IFallout4ModGetter, Global, IGlobalGetter>(
                         srcGroup: obj.Globals,
                         type: type,

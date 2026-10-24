@@ -1672,6 +1672,14 @@ namespace Mutagen.Bethesda.Skyrim
                 case "IAPlacedTrapGetter":
                 case "IAPlacedTrap":
                 case "IAPlacedTrapInternal":
+                case "PlacedArrow":
+                case "PlacedBeam":
+                case "PlacedFlame":
+                case "PlacedCone":
+                case "PlacedBarrier":
+                case "PlacedTrap":
+                case "PlacedHazard":
+                case "PlacedMissile":
                     foreach (var subItem in obj.Cells)
                     {
                         if (type.IsAssignableFrom(subItem.GetType()))
