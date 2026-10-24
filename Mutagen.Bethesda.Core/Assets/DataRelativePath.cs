@@ -57,7 +57,7 @@ public readonly struct DataRelativePath : IEquatable<DataRelativePath>, ICompara
 
     private static string ConvertToDataRelativePath(ReadOnlySpan<char> inputPath)
     {
-        Span<char> mySpan = stackalloc char[inputPath.Length];
+        Span<char> mySpan = inputPath.Length <= 256 ? stackalloc char[inputPath.Length] : new char[inputPath.Length];
         inputPath.CopyTo(mySpan);
         IFileSystemExt.CleanDirectorySeparators(mySpan);
         

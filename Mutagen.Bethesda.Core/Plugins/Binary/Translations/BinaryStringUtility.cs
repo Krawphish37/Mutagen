@@ -1,4 +1,5 @@
 using Noggog;
+using System.Buffers;
 using System.Buffers.Binary;
 using Mutagen.Bethesda.Strings;
 
@@ -9,6 +10,8 @@ namespace Mutagen.Bethesda.Plugins.Binary.Translations;
 /// </summary>
 public static class BinaryStringUtility
 {
+    private const int MaxStackAllocBytes = 1024;
+
     /// <summary>
     /// Converts span to a string.
     /// </summary>
@@ -237,9 +240,28 @@ public static class BinaryStringUtility
     public static void Write<TStream>(TStream stream, ReadOnlySpan<char> str, IMutagenEncoding encoding, int byteCount)
         where TStream : IBinaryWriteStream
     {
-        Span<byte> bytes = stackalloc byte[byteCount];
-        encoding.GetBytes(str, bytes);
-        stream.Write(bytes);
+        if (byteCount <= MaxStackAllocBytes)
+        {
+            Span<byte> bytes = stackalloc byte[byteCount];
+            encoding.GetBytes(str, bytes);
+            stream.Write(bytes);
+            return;
+        }
+
+        // Large strings (localized .STRINGS content can be megabytes) would overflow the stack
+        var rented = ArrayPool<byte>.Shared.Rent(byteCount);
+        try
+        {
+            var bytes = rented.AsSpan(0, byteCount);
+            var written = encoding.GetBytes(str, bytes);
+            // Callers may reserve trailing bytes (eg a null terminator) that must be zero
+            bytes.Slice(written).Clear();
+            stream.Write(bytes);
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(rented);
+        }
     }
 
     /// <summary>
