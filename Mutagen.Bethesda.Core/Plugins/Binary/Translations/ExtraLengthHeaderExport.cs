@@ -1,11 +1,12 @@
 using Mutagen.Bethesda.Plugins.Binary.Streams;
-using Noggog;
 
 namespace Mutagen.Bethesda.Plugins.Binary.Translations;
 
 public sealed class ExtraLengthHeaderExport : IDisposable
 {
-    private readonly MemoryTributary _tributary = new();
+    // One per overflow-capable subrecord written, and almost all of them fit in a normal subrecord.
+    // MemoryStream grows with the content, where MemoryTributary allocates a 64 KB block on first write
+    private readonly MemoryStream _tributary = new();
     private readonly MutagenWriter _writer;
     private readonly RecordType _mainRecord;
     private readonly RecordType _overflowRecord;
