@@ -9501,7 +9501,7 @@ namespace Mutagen.Bethesda.Fallout4
         #region Unknown
         private int _UnknownLocation => _DATALocation!.Value.Min + DefaultWeightVersioningOffset + 0x30;
         private bool _Unknown_IsSet => _DATALocation.HasValue;
-        public ReadOnlyMemorySlice<Byte> Unknown => _Unknown_IsSet ? _recordData.Span.Slice(_UnknownLocation, 8).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        public ReadOnlyMemorySlice<Byte> Unknown => _Unknown_IsSet ? _recordData.Span.Slice(_UnknownLocation, 8).ToArray() : UtilityTranslation.Zeros.Slice(0, 8);
         #endregion
         #region InjuredHealthPercent
         private int _InjuredHealthPercentLocation => _DATALocation!.Value.Min + DefaultWeightVersioningOffset + 0x38;
@@ -9554,7 +9554,7 @@ namespace Mutagen.Bethesda.Fallout4
         #region Unknown2
         private int _Unknown2Location => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x5C;
         private bool _Unknown2_IsSet => _DATALocation.HasValue;
-        public ReadOnlyMemorySlice<Byte> Unknown2 => _Unknown2_IsSet ? _recordData.Span.Slice(_Unknown2Location, 36).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        public ReadOnlyMemorySlice<Byte> Unknown2 => _Unknown2_IsSet ? _recordData.Span.Slice(_Unknown2Location, 36).ToArray() : new byte[36];
         #endregion
         #region PipboyBipedObject
         private int _PipboyBipedObjectLocation => _DATALocation!.Value.Min + BeardBipedObjectVersioningOffset + 0x80;

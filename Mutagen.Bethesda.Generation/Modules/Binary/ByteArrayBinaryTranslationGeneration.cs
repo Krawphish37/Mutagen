@@ -196,7 +196,7 @@ public class ByteArrayBinaryTranslationGeneration : PrimitiveBinaryTranslationGe
             }
             else
             {
-                sb.AppendLine($"public {typeGen.TypeName(getter: true)}{(typeGen.Nullable ? "?" : null)} {typeGen.Name} => _{typeGen.Name}Location.HasValue ? {nameof(HeaderTranslation)}.{nameof(HeaderTranslation.ExtractSubrecordMemory)}({recordDataAccessor}, _{typeGen.Name}Location.Value, _package.{nameof(BinaryOverlayFactoryPackage.MetaData)}.{nameof(ParsingMeta.Constants)}) : {(typeGen.Nullable ? $"default(ReadOnlyMemorySlice<byte>?)" : "ReadOnlyMemorySlice<byte>.Empty")};");
+                sb.AppendLine($"public {typeGen.TypeName(getter: true)}{(typeGen.Nullable ? "?" : null)} {typeGen.Name} => _{typeGen.Name}Location.HasValue ? {nameof(HeaderTranslation)}.{nameof(HeaderTranslation.ExtractSubrecordMemory)}({recordDataAccessor}, _{typeGen.Name}Location.Value, _package.{nameof(BinaryOverlayFactoryPackage.MetaData)}.{nameof(ParsingMeta.Constants)}) : {GetWrapperNotSetValue(typeGen)};");
             }
         }
         else
@@ -209,14 +209,9 @@ public class ByteArrayBinaryTranslationGeneration : PrimitiveBinaryTranslationGe
                 }
                 else if (data.Length.HasValue)
                 {
-                    // Only support up to 8 with Zeros array
                     if (data.IsAfterBreak)
                     {
-                        if (data.Length.Value > UtilityTranslation.Zeros.Length)
-                        {
-                            throw new NotImplementedException();
-                        }
-                        sb.AppendLine($"public {typeGen.TypeName(getter: true)}{(typeGen.Nullable ? "?" : null)} {typeGen.Name} => {structDataAccessor}.Span.Length <= {posStr} ? UtilityTranslation.Zeros.Slice({data.Length}) : {structDataAccessor}.Span.Slice({passedLengthAccessor ?? "0x0"}, 0x{data.Length.Value:X}).ToArray();");
+                        sb.AppendLine($"public {typeGen.TypeName(getter: true)}{(typeGen.Nullable ? "?" : null)} {typeGen.Name} => {structDataAccessor}.Span.Length <= {posStr} ? {GetZeros(data.Length.Value)} : {structDataAccessor}.Span.Slice({passedLengthAccessor ?? "0x0"}, 0x{data.Length.Value:X}).ToArray();");
                     }
                     else
                     {
@@ -243,9 +238,29 @@ public class ByteArrayBinaryTranslationGeneration : PrimitiveBinaryTranslationGe
                 {
                     expLen = $"_{dataType.GetFieldData().RecordType}Location!.Value.Max - _{typeGen.Name}Location + 1";
                 }
-                sb.AppendLine($"public {typeGen.TypeName(getter: true)}{(typeGen.Nullable ? "?" : null)} {typeGen.Name} => _{typeGen.Name}_IsSet ? {recordDataAccessor}.Span.Slice(_{typeGen.Name}Location{(expLen != null ? $", {expLen}" : null)}).ToArray() : {(typeGen.Nullable ? $"default(ReadOnlyMemorySlice<byte>?)" : "ReadOnlyMemorySlice<byte>.Empty")};");
+                sb.AppendLine($"public {typeGen.TypeName(getter: true)}{(typeGen.Nullable ? "?" : null)} {typeGen.Name} => _{typeGen.Name}_IsSet ? {recordDataAccessor}.Span.Slice(_{typeGen.Name}Location{(expLen != null ? $", {expLen}" : null)}).ToArray() : {GetWrapperNotSetValue(typeGen)};");
             }
         }
+    }
+
+    /// <summary>
+    /// Value an overlay returns for a byte array that is not present in the binary.
+    /// Matches the default of the mutable class, which is a zeroed array of the declared length.
+    /// </summary>
+    private static string GetWrapperNotSetValue(TypeGeneration typeGen)
+    {
+        if (typeGen.Nullable) return "default(ReadOnlyMemorySlice<byte>?)";
+        if (typeGen is ByteArrayType { Length: > 0 } bType) return GetZeros(bType.Length.Value);
+        return "ReadOnlyMemorySlice<byte>.Empty";
+    }
+
+    private static string GetZeros(long length)
+    {
+        if (length <= UtilityTranslation.Zeros.Length)
+        {
+            return $"{nameof(UtilityTranslation)}.{nameof(UtilityTranslation.Zeros)}.Slice(0, {length})";
+        }
+        return $"new byte[{length}]";
     }
 
     public override async Task<int?> GetPassedAmount(ObjectGeneration objGen, TypeGeneration typeGen)

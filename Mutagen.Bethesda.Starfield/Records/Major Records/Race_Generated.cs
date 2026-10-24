@@ -7365,7 +7365,7 @@ namespace Mutagen.Bethesda.Starfield
         #region DAT2Unknown1
         private int _DAT2Unknown1Location => _DAT2Location!.Value.Min + 0x34;
         private bool _DAT2Unknown1_IsSet => _DAT2Location.HasValue;
-        public ReadOnlyMemorySlice<Byte> DAT2Unknown1 => _DAT2Unknown1_IsSet ? _recordData.Span.Slice(_DAT2Unknown1Location, 12).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        public ReadOnlyMemorySlice<Byte> DAT2Unknown1 => _DAT2Unknown1_IsSet ? _recordData.Span.Slice(_DAT2Unknown1Location, 12).ToArray() : UtilityTranslation.Zeros.Slice(0, 12);
         #endregion
         #region ShieldBipedObject
         private int _ShieldBipedObjectLocation => _DAT2Location!.Value.Min + 0x40;
@@ -7385,7 +7385,7 @@ namespace Mutagen.Bethesda.Starfield
         #region DAT2Unknown2
         private int _DAT2Unknown2Location => _DAT2Location!.Value.Min + 0x4C;
         private bool _DAT2Unknown2_IsSet => _DAT2Location.HasValue;
-        public ReadOnlyMemorySlice<Byte> DAT2Unknown2 => _DAT2Unknown2_IsSet ? _recordData.Span.Slice(_DAT2Unknown2Location, 64).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        public ReadOnlyMemorySlice<Byte> DAT2Unknown2 => _DAT2Unknown2_IsSet ? _recordData.Span.Slice(_DAT2Unknown2Location, 64).ToArray() : new byte[64];
         #endregion
         #region Explosion
         private int _ExplosionLocation => _DAT2Location!.Value.Min + 0x8C;
@@ -7415,7 +7415,7 @@ namespace Mutagen.Bethesda.Starfield
         #region DAT2Unknown3
         private int _DAT2Unknown3Location => _DAT2Location!.Value.Min + 0xA0;
         private bool _DAT2Unknown3_IsSet => _DAT2Location.HasValue;
-        public ReadOnlyMemorySlice<Byte> DAT2Unknown3 => _DAT2Unknown3_IsSet ? _recordData.Span.Slice(_DAT2Unknown3Location, 61).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        public ReadOnlyMemorySlice<Byte> DAT2Unknown3 => _DAT2Unknown3_IsSet ? _recordData.Span.Slice(_DAT2Unknown3Location, 61).ToArray() : new byte[61];
         #endregion
         #region MNAMLogic
         public partial ParseResult MNAMLogicCustomParse(

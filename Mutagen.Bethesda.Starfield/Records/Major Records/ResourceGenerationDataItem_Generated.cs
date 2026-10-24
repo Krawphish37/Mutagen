@@ -1168,7 +1168,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region Floats
         private int? _FloatsLocation;
-        public ReadOnlyMemorySlice<Byte> Floats => _FloatsLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FloatsLocation.Value, _package.MetaData.Constants) : ReadOnlyMemorySlice<byte>.Empty;
+        public ReadOnlyMemorySlice<Byte> Floats => _FloatsLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FloatsLocation.Value, _package.MetaData.Constants) : new byte[140];
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,

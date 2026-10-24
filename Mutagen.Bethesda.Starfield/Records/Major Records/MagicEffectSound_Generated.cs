@@ -1302,7 +1302,7 @@ namespace Mutagen.Bethesda.Starfield
         public MagicEffectSound.SoundType Type => (MagicEffectSound.SoundType)_structData.Span.Slice(0x0, 0x1)[0];
         public ISoundReferenceGetter Sound => SoundReferenceBinaryOverlay.SoundReferenceFactory(_structData.Slice(0x1), _package, default(TypedParseParams));
         #region Unknown
-        public ReadOnlyMemorySlice<Byte> Unknown => _structData.Span.Length <= 0x29 ? UtilityTranslation.Zeros.Slice(3) : _structData.Span.Slice(0x29, 0x3).ToArray();
+        public ReadOnlyMemorySlice<Byte> Unknown => _structData.Span.Length <= 0x29 ? UtilityTranslation.Zeros.Slice(0, 3) : _structData.Span.Slice(0x29, 0x3).ToArray();
         int UnknownVersioningOffset => _package.FormVersion!.FormVersion!.Value >= 518 ? -3 : 0;
         #endregion
         partial void CustomFactoryEnd(
