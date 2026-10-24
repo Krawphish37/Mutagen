@@ -55,11 +55,21 @@ internal static class GenderedItemBinaryOverlay
         RecordTypeConverter femaleRecordConverter,
         RecordTypeConverter? maleRecordConverter = null,
         bool shortCircuit = true,
-        bool parseNonConvertedItems = false)
+        bool parseNonConvertedItems = false,
+        IGenderedItemGetter<T?>? existing = null,
+        Func<T, MutagenFrame, TypedParseParams, T>? merge = null)
         where T : class
     {
         var initialPos = stream.Position;
-        T? maleObj = null, femaleObj = null;
+        T? maleObj = existing?.Male, femaleObj = existing?.Female;
+        var maleParams = new TypedParseParams(
+            lengthOverride: null,
+            recordTypeConverter: maleRecordConverter,
+            doNotShortCircuit: !shortCircuit);
+        var femaleParams = new TypedParseParams(
+            lengthOverride: null,
+            recordTypeConverter: femaleRecordConverter,
+            doNotShortCircuit: !shortCircuit);
         for (int i = 0; i < 2; i++)
         {
             if (stream.Complete) break;
@@ -67,31 +77,19 @@ internal static class GenderedItemBinaryOverlay
             var recType = subHeader.RecordType;
             if (maleRecordConverter != null && maleRecordConverter.ToConversions.TryGetValue(recType, out var _))
             {
-                maleObj = creator(stream, package, new TypedParseParams(
-                    lengthOverride: null,
-                    recordTypeConverter: maleRecordConverter,
-                    doNotShortCircuit: !shortCircuit));
+                maleObj = ParseHalf(stream, package, creator, merge, maleObj, maleParams);
             }
             else if (femaleRecordConverter.ToConversions.TryGetValue(recType, out var _))
             {
-                femaleObj = creator(stream, package, new TypedParseParams(
-                    lengthOverride: null,
-                    recordTypeConverter: femaleRecordConverter,
-                    doNotShortCircuit: !shortCircuit));
+                femaleObj = ParseHalf(stream, package, creator, merge, femaleObj, femaleParams);
             }
             else if ((parseNonConvertedItems || maleRecordConverter == null) && i == 0)
             {
-                maleObj = creator(stream, package, new TypedParseParams(
-                    lengthOverride: null,
-                    recordTypeConverter: maleRecordConverter,
-                    doNotShortCircuit: !shortCircuit));
+                maleObj = ParseHalf(stream, package, creator, merge, maleObj, maleParams);
             }
             else if (parseNonConvertedItems && i == 1)
             {
-                femaleObj = creator(stream, package, new TypedParseParams(
-                    lengthOverride: null,
-                    recordTypeConverter: femaleRecordConverter,
-                    doNotShortCircuit: !shortCircuit));
+                femaleObj = ParseHalf(stream, package, creator, merge, femaleObj, femaleParams);
             }
         }
 
@@ -102,6 +100,28 @@ internal static class GenderedItemBinaryOverlay
         }
 
         return new GenderedItem<T?>(maleObj, femaleObj);
+    }
+
+    private static T ParseHalf<T>(
+        OverlayStream stream,
+        BinaryOverlayFactoryPackage package,
+        Func<OverlayStream, BinaryOverlayFactoryPackage, TypedParseParams, T> creator,
+        Func<T, MutagenFrame, TypedParseParams, T>? merge,
+        T? held,
+        TypedParseParams translationParams)
+        where T : class
+    {
+        var startPos = stream.Position;
+        var item = creator(stream, package, translationParams);
+        if (held == null || merge == null) return item;
+        if (stream.Position == startPos) return held;
+
+        // The half was already read, so add these subrecords to it rather than replacing it
+        stream.Position = startPos;
+        var frame = new MutagenFrame(new MutagenMemoryReadStream(stream.RemainingMemory, package.MetaData));
+        var merged = merge(held, frame, translationParams);
+        stream.Position += checked((int)frame.Position);
+        return merged;
     }
 
     internal static GenderedItemBinaryOverlay<T> FactorySkipMarkers<T>(

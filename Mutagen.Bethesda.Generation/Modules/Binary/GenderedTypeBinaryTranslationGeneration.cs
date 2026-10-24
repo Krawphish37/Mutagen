@@ -172,7 +172,28 @@ public class GenderedTypeBinaryTranslationGeneration : BinaryTranslationGenerati
             {
                 args.Add($"fallback: {gender.SubTypeGeneration.GetDefault(getter: false)}");
             }
+
+            if (MergesIntoExisting(gender))
+            {
+                args.Add($"existing: {itemAccessor}");
+                args.Add("fill: static (r, i, p) => i.CopyInFromBinary(r, p)");
+            }
         }
+    }
+
+    /// <summary>
+    /// Gendered loqui fields split by record type converters, with no markers, can be triggered more than once
+    /// in a record (eg. a trailing FLLD).  Those parses add to the halves already read instead of replacing them.
+    /// </summary>
+    private static bool MergesIntoExisting(GenderedType gender)
+    {
+        return gender.SubTypeGeneration is LoquiType
+               && gender.SubTypeGeneration.IsNullable
+               && gender.FemaleConversions != null
+               && !gender.MaleMarker.HasValue
+               && !gender.GenderEnumRecord.HasValue
+               && !gender.MarkerPerGender
+               && !gender.SubTypeGeneration.GetFieldData().MarkerType.HasValue;
     }
 
     public override async Task GenerateCopyInRet(
@@ -633,6 +654,12 @@ public class GenderedTypeBinaryTranslationGeneration : BinaryTranslationGenerati
                         if (notNull)
                         {
                             args.Add($"fallback: {gendered.SubTypeGeneration.GetDefault(getter: false)}");
+                        }
+
+                        if (callName == "Factory" && MergesIntoExisting(gendered))
+                        {
+                            args.Add($"existing: _{typeGen.Name}Overlay");
+                            args.Add("merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; }");
                         }
                     }
                 }
