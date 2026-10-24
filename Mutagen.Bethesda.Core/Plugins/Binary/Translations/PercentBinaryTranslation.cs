@@ -61,16 +61,16 @@ public static class PercentBinaryTranslation
         switch (integerType)
         {
             case FloatIntegerType.UInt:
-                writer.Write((uint)(item.Value * uint.MaxValue));
+                writer.Write((uint)Math.Round(item.Value * uint.MaxValue));
                 return;
             case FloatIntegerType.UShort:
-                writer.Write((ushort)(item.Value * ushort.MaxValue));
+                writer.Write((ushort)Math.Round(item.Value * ushort.MaxValue));
                 return;
             case FloatIntegerType.Byte:
-                writer.Write((byte)(item.Value * byte.MaxValue));
+                writer.Write((byte)Math.Round(item.Value * byte.MaxValue));
                 return;
             case FloatIntegerType.ByteHundred:
-                writer.Write((byte)(item.Value * 100));
+                writer.Write((byte)Math.Round(item.Value * 100));
                 return;
             default:
                 throw new NotImplementedException();

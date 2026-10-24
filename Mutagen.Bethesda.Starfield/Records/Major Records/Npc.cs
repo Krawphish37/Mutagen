@@ -202,7 +202,7 @@ partial class NpcBinaryWriteTranslation
             case IPcLevelMultGetter levelMult:
                 var f = levelMult.LevelMult;
                 f *= 1000;
-                writer.Write((ushort)f);
+                writer.Write((ushort)Math.Round(f));
                 break;
             case INpcLevelGetter level:
                 writer.Write(level.Level);
