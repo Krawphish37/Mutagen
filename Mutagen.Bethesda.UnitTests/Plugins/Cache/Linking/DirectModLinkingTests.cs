@@ -1,8 +1,10 @@
 using Mutagen.Bethesda.Plugins;
+using Mutagen.Bethesda.Plugins.Aspects;
 using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Testing;
+using Mutagen.Bethesda.UnitTests.Plugins.Cache.Linking.Helpers;
 using Xunit;
 
 #nullable disable
@@ -383,5 +385,69 @@ public partial class ALinkingTests
         {
             Assert.True(package.TryResolve<INpcGetter>(TestFileEditorID.ToLower(), out var rec));
         });
+    }
+
+    [Theory]
+    [InlineData(LinkCachePreferences.RetentionType.OnlyIdentifiers)]
+    [InlineData(LinkCachePreferences.RetentionType.WholeRecord)]
+    public void EditorIdCaseDifferencesAllQueryForms(LinkCachePreferences.RetentionType cacheType)
+    {
+        var prototype = new SkyrimMod(TestConstants.PluginModKey, SkyrimRelease.SkyrimLE, forceUseLowerFormIDRanges: false);
+        var objEffect = prototype.ObjectEffects.AddNew("EditorID1");
+        using var disp = ConvertMod(prototype, out var mod);
+        var (style, package) = GetLinkCache(mod, cacheType);
+
+        foreach (var editorId in new[] { objEffect.EditorID.ToUpperInvariant(), objEffect.EditorID.ToLowerInvariant() })
+        {
+            WrapPotentialThrow(cacheType, style, null, () =>
+            {
+                Assert.True(TryTest<IEffectRecord, IEffectRecordGetter>(package, editorId, out var rec));
+                Assert.Equal(objEffect.FormKey, rec.FormKey);
+            });
+            WrapPotentialThrow(cacheType, style, null, () =>
+            {
+                Assert.True(TryTest<INamed, INamedGetter>(package, editorId, out var rec));
+                Assert.Equal(objEffect.FormKey, ((IMajorRecordGetter)rec).FormKey);
+            });
+            WrapPotentialThrow(cacheType, style, null, () =>
+            {
+                Assert.True(package.TryResolve(editorId, out var rec));
+                Assert.Equal(objEffect.FormKey, rec.FormKey);
+            });
+            if (cacheType == LinkCachePreferences.RetentionType.WholeRecord)
+            {
+                Assert.True(package.TryResolveContext(editorId, out var context));
+                Assert.Equal(objEffect.FormKey, context.Record.FormKey);
+            }
+            WrapPotentialThrow(cacheType, style, null, () =>
+            {
+                Assert.True(TryTest<IMajorRecord, IMajorRecordGetter>(package, editorId, out var rec));
+                Assert.Equal(objEffect.FormKey, rec.FormKey);
+            });
+            WrapPotentialThrow(cacheType, style, null, () =>
+            {
+                Assert.True(TryTest<IObjectEffect, IObjectEffectGetter>(package, editorId, out var rec));
+                Assert.Equal(objEffect.FormKey, rec.FormKey);
+            });
+            WrapPotentialThrow(cacheType, style, null, () =>
+            {
+                Assert.True(package.TryResolve(editorId, typeof(IObjectEffectGetter), out var rec));
+                Assert.Equal(objEffect.FormKey, rec.FormKey);
+            });
+            WrapPotentialThrow(cacheType, style, new SimpleContextRetriever(), () =>
+            {
+                Assert.True(package.TryResolveSimpleContext<IObjectEffectGetter>(editorId, out var context));
+                Assert.Equal(objEffect.FormKey, context.Record.FormKey);
+            });
+            WrapPotentialThrow(cacheType, style, new SimpleContextRetriever(), () =>
+            {
+                Assert.True(package.TryResolveSimpleContext(editorId, out var context));
+                Assert.Equal(objEffect.FormKey, context.Record.FormKey);
+            });
+            Assert.True(package.TryResolveIdentifier(editorId, out var formKey));
+            Assert.Equal(objEffect.FormKey, formKey);
+            Assert.True(package.TryResolveIdentifier<IObjectEffectGetter>(editorId, out formKey));
+            Assert.Equal(objEffect.FormKey, formKey);
+        }
     }
 }

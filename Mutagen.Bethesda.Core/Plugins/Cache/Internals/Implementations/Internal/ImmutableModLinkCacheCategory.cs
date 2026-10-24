@@ -41,7 +41,7 @@ internal sealed class ImmutableModLinkCacheCategory<TKey>
 
     protected IReadOnlyCache<LinkCacheItem, TKey> ConstructUntypedCache()
     {
-        var majorRecords = new Cache<LinkCacheItem, TKey>(x => _keyGetter(x).Value);
+        var majorRecords = new Cache<LinkCacheItem, TKey>(x => _keyGetter(x).Value, _equalityComparer);
         foreach (var majorRec in _parent._sourceMod.EnumerateMajorRecords()
                      // ToDo
                      // Capture and expose errors optionally via TryResolve /w out param
@@ -110,7 +110,7 @@ internal sealed class ImmutableModLinkCacheCategory<TKey>
                     {
                         throw new ArgumentException($"A lookup was queried for an unregistered type: {type.Name}");
                     }
-                    var majorRecords = new Cache<LinkCacheItem, TKey>(x => _keyGetter(x).Value);
+                    var majorRecords = new Cache<LinkCacheItem, TKey>(x => _keyGetter(x).Value, _equalityComparer);
                     foreach (var regis in objs.Registrations)
                     {
                         if (!regis.ClassType.InheritsFrom(typeof(MajorRecord))) continue;

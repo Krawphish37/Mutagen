@@ -40,7 +40,8 @@ public sealed class ImmutableModLinkCache : ILinkCache
             metaInterfaceMapGetter: prefs?.MetaInterfaceMapGetterOverride ?? MetaInterfaceMapping.Instance,
             contextEnumerable: sourceMod,
             keyGetter: m => TryGet<FormKey>.Succeed(m.FormKey),
-            shortCircuit: f => f.IsNull);
+            shortCircuit: f => f.IsNull,
+            equalityComparer: null);
         _editorIdContexts = new ImmutableModLinkCacheSimpleContextCategory<string>(
             simple: simple,
             linkCache: this,
@@ -52,7 +53,8 @@ public sealed class ImmutableModLinkCache : ILinkCache
                 var edid = m.EditorID;
                 return TryGet<string>.Create(successful: !string.IsNullOrWhiteSpace(edid), edid!);
             },
-            shortCircuit: e => e.IsNullOrWhitespace());
+            shortCircuit: e => e.IsNullOrWhitespace(),
+            equalityComparer: StringComparer.OrdinalIgnoreCase);
     }
 
     public void Dispose()
@@ -812,7 +814,8 @@ public sealed class ImmutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, T
             parent: this,
             metaInterfaceMapGetter: prefs.MetaInterfaceMapGetterOverride ?? MetaInterfaceMapping.Instance,
             keyGetter: m => TryGet<FormKey>.Succeed(m.FormKey),
-            shortCircuit: f => f.IsNull);
+            shortCircuit: f => f.IsNull,
+            equalityComparer: null);
         _editorIdContexts = new ImmutableModLinkCacheContextCategory<TMod, TModGetter, string>(
             parent: this,
             metaInterfaceMapGetter: prefs.MetaInterfaceMapGetterOverride ?? MetaInterfaceMapping.Instance,
@@ -821,7 +824,8 @@ public sealed class ImmutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, T
                 var edid = m.EditorID;
                 return TryGet<string>.Create(successful: !string.IsNullOrWhiteSpace(edid), edid!);
             },
-            shortCircuit: e => e.IsNullOrWhitespace());
+            shortCircuit: e => e.IsNullOrWhitespace(),
+            equalityComparer: StringComparer.OrdinalIgnoreCase);
     }
 
     private void CheckDisposal()
