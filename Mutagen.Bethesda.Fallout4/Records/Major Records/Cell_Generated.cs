@@ -3583,10 +3583,45 @@ namespace Mutagen.Bethesda.Fallout4
                 case "ICellCombinedMeshReferenceGetter":
                 case "ICellCombinedMeshReference":
                     break;
+                case "IExplodeSpawn":
+                case "IExplodeSpawnGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IExplodeSpawnGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IExplodeSpawnGetter);
+                    break;
+                case "IKeywordLinkedReference":
+                case "IKeywordLinkedReferenceGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IKeywordLinkedReferenceGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IKeywordLinkedReferenceGetter);
+                    break;
                 case "IPlaced":
                 case "IPlacedGetter":
                     obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey));
                     obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey));
+                    break;
+                case "IPlacedSimple":
+                case "IPlacedSimpleGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedSimpleGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedSimpleGetter);
+                    break;
+                case "IPlacedThing":
+                case "IPlacedThingGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedThingGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedThingGetter);
+                    break;
+                case "IPreCutMapEntryReference":
+                case "IPreCutMapEntryReferenceGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPreCutMapEntryReferenceGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPreCutMapEntryReferenceGetter);
+                    {
+                        if (obj.Landscape is {} Landscapeitem)
+                        {
+                            Landscapeitem.Remove(keys, type, throwIfUnknown: false);
+                            if (keys.Contains(Landscapeitem.FormKey))
+                            {
+                                obj.Landscape = null;
+                            }
+                        }
+                    }
                     break;
                 case "Landscape":
                 case "ILandscapeGetter":

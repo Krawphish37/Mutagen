@@ -7289,8 +7289,10 @@ namespace Mutagen.Bethesda.Fallout3
                     break;
                 case "ICellOrWorldspace":
                 case "ICellOrWorldspaceGetter":
-                    Remove(obj, keys, typeof(IWorldspaceGetter), throwIfUnknown: throwIfUnknown);
                     obj.Cells.Remove(
+                        type: type,
+                        keys: keys);
+                    obj.Worldspaces.Remove(
                         type: type,
                         keys: keys);
                     break;

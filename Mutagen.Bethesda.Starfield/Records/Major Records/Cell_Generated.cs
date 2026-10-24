@@ -3728,10 +3728,45 @@ namespace Mutagen.Bethesda.Starfield
                 case "ICellXCLAItemGetter":
                 case "ICellXCLAItem":
                     break;
+                case "IBiomeObjectPackInTarget":
+                case "IBiomeObjectPackInTargetGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IBiomeObjectPackInTargetGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IBiomeObjectPackInTargetGetter);
+                    break;
+                case "ICellOrObject":
+                case "ICellOrObjectGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is ICellOrObjectGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is ICellOrObjectGetter);
+                    break;
+                case "IKeywordLinkedReference":
+                case "IKeywordLinkedReferenceGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IKeywordLinkedReferenceGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IKeywordLinkedReferenceGetter);
+                    break;
+                case "IOwner":
+                case "IOwnerGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IOwnerGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IOwnerGetter);
+                    break;
                 case "IPlaced":
                 case "IPlacedGetter":
                     obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey));
                     obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey));
+                    break;
+                case "IPlacedSimple":
+                case "IPlacedSimpleGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedSimpleGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedSimpleGetter);
+                    break;
+                case "IPlacedThing":
+                case "IPlacedThingGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedThingGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedThingGetter);
+                    break;
+                case "ITraversalTarget":
+                case "ITraversalTargetGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is ITraversalTargetGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is ITraversalTargetGetter);
                     break;
                 case "LinkedReferences":
                 case "ILinkedReferencesGetter":

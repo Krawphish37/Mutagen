@@ -2403,6 +2403,16 @@ namespace Mutagen.Bethesda.Oblivion
                     obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey));
                     obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey));
                     obj.VisibleWhenDistant.RemoveWhere(i => keys.Contains(i.FormKey));
+                    {
+                        if (obj.Landscape is {} Landscapeitem)
+                        {
+                            Landscapeitem.Remove(keys, type, throwIfUnknown: false);
+                            if (keys.Contains(Landscapeitem.FormKey))
+                            {
+                                obj.Landscape = null;
+                            }
+                        }
+                    }
                     break;
                 case "Landscape":
                 case "ILandscapeGetter":

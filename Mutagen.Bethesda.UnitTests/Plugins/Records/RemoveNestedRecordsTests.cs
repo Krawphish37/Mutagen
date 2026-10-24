@@ -1,12 +1,16 @@
 ﻿using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Aspects;
 using Mutagen.Bethesda.Plugins.Records;
+using Mutagen.Bethesda.Fallout4;
+using Mutagen.Bethesda.Oblivion;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Starfield;
 using Mutagen.Bethesda.Testing;
 using Xunit;
 using SK = Mutagen.Bethesda.Skyrim;
 using SF = Mutagen.Bethesda.Starfield;
+using F4 = Mutagen.Bethesda.Fallout4;
+using OB = Mutagen.Bethesda.Oblivion;
 
 namespace Mutagen.Bethesda.UnitTests.Plugins.Records;
 
@@ -367,6 +371,137 @@ public class RemoveNestedRecordsTests
         w.Mod.Quests.Remove(w.Scene.FormKey, typeof(IMajorRecordGetter));
         Assert.Empty(w.Quest.Scenes);
         Assert.True(Contains(w.Mod, w.Quest.FormKey));
+    }
+
+    [Fact]
+    public void Skyrim_ListedLinkInterface_Cells()
+    {
+        var w = GetSkyrimWorld();
+        Assert.IsAssignableFrom<SK.IComplexLocationGetter>(w.TopCell);
+        w.Mod.Remove(w.TopCell.FormKey, typeof(SK.IComplexLocationGetter));
+        Assert.Null(w.Worldspace.TopCell);
+        Assert.False(Contains(w.Mod, w.TopCellRef.FormKey));
+        Assert.True(Contains(w.Mod, w.ExteriorCell.FormKey));
+
+        w.Mod.Remove(w.ExteriorCell.FormKey, typeof(SK.IComplexLocation));
+        Assert.False(Contains(w.Mod, w.ExteriorCell.FormKey));
+        Assert.False(Contains(w.Mod, w.ExteriorRef.FormKey));
+        Assert.True(Contains(w.Mod, w.Worldspace.FormKey));
+    }
+
+    [Fact]
+    public void Skyrim_ListedLinkInterface_Cells_OnWorldspace()
+    {
+        var w = GetSkyrimWorld();
+        w.Worldspace.Remove(w.ExteriorCell.FormKey, typeof(SK.IComplexLocationGetter));
+        Assert.False(Contains(w.Mod, w.ExteriorCell.FormKey));
+        w.Worldspace.Remove(w.TopCell.FormKey, typeof(SK.IComplexLocationGetter));
+        Assert.Null(w.Worldspace.TopCell);
+    }
+
+    [Fact]
+    public void Starfield_ListedLinkInterface_InteriorCell()
+    {
+        var w = GetStarfieldWorld();
+        Assert.IsAssignableFrom<SF.ICellOrObjectGetter>(w.InteriorCell);
+        w.Mod.Remove(w.InteriorCell.FormKey, typeof(SF.ICellOrObjectGetter));
+        Assert.False(Contains(w.Mod, w.InteriorCell.FormKey));
+        Assert.False(Contains(w.Mod, w.InteriorRef.FormKey));
+        Assert.Empty(w.Mod.Cells.Records.SelectMany(b => b.SubBlocks));
+        Assert.True(Contains(w.Mod, w.ExteriorCell.FormKey));
+        Assert.True(Contains(w.Mod, w.TopCell.FormKey));
+    }
+
+    [Fact]
+    public void Starfield_ListedLinkInterface_TopCell()
+    {
+        foreach (var type in new[] { typeof(SF.ICellOrObjectGetter), typeof(SF.IComplexLocationGetter), typeof(SF.ISpaceCellSpawnGetter) })
+        {
+            var w = GetStarfieldWorld();
+            w.Mod.Remove(w.TopCell.FormKey, type);
+            Assert.Null(w.Worldspace.TopCell);
+            Assert.False(Contains(w.Mod, w.TopCellNpc.FormKey));
+            Assert.True(Contains(w.Mod, w.ExteriorCell.FormKey));
+            Assert.True(Contains(w.Mod, w.Worldspace.FormKey));
+        }
+    }
+
+    [Fact]
+    public void Starfield_ListedLinkInterface_ExteriorCell()
+    {
+        foreach (var type in new[] { typeof(SF.ICellOrObjectGetter), typeof(SF.IComplexLocationGetter) })
+        {
+            var w = GetStarfieldWorld();
+            w.Mod.Remove(w.ExteriorCell.FormKey, type);
+            Assert.False(Contains(w.Mod, w.ExteriorCell.FormKey));
+            Assert.False(Contains(w.Mod, w.ExteriorRef.FormKey));
+            Assert.Same(w.TopCell, w.Worldspace.TopCell);
+            Assert.True(Contains(w.Mod, w.Worldspace.FormKey));
+
+            w = GetStarfieldWorld();
+            w.Worldspace.Remove(w.ExteriorCell.FormKey, type);
+            Assert.False(Contains(w.Mod, w.ExteriorCell.FormKey));
+            Assert.Same(w.TopCell, w.Worldspace.TopCell);
+        }
+    }
+
+    [Fact]
+    public void Starfield_ListedLinkInterface_ReferenceOfOtherTypeUntouched()
+    {
+        var w = GetStarfieldWorld();
+        var npc = new SF.PlacedNpc(w.Mod.GetNextFormKey(), SF.StarfieldRelease.Starfield);
+        Assert.False(npc is SF.ICellOrObjectGetter);
+        w.InteriorCell.Temporary.Add(npc);
+        w.InteriorCell.Remove(new[] { npc.FormKey, w.InteriorRef.FormKey }, typeof(SF.ICellOrObjectGetter));
+        Assert.Equal(new SF.IPlaced[] { w.OtherInteriorRef, npc }, w.InteriorCell.Temporary);
+
+        w.Mod.Remove(w.ExteriorNpc.FormKey, typeof(SF.ICellOrObjectGetter));
+        Assert.True(Contains(w.Mod, w.ExteriorNpc.FormKey));
+    }
+
+    [Fact]
+    public void Fallout4_ListedLinkInterface_Cells()
+    {
+        var release = F4.Fallout4Release.Fallout4;
+        var mod = new F4.Fallout4Mod(TestConstants.PluginModKey, release);
+        var worldspace = mod.Worldspaces.AddNew();
+        var topCell = new F4.Cell(mod.GetNextFormKey(), release);
+        worldspace.TopCell = topCell;
+        var exteriorCell = new F4.Cell(mod.GetNextFormKey(), release);
+        var landscape = new F4.Landscape(mod.GetNextFormKey(), release);
+        exteriorCell.Landscape = landscape;
+        worldspace.SubCells.Add(new F4.WorldspaceBlock() { Items = { new F4.WorldspaceSubBlock() { Items = { exteriorCell } } } });
+
+        Assert.IsAssignableFrom<F4.IPreCutMapEntryReferenceGetter>(landscape);
+        mod.Remove(landscape.FormKey, typeof(F4.IPreCutMapEntryReferenceGetter));
+        Assert.Null(exteriorCell.Landscape);
+
+        mod.Remove(exteriorCell.FormKey, typeof(F4.IComplexLocationGetter));
+        Assert.False(Contains(mod, exteriorCell.FormKey));
+        mod.Remove(topCell.FormKey, typeof(F4.IComplexLocationGetter));
+        Assert.Null(worldspace.TopCell);
+        Assert.True(Contains(mod, worldspace.FormKey));
+    }
+
+    [Fact]
+    public void Oblivion_ListedLinkInterface_Landscape()
+    {
+        var release = OB.OblivionRelease.Oblivion;
+        var mod = new OB.OblivionMod(TestConstants.PluginModKey, release);
+        var worldspace = mod.Worldspaces.AddNew();
+        var exteriorCell = new OB.Cell(mod.GetNextFormKey(), release);
+        var landscape = new OB.Landscape(mod.GetNextFormKey(), release);
+        exteriorCell.Landscape = landscape;
+        worldspace.SubCells.Add(new OB.WorldspaceBlock() { Items = { new OB.WorldspaceSubBlock() { Items = { exteriorCell } } } });
+
+        Assert.IsAssignableFrom<OB.IPlacedGetter>(landscape);
+        mod.Remove(landscape.FormKey, typeof(OB.IPlacedGetter));
+        Assert.Null(exteriorCell.Landscape);
+        Assert.True(Contains(mod, exteriorCell.FormKey));
+
+        exteriorCell.Landscape = landscape;
+        exteriorCell.Remove(landscape.FormKey, typeof(OB.IPlaced));
+        Assert.Null(exteriorCell.Landscape);
     }
 }
 #pragma warning restore CS0618

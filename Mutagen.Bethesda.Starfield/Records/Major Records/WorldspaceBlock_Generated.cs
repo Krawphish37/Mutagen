@@ -1370,6 +1370,7 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         subItem.Remove(keys, type, throwIfUnknown: false);
                     }
+                    obj.Items.RemoveWhere(i => i.Items.Count == 0);
                     break;
                 case "IComplexLocation":
                 case "IComplexLocationGetter":
@@ -1377,6 +1378,7 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         subItem.Remove(keys, type, throwIfUnknown: false);
                     }
+                    obj.Items.RemoveWhere(i => i.Items.Count == 0);
                     break;
                 case "IKeywordLinkedReference":
                 case "IKeywordLinkedReferenceGetter":
@@ -1419,6 +1421,7 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         subItem.Remove(keys, type, throwIfUnknown: false);
                     }
+                    obj.Items.RemoveWhere(i => i.Items.Count == 0);
                     break;
                 case "ITraversalTarget":
                 case "ITraversalTargetGetter":

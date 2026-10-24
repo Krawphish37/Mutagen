@@ -3472,6 +3472,10 @@ namespace Mutagen.Bethesda.Starfield
                         if (obj.TopCell is {} TopCellitem)
                         {
                             TopCellitem.Remove(keys, type, throwIfUnknown: false);
+                            if (keys.Contains(TopCellitem.FormKey))
+                            {
+                                obj.TopCell = null;
+                            }
                         }
                     }
                     break;
@@ -3480,6 +3484,16 @@ namespace Mutagen.Bethesda.Starfield
                     foreach (var subItem in obj.SubCells)
                     {
                         subItem.Remove(keys, type, throwIfUnknown: false);
+                    }
+                    {
+                        if (obj.TopCell is {} TopCellitem)
+                        {
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
+                            if (keys.Contains(TopCellitem.FormKey))
+                            {
+                                obj.TopCell = null;
+                            }
+                        }
                     }
                     break;
                 case "IKeywordLinkedReference":
@@ -3552,6 +3566,16 @@ namespace Mutagen.Bethesda.Starfield
                     foreach (var subItem in obj.SubCells)
                     {
                         subItem.Remove(keys, type, throwIfUnknown: false);
+                    }
+                    {
+                        if (obj.TopCell is {} TopCellitem)
+                        {
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
+                            if (keys.Contains(TopCellitem.FormKey))
+                            {
+                                obj.TopCell = null;
+                            }
+                        }
                     }
                     break;
                 case "ITraversalTarget":

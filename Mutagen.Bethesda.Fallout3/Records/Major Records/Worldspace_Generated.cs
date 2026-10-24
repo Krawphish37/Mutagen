@@ -2606,6 +2606,16 @@ namespace Mutagen.Bethesda.Fallout3
                     {
                         subItem.Remove(keys, type, throwIfUnknown: false);
                     }
+                    {
+                        if (obj.TopCell is {} TopCellitem)
+                        {
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
+                            if (keys.Contains(TopCellitem.FormKey))
+                            {
+                                obj.TopCell = null;
+                            }
+                        }
+                    }
                     break;
                 case "IPlaced":
                 case "IPlacedGetter":

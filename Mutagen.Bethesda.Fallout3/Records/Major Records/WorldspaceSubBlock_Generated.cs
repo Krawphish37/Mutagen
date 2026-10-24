@@ -1316,6 +1316,14 @@ namespace Mutagen.Bethesda.Fallout3
                         subItem.Remove(keys, type, throwIfUnknown: false);
                     }
                     break;
+                case "ICellOrWorldspace":
+                case "ICellOrWorldspaceGetter":
+                    obj.Items.RemoveWhere(i => keys.Contains(i.FormKey));
+                    foreach (var subItem in obj.Items)
+                    {
+                        subItem.Remove(keys, type, throwIfUnknown: false);
+                    }
+                    break;
                 case "IPlaced":
                 case "IPlacedGetter":
                     foreach (var subItem in obj.Items)

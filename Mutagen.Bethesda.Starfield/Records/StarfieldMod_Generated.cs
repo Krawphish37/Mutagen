@@ -11780,8 +11780,10 @@ namespace Mutagen.Bethesda.Starfield
                     break;
                 case "IComplexLocation":
                 case "IComplexLocationGetter":
-                    Remove(obj, keys, typeof(IWorldspaceGetter), throwIfUnknown: throwIfUnknown);
                     obj.Cells.Remove(
+                        type: type,
+                        keys: keys);
+                    obj.Worldspaces.Remove(
                         type: type,
                         keys: keys);
                     break;
