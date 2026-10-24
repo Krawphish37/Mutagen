@@ -1965,7 +1965,7 @@ public sealed class MutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, TMo
     /// <inheritdoc />
     public IEnumerable<IModContext<IMajorRecordGetter>> ResolveAllSimpleContexts(IFormLinkIdentifier formLink, ResolveTarget target = ResolveTarget.Winner)
     {
-        return ResolveAllSimpleContexts(formLink, target);
+        return ResolveAllSimpleContexts(formLink.FormKey, formLink.Type, target);
     }
     
     /// <inheritdoc />

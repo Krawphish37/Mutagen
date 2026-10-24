@@ -1493,29 +1493,26 @@ public sealed class ImmutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, T
 
     public bool TryResolveSimpleContext(string editorId, Type type, [MaybeNullWhen(false)] out IModContext<IMajorRecordGetter> majorRec)
     {
-        if (TryResolveContext(editorId, type, out var context))
-        {
-            majorRec = context;
-            return true;
-        }
-
-        majorRec = default;
-        return false;
+        CheckDisposal();
+        return _editorIdContexts.TryResolveSimpleContext(editorId, type, out majorRec);
     }
 
     public IModContext<IMajorRecordGetter> ResolveSimpleContext(FormKey formKey, ResolveTarget target)
     {
-        return ResolveContext(formKey, target);
+        if (TryResolveSimpleContext(formKey, out var majorRec, target)) return majorRec;
+        throw new MissingRecordException(formKey, typeof(IMajorRecordGetter));
     }
 
     public IModContext<IMajorRecordGetter> ResolveSimpleContext(string editorId)
     {
-        return ResolveContext(editorId);
+        if (TryResolveSimpleContext(editorId, out var majorRec)) return majorRec;
+        throw new MissingRecordException(editorId, typeof(IMajorRecordGetter));
     }
 
     public IModContext<IMajorRecordGetter> ResolveSimpleContext(FormKey formKey, Type type, ResolveTarget target)
     {
-        return ResolveContext(formKey, type, target);
+        if (TryResolveSimpleContext(formKey, type, out var commonRec, target)) return commonRec;
+        throw new MissingRecordException(formKey, type);
     }
 
     public IModContext<IMajorRecordGetter> ResolveSimpleContext(IFormLinkIdentifier formLink, ResolveTarget target)
@@ -1531,7 +1528,8 @@ public sealed class ImmutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, T
 
     public IModContext<IMajorRecordGetter> ResolveSimpleContext(string editorId, Type type)
     {
-        return ResolveContext(editorId, type);
+        if (TryResolveSimpleContext(editorId, type, out var commonRec)) return commonRec;
+        throw new MissingRecordException(editorId, type);
     }
 
     public IModContext<TMajor> ResolveSimpleContext<TMajor>(FormKey formKey, ResolveTarget target = ResolveTarget.Winner) 
@@ -1559,7 +1557,10 @@ public sealed class ImmutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, T
 
     public IEnumerable<IModContext<IMajorRecordGetter>> ResolveAllSimpleContexts(FormKey formKey, Type type, ResolveTarget target)
     {
-        return ResolveAllContexts(formKey, type, target);
+        if (TryResolveSimpleContext(formKey, type, out var rec, target))
+        {
+            yield return rec;
+        }
     }
 
     public IEnumerable<IModContext<IMajorRecordGetter>> ResolveAllSimpleContexts(IFormLinkIdentifier formLink, ResolveTarget target)
