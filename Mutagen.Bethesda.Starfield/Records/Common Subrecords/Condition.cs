@@ -84,6 +84,7 @@ public partial class Condition
         FormType,
         Furniture,
         FurnitureEntry,
+        GameplayOption,
         Global,
         IdleForm,
         Integer,
@@ -732,6 +733,10 @@ public partial class Condition
         GetShipReactorClass = 957,
         ShipReactorHasClassKeyword = 958,
         EPIsResistanceActorValue = 960,
+        GetGameplayOptionCurrentValue = 961,
+        IsInVehicle = 965,
+        AreVehiclesUnlocked = 966,
+        IsLevelGreaterThanGameplayOption = 967,
     }
 
     public static (ParameterType First, ParameterType Second) GetParameterTypes(Function function)
@@ -1032,6 +1037,8 @@ public partial class Condition
             955 => (ParameterType.Keyword, ParameterType.Integer),
             958 => (ParameterType.Keyword, ParameterType.None),
             960 => (ParameterType.ActorValue, ParameterType.None),
+            961 => (ParameterType.GameplayOption, ParameterType.None),
+            967 => (ParameterType.GameplayOption, ParameterType.None),
             _ => (ParameterType.None, ParameterType.None),
         };
     }
@@ -2389,6 +2396,14 @@ partial class ConditionBinaryCreateTranslation
                 return ShipReactorHasClassKeywordConditionData.CreateFromBinary(frame);
             case 960:
                 return EPIsResistanceActorValueConditionData.CreateFromBinary(frame);
+            case 961:
+                return GetGameplayOptionCurrentValueConditionData.CreateFromBinary(frame);
+            case 965:
+                return IsInVehicleConditionData.CreateFromBinary(frame);
+            case 966:
+                return AreVehiclesUnlockedConditionData.CreateFromBinary(frame);
+            case 967:
+                return IsLevelGreaterThanGameplayOptionConditionData.CreateFromBinary(frame);
             default:
                 return null;
         }

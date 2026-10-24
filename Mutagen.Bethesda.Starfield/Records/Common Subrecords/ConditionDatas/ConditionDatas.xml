@@ -5001,4 +5001,36 @@
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
     </Fields>
   </Object>
+  <Object name="GetGameplayOptionCurrentValueConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
+    <Fields>
+      <FormLinkOrIndex refName="GameplayOption" name="FirstParameter" />
+      <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
+      <Int32 name="SecondParameter" />
+      <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
+    </Fields>
+  </Object>
+  <Object name="IsInVehicleConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
+    <Fields>
+      <Int32 name="FirstParameter" />
+      <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
+      <Int32 name="SecondParameter" />
+      <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
+    </Fields>
+  </Object>
+  <Object name="AreVehiclesUnlockedConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
+    <Fields>
+      <Int32 name="FirstParameter" />
+      <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
+      <Int32 name="SecondParameter" />
+      <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
+    </Fields>
+  </Object>
+  <Object name="IsLevelGreaterThanGameplayOptionConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
+    <Fields>
+      <FormLinkOrIndex refName="GameplayOption" name="FirstParameter" />
+      <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
+      <Int32 name="SecondParameter" />
+      <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
+    </Fields>
+  </Object>
 </Loqui>
