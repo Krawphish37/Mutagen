@@ -248,7 +248,10 @@ partial class QuestBinaryWriteTranslation
                         case IQuestLocationAliasGetter locAlias:
                             return locAlias.ID;
                         case IQuestCollectionAliasGetter collAlias:
-                            return default(UInt32);
+                            return collAlias.Collection
+                                .Select(x => (uint)x.AliasID)
+                                .StartWith((uint)0)
+                                .Max();
                         default:
                             throw new NotImplementedException();
                     }
