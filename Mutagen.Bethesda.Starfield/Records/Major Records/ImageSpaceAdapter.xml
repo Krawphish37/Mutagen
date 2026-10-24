@@ -2,7 +2,7 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="ImageSpaceAdapter" recordType="IMAD" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
-      <ByteArray name="REFL" recordType="REFL" unknown="true" />
+      <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
     </Fields>
   </Object>
 </Loqui>
