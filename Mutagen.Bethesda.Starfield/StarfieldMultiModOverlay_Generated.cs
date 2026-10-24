@@ -55,6 +55,7 @@ internal class StarfieldMultiModOverlay : IStarfieldModDisposableGetter
     private MergedGroup<IObjectEffectGetter>? _objectEffects;
     private MergedGroup<ISpellGetter>? _spells;
     private MergedGroup<IActivatorGetter>? _activators;
+    private MergedGroup<ITalkingActivatorGetter>? _talkingActivators;
     private MergedGroup<ICurveTableGetter>? _curveTables;
     private MergedGroup<ICurve3DGetter>? _curve3Ds;
     private MergedGroup<IArmorGetter>? _armors;
@@ -133,6 +134,7 @@ internal class StarfieldMultiModOverlay : IStarfieldModDisposableGetter
     private MergedGroup<IStoryManagerEventNodeGetter>? _storyManagerEventNodes;
     private MergedGroup<IMusicTrackGetter>? _musicTracks;
     private MergedGroup<IEquipTypeGetter>? _equipTypes;
+    private MergedGroup<IRelationshipGetter>? _relationships;
     private MergedGroup<IOutfitGetter>? _outfits;
     private MergedGroup<IArtObjectGetter>? _artObjects;
     private MergedGroup<IMovementTypeGetter>? _movementTypes;
@@ -317,6 +319,9 @@ internal class StarfieldMultiModOverlay : IStarfieldModDisposableGetter
     public IStarfieldGroupGetter<IActivatorGetter> Activators =>
         _activators ??= new MergedGroup<IActivatorGetter>(
             _sourceMods.Select(m => m.Activators));
+    public IStarfieldGroupGetter<ITalkingActivatorGetter> TalkingActivators =>
+        _talkingActivators ??= new MergedGroup<ITalkingActivatorGetter>(
+            _sourceMods.Select(m => m.TalkingActivators));
     public IStarfieldGroupGetter<ICurveTableGetter> CurveTables =>
         _curveTables ??= new MergedGroup<ICurveTableGetter>(
             _sourceMods.Select(m => m.CurveTables));
@@ -551,6 +556,9 @@ internal class StarfieldMultiModOverlay : IStarfieldModDisposableGetter
     public IStarfieldGroupGetter<IEquipTypeGetter> EquipTypes =>
         _equipTypes ??= new MergedGroup<IEquipTypeGetter>(
             _sourceMods.Select(m => m.EquipTypes));
+    public IStarfieldGroupGetter<IRelationshipGetter> Relationships =>
+        _relationships ??= new MergedGroup<IRelationshipGetter>(
+            _sourceMods.Select(m => m.Relationships));
     public IStarfieldGroupGetter<IOutfitGetter> Outfits =>
         _outfits ??= new MergedGroup<IOutfitGetter>(
             _sourceMods.Select(m => m.Outfits));

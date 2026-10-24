@@ -80,6 +80,7 @@ internal class StarfieldLinkInterfaceMapping : IInterfaceMapping
                 Spell_Registration.Instance,
                 Static_Registration.Instance,
                 StaticCollection_Registration.Instance,
+                TalkingActivator_Registration.Instance,
                 Terminal_Registration.Instance,
                 TextureSet_Registration.Instance,
                 Water_Registration.Instance,

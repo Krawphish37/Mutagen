@@ -27,6 +27,7 @@
       <Group name="ObjectEffects" refName="ObjectEffect" />
       <Group name="Spells" refName="Spell" />
       <Group name="Activators" refName="Activator" />
+      <Group name="TalkingActivators" refName="TalkingActivator" />
       <Group name="CurveTables" refName="CurveTable" />
       <Group name="Curve3Ds" refName="Curve3D" />
       <Group name="Armors" refName="Armor" />
@@ -109,6 +110,7 @@
       <Group name="StoryManagerEventNodes" refName="StoryManagerEventNode" />
       <Group name="MusicTracks" refName="MusicTrack" />
       <Group name="EquipTypes" refName="EquipType" />
+      <Group name="Relationships" refName="Relationship" />
       <Group name="Outfits" refName="Outfit" />
       <Group name="ArtObjects" refName="ArtObject" />
       <Group name="MovementTypes" refName="MovementType" />
