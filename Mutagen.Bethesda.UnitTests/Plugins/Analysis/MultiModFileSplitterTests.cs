@@ -249,6 +249,32 @@ public class MultiModFileSplitterTests
     }
 
     [Theory, MutagenModAutoData]
+    public void Split_TooManyMastersMessageNamesGivenLimit(SkyrimMod inputMod)
+    {
+        // The exception message must report the master limit that was passed in, not the plugin format limit (254).
+        var formList = inputMod.FormLists.AddNew();
+        formList.EditorID = "MassiveFormList";
+
+        for (uint i = 0; i < 20; i++)
+        {
+            var masterKey = new ModKey($"Master_{i}", ModType.Plugin);
+            formList.Items.Add(new FormKey(masterKey, 0x800));
+        }
+
+        var sut = new MultiModFileSplitter();
+
+        var ex = Should.Throw<TooManyMastersException>(() =>
+        {
+            sut.Split<ISkyrimMod, ISkyrimModGetter>(inputMod, 10);
+        });
+        ex.CurrentMod.ShouldBe(inputMod.ModKey);
+        ex.Masters.Count.ShouldBe(20);
+        ex.Message.ShouldContain("20 masters");
+        ex.Message.ShouldContain("limit is 10");
+        ex.Message.ShouldNotContain("254");
+    }
+
+    [Theory, MutagenModAutoData]
     public void DialogResponsesFromManyMods_ShouldSplitSuccessfully(
         SkyrimMod inputMod, DirectoryPath existingOutputDirectory, IFileSystem fileSystem)
     {
