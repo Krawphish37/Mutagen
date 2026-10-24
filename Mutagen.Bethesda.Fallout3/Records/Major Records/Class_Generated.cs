@@ -2289,7 +2289,12 @@ namespace Mutagen.Bethesda.Fallout3
         public String? Icon => _IconLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _IconLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         private RangeInt32? _DATALocation;
-        public ReadOnlyMemorySlice<ActorValue> TagSkills => BinaryOverlayArrayHelper.EnumSliceFromFixedSize<ActorValue>(_recordData.Slice(_DATALocation!.Value.Min), amount: 4, enumLength: 4);
+        #region TagSkills
+        private int _TagSkillsLocation => _DATALocation!.Value.Min;
+        private bool _TagSkills_IsSet => _DATALocation.HasValue;
+        private readonly static ReadOnlyMemorySlice<ActorValue> _defaultTagSkills = ArrayExt.Create(4, default(ActorValue));
+        public ReadOnlyMemorySlice<ActorValue> TagSkills => _TagSkills_IsSet ? BinaryOverlayArrayHelper.EnumSliceFromFixedSize<ActorValue>(_recordData.Slice(_TagSkillsLocation), amount: 4, enumLength: 4) : _defaultTagSkills;
+        #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x10;
         private bool _Flags_IsSet => _DATALocation.HasValue;
@@ -2307,6 +2312,7 @@ namespace Mutagen.Bethesda.Fallout3
         {
             get
             {
+                if (!_Teaches_IsSet) return null;
                 var val = (Skill)_recordData.Span.Slice(_TeachesLocation, 0x1)[0];
                 if (((int)val) == -1) return null;
                 return val;
@@ -2327,10 +2333,10 @@ namespace Mutagen.Bethesda.Fallout3
         #region Attributes
         private int _AttributesLocation => _ATTRLocation!.Value.Min;
         private bool _Attributes_IsSet => _ATTRLocation.HasValue;
-        public IReadOnlyDictionary<Class.Attribute, Byte> Attributes => DictBinaryTranslation<Byte>.Instance.Parse<Class.Attribute>(
+        public IReadOnlyDictionary<Class.Attribute, Byte> Attributes => _Attributes_IsSet ? DictBinaryTranslation<Byte>.Instance.Parse<Class.Attribute>(
             new MutagenFrame(new MutagenMemoryReadStream(_recordData.Slice(_AttributesLocation), _package.MetaData)),
             new Dictionary<Class.Attribute, Byte>(),
-            ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse);
+            ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse) : new Dictionary<Class.Attribute, Byte>();
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,

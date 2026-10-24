@@ -8417,10 +8417,10 @@ namespace Mutagen.Bethesda.Skyrim
         #region Starting
         private int _StartingLocation => _DATALocation!.Value.Min + 0x24;
         private bool _Starting_IsSet => _DATALocation.HasValue;
-        public IReadOnlyDictionary<BasicStat, Single> Starting => DictBinaryTranslation<Single>.Instance.Parse<BasicStat>(
+        public IReadOnlyDictionary<BasicStat, Single> Starting => _Starting_IsSet ? DictBinaryTranslation<Single>.Instance.Parse<BasicStat>(
             new MutagenFrame(new MutagenMemoryReadStream(_recordData.Slice(_StartingLocation), _package.MetaData)),
             new Dictionary<BasicStat, Single>(),
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse) : new Dictionary<BasicStat, Single>();
         #endregion
         #region BaseCarryWeight
         private int _BaseCarryWeightLocation => _DATALocation!.Value.Min + 0x30;
@@ -8470,10 +8470,10 @@ namespace Mutagen.Bethesda.Skyrim
         #region Regen
         private int _RegenLocation => _DATALocation!.Value.Min + 0x54;
         private bool _Regen_IsSet => _DATALocation.HasValue;
-        public IReadOnlyDictionary<BasicStat, Single> Regen => DictBinaryTranslation<Single>.Instance.Parse<BasicStat>(
+        public IReadOnlyDictionary<BasicStat, Single> Regen => _Regen_IsSet ? DictBinaryTranslation<Single>.Instance.Parse<BasicStat>(
             new MutagenFrame(new MutagenMemoryReadStream(_recordData.Slice(_RegenLocation), _package.MetaData)),
             new Dictionary<BasicStat, Single>(),
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse) : new Dictionary<BasicStat, Single>();
         #endregion
         #region UnarmedDamage
         private int _UnarmedDamageLocation => _DATALocation!.Value.Min + 0x60;

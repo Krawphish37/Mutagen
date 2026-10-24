@@ -2344,6 +2344,7 @@ namespace Mutagen.Bethesda.Skyrim
         {
             get
             {
+                if (!_Teaches_IsSet) return null;
                 var val = (Skill)_recordData.Span.Slice(_TeachesLocation, 0x1)[0];
                 if (((int)val) == -1) return null;
                 return val;
@@ -2358,10 +2359,10 @@ namespace Mutagen.Bethesda.Skyrim
         #region SkillWeights
         private int _SkillWeightsLocation => _DATALocation!.Value.Min + 0x6;
         private bool _SkillWeights_IsSet => _DATALocation.HasValue;
-        public IReadOnlyDictionary<Skill, Byte> SkillWeights => DictBinaryTranslation<Byte>.Instance.Parse<Skill>(
+        public IReadOnlyDictionary<Skill, Byte> SkillWeights => _SkillWeights_IsSet ? DictBinaryTranslation<Byte>.Instance.Parse<Skill>(
             new MutagenFrame(new MutagenMemoryReadStream(_recordData.Slice(_SkillWeightsLocation), _package.MetaData)),
             new Dictionary<Skill, Byte>(),
-            ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse);
+            ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse) : new Dictionary<Skill, Byte>();
         #endregion
         #region BleedoutDefault
         private int _BleedoutDefaultLocation => _DATALocation!.Value.Min + 0x18;
@@ -2376,10 +2377,10 @@ namespace Mutagen.Bethesda.Skyrim
         #region StatWeights
         private int _StatWeightsLocation => _DATALocation!.Value.Min + 0x20;
         private bool _StatWeights_IsSet => _DATALocation.HasValue;
-        public IReadOnlyDictionary<BasicStat, Byte> StatWeights => DictBinaryTranslation<Byte>.Instance.Parse<BasicStat>(
+        public IReadOnlyDictionary<BasicStat, Byte> StatWeights => _StatWeights_IsSet ? DictBinaryTranslation<Byte>.Instance.Parse<BasicStat>(
             new MutagenFrame(new MutagenMemoryReadStream(_recordData.Slice(_StatWeightsLocation), _package.MetaData)),
             new Dictionary<BasicStat, Byte>(),
-            ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse);
+            ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse) : new Dictionary<BasicStat, Byte>();
         #endregion
         #region Unknown2
         private int _Unknown2Location => _DATALocation!.Value.Min + 0x23;

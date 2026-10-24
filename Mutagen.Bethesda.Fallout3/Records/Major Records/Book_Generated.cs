@@ -2620,6 +2620,7 @@ namespace Mutagen.Bethesda.Fallout3
         {
             get
             {
+                if (!_Skill_IsSet) return null;
                 var val = (Skill)_recordData.Span.Slice(_SkillLocation, 0x1)[0];
                 if (((int)val) == -1) return null;
                 return val;

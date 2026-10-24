@@ -4913,6 +4913,7 @@ namespace Mutagen.Bethesda.Fallout4
         {
             get
             {
+                if (!_UsesSkill_IsSet) return null;
                 var val = (Skill)_recordData.Span.Slice(_UsesSkillLocation, 0x1)[0];
                 if (((int)val) == -1) return null;
                 return val;
