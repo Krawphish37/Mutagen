@@ -195,15 +195,15 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region QDUPs
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<IFormLinkGetter<IDialogResponsesGetter>>? _QDUPs;
-        public ExtendedList<IFormLinkGetter<IDialogResponsesGetter>>? QDUPs
+        private ExtendedList<IFormLinkGetter<IStarfieldMajorRecordGetter>>? _QDUPs;
+        public ExtendedList<IFormLinkGetter<IStarfieldMajorRecordGetter>>? QDUPs
         {
             get => this._QDUPs;
             set => this._QDUPs = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<IFormLinkGetter<IDialogResponsesGetter>>? IQuestGetter.QDUPs => _QDUPs;
+        IReadOnlyList<IFormLinkGetter<IStarfieldMajorRecordGetter>>? IQuestGetter.QDUPs => _QDUPs;
         #endregion
 
         #endregion
@@ -2672,7 +2672,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<ILocationGetter> Location { get; set; }
         new IFormLinkNullable<IGlobalGetter> QuestTimeLimit { get; set; }
         new IFormLinkNullable<IQuestGetter> SourceQuest { get; set; }
-        new ExtendedList<IFormLinkGetter<IDialogResponsesGetter>>? QDUPs { get; set; }
+        new ExtendedList<IFormLinkGetter<IStarfieldMajorRecordGetter>>? QDUPs { get; set; }
         new ExtendedList<IFormLinkGetter<IGlobalGetter>> TextDisplayGlobals { get; }
         new String? Filter { get; set; }
         new String? Summary { get; set; }
@@ -2746,7 +2746,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<ILocationGetter> Location { get; }
         IFormLinkNullableGetter<IGlobalGetter> QuestTimeLimit { get; }
         IFormLinkNullableGetter<IQuestGetter> SourceQuest { get; }
-        IReadOnlyList<IFormLinkGetter<IDialogResponsesGetter>>? QDUPs { get; }
+        IReadOnlyList<IFormLinkGetter<IStarfieldMajorRecordGetter>>? QDUPs { get; }
         IReadOnlyList<IFormLinkGetter<IGlobalGetter>> TextDisplayGlobals { get; }
         String? Filter { get; }
         String? Summary { get; }
@@ -5759,8 +5759,8 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         item.QDUPs = 
                             rhs.QDUPs
-                                .Select(b => (IFormLinkGetter<IDialogResponsesGetter>)new FormLink<IDialogResponsesGetter>(b.FormKey))
-                            .ToExtendedList<IFormLinkGetter<IDialogResponsesGetter>>();
+                                .Select(b => (IFormLinkGetter<IStarfieldMajorRecordGetter>)new FormLink<IStarfieldMajorRecordGetter>(b.FormKey))
+                            .ToExtendedList<IFormLinkGetter<IStarfieldMajorRecordGetter>>();
                     }
                     else
                     {
@@ -6324,11 +6324,11 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.SourceQuest,
                 header: translationParams.ConvertToCustom(RecordTypes.QSRC));
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IDialogResponsesGetter>>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IStarfieldMajorRecordGetter>>.Instance.Write(
                 writer: writer,
                 items: item.QDUPs,
                 recordType: translationParams.ConvertToCustom(RecordTypes.QDUP),
-                transl: (MutagenWriter subWriter, IFormLinkGetter<IDialogResponsesGetter> subItem, TypedWriteParams conv) =>
+                transl: (MutagenWriter subWriter, IFormLinkGetter<IStarfieldMajorRecordGetter> subItem, TypedWriteParams conv) =>
                 {
                     FormLinkBinaryTranslation.Instance.Write(
                         writer: subWriter,
@@ -6628,10 +6628,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QDUPs = 
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IDialogResponsesGetter>>.Instance.Parse(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IStarfieldMajorRecordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
-                        .CastExtendedList<IFormLinkGetter<IDialogResponsesGetter>>();
+                        .CastExtendedList<IFormLinkGetter<IStarfieldMajorRecordGetter>>();
                     return (int)Quest_FieldIndex.QDUPs;
                 }
                 case RecordTypeInts.QTGL:
@@ -6911,7 +6911,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _SourceQuestLocation;
         public IFormLinkNullableGetter<IQuestGetter> SourceQuest => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IQuestGetter>(_package, _recordData, _SourceQuestLocation);
         #endregion
-        public IReadOnlyList<IFormLinkGetter<IDialogResponsesGetter>>? QDUPs { get; private set; }
+        public IReadOnlyList<IFormLinkGetter<IStarfieldMajorRecordGetter>>? QDUPs { get; private set; }
         public IReadOnlyList<IFormLinkGetter<IGlobalGetter>> TextDisplayGlobals { get; private set; } = [];
         #region Filter
         private int? _FilterLocation;
@@ -7103,12 +7103,12 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.QDUP:
                 {
-                    this.QDUPs = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<IDialogResponsesGetter>>(
+                    this.QDUPs = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<IStarfieldMajorRecordGetter>>(
                         stream: stream,
                         package: _package,
                         finalPos: finalPos,
                         itemLength: 4,
-                        getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<IDialogResponsesGetter>(p, s));
+                        getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(p, s));
                     return (int)Quest_FieldIndex.QDUPs;
                 }
                 case RecordTypeInts.QTGL:

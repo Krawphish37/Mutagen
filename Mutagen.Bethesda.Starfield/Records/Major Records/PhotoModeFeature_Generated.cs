@@ -120,14 +120,14 @@ namespace Mutagen.Bethesda.Starfield
         String? IPhotoModeFeatureGetter.Texture => this.Texture;
         #endregion
         #region ImageSpace
-        private readonly IFormLinkNullable<IImageSpaceGetter> _ImageSpace = new FormLinkNullable<IImageSpaceGetter>();
-        public IFormLinkNullable<IImageSpaceGetter> ImageSpace
+        private readonly IFormLinkNullable<IImageSpaceAdapterGetter> _ImageSpace = new FormLinkNullable<IImageSpaceAdapterGetter>();
+        public IFormLinkNullable<IImageSpaceAdapterGetter> ImageSpace
         {
             get => _ImageSpace;
             set => _ImageSpace.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkNullableGetter<IImageSpaceGetter> IPhotoModeFeatureGetter.ImageSpace => this.ImageSpace;
+        IFormLinkNullableGetter<IImageSpaceAdapterGetter> IPhotoModeFeatureGetter.ImageSpace => this.ImageSpace;
         #endregion
 
         #region To String
@@ -836,7 +836,7 @@ namespace Mutagen.Bethesda.Starfield
         new UInt32 Height { get; set; }
         new UInt32 UnknownFNAM2 { get; set; }
         new String? Texture { get; set; }
-        new IFormLinkNullable<IImageSpaceGetter> ImageSpace { get; set; }
+        new IFormLinkNullable<IImageSpaceAdapterGetter> ImageSpace { get; set; }
     }
 
     public partial interface IPhotoModeFeatureInternal :
@@ -873,7 +873,7 @@ namespace Mutagen.Bethesda.Starfield
         UInt32 Height { get; }
         UInt32 UnknownFNAM2 { get; }
         String? Texture { get; }
-        IFormLinkNullableGetter<IImageSpaceGetter> ImageSpace { get; }
+        IFormLinkNullableGetter<IImageSpaceAdapterGetter> ImageSpace { get; }
 
     }
 
@@ -2082,7 +2082,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region ImageSpace
         private int? _ImageSpaceLocation;
-        public IFormLinkNullableGetter<IImageSpaceGetter> ImageSpace => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IImageSpaceGetter>(_package, _recordData, _ImageSpaceLocation);
+        public IFormLinkNullableGetter<IImageSpaceAdapterGetter> ImageSpace => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IImageSpaceAdapterGetter>(_package, _recordData, _ImageSpaceLocation);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,

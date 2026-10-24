@@ -388,10 +388,19 @@
   </Object>
   <Object name="CrowdComponentItem" objType="Subrecord" >
     <Fields>
-      <RefList name="Properties" refName="ObjectProperty" recordType="PRPS" />
+      <RefList name="Properties" refName="CrowdComponentProperty" recordType="PRPS" />
       <RefList name="Conditions" refName="Condition" counterRecType="CITC" />
       <String name="STRV" recordType="STRV" unknown="true" />
       <Float name="FLTV" recordType="FLTV" unknown="true" />
+    </Fields>
+  </Object>
+  <Object name="CrowdComponentProperty" objType="Subrecord">
+    <Fields>
+      <FormLink name="Npc" refName="Npc" />
+      <Float name="Value" />
+      <FormLink name="CurveTable" refName="CurveTable">
+        <Versioning formVersion="152" action="Add" />
+      </FormLink>
     </Fields>
   </Object>
   <Object name="SpaceshipHullCodeComponent" objType="Subrecord" baseClass="AComponent">
@@ -600,7 +609,7 @@
   <Object name="QualityUpgradeComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
       <List name="QualityMods" recordType="QUPA">
-        <FormLink refName="ObjectModification" />
+        <FormLink refName="AObjectModification" />
       </List>
     </Fields>
   </Object>

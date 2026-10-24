@@ -3,7 +3,7 @@
   <Object name="ImageSpace" recordType="IMGS" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <ByteArray name="Reflection" recordType="REFL" overflowRecordType="XXXX" />
-      <FormLink name="ReflectionParent" refName="WeatherSetting" recordType="RFDP" />
+      <FormLink name="ReflectionParent" refName="ImageSpace" recordType="RFDP" />
       <ByteArray name="ReflectionDiff" recordType="RDIF" />
     </Fields>
   </Object>

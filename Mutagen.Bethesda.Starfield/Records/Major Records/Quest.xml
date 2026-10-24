@@ -13,7 +13,7 @@
       <FormLink name="QuestTimeLimit" recordType="QTLM" refName="Global" />
       <FormLink name="SourceQuest" recordType="QSRC" refName="Quest" />
       <List name="QDUPs" recordType="QDUP" unknown="true" >
-        <FormLink refName="DialogResponses" />
+        <FormLink refName="StarfieldMajorRecord" />
       </List>
       <List name="TextDisplayGlobals">
         <FormLink recordType="QTGL" refName="Global" />
@@ -203,7 +203,7 @@
         <Interface>IAliasVoiceType</Interface>
       </FormLink>
       <List name="TerminalMenus">
-        <FormLink recordType="ALTM" refName="Terminal" />
+        <FormLink recordType="ALTM" refName="TerminalMenu" />
       </List>
     </Fields>
   </Object>

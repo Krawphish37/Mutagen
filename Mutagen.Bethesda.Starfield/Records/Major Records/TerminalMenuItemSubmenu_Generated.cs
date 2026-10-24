@@ -55,14 +55,14 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region Submenu
-        private readonly IFormLinkNullable<ITerminalGetter> _Submenu = new FormLinkNullable<ITerminalGetter>();
-        public IFormLinkNullable<ITerminalGetter> Submenu
+        private readonly IFormLinkNullable<ITerminalMenuGetter> _Submenu = new FormLinkNullable<ITerminalMenuGetter>();
+        public IFormLinkNullable<ITerminalMenuGetter> Submenu
         {
             get => _Submenu;
             set => _Submenu.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkNullableGetter<ITerminalGetter> ITerminalMenuItemSubmenuGetter.Submenu => this.Submenu;
+        IFormLinkNullableGetter<ITerminalMenuGetter> ITerminalMenuItemSubmenuGetter.Submenu => this.Submenu;
         #endregion
 
         #region To String
@@ -410,7 +410,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<ITerminalMenuItemSubmenu>,
         ITerminalMenuItemSubmenuGetter
     {
-        new IFormLinkNullable<ITerminalGetter> Submenu { get; set; }
+        new IFormLinkNullable<ITerminalMenuGetter> Submenu { get; set; }
     }
 
     public partial interface ITerminalMenuItemSubmenuGetter :
@@ -420,7 +420,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<ITerminalMenuItemSubmenuGetter>
     {
         static new ILoquiRegistration StaticRegistration => TerminalMenuItemSubmenu_Registration.Instance;
-        IFormLinkNullableGetter<ITerminalGetter> Submenu { get; }
+        IFormLinkNullableGetter<ITerminalMenuGetter> Submenu { get; }
 
     }
 
@@ -1108,7 +1108,7 @@ namespace Mutagen.Bethesda.Starfield
 
         #region Submenu
         private int? _SubmenuLocation;
-        public IFormLinkNullableGetter<ITerminalGetter> Submenu => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ITerminalGetter>(_package, _recordData, _SubmenuLocation);
+        public IFormLinkNullableGetter<ITerminalMenuGetter> Submenu => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ITerminalMenuGetter>(_package, _recordData, _SubmenuLocation);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,

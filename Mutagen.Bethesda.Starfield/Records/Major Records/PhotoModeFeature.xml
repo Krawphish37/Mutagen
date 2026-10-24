@@ -15,7 +15,7 @@
         </Fields>
       </Data>
       <String name="Texture" recordType="HNAM" />
-      <FormLink name="ImageSpace" refName="ImageSpace" recordType="INAM" />
+      <FormLink name="ImageSpace" refName="ImageSpaceAdapter" recordType="INAM" />
     </Fields>
   </Object>
 </Loqui>

@@ -6941,5 +6941,8 @@
     <Compile Include="Records\Major Records\TalkingActivator_Generated.cs">
       <DependentUpon>TalkingActivator.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Common Subrecords\CrowdComponentProperty_Generated.cs">
+      <DependentUpon>Component.xml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

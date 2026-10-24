@@ -196,6 +196,7 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             CrimeValues_Registration.Instance,
             CrowdComponent_Registration.Instance,
             CrowdComponentItem_Registration.Instance,
+            CrowdComponentProperty_Registration.Instance,
             CurrentFurnitureHasKeywordConditionData_Registration.Instance,
             CurrentShipLandedConditionData_Registration.Instance,
             Curve3D_Registration.Instance,

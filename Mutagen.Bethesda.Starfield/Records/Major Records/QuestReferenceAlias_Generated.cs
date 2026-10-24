@@ -382,15 +382,15 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region TerminalMenus
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<IFormLinkGetter<ITerminalGetter>> _TerminalMenus = new ExtendedList<IFormLinkGetter<ITerminalGetter>>();
-        public ExtendedList<IFormLinkGetter<ITerminalGetter>> TerminalMenus
+        private ExtendedList<IFormLinkGetter<ITerminalMenuGetter>> _TerminalMenus = new ExtendedList<IFormLinkGetter<ITerminalMenuGetter>>();
+        public ExtendedList<IFormLinkGetter<ITerminalMenuGetter>> TerminalMenus
         {
             get => this._TerminalMenus;
             init => this._TerminalMenus = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<IFormLinkGetter<ITerminalGetter>> IQuestReferenceAliasGetter.TerminalMenus => _TerminalMenus;
+        IReadOnlyList<IFormLinkGetter<ITerminalMenuGetter>> IQuestReferenceAliasGetter.TerminalMenus => _TerminalMenus;
         #endregion
 
         #endregion
@@ -2338,7 +2338,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<IFormLinkGetter<IPackageGetter>> PackageData { get; }
         new String? ScriptComment { get; set; }
         new IFormLinkNullable<IAliasVoiceTypeGetter> VoiceTypes { get; set; }
-        new ExtendedList<IFormLinkGetter<ITerminalGetter>> TerminalMenus { get; }
+        new ExtendedList<IFormLinkGetter<ITerminalMenuGetter>> TerminalMenus { get; }
     }
 
     public partial interface IQuestReferenceAliasGetter :
@@ -2393,7 +2393,7 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IFormLinkGetter<IPackageGetter>> PackageData { get; }
         String? ScriptComment { get; }
         IFormLinkNullableGetter<IAliasVoiceTypeGetter> VoiceTypes { get; }
-        IReadOnlyList<IFormLinkGetter<ITerminalGetter>> TerminalMenus { get; }
+        IReadOnlyList<IFormLinkGetter<ITerminalMenuGetter>> TerminalMenus { get; }
 
     }
 
@@ -4073,7 +4073,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     item.TerminalMenus.SetTo(
                         rhs.TerminalMenus
-                            .Select(b => (IFormLinkGetter<ITerminalGetter>)new FormLink<ITerminalGetter>(b.FormKey)));
+                            .Select(b => (IFormLinkGetter<ITerminalMenuGetter>)new FormLink<ITerminalMenuGetter>(b.FormKey)));
                 }
                 catch (Exception ex)
                 when (errorMask != null)
@@ -4409,10 +4409,10 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.VoiceTypes,
                 header: translationParams.ConvertToCustom(RecordTypes.VTCK));
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ITerminalGetter>>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ITerminalMenuGetter>>.Instance.Write(
                 writer: writer,
                 items: item.TerminalMenus,
-                transl: (MutagenWriter subWriter, IFormLinkGetter<ITerminalGetter> subItem, TypedWriteParams conv) =>
+                transl: (MutagenWriter subWriter, IFormLinkGetter<ITerminalMenuGetter> subItem, TypedWriteParams conv) =>
                 {
                     FormLinkBinaryTranslation.Instance.Write(
                         writer: subWriter,
@@ -4727,7 +4727,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ALTM:
                 {
                     item.TerminalMenus.SetTo(
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ITerminalGetter>>.Instance.Parse(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ITerminalMenuGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.ALTM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
@@ -4879,7 +4879,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _VoiceTypesLocation;
         public IFormLinkNullableGetter<IAliasVoiceTypeGetter> VoiceTypes => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IAliasVoiceTypeGetter>(_package, _recordData, _VoiceTypesLocation);
         #endregion
-        public IReadOnlyList<IFormLinkGetter<ITerminalGetter>> TerminalMenus { get; private set; } = [];
+        public IReadOnlyList<IFormLinkGetter<ITerminalMenuGetter>> TerminalMenus { get; private set; } = [];
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -5195,10 +5195,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ALTM:
                 {
-                    this.TerminalMenus = BinaryOverlayList.FactoryByArray<IFormLinkGetter<ITerminalGetter>>(
+                    this.TerminalMenus = BinaryOverlayList.FactoryByArray<IFormLinkGetter<ITerminalMenuGetter>>(
                         mem: stream.RemainingMemory,
                         package: _package,
-                        getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<ITerminalGetter>(p, s),
+                        getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<ITerminalMenuGetter>(p, s),
                         locs: ParseRecordLocations(
                             stream: stream,
                             constants: _package.MetaData.Constants.SubConstants,

@@ -22,6 +22,7 @@
       </FormLink>
       <FormLink name="Interval" refName="Global" recordType="NAM3" />
     </Fields>
+    <LinkInterface>IItem</LinkInterface>
     <LinkInterface>IBaseObject</LinkInterface>
     <LinkInterface>IPlaceableObject</LinkInterface>
     <LinkInterface>IExplodeSpawn</LinkInterface>
