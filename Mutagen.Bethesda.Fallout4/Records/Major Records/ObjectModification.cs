@@ -10,11 +10,6 @@ using System.Buffers.Binary;
 
 namespace Mutagen.Bethesda.Fallout4;
 
-internal class DeletedObjectModification : AObjectModification
-{
-    protected override Type LinkType => typeof(IAObjectModification);
-}
-
 partial class AObjectModification
 {
     [Flags]
@@ -37,18 +32,10 @@ partial class AObjectModification
         {
             if (!majorMeta.TryFindSubrecord(RecordTypes.DATA, out var data))
             {
-                if (majorMeta.IsDeleted)
-                {
-                    var ret = new DeletedObjectModification();
-                    ret.CopyInFromBinary(frame);
-                    return ret;
-                }
-                else
-                {
-                    var ret = UnknownObjectModification.CreateFromBinary(frame);
-                    ret.ModificationType = RecordType.Null;
-                    return ret;
-                }
+                // No DATA, deleted or not: read as unknown with no target, like the overlay
+                var ret = UnknownObjectModification.CreateFromBinary(frame);
+                ret.ModificationType = RecordType.Null;
+                return ret;
             }
             var type = new RecordType(BinaryPrimitives.ReadInt32LittleEndian(data.Content.Slice(10)));
             switch (type.TypeInt)
@@ -130,14 +117,6 @@ partial class AObjectModificationBinaryCreateTranslation
                 unknown.Properties.SetTo(
                     ObjectTemplateBinaryCreateTranslation<AObjectModification.NoneProperty>.ReadProperties(frame, propertyCount));
                 unknown.ModificationType = formType;
-                break;
-            case DeletedObjectModification del:
-                if (!del.IsDeleted)
-                {
-                    throw new MalformedDataException(
-                        "Do not mark a DeletedObjectModification as no longer deleted.  Instead, make a new" +
-                        "ObjectModification record");
-                }
                 break;
             default:
                 throw new NotImplementedException();
@@ -250,13 +229,17 @@ partial class AObjectModificationBinaryWriteTranslation
 partial class AObjectModificationBinaryOverlay
 {
     private ReadOnlyMemorySlice<byte> _dataBytes;
-    public ushort Unknown => BinaryPrimitives.ReadUInt16LittleEndian(_dataBytes.Slice(0x8, 2));
+    // False when the record has no DATA; the DATA fields then read as defaults
+    private bool HasData => _dataBytes.Length > 0;
+    public ushort Unknown => HasData ? BinaryPrimitives.ReadUInt16LittleEndian(_dataBytes.Slice(0x8, 2)) : default;
 
-    public byte MaxRank => _dataBytes[0xE];
+    public byte MaxRank => HasData ? _dataBytes[0xE] : default;
 
-    public byte LevelTierScaledOffset => _dataBytes[0xF];
+    public byte LevelTierScaledOffset => HasData ? _dataBytes[0xF] : default;
 
-    public IFormLinkGetter<IKeywordGetter> AttachPoint => FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _dataBytes.Slice(0x10, 0x4));
+    public IFormLinkGetter<IKeywordGetter> AttachPoint => HasData
+        ? FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _dataBytes.Slice(0x10, 0x4))
+        : FormLink<IKeywordGetter>.Null;
 
     public IReadOnlyList<IFormLinkGetter<IKeywordGetter>> AttachParentSlots { get; private set; } = Array.Empty<IFormLinkGetter<IKeywordGetter>>();
 
