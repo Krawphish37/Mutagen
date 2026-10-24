@@ -11993,6 +11993,7 @@ namespace Mutagen.Bethesda.Starfield
                     Remove(obj, keys, typeof(ISpellGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(IStaticGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(IStaticCollectionGetter), throwIfUnknown: throwIfUnknown);
+                    Remove(obj, keys, typeof(ITalkingActivatorGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(ITerminalGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(ITextureSetGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(IWaterGetter), throwIfUnknown: throwIfUnknown);
@@ -12186,6 +12187,7 @@ namespace Mutagen.Bethesda.Starfield
                     Remove(obj, keys, typeof(ISpellGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(IStaticGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(IStaticCollectionGetter), throwIfUnknown: throwIfUnknown);
+                    Remove(obj, keys, typeof(ITalkingActivatorGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(ITerminalGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(ITextureSetGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(IWaterGetter), throwIfUnknown: throwIfUnknown);
