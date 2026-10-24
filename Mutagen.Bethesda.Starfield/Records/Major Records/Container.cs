@@ -29,4 +29,6 @@ public partial class Container
     {
         Keyword = RecordTypeInts.CKEY,
     }
+
+    public const string ObjectModificationName = "Container_InstanceData";
 }

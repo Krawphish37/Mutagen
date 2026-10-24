@@ -1,6 +1,7 @@
 ﻿using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Exceptions;
 using RecordTypes = Mutagen.Bethesda.Starfield.Internals.RecordTypes;
 
 namespace Mutagen.Bethesda.Starfield;
@@ -46,6 +47,12 @@ public partial class GameplayOptionsGroupBinaryWriteTranslation
 {
     public static partial void WriteBinaryGroupsCustom(MutagenWriter writer, IGameplayOptionsGroupGetter item)
     {
+        if (item.Options is null)
+        {
+            throw SubrecordException.Enrich(
+                new NullReferenceException($"{nameof(IGameplayOptionsGroupGetter.Options)} was null"),
+                RecordTypes.BNAM);
+        }
         var opt = item.Options;
         var isRoot = opt is IGameplayOptionsGroupRootGetter;
         using (HeaderExport.Subrecord(writer, RecordTypes.BNAM))

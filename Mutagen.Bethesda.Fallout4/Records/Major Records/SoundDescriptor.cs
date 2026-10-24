@@ -56,11 +56,13 @@ partial class SoundDescriptorBinaryWriteTranslation
 {
     public static partial void WriteBinaryDataCustom(MutagenWriter writer, ISoundDescriptorGetter item)
     {
-        var type = item.Data switch
+        // Data is null when the record has no CNAM, so write none back
+        if (item.Data is not { } data) return;
+        var type = data switch
         {
             ISoundDescriptorStandardDataGetter _ => SoundDescriptorBinaryCreateTranslation.DescriptorType.Standard,
             ISoundDescriptorAutoweaponDataGetter _ => SoundDescriptorBinaryCreateTranslation.DescriptorType.AutoWeapon,
-            ISoundDescriptorCompoundData _ => SoundDescriptorBinaryCreateTranslation.DescriptorType.Compound,
+            ISoundDescriptorCompoundDataGetter _ => SoundDescriptorBinaryCreateTranslation.DescriptorType.Compound,
             _ => throw new NotImplementedException()
         };
         

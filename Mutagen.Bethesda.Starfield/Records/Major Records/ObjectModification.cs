@@ -9,11 +9,6 @@ using System.Buffers.Binary;
 
 namespace Mutagen.Bethesda.Starfield;
 
-internal class DeletedObjectModification : AObjectModification
-{
-    protected override Type LinkType => typeof(IAObjectModification);
-}
-
 partial class AObjectModification
 {
     [Flags]
@@ -39,18 +34,10 @@ partial class AObjectModification
         {
             if (!majorMeta.TryFindSubrecord(RecordTypes.DATA, out var data))
             {
-                if (majorMeta.IsDeleted)
-                {
-                    var ret = new DeletedObjectModification();
-                    ret.CopyInFromBinary(frame);
-                    return ret;
-                }
-                else
-                {
-                    var ret = UnknownObjectModification.CreateFromBinary(frame);
-                    ret.ObjectModificationTargetName = null;
-                    return ret;
-                }
+                // No DATA, deleted or not: read as unknown with no target, like the overlay
+                var ret = UnknownObjectModification.CreateFromBinary(frame);
+                ret.ObjectModificationTargetName = null;
+                return ret;
             }
 
             var strLen = BinaryPrimitives.ReadInt32LittleEndian(data.Content.Slice(10));
@@ -65,6 +52,8 @@ partial class AObjectModification
                     return NpcModification.CreateFromBinary(frame);
                 case Flora.ObjectModificationName:
                     return FloraModification.CreateFromBinary(frame);
+                case Container.ObjectModificationName:
+                    return ContainerModification.CreateFromBinary(frame);
                 case AObjectModification.NoneObjectModificationName:
                     return ObjectModification.CreateFromBinary(frame);
                 default:
@@ -129,6 +118,10 @@ partial class AObjectModificationBinaryCreateTranslation
                 floraMod.Properties.SetTo(
                     ObjectTemplateBinaryCreateTranslation<Flora.Property>.ReadProperties(frame, propertyCount));
                 break;
+            case IContainerModificationInternal containerMod:
+                containerMod.Properties.SetTo(
+                    ObjectTemplateBinaryCreateTranslation<Container.Property>.ReadProperties(frame, propertyCount));
+                break;
             case IObjectModificationInternal objMod:
                 objMod.Properties.SetTo(
                     ObjectTemplateBinaryCreateTranslation<AObjectModification.NoneProperty>.ReadProperties(frame, propertyCount));
@@ -137,14 +130,6 @@ partial class AObjectModificationBinaryCreateTranslation
                 unknown.Properties.SetTo(
                     ObjectTemplateBinaryCreateTranslation<AObjectModification.NoneProperty>.ReadProperties(frame, propertyCount));
                 unknown.ObjectModificationTargetName = dataName;
-                break;
-            case DeletedObjectModification del:
-                if (!del.IsDeleted)
-                {
-                    throw new MalformedDataException(
-                        "Do not mark a DeletedObjectModification as no longer deleted.  Instead, make a new" +
-                        "ObjectModification record");
-                }
                 break;
             default:
                 throw new NotImplementedException();
@@ -159,6 +144,8 @@ partial class AObjectModificationBinaryWriteTranslation
         MutagenWriter writer,
         IAObjectModificationGetter item)
     {
+        // A null target name means the record had no DATA, so write none back
+        if (item is IUnknownObjectModificationGetter { ObjectModificationTargetName: null }) return;
         using var header = HeaderExport.Subrecord(writer, RecordTypes.DATA);
         var includes = item.Includes;
         PluginUtilityTranslation.BinaryMasterWriteDelegate<IBinaryItem> export;
@@ -197,6 +184,14 @@ partial class AObjectModificationBinaryWriteTranslation
                         writer,
                         (IAObjectModPropertyGetter<Flora.Property>)item);
                 dataName = Flora.ObjectModificationName;
+                break;
+            case IContainerModificationGetter containerMod:
+                properties = containerMod.Properties;
+                export = (subFrame, item, _) =>
+                    ObjectTemplateBinaryWriteTranslation.WriteProperty<Container.Property>(
+                        writer,
+                        (IAObjectModPropertyGetter<Container.Property>)item);
+                dataName = Container.ObjectModificationName;
                 break;
             case IObjectModificationGetter objMod:
                 properties = objMod.Properties;
@@ -257,13 +252,15 @@ partial class AObjectModificationBinaryWriteTranslation
 partial class AObjectModificationBinaryOverlay
 {
     private ReadOnlyMemorySlice<byte> _dataBytes;
+    // False when the record has no DATA; the DATA fields then read as defaults
+    private bool HasData => _dataBytes.Length > 0;
 
     private int StringLen => BinaryPrimitives.ReadInt32LittleEndian(_dataBytes.Slice(10));
     private int StringEnd => StringLen + 14;
     private int AttachSlotsStart => StringEnd + 6;
     private int AttachSlotsEnd => 4 + AttachSlotsStart + AttachParentSlots.Count * 4;
-    public ushort Unknown => BinaryPrimitives.ReadUInt16LittleEndian(_dataBytes.Slice(0x8, 2));
-    public ushort Unknown2 => BinaryPrimitives.ReadUInt16LittleEndian(_dataBytes.Slice(StringEnd));
+    public ushort Unknown => HasData ? BinaryPrimitives.ReadUInt16LittleEndian(_dataBytes.Slice(0x8, 2)) : default;
+    public ushort Unknown2 => HasData ? BinaryPrimitives.ReadUInt16LittleEndian(_dataBytes.Slice(StringEnd)) : default;
     public string DataName => StringBinaryTranslation.Instance.Parse(_dataBytes.Slice(10, StringLen), 
         _package.MetaData.Encodings.NonTranslated, parseWhole: true);
 
@@ -271,10 +268,12 @@ partial class AObjectModificationBinaryOverlay
 
     public byte LevelTierScaledOffset => _dataBytes[0xF];
 
-    public IFormLinkGetter<IKeywordGetter> AttachPoint => FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _dataBytes.Slice(StringEnd + 2, 0x4));
+    public IFormLinkGetter<IKeywordGetter> AttachPoint => HasData
+        ? FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _dataBytes.Slice(StringEnd + 2, 0x4))
+        : FormLink<IKeywordGetter>.Null;
 
     public IReadOnlyList<IFormLinkGetter<IKeywordGetter>> AttachParentSlots { get; private set; } = Array.Empty<IFormLinkGetter<IKeywordGetter>>();
-    public uint Unknown3 => BinaryPrimitives.ReadUInt32LittleEndian(_dataBytes.Slice(AttachSlotsEnd));
+    public uint Unknown3 => HasData ? BinaryPrimitives.ReadUInt32LittleEndian(_dataBytes.Slice(AttachSlotsEnd)) : default;
 
     public IReadOnlyList<IObjectModIncludeGetter> Includes { get; private set; } = [];
 
@@ -337,6 +336,14 @@ partial class AObjectModificationBinaryOverlay
                     count: propertyCount,
                     getter: (s, p) => ObjectTemplateBinaryCreateTranslation<Flora.Property>.ReadProperty(stream.MetaData, s));
                 break;
+            case ContainerModificationBinaryOverlay container:
+                container.Properties = BinaryOverlayList.FactoryByCount(
+                    _dataBytes.Slice(includesEndingPos, checked((int)(24 * propertyCount))),
+                    _package,
+                    itemLength: 24,
+                    count: propertyCount,
+                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<Container.Property>.ReadProperty(stream.MetaData.MasterReferences, s));
+                break;
             case ObjectModificationBinaryOverlay obj:
                 obj.Properties = BinaryOverlayList.FactoryByCount(
                     _dataBytes.Slice(includesEndingPos, checked((int)(24 * propertyCount))),
@@ -385,6 +392,8 @@ partial class AObjectModificationBinaryOverlay
                 return NpcModificationBinaryOverlay.NpcModificationFactory(stream, package);
             case Flora.ObjectModificationName:
                 return FloraModificationBinaryOverlay.FloraModificationFactory(stream, package);
+            case Container.ObjectModificationName:
+                return ContainerModificationBinaryOverlay.ContainerModificationFactory(stream, package);
             case AObjectModification.NoneObjectModificationName:
                 return ObjectModificationBinaryOverlay.ObjectModificationFactory(stream, package);
             default:

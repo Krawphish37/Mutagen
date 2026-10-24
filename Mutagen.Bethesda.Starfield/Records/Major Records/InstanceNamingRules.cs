@@ -75,6 +75,8 @@ public partial class InstanceNamingRulesBinaryWriteTranslation
         IInstanceNamingRulesGetter item)
     {
         var ruleSet = item.Rules;
+        // Rules is null when the record has no UNAM, so write none back
+        if (ruleSet == null) return;
         var t = ruleSet switch
         {
             INoInstanceNamingRulesGetter => InstanceNamingRulesBinaryCreateTranslation.TargetType.None,
@@ -96,7 +98,7 @@ public partial class InstanceNamingRulesBinaryWriteTranslation
 
 internal partial class InstanceNamingRulesBinaryOverlay
 {
-    public IAInstanceNamingRulesGetter Rules { get; private set; } = null!;
+    public IAInstanceNamingRulesGetter? Rules { get; private set; }
     
     public partial ParseResult RuleSetParserCustomParse(
         OverlayStream stream,
