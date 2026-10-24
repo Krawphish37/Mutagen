@@ -113,8 +113,10 @@ public static class GetOrAddAsOverrideMixIns
     {
         try
         {
-            // Check if the record type is assignable to the group's contained type
-            if (!group.ContainedRecordType.IsAssignableFrom(major.GetType()))
+            // Check the record against the group's getter interface, so that
+            // binary overlay records (which only implement the getter) are accepted
+            var registration = group.ContainedRecordRegistration;
+            if (!registration.GetterType.IsInstanceOfType(major))
             {
                 result = null;
                 return false;
@@ -132,8 +134,8 @@ public static class GetOrAddAsOverrideMixIns
                 return false;
             }
 
-            // Get the override mask for this record type
-            var mask = OverrideMaskRegistrations.Get(major.GetType());
+            // Get the override mask for the group's record type
+            var mask = OverrideMaskRegistrations.Get(registration.ClassType);
 
             // Create a deep copy with the override mask
             var copy = major.DeepCopy(mask as MajorRecord.TranslationMask);

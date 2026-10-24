@@ -2,6 +2,7 @@ using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Testing;
+using Noggog;
 using Xunit;
 
 namespace Mutagen.Bethesda.UnitTests.Plugins.Records;
@@ -251,5 +252,116 @@ public class GetOrAddAsOverrideUntypedTests
         Assert.NotNull(overrideRecord);
         Assert.Equal(quest.FormKey, overrideRecord.FormKey);
         Assert.Equal("TestQuest", overrideRecord.EditorID);
+    }
+
+    private static ISkyrimModGetter ToOverlay(SkyrimMod mod)
+    {
+        var stream = new MemoryTributary();
+        mod.WriteToBinary(stream);
+        stream.Position = 0;
+        return SkyrimMod.CreateFromBinaryOverlay(stream, SkyrimRelease.SkyrimSE, mod.ModKey);
+    }
+
+    [Fact]
+    public void TryGetOrAddAsOverrideUntyped_Overlay_Success()
+    {
+        // Arrange
+        var masterMod = new SkyrimMod(TestConstants.MasterModKey, SkyrimRelease.SkyrimSE);
+        var npc = masterMod.Npcs.AddNew();
+        npc.EditorID = TestConstants.Edid1;
+        npc.Name = "TestNpc";
+        var overlayNpc = ToOverlay(masterMod).Npcs.First();
+
+        var pluginMod = new SkyrimMod(TestConstants.PluginModKey, SkyrimRelease.SkyrimSE);
+
+        // Act
+        var result = pluginMod.Npcs.TryGetOrAddAsOverrideUntyped(overlayNpc, out var overrideRecord);
+
+        // Assert
+        Assert.True(result);
+        Assert.NotNull(overrideRecord);
+        Assert.IsType<Npc>(overrideRecord);
+        Assert.Equal(npc.FormKey, overrideRecord.FormKey);
+        Assert.Equal(TestConstants.Edid1, overrideRecord.EditorID);
+        Assert.Equal("TestNpc", ((INpcGetter)overrideRecord).Name?.String);
+        Assert.Equal(1, pluginMod.Npcs.Count);
+        Assert.Same(overrideRecord, pluginMod.Npcs.Records.First());
+    }
+
+    [Fact]
+    public void TryGetOrAddAsOverrideUntyped_Overlay_ExistingOverride_ReturnsExisting()
+    {
+        // Arrange
+        var masterMod = new SkyrimMod(TestConstants.MasterModKey, SkyrimRelease.SkyrimSE);
+        masterMod.Npcs.AddNew();
+        var overlayNpc = ToOverlay(masterMod).Npcs.First();
+
+        var pluginMod = new SkyrimMod(TestConstants.PluginModKey, SkyrimRelease.SkyrimSE);
+
+        // Act
+        var firstResult = pluginMod.Npcs.TryGetOrAddAsOverrideUntyped(overlayNpc, out var firstOverride);
+        var secondResult = pluginMod.Npcs.TryGetOrAddAsOverrideUntyped(overlayNpc, out var secondOverride);
+
+        // Assert
+        Assert.True(firstResult);
+        Assert.True(secondResult);
+        Assert.Same(firstOverride, secondOverride);
+        Assert.Equal(1, pluginMod.Npcs.Count);
+    }
+
+    [Fact]
+    public void TryGetOrAddAsOverrideUntyped_Overlay_TypeMismatch_ReturnsFalse()
+    {
+        // Arrange
+        var masterMod = new SkyrimMod(TestConstants.MasterModKey, SkyrimRelease.SkyrimSE);
+        masterMod.Weapons.AddNew();
+        var overlayWeapon = ToOverlay(masterMod).Weapons.First();
+
+        var pluginMod = new SkyrimMod(TestConstants.PluginModKey, SkyrimRelease.SkyrimSE);
+
+        // Act - try to add an overlay Weapon to the Armors group
+        var result = pluginMod.Armors.TryGetOrAddAsOverrideUntyped(overlayWeapon, out var overrideRecord);
+
+        // Assert
+        Assert.False(result);
+        Assert.Null(overrideRecord);
+        Assert.Equal(0, pluginMod.Armors.Count);
+    }
+
+    [Fact]
+    public void TryGetOrAddAsOverrideUntyped_Overlay_AppliesOverrideMask()
+    {
+        // Arrange - a worldspace with a cell in its subcells
+        var masterMod = new SkyrimMod(TestConstants.MasterModKey, SkyrimRelease.SkyrimSE);
+        var worldspace = masterMod.Worldspaces.AddNew();
+        worldspace.EditorID = "TestWorldspace";
+        var block = new WorldspaceBlock()
+        {
+            BlockNumberX = 0,
+            BlockNumberY = 0,
+            GroupType = GroupTypeEnum.ExteriorCellBlock,
+        };
+        var subBlock = new WorldspaceSubBlock()
+        {
+            BlockNumberX = 0,
+            BlockNumberY = 0,
+            GroupType = GroupTypeEnum.ExteriorCellSubBlock,
+        };
+        subBlock.Items.Add(new Cell(masterMod.GetNextFormKey(), SkyrimRelease.SkyrimSE));
+        block.Items.Add(subBlock);
+        worldspace.SubCells.Add(block);
+        var overlayWorldspace = ToOverlay(masterMod).Worldspaces.First();
+        Assert.NotEmpty(overlayWorldspace.SubCells);
+
+        var pluginMod = new SkyrimMod(TestConstants.PluginModKey, SkyrimRelease.SkyrimSE);
+
+        // Act
+        var result = pluginMod.Worldspaces.TryGetOrAddAsOverrideUntyped(overlayWorldspace, out var overrideRecord);
+
+        // Assert - like the typed GetOrAddAsOverride, the worldspace override mask leaves out the subcells
+        Assert.True(result);
+        var overrideWorldspace = Assert.IsType<Worldspace>(overrideRecord);
+        Assert.Equal("TestWorldspace", overrideWorldspace.EditorID);
+        Assert.Empty(overrideWorldspace.SubCells);
     }
 }
