@@ -982,47 +982,6 @@ public class StarfieldProcessor : Processor
             }
             
             RemoveUnnecessaryOverflowRecord(majorFrame, xtv2, fileOffset);
-
-            try
-            {
-                var span = xtv2.Content;
-                int pos = 0;
-                while (span.Length > pos)
-                {
-                    pos += 0x28;
-                    var flag = BinaryPrimitives.ReadInt32LittleEndian(span.Slice(pos));
-                    if (flag == 0)
-                    {
-                        pos += 0x10;
-                    }
-                    else if (flag == 4)
-                    {
-                        pos += 0xC;
-                    }
-                    else
-                    {
-                        if (Enums.HasFlag(flag, 4))
-                        {
-                            Instructions.SetSubstitution(fileOffset + xtv2.ContentLocation + pos, new byte[]
-                            {
-                                4, 0, 0, 0
-                            });
-                            pos += 0xC;
-                        }
-                        else
-                        {
-                            Instructions.SetSubstitution(fileOffset + xtv2.ContentLocation + pos, new byte[]
-                            {
-                                0, 0, 0, 0
-                            });
-                            pos += 0x10;
-                        }
-                    }
-                }
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-            }
         }
     }
 
