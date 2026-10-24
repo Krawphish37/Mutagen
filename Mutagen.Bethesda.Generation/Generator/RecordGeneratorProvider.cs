@@ -64,6 +64,7 @@ public class RecordGeneratorProvider : IGenerationConstructor
         gen.ReplaceTypeAssociation<Loqui.Generation.PercentType, PercentType>();
         gen.ReplaceTypeAssociation<Loqui.Generation.DictType, DictType>();
         gen.ReplaceTypeAssociation<Loqui.Generation.BoolType, BoolType>();
+        gen.ReplaceTypeAssociation<Loqui.Generation.ListType, MutagenListType>();
 
         var bethesdaProto = gen.AddProtocol(
             new ProtocolGeneration(
