@@ -41,6 +41,7 @@ partial class Light
         Pulse
     }
 
+    [Flags]
     public enum LightLayer
     {
         Default = 0x1,
