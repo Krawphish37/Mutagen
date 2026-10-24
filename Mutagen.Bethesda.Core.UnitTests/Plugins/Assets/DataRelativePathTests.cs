@@ -133,4 +133,38 @@ public class DataRelativePathTests
         var link = new DataRelativePath(path);
         link.Path.ShouldBe(Path.Combine("Meshes", "Actors", "Character", "FaceGenData"));
     }
+
+    [Fact]
+    public void LongAbsolutePath()
+    {
+        var fileName = new string('a', 300) + ".nif";
+        var path = @$"{absPrefix}{Path.Combine("Skyrim", "Data", "Meshes", fileName)}";
+        var link = new DataRelativePath(path);
+        link.Path.ShouldBe(Path.Combine("Meshes", fileName));
+    }
+
+    [Fact]
+    public void PathLargerThanStackDoesNotOverflow()
+    {
+        // Path chars take 4x the thread's stack, so they must not be stackalloc'd
+        var fileName = new string('a', 2 * 1024 * 1024) + ".nif";
+        var path = Path.Combine("Meshes", fileName);
+        string? result = null;
+        Exception? ex = null;
+        var thread = new Thread(() =>
+        {
+            try
+            {
+                result = new DataRelativePath(path).Path;
+            }
+            catch (Exception e)
+            {
+                ex = e;
+            }
+        }, maxStackSize: 1024 * 1024);
+        thread.Start();
+        thread.Join();
+        ex.ShouldBeNull();
+        result.ShouldBe(path);
+    }
 }
