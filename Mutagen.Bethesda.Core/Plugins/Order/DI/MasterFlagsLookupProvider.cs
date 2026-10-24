@@ -48,7 +48,9 @@ public class MasterFlagsLookupProvider : IMasterFlagsLookupProvider
         var cache = new Cache<IModMasterStyledGetter, ModKey>(x => x.ModKey);
         foreach (var style in keyedMasterStyles)
         {
-            if (style == null) return null;
+            // Listed but missing on disk: the importer leaves these unloaded, so skip them here too.
+            // A present mod that does list one as a master still fails, with a MissingModException naming it.
+            if (style == null) continue;
             cache.Add(style);
         }
 
