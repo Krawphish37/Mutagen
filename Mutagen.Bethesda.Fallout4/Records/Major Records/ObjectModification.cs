@@ -304,7 +304,7 @@ partial class AObjectModificationBinaryOverlay
                     _package,
                     itemLength: 24,
                     count: propertyCount,
-                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<Armor.Property>.ReadProperty(stream.MetaData.MasterReferences, s));
+                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<Armor.Property>.ReadProperty(stream.MetaData, s));
                 break;
             case NpcModificationBinaryOverlay npc:
                 npc.Properties = BinaryOverlayList.FactoryByCount(
@@ -312,7 +312,7 @@ partial class AObjectModificationBinaryOverlay
                     _package,
                     itemLength: 24,
                     count: propertyCount,
-                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<Npc.Property>.ReadProperty(stream.MetaData.MasterReferences, s));
+                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<Npc.Property>.ReadProperty(stream.MetaData, s));
                 break;
             case WeaponModificationBinaryOverlay weap:
                 weap.Properties = BinaryOverlayList.FactoryByCount(
@@ -320,7 +320,7 @@ partial class AObjectModificationBinaryOverlay
                     _package,
                     itemLength: 24,
                     count: propertyCount,
-                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<Weapon.Property>.ReadProperty(stream.MetaData.MasterReferences, s));
+                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<Weapon.Property>.ReadProperty(stream.MetaData, s));
                 break;
             case ObjectModificationBinaryOverlay obj:
                 obj.Properties = BinaryOverlayList.FactoryByCount(
@@ -328,7 +328,7 @@ partial class AObjectModificationBinaryOverlay
                     _package,
                     itemLength: 24,
                     count: propertyCount,
-                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<AObjectModification.NoneProperty>.ReadProperty(stream.MetaData.MasterReferences, s));
+                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<AObjectModification.NoneProperty>.ReadProperty(stream.MetaData, s));
                 break;
             case UnknownObjectModificationBinaryOverlay obj:
                 obj.Properties = BinaryOverlayList.FactoryByCount(
@@ -336,7 +336,7 @@ partial class AObjectModificationBinaryOverlay
                     _package,
                     itemLength: 24,
                     count: propertyCount,
-                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<AObjectModification.NoneProperty>.ReadProperty(stream.MetaData.MasterReferences, s));
+                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<AObjectModification.NoneProperty>.ReadProperty(stream.MetaData, s));
                 break;
             default:
                 throw new NotImplementedException();
