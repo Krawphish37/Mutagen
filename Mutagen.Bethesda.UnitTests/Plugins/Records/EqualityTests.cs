@@ -123,6 +123,65 @@ public class EqualityTests
             .ShouldBeFalse();
     }
 
+    private MaterialObject GetSomeMaterialObject()
+    {
+        var ret = new MaterialObject(TestConstants.Form1, SkyrimRelease.SkyrimSE);
+        ret.DNAMs.Add(new byte[] { 1, 2, 3 });
+        ret.DNAMs.Add(new byte[] { 4, 5 });
+        return ret;
+    }
+
+    [Fact]
+    public void ByteArrayListDuplicatedEquality()
+    {
+        var material = GetSomeMaterialObject();
+        var other = material.DeepCopy();
+
+        material.Equals(other)
+            .ShouldBeTrue();
+    }
+
+    [Fact]
+    public void ByteArrayListSeparateInstanceEquality()
+    {
+        GetSomeMaterialObject().Equals(GetSomeMaterialObject())
+            .ShouldBeTrue();
+    }
+
+    [Fact]
+    public void ByteArrayListInequality()
+    {
+        var material = GetSomeMaterialObject();
+
+        var other = material.DeepCopy();
+        other.DNAMs[1] = new byte[] { 4, 6 };
+        material.Equals(other)
+            .ShouldBeFalse();
+
+        other = material.DeepCopy();
+        other.DNAMs.Add(new byte[] { 7 });
+        material.Equals(other)
+            .ShouldBeFalse();
+    }
+
+    [Fact]
+    public void StarfieldByteArrayListDuplicatedEquality()
+    {
+        var subObject = new Mutagen.Bethesda.Starfield.NavigationMeshObstacleManagerSubObject()
+        {
+            Index = 1
+        };
+        subObject.DATAs.Add(new byte[] { 1, 2, 3 });
+        var other = Mutagen.Bethesda.Starfield.NavigationMeshObstacleManagerSubObjectMixIn.DeepCopy(subObject);
+
+        subObject.Equals(other)
+            .ShouldBeTrue();
+
+        other.DATAs[0] = new byte[] { 1, 2, 4 };
+        subObject.Equals(other)
+            .ShouldBeFalse();
+    }
+
     [Fact]
     public void DeepLoquiMasking()
     {
