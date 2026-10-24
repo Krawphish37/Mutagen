@@ -2529,7 +2529,10 @@ namespace Mutagen.Bethesda.Starfield
                 offset: offset,
                 translationParams: translationParams,
                 fill: ret.FillRecordType);
-            ret.OpticalSightAttachNodeEndingPos = ret._ANAMLocation!.Value.Min + 0x1 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret._ANAMLocation!.Value.Min + 0x1)) + 4;
+            if (ret._ANAMLocation.HasValue)
+            {
+                ret.OpticalSightAttachNodeEndingPos = ret._ANAMLocation!.Value.Min + 0x1 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret._ANAMLocation!.Value.Min + 0x1)) + 4;
+            }
             return ret;
         }
 

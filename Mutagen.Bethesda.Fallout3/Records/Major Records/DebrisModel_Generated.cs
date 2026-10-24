@@ -1420,8 +1420,11 @@ namespace Mutagen.Bethesda.Fallout3
                 offset: offset,
                 translationParams: translationParams,
                 fill: ret.FillRecordType);
-            ret.ModelFileName = BinaryStringUtility.ParseUnknownLengthString(ret._recordData.Slice(ret._DATALocation!.Value.Min + 0x1), package.MetaData.Encodings.NonTranslated);
-            ret.ModelFileNameEndingPos = ret._DATALocation!.Value.Min + 0x1 + ret.ModelFileName.Length + 1;
+            if (ret._DATALocation.HasValue)
+            {
+                ret.ModelFileName = BinaryStringUtility.ParseUnknownLengthString(ret._recordData.Slice(ret._DATALocation!.Value.Min + 0x1), package.MetaData.Encodings.NonTranslated);
+                ret.ModelFileNameEndingPos = ret._DATALocation!.Value.Min + 0x1 + ret.ModelFileName.Length + 1;
+            }
             return ret;
         }
 

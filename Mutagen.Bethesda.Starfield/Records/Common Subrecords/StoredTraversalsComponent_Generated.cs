@@ -1443,13 +1443,13 @@ namespace Mutagen.Bethesda.Starfield
         #region Traversals
         private int _TraversalsLocation => _STRDLocation!.Value.Min;
         private bool _Traversals_IsSet => _STRDLocation.HasValue;
-        public IReadOnlyList<ITraversalReferenceGetter> Traversals { get; private set; } = null!;
+        public IReadOnlyList<ITraversalReferenceGetter> Traversals { get; private set; } = [];
         protected int TraversalsEndingPos;
         #endregion
         #region ActivatorTraversals
         private int _ActivatorTraversalsLocation => TraversalsEndingPos;
         private bool _ActivatorTraversals_IsSet => _STRDLocation.HasValue;
-        public IReadOnlyList<IStoredTraversalsComponentItemGetter> ActivatorTraversals { get; private set; } = null!;
+        public IReadOnlyList<IStoredTraversalsComponentItemGetter> ActivatorTraversals { get; private set; } = [];
         protected int ActivatorTraversalsEndingPos;
         #endregion
         partial void CustomFactoryEnd(
@@ -1489,21 +1489,24 @@ namespace Mutagen.Bethesda.Starfield
                 offset: offset,
                 translationParams: translationParams,
                 fill: ret.FillRecordType);
+            if (ret._STRDLocation.HasValue)
             {
-                var tempStream = new OverlayStream(ret._recordData, package)
                 {
-                    Position = ret._TraversalsLocation
-                };
-                ret.Traversals = BinaryOverlayList.EagerFactoryByPrependedCount(tempStream, package, 4, (s, p) => TraversalReferenceBinaryOverlay.TraversalReferenceFactory(s, p));
-                ret.TraversalsEndingPos = tempStream.Position;
-            }
-            {
-                var tempStream = new OverlayStream(ret._recordData, package)
+                    var tempStream = new OverlayStream(ret._recordData, package)
+                    {
+                        Position = ret._TraversalsLocation
+                    };
+                    ret.Traversals = BinaryOverlayList.EagerFactoryByPrependedCount(tempStream, package, 4, (s, p) => TraversalReferenceBinaryOverlay.TraversalReferenceFactory(s, p));
+                    ret.TraversalsEndingPos = tempStream.Position;
+                }
                 {
-                    Position = ret._ActivatorTraversalsLocation
-                };
-                ret.ActivatorTraversals = BinaryOverlayList.EagerFactoryByPrependedCount(tempStream, package, 4, (s, p) => StoredTraversalsComponentItemBinaryOverlay.StoredTraversalsComponentItemFactory(s, p));
-                ret.ActivatorTraversalsEndingPos = tempStream.Position;
+                    var tempStream = new OverlayStream(ret._recordData, package)
+                    {
+                        Position = ret._ActivatorTraversalsLocation
+                    };
+                    ret.ActivatorTraversals = BinaryOverlayList.EagerFactoryByPrependedCount(tempStream, package, 4, (s, p) => StoredTraversalsComponentItemBinaryOverlay.StoredTraversalsComponentItemFactory(s, p));
+                    ret.ActivatorTraversalsEndingPos = tempStream.Position;
+                }
             }
             return ret;
         }

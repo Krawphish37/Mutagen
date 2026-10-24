@@ -293,6 +293,25 @@ public class DataBinaryTranslationGeneration : BinaryTranslationGeneration
                 passedLenPrefix: "ret.",
                 forOverlay: true)
             .ToListAsync();
+        // Ending positions can only be computed if the data subrecord was present.
+        // If it was missing, the fields fall back to their defaults via their _IsSet checks
+        var dataSb = new StructuredStringBuilder();
+        await GenerateWrapperUnknownLengthParseFields(dataSb, objGen, dataType, dataAccessor, lengths);
+        if (dataSb.Count == 0) return;
+        sb.AppendLine($"if (ret._{dataType.GetFieldData().RecordType}Location.HasValue)");
+        using (sb.CurlyBrace())
+        {
+            sb.AppendLines(dataSb);
+        }
+    }
+
+    private async Task GenerateWrapperUnknownLengthParseFields(
+        StructuredStringBuilder sb,
+        ObjectGeneration objGen,
+        DataType dataType,
+        Accessor dataAccessor,
+        List<BinaryTranslationModule.PassedLengths> lengths)
+    {
         foreach (var field in dataType.IterateFieldsWithMeta())
         {
             if (!this.Module.TryGetTypeGeneration(field.Field.GetType(), out var subTypeGen)) continue;
