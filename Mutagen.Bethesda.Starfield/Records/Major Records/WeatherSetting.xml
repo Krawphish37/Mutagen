@@ -5,6 +5,7 @@
       <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
       <FormLink name="ReflectionParent" refName="WeatherSetting" recordType="RFDP" />
       <ByteArray name="ReflectionDiff" recordType="RDIF" unknown="true" />
+      <RefList name="Conditions" refName="Condition" />
     </Fields>
   </Object>
 </Loqui>

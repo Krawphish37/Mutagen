@@ -24,12 +24,20 @@
       <RefDirect name="Ownership" refName="Ownership"/>
       <FormLink name="EncounterLocation" refName="Location" recordType="XEZN" />
       <Float name="GeometryDirtinessScale" recordType="XGDS" />
+      <RefDirect name="GroupedPackIn" refName="GroupedPackIn" />
+      <UInt32 name="BlueprintPartOrigin" recordType="XBPO" />
       <FormLink name="Layer" refName="Layer" recordType="XLYR" />
       <FormLink name="Location" refName="Location" recordType="XLRL" />
       <Float name="HeadTrackingWeight" recordType="XHTW" />
       <List name="LocationRefTypes" recordType="XLRT">
         <FormLink refName="LocationReferenceType" />
       </List>
+      <List name="LayeredMaterialSwaps" recordType="XLMS" >
+        <FormLink refName="LayeredMaterialSwap" />
+      </List>
+      <FormLink name="AttachRef" recordType="XATR">
+        <Interface>IPlaced</Interface>
+      </FormLink>
       <P3Float name="RagdollBipedRotation" recordType="XRGB" />
       <Percent name="Health" recordType="XHLT" />
       <RefDirect name="EnableParent" refName="EnableParent" />

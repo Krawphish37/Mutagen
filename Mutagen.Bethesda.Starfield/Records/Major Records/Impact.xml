@@ -26,6 +26,7 @@
       <RefDirect name="ImpactSoundDefault" recordType="IDSH" refName="SoundReference" />
       <RefDirect name="ImpactSoundPlayerFirstShooter" recordType="IDP1" refName="SoundReference" />
       <RefDirect name="ImpactSoundPlayerThirdTarget" recordType="IDP3" refName="SoundReference" />
+      <FormLink name="FootstepExplosion" recordType="NAM3" refName="Explosion" />
       <Float name="FootstepParticleMaxDist" recordType="FNAM" />
       <Float name="DecalLifetime" recordType="INAM" />
     </Fields>
