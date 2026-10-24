@@ -1045,6 +1045,7 @@ public partial class RecordTypeInts
     public const int SUNP = 0x504E5553;
     public const int SWMV = 0x564D5753;
     public const int SWMW = 0x574D5753;
+    public const int TACT = 0x54434154;
     public const int TASF = 0x46534154;
     public const int TAUT = 0x54554154;
     public const int TCMP = 0x504D4354;

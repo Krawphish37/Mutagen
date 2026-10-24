@@ -20,12 +20,14 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - MoveableStatic
 - Npc
 - Projectile
+- TalkingActivator
 ### IHasEffects
 - Ingestible
 - ObjectEffect
 - Spell
 ### IHasVoiceType
 - Npc
+- TalkingActivator
 ### IHaveVirtualMachineAdapter
 - AcousticSpace
 - ActionRecord
@@ -130,6 +132,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - Spell
 - Static
 - StaticCollection
+- TalkingActivator
 - Terminal
 - TerminalMenu
 - TextureSet
@@ -183,6 +186,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - SpeechChallenge
 - Spell
 - Star
+- TalkingActivator
 - Terminal
 - Weapon
 - Weather
@@ -236,6 +240,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - SnapTemplateNode
 - Static
 - StaticCollection
+- TalkingActivator
 - Terminal
 - UnknownObjectModification
 - Weapon
@@ -355,6 +360,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - StartSceneAction
 - Static
 - StaticCollection
+- TalkingActivator
 - Terminal
 - TerminalMenu
 - TimelineSceneAction
@@ -406,6 +412,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - Spell
 - Static
 - StaticCollection
+- TalkingActivator
 - Terminal
 - TextureSet
 - Weapon
@@ -525,6 +532,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - Spell
 - Static
 - StaticCollection
+- TalkingActivator
 - TextureSet
 - Traversal
 - UnknownObjectModification
@@ -1214,6 +1222,15 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IScripted
 ### StaticPlacement
 - IPositionRotation
+### TalkingActivator
+- IHasDestructible
+- IHasVoiceType
+- IHaveVirtualMachineAdapter
+- IKeyworded
+- IModeled
+- INamed
+- IObjectBounded
+- IScripted
 ### TeleportDestination
 - IPositionRotation
 ### Terminal

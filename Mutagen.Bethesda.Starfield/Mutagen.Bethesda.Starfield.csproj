@@ -2509,6 +2509,9 @@
     <Compile Include="Records\Major Records\RegionWeather.cs">
       <DependentUpon>Region.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\Relationship.cs">
+      <DependentUpon>Relationship.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\ResearchProject.cs">
       <DependentUpon>ResearchProject.xml</DependentUpon>
     </Compile>
@@ -2556,6 +2559,9 @@
     </Compile>
     <Compile Include="Records\Major Records\Subgraph.cs">
       <DependentUpon>Race.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\TalkingActivator.cs">
+      <DependentUpon>TalkingActivator.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\Major Records\TeleportDestination.cs">
       <DependentUpon>PlacedObject.xml</DependentUpon>
@@ -6928,6 +6934,12 @@
     </Compile>
     <Compile Include="Records\Common Subrecords\ConditionDatas\IsLevelGreaterThanGameplayOptionConditionData_Generated.cs">
       <DependentUpon>ConditionDatas.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\Relationship_Generated.cs">
+      <DependentUpon>Relationship.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\TalkingActivator_Generated.cs">
+      <DependentUpon>TalkingActivator.xml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

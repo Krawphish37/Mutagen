@@ -1047,6 +1047,7 @@ public partial class RecordTypes
     public static readonly RecordType SUNP = new(0x504E5553);
     public static readonly RecordType SWMV = new(0x564D5753);
     public static readonly RecordType SWMW = new(0x574D5753);
+    public static readonly RecordType TACT = new(0x54434154);
     public static readonly RecordType TASF = new(0x46534154);
     public static readonly RecordType TAUT = new(0x54554154);
     public static readonly RecordType TCMP = new(0x504D4354);
