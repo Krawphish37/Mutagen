@@ -317,7 +317,7 @@ partial class PerkBinaryCreateTranslation
         {
             effect.Flags = new PerkScriptFlag()
             {
-                Flags = (PerkScriptFlag.Flag)BinaryPrimitives.ReadInt16LittleEndian(payload.EPF3.Value.Content),
+                Flags = (PerkScriptFlag.Flag)BinaryPrimitives.ReadUInt16LittleEndian(payload.EPF3.Value.Content),
                 FragmentIndex = BinaryPrimitives.ReadUInt16LittleEndian(payload.EPF3.Value.Content.Slice(2))
             };
         }

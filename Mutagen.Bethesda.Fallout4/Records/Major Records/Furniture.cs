@@ -175,7 +175,7 @@ partial class FurnitureBinaryCreateTranslation
         {
             throw new ArgumentException($"Unexpected non-zero NAM0 data: {zeros}");
         }
-        return (Furniture.EntryPointType)BinaryPrimitives.ReadInt16LittleEndian(name0.Content.Slice(2));
+        return (Furniture.EntryPointType)BinaryPrimitives.ReadUInt16LittleEndian(name0.Content.Slice(2));
     }
 
     public static partial void FillBinaryMarkerParametersCustom(MutagenFrame frame, IFurnitureInternal item, PreviousParse lastParsed)

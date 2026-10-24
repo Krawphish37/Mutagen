@@ -13,6 +13,7 @@ public class TwoByteEnumTests
 {
     private const Package.InterruptFlag InterruptFlags = (Package.InterruptFlag)0xFEFC;
     private const Mutagen.Bethesda.Starfield.Activator.Flag ActivatorFlags = (Mutagen.Bethesda.Starfield.Activator.Flag)0x8001;
+    private const APerkEffect.Flag PerkFlags = (APerkEffect.Flag)0x8001;
 
     private static IEnumerable<IStarfieldModGetter> WriteAndReadBoth(
         IFileSystem fileSystem,
@@ -36,6 +37,17 @@ public class TwoByteEnumTests
                 }
             }
         };
+        var perk = mod.Perks.AddNew("Perk");
+        perk.Ranks.Add(new PerkRank()
+        {
+            Effects =
+            {
+                new PerkEntryPointAddActivateChoice()
+                {
+                    Flags = PerkFlags
+                }
+            }
+        });
         var modPath = Path.Combine(existingDir, mod.ModKey.FileName);
         mod.WriteToBinary(modPath, new BinaryWriteParameters()
         {
@@ -92,6 +104,19 @@ public class TwoByteEnumTests
         {
             var alias = mod.Quests.First().Aliases.Single().ShouldBeAssignableTo<IQuestReferenceAliasGetter>()!;
             alias.CreateReferenceToObject!.Create.ShouldBe(CreateReferenceToObject.CreateEnum.In);
+        }
+    }
+
+    [Theory, MutagenAutoData]
+    public void PerkRankEffectFlagsHighBitNotSignExtended(
+        IFileSystem fileSystem,
+        ModKey modKey,
+        DirectoryPath existingDir)
+    {
+        foreach (var mod in WriteAndReadBoth(fileSystem, modKey, existingDir))
+        {
+            var effect = mod.Perks.First().Ranks.Single().Effects.Single().ShouldBeAssignableTo<IPerkEntryPointAddActivateChoiceGetter>()!;
+            effect.Flags.ShouldBe(PerkFlags);
         }
     }
 }

@@ -274,7 +274,7 @@ partial class PerkBinaryCreateTranslation
                             {
                                 Spell = FormLinkBinaryTranslation.Instance.FactoryNullable<ISpellGetter>(stream.MetaData, payload.EPFD?.Content),
                                 ButtonLabel = payload.EPF2.HasValue ? StringBinaryTranslation.Instance.Parse(payload.EPF2.Value.Content, StringsSource.Normal, stream.MetaData, eager: true) : null,
-                                Flags = (PerkEntryPointAddActivateChoice.Flag)BinaryPrimitives.ReadInt16LittleEndian(payload.EPF3.Value.Content),
+                                Flags = (PerkEntryPointAddActivateChoice.Flag)BinaryPrimitives.ReadUInt16LittleEndian(payload.EPF3.Value.Content),
                             };
                             break;
                         case APerkEntryPointEffect.FunctionType.SelectSpell:
@@ -342,7 +342,7 @@ partial class PerkBinaryCreateTranslation
         }
         if (payload.EPF3 != null)
         {
-            effect.Flags = (APerkEffect.Flag)payload.EPF3.Value.AsInt16();
+            effect.Flags = (APerkEffect.Flag)payload.EPF3.Value.AsUInt16();
         }
         if (payload.EPFB != null)
         {
