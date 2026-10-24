@@ -7,6 +7,7 @@
       <Percent name="DirtinessScale" recordType="ODTY" nullable="False" />
       <UInt64 name="XALG" recordType="XALG" unknown="true" />
       <String name="Description" recordType="NNAM" />
+      <RefDirect name="ECHL" refName="SoundReference" recordType="ECHL" unknown="true" />
       <RefList name="Markers" refName="EchoMarker" itemMarkerType="ECHO" itemEndMarkerType="ECHE" />
       <RefDirect name="DefaultStartMarker" refName="EchoMarker" markerType="ECHD" endMarkerType="ECHE" />
     </Fields>
@@ -23,6 +24,7 @@
       <ByteArray name="CNAM" recordType="CNAM" unknown="true" />
       <ByteArray name="DNAM" recordType="DNAM" unknown="true" />
       <ByteArray name="ENAM" recordType="ENAM" unknown="true" />
+      <RefList name="Conditions" refName="Condition" />
       <String name="Description" recordType="NNAM" />
     </Fields>
   </Object>

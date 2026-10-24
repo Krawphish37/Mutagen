@@ -338,6 +338,7 @@ public partial class RecordTypes
     public static readonly RecordType EAMT = new(0x544D4145);
     public static readonly RecordType ECHD = new(0x44484345);
     public static readonly RecordType ECHE = new(0x45484345);
+    public static readonly RecordType ECHL = new(0x4C484345);
     public static readonly RecordType ECHO = new(0x4F484345);
     public static readonly RecordType ECOL = new(0x4C4F4345);
     public static readonly RecordType ECOR = new(0x524F4345);

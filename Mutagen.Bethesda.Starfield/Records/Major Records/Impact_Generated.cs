@@ -186,6 +186,16 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ISoundReferenceGetter? IImpactGetter.ImpactSoundPlayerThirdTarget => this.ImpactSoundPlayerThirdTarget;
         #endregion
+        #region FootstepExplosion
+        private readonly IFormLinkNullable<IExplosionGetter> _FootstepExplosion = new FormLinkNullable<IExplosionGetter>();
+        public IFormLinkNullable<IExplosionGetter> FootstepExplosion
+        {
+            get => _FootstepExplosion;
+            set => _FootstepExplosion.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkNullableGetter<IExplosionGetter> IImpactGetter.FootstepExplosion => this.FootstepExplosion;
+        #endregion
         #region FootstepParticleMaxDist
         public Single? FootstepParticleMaxDist { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -237,6 +247,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ImpactSoundDefault = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.ImpactSoundPlayerFirstShooter = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.ImpactSoundPlayerThirdTarget = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.FootstepExplosion = initialValue;
                 this.FootstepParticleMaxDist = initialValue;
                 this.DecalLifetime = initialValue;
             }
@@ -265,6 +276,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ImpactSoundDefault,
                 TItem ImpactSoundPlayerFirstShooter,
                 TItem ImpactSoundPlayerThirdTarget,
+                TItem FootstepExplosion,
                 TItem FootstepParticleMaxDist,
                 TItem DecalLifetime)
             : base(
@@ -292,6 +304,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ImpactSoundDefault = new MaskItem<TItem, SoundReference.Mask<TItem>?>(ImpactSoundDefault, new SoundReference.Mask<TItem>(ImpactSoundDefault));
                 this.ImpactSoundPlayerFirstShooter = new MaskItem<TItem, SoundReference.Mask<TItem>?>(ImpactSoundPlayerFirstShooter, new SoundReference.Mask<TItem>(ImpactSoundPlayerFirstShooter));
                 this.ImpactSoundPlayerThirdTarget = new MaskItem<TItem, SoundReference.Mask<TItem>?>(ImpactSoundPlayerThirdTarget, new SoundReference.Mask<TItem>(ImpactSoundPlayerThirdTarget));
+                this.FootstepExplosion = FootstepExplosion;
                 this.FootstepParticleMaxDist = FootstepParticleMaxDist;
                 this.DecalLifetime = DecalLifetime;
             }
@@ -321,6 +334,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? ImpactSoundDefault { get; set; }
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? ImpactSoundPlayerFirstShooter { get; set; }
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? ImpactSoundPlayerThirdTarget { get; set; }
+            public TItem FootstepExplosion;
             public TItem FootstepParticleMaxDist;
             public TItem DecalLifetime;
             #endregion
@@ -352,6 +366,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ImpactSoundDefault, rhs.ImpactSoundDefault)) return false;
                 if (!object.Equals(this.ImpactSoundPlayerFirstShooter, rhs.ImpactSoundPlayerFirstShooter)) return false;
                 if (!object.Equals(this.ImpactSoundPlayerThirdTarget, rhs.ImpactSoundPlayerThirdTarget)) return false;
+                if (!object.Equals(this.FootstepExplosion, rhs.FootstepExplosion)) return false;
                 if (!object.Equals(this.FootstepParticleMaxDist, rhs.FootstepParticleMaxDist)) return false;
                 if (!object.Equals(this.DecalLifetime, rhs.DecalLifetime)) return false;
                 return true;
@@ -375,6 +390,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ImpactSoundDefault);
                 hash.Add(this.ImpactSoundPlayerFirstShooter);
                 hash.Add(this.ImpactSoundPlayerThirdTarget);
+                hash.Add(this.FootstepExplosion);
                 hash.Add(this.FootstepParticleMaxDist);
                 hash.Add(this.DecalLifetime);
                 hash.Add(base.GetHashCode());
@@ -454,6 +470,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.ImpactSoundPlayerThirdTarget.Overall)) return false;
                     if (this.ImpactSoundPlayerThirdTarget.Specific != null && !this.ImpactSoundPlayerThirdTarget.Specific.All(eval)) return false;
                 }
+                if (!eval(this.FootstepExplosion)) return false;
                 if (!eval(this.FootstepParticleMaxDist)) return false;
                 if (!eval(this.DecalLifetime)) return false;
                 return true;
@@ -531,6 +548,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.ImpactSoundPlayerThirdTarget.Overall)) return true;
                     if (this.ImpactSoundPlayerThirdTarget.Specific != null && this.ImpactSoundPlayerThirdTarget.Specific.Any(eval)) return true;
                 }
+                if (eval(this.FootstepExplosion)) return true;
                 if (eval(this.FootstepParticleMaxDist)) return true;
                 if (eval(this.DecalLifetime)) return true;
                 return false;
@@ -604,6 +622,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.ImpactSoundDefault = this.ImpactSoundDefault == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.ImpactSoundDefault.Overall), this.ImpactSoundDefault.Specific?.Translate(eval));
                 obj.ImpactSoundPlayerFirstShooter = this.ImpactSoundPlayerFirstShooter == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.ImpactSoundPlayerFirstShooter.Overall), this.ImpactSoundPlayerFirstShooter.Specific?.Translate(eval));
                 obj.ImpactSoundPlayerThirdTarget = this.ImpactSoundPlayerThirdTarget == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.ImpactSoundPlayerThirdTarget.Overall), this.ImpactSoundPlayerThirdTarget.Specific?.Translate(eval));
+                obj.FootstepExplosion = eval(this.FootstepExplosion);
                 obj.FootstepParticleMaxDist = eval(this.FootstepParticleMaxDist);
                 obj.DecalLifetime = eval(this.DecalLifetime);
             }
@@ -737,6 +756,10 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         ImpactSoundPlayerThirdTarget?.Print(sb);
                     }
+                    if (printMask?.FootstepExplosion ?? true)
+                    {
+                        sb.AppendItem(FootstepExplosion, "FootstepExplosion");
+                    }
                     if (printMask?.FootstepParticleMaxDist ?? true)
                     {
                         sb.AppendItem(FootstepParticleMaxDist, "FootstepParticleMaxDist");
@@ -772,6 +795,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, SoundReference.ErrorMask?>? ImpactSoundDefault;
             public MaskItem<Exception?, SoundReference.ErrorMask?>? ImpactSoundPlayerFirstShooter;
             public MaskItem<Exception?, SoundReference.ErrorMask?>? ImpactSoundPlayerThirdTarget;
+            public Exception? FootstepExplosion;
             public Exception? FootstepParticleMaxDist;
             public Exception? DecalLifetime;
             #endregion
@@ -814,6 +838,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ImpactSoundPlayerFirstShooter;
                     case Impact_FieldIndex.ImpactSoundPlayerThirdTarget:
                         return ImpactSoundPlayerThirdTarget;
+                    case Impact_FieldIndex.FootstepExplosion:
+                        return FootstepExplosion;
                     case Impact_FieldIndex.FootstepParticleMaxDist:
                         return FootstepParticleMaxDist;
                     case Impact_FieldIndex.DecalLifetime:
@@ -875,6 +901,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case Impact_FieldIndex.ImpactSoundPlayerThirdTarget:
                         this.ImpactSoundPlayerThirdTarget = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                        break;
+                    case Impact_FieldIndex.FootstepExplosion:
+                        this.FootstepExplosion = ex;
                         break;
                     case Impact_FieldIndex.FootstepParticleMaxDist:
                         this.FootstepParticleMaxDist = ex;
@@ -941,6 +970,9 @@ namespace Mutagen.Bethesda.Starfield
                     case Impact_FieldIndex.ImpactSoundPlayerThirdTarget:
                         this.ImpactSoundPlayerThirdTarget = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
+                    case Impact_FieldIndex.FootstepExplosion:
+                        this.FootstepExplosion = (Exception?)obj;
+                        break;
                     case Impact_FieldIndex.FootstepParticleMaxDist:
                         this.FootstepParticleMaxDist = (Exception?)obj;
                         break;
@@ -972,6 +1004,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ImpactSoundDefault != null) return true;
                 if (ImpactSoundPlayerFirstShooter != null) return true;
                 if (ImpactSoundPlayerThirdTarget != null) return true;
+                if (FootstepExplosion != null) return true;
                 if (FootstepParticleMaxDist != null) return true;
                 if (DecalLifetime != null) return true;
                 return false;
@@ -1088,6 +1121,9 @@ namespace Mutagen.Bethesda.Starfield
                 ImpactSoundPlayerFirstShooter?.Print(sb);
                 ImpactSoundPlayerThirdTarget?.Print(sb);
                 {
+                    sb.AppendItem(FootstepExplosion, "FootstepExplosion");
+                }
+                {
                     sb.AppendItem(FootstepParticleMaxDist, "FootstepParticleMaxDist");
                 }
                 {
@@ -1117,6 +1153,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ImpactSoundDefault = this.ImpactSoundDefault.Combine(rhs.ImpactSoundDefault, (l, r) => l.Combine(r));
                 ret.ImpactSoundPlayerFirstShooter = this.ImpactSoundPlayerFirstShooter.Combine(rhs.ImpactSoundPlayerFirstShooter, (l, r) => l.Combine(r));
                 ret.ImpactSoundPlayerThirdTarget = this.ImpactSoundPlayerThirdTarget.Combine(rhs.ImpactSoundPlayerThirdTarget, (l, r) => l.Combine(r));
+                ret.FootstepExplosion = this.FootstepExplosion.Combine(rhs.FootstepExplosion);
                 ret.FootstepParticleMaxDist = this.FootstepParticleMaxDist.Combine(rhs.FootstepParticleMaxDist);
                 ret.DecalLifetime = this.DecalLifetime.Combine(rhs.DecalLifetime);
                 return ret;
@@ -1157,6 +1194,7 @@ namespace Mutagen.Bethesda.Starfield
             public SoundReference.TranslationMask? ImpactSoundDefault;
             public SoundReference.TranslationMask? ImpactSoundPlayerFirstShooter;
             public SoundReference.TranslationMask? ImpactSoundPlayerThirdTarget;
+            public bool FootstepExplosion;
             public bool FootstepParticleMaxDist;
             public bool DecalLifetime;
             #endregion
@@ -1177,6 +1215,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Unknown = defaultOn;
                 this.ProjectedDecals = defaultOn;
                 this.ScatterProjectedDecals = defaultOn;
+                this.FootstepExplosion = defaultOn;
                 this.FootstepParticleMaxDist = defaultOn;
                 this.DecalLifetime = defaultOn;
             }
@@ -1202,6 +1241,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ImpactSoundDefault != null ? ImpactSoundDefault.OnOverall : DefaultOn, ImpactSoundDefault?.GetCrystal()));
                 ret.Add((ImpactSoundPlayerFirstShooter != null ? ImpactSoundPlayerFirstShooter.OnOverall : DefaultOn, ImpactSoundPlayerFirstShooter?.GetCrystal()));
                 ret.Add((ImpactSoundPlayerThirdTarget != null ? ImpactSoundPlayerThirdTarget.OnOverall : DefaultOn, ImpactSoundPlayerThirdTarget?.GetCrystal()));
+                ret.Add((FootstepExplosion, null));
                 ret.Add((FootstepParticleMaxDist, null));
                 ret.Add((DecalLifetime, null));
             }
@@ -1376,6 +1416,7 @@ namespace Mutagen.Bethesda.Starfield
         new SoundReference? ImpactSoundDefault { get; set; }
         new SoundReference? ImpactSoundPlayerFirstShooter { get; set; }
         new SoundReference? ImpactSoundPlayerThirdTarget { get; set; }
+        new IFormLinkNullable<IExplosionGetter> FootstepExplosion { get; set; }
         new Single? FootstepParticleMaxDist { get; set; }
         new Single? DecalLifetime { get; set; }
     }
@@ -1419,6 +1460,7 @@ namespace Mutagen.Bethesda.Starfield
         ISoundReferenceGetter? ImpactSoundDefault { get; }
         ISoundReferenceGetter? ImpactSoundPlayerFirstShooter { get; }
         ISoundReferenceGetter? ImpactSoundPlayerThirdTarget { get; }
+        IFormLinkNullableGetter<IExplosionGetter> FootstepExplosion { get; }
         Single? FootstepParticleMaxDist { get; }
         Single? DecalLifetime { get; }
 
@@ -1613,8 +1655,9 @@ namespace Mutagen.Bethesda.Starfield
         ImpactSoundDefault = 20,
         ImpactSoundPlayerFirstShooter = 21,
         ImpactSoundPlayerThirdTarget = 22,
-        FootstepParticleMaxDist = 23,
-        DecalLifetime = 24,
+        FootstepExplosion = 23,
+        FootstepParticleMaxDist = 24,
+        DecalLifetime = 25,
     }
     #endregion
 
@@ -1625,9 +1668,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 18;
+        public const ushort AdditionalFieldCount = 19;
 
-        public const ushort FieldCount = 25;
+        public const ushort FieldCount = 26;
 
         public static readonly Type MaskType = typeof(Impact.Mask<>);
 
@@ -1676,6 +1719,7 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.IDSH,
                 RecordTypes.IDP1,
                 RecordTypes.IDP3,
+                RecordTypes.NAM3,
                 RecordTypes.FNAM,
                 RecordTypes.INAM);
             return new RecordTriggerSpecs(
@@ -1738,6 +1782,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ImpactSoundDefault = null;
             item.ImpactSoundPlayerFirstShooter = null;
             item.ImpactSoundPlayerThirdTarget = null;
+            item.FootstepExplosion.Clear();
             item.FootstepParticleMaxDist = default;
             item.DecalLifetime = default;
             base.Clear(item);
@@ -1764,6 +1809,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.ImpactSoundDefault?.RemapLinks(mapping);
             obj.ImpactSoundPlayerFirstShooter?.RemapLinks(mapping);
             obj.ImpactSoundPlayerThirdTarget?.RemapLinks(mapping);
+            obj.FootstepExplosion.Relink(mapping);
         }
         
         public IEnumerable<IAssetLink> EnumerateListedAssetLinks(IImpact obj, bool iterateNestedRecords = true)
@@ -1908,6 +1954,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.ImpactSoundPlayerThirdTarget,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
+            ret.FootstepExplosion = item.FootstepExplosion.Equals(rhs.FootstepExplosion);
             ret.FootstepParticleMaxDist = item.FootstepParticleMaxDist.EqualsWithin(rhs.FootstepParticleMaxDist);
             ret.DecalLifetime = item.DecalLifetime.EqualsWithin(rhs.DecalLifetime);
             base.FillEqualsMask(item, rhs, ret, include);
@@ -2060,6 +2107,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ImpactSoundPlayerThirdTargetItem?.Print(sb, "ImpactSoundPlayerThirdTarget");
             }
+            if (printMask?.FootstepExplosion ?? true)
+            {
+                sb.AppendItem(item.FootstepExplosion.FormKeyNullable, "FootstepExplosion");
+            }
             if ((printMask?.FootstepParticleMaxDist ?? true)
                 && item.FootstepParticleMaxDist is {} FootstepParticleMaxDistItem)
             {
@@ -2204,6 +2255,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isImpactSoundPlayerThirdTargetEqual) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)Impact_FieldIndex.FootstepExplosion) ?? true))
+            {
+                if (!lhs.FootstepExplosion.Equals(rhs.FootstepExplosion)) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)Impact_FieldIndex.FootstepParticleMaxDist) ?? true))
             {
                 if (!lhs.FootstepParticleMaxDist.EqualsWithin(rhs.FootstepParticleMaxDist)) return false;
@@ -2286,6 +2341,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(ImpactSoundPlayerThirdTargetitem);
             }
+            hash.Add(item.FootstepExplosion);
             if (item.FootstepParticleMaxDist is {} FootstepParticleMaxDistitem)
             {
                 hash.Add(FootstepParticleMaxDistitem);
@@ -2369,6 +2425,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     yield return item;
                 }
+            }
+            if (FormLinkInformation.TryFactory(obj.FootstepExplosion, out var FootstepExplosionInfo))
+            {
+                yield return FootstepExplosionInfo;
             }
             yield break;
         }
@@ -2727,6 +2787,10 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
+            if ((copyMask?.GetShouldTranslate((int)Impact_FieldIndex.FootstepExplosion) ?? true))
+            {
+                item.FootstepExplosion.SetTo(rhs.FootstepExplosion.FormKeyNullable);
+            }
             if ((copyMask?.GetShouldTranslate((int)Impact_FieldIndex.FootstepParticleMaxDist) ?? true))
             {
                 item.FootstepParticleMaxDist = rhs.FootstepParticleMaxDist;
@@ -3005,6 +3069,10 @@ namespace Mutagen.Bethesda.Starfield
                         translationParams: translationParams);
                 }
             }
+            FormLinkBinaryTranslation.Instance.WriteNullable(
+                writer: writer,
+                item: item.FootstepExplosion,
+                header: translationParams.ConvertToCustom(RecordTypes.NAM3));
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
                 item: item.FootstepParticleMaxDist,
@@ -3175,6 +3243,12 @@ namespace Mutagen.Bethesda.Starfield
                     item.ImpactSoundPlayerThirdTarget = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
                     return (int)Impact_FieldIndex.ImpactSoundPlayerThirdTarget;
                 }
+                case RecordTypeInts.NAM3:
+                {
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                    item.FootstepExplosion.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)Impact_FieldIndex.FootstepExplosion;
+                }
                 case RecordTypeInts.FNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -3299,6 +3373,10 @@ namespace Mutagen.Bethesda.Starfield
         public ISoundReferenceGetter? ImpactSoundDefault { get; private set; }
         public ISoundReferenceGetter? ImpactSoundPlayerFirstShooter { get; private set; }
         public ISoundReferenceGetter? ImpactSoundPlayerThirdTarget { get; private set; }
+        #region FootstepExplosion
+        private int? _FootstepExplosionLocation;
+        public IFormLinkNullableGetter<IExplosionGetter> FootstepExplosion => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IExplosionGetter>(_package, _recordData, _FootstepExplosionLocation);
+        #endregion
         #region FootstepParticleMaxDist
         private int? _FootstepParticleMaxDistLocation;
         public Single? FootstepParticleMaxDist => _FootstepParticleMaxDistLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FootstepParticleMaxDistLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
@@ -3455,6 +3533,11 @@ namespace Mutagen.Bethesda.Starfield
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
                     return (int)Impact_FieldIndex.ImpactSoundPlayerThirdTarget;
+                }
+                case RecordTypeInts.NAM3:
+                {
+                    _FootstepExplosionLocation = (stream.Position - offset);
+                    return (int)Impact_FieldIndex.FootstepExplosion;
                 }
                 case RecordTypeInts.FNAM:
                 {

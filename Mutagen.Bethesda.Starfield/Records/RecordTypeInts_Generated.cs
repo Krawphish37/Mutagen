@@ -336,6 +336,7 @@ public partial class RecordTypeInts
     public const int EAMT = 0x544D4145;
     public const int ECHD = 0x44484345;
     public const int ECHE = 0x45484345;
+    public const int ECHL = 0x4C484345;
     public const int ECHO = 0x4F484345;
     public const int ECOL = 0x4C4F4345;
     public const int ECOR = 0x524F4345;

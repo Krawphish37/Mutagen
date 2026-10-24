@@ -18,6 +18,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - Light
 - MiscItem
 - MoveableStatic
+- Npc
 - Projectile
 ### IHasEffects
 - Ingestible
@@ -963,6 +964,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IScripted
 - IWeightValue
 ### Npc
+- IHasDestructible
 - IHasVoiceType
 - IHaveVirtualMachineAdapter
 - IKeyworded

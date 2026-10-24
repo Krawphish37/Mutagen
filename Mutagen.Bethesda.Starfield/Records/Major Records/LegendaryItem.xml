@@ -24,6 +24,7 @@
       <ByteArray name="KNAM" recordType="KNAM" unknown="true" />
       <RefList name="GNAM" refName="LegendaryMod" recordType="GNAM" unknown="true" />
       <RefList name="HNAM" refName="LegendaryItemHNAMEntry" recordType="HNAM" unknown="true" />
+      <RefList name="INAM" refName="LegendaryItemHNAMEntry" recordType="INAM" unknown="true" />
       <ByteArray name="JNAM" recordType="JNAM" unknown="true" />
     </Fields>
     <LinkInterface>IItem</LinkInterface>

@@ -48,6 +48,7 @@ namespace Mutagen.Bethesda.Starfield
                     Light_Registration.Instance,
                     MiscItem_Registration.Instance,
                     MoveableStatic_Registration.Instance,
+                    Npc_Registration.Instance,
                     Projectile_Registration.Instance,
                 },
                 new InterfaceMappingTypes(

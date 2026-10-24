@@ -34,6 +34,7 @@
       <FormLink name="AmbienceSet" refName="AmbienceSet" recordType="WAMB" />
       <String name="EnvironmentMap" recordType="XEMP" />
       <String name="WaterEnvironmentMap" recordType="XWEM" />
+      <RefList name="XCLAs" refName="CellXCLAItem" />
       <Float name="GNAM" recordType="GNAM" unknown="true" />
       <List name="LandscapeTextures" >
         <FormLink refName="LandscapeTexture" recordType="LNAM" />

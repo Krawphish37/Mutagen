@@ -294,6 +294,20 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         String? IWorldspaceGetter.WaterEnvironmentMap => this.WaterEnvironmentMap;
         #endregion
+        #region XCLAs
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private ExtendedList<CellXCLAItem> _XCLAs = new ExtendedList<CellXCLAItem>();
+        public ExtendedList<CellXCLAItem> XCLAs
+        {
+            get => this._XCLAs;
+            init => this._XCLAs = value;
+        }
+        #region Interface Members
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IReadOnlyList<ICellXCLAItemGetter> IWorldspaceGetter.XCLAs => _XCLAs;
+        #endregion
+
+        #endregion
         #region GNAM
         public Single? GNAM { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -454,6 +468,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.AmbienceSet = initialValue;
                 this.EnvironmentMap = initialValue;
                 this.WaterEnvironmentMap = initialValue;
+                this.XCLAs = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CellXCLAItem.Mask<TItem>?>>?>(initialValue, []);
                 this.GNAM = initialValue;
                 this.LandscapeTextures = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.CellWaterHeightLocations = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
@@ -499,6 +514,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem AmbienceSet,
                 TItem EnvironmentMap,
                 TItem WaterEnvironmentMap,
+                TItem XCLAs,
                 TItem GNAM,
                 TItem LandscapeTextures,
                 TItem CellWaterHeightLocations,
@@ -543,6 +559,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.AmbienceSet = AmbienceSet;
                 this.EnvironmentMap = EnvironmentMap;
                 this.WaterEnvironmentMap = WaterEnvironmentMap;
+                this.XCLAs = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CellXCLAItem.Mask<TItem>?>>?>(XCLAs, []);
                 this.GNAM = GNAM;
                 this.LandscapeTextures = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(LandscapeTextures, []);
                 this.CellWaterHeightLocations = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(CellWaterHeightLocations, []);
@@ -589,6 +606,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem AmbienceSet;
             public TItem EnvironmentMap;
             public TItem WaterEnvironmentMap;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CellXCLAItem.Mask<TItem>?>>?>? XCLAs;
             public TItem GNAM;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? LandscapeTextures;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? CellWaterHeightLocations;
@@ -637,6 +655,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.AmbienceSet, rhs.AmbienceSet)) return false;
                 if (!object.Equals(this.EnvironmentMap, rhs.EnvironmentMap)) return false;
                 if (!object.Equals(this.WaterEnvironmentMap, rhs.WaterEnvironmentMap)) return false;
+                if (!object.Equals(this.XCLAs, rhs.XCLAs)) return false;
                 if (!object.Equals(this.GNAM, rhs.GNAM)) return false;
                 if (!object.Equals(this.LandscapeTextures, rhs.LandscapeTextures)) return false;
                 if (!object.Equals(this.CellWaterHeightLocations, rhs.CellWaterHeightLocations)) return false;
@@ -677,6 +696,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.AmbienceSet);
                 hash.Add(this.EnvironmentMap);
                 hash.Add(this.WaterEnvironmentMap);
+                hash.Add(this.XCLAs);
                 hash.Add(this.GNAM);
                 hash.Add(this.LandscapeTextures);
                 hash.Add(this.CellWaterHeightLocations);
@@ -760,6 +780,18 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.AmbienceSet)) return false;
                 if (!eval(this.EnvironmentMap)) return false;
                 if (!eval(this.WaterEnvironmentMap)) return false;
+                if (this.XCLAs != null)
+                {
+                    if (!eval(this.XCLAs.Overall)) return false;
+                    if (this.XCLAs.Specific != null)
+                    {
+                        foreach (var item in this.XCLAs.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (!eval(this.GNAM)) return false;
                 if (this.LandscapeTextures != null)
                 {
@@ -886,6 +918,18 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.AmbienceSet)) return true;
                 if (eval(this.EnvironmentMap)) return true;
                 if (eval(this.WaterEnvironmentMap)) return true;
+                if (this.XCLAs != null)
+                {
+                    if (eval(this.XCLAs.Overall)) return true;
+                    if (this.XCLAs.Specific != null)
+                    {
+                        foreach (var item in this.XCLAs.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (eval(this.GNAM)) return true;
                 if (this.LandscapeTextures != null)
                 {
@@ -1009,6 +1053,21 @@ namespace Mutagen.Bethesda.Starfield
                 obj.AmbienceSet = eval(this.AmbienceSet);
                 obj.EnvironmentMap = eval(this.EnvironmentMap);
                 obj.WaterEnvironmentMap = eval(this.WaterEnvironmentMap);
+                if (XCLAs != null)
+                {
+                    obj.XCLAs = new MaskItem<R, IEnumerable<MaskItemIndexed<R, CellXCLAItem.Mask<R>?>>?>(eval(this.XCLAs.Overall), []);
+                    if (XCLAs.Specific != null)
+                    {
+                        var l = new List<MaskItemIndexed<R, CellXCLAItem.Mask<R>?>>();
+                        obj.XCLAs.Specific = l;
+                        foreach (var item in XCLAs.Specific)
+                        {
+                            MaskItemIndexed<R, CellXCLAItem.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, CellXCLAItem.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
+                        }
+                    }
+                }
                 obj.GNAM = eval(this.GNAM);
                 if (LandscapeTextures != null)
                 {
@@ -1217,6 +1276,25 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(WaterEnvironmentMap, "WaterEnvironmentMap");
                     }
+                    if ((printMask?.XCLAs?.Overall ?? true)
+                        && XCLAs is {} XCLAsItem)
+                    {
+                        sb.AppendLine("XCLAs =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(XCLAsItem.Overall);
+                            if (XCLAsItem.Specific != null)
+                            {
+                                foreach (var subItem in XCLAsItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        subItem?.Print(sb);
+                                    }
+                                }
+                            }
+                        }
+                    }
                     if (printMask?.GNAM ?? true)
                     {
                         sb.AppendItem(GNAM, "GNAM");
@@ -1362,6 +1440,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? AmbienceSet;
             public Exception? EnvironmentMap;
             public Exception? WaterEnvironmentMap;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellXCLAItem.ErrorMask?>>?>? XCLAs;
             public Exception? GNAM;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? LandscapeTextures;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? CellWaterHeightLocations;
@@ -1429,6 +1508,8 @@ namespace Mutagen.Bethesda.Starfield
                         return EnvironmentMap;
                     case Worldspace_FieldIndex.WaterEnvironmentMap:
                         return WaterEnvironmentMap;
+                    case Worldspace_FieldIndex.XCLAs:
+                        return XCLAs;
                     case Worldspace_FieldIndex.GNAM:
                         return GNAM;
                     case Worldspace_FieldIndex.LandscapeTextures:
@@ -1532,6 +1613,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case Worldspace_FieldIndex.WaterEnvironmentMap:
                         this.WaterEnvironmentMap = ex;
+                        break;
+                    case Worldspace_FieldIndex.XCLAs:
+                        this.XCLAs = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellXCLAItem.ErrorMask?>>?>(ex, null);
                         break;
                     case Worldspace_FieldIndex.GNAM:
                         this.GNAM = ex;
@@ -1649,6 +1733,9 @@ namespace Mutagen.Bethesda.Starfield
                     case Worldspace_FieldIndex.WaterEnvironmentMap:
                         this.WaterEnvironmentMap = (Exception?)obj;
                         break;
+                    case Worldspace_FieldIndex.XCLAs:
+                        this.XCLAs = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellXCLAItem.ErrorMask?>>?>)obj;
+                        break;
                     case Worldspace_FieldIndex.GNAM:
                         this.GNAM = (Exception?)obj;
                         break;
@@ -1715,6 +1802,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (AmbienceSet != null) return true;
                 if (EnvironmentMap != null) return true;
                 if (WaterEnvironmentMap != null) return true;
+                if (XCLAs != null) return true;
                 if (GNAM != null) return true;
                 if (LandscapeTextures != null) return true;
                 if (CellWaterHeightLocations != null) return true;
@@ -1846,6 +1934,24 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(WaterEnvironmentMap, "WaterEnvironmentMap");
                 }
+                if (XCLAs is {} XCLAsItem)
+                {
+                    sb.AppendLine("XCLAs =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(XCLAsItem.Overall);
+                        if (XCLAsItem.Specific != null)
+                        {
+                            foreach (var subItem in XCLAsItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    subItem?.Print(sb);
+                                }
+                            }
+                        }
+                    }
+                }
                 {
                     sb.AppendItem(GNAM, "GNAM");
                 }
@@ -1975,6 +2081,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.AmbienceSet = this.AmbienceSet.Combine(rhs.AmbienceSet);
                 ret.EnvironmentMap = this.EnvironmentMap.Combine(rhs.EnvironmentMap);
                 ret.WaterEnvironmentMap = this.WaterEnvironmentMap.Combine(rhs.WaterEnvironmentMap);
+                ret.XCLAs = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellXCLAItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.XCLAs?.Overall, rhs.XCLAs?.Overall), Noggog.ExceptionExt.Combine(this.XCLAs?.Specific, rhs.XCLAs?.Specific));
                 ret.GNAM = this.GNAM.Combine(rhs.GNAM);
                 ret.LandscapeTextures = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.LandscapeTextures?.Overall, rhs.LandscapeTextures?.Overall), Noggog.ExceptionExt.Combine(this.LandscapeTextures?.Specific, rhs.LandscapeTextures?.Specific));
                 ret.CellWaterHeightLocations = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.CellWaterHeightLocations?.Overall, rhs.CellWaterHeightLocations?.Overall), Noggog.ExceptionExt.Combine(this.CellWaterHeightLocations?.Specific, rhs.CellWaterHeightLocations?.Specific));
@@ -2032,6 +2139,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool AmbienceSet;
             public bool EnvironmentMap;
             public bool WaterEnvironmentMap;
+            public CellXCLAItem.TranslationMask? XCLAs;
             public bool GNAM;
             public bool LandscapeTextures;
             public bool CellWaterHeightLocations;
@@ -2109,6 +2217,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((AmbienceSet, null));
                 ret.Add((EnvironmentMap, null));
                 ret.Add((WaterEnvironmentMap, null));
+                ret.Add((XCLAs == null ? DefaultOn : !XCLAs.GetCrystal().CopyNothing, XCLAs?.GetCrystal()));
                 ret.Add((GNAM, null));
                 ret.Add((LandscapeTextures, null));
                 ret.Add((CellWaterHeightLocations, null));
@@ -2349,6 +2458,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<IAmbienceSetGetter> AmbienceSet { get; set; }
         new String? EnvironmentMap { get; set; }
         new String? WaterEnvironmentMap { get; set; }
+        new ExtendedList<CellXCLAItem> XCLAs { get; }
         new Single? GNAM { get; set; }
         new ExtendedList<IFormLinkGetter<ILandscapeTextureGetter>> LandscapeTextures { get; }
         new ExtendedList<P2Int16>? CellWaterHeightLocations { get; set; }
@@ -2419,6 +2529,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IAmbienceSetGetter> AmbienceSet { get; }
         String? EnvironmentMap { get; }
         String? WaterEnvironmentMap { get; }
+        IReadOnlyList<ICellXCLAItemGetter> XCLAs { get; }
         Single? GNAM { get; }
         IReadOnlyList<IFormLinkGetter<ILandscapeTextureGetter>> LandscapeTextures { get; }
         IReadOnlyList<P2Int16>? CellWaterHeightLocations { get; }
@@ -2860,17 +2971,18 @@ namespace Mutagen.Bethesda.Starfield
         AmbienceSet = 28,
         EnvironmentMap = 29,
         WaterEnvironmentMap = 30,
-        GNAM = 31,
-        LandscapeTextures = 32,
-        CellWaterHeightLocations = 33,
-        WaterHeights = 34,
-        HNAM = 35,
-        OffsetData = 36,
-        CellSizeData = 37,
-        TopCell = 38,
-        SubCellsTimestamp = 39,
-        SubCellsUnknown = 40,
-        SubCells = 41,
+        XCLAs = 31,
+        GNAM = 32,
+        LandscapeTextures = 33,
+        CellWaterHeightLocations = 34,
+        WaterHeights = 35,
+        HNAM = 36,
+        OffsetData = 37,
+        CellSizeData = 38,
+        TopCell = 39,
+        SubCellsTimestamp = 40,
+        SubCellsUnknown = 41,
+        SubCells = 42,
     }
     #endregion
 
@@ -2881,9 +2993,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 35;
+        public const ushort AdditionalFieldCount = 36;
 
-        public const ushort FieldCount = 42;
+        public const ushort FieldCount = 43;
 
         public static readonly Type MaskType = typeof(Worldspace.Mask<>);
 
@@ -2941,6 +3053,8 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.WAMB,
                 RecordTypes.XEMP,
                 RecordTypes.XWEM,
+                RecordTypes.XCLA,
+                RecordTypes.XCLD,
                 RecordTypes.GNAM,
                 RecordTypes.LNAM,
                 RecordTypes.XCLW,
@@ -2956,8 +3070,6 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.MHDT,
                 RecordTypes.LTMP,
                 RecordTypes.XILS,
-                RecordTypes.XCLA,
-                RecordTypes.XCLD,
                 RecordTypes.XWCN,
                 RecordTypes.XCCM,
                 RecordTypes.XOWN,
@@ -3062,6 +3174,7 @@ namespace Mutagen.Bethesda.Starfield
             item.AmbienceSet.Clear();
             item.EnvironmentMap = default;
             item.WaterEnvironmentMap = default;
+            item.XCLAs.Clear();
             item.GNAM = default;
             item.LandscapeTextures.Clear();
             item.CellWaterHeightLocations = null;
@@ -3449,6 +3562,10 @@ namespace Mutagen.Bethesda.Starfield
                         subItem.Remove(keys, type, throwIfUnknown: false);
                     }
                     break;
+                case "CellXCLAItem":
+                case "ICellXCLAItemGetter":
+                case "ICellXCLAItem":
+                    break;
                 case "IBiomeObjectPackInTarget":
                 case "IBiomeObjectPackInTargetGetter":
                     {
@@ -3818,6 +3935,10 @@ namespace Mutagen.Bethesda.Starfield
             ret.AmbienceSet = item.AmbienceSet.Equals(rhs.AmbienceSet);
             ret.EnvironmentMap = string.Equals(item.EnvironmentMap, rhs.EnvironmentMap);
             ret.WaterEnvironmentMap = string.Equals(item.WaterEnvironmentMap, rhs.WaterEnvironmentMap);
+            ret.XCLAs = item.XCLAs.CollectionEqualsHelper(
+                rhs.XCLAs,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
+                include);
             ret.GNAM = item.GNAM.EqualsWithin(rhs.GNAM);
             ret.LandscapeTextures = item.LandscapeTextures.CollectionEqualsHelper(
                 rhs.LandscapeTextures,
@@ -4021,6 +4142,20 @@ namespace Mutagen.Bethesda.Starfield
                 && item.WaterEnvironmentMap is {} WaterEnvironmentMapItem)
             {
                 sb.AppendItem(WaterEnvironmentMapItem, "WaterEnvironmentMap");
+            }
+            if (printMask?.XCLAs?.Overall ?? true)
+            {
+                sb.AppendLine("XCLAs =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in item.XCLAs)
+                    {
+                        using (sb.Brace())
+                        {
+                            subItem?.Print(sb, "Item");
+                        }
+                    }
+                }
             }
             if ((printMask?.GNAM ?? true)
                 && item.GNAM is {} GNAMItem)
@@ -4275,6 +4410,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!string.Equals(lhs.WaterEnvironmentMap, rhs.WaterEnvironmentMap)) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.XCLAs) ?? true))
+            {
+                if (!lhs.XCLAs.SequenceEqual(rhs.XCLAs, (l, r) => ((CellXCLAItemCommon)((ICellXCLAItemGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Worldspace_FieldIndex.XCLAs)))) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.GNAM) ?? true))
             {
                 if (!lhs.GNAM.EqualsWithin(rhs.GNAM)) return false;
@@ -4417,6 +4556,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(WaterEnvironmentMapitem);
             }
+            hash.Add(item.XCLAs);
             if (item.GNAM is {} GNAMitem)
             {
                 hash.Add(GNAMitem);
@@ -4682,6 +4822,10 @@ namespace Mutagen.Bethesda.Starfield
                             yield return item;
                         }
                     }
+                    yield break;
+                case "CellXCLAItem":
+                case "ICellXCLAItemGetter":
+                case "ICellXCLAItem":
                     yield break;
                 case "NavigationMesh":
                 case "INavigationMeshGetter":
@@ -5024,6 +5168,10 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         yield return item;
                     }
+                    yield break;
+                case "CellXCLAItem":
+                case "ICellXCLAItemGetter":
+                case "ICellXCLAItem":
                     yield break;
                 case "NavigationMesh":
                 case "INavigationMeshGetter":
@@ -5566,6 +5714,30 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.WaterEnvironmentMap = rhs.WaterEnvironmentMap;
             }
+            if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.XCLAs) ?? true))
+            {
+                errorMask?.PushIndex((int)Worldspace_FieldIndex.XCLAs);
+                try
+                {
+                    item.XCLAs.SetTo(
+                        rhs.XCLAs
+                        .Select(r =>
+                        {
+                            return r.DeepCopy(
+                                errorMask: errorMask,
+                                default(TranslationCrystal));
+                        }));
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
+            }
             if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.GNAM) ?? true))
             {
                 item.GNAM = rhs.GNAM;
@@ -6042,6 +6214,17 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.WaterEnvironmentMap,
                 header: translationParams.ConvertToCustom(RecordTypes.XWEM),
                 binaryType: StringBinaryType.NullTerminate);
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ICellXCLAItemGetter>.Instance.Write(
+                writer: writer,
+                items: item.XCLAs,
+                transl: (MutagenWriter subWriter, ICellXCLAItemGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((CellXCLAItemBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
                 item: item.GNAM,
@@ -6369,6 +6552,17 @@ namespace Mutagen.Bethesda.Starfield
                         parseWhole: true);
                     return (int)Worldspace_FieldIndex.WaterEnvironmentMap;
                 }
+                case RecordTypeInts.XCLA:
+                case RecordTypeInts.XCLD:
+                {
+                    item.XCLAs.SetTo(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<CellXCLAItem>.Instance.Parse(
+                            reader: frame,
+                            triggeringRecord: CellXCLAItem_Registration.TriggerSpecs,
+                            translationParams: translationParams,
+                            transl: CellXCLAItem.TryCreateFromBinary));
+                    return (int)Worldspace_FieldIndex.XCLAs;
+                }
                 case RecordTypeInts.GNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -6614,6 +6808,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _WaterEnvironmentMapLocation;
         public String? WaterEnvironmentMap => _WaterEnvironmentMapLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _WaterEnvironmentMapLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
+        public IReadOnlyList<ICellXCLAItemGetter> XCLAs { get; private set; } = [];
         #region GNAM
         private int? _GNAMLocation;
         public Single? GNAM => _GNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _GNAMLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
@@ -6857,6 +7052,16 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     _WaterEnvironmentMapLocation = (stream.Position - offset);
                     return (int)Worldspace_FieldIndex.WaterEnvironmentMap;
+                }
+                case RecordTypeInts.XCLA:
+                case RecordTypeInts.XCLD:
+                {
+                    this.XCLAs = this.ParseRepeatedTypelessSubrecord<ICellXCLAItemGetter>(
+                        stream: stream,
+                        translationParams: translationParams,
+                        trigger: CellXCLAItem_Registration.TriggerSpecs,
+                        factory: CellXCLAItemBinaryOverlay.CellXCLAItemFactory);
+                    return (int)Worldspace_FieldIndex.XCLAs;
                 }
                 case RecordTypeInts.GNAM:
                 {

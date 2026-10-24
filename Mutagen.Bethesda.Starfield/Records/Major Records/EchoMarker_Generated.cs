@@ -118,6 +118,20 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ReadOnlyMemorySlice<Byte>? IEchoMarkerGetter.ENAM => this.ENAM;
         #endregion
+        #region Conditions
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private ExtendedList<Condition> _Conditions = new ExtendedList<Condition>();
+        public ExtendedList<Condition> Conditions
+        {
+            get => this._Conditions;
+            init => this._Conditions = value;
+        }
+        #region Interface Members
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IReadOnlyList<IConditionGetter> IEchoMarkerGetter.Conditions => _Conditions;
+        #endregion
+
+        #endregion
         #region Description
         public String? Description { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -169,6 +183,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.CNAM = initialValue;
                 this.DNAM = initialValue;
                 this.ENAM = initialValue;
+                this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
                 this.Description = initialValue;
             }
 
@@ -180,6 +195,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem CNAM,
                 TItem DNAM,
                 TItem ENAM,
+                TItem Conditions,
                 TItem Description)
             {
                 this.ECTE = ECTE;
@@ -189,6 +205,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.CNAM = CNAM;
                 this.DNAM = DNAM;
                 this.ENAM = ENAM;
+                this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
                 this.Description = Description;
             }
 
@@ -208,6 +225,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem CNAM;
             public TItem DNAM;
             public TItem ENAM;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
             public TItem Description;
             #endregion
 
@@ -228,6 +246,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.CNAM, rhs.CNAM)) return false;
                 if (!object.Equals(this.DNAM, rhs.DNAM)) return false;
                 if (!object.Equals(this.ENAM, rhs.ENAM)) return false;
+                if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
                 if (!object.Equals(this.Description, rhs.Description)) return false;
                 return true;
             }
@@ -241,6 +260,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.CNAM);
                 hash.Add(this.DNAM);
                 hash.Add(this.ENAM);
+                hash.Add(this.Conditions);
                 hash.Add(this.Description);
                 return hash.ToHashCode();
             }
@@ -261,6 +281,18 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.CNAM)) return false;
                 if (!eval(this.DNAM)) return false;
                 if (!eval(this.ENAM)) return false;
+                if (this.Conditions != null)
+                {
+                    if (!eval(this.Conditions.Overall)) return false;
+                    if (this.Conditions.Specific != null)
+                    {
+                        foreach (var item in this.Conditions.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (!eval(this.Description)) return false;
                 return true;
             }
@@ -280,6 +312,18 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.CNAM)) return true;
                 if (eval(this.DNAM)) return true;
                 if (eval(this.ENAM)) return true;
+                if (this.Conditions != null)
+                {
+                    if (eval(this.Conditions.Overall)) return true;
+                    if (this.Conditions.Specific != null)
+                    {
+                        foreach (var item in this.Conditions.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (eval(this.Description)) return true;
                 return false;
             }
@@ -302,6 +346,21 @@ namespace Mutagen.Bethesda.Starfield
                 obj.CNAM = eval(this.CNAM);
                 obj.DNAM = eval(this.DNAM);
                 obj.ENAM = eval(this.ENAM);
+                if (Conditions != null)
+                {
+                    obj.Conditions = new MaskItem<R, IEnumerable<MaskItemIndexed<R, Condition.Mask<R>?>>?>(eval(this.Conditions.Overall), []);
+                    if (Conditions.Specific != null)
+                    {
+                        var l = new List<MaskItemIndexed<R, Condition.Mask<R>?>>();
+                        obj.Conditions.Specific = l;
+                        foreach (var item in Conditions.Specific)
+                        {
+                            MaskItemIndexed<R, Condition.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, Condition.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
+                        }
+                    }
+                }
                 obj.Description = eval(this.Description);
             }
             #endregion
@@ -349,6 +408,25 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ENAM, "ENAM");
                     }
+                    if ((printMask?.Conditions?.Overall ?? true)
+                        && Conditions is {} ConditionsItem)
+                    {
+                        sb.AppendLine("Conditions =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(ConditionsItem.Overall);
+                            if (ConditionsItem.Specific != null)
+                            {
+                                foreach (var subItem in ConditionsItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        subItem?.Print(sb);
+                                    }
+                                }
+                            }
+                        }
+                    }
                     if (printMask?.Description ?? true)
                     {
                         sb.AppendItem(Description, "Description");
@@ -384,6 +462,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? CNAM;
             public Exception? DNAM;
             public Exception? ENAM;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
             public Exception? Description;
             #endregion
 
@@ -407,6 +486,8 @@ namespace Mutagen.Bethesda.Starfield
                         return DNAM;
                     case EchoMarker_FieldIndex.ENAM:
                         return ENAM;
+                    case EchoMarker_FieldIndex.Conditions:
+                        return Conditions;
                     case EchoMarker_FieldIndex.Description:
                         return Description;
                     default:
@@ -439,6 +520,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case EchoMarker_FieldIndex.ENAM:
                         this.ENAM = ex;
+                        break;
+                    case EchoMarker_FieldIndex.Conditions:
+                        this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
                         break;
                     case EchoMarker_FieldIndex.Description:
                         this.Description = ex;
@@ -474,6 +558,9 @@ namespace Mutagen.Bethesda.Starfield
                     case EchoMarker_FieldIndex.ENAM:
                         this.ENAM = (Exception?)obj;
                         break;
+                    case EchoMarker_FieldIndex.Conditions:
+                        this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
+                        break;
                     case EchoMarker_FieldIndex.Description:
                         this.Description = (Exception?)obj;
                         break;
@@ -492,6 +579,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (CNAM != null) return true;
                 if (DNAM != null) return true;
                 if (ENAM != null) return true;
+                if (Conditions != null) return true;
                 if (Description != null) return true;
                 return false;
             }
@@ -537,6 +625,24 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(ENAM, "ENAM");
                 }
+                if (Conditions is {} ConditionsItem)
+                {
+                    sb.AppendLine("Conditions =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(ConditionsItem.Overall);
+                        if (ConditionsItem.Specific != null)
+                        {
+                            foreach (var subItem in ConditionsItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    subItem?.Print(sb);
+                                }
+                            }
+                        }
+                    }
+                }
                 {
                     sb.AppendItem(Description, "Description");
                 }
@@ -555,6 +661,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.CNAM = this.CNAM.Combine(rhs.CNAM);
                 ret.DNAM = this.DNAM.Combine(rhs.DNAM);
                 ret.ENAM = this.ENAM.Combine(rhs.ENAM);
+                ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
                 ret.Description = this.Description.Combine(rhs.Description);
                 return ret;
             }
@@ -586,6 +693,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool CNAM;
             public bool DNAM;
             public bool ENAM;
+            public Condition.TranslationMask? Conditions;
             public bool Description;
             #endregion
 
@@ -625,6 +733,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((CNAM, null));
                 ret.Add((DNAM, null));
                 ret.Add((ENAM, null));
+                ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
                 ret.Add((Description, null));
             }
 
@@ -711,6 +820,7 @@ namespace Mutagen.Bethesda.Starfield
         new MemorySlice<Byte>? CNAM { get; set; }
         new MemorySlice<Byte>? DNAM { get; set; }
         new MemorySlice<Byte>? ENAM { get; set; }
+        new ExtendedList<Condition> Conditions { get; }
         new String? Description { get; set; }
     }
 
@@ -734,6 +844,7 @@ namespace Mutagen.Bethesda.Starfield
         ReadOnlyMemorySlice<Byte>? CNAM { get; }
         ReadOnlyMemorySlice<Byte>? DNAM { get; }
         ReadOnlyMemorySlice<Byte>? ENAM { get; }
+        IReadOnlyList<IConditionGetter> Conditions { get; }
         String? Description { get; }
 
     }
@@ -911,7 +1022,8 @@ namespace Mutagen.Bethesda.Starfield
         CNAM = 4,
         DNAM = 5,
         ENAM = 6,
-        Description = 7,
+        Conditions = 7,
+        Description = 8,
     }
     #endregion
 
@@ -922,9 +1034,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 8;
+        public const ushort AdditionalFieldCount = 9;
 
-        public const ushort FieldCount = 8;
+        public const ushort FieldCount = 9;
 
         public static readonly Type MaskType = typeof(EchoMarker.Mask<>);
 
@@ -953,6 +1065,16 @@ namespace Mutagen.Bethesda.Starfield
         public static RecordTriggerSpecs TriggerSpecs => _recordSpecs.Value;
         private static readonly Lazy<RecordTriggerSpecs> _recordSpecs = new Lazy<RecordTriggerSpecs>(() =>
         {
+            var triggers = RecordCollection.Factory(
+                RecordTypes.ECTE,
+                RecordTypes.ECSH,
+                RecordTypes.ANAM,
+                RecordTypes.BNAM,
+                RecordTypes.CNAM,
+                RecordTypes.DNAM,
+                RecordTypes.ENAM,
+                RecordTypes.CTDA,
+                RecordTypes.NNAM);
             var all = RecordCollection.Factory(
                 RecordTypes.ECTE,
                 RecordTypes.ECSH,
@@ -961,8 +1083,14 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.CNAM,
                 RecordTypes.DNAM,
                 RecordTypes.ENAM,
-                RecordTypes.NNAM);
-            return new RecordTriggerSpecs(allRecordTypes: all);
+                RecordTypes.CTDA,
+                RecordTypes.NNAM,
+                RecordTypes.CITC,
+                RecordTypes.CIS1,
+                RecordTypes.CIS2);
+            return new RecordTriggerSpecs(
+                allRecordTypes: all,
+                triggeringRecordTypes: triggers);
         });
         public static readonly Type BinaryWriteTranslation = typeof(EchoMarkerBinaryWriteTranslation);
         #region Interface
@@ -1011,6 +1139,7 @@ namespace Mutagen.Bethesda.Starfield
             item.CNAM = default;
             item.DNAM = default;
             item.ENAM = default;
+            item.Conditions.Clear();
             item.Description = default;
         }
         
@@ -1018,6 +1147,7 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IEchoMarker obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             obj.Sound?.RemapLinks(mapping);
+            obj.Conditions.RemapLinks(mapping);
         }
         
         #endregion
@@ -1073,6 +1203,10 @@ namespace Mutagen.Bethesda.Starfield
             ret.CNAM = MemorySliceExt.SequenceEqual(item.CNAM, rhs.CNAM);
             ret.DNAM = MemorySliceExt.SequenceEqual(item.DNAM, rhs.DNAM);
             ret.ENAM = MemorySliceExt.SequenceEqual(item.ENAM, rhs.ENAM);
+            ret.Conditions = item.Conditions.CollectionEqualsHelper(
+                rhs.Conditions,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
+                include);
             ret.Description = string.Equals(item.Description, rhs.Description);
         }
         
@@ -1153,6 +1287,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendLine($"ENAM => {SpanExt.ToHexString(ENAMItem)}");
             }
+            if (printMask?.Conditions?.Overall ?? true)
+            {
+                sb.AppendLine("Conditions =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in item.Conditions)
+                    {
+                        using (sb.Brace())
+                        {
+                            subItem?.Print(sb, "Item");
+                        }
+                    }
+                }
+            }
             if ((printMask?.Description ?? true)
                 && item.Description is {} DescriptionItem)
             {
@@ -1199,6 +1347,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!MemorySliceExt.SequenceEqual(lhs.ENAM, rhs.ENAM)) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Conditions) ?? true))
+            {
+                if (!lhs.Conditions.SequenceEqual(rhs.Conditions, (l, r) => ((ConditionCommon)((IConditionGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)EchoMarker_FieldIndex.Conditions)))) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Description) ?? true))
             {
                 if (!string.Equals(lhs.Description, rhs.Description)) return false;
@@ -1237,6 +1389,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.AddBytes(ENAMItem);
             }
+            hash.Add(item.Conditions);
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
@@ -1261,6 +1414,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     yield return item;
                 }
+            }
+            foreach (var item in obj.Conditions.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+            {
+                yield return FormLinkInformation.Factory(item);
             }
             yield break;
         }
@@ -1356,6 +1513,30 @@ namespace Mutagen.Bethesda.Starfield
                 else
                 {
                     item.ENAM = default;
+                }
+            }
+            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Conditions) ?? true))
+            {
+                errorMask?.PushIndex((int)EchoMarker_FieldIndex.Conditions);
+                try
+                {
+                    item.Conditions.SetTo(
+                        rhs.Conditions
+                        .Select(r =>
+                        {
+                            return r.DeepCopy(
+                                errorMask: errorMask,
+                                default(TranslationCrystal));
+                        }));
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Description) ?? true))
@@ -1505,6 +1686,17 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.ENAM,
                 header: translationParams.ConvertToCustom(RecordTypes.ENAM));
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IConditionGetter>.Instance.Write(
+                writer: writer,
+                items: item.Conditions,
+                transl: (MutagenWriter subWriter, IConditionGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((ConditionBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.Description,
@@ -1600,6 +1792,17 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ENAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
                     return (int)EchoMarker_FieldIndex.ENAM;
+                }
+                case RecordTypeInts.CTDA:
+                {
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Conditions, translationParams)) return ParseResult.Stop;
+                    item.Conditions.SetTo(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
+                            reader: frame,
+                            triggeringRecord: Condition_Registration.TriggerSpecs,
+                            translationParams: translationParams,
+                            transl: Condition.TryCreateFromBinary));
+                    return (int)EchoMarker_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.NNAM:
                 {
@@ -1705,6 +1908,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _ENAMLocation;
         public ReadOnlyMemorySlice<Byte>? ENAM => _ENAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ENAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
         #endregion
+        public IReadOnlyList<IConditionGetter> Conditions { get; private set; } = [];
         #region Description
         private int? _DescriptionLocation;
         public String? Description => _DescriptionLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DescriptionLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
@@ -1817,6 +2021,22 @@ namespace Mutagen.Bethesda.Starfield
                     if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.ENAM, translationParams)) return ParseResult.Stop;
                     _ENAMLocation = (stream.Position - offset);
                     return (int)EchoMarker_FieldIndex.ENAM;
+                }
+                case RecordTypeInts.CTDA:
+                {
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Conditions, translationParams)) return ParseResult.Stop;
+                    this.Conditions = BinaryOverlayList.FactoryByArray<IConditionGetter>(
+                        mem: stream.RemainingMemory,
+                        package: _package,
+                        translationParams: translationParams,
+                        getter: (s, p, recConv) => ConditionBinaryOverlay.ConditionFactory(new OverlayStream(s, p), p, recConv),
+                        locs: ParseRecordLocations(
+                            stream: stream,
+                            trigger: Condition_Registration.TriggerSpecs,
+                            triggersAlwaysAreNewRecords: true,
+                            constants: _package.MetaData.Constants.SubConstants,
+                            skipHeader: false));
+                    return (int)EchoMarker_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.NNAM:
                 {
