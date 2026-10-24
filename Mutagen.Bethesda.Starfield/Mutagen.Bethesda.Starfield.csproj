@@ -5613,7 +5613,6 @@
     <Compile Include="Records\Major Records\QuestObjectiveTarget_Generated.cs">
       <DependentUpon>Quest.xml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Link\IConstructible_Generated.cs" />
     <Compile Include="Records\Major Records\AQuestAlias_Generated.cs">
       <DependentUpon>Quest.xml</DependentUpon>
     </Compile>
@@ -5795,7 +5794,6 @@
     <Compile Include="Records\Major Records\CellShipBlueprintSnapLink_Generated.cs">
       <DependentUpon>Cell.xml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Link\ILinkedReference_Generated.cs" />
     <Compile Include="Records\StarfieldListGroup_Generated.cs">
       <DependentUpon>StarfieldGroup.xml</DependentUpon>
     </Compile>
