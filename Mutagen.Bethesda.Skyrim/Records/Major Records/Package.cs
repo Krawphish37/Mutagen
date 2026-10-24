@@ -511,7 +511,7 @@ partial class PackageBinaryOverlay
     ReadOnlyMemorySlice<Byte> _xnam;
     public partial ReadOnlyMemorySlice<Byte> GetXnamMarkerCustom() => _xnam;
 
-    IFormLinkGetter<IPackageGetter> _packageTemplate = null!;
+    IFormLinkGetter<IPackageGetter> _packageTemplate = FormLink<IPackageGetter>.Null;
     public partial IFormLinkGetter<IPackageGetter> GetPackageTemplateCustom() => _packageTemplate;
 
     partial void PackageTemplateCustomParse(OverlayStream stream, int finalPos, int offset)

@@ -141,7 +141,8 @@ partial class NoteBinaryWriteTranslation
 partial class NoteBinaryOverlay
 {
     private int? _dataTypeLocation;
-    private int? _dataContentLocation;
+    private int? _dataContentSNAMLocation;
+    private int? _dataContentPNAMLocation;
 
     public IANoteDataGetter Data
     {
@@ -157,28 +158,28 @@ partial class NoteBinaryOverlay
             {
                 case Note.Types.Voice:
                     var voice = new NoteVoice();
-                    if (_dataContentLocation.HasValue)
+                    if (_dataContentSNAMLocation.HasValue)
                     {
                         voice.Scene.SetTo(
                             FormKeyBinaryTranslation.Instance.Parse(
-                                HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentLocation.Value, _package.MetaData.Constants), 
+                                HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentSNAMLocation.Value, _package.MetaData.Constants),
                                 _package.MetaData.MasterReferences));
                     }
                     return voice;
                 case Note.Types.Program:
                     var prog = new NoteProgram();
-                    if (_dataContentLocation.HasValue)
+                    if (_dataContentPNAMLocation.HasValue)
                     {
-                        prog.File = StringBinaryTranslation.Instance.Parse(HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentLocation.Value, _package.MetaData.Constants), _package.MetaData.Encodings.NonTranslated, parseWhole: true);
+                        prog.File = StringBinaryTranslation.Instance.Parse(HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentPNAMLocation.Value, _package.MetaData.Constants), _package.MetaData.Encodings.NonTranslated, parseWhole: true);
                     }
                     return prog;
                 case Note.Types.Terminal:
                     var term = new NoteTerminal();
-                    if (_dataContentLocation.HasValue)
+                    if (_dataContentSNAMLocation.HasValue)
                     {
                         term.Terminal.SetTo(
                             FormKeyBinaryTranslation.Instance.Parse(
-                                HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentLocation.Value, _package.MetaData.Constants), 
+                                HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentSNAMLocation.Value, _package.MetaData.Constants),
                                 _package.MetaData.MasterReferences));
                     }
                     return term;
@@ -198,7 +199,15 @@ partial class NoteBinaryOverlay
 
     public partial ParseResult DataParseCustomParse(OverlayStream stream, int offset, PreviousParse lastParsed)
     {
-        _dataContentLocation = (stream.Position - offset);
+        var sub = stream.GetSubrecordHeader();
+        if (sub.RecordType == RecordTypes.SNAM)
+        {
+            _dataContentSNAMLocation = (stream.Position - offset);
+        }
+        else if (sub.RecordType == RecordTypes.PNAM)
+        {
+            _dataContentPNAMLocation = (stream.Position - offset);
+        }
         return (int)Note_FieldIndex.DropdownSound;
     }
 }

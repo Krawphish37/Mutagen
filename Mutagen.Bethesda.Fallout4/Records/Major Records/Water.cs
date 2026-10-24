@@ -4,6 +4,7 @@ using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
 using Mutagen.Bethesda.Plugins.Exceptions;
+using Noggog;
 
 namespace Mutagen.Bethesda.Fallout4;
 
@@ -110,13 +111,15 @@ partial class WaterBinaryOverlay
     private SubrecordFrame? _nam2;
     private SubrecordFrame? _nam3;
     private SubrecordFrame? _nam4;
-    private int _dataLoc => _SpecularInteriorSpecularPowerLocation + 4;
+    // Without DNAM, the noise layer floats read as zero, matching the full import
+    private static readonly byte[] _noNoiseLayerData = new byte[0x3C];
+    private ReadOnlyMemorySlice<byte> _noiseLayerData => _NoiseLayerParsing_IsSet ? _recordData.Slice(_NoiseLayerParsingLocation) : _noNoiseLayerData;
 
-    public IWaterNoisePropertiesGetter NoiseLayerOne => new WaterNoisePropertiesBinaryOverlay(_recordData.Slice(_dataLoc), _nam2, _package);
+    public IWaterNoisePropertiesGetter NoiseLayerOne => new WaterNoisePropertiesBinaryOverlay(_noiseLayerData, _nam2, _package);
 
-    public IWaterNoisePropertiesGetter NoiseLayerTwo => new WaterNoisePropertiesBinaryOverlay(_recordData.Slice(_dataLoc + 4), _nam3, _package);
+    public IWaterNoisePropertiesGetter NoiseLayerTwo => new WaterNoisePropertiesBinaryOverlay(_noiseLayerData.Slice(4), _nam3, _package);
 
-    public IWaterNoisePropertiesGetter NoiseLayerThree => new WaterNoisePropertiesBinaryOverlay(_recordData.Slice(_dataLoc + 8), _nam4, _package);
+    public IWaterNoisePropertiesGetter NoiseLayerThree => new WaterNoisePropertiesBinaryOverlay(_noiseLayerData.Slice(8), _nam4, _package);
 
     public partial ParseResult NoiseTextureParsingCustomParse(
         OverlayStream stream,

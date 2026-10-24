@@ -155,7 +155,8 @@ partial class HolotapeBinaryWriteTranslation
 partial class HolotapeBinaryOverlay
 {
     private int? _dataTypeLocation;
-    private int? _dataContentLocation;
+    private int? _dataContentSNAMLocation;
+    private int? _dataContentPNAMLocation;
 
     public IAHolotapeDataGetter Data
     {
@@ -171,38 +172,38 @@ partial class HolotapeBinaryOverlay
             {
                 case Holotape.Types.Sound:
                     var sound = new HolotapeSound();
-                    if (_dataContentLocation.HasValue)
+                    if (_dataContentSNAMLocation.HasValue)
                     {
                         sound.Sound.SetTo(
                             FormKeyBinaryTranslation.Instance.Parse(
-                                HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentLocation.Value, _package.MetaData.Constants), 
+                                HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentSNAMLocation.Value, _package.MetaData.Constants),
                                 _package.MetaData.MasterReferences));
                     }
                     return sound;
                 case Holotape.Types.Voice:
                     var voice = new HolotapeVoice();
-                    if (_dataContentLocation.HasValue)
+                    if (_dataContentSNAMLocation.HasValue)
                     {
                         voice.Scene.SetTo(
                             FormKeyBinaryTranslation.Instance.Parse(
-                                HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentLocation.Value, _package.MetaData.Constants), 
+                                HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentSNAMLocation.Value, _package.MetaData.Constants),
                                 _package.MetaData.MasterReferences));
                     }
                     return voice;
                 case Holotape.Types.Program:
                     var prog = new HolotapeProgram();
-                    if (_dataContentLocation.HasValue)
+                    if (_dataContentPNAMLocation.HasValue)
                     {
-                        prog.File = StringBinaryTranslation.Instance.Parse(HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentLocation.Value, _package.MetaData.Constants), _package.MetaData.Encodings.NonTranslated, parseWhole: true);
+                        prog.File = StringBinaryTranslation.Instance.Parse(HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentPNAMLocation.Value, _package.MetaData.Constants), _package.MetaData.Encodings.NonTranslated, parseWhole: true);
                     }
                     return prog;
                 case Holotape.Types.Terminal:
                     var term = new HolotapeTerminal();
-                    if (_dataContentLocation.HasValue)
+                    if (_dataContentSNAMLocation.HasValue)
                     {
                         term.Terminal.SetTo(
                             FormKeyBinaryTranslation.Instance.Parse(
-                                HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentLocation.Value, _package.MetaData.Constants), 
+                                HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentSNAMLocation.Value, _package.MetaData.Constants),
                                 _package.MetaData.MasterReferences));
                     }
                     return term;
@@ -222,7 +223,15 @@ partial class HolotapeBinaryOverlay
 
     public partial ParseResult DataParseCustomParse(OverlayStream stream, int offset, PreviousParse lastParsed)
     {
-        _dataContentLocation = (stream.Position - offset);
+        var sub = stream.GetSubrecordHeader();
+        if (sub.RecordType == RecordTypes.SNAM)
+        {
+            _dataContentSNAMLocation = (stream.Position - offset);
+        }
+        else if (sub.RecordType == RecordTypes.PNAM)
+        {
+            _dataContentPNAMLocation = (stream.Position - offset);
+        }
         return (int)Holotape_FieldIndex.PickUpSound;
     }
 }
