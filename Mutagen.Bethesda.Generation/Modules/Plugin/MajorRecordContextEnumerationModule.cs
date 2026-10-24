@@ -908,6 +908,12 @@ public class MajorRecordContextEnumerationModule : GenerationModule
                         case Case.Yes:
                             // Lets lists that know their items' types skip the others without constructing them
                             var filterByList = includeType && contLoqui.RefType == LoquiType.LoquiRefType.Interface;
+                            // Items that contain major records of their own (e.g. quest topics holding their responses)
+                            // are copied without them, so overriding one nested record does not drag in its siblings
+                            var copyMask = contLoqui.TargetObjectGeneration != null
+                                && await MajorRecordModule.HasMajorRecords(contLoqui, includeBaseClass: true, includeSelf: false) != Case.No
+                                ? $"ModContextExt.{contLoqui.TargetObjectGeneration.Name}CopyMask"
+                                : null;
                             fieldGen.AppendLine($"foreach (var subItem in {accessor}.{field.Name}{(field.Nullable ? ".EmptyIfNull()" : null)}{(filterByList ? ".WhereAssignableTo(type)" : null)})");
                             using (fieldGen.CurlyBrace())
                             {
@@ -929,7 +935,7 @@ public class MajorRecordContextEnumerationModule : GenerationModule
                                                 subFg.AppendLine($"var parent = getOrAddAsOverride(m, linkCache.Resolve<{obj.Interface(getter: true)}>(obj.FormKey));");
                                                 subFg.AppendLine($"var ret = parent.{cont.Name}.FirstOrDefault(x => x.FormKey == r.FormKey);");
                                                 subFg.AppendLine("if (ret != null) return ret;");
-                                                subFg.AppendLine($"ret = ({contLoqui.TypeName()})(({contLoqui.Interface(getter: true)})r).DeepCopy();");
+                                                subFg.AppendLine($"ret = ({contLoqui.TypeName()})(({contLoqui.Interface(getter: true)})r).DeepCopy({copyMask});");
                                                 subFg.AppendLine($"parent.{cont.Name}.Add(ret);");
                                                 subFg.AppendLine($"return ret;");
                                             }
@@ -942,7 +948,7 @@ public class MajorRecordContextEnumerationModule : GenerationModule
                                             subFg.AppendLine($"duplicateInto: (m, r, e, f) =>");
                                             using (subFg.CurlyBrace())
                                             {
-                                                subFg.AppendLine($"var dup = ({contLoqui.TypeName()})(({contLoqui.Interface(getter: true)})r).Duplicate(f ?? m.GetNextFormKey(e));");
+                                                subFg.AppendLine($"var dup = ({contLoqui.TypeName()})(({contLoqui.Interface(getter: true)})r).Duplicate(f ?? m.GetNextFormKey(e){(copyMask == null ? null : $", {copyMask}")});");
                                                 subFg.AppendLine($"getOrAddAsOverride(m, linkCache.Resolve<{obj.Interface(getter: true)}>(obj.FormKey)).{cont.Name}.Add(dup);");
                                                 subFg.AppendLine($"return dup;");
                                             }

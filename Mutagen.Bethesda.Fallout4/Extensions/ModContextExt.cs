@@ -35,7 +35,7 @@ internal static class ModContextExt
         Timestamp = false,
         Unknown = false,
         DialogBranches = false,
-        DialogConditions = false,
+        DialogTopics = false,
         Scenes = false,
     };
 

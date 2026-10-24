@@ -5198,13 +5198,13 @@ namespace Mutagen.Bethesda.Starfield
                         var parent = getOrAddAsOverride(m, linkCache.Resolve<IQuestGetter>(obj.FormKey));
                         var ret = parent.DialogTopics.FirstOrDefault(x => x.FormKey == r.FormKey);
                         if (ret != null) return ret;
-                        ret = (DialogTopic)((IDialogTopicGetter)r).DeepCopy();
+                        ret = (DialogTopic)((IDialogTopicGetter)r).DeepCopy(ModContextExt.DialogTopicCopyMask);
                         parent.DialogTopics.Add(ret);
                         return ret;
                     },
                     duplicateInto: (m, r, e, f) =>
                     {
-                        var dup = (DialogTopic)((IDialogTopicGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                        var dup = (DialogTopic)((IDialogTopicGetter)r).Duplicate(f ?? m.GetNextFormKey(e), ModContextExt.DialogTopicCopyMask);
                         getOrAddAsOverride(m, linkCache.Resolve<IQuestGetter>(obj.FormKey)).DialogTopics.Add(dup);
                         return dup;
                     });
@@ -5218,13 +5218,13 @@ namespace Mutagen.Bethesda.Starfield
                         var parent = getOrAddAsOverride(m, linkCache.Resolve<IQuestGetter>(obj.FormKey));
                         var ret = parent.DialogTopics.FirstOrDefault(x => x.FormKey == r.FormKey);
                         if (ret != null) return ret;
-                        ret = (DialogTopic)((IDialogTopicGetter)r).DeepCopy();
+                        ret = (DialogTopic)((IDialogTopicGetter)r).DeepCopy(ModContextExt.DialogTopicCopyMask);
                         parent.DialogTopics.Add(ret);
                         return ret;
                     },
                     duplicateInto: (m, r, e, f) =>
                     {
-                        var dup = (DialogTopic)((IDialogTopicGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                        var dup = (DialogTopic)((IDialogTopicGetter)r).Duplicate(f ?? m.GetNextFormKey(e), ModContextExt.DialogTopicCopyMask);
                         getOrAddAsOverride(m, linkCache.Resolve<IQuestGetter>(obj.FormKey)).DialogTopics.Add(dup);
                         return dup;
                     }))
@@ -5362,13 +5362,13 @@ namespace Mutagen.Bethesda.Starfield
                                     var parent = getOrAddAsOverride(m, linkCache.Resolve<IQuestGetter>(obj.FormKey));
                                     var ret = parent.DialogTopics.FirstOrDefault(x => x.FormKey == r.FormKey);
                                     if (ret != null) return ret;
-                                    ret = (DialogTopic)((IDialogTopicGetter)r).DeepCopy();
+                                    ret = (DialogTopic)((IDialogTopicGetter)r).DeepCopy(ModContextExt.DialogTopicCopyMask);
                                     parent.DialogTopics.Add(ret);
                                     return ret;
                                 },
                                 duplicateInto: (m, r, e, f) =>
                                 {
-                                    var dup = (DialogTopic)((IDialogTopicGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                    var dup = (DialogTopic)((IDialogTopicGetter)r).Duplicate(f ?? m.GetNextFormKey(e), ModContextExt.DialogTopicCopyMask);
                                     getOrAddAsOverride(m, linkCache.Resolve<IQuestGetter>(obj.FormKey)).DialogTopics.Add(dup);
                                     return dup;
                                 });
@@ -5385,13 +5385,13 @@ namespace Mutagen.Bethesda.Starfield
                                 var parent = getOrAddAsOverride(m, linkCache.Resolve<IQuestGetter>(obj.FormKey));
                                 var ret = parent.DialogTopics.FirstOrDefault(x => x.FormKey == r.FormKey);
                                 if (ret != null) return ret;
-                                ret = (DialogTopic)((IDialogTopicGetter)r).DeepCopy();
+                                ret = (DialogTopic)((IDialogTopicGetter)r).DeepCopy(ModContextExt.DialogTopicCopyMask);
                                 parent.DialogTopics.Add(ret);
                                 return ret;
                             },
                             duplicateInto: (m, r, e, f) =>
                             {
-                                var dup = (DialogTopic)((IDialogTopicGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                var dup = (DialogTopic)((IDialogTopicGetter)r).Duplicate(f ?? m.GetNextFormKey(e), ModContextExt.DialogTopicCopyMask);
                                 getOrAddAsOverride(m, linkCache.Resolve<IQuestGetter>(obj.FormKey)).DialogTopics.Add(dup);
                                 return dup;
                             }))
@@ -5417,13 +5417,13 @@ namespace Mutagen.Bethesda.Starfield
                                     var parent = getOrAddAsOverride(m, linkCache.Resolve<IQuestGetter>(obj.FormKey));
                                     var ret = parent.DialogTopics.FirstOrDefault(x => x.FormKey == r.FormKey);
                                     if (ret != null) return ret;
-                                    ret = (DialogTopic)((IDialogTopicGetter)r).DeepCopy();
+                                    ret = (DialogTopic)((IDialogTopicGetter)r).DeepCopy(ModContextExt.DialogTopicCopyMask);
                                     parent.DialogTopics.Add(ret);
                                     return ret;
                                 },
                                 duplicateInto: (m, r, e, f) =>
                                 {
-                                    var dup = (DialogTopic)((IDialogTopicGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                    var dup = (DialogTopic)((IDialogTopicGetter)r).Duplicate(f ?? m.GetNextFormKey(e), ModContextExt.DialogTopicCopyMask);
                                     getOrAddAsOverride(m, linkCache.Resolve<IQuestGetter>(obj.FormKey)).DialogTopics.Add(dup);
                                     return dup;
                                 });
@@ -5440,13 +5440,13 @@ namespace Mutagen.Bethesda.Starfield
                                 var parent = getOrAddAsOverride(m, linkCache.Resolve<IQuestGetter>(obj.FormKey));
                                 var ret = parent.DialogTopics.FirstOrDefault(x => x.FormKey == r.FormKey);
                                 if (ret != null) return ret;
-                                ret = (DialogTopic)((IDialogTopicGetter)r).DeepCopy();
+                                ret = (DialogTopic)((IDialogTopicGetter)r).DeepCopy(ModContextExt.DialogTopicCopyMask);
                                 parent.DialogTopics.Add(ret);
                                 return ret;
                             },
                             duplicateInto: (m, r, e, f) =>
                             {
-                                var dup = (DialogTopic)((IDialogTopicGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                var dup = (DialogTopic)((IDialogTopicGetter)r).Duplicate(f ?? m.GetNextFormKey(e), ModContextExt.DialogTopicCopyMask);
                                 getOrAddAsOverride(m, linkCache.Resolve<IQuestGetter>(obj.FormKey)).DialogTopics.Add(dup);
                                 return dup;
                             }))
