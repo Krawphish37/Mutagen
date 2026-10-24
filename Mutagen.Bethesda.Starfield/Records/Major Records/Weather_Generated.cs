@@ -5097,8 +5097,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)Weather_FieldIndex.NAM4) ?? true))
             {
-                if (!ObjectExt.NullSame(lhs.NAM4, rhs.NAM4)) return false;
-                if (!MemoryExtensions.SequenceEqual<Single>(lhs.NAM4!.Value.Span!, rhs.NAM4!.Value.Span!)) return false;
+                if (!MemorySliceExt.SequenceEqual(lhs.NAM4, rhs.NAM4)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weather_FieldIndex.FogDistanceDayNear) ?? true))
             {

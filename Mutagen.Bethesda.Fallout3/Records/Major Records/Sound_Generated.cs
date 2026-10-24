@@ -1387,8 +1387,7 @@ namespace Mutagen.Bethesda.Fallout3
             }
             if ((equalsMask?.GetShouldTranslate((int)Sound_FieldIndex.AttenuationCurve) ?? true))
             {
-                if (!ObjectExt.NullSame(lhs.AttenuationCurve, rhs.AttenuationCurve)) return false;
-                if (!MemoryExtensions.SequenceEqual<Int16>(lhs.AttenuationCurve!.Value.Span!, rhs.AttenuationCurve!.Value.Span!)) return false;
+                if (!MemorySliceExt.SequenceEqual(lhs.AttenuationCurve, rhs.AttenuationCurve)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Sound_FieldIndex.ReverbAttenuationControl) ?? true))
             {
