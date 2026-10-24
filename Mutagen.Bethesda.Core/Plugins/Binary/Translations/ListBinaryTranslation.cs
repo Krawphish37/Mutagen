@@ -203,7 +203,15 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
                 throw new NotImplementedException(); 
             } 
             var totalLen = header.TotalLength; 
-            var subFrame = reader.ReadAndReframe(checked((int)totalLen)); 
+            // Each item is parsed on its own thread, so it needs its own ParsingMeta.
+            // MajorRecordParse sets and clears per-record trackers like FormVersion on it,
+            // which would otherwise race with the other items being parsed at the same time.
+            var offset = reader.PositionWithOffset;
+            var subFrame = new MutagenFrame(
+                new MutagenMemoryReadStream(
+                    reader.ReadMemory(checked((int)totalLen), readSafe: true),
+                    reader.MetaData.CloneForParallelParse(),
+                    offsetReference: offset));
             frames.Add(subFrame); 
         } 
         var ret = new TryGet<T>[frames.Count]; 
