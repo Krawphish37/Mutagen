@@ -1448,12 +1448,12 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Unknown, null));
                 ret.Add((DetectionSoundValue, null));
                 ret.Add((HealthBarOffset, null));
-                ret.Add((WorldModel != null || DefaultOn, null));
-                ret.Add((FirstPersonModel != null || DefaultOn, null));
-                ret.Add((AltSkeleton != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(WorldModel, DefaultOn, m => m.OnOverall));
+                ret.Add(GenderedItem.GetCrystalMask(FirstPersonModel, DefaultOn, m => m.OnOverall));
+                ret.Add(GenderedItem.GetCrystal(AltSkeleton, DefaultOn));
                 ret.Add((ExtraLightLayers, null));
-                ret.Add((SkinTexture != null || DefaultOn, null));
-                ret.Add((Morphs != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(SkinTexture, DefaultOn, m => m.OnOverall));
+                ret.Add(GenderedItem.GetCrystalMask(Morphs, DefaultOn, m => m.OnOverall));
                 ret.Add((AdditionalRaces, null));
                 ret.Add((FootstepSound, null));
                 ret.Add((ArtObject, null));
@@ -1462,7 +1462,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ActorValueModulationEntryType, null));
                 ret.Add((ActorValueModulationSubType, null));
                 ret.Add((ActorValueModulationEntryValue, null));
-                ret.Add((BoneDataModifiers != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(BoneDataModifiers, DefaultOn));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -3083,43 +3083,67 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.HealthBarOffset = rhs.HealthBarOffset;
             }
-            if (rhs.WorldModel is not {} rhsWorldModelitem)
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.WorldModel) ?? true))
             {
-                item.WorldModel = null;
+                var WorldModelCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.WorldModel);
+                if (rhs.WorldModel is not {} rhsWorldModelitem)
+                {
+                    item.WorldModel = null;
+                }
+                else
+                {
+                    item.WorldModel = new GenderedItem<Model?>(
+                        male: (WorldModelCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsWorldModelitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                WorldModelCrystal?.GetSubCrystal(0))
+                            : item.WorldModel?.Male,
+                        female: (WorldModelCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsWorldModelitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                WorldModelCrystal?.GetSubCrystal(1))
+                            : item.WorldModel?.Female);
+                }
             }
-            else
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.FirstPersonModel) ?? true))
             {
-                item.WorldModel = new GenderedItem<Model?>(
-                    male: rhsWorldModelitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsWorldModelitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var FirstPersonModelCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.FirstPersonModel);
+                if (rhs.FirstPersonModel is not {} rhsFirstPersonModelitem)
+                {
+                    item.FirstPersonModel = null;
+                }
+                else
+                {
+                    item.FirstPersonModel = new GenderedItem<Model?>(
+                        male: (FirstPersonModelCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsFirstPersonModelitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                FirstPersonModelCrystal?.GetSubCrystal(0))
+                            : item.FirstPersonModel?.Male,
+                        female: (FirstPersonModelCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsFirstPersonModelitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                FirstPersonModelCrystal?.GetSubCrystal(1))
+                            : item.FirstPersonModel?.Female);
+                }
             }
-            if (rhs.FirstPersonModel is not {} rhsFirstPersonModelitem)
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.AltSkeleton) ?? true))
             {
-                item.FirstPersonModel = null;
-            }
-            else
-            {
-                item.FirstPersonModel = new GenderedItem<Model?>(
-                    male: rhsFirstPersonModelitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsFirstPersonModelitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
-            }
-            if (rhs.AltSkeleton is not {} rhsAltSkeletonitem)
-            {
-                item.AltSkeleton = null;
-            }
-            else
-            {
-                item.AltSkeleton = new GenderedItem<String?>(
-                    male: rhsAltSkeletonitem.Male,
-                    female: rhsAltSkeletonitem.Female);
+                var AltSkeletonCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.AltSkeleton);
+                if (rhs.AltSkeleton is not {} rhsAltSkeletonitem)
+                {
+                    item.AltSkeleton = null;
+                }
+                else
+                {
+                    item.AltSkeleton = new GenderedItem<String?>(
+                        male: (AltSkeletonCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsAltSkeletonitem.Male
+                            : item.AltSkeleton?.Male,
+                        female: (AltSkeletonCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsAltSkeletonitem.Female
+                            : item.AltSkeleton?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.ExtraLightLayers) ?? true))
             {
@@ -3138,33 +3162,49 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if (rhs.SkinTexture is not {} rhsSkinTextureitem)
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.SkinTexture) ?? true))
             {
-                item.SkinTexture = null;
+                var SkinTextureCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.SkinTexture);
+                if (rhs.SkinTexture is not {} rhsSkinTextureitem)
+                {
+                    item.SkinTexture = null;
+                }
+                else
+                {
+                    item.SkinTexture = new GenderedItem<ArmorAddonSkinTexture?>(
+                        male: (SkinTextureCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsSkinTextureitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                SkinTextureCrystal?.GetSubCrystal(0))
+                            : item.SkinTexture?.Male,
+                        female: (SkinTextureCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsSkinTextureitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                SkinTextureCrystal?.GetSubCrystal(1))
+                            : item.SkinTexture?.Female);
+                }
             }
-            else
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.Morphs) ?? true))
             {
-                item.SkinTexture = new GenderedItem<ArmorAddonSkinTexture?>(
-                    male: rhsSkinTextureitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsSkinTextureitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
-            }
-            if (rhs.Morphs is not {} rhsMorphsitem)
-            {
-                item.Morphs = null;
-            }
-            else
-            {
-                item.Morphs = new GenderedItem<ArmorAddonMorph?>(
-                    male: rhsMorphsitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsMorphsitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var MorphsCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.Morphs);
+                if (rhs.Morphs is not {} rhsMorphsitem)
+                {
+                    item.Morphs = null;
+                }
+                else
+                {
+                    item.Morphs = new GenderedItem<ArmorAddonMorph?>(
+                        male: (MorphsCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsMorphsitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                MorphsCrystal?.GetSubCrystal(0))
+                            : item.Morphs?.Male,
+                        female: (MorphsCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsMorphsitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                MorphsCrystal?.GetSubCrystal(1))
+                            : item.Morphs?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.AdditionalRaces) ?? true))
             {
@@ -3213,9 +3253,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ActorValueModulationEntryValue = rhs.ActorValueModulationEntryValue;
             }
-            item.BoneDataModifiers = new GenderedItem<ExtendedList<IFormLinkGetter<IBoneModifierGetter>>>(
-                male: rhs.BoneDataModifiers.Male.Select(x => new FormLink<IBoneModifierGetter>(x.FormKey)).ToExtendedList<IFormLinkGetter<IBoneModifierGetter>>(),
-                female: rhs.BoneDataModifiers.Female.Select(x => new FormLink<IBoneModifierGetter>(x.FormKey)).ToExtendedList<IFormLinkGetter<IBoneModifierGetter>>());
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.BoneDataModifiers) ?? true))
+            {
+                var BoneDataModifiersCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.BoneDataModifiers);
+                item.BoneDataModifiers = new GenderedItem<ExtendedList<IFormLinkGetter<IBoneModifierGetter>>>(
+                    male: (BoneDataModifiersCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.BoneDataModifiers.Male.Select(x => new FormLink<IBoneModifierGetter>(x.FormKey)).ToExtendedList<IFormLinkGetter<IBoneModifierGetter>>()
+                        : item.BoneDataModifiers.Male,
+                    female: (BoneDataModifiersCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.BoneDataModifiers.Female.Select(x => new FormLink<IBoneModifierGetter>(x.FormKey)).ToExtendedList<IFormLinkGetter<IBoneModifierGetter>>()
+                        : item.BoneDataModifiers.Female);
+            }
             DeepCopyInCustom(
                 item: item,
                 rhs: rhs,

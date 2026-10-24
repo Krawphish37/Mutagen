@@ -3863,8 +3863,8 @@ namespace Mutagen.Bethesda.Skyrim
                 ret.Add((SkillBoost5 != null ? SkillBoost5.OnOverall : DefaultOn, SkillBoost5?.GetCrystal()));
                 ret.Add((SkillBoost6 != null ? SkillBoost6.OnOverall : DefaultOn, SkillBoost6?.GetCrystal()));
                 ret.Add((Unknown, null));
-                ret.Add((Height != null || DefaultOn, null));
-                ret.Add((Weight != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(Height, DefaultOn));
+                ret.Add(GenderedItem.GetCrystal(Weight, DefaultOn));
                 ret.Add((Flags, null));
                 ret.Add((Starting, null));
                 ret.Add((BaseCarryWeight, null));
@@ -3885,21 +3885,21 @@ namespace Mutagen.Bethesda.Skyrim
                 ret.Add((AngularAccelerationRate, null));
                 ret.Add((AngularTolerance, null));
                 ret.Add((MountData != null ? MountData.OnOverall : DefaultOn, MountData?.GetCrystal()));
-                ret.Add((SkeletalModel != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(SkeletalModel, DefaultOn, m => m.OnOverall));
                 ret.Add((MovementTypeNames, null));
-                ret.Add((Voices != null || DefaultOn, null));
-                ret.Add((DecapitateArmors != null || DefaultOn, null));
-                ret.Add((DefaultHairColors != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(Voices, DefaultOn));
+                ret.Add(GenderedItem.GetCrystal(DecapitateArmors, DefaultOn));
+                ret.Add(GenderedItem.GetCrystal(DefaultHairColors, DefaultOn));
                 ret.Add((NumberOfTintsInList, null));
                 ret.Add((FacegenMainClamp, null));
                 ret.Add((FacegenFaceClamp, null));
                 ret.Add((AttackRace, null));
                 ret.Add((Attacks == null ? DefaultOn : !Attacks.GetCrystal().CopyNothing, Attacks?.GetCrystal()));
-                ret.Add((BodyData != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(BodyData, DefaultOn, m => m.OnOverall));
                 ret.Add((Hairs, null));
                 ret.Add((Eyes, null));
                 ret.Add((BodyPartData, null));
-                ret.Add((BehaviorGraph != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(BehaviorGraph, DefaultOn, m => m.OnOverall));
                 ret.Add((MaterialType, null));
                 ret.Add((ImpactDataSet, null));
                 ret.Add((DecapitationFX, null));
@@ -3917,7 +3917,7 @@ namespace Mutagen.Bethesda.Skyrim
                 ret.Add((BaseMovementDefaultFly, null));
                 ret.Add((BaseMovementDefaultSneak, null));
                 ret.Add((BaseMovementDefaultSprint, null));
-                ret.Add((HeadData != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(HeadData, DefaultOn, m => m.OnOverall));
                 ret.Add((MorphRace, null));
                 ret.Add((ArmorRace, null));
                 ret.Add((DATADataTypeState, null));
@@ -6651,12 +6651,28 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 item.Unknown = rhs.Unknown;
             }
-            item.Height = new GenderedItem<Single>(
-                male: rhs.Height.Male,
-                female: rhs.Height.Female);
-            item.Weight = new GenderedItem<Single>(
-                male: rhs.Weight.Male,
-                female: rhs.Weight.Female);
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Height) ?? true))
+            {
+                var HeightCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.Height);
+                item.Height = new GenderedItem<Single>(
+                    male: (HeightCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.Height.Male
+                        : item.Height.Male,
+                    female: (HeightCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.Height.Female
+                        : item.Height.Female);
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Weight) ?? true))
+            {
+                var WeightCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.Weight);
+                item.Weight = new GenderedItem<Single>(
+                    male: (WeightCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.Weight.Male
+                        : item.Weight.Male,
+                    female: (WeightCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.Weight.Female
+                        : item.Weight.Female);
+            }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Flags) ?? true))
             {
                 item.Flags = rhs.Flags;
@@ -6755,19 +6771,27 @@ namespace Mutagen.Bethesda.Skyrim
                     errorMask?.PopIndex();
                 }
             }
-            if (rhs.SkeletalModel is not {} rhsSkeletalModelitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.SkeletalModel) ?? true))
             {
-                item.SkeletalModel = null;
-            }
-            else
-            {
-                item.SkeletalModel = new GenderedItem<SimpleModel?>(
-                    male: rhsSkeletalModelitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsSkeletalModelitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var SkeletalModelCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.SkeletalModel);
+                if (rhs.SkeletalModel is not {} rhsSkeletalModelitem)
+                {
+                    item.SkeletalModel = null;
+                }
+                else
+                {
+                    item.SkeletalModel = new GenderedItem<SimpleModel?>(
+                        male: (SkeletalModelCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsSkeletalModelitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                SkeletalModelCrystal?.GetSubCrystal(0))
+                            : item.SkeletalModel?.Male,
+                        female: (SkeletalModelCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsSkeletalModelitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                SkeletalModelCrystal?.GetSubCrystal(1))
+                            : item.SkeletalModel?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.MovementTypeNames) ?? true))
             {
@@ -6786,28 +6810,52 @@ namespace Mutagen.Bethesda.Skyrim
                     errorMask?.PopIndex();
                 }
             }
-            item.Voices = new GenderedItem<IFormLinkGetter<IVoiceTypeGetter>>(
-                male: new FormLink<IVoiceTypeGetter>(rhs.Voices.Male.FormKey),
-                female: new FormLink<IVoiceTypeGetter>(rhs.Voices.Female.FormKey));
-            if (rhs.DecapitateArmors is not {} rhsDecapitateArmorsitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Voices) ?? true))
             {
-                item.DecapitateArmors = null;
+                var VoicesCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.Voices);
+                item.Voices = new GenderedItem<IFormLinkGetter<IVoiceTypeGetter>>(
+                    male: (VoicesCrystal?.GetShouldTranslate(0) ?? true)
+                        ? new FormLink<IVoiceTypeGetter>(rhs.Voices.Male.FormKey)
+                        : item.Voices.Male,
+                    female: (VoicesCrystal?.GetShouldTranslate(1) ?? true)
+                        ? new FormLink<IVoiceTypeGetter>(rhs.Voices.Female.FormKey)
+                        : item.Voices.Female);
             }
-            else
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.DecapitateArmors) ?? true))
             {
-                item.DecapitateArmors = new GenderedItem<IFormLinkGetter<IArmorGetter>>(
-                    male: new FormLink<IArmorGetter>(rhsDecapitateArmorsitem.Male.FormKey),
-                    female: new FormLink<IArmorGetter>(rhsDecapitateArmorsitem.Female.FormKey));
+                var DecapitateArmorsCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.DecapitateArmors);
+                if (rhs.DecapitateArmors is not {} rhsDecapitateArmorsitem)
+                {
+                    item.DecapitateArmors = null;
+                }
+                else
+                {
+                    item.DecapitateArmors = new GenderedItem<IFormLinkGetter<IArmorGetter>>(
+                        male: (DecapitateArmorsCrystal?.GetShouldTranslate(0) ?? true)
+                            ? new FormLink<IArmorGetter>(rhsDecapitateArmorsitem.Male.FormKey)
+                            : (item.DecapitateArmors?.Male ?? FormLink<IArmorGetter>.Null),
+                        female: (DecapitateArmorsCrystal?.GetShouldTranslate(1) ?? true)
+                            ? new FormLink<IArmorGetter>(rhsDecapitateArmorsitem.Female.FormKey)
+                            : (item.DecapitateArmors?.Female ?? FormLink<IArmorGetter>.Null));
+                }
             }
-            if (rhs.DefaultHairColors is not {} rhsDefaultHairColorsitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.DefaultHairColors) ?? true))
             {
-                item.DefaultHairColors = null;
-            }
-            else
-            {
-                item.DefaultHairColors = new GenderedItem<IFormLinkGetter<IColorRecordGetter>>(
-                    male: new FormLink<IColorRecordGetter>(rhsDefaultHairColorsitem.Male.FormKey),
-                    female: new FormLink<IColorRecordGetter>(rhsDefaultHairColorsitem.Female.FormKey));
+                var DefaultHairColorsCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.DefaultHairColors);
+                if (rhs.DefaultHairColors is not {} rhsDefaultHairColorsitem)
+                {
+                    item.DefaultHairColors = null;
+                }
+                else
+                {
+                    item.DefaultHairColors = new GenderedItem<IFormLinkGetter<IColorRecordGetter>>(
+                        male: (DefaultHairColorsCrystal?.GetShouldTranslate(0) ?? true)
+                            ? new FormLink<IColorRecordGetter>(rhsDefaultHairColorsitem.Male.FormKey)
+                            : (item.DefaultHairColors?.Male ?? FormLink<IColorRecordGetter>.Null),
+                        female: (DefaultHairColorsCrystal?.GetShouldTranslate(1) ?? true)
+                            ? new FormLink<IColorRecordGetter>(rhsDefaultHairColorsitem.Female.FormKey)
+                            : (item.DefaultHairColors?.Female ?? FormLink<IColorRecordGetter>.Null));
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.NumberOfTintsInList) ?? true))
             {
@@ -6849,13 +6897,21 @@ namespace Mutagen.Bethesda.Skyrim
                     errorMask?.PopIndex();
                 }
             }
-            item.BodyData = new GenderedItem<BodyData?>(
-                male: rhs.BodyData.Male?.DeepCopy(
-                    errorMask: errorMask,
-                    default(TranslationCrystal)),
-                female: rhs.BodyData.Female?.DeepCopy(
-                    errorMask: errorMask,
-                    default(TranslationCrystal)));
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.BodyData) ?? true))
+            {
+                var BodyDataCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.BodyData);
+                item.BodyData = new GenderedItem<BodyData?>(
+                    male: (BodyDataCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.BodyData.Male?.DeepCopy(
+                            errorMask: errorMask,
+                            BodyDataCrystal?.GetSubCrystal(0))
+                        : item.BodyData.Male,
+                    female: (BodyDataCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.BodyData.Female?.DeepCopy(
+                            errorMask: errorMask,
+                            BodyDataCrystal?.GetSubCrystal(1))
+                        : item.BodyData.Female);
+            }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Hairs) ?? true))
             {
                 errorMask?.PushIndex((int)Race_FieldIndex.Hairs);
@@ -6914,13 +6970,21 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 item.BodyPartData.SetTo(rhs.BodyPartData.FormKeyNullable);
             }
-            item.BehaviorGraph = new GenderedItem<ModelBehavior?>(
-                male: rhs.BehaviorGraph.Male?.DeepCopy(
-                    errorMask: errorMask,
-                    default(TranslationCrystal)),
-                female: rhs.BehaviorGraph.Female?.DeepCopy(
-                    errorMask: errorMask,
-                    default(TranslationCrystal)));
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.BehaviorGraph) ?? true))
+            {
+                var BehaviorGraphCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.BehaviorGraph);
+                item.BehaviorGraph = new GenderedItem<ModelBehavior?>(
+                    male: (BehaviorGraphCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.BehaviorGraph.Male?.DeepCopy(
+                            errorMask: errorMask,
+                            BehaviorGraphCrystal?.GetSubCrystal(0))
+                        : item.BehaviorGraph.Male,
+                    female: (BehaviorGraphCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.BehaviorGraph.Female?.DeepCopy(
+                            errorMask: errorMask,
+                            BehaviorGraphCrystal?.GetSubCrystal(1))
+                        : item.BehaviorGraph.Female);
+            }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.MaterialType) ?? true))
             {
                 item.MaterialType.SetTo(rhs.MaterialType.FormKeyNullable);
@@ -7042,19 +7106,27 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 item.BaseMovementDefaultSprint.SetTo(rhs.BaseMovementDefaultSprint.FormKeyNullable);
             }
-            if (rhs.HeadData is not {} rhsHeadDataitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.HeadData) ?? true))
             {
-                item.HeadData = null;
-            }
-            else
-            {
-                item.HeadData = new GenderedItem<HeadData?>(
-                    male: rhsHeadDataitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsHeadDataitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var HeadDataCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.HeadData);
+                if (rhs.HeadData is not {} rhsHeadDataitem)
+                {
+                    item.HeadData = null;
+                }
+                else
+                {
+                    item.HeadData = new GenderedItem<HeadData?>(
+                        male: (HeadDataCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsHeadDataitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                HeadDataCrystal?.GetSubCrystal(0))
+                            : item.HeadData?.Male,
+                        female: (HeadDataCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsHeadDataitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                HeadDataCrystal?.GetSubCrystal(1))
+                            : item.HeadData?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.MorphRace) ?? true))
             {

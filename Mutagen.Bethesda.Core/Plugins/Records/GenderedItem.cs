@@ -1,4 +1,5 @@
 using Loqui;
+using Loqui.Internal;
 using System.Collections;
 using Noggog.StructuredStrings;
 using static Loqui.EqualsMaskHelper;
@@ -139,6 +140,50 @@ namespace Mutagen.Bethesda.Plugins.Records
             }
 
             sb.AppendLine("]");
+        }
+
+        /// <summary>
+        /// Crystalizes a gendered translation mask field.<br/>
+        /// The field is on if either gender is on.  Its sub crystal holds the male entry at index 0
+        /// and the female entry at index 1.
+        /// </summary>
+        public static (bool On, TranslationCrystal? SubCrystal) GetCrystal(
+            IGenderedItemGetter<bool>? mask,
+            bool defaultOn)
+        {
+            if (mask == null) return (defaultOn, null);
+            return (mask.Male || mask.Female, new TranslationCrystal(new (bool On, TranslationCrystal? SubCrystal)[]
+            {
+                (mask.Male, null),
+                (mask.Female, null),
+            }));
+        }
+
+        /// <summary>
+        /// Crystalizes a gendered translation mask field whose items have translation masks of their own.<br/>
+        /// The field is on if either gender is on.  Its sub crystal holds the male entry at index 0
+        /// and the female entry at index 1.
+        /// </summary>
+        public static (bool On, TranslationCrystal? SubCrystal) GetCrystalMask<TMask>(
+            IGenderedItemGetter<TMask?>? mask,
+            bool defaultOn,
+            Func<TMask, bool> onOverall)
+            where TMask : class, ITranslationMask
+        {
+            if (mask == null) return (defaultOn, null);
+            var male = GetItemCrystal(mask.Male, defaultOn, onOverall);
+            var female = GetItemCrystal(mask.Female, defaultOn, onOverall);
+            return (male.On || female.On, new TranslationCrystal(new[] { male, female }));
+        }
+
+        private static (bool On, TranslationCrystal? SubCrystal) GetItemCrystal<TMask>(
+            TMask? mask,
+            bool defaultOn,
+            Func<TMask, bool> onOverall)
+            where TMask : class, ITranslationMask
+        {
+            if (mask == null) return (defaultOn, null);
+            return (onOverall(mask), mask.GetCrystal());
         }
 
         public static GenderedItem<Exception?>? Combine(GenderedItem<Exception?>? lhs, GenderedItem<Exception?>? rhs)

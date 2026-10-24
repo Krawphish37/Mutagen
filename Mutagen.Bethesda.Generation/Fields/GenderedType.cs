@@ -74,51 +74,71 @@ public class GenderedType : WrapperType
         {
             throw new NotImplementedException();
         }
-        if (this.Nullable)
+        sb.AppendLine($"if ({this.GetTranslationIfAccessor(copyMaskAccessor)})");
+        using (sb.CurlyBrace())
         {
-            sb.AppendLine($"if ({rhs} is not {{}} rhs{this.Name}item)");
-            using (sb.CurlyBrace())
+            // Sub crystal holds the male entry at index 0 and the female entry at index 1
+            var crystal = $"{this.Name}Crystal";
+            sb.AppendLine($"var {crystal} = {copyMaskAccessor}?.GetSubCrystal({this.IndexEnumInt});");
+            var existing = $"{accessor}";
+            if (this.Nullable)
             {
-                sb.AppendLine($"{accessor} = null;");
+                sb.AppendLine($"if ({rhs} is not {{}} rhs{this.Name}item)");
+                using (sb.CurlyBrace())
+                {
+                    sb.AppendLine($"{accessor} = null;");
+                }
+                sb.AppendLine("else");
+                rhs = $"rhs{this.Name}item";
+                existing = $"{accessor}?";
             }
-            sb.AppendLine("else");
-            rhs = $"rhs{this.Name}item";
+            using (sb.CurlyBrace(doIt: this.Nullable))
+            {
+                using (var args = sb.Call(
+                           $"{accessor} = new GenderedItem<{this.SubTypeGeneration.TypeName(getter: false, needsCovariance: true)}{this.SubTypeGeneration.NullChar}>"))
+                {
+                    args.Add(subFg => GenerateGenderCopy(subFg, rhs, existing, crystal, MaleFemaleGender.Male));
+                    args.Add(subFg => GenerateGenderCopy(subFg, rhs, existing, crystal, MaleFemaleGender.Female));
+                }
+            }
         }
-        using (sb.CurlyBrace(doIt: this.Nullable))
+    }
+
+    private void GenerateGenderCopy(
+        StructuredStringBuilder sb,
+        Accessor rhs,
+        string existing,
+        string crystal,
+        MaleFemaleGender gender)
+    {
+        var index = gender == MaleFemaleGender.Male ? 0 : 1;
+        var existingItem = $"{existing}.{gender}";
+        if (this.Nullable && string.IsNullOrEmpty(this.SubTypeGeneration.NullChar))
         {
-            using (var args = sb.Call(
-                       $"{accessor} = new GenderedItem<{this.SubTypeGeneration.TypeName(getter: false, needsCovariance: true)}{this.SubTypeGeneration.NullChar}>"))
+            existingItem = $"({existingItem} ?? {this.SubTypeGeneration.GetDefault(getter: false)})";
+        }
+        sb.AppendLine($"{gender.ToString().ToLower()}: ({crystal}?.GetShouldTranslate({index}) ?? true)");
+        using (sb.IncreaseDepth())
+        {
+            if (this.SubTypeGeneration is LoquiType loqui)
             {
-                if (this.isLoquiSingle)
+                if (loqui.RefType != LoquiType.LoquiRefType.Direct)
                 {
-                    LoquiType loqui = this.SubTypeGeneration as LoquiType;
-                    args.Add(subFg =>
-                    {
-                        loqui.GenerateTypicalMakeCopy(
-                            subFg,
-                            retAccessor: $"male: ",
-                            rhsAccessor: $"{rhs}.Male{this.SubTypeGeneration.NullChar}",
-                            copyMaskAccessor: $"{copyMaskAccessor}.Male",
-                            deepCopy: deepCopy,
-                            doTranslationMask: false);
-                    });
-                    args.Add(subFg =>
-                    {
-                        loqui.GenerateTypicalMakeCopy(
-                            subFg,
-                            retAccessor: $"female: ",
-                            rhsAccessor: $"{rhs}.Female{this.SubTypeGeneration.NullChar}",
-                            copyMaskAccessor: $"{copyMaskAccessor}.Female",
-                            deepCopy: deepCopy,
-                            doTranslationMask: false);
-                    });
+                    throw new NotImplementedException();
                 }
-                else
+                using (var args = sb.Call(
+                           $"? {rhs}.{gender}{this.SubTypeGeneration.NullChar}.DeepCopy{loqui.GetGenericTypes(getter: true, MaskType.Normal, MaskType.NormalGetter)}",
+                           semiColon: false))
                 {
-                    args.Add($"male: {this.SubTypeGeneration.GetDuplicate($"{rhs}.Male") ?? $"{rhs}.Male"}");
-                    args.Add($"female: {this.SubTypeGeneration.GetDuplicate($"{rhs}.Female") ?? $"{rhs}.Female"}");
+                    args.AddPassArg("errorMask");
+                    args.Add($"{crystal}?.GetSubCrystal({index})");
                 }
             }
+            else
+            {
+                sb.AppendLine($"? {this.SubTypeGeneration.GetDuplicate($"{rhs}.{gender}") ?? $"{rhs}.{gender}"}");
+            }
+            sb.AppendLine($": {existingItem}");
         }
     }
 

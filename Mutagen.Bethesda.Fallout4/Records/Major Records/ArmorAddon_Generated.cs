@@ -961,20 +961,20 @@ namespace Mutagen.Bethesda.Fallout4
                 base.GetCrystal(ret);
                 ret.Add((BodyTemplate != null ? BodyTemplate.OnOverall : DefaultOn, BodyTemplate?.GetCrystal()));
                 ret.Add((Race, null));
-                ret.Add((Priority != null || DefaultOn, null));
-                ret.Add((WeightSliderEnabled != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(Priority, DefaultOn));
+                ret.Add(GenderedItem.GetCrystal(WeightSliderEnabled, DefaultOn));
                 ret.Add((Unknown, null));
                 ret.Add((DetectionSoundValue, null));
                 ret.Add((Unknown2, null));
                 ret.Add((WeaponAdjust, null));
-                ret.Add((WorldModel != null || DefaultOn, null));
-                ret.Add((FirstPersonModel != null || DefaultOn, null));
-                ret.Add((SkinTexture != null || DefaultOn, null));
-                ret.Add((TextureSwapList != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(WorldModel, DefaultOn, m => m.OnOverall));
+                ret.Add(GenderedItem.GetCrystalMask(FirstPersonModel, DefaultOn, m => m.OnOverall));
+                ret.Add(GenderedItem.GetCrystal(SkinTexture, DefaultOn));
+                ret.Add(GenderedItem.GetCrystal(TextureSwapList, DefaultOn));
                 ret.Add((AdditionalRaces, null));
                 ret.Add((FootstepSound, null));
                 ret.Add((ArtObject, null));
-                ret.Add((BoneData != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(BoneData, DefaultOn));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -2236,12 +2236,28 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 item.Race.SetTo(rhs.Race.FormKeyNullable);
             }
-            item.Priority = new GenderedItem<Byte>(
-                male: rhs.Priority.Male,
-                female: rhs.Priority.Female);
-            item.WeightSliderEnabled = new GenderedItem<Boolean>(
-                male: rhs.WeightSliderEnabled.Male,
-                female: rhs.WeightSliderEnabled.Female);
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.Priority) ?? true))
+            {
+                var PriorityCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.Priority);
+                item.Priority = new GenderedItem<Byte>(
+                    male: (PriorityCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.Priority.Male
+                        : item.Priority.Male,
+                    female: (PriorityCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.Priority.Female
+                        : item.Priority.Female);
+            }
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.WeightSliderEnabled) ?? true))
+            {
+                var WeightSliderEnabledCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.WeightSliderEnabled);
+                item.WeightSliderEnabled = new GenderedItem<Boolean>(
+                    male: (WeightSliderEnabledCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.WeightSliderEnabled.Male
+                        : item.WeightSliderEnabled.Male,
+                    female: (WeightSliderEnabledCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.WeightSliderEnabled.Female
+                        : item.WeightSliderEnabled.Female);
+            }
             if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.Unknown) ?? true))
             {
                 item.Unknown = rhs.Unknown;
@@ -2258,53 +2274,85 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 item.WeaponAdjust = rhs.WeaponAdjust;
             }
-            if (rhs.WorldModel is not {} rhsWorldModelitem)
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.WorldModel) ?? true))
             {
-                item.WorldModel = null;
+                var WorldModelCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.WorldModel);
+                if (rhs.WorldModel is not {} rhsWorldModelitem)
+                {
+                    item.WorldModel = null;
+                }
+                else
+                {
+                    item.WorldModel = new GenderedItem<Model?>(
+                        male: (WorldModelCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsWorldModelitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                WorldModelCrystal?.GetSubCrystal(0))
+                            : item.WorldModel?.Male,
+                        female: (WorldModelCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsWorldModelitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                WorldModelCrystal?.GetSubCrystal(1))
+                            : item.WorldModel?.Female);
+                }
             }
-            else
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.FirstPersonModel) ?? true))
             {
-                item.WorldModel = new GenderedItem<Model?>(
-                    male: rhsWorldModelitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsWorldModelitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var FirstPersonModelCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.FirstPersonModel);
+                if (rhs.FirstPersonModel is not {} rhsFirstPersonModelitem)
+                {
+                    item.FirstPersonModel = null;
+                }
+                else
+                {
+                    item.FirstPersonModel = new GenderedItem<Model?>(
+                        male: (FirstPersonModelCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsFirstPersonModelitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                FirstPersonModelCrystal?.GetSubCrystal(0))
+                            : item.FirstPersonModel?.Male,
+                        female: (FirstPersonModelCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsFirstPersonModelitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                FirstPersonModelCrystal?.GetSubCrystal(1))
+                            : item.FirstPersonModel?.Female);
+                }
             }
-            if (rhs.FirstPersonModel is not {} rhsFirstPersonModelitem)
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.SkinTexture) ?? true))
             {
-                item.FirstPersonModel = null;
+                var SkinTextureCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.SkinTexture);
+                if (rhs.SkinTexture is not {} rhsSkinTextureitem)
+                {
+                    item.SkinTexture = null;
+                }
+                else
+                {
+                    item.SkinTexture = new GenderedItem<IFormLinkNullableGetter<ITextureSetGetter>>(
+                        male: (SkinTextureCrystal?.GetShouldTranslate(0) ?? true)
+                            ? new FormLinkNullable<ITextureSetGetter>(rhsSkinTextureitem.Male.FormKeyNullable)
+                            : (item.SkinTexture?.Male ?? FormLinkNullable<ITextureSetGetter>.Null),
+                        female: (SkinTextureCrystal?.GetShouldTranslate(1) ?? true)
+                            ? new FormLinkNullable<ITextureSetGetter>(rhsSkinTextureitem.Female.FormKeyNullable)
+                            : (item.SkinTexture?.Female ?? FormLinkNullable<ITextureSetGetter>.Null));
+                }
             }
-            else
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.TextureSwapList) ?? true))
             {
-                item.FirstPersonModel = new GenderedItem<Model?>(
-                    male: rhsFirstPersonModelitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsFirstPersonModelitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
-            }
-            if (rhs.SkinTexture is not {} rhsSkinTextureitem)
-            {
-                item.SkinTexture = null;
-            }
-            else
-            {
-                item.SkinTexture = new GenderedItem<IFormLinkNullableGetter<ITextureSetGetter>>(
-                    male: new FormLinkNullable<ITextureSetGetter>(rhsSkinTextureitem.Male.FormKeyNullable),
-                    female: new FormLinkNullable<ITextureSetGetter>(rhsSkinTextureitem.Female.FormKeyNullable));
-            }
-            if (rhs.TextureSwapList is not {} rhsTextureSwapListitem)
-            {
-                item.TextureSwapList = null;
-            }
-            else
-            {
-                item.TextureSwapList = new GenderedItem<IFormLinkNullableGetter<IFormListGetter>>(
-                    male: new FormLinkNullable<IFormListGetter>(rhsTextureSwapListitem.Male.FormKeyNullable),
-                    female: new FormLinkNullable<IFormListGetter>(rhsTextureSwapListitem.Female.FormKeyNullable));
+                var TextureSwapListCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.TextureSwapList);
+                if (rhs.TextureSwapList is not {} rhsTextureSwapListitem)
+                {
+                    item.TextureSwapList = null;
+                }
+                else
+                {
+                    item.TextureSwapList = new GenderedItem<IFormLinkNullableGetter<IFormListGetter>>(
+                        male: (TextureSwapListCrystal?.GetShouldTranslate(0) ?? true)
+                            ? new FormLinkNullable<IFormListGetter>(rhsTextureSwapListitem.Male.FormKeyNullable)
+                            : (item.TextureSwapList?.Male ?? FormLinkNullable<IFormListGetter>.Null),
+                        female: (TextureSwapListCrystal?.GetShouldTranslate(1) ?? true)
+                            ? new FormLinkNullable<IFormListGetter>(rhsTextureSwapListitem.Female.FormKeyNullable)
+                            : (item.TextureSwapList?.Female ?? FormLinkNullable<IFormListGetter>.Null));
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.AdditionalRaces) ?? true))
             {
@@ -2333,9 +2381,17 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 item.ArtObject.SetTo(rhs.ArtObject.FormKeyNullable);
             }
-            item.BoneData = new GenderedItem<ExtendedList<Bone>?>(
-                male: rhs.BoneData.Male?.Select(x => x.DeepCopy()).ToExtendedList<Bone>(),
-                female: rhs.BoneData.Female?.Select(x => x.DeepCopy()).ToExtendedList<Bone>());
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.BoneData) ?? true))
+            {
+                var BoneDataCrystal = copyMask?.GetSubCrystal((int)ArmorAddon_FieldIndex.BoneData);
+                item.BoneData = new GenderedItem<ExtendedList<Bone>?>(
+                    male: (BoneDataCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.BoneData.Male?.Select(x => x.DeepCopy()).ToExtendedList<Bone>()
+                        : item.BoneData.Male,
+                    female: (BoneDataCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.BoneData.Female?.Select(x => x.DeepCopy()).ToExtendedList<Bone>()
+                        : item.BoneData.Female);
+            }
             DeepCopyInCustom(
                 item: item,
                 rhs: rhs,

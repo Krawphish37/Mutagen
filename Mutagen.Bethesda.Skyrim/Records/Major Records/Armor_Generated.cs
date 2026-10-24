@@ -1356,7 +1356,7 @@ namespace Mutagen.Bethesda.Skyrim
                 ret.Add((Name, null));
                 ret.Add((ObjectEffect, null));
                 ret.Add((EnchantmentAmount, null));
-                ret.Add((WorldModel != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(WorldModel, DefaultOn, m => m.OnOverall));
                 ret.Add((BodyTemplate != null ? BodyTemplate.OnOverall : DefaultOn, BodyTemplate?.GetCrystal()));
                 ret.Add((Destructible != null ? Destructible.OnOverall : DefaultOn, Destructible?.GetCrystal()));
                 ret.Add((PickUpSound, null));
@@ -2916,19 +2916,27 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 item.EnchantmentAmount = rhs.EnchantmentAmount;
             }
-            if (rhs.WorldModel is not {} rhsWorldModelitem)
+            if ((copyMask?.GetShouldTranslate((int)Armor_FieldIndex.WorldModel) ?? true))
             {
-                item.WorldModel = null;
-            }
-            else
-            {
-                item.WorldModel = new GenderedItem<ArmorModel?>(
-                    male: rhsWorldModelitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsWorldModelitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var WorldModelCrystal = copyMask?.GetSubCrystal((int)Armor_FieldIndex.WorldModel);
+                if (rhs.WorldModel is not {} rhsWorldModelitem)
+                {
+                    item.WorldModel = null;
+                }
+                else
+                {
+                    item.WorldModel = new GenderedItem<ArmorModel?>(
+                        male: (WorldModelCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsWorldModelitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                WorldModelCrystal?.GetSubCrystal(0))
+                            : item.WorldModel?.Male,
+                        female: (WorldModelCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsWorldModelitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                WorldModelCrystal?.GetSubCrystal(1))
+                            : item.WorldModel?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Armor_FieldIndex.BodyTemplate) ?? true))
             {

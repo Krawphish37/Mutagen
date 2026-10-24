@@ -412,8 +412,8 @@ namespace Mutagen.Bethesda.Skyrim
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((ParentTitle != null || DefaultOn, null));
-                ret.Add((Title != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(ParentTitle, DefaultOn));
+                ret.Add(GenderedItem.GetCrystal(Title, DefaultOn));
                 ret.Add((IsFamily, null));
             }
 
@@ -1246,25 +1246,41 @@ namespace Mutagen.Bethesda.Skyrim
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if (rhs.ParentTitle is not {} rhsParentTitleitem)
+            if ((copyMask?.GetShouldTranslate((int)AssociationType_FieldIndex.ParentTitle) ?? true))
             {
-                item.ParentTitle = null;
+                var ParentTitleCrystal = copyMask?.GetSubCrystal((int)AssociationType_FieldIndex.ParentTitle);
+                if (rhs.ParentTitle is not {} rhsParentTitleitem)
+                {
+                    item.ParentTitle = null;
+                }
+                else
+                {
+                    item.ParentTitle = new GenderedItem<String?>(
+                        male: (ParentTitleCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsParentTitleitem.Male
+                            : item.ParentTitle?.Male,
+                        female: (ParentTitleCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsParentTitleitem.Female
+                            : item.ParentTitle?.Female);
+                }
             }
-            else
+            if ((copyMask?.GetShouldTranslate((int)AssociationType_FieldIndex.Title) ?? true))
             {
-                item.ParentTitle = new GenderedItem<String?>(
-                    male: rhsParentTitleitem.Male,
-                    female: rhsParentTitleitem.Female);
-            }
-            if (rhs.Title is not {} rhsTitleitem)
-            {
-                item.Title = null;
-            }
-            else
-            {
-                item.Title = new GenderedItem<String?>(
-                    male: rhsTitleitem.Male,
-                    female: rhsTitleitem.Female);
+                var TitleCrystal = copyMask?.GetSubCrystal((int)AssociationType_FieldIndex.Title);
+                if (rhs.Title is not {} rhsTitleitem)
+                {
+                    item.Title = null;
+                }
+                else
+                {
+                    item.Title = new GenderedItem<String?>(
+                        male: (TitleCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsTitleitem.Male
+                            : item.Title?.Male,
+                        female: (TitleCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsTitleitem.Female
+                            : item.Title?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)AssociationType_FieldIndex.IsFamily) ?? true))
             {
