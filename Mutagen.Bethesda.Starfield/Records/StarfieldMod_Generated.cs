@@ -11841,6 +11841,7 @@ namespace Mutagen.Bethesda.Starfield
                     Remove(obj, keys, typeof(IHazardGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(IIdleMarkerGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(IIngestibleGetter), throwIfUnknown: throwIfUnknown);
+                    Remove(obj, keys, typeof(IKeyGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(ILegendaryItemGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(ILeveledItemGetter), throwIfUnknown: throwIfUnknown);
                     Remove(obj, keys, typeof(ILeveledNpcGetter), throwIfUnknown: throwIfUnknown);
