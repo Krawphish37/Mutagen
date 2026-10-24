@@ -90,6 +90,17 @@ public sealed class ParsingMeta
         return bundle.Constants;
     }
 
+    /// <summary>
+    /// Creates a copy to hand to a parse that runs on another thread.<br/>
+    /// Shared services (masters, caches, strings lookup, link cache) are carried over by reference,
+    /// while per-record trackers such as <see cref="FormVersion"/> and <see cref="InWorldspace"/>
+    /// become independent, so one thread setting or clearing them cannot affect another.
+    /// </summary>
+    internal ParsingMeta CloneForParallelParse()
+    {
+        return (ParsingMeta)MemberwiseClone();
+    }
+
     public void ReportIssue(RecordType? recordType, string note)
     {
         // Nothing for now.  Need to implement
