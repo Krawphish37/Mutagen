@@ -595,12 +595,22 @@ internal static class PluginUtilityTranslation
     {
         try
         {
+            var headerPos = writer.Position;
             using (HeaderExport.Record(
                        writer: writer,
                        record: translationParams.ConvertToCustom(type)))
             {
                 writeEmbedded(item, writer);
-                if (item.IsDeleted) return;
+                if (item.IsDeleted)
+                {
+                    if (item.IsCompressed)
+                    {
+                        // Deleted records are written without content, so there is nothing to compress.
+                        // Leaving the flag on would mark an empty body as compressed, which cannot be read back
+                        ClearCompressedFlag(writer, headerPos, item.MajorRecordFlagsRaw);
+                    }
+                    return;
+                }
 
                 writer.MetaData.FormVersion = item.FormVersion;
                 using (CompressionExport.Compression(item.IsCompressed, writer, out var writerToUse))
@@ -619,5 +629,13 @@ internal static class PluginUtilityTranslation
             RecordException.EnrichAndThrow(ex, item);
             throw;
         }
+    }
+
+    private static void ClearCompressedFlag(MutagenWriter writer, long headerPos, int flags)
+    {
+        var endPos = writer.Position;
+        writer.Position = headerPos + writer.MetaData.Constants.MajorConstants.FlagLocationOffset;
+        writer.Write(flags & ~Constants.CompressedFlag);
+        writer.Position = endPos;
     }
 }
