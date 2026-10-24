@@ -203,7 +203,6 @@ internal sealed class ImmutableLoadOrderLinkCacheSimpleContextCategory<TKey> : I
             if (!cache.TryGetValue(key, out list))
             {
                 list = ImmutableList<IModContext<IMajorRecordGetter>>.Empty;
-                cache.Add(key, list);
             }
             consideredDepth = cache.Depth;
             iteratedCount = list.Count;
