@@ -566,7 +566,9 @@ partial class Fallout4ModCommon
 
         // Tally Dialog Group Counts
         var quests = item.Quests.ToArray();
-        count += (uint)quests.Length;
+        count += (uint)quests.Count(q => q.Scenes.Count > 0
+            || q.DialogTopics.Count > 0
+            || q.DialogBranches.Count > 0); // Quest Children
         count += (uint)quests.SelectMany(x => x.DialogTopics)
             .Select(x => x.Responses.Count > 0 ? 1 : 0)
             .Sum();
