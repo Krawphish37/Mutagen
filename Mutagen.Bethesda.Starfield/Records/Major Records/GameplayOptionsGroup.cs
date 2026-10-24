@@ -47,7 +47,7 @@ public partial class GameplayOptionsGroupBinaryWriteTranslation
     public static partial void WriteBinaryGroupsCustom(MutagenWriter writer, IGameplayOptionsGroupGetter item)
     {
         var opt = item.Options;
-        var isRoot = opt is IGameplayOptionsGroupRoot;
+        var isRoot = opt is IGameplayOptionsGroupRootGetter;
         using (HeaderExport.Subrecord(writer, RecordTypes.BNAM))
         {
             writer.Write(isRoot ? (byte)1 : (byte)0);
