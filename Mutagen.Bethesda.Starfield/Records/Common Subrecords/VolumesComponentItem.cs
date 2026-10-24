@@ -72,7 +72,7 @@ partial class VolumesComponentItemBinaryOverlay
             1 => 4,
             3 => 8,
             5 => 12,
-            11 => 0,
+            11 => 4,
             _ => throw new NotImplementedException()
         };
     }

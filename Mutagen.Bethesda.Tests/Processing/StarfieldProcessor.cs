@@ -599,6 +599,7 @@ public class StarfieldProcessor : Processor
             switch (type)
             {
                 case 1:
+                case 11:
                     ProcessZeroFloats(VLMS, fileOffset, ref loc, 1);
                     break;
                 case 3:
