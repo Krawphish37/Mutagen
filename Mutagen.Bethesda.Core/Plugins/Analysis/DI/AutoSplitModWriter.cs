@@ -91,6 +91,41 @@ public class AutoSplitModWriter : IAutoSplitModWriter
         IReadOnlyCollection<TMod> splitMods)
         where TMod : IModGetter
     {
+        param = AugmentMastersListOrdering(param, splitMods);
+        param = AugmentMasterFlagsLookup(param, splitMods);
+        return param;
+    }
+
+    private static BinaryWriteParameters AugmentMasterFlagsLookup<TMod>(
+        BinaryWriteParameters param,
+        IReadOnlyCollection<TMod> splitMods)
+        where TMod : IModGetter
+    {
+        // Games with separated master load orders need the master style of every master,
+        // and a split file can list an earlier split file as a master.  Those files are
+        // created here, so the caller's lookup cannot be expected to contain them.
+        if (param.MasterFlagsLookup == null)
+            return param;
+
+        var masterFlagsLookup = new Cache<IModMasterStyledGetter, ModKey>(x => x.ModKey);
+        masterFlagsLookup.SetTo(param.MasterFlagsLookup.Items);
+        foreach (var splitMod in splitMods)
+        {
+            // The split file being written is the source of truth for its own style
+            masterFlagsLookup.Set(KeyedMasterStyle.FromMod(splitMod));
+        }
+
+        return param with
+        {
+            MasterFlagsLookup = masterFlagsLookup
+        };
+    }
+
+    private static BinaryWriteParameters AugmentMastersListOrdering<TMod>(
+        BinaryWriteParameters param,
+        IReadOnlyCollection<TMod> splitMods)
+        where TMod : IModGetter
+    {
         if (param.MastersListOrdering is not MastersListOrderingByLoadOrder loadOrderOrdering)
             return param;
 
