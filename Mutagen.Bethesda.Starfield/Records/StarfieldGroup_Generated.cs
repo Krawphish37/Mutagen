@@ -884,6 +884,16 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         obj.RecordCache.Remove(keys);
                     }
+                    else
+                    {
+                        foreach (var key in keys)
+                        {
+                            if (obj.RecordCache.TryGetValue(key, out var record) && type.IsInstanceOfType(record))
+                            {
+                                obj.RecordCache.Remove(key);
+                            }
+                        }
+                    }
                     foreach (var item in obj.RecordCache.Items)
                     {
                         item.Remove(keys, type, throwIfUnknown: false);

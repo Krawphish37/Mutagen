@@ -908,6 +908,21 @@ public class MajorRecordRemovalModule : GenerationModule
                 {
                     fieldGen.AppendLine($"obj.RecordCache.Remove(keys);");
                 }
+                // A type inheriting from the group's record type (ex: IWeaponModification in a group of
+                // AObjectModification) only removes the records that are of that type
+                fieldGen.AppendLine("else");
+                using (fieldGen.CurlyBrace())
+                {
+                    fieldGen.AppendLine("foreach (var key in keys)");
+                    using (fieldGen.CurlyBrace())
+                    {
+                        fieldGen.AppendLine("if (obj.RecordCache.TryGetValue(key, out var record) && type.IsInstanceOfType(record))");
+                        using (fieldGen.CurlyBrace())
+                        {
+                            fieldGen.AppendLine("obj.RecordCache.Remove(key);");
+                        }
+                    }
+                }
                 fieldGen.AppendLine($"foreach (var item in obj.{field.Name}.Items)");
                 using (fieldGen.CurlyBrace())
                 {
