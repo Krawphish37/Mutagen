@@ -3046,10 +3046,25 @@ namespace Mutagen.Bethesda.Skyrim
                     obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey));
                     obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey));
                     break;
+                case "IKeywordLinkedReference":
+                case "IKeywordLinkedReferenceGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IKeywordLinkedReferenceGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IKeywordLinkedReferenceGetter);
+                    break;
                 case "IPlaced":
                 case "IPlacedGetter":
                     obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey));
                     obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey));
+                    break;
+                case "IPlacedSimple":
+                case "IPlacedSimpleGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedSimpleGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedSimpleGetter);
+                    break;
+                case "IPlacedThing":
+                case "IPlacedThingGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedThingGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedThingGetter);
                     break;
                 case "Landscape":
                 case "ILandscapeGetter":

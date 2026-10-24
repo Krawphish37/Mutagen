@@ -667,7 +667,9 @@ public class MajorRecordRemovalModule : GenerationModule
                     {
                         StructuredStringBuilder subFg = new StructuredStringBuilder();
                         HashSet<ObjectGeneration> passedObjects = new HashSet<ObjectGeneration>();
-                        HashSet<TypeGeneration> deepObjects = new HashSet<TypeGeneration>();
+                        // By reference, as LoquiType equality would see all of the groups as one field
+                        HashSet<TypeGeneration> deepObjects = new HashSet<TypeGeneration>(ReferenceEqualityComparer.Instance);
+                        List<GroupType> grups = new List<GroupType>();
                         foreach (var subObj in interf.Value.OrderBy(x => x.Name))
                         {
                             var grup = obj.Fields
@@ -677,8 +679,7 @@ public class MajorRecordRemovalModule : GenerationModule
 
                             if (grup != null)
                             {
-                                subFg.AppendLine($"Remove({accessor}, keys, typeof({grup.GetGroupTarget().Interface(getter: true)}), throwIfUnknown: throwIfUnknown);");
-                                passedObjects.Add(grup.GetGroupTarget());
+                                grups.Add(grup);
                             }
                             else if (deepRecordMapping.TryGetValue(subObj, out var deepRec))
                             {
@@ -688,7 +689,25 @@ public class MajorRecordRemovalModule : GenerationModule
                                 }
                             }
                         }
-                        foreach (var deepObj in deepObjects)
+                        foreach (var grup in grups)
+                        {
+                            // A group that also holds other records implementing the interface, such as the Cells
+                            // within Worldspaces, is asked with the interface below, which removes its own records too
+                            if (deepObjects.Contains(grup)) continue;
+                            subFg.AppendLine($"Remove({accessor}, keys, typeof({grup.GetGroupTarget().Interface(getter: true)}), throwIfUnknown: throwIfUnknown);");
+                            passedObjects.Add(grup.GetGroupTarget());
+                        }
+                        // Records held directly that implement the interface, such as the Cells of a sub block
+                        // or a Worldspace's TopCell, are removed themselves as well
+                        var directObjects = new Dictionary<TypeGeneration, bool>(ReferenceEqualityComparer.Instance);
+                        foreach (var field in obj.IterateFields())
+                        {
+                            if (await HoldsInterfaceRecordsDirectly(field, interf.Key, interf.Value, interfs) is { } needsTypeCheck)
+                            {
+                                directObjects[field] = needsTypeCheck;
+                            }
+                        }
+                        foreach (var deepObj in deepObjects.Concat(directObjects.Keys.Where(f => !deepObjects.Contains(f))))
                         {
                             bool remSelf = false;
                             switch (deepObj)
@@ -702,7 +721,17 @@ public class MajorRecordRemovalModule : GenerationModule
                                 default:
                                     break;
                             }
-                            await ApplyRemovalLines(deepObj, subFg, accessor, blackList: passedObjects, removeSelf: remSelf);
+                            string removeSelfTypeCheck = null;
+                            if (!remSelf && directObjects.TryGetValue(deepObj, out var needsTypeCheck))
+                            {
+                                remSelf = true;
+                                if (needsTypeCheck)
+                                {
+                                    removeSelfTypeCheck = $"{interf.Key}Getter";
+                                }
+                            }
+                            await ApplyRemovalLines(deepObj, subFg, accessor, blackList: passedObjects, removeSelf: remSelf,
+                                removeSelfTypeCheck: removeSelfTypeCheck, removedObjects: interf.Value);
                         }
                         if (!subFg.Empty)
                         {
@@ -842,14 +871,75 @@ public class MajorRecordRemovalModule : GenerationModule
         sb.AppendLine("#pragma warning restore CS0618");
     }
 
+    /// <summary>
+    /// Whether a field directly holds major records that implement a marker interface
+    /// </summary>
+    /// <returns>Null if it does not, otherwise whether only some of the records it holds implement it</returns>
+    static async Task<bool?> HoldsInterfaceRecordsDirectly(
+        TypeGeneration field,
+        string interf,
+        IReadOnlyCollection<ObjectGeneration> implementingObjects,
+        Dictionary<string, List<ObjectGeneration>> interfs)
+    {
+        if (field is GroupType) return null;
+        var loqui = field switch
+        {
+            LoquiType l => l,
+            ContainerType { SubTypeGeneration: LoquiType l } => l,
+            _ => null
+        };
+        if (loqui == null) return null;
+        switch (loqui.RefType)
+        {
+            case LoquiType.LoquiRefType.Direct:
+                var target = loqui.TargetObjectGeneration;
+                if (target == null
+                    || target.IsListGroup()
+                    || !await target.IsMajorRecord())
+                {
+                    return null;
+                }
+                if (implementingObjects.Contains(target)
+                    || target.BaseClassTrail().Any(implementingObjects.Contains))
+                {
+                    return false;
+                }
+                return await AnyInheritingObject(target, implementingObjects.Contains) ? true : null;
+            case LoquiType.LoquiRefType.Interface:
+                if (loqui.Interface(getter: false) == interf) return false;
+                if (interfs.TryGetValue(loqui.SetterInterface, out var held)
+                    && held.Any(implementingObjects.Contains))
+                {
+                    return true;
+                }
+                return null;
+            case LoquiType.LoquiRefType.Generic:
+            default:
+                return null;
+        }
+    }
+
+    static async Task<bool> AnyInheritingObject(ObjectGeneration obj, Func<ObjectGeneration, bool> predicate)
+    {
+        foreach (var inheriting in await obj.InheritingObjects())
+        {
+            if (predicate(inheriting) || await AnyInheritingObject(inheriting, predicate)) return true;
+        }
+        return false;
+    }
+
     async Task ApplyRemovalLines(
         TypeGeneration field,
         StructuredStringBuilder fieldGen,
         Accessor accessor,
         bool removeSelf,
         ObjectGeneration obj = null,
-        HashSet<ObjectGeneration> blackList = null)
+        HashSet<ObjectGeneration> blackList = null,
+        string removeSelfTypeCheck = null,
+        IReadOnlyCollection<ObjectGeneration> removedObjects = null)
     {
+        // Only records of this type are removed themselves, when they are not all known to be
+        var typeCheck = removeSelfTypeCheck == null ? null : $" && i is {removeSelfTypeCheck}";
         if (field is GroupType group)
         {
             if (blackList?.Contains(group.GetGroupTarget()) ?? false) return;
@@ -879,7 +969,7 @@ public class MajorRecordRemovalModule : GenerationModule
             subFg.AppendLine($"{fieldAccessor}.Remove(keys, type, throwIfUnknown: false);");
             if (removeSelf && loqui.Nullable)
             {
-                subFg.AppendLine($"if (keys.Contains({fieldAccessor}.FormKey))");
+                subFg.AppendLine($"if (keys.Contains({fieldAccessor}.FormKey){(removeSelfTypeCheck == null ? null : $" && {fieldAccessor} is {removeSelfTypeCheck}")})");
                 using (subFg.CurlyBrace())
                 {
                     subFg.AppendLine($"{accessor}.{loqui.Name} = null;");
@@ -922,7 +1012,7 @@ public class MajorRecordRemovalModule : GenerationModule
                 {
                     if (removeSelf)
                     {
-                        fieldGen.AppendLine($"obj.{field.Name}.RemoveWhere(i => keys.Contains(i.FormKey));");
+                        fieldGen.AppendLine($"obj.{field.Name}.RemoveWhere(i => keys.Contains(i.FormKey){typeCheck});");
                     }
                     switch (await MajorRecordModule.HasMajorRecords(contLoqui, includeBaseClass: true, includeSelf: false))
                     {
@@ -942,7 +1032,8 @@ public class MajorRecordRemovalModule : GenerationModule
             }
             if (contLoqui.TargetObjectGeneration != null
                 && contLoqui.TargetObjectGeneration.IsListGroup()
-                && (await contLoqui.TargetObjectGeneration.GetGroupLoquiType()).TargetObjectGeneration == obj)
+                && (await contLoqui.TargetObjectGeneration.GetGroupLoquiType()).TargetObjectGeneration is { } listGroupTarget
+                && (listGroupTarget == obj || (removedObjects?.Contains(listGroupTarget) ?? false)))
             {
                 fieldGen.AppendLine($"{accessor}.{field.Name}.RemoveWhere(i => i.{contLoqui.TargetObjectGeneration.Fields.FirstOrDefault(f => f is ContainerType).Name}.Count == 0);");
             }

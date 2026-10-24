@@ -1366,6 +1366,15 @@ namespace Mutagen.Bethesda.Starfield
                     break;
                 case "ICellOrObject":
                 case "ICellOrObjectGetter":
+                    obj.Items.RemoveWhere(i => keys.Contains(i.FormKey));
+                    foreach (var subItem in obj.Items)
+                    {
+                        subItem.Remove(keys, type, throwIfUnknown: false);
+                    }
+                    break;
+                case "IComplexLocation":
+                case "IComplexLocationGetter":
+                    obj.Items.RemoveWhere(i => keys.Contains(i.FormKey));
                     foreach (var subItem in obj.Items)
                     {
                         subItem.Remove(keys, type, throwIfUnknown: false);
@@ -1401,6 +1410,14 @@ namespace Mutagen.Bethesda.Starfield
                     break;
                 case "IPlacedThing":
                 case "IPlacedThingGetter":
+                    foreach (var subItem in obj.Items)
+                    {
+                        subItem.Remove(keys, type, throwIfUnknown: false);
+                    }
+                    break;
+                case "ISpaceCellSpawn":
+                case "ISpaceCellSpawnGetter":
+                    obj.Items.RemoveWhere(i => keys.Contains(i.FormKey));
                     foreach (var subItem in obj.Items)
                     {
                         subItem.Remove(keys, type, throwIfUnknown: false);

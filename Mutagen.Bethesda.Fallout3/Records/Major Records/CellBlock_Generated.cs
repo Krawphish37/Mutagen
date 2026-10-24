@@ -1293,6 +1293,7 @@ namespace Mutagen.Bethesda.Fallout3
                     {
                         subItem.Remove(keys, type, throwIfUnknown: false);
                     }
+                    obj.SubBlocks.RemoveWhere(i => i.Cells.Count == 0);
                     break;
                 case "IPlaced":
                 case "IPlacedGetter":

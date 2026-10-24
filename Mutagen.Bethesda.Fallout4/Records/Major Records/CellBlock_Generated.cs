@@ -1334,6 +1334,7 @@ namespace Mutagen.Bethesda.Fallout4
                     {
                         subItem.Remove(keys, type, throwIfUnknown: false);
                     }
+                    obj.SubBlocks.RemoveWhere(i => i.Cells.Count == 0);
                     break;
                 case "IExplodeSpawn":
                 case "IExplodeSpawnGetter":

@@ -2845,6 +2845,16 @@ namespace Mutagen.Bethesda.Skyrim
                     {
                         subItem.Remove(keys, type, throwIfUnknown: false);
                     }
+                    {
+                        if (obj.TopCell is {} TopCellitem)
+                        {
+                            TopCellitem.Remove(keys, type, throwIfUnknown: false);
+                            if (keys.Contains(TopCellitem.FormKey))
+                            {
+                                obj.TopCell = null;
+                            }
+                        }
+                    }
                     break;
                 case "IKeywordLinkedReference":
                 case "IKeywordLinkedReferenceGetter":

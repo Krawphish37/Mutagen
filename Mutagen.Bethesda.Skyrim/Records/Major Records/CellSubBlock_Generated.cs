@@ -1320,6 +1320,14 @@ namespace Mutagen.Bethesda.Skyrim
                         subItem.Remove(keys, type, throwIfUnknown: false);
                     }
                     break;
+                case "IComplexLocation":
+                case "IComplexLocationGetter":
+                    obj.Cells.RemoveWhere(i => keys.Contains(i.FormKey));
+                    foreach (var subItem in obj.Cells)
+                    {
+                        subItem.Remove(keys, type, throwIfUnknown: false);
+                    }
+                    break;
                 case "IKeywordLinkedReference":
                 case "IKeywordLinkedReferenceGetter":
                     foreach (var subItem in obj.Cells)
