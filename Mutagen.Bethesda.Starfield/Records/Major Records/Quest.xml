@@ -32,6 +32,7 @@
         <RecordType>ALCS</RecordType>
         <RecordType>ALMI</RecordType>
       </CustomLogic>
+      <UInt32 name="NextAliasID" binary="NoGeneration" nullable="True" />
       <RefList name="Aliases" refName="AQuestAlias" binary="NoGeneration" nullable="True" />
       <FormLink name="QuestGroup" recordType="GNAM" refName="Keyword" />
       <String name="SwfFile" recordType="SNAM" />

@@ -102,7 +102,10 @@ partial class QuestBinaryCreateTranslation
     public static partial ParseResult FillBinaryAliasParseCustom(MutagenFrame frame, IQuestInternal item, PreviousParse lastParsed)
     {
         frame = frame.SpawnAll();
-        frame.TryReadSubrecord(RecordTypes.ANAM, out _);
+        if (frame.TryReadSubrecord(RecordTypes.ANAM, out var nextAliasId))
+        {
+            item.NextAliasID = nextAliasId.AsUInt32();
+        }
         item.Aliases = new();
         while (frame.TryReadSubrecord(_expectedAliasRecords, out var subRec))
         {
@@ -219,14 +222,22 @@ partial class QuestBinaryWriteTranslation
     public static partial void WriteBinaryAliasParseCustom(MutagenWriter writer, IQuestGetter item)
     {
         var aliases = item.Aliases;
-        if (aliases == null) return;
+        var nextAliasId = item.NextAliasID;
+        if (aliases == null)
+        {
+            if (nextAliasId.HasValue)
+            {
+                using (HeaderExport.Subrecord(writer, RecordTypes.ANAM))
+                {
+                    writer.Write(nextAliasId.Value);
+                }
+            }
+            return;
+        }
         using (HeaderExport.Subrecord(writer, RecordTypes.ANAM))
         {
-            if (aliases.Count == 0)
-            {
-                writer.Write(0);
-            }
-            else
+            uint next = 0;
+            if (aliases.Count > 0)
             {
                 var max = aliases.Select(x =>
                 {
@@ -242,8 +253,11 @@ partial class QuestBinaryWriteTranslation
                             throw new NotImplementedException();
                     }
                 }).Max();
-                writer.Write(max + 1);
+                next = max + 1;
             }
+            // The next alias ID is a counter that can sit above the existing aliases
+            // (IDs of deleted aliases are not reused), so keep it unless it would collide
+            writer.Write(Math.Max(next, nextAliasId ?? 0));
         }
         foreach (var alias in aliases)
         {
@@ -328,6 +342,7 @@ partial class QuestBinaryOverlay
 {
     public IReadOnlyList<IConditionGetter> DialogConditions { get; private set; } = [];
     public IReadOnlyList<IConditionGetter>? UnusedConditions { get; private set; }
+    public UInt32? NextAliasID { get; private set; }
     public IReadOnlyList<IAQuestAliasGetter>? Aliases { get; private set; }
 
     private ReadOnlyMemorySlice<byte>? _grupData;
@@ -416,7 +431,10 @@ partial class QuestBinaryOverlay
 
     public partial ParseResult AliasParseCustomParse(OverlayStream stream, int offset, PreviousParse lastParsed)
     {
-        stream.TryReadSubrecord(RecordTypes.ANAM, out _);
+        if (stream.TryReadSubrecord(RecordTypes.ANAM, out var nextAliasId))
+        {
+            NextAliasID = nextAliasId.AsUInt32();
+        }
         var mem = stream.RemainingMemory;
         var locs = ParseRecordLocations(
             stream,

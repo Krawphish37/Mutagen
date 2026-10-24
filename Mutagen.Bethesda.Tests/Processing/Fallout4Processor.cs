@@ -982,7 +982,8 @@ public class Fallout4Processor : Processor
                 actualNext++;
             }
 
-            if (actualNext != next)
+            // NextAliasID is kept on write unless it is lower than the aliases need
+            if (actualNext > next)
             {
                 byte[] sub = new byte[4];
                 BinaryPrimitives.WriteUInt32LittleEndian(sub, actualNext);
