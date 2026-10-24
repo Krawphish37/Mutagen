@@ -11,6 +11,10 @@ namespace Mutagen.Bethesda.Starfield;
 
 public partial class TraversalReference
 {
+    /// <summary>
+    /// NoTraversalFormID is implicit depending on whether Traversal is null,
+    /// and is not kept on the Flags property
+    /// </summary>
     [Flags]
     public enum Flag
     {
@@ -35,12 +39,15 @@ partial class TraversalReferenceBinaryCreateTranslation
         Unknown1 = true
     };
     
+    public static TraversalReference.Flag GetFlags(int flags) =>
+        ((TraversalReference.Flag)flags).SetFlag(TraversalReference.Flag.NoTraversalFormID, false);
+
     public static partial void FillBinaryTraversalCustom(
         MutagenFrame frame,
         ITraversalReference item)
     {
         var flags = frame.ReadInt32();
-        if (flags != HasNoTraversal)
+        if (!Enums.HasFlag(flags, HasNoTraversal))
         {
             item.Traversal.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
         }
@@ -49,6 +56,7 @@ partial class TraversalReferenceBinaryCreateTranslation
             item.Traversal.SetToNull();
         }
 
+        item.Flags = GetFlags(flags);
         item.Unknown = frame.ReadBytes(8);
     }
  
@@ -92,13 +100,10 @@ partial class TraversalReferenceBinaryWriteTranslation
         ITraversalReferenceGetter item)
     {
         var trav = item.Traversal;
-        if (trav.IsNull)
+        var flags = item.Flags.SetFlag(TraversalReference.Flag.NoTraversalFormID, trav.IsNull);
+        writer.Write((int)flags);
+        if (!trav.IsNull)
         {
-            writer.Write(TraversalReferenceBinaryCreateTranslation.HasNoTraversal);
-        }
-        else
-        {
-            writer.Write(0);
             FormKeyBinaryTranslation.Instance.Write(writer, trav);
         }
         writer.Write(item.Unknown);
@@ -146,8 +151,12 @@ partial class TraversalReferenceBinaryWriteTranslation
 
 partial class TraversalReferenceBinaryOverlay
 {
-    private bool HasFormKey => !Enums.HasFlag(BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x28)), 4);
-    
+    private int RawFlags => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x28));
+
+    private bool HasFormKey => !Enums.HasFlag(RawFlags, TraversalReferenceBinaryCreateTranslation.HasNoTraversal);
+
+    public TraversalReference.Flag Flags => TraversalReferenceBinaryCreateTranslation.GetFlags(RawFlags);
+
     public partial IFormLinkNullableGetter<ITraversalGetter> GetTraversalCustom(int location)
     {
         if (HasFormKey)
