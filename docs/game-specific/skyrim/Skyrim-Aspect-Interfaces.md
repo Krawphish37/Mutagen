@@ -4,6 +4,44 @@ Aspect Interfaces expose common aspects of records.  For example, `INamed` are i
 
 Functions can then be written that take in `INamed`, allowing any record that has a name to be passed in.
 ## Interfaces to Concrete Classes
+### IEnchantable
+
+- Armor
+- Weapon
+### IHarvestable
+
+- Flora
+- Tree
+### IHasDestructible
+
+- Activator
+- AlchemicalApparatus
+- Ammunition
+- Armor
+- Book
+- Container
+- Door
+- Flora
+- Furniture
+- Ingestible
+- Ingredient
+- Key
+- Light
+- MiscItem
+- MoveableStatic
+- Npc
+- Projectile
+- Scroll
+- SoulGem
+- TalkingActivator
+- Weapon
+### IHasEffects
+
+- Ingestible
+- Ingredient
+- ObjectEffect
+- Scroll
+- Spell
 ### IHasIcons
 
 - AlchemicalApparatus
@@ -18,8 +56,57 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - MiscItem
 - Perk
 - RegionData
+- RegionGrasses
+- RegionLand
+- RegionMap
+- RegionObjects
+- RegionSounds
+- RegionWeather
 - SoulGem
 - Weapon
+### IHasVoiceType
+
+- Npc
+- TalkingActivator
+### IHaveVirtualMachineAdapter
+
+- Activator
+- AlchemicalApparatus
+- APlacedTrap
+- Armor
+- Book
+- Container
+- DialogResponses
+- Door
+- Explosion
+- Flora
+- Furniture
+- Ingredient
+- Key
+- Light
+- MagicEffect
+- MiscItem
+- Npc
+- Package
+- Perk
+- PlacedArrow
+- PlacedBarrier
+- PlacedBeam
+- PlacedCone
+- PlacedFlame
+- PlacedHazard
+- PlacedMissile
+- PlacedNpc
+- PlacedObject
+- PlacedTrap
+- Quest
+- Scene
+- TalkingActivator
+- Tree
+- Weapon
+### IKeywordCommon
+
+- Keyword
 ### IKeyworded
 
 - Activator
@@ -51,7 +138,6 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - AnimatedObject
 - ArmorModel
 - ArtObject
-- BodyData
 - BodyPartData
 - Book
 - CameraShot
@@ -201,6 +287,41 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - TextureSet
 - Tree
 - Weapon
+### IPositionRotation
+
+- Placement
+- TeleportDestination
+### IScripted
+
+- Activator
+- AlchemicalApparatus
+- APlacedTrap
+- Armor
+- Book
+- Container
+- Door
+- Explosion
+- Flora
+- Furniture
+- Ingredient
+- Key
+- Light
+- MagicEffect
+- MiscItem
+- Npc
+- PlacedArrow
+- PlacedBarrier
+- PlacedBeam
+- PlacedCone
+- PlacedFlame
+- PlacedHazard
+- PlacedMissile
+- PlacedNpc
+- PlacedObject
+- PlacedTrap
+- TalkingActivator
+- Tree
+- Weapon
 ### IWeightValue
 
 - AlchemicalApparatus
@@ -215,19 +336,19 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - Scroll
 - SoulGem
 - WeaponBasicStats
-### Keyword
-
-- Keyword
 ## Concrete Classes to Interfaces
 ### AcousticSpace
 
 - IObjectBounded
 ### Activator
 
+- IHasDestructible
+- IHaveVirtualMachineAdapter
 - IKeyworded
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 ### ActorValueInformation
 
 - INamed
@@ -237,16 +358,20 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IObjectBounded
 ### AlchemicalApparatus
 
+- IHasDestructible
 - IHasIcons
+- IHaveVirtualMachineAdapter
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 - IWeightValue
 ### AlternateTexture
 
 - INamed
 ### Ammunition
 
+- IHasDestructible
 - IHasIcons
 - IKeyworded
 - IModeled
@@ -259,11 +384,19 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 ### APackageData
 
 - INamed
+### APlacedTrap
+
+- IHaveVirtualMachineAdapter
+- IScripted
 ### Armor
 
+- IEnchantable
+- IHasDestructible
+- IHaveVirtualMachineAdapter
 - IKeyworded
 - INamed
 - IObjectBounded
+- IScripted
 - IWeightValue
 ### ArmorModel
 
@@ -273,9 +406,6 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 
 - IModeled
 - IObjectBounded
-### BodyData
-
-- IModeled
 ### BodyPart
 
 - INamed
@@ -284,11 +414,14 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IModeled
 ### Book
 
+- IHasDestructible
 - IHasIcons
+- IHaveVirtualMachineAdapter
 - IKeyworded
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 - IWeightValue
 ### CameraShot
 
@@ -310,28 +443,39 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - INamed
 ### Container
 
+- IHasDestructible
+- IHaveVirtualMachineAdapter
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 ### DestructionStage
 
 - IModeled
+### DialogResponses
+
+- IHaveVirtualMachineAdapter
 ### DialogTopic
 
 - INamed
 ### Door
 
+- IHasDestructible
+- IHaveVirtualMachineAdapter
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 ### DualCastData
 
 - IObjectBounded
 ### Explosion
 
+- IHaveVirtualMachineAdapter
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 ### Eyes
 
 - INamed
@@ -340,16 +484,23 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - INamed
 ### Flora
 
+- IHarvestable
+- IHasDestructible
+- IHaveVirtualMachineAdapter
 - IKeyworded
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 ### Furniture
 
+- IHasDestructible
+- IHaveVirtualMachineAdapter
 - IKeyworded
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 ### Grass
 
 - IModeled
@@ -375,6 +526,8 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IModeled
 ### Ingestible
 
+- IHasDestructible
+- IHasEffects
 - IHasIcons
 - IKeyworded
 - IModeled
@@ -383,23 +536,30 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IWeightValue
 ### Ingredient
 
+- IHasDestructible
+- IHasEffects
 - IHasIcons
+- IHaveVirtualMachineAdapter
 - IKeyworded
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 - IWeightValue
 ### Key
 
+- IHasDestructible
 - IHasIcons
+- IHaveVirtualMachineAdapter
 - IKeyworded
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 - IWeightValue
 ### Keyword
 
-- Keyword
+- IKeywordCommon
 ### LeveledItem
 
 - IObjectBounded
@@ -412,10 +572,13 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IObjectBounded
 ### Light
 
+- IHasDestructible
 - IHasIcons
+- IHaveVirtualMachineAdapter
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 - IWeightValue
 ### LoadScreen
 
@@ -426,8 +589,10 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - INamed
 ### MagicEffect
 
+- IHaveVirtualMachineAdapter
 - IKeyworded
 - INamed
+- IScripted
 ### MapMarker
 
 - INamed
@@ -442,14 +607,18 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - INamed
 ### MiscItem
 
+- IHasDestructible
 - IHasIcons
+- IHaveVirtualMachineAdapter
 - IKeyworded
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 - IWeightValue
 ### MoveableStatic
 
+- IHasDestructible
 - IModeled
 - INamed
 - IObjectBounded
@@ -458,13 +627,21 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - INamed
 ### Npc
 
+- IHasDestructible
+- IHasVoiceType
+- IHaveVirtualMachineAdapter
 - IKeyworded
 - INamed
 - IObjectBounded
+- IScripted
 ### ObjectEffect
 
+- IHasEffects
 - INamed
 - IObjectBounded
+### Package
+
+- IHaveVirtualMachineAdapter
 ### PackageDataBool
 
 - INamed
@@ -489,17 +666,63 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 ### Perk
 
 - IHasIcons
+- IHaveVirtualMachineAdapter
 - INamed
 ### Phoneme
 
 - INamed
+### PlacedArrow
+
+- IHaveVirtualMachineAdapter
+- IScripted
+### PlacedBarrier
+
+- IHaveVirtualMachineAdapter
+- IScripted
+### PlacedBeam
+
+- IHaveVirtualMachineAdapter
+- IScripted
+### PlacedCone
+
+- IHaveVirtualMachineAdapter
+- IScripted
+### PlacedFlame
+
+- IHaveVirtualMachineAdapter
+- IScripted
+### PlacedHazard
+
+- IHaveVirtualMachineAdapter
+- IScripted
+### PlacedMissile
+
+- IHaveVirtualMachineAdapter
+- IScripted
+### PlacedNpc
+
+- IHaveVirtualMachineAdapter
+- IScripted
+### PlacedObject
+
+- IHaveVirtualMachineAdapter
+- IScripted
+### PlacedTrap
+
+- IHaveVirtualMachineAdapter
+- IScripted
+### Placement
+
+- IPositionRotation
 ### Projectile
 
+- IHasDestructible
 - IModeled
 - INamed
 - IObjectBounded
 ### Quest
 
+- IHaveVirtualMachineAdapter
 - INamed
 ### QuestAlias
 
@@ -512,9 +735,28 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 ### RegionData
 
 - IHasIcons
+### RegionGrasses
+
+- IHasIcons
+### RegionLand
+
+- IHasIcons
 ### RegionMap
 
+- IHasIcons
 - INamed
+### RegionObjects
+
+- IHasIcons
+### RegionSounds
+
+- IHasIcons
+### RegionWeather
+
+- IHasIcons
+### Scene
+
+- IHaveVirtualMachineAdapter
 ### SceneAction
 
 - INamed
@@ -559,6 +801,8 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - INamed
 ### Scroll
 
+- IHasDestructible
+- IHasEffects
 - IKeyworded
 - IModeled
 - INamed
@@ -569,6 +813,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - INamed
 ### SoulGem
 
+- IHasDestructible
 - IHasIcons
 - IKeyworded
 - IModeled
@@ -583,6 +828,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IObjectBounded
 ### Spell
 
+- IHasEffects
 - IKeyworded
 - INamed
 - IObjectBounded
@@ -592,28 +838,42 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IObjectBounded
 ### TalkingActivator
 
+- IHasDestructible
+- IHasVoiceType
+- IHaveVirtualMachineAdapter
 - IKeyworded
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
+### TeleportDestination
+
+- IPositionRotation
 ### TextureSet
 
 - IObjectBounded
 ### Tree
 
+- IHarvestable
+- IHaveVirtualMachineAdapter
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 ### Water
 
 - INamed
 ### Weapon
 
+- IEnchantable
+- IHasDestructible
 - IHasIcons
+- IHaveVirtualMachineAdapter
 - IKeyworded
 - IModeled
 - INamed
 - IObjectBounded
+- IScripted
 ### WeaponBasicStats
 
 - IWeightValue

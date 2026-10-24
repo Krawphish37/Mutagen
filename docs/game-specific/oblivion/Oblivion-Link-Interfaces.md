@@ -6,25 +6,105 @@ An interface would be defined such as 'IItem', which all Armor, Weapon, Ingredie
 
 A `FormLink<IItem>` could then point to all those record types by pointing to the interface instead.
 ## Interfaces to Concrete Classes
+### IItem
+
+- AlchemicalApparatus
+- Ammunition
+- Armor
+- Book
+- Clothing
+- Ingredient
+- Key
+- LeveledItem
+- Light
+- Miscellaneous
+- Potion
+- SigilStone
+- SoulGem
+- Weapon
+### INpcRecord
+
+- Creature
+- Npc
+### INpcSpawn
+
+- Creature
+- LeveledCreature
+- Npc
 ### IOwner
 
 - Faction
 - Npc
+### IPlace
+
+- Worldspace
 ### IPlaced
 
 - Landscape
 - PlacedCreature
 - PlacedNpc
 - PlacedObject
+### IRelatable
+
+- Faction
+- Race
+### ISpellRecord
+
+- LeveledSpell
+- Spell
+- SpellLeveled
 ## Concrete Classes to Interfaces
+### AlchemicalApparatus
+
+- IItem
+### Ammunition
+
+- IItem
+### Armor
+
+- IItem
+### Book
+
+- IItem
+### Clothing
+
+- IItem
+### Creature
+
+- INpcRecord
+- INpcSpawn
 ### Faction
 
 - IOwner
+- IRelatable
+### Ingredient
+
+- IItem
+### Key
+
+- IItem
 ### Landscape
 
 - IPlaced
+### LeveledCreature
+
+- INpcSpawn
+### LeveledItem
+
+- IItem
+### LeveledSpell
+
+- ISpellRecord
+### Light
+
+- IItem
+### Miscellaneous
+
+- IItem
 ### Npc
 
+- INpcRecord
+- INpcSpawn
 - IOwner
 ### PlacedCreature
 
@@ -35,3 +115,27 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 ### PlacedObject
 
 - IPlaced
+### Potion
+
+- IItem
+### Race
+
+- IRelatable
+### SigilStone
+
+- IItem
+### SoulGem
+
+- IItem
+### Spell
+
+- ISpellRecord
+### SpellLeveled
+
+- ISpellRecord
+### Weapon
+
+- IItem
+### Worldspace
+
+- IPlace

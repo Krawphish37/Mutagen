@@ -4,6 +4,13 @@ Aspect Interfaces expose common aspects of records.  For example, `INamed` are i
 
 Functions can then be written that take in `INamed`, allowing any record that has a name to be passed in.
 ## Interfaces to Concrete Classes
+### IHasEffects
+
+- Enchantment
+- Ingredient
+- Potion
+- SigilStone
+- Spell
 ### IModeled
 
 - Activator
@@ -16,7 +23,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - Container
 - Creature
 - Door
-- FacePart
+- FacePartItem
 - Flora
 - Furniture
 - Grass
@@ -37,7 +44,6 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - Weather
 ### INamed
 
-- AClothing
 - Activator
 - AlchemicalApparatus
 - Ammunition
@@ -73,9 +79,12 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - SoulGem
 - Spell
 - SpellLeveled
-- SpellUnleveled
 - Weapon
 - Worldspace
+### IPositionRotation
+
+- Location
+- TeleportDestination
 ### IWeightValue
 
 - AlchemicalApparatusData
@@ -88,9 +97,6 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - SoulGemData
 - WeaponData
 ## Concrete Classes to Interfaces
-### AClothing
-
-- INamed
 ### Activator
 
 - IModeled
@@ -160,11 +166,12 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - INamed
 ### Enchantment
 
+- IHasEffects
 - INamed
 ### Eye
 
 - INamed
-### FacePart
+### FacePartItem
 
 - IModeled
 ### Faction
@@ -190,6 +197,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IModeled
 ### Ingredient
 
+- IHasEffects
 - IModeled
 - INamed
 ### Key
@@ -209,6 +217,9 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 ### LocalVariable
 
 - INamed
+### Location
+
+- IPositionRotation
 ### MagicEffect
 
 - IModeled
@@ -226,6 +237,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - INamed
 ### Potion
 
+- IHasEffects
 - IModeled
 - INamed
 ### Quest
@@ -239,6 +251,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - INamed
 ### SigilStone
 
+- IHasEffects
 - IModeled
 - INamed
 ### SigilStoneData
@@ -253,16 +266,17 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IWeightValue
 ### Spell
 
+- IHasEffects
 - INamed
 ### SpellLeveled
-
-- INamed
-### SpellUnleveled
 
 - INamed
 ### Static
 
 - IModeled
+### TeleportDestination
+
+- IPositionRotation
 ### Tree
 
 - IModeled
