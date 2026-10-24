@@ -13,11 +13,11 @@ partial class FootstepSetBinaryCreateTranslation
     {
         var counts = GetListCounts(frame, frame.Length, out var dataEnd);
 
-        IEnumerable<IFormLinkGetter<Footstep>> ReadIn(int count)
+        IEnumerable<IFormLinkGetter<IFootstepGetter>> ReadIn(int count)
         {
             for (int i = 0; i < count; i++)
             {
-                yield return new FormLink<Footstep>(FormKeyBinaryTranslation.Instance.Parse(frame));
+                yield return new FormLink<IFootstepGetter>(FormKeyBinaryTranslation.Instance.Parse(frame));
             }
         }
 
