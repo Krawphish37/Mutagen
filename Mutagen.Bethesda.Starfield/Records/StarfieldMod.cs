@@ -410,19 +410,13 @@ partial class StarfieldModCommon
             var worldTrib = new MemoryTributary();
             using (var writer = new MutagenWriter(worldTrib, bundle with {}, dispose: false))
             {
-                using (HeaderExport.Header(
-                           writer: writer,
-                           record: RecordTypes.WRLD,
-                           type: ObjectType.Record))
-                {
-                    WorldspaceBinaryWriteTranslation.WriteEmbedded(
-                        item: worldspace,
-                        writer: writer);
-                    WorldspaceBinaryWriteTranslation.WriteRecordTypes(
-                        item: worldspace,
-                        writer: writer,
-                        translationParams: null);
-                }
+                PluginUtilityTranslation.WriteMajorRecord(
+                    writer: writer,
+                    item: worldspace,
+                    translationParams: default,
+                    type: RecordTypes.WRLD,
+                    writeEmbedded: WorldspaceBinaryWriteTranslation.WriteEmbedded,
+                    writeRecordTypes: WorldspaceBinaryWriteTranslation.WriteRecordTypes);
             }
             var topCell = worldspace.TopCell;
             var subCells = worldspace.SubCells;
