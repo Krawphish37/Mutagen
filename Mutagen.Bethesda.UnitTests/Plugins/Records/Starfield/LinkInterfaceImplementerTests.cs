@@ -29,11 +29,13 @@ public class LinkInterfaceImplementerTests
         new object[] { typeof(IPlaceableObjectGetter), typeof(IKeyGetter) },
         new object[] { typeof(IPlaceableObjectGetter), typeof(INpcGetter) },
         new object[] { typeof(IPlaceableObjectGetter), typeof(ITextureSetGetter) },
+        new object[] { typeof(IPlaceableObjectGetter), typeof(ITalkingActivatorGetter) },
         // Explosion.PlacedObject
         new object[] { typeof(IExplodeSpawnGetter), typeof(IHazardGetter) },
         new object[] { typeof(IExplodeSpawnGetter), typeof(IActivatorGetter) },
         new object[] { typeof(IExplodeSpawnGetter), typeof(IMoveableStaticGetter) },
         new object[] { typeof(IExplodeSpawnGetter), typeof(IExplosionGetter) },
+        new object[] { typeof(IExplodeSpawnGetter), typeof(ITalkingActivatorGetter) },
         // IdleAnimation.ParentAnimation / PreviousAnimation
         new object[] { typeof(IIdleRelationGetter), typeof(IIdleAnimationGetter) },
         new object[] { typeof(IIdleRelationGetter), typeof(IActionRecordGetter) },

@@ -142,6 +142,7 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 - Spell
 - Static
 - StaticCollection
+- TalkingActivator
 - Terminal
 - TextureSet
 - Water
@@ -249,6 +250,7 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 - Spell
 - Static
 - StaticCollection
+- TalkingActivator
 - Terminal
 - TextureSet
 - Water
@@ -626,6 +628,8 @@ A `FormLink<IItem>` could then point to all those record types by pointing to th
 - IPlaceableObject
 ### TalkingActivator
 - IBaseObject
+- IExplodeSpawn
+- IPlaceableObject
 ### Terminal
 - IBaseObject
 - IConstructibleObjectTarget
