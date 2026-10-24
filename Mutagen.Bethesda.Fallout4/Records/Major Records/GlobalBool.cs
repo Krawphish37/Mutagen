@@ -13,7 +13,7 @@ public partial class GlobalBool
 
     public override float? RawFloat
     {
-        get => this.Data ?? default ? 1 : 0;
+        get => this.Data is {} data ? (data ? 1f : 0f) : null;
         set
         {
             if (value.HasValue)
@@ -50,7 +50,7 @@ partial class GlobalBoolBinaryWriteTranslation
 partial class GlobalBoolBinaryOverlay
 {
     char IGlobalGetter.TypeChar => GlobalInt.TRIGGER_CHAR;
-    public override float? RawFloat => this.Data is {} data ? (data ? 1 : 0) : default;
+    public override float? RawFloat => this.Data is {} data ? (data ? 1f : 0f) : null;
 
     private int? _DataLocation;
     public bool GetDataIsSetCustom() => _DataLocation.HasValue;
