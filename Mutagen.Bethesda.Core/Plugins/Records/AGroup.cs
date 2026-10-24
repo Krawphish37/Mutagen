@@ -101,7 +101,7 @@ public abstract class AGroup<TMajor> : IEnumerable<TMajor>, IGroup<TMajor>
     /// <inheritdoc />
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return InternalCache.GetEnumerator();
+        return GetEnumerator();
     }
 
     /// <inheritdoc />
@@ -395,7 +395,7 @@ internal abstract class AGroupBinaryOverlay<TMajor> : PluginBinaryOverlay, IGrou
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return _recordCache.GetEnumerator();
+        return GetEnumerator();
     }
 
     protected AGroupBinaryOverlay(
