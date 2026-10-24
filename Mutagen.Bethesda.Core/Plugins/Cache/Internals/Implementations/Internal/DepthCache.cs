@@ -8,7 +8,8 @@ internal sealed class DepthCache<K, T>
     private readonly Dictionary<K, T> _dictionary;
     public HashSet<ModKey> PassedMods = new();
     public int Depth;
-    public bool Done;
+    // Read without locking once set, so it is published after the dictionary contents
+    public volatile bool Done;
 
     public IReadOnlyCollection<T> Values => _dictionary.Values;
 

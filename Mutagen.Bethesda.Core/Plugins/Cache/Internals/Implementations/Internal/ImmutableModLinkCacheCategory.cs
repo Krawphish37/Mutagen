@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using Loqui;
 using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Plugins.Records.Mapping;
@@ -15,7 +16,7 @@ internal sealed class ImmutableModLinkCacheCategory<TKey>
     private readonly Func<TKey, bool> _shortCircuit;
     private readonly IEqualityComparer<TKey>? _equalityComparer;
     internal readonly Lazy<IReadOnlyCache<LinkCacheItem, TKey>> _untypedMajorRecords;
-    private readonly Dictionary<Type, IReadOnlyCache<LinkCacheItem, TKey>> _majorRecords = new();
+    private readonly ConcurrentDictionary<Type, IReadOnlyCache<LinkCacheItem, TKey>> _majorRecords = new();
 
     static ImmutableModLinkCacheCategory()
     {
@@ -78,9 +79,15 @@ internal sealed class ImmutableModLinkCacheCategory<TKey>
         GameCategory category,
         IModGetter sourceMod)
     {
+        // Types queried before can be looked up without locking
+        if (_majorRecords.TryGetValue(type, out var cache))
+        {
+            return cache;
+        }
+
         lock (_majorRecords)
         {
-            if (!_majorRecords.TryGetValue(type, out var cache))
+            if (!_majorRecords.TryGetValue(type, out cache))
             {
                 if (type == typeof(IMajorRecord)
                     || type == typeof(IMajorRecordGetter))
