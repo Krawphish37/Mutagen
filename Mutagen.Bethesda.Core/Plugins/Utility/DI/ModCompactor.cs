@@ -200,7 +200,10 @@ public class ModCompactor : IModCompactor
             } while (originatingRecords.ContainsKey(nextFormKey));
 
             mod.Remove(rec.Record);
-            rec.DuplicateIntoAsNewRecord(mod, nextFormKey);
+            var dup = rec.DuplicateIntoAsNewRecord(mod, nextFormKey);
+            // Duplication leaves out nested records (Cell refs, Quest scenes, etc).
+            // When compacting they belong to the same mod, and should move along to the new FormKey
+            ((IMajorRecordInternal)dup).DeepCopyIn(rec.Record);
             
             remapped.Add(rec.Record.FormKey, nextFormKey);
         }
