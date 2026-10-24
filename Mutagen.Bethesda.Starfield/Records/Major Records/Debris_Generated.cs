@@ -557,7 +557,9 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainer,
         IBaseObject,
         IDebrisGetter,
+        IExplodeSpawn,
         ILoquiObjectSetter<IDebrisInternal>,
+        IPlaceableObject,
         IStarfieldMajorRecordInternal
     {
         new ExtendedList<DebrisModel> Models { get; }
@@ -576,8 +578,10 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         ILoquiObject<IDebrisGetter>,
-        IMapsToGetter<IDebrisGetter>
+        IMapsToGetter<IDebrisGetter>,
+        IPlaceableObjectGetter
     {
         static new ILoquiRegistration StaticRegistration => Debris_Registration.Instance;
         IReadOnlyList<IDebrisModelGetter> Models { get; }

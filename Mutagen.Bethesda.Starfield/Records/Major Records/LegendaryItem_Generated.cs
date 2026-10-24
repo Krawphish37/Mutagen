@@ -1885,6 +1885,7 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface ILegendaryItem :
         IAssetLinkContainer,
         IBaseObject,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         IItem,
@@ -1894,6 +1895,7 @@ namespace Mutagen.Bethesda.Starfield
         INamed,
         INamedRequired,
         IObjectBoundedOptional,
+        IPlaceableObject,
         IScripted,
         IStarfieldMajorRecordInternal,
         ITranslatedNamed,
@@ -1948,6 +1950,7 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         IItemGetter,
@@ -1957,6 +1960,7 @@ namespace Mutagen.Bethesda.Starfield
         INamedGetter,
         INamedRequiredGetter,
         IObjectBoundedOptionalGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter,
         ITranslatedNamedGetter,
         ITranslatedNamedRequiredGetter

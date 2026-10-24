@@ -1312,6 +1312,7 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainer,
         IBaseObject,
         IBiomeObjectPackInTarget,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         ILeveledPackInGetter,
@@ -1319,6 +1320,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<ILeveledPackInInternal>,
         IModeled,
         IObjectBounded,
+        IPlaceableObject,
         IPlanetContentTarget,
         IScripted,
         IStarfieldMajorRecordInternal
@@ -1366,6 +1368,7 @@ namespace Mutagen.Bethesda.Starfield
         IBaseObjectGetter,
         IBinaryItem,
         IBiomeObjectPackInTargetGetter,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         ILeveledPackInTargetGetter,
@@ -1373,6 +1376,7 @@ namespace Mutagen.Bethesda.Starfield
         IMapsToGetter<ILeveledPackInGetter>,
         IModeledGetter,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         IPlanetContentTargetGetter,
         IScriptedGetter
     {

@@ -11,6 +11,8 @@
       <RefDirect name="DefaultStartMarker" refName="EchoMarker" markerType="ECHD" endMarkerType="ECHE" />
     </Fields>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
   </Object>
   <Object name="EchoMarker" objType="Subrecord" >
     <Fields>

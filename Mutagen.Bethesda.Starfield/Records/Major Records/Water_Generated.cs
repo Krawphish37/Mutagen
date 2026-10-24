@@ -1405,11 +1405,13 @@ namespace Mutagen.Bethesda.Starfield
     #region Interface
     public partial interface IWater :
         IBaseObject,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         ILoquiObjectSetter<IWaterInternal>,
         INamed,
         INamedRequired,
+        IPlaceableObject,
         IScripted,
         IStarfieldMajorRecordInternal,
         ITranslatedNamed,
@@ -1460,12 +1462,14 @@ namespace Mutagen.Bethesda.Starfield
         IStarfieldMajorRecordGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         ILoquiObject<IWaterGetter>,
         IMapsToGetter<IWaterGetter>,
         INamedGetter,
         INamedRequiredGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter,
         ITranslatedNamedGetter,
         ITranslatedNamedRequiredGetter

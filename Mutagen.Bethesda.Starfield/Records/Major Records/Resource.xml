@@ -23,6 +23,8 @@
       <FormLink name="Interval" refName="Global" recordType="NAM3" />
     </Fields>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
     <LinkInterface>IResearchResourceTarget</LinkInterface>
   </Object>
 </Loqui>

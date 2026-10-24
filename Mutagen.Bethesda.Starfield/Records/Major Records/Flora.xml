@@ -47,5 +47,7 @@
     <LinkInterface>IStaticTarget</LinkInterface>
     <LinkInterface>IItem</LinkInterface>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
   </Object>
 </Loqui>

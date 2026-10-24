@@ -19,5 +19,6 @@
       <String name="AnimationFile" recordType="GNAM" />
       <String name="Name" recordType="FULL" translated="Normal" />
     </Fields>
+    <LinkInterface>IIdleRelation</LinkInterface>
   </Object>
 </Loqui>

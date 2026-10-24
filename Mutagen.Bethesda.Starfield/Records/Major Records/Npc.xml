@@ -138,6 +138,9 @@
     <LinkInterface>IOwner</LinkInterface>
     <LinkInterface>INpcTemplateTarget</LinkInterface>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
+    <LinkInterface>IAliasVoiceType</LinkInterface>
     <LinkInterface>ILocationOwner</LinkInterface>
   </Object>
   <Object name="TemplateActors" objType="Subrecord" recordType="TPTA">

@@ -20,5 +20,7 @@
       <FormLink name="MaterialPath" refName="MaterialPath" recordType="MNAM" />
     </Fields>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
   </Object>
 </Loqui>

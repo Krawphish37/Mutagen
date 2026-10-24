@@ -599,8 +599,10 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IAudioOcclusionPrimitive :
         IAudioOcclusionPrimitiveGetter,
         IBaseObject,
+        IExplodeSpawn,
         ILoquiObjectSetter<IAudioOcclusionPrimitiveInternal>,
         IObjectBounded,
+        IPlaceableObject,
         IStarfieldMajorRecordInternal
     {
         /// <summary>
@@ -624,9 +626,11 @@ namespace Mutagen.Bethesda.Starfield
         IStarfieldMajorRecordGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         ILoquiObject<IAudioOcclusionPrimitiveGetter>,
         IMapsToGetter<IAudioOcclusionPrimitiveGetter>,
-        IObjectBoundedGetter
+        IObjectBoundedGetter,
+        IPlaceableObjectGetter
     {
         static new ILoquiRegistration StaticRegistration => AudioOcclusionPrimitive_Registration.Instance;
         #region ObjectBounds

@@ -8,5 +8,6 @@
       <ByteArray name="PNAM" recordType="PNAM" unknown="true" />
     </Fields>
     <LinkInterface>IVoiceTypeOrList</LinkInterface>
+    <LinkInterface>IAliasVoiceType</LinkInterface>
   </Object>
 </Loqui>

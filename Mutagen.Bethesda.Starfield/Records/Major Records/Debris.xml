@@ -5,6 +5,8 @@
       <RefList name="Models" refName="DebrisModel" />
     </Fields>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
   </Object>
   <Object name="DebrisModel" objType="Subrecord">
     <Fields>

@@ -34,6 +34,8 @@
     <LinkInterface>IConstructibleObjectTarget</LinkInterface>
     <LinkInterface>IHarvestTarget</LinkInterface>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
     <LinkInterface>IResearchResourceTarget</LinkInterface>
   </Object>
 </Loqui>

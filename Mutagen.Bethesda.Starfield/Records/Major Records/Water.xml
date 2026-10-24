@@ -78,6 +78,8 @@
       <FormLink name="YelowMatterCurve" refName="Curve3D" recordType="UNAM" />
     </Fields>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
   </Object>
   <Object name="WaterNoiseProperties" objType="Subrecord">
     <Fields>

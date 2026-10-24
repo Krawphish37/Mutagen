@@ -1090,6 +1090,7 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainer,
         IBaseObject,
         IConstructibleObjectTarget,
+        IExplodeSpawn,
         IExternalBaseTemplate,
         IFormLinkContainer,
         IGenericBaseFormGetter,
@@ -1097,6 +1098,7 @@ namespace Mutagen.Bethesda.Starfield
         ILeveledBaseFormTarget,
         ILoquiObjectSetter<IGenericBaseFormInternal>,
         IObjectBounded,
+        IPlaceableObject,
         IScripted,
         IStarfieldMajorRecordInternal
     {
@@ -1132,6 +1134,7 @@ namespace Mutagen.Bethesda.Starfield
         IBaseObjectGetter,
         IBinaryItem,
         IConstructibleObjectTargetGetter,
+        IExplodeSpawnGetter,
         IExternalBaseTemplateGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
@@ -1139,6 +1142,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IGenericBaseFormGetter>,
         IMapsToGetter<IGenericBaseFormGetter>,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter
     {
         static new ILoquiRegistration StaticRegistration => GenericBaseForm_Registration.Instance;

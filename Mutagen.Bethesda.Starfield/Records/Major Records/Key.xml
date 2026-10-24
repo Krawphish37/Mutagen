@@ -33,5 +33,7 @@
     </Fields>
     <LinkInterface>IItem</LinkInterface>
     <LinkInterface>IResearchResourceTarget</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
   </Object>
 </Loqui>

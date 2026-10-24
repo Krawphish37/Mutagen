@@ -44,6 +44,8 @@
     <LinkInterface>IItem</LinkInterface>
     <LinkInterface>IConstructibleObjectTarget</LinkInterface>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
     <LinkInterface>IResearchResourceTarget</LinkInterface>
   </Object>
   <Object name="BookTeachTarget" abstract="true" objType="Subrecord" />

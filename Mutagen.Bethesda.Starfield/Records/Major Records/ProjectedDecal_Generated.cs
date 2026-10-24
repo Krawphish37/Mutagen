@@ -1166,11 +1166,13 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IProjectedDecal :
         IAssetLinkContainer,
         IBaseObject,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         IItem,
         ILoquiObjectSetter<IProjectedDecalInternal>,
         IObjectBounded,
+        IPlaceableObject,
         IProjectedDecalGetter,
         IScripted,
         IStarfieldMajorRecordInternal
@@ -1212,12 +1214,14 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         IItemGetter,
         ILoquiObject<IProjectedDecalGetter>,
         IMapsToGetter<IProjectedDecalGetter>,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter
     {
         static new ILoquiRegistration StaticRegistration => ProjectedDecal_Registration.Instance;

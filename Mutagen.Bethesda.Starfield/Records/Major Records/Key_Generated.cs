@@ -1544,6 +1544,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Interface
     public partial interface IKey :
         IAssetLinkContainer,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHasDestructible,
         IHaveVirtualMachineAdapter,
@@ -1555,6 +1556,7 @@ namespace Mutagen.Bethesda.Starfield
         INamed,
         INamedRequired,
         IObjectBounded,
+        IPlaceableObject,
         IResearchResourceTarget,
         IScripted,
         IStarfieldMajorRecordInternal,
@@ -1614,6 +1616,7 @@ namespace Mutagen.Bethesda.Starfield
         IStarfieldMajorRecordGetter,
         IAssetLinkContainerGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHasDestructibleGetter,
         IHaveVirtualMachineAdapterGetter,
@@ -1625,6 +1628,7 @@ namespace Mutagen.Bethesda.Starfield
         INamedGetter,
         INamedRequiredGetter,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         IResearchResourceTargetGetter,
         IScriptedGetter,
         ITranslatedNamedGetter,

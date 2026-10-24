@@ -936,11 +936,13 @@ namespace Mutagen.Bethesda.Starfield
         IAddonNodeGetter,
         IAssetLinkContainer,
         IBaseObject,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         ILoquiObjectSetter<IAddonNodeInternal>,
         IModeled,
         IObjectBounded,
+        IPlaceableObject,
         IScripted,
         IStarfieldMajorRecordInternal
     {
@@ -978,12 +980,14 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         ILoquiObject<IAddonNodeGetter>,
         IMapsToGetter<IAddonNodeGetter>,
         IModeledGetter,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter
     {
         static new ILoquiRegistration StaticRegistration => AddonNode_Registration.Instance;

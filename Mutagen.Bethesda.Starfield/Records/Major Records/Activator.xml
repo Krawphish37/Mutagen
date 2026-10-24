@@ -39,5 +39,7 @@
     <LinkInterface>IItem</LinkInterface>
     <LinkInterface>IConstructibleObjectTarget</LinkInterface>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
   </Object>
 </Loqui>

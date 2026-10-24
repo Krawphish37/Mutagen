@@ -21,6 +21,8 @@
     </Fields>
     <LinkInterface>ILeveledPackInTarget</LinkInterface>
     <LinkInterface>IBaseObject</LinkInterface>
+    <LinkInterface>IPlaceableObject</LinkInterface>
+    <LinkInterface>IExplodeSpawn</LinkInterface>
     <LinkInterface>IPlanetContentTarget</LinkInterface>
     <LinkInterface>IBiomeObjectPackInTarget</LinkInterface>
   </Object>
