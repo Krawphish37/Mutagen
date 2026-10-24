@@ -351,7 +351,7 @@ public class PluginTranslationModule : BinaryTranslationModule
                 gameReleaseStr = $"release.ToGameRelease()";
             }
             sb.AppendLine("param ??= BinaryReadParameters.Default;");
-            sb.AppendLine($"var meta = ParsingMeta.Factory(param, GameRelease.Oblivion, modKey, stream);");
+            sb.AppendLine($"var meta = ParsingMeta.Factory(param, {gameReleaseStr}, modKey, stream);");
             sb.AppendLine($"using (var reader = new {nameof(MutagenBinaryReadStream)}(stream, meta))");
             using (sb.CurlyBrace())
             {
