@@ -188,7 +188,7 @@ partial class PlacedObjectBinaryCreateTranslation
                     item.ImageSpace.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
                     break;
                 case RecordTypeInts.XLRM:
-                    item.LinkedRooms.Add(new FormLink<PlacedObject>(FormKeyBinaryTranslation.Instance.Parse(frame)));
+                    item.LinkedRooms.Add(new FormLink<IPlacedObjectGetter>(FormKeyBinaryTranslation.Instance.Parse(frame)));
                     break;
                 default:
                     frame.Reader.Position -= subHeader.HeaderLength;

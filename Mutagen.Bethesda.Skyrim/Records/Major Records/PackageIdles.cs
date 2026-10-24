@@ -47,7 +47,7 @@ partial class PackageIdlesBinaryCreateTranslation
                 if (count == null)
                 {
                     item.Animations.SetTo(
-                        ListBinaryTranslation<IFormLinkGetter<IdleAnimation>>.Instance.Parse(
+                        ListBinaryTranslation<IFormLinkGetter<IIdleAnimationGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: RecordTypes.IDLA,
                             transl: FormLinkBinaryTranslation.Instance.Parse));
@@ -55,7 +55,7 @@ partial class PackageIdlesBinaryCreateTranslation
                 else
                 {
                     item.Animations.SetTo(
-                        ListBinaryTranslation<IFormLinkGetter<IdleAnimation>>.Instance.Parse(
+                        ListBinaryTranslation<IFormLinkGetter<IIdleAnimationGetter>>.Instance.Parse(
                             reader: frame,
                             amount: count.Value,
                             triggeringRecord: RecordTypes.IDLA,
