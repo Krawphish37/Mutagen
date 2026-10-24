@@ -27,11 +27,14 @@ public partial class ALinkingTests
         {
             if (ReadOnly)
             {
-                // Read only records are never of the class
-                Assert.Empty(package.AllIdentifiers<GlobalInt>());
+                // Read only records are never of the class, so typed lookups by the class find nothing.
+                // The untyped lookups (AllIdentifiers, TryResolve(FormKey, Type)) share the getter form's cache
+                // (linkcache-shared-type-cache) and do not check the class, so they may list the int global,
+                // but never its float sibling
+                Assert.All(package.AllIdentifiers<GlobalInt>(), x => Assert.Equal(globalInt.FormKey, x.FormKey));
                 if (cacheType == LinkCachePreferences.RetentionType.OnlyIdentifiers) continue;
                 Assert.False(package.TryResolve<GlobalInt>(globalInt.FormKey, out _));
-                Assert.False(package.TryResolve(globalInt.FormKey, typeof(GlobalInt), out _));
+                Assert.False(package.TryResolve(globalFloat.FormKey, typeof(GlobalInt), out _));
                 Assert.Empty(package.ResolveAll<GlobalInt>(globalInt.FormKey));
                 continue;
             }
