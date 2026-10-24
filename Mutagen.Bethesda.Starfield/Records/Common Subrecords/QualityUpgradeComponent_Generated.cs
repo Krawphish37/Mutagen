@@ -56,15 +56,15 @@ namespace Mutagen.Bethesda.Starfield
 
         #region QualityMods
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<IFormLinkGetter<IObjectModificationGetter>>? _QualityMods;
-        public ExtendedList<IFormLinkGetter<IObjectModificationGetter>>? QualityMods
+        private ExtendedList<IFormLinkGetter<IAObjectModificationGetter>>? _QualityMods;
+        public ExtendedList<IFormLinkGetter<IAObjectModificationGetter>>? QualityMods
         {
             get => this._QualityMods;
             set => this._QualityMods = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<IFormLinkGetter<IObjectModificationGetter>>? IQualityUpgradeComponentGetter.QualityMods => _QualityMods;
+        IReadOnlyList<IFormLinkGetter<IAObjectModificationGetter>>? IQualityUpgradeComponentGetter.QualityMods => _QualityMods;
         #endregion
 
         #endregion
@@ -481,7 +481,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IQualityUpgradeComponent>,
         IQualityUpgradeComponentGetter
     {
-        new ExtendedList<IFormLinkGetter<IObjectModificationGetter>>? QualityMods { get; set; }
+        new ExtendedList<IFormLinkGetter<IAObjectModificationGetter>>? QualityMods { get; set; }
     }
 
     public partial interface IQualityUpgradeComponentGetter :
@@ -491,7 +491,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IQualityUpgradeComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => QualityUpgradeComponent_Registration.Instance;
-        IReadOnlyList<IFormLinkGetter<IObjectModificationGetter>>? QualityMods { get; }
+        IReadOnlyList<IFormLinkGetter<IAObjectModificationGetter>>? QualityMods { get; }
 
     }
 
@@ -975,8 +975,8 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         item.QualityMods = 
                             rhs.QualityMods
-                                .Select(b => (IFormLinkGetter<IObjectModificationGetter>)new FormLink<IObjectModificationGetter>(b.FormKey))
-                            .ToExtendedList<IFormLinkGetter<IObjectModificationGetter>>();
+                                .Select(b => (IFormLinkGetter<IAObjectModificationGetter>)new FormLink<IAObjectModificationGetter>(b.FormKey))
+                            .ToExtendedList<IFormLinkGetter<IAObjectModificationGetter>>();
                     }
                     else
                     {
@@ -1118,11 +1118,11 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IObjectModificationGetter>>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IAObjectModificationGetter>>.Instance.Write(
                 writer: writer,
                 items: item.QualityMods,
                 recordType: translationParams.ConvertToCustom(RecordTypes.QUPA),
-                transl: (MutagenWriter subWriter, IFormLinkGetter<IObjectModificationGetter> subItem, TypedWriteParams conv) =>
+                transl: (MutagenWriter subWriter, IFormLinkGetter<IAObjectModificationGetter> subItem, TypedWriteParams conv) =>
                 {
                     FormLinkBinaryTranslation.Instance.Write(
                         writer: subWriter,
@@ -1186,10 +1186,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QualityMods = 
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IObjectModificationGetter>>.Instance.Parse(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IAObjectModificationGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
-                        .CastExtendedList<IFormLinkGetter<IObjectModificationGetter>>();
+                        .CastExtendedList<IFormLinkGetter<IAObjectModificationGetter>>();
                     return (int)QualityUpgradeComponent_FieldIndex.QualityMods;
                 }
                 default:
@@ -1249,7 +1249,7 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public IReadOnlyList<IFormLinkGetter<IObjectModificationGetter>>? QualityMods { get; private set; }
+        public IReadOnlyList<IFormLinkGetter<IAObjectModificationGetter>>? QualityMods { get; private set; }
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1315,12 +1315,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.QUPA:
                 {
-                    this.QualityMods = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<IObjectModificationGetter>>(
+                    this.QualityMods = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<IAObjectModificationGetter>>(
                         stream: stream,
                         package: _package,
                         finalPos: finalPos,
                         itemLength: 4,
-                        getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<IObjectModificationGetter>(p, s));
+                        getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<IAObjectModificationGetter>(p, s));
                     return (int)QualityUpgradeComponent_FieldIndex.QualityMods;
                 }
                 default:

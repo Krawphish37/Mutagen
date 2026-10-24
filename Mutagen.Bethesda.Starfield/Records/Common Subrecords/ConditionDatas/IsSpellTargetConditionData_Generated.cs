@@ -49,21 +49,21 @@ namespace Mutagen.Bethesda.Starfield
         #region Ctor
         public IsSpellTargetConditionData()
         {
-            _FirstParameter = new FormLinkOrIndex<ISpellGetter>(this);
+            _FirstParameter = new FormLinkOrIndex<IEffectRecordGetter>(this);
             CustomCtor();
         }
         partial void CustomCtor();
         #endregion
 
         #region FirstParameter
-        private readonly IFormLinkOrIndex<ISpellGetter> _FirstParameter = default!;
-        public IFormLinkOrIndex<ISpellGetter> FirstParameter
+        private readonly IFormLinkOrIndex<IEffectRecordGetter> _FirstParameter = default!;
+        public IFormLinkOrIndex<IEffectRecordGetter> FirstParameter
         {
             get => _FirstParameter;
             set => _FirstParameter.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkOrIndexGetter<ISpellGetter> IIsSpellTargetConditionDataGetter.FirstParameter => this.FirstParameter;
+        IFormLinkOrIndexGetter<IEffectRecordGetter> IIsSpellTargetConditionDataGetter.FirstParameter => this.FirstParameter;
         #endregion
         #region FirstUnusedStringParameter
         public String? FirstUnusedStringParameter { get; set; }
@@ -470,7 +470,7 @@ namespace Mutagen.Bethesda.Starfield
         object? IConditionParameters.Parameter1
         {
             get => FirstParameter;
-            set => FirstParameter = (value is IFormLinkOrIndex<ISpellGetter> v ? v : throw new ArgumentException());
+            set => FirstParameter = (value is IFormLinkOrIndex<IEffectRecordGetter> v ? v : throw new ArgumentException());
         }
         object? IConditionParametersGetter.Parameter1
         {
@@ -478,7 +478,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         Type? IConditionParametersGetter.Parameter1Type
         {
-            get => typeof(IFormLinkOrIndexGetter<ISpellGetter>);
+            get => typeof(IFormLinkOrIndexGetter<IEffectRecordGetter>);
         }
         object? IConditionParameters.Parameter2
         {
@@ -557,7 +557,7 @@ namespace Mutagen.Bethesda.Starfield
         IIsSpellTargetConditionDataGetter,
         ILoquiObjectSetter<IIsSpellTargetConditionData>
     {
-        new IFormLinkOrIndex<ISpellGetter> FirstParameter { get; set; }
+        new IFormLinkOrIndex<IEffectRecordGetter> FirstParameter { get; set; }
         new String? FirstUnusedStringParameter { get; set; }
         new Int32 SecondParameter { get; set; }
         new String? SecondUnusedStringParameter { get; set; }
@@ -570,7 +570,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IIsSpellTargetConditionDataGetter>
     {
         static new ILoquiRegistration StaticRegistration => IsSpellTargetConditionData_Registration.Instance;
-        IFormLinkOrIndexGetter<ISpellGetter> FirstParameter { get; }
+        IFormLinkOrIndexGetter<IEffectRecordGetter> FirstParameter { get; }
         String? FirstUnusedStringParameter { get; }
         Int32 SecondParameter { get; }
         String? SecondUnusedStringParameter { get; }

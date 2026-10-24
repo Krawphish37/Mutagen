@@ -291,6 +291,7 @@ internal class StarfieldLinkInterfaceMapping : IInterfaceMapping
                 MiscItem_Registration.Instance,
                 MoveableStatic_Registration.Instance,
                 ProjectedDecal_Registration.Instance,
+                Resource_Registration.Instance,
                 Static_Registration.Instance,
                 Weapon_Registration.Instance,
             },

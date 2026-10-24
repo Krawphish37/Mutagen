@@ -983,7 +983,9 @@
   </Object>
   <Object name="IsSpellTargetConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <FormLinkOrIndex refName="Spell" name="FirstParameter" />
+      <FormLinkOrIndex name="FirstParameter">
+        <Interface>IEffectRecord</Interface>
+      </FormLinkOrIndex>
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />

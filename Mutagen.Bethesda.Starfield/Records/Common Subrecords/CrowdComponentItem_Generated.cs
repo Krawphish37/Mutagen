@@ -55,15 +55,15 @@ namespace Mutagen.Bethesda.Starfield
 
         #region Properties
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<ObjectProperty>? _Properties;
-        public ExtendedList<ObjectProperty>? Properties
+        private ExtendedList<CrowdComponentProperty>? _Properties;
+        public ExtendedList<CrowdComponentProperty>? Properties
         {
             get => this._Properties;
             set => this._Properties = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<IObjectPropertyGetter>? ICrowdComponentItemGetter.Properties => _Properties;
+        IReadOnlyList<ICrowdComponentPropertyGetter>? ICrowdComponentItemGetter.Properties => _Properties;
         #endregion
 
         #endregion
@@ -130,7 +130,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>(initialValue, []);
+                this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CrowdComponentProperty.Mask<TItem>?>>?>(initialValue, []);
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
                 this.STRV = initialValue;
                 this.FLTV = initialValue;
@@ -142,7 +142,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem STRV,
                 TItem FLTV)
             {
-                this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>(Properties, []);
+                this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CrowdComponentProperty.Mask<TItem>?>>?>(Properties, []);
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
                 this.STRV = STRV;
                 this.FLTV = FLTV;
@@ -157,7 +157,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>? Properties;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CrowdComponentProperty.Mask<TItem>?>>?>? Properties;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
             public TItem STRV;
             public TItem FLTV;
@@ -269,14 +269,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Properties != null)
                 {
-                    obj.Properties = new MaskItem<R, IEnumerable<MaskItemIndexed<R, ObjectProperty.Mask<R>?>>?>(eval(this.Properties.Overall), []);
+                    obj.Properties = new MaskItem<R, IEnumerable<MaskItemIndexed<R, CrowdComponentProperty.Mask<R>?>>?>(eval(this.Properties.Overall), []);
                     if (Properties.Specific != null)
                     {
-                        var l = new List<MaskItemIndexed<R, ObjectProperty.Mask<R>?>>();
+                        var l = new List<MaskItemIndexed<R, CrowdComponentProperty.Mask<R>?>>();
                         obj.Properties.Specific = l;
                         foreach (var item in Properties.Specific)
                         {
-                            MaskItemIndexed<R, ObjectProperty.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, ObjectProperty.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            MaskItemIndexed<R, CrowdComponentProperty.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, CrowdComponentProperty.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
                             if (mask == null) continue;
                             l.Add(mask);
                         }
@@ -387,7 +387,7 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>? Properties;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentProperty.ErrorMask?>>?>? Properties;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
             public Exception? STRV;
             public Exception? FLTV;
@@ -418,7 +418,7 @@ namespace Mutagen.Bethesda.Starfield
                 switch (enu)
                 {
                     case CrowdComponentItem_FieldIndex.Properties:
-                        this.Properties = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>(ex, null);
+                        this.Properties = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentProperty.ErrorMask?>>?>(ex, null);
                         break;
                     case CrowdComponentItem_FieldIndex.Conditions:
                         this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
@@ -440,7 +440,7 @@ namespace Mutagen.Bethesda.Starfield
                 switch (enu)
                 {
                     case CrowdComponentItem_FieldIndex.Properties:
-                        this.Properties = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>)obj;
+                        this.Properties = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentProperty.ErrorMask?>>?>)obj;
                         break;
                     case CrowdComponentItem_FieldIndex.Conditions:
                         this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
@@ -538,7 +538,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Properties = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Properties?.Overall, rhs.Properties?.Overall), Noggog.ExceptionExt.Combine(this.Properties?.Specific, rhs.Properties?.Specific));
+                ret.Properties = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentProperty.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Properties?.Overall, rhs.Properties?.Overall), Noggog.ExceptionExt.Combine(this.Properties?.Specific, rhs.Properties?.Specific));
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
                 ret.STRV = this.STRV.Combine(rhs.STRV);
                 ret.FLTV = this.FLTV.Combine(rhs.FLTV);
@@ -565,7 +565,7 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public ObjectProperty.TranslationMask? Properties;
+            public CrowdComponentProperty.TranslationMask? Properties;
             public Condition.TranslationMask? Conditions;
             public bool STRV;
             public bool FLTV;
@@ -677,7 +677,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkContainer,
         ILoquiObjectSetter<ICrowdComponentItem>
     {
-        new ExtendedList<ObjectProperty>? Properties { get; set; }
+        new ExtendedList<CrowdComponentProperty>? Properties { get; set; }
         new ExtendedList<Condition>? Conditions { get; set; }
         new String? STRV { get; set; }
         new Single? FLTV { get; set; }
@@ -696,7 +696,7 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => CrowdComponentItem_Registration.Instance;
-        IReadOnlyList<IObjectPropertyGetter>? Properties { get; }
+        IReadOnlyList<ICrowdComponentPropertyGetter>? Properties { get; }
         IReadOnlyList<IConditionGetter>? Conditions { get; }
         String? STRV { get; }
         Single? FLTV { get; }
@@ -1132,7 +1132,7 @@ namespace Mutagen.Bethesda.Starfield
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if ((equalsMask?.GetShouldTranslate((int)CrowdComponentItem_FieldIndex.Properties) ?? true))
             {
-                if (!lhs.Properties.SequenceEqualNullable(rhs.Properties, (l, r) => ((ObjectPropertyCommon)((IObjectPropertyGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)CrowdComponentItem_FieldIndex.Properties)))) return false;
+                if (!lhs.Properties.SequenceEqualNullable(rhs.Properties, (l, r) => ((CrowdComponentPropertyCommon)((ICrowdComponentPropertyGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)CrowdComponentItem_FieldIndex.Properties)))) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CrowdComponentItem_FieldIndex.Conditions) ?? true))
             {
@@ -1235,7 +1235,7 @@ namespace Mutagen.Bethesda.Starfield
                                     errorMask: errorMask,
                                     default(TranslationCrystal));
                             })
-                            .ToExtendedList<ObjectProperty>();
+                            .ToExtendedList<CrowdComponentProperty>();
                     }
                     else
                     {
@@ -1401,14 +1401,14 @@ namespace Mutagen.Bethesda.Starfield
             MutagenWriter writer,
             TypedWriteParams translationParams)
         {
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IObjectPropertyGetter>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ICrowdComponentPropertyGetter>.Instance.Write(
                 writer: writer,
                 items: item.Properties,
                 recordType: translationParams.ConvertToCustom(RecordTypes.PRPS),
-                transl: (MutagenWriter subWriter, IObjectPropertyGetter subItem, TypedWriteParams conv) =>
+                transl: (MutagenWriter subWriter, ICrowdComponentPropertyGetter subItem, TypedWriteParams conv) =>
                 {
                     var Item = subItem;
-                    ((ObjectPropertyBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                    ((CrowdComponentPropertyBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
                         item: Item,
                         writer: subWriter,
                         translationParams: conv);
@@ -1482,10 +1482,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.Properties, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Properties = 
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ObjectProperty>.Instance.Parse(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<CrowdComponentProperty>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
-                            transl: ObjectProperty.TryCreateFromBinary)
-                        .CastExtendedList<ObjectProperty>();
+                            transl: CrowdComponentProperty.TryCreateFromBinary)
+                        .CastExtendedList<CrowdComponentProperty>();
                     return (int)CrowdComponentItem_FieldIndex.Properties;
                 }
                 case RecordTypeInts.CTDA:
@@ -1589,7 +1589,7 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public IReadOnlyList<IObjectPropertyGetter>? Properties { get; private set; }
+        public IReadOnlyList<ICrowdComponentPropertyGetter>? Properties { get; private set; }
         public IReadOnlyList<IConditionGetter>? Conditions { get; private set; }
         #region STRV
         private int? _STRVLocation;
@@ -1665,12 +1665,12 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.PRPS:
                 {
                     if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.Properties, translationParams)) return ParseResult.Stop;
-                    this.Properties = BinaryOverlayList.FactoryByStartIndexWithTrigger<IObjectPropertyGetter>(
+                    this.Properties = BinaryOverlayList.FactoryByStartIndexWithTrigger<ICrowdComponentPropertyGetter>(
                         stream: stream,
                         package: _package,
                         finalPos: finalPos,
                         itemLength: 12,
-                        getter: (s, p) => ObjectPropertyBinaryOverlay.ObjectPropertyFactory(s, p));
+                        getter: (s, p) => CrowdComponentPropertyBinaryOverlay.CrowdComponentPropertyFactory(s, p));
                     return (int)CrowdComponentItem_FieldIndex.Properties;
                 }
                 case RecordTypeInts.CTDA:

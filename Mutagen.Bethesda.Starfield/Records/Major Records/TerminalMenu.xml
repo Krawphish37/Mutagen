@@ -50,7 +50,7 @@
   </Object>
   <Object name="TerminalMenuItemSubmenu" objType="Subrecord" baseClass="ATerminalMenuItemTarget" >
     <Fields>
-      <FormLink name="Submenu" recordType="TNAM" refName="Terminal" />
+      <FormLink name="Submenu" recordType="TNAM" refName="TerminalMenu" />
     </Fields>
   </Object>
   <Object name="TerminalMenuItemDataslate" objType="Subrecord" baseClass="ATerminalMenuItemTarget" >

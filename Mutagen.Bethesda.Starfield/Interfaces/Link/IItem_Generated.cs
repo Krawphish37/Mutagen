@@ -10,7 +10,7 @@ using Mutagen.Bethesda;
 namespace Mutagen.Bethesda.Starfield
 {
     /// <summary>
-    /// Implemented by: [Activator, Ammunition, Armor, Book, Container, Flora, Ingestible, Key, LegendaryItem, LeveledItem, MiscItem, MoveableStatic, ProjectedDecal, Static, Weapon]
+    /// Implemented by: [Activator, Ammunition, Armor, Book, Container, Flora, Ingestible, Key, LegendaryItem, LeveledItem, MiscItem, MoveableStatic, ProjectedDecal, Resource, Static, Weapon]
     /// </summary>
     public partial interface IItem :
         IItemGetter,
@@ -19,7 +19,7 @@ namespace Mutagen.Bethesda.Starfield
     }
 
     /// <summary>
-    /// Implemented by: [Activator, Ammunition, Armor, Book, Container, Flora, Ingestible, Key, LegendaryItem, LeveledItem, MiscItem, MoveableStatic, ProjectedDecal, Static, Weapon]
+    /// Implemented by: [Activator, Ammunition, Armor, Book, Container, Flora, Ingestible, Key, LegendaryItem, LeveledItem, MiscItem, MoveableStatic, ProjectedDecal, Resource, Static, Weapon]
     /// </summary>
     public partial interface IItemGetter : IStarfieldMajorRecordGetter
     {

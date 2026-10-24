@@ -67,14 +67,14 @@ namespace Mutagen.Bethesda.Starfield
         ReadOnlyMemorySlice<Byte>? IImageSpaceGetter.Reflection => this.Reflection;
         #endregion
         #region ReflectionParent
-        private readonly IFormLinkNullable<IWeatherSettingGetter> _ReflectionParent = new FormLinkNullable<IWeatherSettingGetter>();
-        public IFormLinkNullable<IWeatherSettingGetter> ReflectionParent
+        private readonly IFormLinkNullable<IImageSpaceGetter> _ReflectionParent = new FormLinkNullable<IImageSpaceGetter>();
+        public IFormLinkNullable<IImageSpaceGetter> ReflectionParent
         {
             get => _ReflectionParent;
             set => _ReflectionParent.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkNullableGetter<IWeatherSettingGetter> IImageSpaceGetter.ReflectionParent => this.ReflectionParent;
+        IFormLinkNullableGetter<IImageSpaceGetter> IImageSpaceGetter.ReflectionParent => this.ReflectionParent;
         #endregion
         #region ReflectionDiff
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -569,7 +569,7 @@ namespace Mutagen.Bethesda.Starfield
         IStarfieldMajorRecordInternal
     {
         new MemorySlice<Byte>? Reflection { get; set; }
-        new IFormLinkNullable<IWeatherSettingGetter> ReflectionParent { get; set; }
+        new IFormLinkNullable<IImageSpaceGetter> ReflectionParent { get; set; }
         new MemorySlice<Byte>? ReflectionDiff { get; set; }
     }
 
@@ -590,7 +590,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         static new ILoquiRegistration StaticRegistration => ImageSpace_Registration.Instance;
         ReadOnlyMemorySlice<Byte>? Reflection { get; }
-        IFormLinkNullableGetter<IWeatherSettingGetter> ReflectionParent { get; }
+        IFormLinkNullableGetter<IImageSpaceGetter> ReflectionParent { get; }
         ReadOnlyMemorySlice<Byte>? ReflectionDiff { get; }
 
     }
@@ -1615,7 +1615,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region ReflectionParent
         private int? _ReflectionParentLocation;
-        public IFormLinkNullableGetter<IWeatherSettingGetter> ReflectionParent => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IWeatherSettingGetter>(_package, _recordData, _ReflectionParentLocation);
+        public IFormLinkNullableGetter<IImageSpaceGetter> ReflectionParent => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IImageSpaceGetter>(_package, _recordData, _ReflectionParentLocation);
         #endregion
         #region ReflectionDiff
         private int? _ReflectionDiffLocation;

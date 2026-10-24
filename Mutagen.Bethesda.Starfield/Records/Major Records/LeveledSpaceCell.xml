@@ -8,7 +8,7 @@
       <Enum name="Flags" recordType="LVLF" nullable="False" enumName="LeveledSpaceCell.Flag" byteLength="2" />
       <RefList name="Conditions" refName="Condition" />
       <FormLink name="UseGlobal" refName="Global" recordType="LVLG" />
-      <RefList name="Entries" counterRecType="LLCT" refName="LeveledNpcEntry" counterLength="1" />
+      <RefList name="Entries" counterRecType="LLCT" refName="LeveledSpaceCellEntry" counterLength="1" />
     </Fields>
     <LinkInterface>ISpaceCellSpawn</LinkInterface>
   </Object>
