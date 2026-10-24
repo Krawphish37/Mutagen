@@ -211,10 +211,11 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
         bool more;
         lock (cache)
         {
+            // Don't add a placeholder for a missing key.  Another thread may have marked
+            // the cache Done while we waited on the lock, and Done caches are read without locking
             if (!cache.TryGetValue(key, out list))
             {
                 list = ImmutableList<LinkCacheItem>.Empty;
-                cache.Add(key, list);
             }
             consideredDepth = cache.Depth;
             iteratedCount = list.Count;
