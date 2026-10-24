@@ -117,7 +117,7 @@ public sealed class MutableModLinkCache : ILinkCache
                      // Capture and expose errors optionally via TryResolve /w out param
                      .Catch((Exception ex) => { }))
         {
-            if (editorId.Equals(item.EditorID))
+            if (editorId.Equals(item.EditorID, StringComparison.OrdinalIgnoreCase))
             {
                 majorRec = item;
                 return true;
@@ -192,7 +192,7 @@ public sealed class MutableModLinkCache : ILinkCache
                      .Catch((Exception ex) => { }))
         {
             if (item is IMajorRecordGetter majRec
-                && editorId.Equals(majRec.EditorID))
+                && editorId.Equals(majRec.EditorID, StringComparison.OrdinalIgnoreCase))
             {
                 majorRec = item;
                 return true;
@@ -263,7 +263,7 @@ public sealed class MutableModLinkCache : ILinkCache
                      // Capture and expose errors optionally via TryResolve /w out param
                      .Catch((Exception ex) => { }))
         {
-            if (editorId.Equals(major.EditorID))
+            if (editorId.Equals(major.EditorID, StringComparison.OrdinalIgnoreCase))
             {
                 majorRec = major;
                 return true;
@@ -445,7 +445,7 @@ public sealed class MutableModLinkCache : ILinkCache
                      // Capture and expose errors optionally via TryResolve /w out param
                      .Catch((Exception ex) => { }))
         {
-            if (editorId.Equals(item.Record.EditorID))
+            if (editorId.Equals(item.Record.EditorID, StringComparison.OrdinalIgnoreCase))
             {
                 majorRec = item;
                 return true;
@@ -511,7 +511,7 @@ public sealed class MutableModLinkCache : ILinkCache
                      // Capture and expose errors optionally via TryResolve /w out param
                      .Catch((Exception ex) => { }))
         {
-            if (context.Record is IMajorRecordGetter majRec && editorId.Equals(majRec.EditorID))
+            if (context.Record is IMajorRecordGetter majRec && editorId.Equals(majRec.EditorID, StringComparison.OrdinalIgnoreCase))
             {
                 majorRec = context;
                 return true;
@@ -581,7 +581,7 @@ public sealed class MutableModLinkCache : ILinkCache
                      // Capture and expose errors optionally via TryResolve /w out param
                      .Catch((Exception ex) => { }))
         {
-            if (editorId.Equals(major.Record.EditorID))
+            if (editorId.Equals(major.Record.EditorID, StringComparison.OrdinalIgnoreCase))
             {
                 majorRec = major;
                 return true;
@@ -1232,7 +1232,7 @@ public sealed class MutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, TMo
                      // Capture and expose errors optionally via TryResolve /w out param
                      .Catch((Exception ex) => { }))
         {
-            if (editorId.Equals(item.EditorID))
+            if (editorId.Equals(item.EditorID, StringComparison.OrdinalIgnoreCase))
             {
                 majorRec = item;
                 return true;
@@ -1378,7 +1378,7 @@ public sealed class MutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, TMo
                      // Capture and expose errors optionally via TryResolve /w out param
                      .Catch((Exception ex) => { }))
         {
-            if (editorId.Equals(major.EditorID))
+            if (editorId.Equals(major.EditorID, StringComparison.OrdinalIgnoreCase))
             {
                 majorRec = major;
                 return true;
@@ -1506,7 +1506,7 @@ public sealed class MutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, TMo
                      // Capture and expose errors optionally via TryResolve /w out param
                      .Catch((Exception ex) => { }))
         {
-            if (editorId.Equals(item.Record.EditorID))
+            if (editorId.Equals(item.Record.EditorID, StringComparison.OrdinalIgnoreCase))
             {
                 majorRec = item;
                 return true;
@@ -1576,7 +1576,7 @@ public sealed class MutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, TMo
                      .Catch((Exception ex) => { }))
         {
             if (context.Record is IMajorRecordGetter majRec
-                && editorId.Equals(majRec.EditorID))
+                && editorId.Equals(majRec.EditorID, StringComparison.OrdinalIgnoreCase))
             {
                 majorRec = context;
                 return true;
@@ -1646,7 +1646,7 @@ public sealed class MutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, TMo
                      // Capture and expose errors optionally via TryResolve /w out param
                      .Catch((Exception ex) => { }))
         {
-            if (editorId.Equals(major.Record.EditorID))
+            if (editorId.Equals(major.Record.EditorID, StringComparison.OrdinalIgnoreCase))
             {
                 majorRec = major;
                 return true;
@@ -1845,7 +1845,7 @@ public sealed class MutableModLinkCache<TMod, TModGetter> : ILinkCache<TMod, TMo
                      // Capture and expose errors optionally via TryResolve /w out param
                      .Catch((Exception ex) => { }))
         {
-            if (context.Record is IMajorRecordGetter majRec && editorId.Equals(majRec.EditorID))
+            if (context.Record is IMajorRecordGetter majRec && editorId.Equals(majRec.EditorID, StringComparison.OrdinalIgnoreCase))
             {
                 majorRec = context;
                 return true;

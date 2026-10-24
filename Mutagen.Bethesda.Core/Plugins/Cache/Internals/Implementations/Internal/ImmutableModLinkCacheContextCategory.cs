@@ -30,6 +30,7 @@ internal sealed class ImmutableModLinkCacheContextCategory<TMod, TModGetter, TKe
     private readonly IMetaInterfaceMapGetter _metaInterfaceMapGetter;
     private readonly Func<IMajorRecordGetter, TryGet<TKey>> _keyGetter;
     private readonly Func<TKey, bool> _shortCircuit;
+    private readonly IEqualityComparer<TKey>? _equalityComparer;
     private readonly Lazy<IReadOnlyCache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey>> _untypedContexts;
     private readonly Dictionary<Type, IReadOnlyCache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey>> _contexts = new();
 
@@ -42,12 +43,14 @@ internal sealed class ImmutableModLinkCacheContextCategory<TMod, TModGetter, TKe
         ImmutableModLinkCache<TMod, TModGetter> parent,
         IMetaInterfaceMapGetter metaInterfaceMapGetter,
         Func<IMajorRecordGetter, TryGet<TKey>> keyGetter,
-        Func<TKey, bool> shortCircuit)
+        Func<TKey, bool> shortCircuit,
+        IEqualityComparer<TKey>? equalityComparer)
     {
         _parent = parent;
         _metaInterfaceMapGetter = metaInterfaceMapGetter;
         _keyGetter = keyGetter;
         _shortCircuit = shortCircuit;
+        _equalityComparer = equalityComparer;
         _untypedContexts = new Lazy<IReadOnlyCache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey>>(
             isThreadSafe: true,
             valueFactory: () => ConstructUntypedContextCache());
@@ -55,7 +58,7 @@ internal sealed class ImmutableModLinkCacheContextCategory<TMod, TModGetter, TKe
 
     private IReadOnlyCache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey> ConstructUntypedContextCache()
     {
-        var majorRecords = new Cache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey>(x => _keyGetter(x.Record).Value);
+        var majorRecords = new Cache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey>(x => _keyGetter(x.Record).Value, _equalityComparer);
         foreach (var majorRec in _parent._sourceMod.EnumerateMajorRecordContexts<IMajorRecord, IMajorRecordGetter>(_parent))
         {
             var key = _keyGetter(majorRec.Record);
@@ -187,7 +190,7 @@ internal sealed class ImmutableModLinkCacheContextCategory<TMod, TModGetter, TKe
                     {
                         throw new ArgumentException($"A lookup was queried for an unregistered type: {type.Name}");
                     }
-                    var majorRecords = new Cache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey>(x => _keyGetter(x.Record).Value);
+                    var majorRecords = new Cache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey>(x => _keyGetter(x.Record).Value, _equalityComparer);
                     foreach (var regis in objs.Registrations)
                     {
                         majorRecords.Set(
@@ -205,7 +208,7 @@ internal sealed class ImmutableModLinkCacheContextCategory<TMod, TModGetter, TKe
     {
         try
         {
-            var cache = new Cache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey>(x => _keyGetter(x.Record).Value);
+            var cache = new Cache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey>(x => _keyGetter(x.Record).Value, _equalityComparer);
             // ToDo
             // Upgrade to call EnumerateGroups(), which will perform much better
             foreach (var majorRec in _parent._sourceMod.EnumerateMajorRecordContexts(_parent, type, throwIfUnknown: false))
