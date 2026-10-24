@@ -183,7 +183,8 @@ partial class TraversalReferenceBinaryOverlay
         long finalPos, int offset, PreviousParse lastParsed,
         out uint fluffBytes)
     {
-        List<int> locs = new();
+        // Entries are at least 0x34 bytes, so this is an upper bound on the count
+        List<int> locs = new(capacity: checked((int)Math.Max(0, (finalPos - stream.Position) / 0x34)));
         var startingPos = stream.Position;
         fluffBytes = 0;
         while (stream.Position < finalPos)
@@ -193,7 +194,7 @@ partial class TraversalReferenceBinaryOverlay
             {
                 var itemPos = stream.Position;
                 var bytes = stream.ReadMemory(0x10);
-                if (bytes.All(b => b == 0))
+                if (!bytes.Span.ContainsAnyExcept((byte)0))
                 {
                     fluffBytes = remaining;
                     break;
