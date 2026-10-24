@@ -1717,14 +1717,17 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.DNAMs);
+            foreach (var subItem in item.DNAMs)
+            {
+                hash.AddBytes(subItem);
+            }
             hash.Add(item.FalloffScale);
             hash.Add(item.FalloffBias);
             hash.Add(item.NoiseUvScale);
             hash.Add(item.MaterialUvScale);
             hash.Add(item.ProjectionVector);
             hash.Add(item.NormalDampener);
-            hash.Add(item.SinglePassColor);
+            hash.Add(item.SinglePassColor.ToArgb());
             hash.Add(item.Flags);
             hash.Add(item.HasSnow);
             hash.Add(item.DATADataTypeState);

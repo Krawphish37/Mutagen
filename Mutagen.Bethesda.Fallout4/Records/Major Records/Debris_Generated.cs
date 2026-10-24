@@ -1076,7 +1076,10 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IDebrisGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Models);
+            foreach (var subItem in item.Models)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

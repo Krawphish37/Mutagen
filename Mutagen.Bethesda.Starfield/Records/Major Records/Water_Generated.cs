@@ -2328,15 +2328,15 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ContactSpell);
             if (item.DATA is {} DATAItem)
             {
-                hash.Add(DATAItem);
+                hash.AddBytes(DATAItem);
             }
             if (item.DNAM is {} DNAMItem)
             {
-                hash.Add(DNAMItem);
+                hash.AddBytes(DNAMItem);
             }
             if (item.GNAM is {} GNAMItem)
             {
-                hash.Add(GNAMItem);
+                hash.AddBytes(GNAMItem);
             }
             if (item.LinearVelocity is {} LinearVelocityitem)
             {

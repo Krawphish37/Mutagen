@@ -1116,13 +1116,16 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.Flags);
             if (item.AnimationCount is {} AnimationCountItem)
             {
-                hash.Add(AnimationCountItem);
+                hash.AddBytes(AnimationCountItem);
             }
             hash.Add(item.TimerSetting);
-            hash.Add(item.Animations);
+            foreach (var subItem in item.Animations)
+            {
+                hash.Add(subItem);
+            }
             if (item.Unknown is {} UnknownItem)
             {
-                hash.Add(UnknownItem);
+                hash.AddBytes(UnknownItem);
             }
             return hash.ToHashCode();
         }

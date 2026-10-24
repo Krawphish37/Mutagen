@@ -2396,12 +2396,30 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.Quest);
             hash.Add(item.PreviousTopic);
             hash.Add(item.PreviousInfo);
-            hash.Add(item.AddTopics);
-            hash.Add(item.Responses);
-            hash.Add(item.Conditions);
-            hash.Add(item.Choices);
-            hash.Add(item.LinkFrom);
-            hash.Add(item.FollowUp);
+            foreach (var subItem in item.AddTopics)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Responses)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Choices)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.LinkFrom)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.FollowUp)
+            {
+                hash.Add(subItem);
+            }
             if (item.BeginScript is {} BeginScriptitem)
             {
                 hash.Add(BeginScriptitem);

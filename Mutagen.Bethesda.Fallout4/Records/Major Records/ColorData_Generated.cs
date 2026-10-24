@@ -791,7 +791,7 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IColorDataGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Color);
+            hash.Add(item.Color.ToArgb());
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

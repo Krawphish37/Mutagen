@@ -1239,7 +1239,10 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(TextureSpecularExponentitem);
             }
-            hash.Add(item.PotentialGrass);
+            foreach (var subItem in item.PotentialGrass)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -913,7 +913,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.NorthwestCellSize);
             if (item.Data is {} DataItem)
             {
-                hash.Add(DataItem);
+                hash.AddBytes(DataItem);
             }
             return hash.ToHashCode();
         }

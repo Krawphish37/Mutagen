@@ -908,7 +908,13 @@ namespace Mutagen.Bethesda.Fallout3
         public virtual int GetHashCode(IAlphaLayerGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.AlphaLayerData);
+            if (item.AlphaLayerData is {} AlphaLayerDataitem)
+            {
+                foreach (var subItem in AlphaLayerDataitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

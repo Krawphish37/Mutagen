@@ -1390,7 +1390,7 @@ namespace Mutagen.Bethesda.Fallout4
             }
             if (item.HavokDisplayColor is {} HavokDisplayColoritem)
             {
-                hash.Add(HavokDisplayColoritem);
+                hash.Add(HavokDisplayColoritem.ToArgb());
             }
             if (item.Buoyancy is {} Buoyancyitem)
             {
@@ -1407,7 +1407,7 @@ namespace Mutagen.Bethesda.Fallout4
             }
             if (item.ModelData is {} ModelDataItem)
             {
-                hash.Add(ModelDataItem);
+                hash.AddBytes(ModelDataItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

@@ -854,8 +854,8 @@ namespace Mutagen.Bethesda.Fallout3
         public virtual int GetHashCode(ILinkedReferenceColorGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.LinkStartColor);
-            hash.Add(item.LinkEndColor);
+            hash.Add(item.LinkStartColor.ToArgb());
+            hash.Add(item.LinkEndColor.ToArgb());
             return hash.ToHashCode();
         }
         

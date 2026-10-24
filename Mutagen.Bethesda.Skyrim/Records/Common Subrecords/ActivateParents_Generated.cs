@@ -954,7 +954,10 @@ namespace Mutagen.Bethesda.Skyrim
         {
             var hash = new HashCode();
             hash.Add(item.Flags);
-            hash.Add(item.Parents);
+            foreach (var subItem in item.Parents)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

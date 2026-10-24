@@ -906,7 +906,10 @@ namespace Mutagen.Bethesda.Skyrim
         public virtual int GetHashCode(ISceneScriptFragmentsGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.PhaseFragments);
+            foreach (var subItem in item.PhaseFragments)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

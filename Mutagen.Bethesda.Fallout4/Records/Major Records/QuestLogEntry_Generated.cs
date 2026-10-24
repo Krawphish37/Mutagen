@@ -1122,7 +1122,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Flagsitem);
             }
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.Note is {} Noteitem)
             {
                 hash.Add(Noteitem);

@@ -9007,61 +9007,391 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.DepthOfFieldUseTarget);
             hash.Add(item.DepthOfFieldFlags);
             hash.Add(item.Unused);
-            hash.Add(item.BlurRadius);
-            hash.Add(item.DoubleVisionStrength);
-            hash.Add(item.TintColor);
-            hash.Add(item.FadeColor);
-            hash.Add(item.RadialBlurStrength);
-            hash.Add(item.RadialBlurRampUp);
-            hash.Add(item.RadialBlurStart);
-            hash.Add(item.RadialBlurRampDown);
-            hash.Add(item.RadialBlurDownStart);
-            hash.Add(item.DepthOfFieldStrength);
-            hash.Add(item.DepthOfFieldDistance);
-            hash.Add(item.DepthOfFieldRange);
-            hash.Add(item.MotionBlurStrength);
-            hash.Add(item.HdrEyeAdaptSpeedMult);
-            hash.Add(item.HdrEyeAdaptSpeedAdd);
-            hash.Add(item.HdrBlurRadiusMult);
-            hash.Add(item.HdrBlurRadiusAdd);
-            hash.Add(item.HdrSkinDimmerMult);
-            hash.Add(item.HdrSkinDimmerAdd);
-            hash.Add(item.HdrEmissiveMultMult);
-            hash.Add(item.HdrEmissiveMultAdd);
-            hash.Add(item.HdrTargetLumMult);
-            hash.Add(item.HdrTargetLumAdd);
-            hash.Add(item.HdrUpperLumClampMult);
-            hash.Add(item.HdrUpperLumClampAdd);
-            hash.Add(item.HdrBrightScaleMult);
-            hash.Add(item.HdrBrightScaleAdd);
-            hash.Add(item.HdrBrightClampMult);
-            hash.Add(item.HdrBrightClampAdd);
-            hash.Add(item.HdrLumRampNoTexMult);
-            hash.Add(item.HdrLumRampNoTexAdd);
-            hash.Add(item.HdrLumRampMinMult);
-            hash.Add(item.HdrLumRampMinAdd);
-            hash.Add(item.HdrLumRampMaxMult);
-            hash.Add(item.HdrLumRampMaxAdd);
-            hash.Add(item.HdrSunlightDimmerMult);
-            hash.Add(item.HdrSunlightDimmerAdd);
-            hash.Add(item.HdrGrassDimmerMult);
-            hash.Add(item.HdrGrassDimmerAdd);
-            hash.Add(item.HdrTreeDimmerMult);
-            hash.Add(item.HdrTreeDimmerAdd);
-            hash.Add(item.BloomBlurRadiusMult);
-            hash.Add(item.BloomBlurRadiusAdd);
-            hash.Add(item.BloomAlphaMultInteriorMult);
-            hash.Add(item.BloomAlphaMultInteriorAdd);
-            hash.Add(item.BloomAlphaMultExteriorMult);
-            hash.Add(item.BloomAlphaMultExteriorAdd);
-            hash.Add(item.CinematicSaturationMult);
-            hash.Add(item.CinematicSaturationAdd);
-            hash.Add(item.CinematicContrastMult);
-            hash.Add(item.CinematicContrastAdd);
-            hash.Add(item.CinematicContrastAvgLumMult);
-            hash.Add(item.CinematicContrastAvgLumAdd);
-            hash.Add(item.CinematicBrightnessMult);
-            hash.Add(item.CinematicBrightnessAdd);
+            if (item.BlurRadius is {} BlurRadiusitem)
+            {
+                foreach (var subItem in BlurRadiusitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.DoubleVisionStrength is {} DoubleVisionStrengthitem)
+            {
+                foreach (var subItem in DoubleVisionStrengthitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.TintColor is {} TintColoritem)
+            {
+                foreach (var subItem in TintColoritem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.FadeColor is {} FadeColoritem)
+            {
+                foreach (var subItem in FadeColoritem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RadialBlurStrength is {} RadialBlurStrengthitem)
+            {
+                foreach (var subItem in RadialBlurStrengthitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RadialBlurRampUp is {} RadialBlurRampUpitem)
+            {
+                foreach (var subItem in RadialBlurRampUpitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RadialBlurStart is {} RadialBlurStartitem)
+            {
+                foreach (var subItem in RadialBlurStartitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RadialBlurRampDown is {} RadialBlurRampDownitem)
+            {
+                foreach (var subItem in RadialBlurRampDownitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RadialBlurDownStart is {} RadialBlurDownStartitem)
+            {
+                foreach (var subItem in RadialBlurDownStartitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.DepthOfFieldStrength is {} DepthOfFieldStrengthitem)
+            {
+                foreach (var subItem in DepthOfFieldStrengthitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.DepthOfFieldDistance is {} DepthOfFieldDistanceitem)
+            {
+                foreach (var subItem in DepthOfFieldDistanceitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.DepthOfFieldRange is {} DepthOfFieldRangeitem)
+            {
+                foreach (var subItem in DepthOfFieldRangeitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.MotionBlurStrength is {} MotionBlurStrengthitem)
+            {
+                foreach (var subItem in MotionBlurStrengthitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrEyeAdaptSpeedMult is {} HdrEyeAdaptSpeedMultitem)
+            {
+                foreach (var subItem in HdrEyeAdaptSpeedMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrEyeAdaptSpeedAdd is {} HdrEyeAdaptSpeedAdditem)
+            {
+                foreach (var subItem in HdrEyeAdaptSpeedAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrBlurRadiusMult is {} HdrBlurRadiusMultitem)
+            {
+                foreach (var subItem in HdrBlurRadiusMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrBlurRadiusAdd is {} HdrBlurRadiusAdditem)
+            {
+                foreach (var subItem in HdrBlurRadiusAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrSkinDimmerMult is {} HdrSkinDimmerMultitem)
+            {
+                foreach (var subItem in HdrSkinDimmerMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrSkinDimmerAdd is {} HdrSkinDimmerAdditem)
+            {
+                foreach (var subItem in HdrSkinDimmerAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrEmissiveMultMult is {} HdrEmissiveMultMultitem)
+            {
+                foreach (var subItem in HdrEmissiveMultMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrEmissiveMultAdd is {} HdrEmissiveMultAdditem)
+            {
+                foreach (var subItem in HdrEmissiveMultAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrTargetLumMult is {} HdrTargetLumMultitem)
+            {
+                foreach (var subItem in HdrTargetLumMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrTargetLumAdd is {} HdrTargetLumAdditem)
+            {
+                foreach (var subItem in HdrTargetLumAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrUpperLumClampMult is {} HdrUpperLumClampMultitem)
+            {
+                foreach (var subItem in HdrUpperLumClampMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrUpperLumClampAdd is {} HdrUpperLumClampAdditem)
+            {
+                foreach (var subItem in HdrUpperLumClampAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrBrightScaleMult is {} HdrBrightScaleMultitem)
+            {
+                foreach (var subItem in HdrBrightScaleMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrBrightScaleAdd is {} HdrBrightScaleAdditem)
+            {
+                foreach (var subItem in HdrBrightScaleAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrBrightClampMult is {} HdrBrightClampMultitem)
+            {
+                foreach (var subItem in HdrBrightClampMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrBrightClampAdd is {} HdrBrightClampAdditem)
+            {
+                foreach (var subItem in HdrBrightClampAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrLumRampNoTexMult is {} HdrLumRampNoTexMultitem)
+            {
+                foreach (var subItem in HdrLumRampNoTexMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrLumRampNoTexAdd is {} HdrLumRampNoTexAdditem)
+            {
+                foreach (var subItem in HdrLumRampNoTexAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrLumRampMinMult is {} HdrLumRampMinMultitem)
+            {
+                foreach (var subItem in HdrLumRampMinMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrLumRampMinAdd is {} HdrLumRampMinAdditem)
+            {
+                foreach (var subItem in HdrLumRampMinAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrLumRampMaxMult is {} HdrLumRampMaxMultitem)
+            {
+                foreach (var subItem in HdrLumRampMaxMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrLumRampMaxAdd is {} HdrLumRampMaxAdditem)
+            {
+                foreach (var subItem in HdrLumRampMaxAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrSunlightDimmerMult is {} HdrSunlightDimmerMultitem)
+            {
+                foreach (var subItem in HdrSunlightDimmerMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrSunlightDimmerAdd is {} HdrSunlightDimmerAdditem)
+            {
+                foreach (var subItem in HdrSunlightDimmerAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrGrassDimmerMult is {} HdrGrassDimmerMultitem)
+            {
+                foreach (var subItem in HdrGrassDimmerMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrGrassDimmerAdd is {} HdrGrassDimmerAdditem)
+            {
+                foreach (var subItem in HdrGrassDimmerAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrTreeDimmerMult is {} HdrTreeDimmerMultitem)
+            {
+                foreach (var subItem in HdrTreeDimmerMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrTreeDimmerAdd is {} HdrTreeDimmerAdditem)
+            {
+                foreach (var subItem in HdrTreeDimmerAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.BloomBlurRadiusMult is {} BloomBlurRadiusMultitem)
+            {
+                foreach (var subItem in BloomBlurRadiusMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.BloomBlurRadiusAdd is {} BloomBlurRadiusAdditem)
+            {
+                foreach (var subItem in BloomBlurRadiusAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.BloomAlphaMultInteriorMult is {} BloomAlphaMultInteriorMultitem)
+            {
+                foreach (var subItem in BloomAlphaMultInteriorMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.BloomAlphaMultInteriorAdd is {} BloomAlphaMultInteriorAdditem)
+            {
+                foreach (var subItem in BloomAlphaMultInteriorAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.BloomAlphaMultExteriorMult is {} BloomAlphaMultExteriorMultitem)
+            {
+                foreach (var subItem in BloomAlphaMultExteriorMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.BloomAlphaMultExteriorAdd is {} BloomAlphaMultExteriorAdditem)
+            {
+                foreach (var subItem in BloomAlphaMultExteriorAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicSaturationMult is {} CinematicSaturationMultitem)
+            {
+                foreach (var subItem in CinematicSaturationMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicSaturationAdd is {} CinematicSaturationAdditem)
+            {
+                foreach (var subItem in CinematicSaturationAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicContrastMult is {} CinematicContrastMultitem)
+            {
+                foreach (var subItem in CinematicContrastMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicContrastAdd is {} CinematicContrastAdditem)
+            {
+                foreach (var subItem in CinematicContrastAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicContrastAvgLumMult is {} CinematicContrastAvgLumMultitem)
+            {
+                foreach (var subItem in CinematicContrastAvgLumMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicContrastAvgLumAdd is {} CinematicContrastAvgLumAdditem)
+            {
+                foreach (var subItem in CinematicContrastAvgLumAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicBrightnessMult is {} CinematicBrightnessMultitem)
+            {
+                foreach (var subItem in CinematicBrightnessMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicBrightnessAdd is {} CinematicBrightnessAdditem)
+            {
+                foreach (var subItem in CinematicBrightnessAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.SoundIntro);
             hash.Add(item.SoundOutro);
             hash.Add(item.DNAMDataTypeState);

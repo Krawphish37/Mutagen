@@ -1246,9 +1246,15 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.TextureFileHashes is {} TextureFileHashesItem)
             {
-                hash.Add(TextureFileHashesItem);
+                hash.AddBytes(TextureFileHashesItem);
             }
-            hash.Add(item.MaterialSwaps);
+            if (item.MaterialSwaps is {} MaterialSwapsitem)
+            {
+                foreach (var subItem in MaterialSwapsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.LightLayer is {} LightLayeritem)
             {
                 hash.Add(LightLayeritem);

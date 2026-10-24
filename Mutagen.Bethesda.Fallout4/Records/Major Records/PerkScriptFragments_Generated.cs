@@ -1001,7 +1001,10 @@ namespace Mutagen.Bethesda.Fallout4
             var hash = new HashCode();
             hash.Add(item.ExtraBindDataVersion);
             hash.Add(item.Script);
-            hash.Add(item.Fragments);
+            foreach (var subItem in item.Fragments)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

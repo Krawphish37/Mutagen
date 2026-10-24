@@ -1078,8 +1078,8 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.Level);
             hash.Add(item.Key);
             hash.Add(item.LockFlags);
-            hash.Add(item.Unused);
-            hash.Add(item.Unknown);
+            hash.AddBytes(item.Unused);
+            hash.AddBytes(item.Unknown);
             return hash.ToHashCode();
         }
         

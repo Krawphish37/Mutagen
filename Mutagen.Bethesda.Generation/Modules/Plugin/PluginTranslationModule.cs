@@ -97,14 +97,15 @@ public class PluginTranslationModule : BinaryTranslationModule
         _typeGenerations[typeof(RecordTypeType)] = new RecordTypeBinaryTranslationGeneration();
         _typeGenerations[typeof(FormLinkType)] = new FormLinkBinaryTranslationGeneration();
         _typeGenerations[typeof(FormLinkOrIndexType)] = new FormLinkOrIndexTranslationGeneration();
+        // Field load lookups are by exact type, so these are registered by the Mutagen replacement types
         _typeGenerations[typeof(MutagenListType)] = new PluginListBinaryTranslationGeneration();
-        _typeGenerations[typeof(Array2dType)] = new Array2dBinaryTranslationGeneration();
-        _typeGenerations[typeof(ArrayType)] = new PluginArrayBinaryTranslationGeneration();
+        _typeGenerations[typeof(MutagenArray2dType)] = new Array2dBinaryTranslationGeneration();
+        _typeGenerations[typeof(MutagenArrayType)] = new PluginArrayBinaryTranslationGeneration();
         _typeGenerations[typeof(DictType)] = new DictBinaryTranslationGeneration();
-        _typeGenerations[typeof(ByteArrayType)] = new ByteArrayBinaryTranslationGeneration();
+        _typeGenerations[typeof(MutagenByteArrayType)] = new ByteArrayBinaryTranslationGeneration();
         _typeGenerations[typeof(BufferType)] = new BufferBinaryTranslationGeneration();
         _typeGenerations[typeof(DataType)] = new DataBinaryTranslationGeneration();
-        _typeGenerations[typeof(ColorType)] = new ColorBinaryTranslationGeneration()
+        _typeGenerations[typeof(MutagenColorType)] = new ColorBinaryTranslationGeneration()
         {
             PreferDirectTranslation = false
         };

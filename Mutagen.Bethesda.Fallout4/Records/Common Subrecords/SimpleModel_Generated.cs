@@ -994,7 +994,7 @@ namespace Mutagen.Bethesda.Fallout4
             }
             if (item.Data is {} DataItem)
             {
-                hash.Add(DataItem);
+                hash.AddBytes(DataItem);
             }
             hash.Add(item.MaterialSwap);
             return hash.ToHashCode();

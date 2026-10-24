@@ -909,7 +909,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IScriptStructPropertyGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Members);
+            foreach (var subItem in item.Members)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

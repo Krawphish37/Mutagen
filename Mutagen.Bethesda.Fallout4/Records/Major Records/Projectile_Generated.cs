@@ -2763,7 +2763,7 @@ namespace Mutagen.Bethesda.Fallout4
             }
             if (item.Unused is {} UnusedItem)
             {
-                hash.Add(UnusedItem);
+                hash.AddBytes(UnusedItem);
             }
             hash.Add(item.Flags);
             hash.Add(item.Type);
@@ -2793,7 +2793,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.MuzzleFlashModel);
             if (item.TextureFilesHashes is {} TextureFilesHashesItem)
             {
-                hash.Add(TextureFilesHashesItem);
+                hash.AddBytes(TextureFilesHashesItem);
             }
             hash.Add(item.SoundLevel);
             hash.Add(base.GetHashCode());

@@ -1601,7 +1601,10 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IIdleAnimationGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.BehaviorGraph is {} BehaviorGraphitem)
             {
                 hash.Add(BehaviorGraphitem);
@@ -1610,7 +1613,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(AnimationEventitem);
             }
-            hash.Add(item.RelatedIdles);
+            foreach (var subItem in item.RelatedIdles)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.LoopingSecondsMin);
             hash.Add(item.LoopingSecondsMax);
             hash.Add(item.Flags);

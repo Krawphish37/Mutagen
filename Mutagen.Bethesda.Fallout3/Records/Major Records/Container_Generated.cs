@@ -1749,7 +1749,10 @@ namespace Mutagen.Bethesda.Fallout3
                 hash.Add(Modelitem);
             }
             hash.Add(item.Script);
-            hash.Add(item.Items);
+            foreach (var subItem in item.Items)
+            {
+                hash.Add(subItem);
+            }
             if (item.Destructible is {} Destructibleitem)
             {
                 hash.Add(Destructibleitem);

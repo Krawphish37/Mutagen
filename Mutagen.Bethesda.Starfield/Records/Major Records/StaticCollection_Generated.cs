@@ -1784,7 +1784,10 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ObjectBounds);
             hash.Add(item.DirtinessScale);
             hash.Add(item.SnapTemplate);
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Model is {} Modelitem)
             {
                 hash.Add(Modelitem);
@@ -1797,7 +1800,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Filteritem);
             }
-            hash.Add(item.Parts);
+            foreach (var subItem in item.Parts)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

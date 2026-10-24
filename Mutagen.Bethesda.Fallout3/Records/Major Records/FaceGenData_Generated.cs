@@ -973,15 +973,15 @@ namespace Mutagen.Bethesda.Fallout3
             var hash = new HashCode();
             if (item.SymmetricGeometry is {} SymmetricGeometryItem)
             {
-                hash.Add(SymmetricGeometryItem);
+                hash.AddBytes(SymmetricGeometryItem);
             }
             if (item.AsymmetricGeometry is {} AsymmetricGeometryItem)
             {
-                hash.Add(AsymmetricGeometryItem);
+                hash.AddBytes(AsymmetricGeometryItem);
             }
             if (item.SymmetricTexture is {} SymmetricTextureItem)
             {
-                hash.Add(SymmetricTextureItem);
+                hash.AddBytes(SymmetricTextureItem);
             }
             hash.Add(item.SNAM);
             return hash.ToHashCode();

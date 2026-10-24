@@ -1387,11 +1387,20 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IPlanetContentManagerTreeGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.NAM1);
-            hash.Add(item.NAM2);
-            hash.Add(item.NAM5);
-            hash.Add(item.Nodes);
-            hash.Add(item.Conditions);
+            hash.AddBytes(item.NAM1);
+            hash.AddBytes(item.NAM2);
+            hash.AddBytes(item.NAM5);
+            foreach (var subItem in item.Nodes)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Conditions is {} Conditionsitem)
+            {
+                foreach (var subItem in Conditionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

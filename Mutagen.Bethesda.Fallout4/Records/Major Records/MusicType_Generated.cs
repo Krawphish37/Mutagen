@@ -1255,7 +1255,13 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(FadeDurationitem);
             }
-            hash.Add(item.Tracks);
+            if (item.Tracks is {} Tracksitem)
+            {
+                foreach (var subItem in Tracksitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -1434,7 +1434,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.DefaultNumberOfTiles);
             hash.Add(item.DefaultNumberOfSlices);
             hash.Add(item.DefaultNumberOfTilesIsRelativeToLength);
-            hash.Add(item.DefaultColor);
+            hash.Add(item.DefaultColor.ToArgb());
             hash.Add(item.WindSensibility);
             hash.Add(item.WindFlexibility);
             hash.Add(item.Texture);

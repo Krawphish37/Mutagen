@@ -1216,8 +1216,14 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.Versioning);
             hash.Add(item.ExtraBindDataVersion);
             hash.Add(item.Script);
-            hash.Add(item.Fragments);
-            hash.Add(item.Aliases);
+            foreach (var subItem in item.Fragments)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Aliases)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

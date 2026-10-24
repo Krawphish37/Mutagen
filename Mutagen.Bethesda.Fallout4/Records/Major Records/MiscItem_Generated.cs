@@ -2283,12 +2283,30 @@ namespace Mutagen.Bethesda.Fallout4
             }
             hash.Add(item.PickUpSound);
             hash.Add(item.PutDownSound);
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.FeaturedItemMessage);
             hash.Add(item.Value);
             hash.Add(item.Weight);
-            hash.Add(item.Components);
-            hash.Add(item.ComponentDisplayIndices);
+            if (item.Components is {} Componentsitem)
+            {
+                foreach (var subItem in Componentsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ComponentDisplayIndices is {} ComponentDisplayIndicesitem)
+            {
+                foreach (var subItem in ComponentDisplayIndicesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

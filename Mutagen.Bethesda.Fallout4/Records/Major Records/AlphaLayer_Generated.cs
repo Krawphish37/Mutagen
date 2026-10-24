@@ -829,7 +829,7 @@ namespace Mutagen.Bethesda.Fallout4
             var hash = new HashCode();
             if (item.AlphaLayerData is {} AlphaLayerDataItem)
             {
-                hash.Add(AlphaLayerDataItem);
+                hash.AddBytes(AlphaLayerDataItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

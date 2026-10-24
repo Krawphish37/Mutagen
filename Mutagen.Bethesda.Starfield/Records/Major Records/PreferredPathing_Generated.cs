@@ -1042,8 +1042,14 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IPreferredPathingGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.NavmeshSets);
-            hash.Add(item.NavmeshTree);
+            foreach (var subItem in item.NavmeshSets)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.NavmeshTree)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

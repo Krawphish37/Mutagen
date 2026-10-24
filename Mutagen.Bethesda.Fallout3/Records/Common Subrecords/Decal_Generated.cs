@@ -1278,7 +1278,7 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.ParallaxPasses);
             hash.Add(item.Flags);
             hash.Add(item.Unknown);
-            hash.Add(item.Color);
+            hash.Add(item.Color.ToArgb());
             return hash.ToHashCode();
         }
         

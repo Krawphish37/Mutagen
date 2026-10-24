@@ -961,7 +961,10 @@ namespace Mutagen.Bethesda.Oblivion
         {
             var hash = new HashCode();
             hash.Add(item.Reference);
-            hash.Add(item.Points);
+            foreach (var subItem in item.Points)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

@@ -4903,13 +4903,19 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.XORD is {} XORDItem)
             {
-                hash.Add(XORDItem);
+                hash.AddBytes(XORDItem);
             }
             if (item.OcclusionPlane is {} OcclusionPlaneitem)
             {
                 hash.Add(OcclusionPlaneitem);
             }
-            hash.Add(item.Portals);
+            if (item.Portals is {} Portalsitem)
+            {
+                foreach (var subItem in Portalsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.RoomPortal is {} RoomPortalitem)
             {
                 hash.Add(RoomPortalitem);
@@ -4917,22 +4923,31 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.Unknown);
             hash.Add(item.LightingTemplate);
             hash.Add(item.ImageSpace);
-            hash.Add(item.LinkedRooms);
+            foreach (var subItem in item.LinkedRooms)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.IsMultiBoundPrimitive);
             if (item.RagdollData is {} RagdollDataItem)
             {
-                hash.Add(RagdollDataItem);
+                hash.AddBytes(RagdollDataItem);
             }
             if (item.RagdollBipedData is {} RagdollBipedDataItem)
             {
-                hash.Add(RagdollBipedDataItem);
+                hash.AddBytes(RagdollBipedDataItem);
             }
             if (item.Radius is {} Radiusitem)
             {
                 hash.Add(Radiusitem);
             }
-            hash.Add(item.Reflections);
-            hash.Add(item.LitWater);
+            foreach (var subItem in item.Reflections)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.LitWater)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Emittance);
             if (item.LightData is {} LightDataitem)
             {
@@ -4950,11 +4965,11 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.MultiBoundReference);
             if (item.XWCN is {} XWCNItem)
             {
-                hash.Add(XWCNItem);
+                hash.AddBytes(XWCNItem);
             }
             if (item.XWCS is {} XWCSItem)
             {
-                hash.Add(XWCSItem);
+                hash.AddBytes(XWCSItem);
             }
             if (item.WaterVelocity is {} WaterVelocityitem)
             {
@@ -4962,12 +4977,12 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.XCVL is {} XCVLItem)
             {
-                hash.Add(XCVLItem);
+                hash.AddBytes(XCVLItem);
             }
             hash.Add(item.XCZR);
             if (item.XCZA is {} XCZAItem)
             {
-                hash.Add(XCZAItem);
+                hash.AddBytes(XCZAItem);
             }
             hash.Add(item.XCZC);
             if (item.Scale is {} Scaleitem)
@@ -4998,7 +5013,13 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(NavigationDoorLinkitem);
             }
-            hash.Add(item.LocationRefTypes);
+            if (item.LocationRefTypes is {} LocationRefTypesitem)
+            {
+                foreach (var subItem in LocationRefTypesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.IsIgnoredBySandbox);
             hash.Add(item.Owner);
             if (item.FactionRank is {} FactionRankitem)
@@ -5018,7 +5039,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(EnableParentitem);
             }
-            hash.Add(item.LinkedReferences);
+            foreach (var subItem in item.LinkedReferences)
+            {
+                hash.Add(subItem);
+            }
             if (item.Patrol is {} Patrolitem)
             {
                 hash.Add(Patrolitem);
@@ -5043,7 +5067,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.AttachRef);
             if (item.DistantLodData is {} DistantLodDataItem)
             {
-                hash.Add(DistantLodDataItem);
+                hash.AddBytes(DistantLodDataItem);
             }
             if (item.Placement is {} Placementitem)
             {

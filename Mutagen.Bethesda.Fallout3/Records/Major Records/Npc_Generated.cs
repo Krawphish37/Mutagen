@@ -4014,12 +4014,18 @@ namespace Mutagen.Bethesda.Fallout3
                 hash.Add(Modelitem);
             }
             hash.Add(item.Configuration);
-            hash.Add(item.Factions);
+            foreach (var subItem in item.Factions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.DeathItem);
             hash.Add(item.Voice);
             hash.Add(item.Template);
             hash.Add(item.Race);
-            hash.Add(item.ActorEffects);
+            foreach (var subItem in item.ActorEffects)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.UnarmedAttackEffect);
             if (item.UnarmedAttackAnimation is {} UnarmedAttackAnimationitem)
             {
@@ -4030,10 +4036,22 @@ namespace Mutagen.Bethesda.Fallout3
                 hash.Add(Destructibleitem);
             }
             hash.Add(item.Script);
-            hash.Add(item.Items);
+            foreach (var subItem in item.Items)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.AIData);
-            hash.Add(item.Packages);
-            hash.Add(item.Animations);
+            foreach (var subItem in item.Packages)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Animations is {} Animationsitem)
+            {
+                foreach (var subItem in Animationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Class);
             hash.Add(item.BaseHealth);
             hash.Add(item.Strength);
@@ -4051,27 +4069,30 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(PlayerSkillsitem);
             }
-            hash.Add(item.HeadParts);
+            foreach (var subItem in item.HeadParts)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Hair);
             if (item.HairLength is {} HairLengthitem)
             {
                 hash.Add(HairLengthitem);
             }
             hash.Add(item.Eyes);
-            hash.Add(item.HairColor);
+            hash.Add(item.HairColor.ToArgb());
             hash.Add(item.CombatStyle);
             hash.Add(item.ImpactMaterialType);
             if (item.FaceGenGeometrySymmetric is {} FaceGenGeometrySymmetricItem)
             {
-                hash.Add(FaceGenGeometrySymmetricItem);
+                hash.AddBytes(FaceGenGeometrySymmetricItem);
             }
             if (item.FaceGenGeometryAsymmetric is {} FaceGenGeometryAsymmetricItem)
             {
-                hash.Add(FaceGenGeometryAsymmetricItem);
+                hash.AddBytes(FaceGenGeometryAsymmetricItem);
             }
             if (item.FaceGenTextureSymmetric is {} FaceGenTextureSymmetricItem)
             {
-                hash.Add(FaceGenTextureSymmetricItem);
+                hash.AddBytes(FaceGenTextureSymmetricItem);
             }
             hash.Add(item.NAM5);
             hash.Add(item.Height);

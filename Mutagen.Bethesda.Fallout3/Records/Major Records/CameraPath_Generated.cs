@@ -1361,11 +1361,17 @@ namespace Mutagen.Bethesda.Fallout3
         public virtual int GetHashCode(ICameraPathGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Parent);
             hash.Add(item.Previous);
             hash.Add(item.Zoom);
-            hash.Add(item.Shots);
+            foreach (var subItem in item.Shots)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

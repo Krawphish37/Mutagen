@@ -1161,8 +1161,14 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.XpAwarded);
             hash.Add(item.BonusCredits);
-            hash.Add(item.Rewards);
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Rewards)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

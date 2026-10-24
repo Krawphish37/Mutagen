@@ -1372,7 +1372,7 @@ namespace Mutagen.Bethesda.Oblivion
             hash.Add(item.ThunderLightningEndFadeOut);
             hash.Add(item.ThunderLightningFrequency);
             hash.Add(item.Classification);
-            hash.Add(item.LightningColor);
+            hash.Add(item.LightningColor.ToArgb());
             return hash.ToHashCode();
         }
         

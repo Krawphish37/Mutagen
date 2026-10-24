@@ -2340,8 +2340,14 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(Descriptionitem);
             }
-            hash.Add(item.Spells);
-            hash.Add(item.Relations);
+            foreach (var subItem in item.Spells)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Relations)
+            {
+                hash.Add(subItem);
+            }
             if (item.Data is {} Dataitem)
             {
                 hash.Add(Dataitem);
@@ -2370,13 +2376,28 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(HashCode.Combine(RaceStatsitem.Male, RaceStatsitem.Female));
             }
-            hash.Add(item.FaceData);
+            foreach (var subItem in item.FaceData)
+            {
+                hash.Add(subItem);
+            }
             if (item.BodyData is {} BodyDataitem)
             {
                 hash.Add(HashCode.Combine(BodyDataitem.Male, BodyDataitem.Female));
             }
-            hash.Add(item.Hairs);
-            hash.Add(item.Eyes);
+            if (item.Hairs is {} Hairsitem)
+            {
+                foreach (var subItem in Hairsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Eyes is {} Eyesitem)
+            {
+                foreach (var subItem in Eyesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.FaceGenData is {} FaceGenDataitem)
             {
                 hash.Add(FaceGenDataitem);

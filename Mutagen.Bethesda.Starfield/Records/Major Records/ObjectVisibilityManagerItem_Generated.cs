@@ -958,7 +958,13 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Object);
-            hash.Add(item.ObjectBounds);
+            if (item.ObjectBounds is {} ObjectBoundsitem)
+            {
+                foreach (var subItem in ObjectBoundsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             return hash.ToHashCode();
         }
         

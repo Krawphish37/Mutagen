@@ -3104,7 +3104,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Transformsitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.XALG is {} XALGitem)
             {
                 hash.Add(XALGitem);
@@ -3113,7 +3116,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Model is {} Modelitem)
             {
                 hash.Add(Modelitem);
@@ -3136,8 +3145,20 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(CraftingSounditem);
             }
             hash.Add(item.Description);
-            hash.Add(item.Resources);
-            hash.Add(item.ComponentDisplayIndices);
+            if (item.Resources is {} Resourcesitem)
+            {
+                foreach (var subItem in Resourcesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ComponentDisplayIndices is {} ComponentDisplayIndicesitem)
+            {
+                foreach (var subItem in ComponentDisplayIndicesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Weight);
             hash.Add(item.Value);
             hash.Add(item.Flags);
@@ -3148,7 +3169,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(AddictionNameitem);
             }
-            hash.Add(item.Effects);
+            foreach (var subItem in item.Effects)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -903,11 +903,20 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.LevelMin);
             hash.Add(item.LevelMax);
             hash.Add(item.Default);
-            hash.Add(item.Keywords);
+            foreach (var subItem in item.Keywords)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.MinLevelForRanks);
             hash.Add(item.AltLevelsPerTier);
-            hash.Add(item.Includes);
-            hash.Add(item.Properties);
+            foreach (var subItem in item.Includes)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Properties)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

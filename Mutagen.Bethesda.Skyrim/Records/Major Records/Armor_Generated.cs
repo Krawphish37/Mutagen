@@ -2618,12 +2618,21 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.BashImpactDataSet);
             hash.Add(item.AlternateBlockMaterial);
             hash.Add(item.Race);
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
             }
-            hash.Add(item.Armature);
+            foreach (var subItem in item.Armature)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Value);
             hash.Add(item.Weight);
             hash.Add(item.ArmorRating);

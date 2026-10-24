@@ -1026,9 +1026,12 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.CDNS is {} CDNSItem)
             {
-                hash.Add(CDNSItem);
+                hash.AddBytes(CDNSItem);
             }
-            hash.Add(item.Items);
+            foreach (var subItem in item.Items)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

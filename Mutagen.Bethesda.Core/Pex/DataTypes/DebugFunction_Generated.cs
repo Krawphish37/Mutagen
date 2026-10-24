@@ -974,7 +974,10 @@ namespace Mutagen.Bethesda.Pex
             hash.Add(item.StateName);
             hash.Add(item.FunctionName);
             hash.Add(item.FunctionType);
-            hash.Add(item.Instructions);
+            foreach (var subItem in item.Instructions)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

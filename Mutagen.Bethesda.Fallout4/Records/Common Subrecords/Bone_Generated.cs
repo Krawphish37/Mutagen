@@ -1031,10 +1031,16 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Values);
+            if (item.Values is {} Valuesitem)
+            {
+                foreach (var subItem in Valuesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.BMMP is {} BMMPItem)
             {
-                hash.Add(BMMPItem);
+                hash.AddBytes(BMMPItem);
             }
             return hash.ToHashCode();
         }

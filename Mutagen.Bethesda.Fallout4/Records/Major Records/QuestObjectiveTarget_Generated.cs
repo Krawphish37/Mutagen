@@ -1110,7 +1110,10 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.AliasID);
             hash.Add(item.Flags);
             hash.Add(item.Keyword);
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.QSTADataTypeState);
             return hash.ToHashCode();
         }

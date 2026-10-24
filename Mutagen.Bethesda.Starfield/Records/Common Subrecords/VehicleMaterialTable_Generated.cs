@@ -1223,9 +1223,18 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.MaterialID);
-            hash.Add(item.AudioRules);
-            hash.Add(item.VfxRules);
-            hash.Add(item.FrictionRules);
+            foreach (var subItem in item.AudioRules)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.VfxRules)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.FrictionRules)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

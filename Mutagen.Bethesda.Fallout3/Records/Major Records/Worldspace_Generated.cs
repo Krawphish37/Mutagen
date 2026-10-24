@@ -3388,19 +3388,31 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(WaterNoiseTextureitem);
             }
-            hash.Add(item.ImpactSwapData);
+            foreach (var subItem in item.ImpactSwapData)
+            {
+                hash.Add(subItem);
+            }
             if (item.FootstepMaterials is {} FootstepMaterialsitem)
             {
                 hash.Add(FootstepMaterialsitem);
             }
-            hash.Add(item.OffsetData);
+            if (item.OffsetData is {} OffsetDataitem)
+            {
+                foreach (var subItem in OffsetDataitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.TopCell is {} TopCellitem)
             {
                 hash.Add(TopCellitem);
             }
             hash.Add(item.SubCellsTimestamp);
             hash.Add(item.SubCellsUnknownGroupData);
-            hash.Add(item.SubCells);
+            foreach (var subItem in item.SubCells)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

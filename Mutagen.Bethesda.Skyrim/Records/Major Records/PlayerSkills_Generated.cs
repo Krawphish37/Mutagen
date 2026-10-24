@@ -1427,15 +1427,23 @@ namespace Mutagen.Bethesda.Skyrim
         public virtual int GetHashCode(IPlayerSkillsGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.SkillValues);
-            hash.Add(item.SkillOffsets);
+            foreach (var subItem in item.SkillValues)
+            {
+                hash.Add(subItem.Key);
+                hash.Add(subItem.Value);
+            }
+            foreach (var subItem in item.SkillOffsets)
+            {
+                hash.Add(subItem.Key);
+                hash.Add(subItem.Value);
+            }
             hash.Add(item.Health);
             hash.Add(item.Magicka);
             hash.Add(item.Stamina);
             hash.Add(item.Unused);
             hash.Add(item.FarAwayModelDistance);
             hash.Add(item.GearedUpWeapons);
-            hash.Add(item.Unused2);
+            hash.AddBytes(item.Unused2);
             return hash.ToHashCode();
         }
         

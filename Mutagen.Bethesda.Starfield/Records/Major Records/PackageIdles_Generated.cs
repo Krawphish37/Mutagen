@@ -1011,7 +1011,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(TimerSettingitem);
             }
-            hash.Add(item.Animations);
+            if (item.Animations is {} Animationsitem)
+            {
+                foreach (var subItem in Animationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             return hash.ToHashCode();
         }
         

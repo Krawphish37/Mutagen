@@ -993,7 +993,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.REFL is {} REFLItem)
             {
-                hash.Add(REFLItem);
+                hash.AddBytes(REFLItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

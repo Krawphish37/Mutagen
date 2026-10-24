@@ -1334,7 +1334,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.MOBC is {} MOBCItem)
             {
-                hash.Add(MOBCItem);
+                hash.AddBytes(MOBCItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

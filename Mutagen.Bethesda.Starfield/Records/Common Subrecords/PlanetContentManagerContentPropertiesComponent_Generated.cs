@@ -1708,7 +1708,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.NAM4 is {} NAM4Item)
             {
-                hash.Add(NAM4Item);
+                hash.AddBytes(NAM4Item);
             }
             if (item.NAM5 is {} NAM5item)
             {
@@ -1730,7 +1730,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(NAM9item);
             }
-            hash.Add(item.Conditions);
+            if (item.Conditions is {} Conditionsitem)
+            {
+                foreach (var subItem in Conditionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

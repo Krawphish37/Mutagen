@@ -814,7 +814,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.ESSF is {} ESSFItem)
             {
-                hash.Add(ESSFItem);
+                hash.AddBytes(ESSFItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

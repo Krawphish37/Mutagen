@@ -1327,12 +1327,15 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.UnknownByte);
             hash.Add(item.UnknownString2);
             hash.Add(item.UnknownString3);
-            hash.Add(item.UnknownInts);
+            foreach (var subItem in item.UnknownInts)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.UnknownInt1);
             hash.Add(item.UnknownInt2);
             hash.Add(item.UnknownInt3);
             hash.Add(item.UnknownInt4);
-            hash.Add(item.UnknownEnding);
+            hash.AddBytes(item.UnknownEnding);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

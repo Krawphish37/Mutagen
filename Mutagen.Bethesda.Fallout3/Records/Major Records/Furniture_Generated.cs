@@ -1418,7 +1418,7 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(Destructibleitem);
             }
-            hash.Add(item.MarkerFlags);
+            hash.AddBytes(item.MarkerFlags);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

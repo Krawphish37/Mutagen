@@ -3680,11 +3680,17 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(WaterNoiseTextureitem);
             }
-            hash.Add(item.Regions);
+            if (item.Regions is {} Regionsitem)
+            {
+                foreach (var subItem in Regionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.ImageSpace);
             if (item.XCET is {} XCETItem)
             {
-                hash.Add(XCETItem);
+                hash.AddBytes(XCETItem);
             }
             hash.Add(item.EncounterZone);
             hash.Add(item.Climate);
@@ -3697,25 +3703,37 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.AcousticSpace);
             if (item.XCMT is {} XCMTItem)
             {
-                hash.Add(XCMTItem);
+                hash.AddBytes(XCMTItem);
             }
             hash.Add(item.MusicType);
             if (item.Landscape is {} Landscapeitem)
             {
                 hash.Add(Landscapeitem);
             }
-            hash.Add(item.NavigationMeshes);
+            foreach (var subItem in item.NavigationMeshes)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Timestamp);
             hash.Add(item.UnknownGroupData);
             hash.Add(item.PersistentTimestamp);
             hash.Add(item.PersistentUnknownGroupData);
-            hash.Add(item.Persistent);
+            foreach (var subItem in item.Persistent)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.TemporaryTimestamp);
             hash.Add(item.TemporaryUnknownGroupData);
-            hash.Add(item.Temporary);
+            foreach (var subItem in item.Temporary)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.VisibleWhenDistantTimestamp);
             hash.Add(item.VisibleWhenDistantUnknownGroupData);
-            hash.Add(item.VisibleWhenDistant);
+            foreach (var subItem in item.VisibleWhenDistant)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

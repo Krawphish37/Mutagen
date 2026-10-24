@@ -2856,7 +2856,10 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(Transformsitem);
             }
             hash.Add(item.SnapTemplate);
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Menu);
             if (item.Background is {} Backgrounditem)
             {
@@ -2870,20 +2873,38 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Properties);
-            hash.Add(item.ForcedLocations);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ForcedLocations is {} ForcedLocationsitem)
+            {
+                foreach (var subItem in ForcedLocationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.PNAM is {} PNAMItem)
             {
-                hash.Add(PNAMItem);
+                hash.AddBytes(PNAMItem);
             }
             if (item.FNAM is {} FNAMItem)
             {
-                hash.Add(FNAMItem);
+                hash.AddBytes(FNAMItem);
             }
             if (item.JNAM is {} JNAMItem)
             {
-                hash.Add(JNAMItem);
+                hash.AddBytes(JNAMItem);
             }
             if (item.MarkerFlags is {} MarkerFlagsitem)
             {
@@ -2891,22 +2912,28 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.GNAM is {} GNAMItem)
             {
-                hash.Add(GNAMItem);
+                hash.AddBytes(GNAMItem);
             }
             if (item.WorkbenchData is {} WorkbenchDataItem)
             {
-                hash.Add(WorkbenchDataItem);
+                hash.AddBytes(WorkbenchDataItem);
             }
             hash.Add(item.FurnitureTemplate);
             if (item.FNPR is {} FNPRItem)
             {
-                hash.Add(FNPRItem);
+                hash.AddBytes(FNPRItem);
             }
             if (item.MarkerModel is {} MarkerModelitem)
             {
                 hash.Add(MarkerModelitem);
             }
-            hash.Add(item.MarkerParameters);
+            if (item.MarkerParameters is {} MarkerParametersitem)
+            {
+                foreach (var subItem in MarkerParametersitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

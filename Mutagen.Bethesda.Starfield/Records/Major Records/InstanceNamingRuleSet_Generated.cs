@@ -616,7 +616,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IInstanceNamingRuleSetGetter<T> item)
         {
             var hash = new HashCode();
-            hash.Add(item.Names);
+            if (item.Names is {} Namesitem)
+            {
+                foreach (var subItem in Namesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             return hash.ToHashCode();
         }
         

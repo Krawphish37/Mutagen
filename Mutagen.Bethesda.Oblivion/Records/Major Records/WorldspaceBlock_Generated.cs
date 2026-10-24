@@ -1535,7 +1535,10 @@ namespace Mutagen.Bethesda.Oblivion
             hash.Add(item.BlockNumberX);
             hash.Add(item.GroupType);
             hash.Add(item.LastModified);
-            hash.Add(item.Items);
+            foreach (var subItem in item.Items)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

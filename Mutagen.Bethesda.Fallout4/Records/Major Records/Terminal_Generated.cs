@@ -2682,33 +2682,69 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Properties);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.PNAM is {} PNAMItem)
             {
-                hash.Add(PNAMItem);
+                hash.AddBytes(PNAMItem);
             }
             hash.Add(item.LoopingSound);
             if (item.FNAM is {} FNAMItem)
             {
-                hash.Add(FNAMItem);
+                hash.AddBytes(FNAMItem);
             }
-            hash.Add(item.Holotapes);
+            if (item.Holotapes is {} Holotapesitem)
+            {
+                foreach (var subItem in Holotapesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Flags is {} Flagsitem)
             {
                 hash.Add(Flagsitem);
             }
             if (item.WorkbenchData is {} WorkbenchDataItem)
             {
-                hash.Add(WorkbenchDataItem);
+                hash.AddBytes(WorkbenchDataItem);
             }
             if (item.MarkerModel is {} MarkerModelitem)
             {
                 hash.Add(MarkerModelitem);
             }
-            hash.Add(item.MarkerParameters);
-            hash.Add(item.BodyTexts);
-            hash.Add(item.MenuItems);
+            if (item.MarkerParameters is {} MarkerParametersitem)
+            {
+                foreach (var subItem in MarkerParametersitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.BodyTexts is {} BodyTextsitem)
+            {
+                foreach (var subItem in BodyTextsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.MenuItems is {} MenuItemsitem)
+            {
+                foreach (var subItem in MenuItemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -1482,10 +1482,19 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IPlanetContentManagerContentNodeGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Content);
             hash.Add(item.OverrideContentPlacementPropertiesAndConditions);
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.ParentNode);
             hash.Add(item.PreviousNode);
             hash.Add(base.GetHashCode());

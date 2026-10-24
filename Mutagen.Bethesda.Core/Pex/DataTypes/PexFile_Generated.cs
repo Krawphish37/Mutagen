@@ -1324,8 +1324,14 @@ namespace Mutagen.Bethesda.Pex
             {
                 hash.Add(DebugInfoitem);
             }
-            hash.Add(item.Objects);
-            hash.Add(item.UserFlags);
+            foreach (var subItem in item.Objects)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.UserFlags)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

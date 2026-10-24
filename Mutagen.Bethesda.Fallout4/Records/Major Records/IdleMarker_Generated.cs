@@ -1590,7 +1590,13 @@ namespace Mutagen.Bethesda.Fallout4
         {
             var hash = new HashCode();
             hash.Add(item.ObjectBounds);
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Flags is {} Flagsitem)
             {
                 hash.Add(Flagsitem);
@@ -1599,7 +1605,13 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(IdleTimeritem);
             }
-            hash.Add(item.Animations);
+            if (item.Animations is {} Animationsitem)
+            {
+                foreach (var subItem in Animationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Unknown);
             if (item.Model is {} Modelitem)
             {

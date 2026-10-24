@@ -974,7 +974,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Morphs);
+            foreach (var subItem in item.Morphs)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

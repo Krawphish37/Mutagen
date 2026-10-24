@@ -2027,9 +2027,9 @@ namespace Mutagen.Bethesda.Oblivion
             hash.Add(item.ScrollYSpeed);
             hash.Add(item.FogDistanceNearPlane);
             hash.Add(item.FogDistanceFarPlane);
-            hash.Add(item.ShallowColor);
-            hash.Add(item.DeepColor);
-            hash.Add(item.ReflectionColor);
+            hash.Add(item.ShallowColor.ToArgb());
+            hash.Add(item.DeepColor.ToArgb());
+            hash.Add(item.ReflectionColor.ToArgb());
             hash.Add(item.TextureBlend);
             hash.Add(item.RainSimulatorForce);
             hash.Add(item.RainSimulatorVelocity);

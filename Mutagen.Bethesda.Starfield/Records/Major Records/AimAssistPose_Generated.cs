@@ -1212,8 +1212,17 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IAimAssistPoseGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.AttachPoints);
-            hash.Add(item.Connections);
+            foreach (var subItem in item.AttachPoints)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Connections is {} Connectionsitem)
+            {
+                foreach (var subItem in Connectionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

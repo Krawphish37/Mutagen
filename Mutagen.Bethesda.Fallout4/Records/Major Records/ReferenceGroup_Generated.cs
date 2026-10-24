@@ -1134,7 +1134,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.Reference);
             if (item.PNAM is {} PNAMItem)
             {
-                hash.Add(PNAMItem);
+                hash.AddBytes(PNAMItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

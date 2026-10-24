@@ -1914,11 +1914,26 @@ namespace Mutagen.Bethesda.Oblivion
             hash.Add(item.Quest);
             hash.Add(item.Topic);
             hash.Add(item.PreviousItem);
-            hash.Add(item.Topics);
-            hash.Add(item.Responses);
-            hash.Add(item.Conditions);
-            hash.Add(item.Choices);
-            hash.Add(item.LinkFrom);
+            foreach (var subItem in item.Topics)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Responses)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Choices)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.LinkFrom)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Script);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

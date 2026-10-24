@@ -1027,12 +1027,12 @@ namespace Mutagen.Bethesda.Fallout3
         public virtual int GetHashCode(IWeatherColorSetGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Sunrise);
-            hash.Add(item.Day);
-            hash.Add(item.Sunset);
-            hash.Add(item.Night);
-            hash.Add(item.HighNoon);
-            hash.Add(item.Midnight);
+            hash.Add(item.Sunrise.ToArgb());
+            hash.Add(item.Day.ToArgb());
+            hash.Add(item.Sunset.ToArgb());
+            hash.Add(item.Night.ToArgb());
+            hash.Add(item.HighNoon.ToArgb());
+            hash.Add(item.Midnight.ToArgb());
             return hash.ToHashCode();
         }
         

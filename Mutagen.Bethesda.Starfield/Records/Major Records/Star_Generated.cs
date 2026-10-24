@@ -1606,8 +1606,17 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IStarGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
-            hash.Add(item.Keywords);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -1618,7 +1627,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.ONAM is {} ONAMItem)
             {
-                hash.Add(ONAMItem);
+                hash.AddBytes(ONAMItem);
             }
             if (item.ID is {} IDitem)
             {
@@ -1626,7 +1635,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.Color is {} Coloritem)
             {
-                hash.Add(Coloritem);
+                hash.Add(Coloritem.ToArgb());
             }
             hash.Add(item.SunPreset);
             hash.Add(base.GetHashCode());

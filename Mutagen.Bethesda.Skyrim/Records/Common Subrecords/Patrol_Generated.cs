@@ -1125,13 +1125,16 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.Idle);
             if (item.SCHR is {} SCHRItem)
             {
-                hash.Add(SCHRItem);
+                hash.AddBytes(SCHRItem);
             }
             if (item.SCTX is {} SCTXItem)
             {
-                hash.Add(SCTXItem);
+                hash.AddBytes(SCTXItem);
             }
-            hash.Add(item.Topics);
+            foreach (var subItem in item.Topics)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

@@ -1461,8 +1461,14 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(VatsThresholditem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Sounds);
+            foreach (var subItem in item.Keywords)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Sounds)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

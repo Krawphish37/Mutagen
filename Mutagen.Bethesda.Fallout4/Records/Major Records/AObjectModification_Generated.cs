@@ -2233,11 +2233,32 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.MaxRank);
             hash.Add(item.LevelTierScaledOffset);
             hash.Add(item.AttachPoint);
-            hash.Add(item.AttachParentSlots);
-            hash.Add(item.Items);
-            hash.Add(item.Includes);
-            hash.Add(item.TargetOmodKeywords);
-            hash.Add(item.FilterKeywords);
+            foreach (var subItem in item.AttachParentSlots)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Items)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Includes)
+            {
+                hash.Add(subItem);
+            }
+            if (item.TargetOmodKeywords is {} TargetOmodKeywordsitem)
+            {
+                foreach (var subItem in TargetOmodKeywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.FilterKeywords is {} FilterKeywordsitem)
+            {
+                foreach (var subItem in FilterKeywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.LooseMod);
             if (item.Priority is {} Priorityitem)
             {

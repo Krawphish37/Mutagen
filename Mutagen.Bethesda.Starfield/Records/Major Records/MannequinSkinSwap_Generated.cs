@@ -961,9 +961,12 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.MSSS is {} MSSSItem)
             {
-                hash.Add(MSSSItem);
+                hash.AddBytes(MSSSItem);
             }
-            hash.Add(item.Items);
+            foreach (var subItem in item.Items)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

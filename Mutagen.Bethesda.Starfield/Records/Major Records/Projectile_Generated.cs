@@ -3769,7 +3769,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XALGitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -3784,7 +3787,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.Unused is {} UnusedItem)
             {
-                hash.Add(UnusedItem);
+                hash.AddBytes(UnusedItem);
             }
             hash.Add(item.Flags);
             hash.Add(item.Type);
@@ -3820,11 +3823,11 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.MuzzleFlashModel);
             if (item.TextureFilesHashes is {} TextureFilesHashesItem)
             {
-                hash.Add(TextureFilesHashesItem);
+                hash.AddBytes(TextureFilesHashesItem);
             }
             if (item.FLLD is {} FLLDItem)
             {
-                hash.Add(FLLDItem);
+                hash.AddBytes(FLLDItem);
             }
             if (item.ActiveSound is {} ActiveSounditem)
             {

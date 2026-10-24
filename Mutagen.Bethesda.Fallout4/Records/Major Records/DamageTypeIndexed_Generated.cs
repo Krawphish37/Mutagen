@@ -1124,7 +1124,13 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IDamageTypeIndexedGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.DamageTypes);
+            if (item.DamageTypes is {} DamageTypesitem)
+            {
+                foreach (var subItem in DamageTypesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -2349,12 +2349,30 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(RetriggerDelayitem);
             }
-            hash.Add(item.NeutralSets);
-            hash.Add(item.AllySets);
-            hash.Add(item.FriendSets);
-            hash.Add(item.EnemySets);
-            hash.Add(item.LocationSets);
-            hash.Add(item.BattleSets);
+            foreach (var subItem in item.NeutralSets)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.AllySets)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.FriendSets)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.EnemySets)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.LocationSets)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.BattleSets)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.ConditionalFaction);
             if (item.FNAM is {} FNAMitem)
             {

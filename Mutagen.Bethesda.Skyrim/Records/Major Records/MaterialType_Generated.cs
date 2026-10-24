@@ -1284,7 +1284,7 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.HavokDisplayColor is {} HavokDisplayColoritem)
             {
-                hash.Add(HavokDisplayColoritem);
+                hash.Add(HavokDisplayColoritem.ToArgb());
             }
             if (item.Buoyancy is {} Buoyancyitem)
             {

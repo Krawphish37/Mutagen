@@ -1539,7 +1539,10 @@ namespace Mutagen.Bethesda.Skyrim
         {
             var hash = new HashCode();
             hash.Add(item.BranchType);
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.Root is {} Rootitem)
             {
                 hash.Add(Rootitem);
@@ -1552,7 +1555,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(Flagsitem);
             }
-            hash.Add(item.DataInputIndices);
+            foreach (var subItem in item.DataInputIndices)
+            {
+                hash.Add(subItem);
+            }
             if (item.FlagsOverride is {} FlagsOverrideitem)
             {
                 hash.Add(FlagsOverrideitem);
@@ -1561,7 +1567,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(FlagsOverrideUnuseditem);
             }
-            hash.Add(item.Unknown);
+            foreach (var subItem in item.Unknown)
+            {
+                hash.AddBytes(subItem);
+            }
             return hash.ToHashCode();
         }
         

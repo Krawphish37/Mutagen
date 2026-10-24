@@ -1269,7 +1269,7 @@ namespace Mutagen.Bethesda.Skyrim
             var hash = new HashCode();
             if (item.ENAM is {} ENAMItem)
             {
-                hash.Add(ENAMItem);
+                hash.AddBytes(ENAMItem);
             }
             if (item.Hdr is {} Hdritem)
             {

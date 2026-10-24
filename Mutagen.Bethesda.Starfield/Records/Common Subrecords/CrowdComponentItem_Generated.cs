@@ -1152,8 +1152,20 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ICrowdComponentItemGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Properties);
-            hash.Add(item.Conditions);
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Conditions is {} Conditionsitem)
+            {
+                foreach (var subItem in Conditionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.STRV is {} STRVitem)
             {
                 hash.Add(STRVitem);

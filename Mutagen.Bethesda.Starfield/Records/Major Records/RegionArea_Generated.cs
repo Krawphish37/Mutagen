@@ -947,7 +947,13 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.EdgeFallOff);
-            hash.Add(item.RegionPointListData);
+            if (item.RegionPointListData is {} RegionPointListDataitem)
+            {
+                foreach (var subItem in RegionPointListDataitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             return hash.ToHashCode();
         }
         

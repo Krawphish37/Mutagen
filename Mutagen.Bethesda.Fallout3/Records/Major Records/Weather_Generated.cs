@@ -2181,13 +2181,16 @@ namespace Mutagen.Bethesda.Fallout3
             }
             if (item.INAM is {} INAMItem)
             {
-                hash.Add(INAMItem);
+                hash.AddBytes(INAMItem);
             }
             if (item.Data is {} Dataitem)
             {
                 hash.Add(Dataitem);
             }
-            hash.Add(item.Sounds);
+            foreach (var subItem in item.Sounds)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

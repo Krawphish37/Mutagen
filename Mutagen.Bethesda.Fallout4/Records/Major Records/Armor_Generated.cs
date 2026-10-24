@@ -3182,24 +3182,51 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.BlockBashImpactDataSet);
             hash.Add(item.AlternateBlockMaterial);
             hash.Add(item.Race);
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
             }
             hash.Add(item.InstanceNaming);
-            hash.Add(item.Armatures);
+            foreach (var subItem in item.Armatures)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Value);
             hash.Add(item.Weight);
             hash.Add(item.Health);
             hash.Add(item.ArmorRating);
             hash.Add(item.BaseAddonIndex);
             hash.Add(item.StaggerRating);
-            hash.Add(item.Unused);
-            hash.Add(item.Resistances);
+            hash.AddBytes(item.Unused);
+            if (item.Resistances is {} Resistancesitem)
+            {
+                foreach (var subItem in Resistancesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.TemplateArmor);
-            hash.Add(item.AttachParentSlots);
-            hash.Add(item.ObjectTemplates);
+            if (item.AttachParentSlots is {} AttachParentSlotsitem)
+            {
+                foreach (var subItem in AttachParentSlotsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ObjectTemplates is {} ObjectTemplatesitem)
+            {
+                foreach (var subItem in ObjectTemplatesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

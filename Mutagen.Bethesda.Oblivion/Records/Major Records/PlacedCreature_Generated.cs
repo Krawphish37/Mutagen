@@ -1467,7 +1467,7 @@ namespace Mutagen.Bethesda.Oblivion
             }
             if (item.RagdollData is {} RagdollDataItem)
             {
-                hash.Add(RagdollDataItem);
+                hash.AddBytes(RagdollDataItem);
             }
             if (item.Scale is {} Scaleitem)
             {

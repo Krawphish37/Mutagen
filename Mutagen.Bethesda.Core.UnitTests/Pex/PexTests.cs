@@ -57,6 +57,17 @@ public class PexTests
         inputPex.Equals(outputPex).ShouldBeTrue();
     }
 
+    [Theory]
+    [MemberData(nameof(TestDataFiles))]
+    public void TestPexHashCode(string file, GameCategory gameCategory)
+    {
+        var path = new FilePath(Path.Combine("Pex", file));
+        var pex = PexFile.CreateFromFile(path, gameCategory);
+        var other = PexFile.CreateFromFile(path, gameCategory);
+        pex.Equals(other).ShouldBeTrue();
+        pex.GetHashCode().ShouldBe(other.GetHashCode());
+    }
+
     [Fact]
     public void TestSinglePexParsing()
     {

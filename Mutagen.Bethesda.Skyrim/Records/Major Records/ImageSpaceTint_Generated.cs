@@ -855,7 +855,7 @@ namespace Mutagen.Bethesda.Skyrim
         {
             var hash = new HashCode();
             hash.Add(item.Amount);
-            hash.Add(item.Color);
+            hash.Add(item.Color.ToArgb());
             return hash.ToHashCode();
         }
         

@@ -1746,10 +1746,18 @@ namespace Mutagen.Bethesda.Skyrim
                 hash.Add(Teachesitem);
             }
             hash.Add(item.MaxTrainingLevel);
-            hash.Add(item.SkillWeights);
+            foreach (var subItem in item.SkillWeights)
+            {
+                hash.Add(subItem.Key);
+                hash.Add(subItem.Value);
+            }
             hash.Add(item.BleedoutDefault);
             hash.Add(item.VoicePoints);
-            hash.Add(item.StatWeights);
+            foreach (var subItem in item.StatWeights)
+            {
+                hash.Add(subItem.Key);
+                hash.Add(subItem.Value);
+            }
             hash.Add(item.Unknown2);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

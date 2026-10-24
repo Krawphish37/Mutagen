@@ -3448,9 +3448,12 @@ namespace Mutagen.Bethesda.Fallout4
             }
             if (item.STSC is {} STSCItem)
             {
-                hash.Add(STSCItem);
+                hash.AddBytes(STSCItem);
             }
-            hash.Add(item.StartScenes);
+            foreach (var subItem in item.StartScenes)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.PlayerPositiveResponse);
             hash.Add(item.PlayerNegativeResponse);
             hash.Add(item.PlayerNeutralResponse);
@@ -3459,7 +3462,13 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.PlayerNegativeSubtype);
             hash.Add(item.PlayerNeutralSubtype);
             hash.Add(item.PlayerQuestionSubtype);
-            hash.Add(item.NpcHeadtrackingActorIds);
+            if (item.NpcHeadtrackingActorIds is {} NpcHeadtrackingActorIdsitem)
+            {
+                foreach (var subItem in NpcHeadtrackingActorIdsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.NpcPositiveResponse);
             hash.Add(item.NpcNegativeResponse);
             hash.Add(item.NpcNeutralResponse);
@@ -3472,7 +3481,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(DialogueTargetActorIditem);
             }
-            hash.Add(item.Packages);
+            foreach (var subItem in item.Packages)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Topic);
             if (item.LoopingMax is {} LoopingMaxitem)
             {
@@ -3494,7 +3506,13 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(EmotionValueitem);
             }
-            hash.Add(item.PlayerHeadTrackingActorIds);
+            if (item.PlayerHeadTrackingActorIds is {} PlayerHeadTrackingActorIdsitem)
+            {
+                foreach (var subItem in PlayerHeadTrackingActorIdsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.DialogueSubtype);
             hash.Add(item.AnimArchType);
             hash.Add(item.AudioOutputOverride);

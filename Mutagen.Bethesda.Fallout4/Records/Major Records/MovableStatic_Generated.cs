@@ -1891,8 +1891,20 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Destructibleitem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Properties);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.OnLocalMap);
             hash.Add(item.LoopingSound);
             hash.Add(base.GetHashCode());

@@ -940,11 +940,11 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.SNAM is {} SNAMItem)
             {
-                hash.Add(SNAMItem);
+                hash.AddBytes(SNAMItem);
             }
             if (item.PNAM is {} PNAMItem)
             {
-                hash.Add(PNAMItem);
+                hash.AddBytes(PNAMItem);
             }
             hash.Add(item.SurfaceBlock);
             hash.Add(base.GetHashCode());

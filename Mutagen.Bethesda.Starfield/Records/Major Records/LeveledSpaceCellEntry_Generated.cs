@@ -1200,7 +1200,10 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Count);
             hash.Add(item.ChanceNone);
             hash.Add(item.Unused2);
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

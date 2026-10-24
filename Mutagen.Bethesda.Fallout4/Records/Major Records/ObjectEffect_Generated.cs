@@ -1765,7 +1765,10 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.ChargeTime);
             hash.Add(item.BaseEnchantment);
             hash.Add(item.WornRestrictions);
-            hash.Add(item.Effects);
+            foreach (var subItem in item.Effects)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.ENITDataTypeState);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

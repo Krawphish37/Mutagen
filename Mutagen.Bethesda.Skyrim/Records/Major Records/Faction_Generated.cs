@@ -2161,7 +2161,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Relations);
+            foreach (var subItem in item.Relations)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Flags);
             hash.Add(item.ExteriorJailMarker);
             hash.Add(item.FollowerWaitMarker);
@@ -2173,7 +2176,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(CrimeValuesitem);
             }
-            hash.Add(item.Ranks);
+            foreach (var subItem in item.Ranks)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.VendorBuySellList);
             hash.Add(item.MerchantContainer);
             if (item.VendorValues is {} VendorValuesitem)
@@ -2184,7 +2190,13 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(VendorLocationitem);
             }
-            hash.Add(item.Conditions);
+            if (item.Conditions is {} Conditionsitem)
+            {
+                foreach (var subItem in Conditionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

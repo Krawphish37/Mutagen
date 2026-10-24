@@ -2507,9 +2507,18 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Flagsitem);
             }
-            hash.Add(item.Phases);
-            hash.Add(item.Actors);
-            hash.Add(item.Actions);
+            foreach (var subItem in item.Phases)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Actors)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Actions)
+            {
+                hash.Add(subItem);
+            }
             if (item.Unused is {} Unuseditem)
             {
                 hash.Add(Unuseditem);
@@ -2525,7 +2534,7 @@ namespace Mutagen.Bethesda.Fallout4
             }
             if (item.VNAM is {} VNAMItem)
             {
-                hash.Add(VNAMItem);
+                hash.AddBytes(VNAMItem);
             }
             if (item.CameraDistanceOverride is {} CameraDistanceOverrideitem)
             {
@@ -2539,8 +2548,17 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(FovOverrideitem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Conditions);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.SetParentQuestStage is {} SetParentQuestStageitem)
             {
                 hash.Add(SetParentQuestStageitem);

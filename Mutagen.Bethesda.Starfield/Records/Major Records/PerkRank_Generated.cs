@@ -1304,9 +1304,21 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IPerkRankGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Effects);
-            hash.Add(item.Conditions);
-            hash.Add(item.Activities);
+            foreach (var subItem in item.Effects)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Activities is {} Activitiesitem)
+            {
+                foreach (var subItem in Activitiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Description);
             hash.Add(item.UnknownStatic);
             return hash.ToHashCode();

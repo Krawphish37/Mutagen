@@ -2167,7 +2167,13 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Descriptionitem);
             }
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Value);
             hash.Add(item.Weight);
             hash.Add(item.Projectile);
@@ -2184,7 +2190,7 @@ namespace Mutagen.Bethesda.Fallout4
             }
             if (item.ModelInfo is {} ModelInfoItem)
             {
-                hash.Add(ModelInfoItem);
+                hash.AddBytes(ModelInfoItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

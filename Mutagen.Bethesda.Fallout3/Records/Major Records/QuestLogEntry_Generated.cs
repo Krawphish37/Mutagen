@@ -1128,7 +1128,10 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(Flagsitem);
             }
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.Entry is {} Entryitem)
             {
                 hash.Add(Entryitem);

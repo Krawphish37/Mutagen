@@ -1153,8 +1153,17 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.ExternalBaseTemplate);
-            hash.Add(item.Sources);
-            hash.Add(item.EXASs);
+            foreach (var subItem in item.Sources)
+            {
+                hash.Add(subItem);
+            }
+            if (item.EXASs is {} EXASsitem)
+            {
+                foreach (var subItem in EXASsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.EXBS);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

@@ -3221,7 +3221,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XALGitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -3234,13 +3237,31 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Destructibleitem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Properties);
-            hash.Add(item.ForcedLocations);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ForcedLocations is {} ForcedLocationsitem)
+            {
+                foreach (var subItem in ForcedLocationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.NativeTerminal);
             if (item.MarkerColor is {} MarkerColoritem)
             {
-                hash.Add(MarkerColoritem);
+                hash.Add(MarkerColoritem.ToArgb());
             }
             if (item.WaterMaterial is {} WaterMaterialitem)
             {
@@ -3268,7 +3289,13 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(ActivationAngleitem);
             }
             hash.Add(item.InvertFacing);
-            hash.Add(item.Conditions);
+            if (item.Conditions is {} Conditionsitem)
+            {
+                foreach (var subItem in Conditionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.NavmeshGeometry is {} NavmeshGeometryitem)
             {
                 hash.Add(NavmeshGeometryitem);

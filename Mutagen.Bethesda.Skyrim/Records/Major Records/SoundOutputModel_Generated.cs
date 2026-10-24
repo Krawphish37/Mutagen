@@ -1366,7 +1366,7 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.FNAM is {} FNAMItem)
             {
-                hash.Add(FNAMItem);
+                hash.AddBytes(FNAMItem);
             }
             if (item.Type is {} Typeitem)
             {
@@ -1374,11 +1374,11 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.CNAM is {} CNAMItem)
             {
-                hash.Add(CNAMItem);
+                hash.AddBytes(CNAMItem);
             }
             if (item.SNAM is {} SNAMItem)
             {
-                hash.Add(SNAMItem);
+                hash.AddBytes(SNAMItem);
             }
             if (item.OutputChannels is {} OutputChannelsitem)
             {

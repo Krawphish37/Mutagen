@@ -3788,27 +3788,120 @@ namespace Mutagen.Bethesda.Skyrim
         public virtual int GetHashCode(ILocationGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.PersistentActorReferencesAdded);
-            hash.Add(item.PersistentActorReferencesStatic);
-            hash.Add(item.PersistentActorReferencesRemoved);
-            hash.Add(item.UniqueActorReferencesAdded);
-            hash.Add(item.UniqueActorReferencesStatic);
-            hash.Add(item.UniqueActorReferencesRemoved);
-            hash.Add(item.LocationRefTypeReferencesAdded);
-            hash.Add(item.LocationRefTypeReferencesStatic);
-            hash.Add(item.LocationRefTypeReferencesRemoved);
-            hash.Add(item.WorldspaceCellsAdded);
-            hash.Add(item.WorldspaceCellsStatic);
-            hash.Add(item.WorldspaceCellsRemoved);
-            hash.Add(item.InitiallyDisabledReferencesAdded);
-            hash.Add(item.InitiallyDisabledReferencesStatic);
-            hash.Add(item.EnableParentReferencesAdded);
-            hash.Add(item.EnableParentReferencesStatic);
+            if (item.PersistentActorReferencesAdded is {} PersistentActorReferencesAddeditem)
+            {
+                foreach (var subItem in PersistentActorReferencesAddeditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.PersistentActorReferencesStatic is {} PersistentActorReferencesStaticitem)
+            {
+                foreach (var subItem in PersistentActorReferencesStaticitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.PersistentActorReferencesRemoved is {} PersistentActorReferencesRemoveditem)
+            {
+                foreach (var subItem in PersistentActorReferencesRemoveditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.UniqueActorReferencesAdded is {} UniqueActorReferencesAddeditem)
+            {
+                foreach (var subItem in UniqueActorReferencesAddeditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.UniqueActorReferencesStatic is {} UniqueActorReferencesStaticitem)
+            {
+                foreach (var subItem in UniqueActorReferencesStaticitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.UniqueActorReferencesRemoved is {} UniqueActorReferencesRemoveditem)
+            {
+                foreach (var subItem in UniqueActorReferencesRemoveditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.LocationRefTypeReferencesAdded is {} LocationRefTypeReferencesAddeditem)
+            {
+                foreach (var subItem in LocationRefTypeReferencesAddeditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.LocationRefTypeReferencesStatic is {} LocationRefTypeReferencesStaticitem)
+            {
+                foreach (var subItem in LocationRefTypeReferencesStaticitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.LocationRefTypeReferencesRemoved is {} LocationRefTypeReferencesRemoveditem)
+            {
+                foreach (var subItem in LocationRefTypeReferencesRemoveditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            foreach (var subItem in item.WorldspaceCellsAdded)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.WorldspaceCellsStatic)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.WorldspaceCellsRemoved)
+            {
+                hash.Add(subItem);
+            }
+            if (item.InitiallyDisabledReferencesAdded is {} InitiallyDisabledReferencesAddeditem)
+            {
+                foreach (var subItem in InitiallyDisabledReferencesAddeditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.InitiallyDisabledReferencesStatic is {} InitiallyDisabledReferencesStaticitem)
+            {
+                foreach (var subItem in InitiallyDisabledReferencesStaticitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.EnableParentReferencesAdded is {} EnableParentReferencesAddeditem)
+            {
+                foreach (var subItem in EnableParentReferencesAddeditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.EnableParentReferencesStatic is {} EnableParentReferencesStaticitem)
+            {
+                foreach (var subItem in EnableParentReferencesStaticitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.ParentLocation);
             hash.Add(item.Music);
             hash.Add(item.UnreportedCrimeFaction);
@@ -3820,7 +3913,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.HorseMarkerRef);
             if (item.Color is {} Coloritem)
             {
-                hash.Add(Coloritem);
+                hash.Add(Coloritem.ToArgb());
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

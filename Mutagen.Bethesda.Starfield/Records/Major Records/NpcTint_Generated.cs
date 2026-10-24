@@ -1047,7 +1047,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.TintGroup);
             hash.Add(item.TintName);
             hash.Add(item.TintTexture);
-            hash.Add(item.TintColor);
+            hash.Add(item.TintColor.ToArgb());
             hash.Add(item.TintIntensity);
             return hash.ToHashCode();
         }

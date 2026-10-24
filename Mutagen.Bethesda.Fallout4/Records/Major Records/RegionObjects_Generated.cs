@@ -1028,7 +1028,13 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IRegionObjectsGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Objects);
+            if (item.Objects is {} Objectsitem)
+            {
+                foreach (var subItem in Objectsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.LodDisplayDistanceMultiplier is {} LodDisplayDistanceMultiplieritem)
             {
                 hash.Add(LodDisplayDistanceMultiplieritem);

@@ -1868,11 +1868,26 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ISnapTemplateGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Parent);
-            hash.Add(item.Nodes);
-            hash.Add(item.ParentNodes);
-            hash.Add(item.BNAM);
+            foreach (var subItem in item.Nodes)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.ParentNodes)
+            {
+                hash.Add(subItem);
+            }
+            if (item.BNAM is {} BNAMitem)
+            {
+                foreach (var subItem in BNAMitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.NextNodeID is {} NextNodeIDitem)
             {
                 hash.Add(NextNodeIDitem);
@@ -1885,7 +1900,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(CNAMitem);
             }
-            hash.Add(item.SnapTemplateRnamTraversal);
+            foreach (var subItem in item.SnapTemplateRnamTraversal)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

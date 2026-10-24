@@ -3319,13 +3319,25 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Destructibleitem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Properties);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.NativeTerminal);
             hash.Add(item.ForcedLocRefType);
             if (item.PNAM is {} PNAMItem)
             {
-                hash.Add(PNAMItem);
+                hash.AddBytes(PNAMItem);
             }
             hash.Add(item.DrinkingWater);
             if (item.ActivateTextOverride is {} ActivateTextOverrideitem)
@@ -3336,8 +3348,20 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Flagsitem);
             }
-            hash.Add(item.Conditions);
-            hash.Add(item.Items);
+            if (item.Conditions is {} Conditionsitem)
+            {
+                foreach (var subItem in Conditionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Items is {} Itemsitem)
+            {
+                foreach (var subItem in Itemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.BenchType);
             if (item.UsesSkill is {} UsesSkillitem)
             {
@@ -3348,14 +3372,35 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(EnabledEntryPointsitem);
             }
-            hash.Add(item.MarkerEntryPoints);
+            foreach (var subItem in item.MarkerEntryPoints)
+            {
+                hash.Add(subItem);
+            }
             if (item.MarkerModel is {} MarkerModelitem)
             {
                 hash.Add(MarkerModelitem);
             }
-            hash.Add(item.MarkerParameters);
-            hash.Add(item.AttachParentSlots);
-            hash.Add(item.ObjectTemplates);
+            if (item.MarkerParameters is {} MarkerParametersitem)
+            {
+                foreach (var subItem in MarkerParametersitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.AttachParentSlots is {} AttachParentSlotsitem)
+            {
+                foreach (var subItem in AttachParentSlotsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ObjectTemplates is {} ObjectTemplatesitem)
+            {
+                foreach (var subItem in ObjectTemplatesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.NavmeshGeometry is {} NavmeshGeometryitem)
             {
                 hash.Add(NavmeshGeometryitem);

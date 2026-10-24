@@ -1586,7 +1586,10 @@ namespace Mutagen.Bethesda.Skyrim
         public virtual int GetHashCode(IIdleAnimationGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.Filename is {} Filenameitem)
             {
                 hash.Add(Filenameitem);
@@ -1595,7 +1598,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(AnimationEventitem);
             }
-            hash.Add(item.RelatedIdles);
+            foreach (var subItem in item.RelatedIdles)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.LoopingSecondsMin);
             hash.Add(item.LoopingSecondsMax);
             hash.Add(item.Flags);

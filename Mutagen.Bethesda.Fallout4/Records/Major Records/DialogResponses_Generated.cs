@@ -2329,8 +2329,14 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(OverrideFileNameitem);
             }
-            hash.Add(item.Responses);
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Responses)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.Prompt is {} Promptitem)
             {
                 hash.Add(Promptitem);
@@ -2339,7 +2345,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.StartScene);
             if (item.INTV is {} INTVItem)
             {
-                hash.Add(INTVItem);
+                hash.AddBytes(INTVItem);
             }
             if (item.ForcedAlias is {} ForcedAliasitem)
             {

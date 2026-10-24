@@ -1345,11 +1345,20 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.NavigationMesh);
-            hash.Add(item.Data);
-            hash.Add(item.MergedTo);
-            hash.Add(item.PreferredMerges);
-            hash.Add(item.LinkedDoors);
-            hash.Add(item.Unknown);
+            hash.AddBytes(item.Data);
+            foreach (var subItem in item.MergedTo)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.PreferredMerges)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.LinkedDoors)
+            {
+                hash.Add(subItem);
+            }
+            hash.AddBytes(item.Unknown);
             return hash.ToHashCode();
         }
         

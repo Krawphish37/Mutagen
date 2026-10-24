@@ -9635,7 +9635,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XALGitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -9660,18 +9663,36 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(DropdownSounditem);
             }
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
             }
             hash.Add(item.InstanceNaming);
-            hash.Add(item.AttachParentSlots);
-            hash.Add(item.ObjectTemplates);
+            if (item.AttachParentSlots is {} AttachParentSlotsitem)
+            {
+                foreach (var subItem in AttachParentSlotsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ObjectTemplates is {} ObjectTemplatesitem)
+            {
+                foreach (var subItem in ObjectTemplatesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.EmbeddedWeaponMod);
             if (item.BNAM is {} BNAMItem)
             {
-                hash.Add(BNAMItem);
+                hash.AddBytes(BNAMItem);
             }
             hash.Add(item.SightedTransitionSeconds);
             hash.Add(item.AimDownSightTemplate);
@@ -9697,7 +9718,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.WAM2Unknown1);
             if (item.WAMM is {} WAMMItem)
             {
-                hash.Add(WAMMItem);
+                hash.AddBytes(WAMMItem);
             }
             hash.Add(item.MeleeOrCreature);
             hash.Add(item.PrimedExplosive);
@@ -9710,7 +9731,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.WAUDUnknown2);
             if (item.WTUR is {} WTURItem)
             {
-                hash.Add(WTURItem);
+                hash.AddBytes(WTURItem);
             }
             hash.Add(item.ChargeFullPowerSeconds);
             hash.Add(item.ChargeMinPowerPerShot);
@@ -9734,7 +9755,13 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.WDMGUnknown8);
             hash.Add(item.WDMGUnknown9);
             hash.Add(item.CritChanceIncMult);
-            hash.Add(item.DamageTypes);
+            if (item.DamageTypes is {} DamageTypesitem)
+            {
+                foreach (var subItem in DamageTypesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.FiringType);
             hash.Add(item.BurstCount);
             hash.Add(item.RepeatableFire);
@@ -9797,7 +9824,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ReloadSingle);
             if (item.WRUM is {} WRUMItem)
             {
-                hash.Add(WRUMItem);
+                hash.AddBytes(WRUMItem);
             }
             hash.Add(item.ApertureValueMin);
             hash.Add(item.ApertureValueMax);

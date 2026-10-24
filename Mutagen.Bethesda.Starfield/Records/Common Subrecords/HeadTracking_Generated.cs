@@ -997,7 +997,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IHeadTrackingGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Aliases);
+            if (item.Aliases is {} Aliasesitem)
+            {
+                foreach (var subItem in Aliasesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.ForceRotate);
             hash.Add(item.ForceRotateMustComplete);
             return hash.ToHashCode();

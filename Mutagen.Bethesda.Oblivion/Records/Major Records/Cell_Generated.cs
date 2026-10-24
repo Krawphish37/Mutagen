@@ -3013,7 +3013,13 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(Lightingitem);
             }
-            hash.Add(item.Regions);
+            if (item.Regions is {} Regionsitem)
+            {
+                foreach (var subItem in Regionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.MusicType is {} MusicTypeitem)
             {
                 hash.Add(MusicTypeitem);
@@ -3032,11 +3038,11 @@ namespace Mutagen.Bethesda.Oblivion
             hash.Add(item.GlobalVariable);
             if (item.XTLI is {} XTLIItem)
             {
-                hash.Add(XTLIItem);
+                hash.AddBytes(XTLIItem);
             }
             if (item.XLRL is {} XLRLItem)
             {
-                hash.Add(XLRLItem);
+                hash.AddBytes(XLRLItem);
             }
             if (item.PathGrid is {} PathGriditem)
             {
@@ -3048,11 +3054,20 @@ namespace Mutagen.Bethesda.Oblivion
             }
             hash.Add(item.Timestamp);
             hash.Add(item.PersistentTimestamp);
-            hash.Add(item.Persistent);
+            foreach (var subItem in item.Persistent)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.TemporaryTimestamp);
-            hash.Add(item.Temporary);
+            foreach (var subItem in item.Temporary)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.VisibleWhenDistantTimestamp);
-            hash.Add(item.VisibleWhenDistant);
+            foreach (var subItem in item.VisibleWhenDistant)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

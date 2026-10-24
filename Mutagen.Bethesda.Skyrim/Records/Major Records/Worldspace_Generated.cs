@@ -3635,7 +3635,10 @@ namespace Mutagen.Bethesda.Skyrim
         public virtual int GetHashCode(IWorldspaceGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.LargeReferences);
+            foreach (var subItem in item.LargeReferences)
+            {
+                hash.Add(subItem);
+            }
             if (item.MaxHeight is {} MaxHeightitem)
             {
                 hash.Add(MaxHeightitem);
@@ -3710,7 +3713,7 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.OffsetData is {} OffsetDataItem)
             {
-                hash.Add(OffsetDataItem);
+                hash.AddBytes(OffsetDataItem);
             }
             if (item.TopCell is {} TopCellitem)
             {
@@ -3718,7 +3721,10 @@ namespace Mutagen.Bethesda.Skyrim
             }
             hash.Add(item.SubCellsTimestamp);
             hash.Add(item.SubCellsUnknown);
-            hash.Add(item.SubCells);
+            foreach (var subItem in item.SubCells)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

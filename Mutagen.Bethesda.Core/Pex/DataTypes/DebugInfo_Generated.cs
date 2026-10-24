@@ -1102,9 +1102,18 @@ namespace Mutagen.Bethesda.Pex
         {
             var hash = new HashCode();
             hash.Add(item.ModificationTime);
-            hash.Add(item.Functions);
-            hash.Add(item.PropertyGroups);
-            hash.Add(item.StructOrders);
+            foreach (var subItem in item.Functions)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.PropertyGroups)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.StructOrders)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

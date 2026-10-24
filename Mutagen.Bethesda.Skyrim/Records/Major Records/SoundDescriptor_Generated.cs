@@ -1823,13 +1823,19 @@ namespace Mutagen.Bethesda.Skyrim
             }
             hash.Add(item.Category);
             hash.Add(item.AlternateSoundFor);
-            hash.Add(item.SoundFiles);
+            foreach (var subItem in item.SoundFiles)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.OutputModel);
             if (item.String is {} Stringitem)
             {
                 hash.Add(Stringitem);
             }
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.LoopAndRumble is {} LoopAndRumbleitem)
             {
                 hash.Add(LoopAndRumbleitem);

@@ -4528,30 +4528,147 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            hash.Add(item.Properties);
-            hash.Add(item.AddedPersistLocationReferences);
-            hash.Add(item.MasterPersistLocationReferences);
-            hash.Add(item.RemovedPersistLocationReferences);
-            hash.Add(item.AddedUniqueBaseForms);
-            hash.Add(item.LocationCellUniqueReferences);
-            hash.Add(item.RemovedUniqueBaseForms);
-            hash.Add(item.AddedUniqueNpcs);
-            hash.Add(item.MasterUniqueNpcs);
-            hash.Add(item.RemovedUniqueNpcs);
-            hash.Add(item.AddedSpecialReferences);
-            hash.Add(item.MasterSpecialReferences);
-            hash.Add(item.RemovedSpecialReferences);
-            hash.Add(item.MasterWorldspaceCells);
-            hash.Add(item.AddedInitiallyDisabledReferences);
-            hash.Add(item.MasterInitiallyDisabledReferences);
-            hash.Add(item.AddedEnablePointReferences);
-            hash.Add(item.MasterEnablePointReferences);
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.AddedPersistLocationReferences is {} AddedPersistLocationReferencesitem)
+            {
+                foreach (var subItem in AddedPersistLocationReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.MasterPersistLocationReferences is {} MasterPersistLocationReferencesitem)
+            {
+                foreach (var subItem in MasterPersistLocationReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RemovedPersistLocationReferences is {} RemovedPersistLocationReferencesitem)
+            {
+                foreach (var subItem in RemovedPersistLocationReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.AddedUniqueBaseForms is {} AddedUniqueBaseFormsitem)
+            {
+                foreach (var subItem in AddedUniqueBaseFormsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.LocationCellUniqueReferences is {} LocationCellUniqueReferencesitem)
+            {
+                foreach (var subItem in LocationCellUniqueReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RemovedUniqueBaseForms is {} RemovedUniqueBaseFormsitem)
+            {
+                foreach (var subItem in RemovedUniqueBaseFormsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.AddedUniqueNpcs is {} AddedUniqueNpcsitem)
+            {
+                foreach (var subItem in AddedUniqueNpcsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.MasterUniqueNpcs is {} MasterUniqueNpcsitem)
+            {
+                foreach (var subItem in MasterUniqueNpcsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RemovedUniqueNpcs is {} RemovedUniqueNpcsitem)
+            {
+                foreach (var subItem in RemovedUniqueNpcsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.AddedSpecialReferences is {} AddedSpecialReferencesitem)
+            {
+                foreach (var subItem in AddedSpecialReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.MasterSpecialReferences is {} MasterSpecialReferencesitem)
+            {
+                foreach (var subItem in MasterSpecialReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RemovedSpecialReferences is {} RemovedSpecialReferencesitem)
+            {
+                foreach (var subItem in RemovedSpecialReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            foreach (var subItem in item.MasterWorldspaceCells)
+            {
+                hash.Add(subItem);
+            }
+            if (item.AddedInitiallyDisabledReferences is {} AddedInitiallyDisabledReferencesitem)
+            {
+                foreach (var subItem in AddedInitiallyDisabledReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.MasterInitiallyDisabledReferences is {} MasterInitiallyDisabledReferencesitem)
+            {
+                foreach (var subItem in MasterInitiallyDisabledReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.AddedEnablePointReferences is {} AddedEnablePointReferencesitem)
+            {
+                foreach (var subItem in AddedEnablePointReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.MasterEnablePointReferences is {} MasterEnablePointReferencesitem)
+            {
+                foreach (var subItem in MasterEnablePointReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Properties2);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Properties2 is {} Properties2item)
+            {
+                foreach (var subItem in Properties2item)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Owner is {} Owneritem)
             {
                 hash.Add(Owneritem);
@@ -4574,7 +4691,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.Color is {} Coloritem)
             {
-                hash.Add(Coloritem);
+                hash.Add(Coloritem.ToArgb());
             }
             if (item.StarID is {} StarIDitem)
             {

@@ -2481,20 +2481,38 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(Eventitem);
             }
-            hash.Add(item.TextDisplayGlobals);
+            foreach (var subItem in item.TextDisplayGlobals)
+            {
+                hash.Add(subItem);
+            }
             if (item.Filter is {} Filteritem)
             {
                 hash.Add(Filteritem);
             }
-            hash.Add(item.DialogConditions);
-            hash.Add(item.EventConditions);
-            hash.Add(item.Stages);
-            hash.Add(item.Objectives);
+            foreach (var subItem in item.DialogConditions)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.EventConditions)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Stages)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Objectives)
+            {
+                hash.Add(subItem);
+            }
             if (item.NextAliasID is {} NextAliasIDitem)
             {
                 hash.Add(NextAliasIDitem);
             }
-            hash.Add(item.Aliases);
+            foreach (var subItem in item.Aliases)
+            {
+                hash.Add(subItem);
+            }
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);

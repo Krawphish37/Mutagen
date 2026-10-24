@@ -1515,11 +1515,11 @@ namespace Mutagen.Bethesda.Oblivion
             hash.Add(item.Base);
             if (item.XPCIFluff is {} XPCIFluffItem)
             {
-                hash.Add(XPCIFluffItem);
+                hash.AddBytes(XPCIFluffItem);
             }
             if (item.FULLFluff is {} FULLFluffItem)
             {
-                hash.Add(FULLFluffItem);
+                hash.AddBytes(FULLFluffItem);
             }
             if (item.DistantLODData is {} DistantLODDataitem)
             {
@@ -1533,7 +1533,7 @@ namespace Mutagen.Bethesda.Oblivion
             hash.Add(item.Horse);
             if (item.RagdollData is {} RagdollDataItem)
             {
-                hash.Add(RagdollDataItem);
+                hash.AddBytes(RagdollDataItem);
             }
             if (item.Scale is {} Scaleitem)
             {

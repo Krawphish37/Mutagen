@@ -929,7 +929,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.Color is {} Coloritem)
             {
-                hash.Add(Coloritem);
+                hash.Add(Coloritem.ToArgb());
             }
             return hash.ToHashCode();
         }

@@ -1778,7 +1778,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(DelayStartTimeActionitem);
             }
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Action);
             hash.Add(item.UseActorAnimationAction);
             hash.Add(item.AnimationHoldEvent);

@@ -1687,10 +1687,13 @@ namespace Mutagen.Bethesda.Skyrim
             var hash = new HashCode();
             if (item.MapColor is {} MapColoritem)
             {
-                hash.Add(MapColoritem);
+                hash.Add(MapColoritem.ToArgb());
             }
             hash.Add(item.Worldspace);
-            hash.Add(item.RegionAreas);
+            foreach (var subItem in item.RegionAreas)
+            {
+                hash.Add(subItem);
+            }
             if (item.Objects is {} Objectsitem)
             {
                 hash.Add(Objectsitem);

@@ -1,5 +1,8 @@
 using System.Xml.Linq;
+using Loqui.Generation;
 using Noggog;
+using Noggog.StructuredStrings;
+using Noggog.StructuredStrings.CSharp;
 
 namespace Mutagen.Bethesda.Generation.Fields;
 
@@ -17,6 +20,25 @@ public class DictType : Loqui.Generation.DictType
         if (node.TryGetAttribute("numEnumKeys", out byte num))
         {
             NumEnumKeys = num;
+        }
+    }
+
+    public override void GenerateForHash(StructuredStringBuilder sb, Accessor accessor, string hashResultAccessor)
+    {
+        // Equals compares the entries, so hash the entries rather than the dictionary object itself
+        if (this.Nullable)
+        {
+            sb.AppendLine($"if ({accessor} is {{}} {this.Name}item)");
+            accessor = $"{this.Name}item";
+        }
+        using (sb.CurlyBrace(doIt: this.Nullable))
+        {
+            sb.AppendLine($"foreach (var subItem in {accessor})");
+            using (sb.CurlyBrace())
+            {
+                sb.AppendLine($"{hashResultAccessor}.Add(subItem.Key);");
+                sb.AppendLine($"{hashResultAccessor}.Add(subItem.Value);");
+            }
         }
     }
 }

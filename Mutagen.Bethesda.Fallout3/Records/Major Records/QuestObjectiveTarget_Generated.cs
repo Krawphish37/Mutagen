@@ -1063,8 +1063,11 @@ namespace Mutagen.Bethesda.Fallout3
             var hash = new HashCode();
             hash.Add(item.Target);
             hash.Add(item.CompassMarkerIgnoresLocks);
-            hash.Add(item.Unused);
-            hash.Add(item.Conditions);
+            hash.AddBytes(item.Unused);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

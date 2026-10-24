@@ -2018,10 +2018,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IEffectShaderGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.EffectSequence);
             hash.Add(item.EdgeEffectFallOff);
-            hash.Add(item.EdgeEffectColor);
+            hash.Add(item.EdgeEffectColor.ToArgb());
             hash.Add(item.EdgeEffectAlphaFadeInTime);
             hash.Add(item.EdgeEffectFullAlphaTime);
             hash.Add(item.EdgeEffectAlphaFadeOutTime);

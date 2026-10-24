@@ -2426,8 +2426,14 @@ namespace Mutagen.Bethesda.Fallout3
         public virtual int GetHashCode(IDialogTopicGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.AssociatedQuests);
-            hash.Add(item.RemovedQuests);
+            foreach (var subItem in item.AssociatedQuests)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.RemovedQuests)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -2442,11 +2448,26 @@ namespace Mutagen.Bethesda.Fallout3
             }
             hash.Add(item.Type);
             hash.Add(item.Flags);
-            hash.Add(item.InfoOrderMastersOnly);
-            hash.Add(item.InfoOrderAllPreviousModules);
+            if (item.InfoOrderMastersOnly is {} InfoOrderMastersOnlyitem)
+            {
+                foreach (var subItem in InfoOrderMastersOnlyitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.InfoOrderAllPreviousModules is {} InfoOrderAllPreviousModulesitem)
+            {
+                foreach (var subItem in InfoOrderAllPreviousModulesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Timestamp);
             hash.Add(item.Unknown);
-            hash.Add(item.Responses);
+            foreach (var subItem in item.Responses)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.DATADataTypeState);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

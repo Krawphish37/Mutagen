@@ -1120,13 +1120,13 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IAmbientColorsGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.DirectionalXPlus);
-            hash.Add(item.DirectionalXMinus);
-            hash.Add(item.DirectionalYPlus);
-            hash.Add(item.DirectionalYMinus);
-            hash.Add(item.DirectionalZPlus);
-            hash.Add(item.DirectionalZMinus);
-            hash.Add(item.Specular);
+            hash.Add(item.DirectionalXPlus.ToArgb());
+            hash.Add(item.DirectionalXMinus.ToArgb());
+            hash.Add(item.DirectionalYPlus.ToArgb());
+            hash.Add(item.DirectionalYMinus.ToArgb());
+            hash.Add(item.DirectionalZPlus.ToArgb());
+            hash.Add(item.DirectionalZMinus.ToArgb());
+            hash.Add(item.Specular.ToArgb());
             hash.Add(item.Scale);
             return hash.ToHashCode();
         }

@@ -814,7 +814,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.PTCL is {} PTCLItem)
             {
-                hash.Add(PTCLItem);
+                hash.AddBytes(PTCLItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

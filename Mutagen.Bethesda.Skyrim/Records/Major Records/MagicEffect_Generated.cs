@@ -3647,7 +3647,13 @@ namespace Mutagen.Bethesda.Skyrim
                 hash.Add(Nameitem);
             }
             hash.Add(item.MenuDisplayObject);
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Flags);
             hash.Add(item.BaseCost);
             hash.Add(item.MagicSkill);
@@ -3684,13 +3690,25 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.CastingSoundLevel);
             hash.Add(item.ScriptEffectAIScore);
             hash.Add(item.ScriptEffectAIDelayTime);
-            hash.Add(item.CounterEffects);
-            hash.Add(item.Sounds);
+            foreach (var subItem in item.CounterEffects)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Sounds is {} Soundsitem)
+            {
+                foreach (var subItem in Soundsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
             }
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

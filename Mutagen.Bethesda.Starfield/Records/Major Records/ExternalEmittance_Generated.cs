@@ -809,7 +809,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IExternalEmittanceGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Data);
+            hash.AddBytes(item.Data);
             return hash.ToHashCode();
         }
         

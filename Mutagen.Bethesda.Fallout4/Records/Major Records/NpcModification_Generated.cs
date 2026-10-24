@@ -1208,7 +1208,10 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(INpcModificationGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Properties);
+            foreach (var subItem in item.Properties)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

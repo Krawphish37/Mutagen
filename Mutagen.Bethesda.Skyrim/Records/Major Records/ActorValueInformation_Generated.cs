@@ -1422,13 +1422,16 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.CNAM is {} CNAMItem)
             {
-                hash.Add(CNAMItem);
+                hash.AddBytes(CNAMItem);
             }
             if (item.Skill is {} Skillitem)
             {
                 hash.Add(Skillitem);
             }
-            hash.Add(item.PerkTree);
+            foreach (var subItem in item.PerkTree)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

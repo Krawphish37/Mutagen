@@ -6914,7 +6914,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XALGitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Base);
             hash.Add(item.XMSP);
             hash.Add(item.XPWR);
@@ -6943,7 +6946,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Primitiveitem);
             }
-            hash.Add(item.PlacedObjectXCZRXCZA);
+            foreach (var subItem in item.PlacedObjectXCZRXCZA)
+            {
+                hash.Add(subItem);
+            }
             if (item.VolumeReflectionProbeOffsetIntensity is {} VolumeReflectionProbeOffsetIntensityitem)
             {
                 hash.Add(VolumeReflectionProbeOffsetIntensityitem);
@@ -6977,15 +6983,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Patrolitem);
             }
-            hash.Add(item.RagdollData);
+            if (item.RagdollData is {} RagdollDataitem)
+            {
+                foreach (var subItem in RagdollDataitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.TeleportDestination is {} TeleportDestinationitem)
             {
                 hash.Add(TeleportDestinationitem);
             }
             hash.Add(item.TeleportName);
             hash.Add(item.ReferenceGroup);
-            hash.Add(item.LocationRefTypes);
-            hash.Add(item.LayeredMaterialSwaps);
+            if (item.LocationRefTypes is {} LocationRefTypesitem)
+            {
+                foreach (var subItem in LocationRefTypesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.LayeredMaterialSwaps is {} LayeredMaterialSwapsitem)
+            {
+                foreach (var subItem in LayeredMaterialSwapsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.XPCK);
             hash.Add(item.SourcePackIn);
             hash.Add(item.PersistentLocation);
@@ -6993,7 +7017,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(ProjectedDecalitem);
             }
-            hash.Add(item.ProjectedDecalReferences);
+            if (item.ProjectedDecalReferences is {} ProjectedDecalReferencesitem)
+            {
+                foreach (var subItem in ProjectedDecalReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.ConstrainedDecal is {} ConstrainedDecalitem)
             {
                 hash.Add(ConstrainedDecalitem);
@@ -7011,14 +7041,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Collisionitem);
             }
-            hash.Add(item.PowerLinks);
+            foreach (var subItem in item.PowerLinks)
+            {
+                hash.Add(subItem);
+            }
             if (item.Count is {} Countitem)
             {
                 hash.Add(Countitem);
             }
             if (item.XFLG is {} XFLGItem)
             {
-                hash.Add(XFLGItem);
+                hash.AddBytes(XFLGItem);
             }
             if (item.LightFlicker is {} LightFlickeritem)
             {
@@ -7048,7 +7081,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Ownershipitem);
             }
-            hash.Add(item.LightColors);
+            foreach (var subItem in item.LightColors)
+            {
+                hash.Add(subItem);
+            }
             if (item.GroupedPackIn is {} GroupedPackInitem)
             {
                 hash.Add(GroupedPackInitem);
@@ -7065,7 +7101,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.XWCN);
             if (item.XWCU is {} XWCUItem)
             {
-                hash.Add(XWCUItem);
+                hash.AddBytes(XWCUItem);
             }
             hash.Add(item.Location);
             if (item.XTRI is {} XTRIitem)
@@ -7076,10 +7112,19 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(LightRoundednessitem);
             }
-            hash.Add(item.LinkedReferences);
+            foreach (var subItem in item.LinkedReferences)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.IsLinkedRefTransient);
             hash.Add(item.XLIB);
-            hash.Add(item.SnapLinks);
+            if (item.SnapLinks is {} SnapLinksitem)
+            {
+                foreach (var subItem in SnapLinksitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.EncounterZone);
             if (item.GeometryDirtinessScale is {} GeometryDirtinessScaleitem)
             {
@@ -7089,7 +7134,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Lockitem);
             }
-            hash.Add(item.Properties);
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.ExternalEmittance is {} ExternalEmittanceitem)
             {
                 hash.Add(ExternalEmittanceitem);
@@ -7104,7 +7155,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.XNSE is {} XNSEItem)
             {
-                hash.Add(XNSEItem);
+                hash.AddBytes(XNSEItem);
             }
             hash.Add(item.AttachRef);
             if (item.RagdollBipedRotation is {} RagdollBipedRotationitem)
@@ -7120,7 +7171,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(EnableParentitem);
             }
-            hash.Add(item.Traversals);
+            if (item.Traversals is {} Traversalsitem)
+            {
+                foreach (var subItem in Traversalsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.NumTraversalFluffBytes);
             if (item.NavigationDoorLink is {} NavigationDoorLinkitem)
             {

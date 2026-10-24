@@ -1934,9 +1934,9 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ILightingTemplateGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.AmbientColor);
-            hash.Add(item.DirectionalColor);
-            hash.Add(item.FogNearColor);
+            hash.Add(item.AmbientColor.ToArgb());
+            hash.Add(item.DirectionalColor.ToArgb());
+            hash.Add(item.FogNearColor.ToArgb());
             hash.Add(item.FogNear);
             hash.Add(item.FogFar);
             hash.Add(item.DirectionalRotationXY);
@@ -1944,16 +1944,16 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.DirectionalFade);
             hash.Add(item.FogClipDistance);
             hash.Add(item.FogPower);
-            hash.Add(item.Unused);
-            hash.Add(item.FogFarColor);
+            hash.AddBytes(item.Unused);
+            hash.Add(item.FogFarColor.ToArgb());
             hash.Add(item.FogMax);
             hash.Add(item.LightFadeStartDistance);
             hash.Add(item.LightFadeEndDistance);
             hash.Add(item.Unknown);
             hash.Add(item.NearHeightMid);
             hash.Add(item.NearHeightRange);
-            hash.Add(item.FogColorHighNear);
-            hash.Add(item.FogColorHighFar);
+            hash.Add(item.FogColorHighNear.ToArgb());
+            hash.Add(item.FogColorHighFar.ToArgb());
             if (item.DirectionalAmbientColors is {} DirectionalAmbientColorsitem)
             {
                 hash.Add(DirectionalAmbientColorsitem);

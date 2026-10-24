@@ -1875,7 +1875,13 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.ObjectBounds);
             hash.Add(item.DirtinessScale);
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Flags is {} Flagsitem)
             {
                 hash.Add(Flagsitem);
@@ -1884,7 +1890,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(IdleTimeritem);
             }
-            hash.Add(item.Animations);
+            if (item.Animations is {} Animationsitem)
+            {
+                foreach (var subItem in Animationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Model is {} Modelitem)
             {
                 hash.Add(Modelitem);

@@ -5885,14 +5885,20 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Primitiveitem);
             }
-            hash.Add(item.Portals);
+            if (item.Portals is {} Portalsitem)
+            {
+                foreach (var subItem in Portalsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.RoomPortal is {} RoomPortalitem)
             {
                 hash.Add(RoomPortalitem);
             }
             if (item.XORD is {} XORDItem)
             {
-                hash.Add(XORDItem);
+                hash.AddBytes(XORDItem);
             }
             if (item.OcclusionPlane is {} OcclusionPlaneitem)
             {
@@ -5901,9 +5907,18 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.Unknown);
             hash.Add(item.LightingTemplate);
             hash.Add(item.ImageSpace);
-            hash.Add(item.LinkedRooms);
+            foreach (var subItem in item.LinkedRooms)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.IsMultiBoundPrimitive);
-            hash.Add(item.RagdollData);
+            if (item.RagdollData is {} RagdollDataitem)
+            {
+                foreach (var subItem in RagdollDataitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.RagdollBipedRotation is {} RagdollBipedRotationitem)
             {
                 hash.Add(RagdollBipedRotationitem);
@@ -5917,7 +5932,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Lightingitem);
             }
-            hash.Add(item.LitWater);
+            foreach (var subItem in item.LitWater)
+            {
+                hash.Add(subItem);
+            }
             if (item.Alpha is {} Alphaitem)
             {
                 hash.Add(Alphaitem);
@@ -5930,7 +5948,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.MultiBoundReference);
             if (item.XWCN is {} XWCNItem)
             {
-                hash.Add(XWCNItem);
+                hash.AddBytes(XWCNItem);
             }
             if (item.WaterVelocity is {} WaterVelocityitem)
             {
@@ -5984,7 +6002,13 @@ namespace Mutagen.Bethesda.Fallout4
             }
             hash.Add(item.LocationReference);
             hash.Add(item.LocationRefType);
-            hash.Add(item.LocationRefTypes);
+            if (item.LocationRefTypes is {} LocationRefTypesitem)
+            {
+                foreach (var subItem in LocationRefTypesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.IsIgnoredBySandbox);
             if (item.Ownership is {} Ownershipitem)
             {
@@ -6006,7 +6030,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(EnableParentitem);
             }
-            hash.Add(item.LinkedReferences);
+            foreach (var subItem in item.LinkedReferences)
+            {
+                hash.Add(subItem);
+            }
             if (item.Patrol is {} Patrolitem)
             {
                 hash.Add(Patrolitem);
@@ -6029,27 +6056,42 @@ namespace Mutagen.Bethesda.Fallout4
                 hash.Add(MapMarkeritem);
             }
             hash.Add(item.AttachRef);
-            hash.Add(item.SplineConnections);
-            hash.Add(item.PowerGridConnections);
+            foreach (var subItem in item.SplineConnections)
+            {
+                hash.Add(subItem);
+            }
+            if (item.PowerGridConnections is {} PowerGridConnectionsitem)
+            {
+                foreach (var subItem in PowerGridConnectionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.XCVR is {} XCVRItem)
             {
-                hash.Add(XCVRItem);
+                hash.AddBytes(XCVRItem);
             }
             if (item.XCVL is {} XCVLItem)
             {
-                hash.Add(XCVLItem);
+                hash.AddBytes(XCVLItem);
             }
             hash.Add(item.CurrentZoneReference);
             if (item.XCZA is {} XCZAItem)
             {
-                hash.Add(XCZAItem);
+                hash.AddBytes(XCZAItem);
             }
             hash.Add(item.CurrentZoneCell);
             if (item.Scale is {} Scaleitem)
             {
                 hash.Add(Scaleitem);
             }
-            hash.Add(item.DistantLodData);
+            if (item.DistantLodData is {} DistantLodDataitem)
+            {
+                foreach (var subItem in DistantLodDataitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Position);
             hash.Add(item.Rotation);
             if (item.Comments is {} Commentsitem)

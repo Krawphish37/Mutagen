@@ -1918,7 +1918,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.AvoidThreatChance);
             if (item.CSMD is {} CSMDItem)
             {
-                hash.Add(CSMDItem);
+                hash.AddBytes(CSMDItem);
             }
             if (item.Melee is {} Meleeitem)
             {

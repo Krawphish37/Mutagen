@@ -1737,9 +1737,27 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(LoopDataitem);
             }
-            hash.Add(item.CuePoints);
-            hash.Add(item.Conditions);
-            hash.Add(item.Tracks);
+            if (item.CuePoints is {} CuePointsitem)
+            {
+                foreach (var subItem in CuePointsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Conditions is {} Conditionsitem)
+            {
+                foreach (var subItem in Conditionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Tracks is {} Tracksitem)
+            {
+                foreach (var subItem in Tracksitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

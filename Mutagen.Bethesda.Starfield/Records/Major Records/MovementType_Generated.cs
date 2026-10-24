@@ -1270,7 +1270,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.SPED is {} SPEDItem)
             {
-                hash.Add(SPEDItem);
+                hash.AddBytes(SPEDItem);
             }
             if (item.FlightAngleGain is {} FlightAngleGainitem)
             {

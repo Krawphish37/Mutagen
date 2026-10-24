@@ -935,10 +935,10 @@ namespace Mutagen.Bethesda.Oblivion
         public virtual int GetHashCode(IWeatherColorsGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Sunrise);
-            hash.Add(item.Day);
-            hash.Add(item.Sunset);
-            hash.Add(item.Night);
+            hash.Add(item.Sunrise.ToArgb());
+            hash.Add(item.Day.ToArgb());
+            hash.Add(item.Sunset.ToArgb());
+            hash.Add(item.Night.ToArgb());
             return hash.ToHashCode();
         }
         

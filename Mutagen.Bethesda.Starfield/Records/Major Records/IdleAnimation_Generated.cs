@@ -1488,7 +1488,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IIdleAnimationGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.BehaviorGraph is {} BehaviorGraphitem)
             {
                 hash.Add(BehaviorGraphitem);

@@ -1084,7 +1084,13 @@ namespace Mutagen.Bethesda.Fallout4
         {
             var hash = new HashCode();
             hash.Add(item.Music);
-            hash.Add(item.Sounds);
+            if (item.Sounds is {} Soundsitem)
+            {
+                foreach (var subItem in Soundsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.LodDisplayDistanceMultiplier is {} LodDisplayDistanceMultiplieritem)
             {
                 hash.Add(LodDisplayDistanceMultiplieritem);

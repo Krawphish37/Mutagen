@@ -2434,7 +2434,7 @@ namespace Mutagen.Bethesda.Oblivion
             }
             if (item.OffsetData is {} OffsetDataItem)
             {
-                hash.Add(OffsetDataItem);
+                hash.AddBytes(OffsetDataItem);
             }
             if (item.Road is {} Roaditem)
             {
@@ -2445,7 +2445,10 @@ namespace Mutagen.Bethesda.Oblivion
                 hash.Add(TopCellitem);
             }
             hash.Add(item.SubCellsTimestamp);
-            hash.Add(item.SubCells);
+            foreach (var subItem in item.SubCells)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

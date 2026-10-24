@@ -1832,12 +1832,21 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Typeitem);
             }
-            hash.Add(item.ExtraParts);
-            hash.Add(item.Parts);
+            foreach (var subItem in item.ExtraParts)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Parts)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.TextureSet);
             hash.Add(item.Color);
             hash.Add(item.ValidRaces);
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -3281,7 +3281,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.GoreTargetBone);
             if (item.TextureFilesHashes is {} TextureFilesHashesItem)
             {
-                hash.Add(TextureFilesHashesItem);
+                hash.AddBytes(TextureFilesHashesItem);
             }
             if (item.HitReactionStart is {} HitReactionStartitem)
             {

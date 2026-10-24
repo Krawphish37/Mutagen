@@ -893,7 +893,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IVolumesComponentGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Items);
+            if (item.Items is {} Itemsitem)
+            {
+                foreach (var subItem in Itemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

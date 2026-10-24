@@ -1,5 +1,6 @@
 using Loqui;
 using Loqui.Generation;
+using Mutagen.Bethesda.Generation.Fields;
 using Mutagen.Bethesda.Generation.Generator;
 
 namespace Mutagen.Bethesda.Pex.Generator;
@@ -15,6 +16,8 @@ public class PexGenerationConstructor : IGenerationConstructor
         };
         gen.AddTypicalTypeAssociations();
         gen.Add(gen.MaskModule);
+        gen.ReplaceTypeAssociation<Loqui.Generation.ListType, MutagenListType>();
+        gen.ReplaceTypeAssociation<Loqui.Generation.ArrayType, MutagenArrayType>();
 
         var dir = new DirectoryInfo("../../../../Mutagen.Bethesda.Core/Pex/DataTypes");
         var pexProto = gen.AddProtocol(

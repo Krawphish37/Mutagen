@@ -2048,7 +2048,13 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.Properties);
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -2061,7 +2067,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(NavmeshGeometryitem);
             }
-            hash.Add(item.DistantLods);
+            foreach (var subItem in item.DistantLods)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.DNAMDataTypeState);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

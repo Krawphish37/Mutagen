@@ -1158,7 +1158,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(FMRSitem);
             }
-            hash.Add(item.Items);
+            foreach (var subItem in item.Items)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

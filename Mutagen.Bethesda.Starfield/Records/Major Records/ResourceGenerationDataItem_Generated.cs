@@ -879,7 +879,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Resource);
-            hash.Add(item.Floats);
+            hash.AddBytes(item.Floats);
             return hash.ToHashCode();
         }
         

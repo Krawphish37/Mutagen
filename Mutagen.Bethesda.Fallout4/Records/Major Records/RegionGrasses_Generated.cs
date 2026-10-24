@@ -1028,7 +1028,13 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IRegionGrassesGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Grasses);
+            if (item.Grasses is {} Grassesitem)
+            {
+                foreach (var subItem in Grassesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.LodDisplayDistanceMultiplier is {} LodDisplayDistanceMultiplieritem)
             {
                 hash.Add(LodDisplayDistanceMultiplieritem);

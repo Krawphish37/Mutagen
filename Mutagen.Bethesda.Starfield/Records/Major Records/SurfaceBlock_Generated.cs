@@ -1960,7 +1960,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ISurfaceBlockGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.ANAM is {} ANAMitem)
             {
                 hash.Add(ANAMitem);
@@ -1969,7 +1972,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ENAM);
             if (item.FNAM is {} FNAMItem)
             {
-                hash.Add(FNAMItem);
+                hash.AddBytes(FNAMItem);
             }
             if (item.GNAM is {} GNAMitem)
             {

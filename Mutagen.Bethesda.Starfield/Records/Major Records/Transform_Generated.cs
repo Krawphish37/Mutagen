@@ -1301,11 +1301,11 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ZoomMax);
             if (item.BNAM is {} BNAMItem)
             {
-                hash.Add(BNAMItem);
+                hash.AddBytes(BNAMItem);
             }
             if (item.ENAM is {} ENAMItem)
             {
-                hash.Add(ENAMItem);
+                hash.AddBytes(ENAMItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

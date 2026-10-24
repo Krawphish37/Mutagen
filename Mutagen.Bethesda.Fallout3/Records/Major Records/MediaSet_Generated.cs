@@ -2498,7 +2498,7 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.OutroNighttime);
             if (item.DATA is {} DATAItem)
             {
-                hash.Add(DATAItem);
+                hash.AddBytes(DATAItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

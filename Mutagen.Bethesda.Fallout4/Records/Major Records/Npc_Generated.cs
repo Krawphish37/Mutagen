@@ -7032,7 +7032,10 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.UseTemplateActors);
             hash.Add(item.BleedoutOverride);
             hash.Add(item.Unknown);
-            hash.Add(item.Factions);
+            foreach (var subItem in item.Factions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.DeathItem);
             hash.Add(item.Voice);
             hash.Add(item.DefaultTemplate);
@@ -7043,7 +7046,13 @@ namespace Mutagen.Bethesda.Fallout4
                 hash.Add(TemplateActorsitem);
             }
             hash.Add(item.Race);
-            hash.Add(item.ActorEffect);
+            if (item.ActorEffect is {} ActorEffectitem)
+            {
+                foreach (var subItem in ActorEffectitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Destructible is {} Destructibleitem)
             {
                 hash.Add(Destructibleitem);
@@ -7051,18 +7060,39 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.Skin);
             hash.Add(item.FarAwayModel);
             hash.Add(item.AttackRace);
-            hash.Add(item.Attacks);
+            foreach (var subItem in item.Attacks)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.SpectatorOverridePackageList);
             hash.Add(item.ObserveDeadBodyOverridePackageList);
             hash.Add(item.GuardWarnOverridePackageList);
             hash.Add(item.CombatOverridePackageList);
             hash.Add(item.FollowerCommandPackageList);
             hash.Add(item.FollowerElevatorPackageList);
-            hash.Add(item.Perks);
-            hash.Add(item.Properties);
+            if (item.Perks is {} Perksitem)
+            {
+                foreach (var subItem in Perksitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.ForcedLocRefType);
             hash.Add(item.NativeTerminal);
-            hash.Add(item.Items);
+            if (item.Items is {} Itemsitem)
+            {
+                foreach (var subItem in Itemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Aggression);
             hash.Add(item.Confidence);
             hash.Add(item.EnergyLevel);
@@ -7074,10 +7104,31 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.AggroRadiusWarnOrAttack);
             hash.Add(item.AggroRadiusAttack);
             hash.Add(item.NoSlowApproach);
-            hash.Add(item.Packages);
-            hash.Add(item.Keywords);
-            hash.Add(item.AttachParentSlots);
-            hash.Add(item.ObjectTemplates);
+            foreach (var subItem in item.Packages)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.AttachParentSlots is {} AttachParentSlotsitem)
+            {
+                foreach (var subItem in AttachParentSlotsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ObjectTemplates is {} ObjectTemplatesitem)
+            {
+                foreach (var subItem in ObjectTemplatesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Class);
             if (item.Name is {} Nameitem)
             {
@@ -7092,14 +7143,17 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.FarAwayModelDistance);
             hash.Add(item.GearedUpWeapons);
             hash.Add(item.Unused);
-            hash.Add(item.HeadParts);
+            foreach (var subItem in item.HeadParts)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.HairColor);
             hash.Add(item.FacialHairColor);
             hash.Add(item.CombatStyle);
             hash.Add(item.GiftFilter);
             if (item.NAM5 is {} NAM5Item)
             {
-                hash.Add(NAM5Item);
+                hash.AddBytes(NAM5Item);
             }
             hash.Add(item.HeightMin);
             if (item.NAM7 is {} NAM7item)
@@ -7112,10 +7166,16 @@ namespace Mutagen.Bethesda.Fallout4
                 hash.Add(Weightitem);
             }
             hash.Add(item.SoundLevel);
-            hash.Add(item.Sounds);
+            if (item.Sounds is {} Soundsitem)
+            {
+                foreach (var subItem in Soundsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.SoundsFinalize is {} SoundsFinalizeItem)
             {
-                hash.Add(SoundsFinalizeItem);
+                hash.AddBytes(SoundsFinalizeItem);
             }
             hash.Add(item.InheritsSoundsFrom);
             hash.Add(item.PowerArmorStand);
@@ -7126,15 +7186,24 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.HeadTexture);
             if (item.TextureLighting is {} TextureLightingitem)
             {
-                hash.Add(TextureLightingitem);
+                hash.Add(TextureLightingitem.ToArgb());
             }
-            hash.Add(item.Morphs);
-            hash.Add(item.FaceTintingLayers);
+            foreach (var subItem in item.Morphs)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.FaceTintingLayers)
+            {
+                hash.Add(subItem);
+            }
             if (item.BodyMorphRegionValues is {} BodyMorphRegionValuesitem)
             {
                 hash.Add(BodyMorphRegionValuesitem);
             }
-            hash.Add(item.FaceMorphs);
+            foreach (var subItem in item.FaceMorphs)
+            {
+                hash.Add(subItem);
+            }
             if (item.FacialMorphIntensity is {} FacialMorphIntensityitem)
             {
                 hash.Add(FacialMorphIntensityitem);

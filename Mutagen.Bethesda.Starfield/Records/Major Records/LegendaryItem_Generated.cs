@@ -2960,7 +2960,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.DirtinessScale);
             if (item.FLLD is {} FLLDItem)
             {
-                hash.Add(FLLDItem);
+                hash.AddBytes(FLLDItem);
             }
             if (item.Name is {} Nameitem)
             {
@@ -2978,7 +2978,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XALGitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Model is {} Modelitem)
             {
                 hash.Add(Modelitem);
@@ -2986,23 +2989,59 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.BaseObjectList);
             hash.Add(item.RankTemplate);
             hash.Add(item.MNAM);
-            hash.Add(item.LegendaryMods);
-            hash.Add(item.LnamEntries);
-            hash.Add(item.IncludeFilters);
-            hash.Add(item.ExcludeFilters);
+            if (item.LegendaryMods is {} LegendaryModsitem)
+            {
+                foreach (var subItem in LegendaryModsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.LnamEntries is {} LnamEntriesitem)
+            {
+                foreach (var subItem in LnamEntriesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.IncludeFilters is {} IncludeFiltersitem)
+            {
+                foreach (var subItem in IncludeFiltersitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ExcludeFilters is {} ExcludeFiltersitem)
+            {
+                foreach (var subItem in ExcludeFiltersitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.FNAM is {} FNAMItem)
             {
-                hash.Add(FNAMItem);
+                hash.AddBytes(FNAMItem);
             }
             if (item.KNAM is {} KNAMItem)
             {
-                hash.Add(KNAMItem);
+                hash.AddBytes(KNAMItem);
             }
-            hash.Add(item.GNAM);
-            hash.Add(item.HNAM);
+            if (item.GNAM is {} GNAMitem)
+            {
+                foreach (var subItem in GNAMitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HNAM is {} HNAMitem)
+            {
+                foreach (var subItem in HNAMitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.JNAM is {} JNAMItem)
             {
-                hash.Add(JNAMItem);
+                hash.AddBytes(JNAMItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

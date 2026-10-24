@@ -1179,7 +1179,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IBoneModifierGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Data is {} Dataitem)
             {
                 hash.Add(Dataitem);

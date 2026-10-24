@@ -3164,7 +3164,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.XALG is {} XALGitem)
             {
                 hash.Add(XALGitem);
@@ -3179,7 +3182,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Radiusitem);
             }
-            hash.Add(item.RagdollData);
+            if (item.RagdollData is {} RagdollDataitem)
+            {
+                foreach (var subItem in RagdollDataitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.ReferenceGroup);
             hash.Add(item.SourcePackIn);
             hash.Add(item.PersistentLocation);
@@ -3188,8 +3197,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(FactionRankitem);
             }
-            hash.Add(item.PowerLinks);
-            hash.Add(item.LinkedReferences);
+            foreach (var subItem in item.PowerLinks)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.LinkedReferences)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.IsLinkedRefTransient);
             if (item.ExternalEmittance is {} ExternalEmittanceitem)
             {
@@ -3210,7 +3225,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(HeadTrackingWeightitem);
             }
-            hash.Add(item.LocationRefTypes);
+            if (item.LocationRefTypes is {} LocationRefTypesitem)
+            {
+                foreach (var subItem in LocationRefTypesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.RagdollBipedRotation is {} RagdollBipedRotationitem)
             {
                 hash.Add(RagdollBipedRotationitem);

@@ -1651,11 +1651,23 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.SRAN);
             hash.Add(item.SGEN);
             hash.Add(item.Quest);
-            hash.Add(item.Keywords);
-            hash.Add(item.Scenes);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Scenes is {} Scenesitem)
+            {
+                foreach (var subItem in Scenesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.DIFF is {} DIFFItem)
             {
-                hash.Add(DIFFItem);
+                hash.AddBytes(DIFFItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

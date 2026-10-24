@@ -2984,7 +2984,10 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.SnapTemplate);
             hash.Add(item.SnapBehavior);
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -2993,17 +2996,47 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.Items);
+            if (item.Items is {} Itemsitem)
+            {
+                foreach (var subItem in Itemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Destructible is {} Destructibleitem)
             {
                 hash.Add(Destructibleitem);
             }
             hash.Add(item.Flags);
-            hash.Add(item.Keywords);
-            hash.Add(item.ForcedLocations);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ForcedLocations is {} ForcedLocationsitem)
+            {
+                foreach (var subItem in ForcedLocationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.NativeTerminal);
-            hash.Add(item.Properties);
-            hash.Add(item.AttachParentSlots);
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.AttachParentSlots is {} AttachParentSlotsitem)
+            {
+                foreach (var subItem in AttachParentSlotsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.OpenSound is {} OpenSounditem)
             {
                 hash.Add(OpenSounditem);

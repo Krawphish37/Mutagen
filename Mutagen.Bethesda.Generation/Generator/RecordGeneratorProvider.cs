@@ -65,6 +65,12 @@ public class RecordGeneratorProvider : IGenerationConstructor
         gen.ReplaceTypeAssociation<Loqui.Generation.DictType, DictType>();
         gen.ReplaceTypeAssociation<Loqui.Generation.BoolType, BoolType>();
         gen.ReplaceTypeAssociation<Loqui.Generation.ListType, MutagenListType>();
+        gen.ReplaceTypeAssociation<Loqui.Generation.ArrayType, MutagenArrayType>();
+        gen.ReplaceTypeAssociation<Loqui.Generation.Array2dType, MutagenArray2dType>();
+        gen.ReplaceTypeAssociation<Loqui.Generation.ByteArrayType, MutagenByteArrayType>();
+        gen.ReplaceTypeAssociation<Loqui.Generation.ColorType, MutagenColorType>();
+        // An inherited lookup would otherwise find the ListType mask generation first
+        gen.MaskModule.AddTypeAssociation<MutagenArray2dType>(new Array2dMaskFieldGeneration());
 
         var bethesdaProto = gen.AddProtocol(
             new ProtocolGeneration(

@@ -877,7 +877,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.MSSI is {} MSSIItem)
             {
-                hash.Add(MSSIItem);
+                hash.AddBytes(MSSIItem);
             }
             hash.Add(item.MaterialSwap);
             return hash.ToHashCode();

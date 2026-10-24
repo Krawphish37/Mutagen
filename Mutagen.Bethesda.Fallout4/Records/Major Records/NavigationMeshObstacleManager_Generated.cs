@@ -1074,7 +1074,10 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(INavigationMeshObstacleManagerGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.SubObjects);
+            foreach (var subItem in item.SubObjects)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -9088,63 +9088,405 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.RadialBlurCenter);
             hash.Add(item.DepthOfFieldFlags);
             hash.Add(item.Unknown);
-            hash.Add(item.BlurRadius);
-            hash.Add(item.DoubleVisionStrength);
-            hash.Add(item.TintColor);
-            hash.Add(item.FadeColor);
-            hash.Add(item.RadialBlurStrength);
-            hash.Add(item.RadialBlurRampUp);
-            hash.Add(item.RadialBlurStart);
-            hash.Add(item.RadialBlurRampDown);
-            hash.Add(item.RadialBlurDownStart);
-            hash.Add(item.DepthOfFieldStrength);
-            hash.Add(item.DepthOfFieldDistance);
-            hash.Add(item.DepthOfFieldRange);
-            hash.Add(item.DepthOfFieldVignetteRadius);
-            hash.Add(item.DepthOfFieldVignetteStrength);
-            hash.Add(item.MotionBlurStrength);
-            hash.Add(item.HdrEyeAdaptSpeedMult);
-            hash.Add(item.HdrEyeAdaptSpeedAdd);
-            hash.Add(item.HdrBloomBlurRadiusMult);
-            hash.Add(item.HdrBloomBlurRadiusAdd);
-            hash.Add(item.HdrBloomThresholdMult);
-            hash.Add(item.HdrBloomThresholdAdd);
-            hash.Add(item.HdrBloomScaleMult);
-            hash.Add(item.HdrBloomScaleAdd);
-            hash.Add(item.HdrTargetLumMinMult);
-            hash.Add(item.HdrTargetLumMinAdd);
-            hash.Add(item.HdrTargetLumMaxMult);
-            hash.Add(item.HdrTargetLumMaxAdd);
-            hash.Add(item.HdrSunlightScaleMult);
-            hash.Add(item.HdrSunlightScaleAdd);
-            hash.Add(item.HdrSkyScaleMult);
-            hash.Add(item.HdrSkyScaleAdd);
-            hash.Add(item.Unknown08);
-            hash.Add(item.Unknown48);
-            hash.Add(item.Unknown09);
-            hash.Add(item.Unknown49);
-            hash.Add(item.Unknown0A);
-            hash.Add(item.Unknown4A);
-            hash.Add(item.Unknown0B);
-            hash.Add(item.Unknown4B);
-            hash.Add(item.Unknown0C);
-            hash.Add(item.Unknown4C);
-            hash.Add(item.Unknown0D);
-            hash.Add(item.Unknown4D);
-            hash.Add(item.Unknown0E);
-            hash.Add(item.Unknown4E);
-            hash.Add(item.Unknown0F);
-            hash.Add(item.Unknown4F);
-            hash.Add(item.Unknown10);
-            hash.Add(item.Unknown50);
-            hash.Add(item.CinematicSaturationMult);
-            hash.Add(item.CinematicSaturationAdd);
-            hash.Add(item.CinematicBrightnessMult);
-            hash.Add(item.CinematicBrightnessAdd);
-            hash.Add(item.CinematicContrastMult);
-            hash.Add(item.CinematicContrastAdd);
-            hash.Add(item.Unknown14);
-            hash.Add(item.Unknown54);
+            if (item.BlurRadius is {} BlurRadiusitem)
+            {
+                foreach (var subItem in BlurRadiusitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.DoubleVisionStrength is {} DoubleVisionStrengthitem)
+            {
+                foreach (var subItem in DoubleVisionStrengthitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.TintColor is {} TintColoritem)
+            {
+                foreach (var subItem in TintColoritem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.FadeColor is {} FadeColoritem)
+            {
+                foreach (var subItem in FadeColoritem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RadialBlurStrength is {} RadialBlurStrengthitem)
+            {
+                foreach (var subItem in RadialBlurStrengthitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RadialBlurRampUp is {} RadialBlurRampUpitem)
+            {
+                foreach (var subItem in RadialBlurRampUpitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RadialBlurStart is {} RadialBlurStartitem)
+            {
+                foreach (var subItem in RadialBlurStartitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RadialBlurRampDown is {} RadialBlurRampDownitem)
+            {
+                foreach (var subItem in RadialBlurRampDownitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RadialBlurDownStart is {} RadialBlurDownStartitem)
+            {
+                foreach (var subItem in RadialBlurDownStartitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.DepthOfFieldStrength is {} DepthOfFieldStrengthitem)
+            {
+                foreach (var subItem in DepthOfFieldStrengthitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.DepthOfFieldDistance is {} DepthOfFieldDistanceitem)
+            {
+                foreach (var subItem in DepthOfFieldDistanceitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.DepthOfFieldRange is {} DepthOfFieldRangeitem)
+            {
+                foreach (var subItem in DepthOfFieldRangeitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.DepthOfFieldVignetteRadius is {} DepthOfFieldVignetteRadiusitem)
+            {
+                foreach (var subItem in DepthOfFieldVignetteRadiusitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.DepthOfFieldVignetteStrength is {} DepthOfFieldVignetteStrengthitem)
+            {
+                foreach (var subItem in DepthOfFieldVignetteStrengthitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.MotionBlurStrength is {} MotionBlurStrengthitem)
+            {
+                foreach (var subItem in MotionBlurStrengthitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrEyeAdaptSpeedMult is {} HdrEyeAdaptSpeedMultitem)
+            {
+                foreach (var subItem in HdrEyeAdaptSpeedMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrEyeAdaptSpeedAdd is {} HdrEyeAdaptSpeedAdditem)
+            {
+                foreach (var subItem in HdrEyeAdaptSpeedAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrBloomBlurRadiusMult is {} HdrBloomBlurRadiusMultitem)
+            {
+                foreach (var subItem in HdrBloomBlurRadiusMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrBloomBlurRadiusAdd is {} HdrBloomBlurRadiusAdditem)
+            {
+                foreach (var subItem in HdrBloomBlurRadiusAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrBloomThresholdMult is {} HdrBloomThresholdMultitem)
+            {
+                foreach (var subItem in HdrBloomThresholdMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrBloomThresholdAdd is {} HdrBloomThresholdAdditem)
+            {
+                foreach (var subItem in HdrBloomThresholdAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrBloomScaleMult is {} HdrBloomScaleMultitem)
+            {
+                foreach (var subItem in HdrBloomScaleMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrBloomScaleAdd is {} HdrBloomScaleAdditem)
+            {
+                foreach (var subItem in HdrBloomScaleAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrTargetLumMinMult is {} HdrTargetLumMinMultitem)
+            {
+                foreach (var subItem in HdrTargetLumMinMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrTargetLumMinAdd is {} HdrTargetLumMinAdditem)
+            {
+                foreach (var subItem in HdrTargetLumMinAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrTargetLumMaxMult is {} HdrTargetLumMaxMultitem)
+            {
+                foreach (var subItem in HdrTargetLumMaxMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrTargetLumMaxAdd is {} HdrTargetLumMaxAdditem)
+            {
+                foreach (var subItem in HdrTargetLumMaxAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrSunlightScaleMult is {} HdrSunlightScaleMultitem)
+            {
+                foreach (var subItem in HdrSunlightScaleMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrSunlightScaleAdd is {} HdrSunlightScaleAdditem)
+            {
+                foreach (var subItem in HdrSunlightScaleAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrSkyScaleMult is {} HdrSkyScaleMultitem)
+            {
+                foreach (var subItem in HdrSkyScaleMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.HdrSkyScaleAdd is {} HdrSkyScaleAdditem)
+            {
+                foreach (var subItem in HdrSkyScaleAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown08 is {} Unknown08item)
+            {
+                foreach (var subItem in Unknown08item)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown48 is {} Unknown48item)
+            {
+                foreach (var subItem in Unknown48item)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown09 is {} Unknown09item)
+            {
+                foreach (var subItem in Unknown09item)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown49 is {} Unknown49item)
+            {
+                foreach (var subItem in Unknown49item)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown0A is {} Unknown0Aitem)
+            {
+                foreach (var subItem in Unknown0Aitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown4A is {} Unknown4Aitem)
+            {
+                foreach (var subItem in Unknown4Aitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown0B is {} Unknown0Bitem)
+            {
+                foreach (var subItem in Unknown0Bitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown4B is {} Unknown4Bitem)
+            {
+                foreach (var subItem in Unknown4Bitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown0C is {} Unknown0Citem)
+            {
+                foreach (var subItem in Unknown0Citem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown4C is {} Unknown4Citem)
+            {
+                foreach (var subItem in Unknown4Citem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown0D is {} Unknown0Ditem)
+            {
+                foreach (var subItem in Unknown0Ditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown4D is {} Unknown4Ditem)
+            {
+                foreach (var subItem in Unknown4Ditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown0E is {} Unknown0Eitem)
+            {
+                foreach (var subItem in Unknown0Eitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown4E is {} Unknown4Eitem)
+            {
+                foreach (var subItem in Unknown4Eitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown0F is {} Unknown0Fitem)
+            {
+                foreach (var subItem in Unknown0Fitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown4F is {} Unknown4Fitem)
+            {
+                foreach (var subItem in Unknown4Fitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown10 is {} Unknown10item)
+            {
+                foreach (var subItem in Unknown10item)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown50 is {} Unknown50item)
+            {
+                foreach (var subItem in Unknown50item)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicSaturationMult is {} CinematicSaturationMultitem)
+            {
+                foreach (var subItem in CinematicSaturationMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicSaturationAdd is {} CinematicSaturationAdditem)
+            {
+                foreach (var subItem in CinematicSaturationAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicBrightnessMult is {} CinematicBrightnessMultitem)
+            {
+                foreach (var subItem in CinematicBrightnessMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicBrightnessAdd is {} CinematicBrightnessAdditem)
+            {
+                foreach (var subItem in CinematicBrightnessAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicContrastMult is {} CinematicContrastMultitem)
+            {
+                foreach (var subItem in CinematicContrastMultitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CinematicContrastAdd is {} CinematicContrastAdditem)
+            {
+                foreach (var subItem in CinematicContrastAdditem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown14 is {} Unknown14item)
+            {
+                foreach (var subItem in Unknown14item)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Unknown54 is {} Unknown54item)
+            {
+                foreach (var subItem in Unknown54item)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.DNAMDataTypeState);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

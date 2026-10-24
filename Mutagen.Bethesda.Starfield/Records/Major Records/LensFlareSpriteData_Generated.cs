@@ -1084,7 +1084,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ILensFlareSpriteDataGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Tint);
+            hash.Add(item.Tint.ToArgb());
             hash.Add(item.Width);
             hash.Add(item.Height);
             hash.Add(item.Position);

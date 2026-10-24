@@ -3503,7 +3503,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Transformsitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -3533,23 +3536,50 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.BlockBashImpactDataSet);
             hash.Add(item.AlternateBlockMaterial);
             hash.Add(item.Race);
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
             }
             hash.Add(item.InstanceNaming);
-            hash.Add(item.Armatures);
+            foreach (var subItem in item.Armatures)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Value);
             hash.Add(item.Weight);
             hash.Add(item.Health);
             hash.Add(item.ArmorRating);
             hash.Add(item.BaseAddonIndex);
             hash.Add(item.StaggerRating);
-            hash.Add(item.Unused);
-            hash.Add(item.Resistances);
-            hash.Add(item.AttachParentSlots);
-            hash.Add(item.ObjectTemplates);
+            hash.AddBytes(item.Unused);
+            if (item.Resistances is {} Resistancesitem)
+            {
+                foreach (var subItem in Resistancesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.AttachParentSlots is {} AttachParentSlotsitem)
+            {
+                foreach (var subItem in AttachParentSlotsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ObjectTemplates is {} ObjectTemplatesitem)
+            {
+                foreach (var subItem in ObjectTemplatesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Voice is {} Voiceitem)
             {
                 hash.Add(Voiceitem);

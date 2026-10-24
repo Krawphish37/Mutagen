@@ -1693,7 +1693,10 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.ObjectBounds);
             hash.Add(item.DirtinessScale);
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Model is {} Modelitem)
             {
                 hash.Add(Modelitem);
@@ -1702,7 +1705,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Light);
             if (item.Reflection is {} ReflectionItem)
             {
-                hash.Add(ReflectionItem);
+                hash.AddBytes(ReflectionItem);
             }
             hash.Add(item.MasterParticleSystemCap);
             hash.Add(item.Flags);

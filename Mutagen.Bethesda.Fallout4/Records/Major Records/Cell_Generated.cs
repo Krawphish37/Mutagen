@@ -4439,7 +4439,7 @@ namespace Mutagen.Bethesda.Fallout4
             }
             if (item.TVDT is {} TVDTItem)
             {
-                hash.Add(TVDTItem);
+                hash.AddBytes(TVDTItem);
             }
             if (item.MaxHeightData is {} MaxHeightDataitem)
             {
@@ -4450,11 +4450,17 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(WaterHeightitem);
             }
-            hash.Add(item.Regions);
+            if (item.Regions is {} Regionsitem)
+            {
+                foreach (var subItem in Regionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Location);
             if (item.XWCN is {} XWCNItem)
             {
-                hash.Add(XWCNItem);
+                hash.AddBytes(XWCNItem);
             }
             if (item.WaterVelocity is {} WaterVelocityitem)
             {
@@ -4484,22 +4490,43 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.Music);
             hash.Add(item.ImageSpace);
             hash.Add(item.GodRays);
-            hash.Add(item.PhysicsReferences);
-            hash.Add(item.CombinedMeshes);
-            hash.Add(item.CombinedMeshReferences);
+            if (item.PhysicsReferences is {} PhysicsReferencesitem)
+            {
+                foreach (var subItem in PhysicsReferencesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            foreach (var subItem in item.CombinedMeshes)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.CombinedMeshReferences)
+            {
+                hash.Add(subItem);
+            }
             if (item.Landscape is {} Landscapeitem)
             {
                 hash.Add(Landscapeitem);
             }
-            hash.Add(item.NavigationMeshes);
+            foreach (var subItem in item.NavigationMeshes)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Timestamp);
             hash.Add(item.UnknownGroupData);
             hash.Add(item.PersistentTimestamp);
             hash.Add(item.PersistentUnknownGroupData);
-            hash.Add(item.Persistent);
+            foreach (var subItem in item.Persistent)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.TemporaryTimestamp);
             hash.Add(item.TemporaryUnknownGroupData);
-            hash.Add(item.Temporary);
+            foreach (var subItem in item.Temporary)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

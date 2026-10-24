@@ -1027,12 +1027,12 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IAmbientColorsGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.DirectionalXPlus);
-            hash.Add(item.DirectionalXMinus);
-            hash.Add(item.DirectionalYPlus);
-            hash.Add(item.DirectionalYMinus);
-            hash.Add(item.DirectionalZPlus);
-            hash.Add(item.DirectionalZMinus);
+            hash.Add(item.DirectionalXPlus.ToArgb());
+            hash.Add(item.DirectionalXMinus.ToArgb());
+            hash.Add(item.DirectionalYPlus.ToArgb());
+            hash.Add(item.DirectionalYMinus.ToArgb());
+            hash.Add(item.DirectionalZPlus.ToArgb());
+            hash.Add(item.DirectionalZMinus.ToArgb());
             return hash.ToHashCode();
         }
         

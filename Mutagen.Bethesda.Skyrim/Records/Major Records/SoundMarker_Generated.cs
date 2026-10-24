@@ -1204,11 +1204,11 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.ObjectBounds);
             if (item.FNAM is {} FNAMItem)
             {
-                hash.Add(FNAMItem);
+                hash.AddBytes(FNAMItem);
             }
             if (item.SNDD is {} SNDDItem)
             {
-                hash.Add(SNDDItem);
+                hash.AddBytes(SNDDItem);
             }
             hash.Add(item.SoundDescriptor);
             hash.Add(base.GetHashCode());

@@ -2792,18 +2792,36 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(Configurationitem);
             }
-            hash.Add(item.Factions);
+            foreach (var subItem in item.Factions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.DeathItem);
             hash.Add(item.Race);
-            hash.Add(item.Spells);
+            foreach (var subItem in item.Spells)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Script);
-            hash.Add(item.Items);
+            foreach (var subItem in item.Items)
+            {
+                hash.Add(subItem);
+            }
             if (item.AIData is {} AIDataitem)
             {
                 hash.Add(AIDataitem);
             }
-            hash.Add(item.AIPackages);
-            hash.Add(item.Animations);
+            foreach (var subItem in item.AIPackages)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Animations is {} Animationsitem)
+            {
+                foreach (var subItem in Animationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Class);
             if (item.Stats is {} Statsitem)
             {
@@ -2814,27 +2832,33 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(HairLengthitem);
             }
-            hash.Add(item.Eyes);
+            if (item.Eyes is {} Eyesitem)
+            {
+                foreach (var subItem in Eyesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.HairColor is {} HairColoritem)
             {
-                hash.Add(HairColoritem);
+                hash.Add(HairColoritem.ToArgb());
             }
             hash.Add(item.CombatStyle);
             if (item.FaceGenGeometrySymmetric is {} FaceGenGeometrySymmetricItem)
             {
-                hash.Add(FaceGenGeometrySymmetricItem);
+                hash.AddBytes(FaceGenGeometrySymmetricItem);
             }
             if (item.FaceGenGeometryAsymmetric is {} FaceGenGeometryAsymmetricItem)
             {
-                hash.Add(FaceGenGeometryAsymmetricItem);
+                hash.AddBytes(FaceGenGeometryAsymmetricItem);
             }
             if (item.FaceGenTextureSymmetric is {} FaceGenTextureSymmetricItem)
             {
-                hash.Add(FaceGenTextureSymmetricItem);
+                hash.AddBytes(FaceGenTextureSymmetricItem);
             }
             if (item.FNAM is {} FNAMItem)
             {
-                hash.Add(FNAMItem);
+                hash.AddBytes(FNAMItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

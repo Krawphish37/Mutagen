@@ -4397,7 +4397,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.UnusedNoisemaps);
+            foreach (var subItem in item.UnusedNoisemaps)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Opacity);
             if (item.Flags is {} Flagsitem)
             {
@@ -4405,7 +4408,7 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.MNAM is {} MNAMItem)
             {
-                hash.Add(MNAMItem);
+                hash.AddBytes(MNAMItem);
             }
             hash.Add(item.Material);
             hash.Add(item.OpenSound);
@@ -4415,17 +4418,17 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(DamagePerSeconditem);
             }
-            hash.Add(item.Unknown);
+            hash.AddBytes(item.Unknown);
             hash.Add(item.SpecularSunPower);
             hash.Add(item.WaterReflectivity);
             hash.Add(item.WaterFresnel);
             hash.Add(item.Unknown2);
             hash.Add(item.FogAboveWaterDistanceNearPlane);
             hash.Add(item.FogAboveWaterDistanceFarPlane);
-            hash.Add(item.ShallowColor);
-            hash.Add(item.DeepColor);
-            hash.Add(item.ReflectionColor);
-            hash.Add(item.Unknown3);
+            hash.Add(item.ShallowColor.ToArgb());
+            hash.Add(item.DeepColor.ToArgb());
+            hash.Add(item.ReflectionColor.ToArgb());
+            hash.AddBytes(item.Unknown3);
             hash.Add(item.DisplacementStartingSize);
             hash.Add(item.DisplacementFoce);
             hash.Add(item.DisplacementVelocity);
@@ -4439,7 +4442,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.NoiseLayerOneWindSpeed);
             hash.Add(item.NoiseLayerTwoWindSpeed);
             hash.Add(item.NoiseLayerThreeWindSpeed);
-            hash.Add(item.Unknown5);
+            hash.AddBytes(item.Unknown5);
             hash.Add(item.FogAboveWaterAmount);
             hash.Add(item.Unknown6);
             hash.Add(item.FogUnderWaterAmount);
@@ -4467,7 +4470,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.NoiseFlowmapScale);
             if (item.GNAM is {} GNAMItem)
             {
-                hash.Add(GNAMItem);
+                hash.AddBytes(GNAMItem);
             }
             if (item.LinearVelocity is {} LinearVelocityitem)
             {

@@ -881,7 +881,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(INavmeshGridArrayGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.GridCell);
+            foreach (var subItem in item.GridCell)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

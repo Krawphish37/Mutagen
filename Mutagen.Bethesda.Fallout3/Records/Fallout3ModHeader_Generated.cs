@@ -1617,11 +1617,11 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.Stats);
             if (item.TypeOffsets is {} TypeOffsetsItem)
             {
-                hash.Add(TypeOffsetsItem);
+                hash.AddBytes(TypeOffsetsItem);
             }
             if (item.Deleted is {} DeletedItem)
             {
-                hash.Add(DeletedItem);
+                hash.AddBytes(DeletedItem);
             }
             if (item.Author is {} Authoritem)
             {
@@ -1631,12 +1631,21 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(Descriptionitem);
             }
-            hash.Add(item.MasterReferences);
+            foreach (var subItem in item.MasterReferences)
+            {
+                hash.Add(subItem);
+            }
             if (item.Screenshot is {} ScreenshotItem)
             {
-                hash.Add(ScreenshotItem);
+                hash.AddBytes(ScreenshotItem);
             }
-            hash.Add(item.OverriddenForms);
+            if (item.OverriddenForms is {} OverriddenFormsitem)
+            {
+                foreach (var subItem in OverriddenFormsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             return hash.ToHashCode();
         }
         

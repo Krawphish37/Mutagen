@@ -1544,10 +1544,22 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Chance);
             hash.Add(item.Unknown2);
             hash.Add(item.ResourceGeneration);
-            hash.Add(item.Fauna);
-            hash.Add(item.Keywords);
-            hash.Add(item.Flora);
-            hash.Add(item.UnknownItems);
+            foreach (var subItem in item.Fauna)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Keywords)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Flora)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.UnknownItems)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

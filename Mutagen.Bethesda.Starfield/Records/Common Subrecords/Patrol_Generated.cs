@@ -1066,7 +1066,10 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.IdleTime);
             hash.Add(item.Idle);
-            hash.Add(item.Topics);
+            foreach (var subItem in item.Topics)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Topic);
             return hash.ToHashCode();
         }

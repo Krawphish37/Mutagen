@@ -1966,9 +1966,27 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(Descriptionitem);
             }
             hash.Add(item.WorkbenchKeyword);
-            hash.Add(item.Conditions);
-            hash.Add(item.RequiredItems);
-            hash.Add(item.RequiredPerks);
+            if (item.Conditions is {} Conditionsitem)
+            {
+                foreach (var subItem in Conditionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RequiredItems is {} RequiredItemsitem)
+            {
+                foreach (var subItem in RequiredItemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RequiredPerks is {} RequiredPerksitem)
+            {
+                foreach (var subItem in RequiredPerksitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.CreatedItem);
             if (item.NumberCreated is {} NumberCreateditem)
             {
@@ -1980,7 +1998,10 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.Tier);
             hash.Add(item.CategoryKeyword);
-            hash.Add(item.RequiredProjects);
+            foreach (var subItem in item.RequiredProjects)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

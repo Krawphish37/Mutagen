@@ -1132,7 +1132,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IImpactDataSetGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Impacts);
+            foreach (var subItem in item.Impacts)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Parent);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

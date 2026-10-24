@@ -6206,7 +6206,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.MembraneSourceBlendMode);
             hash.Add(item.MembraneBlendOperation);
             hash.Add(item.MembraneZTest);
-            hash.Add(item.FillColorKey1);
+            hash.Add(item.FillColorKey1.ToArgb());
             hash.Add(item.FillAlphaFadeInTime);
             hash.Add(item.FillFullAlphaTime);
             hash.Add(item.FillFadeOutTime);
@@ -6216,7 +6216,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.FillTextureAnimationSpeedU);
             hash.Add(item.FillTextureAnimationSpeedV);
             hash.Add(item.EdgeEffectFallOff);
-            hash.Add(item.EdgeEffectColor);
+            hash.Add(item.EdgeEffectColor.ToArgb());
             hash.Add(item.EdgeEffectAlphaFadeInTime);
             hash.Add(item.EdgeEffectFullAlphaTime);
             hash.Add(item.EdgeEffectAlphaFadeOutTime);
@@ -6249,9 +6249,9 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.ParticleScaleKey2);
             hash.Add(item.ParticleScaleKey1Time);
             hash.Add(item.ParticleScaleKey2Time);
-            hash.Add(item.ColorKey1);
-            hash.Add(item.ColorKey2);
-            hash.Add(item.ColorKey3);
+            hash.Add(item.ColorKey1.ToArgb());
+            hash.Add(item.ColorKey2.ToArgb());
+            hash.Add(item.ColorKey3.ToArgb());
             hash.Add(item.ColorKey1Alpha);
             hash.Add(item.ColorKey2Alpha);
             hash.Add(item.ColorKey3Alpha);
@@ -6269,7 +6269,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.HolesStartValue);
             hash.Add(item.HolesEndValue);
             hash.Add(item.EdgeWidth);
-            hash.Add(item.EdgeColor);
+            hash.Add(item.EdgeColor.ToArgb());
             hash.Add(item.ExplosionWindSpeed);
             hash.Add(item.TextureCountU);
             hash.Add(item.TextureCountV);
@@ -6280,8 +6280,8 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.AddonModelsScaleInTime);
             hash.Add(item.AddonModelsScaleOutTime);
             hash.Add(item.AmbientSound);
-            hash.Add(item.FillColorKey2);
-            hash.Add(item.FillColorKey3);
+            hash.Add(item.FillColorKey2.ToArgb());
+            hash.Add(item.FillColorKey3.ToArgb());
             hash.Add(item.FillColorKey1Scale);
             hash.Add(item.FillColorKey2Scale);
             hash.Add(item.FillColorKey3Scale);

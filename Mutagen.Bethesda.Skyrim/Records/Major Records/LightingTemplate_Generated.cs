@@ -1854,9 +1854,9 @@ namespace Mutagen.Bethesda.Skyrim
         public virtual int GetHashCode(ILightingTemplateGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.AmbientColor);
-            hash.Add(item.DirectionalColor);
-            hash.Add(item.FogNearColor);
+            hash.Add(item.AmbientColor.ToArgb());
+            hash.Add(item.DirectionalColor.ToArgb());
+            hash.Add(item.FogNearColor.ToArgb());
             hash.Add(item.FogNear);
             hash.Add(item.FogFar);
             hash.Add(item.DirectionalRotationXY);
@@ -1865,7 +1865,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.FogClipDistance);
             hash.Add(item.FogPower);
             hash.Add(item.AmbientColors);
-            hash.Add(item.FogFarColor);
+            hash.Add(item.FogFarColor.ToArgb());
             hash.Add(item.FogMax);
             hash.Add(item.LightFadeStartDistance);
             hash.Add(item.LightFadeEndDistance);

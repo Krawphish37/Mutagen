@@ -1225,8 +1225,17 @@ namespace Mutagen.Bethesda.Fallout3
             }
             hash.Add(item.Music);
             hash.Add(item.IncidentalMediaSet);
-            hash.Add(item.BattleMediaSets);
-            hash.Add(item.Sounds);
+            foreach (var subItem in item.BattleMediaSets)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Sounds is {} Soundsitem)
+            {
+                foreach (var subItem in Soundsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

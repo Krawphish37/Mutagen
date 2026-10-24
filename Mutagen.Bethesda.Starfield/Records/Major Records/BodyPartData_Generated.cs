@@ -1358,12 +1358,18 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IBodyPartDataGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Model is {} Modelitem)
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.Parts);
+            foreach (var subItem in item.Parts)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

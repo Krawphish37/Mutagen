@@ -1201,7 +1201,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.AnimationFaceArchetype);
             if (item.PNAM is {} PNAMItem)
             {
-                hash.Add(PNAMItem);
+                hash.AddBytes(PNAMItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

@@ -1133,7 +1133,7 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Color);
+            hash.Add(item.Color.ToArgb());
             hash.Add(item.Playable);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

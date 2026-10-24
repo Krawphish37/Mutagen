@@ -877,11 +877,11 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.WFIR is {} WFIRItem)
             {
-                hash.Add(WFIRItem);
+                hash.AddBytes(WFIRItem);
             }
             if (item.WAIM is {} WAIMItem)
             {
-                hash.Add(WAIMItem);
+                hash.AddBytes(WAIMItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

@@ -1174,14 +1174,14 @@ namespace Mutagen.Bethesda.Fallout4
         {
             var hash = new HashCode();
             hash.Add(item.Versioning);
-            hash.Add(item.Sunrise);
-            hash.Add(item.Day);
-            hash.Add(item.Sunset);
-            hash.Add(item.Night);
-            hash.Add(item.EarlySunrise);
-            hash.Add(item.LateSunrise);
-            hash.Add(item.EarlySunset);
-            hash.Add(item.LateSunset);
+            hash.Add(item.Sunrise.ToArgb());
+            hash.Add(item.Day.ToArgb());
+            hash.Add(item.Sunset.ToArgb());
+            hash.Add(item.Night.ToArgb());
+            hash.Add(item.EarlySunrise.ToArgb());
+            hash.Add(item.LateSunrise.ToArgb());
+            hash.Add(item.EarlySunset.ToArgb());
+            hash.Add(item.LateSunset.ToArgb());
             return hash.ToHashCode();
         }
         

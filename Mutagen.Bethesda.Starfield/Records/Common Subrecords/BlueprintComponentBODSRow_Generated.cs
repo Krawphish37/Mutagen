@@ -893,7 +893,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IBlueprintComponentBODSRowGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.BODSItems);
+            foreach (var subItem in item.BODSItems)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

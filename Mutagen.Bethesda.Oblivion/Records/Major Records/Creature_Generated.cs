@@ -2845,26 +2845,50 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.Items);
-            hash.Add(item.Spells);
-            hash.Add(item.Models);
+            foreach (var subItem in item.Items)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Spells)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Models is {} Modelsitem)
+            {
+                foreach (var subItem in Modelsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.NIFT is {} NIFTItem)
             {
-                hash.Add(NIFTItem);
+                hash.AddBytes(NIFTItem);
             }
             if (item.Configuration is {} Configurationitem)
             {
                 hash.Add(Configurationitem);
             }
-            hash.Add(item.Factions);
+            foreach (var subItem in item.Factions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.DeathItem);
             hash.Add(item.Script);
             if (item.AIData is {} AIDataitem)
             {
                 hash.Add(AIDataitem);
             }
-            hash.Add(item.AIPackages);
-            hash.Add(item.Animations);
+            foreach (var subItem in item.AIPackages)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Animations is {} Animationsitem)
+            {
+                foreach (var subItem in Animationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Data is {} Dataitem)
             {
                 hash.Add(Dataitem);
@@ -2895,7 +2919,10 @@ namespace Mutagen.Bethesda.Oblivion
                 hash.Add(BloodDecalitem);
             }
             hash.Add(item.InheritsSoundFrom);
-            hash.Add(item.Sounds);
+            foreach (var subItem in item.Sounds)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -1219,7 +1219,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.ANAM is {} ANAMItem)
             {
-                hash.Add(ANAMItem);
+                hash.AddBytes(ANAMItem);
             }
             if (item.BNAM is {} BNAMitem)
             {
@@ -1227,15 +1227,15 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.CNAM is {} CNAMItem)
             {
-                hash.Add(CNAMItem);
+                hash.AddBytes(CNAMItem);
             }
             if (item.DNAM is {} DNAMItem)
             {
-                hash.Add(DNAMItem);
+                hash.AddBytes(DNAMItem);
             }
             if (item.ENAM is {} ENAMItem)
             {
-                hash.Add(ENAMItem);
+                hash.AddBytes(ENAMItem);
             }
             if (item.Description is {} Descriptionitem)
             {

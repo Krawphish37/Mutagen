@@ -854,8 +854,8 @@ namespace Mutagen.Bethesda.Skyrim
         public virtual int GetHashCode(ILinkedReferenceColorGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Start);
-            hash.Add(item.End);
+            hash.Add(item.Start.ToArgb());
+            hash.Add(item.End.ToArgb());
             return hash.ToHashCode();
         }
         

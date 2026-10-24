@@ -1198,15 +1198,15 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.ONAM is {} ONAMItem)
             {
-                hash.Add(ONAMItem);
+                hash.AddBytes(ONAMItem);
             }
             if (item.PNAM is {} PNAMItem)
             {
-                hash.Add(PNAMItem);
+                hash.AddBytes(PNAMItem);
             }
             if (item.NNAM is {} NNAMItem)
             {
-                hash.Add(NNAMItem);
+                hash.AddBytes(NNAMItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
