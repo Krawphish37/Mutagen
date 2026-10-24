@@ -57,7 +57,7 @@
   <Object name="LegendaryFilter" objType="Subrecord">
     <Fields>
       <Enum name="Slot" enumName="LegendaryItem.StarSlot" />
-      <FormLink name="ReferencedMod" refName="ObjectModification" />
+      <UInt32 name="ReferencedModIndex" />
       <FormLink name="Keyword" refName="Keyword" />
     </Fields>
   </Object>
