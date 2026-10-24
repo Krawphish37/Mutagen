@@ -186,6 +186,7 @@ partial class ImageSpaceBinaryOverlay
 {
     public partial byte GetDepthOfFieldBlurRadiusCustom()
     {
+        if (!_DNAMLocation.HasValue) return default;
         ImageSpaceBinaryCreateTranslation.ParseSkyBlurRadius(
             BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_DNAMLocation!.Value.Min + 0xE)),
             out var radius,
@@ -195,6 +196,7 @@ partial class ImageSpaceBinaryOverlay
 
     public partial Boolean GetDepthOfFieldSkyCustom()
     {
+        if (!_DNAMLocation.HasValue) return default;
         ImageSpaceBinaryCreateTranslation.ParseSkyBlurRadius(
             BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_DNAMLocation!.Value.Min + 0xE)),
             out var _,
