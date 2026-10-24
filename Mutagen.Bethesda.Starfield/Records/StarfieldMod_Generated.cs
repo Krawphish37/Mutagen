@@ -19149,6 +19149,13 @@ namespace Mutagen.Bethesda.Starfield
                 case "IAObjectModificationGetter":
                 case "IAObjectModification":
                 case "IAObjectModificationInternal":
+                case "WeaponModification":
+                case "ArmorModification":
+                case "FloraModification":
+                case "NpcModification":
+                case "ContainerModification":
+                case "ObjectModification":
+                case "UnknownObjectModification":
                     foreach (var item in obj.ObjectModifications.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -19158,6 +19165,14 @@ namespace Mutagen.Bethesda.Starfield
                 case "IAPlacedTrapGetter":
                 case "IAPlacedTrap":
                 case "IAPlacedTrapInternal":
+                case "PlacedArrow":
+                case "PlacedBeam":
+                case "PlacedFlame":
+                case "PlacedCone":
+                case "PlacedBarrier":
+                case "PlacedTrap":
+                case "PlacedHazard":
+                case "PlacedMissile":
                     foreach (var item in obj.Cells.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -19634,6 +19649,11 @@ namespace Mutagen.Bethesda.Starfield
                 case "IGameSettingGetter":
                 case "IGameSetting":
                 case "IGameSettingInternal":
+                case "GameSettingInt":
+                case "GameSettingFloat":
+                case "GameSettingString":
+                case "GameSettingBool":
+                case "GameSettingUInt":
                     foreach (var item in obj.GameSettings.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -22581,6 +22601,13 @@ namespace Mutagen.Bethesda.Starfield
                 case "IAObjectModificationGetter":
                 case "IAObjectModification":
                 case "IAObjectModificationInternal":
+                case "WeaponModification":
+                case "ArmorModification":
+                case "FloraModification":
+                case "NpcModification":
+                case "ContainerModification":
+                case "ObjectModification":
+                case "UnknownObjectModification":
                     foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<IStarfieldMod, IStarfieldModGetter, AObjectModification, IAObjectModificationGetter>(
                         srcGroup: obj.ObjectModifications,
                         type: type,
@@ -22595,6 +22622,14 @@ namespace Mutagen.Bethesda.Starfield
                 case "IAPlacedTrapGetter":
                 case "IAPlacedTrap":
                 case "IAPlacedTrapInternal":
+                case "PlacedArrow":
+                case "PlacedBeam":
+                case "PlacedFlame":
+                case "PlacedCone":
+                case "PlacedBarrier":
+                case "PlacedTrap":
+                case "PlacedHazard":
+                case "PlacedMissile":
                     foreach (var item in obj.Cells.EnumerateMajorRecordContexts(
                         linkCache: linkCache,
                         type: type,
@@ -23371,6 +23406,11 @@ namespace Mutagen.Bethesda.Starfield
                 case "IGameSettingGetter":
                 case "IGameSetting":
                 case "IGameSettingInternal":
+                case "GameSettingInt":
+                case "GameSettingFloat":
+                case "GameSettingString":
+                case "GameSettingBool":
+                case "GameSettingUInt":
                     foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<IStarfieldMod, IStarfieldModGetter, GameSetting, IGameSettingGetter>(
                         srcGroup: obj.GameSettings,
                         type: type,

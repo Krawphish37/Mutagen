@@ -621,6 +621,7 @@ public class MajorRecordContextEnumerationModule : GenerationModule
                                 {
                                     sb.AppendLine($"case \"{targetObj.Interface(getter: false, internalInterface: true)}\":");
                                 }
+                                await targetObj.AppendInheritingClassSwitchCases(sb);
                                 break;
                             case string str:
                                 if (str != "default:")

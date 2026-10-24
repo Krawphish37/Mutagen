@@ -262,6 +262,57 @@ public abstract class AMajorRecordEnumerationTests
     }
 
     [Theory, MutagenModAutoData(GameRelease.SkyrimSE)]
+    public void EnumerateInheritingClassesByClass(SkyrimMod mod)
+    {
+        var globalInt = mod.Globals.AddNewInt();
+        var globalFloat = mod.Globals.AddNewFloat();
+        var conv = ConvertMod(mod);
+        Assert.Equal(Getter ? 0 : 2, RunTest<Global, Global>(conv).Count());
+        if (Getter)
+        {
+            Assert.Empty(RunTest<GlobalInt, GlobalInt>(conv));
+            Assert.Empty(RunTest<GlobalFloat, GlobalFloat>(conv));
+        }
+        else
+        {
+            Assert.Equal(globalInt.FormKey, Assert.Single(RunTest<GlobalInt, GlobalInt>(conv)).FormKey);
+            Assert.Equal(globalFloat.FormKey, Assert.Single(RunTest<GlobalFloat, GlobalFloat>(conv)).FormKey);
+        }
+        Assert.Empty(RunTest<GlobalShort, GlobalShort>(conv));
+    }
+
+    [Theory, MutagenModAutoData(GameRelease.SkyrimSE)]
+    public void EnumerateDeepInheritingClassesByClass(SkyrimMod mod)
+    {
+        var arrow = new PlacedArrow(mod);
+        var beam = new PlacedBeam(mod);
+        mod.Worldspaces.Add(new Worldspace(mod)
+        {
+            TopCell = new Cell(mod)
+            {
+                Temporary = new ExtendedList<IPlaced>()
+                {
+                    arrow,
+                    beam,
+                }
+            }
+        });
+        var conv = ConvertMod(mod);
+        Assert.Equal(2, RunTest<IAPlacedTrap, IAPlacedTrapGetter>(conv).Count());
+        if (Getter)
+        {
+            Assert.Empty(RunTest<PlacedArrow, PlacedArrow>(conv));
+        }
+        else
+        {
+            Assert.Equal(arrow.FormKey, Assert.Single(RunTest<PlacedArrow, PlacedArrow>(conv)).FormKey);
+            Assert.Equal(beam.FormKey, Assert.Single(RunTest<PlacedBeam, PlacedBeam>(conv)).FormKey);
+        }
+        Assert.Empty(RunTest<PlacedFlame, PlacedFlame>(conv));
+        Assert.Equal(Getter ? 0 : 1, new IModGetter[] { conv }.WinningOverrides<PlacedArrow>().Count());
+    }
+
+    [Theory, MutagenModAutoData(GameRelease.SkyrimSE)]
     public void EnumerateInheritingClasses(SkyrimMod mod)
     {
         var rec = mod.Globals.AddNewInt();

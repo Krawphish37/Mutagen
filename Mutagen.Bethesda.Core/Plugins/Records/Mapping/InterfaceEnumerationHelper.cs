@@ -229,7 +229,10 @@ internal static class InterfaceEnumerationHelper
         where TMajor : class, IMajorRecordInternal, TMajorTarget
         where TMajorTarget : class, IMajorRecordGetter
     {
-        if (!srcGroup.ContainedRecordType.InheritsFrom(type)) yield break;
+        // A query by a class inheriting from the group's record type (ex: WeaponModification in a group of
+        // AObjectModification) only wants the records that are of that class
+        var inheriting = !srcGroup.ContainedRecordType.InheritsFrom(type);
+        if (inheriting && !srcGroup.ContainedRecordType.IsAssignableFrom(type)) yield break;
 
         foreach (var item in srcGroup.Records.Catch(ex =>
                  {
@@ -237,6 +240,7 @@ internal static class InterfaceEnumerationHelper
                      throw RecordException.Enrich(ex, modKey);
                  }))
         {
+            if (inheriting && !type.IsInstanceOfType(item)) continue;
             yield return new GroupModContext<TMod, TModGetter, TMajor, TMajorTarget>(
                 modKey: modKey,
                 record: item,

@@ -344,6 +344,20 @@ public static class ObjectGenerationExt
         }
     }
 
+    /// <summary>
+    /// Appends case labels for the classes inheriting from an object (ex: WeaponModification under AObjectModification),
+    /// so that a query by one of those classes is routed the same way as a query by the object itself.
+    /// Their interfaces are not included, as those are routed via the inheriting interface mappings.
+    /// </summary>
+    public static async Task AppendInheritingClassSwitchCases(this ObjectGeneration obj, StructuredStringBuilder sb)
+    {
+        foreach (var inheriting in (await obj.InheritingObjects()).OrderByDeclaration())
+        {
+            if (!await inheriting.IsMajorRecord()) continue;
+            sb.AppendLine($"case \"{inheriting.Name}\":");
+        }
+    }
+
     public static bool IsBaseClassField(this ObjectGeneration obj, TypeGeneration field)
     {
         if (obj.BaseClass == null) return false;

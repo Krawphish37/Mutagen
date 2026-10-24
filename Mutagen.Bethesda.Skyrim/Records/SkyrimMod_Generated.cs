@@ -13023,6 +13023,14 @@ namespace Mutagen.Bethesda.Skyrim
                 case "IAPlacedTrapGetter":
                 case "IAPlacedTrap":
                 case "IAPlacedTrapInternal":
+                case "PlacedArrow":
+                case "PlacedBeam":
+                case "PlacedFlame":
+                case "PlacedCone":
+                case "PlacedBarrier":
+                case "PlacedTrap":
+                case "PlacedHazard":
+                case "PlacedMissile":
                     foreach (var item in obj.Cells.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -13355,6 +13363,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case "IGameSettingGetter":
                 case "IGameSetting":
                 case "IGameSettingInternal":
+                case "GameSettingInt":
+                case "GameSettingFloat":
+                case "GameSettingString":
+                case "GameSettingBool":
                     foreach (var item in obj.GameSettings.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -13364,6 +13376,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case "IGlobalGetter":
                 case "IGlobal":
                 case "IGlobalInternal":
+                case "GlobalInt":
+                case "GlobalShort":
+                case "GlobalFloat":
+                case "GlobalUnknown":
                     foreach (var item in obj.Globals.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
                     {
                         yield return item;
@@ -15272,6 +15288,14 @@ namespace Mutagen.Bethesda.Skyrim
                 case "IAPlacedTrapGetter":
                 case "IAPlacedTrap":
                 case "IAPlacedTrapInternal":
+                case "PlacedArrow":
+                case "PlacedBeam":
+                case "PlacedFlame":
+                case "PlacedCone":
+                case "PlacedBarrier":
+                case "PlacedTrap":
+                case "PlacedHazard":
+                case "PlacedMissile":
                     foreach (var item in obj.Cells.EnumerateMajorRecordContexts(
                         linkCache: linkCache,
                         type: type,
@@ -15812,6 +15836,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case "IGameSettingGetter":
                 case "IGameSetting":
                 case "IGameSettingInternal":
+                case "GameSettingInt":
+                case "GameSettingFloat":
+                case "GameSettingString":
+                case "GameSettingBool":
                     foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<ISkyrimMod, ISkyrimModGetter, GameSetting, IGameSettingGetter>(
                         srcGroup: obj.GameSettings,
                         type: type,
@@ -15826,6 +15854,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case "IGlobalGetter":
                 case "IGlobal":
                 case "IGlobalInternal":
+                case "GlobalInt":
+                case "GlobalShort":
+                case "GlobalFloat":
+                case "GlobalUnknown":
                     foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<ISkyrimMod, ISkyrimModGetter, Global, IGlobalGetter>(
                         srcGroup: obj.Globals,
                         type: type,

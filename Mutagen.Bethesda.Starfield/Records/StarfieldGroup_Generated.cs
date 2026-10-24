@@ -1165,9 +1165,10 @@ namespace Mutagen.Bethesda.Starfield
                         yield break;
                     }
                     var assignable = type.IsAssignableFrom(typeof(T));
+                    var inheriting = !assignable && typeof(T).IsAssignableFrom(type);
                     foreach (var item in obj.RecordCache.Items)
                     {
-                        if (assignable)
+                        if (assignable || (inheriting && type.IsInstanceOfType(item)))
                         {
                             yield return item;
                         }

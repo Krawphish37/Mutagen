@@ -693,6 +693,7 @@ public class MajorRecordEnumerationModule : GenerationModule
                                     break;
                                 case ObjectGeneration targetObj:
                                     targetObj.AppendSwitchCases(sb);
+                                    await targetObj.AppendInheritingClassSwitchCases(sb);
                                     break;
                                 case string str:
                                     if (str != "default:")
@@ -886,10 +887,11 @@ public class MajorRecordEnumerationModule : GenerationModule
             if (dictLoqui.RefType == LoquiType.LoquiRefType.Generic)
             {
                 fieldGen.AppendLine($"var assignable = type.IsAssignableFrom(typeof({dictLoqui.GenericDef.Name}));");
+                fieldGen.AppendLine($"var inheriting = !assignable && typeof({dictLoqui.GenericDef.Name}).IsAssignableFrom(type);");
                 fieldGen.AppendLine($"foreach (var item in obj.{field.Name}.Items)");
                 using (fieldGen.CurlyBrace())
                 {
-                    fieldGen.AppendLine($"if (assignable)");
+                    fieldGen.AppendLine($"if (assignable || (inheriting && type.IsInstanceOfType(item)))");
                     using (fieldGen.CurlyBrace())
                     {
                         fieldGen.AppendLine($"yield return item;");
