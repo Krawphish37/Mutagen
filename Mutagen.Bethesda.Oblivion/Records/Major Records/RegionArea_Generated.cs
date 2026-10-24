@@ -949,7 +949,13 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(EdgeFallOffitem);
             }
-            hash.Add(item.RegionPoints);
+            if (item.RegionPoints is {} RegionPointsitem)
+            {
+                foreach (var subItem in RegionPointsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             return hash.ToHashCode();
         }
         

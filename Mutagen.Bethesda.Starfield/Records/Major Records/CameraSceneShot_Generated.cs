@@ -1505,7 +1505,10 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.AIDT);
             hash.Add(item.MPCD);
             hash.Add(item.VNAM);
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

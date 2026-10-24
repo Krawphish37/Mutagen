@@ -924,7 +924,7 @@ namespace Mutagen.Bethesda.Skyrim
             var hash = new HashCode();
             if (item.SCHR is {} SCHRItem)
             {
-                hash.Add(SCHRItem);
+                hash.AddBytes(SCHRItem);
             }
             hash.Add(item.QNAM);
             hash.Add(item.NEXT);

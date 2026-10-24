@@ -962,9 +962,9 @@ namespace Mutagen.Bethesda.Fallout3
         {
             var hash = new HashCode();
             hash.Add(item.Index);
-            hash.Add(item.Unknown);
+            hash.AddBytes(item.Unknown);
             hash.Add(item.IsLongOrShort);
-            hash.Add(item.Unknown2);
+            hash.AddBytes(item.Unknown2);
             return hash.ToHashCode();
         }
         

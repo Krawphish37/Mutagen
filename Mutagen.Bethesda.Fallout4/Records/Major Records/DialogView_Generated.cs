@@ -1385,15 +1385,21 @@ namespace Mutagen.Bethesda.Fallout4
         {
             var hash = new HashCode();
             hash.Add(item.Quest);
-            hash.Add(item.Branches);
-            hash.Add(item.TNAMs);
+            foreach (var subItem in item.Branches)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.TNAMs)
+            {
+                hash.AddBytes(subItem);
+            }
             if (item.ENAM is {} ENAMItem)
             {
-                hash.Add(ENAMItem);
+                hash.AddBytes(ENAMItem);
             }
             if (item.DNAM is {} DNAMItem)
             {
-                hash.Add(DNAMItem);
+                hash.AddBytes(DNAMItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

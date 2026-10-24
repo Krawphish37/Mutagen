@@ -1550,13 +1550,22 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IFormListGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Items);
-            hash.Add(item.ConditionalEntries);
+            foreach (var subItem in item.Items)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.ConditionalEntries)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.AddToList);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

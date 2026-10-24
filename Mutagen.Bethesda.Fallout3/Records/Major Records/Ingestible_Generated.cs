@@ -2090,7 +2090,10 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.WithdrawalEffect);
             hash.Add(item.AddictionChance);
             hash.Add(item.ConsumeSound);
-            hash.Add(item.Effects);
+            foreach (var subItem in item.Effects)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

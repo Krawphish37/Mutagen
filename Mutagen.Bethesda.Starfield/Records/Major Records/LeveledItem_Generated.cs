@@ -2664,7 +2664,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(ObjectPaletteDefaultsitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.XALG is {} XALGitem)
             {
                 hash.Add(XALGitem);
@@ -2675,16 +2678,31 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(MaxCountitem);
             }
             hash.Add(item.Flags);
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.UseChanceNoneGlobal);
             hash.Add(item.RequiredBiome);
             hash.Add(item.RequiredResourceVein);
-            hash.Add(item.Entries);
-            hash.Add(item.FilterKeywordChances);
+            if (item.Entries is {} Entriesitem)
+            {
+                foreach (var subItem in Entriesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.FilterKeywordChances is {} FilterKeywordChancesitem)
+            {
+                foreach (var subItem in FilterKeywordChancesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.EpicLootChance);
             if (item.MarkerColor is {} MarkerColoritem)
             {
-                hash.Add(MarkerColoritem);
+                hash.Add(MarkerColoritem.ToArgb());
             }
             if (item.OverrideName is {} OverrideNameitem)
             {
@@ -2698,7 +2716,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.ForcedLocations);
+            if (item.ForcedLocations is {} ForcedLocationsitem)
+            {
+                foreach (var subItem in ForcedLocationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

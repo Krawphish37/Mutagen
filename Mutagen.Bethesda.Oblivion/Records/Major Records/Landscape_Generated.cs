@@ -1425,22 +1425,31 @@ namespace Mutagen.Bethesda.Oblivion
             var hash = new HashCode();
             if (item.DATA is {} DATAItem)
             {
-                hash.Add(DATAItem);
+                hash.AddBytes(DATAItem);
             }
             if (item.VertexNormals is {} VertexNormalsItem)
             {
-                hash.Add(VertexNormalsItem);
+                hash.AddBytes(VertexNormalsItem);
             }
             if (item.VertexHeightMap is {} VertexHeightMapItem)
             {
-                hash.Add(VertexHeightMapItem);
+                hash.AddBytes(VertexHeightMapItem);
             }
             if (item.VertexColors is {} VertexColorsItem)
             {
-                hash.Add(VertexColorsItem);
+                hash.AddBytes(VertexColorsItem);
             }
-            hash.Add(item.Layers);
-            hash.Add(item.Textures);
+            foreach (var subItem in item.Layers)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Textures is {} Texturesitem)
+            {
+                foreach (var subItem in Texturesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

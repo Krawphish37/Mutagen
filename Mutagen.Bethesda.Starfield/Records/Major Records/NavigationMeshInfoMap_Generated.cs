@@ -1201,7 +1201,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(NavMeshVersionitem);
             }
-            hash.Add(item.MapInfos);
+            foreach (var subItem in item.MapInfos)
+            {
+                hash.Add(subItem);
+            }
             if (item.PreferredPathing is {} PreferredPathingitem)
             {
                 hash.Add(PreferredPathingitem);

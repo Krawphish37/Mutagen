@@ -1382,12 +1382,24 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.NNAM is {} NNAMItem)
             {
-                hash.Add(NNAMItem);
+                hash.AddBytes(NNAMItem);
             }
-            hash.Add(item.RacePresets);
-            hash.Add(item.MorphGroups);
-            hash.Add(item.FaceMorphs);
-            hash.Add(item.FaceDials);
+            foreach (var subItem in item.RacePresets)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.MorphGroups)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.FaceMorphs)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.FaceDials)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

@@ -1949,8 +1949,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Transformsitem);
             }
-            hash.Add(item.Components);
-            hash.Add(item.Keywords);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Model is {} Modelitem)
             {
                 hash.Add(Modelitem);

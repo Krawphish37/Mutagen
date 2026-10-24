@@ -929,7 +929,10 @@ namespace Mutagen.Bethesda.Fallout3
         public virtual int GetHashCode(IHeadDataGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.HeadParts);
+            foreach (var subItem in item.HeadParts)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

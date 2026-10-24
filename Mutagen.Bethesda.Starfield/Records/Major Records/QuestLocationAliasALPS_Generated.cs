@@ -966,7 +966,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IQuestLocationAliasALPSGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.PcmTypeKeyword);
             return hash.ToHashCode();
         }

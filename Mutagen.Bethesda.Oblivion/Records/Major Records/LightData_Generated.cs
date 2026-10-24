@@ -1193,7 +1193,7 @@ namespace Mutagen.Bethesda.Oblivion
             hash.Add(item.Versioning);
             hash.Add(item.Time);
             hash.Add(item.Radius);
-            hash.Add(item.Color);
+            hash.Add(item.Color.ToArgb());
             hash.Add(item.Flags);
             hash.Add(item.FalloffExponent);
             hash.Add(item.FOV);

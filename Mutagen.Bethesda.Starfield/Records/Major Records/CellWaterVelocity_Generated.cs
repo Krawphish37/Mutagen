@@ -956,7 +956,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Offset);
             hash.Add(item.Unknown);
             hash.Add(item.Angle);
-            hash.Add(item.UnknownBytes);
+            hash.AddBytes(item.UnknownBytes);
             return hash.ToHashCode();
         }
         

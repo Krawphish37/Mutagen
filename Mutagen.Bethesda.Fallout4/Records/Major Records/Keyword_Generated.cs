@@ -1323,7 +1323,7 @@ namespace Mutagen.Bethesda.Fallout4
             var hash = new HashCode();
             if (item.Color is {} Coloritem)
             {
-                hash.Add(Coloritem);
+                hash.Add(Coloritem.ToArgb());
             }
             if (item.Notes is {} Notesitem)
             {

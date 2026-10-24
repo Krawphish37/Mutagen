@@ -2121,10 +2121,16 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(Destructibleitem);
             }
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.PNAM is {} PNAMItem)
             {
-                hash.Add(PNAMItem);
+                hash.AddBytes(PNAMItem);
             }
             if (item.Flags is {} Flagsitem)
             {
@@ -2136,7 +2142,13 @@ namespace Mutagen.Bethesda.Skyrim
                 hash.Add(WorkbenchDataitem);
             }
             hash.Add(item.AssociatedSpell);
-            hash.Add(item.Markers);
+            if (item.Markers is {} Markersitem)
+            {
+                foreach (var subItem in Markersitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.ModelFilename is {} ModelFilenameitem)
             {
                 hash.Add(ModelFilenameitem);

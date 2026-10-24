@@ -6766,22 +6766,46 @@ namespace Mutagen.Bethesda.Fallout4
                 hash.Add(Nameitem);
             }
             hash.Add(item.Description);
-            hash.Add(item.ActorEffect);
+            if (item.ActorEffect is {} ActorEffectitem)
+            {
+                foreach (var subItem in ActorEffectitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Skin);
             if (item.BipedBodyTemplate is {} BipedBodyTemplateitem)
             {
                 hash.Add(BipedBodyTemplateitem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Properties);
-            hash.Add(item.AttachParentSlots);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.AttachParentSlots is {} AttachParentSlotsitem)
+            {
+                foreach (var subItem in AttachParentSlotsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(HashCode.Combine(item.Height.Male, item.Height.Female));
             hash.Add(HashCode.Combine(item.DefaultWeight.Male, item.DefaultWeight.Female));
             hash.Add(item.Flags);
             hash.Add(item.AccelerationRate);
             hash.Add(item.DecelerationRate);
             hash.Add(item.Size);
-            hash.Add(item.Unknown);
+            hash.AddBytes(item.Unknown);
             hash.Add(item.InjuredHealthPercent);
             hash.Add(item.ShieldBipedObject);
             hash.Add(item.BeardBipedObject);
@@ -6790,7 +6814,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.FlightRadius);
             hash.Add(item.AngularAccelerationRate);
             hash.Add(item.AngularTolerance);
-            hash.Add(item.Unknown2);
+            hash.AddBytes(item.Unknown2);
             hash.Add(item.PipboyBipedObject);
             hash.Add(item.XPValue);
             hash.Add(item.SeverableDebrisScale);
@@ -6818,7 +6842,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(HashCode.Combine(SkeletalModelitem.Male, SkeletalModelitem.Female));
             }
-            hash.Add(item.MovementTypeNames);
+            foreach (var subItem in item.MovementTypeNames)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(HashCode.Combine(item.Voices.Male, item.Voices.Female));
             if (item.DefaultHairColors is {} DefaultHairColorsitem)
             {
@@ -6831,7 +6858,10 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.FacegenMainClamp);
             hash.Add(item.FacegenFaceClamp);
             hash.Add(item.AttackRace);
-            hash.Add(item.Attacks);
+            foreach (var subItem in item.Attacks)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(HashCode.Combine(item.BodyData.Male, item.BodyData.Female));
             hash.Add(item.BodyPartData);
             hash.Add(HashCode.Combine(item.BehaviorGraph.Male, item.BehaviorGraph.Female));
@@ -6842,13 +6872,26 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.CollarTextureSet);
             hash.Add(item.SoundOpenCorpse);
             hash.Add(item.SoundCloseCorpse);
-            hash.Add(item.BipedObjects);
-            hash.Add(item.MovementDataOverrides);
+            if (item.BipedObjects is {} BipedObjectsitem)
+            {
+                foreach (var subItem in BipedObjectsitem)
+                {
+                    hash.Add(subItem.Key);
+                    hash.Add(subItem.Value);
+                }
+            }
+            foreach (var subItem in item.MovementDataOverrides)
+            {
+                hash.Add(subItem);
+            }
             if (item.EquipmentFlags is {} EquipmentFlagsitem)
             {
                 hash.Add(EquipmentFlagsitem);
             }
-            hash.Add(item.EquipmentSlots);
+            foreach (var subItem in item.EquipmentSlots)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.UnarmedWeapon);
             hash.Add(item.FaceFxPhonemes);
             hash.Add(item.BaseMovementDefault);
@@ -6863,7 +6906,10 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.ArmorRace);
             hash.Add(item.SubgraphTemplateRace);
             hash.Add(item.SubgraphAdditiveRace);
-            hash.Add(item.Subgraphs);
+            foreach (var subItem in item.Subgraphs)
+            {
+                hash.Add(subItem);
+            }
             if (item.IdleChatterTimeMin is {} IdleChatterTimeMinitem)
             {
                 hash.Add(IdleChatterTimeMinitem);
@@ -6872,7 +6918,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(IdleChatterTimeMaxitem);
             }
-            hash.Add(item.MorphValues);
+            foreach (var subItem in item.MorphValues)
+            {
+                hash.Add(subItem);
+            }
             if (item.MorphValuesLastIndex is {} MorphValuesLastIndexitem)
             {
                 hash.Add(MorphValuesLastIndexitem);

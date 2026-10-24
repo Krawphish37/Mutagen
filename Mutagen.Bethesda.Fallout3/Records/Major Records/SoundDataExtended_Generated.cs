@@ -1124,7 +1124,10 @@ namespace Mutagen.Bethesda.Fallout3
         public virtual int GetHashCode(ISoundDataExtendedGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.AttenuationCurve);
+            foreach (var subItem in item.AttenuationCurve)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.ReverbAttenuationControl);
             hash.Add(item.Priority);
             hash.Add(item.LoopBegin);

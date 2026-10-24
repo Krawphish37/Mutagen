@@ -1140,7 +1140,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(TreeFolderitem);
             }
-            hash.Add(item.Substitutions);
+            foreach (var subItem in item.Substitutions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

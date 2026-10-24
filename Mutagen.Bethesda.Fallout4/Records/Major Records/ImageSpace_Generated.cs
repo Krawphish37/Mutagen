@@ -2088,7 +2088,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.CinematicBrightness);
             hash.Add(item.CinematicContrast);
             hash.Add(item.TintAmount);
-            hash.Add(item.TintColor);
+            hash.Add(item.TintColor.ToArgb());
             hash.Add(item.DepthOfFieldStrength);
             hash.Add(item.DepthOfFieldDistance);
             hash.Add(item.DepthOfFieldRange);

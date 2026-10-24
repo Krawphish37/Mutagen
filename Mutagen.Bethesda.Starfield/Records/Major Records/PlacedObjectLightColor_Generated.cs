@@ -854,7 +854,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IPlacedObjectLightColorGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.UnknownColor);
+            hash.Add(item.UnknownColor.ToArgb());
             hash.Add(item.Unknown);
             return hash.ToHashCode();
         }

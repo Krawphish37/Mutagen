@@ -3204,7 +3204,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Transformsitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -3217,11 +3220,23 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Destructibleitem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Properties);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.MarkerColor is {} MarkerColoritem)
             {
-                hash.Add(MarkerColoritem);
+                hash.Add(MarkerColoritem.ToArgb());
             }
             if (item.ActivateTextOverride is {} ActivateTextOverrideitem)
             {
@@ -3229,11 +3244,11 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.FNAM is {} FNAMItem)
             {
-                hash.Add(FNAMItem);
+                hash.AddBytes(FNAMItem);
             }
             if (item.JNAM is {} JNAMItem)
             {
-                hash.Add(JNAMItem);
+                hash.AddBytes(JNAMItem);
             }
             hash.Add(item.Ingredient);
             if (item.HarvestSound is {} HarvestSounditem)
@@ -3244,8 +3259,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Productionitem);
             }
-            hash.Add(item.AttachParentSlots);
-            hash.Add(item.ObjectTemplates);
+            if (item.AttachParentSlots is {} AttachParentSlotsitem)
+            {
+                foreach (var subItem in AttachParentSlotsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ObjectTemplates is {} ObjectTemplatesitem)
+            {
+                foreach (var subItem in ObjectTemplatesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.ActionKeyword);
             hash.Add(item.DamageRequiredToHarvest);
             hash.Add(item.MaxHarvestCount);

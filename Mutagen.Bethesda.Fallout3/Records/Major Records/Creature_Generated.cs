@@ -3378,16 +3378,28 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.ActorEffects);
+            foreach (var subItem in item.ActorEffects)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.UnarmedAttackEffect);
             hash.Add(item.UnarmedAttackAnimation);
-            hash.Add(item.Models);
+            if (item.Models is {} Modelsitem)
+            {
+                foreach (var subItem in Modelsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.ModelListTextures is {} ModelListTexturesItem)
             {
-                hash.Add(ModelListTexturesItem);
+                hash.AddBytes(ModelListTexturesItem);
             }
             hash.Add(item.Configuration);
-            hash.Add(item.Factions);
+            foreach (var subItem in item.Factions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.DeathItem);
             hash.Add(item.Voice);
             hash.Add(item.Template);
@@ -3396,10 +3408,22 @@ namespace Mutagen.Bethesda.Fallout3
                 hash.Add(Destructibleitem);
             }
             hash.Add(item.Script);
-            hash.Add(item.Items);
+            foreach (var subItem in item.Items)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.AIData);
-            hash.Add(item.Packages);
-            hash.Add(item.Animations);
+            foreach (var subItem in item.Packages)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Animations is {} Animationsitem)
+            {
+                foreach (var subItem in Animationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Data);
             hash.Add(item.AttackReach);
             hash.Add(item.CombatStyle);
@@ -3410,7 +3434,10 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.ImpactMaterialType);
             hash.Add(item.SoundLevel);
             hash.Add(item.InheritsSoundFrom);
-            hash.Add(item.SoundTypes);
+            foreach (var subItem in item.SoundTypes)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.ImpactDataset);
             hash.Add(item.MeleeWeaponList);
             hash.Add(base.GetHashCode());

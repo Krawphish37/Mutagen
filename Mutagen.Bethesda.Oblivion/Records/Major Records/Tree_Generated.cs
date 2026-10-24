@@ -1336,7 +1336,13 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(Iconitem);
             }
-            hash.Add(item.SpeedTreeSeeds);
+            if (item.SpeedTreeSeeds is {} SpeedTreeSeedsitem)
+            {
+                foreach (var subItem in SpeedTreeSeedsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Data is {} Dataitem)
             {
                 hash.Add(Dataitem);

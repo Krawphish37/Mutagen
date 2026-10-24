@@ -1493,11 +1493,17 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Index);
             if (item.DebugColor is {} DebugColoritem)
             {
-                hash.Add(DebugColoritem);
+                hash.Add(DebugColoritem.ToArgb());
             }
             hash.Add(item.Flags);
             hash.Add(item.Name);
-            hash.Add(item.CollidesWith);
+            if (item.CollidesWith is {} CollidesWithitem)
+            {
+                foreach (var subItem in CollidesWithitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

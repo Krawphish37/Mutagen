@@ -844,7 +844,7 @@ namespace Mutagen.Bethesda.Fallout4
         {
             var hash = new HashCode();
             hash.Add(item.Time);
-            hash.Add(item.Color);
+            hash.Add(item.Color.ToArgb());
             return hash.ToHashCode();
         }
         

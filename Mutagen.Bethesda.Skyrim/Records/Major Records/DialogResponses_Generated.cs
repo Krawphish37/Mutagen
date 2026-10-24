@@ -2204,7 +2204,7 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.DATA is {} DATAItem)
             {
-                hash.Add(DATAItem);
+                hash.AddBytes(DATAItem);
             }
             if (item.Flags is {} Flagsitem)
             {
@@ -2216,11 +2216,23 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(FavorLevelitem);
             }
-            hash.Add(item.LinkTo);
+            foreach (var subItem in item.LinkTo)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.ResponseData);
-            hash.Add(item.Responses);
-            hash.Add(item.Conditions);
-            hash.Add(item.UnknownData);
+            foreach (var subItem in item.Responses)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.UnknownData)
+            {
+                hash.Add(subItem);
+            }
             if (item.Prompt is {} Promptitem)
             {
                 hash.Add(Promptitem);

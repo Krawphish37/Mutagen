@@ -2538,7 +2538,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -2554,11 +2557,29 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Unknown);
             hash.Add(item.Unknown2);
             hash.Add(item.AttachPoint);
-            hash.Add(item.AttachParentSlots);
+            foreach (var subItem in item.AttachParentSlots)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Unknown3);
-            hash.Add(item.Includes);
-            hash.Add(item.TargetOmodKeywords);
-            hash.Add(item.FilterKeywords);
+            foreach (var subItem in item.Includes)
+            {
+                hash.Add(subItem);
+            }
+            if (item.TargetOmodKeywords is {} TargetOmodKeywordsitem)
+            {
+                foreach (var subItem in TargetOmodKeywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.FilterKeywords is {} FilterKeywordsitem)
+            {
+                foreach (var subItem in FilterKeywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.LooseMod);
             if (item.Priority is {} Priorityitem)
             {

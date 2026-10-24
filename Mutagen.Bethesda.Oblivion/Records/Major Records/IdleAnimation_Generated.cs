@@ -1337,12 +1337,21 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.AnimationGroupSection is {} AnimationGroupSectionitem)
             {
                 hash.Add(AnimationGroupSectionitem);
             }
-            hash.Add(item.RelatedIdleAnimations);
+            if (item.RelatedIdleAnimations is {} RelatedIdleAnimationsitem)
+            {
+                foreach (var subItem in RelatedIdleAnimationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

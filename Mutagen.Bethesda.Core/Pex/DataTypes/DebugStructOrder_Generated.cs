@@ -880,7 +880,10 @@ namespace Mutagen.Bethesda.Pex
             var hash = new HashCode();
             hash.Add(item.ObjectName);
             hash.Add(item.OrderName);
-            hash.Add(item.Names);
+            foreach (var subItem in item.Names)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

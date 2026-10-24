@@ -902,7 +902,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IUniqueOverlayListComponentGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Worldspaces);
+            if (item.Worldspaces is {} Worldspacesitem)
+            {
+                foreach (var subItem in Worldspacesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

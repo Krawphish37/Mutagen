@@ -1586,7 +1586,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Filteritem);
             }
-            hash.Add(item.Parts);
+            foreach (var subItem in item.Parts)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

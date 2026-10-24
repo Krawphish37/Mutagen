@@ -3696,7 +3696,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XALGitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -3709,13 +3712,31 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Destructibleitem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Properties);
-            hash.Add(item.ForcedLocations);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ForcedLocations is {} ForcedLocationsitem)
+            {
+                foreach (var subItem in ForcedLocationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.NativeTerminal);
             if (item.MarkerColor is {} MarkerColoritem)
             {
-                hash.Add(MarkerColoritem);
+                hash.Add(MarkerColoritem.ToArgb());
             }
             if (item.LoopingSound is {} LoopingSounditem)
             {
@@ -3735,7 +3756,13 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(ActivationAngleForPlayeritem);
             }
             hash.Add(item.ActivationAngleInvertFacing);
-            hash.Add(item.ContainerItems);
+            if (item.ContainerItems is {} ContainerItemsitem)
+            {
+                foreach (var subItem in ContainerItemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.MarkerFlags is {} MarkerFlagsitem)
             {
                 hash.Add(MarkerFlagsitem);
@@ -3750,13 +3777,28 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.AssociatedForm);
             hash.Add(item.FurnitureTemplate);
-            hash.Add(item.MarkerEntryPoints);
+            foreach (var subItem in item.MarkerEntryPoints)
+            {
+                hash.Add(subItem);
+            }
             if (item.MarkerModel is {} MarkerModelitem)
             {
                 hash.Add(MarkerModelitem);
             }
-            hash.Add(item.MarkerParameters);
-            hash.Add(item.MarkerFiles);
+            if (item.MarkerParameters is {} MarkerParametersitem)
+            {
+                foreach (var subItem in MarkerParametersitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.MarkerFiles is {} MarkerFilesitem)
+            {
+                foreach (var subItem in MarkerFilesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -1692,7 +1692,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ObjectBounds);
             if (item.ODTY is {} ODTYItem)
             {
-                hash.Add(ODTYItem);
+                hash.AddBytes(ODTYItem);
             }
             if (item.TX00 is {} TX00item)
             {
@@ -1724,7 +1724,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.DODT is {} DODTItem)
             {
-                hash.Add(DODTItem);
+                hash.AddBytes(DODTItem);
             }
             hash.Add(item.Flags);
             if (item.Material is {} Materialitem)

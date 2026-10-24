@@ -1536,13 +1536,25 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Flagsitem);
             }
-            hash.Add(item.Conditions);
-            hash.Add(item.Textures);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Textures)
+            {
+                hash.Add(subItem);
+            }
             if (item.BlendOperation is {} BlendOperationitem)
             {
                 hash.Add(BlendOperationitem);
             }
-            hash.Add(item.TemplateColors);
+            if (item.TemplateColors is {} TemplateColorsitem)
+            {
+                foreach (var subItem in TemplateColorsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Default is {} Defaultitem)
             {
                 hash.Add(Defaultitem);

@@ -1817,7 +1817,13 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.Items);
+            if (item.Items is {} Itemsitem)
+            {
+                foreach (var subItem in Itemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Destructible is {} Destructibleitem)
             {
                 hash.Add(Destructibleitem);

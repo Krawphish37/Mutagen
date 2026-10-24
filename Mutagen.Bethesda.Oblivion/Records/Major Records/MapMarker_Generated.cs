@@ -1029,7 +1029,13 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Types);
+            if (item.Types is {} Typesitem)
+            {
+                foreach (var subItem in Typesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             return hash.ToHashCode();
         }
         

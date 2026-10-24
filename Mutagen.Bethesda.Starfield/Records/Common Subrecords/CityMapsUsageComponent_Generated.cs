@@ -814,7 +814,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.MOD2 is {} MOD2Item)
             {
-                hash.Add(MOD2Item);
+                hash.AddBytes(MOD2Item);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

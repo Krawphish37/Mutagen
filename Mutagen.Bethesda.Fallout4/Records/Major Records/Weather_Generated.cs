@@ -5757,18 +5757,24 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IWeatherGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.CloudTextures);
+            foreach (var subItem in item.CloudTextures)
+            {
+                hash.Add(subItem);
+            }
             if (item.LNAM is {} LNAMItem)
             {
-                hash.Add(LNAMItem);
+                hash.AddBytes(LNAMItem);
             }
             hash.Add(item.Precipitation);
             hash.Add(item.VisualEffect);
             if (item.ONAM is {} ONAMItem)
             {
-                hash.Add(ONAMItem);
+                hash.AddBytes(ONAMItem);
             }
-            hash.Add(item.Clouds);
+            foreach (var subItem in item.Clouds)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.SkyUpperColor);
             hash.Add(item.FogNearColor);
             hash.Add(item.UnknownColor);
@@ -5788,7 +5794,13 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.MoonGlareColor);
             hash.Add(item.FogNearHigh);
             hash.Add(item.FogFarHigh);
-            hash.Add(item.NAM4);
+            if (item.NAM4 is {} NAM4item)
+            {
+                foreach (var subItem in NAM4item)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.FogDistanceDayNear);
             hash.Add(item.FogDistanceDayFar);
             hash.Add(item.FogDistanceNightNear);
@@ -5818,14 +5830,20 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.ThunderLightningEndFadeOut);
             hash.Add(item.ThunderLightningFrequency);
             hash.Add(item.Flags);
-            hash.Add(item.LightningColor);
+            hash.Add(item.LightningColor.ToArgb());
             hash.Add(item.VisualEffectBegin);
             hash.Add(item.VisualEffectEnd);
             hash.Add(item.WindDirection);
             hash.Add(item.WindDirectionRange);
             hash.Add(item.WindTurbulance);
-            hash.Add(item.Sounds);
-            hash.Add(item.SkyStatics);
+            foreach (var subItem in item.Sounds)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.SkyStatics)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.ImageSpaceSunrise);
             hash.Add(item.ImageSpaceDay);
             hash.Add(item.ImageSpaceSunset);

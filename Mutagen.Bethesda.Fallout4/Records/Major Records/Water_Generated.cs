@@ -3560,18 +3560,18 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.ImageSpace);
             if (item.DATA is {} DATAItem)
             {
-                hash.Add(DATAItem);
+                hash.AddBytes(DATAItem);
             }
             hash.Add(item.FogDepthAmount);
-            hash.Add(item.FogShallowColor);
-            hash.Add(item.FogDeepColor);
+            hash.Add(item.FogShallowColor.ToArgb());
+            hash.Add(item.FogDeepColor.ToArgb());
             hash.Add(item.FogColorShallowRange);
             hash.Add(item.FogColorDeepRange);
             hash.Add(item.FogShallowAlpha);
             hash.Add(item.FogDeepAlpha);
             hash.Add(item.FogAlphaShallowRange);
             hash.Add(item.FogAlphaDeepRange);
-            hash.Add(item.FogUnderwaterColor);
+            hash.Add(item.FogUnderwaterColor.ToArgb());
             hash.Add(item.FogUnderwaterAmount);
             hash.Add(item.FogUnderwaterNear);
             hash.Add(item.FogUnderwaterFar);
@@ -3586,7 +3586,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.PhysicalDisplacementSimulatorFalloff);
             hash.Add(item.PhysicalDisplacementSimulatorDampener);
             hash.Add(item.PhysicalDisplacementSimulatorStartingSize);
-            hash.Add(item.PhysicalReflectionColor);
+            hash.Add(item.PhysicalReflectionColor.ToArgb());
             hash.Add(item.SpecularSunSpecularPower);
             hash.Add(item.SpecularSunSpecularMagnitude);
             hash.Add(item.SpecularSunSparklePower);
@@ -3595,15 +3595,15 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.SpecularInteriorSpecularBrightness);
             hash.Add(item.SpecularInteriorSpecularPower);
             hash.Add(item.SiltAmount);
-            hash.Add(item.SiltLightColor);
-            hash.Add(item.SiltDarkColor);
+            hash.Add(item.SiltLightColor.ToArgb());
+            hash.Add(item.SiltDarkColor.ToArgb());
             hash.Add(item.ScreenSpaceReflections);
             hash.Add(item.NoiseLayerOne);
             hash.Add(item.NoiseLayerTwo);
             hash.Add(item.NoiseLayerThree);
             if (item.GNAM is {} GNAMItem)
             {
-                hash.Add(GNAMItem);
+                hash.AddBytes(GNAMItem);
             }
             if (item.LinearVelocity is {} LinearVelocityitem)
             {

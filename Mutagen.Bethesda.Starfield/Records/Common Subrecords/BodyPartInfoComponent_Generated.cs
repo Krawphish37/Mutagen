@@ -814,7 +814,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.GNAM is {} GNAMItem)
             {
-                hash.Add(GNAMItem);
+                hash.AddBytes(GNAMItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

@@ -1443,13 +1443,19 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Relations);
+            foreach (var subItem in item.Relations)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Flags);
             if (item.CrimeGoldMultiplier is {} CrimeGoldMultiplieritem)
             {
                 hash.Add(CrimeGoldMultiplieritem);
             }
-            hash.Add(item.Ranks);
+            foreach (var subItem in item.Ranks)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Reputation);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

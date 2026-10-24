@@ -1152,7 +1152,10 @@ namespace Mutagen.Bethesda.Skyrim
                 hash.Add(MaskTypeitem);
             }
             hash.Add(item.PresetDefault);
-            hash.Add(item.Presets);
+            foreach (var subItem in item.Presets)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

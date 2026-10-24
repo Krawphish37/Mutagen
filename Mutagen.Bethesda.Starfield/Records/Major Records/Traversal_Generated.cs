@@ -1097,7 +1097,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.DNAM is {} DNAMItem)
             {
-                hash.Add(DNAMItem);
+                hash.AddBytes(DNAMItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

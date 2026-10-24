@@ -904,7 +904,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IAttachParentArrayComponentGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Slots);
+            if (item.Slots is {} Slotsitem)
+            {
+                foreach (var subItem in Slotsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

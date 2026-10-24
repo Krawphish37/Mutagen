@@ -1314,8 +1314,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(WED0item);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Items);
+            foreach (var subItem in item.Keywords)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Items)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

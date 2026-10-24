@@ -2457,19 +2457,28 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Flags is {} Flagsitem)
             {
                 hash.Add(Flagsitem);
             }
             if (item.TPIC is {} TPICItem)
             {
-                hash.Add(TPICItem);
+                hash.AddBytes(TPICItem);
             }
             hash.Add(item.SharedDialog);
             hash.Add(item.DialogGroup);
-            hash.Add(item.Responses);
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Responses)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.Prompt is {} Promptitem)
             {
                 hash.Add(Promptitem);
@@ -2478,7 +2487,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.StartScene);
             if (item.INTV is {} INTVItem)
             {
-                hash.Add(INTVItem);
+                hash.AddBytes(INTVItem);
             }
             if (item.WED0 is {} WED0item)
             {

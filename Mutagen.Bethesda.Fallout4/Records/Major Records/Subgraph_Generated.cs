@@ -1328,9 +1328,18 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(BehaviorGraphitem);
             }
-            hash.Add(item.ActorKeywords);
-            hash.Add(item.TargetKeywords);
-            hash.Add(item.AnimationPaths);
+            foreach (var subItem in item.ActorKeywords)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.TargetKeywords)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.AnimationPaths)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Role);
             hash.Add(item.Perspective);
             return hash.ToHashCode();

@@ -1534,9 +1534,18 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            hash.Add(item.Components);
-            hash.Add(item.Grasses);
-            hash.Add(item.LandscapeTextures);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Grasses)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.LandscapeTextures)
+            {
+                hash.Add(subItem);
+            }
             if (item.PaintedMaterialThreshold is {} PaintedMaterialThresholditem)
             {
                 hash.Add(PaintedMaterialThresholditem);

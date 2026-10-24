@@ -1377,7 +1377,13 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Iconitem);
             }
-            hash.Add(item.Properties);
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Unknown);
             hash.Add(item.BleedoutDefault);
             hash.Add(base.GetHashCode());

@@ -4722,7 +4722,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Data is {} Dataitem)
             {
                 hash.Add(Dataitem);
@@ -4736,8 +4739,17 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Location);
             hash.Add(item.QuestTimeLimit);
             hash.Add(item.SourceQuest);
-            hash.Add(item.QDUPs);
-            hash.Add(item.TextDisplayGlobals);
+            if (item.QDUPs is {} QDUPsitem)
+            {
+                foreach (var subItem in QDUPsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            foreach (var subItem in item.TextDisplayGlobals)
+            {
+                hash.Add(subItem);
+            }
             if (item.Filter is {} Filteritem)
             {
                 hash.Add(Filteritem);
@@ -4746,11 +4758,32 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Summaryitem);
             }
-            hash.Add(item.DialogConditions);
-            hash.Add(item.UnusedConditions);
-            hash.Add(item.Stages);
-            hash.Add(item.Objectives);
-            hash.Add(item.Aliases);
+            foreach (var subItem in item.DialogConditions)
+            {
+                hash.Add(subItem);
+            }
+            if (item.UnusedConditions is {} UnusedConditionsitem)
+            {
+                foreach (var subItem in UnusedConditionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            foreach (var subItem in item.Stages)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Objectives)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Aliases is {} Aliasesitem)
+            {
+                foreach (var subItem in Aliasesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.QuestGroup);
             if (item.SwfFile is {} SwfFileitem)
             {
@@ -4761,17 +4794,35 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(MissionBoardDescriptionitem);
             }
-            hash.Add(item.MissionBoardInfoPanels);
-            hash.Add(item.Keywords);
+            foreach (var subItem in item.MissionBoardInfoPanels)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.ScriptComment is {} ScriptCommentitem)
             {
                 hash.Add(ScriptCommentitem);
             }
             hash.Add(item.Timestamp);
             hash.Add(item.Unknown);
-            hash.Add(item.DialogBranches);
-            hash.Add(item.DialogTopics);
-            hash.Add(item.Scenes);
+            foreach (var subItem in item.DialogBranches)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.DialogTopics)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Scenes)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

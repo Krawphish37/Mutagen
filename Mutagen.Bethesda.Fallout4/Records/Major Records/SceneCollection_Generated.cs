@@ -1370,12 +1370,18 @@ namespace Mutagen.Bethesda.Fallout4
         {
             var hash = new HashCode();
             hash.Add(item.Quest);
-            hash.Add(item.Scenes);
+            foreach (var subItem in item.Scenes)
+            {
+                hash.Add(subItem);
+            }
             if (item.VNAM is {} VNAMitem)
             {
                 hash.Add(VNAMitem);
             }
-            hash.Add(item.XNAMs);
+            foreach (var subItem in item.XNAMs)
+            {
+                hash.Add(subItem);
+            }
             if (item.VNAM2 is {} VNAM2item)
             {
                 hash.Add(VNAM2item);

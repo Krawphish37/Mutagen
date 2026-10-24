@@ -2381,7 +2381,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.GoreTargetBone);
             if (item.TextureFilesHashes is {} TextureFilesHashesItem)
             {
-                hash.Add(TextureFilesHashesItem);
+                hash.AddBytes(TextureFilesHashesItem);
             }
             return hash.ToHashCode();
         }

@@ -2616,10 +2616,28 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(DropdownSounditem);
             }
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.FeaturedItemMessage);
-            hash.Add(item.Resources);
-            hash.Add(item.ComponentDisplayIndices);
+            if (item.Resources is {} Resourcesitem)
+            {
+                foreach (var subItem in Resourcesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ComponentDisplayIndices is {} ComponentDisplayIndicesitem)
+            {
+                foreach (var subItem in ComponentDisplayIndicesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Value);
             hash.Add(item.Weight);
             if (item.Flags is {} Flagsitem)

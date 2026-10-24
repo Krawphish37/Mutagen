@@ -4431,11 +4431,11 @@ namespace Mutagen.Bethesda.Fallout3
             var hash = new HashCode();
             hash.Add(item.Versioning);
             hash.Add(item.Flags);
-            hash.Add(item.Unused1);
+            hash.AddBytes(item.Unused1);
             hash.Add(item.MembraneShaderSourceBlendMode);
             hash.Add(item.MembraneShaderBlendOperation);
             hash.Add(item.MembraneShaderZTestFunction);
-            hash.Add(item.FillTextureEffectColor);
+            hash.Add(item.FillTextureEffectColor.ToArgb());
             hash.Add(item.FillTextureEffectAlphaFadeInTime);
             hash.Add(item.FillTextureEffectFullAlphaTime);
             hash.Add(item.FillTextureEffectAlphaFadeOutTime);
@@ -4445,7 +4445,7 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.FillTextureEffectTextureAnimationSpeedU);
             hash.Add(item.FillTextureEffectTextureAnimationSpeedV);
             hash.Add(item.EdgeEffectFallOff);
-            hash.Add(item.EdgeEffectColor);
+            hash.Add(item.EdgeEffectColor.ToArgb());
             hash.Add(item.EdgeEffectAlphaFadeInTime);
             hash.Add(item.EdgeEffectFullAlphaTime);
             hash.Add(item.EdgeEffectAlphaFadeOutTime);
@@ -4478,9 +4478,9 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.ParticleShaderScaleKey2);
             hash.Add(item.ParticleShaderScaleKey1Time);
             hash.Add(item.ParticleShaderScaleKey2Time);
-            hash.Add(item.ColorKey1Color);
-            hash.Add(item.ColorKey2Color);
-            hash.Add(item.ColorKey3Color);
+            hash.Add(item.ColorKey1Color.ToArgb());
+            hash.Add(item.ColorKey2Color.ToArgb());
+            hash.Add(item.ColorKey3Color.ToArgb());
             hash.Add(item.ColorKey1ColorAlpha);
             hash.Add(item.ColorKey2ColorAlpha);
             hash.Add(item.ColorKey3ColorAlpha);
@@ -4498,7 +4498,7 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.HolesStartValue);
             hash.Add(item.HolesEndValue);
             hash.Add(item.EdgeWidth);
-            hash.Add(item.EdgeColor);
+            hash.Add(item.EdgeColor.ToArgb());
             hash.Add(item.ExplosionWindSpeed);
             hash.Add(item.TextureCountU);
             hash.Add(item.TextureCountV);

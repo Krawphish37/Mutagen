@@ -1100,14 +1100,20 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.MorphPresets);
+            if (item.MorphPresets is {} MorphPresetsitem)
+            {
+                foreach (var subItem in MorphPresetsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.UnknownMPPK is {} UnknownMPPKItem)
             {
-                hash.Add(UnknownMPPKItem);
+                hash.AddBytes(UnknownMPPKItem);
             }
             if (item.UnknownMPGS is {} UnknownMPGSItem)
             {
-                hash.Add(UnknownMPGSItem);
+                hash.AddBytes(UnknownMPGSItem);
             }
             return hash.ToHashCode();
         }

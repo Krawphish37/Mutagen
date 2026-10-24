@@ -1711,7 +1711,10 @@ namespace Mutagen.Bethesda.Fallout3
             }
             hash.Add(item.PickUpSound);
             hash.Add(item.DropSound);
-            hash.Add(item.Quests);
+            foreach (var subItem in item.Quests)
+            {
+                hash.Add(subItem);
+            }
             if (item.Texture is {} Textureitem)
             {
                 hash.Add(Textureitem);

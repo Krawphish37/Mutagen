@@ -1402,7 +1402,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(HoursUntilResetitem);
             }
-            hash.Add(item.Quests);
+            foreach (var subItem in item.Quests)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

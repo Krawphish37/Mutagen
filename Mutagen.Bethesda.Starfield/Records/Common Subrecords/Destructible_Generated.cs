@@ -1212,12 +1212,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Dataitem);
             }
-            hash.Add(item.Resistances);
+            if (item.Resistances is {} Resistancesitem)
+            {
+                foreach (var subItem in Resistancesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.DSDL is {} DSDLItem)
             {
-                hash.Add(DSDLItem);
+                hash.AddBytes(DSDLItem);
             }
-            hash.Add(item.Stages);
+            foreach (var subItem in item.Stages)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

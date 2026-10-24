@@ -1641,8 +1641,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(INAMitem);
             }
-            hash.Add(item.BodyTexts);
-            hash.Add(item.MenuItems);
+            if (item.BodyTexts is {} BodyTextsitem)
+            {
+                foreach (var subItem in BodyTextsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.MenuItems is {} MenuItemsitem)
+            {
+                foreach (var subItem in MenuItemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -1199,7 +1199,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IAmbienceSetGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Sounds);
+            if (item.Sounds is {} Soundsitem)
+            {
+                foreach (var subItem in Soundsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.MergeBehavior is {} MergeBehavioritem)
             {
                 hash.Add(MergeBehavioritem);

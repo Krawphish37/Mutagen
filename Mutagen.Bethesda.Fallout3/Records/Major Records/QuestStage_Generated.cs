@@ -958,7 +958,10 @@ namespace Mutagen.Bethesda.Fallout3
         {
             var hash = new HashCode();
             hash.Add(item.Index);
-            hash.Add(item.LogEntries);
+            foreach (var subItem in item.LogEntries)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

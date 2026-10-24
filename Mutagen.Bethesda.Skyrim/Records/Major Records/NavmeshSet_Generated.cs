@@ -890,7 +890,10 @@ namespace Mutagen.Bethesda.Skyrim
         public virtual int GetHashCode(INavmeshSetGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Navmeshes);
+            foreach (var subItem in item.Navmeshes)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

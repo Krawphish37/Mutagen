@@ -1442,7 +1442,13 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.ChanceNone);
             hash.Add(item.Flags);
             hash.Add(item.Global);
-            hash.Add(item.Entries);
+            if (item.Entries is {} Entriesitem)
+            {
+                foreach (var subItem in Entriesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Model is {} Modelitem)
             {
                 hash.Add(Modelitem);

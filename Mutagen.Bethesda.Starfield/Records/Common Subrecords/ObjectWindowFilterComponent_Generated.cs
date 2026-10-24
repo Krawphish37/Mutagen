@@ -871,7 +871,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.INTV is {} INTVItem)
             {
-                hash.Add(INTVItem);
+                hash.AddBytes(INTVItem);
             }
             if (item.FLTR is {} FLTRitem)
             {

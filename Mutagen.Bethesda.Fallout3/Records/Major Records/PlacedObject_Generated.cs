@@ -4461,11 +4461,17 @@ namespace Mutagen.Bethesda.Fallout3
             var hash = new HashCode();
             if (item.RCLR is {} RCLRItem)
             {
-                hash.Add(RCLRItem);
+                hash.AddBytes(RCLRItem);
             }
             hash.Add(item.Base);
             hash.Add(item.EncounterZone);
-            hash.Add(item.RagdollData);
+            if (item.RagdollData is {} RagdollDataitem)
+            {
+                foreach (var subItem in RagdollDataitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.RagdollBipedRotation is {} RagdollBipedRotationitem)
             {
                 hash.Add(RagdollBipedRotationitem);
@@ -4549,9 +4555,18 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(AmmoCountitem);
             }
-            hash.Add(item.Reflections);
-            hash.Add(item.LitWater);
-            hash.Add(item.LinkedDecals);
+            foreach (var subItem in item.Reflections)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.LitWater)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.LinkedDecals)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.LinkedReference);
             if (item.LinkedReferenceColor is {} LinkedReferenceColoritem)
             {
@@ -4581,7 +4596,13 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(NavigationDoorLinkitem);
             }
-            hash.Add(item.Portals);
+            if (item.Portals is {} Portalsitem)
+            {
+                foreach (var subItem in Portalsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.PortalRoom is {} PortalRoomitem)
             {
                 hash.Add(PortalRoomitem);
@@ -4591,7 +4612,10 @@ namespace Mutagen.Bethesda.Fallout3
                 hash.Add(SpeedTreeSeeditem);
             }
             hash.Add(item.Unknown);
-            hash.Add(item.LinkedRooms);
+            foreach (var subItem in item.LinkedRooms)
+            {
+                hash.Add(subItem);
+            }
             if (item.OcclusionPlane is {} OcclusionPlaneitem)
             {
                 hash.Add(OcclusionPlaneitem);
@@ -4600,7 +4624,13 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(LinkedOcclusionPlanesitem);
             }
-            hash.Add(item.DistantLodData);
+            if (item.DistantLodData is {} DistantLodDataitem)
+            {
+                foreach (var subItem in DistantLodDataitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Scale is {} Scaleitem)
             {
                 hash.Add(Scaleitem);

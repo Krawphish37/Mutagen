@@ -1450,11 +1450,20 @@ namespace Mutagen.Bethesda.Skyrim
         public virtual int GetHashCode(ICameraPathGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Conditions);
-            hash.Add(item.RelatedPaths);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.RelatedPaths)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Zoom);
             hash.Add(item.ZoomMustHaveCameraShots);
-            hash.Add(item.Shots);
+            foreach (var subItem in item.Shots)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

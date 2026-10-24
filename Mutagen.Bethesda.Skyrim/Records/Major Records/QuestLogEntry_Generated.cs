@@ -1242,7 +1242,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(Flagsitem);
             }
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.Entry is {} Entryitem)
             {
                 hash.Add(Entryitem);
@@ -1250,15 +1253,15 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.NextQuest);
             if (item.SCHR is {} SCHRItem)
             {
-                hash.Add(SCHRItem);
+                hash.AddBytes(SCHRItem);
             }
             if (item.SCTX is {} SCTXItem)
             {
-                hash.Add(SCTXItem);
+                hash.AddBytes(SCTXItem);
             }
             if (item.QNAM is {} QNAMItem)
             {
-                hash.Add(QNAMItem);
+                hash.AddBytes(QNAMItem);
             }
             return hash.ToHashCode();
         }

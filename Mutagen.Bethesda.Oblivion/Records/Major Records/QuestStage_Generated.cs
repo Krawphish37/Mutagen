@@ -959,7 +959,10 @@ namespace Mutagen.Bethesda.Oblivion
         {
             var hash = new HashCode();
             hash.Add(item.Stage);
-            hash.Add(item.LogEntries);
+            foreach (var subItem in item.LogEntries)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

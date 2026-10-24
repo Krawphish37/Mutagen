@@ -1207,7 +1207,10 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(Nameitem);
             }
             hash.Add(item.Description);
-            hash.Add(item.ProgressionEvalutor);
+            foreach (var subItem in item.ProgressionEvalutor)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.ANAM);
             hash.Add(item.Configuration);
             return hash.ToHashCode();

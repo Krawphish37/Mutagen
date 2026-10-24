@@ -906,7 +906,13 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IInstanceNamingRuleSetGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Names);
+            if (item.Names is {} Namesitem)
+            {
+                foreach (var subItem in Namesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             return hash.ToHashCode();
         }
         

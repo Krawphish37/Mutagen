@@ -878,7 +878,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.CurrentZoneCell);
             if (item.XCZA is {} XCZAItem)
             {
-                hash.Add(XCZAItem);
+                hash.AddBytes(XCZAItem);
             }
             return hash.ToHashCode();
         }

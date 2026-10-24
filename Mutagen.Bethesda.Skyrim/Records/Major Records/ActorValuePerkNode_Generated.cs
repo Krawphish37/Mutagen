@@ -1325,7 +1325,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.Perk);
             if (item.FNAM is {} FNAMItem)
             {
-                hash.Add(FNAMItem);
+                hash.AddBytes(FNAMItem);
             }
             if (item.PerkGridX is {} PerkGridXitem)
             {
@@ -1344,7 +1344,10 @@ namespace Mutagen.Bethesda.Skyrim
                 hash.Add(VerticalPositionitem);
             }
             hash.Add(item.AssociatedSkill);
-            hash.Add(item.ConnectionLineToIndices);
+            foreach (var subItem in item.ConnectionLineToIndices)
+            {
+                hash.Add(subItem);
+            }
             if (item.Index is {} Indexitem)
             {
                 hash.Add(Indexitem);

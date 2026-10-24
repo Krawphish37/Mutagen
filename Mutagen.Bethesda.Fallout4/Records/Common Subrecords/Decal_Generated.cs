@@ -1279,7 +1279,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.ParallaxPasses);
             hash.Add(item.Flags);
             hash.Add(item.AlphaThreshold);
-            hash.Add(item.Color);
+            hash.Add(item.Color.ToArgb());
             return hash.ToHashCode();
         }
         

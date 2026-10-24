@@ -1119,9 +1119,15 @@ namespace Mutagen.Bethesda.Fallout3
             }
             if (item.Hashes is {} HashesItem)
             {
-                hash.Add(HashesItem);
+                hash.AddBytes(HashesItem);
             }
-            hash.Add(item.AlternateTextures);
+            if (item.AlternateTextures is {} AlternateTexturesitem)
+            {
+                foreach (var subItem in AlternateTexturesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.FaceGenFlags is {} FaceGenFlagsitem)
             {
                 hash.Add(FaceGenFlagsitem);

@@ -2889,8 +2889,14 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(FavorCostitem);
             }
-            hash.Add(item.Reflections);
-            hash.Add(item.LinkedReferences);
+            foreach (var subItem in item.Reflections)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.LinkedReferences)
+            {
+                hash.Add(subItem);
+            }
             if (item.ActivateParents is {} ActivateParentsitem)
             {
                 hash.Add(ActivateParentsitem);
@@ -2898,7 +2904,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.UnknownReference);
             if (item.XATP is {} XATPItem)
             {
-                hash.Add(XATPItem);
+                hash.AddBytes(XATPItem);
             }
             if (item.AmmoCount is {} AmmoCountitem)
             {
@@ -2910,7 +2916,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.ReferenceGroup);
             if (item.XCVR is {} XCVRItem)
             {
-                hash.Add(XCVRItem);
+                hash.AddBytes(XCVRItem);
             }
             if (item.EnableParent is {} EnableParentitem)
             {
@@ -2927,13 +2933,25 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.Emittance);
             hash.Add(item.MultiBoundReference);
             hash.Add(item.IsIgnoredBySandbox);
-            hash.Add(item.LocationRefTypes);
+            if (item.LocationRefTypes is {} LocationRefTypesitem)
+            {
+                foreach (var subItem in LocationRefTypesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.LocationReference);
             if (item.Scale is {} Scaleitem)
             {
                 hash.Add(Scaleitem);
             }
-            hash.Add(item.DistantLodData);
+            if (item.DistantLodData is {} DistantLodDataitem)
+            {
+                foreach (var subItem in DistantLodDataitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Position);
             hash.Add(item.Rotation);
             if (item.Comments is {} Commentsitem)

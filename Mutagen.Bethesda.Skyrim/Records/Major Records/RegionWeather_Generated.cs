@@ -928,7 +928,13 @@ namespace Mutagen.Bethesda.Skyrim
         public virtual int GetHashCode(IRegionWeatherGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Weathers);
+            if (item.Weathers is {} Weathersitem)
+            {
+                foreach (var subItem in Weathersitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

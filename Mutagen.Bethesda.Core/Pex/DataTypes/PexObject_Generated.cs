@@ -1492,10 +1492,22 @@ namespace Mutagen.Bethesda.Pex
             hash.Add(item.IsConst);
             hash.Add(item.RawUserFlags);
             hash.Add(item.AutoStateName);
-            hash.Add(item.StructInfos);
-            hash.Add(item.Variables);
-            hash.Add(item.Properties);
-            hash.Add(item.States);
+            foreach (var subItem in item.StructInfos)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Variables)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Properties)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.States)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

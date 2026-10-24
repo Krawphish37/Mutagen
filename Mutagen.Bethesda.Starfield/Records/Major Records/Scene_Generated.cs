@@ -3302,9 +3302,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Flagsitem);
             }
-            hash.Add(item.Phases);
-            hash.Add(item.Actors);
-            hash.Add(item.Actions);
+            foreach (var subItem in item.Phases)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Actors)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Actions is {} Actionsitem)
+            {
+                foreach (var subItem in Actionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Quest);
             if (item.LastActionIndex is {} LastActionIndexitem)
             {
@@ -3312,9 +3324,12 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.VNAM is {} VNAMItem)
             {
-                hash.Add(VNAMItem);
+                hash.AddBytes(VNAMItem);
             }
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.SetParentQuestStage is {} SetParentQuestStageitem)
             {
                 hash.Add(SetParentQuestStageitem);
@@ -3326,7 +3341,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Template);
             if (item.BOLV is {} BOLVItem)
             {
-                hash.Add(BOLVItem);
+                hash.AddBytes(BOLVItem);
             }
             if (item.Index is {} Indexitem)
             {
@@ -3334,30 +3349,60 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.SCPI is {} SCPIItem)
             {
-                hash.Add(SCPIItem);
+                hash.AddBytes(SCPIItem);
             }
             if (item.JNAM is {} JNAMItem)
             {
-                hash.Add(JNAMItem);
+                hash.AddBytes(JNAMItem);
             }
             hash.Add(item.SCPP);
             hash.Add(item.SCSP);
-            hash.Add(item.SPMA);
-            hash.Add(item.SPEX);
+            if (item.SPMA is {} SPMAitem)
+            {
+                foreach (var subItem in SPMAitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.SPEX is {} SPEXitem)
+            {
+                foreach (var subItem in SPEXitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.SPRK is {} SPRKItem)
             {
-                hash.Add(SPRKItem);
+                hash.AddBytes(SPRKItem);
             }
             if (item.SPRW is {} SPRWItem)
             {
-                hash.Add(SPRWItem);
+                hash.AddBytes(SPRWItem);
             }
             hash.Add(item.SPRP);
             hash.Add(item.SPDF);
             hash.Add(item.SPPQ);
-            hash.Add(item.SPKW);
-            hash.Add(item.SPPK);
-            hash.Add(item.SPKY);
+            if (item.SPKW is {} SPKWitem)
+            {
+                foreach (var subItem in SPKWitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.SPPK is {} SPPKitem)
+            {
+                foreach (var subItem in SPPKitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.SPKY is {} SPKYitem)
+            {
+                foreach (var subItem in SPKYitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.DEVT);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

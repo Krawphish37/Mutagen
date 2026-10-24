@@ -1335,10 +1335,16 @@ namespace Mutagen.Bethesda.Fallout4
             var hash = new HashCode();
             hash.Add(item.Description);
             hash.Add(item.Index);
-            hash.Add(item.DebugColor);
+            hash.Add(item.DebugColor.ToArgb());
             hash.Add(item.Flags);
             hash.Add(item.Name);
-            hash.Add(item.CollidesWith);
+            if (item.CollidesWith is {} CollidesWithitem)
+            {
+                foreach (var subItem in CollidesWithitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

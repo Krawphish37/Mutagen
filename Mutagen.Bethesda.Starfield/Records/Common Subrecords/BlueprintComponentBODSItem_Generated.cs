@@ -1008,9 +1008,9 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Name);
-            hash.Add(item.Color1);
-            hash.Add(item.Color2);
-            hash.Add(item.Color3);
+            hash.Add(item.Color1.ToArgb());
+            hash.Add(item.Color2.ToArgb());
+            hash.Add(item.Color3.ToArgb());
             hash.Add(item.Unknown);
             return hash.ToHashCode();
         }

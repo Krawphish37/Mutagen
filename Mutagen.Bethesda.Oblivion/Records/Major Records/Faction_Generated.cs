@@ -1379,7 +1379,10 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Relations);
+            foreach (var subItem in item.Relations)
+            {
+                hash.Add(subItem);
+            }
             if (item.Flags is {} Flagsitem)
             {
                 hash.Add(Flagsitem);
@@ -1388,7 +1391,10 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(CrimeGoldMultiplieritem);
             }
-            hash.Add(item.Ranks);
+            foreach (var subItem in item.Ranks)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

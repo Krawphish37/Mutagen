@@ -7327,7 +7327,10 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(Transformsitem);
             }
             hash.Add(item.SnapTemplate);
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Flags);
             hash.Add(item.XpValueOffset);
             hash.Add(item.Level);
@@ -7335,7 +7338,10 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.CalcMaxLevel);
             hash.Add(item.DispositionBase);
             hash.Add(item.UseTemplateActors);
-            hash.Add(item.Factions);
+            foreach (var subItem in item.Factions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.DeathItem);
             hash.Add(item.Voice);
             hash.Add(item.DefaultTemplate);
@@ -7346,16 +7352,43 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(TemplateActorsitem);
             }
             hash.Add(item.Race);
-            hash.Add(item.ActorEffect);
+            foreach (var subItem in item.ActorEffect)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Skin);
             hash.Add(item.AttackRace);
             hash.Add(item.SpectatorOverridePackageList);
             hash.Add(item.CombatOverridePackageList);
-            hash.Add(item.Perks);
-            hash.Add(item.Properties);
-            hash.Add(item.ForcedLocations);
+            if (item.Perks is {} Perksitem)
+            {
+                foreach (var subItem in Perksitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ForcedLocations is {} ForcedLocationsitem)
+            {
+                foreach (var subItem in ForcedLocationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.NativeTerminal);
-            hash.Add(item.Items);
+            if (item.Items is {} Itemsitem)
+            {
+                foreach (var subItem in Itemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Aggression);
             hash.Add(item.Confidence);
             hash.Add(item.EnergyLevel);
@@ -7363,15 +7396,42 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Mood);
             hash.Add(item.Assistance);
             hash.Add(item.UnknownAIDT);
-            hash.Add(item.Packages);
+            foreach (var subItem in item.Packages)
+            {
+                hash.Add(subItem);
+            }
             if (item.FLEE is {} FLEEitem)
             {
                 hash.Add(FLEEitem);
             }
-            hash.Add(item.RDSAs);
-            hash.Add(item.Keywords);
-            hash.Add(item.AttachParentSlots);
-            hash.Add(item.ObjectTemplates);
+            if (item.RDSAs is {} RDSAsitem)
+            {
+                foreach (var subItem in RDSAsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.AttachParentSlots is {} AttachParentSlotsitem)
+            {
+                foreach (var subItem in AttachParentSlotsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ObjectTemplates is {} ObjectTemplatesitem)
+            {
+                foreach (var subItem in ObjectTemplatesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Class);
             if (item.Name is {} Nameitem)
             {
@@ -7398,11 +7458,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(BCLRitem);
             }
-            hash.Add(item.HeadParts);
+            foreach (var subItem in item.HeadParts)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.CombatStyle);
             if (item.NAM5 is {} NAM5Item)
             {
-                hash.Add(NAM5Item);
+                hash.AddBytes(NAM5Item);
             }
             hash.Add(item.HeightMin);
             hash.Add(item.HeightMax);
@@ -7410,7 +7473,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Weightitem);
             }
-            hash.Add(item.Sounds);
+            if (item.Sounds is {} Soundsitem)
+            {
+                foreach (var subItem in Soundsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.InheritsSoundsFrom);
             hash.Add(item.CompanionInfoQuest);
             hash.Add(item.CompanionInfoDialogue);
@@ -7419,14 +7488,29 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.DefaultPackageList);
             hash.Add(item.CrimeFaction);
             hash.Add(item.FormationFaction);
-            hash.Add(item.Tints);
+            if (item.Tints is {} Tintsitem)
+            {
+                foreach (var subItem in Tintsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.BodyMorphRegionValues is {} BodyMorphRegionValuesitem)
             {
                 hash.Add(BodyMorphRegionValuesitem);
             }
-            hash.Add(item.FaceDialPositions);
-            hash.Add(item.FaceMorphs);
-            hash.Add(item.MorphBlends);
+            foreach (var subItem in item.FaceDialPositions)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.FaceMorphs)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.MorphBlends)
+            {
+                hash.Add(subItem);
+            }
             if (item.ActivateTextOverride is {} ActivateTextOverrideitem)
             {
                 hash.Add(ActivateTextOverrideitem);
@@ -7469,7 +7553,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.ONA2 is {} ONA2Item)
             {
-                hash.Add(ONA2Item);
+                hash.AddBytes(ONA2Item);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

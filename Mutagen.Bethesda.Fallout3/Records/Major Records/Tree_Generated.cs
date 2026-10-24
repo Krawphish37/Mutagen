@@ -1944,7 +1944,10 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(Destructibleitem);
             }
-            hash.Add(item.SpeedTreeSeeds);
+            foreach (var subItem in item.SpeedTreeSeeds)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.LeafCurvature);
             hash.Add(item.MinimumLeafAngle);
             hash.Add(item.MaximumLeafAngle);

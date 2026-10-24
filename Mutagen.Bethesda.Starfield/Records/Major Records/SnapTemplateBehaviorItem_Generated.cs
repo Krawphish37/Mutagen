@@ -1124,7 +1124,13 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.ENAM);
             hash.Add(item.BaseObject);
-            hash.Add(item.Conditions);
+            if (item.Conditions is {} Conditionsitem)
+            {
+                foreach (var subItem in Conditionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.SnapTemplateNode);
             hash.Add(item.Keyword);
             return hash.ToHashCode();

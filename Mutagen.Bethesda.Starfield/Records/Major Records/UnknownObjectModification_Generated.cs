@@ -1266,7 +1266,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IUnknownObjectModificationGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Properties);
+            foreach (var subItem in item.Properties)
+            {
+                hash.Add(subItem);
+            }
             if (item.ObjectModificationTargetName is {} ObjectModificationTargetNameitem)
             {
                 hash.Add(ObjectModificationTargetNameitem);

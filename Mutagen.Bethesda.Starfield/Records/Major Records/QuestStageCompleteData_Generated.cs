@@ -1030,10 +1030,13 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.QSRD is {} QSRDItem)
             {
-                hash.Add(QSRDItem);
+                hash.AddBytes(QSRDItem);
             }
             hash.Add(item.AffinityChange);
-            hash.Add(item.RewardDatas);
+            foreach (var subItem in item.RewardDatas)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

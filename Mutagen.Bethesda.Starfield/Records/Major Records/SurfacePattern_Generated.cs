@@ -2013,14 +2013,53 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ISurfacePatternGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.SurfacePatternStyle);
-            hash.Add(item.Blocks);
-            hash.Add(item.MasterBlocks);
-            hash.Add(item.MasterBlockRotations);
-            hash.Add(item.OverrideBlocks);
-            hash.Add(item.OverrideBlockRotations);
-            hash.Add(item.Worldspaces);
+            if (item.Blocks is {} Blocksitem)
+            {
+                foreach (var subItem in Blocksitem)
+                {
+                    hash.Add(subItem.Value);
+                }
+            }
+            if (item.MasterBlocks is {} MasterBlocksitem)
+            {
+                foreach (var subItem in MasterBlocksitem)
+                {
+                    hash.Add(subItem.Value);
+                }
+            }
+            if (item.MasterBlockRotations is {} MasterBlockRotationsitem)
+            {
+                foreach (var subItem in MasterBlockRotationsitem)
+                {
+                    hash.Add(subItem.Value);
+                }
+            }
+            if (item.OverrideBlocks is {} OverrideBlocksitem)
+            {
+                foreach (var subItem in OverrideBlocksitem)
+                {
+                    hash.Add(subItem.Value);
+                }
+            }
+            if (item.OverrideBlockRotations is {} OverrideBlockRotationsitem)
+            {
+                foreach (var subItem in OverrideBlockRotationsitem)
+                {
+                    hash.Add(subItem.Value);
+                }
+            }
+            if (item.Worldspaces is {} Worldspacesitem)
+            {
+                foreach (var subItem in Worldspacesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

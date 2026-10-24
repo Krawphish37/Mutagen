@@ -1386,9 +1386,9 @@ namespace Mutagen.Bethesda.Fallout3
         public virtual int GetHashCode(ILightingTemplateGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.AmbientColor);
-            hash.Add(item.DirectionalColor);
-            hash.Add(item.FogColor);
+            hash.Add(item.AmbientColor.ToArgb());
+            hash.Add(item.DirectionalColor.ToArgb());
+            hash.Add(item.FogColor.ToArgb());
             hash.Add(item.FogNear);
             hash.Add(item.FogFar);
             hash.Add(item.DirectionalRotationXY);

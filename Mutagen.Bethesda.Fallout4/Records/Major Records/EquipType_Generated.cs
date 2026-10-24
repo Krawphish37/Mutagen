@@ -1185,7 +1185,13 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IEquipTypeGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.SlotParents);
+            if (item.SlotParents is {} SlotParentsitem)
+            {
+                foreach (var subItem in SlotParentsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Flag is {} Flagitem)
             {
                 hash.Add(Flagitem);

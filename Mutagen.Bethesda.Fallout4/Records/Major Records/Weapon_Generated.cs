@@ -5250,14 +5250,32 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.AlternateBlockMaterial);
             hash.Add(item.PickUpSound);
             hash.Add(item.PutDownSound);
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
             }
             hash.Add(item.InstanceNaming);
-            hash.Add(item.AttachParentSlots);
-            hash.Add(item.ObjectTemplates);
+            if (item.AttachParentSlots is {} AttachParentSlotsitem)
+            {
+                foreach (var subItem in AttachParentSlotsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ObjectTemplates is {} ObjectTemplatesitem)
+            {
+                foreach (var subItem in ObjectTemplatesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.EmbeddedWeaponMod);
             if (item.FirstPersonModel is {} FirstPersonModelitem)
             {
@@ -5315,7 +5333,13 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.AimModel);
             hash.Add(item.Zoom);
             hash.Add(item.Template);
-            hash.Add(item.DamageTypes);
+            if (item.DamageTypes is {} DamageTypesitem)
+            {
+                foreach (var subItem in DamageTypesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Filter is {} Filteritem)
             {
                 hash.Add(Filteritem);

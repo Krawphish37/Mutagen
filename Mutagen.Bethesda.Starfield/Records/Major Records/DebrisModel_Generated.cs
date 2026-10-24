@@ -992,7 +992,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.HasCollision);
             if (item.TextureFileHashes is {} TextureFileHashesItem)
             {
-                hash.Add(TextureFileHashesItem);
+                hash.AddBytes(TextureFileHashesItem);
             }
             return hash.ToHashCode();
         }

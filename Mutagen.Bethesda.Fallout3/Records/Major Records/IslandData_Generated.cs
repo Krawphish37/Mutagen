@@ -1118,8 +1118,14 @@ namespace Mutagen.Bethesda.Fallout3
             var hash = new HashCode();
             hash.Add(item.Min);
             hash.Add(item.Max);
-            hash.Add(item.Vertices);
-            hash.Add(item.Triangles);
+            foreach (var subItem in item.Vertices)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Triangles)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

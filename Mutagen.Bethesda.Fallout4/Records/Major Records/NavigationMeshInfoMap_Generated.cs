@@ -1257,14 +1257,17 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(NavMeshVersionitem);
             }
-            hash.Add(item.MapInfos);
+            foreach (var subItem in item.MapInfos)
+            {
+                hash.Add(subItem);
+            }
             if (item.PreferredPathing is {} PreferredPathingitem)
             {
                 hash.Add(PreferredPathingitem);
             }
             if (item.NVSI is {} NVSIItem)
             {
-                hash.Add(NVSIItem);
+                hash.AddBytes(NVSIItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

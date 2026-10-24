@@ -911,7 +911,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.File);
             if (item.Data is {} DataItem)
             {
-                hash.Add(DataItem);
+                hash.AddBytes(DataItem);
             }
             return hash.ToHashCode();
         }

@@ -1998,29 +1998,50 @@ namespace Mutagen.Bethesda.Fallout4
             var hash = new HashCode();
             hash.Add(item.PickUpSound);
             hash.Add(item.PutDownSound);
-            hash.Add(item.Components);
+            if (item.Components is {} Componentsitem)
+            {
+                foreach (var subItem in Componentsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
             }
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.CreatedObject);
             hash.Add(item.WorkbenchKeyword);
             if (item.NAM1 is {} NAM1Item)
             {
-                hash.Add(NAM1Item);
+                hash.AddBytes(NAM1Item);
             }
             if (item.NAM2 is {} NAM2Item)
             {
-                hash.Add(NAM2Item);
+                hash.AddBytes(NAM2Item);
             }
             if (item.NAM3 is {} NAM3Item)
             {
-                hash.Add(NAM3Item);
+                hash.AddBytes(NAM3Item);
             }
             hash.Add(item.MenuArtObject);
-            hash.Add(item.Categories);
-            hash.Add(item.CreatedObjectCounts);
+            if (item.Categories is {} Categoriesitem)
+            {
+                foreach (var subItem in Categoriesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.CreatedObjectCounts is {} CreatedObjectCountsitem)
+            {
+                foreach (var subItem in CreatedObjectCountsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

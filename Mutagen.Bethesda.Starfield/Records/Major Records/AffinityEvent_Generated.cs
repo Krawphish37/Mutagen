@@ -1510,7 +1510,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(ContextNotesitem);
             }
-            hash.Add(item.ActorReactions);
+            foreach (var subItem in item.ActorReactions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.ActorValue);
             hash.Add(item.EventSize);
             hash.Add(item.DistanceToPlayer);

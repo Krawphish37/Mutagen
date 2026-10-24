@@ -1177,7 +1177,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            hash.Add(item.Tags);
+            if (item.Tags is {} Tagsitem)
+            {
+                foreach (var subItem in Tagsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

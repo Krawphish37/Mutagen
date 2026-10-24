@@ -928,7 +928,13 @@ namespace Mutagen.Bethesda.Skyrim
         public virtual int GetHashCode(IRegionGrassesGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Grasses);
+            if (item.Grasses is {} Grassesitem)
+            {
+                foreach (var subItem in Grassesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

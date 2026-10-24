@@ -1496,11 +1496,20 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IActorValueModulationGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Type);
             hash.Add(item.YNAM);
             hash.Add(item.TNAM);
-            hash.Add(item.Entries);
+            if (item.Entries is {} Entriesitem)
+            {
+                foreach (var subItem in Entriesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.TextureType is {} TextureTypeitem)
             {
                 hash.Add(TextureTypeitem);

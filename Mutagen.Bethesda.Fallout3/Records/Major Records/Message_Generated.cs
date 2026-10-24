@@ -1913,43 +1913,43 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.Icon);
             if (item.NAM0 is {} NAM0Item)
             {
-                hash.Add(NAM0Item);
+                hash.AddBytes(NAM0Item);
             }
             if (item.NAM1 is {} NAM1Item)
             {
-                hash.Add(NAM1Item);
+                hash.AddBytes(NAM1Item);
             }
             if (item.NAM2 is {} NAM2Item)
             {
-                hash.Add(NAM2Item);
+                hash.AddBytes(NAM2Item);
             }
             if (item.NAM3 is {} NAM3Item)
             {
-                hash.Add(NAM3Item);
+                hash.AddBytes(NAM3Item);
             }
             if (item.NAM4 is {} NAM4Item)
             {
-                hash.Add(NAM4Item);
+                hash.AddBytes(NAM4Item);
             }
             if (item.NAM5 is {} NAM5Item)
             {
-                hash.Add(NAM5Item);
+                hash.AddBytes(NAM5Item);
             }
             if (item.NAM6 is {} NAM6Item)
             {
-                hash.Add(NAM6Item);
+                hash.AddBytes(NAM6Item);
             }
             if (item.NAM7 is {} NAM7Item)
             {
-                hash.Add(NAM7Item);
+                hash.AddBytes(NAM7Item);
             }
             if (item.NAM8 is {} NAM8Item)
             {
-                hash.Add(NAM8Item);
+                hash.AddBytes(NAM8Item);
             }
             if (item.NAM9 is {} NAM9Item)
             {
-                hash.Add(NAM9Item);
+                hash.AddBytes(NAM9Item);
             }
             if (item.Flags is {} Flagsitem)
             {
@@ -1959,7 +1959,10 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(DisplayTimeitem);
             }
-            hash.Add(item.MenuButtons);
+            foreach (var subItem in item.MenuButtons)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -1109,12 +1109,12 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             if (item.Reflection is {} ReflectionItem)
             {
-                hash.Add(ReflectionItem);
+                hash.AddBytes(ReflectionItem);
             }
             hash.Add(item.ReflectionParent);
             if (item.ReflectionDiff is {} ReflectionDiffItem)
             {
-                hash.Add(ReflectionDiffItem);
+                hash.AddBytes(ReflectionDiffItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

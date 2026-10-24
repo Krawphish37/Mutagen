@@ -1077,7 +1077,10 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IImpactDataSetGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Impacts);
+            foreach (var subItem in item.Impacts)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

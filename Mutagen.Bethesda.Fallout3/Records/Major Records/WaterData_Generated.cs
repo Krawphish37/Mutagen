@@ -3142,9 +3142,9 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.Unused5);
             hash.Add(item.FogAboveWaterDistanceNearPlane);
             hash.Add(item.FogAboveWaterDistanceFarPlane);
-            hash.Add(item.ShallowColor);
-            hash.Add(item.DeepColor);
-            hash.Add(item.ReflectionColor);
+            hash.Add(item.ShallowColor.ToArgb());
+            hash.Add(item.DeepColor.ToArgb());
+            hash.Add(item.ReflectionColor.ToArgb());
             hash.Add(item.Unused6);
             hash.Add(item.RainSimulatorForce);
             hash.Add(item.RainSimulatorVelocity);

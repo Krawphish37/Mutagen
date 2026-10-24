@@ -1661,11 +1661,11 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.Stats);
             if (item.TypeOffsets is {} TypeOffsetsItem)
             {
-                hash.Add(TypeOffsetsItem);
+                hash.AddBytes(TypeOffsetsItem);
             }
             if (item.Deleted is {} DeletedItem)
             {
-                hash.Add(DeletedItem);
+                hash.AddBytes(DeletedItem);
             }
             if (item.Author is {} Authoritem)
             {
@@ -1675,8 +1675,17 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(Descriptionitem);
             }
-            hash.Add(item.MasterReferences);
-            hash.Add(item.OverriddenForms);
+            foreach (var subItem in item.MasterReferences)
+            {
+                hash.Add(subItem);
+            }
+            if (item.OverriddenForms is {} OverriddenFormsitem)
+            {
+                foreach (var subItem in OverriddenFormsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.INTV is {} INTVitem)
             {
                 hash.Add(INTVitem);

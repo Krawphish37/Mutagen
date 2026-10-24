@@ -2967,12 +2967,24 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Destructible is {} Destructibleitem)
             {
                 hash.Add(Destructibleitem);
             }
-            hash.Add(item.Properties);
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -2983,7 +2995,7 @@ namespace Mutagen.Bethesda.Fallout4
             }
             hash.Add(item.Time);
             hash.Add(item.Radius);
-            hash.Add(item.Color);
+            hash.Add(item.Color.ToArgb());
             hash.Add(item.Flags);
             hash.Add(item.FalloffExponent);
             hash.Add(item.FOV);

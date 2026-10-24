@@ -1996,7 +1996,13 @@ namespace Mutagen.Bethesda.Skyrim
             }
             hash.Add(item.PickUpSound);
             hash.Add(item.PutDownSound);
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Value);
             hash.Add(item.Weight);
             hash.Add(item.ContainedSoul);

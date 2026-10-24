@@ -3419,16 +3419,40 @@ namespace Mutagen.Bethesda.Fallout4
             }
             hash.Add(item.Location);
             hash.Add(item.QuestCompletionXp);
-            hash.Add(item.TextDisplayGlobals);
+            foreach (var subItem in item.TextDisplayGlobals)
+            {
+                hash.Add(subItem);
+            }
             if (item.Filter is {} Filteritem)
             {
                 hash.Add(Filteritem);
             }
-            hash.Add(item.DialogConditions);
-            hash.Add(item.UnusedConditions);
-            hash.Add(item.Stages);
-            hash.Add(item.Objectives);
-            hash.Add(item.Aliases);
+            foreach (var subItem in item.DialogConditions)
+            {
+                hash.Add(subItem);
+            }
+            if (item.UnusedConditions is {} UnusedConditionsitem)
+            {
+                foreach (var subItem in UnusedConditionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            foreach (var subItem in item.Stages)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Objectives)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Aliases is {} Aliasesitem)
+            {
+                foreach (var subItem in Aliasesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
@@ -3440,9 +3464,18 @@ namespace Mutagen.Bethesda.Fallout4
             }
             hash.Add(item.Timestamp);
             hash.Add(item.Unknown);
-            hash.Add(item.DialogBranches);
-            hash.Add(item.DialogTopics);
-            hash.Add(item.Scenes);
+            foreach (var subItem in item.DialogBranches)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.DialogTopics)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Scenes)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

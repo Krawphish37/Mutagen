@@ -4541,7 +4541,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ICellGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -4571,10 +4574,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XILSitem);
             }
-            hash.Add(item.XCLAs);
+            foreach (var subItem in item.XCLAs)
+            {
+                hash.Add(subItem);
+            }
             if (item.WaterData is {} WaterDataItem)
             {
-                hash.Add(WaterDataItem);
+                hash.AddBytes(WaterDataItem);
             }
             hash.Add(item.CellSkyRegion);
             if (item.Ownership is {} Ownershipitem)
@@ -4587,7 +4593,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(WaterTypeitem);
             }
-            hash.Add(item.ShipBlueprintSnapLinks);
+            if (item.ShipBlueprintSnapLinks is {} ShipBlueprintSnapLinksitem)
+            {
+                foreach (var subItem in ShipBlueprintSnapLinksitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.WaterVelocity is {} WaterVelocityitem)
             {
                 hash.Add(WaterVelocityitem);
@@ -4609,23 +4621,41 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(GlobalDirtLayerInheritBiomeLayeritem);
             }
             hash.Add(item.TimeOfDay);
-            hash.Add(item.LinkedReferences);
+            foreach (var subItem in item.LinkedReferences)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.IsLinkedRefTransient);
             if (item.EnvironmentMap is {} EnvironmentMapitem)
             {
                 hash.Add(EnvironmentMapitem);
             }
-            hash.Add(item.Traversals);
+            if (item.Traversals is {} Traversalsitem)
+            {
+                foreach (var subItem in Traversalsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.NumTraversalFluffBytes);
-            hash.Add(item.NavigationMeshes);
+            foreach (var subItem in item.NavigationMeshes)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Timestamp);
             hash.Add(item.UnknownGroupData);
             hash.Add(item.PersistentTimestamp);
             hash.Add(item.PersistentUnknownGroupData);
-            hash.Add(item.Persistent);
+            foreach (var subItem in item.Persistent)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.TemporaryTimestamp);
             hash.Add(item.TemporaryUnknownGroupData);
-            hash.Add(item.Temporary);
+            foreach (var subItem in item.Temporary)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

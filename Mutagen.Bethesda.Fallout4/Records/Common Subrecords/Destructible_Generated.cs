@@ -1125,8 +1125,17 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Dataitem);
             }
-            hash.Add(item.Resistances);
-            hash.Add(item.Stages);
+            if (item.Resistances is {} Resistancesitem)
+            {
+                foreach (var subItem in Resistancesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            foreach (var subItem in item.Stages)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

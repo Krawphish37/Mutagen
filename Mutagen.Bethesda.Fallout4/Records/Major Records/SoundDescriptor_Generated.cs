@@ -1864,15 +1864,30 @@ namespace Mutagen.Bethesda.Fallout4
             }
             hash.Add(item.Category);
             hash.Add(item.AlternateSoundFor);
-            hash.Add(item.SoundFiles);
+            foreach (var subItem in item.SoundFiles)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.OutputModel);
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.LoopAndRumble is {} LoopAndRumbleitem)
             {
                 hash.Add(LoopAndRumbleitem);
             }
-            hash.Add(item.Descriptors);
-            hash.Add(item.RatesOfFire);
+            foreach (var subItem in item.Descriptors)
+            {
+                hash.Add(subItem);
+            }
+            if (item.RatesOfFire is {} RatesOfFireitem)
+            {
+                foreach (var subItem in RatesOfFireitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

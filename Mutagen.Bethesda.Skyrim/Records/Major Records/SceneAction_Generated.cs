@@ -1775,7 +1775,7 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.LNAM is {} LNAMItem)
             {
-                hash.Add(LNAMItem);
+                hash.AddBytes(LNAMItem);
             }
             if (item.Index is {} Indexitem)
             {
@@ -1797,7 +1797,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(TimerSecondsitem);
             }
-            hash.Add(item.Packages);
+            foreach (var subItem in item.Packages)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Topic);
             if (item.HeadtrackActorID is {} HeadtrackActorIDitem)
             {

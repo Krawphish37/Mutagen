@@ -3382,16 +3382,40 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.FilterString is {} FilterStringitem)
             {
                 hash.Add(FilterStringitem);
             }
-            hash.Add(item.Flora);
-            hash.Add(item.ResourceGeneration);
-            hash.Add(item.ProceduralObjectGeneration);
-            hash.Add(item.ObjectSwaps);
-            hash.Add(item.MaterialSwaps);
+            if (item.Flora is {} Floraitem)
+            {
+                foreach (var subItem in Floraitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            foreach (var subItem in item.ResourceGeneration)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.ProceduralObjectGeneration)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.ObjectSwaps)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.MaterialSwaps)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Climate);
             hash.Add(item.Water);
             if (item.BlockDensityMult is {} BlockDensityMultitem)
@@ -3411,22 +3435,28 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.MusicType);
             hash.Add(item.TimeOfDay);
             hash.Add(item.PatternStyle);
-            hash.Add(item.Color);
-            hash.Add(item.SurfaceColor1);
-            hash.Add(item.SurfaceColor2);
-            hash.Add(item.RockTint);
+            hash.Add(item.Color.ToArgb());
+            hash.Add(item.SurfaceColor1.ToArgb());
+            hash.Add(item.SurfaceColor2.ToArgb());
+            hash.Add(item.RockTint.ToArgb());
             hash.Add(item.Type);
-            hash.Add(item.MarkerObjectKeywords);
-            hash.Add(item.Terrain);
+            foreach (var subItem in item.MarkerObjectKeywords)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Terrain)
+            {
+                hash.Add(subItem);
+            }
             if (item.GroundLayerNormal is {} GroundLayerNormalitem)
             {
                 hash.Add(GroundLayerNormalitem);
             }
             if (item.BTPS is {} BTPSItem)
             {
-                hash.Add(BTPSItem);
+                hash.AddBytes(BTPSItem);
             }
-            hash.Add(item.DistantView);
+            hash.AddBytes(item.DistantView);
             if (item.GlobalLayerMaterial is {} GlobalLayerMaterialitem)
             {
                 hash.Add(GlobalLayerMaterialitem);

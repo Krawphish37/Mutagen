@@ -960,8 +960,11 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ISurfaceTreePatternSwapInfoComponentDataGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Data);
-            hash.Add(item.Unknown);
+            foreach (var subItem in item.Data)
+            {
+                hash.Add(subItem);
+            }
+            hash.AddBytes(item.Unknown);
             return hash.ToHashCode();
         }
         

@@ -882,7 +882,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.XCZR);
             if (item.XCZA is {} XCZAItem)
             {
-                hash.Add(XCZAItem);
+                hash.AddBytes(XCZAItem);
             }
             return hash.ToHashCode();
         }

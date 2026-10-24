@@ -1142,7 +1142,10 @@ namespace Mutagen.Bethesda.Fallout4
             var hash = new HashCode();
             hash.Add(item.Rank);
             hash.Add(item.Priority);
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.PerkEntryID is {} PerkEntryIDitem)
             {
                 hash.Add(PerkEntryIDitem);

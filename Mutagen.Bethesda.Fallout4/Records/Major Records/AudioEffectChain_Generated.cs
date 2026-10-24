@@ -1071,7 +1071,10 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IAudioEffectChainGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Effects);
+            foreach (var subItem in item.Effects)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

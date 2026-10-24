@@ -1379,12 +1379,21 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Sound);
-            hash.Add(item.WeatherKeywords);
-            hash.Add(item.MarkerKeywords);
+            foreach (var subItem in item.WeatherKeywords)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.MarkerKeywords)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.SwitchGroup);
             hash.Add(item.ReEvaluateIntervalUseCustom);
             hash.Add(item.ReEvaluateIntervalSeconds);
-            hash.Add(item.PlanetCustomizations);
+            foreach (var subItem in item.PlanetCustomizations)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

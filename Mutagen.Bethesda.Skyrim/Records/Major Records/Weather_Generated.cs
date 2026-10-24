@@ -4557,34 +4557,40 @@ namespace Mutagen.Bethesda.Skyrim
         public virtual int GetHashCode(IWeatherGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.CloudTextures);
+            foreach (var subItem in item.CloudTextures)
+            {
+                hash.Add(subItem);
+            }
             if (item.DNAM is {} DNAMItem)
             {
-                hash.Add(DNAMItem);
+                hash.AddBytes(DNAMItem);
             }
             if (item.CNAM is {} CNAMItem)
             {
-                hash.Add(CNAMItem);
+                hash.AddBytes(CNAMItem);
             }
             if (item.ANAM is {} ANAMItem)
             {
-                hash.Add(ANAMItem);
+                hash.AddBytes(ANAMItem);
             }
             if (item.BNAM is {} BNAMItem)
             {
-                hash.Add(BNAMItem);
+                hash.AddBytes(BNAMItem);
             }
             if (item.LNAM is {} LNAMItem)
             {
-                hash.Add(LNAMItem);
+                hash.AddBytes(LNAMItem);
             }
             hash.Add(item.Precipitation);
             hash.Add(item.VisualEffect);
             if (item.ONAM is {} ONAMItem)
             {
-                hash.Add(ONAMItem);
+                hash.AddBytes(ONAMItem);
             }
-            hash.Add(item.Clouds);
+            foreach (var subItem in item.Clouds)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.SkyUpperColor);
             hash.Add(item.FogNearColor);
             hash.Add(item.UnknownColor);
@@ -4621,13 +4627,19 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.ThunderLightningEndFadeOut);
             hash.Add(item.ThunderLightningFrequency);
             hash.Add(item.Flags);
-            hash.Add(item.LightningColor);
+            hash.Add(item.LightningColor.ToArgb());
             hash.Add(item.VisualEffectBegin);
             hash.Add(item.VisualEffectEnd);
             hash.Add(item.WindDirection);
             hash.Add(item.WindDirectionRange);
-            hash.Add(item.Sounds);
-            hash.Add(item.SkyStatics);
+            foreach (var subItem in item.Sounds)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.SkyStatics)
+            {
+                hash.Add(subItem);
+            }
             if (item.ImageSpaces is {} ImageSpacesitem)
             {
                 hash.Add(ImageSpacesitem);
@@ -4642,11 +4654,11 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.NAM2 is {} NAM2Item)
             {
-                hash.Add(NAM2Item);
+                hash.AddBytes(NAM2Item);
             }
             if (item.NAM3 is {} NAM3Item)
             {
-                hash.Add(NAM3Item);
+                hash.AddBytes(NAM3Item);
             }
             if (item.Aurora is {} Auroraitem)
             {

@@ -1609,9 +1609,12 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IRegionGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.MapColor);
+            hash.Add(item.MapColor.ToArgb());
             hash.Add(item.Worldspace);
-            hash.Add(item.RegionAreas);
+            foreach (var subItem in item.RegionAreas)
+            {
+                hash.Add(subItem);
+            }
             if (item.Objects is {} Objectsitem)
             {
                 hash.Add(Objectsitem);

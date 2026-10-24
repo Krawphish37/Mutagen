@@ -1061,7 +1061,13 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(TimerSettingitem);
             }
-            hash.Add(item.Animations);
+            if (item.Animations is {} Animationsitem)
+            {
+                foreach (var subItem in Animationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.IDLB is {} IDLBitem)
             {
                 hash.Add(IDLBitem);

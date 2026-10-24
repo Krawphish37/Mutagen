@@ -4446,12 +4446,21 @@ namespace Mutagen.Bethesda.Skyrim
             }
             hash.Add(item.ObjectBounds);
             hash.Add(item.Configuration);
-            hash.Add(item.Factions);
+            foreach (var subItem in item.Factions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.DeathItem);
             hash.Add(item.Voice);
             hash.Add(item.Template);
             hash.Add(item.Race);
-            hash.Add(item.ActorEffect);
+            if (item.ActorEffect is {} ActorEffectitem)
+            {
+                foreach (var subItem in ActorEffectitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Destructible is {} Destructibleitem)
             {
                 hash.Add(Destructibleitem);
@@ -4459,16 +4468,40 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.WornArmor);
             hash.Add(item.FarAwayModel);
             hash.Add(item.AttackRace);
-            hash.Add(item.Attacks);
+            foreach (var subItem in item.Attacks)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.SpectatorOverridePackageList);
             hash.Add(item.ObserveDeadBodyOverridePackageList);
             hash.Add(item.GuardWarnOverridePackageList);
             hash.Add(item.CombatOverridePackageList);
-            hash.Add(item.Perks);
-            hash.Add(item.Items);
+            if (item.Perks is {} Perksitem)
+            {
+                foreach (var subItem in Perksitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Items is {} Itemsitem)
+            {
+                foreach (var subItem in Itemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.AIData);
-            hash.Add(item.Packages);
-            hash.Add(item.Keywords);
+            foreach (var subItem in item.Packages)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Class);
             if (item.Name is {} Nameitem)
             {
@@ -4482,7 +4515,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(PlayerSkillsitem);
             }
-            hash.Add(item.HeadParts);
+            foreach (var subItem in item.HeadParts)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.HairColor);
             hash.Add(item.CombatStyle);
             hash.Add(item.GiftFilter);
@@ -4501,7 +4537,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.HeadTexture);
             if (item.TextureLighting is {} TextureLightingitem)
             {
-                hash.Add(TextureLightingitem);
+                hash.Add(TextureLightingitem.ToArgb());
             }
             if (item.FaceMorph is {} FaceMorphitem)
             {
@@ -4511,7 +4547,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(FacePartsitem);
             }
-            hash.Add(item.TintLayers);
+            foreach (var subItem in item.TintLayers)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

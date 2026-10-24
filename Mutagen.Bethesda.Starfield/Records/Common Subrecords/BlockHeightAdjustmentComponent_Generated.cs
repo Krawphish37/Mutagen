@@ -957,10 +957,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IBlockHeightAdjustmentComponentGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.SurfaceBlocks);
+            foreach (var subItem in item.SurfaceBlocks)
+            {
+                hash.Add(subItem.Value);
+            }
             if (item.DATA is {} DATAItem)
             {
-                hash.Add(DATAItem);
+                hash.AddBytes(DATAItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

@@ -950,7 +950,10 @@ namespace Mutagen.Bethesda.Fallout4
         {
             var hash = new HashCode();
             hash.Add(item.Location);
-            hash.Add(item.Coordinates);
+            foreach (var subItem in item.Coordinates)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

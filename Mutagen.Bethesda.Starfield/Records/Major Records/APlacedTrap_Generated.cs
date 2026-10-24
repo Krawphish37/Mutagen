@@ -2334,7 +2334,13 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(VirtualMachineAdapteritem);
             }
             hash.Add(item.Emittance);
-            hash.Add(item.RagdollData);
+            if (item.RagdollData is {} RagdollDataitem)
+            {
+                foreach (var subItem in RagdollDataitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.ReferenceGroup);
             hash.Add(item.SourcePackIn);
             hash.Add(item.IgnoredBySandbox);
@@ -2342,7 +2348,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(OwnerFactionRankitem);
             }
-            hash.Add(item.LinkedReferences);
+            foreach (var subItem in item.LinkedReferences)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.IsLinkedRefTransient);
             if (item.Ownership is {} Ownershipitem)
             {
@@ -2354,7 +2363,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(HeadTrackingWeightitem);
             }
-            hash.Add(item.LocationRefTypes);
+            if (item.LocationRefTypes is {} LocationRefTypesitem)
+            {
+                foreach (var subItem in LocationRefTypesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.EnableParent is {} EnableParentitem)
             {
                 hash.Add(EnableParentitem);

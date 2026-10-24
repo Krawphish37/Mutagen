@@ -1919,7 +1919,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IPlanetContentManagerBranchNodeGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.NodeType is {} NodeTypeitem)
             {
                 hash.Add(NodeTypeitem);
@@ -1931,9 +1934,24 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(ConsumeRequestEvenOnFailureitem);
             }
-            hash.Add(item.Nodes);
-            hash.Add(item.Conditions);
-            hash.Add(item.Keywords);
+            foreach (var subItem in item.Nodes)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Conditions is {} Conditionsitem)
+            {
+                foreach (var subItem in Conditionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.ParentNode);
             hash.Add(item.PreviousNode);
             hash.Add(base.GetHashCode());

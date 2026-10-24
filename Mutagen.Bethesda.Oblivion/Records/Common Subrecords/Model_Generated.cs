@@ -914,7 +914,7 @@ namespace Mutagen.Bethesda.Oblivion
             hash.Add(item.BoundRadius);
             if (item.Hashes is {} HashesItem)
             {
-                hash.Add(HashesItem);
+                hash.AddBytes(HashesItem);
             }
             return hash.ToHashCode();
         }

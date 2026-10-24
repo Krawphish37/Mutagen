@@ -1054,10 +1054,13 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Indexitem);
             }
-            hash.Add(item.DATAs);
+            foreach (var subItem in item.DATAs)
+            {
+                hash.Add(subItem);
+            }
             if (item.INTV is {} INTVItem)
             {
-                hash.Add(INTVItem);
+                hash.AddBytes(INTVItem);
             }
             if (item.Model is {} Modelitem)
             {

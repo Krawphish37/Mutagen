@@ -963,7 +963,7 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.Color is {} Coloritem)
             {
-                hash.Add(Coloritem);
+                hash.Add(Coloritem.ToArgb());
             }
             if (item.InterpolationValue is {} InterpolationValueitem)
             {

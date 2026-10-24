@@ -1926,7 +1926,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Iconitem);
             }
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Trait);
             hash.Add(item.Level);
             hash.Add(item.NumRanks);
@@ -1938,7 +1941,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Swfitem);
             }
-            hash.Add(item.Effects);
+            foreach (var subItem in item.Effects)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

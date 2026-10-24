@@ -2290,18 +2290,42 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.NavmeshVersion);
             hash.Add(item.CrcHash);
             hash.Add(item.Parent);
-            hash.Add(item.Vertices);
-            hash.Add(item.Triangles);
-            hash.Add(item.EdgeLinks);
-            hash.Add(item.DoorTriangles);
-            hash.Add(item.Cover);
-            hash.Add(item.CoverTriangleMappings);
-            hash.Add(item.Waypoints);
+            foreach (var subItem in item.Vertices)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Triangles)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.EdgeLinks)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.DoorTriangles)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Cover)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.CoverTriangleMappings)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Waypoints)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.GridSize);
             hash.Add(item.GridMaxDistance);
             hash.Add(item.GridMin);
             hash.Add(item.GridMax);
-            hash.Add(item.GridArrays);
+            foreach (var subItem in item.GridArrays)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Unknown3);
             return hash.ToHashCode();
         }

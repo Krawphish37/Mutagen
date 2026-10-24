@@ -1741,11 +1741,14 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(ObjectBoundsitem);
             }
             hash.Add(item.DirtinessScale);
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.DefaultNumberOfTiles);
             hash.Add(item.DefaultNumberOfSlices);
             hash.Add(item.DefaultNumberOfTilesIsRelativeToLength);
-            hash.Add(item.DefaultColor);
+            hash.Add(item.DefaultColor.ToArgb());
             hash.Add(item.WindSensibility);
             hash.Add(item.WindFlexibility);
             hash.Add(item.MaterialPath);

@@ -2664,13 +2664,28 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(XALGitem);
             }
             hash.Add(item.DefaultLayer);
-            hash.Add(item.Components);
-            hash.Add(item.ForcedLocations);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
+            if (item.ForcedLocations is {} ForcedLocationsitem)
+            {
+                foreach (var subItem in ForcedLocationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Model is {} Modelitem)
             {
                 hash.Add(Modelitem);
             }
-            hash.Add(item.Properties);
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);

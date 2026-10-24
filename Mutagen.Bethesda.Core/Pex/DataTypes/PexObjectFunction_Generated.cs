@@ -1256,9 +1256,18 @@ namespace Mutagen.Bethesda.Pex
                 hash.Add(DocStringitem);
             }
             hash.Add(item.Flags);
-            hash.Add(item.Parameters);
-            hash.Add(item.Locals);
-            hash.Add(item.Instructions);
+            foreach (var subItem in item.Parameters)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Locals)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Instructions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.RawUserFlags);
             return hash.ToHashCode();
         }

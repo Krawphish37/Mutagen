@@ -6327,7 +6327,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.FNAM is {} FNAMItem)
             {
-                hash.Add(FNAMItem);
+                hash.AddBytes(FNAMItem);
             }
             hash.Add(item.TemplateDefaultCombatStyle);
             if (item.Templates is {} Templatesitem)

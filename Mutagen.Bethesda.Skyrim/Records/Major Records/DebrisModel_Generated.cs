@@ -1054,7 +1054,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.Flags);
             if (item.TextureFileHashes is {} TextureFileHashesItem)
             {
-                hash.Add(TextureFileHashesItem);
+                hash.AddBytes(TextureFileHashesItem);
             }
             hash.Add(item.DATADataTypeState);
             return hash.ToHashCode();

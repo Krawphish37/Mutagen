@@ -1284,7 +1284,10 @@ namespace Mutagen.Bethesda.Fallout3
                 hash.Add(SmallIconFilenameitem);
             }
             hash.Add(item.Description);
-            hash.Add(item.Locations);
+            foreach (var subItem in item.Locations)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.LoadScreenType);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

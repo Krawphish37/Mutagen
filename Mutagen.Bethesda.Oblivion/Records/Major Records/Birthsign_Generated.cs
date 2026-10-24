@@ -1246,7 +1246,10 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 hash.Add(Descriptionitem);
             }
-            hash.Add(item.Spells);
+            foreach (var subItem in item.Spells)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

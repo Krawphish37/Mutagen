@@ -949,7 +949,10 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.LinkedReference);
-            hash.Add(item.Links);
+            foreach (var subItem in item.Links)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

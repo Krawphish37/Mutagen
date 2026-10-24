@@ -881,7 +881,10 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(INavmeshGridArrayGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.GridCell);
+            foreach (var subItem in item.GridCell)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

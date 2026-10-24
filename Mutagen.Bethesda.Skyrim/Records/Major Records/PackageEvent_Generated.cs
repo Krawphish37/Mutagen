@@ -1244,25 +1244,28 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.Idle);
             if (item.SCHR is {} SCHRItem)
             {
-                hash.Add(SCHRItem);
+                hash.AddBytes(SCHRItem);
             }
             if (item.SCDA is {} SCDAItem)
             {
-                hash.Add(SCDAItem);
+                hash.AddBytes(SCDAItem);
             }
             if (item.SCTX is {} SCTXItem)
             {
-                hash.Add(SCTXItem);
+                hash.AddBytes(SCTXItem);
             }
             if (item.QNAM is {} QNAMItem)
             {
-                hash.Add(QNAMItem);
+                hash.AddBytes(QNAMItem);
             }
             if (item.TNAM is {} TNAMItem)
             {
-                hash.Add(TNAMItem);
+                hash.AddBytes(TNAMItem);
             }
-            hash.Add(item.Topics);
+            foreach (var subItem in item.Topics)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

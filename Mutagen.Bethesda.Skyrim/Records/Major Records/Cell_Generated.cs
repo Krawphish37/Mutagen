@@ -3770,7 +3770,7 @@ namespace Mutagen.Bethesda.Skyrim
             }
             if (item.OcclusionData is {} OcclusionDataItem)
             {
-                hash.Add(OcclusionDataItem);
+                hash.AddBytes(OcclusionDataItem);
             }
             if (item.MaxHeightData is {} MaxHeightDataitem)
             {
@@ -3779,7 +3779,7 @@ namespace Mutagen.Bethesda.Skyrim
             hash.Add(item.LightingTemplate);
             if (item.LNAM is {} LNAMItem)
             {
-                hash.Add(LNAMItem);
+                hash.AddBytes(LNAMItem);
             }
             if (item.WaterHeight is {} WaterHeightitem)
             {
@@ -3789,15 +3789,21 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(WaterNoiseTextureitem);
             }
-            hash.Add(item.Regions);
+            if (item.Regions is {} Regionsitem)
+            {
+                foreach (var subItem in Regionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Location);
             if (item.XWCN is {} XWCNItem)
             {
-                hash.Add(XWCNItem);
+                hash.AddBytes(XWCNItem);
             }
             if (item.XWCS is {} XWCSItem)
             {
-                hash.Add(XWCSItem);
+                hash.AddBytes(XWCSItem);
             }
             if (item.WaterVelocity is {} WaterVelocityitem)
             {
@@ -3823,15 +3829,24 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(Landscapeitem);
             }
-            hash.Add(item.NavigationMeshes);
+            foreach (var subItem in item.NavigationMeshes)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Timestamp);
             hash.Add(item.UnknownGroupData);
             hash.Add(item.PersistentTimestamp);
             hash.Add(item.PersistentUnknownGroupData);
-            hash.Add(item.Persistent);
+            foreach (var subItem in item.Persistent)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.TemporaryTimestamp);
             hash.Add(item.TemporaryUnknownGroupData);
-            hash.Add(item.Temporary);
+            foreach (var subItem in item.Temporary)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

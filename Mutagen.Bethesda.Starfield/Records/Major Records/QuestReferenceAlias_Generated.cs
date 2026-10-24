@@ -3443,26 +3443,59 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(CreateObjectTemplateitem);
             }
-            hash.Add(item.Conditions);
-            hash.Add(item.Keywords);
-            hash.Add(item.Items);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Items is {} Itemsitem)
+            {
+                foreach (var subItem in Itemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.SpectatorOverridePackageList);
             hash.Add(item.ObserveDeadBodyOverridePackageList);
             hash.Add(item.GuardWarnOverridePackageList);
             hash.Add(item.CombatOverridePackageList);
-            hash.Add(item.LinkedAliases);
+            if (item.LinkedAliases is {} LinkedAliasesitem)
+            {
+                foreach (var subItem in LinkedAliasesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.DisplayName);
             hash.Add(item.DeathItem);
             hash.Add(item.ForcedVoice);
-            hash.Add(item.Spells);
-            hash.Add(item.Factions);
-            hash.Add(item.PackageData);
+            foreach (var subItem in item.Spells)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Factions)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.PackageData)
+            {
+                hash.Add(subItem);
+            }
             if (item.ScriptComment is {} ScriptCommentitem)
             {
                 hash.Add(ScriptCommentitem);
             }
             hash.Add(item.VoiceTypes);
-            hash.Add(item.TerminalMenus);
+            foreach (var subItem in item.TerminalMenus)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

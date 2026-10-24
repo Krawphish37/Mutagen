@@ -904,7 +904,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IForcedLocRefTypeComponentGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.ForcedLocations);
+            if (item.ForcedLocations is {} ForcedLocationsitem)
+            {
+                foreach (var subItem in ForcedLocationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

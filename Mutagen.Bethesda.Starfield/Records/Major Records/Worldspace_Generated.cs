@@ -4319,8 +4319,14 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IWorldspaceGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
-            hash.Add(item.LargeReferences);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.LargeReferences)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -4365,7 +4371,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.FNAM is {} FNAMItem)
             {
-                hash.Add(FNAMItem);
+                hash.AddBytes(FNAMItem);
             }
             hash.Add(item.ObjectBoundsMin);
             hash.Add(item.ObjectBoundsMax);
@@ -4383,20 +4389,35 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(GNAMitem);
             }
-            hash.Add(item.LandscapeTextures);
-            hash.Add(item.CellWaterHeightLocations);
-            hash.Add(item.WaterHeights);
+            foreach (var subItem in item.LandscapeTextures)
+            {
+                hash.Add(subItem);
+            }
+            if (item.CellWaterHeightLocations is {} CellWaterHeightLocationsitem)
+            {
+                foreach (var subItem in CellWaterHeightLocationsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.WaterHeights is {} WaterHeightsitem)
+            {
+                foreach (var subItem in WaterHeightsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.HNAM is {} HNAMItem)
             {
-                hash.Add(HNAMItem);
+                hash.AddBytes(HNAMItem);
             }
             if (item.OffsetData is {} OffsetDataItem)
             {
-                hash.Add(OffsetDataItem);
+                hash.AddBytes(OffsetDataItem);
             }
             if (item.CellSizeData is {} CellSizeDataItem)
             {
-                hash.Add(CellSizeDataItem);
+                hash.AddBytes(CellSizeDataItem);
             }
             if (item.TopCell is {} TopCellitem)
             {
@@ -4404,7 +4425,10 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.SubCellsTimestamp);
             hash.Add(item.SubCellsUnknown);
-            hash.Add(item.SubCells);
+            foreach (var subItem in item.SubCells)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

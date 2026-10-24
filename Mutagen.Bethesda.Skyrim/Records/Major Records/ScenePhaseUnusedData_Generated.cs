@@ -1038,23 +1038,23 @@ namespace Mutagen.Bethesda.Skyrim
             var hash = new HashCode();
             if (item.SCHR is {} SCHRItem)
             {
-                hash.Add(SCHRItem);
+                hash.AddBytes(SCHRItem);
             }
             if (item.SCDA is {} SCDAItem)
             {
-                hash.Add(SCDAItem);
+                hash.AddBytes(SCDAItem);
             }
             if (item.SCTX is {} SCTXItem)
             {
-                hash.Add(SCTXItem);
+                hash.AddBytes(SCTXItem);
             }
             if (item.QNAM is {} QNAMItem)
             {
-                hash.Add(QNAMItem);
+                hash.AddBytes(QNAMItem);
             }
             if (item.SCRO is {} SCROItem)
             {
-                hash.Add(SCROItem);
+                hash.AddBytes(SCROItem);
             }
             return hash.ToHashCode();
         }

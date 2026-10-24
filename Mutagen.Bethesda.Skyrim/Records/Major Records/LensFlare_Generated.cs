@@ -1217,7 +1217,13 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 hash.Add(FadeDistanceRadiusScaleitem);
             }
-            hash.Add(item.Sprites);
+            if (item.Sprites is {} Spritesitem)
+            {
+                foreach (var subItem in Spritesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

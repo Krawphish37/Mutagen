@@ -1351,14 +1351,14 @@ namespace Mutagen.Bethesda.Fallout4
         public virtual int GetHashCode(IGodRaysGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.BackColor);
-            hash.Add(item.ForwardColor);
+            hash.Add(item.BackColor.ToArgb());
+            hash.Add(item.ForwardColor.ToArgb());
             hash.Add(item.Intensity);
             hash.Add(item.AirColorScale);
             hash.Add(item.BackColorScale);
             hash.Add(item.ForwardColorScale);
             hash.Add(item.BackPhase);
-            hash.Add(item.AirColor);
+            hash.Add(item.AirColor.ToArgb());
             hash.Add(item.ForwardPhase);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

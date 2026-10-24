@@ -1352,8 +1352,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.StartConditions);
-            hash.Add(item.CompletionConditions);
+            foreach (var subItem in item.StartConditions)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.CompletionConditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.EditorWidth is {} EditorWidthitem)
             {
                 hash.Add(EditorWidthitem);
@@ -1368,7 +1374,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.SPMV is {} SPMVItem)
             {
-                hash.Add(SPMVItem);
+                hash.AddBytes(SPMVItem);
             }
             return hash.ToHashCode();
         }

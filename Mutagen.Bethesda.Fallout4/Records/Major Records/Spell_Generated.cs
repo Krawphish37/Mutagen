@@ -1968,7 +1968,13 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 hash.Add(Nameitem);
             }
-            hash.Add(item.Keywords);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.EquipmentType);
             hash.Add(item.Description);
             hash.Add(item.BaseCost);
@@ -1980,7 +1986,10 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.CastDuration);
             hash.Add(item.Range);
             hash.Add(item.CastingPerk);
-            hash.Add(item.Effects);
+            foreach (var subItem in item.Effects)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

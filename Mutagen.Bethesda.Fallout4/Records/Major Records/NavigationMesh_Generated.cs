@@ -1280,9 +1280,15 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.ONAM);
             if (item.NNAM is {} NNAMItem)
             {
-                hash.Add(NNAMItem);
+                hash.AddBytes(NNAMItem);
             }
-            hash.Add(item.PreCutMapEntries);
+            if (item.PreCutMapEntries is {} PreCutMapEntriesitem)
+            {
+                foreach (var subItem in PreCutMapEntriesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

@@ -997,7 +997,13 @@ namespace Mutagen.Bethesda.Fallout4
         {
             var hash = new HashCode();
             hash.Add(item.EdgeFallOff);
-            hash.Add(item.RegionPointListData);
+            if (item.RegionPointListData is {} RegionPointListDataitem)
+            {
+                foreach (var subItem in RegionPointListDataitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Unknown is {} Unknownitem)
             {
                 hash.Add(Unknownitem);

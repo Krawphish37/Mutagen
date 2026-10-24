@@ -1071,7 +1071,7 @@ namespace Mutagen.Bethesda.Fallout4
             hash.Add(item.DataType);
             hash.Add(item.Index);
             hash.Add(item.Value);
-            hash.Add(item.Color);
+            hash.Add(item.Color.ToArgb());
             hash.Add(item.TemplateColorIndex);
             hash.Add(item.TENDDataTypeState);
             return hash.ToHashCode();

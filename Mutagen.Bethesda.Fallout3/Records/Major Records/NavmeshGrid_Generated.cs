@@ -1132,7 +1132,10 @@ namespace Mutagen.Bethesda.Fallout3
             hash.Add(item.MaxDistanceY);
             hash.Add(item.Min);
             hash.Add(item.Max);
-            hash.Add(item.Cells);
+            foreach (var subItem in item.Cells)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

@@ -1679,9 +1679,18 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 hash.Add(QuestDataitem);
             }
-            hash.Add(item.Conditions);
-            hash.Add(item.Stages);
-            hash.Add(item.Objectives);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Stages)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Objectives)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
