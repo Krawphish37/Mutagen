@@ -3,6 +3,7 @@
   <Object name="WWiseEventData" recordType="WWED" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
+      <RefList name="Components" refName="AComponent" />
       <Guid name="Start" recordType="WSED" />
       <FormLink name="Condition" recordType="CNAM" refName="ConditionRecord" />
       <Guid name="End" recordType="WTED" />

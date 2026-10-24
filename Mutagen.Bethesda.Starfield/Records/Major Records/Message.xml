@@ -3,6 +3,7 @@
   <Object name="Message" recordType="MESG" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
+      <RefList name="Components" refName="AComponent" />
       <String name="Description" recordType="DESC" translated="DL" nullable="False" />
       <String name="Name" recordType="FULL" translated="Normal" />
       <Int32 name="INAM" recordType="INAM" nullable="False" unknown="true" />

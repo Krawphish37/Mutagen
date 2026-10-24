@@ -8,9 +8,11 @@
 using Loqui;
 using Loqui.Interfaces;
 using Loqui.Internal;
+using Mutagen.Bethesda.Assets;
 using Mutagen.Bethesda.Binary;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Aspects;
+using Mutagen.Bethesda.Plugins.Assets;
 using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
@@ -76,6 +78,20 @@ namespace Mutagen.Bethesda.Starfield
         IVirtualMachineAdapterGetter? IScriptedGetter.VirtualMachineAdapter => this.VirtualMachineAdapter;
         #endregion
         #endregion
+        #region Components
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private ExtendedList<AComponent> _Components = new ExtendedList<AComponent>();
+        public ExtendedList<AComponent> Components
+        {
+            get => this._Components;
+            init => this._Components = value;
+        }
+        #region Interface Members
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IReadOnlyList<IAComponentGetter> IWWiseEventDataGetter.Components => _Components;
+        #endregion
+
+        #endregion
         #region Start
         public Guid? Start { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -122,6 +138,7 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(initialValue, new VirtualMachineAdapter.Mask<TItem>(initialValue));
+                this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
                 this.Start = initialValue;
                 this.Condition = initialValue;
                 this.End = initialValue;
@@ -136,6 +153,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
                 TItem VirtualMachineAdapter,
+                TItem Components,
                 TItem Start,
                 TItem Condition,
                 TItem End)
@@ -149,6 +167,7 @@ namespace Mutagen.Bethesda.Starfield
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(VirtualMachineAdapter, new VirtualMachineAdapter.Mask<TItem>(VirtualMachineAdapter));
+                this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
                 this.Start = Start;
                 this.Condition = Condition;
                 this.End = End;
@@ -164,6 +183,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
             public TItem Start;
             public TItem Condition;
             public TItem End;
@@ -181,6 +201,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
+                if (!object.Equals(this.Components, rhs.Components)) return false;
                 if (!object.Equals(this.Start, rhs.Start)) return false;
                 if (!object.Equals(this.Condition, rhs.Condition)) return false;
                 if (!object.Equals(this.End, rhs.End)) return false;
@@ -190,6 +211,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.VirtualMachineAdapter);
+                hash.Add(this.Components);
                 hash.Add(this.Start);
                 hash.Add(this.Condition);
                 hash.Add(this.End);
@@ -208,6 +230,18 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.VirtualMachineAdapter.Overall)) return false;
                     if (this.VirtualMachineAdapter.Specific != null && !this.VirtualMachineAdapter.Specific.All(eval)) return false;
                 }
+                if (this.Components != null)
+                {
+                    if (!eval(this.Components.Overall)) return false;
+                    if (this.Components.Specific != null)
+                    {
+                        foreach (var item in this.Components.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (!eval(this.Start)) return false;
                 if (!eval(this.Condition)) return false;
                 if (!eval(this.End)) return false;
@@ -223,6 +257,18 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     if (eval(this.VirtualMachineAdapter.Overall)) return true;
                     if (this.VirtualMachineAdapter.Specific != null && this.VirtualMachineAdapter.Specific.Any(eval)) return true;
+                }
+                if (this.Components != null)
+                {
+                    if (eval(this.Components.Overall)) return true;
+                    if (this.Components.Specific != null)
+                    {
+                        foreach (var item in this.Components.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
                 }
                 if (eval(this.Start)) return true;
                 if (eval(this.Condition)) return true;
@@ -243,6 +289,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.Translate_InternalFill(obj, eval);
                 obj.VirtualMachineAdapter = this.VirtualMachineAdapter == null ? null : new MaskItem<R, VirtualMachineAdapter.Mask<R>?>(eval(this.VirtualMachineAdapter.Overall), this.VirtualMachineAdapter.Specific?.Translate(eval));
+                if (Components != null)
+                {
+                    obj.Components = new MaskItem<R, IEnumerable<MaskItemIndexed<R, AComponent.Mask<R>?>>?>(eval(this.Components.Overall), []);
+                    if (Components.Specific != null)
+                    {
+                        var l = new List<MaskItemIndexed<R, AComponent.Mask<R>?>>();
+                        obj.Components.Specific = l;
+                        foreach (var item in Components.Specific)
+                        {
+                            MaskItemIndexed<R, AComponent.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, AComponent.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
+                        }
+                    }
+                }
                 obj.Start = eval(this.Start);
                 obj.Condition = eval(this.Condition);
                 obj.End = eval(this.End);
@@ -268,6 +329,25 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         VirtualMachineAdapter?.Print(sb);
                     }
+                    if ((printMask?.Components?.Overall ?? true)
+                        && Components is {} ComponentsItem)
+                    {
+                        sb.AppendLine("Components =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(ComponentsItem.Overall);
+                            if (ComponentsItem.Specific != null)
+                            {
+                                foreach (var subItem in ComponentsItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        subItem?.Print(sb);
+                                    }
+                                }
+                            }
+                        }
+                    }
                     if (printMask?.Start ?? true)
                     {
                         sb.AppendItem(Start, "Start");
@@ -292,6 +372,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>? VirtualMachineAdapter;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
             public Exception? Start;
             public Exception? Condition;
             public Exception? End;
@@ -305,6 +386,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case WWiseEventData_FieldIndex.VirtualMachineAdapter:
                         return VirtualMachineAdapter;
+                    case WWiseEventData_FieldIndex.Components:
+                        return Components;
                     case WWiseEventData_FieldIndex.Start:
                         return Start;
                     case WWiseEventData_FieldIndex.Condition:
@@ -323,6 +406,9 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case WWiseEventData_FieldIndex.VirtualMachineAdapter:
                         this.VirtualMachineAdapter = new MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>(ex, null);
+                        break;
+                    case WWiseEventData_FieldIndex.Components:
+                        this.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(ex, null);
                         break;
                     case WWiseEventData_FieldIndex.Start:
                         this.Start = ex;
@@ -347,6 +433,9 @@ namespace Mutagen.Bethesda.Starfield
                     case WWiseEventData_FieldIndex.VirtualMachineAdapter:
                         this.VirtualMachineAdapter = (MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>?)obj;
                         break;
+                    case WWiseEventData_FieldIndex.Components:
+                        this.Components = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>)obj;
+                        break;
                     case WWiseEventData_FieldIndex.Start:
                         this.Start = (Exception?)obj;
                         break;
@@ -366,6 +455,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (VirtualMachineAdapter != null) return true;
+                if (Components != null) return true;
                 if (Start != null) return true;
                 if (Condition != null) return true;
                 if (End != null) return true;
@@ -396,6 +486,24 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 VirtualMachineAdapter?.Print(sb);
+                if (Components is {} ComponentsItem)
+                {
+                    sb.AppendLine("Components =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(ComponentsItem.Overall);
+                        if (ComponentsItem.Specific != null)
+                        {
+                            foreach (var subItem in ComponentsItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    subItem?.Print(sb);
+                                }
+                            }
+                        }
+                    }
+                }
                 {
                     sb.AppendItem(Start, "Start");
                 }
@@ -414,6 +522,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
+                ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
                 ret.Start = this.Start.Combine(rhs.Start);
                 ret.Condition = this.Condition.Combine(rhs.Condition);
                 ret.End = this.End.Combine(rhs.End);
@@ -440,6 +549,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public VirtualMachineAdapter.TranslationMask? VirtualMachineAdapter;
+            public AComponent.TranslationMask? Components;
             public bool Start;
             public bool Condition;
             public bool End;
@@ -462,6 +572,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
+                ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
                 ret.Add((Start, null));
                 ret.Add((Condition, null));
                 ret.Add((End, null));
@@ -528,6 +639,10 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(IWWiseEventData);
 
+        public override IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(AssetLinkQuery queryCategories, IAssetLinkCache? linkCache = null, Type? assetType = null, bool iterateNestedRecords = true) => WWiseEventDataCommon.Instance.EnumerateAssetLinks(this, queryCategories, linkCache, assetType, iterateNestedRecords);
+        public override IEnumerable<IAssetLink> EnumerateListedAssetLinks(bool iterateNestedRecords = true) => WWiseEventDataSetterCommon.Instance.EnumerateListedAssetLinks(this, iterateNestedRecords);
+        public override void RemapAssetLinks(IReadOnlyDictionary<IAssetLinkGetter, string> mapping, AssetLinkQuery queryCategories, IAssetLinkCache? linkCache) => WWiseEventDataSetterCommon.Instance.RemapAssetLinks(this, mapping, linkCache, queryCategories);
+        public override void RemapListedAssetLinks(IReadOnlyDictionary<IAssetLinkGetter, string> mapping) => WWiseEventDataSetterCommon.Instance.RemapAssetLinks(this, mapping, null, AssetLinkQuery.Listed);
         #region Equals and Hash
         public override bool Equals(object? obj)
         {
@@ -607,6 +722,7 @@ namespace Mutagen.Bethesda.Starfield
 
     #region Interface
     public partial interface IWWiseEventData :
+        IAssetLinkContainer,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         ILoquiObjectSetter<IWWiseEventDataInternal>,
@@ -618,6 +734,7 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IHaveVirtualMachineAdapter, IScripted
         /// </summary>
         new VirtualMachineAdapter? VirtualMachineAdapter { get; set; }
+        new ExtendedList<AComponent> Components { get; }
         new Guid? Start { get; set; }
         new IFormLinkNullable<IConditionRecordGetter> Condition { get; set; }
         new Guid? End { get; set; }
@@ -633,6 +750,7 @@ namespace Mutagen.Bethesda.Starfield
     [AssociatedRecordTypesAttribute(Mutagen.Bethesda.Starfield.Internals.RecordTypeInts.WWED)]
     public partial interface IWWiseEventDataGetter :
         IStarfieldMajorRecordGetter,
+        IAssetLinkContainerGetter,
         IBinaryItem,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
@@ -647,6 +765,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IVirtualMachineAdapterGetter? VirtualMachineAdapter { get; }
         #endregion
+        IReadOnlyList<IAComponentGetter> Components { get; }
         Guid? Start { get; }
         IFormLinkNullableGetter<IConditionRecordGetter> Condition { get; }
         Guid? End { get; }
@@ -827,9 +946,10 @@ namespace Mutagen.Bethesda.Starfield
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
         VirtualMachineAdapter = 7,
-        Start = 8,
-        Condition = 9,
-        End = 10,
+        Components = 8,
+        Start = 9,
+        Condition = 10,
+        End = 11,
     }
     #endregion
 
@@ -840,9 +960,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 4;
+        public const ushort AdditionalFieldCount = 5;
 
-        public const ushort FieldCount = 11;
+        public const ushort FieldCount = 12;
 
         public static readonly Type MaskType = typeof(WWiseEventData.Mask<>);
 
@@ -877,6 +997,8 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.WWED,
                 RecordTypes.VMAD,
                 RecordTypes.XXXX,
+                RecordTypes.BFCB,
+                RecordTypes.BFCE,
                 RecordTypes.WSED,
                 RecordTypes.CNAM,
                 RecordTypes.WTED);
@@ -925,6 +1047,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.VirtualMachineAdapter = null;
+            item.Components.Clear();
             item.Start = default;
             item.Condition.Clear();
             item.End = default;
@@ -946,7 +1069,32 @@ namespace Mutagen.Bethesda.Starfield
         {
             base.RemapLinks(obj, mapping);
             obj.VirtualMachineAdapter?.RemapLinks(mapping);
+            obj.Components.RemapLinks(mapping);
             obj.Condition.Relink(mapping);
+        }
+        
+        public IEnumerable<IAssetLink> EnumerateListedAssetLinks(IWWiseEventData obj, bool iterateNestedRecords = true)
+        {
+            foreach (var item in base.EnumerateListedAssetLinks(obj, iterateNestedRecords))
+            {
+                yield return item;
+            }
+            foreach (var item in obj.Components.WhereCastable<IAComponentGetter, IAssetLinkContainer>()
+                .SelectMany((f) => f.EnumerateListedAssetLinks(iterateNestedRecords)))
+            {
+                yield return item;
+            }
+            yield break;
+        }
+        
+        public void RemapAssetLinks(
+            IWWiseEventData obj,
+            IReadOnlyDictionary<IAssetLinkGetter, string> mapping,
+            IAssetLinkCache? linkCache,
+            AssetLinkQuery queryCategories)
+        {
+            base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
+            obj.Components.ForEach(x => x.RemapAssetLinks(mapping, queryCategories, linkCache));
         }
         
         #endregion
@@ -1019,6 +1167,10 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.VirtualMachineAdapter,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
+            ret.Components = item.Components.CollectionEqualsHelper(
+                rhs.Components,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
+                include);
             ret.Start = item.Start == rhs.Start;
             ret.Condition = item.Condition.Equals(rhs.Condition);
             ret.End = item.End == rhs.End;
@@ -1075,6 +1227,20 @@ namespace Mutagen.Bethesda.Starfield
                 && item.VirtualMachineAdapter is {} VirtualMachineAdapterItem)
             {
                 VirtualMachineAdapterItem?.Print(sb, "VirtualMachineAdapter");
+            }
+            if (printMask?.Components?.Overall ?? true)
+            {
+                sb.AppendLine("Components =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in item.Components)
+                    {
+                        using (sb.Brace())
+                        {
+                            subItem?.Print(sb, "Item");
+                        }
+                    }
+                }
             }
             if ((printMask?.Start ?? true)
                 && item.Start is {} StartItem)
@@ -1148,6 +1314,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isVirtualMachineAdapterEqual) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)WWiseEventData_FieldIndex.Components) ?? true))
+            {
+                if (!lhs.Components.SequenceEqual(rhs.Components, (l, r) => ((AComponentCommon)((IAComponentGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)WWiseEventData_FieldIndex.Components)))) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)WWiseEventData_FieldIndex.Start) ?? true))
             {
                 if (lhs.Start != rhs.Start) return false;
@@ -1192,6 +1362,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
+            hash.Add(item.Components);
             if (item.Start is {} Startitem)
             {
                 hash.Add(Startitem);
@@ -1237,9 +1408,28 @@ namespace Mutagen.Bethesda.Starfield
                     yield return item;
                 }
             }
+            foreach (var item in obj.Components.WhereCastable<IAComponentGetter, IFormLinkContainerGetter>()
+                .SelectMany((f) => f.EnumerateFormLinks(iterateNestedRecords)))
+            {
+                yield return FormLinkInformation.Factory(item);
+            }
             if (FormLinkInformation.TryFactory(obj.Condition, out var ConditionInfo))
             {
                 yield return ConditionInfo;
+            }
+            yield break;
+        }
+        
+        public IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(IWWiseEventDataGetter obj, AssetLinkQuery queryCategories, IAssetLinkCache? linkCache, Type? assetType, bool iterateNestedRecords = true)
+        {
+            foreach (var item in base.EnumerateAssetLinks(obj, queryCategories, linkCache, assetType, iterateNestedRecords))
+            {
+                yield return item;
+            }
+            foreach (var item in obj.Components.WhereCastable<IAComponentGetter, IAssetLinkContainerGetter>()
+                .SelectMany((f) => f.EnumerateAssetLinks(queryCategories: queryCategories, linkCache: linkCache, assetType: assetType, iterateNestedRecords: iterateNestedRecords)))
+            {
+                yield return item;
             }
             yield break;
         }
@@ -1352,6 +1542,30 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         item.VirtualMachineAdapter = default;
                     }
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
+            }
+            if ((copyMask?.GetShouldTranslate((int)WWiseEventData_FieldIndex.Components) ?? true))
+            {
+                errorMask?.PushIndex((int)WWiseEventData_FieldIndex.Components);
+                try
+                {
+                    item.Components.SetTo(
+                        rhs.Components
+                        .Select(r =>
+                        {
+                            return r.DeepCopy(
+                                errorMask: errorMask,
+                                default(TranslationCrystal));
+                        }));
                 }
                 catch (Exception ex)
                 when (errorMask != null)
@@ -1551,6 +1765,17 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     translationParams: translationParams.With(RecordTypes.XXXX));
             }
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IAComponentGetter>.Instance.Write(
+                writer: writer,
+                items: item.Components,
+                transl: (MutagenWriter subWriter, IAComponentGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((AComponentBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
             GuidBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.Start,
@@ -1638,6 +1863,16 @@ namespace Mutagen.Bethesda.Starfield
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
                     return (int)WWiseEventData_FieldIndex.VirtualMachineAdapter;
                 }
+                case RecordTypeInts.BFCB:
+                {
+                    item.Components.SetTo(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
+                            reader: frame,
+                            triggeringRecord: AComponent_Registration.TriggerSpecs,
+                            translationParams: translationParams,
+                            transl: AComponent.TryCreateFromBinary));
+                    return (int)WWiseEventData_FieldIndex.Components;
+                }
                 case RecordTypeInts.WSED:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -1706,6 +1941,7 @@ namespace Mutagen.Bethesda.Starfield
         void IPrintable.Print(StructuredStringBuilder sb, string? name) => this.Print(sb, name);
 
         public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => WWiseEventDataCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
+        public override IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(AssetLinkQuery queryCategories, IAssetLinkCache? linkCache = null, Type? assetType = null, bool iterateNestedRecords = true) => WWiseEventDataCommon.Instance.EnumerateAssetLinks(this, queryCategories, linkCache, assetType, iterateNestedRecords);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected override object BinaryWriteTranslator => WWiseEventDataBinaryWriteTranslation.Instance;
         void IBinaryItem.WriteToBinary(
@@ -1726,6 +1962,7 @@ namespace Mutagen.Bethesda.Starfield
         public IVirtualMachineAdapterGetter? VirtualMachineAdapter => _VirtualMachineAdapterLocation.HasValue ? VirtualMachineAdapterBinaryOverlay.VirtualMachineAdapterFactory(_recordData.Slice(_VirtualMachineAdapterLocation!.Value.Min), _package, TypedParseParams.FromLengthOverride(_VirtualMachineAdapterLengthOverride)) : default;
         IAVirtualMachineAdapterGetter? IHaveVirtualMachineAdapterGetter.VirtualMachineAdapter => this.VirtualMachineAdapter;
         #endregion
+        public IReadOnlyList<IAComponentGetter> Components { get; private set; } = [];
         #region Start
         private int? _StartLocation;
         public Guid? Start => _StartLocation.HasValue ? new Guid(HeaderTranslation.ExtractSubrecordMemory(_recordData, _StartLocation.Value, _package.MetaData.Constants).Slice(0, 16)) : default(Guid?);
@@ -1816,6 +2053,15 @@ namespace Mutagen.Bethesda.Starfield
                         stream.Position += lastParsed.LengthOverride.Value;
                     }
                     return (int)WWiseEventData_FieldIndex.VirtualMachineAdapter;
+                }
+                case RecordTypeInts.BFCB:
+                {
+                    this.Components = this.ParseRepeatedTypelessSubrecord<IAComponentGetter>(
+                        stream: stream,
+                        translationParams: translationParams,
+                        trigger: AComponent_Registration.TriggerSpecs,
+                        factory: AComponentBinaryOverlay.AComponentFactory);
+                    return (int)WWiseEventData_FieldIndex.Components;
                 }
                 case RecordTypeInts.WSED:
                 {

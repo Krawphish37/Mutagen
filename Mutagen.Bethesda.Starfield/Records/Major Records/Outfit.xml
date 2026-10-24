@@ -3,6 +3,7 @@
   <Object name="Outfit" recordType="OTFT" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
+      <RefList name="Components" refName="AComponent" />
       <List name="Items" recordType="INAM">
         <FormLink >
           <Interface>IOutfitTarget</Interface>

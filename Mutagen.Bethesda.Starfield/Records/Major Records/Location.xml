@@ -3,6 +3,7 @@
   <Object name="Location" recordType="LCTN" objType="Record" baseClass="StarfieldMajorRecord" majorFlag="true" >
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
+      <RefList name="Components" refName="AComponent" />
       <RefList name="Properties" refName="ObjectProperty" recordType="PRPS" />
       <RefList name="AddedPersistLocationReferences" refName="LocationReference" recordType="ACPR" />
       <RefList name="MasterPersistLocationReferences" refName="LocationReference" recordType="LCPR" />
