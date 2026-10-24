@@ -1365,8 +1365,11 @@ namespace Mutagen.Bethesda.Starfield
                 offset: offset,
                 translationParams: translationParams,
                 fill: ret.FillRecordType);
-            ret.ModelFilename = new AssetLink<StarfieldModelAssetType>(BinaryStringUtility.ParseUnknownLengthString(ret._recordData.Slice(ret._DATALocation!.Value.Min + 0x1), package.MetaData.Encodings.NonTranslated));
-            ret.ModelFilenameEndingPos = ret._DATALocation!.Value.Min + 0x1 + ret.ModelFilename.GivenPath.Length + 1;
+            if (ret._DATALocation.HasValue)
+            {
+                ret.ModelFilename = new AssetLink<StarfieldModelAssetType>(BinaryStringUtility.ParseUnknownLengthString(ret._recordData.Slice(ret._DATALocation!.Value.Min + 0x1), package.MetaData.Encodings.NonTranslated));
+                ret.ModelFilenameEndingPos = ret._DATALocation!.Value.Min + 0x1 + ret.ModelFilename.GivenPath.Length + 1;
+            }
             return ret;
         }
 

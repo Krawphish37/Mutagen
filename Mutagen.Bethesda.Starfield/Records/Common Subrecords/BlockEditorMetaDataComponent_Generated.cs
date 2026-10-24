@@ -1763,7 +1763,7 @@ namespace Mutagen.Bethesda.Starfield
         protected int UnknownString3EndingPos;
         #endregion
         #region UnknownInts
-        public IReadOnlyList<Int32> UnknownInts => BinaryOverlayList.FactoryByCountLength<Int32>(_recordData.Slice(UnknownString3EndingPos), _package, 4, countLength: 4, (s, p) => BinaryPrimitives.ReadInt32LittleEndian(s));
+        public IReadOnlyList<Int32> UnknownInts => _DAT2Location.HasValue ? BinaryOverlayList.FactoryByCountLength<Int32>(_recordData.Slice(UnknownString3EndingPos), _package, 4, countLength: 4, (s, p) => BinaryPrimitives.ReadInt32LittleEndian(s)) : Array.Empty<Int32>();
         protected int UnknownIntsEndingPos;
         #endregion
         #region UnknownInt1
@@ -1829,10 +1829,13 @@ namespace Mutagen.Bethesda.Starfield
                 offset: offset,
                 translationParams: translationParams,
                 fill: ret.FillRecordType);
-            ret.UnknownString1EndingPos = ret._DAT2Location!.Value.Min + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret._DAT2Location!.Value.Min)) + 4;
-            ret.UnknownString2EndingPos = ret.UnknownString1EndingPos + 0x1 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.UnknownString1EndingPos + 0x1)) + 4;
-            ret.UnknownString3EndingPos = ret.UnknownString2EndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.UnknownString2EndingPos)) + 4;
-            ret.UnknownIntsEndingPos = ret.UnknownString3EndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.UnknownString3EndingPos)) * 4 + 4;
+            if (ret._DAT2Location.HasValue)
+            {
+                ret.UnknownString1EndingPos = ret._DAT2Location!.Value.Min + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret._DAT2Location!.Value.Min)) + 4;
+                ret.UnknownString2EndingPos = ret.UnknownString1EndingPos + 0x1 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.UnknownString1EndingPos + 0x1)) + 4;
+                ret.UnknownString3EndingPos = ret.UnknownString2EndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.UnknownString2EndingPos)) + 4;
+                ret.UnknownIntsEndingPos = ret.UnknownString3EndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.UnknownString3EndingPos)) * 4 + 4;
+            }
             return ret;
         }
 

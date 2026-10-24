@@ -5468,8 +5468,11 @@ namespace Mutagen.Bethesda.Starfield
                 offset: offset,
                 translationParams: translationParams,
                 fill: ret.FillRecordType);
-            ret.UnknownPRODString1EndingPos = ret._PRODLocation!.Value.Min + 0x51 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret._PRODLocation!.Value.Min + 0x51)) + 4;
-            ret.UnknownPRODString2EndingPos = ret.UnknownPRODString1EndingPos + 0x9 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.UnknownPRODString1EndingPos + 0x9)) + 4;
+            if (ret._PRODLocation.HasValue)
+            {
+                ret.UnknownPRODString1EndingPos = ret._PRODLocation!.Value.Min + 0x51 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret._PRODLocation!.Value.Min + 0x51)) + 4;
+                ret.UnknownPRODString2EndingPos = ret.UnknownPRODString1EndingPos + 0x9 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.UnknownPRODString1EndingPos + 0x9)) + 4;
+            }
             return ret;
         }
 
