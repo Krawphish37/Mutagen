@@ -7,6 +7,11 @@ namespace Mutagen.Bethesda.Fallout3;
 
 internal static class ModContextExt
 {
+    public static readonly DialogTopic.TranslationMask DialogTopicCopyMask = new(true)
+    {
+        Responses = false
+    };
+
     public static readonly Cell.TranslationMask CellCopyMask = new(true)
     {
         Persistent = false,

@@ -7,7 +7,7 @@ namespace Mutagen.Bethesda.Oblivion;
 
 internal static class ModContextExt
 {
-    public static readonly DialogTopic.TranslationMask DialogResponsesCopyMask = new(true)
+    public static readonly DialogTopic.TranslationMask DialogTopicCopyMask = new(true)
     {
         Items = false
     };

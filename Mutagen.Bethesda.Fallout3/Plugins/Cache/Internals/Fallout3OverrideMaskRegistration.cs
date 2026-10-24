@@ -11,6 +11,7 @@ internal class Fallout3OverrideMaskRegistration : IOverrideMaskRegistration
         {
             yield return (Cell_Registration.Instance, ModContextExt.CellCopyMask);
             yield return (Worldspace_Registration.Instance, ModContextExt.WorldspaceCopyMask);
+            yield return (DialogTopic_Registration.Instance, ModContextExt.DialogTopicCopyMask);
         }
     }
 }
