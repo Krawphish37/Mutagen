@@ -868,9 +868,9 @@ public interface ILoadOrder<TListing> : ILoadOrderGetter<TListing>
     /// <summary>
     /// Adds an item at the given index in load order, with the given ModKey
     /// </summary>
-    /// <param name="item">Item to put at end of load order</param>
-    /// <param name="index">Index to insert at</param>
-    /// <exception cref="ArgumentException">If an item with same ModKey exists already</exception>
+    /// <param name="item">Item to insert into the load order</param>
+    /// <param name="index">Index to insert at.  Equal to Count appends to the end</param>
+    /// <exception cref="ArgumentException">If an item with same ModKey exists already, or the index is out of range</exception>
     void Add(TListing item, int index);
 
     /// <summary>
@@ -1046,7 +1046,7 @@ public sealed class LoadOrder<TListing> : ILoadOrder<TListing>
     /// <inheritdoc />
     public void Add(TListing item, int index)
     {
-        if (!_byLoadOrder.InRange(index))
+        if (index < 0 || index > _byLoadOrder.Count)
         {
             throw new ArgumentException("Tried to insert at an out of range index.");
         }
@@ -1061,7 +1061,7 @@ public sealed class LoadOrder<TListing> : ILoadOrder<TListing>
             throw new ArgumentException($"ModKey was already present: {item.ModKey}");
         }
 
-        _byLoadOrder.Add(container);
+        _byLoadOrder.Insert(index, container);
         for (int i = index + 1; i < _byLoadOrder.Count; i++)
         {
             _byLoadOrder[i].Index += 1;
