@@ -710,4 +710,46 @@ public class AutoSplitModWriterTests
     }
 
     #endregion
+
+    [Theory, MutagenModAutoData]
+    public void SplitWritesCreatedTopicWithCreatedResponses(SplitTestPayload payload, DirectoryPath existingOutputDirectory, IFileSystem fileSystem)
+    {
+        var outputPath = Path.Combine(existingOutputDirectory.Path, payload.Mod.ModKey.FileName);
+
+        // 5 x 70 = 350 masters, past the 254 limit, so the write auto-splits.
+        for (uint i = 0; i < 5; i++)
+        {
+            payload.CreateFormListWithContents(70);
+        }
+
+        var topic = payload.Mod.DialogTopics.AddNew();
+        var responseIds = new List<uint>();
+        for (int i = 0; i < 3; i++)
+        {
+            var response = new DialogResponses(payload.Mod);
+            topic.Responses.Add(response);
+            responseIds.Add(response.FormKey.ID);
+        }
+
+        var sut = new AutoSplitModWriter(new MultiModFileSplitter());
+        sut.Write<ISkyrimMod, ISkyrimModGetter>(
+            payload.Mod,
+            outputPath,
+            BinaryWriteParameters.Default with { FileSystem = fileSystem });
+
+        var files = MultiModFileAnalysis.GetSplitModFiles(new ModPath(payload.Mod.ModKey, outputPath), fileSystem);
+        files.Count.ShouldBeGreaterThan(1);
+
+        var topics = files
+            .SelectMany(x => SkyrimMod.CreateFromBinaryOverlay(
+                    x,
+                    SkyrimRelease.SkyrimSE,
+                    new BinaryReadParameters() { FileSystem = fileSystem })
+                .DialogTopics)
+            .ToList();
+        var readTopic = topics.ShouldHaveSingleItem();
+        readTopic.FormKey.ID.ShouldBe(topic.FormKey.ID);
+        readTopic.Responses.Select(x => x.FormKey.ID).ShouldBe(responseIds, ignoreOrder: true);
+        readTopic.Responses.Select(x => x.FormKey.ModKey).ShouldAllBe(x => x == readTopic.FormKey.ModKey);
+    }
 }
