@@ -46,11 +46,11 @@ partial class ObjectTemplateBinaryCreateTranslation<T>
     {
         for (int i = 0; i < count; i++)
         {
-            yield return ReadProperty(stream.MetaData.MasterReferences, stream.ReadSpan(24));
+            yield return ReadProperty(stream.MetaData, stream.ReadSpan(24));
         }
     }
 
-    public static AObjectModProperty<T> ReadProperty(IReadOnlySeparatedMasterPackage masters, ReadOnlySpan<byte> data)
+    public static AObjectModProperty<T> ReadProperty(ParsingMeta meta, ReadOnlySpan<byte> data)
     {
         AObjectModProperty<T> ret;
         var type = (ObjectModProperty.ValueType)data[0];
@@ -86,7 +86,7 @@ partial class ObjectTemplateBinaryCreateTranslation<T>
                 ret = new ObjectModStringProperty<T>()
                 {
                     FunctionType = (ObjectModProperty.FloatFunctionType)enumVal,
-                    Value = data.Slice(12, 4).ToString(),
+                    Value = BinaryStringUtility.ProcessWholeToZString(data.Slice(12, 4), meta.Encodings.NonTranslated),
                     Unused = BinaryPrimitives.ReadUInt32LittleEndian(data[16..]),
                 };
                 break;
@@ -96,7 +96,7 @@ partial class ObjectTemplateBinaryCreateTranslation<T>
                 {
                     FunctionType = (ObjectModProperty.FormLinkFunctionType)enumVal,
                 };
-                prop.Record.SetTo(FormKeyBinaryTranslation.Instance.Parse(data[12..], masters));
+                prop.Record.SetTo(FormKeyBinaryTranslation.Instance.Parse(data[12..], meta.MasterReferences));
                 prop.Value = BinaryPrimitives.ReadUInt32LittleEndian(data[16..]);
                 ret = prop;
                 break;
@@ -115,7 +115,7 @@ partial class ObjectTemplateBinaryCreateTranslation<T>
                 {
                     FunctionType = (ObjectModProperty.FloatFunctionType)enumVal,
                 };
-                prop.Record.SetTo(FormKeyBinaryTranslation.Instance.Parse(data[12..], masters));
+                prop.Record.SetTo(FormKeyBinaryTranslation.Instance.Parse(data[12..], meta.MasterReferences));
                 prop.Value = BinaryPrimitives.ReadSingleLittleEndian(data[16..]);
                 ret = prop;
                 break;
@@ -194,7 +194,7 @@ partial class ObjectTemplateBinaryWriteTranslation
                 break;
             case IObjectModStringPropertyGetter<T> stringProp:
                 WritePropertyFields(writer, property, ObjectModProperty.ValueType.String, stringProp.FunctionType);
-                StringBinaryTranslation.Instance.Write(writer, stringProp.Value.AsSpan().Slice(0, 4));
+                StringBinaryTranslation.Instance.WriteNullPaddedFixedLength(writer, stringProp.Value, 4);
                 writer.Write(stringProp.Unused);
                 break;
             case IObjectModFormLinkIntPropertyGetter<T> linkIntProp:
@@ -262,7 +262,7 @@ partial class ObjectTemplateBinaryOverlay<T>
             _recordData.Slice(IncludeLoc + includeLen, propLen),
             _package,
             itemLength: 24,
-            getter: (s, p) => ObjectTemplateBinaryCreateTranslation<T>.ReadProperty(stream.MetaData.MasterReferences, s));
+            getter: (s, p) => ObjectTemplateBinaryCreateTranslation<T>.ReadProperty(stream.MetaData, s));
         return (int)ObjectTemplate_FieldIndex.Properties;
     }
 
