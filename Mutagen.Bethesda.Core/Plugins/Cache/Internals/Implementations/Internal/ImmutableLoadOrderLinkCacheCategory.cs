@@ -95,13 +95,14 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
         cache.Depth++;
         cache.PassedMods.Add(targetMod.ModKey);
 
-        void AddRecords(IModGetter mod, Type type, bool throwIfUnknown)
+        void AddRecords(IModGetter mod, Type type, bool throwIfUnknown, Type? filter = null)
         {
             foreach (var record in mod.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown)
                          // ToDo
                          // Capture and expose errors optionally via TryResolve /w out param
                          .Catch((Exception ex) => { }))
             {
+                if (filter != null && !filter.IsInstanceOfType(record)) continue;
                 var key = _keyGetter(record);
                 if (key.Failed) continue;
                 cache.AddIfMissing(key.Value, LinkCacheItem.Factory(record, _simple));
@@ -113,7 +114,8 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
         {
             foreach (var regis in objs.Registrations)
             {
-                AddRecords(targetMod, regis.GetterType, throwIfUnknown: false);
+                AddRecords(targetMod, regis.GetterType, throwIfUnknown: false,
+                    filter: InterfaceEnumerationHelper.GetGetterTypeFilter(objs, regis));
             }
         }
         else
@@ -240,13 +242,14 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
                     cache.Depth++;
                     cache.PassedMods.Add(targetMod.ModKey);
 
-                    void AddRecords(IModGetter mod, Type type, bool throwIfUnknown)
+                    void AddRecords(IModGetter mod, Type type, bool throwIfUnknown, Type? filter = null)
                     {
                         foreach (var item in mod.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown)
                                      // ToDo
                                      // Capture and expose errors optionally via TryResolve /w out param
                                      .Catch((Exception ex) => { }))
                         {
+                            if (filter != null && !filter.IsInstanceOfType(item)) continue;
                             var iterKey = _keyGetter(item);
                             if (iterKey.Failed) continue;
                             if (!cache.TryGetValue(iterKey.Value, out var targetList))
@@ -266,7 +269,8 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
                     {
                         foreach (var regis in objs.Registrations)
                         {
-                            AddRecords(targetMod, regis.GetterType, throwIfUnknown: false);
+                            AddRecords(targetMod, regis.GetterType, throwIfUnknown: false,
+                                filter: InterfaceEnumerationHelper.GetGetterTypeFilter(objs, regis));
                         }
                     }
                     else
