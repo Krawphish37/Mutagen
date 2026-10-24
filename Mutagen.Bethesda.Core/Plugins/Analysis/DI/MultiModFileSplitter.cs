@@ -117,6 +117,12 @@ public class MultiModFileSplitter : IMultiModFileSplitter
             if (parent.Record is IMajorRecordGetter parentRecord)
             {
                 Accumulate(parentRecord);
+
+                // A parent created by the mod has to be in this record's mod fragment or an earlier one
+                if (parentRecord.FormKey.ModKey == inputKey)
+                {
+                    referencedOriginatedRecords.Add(parentRecord.FormKey);
+                }
             }
             parent = parent.Parent;
         }
@@ -445,13 +451,21 @@ public class MultiModFileSplitter : IMultiModFileSplitter
             newMod.ModHeader.Author = inputMod.ModHeader.Author;
             newMod.ModHeader.Description = inputMod.ModHeader.Description;
 
-            foreach (var record in modFragment.Records)
+            // Records go in under their input FormKeys first, parents before the records nested in them.
+            // A nested record finds or adds its parent by the parent's input FormKey, so a created parent has to
+            // be in place, under that same FormKey, before its nested records are added to it
+            var created = new HashSet<FormKey>();
+            foreach (var record in modFragment.Records.OrderBy(x => ParentDepth(x.Context)))
             {
                 if (record.IsOriginatingRecord)
                 {
-                    record.Context.DuplicateIntoAsNewRecord(
-                        newMod,
-                        new FormKey(newMod.ModKey, record.Context.Record.FormKey.ID));
+                    // A duplicated parent can bring its nested records along
+                    if (!created.Add(record.Context.Record.FormKey)) continue;
+                    var duplicate = record.Context.DuplicateIntoAsNewRecord(newMod, record.Context.Record.FormKey);
+                    foreach (var nested in duplicate.EnumerateMajorRecords())
+                    {
+                        created.Add(nested.FormKey);
+                    }
                 }
                 else
                 {
@@ -461,6 +475,8 @@ public class MultiModFileSplitter : IMultiModFileSplitter
 
             if (remap.Count > 0)
             {
+                // Records created in a later mod fragment then take that fragment's FormKeys, and links follow them
+                RekeyRecords(newMod, remap);
                 newMod.RemapLinks(remap);
             }
 
@@ -468,5 +484,48 @@ public class MultiModFileSplitter : IMultiModFileSplitter
         }
 
         return result;
+    }
+
+    private static int ParentDepth(IModContext context)
+    {
+        var depth = 0;
+        for (var parent = context.Parent; parent != null; parent = parent.Parent)
+        {
+            depth++;
+        }
+        return depth;
+    }
+
+    /// <summary>
+    /// Gives every record in the mod whose FormKey is remapped its new FormKey, nested records included
+    /// </summary>
+    private static void RekeyRecords(IMod mod, Dictionary<FormKey, FormKey> remap)
+    {
+        var toRekey = mod.EnumerateMajorRecords()
+            .Where(x => remap.ContainsKey(x.FormKey))
+            .ToList();
+        foreach (var record in toRekey)
+        {
+            var oldKey = record.FormKey;
+            var newKey = remap[oldKey];
+            var type = record.GetType();
+
+            // A top-level group is keyed by FormKey, so its records are taken out and put back in.
+            // Nested records sit in plain lists and can be re-keyed where they are.
+            // The removal goes by the group's own record type, which the record's class can derive from (OMODs)
+            var group = mod.TryGetTopLevelGroup(type);
+            if (group != null
+                && group.RecordCache.TryGetValue(oldKey, out var grouped)
+                && ReferenceEquals(grouped, record))
+            {
+                mod.Remove(oldKey, group.ContainedRecordType);
+                ((IMajorRecordInternal)record).FormKey = newKey;
+                group.AddUntyped(record);
+            }
+            else
+            {
+                ((IMajorRecordInternal)record).FormKey = newKey;
+            }
+        }
     }
 }
