@@ -1103,6 +1103,12 @@ public sealed class LoadOrder<TListing> : ILoadOrder<TListing>
         }
 
         _byModKey.Remove(key);
+
+        if (DisposingItems && registry.Item is IDisposable disp)
+        {
+            disp.Dispose();
+        }
+
         return true;
     }
 
