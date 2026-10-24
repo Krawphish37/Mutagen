@@ -5,6 +5,7 @@ using Noggog;
 using Mutagen.Bethesda.Plugins;
 using Xunit;
 using Mutagen.Bethesda.Plugins.Cache;
+using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Testing;
 using Noggog.Testing.Extensions;
 
@@ -529,5 +530,82 @@ public class ModContextTests
         worldParent.ShouldBe(worldspace);
         baseContext.TryGetParentContext<IWorldspace, IWorldspaceGetter>(out var worldParentContext).ShouldBeTrue();
         worldParentContext!.Record.ShouldBe(worldspace);
+    }
+
+    private static (SkyrimMod Mod, Worldspace Worldspace, Cell Cell, IModContext<ISkyrimMod, ISkyrimModGetter, IPlacedObject, IPlacedObjectGetter> Context) ParentRefsSetup()
+    {
+        Warmup.Init();
+        var mod = new SkyrimMod(TestConstants.PluginModKey, SkyrimRelease.SkyrimSE);
+        var worldspace = mod.Worldspaces.AddNew();
+        var block = new WorldspaceBlock()
+        {
+            BlockNumberX = 2,
+            BlockNumberY = 3,
+            GroupType = GroupTypeEnum.ExteriorCellBlock,
+        };
+        var subBlock = new WorldspaceSubBlock()
+        {
+            BlockNumberX = 4,
+            BlockNumberY = 5,
+            GroupType = GroupTypeEnum.ExteriorCellSubBlock,
+        };
+        block.Items.Add(subBlock);
+        worldspace.SubCells.Add(block);
+        var cell = new Cell(mod.GetNextFormKey(), SkyrimRelease.SkyrimSE);
+        subBlock.Items.Add(cell);
+        var placedObj = new PlacedObject(mod.GetNextFormKey(), SkyrimRelease.SkyrimSE);
+        cell.Persistent.Add(placedObj);
+
+        var cache = mod.ToImmutableLinkCache();
+        var contexts = mod.EnumerateMajorRecordContexts<IPlacedObject, IPlacedObjectGetter>(linkCache: cache).ToArray();
+        contexts.ShouldHaveCount(1);
+        return (mod, worldspace, cell, contexts[0]);
+    }
+
+    [Fact]
+    public void ParentContextWiderType()
+    {
+        var (_, worldspace, cell, baseContext) = ParentRefsSetup();
+
+        baseContext.TryGetParentContext<IMajorRecord, IMajorRecordGetter>(out var majorContext).ShouldBeTrue();
+        majorContext!.Record.ShouldBe(cell);
+        baseContext.TryGetParentContext<ISkyrimMajorRecord, ISkyrimMajorRecordGetter>(out var skyrimMajorContext).ShouldBeTrue();
+        skyrimMajorContext!.Record.ShouldBe(cell);
+        baseContext.TryGetParentContext<ICell, IMajorRecordGetter>(out var mixedContext).ShouldBeTrue();
+        mixedContext!.Record.ShouldBe(cell);
+
+        var mod2 = new SkyrimMod(TestConstants.PluginModKey2, SkyrimRelease.SkyrimSE);
+        var cellOverride = majorContext.GetOrAddAsOverride(mod2);
+        cellOverride.FormKey.ShouldBe(cell.FormKey);
+        mod2.Worldspaces.ShouldHaveCount(1);
+        mod2.Worldspaces.First().FormKey.ShouldBe(worldspace.FormKey);
+    }
+
+    [Fact]
+    public void ParentContextUnsatisfiableTypeReturnsFalse()
+    {
+        var (_, _, _, baseContext) = ParentRefsSetup();
+
+        baseContext.TryGetParentContext<Cell, ICellGetter>(out _).ShouldBeFalse();
+    }
+
+    [Fact]
+    public void ParentSimpleContextUnsatisfiableTypeReturnsFalse()
+    {
+        var (_, _, _, baseContext) = ParentRefsSetup();
+
+        baseContext.TryGetParentSimpleContext<ICell>(out _).ShouldBeFalse();
+        baseContext.TryGetParentSimpleContext<IWorldspaceSubBlock>(out _).ShouldBeFalse();
+    }
+
+    [Fact]
+    public void BlockParentSimpleContextUnsatisfiableTypeReturnsFalse()
+    {
+        var (_, worldspace, _, baseContext) = ParentRefsSetup();
+        var subBlockContext = baseContext.Parent!.Parent.ShouldBeAssignableTo<IModContext<IWorldspaceSubBlockGetter>>();
+
+        subBlockContext!.TryGetParentSimpleContext<IWorldspaceGetter>(out var worldspaceContext).ShouldBeTrue();
+        worldspaceContext!.Record.ShouldBe(worldspace);
+        subBlockContext.TryGetParentSimpleContext<IWorldspaceBlock>(out _).ShouldBeFalse();
     }
 }

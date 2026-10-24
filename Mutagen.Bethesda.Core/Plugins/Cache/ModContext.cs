@@ -52,9 +52,10 @@ namespace Mutagen.Bethesda.Plugins.Cache
             var targetContext = Parent;
             while (targetContext != null)
             {
-                if (targetContext.Record is TScopedTargetGetter)
+                if (targetContext.Record is TScopedTargetGetter
+                    && targetContext is IModContext<TScopedTargetGetter> typedContext)
                 {
-                    parent = (IModContext<TScopedTargetGetter>)targetContext;
+                    parent = typedContext;
                     return true;
                 }
                 targetContext = targetContext.Parent;
@@ -155,9 +156,10 @@ namespace Mutagen.Bethesda.Plugins.Cache
             var targetContext = Parent;
             while (targetContext != null)
             {
-                if (targetContext.Record is TScopedTargetGetter)
+                if (targetContext.Record is TScopedTargetGetter
+                    && targetContext is IModContext<TMod, TModGetter, TScopedTarget, TScopedTargetGetter> typedContext)
                 {
-                    parent = (ModContext<TMod, TModGetter, TScopedTarget, TScopedTargetGetter>)targetContext;
+                    parent = typedContext;
                     return true;
                 }
                 targetContext = targetContext.Parent;
@@ -171,9 +173,10 @@ namespace Mutagen.Bethesda.Plugins.Cache
             var targetContext = Parent;
             while (targetContext != null)
             {
-                if (targetContext.Record is TScopedTargetGetter)
+                if (targetContext.Record is TScopedTargetGetter
+                    && targetContext is IModContext<TScopedTargetGetter> typedContext)
                 {
-                    parent = (IModContext<TScopedTargetGetter>)targetContext;
+                    parent = typedContext;
                     return true;
                 }
                 targetContext = targetContext.Parent;
