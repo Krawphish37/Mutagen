@@ -61,10 +61,18 @@ public class PluginArrayBinaryTranslationGeneration : PluginListBinaryTranslatio
             {
                 sb.AppendLine($"public {typeGen.TypeName(getter: true)}{typeGen.NullChar} {typeGen.Name} => _{typeGen.Name}Location.HasValue ? {nameof(BinaryOverlayArrayHelper)}.{nameof(BinaryOverlayArrayHelper.Int16SliceFromFixedSize)}(HeaderTranslation.ExtractSubrecordMemory({recordDataAccessor}, _{typeGen.Name}Location.Value, _package.MetaData.Constants{(data.OverflowRecordType.HasValue ? $", {nameof(TypedParseParams)}.{nameof(TypedParseParams.FromLengthOverride)}(_{typeGen.Name}LengthOverride)" : null)}), amount: {arr.FixedSize.Value}) : {(useFixedDefaultVariable ? $"_default{typeGen.Name}" : typeGen.GetDefault(getter: true))};");
             }
-            else if (arr.SubTypeGeneration is EnumType e)
+            else if (arr.SubTypeGeneration is EnumType e
+                     && dataType != null)
             {
-                var accessor = data.HasTrigger || dataType != null ? recordDataAccessor : structDataAccessor;
-                sb.AppendLine($"public {arr.ListTypeName(getter: true, internalInterface: true)} {typeGen.Name} => {nameof(BinaryOverlayArrayHelper)}.{nameof(BinaryOverlayArrayHelper.EnumSliceFromFixedSize)}<{arr.SubTypeGeneration.TypeName(getter: true)}>({accessor}.Slice({passedLengthAccessor ?? "0x0"}), amount: {arr.FixedSize.Value}, enumLength: {e.ByteLength});");
+                // Location can only be computed if the data subrecord was present
+                DataBinaryTranslationGeneration.GenerateWrapperExtraMembers(sb, dataType, objGen, typeGen, passedLengthAccessor);
+                sb.AppendLine($"private readonly static {arr.ListTypeName(getter: true, internalInterface: true)} _default{typeGen.Name} = ArrayExt.Create({arr.FixedSize}, {arr.SubTypeGeneration.GetDefault(getter: false)});");
+                sb.AppendLine($"public {arr.ListTypeName(getter: true, internalInterface: true)} {typeGen.Name} => _{typeGen.Name}_IsSet ? {nameof(BinaryOverlayArrayHelper)}.{nameof(BinaryOverlayArrayHelper.EnumSliceFromFixedSize)}<{arr.SubTypeGeneration.TypeName(getter: true)}>({recordDataAccessor}.Slice(_{typeGen.Name}Location), amount: {arr.FixedSize.Value}, enumLength: {e.ByteLength}) : _default{typeGen.Name};");
+            }
+            else if (arr.SubTypeGeneration is EnumType e2)
+            {
+                var accessor = data.HasTrigger ? recordDataAccessor : structDataAccessor;
+                sb.AppendLine($"public {arr.ListTypeName(getter: true, internalInterface: true)} {typeGen.Name} => {nameof(BinaryOverlayArrayHelper)}.{nameof(BinaryOverlayArrayHelper.EnumSliceFromFixedSize)}<{arr.SubTypeGeneration.TypeName(getter: true)}>({accessor}.Slice({passedLengthAccessor ?? "0x0"}), amount: {arr.FixedSize.Value}, enumLength: {e2.ByteLength});");
             }
             else if (arr.SubTypeGeneration is Int16Type i1)
             {

@@ -217,6 +217,11 @@ public class EnumBinaryTranslationGeneration : BinaryTranslationGeneration
                 sb.AppendLine("get");
                 using (sb.CurlyBrace())
                 {
+                    if (dataType != null)
+                    {
+                        // Location can only be computed if the data subrecord was present
+                        sb.AppendLine($"if (!_{typeGen.Name}_IsSet) return null;");
+                    }
                     sb.AppendLine($"var val = {getType};");
                     sb.AppendLine($"if (((int)val) == {eType.NullableFallbackInt}) return null;");
                     sb.AppendLine("return val;");

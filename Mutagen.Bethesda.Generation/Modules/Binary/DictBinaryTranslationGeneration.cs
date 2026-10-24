@@ -319,8 +319,10 @@ public class DictBinaryTranslationGeneration : BinaryTranslationGeneration
 
         var accessor = data == null ? structDataAccessor : recordDataAccessor;
 
+        // Inside a data subrecord, the location can only be computed if that subrecord was present
         using (var args = sb.Call(
-                   $"public IReadOnlyDictionary<{dict.KeyTypeGen.TypeName(getter: true)}, {dict.ValueTypeGen.TypeName(getter: true)}> {typeGen.Name} => DictBinaryTranslation<{dict.ValueTypeGen.TypeName(getter: false)}>.Instance.Parse<{dict.KeyTypeGen.TypeName(false)}>"))
+                   $"public IReadOnlyDictionary<{dict.KeyTypeGen.TypeName(getter: true)}, {dict.ValueTypeGen.TypeName(getter: true)}> {typeGen.Name} => {(data == null ? null : $"_{typeGen.Name}_IsSet ? ")}DictBinaryTranslation<{dict.ValueTypeGen.TypeName(getter: false)}>.Instance.Parse<{dict.KeyTypeGen.TypeName(false)}>",
+                   suffixLine: data == null ? null : $" : new Dictionary<{dict.KeyTypeGen.TypeName(getter: true)}, {dict.ValueTypeGen.TypeName(getter: true)}>()"))
         {
             args.Add($"new {nameof(MutagenFrame)}(new {nameof(MutagenMemoryReadStream)}({accessor}{(posStr == null ? null : $".Slice({posStr})")}, _package.{nameof(BinaryOverlayFactoryPackage.MetaData)}))");
             args.Add($"new Dictionary<{dict.KeyTypeGen.TypeName(getter: true)}, {dict.ValueTypeGen.TypeName(getter: true)}>()");
