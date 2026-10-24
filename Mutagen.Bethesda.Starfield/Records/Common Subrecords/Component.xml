@@ -204,6 +204,7 @@
   </Object>
   <Object name="VolumesUnknownEnderEmpty" objType="Subrecord" baseClass="AVolumesUnknownEnder" >
     <Fields>
+      <Float name="Unknown1" />
     </Fields>
   </Object>
   <Object name="PlanetContentManagerContentPropertiesComponent" objType="Subrecord" baseClass="AComponent">
