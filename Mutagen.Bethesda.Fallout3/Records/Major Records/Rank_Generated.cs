@@ -458,7 +458,7 @@ namespace Mutagen.Bethesda.Fallout3
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((RankNumber, null));
-                ret.Add((Name != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(Name, DefaultOn));
                 ret.Add((Insignia, null));
                 ret.Add((XNAM, null));
             }
@@ -1025,15 +1025,23 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 item.RankNumber = rhs.RankNumber;
             }
-            if (rhs.Name is not {} rhsNameitem)
+            if ((copyMask?.GetShouldTranslate((int)Rank_FieldIndex.Name) ?? true))
             {
-                item.Name = null;
-            }
-            else
-            {
-                item.Name = new GenderedItem<String?>(
-                    male: rhsNameitem.Male,
-                    female: rhsNameitem.Female);
+                var NameCrystal = copyMask?.GetSubCrystal((int)Rank_FieldIndex.Name);
+                if (rhs.Name is not {} rhsNameitem)
+                {
+                    item.Name = null;
+                }
+                else
+                {
+                    item.Name = new GenderedItem<String?>(
+                        male: (NameCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsNameitem.Male
+                            : item.Name?.Male,
+                        female: (NameCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsNameitem.Female
+                            : item.Name?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Rank_FieldIndex.Insignia) ?? true))
             {

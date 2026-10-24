@@ -214,15 +214,13 @@ public class GenderedItemMaskGeneration : TypicalMaskFieldGeneration
     public override string GenerateForTranslationMaskCrystalization(TypeGeneration field)
     {
         GenderedType gendered = field as GenderedType;
-        //ToDo
-        //Implement crystal construction
-        if (gendered.SubTypeGeneration is LoquiType loqui)
+        if (gendered.SubTypeGeneration is LoquiType)
         {
-            return $"({field.Name} != null || DefaultOn, null)";
+            return $"{nameof(GenderedItem)}.{nameof(GenderedItem.GetCrystalMask)}({field.Name}, DefaultOn, m => m.OnOverall)";
         }
         else
         {
-            return $"({field.Name} != null || DefaultOn, null)";
+            return $"{nameof(GenderedItem)}.{nameof(GenderedItem.GetCrystal)}({field.Name}, DefaultOn)";
         }
     }
 }

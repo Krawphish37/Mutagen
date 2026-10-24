@@ -1316,14 +1316,14 @@ namespace Mutagen.Bethesda.Oblivion
                 ret.Add((Spells, null));
                 ret.Add((Relations == null ? DefaultOn : !Relations.GetCrystal().CopyNothing, Relations?.GetCrystal()));
                 ret.Add((Data != null ? Data.OnOverall : DefaultOn, Data?.GetCrystal()));
-                ret.Add((Voices != null || DefaultOn, null));
-                ret.Add((DefaultHair != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(Voices, DefaultOn));
+                ret.Add(GenderedItem.GetCrystal(DefaultHair, DefaultOn));
                 ret.Add((DefaultHairColor, null));
                 ret.Add((FaceGenMainClamp, null));
                 ret.Add((FaceGenFaceClamp, null));
-                ret.Add((RaceStats != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(RaceStats, DefaultOn, m => m.OnOverall));
                 ret.Add((FaceData == null ? DefaultOn : !FaceData.GetCrystal().CopyNothing, FaceData?.GetCrystal()));
-                ret.Add((BodyData != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(BodyData, DefaultOn, m => m.OnOverall));
                 ret.Add((Hairs, null));
                 ret.Add((Eyes, null));
                 ret.Add((FaceGenData != null ? FaceGenData.OnOverall : DefaultOn, FaceGenData?.GetCrystal()));
@@ -2644,25 +2644,41 @@ namespace Mutagen.Bethesda.Oblivion
                     errorMask?.PopIndex();
                 }
             }
-            if (rhs.Voices is not {} rhsVoicesitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Voices) ?? true))
             {
-                item.Voices = null;
+                var VoicesCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.Voices);
+                if (rhs.Voices is not {} rhsVoicesitem)
+                {
+                    item.Voices = null;
+                }
+                else
+                {
+                    item.Voices = new GenderedItem<IFormLinkGetter<IRaceGetter>>(
+                        male: (VoicesCrystal?.GetShouldTranslate(0) ?? true)
+                            ? new FormLink<IRaceGetter>(rhsVoicesitem.Male.FormKey)
+                            : (item.Voices?.Male ?? FormLink<IRaceGetter>.Null),
+                        female: (VoicesCrystal?.GetShouldTranslate(1) ?? true)
+                            ? new FormLink<IRaceGetter>(rhsVoicesitem.Female.FormKey)
+                            : (item.Voices?.Female ?? FormLink<IRaceGetter>.Null));
+                }
             }
-            else
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.DefaultHair) ?? true))
             {
-                item.Voices = new GenderedItem<IFormLinkGetter<IRaceGetter>>(
-                    male: new FormLink<IRaceGetter>(rhsVoicesitem.Male.FormKey),
-                    female: new FormLink<IRaceGetter>(rhsVoicesitem.Female.FormKey));
-            }
-            if (rhs.DefaultHair is not {} rhsDefaultHairitem)
-            {
-                item.DefaultHair = null;
-            }
-            else
-            {
-                item.DefaultHair = new GenderedItem<IFormLinkGetter<IHairGetter>>(
-                    male: new FormLink<IHairGetter>(rhsDefaultHairitem.Male.FormKey),
-                    female: new FormLink<IHairGetter>(rhsDefaultHairitem.Female.FormKey));
+                var DefaultHairCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.DefaultHair);
+                if (rhs.DefaultHair is not {} rhsDefaultHairitem)
+                {
+                    item.DefaultHair = null;
+                }
+                else
+                {
+                    item.DefaultHair = new GenderedItem<IFormLinkGetter<IHairGetter>>(
+                        male: (DefaultHairCrystal?.GetShouldTranslate(0) ?? true)
+                            ? new FormLink<IHairGetter>(rhsDefaultHairitem.Male.FormKey)
+                            : (item.DefaultHair?.Male ?? FormLink<IHairGetter>.Null),
+                        female: (DefaultHairCrystal?.GetShouldTranslate(1) ?? true)
+                            ? new FormLink<IHairGetter>(rhsDefaultHairitem.Female.FormKey)
+                            : (item.DefaultHair?.Female ?? FormLink<IHairGetter>.Null));
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.DefaultHairColor) ?? true))
             {
@@ -2676,19 +2692,27 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 item.FaceGenFaceClamp = rhs.FaceGenFaceClamp;
             }
-            if (rhs.RaceStats is not {} rhsRaceStatsitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.RaceStats) ?? true))
             {
-                item.RaceStats = null;
-            }
-            else
-            {
-                item.RaceStats = new GenderedItem<RaceStats>(
-                    male: rhsRaceStatsitem.Male.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsRaceStatsitem.Female.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var RaceStatsCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.RaceStats);
+                if (rhs.RaceStats is not {} rhsRaceStatsitem)
+                {
+                    item.RaceStats = null;
+                }
+                else
+                {
+                    item.RaceStats = new GenderedItem<RaceStats>(
+                        male: (RaceStatsCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsRaceStatsitem.Male.DeepCopy(
+                                errorMask: errorMask,
+                                RaceStatsCrystal?.GetSubCrystal(0))
+                            : (item.RaceStats?.Male ?? new RaceStats()),
+                        female: (RaceStatsCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsRaceStatsitem.Female.DeepCopy(
+                                errorMask: errorMask,
+                                RaceStatsCrystal?.GetSubCrystal(1))
+                            : (item.RaceStats?.Female ?? new RaceStats()));
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.FaceData) ?? true))
             {
@@ -2714,19 +2738,27 @@ namespace Mutagen.Bethesda.Oblivion
                     errorMask?.PopIndex();
                 }
             }
-            if (rhs.BodyData is not {} rhsBodyDataitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.BodyData) ?? true))
             {
-                item.BodyData = null;
-            }
-            else
-            {
-                item.BodyData = new GenderedItem<BodyData?>(
-                    male: rhsBodyDataitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsBodyDataitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var BodyDataCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.BodyData);
+                if (rhs.BodyData is not {} rhsBodyDataitem)
+                {
+                    item.BodyData = null;
+                }
+                else
+                {
+                    item.BodyData = new GenderedItem<BodyData?>(
+                        male: (BodyDataCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsBodyDataitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                BodyDataCrystal?.GetSubCrystal(0))
+                            : item.BodyData?.Male,
+                        female: (BodyDataCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsBodyDataitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                BodyDataCrystal?.GetSubCrystal(1))
+                            : item.BodyData?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Hairs) ?? true))
             {

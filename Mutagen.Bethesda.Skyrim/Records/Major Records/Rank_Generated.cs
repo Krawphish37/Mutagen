@@ -419,7 +419,7 @@ namespace Mutagen.Bethesda.Skyrim
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((Number, null));
-                ret.Add((Title != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(Title, DefaultOn));
                 ret.Add((Insignia, null));
             }
 
@@ -966,15 +966,23 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 item.Number = rhs.Number;
             }
-            if (rhs.Title is not {} rhsTitleitem)
+            if ((copyMask?.GetShouldTranslate((int)Rank_FieldIndex.Title) ?? true))
             {
-                item.Title = null;
-            }
-            else
-            {
-                item.Title = new GenderedItem<TranslatedString?>(
-                    male: rhsTitleitem.Male?.DeepCopy(),
-                    female: rhsTitleitem.Female?.DeepCopy());
+                var TitleCrystal = copyMask?.GetSubCrystal((int)Rank_FieldIndex.Title);
+                if (rhs.Title is not {} rhsTitleitem)
+                {
+                    item.Title = null;
+                }
+                else
+                {
+                    item.Title = new GenderedItem<TranslatedString?>(
+                        male: (TitleCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsTitleitem.Male?.DeepCopy()
+                            : item.Title?.Male,
+                        female: (TitleCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsTitleitem.Female?.DeepCopy()
+                            : item.Title?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Rank_FieldIndex.Insignia) ?? true))
             {

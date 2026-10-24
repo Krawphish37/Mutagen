@@ -723,8 +723,8 @@ namespace Mutagen.Bethesda.Oblivion
                 ret.Add((SkillBoost5 != null ? SkillBoost5.OnOverall : DefaultOn, SkillBoost5?.GetCrystal()));
                 ret.Add((SkillBoost6 != null ? SkillBoost6.OnOverall : DefaultOn, SkillBoost6?.GetCrystal()));
                 ret.Add((Unused, null));
-                ret.Add((Height != null || DefaultOn, null));
-                ret.Add((Weight != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(Height, DefaultOn));
+                ret.Add(GenderedItem.GetCrystal(Weight, DefaultOn));
                 ret.Add((Flags, null));
             }
 
@@ -1556,12 +1556,28 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 item.Unused = rhs.Unused;
             }
-            item.Height = new GenderedItem<Single>(
-                male: rhs.Height.Male,
-                female: rhs.Height.Female);
-            item.Weight = new GenderedItem<Single>(
-                male: rhs.Weight.Male,
-                female: rhs.Weight.Female);
+            if ((copyMask?.GetShouldTranslate((int)RaceData_FieldIndex.Height) ?? true))
+            {
+                var HeightCrystal = copyMask?.GetSubCrystal((int)RaceData_FieldIndex.Height);
+                item.Height = new GenderedItem<Single>(
+                    male: (HeightCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.Height.Male
+                        : item.Height.Male,
+                    female: (HeightCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.Height.Female
+                        : item.Height.Female);
+            }
+            if ((copyMask?.GetShouldTranslate((int)RaceData_FieldIndex.Weight) ?? true))
+            {
+                var WeightCrystal = copyMask?.GetSubCrystal((int)RaceData_FieldIndex.Weight);
+                item.Weight = new GenderedItem<Single>(
+                    male: (WeightCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.Weight.Male
+                        : item.Weight.Male,
+                    female: (WeightCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.Weight.Female
+                        : item.Weight.Female);
+            }
             if ((copyMask?.GetShouldTranslate((int)RaceData_FieldIndex.Flags) ?? true))
             {
                 item.Flags = rhs.Flags;

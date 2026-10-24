@@ -3251,8 +3251,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Keywords, null));
                 ret.Add((Properties == null ? DefaultOn : !Properties.GetCrystal().CopyNothing, Properties?.GetCrystal()));
                 ret.Add((BodyPartData, null));
-                ret.Add((Height != null || DefaultOn, null));
-                ret.Add((DefaultWeight != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(Height, DefaultOn));
+                ret.Add(GenderedItem.GetCrystalMask(DefaultWeight, DefaultOn, m => m.OnOverall));
                 ret.Add((Flags, null));
                 ret.Add((AccelerationRate, null));
                 ret.Add((DecelerationRate, null));
@@ -3268,13 +3268,13 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((OrientationLimitsPitch, null));
                 ret.Add((OrientationLimitsRoll, null));
                 ret.Add((DAT2Unknown3, null));
-                ret.Add((SkeletalModel != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(SkeletalModel, DefaultOn, m => m.OnOverall));
                 ret.Add((MovementTypeNames, null));
-                ret.Add((Voices != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(Voices, DefaultOn));
                 ret.Add((FacegenMainClamp, null));
                 ret.Add((FacegenFaceClamp, null));
                 ret.Add((Attacks == null ? DefaultOn : !Attacks.GetCrystal().CopyNothing, Attacks?.GetCrystal()));
-                ret.Add((BodyData != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(BodyData, DefaultOn, m => m.OnOverall));
                 ret.Add((AimAssistPose, null));
                 ret.Add((ImpactMaterialType, null));
                 ret.Add((WED0 != null ? WED0.OnOverall : DefaultOn, WED0?.GetCrystal()));
@@ -3287,14 +3287,14 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((BaseMovementDefault, null));
                 ret.Add((BaseMovementSwimDefault, null));
                 ret.Add((BaseMovementFlyDefault, null));
-                ret.Add((ChargenAndSkintones != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(ChargenAndSkintones, DefaultOn, m => m.OnOverall));
                 ret.Add((ArmorRace, null));
                 ret.Add((SubgraphTemplateRace, null));
                 ret.Add((Subgraphs == null ? DefaultOn : !Subgraphs.GetCrystal().CopyNothing, Subgraphs?.GetCrystal()));
                 ret.Add((IdleChatterTimeMin, null));
                 ret.Add((IdleChatterTimeMax, null));
                 ret.Add((DialogueQuest, null));
-                ret.Add((HeadPartsAndBoneModifiers != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(HeadPartsAndBoneModifiers, DefaultOn, m => m.OnOverall));
                 ret.Add((MannequinSkinSwaps == null ? DefaultOn : !MannequinSkinSwaps.GetCrystal().CopyNothing, MannequinSkinSwaps?.GetCrystal()));
                 ret.Add((PluralName, null));
             }
@@ -5654,16 +5654,32 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.BodyPartData.SetTo(rhs.BodyPartData.FormKeyNullable);
             }
-            item.Height = new GenderedItem<Single>(
-                male: rhs.Height.Male,
-                female: rhs.Height.Female);
-            item.DefaultWeight = new GenderedItem<Weight>(
-                male: rhs.DefaultWeight.Male.DeepCopy(
-                    errorMask: errorMask,
-                    default(TranslationCrystal)),
-                female: rhs.DefaultWeight.Female.DeepCopy(
-                    errorMask: errorMask,
-                    default(TranslationCrystal)));
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Height) ?? true))
+            {
+                var HeightCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.Height);
+                item.Height = new GenderedItem<Single>(
+                    male: (HeightCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.Height.Male
+                        : item.Height.Male,
+                    female: (HeightCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.Height.Female
+                        : item.Height.Female);
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.DefaultWeight) ?? true))
+            {
+                var DefaultWeightCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.DefaultWeight);
+                item.DefaultWeight = new GenderedItem<Weight>(
+                    male: (DefaultWeightCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.DefaultWeight.Male.DeepCopy(
+                            errorMask: errorMask,
+                            DefaultWeightCrystal?.GetSubCrystal(0))
+                        : item.DefaultWeight.Male,
+                    female: (DefaultWeightCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.DefaultWeight.Female.DeepCopy(
+                            errorMask: errorMask,
+                            DefaultWeightCrystal?.GetSubCrystal(1))
+                        : item.DefaultWeight.Female);
+            }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Flags) ?? true))
             {
                 item.Flags = rhs.Flags;
@@ -5724,19 +5740,27 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.DAT2Unknown3 = rhs.DAT2Unknown3.ToArray();
             }
-            if (rhs.SkeletalModel is not {} rhsSkeletalModelitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.SkeletalModel) ?? true))
             {
-                item.SkeletalModel = null;
-            }
-            else
-            {
-                item.SkeletalModel = new GenderedItem<SkeletalModel?>(
-                    male: rhsSkeletalModelitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsSkeletalModelitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var SkeletalModelCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.SkeletalModel);
+                if (rhs.SkeletalModel is not {} rhsSkeletalModelitem)
+                {
+                    item.SkeletalModel = null;
+                }
+                else
+                {
+                    item.SkeletalModel = new GenderedItem<SkeletalModel?>(
+                        male: (SkeletalModelCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsSkeletalModelitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                SkeletalModelCrystal?.GetSubCrystal(0))
+                            : item.SkeletalModel?.Male,
+                        female: (SkeletalModelCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsSkeletalModelitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                SkeletalModelCrystal?.GetSubCrystal(1))
+                            : item.SkeletalModel?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.MovementTypeNames) ?? true))
             {
@@ -5755,9 +5779,17 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            item.Voices = new GenderedItem<IFormLinkGetter<IVoiceTypeGetter>>(
-                male: new FormLink<IVoiceTypeGetter>(rhs.Voices.Male.FormKey),
-                female: new FormLink<IVoiceTypeGetter>(rhs.Voices.Female.FormKey));
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Voices) ?? true))
+            {
+                var VoicesCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.Voices);
+                item.Voices = new GenderedItem<IFormLinkGetter<IVoiceTypeGetter>>(
+                    male: (VoicesCrystal?.GetShouldTranslate(0) ?? true)
+                        ? new FormLink<IVoiceTypeGetter>(rhs.Voices.Male.FormKey)
+                        : item.Voices.Male,
+                    female: (VoicesCrystal?.GetShouldTranslate(1) ?? true)
+                        ? new FormLink<IVoiceTypeGetter>(rhs.Voices.Female.FormKey)
+                        : item.Voices.Female);
+            }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.FacegenMainClamp) ?? true))
             {
                 item.FacegenMainClamp = rhs.FacegenMainClamp;
@@ -5790,13 +5822,21 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            item.BodyData = new GenderedItem<BodyData?>(
-                male: rhs.BodyData.Male?.DeepCopy(
-                    errorMask: errorMask,
-                    default(TranslationCrystal)),
-                female: rhs.BodyData.Female?.DeepCopy(
-                    errorMask: errorMask,
-                    default(TranslationCrystal)));
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.BodyData) ?? true))
+            {
+                var BodyDataCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.BodyData);
+                item.BodyData = new GenderedItem<BodyData?>(
+                    male: (BodyDataCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.BodyData.Male?.DeepCopy(
+                            errorMask: errorMask,
+                            BodyDataCrystal?.GetSubCrystal(0))
+                        : item.BodyData.Male,
+                    female: (BodyDataCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.BodyData.Female?.DeepCopy(
+                            errorMask: errorMask,
+                            BodyDataCrystal?.GetSubCrystal(1))
+                        : item.BodyData.Female);
+            }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.AimAssistPose) ?? true))
             {
                 item.AimAssistPose.SetTo(rhs.AimAssistPose.FormKeyNullable);
@@ -5937,19 +5977,27 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.BaseMovementFlyDefault.SetTo(rhs.BaseMovementFlyDefault.FormKeyNullable);
             }
-            if (rhs.ChargenAndSkintones is not {} rhsChargenAndSkintonesitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.ChargenAndSkintones) ?? true))
             {
-                item.ChargenAndSkintones = null;
-            }
-            else
-            {
-                item.ChargenAndSkintones = new GenderedItem<ChargenAndSkintones?>(
-                    male: rhsChargenAndSkintonesitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsChargenAndSkintonesitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var ChargenAndSkintonesCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.ChargenAndSkintones);
+                if (rhs.ChargenAndSkintones is not {} rhsChargenAndSkintonesitem)
+                {
+                    item.ChargenAndSkintones = null;
+                }
+                else
+                {
+                    item.ChargenAndSkintones = new GenderedItem<ChargenAndSkintones?>(
+                        male: (ChargenAndSkintonesCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsChargenAndSkintonesitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                ChargenAndSkintonesCrystal?.GetSubCrystal(0))
+                            : item.ChargenAndSkintones?.Male,
+                        female: (ChargenAndSkintonesCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsChargenAndSkintonesitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                ChargenAndSkintonesCrystal?.GetSubCrystal(1))
+                            : item.ChargenAndSkintones?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.ArmorRace) ?? true))
             {
@@ -5995,19 +6043,27 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.DialogueQuest.SetTo(rhs.DialogueQuest.FormKeyNullable);
             }
-            if (rhs.HeadPartsAndBoneModifiers is not {} rhsHeadPartsAndBoneModifiersitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.HeadPartsAndBoneModifiers) ?? true))
             {
-                item.HeadPartsAndBoneModifiers = null;
-            }
-            else
-            {
-                item.HeadPartsAndBoneModifiers = new GenderedItem<HeadPartsAndBoneModifiers?>(
-                    male: rhsHeadPartsAndBoneModifiersitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsHeadPartsAndBoneModifiersitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var HeadPartsAndBoneModifiersCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.HeadPartsAndBoneModifiers);
+                if (rhs.HeadPartsAndBoneModifiers is not {} rhsHeadPartsAndBoneModifiersitem)
+                {
+                    item.HeadPartsAndBoneModifiers = null;
+                }
+                else
+                {
+                    item.HeadPartsAndBoneModifiers = new GenderedItem<HeadPartsAndBoneModifiers?>(
+                        male: (HeadPartsAndBoneModifiersCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsHeadPartsAndBoneModifiersitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                HeadPartsAndBoneModifiersCrystal?.GetSubCrystal(0))
+                            : item.HeadPartsAndBoneModifiers?.Male,
+                        female: (HeadPartsAndBoneModifiersCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsHeadPartsAndBoneModifiersitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                HeadPartsAndBoneModifiersCrystal?.GetSubCrystal(1))
+                            : item.HeadPartsAndBoneModifiers?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.MannequinSkinSwaps) ?? true))
             {
