@@ -9179,7 +9179,7 @@ namespace Mutagen.Bethesda.Starfield
             try
             {
                 param ??= BinaryReadParameters.Default;
-                var meta = ParsingMeta.Factory(param, GameRelease.Oblivion, modKey, stream);
+                var meta = ParsingMeta.Factory(param, release.ToGameRelease(), modKey, stream);
                 using (var reader = new MutagenBinaryReadStream(stream, meta))
                 {
                     var frame = new MutagenFrame(reader);
@@ -9209,7 +9209,7 @@ namespace Mutagen.Bethesda.Starfield
             try
             {
                 param ??= BinaryReadParameters.Default;
-                var meta = ParsingMeta.Factory(param, GameRelease.Oblivion, modKey, stream);
+                var meta = ParsingMeta.Factory(param, release.ToGameRelease(), modKey, stream);
                 using (var reader = new MutagenBinaryReadStream(stream, meta))
                 {
                     var frame = new MutagenFrame(reader);
@@ -10213,7 +10213,7 @@ namespace Mutagen.Bethesda.Starfield
             try
             {
                 param ??= BinaryReadParameters.Default;
-                var meta = ParsingMeta.Factory(param, GameRelease.Oblivion, modKey, stream);
+                var meta = ParsingMeta.Factory(param, release.ToGameRelease(), modKey, stream);
                 using (var reader = new MutagenBinaryReadStream(stream, meta))
                 {
                     var frame = new MutagenFrame(reader);
