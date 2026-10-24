@@ -227,6 +227,13 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
             AddToList(mod, master);
         }
 
+        // Every master has to fit its FormID field.  Full indices end below 0xFD, as 0xFD and 0xFE in the
+        // top byte mark Medium and Small FormIDs.  The mod's own index is only checked once it is used
+        // (CheckOwnIndexFits on write, GetFormID), as a mod that only overrides records never needs one.
+        CheckMasterCount(currentModKey, MasterStyle.Full, normal);
+        CheckMasterCount(currentModKey, MasterStyle.Medium, medium);
+        CheckMasterCount(currentModKey, MasterStyle.Small, small);
+
         if (_starfieldMasters.Contains(currentModKey))
         {
             AddToListViaStyle(style, currentModKey);
@@ -250,6 +257,60 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         FillLookup(ret.Medium, lookup, MasterStyle.Medium);
         ret._lookup = lookup;
         return ret;
+    }
+
+    /// <summary>
+    /// How many indices a FormID of the given style can address
+    /// </summary>
+    private static uint IndexCapacity(MasterStyle style) => style switch
+    {
+        // 0x00-0xFC
+        MasterStyle.Full => FormID.MediumMasterMarker,
+        // 0x00-0xFF
+        MasterStyle.Medium => (FormID.MediumMasterIndexMask >> FormID.MediumMasterIndexShift) + 1,
+        // 0x000-0xFFF
+        MasterStyle.Small => (FormID.LightMasterIndexMask >> FormID.LightMasterIndexShift) + 1,
+        _ => throw new ArgumentOutOfRangeException(nameof(style), style, null)
+    };
+
+    private static void CheckMasterCount(
+        ModKey currentModKey,
+        MasterStyle style,
+        IReadOnlyList<ModKey> masters)
+    {
+        var capacity = IndexCapacity(style);
+        if (masters.Count <= capacity) return;
+        throw new TooManyMastersException(
+            currentModKey,
+            masters.ToArray(),
+            $"{currentModKey} has too many {style} masters on masters list. {masters.Count} {style} masters need indices, but only {capacity} fit in a FormID.");
+    }
+
+    private IReadOnlyList<ModKey> ListForStyle(MasterStyle style) => style switch
+    {
+        MasterStyle.Full => Full,
+        MasterStyle.Medium => Medium,
+        MasterStyle.Small => Small,
+        _ => throw new ArgumentOutOfRangeException(nameof(style), style, null)
+    };
+
+    /// <summary>
+    /// Throws if the mod's own FormIDs would need an index past what their FormID field can hold.
+    /// Only relevant for a mod that has records of its own, or links to them.
+    /// </summary>
+    internal void CheckOwnIndexFits()
+    {
+        if (!TryLookupModKey(CurrentMod, reference: true, out var style, out var index)) return;
+        if (index < IndexCapacity(style)) return;
+        throw OwnIndexDoesNotFit(style, index);
+    }
+
+    private TooManyMastersException OwnIndexDoesNotFit(MasterStyle style, uint index)
+    {
+        return new TooManyMastersException(
+            CurrentMod,
+            ListForStyle(style).Where(x => x != CurrentMod).ToArray(),
+            $"{CurrentMod} has too many {style} masters on masters list to also hold its own records. They would need {style} index 0x{index:X}, but only {IndexCapacity(style)} {style} indices fit in a FormID.");
     }
 
     public static IReadOnlySeparatedMasterPackage FromConstants(GameConstants constants, ModPath path,
@@ -337,6 +398,12 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
             throw new UnmappableFormIDException(
                 new FormLinkInformation(formKey, typeof(IMajorRecordGetter)),
                 this);
+        }
+
+        if (index >= IndexCapacity(style))
+        {
+            // Separate already checked the masters, so only the mod's own index can get here
+            throw OwnIndexDoesNotFit(style, index);
         }
 
         return FormID.Factory(style, index, formKey.ID);

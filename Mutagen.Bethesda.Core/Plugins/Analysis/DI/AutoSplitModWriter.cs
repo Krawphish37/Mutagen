@@ -67,7 +67,8 @@ public class AutoSplitModWriter : IAutoSplitModWriter
         }
 
         // Split the mod using the MultiModFileSplitter
-        var splitMods = _splitter.Split<TMod, TModGetter>(mutableMod, Constants.PluginMasterLimit);
+        // The master styles let it also keep Full masters within the Full FormID indices on separated master games
+        var splitMods = _splitter.Split<TMod, TModGetter>(mutableMod, Constants.PluginMasterLimit, param.MasterFlagsLookup);
 
         // Clean up old split files that are no longer needed
         CleanupOldSplitFiles(path, splitMods.Count, fileSystem);

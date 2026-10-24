@@ -18,4 +18,14 @@ public class TooManyMastersException : Exception
         CurrentMod = currentMod;
         _masters = masters;
     }
+
+    internal TooManyMastersException(
+        ModKey currentMod,
+        ModKey[] masters,
+        string message)
+        : base(message)
+    {
+        CurrentMod = currentMod;
+        _masters = masters;
+    }
 }

@@ -1,5 +1,6 @@
 using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Exceptions;
+using Mutagen.Bethesda.Plugins.Meta;
 using Mutagen.Bethesda.Plugins.Records;
 using Noggog;
 
@@ -36,7 +37,41 @@ public class MultiModFileSplitter : IMultiModFileSplitter
         public required int Index { get; init; }
         public required ModKey Key { get; init; }
         public HashSet<ModKey> Masters { get; } = new();
+        /// <summary>How many of the masters use Full indices, when that is limited</summary>
+        public int FullMasterCount { get; set; }
         public List<AnalyzedRecord<TMod, TModGetter>> Records { get; } = new();
+    }
+
+    /// <summary>
+    /// Limit on how many Full masters a mod fragment can have, for games with separated master load orders
+    /// </summary>
+    private class FullMasterLimit
+    {
+        /// <summary>
+        /// Full indices end below the 0xFD Medium marker, and the mod fragment itself takes the index after its
+        /// Full masters, so 252 Full masters at most
+        /// </summary>
+        public const int Limit = (int)FormID.MediumMasterMarker - 1;
+
+        public required IReadOnlyCache<IModMasterStyledGetter, ModKey> Lookup { get; init; }
+        public required MasterStyle InputStyle { get; init; }
+        public required HashSet<ModKey> FragmentKeys { get; init; }
+
+        public bool IsFull(ModKey modKey)
+        {
+            if (Lookup.TryGetValue(modKey, out var styled))
+            {
+                return styled.MasterStyle == MasterStyle.Full;
+            }
+
+            if (FragmentKeys.Contains(modKey))
+            {
+                return InputStyle == MasterStyle.Full;
+            }
+
+            // Unknown to the lookup, so the write will refuse it anyway.  Count it as Full to be safe
+            return true;
+        }
     }
 
     /// <summary>
@@ -99,7 +134,29 @@ public class MultiModFileSplitter : IMultiModFileSplitter
         where TMod : IMod, TModGetter, IMajorRecordContextEnumerable<TMod, TModGetter>
         where TModGetter : IModGetter
     {
+        return Split<TMod, TModGetter>(inputMod, masterLimit, masterFlagsLookup: null);
+    }
+
+    public IReadOnlyList<TMod> Split<TMod, TModGetter>(
+        TMod inputMod,
+        int masterLimit,
+        IReadOnlyCache<IModMasterStyledGetter, ModKey>? masterFlagsLookup)
+        where TMod : IMod, TModGetter, IMajorRecordContextEnumerable<TMod, TModGetter>
+        where TModGetter : IModGetter
+    {
         var inputKey = inputMod.ModKey;
+
+        FullMasterLimit? fullMasterLimit = null;
+        if (masterFlagsLookup != null
+            && GameConstants.Get(inputMod.GameRelease).SeparateMasterLoadOrders)
+        {
+            fullMasterLimit = new FullMasterLimit()
+            {
+                Lookup = masterFlagsLookup,
+                InputStyle = inputMod.GetMasterStyle(),
+                FragmentKeys = new HashSet<ModKey>(),
+            };
+        }
         var linkCache = inputMod.ToUntypedImmutableLinkCache();
 
         var records = inputMod
@@ -135,7 +192,7 @@ public class MultiModFileSplitter : IMultiModFileSplitter
                 }
             }
 
-            var modFragment = ReserveModFragment(modFragments, inputMod, externalMasters, referencedOutside, masterLimit, originIndexByRecord);
+            var modFragment = ReserveModFragment(modFragments, inputMod, externalMasters, referencedOutside, masterLimit, fullMasterLimit, originIndexByRecord);
             foreach (var key in clusterSet)
             {
                 modFragment.Records.Add(createdRecordsByKey[key]);
@@ -147,7 +204,7 @@ public class MultiModFileSplitter : IMultiModFileSplitter
         foreach (var record in records)
         {
             if (record.IsOriginatingRecord) continue;
-            var modFragment = ReserveModFragment(modFragments, inputMod, record.ExternalMasters, record.ReferencedOriginRecords, masterLimit, originIndexByRecord);
+            var modFragment = ReserveModFragment(modFragments, inputMod, record.ExternalMasters, record.ReferencedOriginRecords, masterLimit, fullMasterLimit, originIndexByRecord);
             modFragment.Records.Add(record);
         }
 
@@ -270,6 +327,7 @@ public class MultiModFileSplitter : IMultiModFileSplitter
         HashSet<ModKey> externals,
         HashSet<FormKey> referencedCreated,
         int masterLimit,
+        FullMasterLimit? fullMasterLimit,
         Dictionary<FormKey, int> originIndexByRecord)
         where TMod : IMod, TModGetter, IMajorRecordContextEnumerable<TMod, TModGetter>
         where TModGetter : IModGetter
@@ -294,14 +352,39 @@ public class MultiModFileSplitter : IMultiModFileSplitter
             return set;
         }
 
+        void AddMasters(ModFragment<TMod, TModGetter> modFragment, HashSet<ModKey> needed)
+        {
+            foreach (var master in needed)
+            {
+                if (modFragment.Masters.Add(master)
+                    && fullMasterLimit != null
+                    && fullMasterLimit.IsFull(master))
+                {
+                    modFragment.FullMasterCount++;
+                }
+            }
+        }
+
         for (var i = requiredMin; i < modFragments.Count; i++)
         {
             var modFragment = modFragments[i];
             var needed = MastersForIndex(i);
-            var missing = needed.Count(m => !modFragment.Masters.Contains(m));
-            if (modFragment.Masters.Count + missing <= masterLimit)
+            var missing = 0;
+            var missingFull = 0;
+            foreach (var master in needed)
             {
-                modFragment.Masters.UnionWith(needed);
+                if (modFragment.Masters.Contains(master)) continue;
+                missing++;
+                if (fullMasterLimit != null && fullMasterLimit.IsFull(master))
+                {
+                    missingFull++;
+                }
+            }
+            if (modFragment.Masters.Count + missing <= masterLimit
+                && (fullMasterLimit == null
+                    || modFragment.FullMasterCount + missingFull <= FullMasterLimit.Limit))
+            {
+                AddMasters(modFragment, needed);
                 return modFragment;
             }
         }
@@ -313,13 +396,25 @@ public class MultiModFileSplitter : IMultiModFileSplitter
             Key = KeyForIndex(inputMod.ModKey, newIndex),
         };
         modFragments.Add(newModFragment);
+        fullMasterLimit?.FragmentKeys.Add(newModFragment.Key);
 
         var newNeeded = MastersForIndex(newIndex);
         if (newNeeded.Count > masterLimit)
         {
             throw new TooManyMastersException(inputMod.ModKey, newNeeded.ToArray());
         }
-        newModFragment.Masters.UnionWith(newNeeded);
+        if (fullMasterLimit != null)
+        {
+            var newFull = newNeeded.Where(fullMasterLimit.IsFull).ToArray();
+            if (newFull.Length > FullMasterLimit.Limit)
+            {
+                throw new TooManyMastersException(
+                    inputMod.ModKey,
+                    newFull,
+                    $"{inputMod.ModKey} has a record that needs too many Full masters on its own. {newFull.Length} Full masters, but a mod can only have {FullMasterLimit.Limit} next to its own Full index.");
+            }
+        }
+        AddMasters(newModFragment, newNeeded);
         return newModFragment;
     }
 
