@@ -83,7 +83,7 @@ public static class IBinaryStreamExt
         {
             return 0;
         }
-        else if (f >= byte.MaxValue)
+        else if (f >= 1)
         {
             return byte.MaxValue;
         }
