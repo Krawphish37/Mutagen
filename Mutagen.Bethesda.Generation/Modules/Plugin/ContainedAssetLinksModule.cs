@@ -452,7 +452,7 @@ public class ContainedAssetLinksModule : AContainedLinksModule<AssetLinkType>
                     }
                     else if (cont.SubTypeGeneration is AssetLinkType)
                     {
-                        fg.AppendLine(
+                        subFg.AppendLine(
                             $"obj.{field.Name}{field.NullChar}.RemapListedAssetLinks(mapping);");
                     }
                 }
