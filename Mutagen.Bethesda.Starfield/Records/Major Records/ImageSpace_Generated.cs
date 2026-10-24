@@ -817,6 +817,7 @@ namespace Mutagen.Bethesda.Starfield
             var all = RecordCollection.Factory(
                 RecordTypes.IMGS,
                 RecordTypes.REFL,
+                RecordTypes.XXXX,
                 RecordTypes.RFDP,
                 RecordTypes.RDIF);
             return new RecordTriggerSpecs(
@@ -1443,7 +1444,8 @@ namespace Mutagen.Bethesda.Starfield
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.Reflection,
-                header: translationParams.ConvertToCustom(RecordTypes.REFL));
+                header: translationParams.ConvertToCustom(RecordTypes.REFL),
+                overflowRecord: RecordTypes.XXXX);
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.ReflectionParent,
@@ -1538,6 +1540,11 @@ namespace Mutagen.Bethesda.Starfield
                     item.ReflectionDiff = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
                     return (int)ImageSpace_FieldIndex.ReflectionDiff;
                 }
+                case RecordTypeInts.XXXX:
+                {
+                    var overflowHeader = frame.ReadSubrecord();
+                    return ParseResult.OverrideLength(lastParsed, BinaryPrimitives.ReadUInt32LittleEndian(overflowHeader.Content));
+                }
                 default:
                     return StarfieldMajorRecordBinaryCreateTranslation.FillBinaryRecordTypes(
                         item: item,
@@ -1599,7 +1606,12 @@ namespace Mutagen.Bethesda.Starfield
 
         #region Reflection
         private int? _ReflectionLocation;
-        public ReadOnlyMemorySlice<Byte>? Reflection => _ReflectionLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ReflectionLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        private int? _ReflectionLengthOverride;
+        public ReadOnlyMemorySlice<Byte>? Reflection => PluginUtilityTranslation.ReadByteArrayWithOverflow(
+            _recordData,
+            _package.MetaData.Constants,
+            _ReflectionLocation,
+            _ReflectionLengthOverride);
         #endregion
         #region ReflectionParent
         private int? _ReflectionParentLocation;
@@ -1681,6 +1693,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.REFL:
                 {
                     _ReflectionLocation = (stream.Position - offset);
+                    _ReflectionLengthOverride = lastParsed.LengthOverride;
+                    if (lastParsed.LengthOverride.HasValue)
+                    {
+                        stream.Position += lastParsed.LengthOverride.Value;
+                    }
                     return (int)ImageSpace_FieldIndex.Reflection;
                 }
                 case RecordTypeInts.RFDP:
@@ -1692,6 +1709,11 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     _ReflectionDiffLocation = (stream.Position - offset);
                     return (int)ImageSpace_FieldIndex.ReflectionDiff;
+                }
+                case RecordTypeInts.XXXX:
+                {
+                    var overflowHeader = stream.ReadSubrecord();
+                    return ParseResult.OverrideLength(lastParsed, BinaryPrimitives.ReadUInt32LittleEndian(overflowHeader.Content));
                 }
                 default:
                     return base.FillRecordType(

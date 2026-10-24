@@ -724,7 +724,8 @@ namespace Mutagen.Bethesda.Starfield
             var triggers = RecordCollection.Factory(RecordTypes.EFSQ);
             var all = RecordCollection.Factory(
                 RecordTypes.EFSQ,
-                RecordTypes.REFL);
+                RecordTypes.REFL,
+                RecordTypes.XXXX);
             return new RecordTriggerSpecs(
                 allRecordTypes: all,
                 triggeringRecordTypes: triggers);
@@ -1303,7 +1304,8 @@ namespace Mutagen.Bethesda.Starfield
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.REFL,
-                header: translationParams.ConvertToCustom(RecordTypes.REFL));
+                header: translationParams.ConvertToCustom(RecordTypes.REFL),
+                overflowRecord: RecordTypes.XXXX);
         }
 
         public void Write(
@@ -1378,6 +1380,11 @@ namespace Mutagen.Bethesda.Starfield
                     item.REFL = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
                     return (int)EffectSequence_FieldIndex.REFL;
                 }
+                case RecordTypeInts.XXXX:
+                {
+                    var overflowHeader = frame.ReadSubrecord();
+                    return ParseResult.OverrideLength(lastParsed, BinaryPrimitives.ReadUInt32LittleEndian(overflowHeader.Content));
+                }
                 default:
                     return StarfieldMajorRecordBinaryCreateTranslation.FillBinaryRecordTypes(
                         item: item,
@@ -1438,7 +1445,12 @@ namespace Mutagen.Bethesda.Starfield
 
         #region REFL
         private int? _REFLLocation;
-        public ReadOnlyMemorySlice<Byte>? REFL => _REFLLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _REFLLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        private int? _REFLLengthOverride;
+        public ReadOnlyMemorySlice<Byte>? REFL => PluginUtilityTranslation.ReadByteArrayWithOverflow(
+            _recordData,
+            _package.MetaData.Constants,
+            _REFLLocation,
+            _REFLLengthOverride);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1512,7 +1524,17 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.REFL:
                 {
                     _REFLLocation = (stream.Position - offset);
+                    _REFLLengthOverride = lastParsed.LengthOverride;
+                    if (lastParsed.LengthOverride.HasValue)
+                    {
+                        stream.Position += lastParsed.LengthOverride.Value;
+                    }
                     return (int)EffectSequence_FieldIndex.REFL;
+                }
+                case RecordTypeInts.XXXX:
+                {
+                    var overflowHeader = stream.ReadSubrecord();
+                    return ParseResult.OverrideLength(lastParsed, BinaryPrimitives.ReadUInt32LittleEndian(overflowHeader.Content));
                 }
                 default:
                     return base.FillRecordType(

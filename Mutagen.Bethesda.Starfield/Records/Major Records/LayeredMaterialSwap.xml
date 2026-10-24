@@ -3,7 +3,7 @@
   <Object name="LayeredMaterialSwap" recordType="LMSW" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <RefList name="Components" refName="AComponent" />
-      <ByteArray name="REFL" recordType="REFL" unknown="true" />
+      <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
     </Fields>
   </Object>
 </Loqui>
