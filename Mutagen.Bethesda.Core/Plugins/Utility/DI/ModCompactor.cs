@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Mutagen.Bethesda.Plugins.Analysis.DI;
+using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Exceptions;
 using Mutagen.Bethesda.Plugins.Records;
 using Noggog;
@@ -199,15 +200,35 @@ public class ModCompactor : IModCompactor
                 nextFormKey = new FormKey(mod.ModKey, nextId++);
             } while (originatingRecords.ContainsKey(nextFormKey));
 
-            mod.Remove(rec.Record);
-            var dup = rec.DuplicateIntoAsNewRecord(mod, nextFormKey);
-            // Duplication leaves out nested records (Cell refs, Quest scenes, etc).
-            // When compacting they belong to the same mod, and should move along to the new FormKey
-            ((IMajorRecordInternal)dup).DeepCopyIn(rec.Record);
-            
             remapped.Add(rec.Record.FormKey, nextFormKey);
         }
 
+        // Nested records first.  Their contexts look up their parent by its original FormKey,
+        // so the parent needs to still be there when they are moved
+        foreach (var rec in outOfRange.OrderByDescending(GetDepth))
+        {
+            mod.Remove(rec.Record);
+            var dup = rec.DuplicateIntoAsNewRecord(mod, remapped[rec.Record.FormKey]);
+            // The original is handed back if it could not be removed
+            if (!ReferenceEquals(dup, rec.Record))
+            {
+                // Some duplications leave out nested records (Cell refs, etc).
+                // When compacting they belong to the same mod, and should move along to the new FormKey
+                ((IMajorRecordInternal)dup).DeepCopyIn(rec.Record);
+            }
+        }
+
         return remapped;
+    }
+
+    private static int GetDepth(IModContext context)
+    {
+        var depth = 0;
+        while (context.Parent is { } parent)
+        {
+            depth++;
+            context = parent;
+        }
+        return depth;
     }
 }
