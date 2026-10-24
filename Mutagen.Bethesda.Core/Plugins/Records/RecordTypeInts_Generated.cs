@@ -31,6 +31,7 @@ public partial class RecordTypeInts
     public const int ATMO = 0x4F4D5441;
     public const int AVIF = 0x46495641;
     public const int AVMD = 0x444D5641;
+    public const int BFCB = 0x42434642;
     public const int BIOM = 0x4D4F4942;
     public const int BMMO = 0x4F4D4D42;
     public const int BMOD = 0x444F4D42;

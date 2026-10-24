@@ -87,6 +87,20 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ReadOnlyMemorySlice<Byte>? IWeatherSettingGetter.ReflectionDiff => this.ReflectionDiff;
         #endregion
+        #region Conditions
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private ExtendedList<Condition> _Conditions = new ExtendedList<Condition>();
+        public ExtendedList<Condition> Conditions
+        {
+            get => this._Conditions;
+            init => this._Conditions = value;
+        }
+        #region Interface Members
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IReadOnlyList<IConditionGetter> IWeatherSettingGetter.Conditions => _Conditions;
+        #endregion
+
+        #endregion
 
         #region To String
 
@@ -115,6 +129,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.REFL = initialValue;
                 this.ReflectionParent = initialValue;
                 this.ReflectionDiff = initialValue;
+                this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
@@ -127,7 +142,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem StarfieldMajorRecordFlags,
                 TItem REFL,
                 TItem ReflectionParent,
-                TItem ReflectionDiff)
+                TItem ReflectionDiff,
+                TItem Conditions)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -140,6 +156,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.REFL = REFL;
                 this.ReflectionParent = ReflectionParent;
                 this.ReflectionDiff = ReflectionDiff;
+                this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
             }
 
             #pragma warning disable CS8618
@@ -154,6 +171,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem REFL;
             public TItem ReflectionParent;
             public TItem ReflectionDiff;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
             #endregion
 
             #region Equals
@@ -170,6 +188,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.REFL, rhs.REFL)) return false;
                 if (!object.Equals(this.ReflectionParent, rhs.ReflectionParent)) return false;
                 if (!object.Equals(this.ReflectionDiff, rhs.ReflectionDiff)) return false;
+                if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -178,6 +197,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.REFL);
                 hash.Add(this.ReflectionParent);
                 hash.Add(this.ReflectionDiff);
+                hash.Add(this.Conditions);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -191,6 +211,18 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.REFL)) return false;
                 if (!eval(this.ReflectionParent)) return false;
                 if (!eval(this.ReflectionDiff)) return false;
+                if (this.Conditions != null)
+                {
+                    if (!eval(this.Conditions.Overall)) return false;
+                    if (this.Conditions.Specific != null)
+                    {
+                        foreach (var item in this.Conditions.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 return true;
             }
             #endregion
@@ -202,6 +234,18 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.REFL)) return true;
                 if (eval(this.ReflectionParent)) return true;
                 if (eval(this.ReflectionDiff)) return true;
+                if (this.Conditions != null)
+                {
+                    if (eval(this.Conditions.Overall)) return true;
+                    if (this.Conditions.Specific != null)
+                    {
+                        foreach (var item in this.Conditions.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 return false;
             }
             #endregion
@@ -220,6 +264,21 @@ namespace Mutagen.Bethesda.Starfield
                 obj.REFL = eval(this.REFL);
                 obj.ReflectionParent = eval(this.ReflectionParent);
                 obj.ReflectionDiff = eval(this.ReflectionDiff);
+                if (Conditions != null)
+                {
+                    obj.Conditions = new MaskItem<R, IEnumerable<MaskItemIndexed<R, Condition.Mask<R>?>>?>(eval(this.Conditions.Overall), []);
+                    if (Conditions.Specific != null)
+                    {
+                        var l = new List<MaskItemIndexed<R, Condition.Mask<R>?>>();
+                        obj.Conditions.Specific = l;
+                        foreach (var item in Conditions.Specific)
+                        {
+                            MaskItemIndexed<R, Condition.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, Condition.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
+                        }
+                    }
+                }
             }
             #endregion
 
@@ -250,6 +309,25 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ReflectionDiff, "ReflectionDiff");
                     }
+                    if ((printMask?.Conditions?.Overall ?? true)
+                        && Conditions is {} ConditionsItem)
+                    {
+                        sb.AppendLine("Conditions =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(ConditionsItem.Overall);
+                            if (ConditionsItem.Specific != null)
+                            {
+                                foreach (var subItem in ConditionsItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        subItem?.Print(sb);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             #endregion
@@ -264,6 +342,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? REFL;
             public Exception? ReflectionParent;
             public Exception? ReflectionDiff;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
             #endregion
 
             #region IErrorMask
@@ -278,6 +357,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ReflectionParent;
                     case WeatherSetting_FieldIndex.ReflectionDiff:
                         return ReflectionDiff;
+                    case WeatherSetting_FieldIndex.Conditions:
+                        return Conditions;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -296,6 +377,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case WeatherSetting_FieldIndex.ReflectionDiff:
                         this.ReflectionDiff = ex;
+                        break;
+                    case WeatherSetting_FieldIndex.Conditions:
+                        this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -317,6 +401,9 @@ namespace Mutagen.Bethesda.Starfield
                     case WeatherSetting_FieldIndex.ReflectionDiff:
                         this.ReflectionDiff = (Exception?)obj;
                         break;
+                    case WeatherSetting_FieldIndex.Conditions:
+                        this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
+                        break;
                     default:
                         base.SetNthMask(index, obj);
                         break;
@@ -329,6 +416,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (REFL != null) return true;
                 if (ReflectionParent != null) return true;
                 if (ReflectionDiff != null) return true;
+                if (Conditions != null) return true;
                 return false;
             }
             #endregion
@@ -364,6 +452,24 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(ReflectionDiff, "ReflectionDiff");
                 }
+                if (Conditions is {} ConditionsItem)
+                {
+                    sb.AppendLine("Conditions =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(ConditionsItem.Overall);
+                        if (ConditionsItem.Specific != null)
+                        {
+                            foreach (var subItem in ConditionsItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    subItem?.Print(sb);
+                                }
+                            }
+                        }
+                    }
+                }
             }
             #endregion
 
@@ -375,6 +481,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.REFL = this.REFL.Combine(rhs.REFL);
                 ret.ReflectionParent = this.ReflectionParent.Combine(rhs.ReflectionParent);
                 ret.ReflectionDiff = this.ReflectionDiff.Combine(rhs.ReflectionDiff);
+                ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -400,6 +507,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool REFL;
             public bool ReflectionParent;
             public bool ReflectionDiff;
+            public Condition.TranslationMask? Conditions;
             #endregion
 
             #region Ctors
@@ -421,6 +529,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((REFL, null));
                 ret.Add((ReflectionParent, null));
                 ret.Add((ReflectionDiff, null));
+                ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -571,6 +680,7 @@ namespace Mutagen.Bethesda.Starfield
         new MemorySlice<Byte>? REFL { get; set; }
         new IFormLinkNullable<IWeatherSettingGetter> ReflectionParent { get; set; }
         new MemorySlice<Byte>? ReflectionDiff { get; set; }
+        new ExtendedList<Condition> Conditions { get; }
     }
 
     public partial interface IWeatherSettingInternal :
@@ -592,6 +702,7 @@ namespace Mutagen.Bethesda.Starfield
         ReadOnlyMemorySlice<Byte>? REFL { get; }
         IFormLinkNullableGetter<IWeatherSettingGetter> ReflectionParent { get; }
         ReadOnlyMemorySlice<Byte>? ReflectionDiff { get; }
+        IReadOnlyList<IConditionGetter> Conditions { get; }
 
     }
 
@@ -771,6 +882,7 @@ namespace Mutagen.Bethesda.Starfield
         REFL = 7,
         ReflectionParent = 8,
         ReflectionDiff = 9,
+        Conditions = 10,
     }
     #endregion
 
@@ -781,9 +893,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 3;
+        public const ushort AdditionalFieldCount = 4;
 
-        public const ushort FieldCount = 10;
+        public const ushort FieldCount = 11;
 
         public static readonly Type MaskType = typeof(WeatherSetting.Mask<>);
 
@@ -819,7 +931,11 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.REFL,
                 RecordTypes.XXXX,
                 RecordTypes.RFDP,
-                RecordTypes.RDIF);
+                RecordTypes.RDIF,
+                RecordTypes.CTDA,
+                RecordTypes.CITC,
+                RecordTypes.CIS1,
+                RecordTypes.CIS2);
             return new RecordTriggerSpecs(
                 allRecordTypes: all,
                 triggeringRecordTypes: triggers);
@@ -867,6 +983,7 @@ namespace Mutagen.Bethesda.Starfield
             item.REFL = default;
             item.ReflectionParent.Clear();
             item.ReflectionDiff = default;
+            item.Conditions.Clear();
             base.Clear(item);
         }
         
@@ -885,6 +1002,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             base.RemapLinks(obj, mapping);
             obj.ReflectionParent.Relink(mapping);
+            obj.Conditions.RemapLinks(mapping);
         }
         
         #endregion
@@ -955,6 +1073,10 @@ namespace Mutagen.Bethesda.Starfield
             ret.REFL = MemorySliceExt.SequenceEqual(item.REFL, rhs.REFL);
             ret.ReflectionParent = item.ReflectionParent.Equals(rhs.ReflectionParent);
             ret.ReflectionDiff = MemorySliceExt.SequenceEqual(item.ReflectionDiff, rhs.ReflectionDiff);
+            ret.Conditions = item.Conditions.CollectionEqualsHelper(
+                rhs.Conditions,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
+                include);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1018,6 +1140,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendLine($"ReflectionDiff => {SpanExt.ToHexString(ReflectionDiffItem)}");
             }
+            if (printMask?.Conditions?.Overall ?? true)
+            {
+                sb.AppendLine("Conditions =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in item.Conditions)
+                    {
+                        using (sb.Brace())
+                        {
+                            subItem?.Print(sb, "Item");
+                        }
+                    }
+                }
+            }
         }
         
         public static WeatherSetting_FieldIndex ConvertFieldIndex(StarfieldMajorRecord_FieldIndex index)
@@ -1080,6 +1216,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!MemorySliceExt.SequenceEqual(lhs.ReflectionDiff, rhs.ReflectionDiff)) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)WeatherSetting_FieldIndex.Conditions) ?? true))
+            {
+                if (!lhs.Conditions.SequenceEqual(rhs.Conditions, (l, r) => ((ConditionCommon)((IConditionGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)WeatherSetting_FieldIndex.Conditions)))) return false;
+            }
             return true;
         }
         
@@ -1117,6 +1257,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.AddBytes(ReflectionDiffItem);
             }
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1149,6 +1293,10 @@ namespace Mutagen.Bethesda.Starfield
             if (FormLinkInformation.TryFactory(obj.ReflectionParent, out var ReflectionParentInfo))
             {
                 yield return ReflectionParentInfo;
+            }
+            foreach (var item in obj.Conditions.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+            {
+                yield return FormLinkInformation.Factory(item);
             }
             yield break;
         }
@@ -1270,6 +1418,30 @@ namespace Mutagen.Bethesda.Starfield
                 else
                 {
                     item.ReflectionDiff = default;
+                }
+            }
+            if ((copyMask?.GetShouldTranslate((int)WeatherSetting_FieldIndex.Conditions) ?? true))
+            {
+                errorMask?.PushIndex((int)WeatherSetting_FieldIndex.Conditions);
+                try
+                {
+                    item.Conditions.SetTo(
+                        rhs.Conditions
+                        .Select(r =>
+                        {
+                            return r.DeepCopy(
+                                errorMask: errorMask,
+                                default(TranslationCrystal));
+                        }));
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             DeepCopyInCustom(
@@ -1454,6 +1626,17 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.ReflectionDiff,
                 header: translationParams.ConvertToCustom(RecordTypes.RDIF));
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IConditionGetter>.Instance.Write(
+                writer: writer,
+                items: item.Conditions,
+                transl: (MutagenWriter subWriter, IConditionGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((ConditionBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
         }
 
         public void Write(
@@ -1540,6 +1723,16 @@ namespace Mutagen.Bethesda.Starfield
                     item.ReflectionDiff = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
                     return (int)WeatherSetting_FieldIndex.ReflectionDiff;
                 }
+                case RecordTypeInts.CTDA:
+                {
+                    item.Conditions.SetTo(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
+                            reader: frame,
+                            triggeringRecord: Condition_Registration.TriggerSpecs,
+                            translationParams: translationParams,
+                            transl: Condition.TryCreateFromBinary));
+                    return (int)WeatherSetting_FieldIndex.Conditions;
+                }
                 case RecordTypeInts.XXXX:
                 {
                     var overflowHeader = frame.ReadSubrecord();
@@ -1621,6 +1814,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _ReflectionDiffLocation;
         public ReadOnlyMemorySlice<Byte>? ReflectionDiff => _ReflectionDiffLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ReflectionDiffLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
         #endregion
+        public IReadOnlyList<IConditionGetter> Conditions { get; private set; } = [];
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1709,6 +1903,21 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     _ReflectionDiffLocation = (stream.Position - offset);
                     return (int)WeatherSetting_FieldIndex.ReflectionDiff;
+                }
+                case RecordTypeInts.CTDA:
+                {
+                    this.Conditions = BinaryOverlayList.FactoryByArray<IConditionGetter>(
+                        mem: stream.RemainingMemory,
+                        package: _package,
+                        translationParams: translationParams,
+                        getter: (s, p, recConv) => ConditionBinaryOverlay.ConditionFactory(new OverlayStream(s, p), p, recConv),
+                        locs: ParseRecordLocations(
+                            stream: stream,
+                            trigger: Condition_Registration.TriggerSpecs,
+                            triggersAlwaysAreNewRecords: true,
+                            constants: _package.MetaData.Constants.SubConstants,
+                            skipHeader: false));
+                    return (int)WeatherSetting_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.XXXX:
                 {

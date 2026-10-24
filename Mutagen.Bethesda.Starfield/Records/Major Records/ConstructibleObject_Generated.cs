@@ -1929,11 +1929,13 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainer,
         IBaseObject,
         IConstructibleObjectGetter,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         ILoquiObjectSetter<IConstructibleObjectInternal>,
         INamed,
         INamedRequired,
+        IPlaceableObject,
         IResearchResourceTarget,
         IResourceTarget,
         IScripted,
@@ -1992,12 +1994,14 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         ILoquiObject<IConstructibleObjectGetter>,
         IMapsToGetter<IConstructibleObjectGetter>,
         INamedGetter,
         INamedRequiredGetter,
+        IPlaceableObjectGetter,
         IResearchResourceTargetGetter,
         IResourceTargetGetter,
         IScriptedGetter,
@@ -3006,7 +3010,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -3016,9 +3023,24 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(Descriptionitem);
             }
             hash.Add(item.WorkbenchKeyword);
-            hash.Add(item.Conditions);
-            hash.Add(item.ConstructableComponents);
-            hash.Add(item.RequiredPerks);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
+            if (item.ConstructableComponents is {} ConstructableComponentsitem)
+            {
+                foreach (var subItem in ConstructableComponentsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.RequiredPerks is {} RequiredPerksitem)
+            {
+                foreach (var subItem in RequiredPerksitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.CreatedObject);
             hash.Add(item.AmountProduced);
             hash.Add(item.MenuSortOrder);
@@ -3035,7 +3057,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(DropdownSounditem);
             }
-            hash.Add(item.RepairComponents);
+            if (item.RepairComponents is {} RepairComponentsitem)
+            {
+                foreach (var subItem in RepairComponentsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.LearnMethod is {} LearnMethoditem)
             {
                 hash.Add(LearnMethoditem);
@@ -3046,7 +3074,13 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.BaseReturnScaleTable);
             hash.Add(item.LearnChance);
             hash.Add(item.MaxBuildCountGlobal);
-            hash.Add(item.RecipeFilters);
+            if (item.RecipeFilters is {} RecipeFiltersitem)
+            {
+                foreach (var subItem in RecipeFiltersitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.InstantiationFilterKeyword);
             if (item.Flags is {} Flagsitem)
             {

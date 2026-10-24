@@ -2305,17 +2305,17 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Class.Flag Flags => _Flags_IsSet ? (Class.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Services
         private int _ServicesLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _Services_IsSet => _DATALocation.HasValue;
+        private bool _Services_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ServicesLocation + 1 >= 4;
         public Class.ClassService Services => _Services_IsSet ? (Class.ClassService)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ServicesLocation, 0x4)) : default;
         #endregion
         #region Teaches
         private int _TeachesLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _Teaches_IsSet => _DATALocation.HasValue;
+        private bool _Teaches_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TeachesLocation + 1 >= 1;
         public Skill? Teaches
         {
             get
@@ -2329,18 +2329,18 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region MaxTrainingLevel
         private int _MaxTrainingLevelLocation => _DATALocation!.Value.Min + 0x19;
-        private bool _MaxTrainingLevel_IsSet => _DATALocation.HasValue;
+        private bool _MaxTrainingLevel_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MaxTrainingLevelLocation + 1 >= 1;
         public Byte MaxTrainingLevel => _MaxTrainingLevel_IsSet ? _recordData.Span[_MaxTrainingLevelLocation] : default;
         #endregion
         #region Unknown
         private int _UnknownLocation => _DATALocation!.Value.Min + 0x1A;
-        private bool _Unknown_IsSet => _DATALocation.HasValue;
+        private bool _Unknown_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownLocation + 1 >= 2;
         public UInt16 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_UnknownLocation, 2)) : default(UInt16);
         #endregion
         private RangeInt32? _ATTRLocation;
         #region Attributes
         private int _AttributesLocation => _ATTRLocation!.Value.Min;
-        private bool _Attributes_IsSet => _ATTRLocation.HasValue;
+        private bool _Attributes_IsSet => _ATTRLocation.HasValue && _ATTRLocation!.Value.Max - _AttributesLocation + 1 >= 7;
         public IReadOnlyDictionary<Class.Attribute, Byte> Attributes => _Attributes_IsSet ? DictBinaryTranslation<Byte>.Instance.Parse<Class.Attribute>(
             new MutagenFrame(new MutagenMemoryReadStream(_recordData.Slice(_AttributesLocation), _package.MetaData)),
             new Dictionary<Class.Attribute, Byte>(),

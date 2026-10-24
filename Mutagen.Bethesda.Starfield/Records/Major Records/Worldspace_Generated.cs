@@ -4556,7 +4556,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(WaterEnvironmentMapitem);
             }
-            hash.Add(item.XCLAs);
+            foreach (var subItem in item.XCLAs)
+            {
+                hash.Add(subItem);
+            }
             if (item.GNAM is {} GNAMitem)
             {
                 hash.Add(GNAMitem);

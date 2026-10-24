@@ -2344,12 +2344,12 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _DATALocation;
         #region Unknown
         private int _UnknownLocation => _DATALocation!.Value.Min;
-        private bool _Unknown_IsSet => _DATALocation.HasValue;
+        private bool _Unknown_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
         #endregion
         #region Teaches
         private int _TeachesLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Teaches_IsSet => _DATALocation.HasValue;
+        private bool _Teaches_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TeachesLocation + 1 >= 1;
         public Skill? Teaches
         {
             get
@@ -2363,12 +2363,12 @@ namespace Mutagen.Bethesda.Skyrim
         #endregion
         #region MaxTrainingLevel
         private int _MaxTrainingLevelLocation => _DATALocation!.Value.Min + 0x5;
-        private bool _MaxTrainingLevel_IsSet => _DATALocation.HasValue;
+        private bool _MaxTrainingLevel_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MaxTrainingLevelLocation + 1 >= 1;
         public Byte MaxTrainingLevel => _MaxTrainingLevel_IsSet ? _recordData.Span[_MaxTrainingLevelLocation] : default;
         #endregion
         #region SkillWeights
         private int _SkillWeightsLocation => _DATALocation!.Value.Min + 0x6;
-        private bool _SkillWeights_IsSet => _DATALocation.HasValue;
+        private bool _SkillWeights_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SkillWeightsLocation + 1 >= 18;
         public IReadOnlyDictionary<Skill, Byte> SkillWeights => _SkillWeights_IsSet ? DictBinaryTranslation<Byte>.Instance.Parse<Skill>(
             new MutagenFrame(new MutagenMemoryReadStream(_recordData.Slice(_SkillWeightsLocation), _package.MetaData)),
             new Dictionary<Skill, Byte>(),
@@ -2376,17 +2376,17 @@ namespace Mutagen.Bethesda.Skyrim
         #endregion
         #region BleedoutDefault
         private int _BleedoutDefaultLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _BleedoutDefault_IsSet => _DATALocation.HasValue;
+        private bool _BleedoutDefault_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BleedoutDefaultLocation + 1 >= 4;
         public Single BleedoutDefault => _BleedoutDefault_IsSet ? _recordData.Slice(_BleedoutDefaultLocation, 4).Float() : default(Single);
         #endregion
         #region VoicePoints
         private int _VoicePointsLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _VoicePoints_IsSet => _DATALocation.HasValue;
+        private bool _VoicePoints_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _VoicePointsLocation + 1 >= 4;
         public UInt32 VoicePoints => _VoicePoints_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_VoicePointsLocation, 4)) : default(UInt32);
         #endregion
         #region StatWeights
         private int _StatWeightsLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _StatWeights_IsSet => _DATALocation.HasValue;
+        private bool _StatWeights_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _StatWeightsLocation + 1 >= 3;
         public IReadOnlyDictionary<BasicStat, Byte> StatWeights => _StatWeights_IsSet ? DictBinaryTranslation<Byte>.Instance.Parse<BasicStat>(
             new MutagenFrame(new MutagenMemoryReadStream(_recordData.Slice(_StatWeightsLocation), _package.MetaData)),
             new Dictionary<BasicStat, Byte>(),
@@ -2394,7 +2394,7 @@ namespace Mutagen.Bethesda.Skyrim
         #endregion
         #region Unknown2
         private int _Unknown2Location => _DATALocation!.Value.Min + 0x23;
-        private bool _Unknown2_IsSet => _DATALocation.HasValue;
+        private bool _Unknown2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Unknown2Location + 1 >= 1;
         public Byte Unknown2 => _Unknown2_IsSet ? _recordData.Span[_Unknown2Location] : default;
         #endregion
         partial void CustomFactoryEnd(

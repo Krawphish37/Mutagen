@@ -270,6 +270,24 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
+        #region Destructible
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Destructible? _Destructible;
+        /// <summary>
+        /// Aspects: IHasDestructible
+        /// </summary>
+        public Destructible? Destructible
+        {
+            get => _Destructible;
+            set => _Destructible = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IDestructibleGetter? INpcGetter.Destructible => this.Destructible;
+        #region Aspects
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IDestructibleGetter? IHasDestructibleGetter.Destructible => this.Destructible;
+        #endregion
+        #endregion
         #region Skin
         private readonly IFormLinkNullable<IArmorGetter> _Skin = new FormLinkNullable<IArmorGetter>();
         public IFormLinkNullable<IArmorGetter> Skin
@@ -289,6 +307,20 @@ namespace Mutagen.Bethesda.Starfield
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IRaceGetter> INpcGetter.AttackRace => this.AttackRace;
+        #endregion
+        #region Attacks
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private ExtendedList<Attack> _Attacks = new ExtendedList<Attack>();
+        public ExtendedList<Attack> Attacks
+        {
+            get => this._Attacks;
+            init => this._Attacks = value;
+        }
+        #region Interface Members
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IReadOnlyList<IAttackGetter> INpcGetter.Attacks => _Attacks;
+        #endregion
+
         #endregion
         #region SpectatorOverridePackageList
         private readonly IFormLinkNullable<IFormListGetter> _SpectatorOverridePackageList = new FormLinkNullable<IFormListGetter>();
@@ -889,8 +921,10 @@ namespace Mutagen.Bethesda.Starfield
                 this.TemplateActors = new MaskItem<TItem, TemplateActors.Mask<TItem>?>(initialValue, new TemplateActors.Mask<TItem>(initialValue));
                 this.Race = initialValue;
                 this.ActorEffect = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
+                this.Destructible = new MaskItem<TItem, Destructible.Mask<TItem>?>(initialValue, new Destructible.Mask<TItem>(initialValue));
                 this.Skin = initialValue;
                 this.AttackRace = initialValue;
+                this.Attacks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Attack.Mask<TItem>?>>?>(initialValue, []);
                 this.SpectatorOverridePackageList = initialValue;
                 this.CombatOverridePackageList = initialValue;
                 this.Perks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PerkPlacement.Mask<TItem>?>>?>(initialValue, []);
@@ -987,8 +1021,10 @@ namespace Mutagen.Bethesda.Starfield
                 TItem TemplateActors,
                 TItem Race,
                 TItem ActorEffect,
+                TItem Destructible,
                 TItem Skin,
                 TItem AttackRace,
+                TItem Attacks,
                 TItem SpectatorOverridePackageList,
                 TItem CombatOverridePackageList,
                 TItem Perks,
@@ -1084,8 +1120,10 @@ namespace Mutagen.Bethesda.Starfield
                 this.TemplateActors = new MaskItem<TItem, TemplateActors.Mask<TItem>?>(TemplateActors, new TemplateActors.Mask<TItem>(TemplateActors));
                 this.Race = Race;
                 this.ActorEffect = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ActorEffect, []);
+                this.Destructible = new MaskItem<TItem, Destructible.Mask<TItem>?>(Destructible, new Destructible.Mask<TItem>(Destructible));
                 this.Skin = Skin;
                 this.AttackRace = AttackRace;
+                this.Attacks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Attack.Mask<TItem>?>>?>(Attacks, []);
                 this.SpectatorOverridePackageList = SpectatorOverridePackageList;
                 this.CombatOverridePackageList = CombatOverridePackageList;
                 this.Perks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PerkPlacement.Mask<TItem>?>>?>(Perks, []);
@@ -1183,8 +1221,10 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, TemplateActors.Mask<TItem>?>? TemplateActors { get; set; }
             public TItem Race;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ActorEffect;
+            public MaskItem<TItem, Destructible.Mask<TItem>?>? Destructible { get; set; }
             public TItem Skin;
             public TItem AttackRace;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Attack.Mask<TItem>?>>?>? Attacks;
             public TItem SpectatorOverridePackageList;
             public TItem CombatOverridePackageList;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PerkPlacement.Mask<TItem>?>>?>? Perks;
@@ -1284,8 +1324,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.TemplateActors, rhs.TemplateActors)) return false;
                 if (!object.Equals(this.Race, rhs.Race)) return false;
                 if (!object.Equals(this.ActorEffect, rhs.ActorEffect)) return false;
+                if (!object.Equals(this.Destructible, rhs.Destructible)) return false;
                 if (!object.Equals(this.Skin, rhs.Skin)) return false;
                 if (!object.Equals(this.AttackRace, rhs.AttackRace)) return false;
+                if (!object.Equals(this.Attacks, rhs.Attacks)) return false;
                 if (!object.Equals(this.SpectatorOverridePackageList, rhs.SpectatorOverridePackageList)) return false;
                 if (!object.Equals(this.CombatOverridePackageList, rhs.CombatOverridePackageList)) return false;
                 if (!object.Equals(this.Perks, rhs.Perks)) return false;
@@ -1377,8 +1419,10 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.TemplateActors);
                 hash.Add(this.Race);
                 hash.Add(this.ActorEffect);
+                hash.Add(this.Destructible);
                 hash.Add(this.Skin);
                 hash.Add(this.AttackRace);
+                hash.Add(this.Attacks);
                 hash.Add(this.SpectatorOverridePackageList);
                 hash.Add(this.CombatOverridePackageList);
                 hash.Add(this.Perks);
@@ -1531,8 +1575,25 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (Destructible != null)
+                {
+                    if (!eval(this.Destructible.Overall)) return false;
+                    if (this.Destructible.Specific != null && !this.Destructible.Specific.All(eval)) return false;
+                }
                 if (!eval(this.Skin)) return false;
                 if (!eval(this.AttackRace)) return false;
+                if (this.Attacks != null)
+                {
+                    if (!eval(this.Attacks.Overall)) return false;
+                    if (this.Attacks.Specific != null)
+                    {
+                        foreach (var item in this.Attacks.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (!eval(this.SpectatorOverridePackageList)) return false;
                 if (!eval(this.CombatOverridePackageList)) return false;
                 if (this.Perks != null)
@@ -1855,8 +1916,25 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (Destructible != null)
+                {
+                    if (eval(this.Destructible.Overall)) return true;
+                    if (this.Destructible.Specific != null && this.Destructible.Specific.Any(eval)) return true;
+                }
                 if (eval(this.Skin)) return true;
                 if (eval(this.AttackRace)) return true;
+                if (this.Attacks != null)
+                {
+                    if (eval(this.Attacks.Overall)) return true;
+                    if (this.Attacks.Specific != null)
+                    {
+                        foreach (var item in this.Attacks.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (eval(this.SpectatorOverridePackageList)) return true;
                 if (eval(this.CombatOverridePackageList)) return true;
                 if (this.Perks != null)
@@ -2171,8 +2249,24 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                obj.Destructible = this.Destructible == null ? null : new MaskItem<R, Destructible.Mask<R>?>(eval(this.Destructible.Overall), this.Destructible.Specific?.Translate(eval));
                 obj.Skin = eval(this.Skin);
                 obj.AttackRace = eval(this.AttackRace);
+                if (Attacks != null)
+                {
+                    obj.Attacks = new MaskItem<R, IEnumerable<MaskItemIndexed<R, Attack.Mask<R>?>>?>(eval(this.Attacks.Overall), []);
+                    if (Attacks.Specific != null)
+                    {
+                        var l = new List<MaskItemIndexed<R, Attack.Mask<R>?>>();
+                        obj.Attacks.Specific = l;
+                        foreach (var item in Attacks.Specific)
+                        {
+                            MaskItemIndexed<R, Attack.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, Attack.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
+                        }
+                    }
+                }
                 obj.SpectatorOverridePackageList = eval(this.SpectatorOverridePackageList);
                 obj.CombatOverridePackageList = eval(this.CombatOverridePackageList);
                 if (Perks != null)
@@ -2601,6 +2695,10 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
+                    if (printMask?.Destructible?.Overall ?? true)
+                    {
+                        Destructible?.Print(sb);
+                    }
                     if (printMask?.Skin ?? true)
                     {
                         sb.AppendItem(Skin, "Skin");
@@ -2608,6 +2706,25 @@ namespace Mutagen.Bethesda.Starfield
                     if (printMask?.AttackRace ?? true)
                     {
                         sb.AppendItem(AttackRace, "AttackRace");
+                    }
+                    if ((printMask?.Attacks?.Overall ?? true)
+                        && Attacks is {} AttacksItem)
+                    {
+                        sb.AppendLine("Attacks =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(AttacksItem.Overall);
+                            if (AttacksItem.Specific != null)
+                            {
+                                foreach (var subItem in AttacksItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        subItem?.Print(sb);
+                                    }
+                                }
+                            }
+                        }
                     }
                     if (printMask?.SpectatorOverridePackageList ?? true)
                     {
@@ -3127,8 +3244,10 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, TemplateActors.ErrorMask?>? TemplateActors;
             public Exception? Race;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ActorEffect;
+            public MaskItem<Exception?, Destructible.ErrorMask?>? Destructible;
             public Exception? Skin;
             public Exception? AttackRace;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Attack.ErrorMask?>>?>? Attacks;
             public Exception? SpectatorOverridePackageList;
             public Exception? CombatOverridePackageList;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PerkPlacement.ErrorMask?>>?>? Perks;
@@ -3247,10 +3366,14 @@ namespace Mutagen.Bethesda.Starfield
                         return Race;
                     case Npc_FieldIndex.ActorEffect:
                         return ActorEffect;
+                    case Npc_FieldIndex.Destructible:
+                        return Destructible;
                     case Npc_FieldIndex.Skin:
                         return Skin;
                     case Npc_FieldIndex.AttackRace:
                         return AttackRace;
+                    case Npc_FieldIndex.Attacks:
+                        return Attacks;
                     case Npc_FieldIndex.SpectatorOverridePackageList:
                         return SpectatorOverridePackageList;
                     case Npc_FieldIndex.CombatOverridePackageList:
@@ -3457,11 +3580,17 @@ namespace Mutagen.Bethesda.Starfield
                     case Npc_FieldIndex.ActorEffect:
                         this.ActorEffect = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
+                    case Npc_FieldIndex.Destructible:
+                        this.Destructible = new MaskItem<Exception?, Destructible.ErrorMask?>(ex, null);
+                        break;
                     case Npc_FieldIndex.Skin:
                         this.Skin = ex;
                         break;
                     case Npc_FieldIndex.AttackRace:
                         this.AttackRace = ex;
+                        break;
+                    case Npc_FieldIndex.Attacks:
+                        this.Attacks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Attack.ErrorMask?>>?>(ex, null);
                         break;
                     case Npc_FieldIndex.SpectatorOverridePackageList:
                         this.SpectatorOverridePackageList = ex;
@@ -3732,11 +3861,17 @@ namespace Mutagen.Bethesda.Starfield
                     case Npc_FieldIndex.ActorEffect:
                         this.ActorEffect = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
+                    case Npc_FieldIndex.Destructible:
+                        this.Destructible = (MaskItem<Exception?, Destructible.ErrorMask?>?)obj;
+                        break;
                     case Npc_FieldIndex.Skin:
                         this.Skin = (Exception?)obj;
                         break;
                     case Npc_FieldIndex.AttackRace:
                         this.AttackRace = (Exception?)obj;
+                        break;
+                    case Npc_FieldIndex.Attacks:
+                        this.Attacks = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Attack.ErrorMask?>>?>)obj;
                         break;
                     case Npc_FieldIndex.SpectatorOverridePackageList:
                         this.SpectatorOverridePackageList = (Exception?)obj;
@@ -3957,8 +4092,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (TemplateActors != null) return true;
                 if (Race != null) return true;
                 if (ActorEffect != null) return true;
+                if (Destructible != null) return true;
                 if (Skin != null) return true;
                 if (AttackRace != null) return true;
+                if (Attacks != null) return true;
                 if (SpectatorOverridePackageList != null) return true;
                 if (CombatOverridePackageList != null) return true;
                 if (Perks != null) return true;
@@ -4154,11 +4291,30 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                Destructible?.Print(sb);
                 {
                     sb.AppendItem(Skin, "Skin");
                 }
                 {
                     sb.AppendItem(AttackRace, "AttackRace");
+                }
+                if (Attacks is {} AttacksItem)
+                {
+                    sb.AppendLine("Attacks =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(AttacksItem.Overall);
+                        if (AttacksItem.Specific != null)
+                        {
+                            foreach (var subItem in AttacksItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    subItem?.Print(sb);
+                                }
+                            }
+                        }
+                    }
                 }
                 {
                     sb.AppendItem(SpectatorOverridePackageList, "SpectatorOverridePackageList");
@@ -4607,8 +4763,10 @@ namespace Mutagen.Bethesda.Starfield
                 ret.TemplateActors = this.TemplateActors.Combine(rhs.TemplateActors, (l, r) => l.Combine(r));
                 ret.Race = this.Race.Combine(rhs.Race);
                 ret.ActorEffect = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ActorEffect?.Overall, rhs.ActorEffect?.Overall), Noggog.ExceptionExt.Combine(this.ActorEffect?.Specific, rhs.ActorEffect?.Specific));
+                ret.Destructible = this.Destructible.Combine(rhs.Destructible, (l, r) => l.Combine(r));
                 ret.Skin = this.Skin.Combine(rhs.Skin);
                 ret.AttackRace = this.AttackRace.Combine(rhs.AttackRace);
+                ret.Attacks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Attack.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Attacks?.Overall, rhs.Attacks?.Overall), Noggog.ExceptionExt.Combine(this.Attacks?.Specific, rhs.Attacks?.Specific));
                 ret.SpectatorOverridePackageList = this.SpectatorOverridePackageList.Combine(rhs.SpectatorOverridePackageList);
                 ret.CombatOverridePackageList = this.CombatOverridePackageList.Combine(rhs.CombatOverridePackageList);
                 ret.Perks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PerkPlacement.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Perks?.Overall, rhs.Perks?.Overall), Noggog.ExceptionExt.Combine(this.Perks?.Specific, rhs.Perks?.Specific));
@@ -4717,8 +4875,10 @@ namespace Mutagen.Bethesda.Starfield
             public TemplateActors.TranslationMask? TemplateActors;
             public bool Race;
             public bool ActorEffect;
+            public Destructible.TranslationMask? Destructible;
             public bool Skin;
             public bool AttackRace;
+            public Attack.TranslationMask? Attacks;
             public bool SpectatorOverridePackageList;
             public bool CombatOverridePackageList;
             public PerkPlacement.TranslationMask? Perks;
@@ -4887,8 +5047,10 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((TemplateActors != null ? TemplateActors.OnOverall : DefaultOn, TemplateActors?.GetCrystal()));
                 ret.Add((Race, null));
                 ret.Add((ActorEffect, null));
+                ret.Add((Destructible != null ? Destructible.OnOverall : DefaultOn, Destructible?.GetCrystal()));
                 ret.Add((Skin, null));
                 ret.Add((AttackRace, null));
+                ret.Add((Attacks == null ? DefaultOn : !Attacks.GetCrystal().CopyNothing, Attacks?.GetCrystal()));
                 ret.Add((SpectatorOverridePackageList, null));
                 ret.Add((CombatOverridePackageList, null));
                 ret.Add((Perks == null ? DefaultOn : !Perks.GetCrystal().CopyNothing, Perks?.GetCrystal()));
@@ -5108,6 +5270,7 @@ namespace Mutagen.Bethesda.Starfield
         IConstructibleObjectTarget,
         IExplodeSpawn,
         IFormLinkContainer,
+        IHasDestructible,
         IHasVoiceType,
         IHaveVirtualMachineAdapter,
         IKeyworded<IKeywordGetter>,
@@ -5156,8 +5319,13 @@ namespace Mutagen.Bethesda.Starfield
         new TemplateActors? TemplateActors { get; set; }
         new IFormLink<IRaceGetter> Race { get; set; }
         new ExtendedList<IFormLinkGetter<ISpellRecordGetter>> ActorEffect { get; }
+        /// <summary>
+        /// Aspects: IHasDestructible
+        /// </summary>
+        new Destructible? Destructible { get; set; }
         new IFormLinkNullable<IArmorGetter> Skin { get; set; }
         new IFormLinkNullable<IRaceGetter> AttackRace { get; set; }
+        new ExtendedList<Attack> Attacks { get; }
         new IFormLinkNullable<IFormListGetter> SpectatorOverridePackageList { get; set; }
         new IFormLinkNullable<IFormListGetter> CombatOverridePackageList { get; set; }
         new ExtendedList<PerkPlacement>? Perks { get; set; }
@@ -5249,6 +5417,7 @@ namespace Mutagen.Bethesda.Starfield
         IConstructibleObjectTargetGetter,
         IExplodeSpawnGetter,
         IFormLinkContainerGetter,
+        IHasDestructibleGetter,
         IHasVoiceTypeGetter,
         IHaveVirtualMachineAdapterGetter,
         IKeywordedGetter<IKeywordGetter>,
@@ -5301,8 +5470,15 @@ namespace Mutagen.Bethesda.Starfield
         ITemplateActorsGetter? TemplateActors { get; }
         IFormLinkGetter<IRaceGetter> Race { get; }
         IReadOnlyList<IFormLinkGetter<ISpellRecordGetter>> ActorEffect { get; }
+        #region Destructible
+        /// <summary>
+        /// Aspects: IHasDestructibleGetter
+        /// </summary>
+        IDestructibleGetter? Destructible { get; }
+        #endregion
         IFormLinkNullableGetter<IArmorGetter> Skin { get; }
         IFormLinkNullableGetter<IRaceGetter> AttackRace { get; }
+        IReadOnlyList<IAttackGetter> Attacks { get; }
         IFormLinkNullableGetter<IFormListGetter> SpectatorOverridePackageList { get; }
         IFormLinkNullableGetter<IFormListGetter> CombatOverridePackageList { get; }
         IReadOnlyList<IPerkPlacementGetter>? Perks { get; }
@@ -5579,70 +5755,72 @@ namespace Mutagen.Bethesda.Starfield
         TemplateActors = 28,
         Race = 29,
         ActorEffect = 30,
-        Skin = 31,
-        AttackRace = 32,
-        SpectatorOverridePackageList = 33,
-        CombatOverridePackageList = 34,
-        Perks = 35,
-        Properties = 36,
-        ForcedLocations = 37,
-        NativeTerminal = 38,
-        Items = 39,
-        Aggression = 40,
-        Confidence = 41,
-        EnergyLevel = 42,
-        Responsibility = 43,
-        Mood = 44,
-        Assistance = 45,
-        UnknownAIDT = 46,
-        Packages = 47,
-        FLEE = 48,
-        RDSAs = 49,
-        Keywords = 50,
-        AttachParentSlots = 51,
-        ObjectTemplates = 52,
-        Class = 53,
-        Name = 54,
-        ShortName = 55,
-        LongName = 56,
-        CalculatedHealth = 57,
-        CalculatedActionPoints = 58,
-        FarAwayModelDistance = 59,
-        GearedUpWeapons = 60,
-        Unused = 61,
-        HCLR = 62,
-        BCLR = 63,
-        HeadParts = 64,
-        CombatStyle = 65,
-        NAM5 = 66,
-        HeightMin = 67,
-        HeightMax = 68,
-        Weight = 69,
-        Sounds = 70,
-        InheritsSoundsFrom = 71,
-        CompanionInfoQuest = 72,
-        CompanionInfoDialogue = 73,
-        DefaultOutfit = 74,
-        SpaceOutfit = 75,
-        DefaultPackageList = 76,
-        CrimeFaction = 77,
-        FormationFaction = 78,
-        Tints = 79,
-        BodyMorphRegionValues = 80,
-        FaceDialPositions = 81,
-        FaceMorphs = 82,
-        MorphBlends = 83,
-        ActivateTextOverride = 84,
-        SkinToneIndex = 85,
-        EYEC = 86,
-        HairColor = 87,
-        FacialHairColor = 88,
-        EyebrowColor = 89,
-        EyeColor = 90,
-        JewelryColor = 91,
-        TeethColor = 92,
-        Pronoun = 93,
-        ONA2 = 94,
+        Destructible = 31,
+        Skin = 32,
+        AttackRace = 33,
+        Attacks = 34,
+        SpectatorOverridePackageList = 35,
+        CombatOverridePackageList = 36,
+        Perks = 37,
+        Properties = 38,
+        ForcedLocations = 39,
+        NativeTerminal = 40,
+        Items = 41,
+        Aggression = 42,
+        Confidence = 43,
+        EnergyLevel = 44,
+        Responsibility = 45,
+        Mood = 46,
+        Assistance = 47,
+        UnknownAIDT = 48,
+        Packages = 49,
+        FLEE = 50,
+        RDSAs = 51,
+        Keywords = 52,
+        AttachParentSlots = 53,
+        ObjectTemplates = 54,
+        Class = 55,
+        Name = 56,
+        ShortName = 57,
+        LongName = 58,
+        CalculatedHealth = 59,
+        CalculatedActionPoints = 60,
+        FarAwayModelDistance = 61,
+        GearedUpWeapons = 62,
+        Unused = 63,
+        HCLR = 64,
+        BCLR = 65,
+        HeadParts = 66,
+        CombatStyle = 67,
+        NAM5 = 68,
+        HeightMin = 69,
+        HeightMax = 70,
+        Weight = 71,
+        Sounds = 72,
+        InheritsSoundsFrom = 73,
+        CompanionInfoQuest = 74,
+        CompanionInfoDialogue = 75,
+        DefaultOutfit = 76,
+        SpaceOutfit = 77,
+        DefaultPackageList = 78,
+        CrimeFaction = 79,
+        FormationFaction = 80,
+        Tints = 81,
+        BodyMorphRegionValues = 82,
+        FaceDialPositions = 83,
+        FaceMorphs = 84,
+        MorphBlends = 85,
+        ActivateTextOverride = 86,
+        SkinToneIndex = 87,
+        EYEC = 88,
+        HairColor = 89,
+        FacialHairColor = 90,
+        EyebrowColor = 91,
+        EyeColor = 92,
+        JewelryColor = 93,
+        TeethColor = 94,
+        Pronoun = 95,
+        ONA2 = 96,
     }
     #endregion
 
@@ -5653,9 +5831,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 88;
+        public const ushort AdditionalFieldCount = 90;
 
-        public const ushort FieldCount = 95;
+        public const ushort FieldCount = 97;
 
         public static readonly Type MaskType = typeof(Npc.Mask<>);
 
@@ -5708,8 +5886,17 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.TPTA,
                 RecordTypes.RNAM,
                 RecordTypes.SPLO,
+                RecordTypes.DEST,
+                RecordTypes.DAMC,
+                RecordTypes.DSDL,
+                RecordTypes.DSTD,
                 RecordTypes.WNAM,
                 RecordTypes.ATKR,
+                RecordTypes.ATKD,
+                RecordTypes.ATKE,
+                RecordTypes.ATKW,
+                RecordTypes.ATKS,
+                RecordTypes.ATKT,
                 RecordTypes.SPOR,
                 RecordTypes.ECOR,
                 RecordTypes.PRKR,
@@ -5850,8 +6037,10 @@ namespace Mutagen.Bethesda.Starfield
             item.TemplateActors = null;
             item.Race.Clear();
             item.ActorEffect.Clear();
+            item.Destructible = null;
             item.Skin.Clear();
             item.AttackRace.Clear();
+            item.Attacks.Clear();
             item.SpectatorOverridePackageList.Clear();
             item.CombatOverridePackageList.Clear();
             item.Perks = null;
@@ -5944,8 +6133,10 @@ namespace Mutagen.Bethesda.Starfield
             obj.TemplateActors?.RemapLinks(mapping);
             obj.Race.Relink(mapping);
             obj.ActorEffect.RemapLinks(mapping);
+            obj.Destructible?.RemapLinks(mapping);
             obj.Skin.Relink(mapping);
             obj.AttackRace.Relink(mapping);
+            obj.Attacks.RemapLinks(mapping);
             obj.SpectatorOverridePackageList.Relink(mapping);
             obj.CombatOverridePackageList.Relink(mapping);
             obj.Perks?.RemapLinks(mapping);
@@ -5984,6 +6175,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
+            if (obj.Destructible is {} DestructibleItems)
+            {
+                foreach (var item in DestructibleItems.EnumerateListedAssetLinks(iterateNestedRecords))
+                {
+                    yield return item;
+                }
+            }
             yield break;
         }
         
@@ -5995,6 +6193,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             obj.Components.ForEach(x => x.RemapAssetLinks(mapping, queryCategories, linkCache));
+            obj.Destructible?.RemapAssetLinks(mapping, queryCategories, linkCache);
         }
         
         #endregion
@@ -6111,8 +6310,17 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.ActorEffect,
                 (l, r) => object.Equals(l, r),
                 include);
+            ret.Destructible = EqualsMaskHelper.EqualsHelper(
+                item.Destructible,
+                rhs.Destructible,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
             ret.Skin = item.Skin.Equals(rhs.Skin);
             ret.AttackRace = item.AttackRace.Equals(rhs.AttackRace);
+            ret.Attacks = item.Attacks.CollectionEqualsHelper(
+                rhs.Attacks,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
+                include);
             ret.SpectatorOverridePackageList = item.SpectatorOverridePackageList.Equals(rhs.SpectatorOverridePackageList);
             ret.CombatOverridePackageList = item.CombatOverridePackageList.Equals(rhs.CombatOverridePackageList);
             ret.Perks = item.Perks.CollectionEqualsHelper(
@@ -6412,6 +6620,11 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
+            if ((printMask?.Destructible?.Overall ?? true)
+                && item.Destructible is {} DestructibleItem)
+            {
+                DestructibleItem?.Print(sb, "Destructible");
+            }
             if (printMask?.Skin ?? true)
             {
                 sb.AppendItem(item.Skin.FormKeyNullable, "Skin");
@@ -6419,6 +6632,20 @@ namespace Mutagen.Bethesda.Starfield
             if (printMask?.AttackRace ?? true)
             {
                 sb.AppendItem(item.AttackRace.FormKeyNullable, "AttackRace");
+            }
+            if (printMask?.Attacks?.Overall ?? true)
+            {
+                sb.AppendLine("Attacks =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in item.Attacks)
+                    {
+                        using (sb.Brace())
+                        {
+                            subItem?.Print(sb, "Item");
+                        }
+                    }
+                }
             }
             if (printMask?.SpectatorOverridePackageList ?? true)
             {
@@ -7018,6 +7245,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ActorEffect.SequenceEqualNullable(rhs.ActorEffect)) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.Destructible) ?? true))
+            {
+                if (EqualsMaskHelper.RefEquality(lhs.Destructible, rhs.Destructible, out var lhsDestructible, out var rhsDestructible, out var isDestructibleEqual))
+                {
+                    if (!((DestructibleCommon)((IDestructibleGetter)lhsDestructible).CommonInstance()!).Equals(lhsDestructible, rhsDestructible, equalsMask?.GetSubCrystal((int)Npc_FieldIndex.Destructible))) return false;
+                }
+                else if (!isDestructibleEqual) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.Skin) ?? true))
             {
                 if (!lhs.Skin.Equals(rhs.Skin)) return false;
@@ -7025,6 +7260,10 @@ namespace Mutagen.Bethesda.Starfield
             if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.AttackRace) ?? true))
             {
                 if (!lhs.AttackRace.Equals(rhs.AttackRace)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.Attacks) ?? true))
+            {
+                if (!lhs.Attacks.SequenceEqual(rhs.Attacks, (l, r) => ((AttackCommon)((IAttackGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Npc_FieldIndex.Attacks)))) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.SpectatorOverridePackageList) ?? true))
             {
@@ -7362,8 +7601,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(subItem);
             }
+            if (item.Destructible is {} Destructibleitem)
+            {
+                hash.Add(Destructibleitem);
+            }
             hash.Add(item.Skin);
             hash.Add(item.AttackRace);
+            foreach (var subItem in item.Attacks)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.SpectatorOverridePackageList);
             hash.Add(item.CombatOverridePackageList);
             if (item.Perks is {} Perksitem)
@@ -7649,6 +7896,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return FormLinkInformation.Factory(item);
             }
+            if (obj.Destructible is {} DestructibleItems)
+            {
+                foreach (var item in DestructibleItems.EnumerateFormLinks(iterateNestedRecords))
+                {
+                    yield return item;
+                }
+            }
             if (FormLinkInformation.TryFactory(obj.Skin, out var SkinInfo))
             {
                 yield return SkinInfo;
@@ -7656,6 +7910,10 @@ namespace Mutagen.Bethesda.Starfield
             if (FormLinkInformation.TryFactory(obj.AttackRace, out var AttackRaceInfo))
             {
                 yield return AttackRaceInfo;
+            }
+            foreach (var item in obj.Attacks.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+            {
+                yield return FormLinkInformation.Factory(item);
             }
             if (FormLinkInformation.TryFactory(obj.SpectatorOverridePackageList, out var SpectatorOverridePackageListInfo))
             {
@@ -7801,6 +8059,13 @@ namespace Mutagen.Bethesda.Starfield
                 .SelectMany((f) => f.EnumerateAssetLinks(queryCategories: queryCategories, linkCache: linkCache, assetType: assetType, iterateNestedRecords: iterateNestedRecords)))
             {
                 yield return item;
+            }
+            if (obj.Destructible is {} DestructibleItems)
+            {
+                foreach (var item in DestructibleItems.EnumerateAssetLinks(queryCategories: queryCategories, linkCache: linkCache, assetType: assetType, iterateNestedRecords: iterateNestedRecords))
+                {
+                    yield return item;
+                }
             }
             yield break;
         }
@@ -8173,6 +8438,32 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.Destructible) ?? true))
+            {
+                errorMask?.PushIndex((int)Npc_FieldIndex.Destructible);
+                try
+                {
+                    if(rhs.Destructible is {} rhsDestructible)
+                    {
+                        item.Destructible = rhsDestructible.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)Npc_FieldIndex.Destructible));
+                    }
+                    else
+                    {
+                        item.Destructible = default;
+                    }
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
+            }
             if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.Skin) ?? true))
             {
                 item.Skin.SetTo(rhs.Skin.FormKeyNullable);
@@ -8180,6 +8471,30 @@ namespace Mutagen.Bethesda.Starfield
             if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.AttackRace) ?? true))
             {
                 item.AttackRace.SetTo(rhs.AttackRace.FormKeyNullable);
+            }
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.Attacks) ?? true))
+            {
+                errorMask?.PushIndex((int)Npc_FieldIndex.Attacks);
+                try
+                {
+                    item.Attacks.SetTo(
+                        rhs.Attacks
+                        .Select(r =>
+                        {
+                            return r.DeepCopy(
+                                errorMask: errorMask,
+                                default(TranslationCrystal));
+                        }));
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.SpectatorOverridePackageList) ?? true))
             {
@@ -9152,6 +9467,13 @@ namespace Mutagen.Bethesda.Starfield
                         item: subItem,
                         header: translationParams.ConvertToCustom(RecordTypes.SPLO));
                 });
+            if (item.Destructible is {} DestructibleItem)
+            {
+                ((DestructibleBinaryWriteTranslation)((IBinaryItem)DestructibleItem).BinaryWriteTranslator).Write(
+                    item: DestructibleItem,
+                    writer: writer,
+                    translationParams: translationParams);
+            }
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.Skin,
@@ -9160,6 +9482,17 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.AttackRace,
                 header: translationParams.ConvertToCustom(RecordTypes.ATKR));
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IAttackGetter>.Instance.Write(
+                writer: writer,
+                items: item.Attacks,
+                transl: (MutagenWriter subWriter, IAttackGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((AttackBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.SpectatorOverridePackageList,
@@ -9767,6 +10100,16 @@ namespace Mutagen.Bethesda.Starfield
                             transl: FormLinkBinaryTranslation.Instance.Parse));
                     return (int)Npc_FieldIndex.ActorEffect;
                 }
+                case RecordTypeInts.DEST:
+                case RecordTypeInts.DAMC:
+                case RecordTypeInts.DSDL:
+                case RecordTypeInts.DSTD:
+                {
+                    item.Destructible = Mutagen.Bethesda.Starfield.Destructible.CreateFromBinary(
+                        frame: frame,
+                        translationParams: translationParams.DoNotShortCircuit());
+                    return (int)Npc_FieldIndex.Destructible;
+                }
                 case RecordTypeInts.WNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -9778,6 +10121,20 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AttackRace.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     return (int)Npc_FieldIndex.AttackRace;
+                }
+                case RecordTypeInts.ATKD:
+                case RecordTypeInts.ATKE:
+                case RecordTypeInts.ATKW:
+                case RecordTypeInts.ATKS:
+                case RecordTypeInts.ATKT:
+                {
+                    item.Attacks.SetTo(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Attack>.Instance.Parse(
+                            reader: frame,
+                            triggeringRecord: Attack_Registration.TriggerSpecs,
+                            translationParams: translationParams,
+                            transl: Attack.TryCreateFromBinary));
+                    return (int)Npc_FieldIndex.Attacks;
                 }
                 case RecordTypeInts.SPOR:
                 {
@@ -10423,6 +10780,7 @@ namespace Mutagen.Bethesda.Starfield
         public IFormLinkGetter<IRaceGetter> Race => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IRaceGetter>(_package, _recordData, _RaceLocation);
         #endregion
         public IReadOnlyList<IFormLinkGetter<ISpellRecordGetter>> ActorEffect { get; private set; } = [];
+        public IDestructibleGetter? Destructible { get; private set; }
         #region Skin
         private int? _SkinLocation;
         public IFormLinkNullableGetter<IArmorGetter> Skin => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IArmorGetter>(_package, _recordData, _SkinLocation);
@@ -10431,6 +10789,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _AttackRaceLocation;
         public IFormLinkNullableGetter<IRaceGetter> AttackRace => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IRaceGetter>(_package, _recordData, _AttackRaceLocation);
         #endregion
+        public IReadOnlyList<IAttackGetter> Attacks { get; private set; } = [];
         #region SpectatorOverridePackageList
         private int? _SpectatorOverridePackageListLocation;
         public IFormLinkNullableGetter<IFormListGetter> SpectatorOverridePackageList => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IFormListGetter>(_package, _recordData, _SpectatorOverridePackageListLocation);
@@ -10843,6 +11202,17 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams));
                     return (int)Npc_FieldIndex.ActorEffect;
                 }
+                case RecordTypeInts.DEST:
+                case RecordTypeInts.DAMC:
+                case RecordTypeInts.DSDL:
+                case RecordTypeInts.DSTD:
+                {
+                    this.Destructible = DestructibleBinaryOverlay.DestructibleFactory(
+                        stream: stream,
+                        package: _package,
+                        translationParams: translationParams.DoNotShortCircuit());
+                    return (int)Npc_FieldIndex.Destructible;
+                }
                 case RecordTypeInts.WNAM:
                 {
                     _SkinLocation = (stream.Position - offset);
@@ -10852,6 +11222,19 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     _AttackRaceLocation = (stream.Position - offset);
                     return (int)Npc_FieldIndex.AttackRace;
+                }
+                case RecordTypeInts.ATKD:
+                case RecordTypeInts.ATKE:
+                case RecordTypeInts.ATKW:
+                case RecordTypeInts.ATKS:
+                case RecordTypeInts.ATKT:
+                {
+                    this.Attacks = this.ParseRepeatedTypelessSubrecord<IAttackGetter>(
+                        stream: stream,
+                        translationParams: translationParams,
+                        trigger: Attack_Registration.TriggerSpecs,
+                        factory: AttackBinaryOverlay.AttackFactory);
+                    return (int)Npc_FieldIndex.Attacks;
                 }
                 case RecordTypeInts.SPOR:
                 {

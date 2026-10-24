@@ -109,6 +109,17 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         String? ISoundEchoMarkerGetter.Description => this.Description;
         #endregion
+        #region ECHL
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private SoundReference? _ECHL;
+        public SoundReference? ECHL
+        {
+            get => _ECHL;
+            set => _ECHL = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ISoundReferenceGetter? ISoundEchoMarkerGetter.ECHL => this.ECHL;
+        #endregion
         #region Markers
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ExtendedList<EchoMarker> _Markers = new ExtendedList<EchoMarker>();
@@ -164,6 +175,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirtinessScale = initialValue;
                 this.XALG = initialValue;
                 this.Description = initialValue;
+                this.ECHL = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.Markers = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, EchoMarker.Mask<TItem>?>>?>(initialValue, []);
                 this.DefaultStartMarker = new MaskItem<TItem, EchoMarker.Mask<TItem>?>(initialValue, new EchoMarker.Mask<TItem>(initialValue));
             }
@@ -181,6 +193,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem DirtinessScale,
                 TItem XALG,
                 TItem Description,
+                TItem ECHL,
                 TItem Markers,
                 TItem DefaultStartMarker)
             : base(
@@ -197,6 +210,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirtinessScale = DirtinessScale;
                 this.XALG = XALG;
                 this.Description = Description;
+                this.ECHL = new MaskItem<TItem, SoundReference.Mask<TItem>?>(ECHL, new SoundReference.Mask<TItem>(ECHL));
                 this.Markers = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, EchoMarker.Mask<TItem>?>>?>(Markers, []);
                 this.DefaultStartMarker = new MaskItem<TItem, EchoMarker.Mask<TItem>?>(DefaultStartMarker, new EchoMarker.Mask<TItem>(DefaultStartMarker));
             }
@@ -215,6 +229,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem DirtinessScale;
             public TItem XALG;
             public TItem Description;
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? ECHL { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, EchoMarker.Mask<TItem>?>>?>? Markers;
             public MaskItem<TItem, EchoMarker.Mask<TItem>?>? DefaultStartMarker { get; set; }
             #endregion
@@ -235,6 +250,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.DirtinessScale, rhs.DirtinessScale)) return false;
                 if (!object.Equals(this.XALG, rhs.XALG)) return false;
                 if (!object.Equals(this.Description, rhs.Description)) return false;
+                if (!object.Equals(this.ECHL, rhs.ECHL)) return false;
                 if (!object.Equals(this.Markers, rhs.Markers)) return false;
                 if (!object.Equals(this.DefaultStartMarker, rhs.DefaultStartMarker)) return false;
                 return true;
@@ -247,6 +263,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.DirtinessScale);
                 hash.Add(this.XALG);
                 hash.Add(this.Description);
+                hash.Add(this.ECHL);
                 hash.Add(this.Markers);
                 hash.Add(this.DefaultStartMarker);
                 hash.Add(base.GetHashCode());
@@ -272,6 +289,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.DirtinessScale)) return false;
                 if (!eval(this.XALG)) return false;
                 if (!eval(this.Description)) return false;
+                if (ECHL != null)
+                {
+                    if (!eval(this.ECHL.Overall)) return false;
+                    if (this.ECHL.Specific != null && !this.ECHL.Specific.All(eval)) return false;
+                }
                 if (this.Markers != null)
                 {
                     if (!eval(this.Markers.Overall)) return false;
@@ -310,6 +332,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.DirtinessScale)) return true;
                 if (eval(this.XALG)) return true;
                 if (eval(this.Description)) return true;
+                if (ECHL != null)
+                {
+                    if (eval(this.ECHL.Overall)) return true;
+                    if (this.ECHL.Specific != null && this.ECHL.Specific.Any(eval)) return true;
+                }
                 if (this.Markers != null)
                 {
                     if (eval(this.Markers.Overall)) return true;
@@ -347,6 +374,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.DirtinessScale = eval(this.DirtinessScale);
                 obj.XALG = eval(this.XALG);
                 obj.Description = eval(this.Description);
+                obj.ECHL = this.ECHL == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.ECHL.Overall), this.ECHL.Specific?.Translate(eval));
                 if (Markers != null)
                 {
                     obj.Markers = new MaskItem<R, IEnumerable<MaskItemIndexed<R, EchoMarker.Mask<R>?>>?>(eval(this.Markers.Overall), []);
@@ -401,6 +429,10 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Description, "Description");
                     }
+                    if (printMask?.ECHL?.Overall ?? true)
+                    {
+                        ECHL?.Print(sb);
+                    }
                     if ((printMask?.Markers?.Overall ?? true)
                         && Markers is {} MarkersItem)
                     {
@@ -440,6 +472,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? DirtinessScale;
             public Exception? XALG;
             public Exception? Description;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? ECHL;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, EchoMarker.ErrorMask?>>?>? Markers;
             public MaskItem<Exception?, EchoMarker.ErrorMask?>? DefaultStartMarker;
             #endregion
@@ -460,6 +493,8 @@ namespace Mutagen.Bethesda.Starfield
                         return XALG;
                     case SoundEchoMarker_FieldIndex.Description:
                         return Description;
+                    case SoundEchoMarker_FieldIndex.ECHL:
+                        return ECHL;
                     case SoundEchoMarker_FieldIndex.Markers:
                         return Markers;
                     case SoundEchoMarker_FieldIndex.DefaultStartMarker:
@@ -488,6 +523,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case SoundEchoMarker_FieldIndex.Description:
                         this.Description = ex;
+                        break;
+                    case SoundEchoMarker_FieldIndex.ECHL:
+                        this.ECHL = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
                     case SoundEchoMarker_FieldIndex.Markers:
                         this.Markers = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, EchoMarker.ErrorMask?>>?>(ex, null);
@@ -521,6 +559,9 @@ namespace Mutagen.Bethesda.Starfield
                     case SoundEchoMarker_FieldIndex.Description:
                         this.Description = (Exception?)obj;
                         break;
+                    case SoundEchoMarker_FieldIndex.ECHL:
+                        this.ECHL = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                        break;
                     case SoundEchoMarker_FieldIndex.Markers:
                         this.Markers = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, EchoMarker.ErrorMask?>>?>)obj;
                         break;
@@ -541,6 +582,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (DirtinessScale != null) return true;
                 if (XALG != null) return true;
                 if (Description != null) return true;
+                if (ECHL != null) return true;
                 if (Markers != null) return true;
                 if (DefaultStartMarker != null) return true;
                 return false;
@@ -580,6 +622,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(Description, "Description");
                 }
+                ECHL?.Print(sb);
                 if (Markers is {} MarkersItem)
                 {
                     sb.AppendLine("Markers =>");
@@ -612,6 +655,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.DirtinessScale = this.DirtinessScale.Combine(rhs.DirtinessScale);
                 ret.XALG = this.XALG.Combine(rhs.XALG);
                 ret.Description = this.Description.Combine(rhs.Description);
+                ret.ECHL = this.ECHL.Combine(rhs.ECHL, (l, r) => l.Combine(r));
                 ret.Markers = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, EchoMarker.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Markers?.Overall, rhs.Markers?.Overall), Noggog.ExceptionExt.Combine(this.Markers?.Specific, rhs.Markers?.Specific));
                 ret.DefaultStartMarker = this.DefaultStartMarker.Combine(rhs.DefaultStartMarker, (l, r) => l.Combine(r));
                 return ret;
@@ -641,6 +685,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool DirtinessScale;
             public bool XALG;
             public bool Description;
+            public SoundReference.TranslationMask? ECHL;
             public EchoMarker.TranslationMask? Markers;
             public EchoMarker.TranslationMask? DefaultStartMarker;
             #endregion
@@ -666,6 +711,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((DirtinessScale, null));
                 ret.Add((XALG, null));
                 ret.Add((Description, null));
+                ret.Add((ECHL != null ? ECHL.OnOverall : DefaultOn, ECHL?.GetCrystal()));
                 ret.Add((Markers == null ? DefaultOn : !Markers.GetCrystal().CopyNothing, Markers?.GetCrystal()));
                 ret.Add((DefaultStartMarker != null ? DefaultStartMarker.OnOverall : DefaultOn, DefaultStartMarker?.GetCrystal()));
             }
@@ -832,6 +878,7 @@ namespace Mutagen.Bethesda.Starfield
         new Percent DirtinessScale { get; set; }
         new UInt64? XALG { get; set; }
         new String? Description { get; set; }
+        new SoundReference? ECHL { get; set; }
         new ExtendedList<EchoMarker> Markers { get; }
         new EchoMarker? DefaultStartMarker { get; set; }
     }
@@ -873,6 +920,7 @@ namespace Mutagen.Bethesda.Starfield
         Percent DirtinessScale { get; }
         UInt64? XALG { get; }
         String? Description { get; }
+        ISoundReferenceGetter? ECHL { get; }
         IReadOnlyList<IEchoMarkerGetter> Markers { get; }
         IEchoMarkerGetter? DefaultStartMarker { get; }
 
@@ -1056,8 +1104,9 @@ namespace Mutagen.Bethesda.Starfield
         DirtinessScale = 9,
         XALG = 10,
         Description = 11,
-        Markers = 12,
-        DefaultStartMarker = 13,
+        ECHL = 12,
+        Markers = 13,
+        DefaultStartMarker = 14,
     }
     #endregion
 
@@ -1068,9 +1117,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 7;
+        public const ushort AdditionalFieldCount = 8;
 
-        public const ushort FieldCount = 14;
+        public const ushort FieldCount = 15;
 
         public static readonly Type MaskType = typeof(SoundEchoMarker.Mask<>);
 
@@ -1109,6 +1158,7 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.ODTY,
                 RecordTypes.XALG,
                 RecordTypes.NNAM,
+                RecordTypes.ECHL,
                 RecordTypes.ECHO,
                 RecordTypes.ECHE,
                 RecordTypes.ECTE,
@@ -1118,6 +1168,10 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.CNAM,
                 RecordTypes.DNAM,
                 RecordTypes.ENAM,
+                RecordTypes.CTDA,
+                RecordTypes.CITC,
+                RecordTypes.CIS1,
+                RecordTypes.CIS2,
                 RecordTypes.ECHD);
             return new RecordTriggerSpecs(
                 allRecordTypes: all,
@@ -1168,6 +1222,7 @@ namespace Mutagen.Bethesda.Starfield
             item.DirtinessScale = default(Percent);
             item.XALG = default;
             item.Description = default;
+            item.ECHL = null;
             item.Markers.Clear();
             item.DefaultStartMarker = null;
             base.Clear(item);
@@ -1188,6 +1243,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             base.RemapLinks(obj, mapping);
             obj.VirtualMachineAdapter?.RemapLinks(mapping);
+            obj.ECHL?.RemapLinks(mapping);
             obj.Markers.RemapLinks(mapping);
             obj.DefaultStartMarker?.RemapLinks(mapping);
         }
@@ -1266,6 +1322,11 @@ namespace Mutagen.Bethesda.Starfield
             ret.DirtinessScale = item.DirtinessScale.Equals(rhs.DirtinessScale);
             ret.XALG = item.XALG == rhs.XALG;
             ret.Description = string.Equals(item.Description, rhs.Description);
+            ret.ECHL = EqualsMaskHelper.EqualsHelper(
+                item.ECHL,
+                rhs.ECHL,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
             ret.Markers = item.Markers.CollectionEqualsHelper(
                 rhs.Markers,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -1346,6 +1407,11 @@ namespace Mutagen.Bethesda.Starfield
                 && item.Description is {} DescriptionItem)
             {
                 sb.AppendItem(DescriptionItem, "Description");
+            }
+            if ((printMask?.ECHL?.Overall ?? true)
+                && item.ECHL is {} ECHLItem)
+            {
+                ECHLItem?.Print(sb, "ECHL");
             }
             if (printMask?.Markers?.Overall ?? true)
             {
@@ -1444,6 +1510,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!string.Equals(lhs.Description, rhs.Description)) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.ECHL) ?? true))
+            {
+                if (EqualsMaskHelper.RefEquality(lhs.ECHL, rhs.ECHL, out var lhsECHL, out var rhsECHL, out var isECHLEqual))
+                {
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsECHL).CommonInstance()!).Equals(lhsECHL, rhsECHL, equalsMask?.GetSubCrystal((int)SoundEchoMarker_FieldIndex.ECHL))) return false;
+                }
+                else if (!isECHLEqual) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.Markers) ?? true))
             {
                 if (!lhs.Markers.SequenceEqual(rhs.Markers, (l, r) => ((EchoMarkerCommon)((IEchoMarkerGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)SoundEchoMarker_FieldIndex.Markers)))) return false;
@@ -1498,6 +1572,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Descriptionitem);
             }
+            if (item.ECHL is {} ECHLitem)
+            {
+                hash.Add(ECHLitem);
+            }
             foreach (var subItem in item.Markers)
             {
                 hash.Add(subItem);
@@ -1538,6 +1616,13 @@ namespace Mutagen.Bethesda.Starfield
             if (obj.VirtualMachineAdapter is IFormLinkContainerGetter VirtualMachineAdapterlinkCont)
             {
                 foreach (var item in VirtualMachineAdapterlinkCont.EnumerateFormLinks(iterateNestedRecords))
+                {
+                    yield return item;
+                }
+            }
+            if (obj.ECHL is {} ECHLItems)
+            {
+                foreach (var item in ECHLItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -1708,6 +1793,32 @@ namespace Mutagen.Bethesda.Starfield
             if ((copyMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.Description) ?? true))
             {
                 item.Description = rhs.Description;
+            }
+            if ((copyMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.ECHL) ?? true))
+            {
+                errorMask?.PushIndex((int)SoundEchoMarker_FieldIndex.ECHL);
+                try
+                {
+                    if(rhs.ECHL is {} rhsECHL)
+                    {
+                        item.ECHL = rhsECHL.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)SoundEchoMarker_FieldIndex.ECHL));
+                    }
+                    else
+                    {
+                        item.ECHL = default;
+                    }
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.Markers) ?? true))
             {
@@ -1954,6 +2065,16 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.Description,
                 header: translationParams.ConvertToCustom(RecordTypes.NNAM),
                 binaryType: StringBinaryType.NullTerminate);
+            if (item.ECHL is {} ECHLItem)
+            {
+                using (HeaderExport.Subrecord(writer, RecordTypes.ECHL))
+                {
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)ECHLItem).BinaryWriteTranslator).Write(
+                        item: ECHLItem,
+                        writer: writer,
+                        translationParams: translationParams);
+                }
+            }
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IEchoMarkerGetter>.Instance.Write(
                 writer: writer,
                 items: item.Markers,
@@ -2079,6 +2200,12 @@ namespace Mutagen.Bethesda.Starfield
                         parseWhole: true);
                     return (int)SoundEchoMarker_FieldIndex.Description;
                 }
+                case RecordTypeInts.ECHL:
+                {
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
+                    item.ECHL = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)SoundEchoMarker_FieldIndex.ECHL;
+                }
                 case RecordTypeInts.ECHO:
                 case RecordTypeInts.ECHE:
                 {
@@ -2187,6 +2314,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _DescriptionLocation;
         public String? Description => _DescriptionLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DescriptionLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
+        public ISoundReferenceGetter? ECHL { get; private set; }
         public IReadOnlyList<IEchoMarkerGetter> Markers { get; private set; } = [];
         public IEchoMarkerGetter? DefaultStartMarker { get; private set; }
         partial void CustomFactoryEnd(
@@ -2287,6 +2415,15 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     _DescriptionLocation = (stream.Position - offset);
                     return (int)SoundEchoMarker_FieldIndex.Description;
+                }
+                case RecordTypeInts.ECHL:
+                {
+                    stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
+                    this.ECHL = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                        stream: stream,
+                        package: _package,
+                        translationParams: translationParams.DoNotShortCircuit());
+                    return (int)SoundEchoMarker_FieldIndex.ECHL;
                 }
                 case RecordTypeInts.ECHO:
                 case RecordTypeInts.ECHE:
