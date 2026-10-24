@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using Loqui;
 using Mutagen.Bethesda.Plugins.Exceptions;
 using Mutagen.Bethesda.Plugins.Records;
@@ -32,7 +33,7 @@ internal sealed class ImmutableModLinkCacheContextCategory<TMod, TModGetter, TKe
     private readonly Func<TKey, bool> _shortCircuit;
     private readonly IEqualityComparer<TKey>? _equalityComparer;
     private readonly Lazy<IReadOnlyCache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey>> _untypedContexts;
-    private readonly Dictionary<Type, IReadOnlyCache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey>> _contexts = new();
+    private readonly ConcurrentDictionary<Type, IReadOnlyCache<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>, TKey>> _contexts = new();
 
     static ImmutableModLinkCacheContextCategory()
     {
@@ -158,9 +159,14 @@ internal sealed class ImmutableModLinkCacheContextCategory<TMod, TModGetter, TKe
         {
             throw new ArgumentException("Queried for record on a simple cache");
         }
+        // Types queried before can be looked up without locking
+        if (_contexts.TryGetValue(type, out var cache))
+        {
+            return cache;
+        }
         lock (_contexts)
         {
-            if (!_contexts.TryGetValue(type, out var cache))
+            if (!_contexts.TryGetValue(type, out cache))
             {
                 if (type.Equals(typeof(IMajorRecord))
                     || type.Equals(typeof(IMajorRecordGetter)))

@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Concurrent;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using Loqui;
 using Mutagen.Bethesda.Plugins.Records;
@@ -18,7 +19,7 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
     private readonly Func<IMajorRecordGetter, TryGet<TKey>> _keyGetter;
     private readonly Func<TKey, bool> _shortCircuit;
     private readonly IEqualityComparer<TKey>? _equalityComparer;
-    private readonly Dictionary<Type, (DepthCache<TKey, LinkCacheItem> Cache, Type EnumerationType)> _winningRecords = new();
+    private readonly ConcurrentDictionary<Type, (DepthCache<TKey, LinkCacheItem> Cache, Type EnumerationType)> _winningRecords = new();
     private readonly Dictionary<Type, DepthCache<TKey, ImmutableList<LinkCacheItem>>> _allRecords = new();
 
     static ImmutableLoadOrderLinkCacheCategory()
@@ -48,10 +49,17 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
 
     private DepthCache<TKey, LinkCacheItem> GetTypeCache(Type type, out Type enumerationType)
     {
+        // Types queried before can be looked up without locking
+        if (_winningRecords.TryGetValue(type, out var entry))
+        {
+            enumerationType = entry.EnumerationType;
+            return entry.Cache;
+        }
+
         lock (_winningRecords)
         {
             // Get cache object by type
-            if (!_winningRecords.TryGetValue(type, out var entry))
+            if (!_winningRecords.TryGetValue(type, out entry))
             {
                 var cache = new DepthCache<TKey, LinkCacheItem>(_equalityComparer);
                 if (type == typeof(IMajorRecord)
@@ -127,6 +135,12 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
         else
         {
             AddRecords(targetMod, type, throwIfUnknown: true);
+        }
+
+        // Every mod is processed, so later queries can skip the lock, even if this one ends with a hit
+        if (cache.Depth >= _listedOrder.Count)
+        {
+            cache.Done = true;
         }
     }
 

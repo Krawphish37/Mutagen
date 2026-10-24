@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Concurrent;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using Loqui;
 using Mutagen.Bethesda.Plugins.Exceptions;
@@ -39,7 +40,7 @@ internal sealed class ImmutableLoadOrderLinkCacheContextCategory<TMod, TModGette
     private readonly Func<IMajorRecordGetter, TryGet<TKey>> _keyGetter;
     private readonly Func<TKey, bool> _shortCircuit;
     private readonly IEqualityComparer<TKey>? _equalityComparer;
-    private readonly Dictionary<Type, (DepthCache<TKey, IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>> Cache, Type EnumerationType)> _winningContexts = new();
+    private readonly ConcurrentDictionary<Type, (DepthCache<TKey, IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>> Cache, Type EnumerationType)> _winningContexts = new();
     private readonly Dictionary<Type, DepthCache<TKey, ImmutableList<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>>>> _allContexts = new();
 
     static ImmutableLoadOrderLinkCacheContextCategory()
@@ -88,48 +89,52 @@ internal sealed class ImmutableLoadOrderLinkCacheContextCategory<TMod, TModGette
 
         DepthCache<TKey, IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>> cache;
         Type enumerationType;
-        lock (_winningContexts)
+        // Types queried before can be looked up without locking
+        if (!_winningContexts.TryGetValue(type, out var entry))
         {
-            // Get cache object by type
-            if (!_winningContexts.TryGetValue(type, out var entry))
+            lock (_winningContexts)
             {
-                cache = new DepthCache<TKey, IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>>(_equalityComparer);
-                if (type.Equals(typeof(IMajorRecord))
-                    || type.Equals(typeof(IMajorRecordGetter)))
+                // Get cache object by type
+                if (!_winningContexts.TryGetValue(type, out entry))
                 {
-                    // Shared by both forms, so fill with the getter form, which read-only records also implement
-                    entry = (cache, typeof(IMajorRecordGetter));
-                    _winningContexts[typeof(IMajorRecord)] = entry;
-                    _winningContexts[typeof(IMajorRecordGetter)] = entry;
-                }
-                else if (LoquiRegistration.TryGetRegister(type, out var registration))
-                {
-                    // Shared by all forms, so fill with the getter form, which read-only records also implement
-                    entry = (cache, registration.GetterType);
-                    _winningContexts[registration.ClassType] = entry;
-                    _winningContexts[registration.GetterType] = entry;
-                    _winningContexts[registration.SetterType] = entry;
-                    if (registration.InternalGetterType != null)
+                    cache = new DepthCache<TKey, IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>>(_equalityComparer);
+                    if (type.Equals(typeof(IMajorRecord))
+                        || type.Equals(typeof(IMajorRecordGetter)))
                     {
-                        _winningContexts[registration.InternalGetterType] = entry;
+                        // Shared by both forms, so fill with the getter form, which read-only records also implement
+                        entry = (cache, typeof(IMajorRecordGetter));
+                        _winningContexts[typeof(IMajorRecord)] = entry;
+                        _winningContexts[typeof(IMajorRecordGetter)] = entry;
                     }
-                    if (registration.InternalSetterType != null)
+                    else if (LoquiRegistration.TryGetRegister(type, out var registration))
                     {
-                        _winningContexts[registration.InternalSetterType] = entry;
+                        // Shared by all forms, so fill with the getter form, which read-only records also implement
+                        entry = (cache, registration.GetterType);
+                        _winningContexts[registration.ClassType] = entry;
+                        _winningContexts[registration.GetterType] = entry;
+                        _winningContexts[registration.SetterType] = entry;
+                        if (registration.InternalGetterType != null)
+                        {
+                            _winningContexts[registration.InternalGetterType] = entry;
+                        }
+                        if (registration.InternalSetterType != null)
+                        {
+                            _winningContexts[registration.InternalSetterType] = entry;
+                        }
                     }
-                }
-                else
-                {
-                    if (!_metaInterfaceMapGetter.TryGetRegistrationsForInterface(_category, type, out var objs))
+                    else
                     {
-                        throw new ArgumentException($"A lookup was queried for an unregistered type: {type.Name}");
+                        if (!_metaInterfaceMapGetter.TryGetRegistrationsForInterface(_category, type, out var objs))
+                        {
+                            throw new ArgumentException($"A lookup was queried for an unregistered type: {type.Name}");
+                        }
+                        entry = (cache, type);
+                        _winningContexts[type] = entry;
                     }
-                    entry = (cache, type);
-                    _winningContexts[type] = entry;
                 }
             }
-            (cache, enumerationType) = entry;
         }
+        (cache, enumerationType) = entry;
 
         // If we're done, we can just query without locking
         if (cache.Done)
@@ -190,6 +195,11 @@ internal sealed class ImmutableLoadOrderLinkCacheContextCategory<TMod, TModGette
                 else
                 {
                     AddRecords(targetMod, enumerationType, throwIfUnknown: true);
+                }
+                // Every mod is processed, so later queries can skip the lock, even if this one ends with a hit
+                if (cache.Depth >= _listedOrder.Count)
+                {
+                    cache.Done = true;
                 }
                 // Check again
                 if (cache.TryGetValue(key, out majorRec))
