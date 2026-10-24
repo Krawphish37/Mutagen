@@ -143,4 +143,86 @@ public class LoadOrderImporterTests
                     .Skip(1)
                     .Select(x => importer.Import(x)));
     }
+
+    private static (MockFileSystem Fs, ModPath[] ModPaths, IModImporter<TestMod> Importer, List<BinaryReadParameters> Params) SetupMasterFlagsLookupTest(
+        string dataFolder)
+    {
+        var modPaths = new ModKey[]
+            {
+                TestConstants.MasterModKey,
+                TestConstants.MasterModKey2,
+            }
+            .Select(x => ModPath.FromPath(Path.Combine(dataFolder, x.FileName)))
+            .ToArray();
+        var fs = new MockFileSystem(
+            modPaths.ToDictionary(x => (string)x.Path, x => new MockFileData(string.Empty)));
+        var importer = Substitute.For<IModImporter<TestMod>>();
+        var receivedParams = new List<BinaryReadParameters>();
+        foreach (var modPath in modPaths)
+        {
+            importer.Import(modPath, Arg.Do<BinaryReadParameters>(p =>
+                {
+                    lock (receivedParams)
+                    {
+                        receivedParams.Add(p);
+                    }
+                }))
+                .Returns(new TestMod(modPath.ModKey));
+        }
+        return (fs, modPaths, importer, receivedParams);
+    }
+
+    [Fact]
+    public void CallerMasterFlagsLookupIsRespected()
+    {
+        var dataFolder = $"{PathingUtil.DrivePrefix}DataFolder";
+        var (fs, modPaths, importer, receivedParams) = SetupMasterFlagsLookupTest(dataFolder);
+        var providerLookup = new LoadOrder<IModMasterStyledGetter>(
+            modPaths.Select(x => new KeyedMasterStyle(x.ModKey, MasterStyle.Full)));
+        var callerLookup = new LoadOrder<IModMasterStyledGetter>(
+            modPaths.Select(x => new KeyedMasterStyle(x.ModKey, MasterStyle.Medium)));
+        var masterFlagsLookupProvider = Substitute.For<IMasterFlagsLookupProvider>();
+        masterFlagsLookupProvider.Get(Arg.Any<IReadOnlyList<ILoadOrderListingGetter>>())
+            .Returns(providerLookup);
+        new LoadOrderImporter<TestMod>(
+                fs,
+                new DataDirectoryInjection(dataFolder),
+                new LoadOrderListingsInjection(modPaths.Select(x => x.ModKey).ToArray()),
+                importer,
+                masterFlagsLookupProvider)
+            .Import(new BinaryReadParameters()
+            {
+                MasterFlagsLookup = callerLookup
+            });
+        receivedParams.Count.ShouldBe(modPaths.Length);
+        foreach (var p in receivedParams)
+        {
+            p.MasterFlagsLookup.ShouldBeSameAs(callerLookup);
+        }
+        masterFlagsLookupProvider.DidNotReceive().Get(Arg.Any<IReadOnlyList<ILoadOrderListingGetter>>());
+    }
+
+    [Fact]
+    public void MissingMasterFlagsLookupUsesProvider()
+    {
+        var dataFolder = $"{PathingUtil.DrivePrefix}DataFolder";
+        var (fs, modPaths, importer, receivedParams) = SetupMasterFlagsLookupTest(dataFolder);
+        var providerLookup = new LoadOrder<IModMasterStyledGetter>(
+            modPaths.Select(x => new KeyedMasterStyle(x.ModKey, MasterStyle.Full)));
+        var masterFlagsLookupProvider = Substitute.For<IMasterFlagsLookupProvider>();
+        masterFlagsLookupProvider.Get(Arg.Any<IReadOnlyList<ILoadOrderListingGetter>>())
+            .Returns(providerLookup);
+        new LoadOrderImporter<TestMod>(
+                fs,
+                new DataDirectoryInjection(dataFolder),
+                new LoadOrderListingsInjection(modPaths.Select(x => x.ModKey).ToArray()),
+                importer,
+                masterFlagsLookupProvider)
+            .Import(new BinaryReadParameters());
+        receivedParams.Count.ShouldBe(modPaths.Length);
+        foreach (var p in receivedParams)
+        {
+            p.MasterFlagsLookup.ShouldBeSameAs(providerLookup);
+        }
+    }
 }
