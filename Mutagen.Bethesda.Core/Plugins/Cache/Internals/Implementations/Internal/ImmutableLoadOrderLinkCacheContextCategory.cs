@@ -39,7 +39,7 @@ internal sealed class ImmutableLoadOrderLinkCacheContextCategory<TMod, TModGette
     private readonly Func<IMajorRecordGetter, TryGet<TKey>> _keyGetter;
     private readonly Func<TKey, bool> _shortCircuit;
     private readonly IEqualityComparer<TKey>? _equalityComparer;
-    private readonly Dictionary<Type, DepthCache<TKey, IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>>> _winningContexts = new();
+    private readonly Dictionary<Type, (DepthCache<TKey, IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>> Cache, Type EnumerationType)> _winningContexts = new();
     private readonly Dictionary<Type, DepthCache<TKey, ImmutableList<IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>>>> _allContexts = new();
 
     static ImmutableLoadOrderLinkCacheContextCategory()
@@ -86,31 +86,36 @@ internal sealed class ImmutableLoadOrderLinkCacheContextCategory<TMod, TModGette
             return false;
         }
 
-        DepthCache<TKey, IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>>? cache;
+        DepthCache<TKey, IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>> cache;
+        Type enumerationType;
         lock (_winningContexts)
         {
             // Get cache object by type
-            if (!_winningContexts.TryGetValue(type, out cache))
+            if (!_winningContexts.TryGetValue(type, out var entry))
             {
                 cache = new DepthCache<TKey, IModContext<TMod, TModGetter, IMajorRecord, IMajorRecordGetter>>(_equalityComparer);
                 if (type.Equals(typeof(IMajorRecord))
                     || type.Equals(typeof(IMajorRecordGetter)))
                 {
-                    _winningContexts[typeof(IMajorRecord)] = cache;
-                    _winningContexts[typeof(IMajorRecordGetter)] = cache;
+                    // Shared by both forms, so fill with the getter form, which read-only records also implement
+                    entry = (cache, typeof(IMajorRecordGetter));
+                    _winningContexts[typeof(IMajorRecord)] = entry;
+                    _winningContexts[typeof(IMajorRecordGetter)] = entry;
                 }
                 else if (LoquiRegistration.TryGetRegister(type, out var registration))
                 {
-                    _winningContexts[registration.ClassType] = cache;
-                    _winningContexts[registration.GetterType] = cache;
-                    _winningContexts[registration.SetterType] = cache;
+                    // Shared by all forms, so fill with the getter form, which read-only records also implement
+                    entry = (cache, registration.GetterType);
+                    _winningContexts[registration.ClassType] = entry;
+                    _winningContexts[registration.GetterType] = entry;
+                    _winningContexts[registration.SetterType] = entry;
                     if (registration.InternalGetterType != null)
                     {
-                        _winningContexts[registration.InternalGetterType] = cache;
+                        _winningContexts[registration.InternalGetterType] = entry;
                     }
                     if (registration.InternalSetterType != null)
                     {
-                        _winningContexts[registration.InternalSetterType] = cache;
+                        _winningContexts[registration.InternalSetterType] = entry;
                     }
                 }
                 else
@@ -119,9 +124,11 @@ internal sealed class ImmutableLoadOrderLinkCacheContextCategory<TMod, TModGette
                     {
                         throw new ArgumentException($"A lookup was queried for an unregistered type: {type.Name}");
                     }
-                    _winningContexts[type] = cache;
+                    entry = (cache, type);
+                    _winningContexts[type] = entry;
                 }
             }
+            (cache, enumerationType) = entry;
         }
 
         // If we're done, we can just query without locking
@@ -172,7 +179,7 @@ internal sealed class ImmutableLoadOrderLinkCacheContextCategory<TMod, TModGette
                 }
 
                 // Add records from that mod that aren't already cached
-                if (_metaInterfaceMapGetter.TryGetRegistrationsForInterface(_category, type, out var objs))
+                if (_metaInterfaceMapGetter.TryGetRegistrationsForInterface(_category, enumerationType, out var objs))
                 {
                     foreach (var regis in objs.Registrations)
                     {
@@ -182,7 +189,7 @@ internal sealed class ImmutableLoadOrderLinkCacheContextCategory<TMod, TModGette
                 }
                 else
                 {
-                    AddRecords(targetMod, type, throwIfUnknown: true);
+                    AddRecords(targetMod, enumerationType, throwIfUnknown: true);
                 }
                 // Check again
                 if (cache.TryGetValue(key, out majorRec))

@@ -85,13 +85,15 @@ internal sealed class ImmutableModLinkCacheCategory<TKey>
                 if (type == typeof(IMajorRecord)
                     || type == typeof(IMajorRecordGetter))
                 {
-                    cache = ConstructTypedCache(type, sourceMod);
+                    // Shared by both forms, so fill with the getter form, which read-only records also implement
+                    cache = ConstructTypedCache(typeof(IMajorRecordGetter), sourceMod);
                     _majorRecords[typeof(IMajorRecord)] = cache;
                     _majorRecords[typeof(IMajorRecordGetter)] = cache;
                 }
                 else if (LoquiRegistration.TryGetRegister(type, out var registration))
                 {
-                    cache = ConstructTypedCache(type, sourceMod);
+                    // Shared by all forms, so fill with the getter form, which read-only records also implement
+                    cache = ConstructTypedCache(registration.GetterType, sourceMod);
                     _majorRecords[registration.ClassType] = cache;
                     _majorRecords[registration.GetterType] = cache;
                     _majorRecords[registration.SetterType] = cache;

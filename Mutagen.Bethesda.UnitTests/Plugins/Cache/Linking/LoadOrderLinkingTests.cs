@@ -6,6 +6,7 @@ using Mutagen.Bethesda.Plugins.Order;
 using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Testing;
+using Mutagen.Bethesda.UnitTests.Plugins.Cache.Linking.Helpers;
 using Xunit;
 
 #nullable disable
@@ -1116,6 +1117,113 @@ public partial class ALinkingTests
         {
             Assert.False(TryTest<Npc, Npc>(cache, TestFileFormKey, out var rec));
             Assert.False(TryTest<Npc, Npc>(cache, TestFileFormKey2, out rec));
+        });
+    }
+
+    [Theory]
+    [InlineData(LinkCachePreferences.RetentionType.OnlyIdentifiers)]
+    [InlineData(LinkCachePreferences.RetentionType.WholeRecord)]
+    public void LoadOrderReadOnlyMechanicsClassFormFirst(LinkCachePreferences.RetentionType cacheType)
+    {
+        var wrapper = SkyrimMod.CreateFromBinaryOverlay(TestDataPathing.SkyrimTestMod, SkyrimRelease.SkyrimSE);
+        var overrideWrapper = SkyrimMod.CreateFromBinaryOverlay(TestDataPathing.SkyrimOverrideMod, SkyrimRelease.SkyrimSE);
+        var loadOrder = new LoadOrder<ISkyrimModGetter>();
+        loadOrder.Add(wrapper);
+        loadOrder.Add(overrideWrapper);
+        var (style, cache) = GetLinkCache(loadOrder, cacheType);
+        // Query the class and setter forms first; they share one cache with the getter form
+        WrapPotentialThrow(cacheType, style, null, () =>
+        {
+            Assert.False(TryTest<Npc, Npc>(cache, TestFileFormKey, out var rec));
+        });
+        WrapPotentialThrow(cacheType, style, null, () =>
+        {
+            Assert.False(TryTest<INpc, INpc>(cache, TestFileFormKey2, out var rec));
+        });
+        cache.TryResolveIdentifier<Npc>(TestFileFormKey, out _);
+        cache.TryResolveIdentifier<INpc>(TestFileEditorID2, out _);
+
+        // The getter form still sees the read-only records, with the override winning
+        WrapPotentialThrow(cacheType, style, null, () =>
+        {
+            Assert.True(TryTest<INpc, INpcGetter>(cache, TestFileFormKey, out var rec));
+        });
+        WrapPotentialThrow(cacheType, style, null, () =>
+        {
+            Assert.True(TryTest<INpc, INpcGetter>(cache, TestFileFormKey2, out var rec));
+            Assert.NotNull(rec.Name);
+            Assert.Equal("A Name", rec.Name.String);
+        });
+        Assert.True(cache.TryResolveIdentifier<INpcGetter>(TestFileFormKey, out var edid));
+        edid.ShouldBe(TestFileEditorID);
+        Assert.True(cache.TryResolveIdentifier<INpcGetter>(TestFileEditorID2, out var formKey));
+        formKey.ShouldBe(TestFileFormKey2);
+        cache.AllIdentifiers<INpcGetter>().Select(x => x.FormKey)
+            .ShouldBe(new[] { TestFileFormKey, TestFileFormKey2 }, ignoreOrder: true);
+    }
+
+    [Theory]
+    [InlineData(LinkCachePreferences.RetentionType.OnlyIdentifiers)]
+    [InlineData(LinkCachePreferences.RetentionType.WholeRecord)]
+    public void LoadOrderClassFormQueryAfterPartialGetterQuery(LinkCachePreferences.RetentionType cacheType)
+    {
+        var masterPrototype = new SkyrimMod(TestConstants.PluginModKey, SkyrimRelease.SkyrimLE);
+        var masterNpc = masterPrototype.Npcs.AddNew("MasterNpc");
+        var topPrototype = new SkyrimMod(TestConstants.PluginModKey2, SkyrimRelease.SkyrimLE);
+        var topNpc = topPrototype.Npcs.AddNew("TopNpc");
+        using var masterDisp = ConvertMod(masterPrototype, out var master);
+        using var topDisp = ConvertMod(topPrototype, out var top);
+        var loadOrder = new LoadOrder<ISkyrimModGetter>();
+        loadOrder.Add(master);
+        loadOrder.Add(top);
+        var (style, cache) = GetLinkCache(loadOrder, cacheType);
+
+        // Getter query of a record from the top mod only fills the cache down to that mod
+        Assert.True(cache.TryResolveIdentifier<INpcGetter>(topNpc.FormKey, out _));
+        // A class form query of a master record then fills the remaining mods of the shared cache
+        cache.TryResolveIdentifier<Npc>(masterNpc.FormKey, out _);
+        WrapPotentialThrow(cacheType, style, null, () =>
+        {
+            var classResult = TryTest<Npc, Npc>(cache, masterNpc.FormKey, out var rec);
+            Assert.Equal(!ReadOnly, classResult);
+        });
+
+        // The getter form must still see the master's record
+        Assert.True(cache.TryResolveIdentifier<INpcGetter>(masterNpc.FormKey, out var edid));
+        edid.ShouldBe("MasterNpc");
+        WrapPotentialThrow(cacheType, style, null, () =>
+        {
+            Assert.True(TryTest<INpc, INpcGetter>(cache, masterNpc.FormKey, out var rec));
+            rec.FormKey.ShouldBe(masterNpc.FormKey);
+        });
+        cache.AllIdentifiers<INpcGetter>().Select(x => x.FormKey)
+            .ShouldBe(new[] { masterNpc.FormKey, topNpc.FormKey }, ignoreOrder: true);
+    }
+
+    [Theory]
+    [MemberData(nameof(ContextTestSources))]
+    public void LoadOrderReadOnlyContextClassFormFirst(LinkCachePreferences.RetentionType cacheType, AContextRetriever contextRetriever)
+    {
+        var wrapper = SkyrimMod.CreateFromBinaryOverlay(TestDataPathing.SkyrimTestMod, SkyrimRelease.SkyrimSE);
+        var overrideWrapper = SkyrimMod.CreateFromBinaryOverlay(TestDataPathing.SkyrimOverrideMod, SkyrimRelease.SkyrimSE);
+        var loadOrder = new LoadOrder<ISkyrimModGetter>();
+        loadOrder.Add(wrapper);
+        loadOrder.Add(overrideWrapper);
+        var (style, cache) = GetLinkCache(loadOrder, cacheType);
+        // Query the class form first; it shares one context cache with the getter form
+        WrapPotentialThrow(cacheType, style, () =>
+        {
+            Assert.False(contextRetriever.TryResolveContext<Npc, Npc>(new FormLink<Npc>(TestFileFormKey), cache, out _));
+        });
+        WrapPotentialThrow(cacheType, style, () =>
+        {
+            Assert.True(contextRetriever.TryResolveContext<INpc, INpcGetter>(new FormLink<INpcGetter>(TestFileFormKey), cache, out var context));
+            ((IMajorRecordGetter)context.Record).FormKey.ShouldBe(TestFileFormKey);
+        });
+        WrapPotentialThrow(cacheType, style, () =>
+        {
+            Assert.True(contextRetriever.TryResolveContext<INpc, INpcGetter>(new FormLink<INpcGetter>(TestFileFormKey2), cache, out var context));
+            context.ModKey.ShouldBe(TestDataPathing.SkyrimOverrideMod.ModKey);
         });
     }
 }

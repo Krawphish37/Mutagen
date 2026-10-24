@@ -18,7 +18,7 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
     private readonly Func<IMajorRecordGetter, TryGet<TKey>> _keyGetter;
     private readonly Func<TKey, bool> _shortCircuit;
     private readonly IEqualityComparer<TKey>? _equalityComparer;
-    private readonly Dictionary<Type, DepthCache<TKey, LinkCacheItem>> _winningRecords = new();
+    private readonly Dictionary<Type, (DepthCache<TKey, LinkCacheItem> Cache, Type EnumerationType)> _winningRecords = new();
     private readonly Dictionary<Type, DepthCache<TKey, ImmutableList<LinkCacheItem>>> _allRecords = new();
 
     static ImmutableLoadOrderLinkCacheCategory()
@@ -46,32 +46,36 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
         _equalityComparer = equalityComparer;
     }
 
-    private DepthCache<TKey, LinkCacheItem> GetTypeCache(Type type)
+    private DepthCache<TKey, LinkCacheItem> GetTypeCache(Type type, out Type enumerationType)
     {
         lock (_winningRecords)
         {
             // Get cache object by type
-            if (!_winningRecords.TryGetValue(type, out var cache))
+            if (!_winningRecords.TryGetValue(type, out var entry))
             {
-                cache = new DepthCache<TKey, LinkCacheItem>(_equalityComparer);
+                var cache = new DepthCache<TKey, LinkCacheItem>(_equalityComparer);
                 if (type == typeof(IMajorRecord)
                     || type == typeof(IMajorRecordGetter))
                 {
-                    _winningRecords[typeof(IMajorRecord)] = cache;
-                    _winningRecords[typeof(IMajorRecordGetter)] = cache;
+                    // Shared by both forms, so fill with the getter form, which read-only records also implement
+                    entry = (cache, typeof(IMajorRecordGetter));
+                    _winningRecords[typeof(IMajorRecord)] = entry;
+                    _winningRecords[typeof(IMajorRecordGetter)] = entry;
                 }
                 else if (LoquiRegistration.TryGetRegister(type, out var registration))
                 {
-                    _winningRecords[registration.ClassType] = cache;
-                    _winningRecords[registration.GetterType] = cache;
-                    _winningRecords[registration.SetterType] = cache;
+                    // Shared by all forms, so fill with the getter form, which read-only records also implement
+                    entry = (cache, registration.GetterType);
+                    _winningRecords[registration.ClassType] = entry;
+                    _winningRecords[registration.GetterType] = entry;
+                    _winningRecords[registration.SetterType] = entry;
                     if (registration.InternalGetterType != null)
                     {
-                        _winningRecords[registration.InternalGetterType] = cache;
+                        _winningRecords[registration.InternalGetterType] = entry;
                     }
                     if (registration.InternalSetterType != null)
                     {
-                        _winningRecords[registration.InternalSetterType] = cache;
+                        _winningRecords[registration.InternalSetterType] = entry;
                     }
                 }
                 else
@@ -80,10 +84,12 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
                     {
                         throw new ArgumentException($"A lookup was queried for an unregistered type: {type.Name}");
                     }
-                    _winningRecords[type] = cache;
+                    entry = (cache, type);
+                    _winningRecords[type] = entry;
                 }
             }
-            return cache;
+            enumerationType = entry.EnumerationType;
+            return entry.Cache;
         }
     }
 
@@ -136,7 +142,7 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
             return false;
         }
 
-        DepthCache<TKey, LinkCacheItem> cache = GetTypeCache(type);
+        DepthCache<TKey, LinkCacheItem> cache = GetTypeCache(type, out var enumerationType);
 
         // If we're done, we can just query without locking
         if (cache.Done)
@@ -160,7 +166,7 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
 
             while (!InternalImmutableLoadOrderLinkCache.ShouldStopQuery(modKey, _listedOrder.Count, cache))
             {
-                FillNextCacheDepth(cache, type);
+                FillNextCacheDepth(cache, enumerationType);
 
                 // Check again 
                 if (cache.TryGetValue(key, out majorRec))
@@ -306,7 +312,7 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
             return [];
         }
 
-        DepthCache<TKey, LinkCacheItem> cache = GetTypeCache(type);
+        DepthCache<TKey, LinkCacheItem> cache = GetTypeCache(type, out var enumerationType);
         if (cancel?.IsCancellationRequested ?? false)
         {
             return [];
@@ -325,7 +331,7 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
             while (!InternalImmutableLoadOrderLinkCache.ShouldStopQuery(modKey: null, _listedOrder.Count, cache))
             {
                 if (cancel?.IsCancellationRequested ?? false) return [];
-                FillNextCacheDepth(cache, type);
+                FillNextCacheDepth(cache, enumerationType);
             }
         }
 
@@ -336,14 +342,14 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
 
     public void Warmup(Type type)
     {
-        DepthCache<TKey, LinkCacheItem> cache = GetTypeCache(type);
+        DepthCache<TKey, LinkCacheItem> cache = GetTypeCache(type, out var enumerationType);
 
         lock (cache)
         {
             // Fill all
             while (!InternalImmutableLoadOrderLinkCache.ShouldStopQuery(modKey: null, _listedOrder.Count, cache))
             {
-                FillNextCacheDepth(cache, type);
+                FillNextCacheDepth(cache, enumerationType);
             }
         }
     }

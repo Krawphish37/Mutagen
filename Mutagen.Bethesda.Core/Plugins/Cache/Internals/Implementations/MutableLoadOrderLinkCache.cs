@@ -1677,7 +1677,8 @@ public sealed class MutableLoadOrderLinkCache<TMod, TModGetter> : ILinkCache<TMo
         ResolveTarget target = ResolveTarget.Winner) 
         where TMajor : class, IMajorRecordQueryableGetter
     {
-        if (TryResolveContext(formKey, typeof(TMajor), out var resolve, target))
+        if (TryResolveContext(formKey, typeof(TMajor), out var resolve, target)
+            && resolve.Record is TMajor)
         {
             majorRec = resolve.AsType<IMajorRecordQueryableGetter, TMajor>();
             return true;
@@ -1691,7 +1692,8 @@ public sealed class MutableLoadOrderLinkCache<TMod, TModGetter> : ILinkCache<TMo
     public bool TryResolveSimpleContext<TMajor>(string editorId, [MaybeNullWhen(false)] out IModContext<TMajor> majorRec)
         where TMajor : class, IMajorRecordQueryableGetter
     {
-        if (TryResolveContext(editorId, typeof(TMajor), out var resolve))
+        if (TryResolveContext(editorId, typeof(TMajor), out var resolve)
+            && resolve.Record is TMajor)
         {
             majorRec = resolve.AsType<IMajorRecordQueryableGetter, TMajor>();
             return true;
@@ -2313,7 +2315,8 @@ public sealed class MutableLoadOrderLinkCache<TMod, TModGetter> : ILinkCache<TMo
     public IModContext<TMajor> ResolveSimpleContext<TMajor>(IFormLinkGetter<TMajor> formLink, ResolveTarget target = ResolveTarget.Winner)
         where TMajor : class, IMajorRecordGetter
     {
-        return ResolveContext(formLink.FormKey, typeof(TMajor), target).AsType<IMajorRecordQueryableGetter, TMajor>();
+        if (TryResolveSimpleContext<TMajor>(formLink.FormKey, out var commonRec, target)) return commonRec;
+        throw new MissingRecordException(formLink.FormKey, typeof(TMajor));
     }
 
     /// <inheritdoc />
