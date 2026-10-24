@@ -6907,5 +6907,29 @@
     <Compile Include="Records\Major Records\LegendaryItemLnamEntry_Generated.cs">
       <DependentUpon>LegendaryItem.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Common Subrecords\ConditionDatas\GetGameplayOptionCurrentValueConditionData.cs">
+      <DependentUpon>ConditionDatas.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Common Subrecords\ConditionDatas\GetGameplayOptionCurrentValueConditionData_Generated.cs">
+      <DependentUpon>ConditionDatas.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Common Subrecords\ConditionDatas\IsInVehicleConditionData.cs">
+      <DependentUpon>ConditionDatas.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Common Subrecords\ConditionDatas\IsInVehicleConditionData_Generated.cs">
+      <DependentUpon>ConditionDatas.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Common Subrecords\ConditionDatas\AreVehiclesUnlockedConditionData.cs">
+      <DependentUpon>ConditionDatas.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Common Subrecords\ConditionDatas\AreVehiclesUnlockedConditionData_Generated.cs">
+      <DependentUpon>ConditionDatas.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Common Subrecords\ConditionDatas\IsLevelGreaterThanGameplayOptionConditionData.cs">
+      <DependentUpon>ConditionDatas.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Common Subrecords\ConditionDatas\IsLevelGreaterThanGameplayOptionConditionData_Generated.cs">
+      <DependentUpon>ConditionDatas.xml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
