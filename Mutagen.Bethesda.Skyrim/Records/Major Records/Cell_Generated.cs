@@ -3058,7 +3058,11 @@ namespace Mutagen.Bethesda.Skyrim
                     {
                         if (obj.Landscape is {} Landscapeitem)
                         {
-                            Landscapeitem.Remove(keys, type, throwIfUnknown);
+                            Landscapeitem.Remove(keys, type, throwIfUnknown: false);
+                            if (keys.Contains(Landscapeitem.FormKey))
+                            {
+                                obj.Landscape = null;
+                            }
                         }
                     }
                     break;
@@ -3083,6 +3087,10 @@ namespace Mutagen.Bethesda.Skyrim
                     obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey));
                     break;
                 default:
+                    if (InterfaceEnumerationHelper.TryRemoveInterfaceRecordsFor(GameCategory.Skyrim, obj, keys, type))
+                    {
+                        break;
+                    }
                     if (throwIfUnknown)
                     {
                         throw new ArgumentException($"Unknown major record type: {type}");

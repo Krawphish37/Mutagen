@@ -4413,7 +4413,15 @@ namespace Mutagen.Bethesda.Oblivion
             obj.Regions.Remove(keys);
             obj.Cells.Remove(keys);
             obj.Worldspaces.Remove(keys);
+            foreach (var item in obj.Worldspaces.RecordCache.Items)
+            {
+                item.Remove(keys);
+            }
             obj.DialogTopics.Remove(keys);
+            foreach (var item in obj.DialogTopics.RecordCache.Items)
+            {
+                item.Remove(keys);
+            }
             obj.Quests.Remove(keys);
             obj.IdleAnimations.Remove(keys);
             obj.AIPackages.Remove(keys);
@@ -5049,6 +5057,10 @@ namespace Mutagen.Bethesda.Oblivion
                         keys: keys);
                     break;
                 default:
+                    if (InterfaceEnumerationHelper.TryRemoveInterfaceRecordsFor(GameCategory.Oblivion, obj, keys, type))
+                    {
+                        break;
+                    }
                     if (throwIfUnknown)
                     {
                         throw new ArgumentException($"Unknown major record type: {type}");

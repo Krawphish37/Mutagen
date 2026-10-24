@@ -872,7 +872,6 @@ namespace Mutagen.Bethesda.Oblivion
                 case "OblivionMajorRecord":
                 case "IMajorRecordGetter":
                 case "IOblivionMajorRecordGetter":
-                    if (!OblivionListGroup_Registration.SetterType.IsAssignableFrom(obj.GetType())) return;
                     this.Remove(obj, keys);
                     break;
                 default:

@@ -879,7 +879,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case "SkyrimMajorRecord":
                 case "IMajorRecordGetter":
                 case "ISkyrimMajorRecordGetter":
-                    if (!SkyrimListGroup_Registration.SetterType.IsAssignableFrom(obj.GetType())) return;
                     this.Remove(obj, keys);
                     break;
                 default:

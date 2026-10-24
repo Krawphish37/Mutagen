@@ -879,7 +879,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case "Fallout3MajorRecord":
                 case "IMajorRecordGetter":
                 case "IFallout3MajorRecordGetter":
-                    if (!Fallout3ListGroup_Registration.SetterType.IsAssignableFrom(obj.GetType())) return;
                     this.Remove(obj, keys);
                     break;
                 default:

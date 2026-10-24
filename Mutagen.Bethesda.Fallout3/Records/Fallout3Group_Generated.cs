@@ -130,13 +130,13 @@ namespace Mutagen.Bethesda.Fallout3
         [DebuggerStepThrough]
         IEnumerable<IMajorRecord> IMajorRecordEnumerable.EnumerateMajorRecords(Type? type, bool throwIfUnknown) => this.EnumerateMajorRecords(type: type, throwIfUnknown: throwIfUnknown);
         [DebuggerStepThrough]
-        void IMajorRecordEnumerable.Remove(FormKey formKey) => this.Remove(formKey);
+        void IMajorRecordEnumerable.Remove(FormKey formKey) => Fallout3GroupMixIn.Remove(this, formKey);
         #pragma warning disable CS0618 // Type or member is obsolete
         [DebuggerStepThrough]
-        void IMajorRecordEnumerable.Remove(HashSet<FormKey> formKeys) => this.Remove(formKeys);
+        void IMajorRecordEnumerable.Remove(HashSet<FormKey> formKeys) => Fallout3GroupMixIn.Remove(this, formKeys);
         #pragma warning restore CS0618
         [DebuggerStepThrough]
-        void IMajorRecordEnumerable.Remove(IEnumerable<FormKey> formKeys) => this.Remove(formKeys);
+        void IMajorRecordEnumerable.Remove(IEnumerable<FormKey> formKeys) => Fallout3GroupMixIn.Remove(this, formKeys);
         [DebuggerStepThrough]
         void IMajorRecordEnumerable.Remove(IEnumerable<IFormLinkIdentifier> formLinks) => this.Remove(formLinks);
         [DebuggerStepThrough]
@@ -860,6 +860,10 @@ namespace Mutagen.Bethesda.Fallout3
             HashSet<FormKey> keys)
         {
             obj.RecordCache.Remove(keys);
+            foreach (var item in obj.RecordCache.Items)
+            {
+                item.Remove(keys);
+            }
         }
         
         public void Remove(
@@ -876,7 +880,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case "Fallout3MajorRecord":
                 case "IMajorRecordGetter":
                 case "IFallout3MajorRecordGetter":
-                    if (!Fallout3Group_Registration.SetterType.IsAssignableFrom(obj.GetType())) return;
                     this.Remove(obj, keys);
                     break;
                 default:

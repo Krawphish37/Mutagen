@@ -10859,7 +10859,15 @@ namespace Mutagen.Bethesda.Starfield
             obj.NavigationMeshInfoMaps.Remove(keys);
             obj.Cells.Remove(keys);
             obj.Worldspaces.Remove(keys);
+            foreach (var item in obj.Worldspaces.RecordCache.Items)
+            {
+                item.Remove(keys);
+            }
             obj.Quests.Remove(keys);
+            foreach (var item in obj.Quests.RecordCache.Items)
+            {
+                item.Remove(keys);
+            }
             obj.IdleAnimations.Remove(keys);
             obj.Packages.Remove(keys);
             obj.CombatStyles.Remove(keys);
@@ -12900,6 +12908,10 @@ namespace Mutagen.Bethesda.Starfield
                         keys: keys);
                     break;
                 default:
+                    if (InterfaceEnumerationHelper.TryRemoveInterfaceRecordsFor(GameCategory.Starfield, obj, keys, type))
+                    {
+                        break;
+                    }
                     if (throwIfUnknown)
                     {
                         throw new ArgumentException($"Unknown major record type: {type}");
