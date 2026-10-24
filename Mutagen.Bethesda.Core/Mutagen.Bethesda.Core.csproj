@@ -630,6 +630,7 @@
         <Compile Include="Extensions\GameCategoryExt.cs" />
         <Compile Include="Extensions\HasModsMixIn.cs" />
         <Compile Include="Extensions\ModKeyExt.cs" />
+        <Compile Include="Extensions\ReadOnlyDictionaryExt.cs" />
         <Compile Include="Extensions\FormLinkRemappingMixIn.cs" />
         <Compile Include="Extensions\RemoveExt.cs" />
         <Compile Include="Extensions\LoadOrderExt.cs" />

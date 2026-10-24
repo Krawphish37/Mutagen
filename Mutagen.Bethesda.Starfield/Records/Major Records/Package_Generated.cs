@@ -2672,7 +2672,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)Package_FieldIndex.Data) ?? true))
             {
-                if (!lhs.Data.SequenceEqualNullable(rhs.Data)) return false;
+                if (!lhs.Data.DictEqualsNullable(rhs.Data)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Package_FieldIndex.PackageGroup) ?? true))
             {

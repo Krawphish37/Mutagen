@@ -4978,7 +4978,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.BipedObjects) ?? true))
             {
-                if (!lhs.BipedObjects.SequenceEqualNullable(rhs.BipedObjects)) return false;
+                if (!lhs.BipedObjects.DictEqualsNullable(rhs.BipedObjects)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.MovementDataOverrides) ?? true))
             {

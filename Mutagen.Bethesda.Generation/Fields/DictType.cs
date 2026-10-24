@@ -23,6 +23,28 @@ public class DictType : Loqui.Generation.DictType
         }
     }
 
+    public override string GenerateEqualsSnippet(Accessor accessor, Accessor rhsAccessor, bool negate = false)
+    {
+        // Keyed value dictionaries (record caches) keep the record order they are written in, so leave them order sensitive
+        if (Mode != DictMode.KeyValue) return base.GenerateEqualsSnippet(accessor, rhsAccessor, negate);
+        // Compare entries by key, so the same content added in a different order is still equal, as GetEqualsMask does
+        return $"{(negate ? "!" : null)}{accessor.Access}.{nameof(ReadOnlyDictionaryExt.DictEqualsNullable)}({rhsAccessor.Access})";
+    }
+
+    public override void GenerateForEquals(StructuredStringBuilder sb, Accessor accessor, Accessor rhsAccessor, Accessor maskAccessor)
+    {
+        if (Mode != DictMode.KeyValue)
+        {
+            base.GenerateForEquals(sb, accessor, rhsAccessor, maskAccessor);
+            return;
+        }
+        sb.AppendLine($"if ({GetTranslationIfAccessor(maskAccessor)})");
+        using (sb.CurlyBrace())
+        {
+            sb.AppendLine($"if ({GenerateEqualsSnippet(accessor, rhsAccessor, negate: true)}) return false;");
+        }
+    }
+
     public override void GenerateForHash(StructuredStringBuilder sb, Accessor accessor, string hashResultAccessor)
     {
         // Equals compares the entries, so hash the entries rather than the dictionary object itself
