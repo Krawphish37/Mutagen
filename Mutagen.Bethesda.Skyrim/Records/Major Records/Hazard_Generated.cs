@@ -2502,52 +2502,52 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _DATALocation;
         #region Limit
         private int _LimitLocation => _DATALocation!.Value.Min;
-        private bool _Limit_IsSet => _DATALocation.HasValue;
+        private bool _Limit_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LimitLocation + 1 >= 4;
         public UInt32 Limit => _Limit_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_LimitLocation, 4)) : default(UInt32);
         #endregion
         #region Radius
         private int _RadiusLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Radius_IsSet => _DATALocation.HasValue;
+        private bool _Radius_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RadiusLocation + 1 >= 4;
         public Single Radius => _Radius_IsSet ? _recordData.Slice(_RadiusLocation, 4).Float() : default(Single);
         #endregion
         #region Lifetime
         private int _LifetimeLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Lifetime_IsSet => _DATALocation.HasValue;
+        private bool _Lifetime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LifetimeLocation + 1 >= 4;
         public Single Lifetime => _Lifetime_IsSet ? _recordData.Slice(_LifetimeLocation, 4).Float() : default(Single);
         #endregion
         #region ImageSpaceRadius
         private int _ImageSpaceRadiusLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _ImageSpaceRadius_IsSet => _DATALocation.HasValue;
+        private bool _ImageSpaceRadius_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ImageSpaceRadiusLocation + 1 >= 4;
         public Single ImageSpaceRadius => _ImageSpaceRadius_IsSet ? _recordData.Slice(_ImageSpaceRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region TargetInterval
         private int _TargetIntervalLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _TargetInterval_IsSet => _DATALocation.HasValue;
+        private bool _TargetInterval_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TargetIntervalLocation + 1 >= 4;
         public Single TargetInterval => _TargetInterval_IsSet ? _recordData.Slice(_TargetIntervalLocation, 4).Float() : default(Single);
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Hazard.Flag Flags => _Flags_IsSet ? (Hazard.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Spell
         private int _SpellLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _Spell_IsSet => _DATALocation.HasValue;
+        private bool _Spell_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SpellLocation + 1 >= 4;
         public IFormLinkGetter<IEffectRecordGetter> Spell => _Spell_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IEffectRecordGetter>(_package, _recordData.Span.Slice(_SpellLocation, 0x4), isSet: _Spell_IsSet) : FormLink<IEffectRecordGetter>.Null;
         #endregion
         #region Light
         private int _LightLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _Light_IsSet => _DATALocation.HasValue;
+        private bool _Light_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LightLocation + 1 >= 4;
         public IFormLinkGetter<ILightGetter> Light => _Light_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILightGetter>(_package, _recordData.Span.Slice(_LightLocation, 0x4), isSet: _Light_IsSet) : FormLink<ILightGetter>.Null;
         #endregion
         #region ImpactDataSet
         private int _ImpactDataSetLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _ImpactDataSet_IsSet => _DATALocation.HasValue;
+        private bool _ImpactDataSet_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ImpactDataSetLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> ImpactDataSet => _ImpactDataSet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_ImpactDataSetLocation, 0x4), isSet: _ImpactDataSet_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region Sound
         private int _SoundLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _Sound_IsSet => _DATALocation.HasValue;
+        private bool _Sound_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundDescriptorGetter> Sound => _Sound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundDescriptorGetter>(_package, _recordData.Span.Slice(_SoundLocation, 0x4), isSet: _Sound_IsSet) : FormLink<ISoundDescriptorGetter>.Null;
         #endregion
         partial void CustomFactoryEnd(

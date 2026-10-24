@@ -1687,32 +1687,32 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _LVLOLocation;
         #region Level
         private int _LevelLocation => _LVLOLocation!.Value.Min;
-        private bool _Level_IsSet => _LVLOLocation.HasValue;
+        private bool _Level_IsSet => _LVLOLocation.HasValue && _LVLOLocation!.Value.Max - _LevelLocation + 1 >= 2;
         public Int16 Level => _Level_IsSet ? BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_LevelLocation, 2)) : default(Int16);
         #endregion
         #region Unused
         private int _UnusedLocation => _LVLOLocation!.Value.Min + 0x2;
-        private bool _Unused_IsSet => _LVLOLocation.HasValue;
+        private bool _Unused_IsSet => _LVLOLocation.HasValue && _LVLOLocation!.Value.Max - _UnusedLocation + 1 >= 2;
         public Int16 Unused => _Unused_IsSet ? BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_UnusedLocation, 2)) : default(Int16);
         #endregion
         #region Reference
         private int _ReferenceLocation => _LVLOLocation!.Value.Min + 0x4;
-        private bool _Reference_IsSet => _LVLOLocation.HasValue;
+        private bool _Reference_IsSet => _LVLOLocation.HasValue && _LVLOLocation!.Value.Max - _ReferenceLocation + 1 >= 4;
         public IFormLinkGetter<INpcSpawnGetter> Reference => _Reference_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<INpcSpawnGetter>(_package, _recordData.Span.Slice(_ReferenceLocation, 0x4), isSet: _Reference_IsSet) : FormLink<INpcSpawnGetter>.Null;
         #endregion
         #region Count
         private int _CountLocation => _LVLOLocation!.Value.Min + 0x8;
-        private bool _Count_IsSet => _LVLOLocation.HasValue;
+        private bool _Count_IsSet => _LVLOLocation.HasValue && _LVLOLocation!.Value.Max - _CountLocation + 1 >= 2;
         public Int16 Count => _Count_IsSet ? BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_CountLocation, 2)) : default(Int16);
         #endregion
         #region ChanceNone
         private int _ChanceNoneLocation => _LVLOLocation!.Value.Min + 0xA;
-        private bool _ChanceNone_IsSet => _LVLOLocation.HasValue;
+        private bool _ChanceNone_IsSet => _LVLOLocation.HasValue && _LVLOLocation!.Value.Max - _ChanceNoneLocation + 1 >= 1;
         public Percent ChanceNone => _ChanceNone_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_ChanceNoneLocation, 1), FloatIntegerType.ByteHundred) : default(Percent);
         #endregion
         #region Unused2
         private int _Unused2Location => _LVLOLocation!.Value.Min + 0xB;
-        private bool _Unused2_IsSet => _LVLOLocation.HasValue;
+        private bool _Unused2_IsSet => _LVLOLocation.HasValue && _LVLOLocation!.Value.Max - _Unused2Location + 1 >= 1;
         public SByte Unused2 => _Unused2_IsSet ? (sbyte)_recordData.Slice(_Unused2Location, 1)[0] : default(SByte);
         #endregion
         #region Data

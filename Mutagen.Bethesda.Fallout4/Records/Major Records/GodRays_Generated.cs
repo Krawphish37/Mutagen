@@ -1876,47 +1876,47 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DATALocation;
         #region BackColor
         private int _BackColorLocation => _DATALocation!.Value.Min;
-        private bool _BackColor_IsSet => _DATALocation.HasValue;
+        private bool _BackColor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BackColorLocation + 1 >= 12;
         public Color BackColor => _BackColor_IsSet ? _recordData.Slice(_BackColorLocation, 12).ReadColor(ColorBinaryType.NoAlphaFloat) : default(Color);
         #endregion
         #region ForwardColor
         private int _ForwardColorLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _ForwardColor_IsSet => _DATALocation.HasValue;
+        private bool _ForwardColor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ForwardColorLocation + 1 >= 12;
         public Color ForwardColor => _ForwardColor_IsSet ? _recordData.Slice(_ForwardColorLocation, 12).ReadColor(ColorBinaryType.NoAlphaFloat) : default(Color);
         #endregion
         #region Intensity
         private int _IntensityLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _Intensity_IsSet => _DATALocation.HasValue;
+        private bool _Intensity_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _IntensityLocation + 1 >= 4;
         public Single Intensity => _Intensity_IsSet ? _recordData.Slice(_IntensityLocation, 4).Float() : default(Single);
         #endregion
         #region AirColorScale
         private int _AirColorScaleLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _AirColorScale_IsSet => _DATALocation.HasValue;
+        private bool _AirColorScale_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AirColorScaleLocation + 1 >= 4;
         public Single AirColorScale => _AirColorScale_IsSet ? _recordData.Slice(_AirColorScaleLocation, 4).Float() : default(Single);
         #endregion
         #region BackColorScale
         private int _BackColorScaleLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _BackColorScale_IsSet => _DATALocation.HasValue;
+        private bool _BackColorScale_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BackColorScaleLocation + 1 >= 4;
         public Single BackColorScale => _BackColorScale_IsSet ? _recordData.Slice(_BackColorScaleLocation, 4).Float() : default(Single);
         #endregion
         #region ForwardColorScale
         private int _ForwardColorScaleLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _ForwardColorScale_IsSet => _DATALocation.HasValue;
+        private bool _ForwardColorScale_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ForwardColorScaleLocation + 1 >= 4;
         public Single ForwardColorScale => _ForwardColorScale_IsSet ? _recordData.Slice(_ForwardColorScaleLocation, 4).Float() : default(Single);
         #endregion
         #region BackPhase
         private int _BackPhaseLocation => _DATALocation!.Value.Min + 0x28;
-        private bool _BackPhase_IsSet => _DATALocation.HasValue;
+        private bool _BackPhase_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BackPhaseLocation + 1 >= 4;
         public Single BackPhase => _BackPhase_IsSet ? _recordData.Slice(_BackPhaseLocation, 4).Float() : default(Single);
         #endregion
         #region AirColor
         private int _AirColorLocation => _DATALocation!.Value.Min + 0x2C;
-        private bool _AirColor_IsSet => _DATALocation.HasValue;
+        private bool _AirColor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AirColorLocation + 1 >= 12;
         public Color AirColor => _AirColor_IsSet ? _recordData.Slice(_AirColorLocation, 12).ReadColor(ColorBinaryType.NoAlphaFloat) : default(Color);
         #endregion
         #region ForwardPhase
         private int _ForwardPhaseLocation => _DATALocation!.Value.Min + 0x38;
-        private bool _ForwardPhase_IsSet => _DATALocation.HasValue;
+        private bool _ForwardPhase_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ForwardPhaseLocation + 1 >= 4;
         public Single ForwardPhase => _ForwardPhase_IsSet ? _recordData.Slice(_ForwardPhaseLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

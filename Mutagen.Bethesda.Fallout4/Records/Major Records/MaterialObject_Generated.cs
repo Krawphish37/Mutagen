@@ -2270,42 +2270,42 @@ namespace Mutagen.Bethesda.Fallout4
         public MaterialObject.DATADataType DATADataTypeState { get; private set; }
         #region FalloffScale
         private int _FalloffScaleLocation => _DATALocation!.Value.Min;
-        private bool _FalloffScale_IsSet => _DATALocation.HasValue;
+        private bool _FalloffScale_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FalloffScaleLocation + 1 >= 4;
         public Single FalloffScale => _FalloffScale_IsSet ? _recordData.Slice(_FalloffScaleLocation, 4).Float() : default(Single);
         #endregion
         #region FalloffBias
         private int _FalloffBiasLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _FalloffBias_IsSet => _DATALocation.HasValue;
+        private bool _FalloffBias_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FalloffBiasLocation + 1 >= 4;
         public Single FalloffBias => _FalloffBias_IsSet ? _recordData.Slice(_FalloffBiasLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseUvScale
         private int _NoiseUvScaleLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _NoiseUvScale_IsSet => _DATALocation.HasValue;
+        private bool _NoiseUvScale_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _NoiseUvScaleLocation + 1 >= 4;
         public Single NoiseUvScale => _NoiseUvScale_IsSet ? _recordData.Slice(_NoiseUvScaleLocation, 4).Float() : default(Single);
         #endregion
         #region MaterialUvScale
         private int _MaterialUvScaleLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _MaterialUvScale_IsSet => _DATALocation.HasValue;
+        private bool _MaterialUvScale_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MaterialUvScaleLocation + 1 >= 4;
         public Single MaterialUvScale => _MaterialUvScale_IsSet ? _recordData.Slice(_MaterialUvScaleLocation, 4).Float() : default(Single);
         #endregion
         #region ProjectionVector
         private int _ProjectionVectorLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _ProjectionVector_IsSet => _DATALocation.HasValue;
+        private bool _ProjectionVector_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ProjectionVectorLocation + 1 >= 12;
         public P3Float ProjectionVector => _ProjectionVector_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_ProjectionVectorLocation, 12)) : default(P3Float);
         #endregion
         #region NormalDampener
         private int _NormalDampenerLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _NormalDampener_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(MaterialObject.DATADataType.Break0);
+        private bool _NormalDampener_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(MaterialObject.DATADataType.Break0) && _DATALocation!.Value.Max - _NormalDampenerLocation + 1 >= 4;
         public Single NormalDampener => _NormalDampener_IsSet ? _recordData.Slice(_NormalDampenerLocation, 4).Float() : default(Single);
         #endregion
         #region SinglePassColor
         private int _SinglePassColorLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _SinglePassColor_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(MaterialObject.DATADataType.Break1);
+        private bool _SinglePassColor_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(MaterialObject.DATADataType.Break1) && _DATALocation!.Value.Max - _SinglePassColorLocation + 1 >= 12;
         public Color SinglePassColor => _SinglePassColor_IsSet ? _recordData.Slice(_SinglePassColorLocation, 12).ReadColor(ColorBinaryType.NoAlphaFloat) : default(Color);
         #endregion
         #region IsSinglePass
         private int _IsSinglePassLocation => _DATALocation!.Value.Min + 0x2C;
-        private bool _IsSinglePass_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(MaterialObject.DATADataType.Break1);
+        private bool _IsSinglePass_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(MaterialObject.DATADataType.Break1) && _DATALocation!.Value.Max - _IsSinglePassLocation + 1 >= 4;
         public Boolean IsSinglePass => _IsSinglePass_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_IsSinglePassLocation, 4)) >= 1 : default(Boolean);
         #endregion
         partial void CustomFactoryEnd(

@@ -1886,47 +1886,47 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _ZNAMLocation;
         #region ImagespaceModifier
         private int _ImagespaceModifierLocation => _ZNAMLocation!.Value.Min;
-        private bool _ImagespaceModifier_IsSet => _ZNAMLocation.HasValue;
+        private bool _ImagespaceModifier_IsSet => _ZNAMLocation.HasValue && _ZNAMLocation!.Value.Max - _ImagespaceModifierLocation + 1 >= 4;
         public IFormLinkGetter<IImageSpaceAdapterGetter> ImagespaceModifier => _ImagespaceModifier_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImageSpaceAdapterGetter>(_package, _recordData.Span.Slice(_ImagespaceModifierLocation, 0x4), isSet: _ImagespaceModifier_IsSet) : FormLink<IImageSpaceAdapterGetter>.Null;
         #endregion
         #region CameraOffset
         private int _CameraOffsetLocation => _ZNAMLocation!.Value.Min + 0x4;
-        private bool _CameraOffset_IsSet => _ZNAMLocation.HasValue;
+        private bool _CameraOffset_IsSet => _ZNAMLocation.HasValue && _ZNAMLocation!.Value.Max - _CameraOffsetLocation + 1 >= 12;
         public P3Float CameraOffset => _CameraOffset_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_CameraOffsetLocation, 12)) : default(P3Float);
         #endregion
         #region FovMult
         private int _FovMultLocation => _ZNAMLocation!.Value.Min + 0x10;
-        private bool _FovMult_IsSet => _ZNAMLocation.HasValue;
+        private bool _FovMult_IsSet => _ZNAMLocation.HasValue && _ZNAMLocation!.Value.Max - _FovMultLocation + 1 >= 4;
         public Single FovMult => _FovMult_IsSet ? _recordData.Slice(_FovMultLocation, 4).Float() : default(Single);
         #endregion
         #region Overlay
         private int _OverlayLocation => _ZNAMLocation!.Value.Min + 0x14;
-        private bool _Overlay_IsSet => _ZNAMLocation.HasValue;
+        private bool _Overlay_IsSet => _ZNAMLocation.HasValue && _ZNAMLocation!.Value.Max - _OverlayLocation + 1 >= 1;
         public Zoom.OverlayType Overlay => _Overlay_IsSet ? (Zoom.OverlayType)_recordData.Span.Slice(_OverlayLocation, 0x1)[0] : default;
         #endregion
         #region AdsDistanceFromCameraOffset
         private int _AdsDistanceFromCameraOffsetLocation => _ZNAMLocation!.Value.Min + 0x15;
-        private bool _AdsDistanceFromCameraOffset_IsSet => _ZNAMLocation.HasValue;
+        private bool _AdsDistanceFromCameraOffset_IsSet => _ZNAMLocation.HasValue && _ZNAMLocation!.Value.Max - _AdsDistanceFromCameraOffsetLocation + 1 >= 4;
         public Single AdsDistanceFromCameraOffset => _AdsDistanceFromCameraOffset_IsSet ? _recordData.Slice(_AdsDistanceFromCameraOffsetLocation, 4).Float() : default(Single);
         #endregion
         #region AdsHeightDelayEnabled
         private int _AdsHeightDelayEnabledLocation => _ZNAMLocation!.Value.Min + 0x19;
-        private bool _AdsHeightDelayEnabled_IsSet => _ZNAMLocation.HasValue;
+        private bool _AdsHeightDelayEnabled_IsSet => _ZNAMLocation.HasValue && _ZNAMLocation!.Value.Max - _AdsHeightDelayEnabledLocation + 1 >= 1;
         public Boolean AdsHeightDelayEnabled => _AdsHeightDelayEnabled_IsSet ? _recordData.Slice(_AdsHeightDelayEnabledLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region AdsHeightDelaySeconds
         private int _AdsHeightDelaySecondsLocation => _ZNAMLocation!.Value.Min + 0x1A;
-        private bool _AdsHeightDelaySeconds_IsSet => _ZNAMLocation.HasValue;
+        private bool _AdsHeightDelaySeconds_IsSet => _ZNAMLocation.HasValue && _ZNAMLocation!.Value.Max - _AdsHeightDelaySecondsLocation + 1 >= 4;
         public Single AdsHeightDelaySeconds => _AdsHeightDelaySeconds_IsSet ? _recordData.Slice(_AdsHeightDelaySecondsLocation, 4).Float() : default(Single);
         #endregion
         #region AdsDepthEnabled
         private int _AdsDepthEnabledLocation => _ZNAMLocation!.Value.Min + 0x1E;
-        private bool _AdsDepthEnabled_IsSet => _ZNAMLocation.HasValue;
+        private bool _AdsDepthEnabled_IsSet => _ZNAMLocation.HasValue && _ZNAMLocation!.Value.Max - _AdsDepthEnabledLocation + 1 >= 1;
         public Boolean AdsDepthEnabled => _AdsDepthEnabled_IsSet ? _recordData.Slice(_AdsDepthEnabledLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region AdsDepthDelaySeconds
         private int _AdsDepthDelaySecondsLocation => _ZNAMLocation!.Value.Min + 0x1F;
-        private bool _AdsDepthDelaySeconds_IsSet => _ZNAMLocation.HasValue;
+        private bool _AdsDepthDelaySeconds_IsSet => _ZNAMLocation.HasValue && _ZNAMLocation!.Value.Max - _AdsDepthDelaySecondsLocation + 1 >= 4;
         public Single AdsDepthDelaySeconds => _AdsDepthDelaySeconds_IsSet ? _recordData.Slice(_AdsDepthDelaySecondsLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

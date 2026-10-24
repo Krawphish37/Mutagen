@@ -3026,17 +3026,17 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DATALocation;
         #region TopicFlags
         private int _TopicFlagsLocation => _DATALocation!.Value.Min;
-        private bool _TopicFlags_IsSet => _DATALocation.HasValue;
+        private bool _TopicFlags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TopicFlagsLocation + 1 >= 1;
         public DialogTopic.TopicFlag TopicFlags => _TopicFlags_IsSet ? (DialogTopic.TopicFlag)_recordData.Span.Slice(_TopicFlagsLocation, 0x1)[0] : default;
         #endregion
         #region Category
         private int _CategoryLocation => _DATALocation!.Value.Min + 0x1;
-        private bool _Category_IsSet => _DATALocation.HasValue;
+        private bool _Category_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CategoryLocation + 1 >= 1;
         public DialogTopic.CategoryEnum Category => _Category_IsSet ? (DialogTopic.CategoryEnum)_recordData.Span.Slice(_CategoryLocation, 0x1)[0] : default;
         #endregion
         #region Subtype
         private int _SubtypeLocation => _DATALocation!.Value.Min + 0x2;
-        private bool _Subtype_IsSet => _DATALocation.HasValue;
+        private bool _Subtype_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SubtypeLocation + 1 >= 2;
         public DialogTopic.SubtypeEnum Subtype => _Subtype_IsSet ? (DialogTopic.SubtypeEnum)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_SubtypeLocation, 0x2)) : default;
         #endregion
         #region SubtypeName

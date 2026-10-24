@@ -2901,7 +2901,7 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DNAMLocation;
         #region Priority
         private int _PriorityLocation => _DNAMLocation!.Value.Min;
-        private bool _Priority_IsSet => _DNAMLocation.HasValue;
+        private bool _Priority_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _PriorityLocation + 1 >= 2;
         public IGenderedItemGetter<Byte> Priority
         {
             get
@@ -2916,22 +2916,22 @@ namespace Mutagen.Bethesda.Fallout4
         #endregion
         #region Unknown
         private int _UnknownLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _Unknown_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _UnknownLocation + 1 >= 2;
         public UInt16 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_UnknownLocation, 2)) : default(UInt16);
         #endregion
         #region DetectionSoundValue
         private int _DetectionSoundValueLocation => _DNAMLocation!.Value.Min + 0x6;
-        private bool _DetectionSoundValue_IsSet => _DNAMLocation.HasValue;
+        private bool _DetectionSoundValue_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DetectionSoundValueLocation + 1 >= 1;
         public Byte DetectionSoundValue => _DetectionSoundValue_IsSet ? _recordData.Span[_DetectionSoundValueLocation] : default;
         #endregion
         #region Unknown2
         private int _Unknown2Location => _DNAMLocation!.Value.Min + 0x7;
-        private bool _Unknown2_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown2_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _Unknown2Location + 1 >= 1;
         public Byte Unknown2 => _Unknown2_IsSet ? _recordData.Span[_Unknown2Location] : default;
         #endregion
         #region WeaponAdjust
         private int _WeaponAdjustLocation => _DNAMLocation!.Value.Min + 0x8;
-        private bool _WeaponAdjust_IsSet => _DNAMLocation.HasValue;
+        private bool _WeaponAdjust_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _WeaponAdjustLocation + 1 >= 4;
         public Single WeaponAdjust => _WeaponAdjust_IsSet ? _recordData.Slice(_WeaponAdjustLocation, 4).Float() : default(Single);
         #endregion
         #region WorldModel

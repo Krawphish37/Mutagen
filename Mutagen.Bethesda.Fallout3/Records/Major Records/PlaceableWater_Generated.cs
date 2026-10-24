@@ -1760,12 +1760,12 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DNAMLocation;
         #region Flags
         private int _FlagsLocation => _DNAMLocation!.Value.Min;
-        private bool _Flags_IsSet => _DNAMLocation.HasValue;
+        private bool _Flags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public PlaceableWater.WaterFlag Flags => _Flags_IsSet ? (PlaceableWater.WaterFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Water
         private int _WaterLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _Water_IsSet => _DNAMLocation.HasValue;
+        private bool _Water_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _WaterLocation + 1 >= 4;
         public IFormLinkGetter<IWaterGetter> Water => _Water_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IWaterGetter>(_package, _recordData.Span.Slice(_WaterLocation, 0x4), isSet: _Water_IsSet) : FormLink<IWaterGetter>.Null;
         #endregion
         partial void CustomFactoryEnd(

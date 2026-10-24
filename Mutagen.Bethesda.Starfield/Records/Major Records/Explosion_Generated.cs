@@ -4042,109 +4042,109 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _ENAMLocation;
         #region Light
         private int _LightLocation => _ENAMLocation!.Value.Min;
-        private bool _Light_IsSet => _ENAMLocation.HasValue;
+        private bool _Light_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _LightLocation + 1 >= 4;
         public IFormLinkGetter<ILightGetter> Light => _Light_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILightGetter>(_package, _recordData.Span.Slice(_LightLocation, 0x4), isSet: _Light_IsSet) : FormLink<ILightGetter>.Null;
         #endregion
         #region Sound1
         private int _Sound1Location => _ENAMLocation!.Value.Min + 0x4;
-        private bool _Sound1_IsSet => _ENAMLocation.HasValue;
+        private bool _Sound1_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _Sound1Location + 1 >= 1;
         private ISoundReferenceGetter? _Sound1 => _Sound1_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_Sound1Location), _package) : default;
         public ISoundReferenceGetter Sound1 => _Sound1 ?? new SoundReference();
         #endregion
         #region Sound2
         private int _Sound2Location => _ENAMLocation!.Value.Min + 0x2C;
-        private bool _Sound2_IsSet => _ENAMLocation.HasValue;
+        private bool _Sound2_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _Sound2Location + 1 >= 1;
         private ISoundReferenceGetter? _Sound2 => _Sound2_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_Sound2Location), _package) : default;
         public ISoundReferenceGetter Sound2 => _Sound2 ?? new SoundReference();
         #endregion
         #region ImpactDataSet
         private int _ImpactDataSetLocation => _ENAMLocation!.Value.Min + 0x54;
-        private bool _ImpactDataSet_IsSet => _ENAMLocation.HasValue;
+        private bool _ImpactDataSet_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _ImpactDataSetLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> ImpactDataSet => _ImpactDataSet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_ImpactDataSetLocation, 0x4), isSet: _ImpactDataSet_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region PlacedObject
         private int _PlacedObjectLocation => _ENAMLocation!.Value.Min + 0x58;
-        private bool _PlacedObject_IsSet => _ENAMLocation.HasValue;
+        private bool _PlacedObject_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _PlacedObjectLocation + 1 >= 4;
         public IFormLinkGetter<IExplodeSpawnGetter> PlacedObject => _PlacedObject_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplodeSpawnGetter>(_package, _recordData.Span.Slice(_PlacedObjectLocation, 0x4), isSet: _PlacedObject_IsSet) : FormLink<IExplodeSpawnGetter>.Null;
         #endregion
         #region SpawnProjectile
         private int _SpawnProjectileLocation => _ENAMLocation!.Value.Min + 0x5C;
-        private bool _SpawnProjectile_IsSet => _ENAMLocation.HasValue;
+        private bool _SpawnProjectile_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _SpawnProjectileLocation + 1 >= 4;
         public IFormLinkGetter<IProjectileGetter> SpawnProjectile => _SpawnProjectile_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IProjectileGetter>(_package, _recordData.Span.Slice(_SpawnProjectileLocation, 0x4), isSet: _SpawnProjectile_IsSet) : FormLink<IProjectileGetter>.Null;
         #endregion
         #region Condition
         private int _ConditionLocation => _ENAMLocation!.Value.Min + 0x60;
-        private bool _Condition_IsSet => _ENAMLocation.HasValue;
+        private bool _Condition_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _ConditionLocation + 1 >= 4;
         public IFormLinkGetter<IConditionRecordGetter> Condition => _Condition_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IConditionRecordGetter>(_package, _recordData.Span.Slice(_ConditionLocation, 0x4), isSet: _Condition_IsSet) : FormLink<IConditionRecordGetter>.Null;
         #endregion
         #region Force
         private int _ForceLocation => _ENAMLocation!.Value.Min + 0x64;
-        private bool _Force_IsSet => _ENAMLocation.HasValue;
+        private bool _Force_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _ForceLocation + 1 >= 4;
         public Single Force => _Force_IsSet ? _recordData.Slice(_ForceLocation, 4).Float() : default(Single);
         #endregion
         #region Damage
         private int _DamageLocation => _ENAMLocation!.Value.Min + 0x68;
-        private bool _Damage_IsSet => _ENAMLocation.HasValue;
+        private bool _Damage_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _DamageLocation + 1 >= 4;
         public Single Damage => _Damage_IsSet ? _recordData.Slice(_DamageLocation, 4).Float() : default(Single);
         #endregion
         #region InnerRadius
         private int _InnerRadiusLocation => _ENAMLocation!.Value.Min + 0x6C;
-        private bool _InnerRadius_IsSet => _ENAMLocation.HasValue;
+        private bool _InnerRadius_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _InnerRadiusLocation + 1 >= 4;
         public Single InnerRadius => _InnerRadius_IsSet ? _recordData.Slice(_InnerRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region OuterRadius
         private int _OuterRadiusLocation => _ENAMLocation!.Value.Min + 0x70;
-        private bool _OuterRadius_IsSet => _ENAMLocation.HasValue;
+        private bool _OuterRadius_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _OuterRadiusLocation + 1 >= 4;
         public Single OuterRadius => _OuterRadius_IsSet ? _recordData.Slice(_OuterRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region ISRadius
         private int _ISRadiusLocation => _ENAMLocation!.Value.Min + 0x74;
-        private bool _ISRadius_IsSet => _ENAMLocation.HasValue;
+        private bool _ISRadius_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _ISRadiusLocation + 1 >= 4;
         public Single ISRadius => _ISRadius_IsSet ? _recordData.Slice(_ISRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region VerticalOffsetMult
         private int _VerticalOffsetMultLocation => _ENAMLocation!.Value.Min + 0x78;
-        private bool _VerticalOffsetMult_IsSet => _ENAMLocation.HasValue;
+        private bool _VerticalOffsetMult_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _VerticalOffsetMultLocation + 1 >= 4;
         public Single VerticalOffsetMult => _VerticalOffsetMult_IsSet ? _recordData.Slice(_VerticalOffsetMultLocation, 4).Float() : default(Single);
         #endregion
         #region Flags
         private int _FlagsLocation => _ENAMLocation!.Value.Min + 0x7C;
-        private bool _Flags_IsSet => _ENAMLocation.HasValue;
+        private bool _Flags_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Explosion.Flag Flags => _Flags_IsSet ? (Explosion.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region SoundLevel
         private int _SoundLevelLocation => _ENAMLocation!.Value.Min + 0x80;
-        private bool _SoundLevel_IsSet => _ENAMLocation.HasValue;
+        private bool _SoundLevel_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _SoundLevelLocation + 1 >= 4;
         public SoundLevel SoundLevel => _SoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SoundLevelLocation, 0x4)) : default;
         #endregion
         #region PlacedObjectAutofadeDelay
         private int _PlacedObjectAutofadeDelayLocation => _ENAMLocation!.Value.Min + 0x84;
-        private bool _PlacedObjectAutofadeDelay_IsSet => _ENAMLocation.HasValue;
+        private bool _PlacedObjectAutofadeDelay_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _PlacedObjectAutofadeDelayLocation + 1 >= 4;
         public Single PlacedObjectAutofadeDelay => _PlacedObjectAutofadeDelay_IsSet ? _recordData.Slice(_PlacedObjectAutofadeDelayLocation, 4).Float() : default(Single);
         #endregion
         #region Stagger
         private int _StaggerLocation => _ENAMLocation!.Value.Min + 0x88;
-        private bool _Stagger_IsSet => _ENAMLocation.HasValue;
+        private bool _Stagger_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _StaggerLocation + 1 >= 4;
         public Stagger Stagger => _Stagger_IsSet ? (Stagger)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_StaggerLocation, 0x4)) : default;
         #endregion
         #region SpawnPoint
         private int _SpawnPointLocation => _ENAMLocation!.Value.Min + 0x8C;
-        private bool _SpawnPoint_IsSet => _ENAMLocation.HasValue;
+        private bool _SpawnPoint_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _SpawnPointLocation + 1 >= 12;
         public P3Float SpawnPoint => _SpawnPoint_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_SpawnPointLocation, 12)) : default(P3Float);
         #endregion
         #region SpawnSpreadDegrees
         private int _SpawnSpreadDegreesLocation => _ENAMLocation!.Value.Min + 0x98;
-        private bool _SpawnSpreadDegrees_IsSet => _ENAMLocation.HasValue;
+        private bool _SpawnSpreadDegrees_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _SpawnSpreadDegreesLocation + 1 >= 4;
         public Single SpawnSpreadDegrees => _SpawnSpreadDegrees_IsSet ? _recordData.Slice(_SpawnSpreadDegreesLocation, 4).Float() : default(Single);
         #endregion
         #region Count
         private int _CountLocation => _ENAMLocation!.Value.Min + 0x9C;
-        private bool _Count_IsSet => _ENAMLocation.HasValue;
+        private bool _Count_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _CountLocation + 1 >= 4;
         public UInt32 Count => _Count_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_CountLocation, 4)) : default(UInt32);
         #endregion
         #region Duration
         private int _DurationLocation => _ENAMLocation!.Value.Min + 0xA0;
-        private bool _Duration_IsSet => _ENAMLocation.HasValue;
+        private bool _Duration_IsSet => _ENAMLocation.HasValue && _ENAMLocation!.Value.Max - _DurationLocation + 1 >= 4;
         public Single Duration => _Duration_IsSet ? _recordData.Slice(_DurationLocation, 4).Float() : default(Single);
         #endregion
         public IReadOnlyList<IDamageTypeValueGetter>? DamageType { get; private set; }

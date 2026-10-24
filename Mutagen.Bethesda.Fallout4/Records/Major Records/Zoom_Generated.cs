@@ -1610,22 +1610,22 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _GNAMLocation;
         #region FovMult
         private int _FovMultLocation => _GNAMLocation!.Value.Min;
-        private bool _FovMult_IsSet => _GNAMLocation.HasValue;
+        private bool _FovMult_IsSet => _GNAMLocation.HasValue && _GNAMLocation!.Value.Max - _FovMultLocation + 1 >= 4;
         public Single FovMult => _FovMult_IsSet ? _recordData.Slice(_FovMultLocation, 4).Float() : default(Single);
         #endregion
         #region Overlay
         private int _OverlayLocation => _GNAMLocation!.Value.Min + 0x4;
-        private bool _Overlay_IsSet => _GNAMLocation.HasValue;
+        private bool _Overlay_IsSet => _GNAMLocation.HasValue && _GNAMLocation!.Value.Max - _OverlayLocation + 1 >= 4;
         public Zoom.OverlayType Overlay => _Overlay_IsSet ? (Zoom.OverlayType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_OverlayLocation, 0x4)) : default;
         #endregion
         #region ImagespaceModifier
         private int _ImagespaceModifierLocation => _GNAMLocation!.Value.Min + 0x8;
-        private bool _ImagespaceModifier_IsSet => _GNAMLocation.HasValue;
+        private bool _ImagespaceModifier_IsSet => _GNAMLocation.HasValue && _GNAMLocation!.Value.Max - _ImagespaceModifierLocation + 1 >= 4;
         public IFormLinkGetter<IImageSpaceAdapterGetter> ImagespaceModifier => _ImagespaceModifier_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImageSpaceAdapterGetter>(_package, _recordData.Span.Slice(_ImagespaceModifierLocation, 0x4), isSet: _ImagespaceModifier_IsSet) : FormLink<IImageSpaceAdapterGetter>.Null;
         #endregion
         #region CameraOffset
         private int _CameraOffsetLocation => _GNAMLocation!.Value.Min + 0xC;
-        private bool _CameraOffset_IsSet => _GNAMLocation.HasValue;
+        private bool _CameraOffset_IsSet => _GNAMLocation.HasValue && _GNAMLocation!.Value.Max - _CameraOffsetLocation + 1 >= 12;
         public P3Float CameraOffset => _CameraOffset_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_CameraOffsetLocation, 12)) : default(P3Float);
         #endregion
         partial void CustomFactoryEnd(

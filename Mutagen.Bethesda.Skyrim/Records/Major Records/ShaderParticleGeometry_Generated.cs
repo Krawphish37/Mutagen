@@ -2259,62 +2259,62 @@ namespace Mutagen.Bethesda.Skyrim
         public ShaderParticleGeometry.DATADataType DATADataTypeState { get; private set; }
         #region GravityVelocity
         private int _GravityVelocityLocation => _DATALocation!.Value.Min;
-        private bool _GravityVelocity_IsSet => _DATALocation.HasValue;
+        private bool _GravityVelocity_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _GravityVelocityLocation + 1 >= 4;
         public Single GravityVelocity => _GravityVelocity_IsSet ? _recordData.Slice(_GravityVelocityLocation, 4).Float() : default(Single);
         #endregion
         #region RotationVelocity
         private int _RotationVelocityLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _RotationVelocity_IsSet => _DATALocation.HasValue;
+        private bool _RotationVelocity_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RotationVelocityLocation + 1 >= 4;
         public Single RotationVelocity => _RotationVelocity_IsSet ? _recordData.Slice(_RotationVelocityLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleSizeX
         private int _ParticleSizeXLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _ParticleSizeX_IsSet => _DATALocation.HasValue;
+        private bool _ParticleSizeX_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleSizeXLocation + 1 >= 4;
         public Single ParticleSizeX => _ParticleSizeX_IsSet ? _recordData.Slice(_ParticleSizeXLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleSizeY
         private int _ParticleSizeYLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _ParticleSizeY_IsSet => _DATALocation.HasValue;
+        private bool _ParticleSizeY_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleSizeYLocation + 1 >= 4;
         public Single ParticleSizeY => _ParticleSizeY_IsSet ? _recordData.Slice(_ParticleSizeYLocation, 4).Float() : default(Single);
         #endregion
         #region CenterOffsetMin
         private int _CenterOffsetMinLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _CenterOffsetMin_IsSet => _DATALocation.HasValue;
+        private bool _CenterOffsetMin_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CenterOffsetMinLocation + 1 >= 4;
         public Single CenterOffsetMin => _CenterOffsetMin_IsSet ? _recordData.Slice(_CenterOffsetMinLocation, 4).Float() : default(Single);
         #endregion
         #region CenterOffsetMax
         private int _CenterOffsetMaxLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _CenterOffsetMax_IsSet => _DATALocation.HasValue;
+        private bool _CenterOffsetMax_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CenterOffsetMaxLocation + 1 >= 4;
         public Single CenterOffsetMax => _CenterOffsetMax_IsSet ? _recordData.Slice(_CenterOffsetMaxLocation, 4).Float() : default(Single);
         #endregion
         #region InitialRotationRange
         private int _InitialRotationRangeLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _InitialRotationRange_IsSet => _DATALocation.HasValue;
+        private bool _InitialRotationRange_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _InitialRotationRangeLocation + 1 >= 4;
         public Single InitialRotationRange => _InitialRotationRange_IsSet ? _recordData.Slice(_InitialRotationRangeLocation, 4).Float() : default(Single);
         #endregion
         #region NumSubtexturesX
         private int _NumSubtexturesXLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _NumSubtexturesX_IsSet => _DATALocation.HasValue;
+        private bool _NumSubtexturesX_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _NumSubtexturesXLocation + 1 >= 4;
         public UInt32 NumSubtexturesX => _NumSubtexturesX_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_NumSubtexturesXLocation, 4)) : default(UInt32);
         #endregion
         #region NumSubtexturesY
         private int _NumSubtexturesYLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _NumSubtexturesY_IsSet => _DATALocation.HasValue;
+        private bool _NumSubtexturesY_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _NumSubtexturesYLocation + 1 >= 4;
         public UInt32 NumSubtexturesY => _NumSubtexturesY_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_NumSubtexturesYLocation, 4)) : default(UInt32);
         #endregion
         #region Type
         private int _TypeLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _Type_IsSet => _DATALocation.HasValue;
+        private bool _Type_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TypeLocation + 1 >= 4;
         public ShaderParticleGeometry.TypeEnum Type => _Type_IsSet ? (ShaderParticleGeometry.TypeEnum)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default;
         #endregion
         #region BoxSize
         private int _BoxSizeLocation => _DATALocation!.Value.Min + 0x28;
-        private bool _BoxSize_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(ShaderParticleGeometry.DATADataType.Break0);
+        private bool _BoxSize_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(ShaderParticleGeometry.DATADataType.Break0) && _DATALocation!.Value.Max - _BoxSizeLocation + 1 >= 4;
         public UInt32 BoxSize => _BoxSize_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_BoxSizeLocation, 4)) : default(UInt32);
         #endregion
         #region ParticleDensity
         private int _ParticleDensityLocation => _DATALocation!.Value.Min + 0x2C;
-        private bool _ParticleDensity_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(ShaderParticleGeometry.DATADataType.Break0);
+        private bool _ParticleDensity_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(ShaderParticleGeometry.DATADataType.Break0) && _DATALocation!.Value.Max - _ParticleDensityLocation + 1 >= 4;
         public Single ParticleDensity => _ParticleDensity_IsSet ? _recordData.Slice(_ParticleDensityLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleTexture

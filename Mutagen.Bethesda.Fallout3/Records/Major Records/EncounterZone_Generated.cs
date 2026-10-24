@@ -1595,22 +1595,22 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region Owner
         private int _OwnerLocation => _DATALocation!.Value.Min;
-        private bool _Owner_IsSet => _DATALocation.HasValue;
+        private bool _Owner_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _OwnerLocation + 1 >= 4;
         public IFormLinkGetter<IOwnerGetter> Owner => _Owner_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IOwnerGetter>(_package, _recordData.Span.Slice(_OwnerLocation, 0x4), isSet: _Owner_IsSet) : FormLink<IOwnerGetter>.Null;
         #endregion
         #region Rank
         private int _RankLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Rank_IsSet => _DATALocation.HasValue;
+        private bool _Rank_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RankLocation + 1 >= 1;
         public SByte Rank => _Rank_IsSet ? (sbyte)_recordData.Slice(_RankLocation, 1)[0] : default(SByte);
         #endregion
         #region MinLevel
         private int _MinLevelLocation => _DATALocation!.Value.Min + 0x5;
-        private bool _MinLevel_IsSet => _DATALocation.HasValue;
+        private bool _MinLevel_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MinLevelLocation + 1 >= 1;
         public SByte MinLevel => _MinLevel_IsSet ? (sbyte)_recordData.Slice(_MinLevelLocation, 1)[0] : default(SByte);
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x6;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 2;
         public EncounterZone.Flag Flags => _Flags_IsSet ? (EncounterZone.Flag)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x2)) : default;
         #endregion
         partial void CustomFactoryEnd(

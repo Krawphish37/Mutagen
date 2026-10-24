@@ -3281,52 +3281,52 @@ namespace Mutagen.Bethesda.Fallout4
         public LightingTemplate.DATADataType DATADataTypeState { get; private set; }
         #region AmbientColor
         private int _AmbientColorLocation => _DATALocation!.Value.Min;
-        private bool _AmbientColor_IsSet => _DATALocation.HasValue;
+        private bool _AmbientColor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AmbientColorLocation + 1 >= 4;
         public Color AmbientColor => _AmbientColor_IsSet ? _recordData.Slice(_AmbientColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region DirectionalColor
         private int _DirectionalColorLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _DirectionalColor_IsSet => _DATALocation.HasValue;
+        private bool _DirectionalColor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DirectionalColorLocation + 1 >= 4;
         public Color DirectionalColor => _DirectionalColor_IsSet ? _recordData.Slice(_DirectionalColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region FogNearColor
         private int _FogNearColorLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _FogNearColor_IsSet => _DATALocation.HasValue;
+        private bool _FogNearColor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FogNearColorLocation + 1 >= 4;
         public Color FogNearColor => _FogNearColor_IsSet ? _recordData.Slice(_FogNearColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region FogNear
         private int _FogNearLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _FogNear_IsSet => _DATALocation.HasValue;
+        private bool _FogNear_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FogNearLocation + 1 >= 4;
         public Single FogNear => _FogNear_IsSet ? _recordData.Slice(_FogNearLocation, 4).Float() : default(Single);
         #endregion
         #region FogFar
         private int _FogFarLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _FogFar_IsSet => _DATALocation.HasValue;
+        private bool _FogFar_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FogFarLocation + 1 >= 4;
         public Single FogFar => _FogFar_IsSet ? _recordData.Slice(_FogFarLocation, 4).Float() : default(Single);
         #endregion
         #region DirectionalRotationXY
         private int _DirectionalRotationXYLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _DirectionalRotationXY_IsSet => _DATALocation.HasValue;
+        private bool _DirectionalRotationXY_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DirectionalRotationXYLocation + 1 >= 4;
         public Int32 DirectionalRotationXY => _DirectionalRotationXY_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_DirectionalRotationXYLocation, 4)) : default(Int32);
         #endregion
         #region DirectionalRotationZ
         private int _DirectionalRotationZLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _DirectionalRotationZ_IsSet => _DATALocation.HasValue;
+        private bool _DirectionalRotationZ_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DirectionalRotationZLocation + 1 >= 4;
         public Int32 DirectionalRotationZ => _DirectionalRotationZ_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_DirectionalRotationZLocation, 4)) : default(Int32);
         #endregion
         #region DirectionalFade
         private int _DirectionalFadeLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _DirectionalFade_IsSet => _DATALocation.HasValue;
+        private bool _DirectionalFade_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DirectionalFadeLocation + 1 >= 4;
         public Single DirectionalFade => _DirectionalFade_IsSet ? _recordData.Slice(_DirectionalFadeLocation, 4).Float() : default(Single);
         #endregion
         #region FogClipDistance
         private int _FogClipDistanceLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _FogClipDistance_IsSet => _DATALocation.HasValue;
+        private bool _FogClipDistance_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FogClipDistanceLocation + 1 >= 4;
         public Single FogClipDistance => _FogClipDistance_IsSet ? _recordData.Slice(_FogClipDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region FogPower
         private int _FogPowerLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _FogPower_IsSet => _DATALocation.HasValue;
+        private bool _FogPower_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FogPowerLocation + 1 >= 4;
         public Single FogPower => _FogPower_IsSet ? _recordData.Slice(_FogPowerLocation, 4).Float() : default(Single);
         #endregion
         #region Unused
@@ -3336,82 +3336,82 @@ namespace Mutagen.Bethesda.Fallout4
         #endregion
         #region FogFarColor
         private int _FogFarColorLocation => _DATALocation!.Value.Min + 0x48;
-        private bool _FogFarColor_IsSet => _DATALocation.HasValue;
+        private bool _FogFarColor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FogFarColorLocation + 1 >= 4;
         public Color FogFarColor => _FogFarColor_IsSet ? _recordData.Slice(_FogFarColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region FogMax
         private int _FogMaxLocation => _DATALocation!.Value.Min + 0x4C;
-        private bool _FogMax_IsSet => _DATALocation.HasValue;
+        private bool _FogMax_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FogMaxLocation + 1 >= 4;
         public Single FogMax => _FogMax_IsSet ? _recordData.Slice(_FogMaxLocation, 4).Float() : default(Single);
         #endregion
         #region LightFadeStartDistance
         private int _LightFadeStartDistanceLocation => _DATALocation!.Value.Min + 0x50;
-        private bool _LightFadeStartDistance_IsSet => _DATALocation.HasValue;
+        private bool _LightFadeStartDistance_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LightFadeStartDistanceLocation + 1 >= 4;
         public Single LightFadeStartDistance => _LightFadeStartDistance_IsSet ? _recordData.Slice(_LightFadeStartDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region LightFadeEndDistance
         private int _LightFadeEndDistanceLocation => _DATALocation!.Value.Min + 0x54;
-        private bool _LightFadeEndDistance_IsSet => _DATALocation.HasValue;
+        private bool _LightFadeEndDistance_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LightFadeEndDistanceLocation + 1 >= 4;
         public Single LightFadeEndDistance => _LightFadeEndDistance_IsSet ? _recordData.Slice(_LightFadeEndDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown
         private int _UnknownLocation => _DATALocation!.Value.Min + 0x58;
-        private bool _Unknown_IsSet => _DATALocation.HasValue;
+        private bool _Unknown_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
         #endregion
         #region NearHeightMid
         private int _NearHeightMidLocation => _DATALocation!.Value.Min + 0x5C;
-        private bool _NearHeightMid_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        private bool _NearHeightMid_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0) && _DATALocation!.Value.Max - _NearHeightMidLocation + 1 >= 4;
         public Single NearHeightMid => _NearHeightMid_IsSet ? _recordData.Slice(_NearHeightMidLocation, 4).Float() : default(Single);
         #endregion
         #region NearHeightRange
         private int _NearHeightRangeLocation => _DATALocation!.Value.Min + 0x60;
-        private bool _NearHeightRange_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        private bool _NearHeightRange_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0) && _DATALocation!.Value.Max - _NearHeightRangeLocation + 1 >= 4;
         public Single NearHeightRange => _NearHeightRange_IsSet ? _recordData.Slice(_NearHeightRangeLocation, 4).Float() : default(Single);
         #endregion
         #region FogColorHighNear
         private int _FogColorHighNearLocation => _DATALocation!.Value.Min + 0x64;
-        private bool _FogColorHighNear_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        private bool _FogColorHighNear_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0) && _DATALocation!.Value.Max - _FogColorHighNearLocation + 1 >= 4;
         public Color FogColorHighNear => _FogColorHighNear_IsSet ? _recordData.Slice(_FogColorHighNearLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region FogColorHighFar
         private int _FogColorHighFarLocation => _DATALocation!.Value.Min + 0x68;
-        private bool _FogColorHighFar_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        private bool _FogColorHighFar_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0) && _DATALocation!.Value.Max - _FogColorHighFarLocation + 1 >= 4;
         public Color FogColorHighFar => _FogColorHighFar_IsSet ? _recordData.Slice(_FogColorHighFarLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region HighDensityScale
         private int _HighDensityScaleLocation => _DATALocation!.Value.Min + 0x6C;
-        private bool _HighDensityScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        private bool _HighDensityScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0) && _DATALocation!.Value.Max - _HighDensityScaleLocation + 1 >= 4;
         public Single HighDensityScale => _HighDensityScale_IsSet ? _recordData.Slice(_HighDensityScaleLocation, 4).Float() : default(Single);
         #endregion
         #region FogNearScale
         private int _FogNearScaleLocation => _DATALocation!.Value.Min + 0x70;
-        private bool _FogNearScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        private bool _FogNearScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0) && _DATALocation!.Value.Max - _FogNearScaleLocation + 1 >= 4;
         public Single FogNearScale => _FogNearScale_IsSet ? _recordData.Slice(_FogNearScaleLocation, 4).Float() : default(Single);
         #endregion
         #region FogFarScale
         private int _FogFarScaleLocation => _DATALocation!.Value.Min + 0x74;
-        private bool _FogFarScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        private bool _FogFarScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0) && _DATALocation!.Value.Max - _FogFarScaleLocation + 1 >= 4;
         public Single FogFarScale => _FogFarScale_IsSet ? _recordData.Slice(_FogFarScaleLocation, 4).Float() : default(Single);
         #endregion
         #region FogHighNearScale
         private int _FogHighNearScaleLocation => _DATALocation!.Value.Min + 0x78;
-        private bool _FogHighNearScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        private bool _FogHighNearScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0) && _DATALocation!.Value.Max - _FogHighNearScaleLocation + 1 >= 4;
         public Single FogHighNearScale => _FogHighNearScale_IsSet ? _recordData.Slice(_FogHighNearScaleLocation, 4).Float() : default(Single);
         #endregion
         #region FogHighFarScale
         private int _FogHighFarScaleLocation => _DATALocation!.Value.Min + 0x7C;
-        private bool _FogHighFarScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        private bool _FogHighFarScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0) && _DATALocation!.Value.Max - _FogHighFarScaleLocation + 1 >= 4;
         public Single FogHighFarScale => _FogHighFarScale_IsSet ? _recordData.Slice(_FogHighFarScaleLocation, 4).Float() : default(Single);
         #endregion
         #region FogHeightMid
         private int _FogHeightMidLocation => _DATALocation!.Value.Min + 0x80;
-        private bool _FogHeightMid_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break1);
+        private bool _FogHeightMid_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break1) && _DATALocation!.Value.Max - _FogHeightMidLocation + 1 >= 4;
         public Single FogHeightMid => _FogHeightMid_IsSet ? _recordData.Slice(_FogHeightMidLocation, 4).Float() : default(Single);
         #endregion
         #region FogHeightRange
         private int _FogHeightRangeLocation => _DATALocation!.Value.Min + 0x84;
-        private bool _FogHeightRange_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break1);
+        private bool _FogHeightRange_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break1) && _DATALocation!.Value.Max - _FogHeightRangeLocation + 1 >= 4;
         public Single FogHeightRange => _FogHeightRange_IsSet ? _recordData.Slice(_FogHeightRangeLocation, 4).Float() : default(Single);
         #endregion
         public IAmbientColorsGetter? DirectionalAmbientColors { get; private set; }

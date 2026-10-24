@@ -508,7 +508,9 @@ public class LoquiBinaryTranslationGeneration : BinaryTranslationGeneration
         else
         {
             isRequiredRecord = true;
-            DataBinaryTranslationGeneration.GenerateWrapperExtraMembers(sb, dataType, objGen, typeGen, passedLengthAccessor);
+            // Like the normal parse, a fixed length struct needs the data subrecord to have at least begun it
+            DataBinaryTranslationGeneration.GenerateWrapperExtraMembers(sb, dataType, objGen, typeGen, passedLengthAccessor,
+                expectedLength: await this.ExpectedLength(objGen, typeGen) == null ? null : 1);
             var finalPosParam = loqui.TargetObjectGeneration.IsVariableLengthStruct() ? $".Slice(0, _{dataType.GetFieldData().RecordType}Location!.Value.Width - {currentPosition})" : null; 
             sb.AppendLine($"private {loqui.Interface(getter: true, internalInterface: true)}? _{typeGen.Name} => _{typeGen.Name}_IsSet ? {this.Module.BinaryOverlayClassName(loqui)}.{loqui.TargetObjectGeneration.Name}Factory({DataAccessor(recordDataAccessor, $"_{typeGen.Name}Location", null)}{finalPosParam}, _package) : default;"); 
         }

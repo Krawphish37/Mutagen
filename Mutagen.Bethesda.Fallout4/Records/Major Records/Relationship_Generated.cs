@@ -1741,32 +1741,32 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DATALocation;
         #region Parent
         private int _ParentLocation => _DATALocation!.Value.Min;
-        private bool _Parent_IsSet => _DATALocation.HasValue;
+        private bool _Parent_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParentLocation + 1 >= 4;
         public IFormLinkGetter<INpcGetter> Parent => _Parent_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<INpcGetter>(_package, _recordData.Span.Slice(_ParentLocation, 0x4), isSet: _Parent_IsSet) : FormLink<INpcGetter>.Null;
         #endregion
         #region Child
         private int _ChildLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Child_IsSet => _DATALocation.HasValue;
+        private bool _Child_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ChildLocation + 1 >= 4;
         public IFormLinkGetter<INpcGetter> Child => _Child_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<INpcGetter>(_package, _recordData.Span.Slice(_ChildLocation, 0x4), isSet: _Child_IsSet) : FormLink<INpcGetter>.Null;
         #endregion
         #region Rank
         private int _RankLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Rank_IsSet => _DATALocation.HasValue;
+        private bool _Rank_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RankLocation + 1 >= 2;
         public Relationship.RankType Rank => _Rank_IsSet ? (Relationship.RankType)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_RankLocation, 0x2)) : default;
         #endregion
         #region Unknown
         private int _UnknownLocation => _DATALocation!.Value.Min + 0xA;
-        private bool _Unknown_IsSet => _DATALocation.HasValue;
+        private bool _Unknown_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownLocation + 1 >= 1;
         public Byte Unknown => _Unknown_IsSet ? _recordData.Span[_UnknownLocation] : default;
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0xB;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public Relationship.Flag Flags => _Flags_IsSet ? (Relationship.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region AssociationType
         private int _AssociationTypeLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _AssociationType_IsSet => _DATALocation.HasValue;
+        private bool _AssociationType_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AssociationTypeLocation + 1 >= 4;
         public IFormLinkGetter<IAssociationTypeGetter> AssociationType => _AssociationType_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IAssociationTypeGetter>(_package, _recordData.Span.Slice(_AssociationTypeLocation, 0x4), isSet: _AssociationType_IsSet) : FormLink<IAssociationTypeGetter>.Null;
         #endregion
         partial void CustomFactoryEnd(

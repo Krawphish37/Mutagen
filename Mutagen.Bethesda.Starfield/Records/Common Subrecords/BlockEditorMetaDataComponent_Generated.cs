@@ -1750,7 +1750,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region UnknownByte
         private int _UnknownByteLocation => UnknownString1EndingPos;
-        private bool _UnknownByte_IsSet => _DAT2Location.HasValue;
+        private bool _UnknownByte_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UnknownByteLocation + 1 >= 1;
         public Byte UnknownByte => _UnknownByte_IsSet ? _recordData.Span[_UnknownByteLocation] : default;
         #endregion
         #region UnknownString2
@@ -1771,22 +1771,22 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region UnknownInt1
         private int _UnknownInt1Location => UnknownIntsEndingPos;
-        private bool _UnknownInt1_IsSet => _DAT2Location.HasValue;
+        private bool _UnknownInt1_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UnknownInt1Location + 1 >= 4;
         public Int32 UnknownInt1 => _UnknownInt1_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownInt1Location, 4)) : default(Int32);
         #endregion
         #region UnknownInt2
         private int _UnknownInt2Location => UnknownIntsEndingPos + 0x4;
-        private bool _UnknownInt2_IsSet => _DAT2Location.HasValue;
+        private bool _UnknownInt2_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UnknownInt2Location + 1 >= 4;
         public Int32 UnknownInt2 => _UnknownInt2_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownInt2Location, 4)) : default(Int32);
         #endregion
         #region UnknownInt3
         private int _UnknownInt3Location => UnknownIntsEndingPos + 0x8;
-        private bool _UnknownInt3_IsSet => _DAT2Location.HasValue;
+        private bool _UnknownInt3_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UnknownInt3Location + 1 >= 4;
         public Int32 UnknownInt3 => _UnknownInt3_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownInt3Location, 4)) : default(Int32);
         #endregion
         #region UnknownInt4
         private int _UnknownInt4Location => UnknownIntsEndingPos + 0xC;
-        private bool _UnknownInt4_IsSet => _DAT2Location.HasValue;
+        private bool _UnknownInt4_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UnknownInt4Location + 1 >= 4;
         public Int32 UnknownInt4 => _UnknownInt4_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownInt4Location, 4)) : default(Int32);
         #endregion
         #region UnknownEnding

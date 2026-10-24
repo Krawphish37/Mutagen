@@ -2572,12 +2572,12 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _CNAMLocation;
         #region TrunkFlexibility
         private int _TrunkFlexibilityLocation => _CNAMLocation!.Value.Min;
-        private bool _TrunkFlexibility_IsSet => _CNAMLocation.HasValue;
+        private bool _TrunkFlexibility_IsSet => _CNAMLocation.HasValue && _CNAMLocation!.Value.Max - _TrunkFlexibilityLocation + 1 >= 4;
         public Single TrunkFlexibility => _TrunkFlexibility_IsSet ? _recordData.Slice(_TrunkFlexibilityLocation, 4).Float() : default(Single);
         #endregion
         #region BranchFlexibility
         private int _BranchFlexibilityLocation => _CNAMLocation!.Value.Min + 0x4;
-        private bool _BranchFlexibility_IsSet => _CNAMLocation.HasValue;
+        private bool _BranchFlexibility_IsSet => _CNAMLocation.HasValue && _CNAMLocation!.Value.Max - _BranchFlexibilityLocation + 1 >= 4;
         public Single BranchFlexibility => _BranchFlexibility_IsSet ? _recordData.Slice(_BranchFlexibilityLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown
@@ -2587,12 +2587,12 @@ namespace Mutagen.Bethesda.Skyrim
         #endregion
         #region LeafAmplitude
         private int _LeafAmplitudeLocation => _CNAMLocation!.Value.Min + 0x28;
-        private bool _LeafAmplitude_IsSet => _CNAMLocation.HasValue;
+        private bool _LeafAmplitude_IsSet => _CNAMLocation.HasValue && _CNAMLocation!.Value.Max - _LeafAmplitudeLocation + 1 >= 4;
         public Single LeafAmplitude => _LeafAmplitude_IsSet ? _recordData.Slice(_LeafAmplitudeLocation, 4).Float() : default(Single);
         #endregion
         #region LeafFrequency
         private int _LeafFrequencyLocation => _CNAMLocation!.Value.Min + 0x2C;
-        private bool _LeafFrequency_IsSet => _CNAMLocation.HasValue;
+        private bool _LeafFrequency_IsSet => _CNAMLocation.HasValue && _CNAMLocation!.Value.Max - _LeafFrequencyLocation + 1 >= 4;
         public Single LeafFrequency => _LeafFrequency_IsSet ? _recordData.Slice(_LeafFrequencyLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

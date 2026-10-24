@@ -1241,17 +1241,17 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DATALocation;
         #region Planet
         private int _PlanetLocation => _DATALocation!.Value.Min;
-        private bool _Planet_IsSet => _DATALocation.HasValue;
+        private bool _Planet_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PlanetLocation + 1 >= 4;
         public IFormLinkGetter<IPlanetGetter> Planet => _Planet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IPlanetGetter>(_package, _recordData.Span.Slice(_PlanetLocation, 0x4), isSet: _Planet_IsSet) : FormLink<IPlanetGetter>.Null;
         #endregion
         #region Longitude
         private int _LongitudeLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Longitude_IsSet => _DATALocation.HasValue;
+        private bool _Longitude_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LongitudeLocation + 1 >= 8;
         public Double Longitude => _Longitude_IsSet ? BinaryPrimitives.ReadDoubleLittleEndian(_recordData.Slice(_LongitudeLocation, 8)) : default(Double);
         #endregion
         #region Latitude
         private int _LatitudeLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _Latitude_IsSet => _DATALocation.HasValue;
+        private bool _Latitude_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LatitudeLocation + 1 >= 8;
         public Double Latitude => _Latitude_IsSet ? BinaryPrimitives.ReadDoubleLittleEndian(_recordData.Slice(_LatitudeLocation, 8)) : default(Double);
         #endregion
         partial void CustomFactoryEnd(

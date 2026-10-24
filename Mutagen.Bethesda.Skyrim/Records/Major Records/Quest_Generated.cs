@@ -3481,27 +3481,27 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _DNAMLocation;
         #region Flags
         private int _FlagsLocation => _DNAMLocation!.Value.Min;
-        private bool _Flags_IsSet => _DNAMLocation.HasValue;
+        private bool _Flags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlagsLocation + 1 >= 2;
         public Quest.Flag Flags => _Flags_IsSet ? (Quest.Flag)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x2)) : default;
         #endregion
         #region Priority
         private int _PriorityLocation => _DNAMLocation!.Value.Min + 0x2;
-        private bool _Priority_IsSet => _DNAMLocation.HasValue;
+        private bool _Priority_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _PriorityLocation + 1 >= 1;
         public Byte Priority => _Priority_IsSet ? _recordData.Span[_PriorityLocation] : default;
         #endregion
         #region QuestFormVersion
         private int _QuestFormVersionLocation => _DNAMLocation!.Value.Min + 0x3;
-        private bool _QuestFormVersion_IsSet => _DNAMLocation.HasValue;
+        private bool _QuestFormVersion_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _QuestFormVersionLocation + 1 >= 1;
         public Byte QuestFormVersion => _QuestFormVersion_IsSet ? _recordData.Span[_QuestFormVersionLocation] : default;
         #endregion
         #region Unknown
         private int _UnknownLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _Unknown_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
         #endregion
         #region Type
         private int _TypeLocation => _DNAMLocation!.Value.Min + 0x8;
-        private bool _Type_IsSet => _DNAMLocation.HasValue;
+        private bool _Type_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _TypeLocation + 1 >= 4;
         public Quest.TypeEnum Type => _Type_IsSet ? (Quest.TypeEnum)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default;
         #endregion
         #region Event

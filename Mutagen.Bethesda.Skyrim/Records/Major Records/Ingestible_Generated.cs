@@ -3263,27 +3263,27 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _ENITLocation;
         #region Value
         private int _ValueLocation => _ENITLocation!.Value.Min;
-        private bool _Value_IsSet => _ENITLocation.HasValue;
+        private bool _Value_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _ValueLocation + 1 >= 4;
         public UInt32 Value => _Value_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ValueLocation, 4)) : default(UInt32);
         #endregion
         #region Flags
         private int _FlagsLocation => _ENITLocation!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _ENITLocation.HasValue;
+        private bool _Flags_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Ingestible.Flag Flags => _Flags_IsSet ? (Ingestible.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Addiction
         private int _AddictionLocation => _ENITLocation!.Value.Min + 0x8;
-        private bool _Addiction_IsSet => _ENITLocation.HasValue;
+        private bool _Addiction_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _AddictionLocation + 1 >= 4;
         public IFormLinkGetter<ISkyrimMajorRecordGetter> Addiction => _Addiction_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISkyrimMajorRecordGetter>(_package, _recordData.Span.Slice(_AddictionLocation, 0x4), isSet: _Addiction_IsSet) : FormLink<ISkyrimMajorRecordGetter>.Null;
         #endregion
         #region AddictionChance
         private int _AddictionChanceLocation => _ENITLocation!.Value.Min + 0xC;
-        private bool _AddictionChance_IsSet => _ENITLocation.HasValue;
+        private bool _AddictionChance_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _AddictionChanceLocation + 1 >= 4;
         public Single AddictionChance => _AddictionChance_IsSet ? _recordData.Slice(_AddictionChanceLocation, 4).Float() : default(Single);
         #endregion
         #region ConsumeSound
         private int _ConsumeSoundLocation => _ENITLocation!.Value.Min + 0x10;
-        private bool _ConsumeSound_IsSet => _ENITLocation.HasValue;
+        private bool _ConsumeSound_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _ConsumeSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundDescriptorGetter> ConsumeSound => _ConsumeSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundDescriptorGetter>(_package, _recordData.Span.Slice(_ConsumeSoundLocation, 0x4), isSet: _ConsumeSound_IsSet) : FormLink<ISoundDescriptorGetter>.Null;
         #endregion
         public IReadOnlyList<IEffectGetter> Effects { get; private set; } = [];

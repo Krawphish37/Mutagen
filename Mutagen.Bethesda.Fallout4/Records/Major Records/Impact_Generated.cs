@@ -2596,42 +2596,42 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DATALocation;
         #region Duration
         private int _DurationLocation => _DATALocation!.Value.Min;
-        private bool _Duration_IsSet => _DATALocation.HasValue;
+        private bool _Duration_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DurationLocation + 1 >= 4;
         public Single Duration => _Duration_IsSet ? _recordData.Slice(_DurationLocation, 4).Float() : default(Single);
         #endregion
         #region Orientation
         private int _OrientationLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Orientation_IsSet => _DATALocation.HasValue;
+        private bool _Orientation_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _OrientationLocation + 1 >= 4;
         public Impact.OrientationType Orientation => _Orientation_IsSet ? (Impact.OrientationType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_OrientationLocation, 0x4)) : default;
         #endregion
         #region AngleThreshold
         private int _AngleThresholdLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _AngleThreshold_IsSet => _DATALocation.HasValue;
+        private bool _AngleThreshold_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AngleThresholdLocation + 1 >= 4;
         public Single AngleThreshold => _AngleThreshold_IsSet ? _recordData.Slice(_AngleThresholdLocation, 4).Float() : default(Single);
         #endregion
         #region PlacementRadius
         private int _PlacementRadiusLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _PlacementRadius_IsSet => _DATALocation.HasValue;
+        private bool _PlacementRadius_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PlacementRadiusLocation + 1 >= 4;
         public Single PlacementRadius => _PlacementRadius_IsSet ? _recordData.Slice(_PlacementRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region SoundLevel
         private int _SoundLevelLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _SoundLevel_IsSet => _DATALocation.HasValue;
+        private bool _SoundLevel_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SoundLevelLocation + 1 >= 4;
         public SoundLevel SoundLevel => _SoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SoundLevelLocation, 0x4)) : default;
         #endregion
         #region NoDecalData
         private int _NoDecalDataLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _NoDecalData_IsSet => _DATALocation.HasValue;
+        private bool _NoDecalData_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _NoDecalDataLocation + 1 >= 1;
         public Boolean NoDecalData => _NoDecalData_IsSet ? _recordData.Slice(_NoDecalDataLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region Result
         private int _ResultLocation => _DATALocation!.Value.Min + 0x15;
-        private bool _Result_IsSet => _DATALocation.HasValue;
+        private bool _Result_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ResultLocation + 1 >= 1;
         public Impact.ResultType Result => _Result_IsSet ? (Impact.ResultType)_recordData.Span.Slice(_ResultLocation, 0x1)[0] : default;
         #endregion
         #region Unknown
         private int _UnknownLocation => _DATALocation!.Value.Min + 0x16;
-        private bool _Unknown_IsSet => _DATALocation.HasValue;
+        private bool _Unknown_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownLocation + 1 >= 2;
         public Int16 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_UnknownLocation, 2)) : default(Int16);
         #endregion
         #region Decal

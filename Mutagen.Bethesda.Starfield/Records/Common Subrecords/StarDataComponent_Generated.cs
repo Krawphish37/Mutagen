@@ -1580,37 +1580,37 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region Magnitude
         private int _MagnitudeLocation => SpectralClassEndingPos;
-        private bool _Magnitude_IsSet => _DATALocation.HasValue;
+        private bool _Magnitude_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MagnitudeLocation + 1 >= 4;
         public Single Magnitude => _Magnitude_IsSet ? _recordData.Slice(_MagnitudeLocation, 4).Float() : default(Single);
         #endregion
         #region MassInSm
         private int _MassInSmLocation => SpectralClassEndingPos + 0x4;
-        private bool _MassInSm_IsSet => _DATALocation.HasValue;
+        private bool _MassInSm_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MassInSmLocation + 1 >= 4;
         public Single MassInSm => _MassInSm_IsSet ? _recordData.Slice(_MassInSmLocation, 4).Float() / 1.98847E+30f : default(Single);
         #endregion
         #region InnerHabitableZone
         private int _InnerHabitableZoneLocation => SpectralClassEndingPos + 0x8;
-        private bool _InnerHabitableZone_IsSet => _DATALocation.HasValue;
+        private bool _InnerHabitableZone_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _InnerHabitableZoneLocation + 1 >= 4;
         public Single InnerHabitableZone => _InnerHabitableZone_IsSet ? _recordData.Slice(_InnerHabitableZoneLocation, 4).Float() : default(Single);
         #endregion
         #region OuterHabitableZone
         private int _OuterHabitableZoneLocation => SpectralClassEndingPos + 0xC;
-        private bool _OuterHabitableZone_IsSet => _DATALocation.HasValue;
+        private bool _OuterHabitableZone_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _OuterHabitableZoneLocation + 1 >= 4;
         public Single OuterHabitableZone => _OuterHabitableZone_IsSet ? _recordData.Slice(_OuterHabitableZoneLocation, 4).Float() : default(Single);
         #endregion
         #region HIP
         private int _HIPLocation => SpectralClassEndingPos + 0x10;
-        private bool _HIP_IsSet => _DATALocation.HasValue;
+        private bool _HIP_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HIPLocation + 1 >= 4;
         public UInt32 HIP => _HIP_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_HIPLocation, 4)) : default(UInt32);
         #endregion
         #region Radius
         private int _RadiusLocation => SpectralClassEndingPos + 0x14;
-        private bool _Radius_IsSet => _DATALocation.HasValue;
+        private bool _Radius_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RadiusLocation + 1 >= 4;
         public UInt32 Radius => _Radius_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_RadiusLocation, 4)) : default(UInt32);
         #endregion
         #region TemperatureInK
         private int _TemperatureInKLocation => SpectralClassEndingPos + 0x18;
-        private bool _TemperatureInK_IsSet => _DATALocation.HasValue;
+        private bool _TemperatureInK_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TemperatureInKLocation + 1 >= 4;
         public UInt32 TemperatureInK => _TemperatureInK_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_TemperatureInKLocation, 4)) : default(UInt32);
         #endregion
         partial void CustomFactoryEnd(

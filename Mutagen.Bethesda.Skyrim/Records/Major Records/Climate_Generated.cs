@@ -2433,7 +2433,7 @@ namespace Mutagen.Bethesda.Skyrim
         #endregion
         #region Volatility
         private int _VolatilityLocation => _TNAMLocation!.Value.Min + 0x4;
-        private bool _Volatility_IsSet => _TNAMLocation.HasValue;
+        private bool _Volatility_IsSet => _TNAMLocation.HasValue && _TNAMLocation!.Value.Max - _VolatilityLocation + 1 >= 1;
         public Byte Volatility => _Volatility_IsSet ? _recordData.Span[_VolatilityLocation] : default;
         #endregion
         #region MoonAndPhaseLength

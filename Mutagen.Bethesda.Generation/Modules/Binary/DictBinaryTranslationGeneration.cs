@@ -314,7 +314,7 @@ public class DictBinaryTranslationGeneration : BinaryTranslationGeneration
         var posStr = data == null ? passedLengthAccessor : $"_{typeGen.Name}Location";
         if (data != null)
         {
-            DataBinaryTranslationGeneration.GenerateWrapperExtraMembers(sb, data, objGen, typeGen, passedLengthAccessor);
+            DataBinaryTranslationGeneration.GenerateWrapperExtraMembers(sb, data, objGen, typeGen, passedLengthAccessor, expectedLength: await this.ExpectedLength(objGen, typeGen));
         }
 
         var accessor = data == null ? structDataAccessor : recordDataAccessor;

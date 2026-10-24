@@ -1367,7 +1367,7 @@ namespace Mutagen.Bethesda.Fallout3
         public DebrisModel.DATADataType DATADataTypeState { get; private set; }
         #region Percentage
         private int _PercentageLocation => _DATALocation!.Value.Min;
-        private bool _Percentage_IsSet => _DATALocation.HasValue;
+        private bool _Percentage_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PercentageLocation + 1 >= 1;
         public Byte Percentage => _Percentage_IsSet ? _recordData.Span[_PercentageLocation] : default;
         #endregion
         #region ModelFileName
@@ -1376,7 +1376,7 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region HasCollision
         private int _HasCollisionLocation => ModelFileNameEndingPos;
-        private bool _HasCollision_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(DebrisModel.DATADataType.Break0);
+        private bool _HasCollision_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(DebrisModel.DATADataType.Break0) && _DATALocation!.Value.Max - _HasCollisionLocation + 1 >= 1;
         public Boolean HasCollision => _HasCollision_IsSet ? _recordData.Slice(_HasCollisionLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region TextureFileHashes

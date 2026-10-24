@@ -4470,62 +4470,62 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _CSGDLocation;
         #region OffensiveMult
         private int _OffensiveMultLocation => _CSGDLocation!.Value.Min;
-        private bool _OffensiveMult_IsSet => _CSGDLocation.HasValue;
+        private bool _OffensiveMult_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _OffensiveMultLocation + 1 >= 4;
         public Single OffensiveMult => _OffensiveMult_IsSet ? _recordData.Slice(_OffensiveMultLocation, 4).Float() : default(Single);
         #endregion
         #region DefensiveMult
         private int _DefensiveMultLocation => _CSGDLocation!.Value.Min + 0x4;
-        private bool _DefensiveMult_IsSet => _CSGDLocation.HasValue;
+        private bool _DefensiveMult_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _DefensiveMultLocation + 1 >= 4;
         public Single DefensiveMult => _DefensiveMult_IsSet ? _recordData.Slice(_DefensiveMultLocation, 4).Float() : default(Single);
         #endregion
         #region GroupOffensiveMult
         private int _GroupOffensiveMultLocation => _CSGDLocation!.Value.Min + 0x8;
-        private bool _GroupOffensiveMult_IsSet => _CSGDLocation.HasValue;
+        private bool _GroupOffensiveMult_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _GroupOffensiveMultLocation + 1 >= 4;
         public Single GroupOffensiveMult => _GroupOffensiveMult_IsSet ? _recordData.Slice(_GroupOffensiveMultLocation, 4).Float() : default(Single);
         #endregion
         #region EquipmentScoreMultMelee
         private int _EquipmentScoreMultMeleeLocation => _CSGDLocation!.Value.Min + 0xC;
-        private bool _EquipmentScoreMultMelee_IsSet => _CSGDLocation.HasValue;
+        private bool _EquipmentScoreMultMelee_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EquipmentScoreMultMeleeLocation + 1 >= 4;
         public Single EquipmentScoreMultMelee => _EquipmentScoreMultMelee_IsSet ? _recordData.Slice(_EquipmentScoreMultMeleeLocation, 4).Float() : default(Single);
         #endregion
         #region EquipmentScoreMultMagic
         private int _EquipmentScoreMultMagicLocation => _CSGDLocation!.Value.Min + 0x10;
-        private bool _EquipmentScoreMultMagic_IsSet => _CSGDLocation.HasValue;
+        private bool _EquipmentScoreMultMagic_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EquipmentScoreMultMagicLocation + 1 >= 4;
         public Single EquipmentScoreMultMagic => _EquipmentScoreMultMagic_IsSet ? _recordData.Slice(_EquipmentScoreMultMagicLocation, 4).Float() : default(Single);
         #endregion
         #region EquipmentScoreMultRanged
         private int _EquipmentScoreMultRangedLocation => _CSGDLocation!.Value.Min + 0x14;
-        private bool _EquipmentScoreMultRanged_IsSet => _CSGDLocation.HasValue;
+        private bool _EquipmentScoreMultRanged_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EquipmentScoreMultRangedLocation + 1 >= 4;
         public Single EquipmentScoreMultRanged => _EquipmentScoreMultRanged_IsSet ? _recordData.Slice(_EquipmentScoreMultRangedLocation, 4).Float() : default(Single);
         #endregion
         #region EquipmentScoreMultShout
         private int _EquipmentScoreMultShoutLocation => _CSGDLocation!.Value.Min + 0x18;
-        private bool _EquipmentScoreMultShout_IsSet => _CSGDLocation.HasValue;
+        private bool _EquipmentScoreMultShout_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EquipmentScoreMultShoutLocation + 1 >= 4;
         public Single EquipmentScoreMultShout => _EquipmentScoreMultShout_IsSet ? _recordData.Slice(_EquipmentScoreMultShoutLocation, 4).Float() : default(Single);
         #endregion
         #region EquipmentScoreMultUnarmed
         private int _EquipmentScoreMultUnarmedLocation => _CSGDLocation!.Value.Min + 0x1C;
-        private bool _EquipmentScoreMultUnarmed_IsSet => _CSGDLocation.HasValue;
+        private bool _EquipmentScoreMultUnarmed_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EquipmentScoreMultUnarmedLocation + 1 >= 4;
         public Single EquipmentScoreMultUnarmed => _EquipmentScoreMultUnarmed_IsSet ? _recordData.Slice(_EquipmentScoreMultUnarmedLocation, 4).Float() : default(Single);
         #endregion
         #region EquipmentScoreMultStaff
         private int _EquipmentScoreMultStaffLocation => _CSGDLocation!.Value.Min + 0x20;
-        private bool _EquipmentScoreMultStaff_IsSet => _CSGDLocation.HasValue;
+        private bool _EquipmentScoreMultStaff_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EquipmentScoreMultStaffLocation + 1 >= 4;
         public Single EquipmentScoreMultStaff => _EquipmentScoreMultStaff_IsSet ? _recordData.Slice(_EquipmentScoreMultStaffLocation, 4).Float() : default(Single);
         #endregion
         #region AvoidThreatChance
         private int _AvoidThreatChanceLocation => _CSGDLocation!.Value.Min + 0x24;
-        private bool _AvoidThreatChance_IsSet => _CSGDLocation.HasValue;
+        private bool _AvoidThreatChance_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _AvoidThreatChanceLocation + 1 >= 4;
         public Single AvoidThreatChance => _AvoidThreatChance_IsSet ? _recordData.Slice(_AvoidThreatChanceLocation, 4).Float() : default(Single);
         #endregion
         #region DodgeThreadChance
         private int _DodgeThreadChanceLocation => _CSGDLocation!.Value.Min + 0x28;
-        private bool _DodgeThreadChance_IsSet => _CSGDLocation.HasValue;
+        private bool _DodgeThreadChance_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _DodgeThreadChanceLocation + 1 >= 4;
         public Single DodgeThreadChance => _DodgeThreadChance_IsSet ? _recordData.Slice(_DodgeThreadChanceLocation, 4).Float() : default(Single);
         #endregion
         #region EvadeThreatChance
         private int _EvadeThreatChanceLocation => _CSGDLocation!.Value.Min + 0x2C;
-        private bool _EvadeThreatChance_IsSet => _CSGDLocation.HasValue;
+        private bool _EvadeThreatChance_IsSet => _CSGDLocation.HasValue && _CSGDLocation!.Value.Max - _EvadeThreatChanceLocation + 1 >= 4;
         public Single EvadeThreatChance => _EvadeThreatChance_IsSet ? _recordData.Slice(_EvadeThreatChanceLocation, 4).Float() : default(Single);
         #endregion
         #region CSMD
@@ -4536,52 +4536,52 @@ namespace Mutagen.Bethesda.Fallout4
         public CombatStyle.CSMEDataType CSMEDataTypeState { get; private set; }
         #region MeleeAttackStaggeredMult
         private int _MeleeAttackStaggeredMultLocation => _CSMELocation!.Value.Min;
-        private bool _MeleeAttackStaggeredMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeAttackStaggeredMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeAttackStaggeredMultLocation + 1 >= 4;
         public Single MeleeAttackStaggeredMult => _MeleeAttackStaggeredMult_IsSet ? _recordData.Slice(_MeleeAttackStaggeredMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleePowerAttackStaggeredMult
         private int _MeleePowerAttackStaggeredMultLocation => _CSMELocation!.Value.Min + 0x4;
-        private bool _MeleePowerAttackStaggeredMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleePowerAttackStaggeredMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleePowerAttackStaggeredMultLocation + 1 >= 4;
         public Single MeleePowerAttackStaggeredMult => _MeleePowerAttackStaggeredMult_IsSet ? _recordData.Slice(_MeleePowerAttackStaggeredMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleePowerAttackBlockingMult
         private int _MeleePowerAttackBlockingMultLocation => _CSMELocation!.Value.Min + 0x8;
-        private bool _MeleePowerAttackBlockingMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleePowerAttackBlockingMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleePowerAttackBlockingMultLocation + 1 >= 4;
         public Single MeleePowerAttackBlockingMult => _MeleePowerAttackBlockingMult_IsSet ? _recordData.Slice(_MeleePowerAttackBlockingMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeBashMult
         private int _MeleeBashMultLocation => _CSMELocation!.Value.Min + 0xC;
-        private bool _MeleeBashMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeBashMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeBashMultLocation + 1 >= 4;
         public Single MeleeBashMult => _MeleeBashMult_IsSet ? _recordData.Slice(_MeleeBashMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeBashRecoilMult
         private int _MeleeBashRecoilMultLocation => _CSMELocation!.Value.Min + 0x10;
-        private bool _MeleeBashRecoilMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeBashRecoilMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeBashRecoilMultLocation + 1 >= 4;
         public Single MeleeBashRecoilMult => _MeleeBashRecoilMult_IsSet ? _recordData.Slice(_MeleeBashRecoilMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeBashAttackMult
         private int _MeleeBashAttackMultLocation => _CSMELocation!.Value.Min + 0x14;
-        private bool _MeleeBashAttackMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeBashAttackMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeBashAttackMultLocation + 1 >= 4;
         public Single MeleeBashAttackMult => _MeleeBashAttackMult_IsSet ? _recordData.Slice(_MeleeBashAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeBashPowerAttackMult
         private int _MeleeBashPowerAttackMultLocation => _CSMELocation!.Value.Min + 0x18;
-        private bool _MeleeBashPowerAttackMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeBashPowerAttackMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeBashPowerAttackMultLocation + 1 >= 4;
         public Single MeleeBashPowerAttackMult => _MeleeBashPowerAttackMult_IsSet ? _recordData.Slice(_MeleeBashPowerAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeSpecialAttackMult
         private int _MeleeSpecialAttackMultLocation => _CSMELocation!.Value.Min + 0x1C;
-        private bool _MeleeSpecialAttackMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeSpecialAttackMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeSpecialAttackMultLocation + 1 >= 4;
         public Single MeleeSpecialAttackMult => _MeleeSpecialAttackMult_IsSet ? _recordData.Slice(_MeleeSpecialAttackMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeBlockWhenStaggeredMult
         private int _MeleeBlockWhenStaggeredMultLocation => _CSMELocation!.Value.Min + 0x20;
-        private bool _MeleeBlockWhenStaggeredMult_IsSet => _CSMELocation.HasValue;
+        private bool _MeleeBlockWhenStaggeredMult_IsSet => _CSMELocation.HasValue && _CSMELocation!.Value.Max - _MeleeBlockWhenStaggeredMultLocation + 1 >= 4;
         public Single MeleeBlockWhenStaggeredMult => _MeleeBlockWhenStaggeredMult_IsSet ? _recordData.Slice(_MeleeBlockWhenStaggeredMultLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeAttackWhenStaggeredMult
         private int _MeleeAttackWhenStaggeredMultLocation => _CSMELocation!.Value.Min + 0x24;
-        private bool _MeleeAttackWhenStaggeredMult_IsSet => _CSMELocation.HasValue && !CSMEDataTypeState.HasFlag(CombatStyle.CSMEDataType.Break0);
+        private bool _MeleeAttackWhenStaggeredMult_IsSet => _CSMELocation.HasValue && !CSMEDataTypeState.HasFlag(CombatStyle.CSMEDataType.Break0) && _CSMELocation!.Value.Max - _MeleeAttackWhenStaggeredMultLocation + 1 >= 4;
         public Single MeleeAttackWhenStaggeredMult => _MeleeAttackWhenStaggeredMult_IsSet ? _recordData.Slice(_MeleeAttackWhenStaggeredMultLocation, 4).Float() : default(Single);
         #endregion
         #region RangedAccuracyMult
@@ -4591,84 +4591,84 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _CSCRLocation;
         #region CloseRangeDuelingCircleMult
         private int _CloseRangeDuelingCircleMultLocation => _CSCRLocation!.Value.Min;
-        private bool _CloseRangeDuelingCircleMult_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeDuelingCircleMult_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeDuelingCircleMultLocation + 1 >= 4;
         public Single CloseRangeDuelingCircleMult => _CloseRangeDuelingCircleMult_IsSet ? _recordData.Slice(_CloseRangeDuelingCircleMultLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeDuelingFallbackMult
         private int _CloseRangeDuelingFallbackMultLocation => _CSCRLocation!.Value.Min + 0x4;
-        private bool _CloseRangeDuelingFallbackMult_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeDuelingFallbackMult_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeDuelingFallbackMultLocation + 1 >= 4;
         public Single CloseRangeDuelingFallbackMult => _CloseRangeDuelingFallbackMult_IsSet ? _recordData.Slice(_CloseRangeDuelingFallbackMultLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeFlankDistance
         private int _CloseRangeFlankDistanceLocation => _CSCRLocation!.Value.Min + 0x8;
-        private bool _CloseRangeFlankDistance_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeFlankDistance_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeFlankDistanceLocation + 1 >= 4;
         public Single CloseRangeFlankDistance => _CloseRangeFlankDistance_IsSet ? _recordData.Slice(_CloseRangeFlankDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeFlankingStalkTime
         private int _CloseRangeFlankingStalkTimeLocation => _CSCRLocation!.Value.Min + 0xC;
-        private bool _CloseRangeFlankingStalkTime_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeFlankingStalkTime_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeFlankingStalkTimeLocation + 1 >= 4;
         public Single CloseRangeFlankingStalkTime => _CloseRangeFlankingStalkTime_IsSet ? _recordData.Slice(_CloseRangeFlankingStalkTimeLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeChargeDistance
         private int _CloseRangeChargeDistanceLocation => _CSCRLocation!.Value.Min + 0x10;
-        private bool _CloseRangeChargeDistance_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeChargeDistance_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeChargeDistanceLocation + 1 >= 4;
         public Single CloseRangeChargeDistance => _CloseRangeChargeDistance_IsSet ? _recordData.Slice(_CloseRangeChargeDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeChargingThrowProbability
         private int _CloseRangeChargingThrowProbabilityLocation => _CSCRLocation!.Value.Min + 0x14;
-        private bool _CloseRangeChargingThrowProbability_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeChargingThrowProbability_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeChargingThrowProbabilityLocation + 1 >= 4;
         public Single CloseRangeChargingThrowProbability => _CloseRangeChargingThrowProbability_IsSet ? _recordData.Slice(_CloseRangeChargingThrowProbabilityLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeChargingSprintFastProbability
         private int _CloseRangeChargingSprintFastProbabilityLocation => _CSCRLocation!.Value.Min + 0x18;
-        private bool _CloseRangeChargingSprintFastProbability_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeChargingSprintFastProbability_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeChargingSprintFastProbabilityLocation + 1 >= 4;
         public Single CloseRangeChargingSprintFastProbability => _CloseRangeChargingSprintFastProbability_IsSet ? _recordData.Slice(_CloseRangeChargingSprintFastProbabilityLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeChargingSideswipeProbability
         private int _CloseRangeChargingSideswipeProbabilityLocation => _CSCRLocation!.Value.Min + 0x1C;
-        private bool _CloseRangeChargingSideswipeProbability_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeChargingSideswipeProbability_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeChargingSideswipeProbabilityLocation + 1 >= 4;
         public Single CloseRangeChargingSideswipeProbability => _CloseRangeChargingSideswipeProbability_IsSet ? _recordData.Slice(_CloseRangeChargingSideswipeProbabilityLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeChargingDisengageProbability
         private int _CloseRangeChargingDisengageProbabilityLocation => _CSCRLocation!.Value.Min + 0x20;
-        private bool _CloseRangeChargingDisengageProbability_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeChargingDisengageProbability_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeChargingDisengageProbabilityLocation + 1 >= 4;
         public Single CloseRangeChargingDisengageProbability => _CloseRangeChargingDisengageProbability_IsSet ? _recordData.Slice(_CloseRangeChargingDisengageProbabilityLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeChargingThrowMaxTargets
         private int _CloseRangeChargingThrowMaxTargetsLocation => _CSCRLocation!.Value.Min + 0x24;
-        private bool _CloseRangeChargingThrowMaxTargets_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeChargingThrowMaxTargets_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeChargingThrowMaxTargetsLocation + 1 >= 4;
         public UInt32 CloseRangeChargingThrowMaxTargets => _CloseRangeChargingThrowMaxTargets_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_CloseRangeChargingThrowMaxTargetsLocation, 4)) : default(UInt32);
         #endregion
         #region CloseRangeFlankingVariance
         private int _CloseRangeFlankingVarianceLocation => _CSCRLocation!.Value.Min + 0x28;
-        private bool _CloseRangeFlankingVariance_IsSet => _CSCRLocation.HasValue;
+        private bool _CloseRangeFlankingVariance_IsSet => _CSCRLocation.HasValue && _CSCRLocation!.Value.Max - _CloseRangeFlankingVarianceLocation + 1 >= 4;
         public Single CloseRangeFlankingVariance => _CloseRangeFlankingVariance_IsSet ? _recordData.Slice(_CloseRangeFlankingVarianceLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _CSLRLocation;
         public CombatStyle.CSLRDataType CSLRDataTypeState { get; private set; }
         #region LongRangeStrafeMult
         private int _LongRangeStrafeMultLocation => _CSLRLocation!.Value.Min;
-        private bool _LongRangeStrafeMult_IsSet => _CSLRLocation.HasValue;
+        private bool _LongRangeStrafeMult_IsSet => _CSLRLocation.HasValue && _CSLRLocation!.Value.Max - _LongRangeStrafeMultLocation + 1 >= 4;
         public Single LongRangeStrafeMult => _LongRangeStrafeMult_IsSet ? _recordData.Slice(_LongRangeStrafeMultLocation, 4).Float() : default(Single);
         #endregion
         #region LongRangeAdjustRangeMult
         private int _LongRangeAdjustRangeMultLocation => _CSLRLocation!.Value.Min + 0x4;
-        private bool _LongRangeAdjustRangeMult_IsSet => _CSLRLocation.HasValue;
+        private bool _LongRangeAdjustRangeMult_IsSet => _CSLRLocation.HasValue && _CSLRLocation!.Value.Max - _LongRangeAdjustRangeMultLocation + 1 >= 4;
         public Single LongRangeAdjustRangeMult => _LongRangeAdjustRangeMult_IsSet ? _recordData.Slice(_LongRangeAdjustRangeMultLocation, 4).Float() : default(Single);
         #endregion
         #region LongRangeCrouchMult
         private int _LongRangeCrouchMultLocation => _CSLRLocation!.Value.Min + 0x8;
-        private bool _LongRangeCrouchMult_IsSet => _CSLRLocation.HasValue;
+        private bool _LongRangeCrouchMult_IsSet => _CSLRLocation.HasValue && _CSLRLocation!.Value.Max - _LongRangeCrouchMultLocation + 1 >= 4;
         public Single LongRangeCrouchMult => _LongRangeCrouchMult_IsSet ? _recordData.Slice(_LongRangeCrouchMultLocation, 4).Float() : default(Single);
         #endregion
         #region LongRangeWaitMult
         private int _LongRangeWaitMultLocation => _CSLRLocation!.Value.Min + 0xC;
-        private bool _LongRangeWaitMult_IsSet => _CSLRLocation.HasValue && !CSLRDataTypeState.HasFlag(CombatStyle.CSLRDataType.Break0);
+        private bool _LongRangeWaitMult_IsSet => _CSLRLocation.HasValue && !CSLRDataTypeState.HasFlag(CombatStyle.CSLRDataType.Break0) && _CSLRLocation!.Value.Max - _LongRangeWaitMultLocation + 1 >= 4;
         public Single LongRangeWaitMult => _LongRangeWaitMult_IsSet ? _recordData.Slice(_LongRangeWaitMultLocation, 4).Float() : default(Single);
         #endregion
         #region LongRangeRangeMult
         private int _LongRangeRangeMultLocation => _CSLRLocation!.Value.Min + 0x10;
-        private bool _LongRangeRangeMult_IsSet => _CSLRLocation.HasValue && !CSLRDataTypeState.HasFlag(CombatStyle.CSLRDataType.Break1);
+        private bool _LongRangeRangeMult_IsSet => _CSLRLocation.HasValue && !CSLRDataTypeState.HasFlag(CombatStyle.CSLRDataType.Break1) && _CSLRLocation!.Value.Max - _LongRangeRangeMultLocation + 1 >= 4;
         public Single LongRangeRangeMult => _LongRangeRangeMult_IsSet ? _recordData.Slice(_LongRangeRangeMultLocation, 4).Float() : default(Single);
         #endregion
         #region CoverSearchDistanceMult
@@ -4678,42 +4678,42 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _CSFLLocation;
         #region HoverChance
         private int _HoverChanceLocation => _CSFLLocation!.Value.Min;
-        private bool _HoverChance_IsSet => _CSFLLocation.HasValue;
+        private bool _HoverChance_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _HoverChanceLocation + 1 >= 4;
         public Single HoverChance => _HoverChance_IsSet ? _recordData.Slice(_HoverChanceLocation, 4).Float() : default(Single);
         #endregion
         #region DiveBombChance
         private int _DiveBombChanceLocation => _CSFLLocation!.Value.Min + 0x4;
-        private bool _DiveBombChance_IsSet => _CSFLLocation.HasValue;
+        private bool _DiveBombChance_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _DiveBombChanceLocation + 1 >= 4;
         public Single DiveBombChance => _DiveBombChance_IsSet ? _recordData.Slice(_DiveBombChanceLocation, 4).Float() : default(Single);
         #endregion
         #region GroundAttackChance
         private int _GroundAttackChanceLocation => _CSFLLocation!.Value.Min + 0x8;
-        private bool _GroundAttackChance_IsSet => _CSFLLocation.HasValue;
+        private bool _GroundAttackChance_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _GroundAttackChanceLocation + 1 >= 4;
         public Single GroundAttackChance => _GroundAttackChance_IsSet ? _recordData.Slice(_GroundAttackChanceLocation, 4).Float() : default(Single);
         #endregion
         #region HoverTime
         private int _HoverTimeLocation => _CSFLLocation!.Value.Min + 0xC;
-        private bool _HoverTime_IsSet => _CSFLLocation.HasValue;
+        private bool _HoverTime_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _HoverTimeLocation + 1 >= 4;
         public Single HoverTime => _HoverTime_IsSet ? _recordData.Slice(_HoverTimeLocation, 4).Float() : default(Single);
         #endregion
         #region GroundAttackTime
         private int _GroundAttackTimeLocation => _CSFLLocation!.Value.Min + 0x10;
-        private bool _GroundAttackTime_IsSet => _CSFLLocation.HasValue;
+        private bool _GroundAttackTime_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _GroundAttackTimeLocation + 1 >= 4;
         public Single GroundAttackTime => _GroundAttackTime_IsSet ? _recordData.Slice(_GroundAttackTimeLocation, 4).Float() : default(Single);
         #endregion
         #region PerchAttackChance
         private int _PerchAttackChanceLocation => _CSFLLocation!.Value.Min + 0x14;
-        private bool _PerchAttackChance_IsSet => _CSFLLocation.HasValue;
+        private bool _PerchAttackChance_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _PerchAttackChanceLocation + 1 >= 4;
         public Single PerchAttackChance => _PerchAttackChance_IsSet ? _recordData.Slice(_PerchAttackChanceLocation, 4).Float() : default(Single);
         #endregion
         #region PerchAttackTime
         private int _PerchAttackTimeLocation => _CSFLLocation!.Value.Min + 0x18;
-        private bool _PerchAttackTime_IsSet => _CSFLLocation.HasValue;
+        private bool _PerchAttackTime_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _PerchAttackTimeLocation + 1 >= 4;
         public Single PerchAttackTime => _PerchAttackTime_IsSet ? _recordData.Slice(_PerchAttackTimeLocation, 4).Float() : default(Single);
         #endregion
         #region FlyingAttackChance
         private int _FlyingAttackChanceLocation => _CSFLLocation!.Value.Min + 0x1C;
-        private bool _FlyingAttackChance_IsSet => _CSFLLocation.HasValue;
+        private bool _FlyingAttackChance_IsSet => _CSFLLocation.HasValue && _CSFLLocation!.Value.Max - _FlyingAttackChanceLocation + 1 >= 4;
         public Single FlyingAttackChance => _FlyingAttackChance_IsSet ? _recordData.Slice(_FlyingAttackChanceLocation, 4).Float() : default(Single);
         #endregion
         #region Flags

@@ -1406,17 +1406,17 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _INDXLocation;
         #region Index
         private int _IndexLocation => _INDXLocation!.Value.Min;
-        private bool _Index_IsSet => _INDXLocation.HasValue;
+        private bool _Index_IsSet => _INDXLocation.HasValue && _INDXLocation!.Value.Max - _IndexLocation + 1 >= 2;
         public UInt16 Index => _Index_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_IndexLocation, 2)) : default(UInt16);
         #endregion
         #region Flags
         private int _FlagsLocation => _INDXLocation!.Value.Min + 0x2;
-        private bool _Flags_IsSet => _INDXLocation.HasValue;
+        private bool _Flags_IsSet => _INDXLocation.HasValue && _INDXLocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public QuestStage.Flag Flags => _Flags_IsSet ? (QuestStage.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region Unknown
         private int _UnknownLocation => _INDXLocation!.Value.Min + 0x3;
-        private bool _Unknown_IsSet => _INDXLocation.HasValue;
+        private bool _Unknown_IsSet => _INDXLocation.HasValue && _INDXLocation!.Value.Max - _UnknownLocation + 1 >= 1;
         public Byte Unknown => _Unknown_IsSet ? _recordData.Span[_UnknownLocation] : default;
         #endregion
         public IReadOnlyList<IQuestLogEntryGetter> LogEntries { get; private set; } = [];

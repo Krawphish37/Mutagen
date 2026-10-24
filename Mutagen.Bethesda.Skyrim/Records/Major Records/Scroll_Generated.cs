@@ -3457,58 +3457,58 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _DATALocation;
         #region Value
         private int _ValueLocation => _DATALocation!.Value.Min;
-        private bool _Value_IsSet => _DATALocation.HasValue;
+        private bool _Value_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ValueLocation + 1 >= 4;
         public UInt32 Value => _Value_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ValueLocation, 4)) : default(UInt32);
         #endregion
         #region Weight
         private int _WeightLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Weight_IsSet => _DATALocation.HasValue;
+        private bool _Weight_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _WeightLocation + 1 >= 4;
         public Single Weight => _Weight_IsSet ? _recordData.Slice(_WeightLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _SPITLocation;
         #region BaseCost
         private int _BaseCostLocation => _SPITLocation!.Value.Min;
-        private bool _BaseCost_IsSet => _SPITLocation.HasValue;
+        private bool _BaseCost_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _BaseCostLocation + 1 >= 4;
         public UInt32 BaseCost => _BaseCost_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_BaseCostLocation, 4)) : default(UInt32);
         #endregion
         #region Flags
         private int _FlagsLocation => _SPITLocation!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _SPITLocation.HasValue;
+        private bool _Flags_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public SpellDataFlag Flags => _Flags_IsSet ? (SpellDataFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Type
         private int _TypeLocation => _SPITLocation!.Value.Min + 0x8;
-        private bool _Type_IsSet => _SPITLocation.HasValue;
+        private bool _Type_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _TypeLocation + 1 >= 4;
         public SpellType Type => _Type_IsSet ? (SpellType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default;
         #endregion
         #region ChargeTime
         private int _ChargeTimeLocation => _SPITLocation!.Value.Min + 0xC;
-        private bool _ChargeTime_IsSet => _SPITLocation.HasValue;
+        private bool _ChargeTime_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _ChargeTimeLocation + 1 >= 4;
         public Single ChargeTime => _ChargeTime_IsSet ? _recordData.Slice(_ChargeTimeLocation, 4).Float() : default(Single);
         #endregion
         #region CastType
         private int _CastTypeLocation => _SPITLocation!.Value.Min + 0x10;
-        private bool _CastType_IsSet => _SPITLocation.HasValue;
+        private bool _CastType_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _CastTypeLocation + 1 >= 4;
         public CastType CastType => _CastType_IsSet ? (CastType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_CastTypeLocation, 0x4)) : default;
         #endregion
         #region TargetType
         private int _TargetTypeLocation => _SPITLocation!.Value.Min + 0x14;
-        private bool _TargetType_IsSet => _SPITLocation.HasValue;
+        private bool _TargetType_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _TargetTypeLocation + 1 >= 4;
         public TargetType TargetType => _TargetType_IsSet ? (TargetType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TargetTypeLocation, 0x4)) : default;
         #endregion
         #region CastDuration
         private int _CastDurationLocation => _SPITLocation!.Value.Min + 0x18;
-        private bool _CastDuration_IsSet => _SPITLocation.HasValue;
+        private bool _CastDuration_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _CastDurationLocation + 1 >= 4;
         public Single CastDuration => _CastDuration_IsSet ? _recordData.Slice(_CastDurationLocation, 4).Float() : default(Single);
         #endregion
         #region Range
         private int _RangeLocation => _SPITLocation!.Value.Min + 0x1C;
-        private bool _Range_IsSet => _SPITLocation.HasValue;
+        private bool _Range_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _RangeLocation + 1 >= 4;
         public Single Range => _Range_IsSet ? _recordData.Slice(_RangeLocation, 4).Float() : default(Single);
         #endregion
         #region HalfCostPerk
         private int _HalfCostPerkLocation => _SPITLocation!.Value.Min + 0x20;
-        private bool _HalfCostPerk_IsSet => _SPITLocation.HasValue;
+        private bool _HalfCostPerk_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _HalfCostPerkLocation + 1 >= 4;
         public IFormLinkGetter<IPerkGetter> HalfCostPerk => _HalfCostPerk_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IPerkGetter>(_package, _recordData.Span.Slice(_HalfCostPerkLocation, 0x4), isSet: _HalfCostPerk_IsSet) : FormLink<IPerkGetter>.Null;
         #endregion
         public IReadOnlyList<IEffectGetter> Effects { get; private set; } = [];

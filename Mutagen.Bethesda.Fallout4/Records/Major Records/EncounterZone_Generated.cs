@@ -1725,32 +1725,32 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _DATALocation;
         #region Owner
         private int _OwnerLocation => _DATALocation!.Value.Min;
-        private bool _Owner_IsSet => _DATALocation.HasValue;
+        private bool _Owner_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _OwnerLocation + 1 >= 4;
         public IFormLinkGetter<IOwnerGetter> Owner => _Owner_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IOwnerGetter>(_package, _recordData.Span.Slice(_OwnerLocation, 0x4), isSet: _Owner_IsSet) : FormLink<IOwnerGetter>.Null;
         #endregion
         #region Location
         private int _LocationLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Location_IsSet => _DATALocation.HasValue;
+        private bool _Location_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LocationLocation + 1 >= 4;
         public IFormLinkGetter<ILocationGetter> Location => _Location_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILocationGetter>(_package, _recordData.Span.Slice(_LocationLocation, 0x4), isSet: _Location_IsSet) : FormLink<ILocationGetter>.Null;
         #endregion
         #region Rank
         private int _RankLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Rank_IsSet => _DATALocation.HasValue;
+        private bool _Rank_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RankLocation + 1 >= 1;
         public Byte Rank => _Rank_IsSet ? _recordData.Span[_RankLocation] : default;
         #endregion
         #region MinLevel
         private int _MinLevelLocation => _DATALocation!.Value.Min + 0x9;
-        private bool _MinLevel_IsSet => _DATALocation.HasValue;
+        private bool _MinLevel_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MinLevelLocation + 1 >= 1;
         public Byte MinLevel => _MinLevel_IsSet ? _recordData.Span[_MinLevelLocation] : default;
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0xA;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public EncounterZone.Flag Flags => _Flags_IsSet ? (EncounterZone.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region MaxLevel
         private int _MaxLevelLocation => _DATALocation!.Value.Min + 0xB;
-        private bool _MaxLevel_IsSet => _DATALocation.HasValue;
+        private bool _MaxLevel_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MaxLevelLocation + 1 >= 1;
         public Byte MaxLevel => _MaxLevel_IsSet ? _recordData.Span[_MaxLevelLocation] : default;
         #endregion
         partial void CustomFactoryEnd(

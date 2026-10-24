@@ -1856,22 +1856,22 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _TRDTLocation;
         #region Emotion
         private int _EmotionLocation => _TRDTLocation!.Value.Min;
-        private bool _Emotion_IsSet => _TRDTLocation.HasValue;
+        private bool _Emotion_IsSet => _TRDTLocation.HasValue && _TRDTLocation!.Value.Max - _EmotionLocation + 1 >= 4;
         public Emotion Emotion => _Emotion_IsSet ? (Emotion)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_EmotionLocation, 0x4)) : default;
         #endregion
         #region EmotionValue
         private int _EmotionValueLocation => _TRDTLocation!.Value.Min + 0x4;
-        private bool _EmotionValue_IsSet => _TRDTLocation.HasValue;
+        private bool _EmotionValue_IsSet => _TRDTLocation.HasValue && _TRDTLocation!.Value.Max - _EmotionValueLocation + 1 >= 4;
         public UInt32 EmotionValue => _EmotionValue_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_EmotionValueLocation, 4)) : default(UInt32);
         #endregion
         #region Unknown
         private int _UnknownLocation => _TRDTLocation!.Value.Min + 0x8;
-        private bool _Unknown_IsSet => _TRDTLocation.HasValue;
+        private bool _Unknown_IsSet => _TRDTLocation.HasValue && _TRDTLocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
         #endregion
         #region ResponseNumber
         private int _ResponseNumberLocation => _TRDTLocation!.Value.Min + 0xC;
-        private bool _ResponseNumber_IsSet => _TRDTLocation.HasValue;
+        private bool _ResponseNumber_IsSet => _TRDTLocation.HasValue && _TRDTLocation!.Value.Max - _ResponseNumberLocation + 1 >= 1;
         public Byte ResponseNumber => _ResponseNumber_IsSet ? _recordData.Span[_ResponseNumberLocation] : default;
         #endregion
         #region Unknown2
@@ -1881,12 +1881,12 @@ namespace Mutagen.Bethesda.Skyrim
         #endregion
         #region Sound
         private int _SoundLocation => _TRDTLocation!.Value.Min + 0x10;
-        private bool _Sound_IsSet => _TRDTLocation.HasValue;
+        private bool _Sound_IsSet => _TRDTLocation.HasValue && _TRDTLocation!.Value.Max - _SoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundDescriptorGetter> Sound => _Sound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundDescriptorGetter>(_package, _recordData.Span.Slice(_SoundLocation, 0x4), isSet: _Sound_IsSet) : FormLink<ISoundDescriptorGetter>.Null;
         #endregion
         #region Flags
         private int _FlagsLocation => _TRDTLocation!.Value.Min + 0x14;
-        private bool _Flags_IsSet => _TRDTLocation.HasValue;
+        private bool _Flags_IsSet => _TRDTLocation.HasValue && _TRDTLocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public DialogResponse.Flag Flags => _Flags_IsSet ? (DialogResponse.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region Unknown3

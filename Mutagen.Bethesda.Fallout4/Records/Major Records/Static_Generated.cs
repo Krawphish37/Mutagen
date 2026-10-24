@@ -2957,22 +2957,22 @@ namespace Mutagen.Bethesda.Fallout4
         public Static.DNAMDataType DNAMDataTypeState { get; private set; }
         #region MaxAngle
         private int _MaxAngleLocation => _DNAMLocation!.Value.Min;
-        private bool _MaxAngle_IsSet => _DNAMLocation.HasValue;
+        private bool _MaxAngle_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MaxAngleLocation + 1 >= 4;
         public Single MaxAngle => _MaxAngle_IsSet ? _recordData.Slice(_MaxAngleLocation, 4).Float() : default(Single);
         #endregion
         #region Material
         private int _MaterialLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _Material_IsSet => _DNAMLocation.HasValue;
+        private bool _Material_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MaterialLocation + 1 >= 4;
         public IFormLinkGetter<IMaterialObjectGetter> Material => _Material_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IMaterialObjectGetter>(_package, _recordData.Span.Slice(_MaterialLocation, 0x4), isSet: _Material_IsSet) : FormLink<IMaterialObjectGetter>.Null;
         #endregion
         #region LeafAmplitude
         private int _LeafAmplitudeLocation => _DNAMLocation!.Value.Min + 0x8;
-        private bool _LeafAmplitude_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Static.DNAMDataType.Break0);
+        private bool _LeafAmplitude_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Static.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _LeafAmplitudeLocation + 1 >= 4;
         public Single LeafAmplitude => _LeafAmplitude_IsSet ? _recordData.Slice(_LeafAmplitudeLocation, 4).Float() : default(Single);
         #endregion
         #region LeafFrequency
         private int _LeafFrequencyLocation => _DNAMLocation!.Value.Min + 0xC;
-        private bool _LeafFrequency_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Static.DNAMDataType.Break0);
+        private bool _LeafFrequency_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Static.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _LeafFrequencyLocation + 1 >= 4;
         public Single LeafFrequency => _LeafFrequency_IsSet ? _recordData.Slice(_LeafFrequencyLocation, 4).Float() : default(Single);
         #endregion
         #region NavmeshGeometry

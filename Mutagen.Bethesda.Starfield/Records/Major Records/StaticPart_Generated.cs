@@ -1352,12 +1352,12 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _ONAMLocation;
         #region Static
         private int _StaticLocation => _ONAMLocation!.Value.Min;
-        private bool _Static_IsSet => _ONAMLocation.HasValue;
+        private bool _Static_IsSet => _ONAMLocation.HasValue && _ONAMLocation!.Value.Max - _StaticLocation + 1 >= 4;
         public IFormLinkGetter<IStaticTargetGetter> Static => _Static_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IStaticTargetGetter>(_package, _recordData.Span.Slice(_StaticLocation, 0x4), isSet: _Static_IsSet) : FormLink<IStaticTargetGetter>.Null;
         #endregion
         #region Unknown
         private int _UnknownLocation => _ONAMLocation!.Value.Min + 0x4;
-        private bool _Unknown_IsSet => _ONAMLocation.HasValue;
+        private bool _Unknown_IsSet => _ONAMLocation.HasValue && _ONAMLocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
         #endregion
         public IReadOnlyList<IStaticPlacementGetter>? Placements { get; private set; }

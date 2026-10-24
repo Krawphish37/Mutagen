@@ -2523,67 +2523,67 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _BPD2Location;
         #region DamageMult
         private int _DamageMultLocation => _BPD2Location!.Value.Min;
-        private bool _DamageMult_IsSet => _BPD2Location.HasValue;
+        private bool _DamageMult_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _DamageMultLocation + 1 >= 4;
         public Single DamageMult => _DamageMult_IsSet ? _recordData.Slice(_DamageMultLocation, 4).Float() : default(Single);
         #endregion
         #region Flags
         private int _FlagsLocation => _BPD2Location!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _BPD2Location.HasValue;
+        private bool _Flags_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _FlagsLocation + 1 >= 1;
         public BodyPart.Flag Flags => _Flags_IsSet ? (BodyPart.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region Type
         private int _TypeLocation => _BPD2Location!.Value.Min + 0x5;
-        private bool _Type_IsSet => _BPD2Location.HasValue;
+        private bool _Type_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _TypeLocation + 1 >= 1;
         public BodyPart.PartType Type => _Type_IsSet ? (BodyPart.PartType)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default;
         #endregion
         #region HealthPercent
         private int _HealthPercentLocation => _BPD2Location!.Value.Min + 0x6;
-        private bool _HealthPercent_IsSet => _BPD2Location.HasValue;
+        private bool _HealthPercent_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _HealthPercentLocation + 1 >= 1;
         public Percent HealthPercent => _HealthPercent_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_HealthPercentLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region ActorValue
         private int _ActorValueLocation => _BPD2Location!.Value.Min + 0x7;
-        private bool _ActorValue_IsSet => _BPD2Location.HasValue;
+        private bool _ActorValue_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _ActorValueLocation + 1 >= 4;
         public IFormLinkGetter<IActorValueInformationGetter> ActorValue => _ActorValue_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IActorValueInformationGetter>(_package, _recordData.Span.Slice(_ActorValueLocation, 0x4), isSet: _ActorValue_IsSet) : FormLink<IActorValueInformationGetter>.Null;
         #endregion
         #region ToHitChance
         private int _ToHitChanceLocation => _BPD2Location!.Value.Min + 0xB;
-        private bool _ToHitChance_IsSet => _BPD2Location.HasValue;
+        private bool _ToHitChance_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _ToHitChanceLocation + 1 >= 1;
         public Percent ToHitChance => _ToHitChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_ToHitChanceLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region OnCrippleArtObject
         private int _OnCrippleArtObjectLocation => _BPD2Location!.Value.Min + 0xC;
-        private bool _OnCrippleArtObject_IsSet => _BPD2Location.HasValue;
+        private bool _OnCrippleArtObject_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _OnCrippleArtObjectLocation + 1 >= 4;
         public IFormLinkGetter<IArtObjectGetter> OnCrippleArtObject => _OnCrippleArtObject_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IArtObjectGetter>(_package, _recordData.Span.Slice(_OnCrippleArtObjectLocation, 0x4), isSet: _OnCrippleArtObject_IsSet) : FormLink<IArtObjectGetter>.Null;
         #endregion
         #region OnCrippleDebris
         private int _OnCrippleDebrisLocation => _BPD2Location!.Value.Min + 0x10;
-        private bool _OnCrippleDebris_IsSet => _BPD2Location.HasValue;
+        private bool _OnCrippleDebris_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _OnCrippleDebrisLocation + 1 >= 4;
         public IFormLinkGetter<IDebrisGetter> OnCrippleDebris => _OnCrippleDebris_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IDebrisGetter>(_package, _recordData.Span.Slice(_OnCrippleDebrisLocation, 0x4), isSet: _OnCrippleDebris_IsSet) : FormLink<IDebrisGetter>.Null;
         #endregion
         #region OnCrippleExplosion
         private int _OnCrippleExplosionLocation => _BPD2Location!.Value.Min + 0x14;
-        private bool _OnCrippleExplosion_IsSet => _BPD2Location.HasValue;
+        private bool _OnCrippleExplosion_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _OnCrippleExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> OnCrippleExplosion => _OnCrippleExplosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_OnCrippleExplosionLocation, 0x4), isSet: _OnCrippleExplosion_IsSet) : FormLink<IExplosionGetter>.Null;
         #endregion
         #region OnCrippleImpactData
         private int _OnCrippleImpactDataLocation => _BPD2Location!.Value.Min + 0x18;
-        private bool _OnCrippleImpactData_IsSet => _BPD2Location.HasValue;
+        private bool _OnCrippleImpactData_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _OnCrippleImpactDataLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> OnCrippleImpactData => _OnCrippleImpactData_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_OnCrippleImpactDataLocation, 0x4), isSet: _OnCrippleImpactData_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region OnCrippleDebrisScale
         private int _OnCrippleDebrisScaleLocation => _BPD2Location!.Value.Min + 0x1C;
-        private bool _OnCrippleDebrisScale_IsSet => _BPD2Location.HasValue;
+        private bool _OnCrippleDebrisScale_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _OnCrippleDebrisScaleLocation + 1 >= 4;
         public Single OnCrippleDebrisScale => _OnCrippleDebrisScale_IsSet ? _recordData.Slice(_OnCrippleDebrisScaleLocation, 4).Float() : default(Single);
         #endregion
         #region OnCrippleDebrisCount
         private int _OnCrippleDebrisCountLocation => _BPD2Location!.Value.Min + 0x20;
-        private bool _OnCrippleDebrisCount_IsSet => _BPD2Location.HasValue;
+        private bool _OnCrippleDebrisCount_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _OnCrippleDebrisCountLocation + 1 >= 1;
         public Byte OnCrippleDebrisCount => _OnCrippleDebrisCount_IsSet ? _recordData.Span[_OnCrippleDebrisCountLocation] : default;
         #endregion
         #region OnCrippleDecalCount
         private int _OnCrippleDecalCountLocation => _BPD2Location!.Value.Min + 0x21;
-        private bool _OnCrippleDecalCount_IsSet => _BPD2Location.HasValue;
+        private bool _OnCrippleDecalCount_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _OnCrippleDecalCountLocation + 1 >= 1;
         public Byte OnCrippleDecalCount => _OnCrippleDecalCount_IsSet ? _recordData.Span[_OnCrippleDecalCountLocation] : default;
         #endregion
         #region GoreTargetBone

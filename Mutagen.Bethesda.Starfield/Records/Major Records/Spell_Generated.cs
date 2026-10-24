@@ -3422,47 +3422,47 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _SPITLocation;
         #region BaseCost
         private int _BaseCostLocation => _SPITLocation!.Value.Min;
-        private bool _BaseCost_IsSet => _SPITLocation.HasValue;
+        private bool _BaseCost_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _BaseCostLocation + 1 >= 4;
         public UInt32 BaseCost => _BaseCost_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_BaseCostLocation, 4)) : default(UInt32);
         #endregion
         #region Flags
         private int _FlagsLocation => _SPITLocation!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _SPITLocation.HasValue;
+        private bool _Flags_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Spell.Flag Flags => _Flags_IsSet ? (Spell.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Type
         private int _TypeLocation => _SPITLocation!.Value.Min + 0x8;
-        private bool _Type_IsSet => _SPITLocation.HasValue;
+        private bool _Type_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _TypeLocation + 1 >= 1;
         public Spell.SpellType Type => _Type_IsSet ? (Spell.SpellType)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default;
         #endregion
         #region ChargeTime
         private int _ChargeTimeLocation => _SPITLocation!.Value.Min + 0x9;
-        private bool _ChargeTime_IsSet => _SPITLocation.HasValue;
+        private bool _ChargeTime_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _ChargeTimeLocation + 1 >= 4;
         public Single ChargeTime => _ChargeTime_IsSet ? _recordData.Slice(_ChargeTimeLocation, 4).Float() : default(Single);
         #endregion
         #region CastType
         private int _CastTypeLocation => _SPITLocation!.Value.Min + 0xD;
-        private bool _CastType_IsSet => _SPITLocation.HasValue;
+        private bool _CastType_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _CastTypeLocation + 1 >= 1;
         public CastType CastType => _CastType_IsSet ? (CastType)_recordData.Span.Slice(_CastTypeLocation, 0x1)[0] : default;
         #endregion
         #region TargetType
         private int _TargetTypeLocation => _SPITLocation!.Value.Min + 0xE;
-        private bool _TargetType_IsSet => _SPITLocation.HasValue;
+        private bool _TargetType_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _TargetTypeLocation + 1 >= 1;
         public TargetType TargetType => _TargetType_IsSet ? (TargetType)_recordData.Span.Slice(_TargetTypeLocation, 0x1)[0] : default;
         #endregion
         #region CastDuration
         private int _CastDurationLocation => _SPITLocation!.Value.Min + 0xF;
-        private bool _CastDuration_IsSet => _SPITLocation.HasValue;
+        private bool _CastDuration_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _CastDurationLocation + 1 >= 4;
         public Single CastDuration => _CastDuration_IsSet ? _recordData.Slice(_CastDurationLocation, 4).Float() : default(Single);
         #endregion
         #region Range
         private int _RangeLocation => _SPITLocation!.Value.Min + 0x13;
-        private bool _Range_IsSet => _SPITLocation.HasValue;
+        private bool _Range_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _RangeLocation + 1 >= 4;
         public Single Range => _Range_IsSet ? _recordData.Slice(_RangeLocation, 4).Float() : default(Single);
         #endregion
         #region CastingPerk
         private int _CastingPerkLocation => _SPITLocation!.Value.Min + 0x17;
-        private bool _CastingPerk_IsSet => _SPITLocation.HasValue;
+        private bool _CastingPerk_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _CastingPerkLocation + 1 >= 4;
         public IFormLinkGetter<IPerkGetter> CastingPerk => _CastingPerk_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IPerkGetter>(_package, _recordData.Span.Slice(_CastingPerkLocation, 0x4), isSet: _CastingPerk_IsSet) : FormLink<IPerkGetter>.Null;
         #endregion
         #region MAGF

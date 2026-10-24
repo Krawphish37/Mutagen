@@ -5766,47 +5766,47 @@ namespace Mutagen.Bethesda.Skyrim
         #endregion
         #region SpecularSunPower
         private int _SpecularSunPowerLocation => _DNAMLocation!.Value.Min + 0x10;
-        private bool _SpecularSunPower_IsSet => _DNAMLocation.HasValue;
+        private bool _SpecularSunPower_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SpecularSunPowerLocation + 1 >= 4;
         public Single SpecularSunPower => _SpecularSunPower_IsSet ? _recordData.Slice(_SpecularSunPowerLocation, 4).Float() : default(Single);
         #endregion
         #region WaterReflectivity
         private int _WaterReflectivityLocation => _DNAMLocation!.Value.Min + 0x14;
-        private bool _WaterReflectivity_IsSet => _DNAMLocation.HasValue;
+        private bool _WaterReflectivity_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _WaterReflectivityLocation + 1 >= 4;
         public Single WaterReflectivity => _WaterReflectivity_IsSet ? _recordData.Slice(_WaterReflectivityLocation, 4).Float() : default(Single);
         #endregion
         #region WaterFresnel
         private int _WaterFresnelLocation => _DNAMLocation!.Value.Min + 0x18;
-        private bool _WaterFresnel_IsSet => _DNAMLocation.HasValue;
+        private bool _WaterFresnel_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _WaterFresnelLocation + 1 >= 4;
         public Single WaterFresnel => _WaterFresnel_IsSet ? _recordData.Slice(_WaterFresnelLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown2
         private int _Unknown2Location => _DNAMLocation!.Value.Min + 0x1C;
-        private bool _Unknown2_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown2_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _Unknown2Location + 1 >= 4;
         public Int32 Unknown2 => _Unknown2_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_Unknown2Location, 4)) : default(Int32);
         #endregion
         #region FogAboveWaterDistanceNearPlane
         private int _FogAboveWaterDistanceNearPlaneLocation => _DNAMLocation!.Value.Min + 0x20;
-        private bool _FogAboveWaterDistanceNearPlane_IsSet => _DNAMLocation.HasValue;
+        private bool _FogAboveWaterDistanceNearPlane_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FogAboveWaterDistanceNearPlaneLocation + 1 >= 4;
         public Single FogAboveWaterDistanceNearPlane => _FogAboveWaterDistanceNearPlane_IsSet ? _recordData.Slice(_FogAboveWaterDistanceNearPlaneLocation, 4).Float() : default(Single);
         #endregion
         #region FogAboveWaterDistanceFarPlane
         private int _FogAboveWaterDistanceFarPlaneLocation => _DNAMLocation!.Value.Min + 0x24;
-        private bool _FogAboveWaterDistanceFarPlane_IsSet => _DNAMLocation.HasValue;
+        private bool _FogAboveWaterDistanceFarPlane_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FogAboveWaterDistanceFarPlaneLocation + 1 >= 4;
         public Single FogAboveWaterDistanceFarPlane => _FogAboveWaterDistanceFarPlane_IsSet ? _recordData.Slice(_FogAboveWaterDistanceFarPlaneLocation, 4).Float() : default(Single);
         #endregion
         #region ShallowColor
         private int _ShallowColorLocation => _DNAMLocation!.Value.Min + 0x28;
-        private bool _ShallowColor_IsSet => _DNAMLocation.HasValue;
+        private bool _ShallowColor_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ShallowColorLocation + 1 >= 4;
         public Color ShallowColor => _ShallowColor_IsSet ? _recordData.Slice(_ShallowColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region DeepColor
         private int _DeepColorLocation => _DNAMLocation!.Value.Min + 0x2C;
-        private bool _DeepColor_IsSet => _DNAMLocation.HasValue;
+        private bool _DeepColor_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DeepColorLocation + 1 >= 4;
         public Color DeepColor => _DeepColor_IsSet ? _recordData.Slice(_DeepColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region ReflectionColor
         private int _ReflectionColorLocation => _DNAMLocation!.Value.Min + 0x30;
-        private bool _ReflectionColor_IsSet => _DNAMLocation.HasValue;
+        private bool _ReflectionColor_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ReflectionColorLocation + 1 >= 4;
         public Color ReflectionColor => _ReflectionColor_IsSet ? _recordData.Slice(_ReflectionColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region Unknown3
@@ -5816,67 +5816,67 @@ namespace Mutagen.Bethesda.Skyrim
         #endregion
         #region DisplacementStartingSize
         private int _DisplacementStartingSizeLocation => _DNAMLocation!.Value.Min + 0x48;
-        private bool _DisplacementStartingSize_IsSet => _DNAMLocation.HasValue;
+        private bool _DisplacementStartingSize_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DisplacementStartingSizeLocation + 1 >= 4;
         public Single DisplacementStartingSize => _DisplacementStartingSize_IsSet ? _recordData.Slice(_DisplacementStartingSizeLocation, 4).Float() : default(Single);
         #endregion
         #region DisplacementFoce
         private int _DisplacementFoceLocation => _DNAMLocation!.Value.Min + 0x4C;
-        private bool _DisplacementFoce_IsSet => _DNAMLocation.HasValue;
+        private bool _DisplacementFoce_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DisplacementFoceLocation + 1 >= 4;
         public Single DisplacementFoce => _DisplacementFoce_IsSet ? _recordData.Slice(_DisplacementFoceLocation, 4).Float() : default(Single);
         #endregion
         #region DisplacementVelocity
         private int _DisplacementVelocityLocation => _DNAMLocation!.Value.Min + 0x50;
-        private bool _DisplacementVelocity_IsSet => _DNAMLocation.HasValue;
+        private bool _DisplacementVelocity_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DisplacementVelocityLocation + 1 >= 4;
         public Single DisplacementVelocity => _DisplacementVelocity_IsSet ? _recordData.Slice(_DisplacementVelocityLocation, 4).Float() : default(Single);
         #endregion
         #region DisplacementFalloff
         private int _DisplacementFalloffLocation => _DNAMLocation!.Value.Min + 0x54;
-        private bool _DisplacementFalloff_IsSet => _DNAMLocation.HasValue;
+        private bool _DisplacementFalloff_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DisplacementFalloffLocation + 1 >= 4;
         public Single DisplacementFalloff => _DisplacementFalloff_IsSet ? _recordData.Slice(_DisplacementFalloffLocation, 4).Float() : default(Single);
         #endregion
         #region DisplacementDampner
         private int _DisplacementDampnerLocation => _DNAMLocation!.Value.Min + 0x58;
-        private bool _DisplacementDampner_IsSet => _DNAMLocation.HasValue;
+        private bool _DisplacementDampner_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DisplacementDampnerLocation + 1 >= 4;
         public Single DisplacementDampner => _DisplacementDampner_IsSet ? _recordData.Slice(_DisplacementDampnerLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown4
         private int _Unknown4Location => _DNAMLocation!.Value.Min + 0x5C;
-        private bool _Unknown4_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown4_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _Unknown4Location + 1 >= 4;
         public Int32 Unknown4 => _Unknown4_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_Unknown4Location, 4)) : default(Int32);
         #endregion
         #region NoiseFalloff
         private int _NoiseFalloffLocation => _DNAMLocation!.Value.Min + 0x60;
-        private bool _NoiseFalloff_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseFalloff_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseFalloffLocation + 1 >= 4;
         public Single NoiseFalloff => _NoiseFalloff_IsSet ? _recordData.Slice(_NoiseFalloffLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseLayerOneWindDirection
         private int _NoiseLayerOneWindDirectionLocation => _DNAMLocation!.Value.Min + 0x64;
-        private bool _NoiseLayerOneWindDirection_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseLayerOneWindDirection_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerOneWindDirectionLocation + 1 >= 4;
         public Single NoiseLayerOneWindDirection => _NoiseLayerOneWindDirection_IsSet ? _recordData.Slice(_NoiseLayerOneWindDirectionLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseLayerTwoWindDirection
         private int _NoiseLayerTwoWindDirectionLocation => _DNAMLocation!.Value.Min + 0x68;
-        private bool _NoiseLayerTwoWindDirection_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseLayerTwoWindDirection_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerTwoWindDirectionLocation + 1 >= 4;
         public Single NoiseLayerTwoWindDirection => _NoiseLayerTwoWindDirection_IsSet ? _recordData.Slice(_NoiseLayerTwoWindDirectionLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseLayerThreeWindDirection
         private int _NoiseLayerThreeWindDirectionLocation => _DNAMLocation!.Value.Min + 0x6C;
-        private bool _NoiseLayerThreeWindDirection_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseLayerThreeWindDirection_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerThreeWindDirectionLocation + 1 >= 4;
         public Single NoiseLayerThreeWindDirection => _NoiseLayerThreeWindDirection_IsSet ? _recordData.Slice(_NoiseLayerThreeWindDirectionLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseLayerOneWindSpeed
         private int _NoiseLayerOneWindSpeedLocation => _DNAMLocation!.Value.Min + 0x70;
-        private bool _NoiseLayerOneWindSpeed_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseLayerOneWindSpeed_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerOneWindSpeedLocation + 1 >= 4;
         public Single NoiseLayerOneWindSpeed => _NoiseLayerOneWindSpeed_IsSet ? _recordData.Slice(_NoiseLayerOneWindSpeedLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseLayerTwoWindSpeed
         private int _NoiseLayerTwoWindSpeedLocation => _DNAMLocation!.Value.Min + 0x74;
-        private bool _NoiseLayerTwoWindSpeed_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseLayerTwoWindSpeed_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerTwoWindSpeedLocation + 1 >= 4;
         public Single NoiseLayerTwoWindSpeed => _NoiseLayerTwoWindSpeed_IsSet ? _recordData.Slice(_NoiseLayerTwoWindSpeedLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseLayerThreeWindSpeed
         private int _NoiseLayerThreeWindSpeedLocation => _DNAMLocation!.Value.Min + 0x78;
-        private bool _NoiseLayerThreeWindSpeed_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseLayerThreeWindSpeed_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerThreeWindSpeedLocation + 1 >= 4;
         public Single NoiseLayerThreeWindSpeed => _NoiseLayerThreeWindSpeed_IsSet ? _recordData.Slice(_NoiseLayerThreeWindSpeedLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown5
@@ -5886,127 +5886,127 @@ namespace Mutagen.Bethesda.Skyrim
         #endregion
         #region FogAboveWaterAmount
         private int _FogAboveWaterAmountLocation => _DNAMLocation!.Value.Min + 0x84;
-        private bool _FogAboveWaterAmount_IsSet => _DNAMLocation.HasValue;
+        private bool _FogAboveWaterAmount_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FogAboveWaterAmountLocation + 1 >= 4;
         public Single FogAboveWaterAmount => _FogAboveWaterAmount_IsSet ? _recordData.Slice(_FogAboveWaterAmountLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown6
         private int _Unknown6Location => _DNAMLocation!.Value.Min + 0x88;
-        private bool _Unknown6_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown6_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _Unknown6Location + 1 >= 4;
         public Int32 Unknown6 => _Unknown6_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_Unknown6Location, 4)) : default(Int32);
         #endregion
         #region FogUnderWaterAmount
         private int _FogUnderWaterAmountLocation => _DNAMLocation!.Value.Min + 0x8C;
-        private bool _FogUnderWaterAmount_IsSet => _DNAMLocation.HasValue;
+        private bool _FogUnderWaterAmount_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FogUnderWaterAmountLocation + 1 >= 4;
         public Single FogUnderWaterAmount => _FogUnderWaterAmount_IsSet ? _recordData.Slice(_FogUnderWaterAmountLocation, 4).Float() : default(Single);
         #endregion
         #region FogUnderWaterDistanceNearPlane
         private int _FogUnderWaterDistanceNearPlaneLocation => _DNAMLocation!.Value.Min + 0x90;
-        private bool _FogUnderWaterDistanceNearPlane_IsSet => _DNAMLocation.HasValue;
+        private bool _FogUnderWaterDistanceNearPlane_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FogUnderWaterDistanceNearPlaneLocation + 1 >= 4;
         public Single FogUnderWaterDistanceNearPlane => _FogUnderWaterDistanceNearPlane_IsSet ? _recordData.Slice(_FogUnderWaterDistanceNearPlaneLocation, 4).Float() : default(Single);
         #endregion
         #region FogUnderWaterDistanceFarPlane
         private int _FogUnderWaterDistanceFarPlaneLocation => _DNAMLocation!.Value.Min + 0x94;
-        private bool _FogUnderWaterDistanceFarPlane_IsSet => _DNAMLocation.HasValue;
+        private bool _FogUnderWaterDistanceFarPlane_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FogUnderWaterDistanceFarPlaneLocation + 1 >= 4;
         public Single FogUnderWaterDistanceFarPlane => _FogUnderWaterDistanceFarPlane_IsSet ? _recordData.Slice(_FogUnderWaterDistanceFarPlaneLocation, 4).Float() : default(Single);
         #endregion
         #region WaterRefractionMagnitude
         private int _WaterRefractionMagnitudeLocation => _DNAMLocation!.Value.Min + 0x98;
-        private bool _WaterRefractionMagnitude_IsSet => _DNAMLocation.HasValue;
+        private bool _WaterRefractionMagnitude_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _WaterRefractionMagnitudeLocation + 1 >= 4;
         public Single WaterRefractionMagnitude => _WaterRefractionMagnitude_IsSet ? _recordData.Slice(_WaterRefractionMagnitudeLocation, 4).Float() : default(Single);
         #endregion
         #region SpecularPower
         private int _SpecularPowerLocation => _DNAMLocation!.Value.Min + 0x9C;
-        private bool _SpecularPower_IsSet => _DNAMLocation.HasValue;
+        private bool _SpecularPower_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SpecularPowerLocation + 1 >= 4;
         public Single SpecularPower => _SpecularPower_IsSet ? _recordData.Slice(_SpecularPowerLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown7
         private int _Unknown7Location => _DNAMLocation!.Value.Min + 0xA0;
-        private bool _Unknown7_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown7_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _Unknown7Location + 1 >= 4;
         public Int32 Unknown7 => _Unknown7_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_Unknown7Location, 4)) : default(Int32);
         #endregion
         #region SpecularRadius
         private int _SpecularRadiusLocation => _DNAMLocation!.Value.Min + 0xA4;
-        private bool _SpecularRadius_IsSet => _DNAMLocation.HasValue;
+        private bool _SpecularRadius_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SpecularRadiusLocation + 1 >= 4;
         public Single SpecularRadius => _SpecularRadius_IsSet ? _recordData.Slice(_SpecularRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region SpecularBrightness
         private int _SpecularBrightnessLocation => _DNAMLocation!.Value.Min + 0xA8;
-        private bool _SpecularBrightness_IsSet => _DNAMLocation.HasValue;
+        private bool _SpecularBrightness_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SpecularBrightnessLocation + 1 >= 4;
         public Single SpecularBrightness => _SpecularBrightness_IsSet ? _recordData.Slice(_SpecularBrightnessLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseLayerOneUvScale
         private int _NoiseLayerOneUvScaleLocation => _DNAMLocation!.Value.Min + 0xAC;
-        private bool _NoiseLayerOneUvScale_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseLayerOneUvScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerOneUvScaleLocation + 1 >= 4;
         public Single NoiseLayerOneUvScale => _NoiseLayerOneUvScale_IsSet ? _recordData.Slice(_NoiseLayerOneUvScaleLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseLayerTwoUvScale
         private int _NoiseLayerTwoUvScaleLocation => _DNAMLocation!.Value.Min + 0xB0;
-        private bool _NoiseLayerTwoUvScale_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseLayerTwoUvScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerTwoUvScaleLocation + 1 >= 4;
         public Single NoiseLayerTwoUvScale => _NoiseLayerTwoUvScale_IsSet ? _recordData.Slice(_NoiseLayerTwoUvScaleLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseLayerThreeUvScale
         private int _NoiseLayerThreeUvScaleLocation => _DNAMLocation!.Value.Min + 0xB4;
-        private bool _NoiseLayerThreeUvScale_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseLayerThreeUvScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerThreeUvScaleLocation + 1 >= 4;
         public Single NoiseLayerThreeUvScale => _NoiseLayerThreeUvScale_IsSet ? _recordData.Slice(_NoiseLayerThreeUvScaleLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseLayerOneAmplitudeScale
         private int _NoiseLayerOneAmplitudeScaleLocation => _DNAMLocation!.Value.Min + 0xB8;
-        private bool _NoiseLayerOneAmplitudeScale_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseLayerOneAmplitudeScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerOneAmplitudeScaleLocation + 1 >= 4;
         public Single NoiseLayerOneAmplitudeScale => _NoiseLayerOneAmplitudeScale_IsSet ? _recordData.Slice(_NoiseLayerOneAmplitudeScaleLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseLayerTwoAmplitudeScale
         private int _NoiseLayerTwoAmplitudeScaleLocation => _DNAMLocation!.Value.Min + 0xBC;
-        private bool _NoiseLayerTwoAmplitudeScale_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseLayerTwoAmplitudeScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerTwoAmplitudeScaleLocation + 1 >= 4;
         public Single NoiseLayerTwoAmplitudeScale => _NoiseLayerTwoAmplitudeScale_IsSet ? _recordData.Slice(_NoiseLayerTwoAmplitudeScaleLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseLayerThreeAmplitudeScale
         private int _NoiseLayerThreeAmplitudeScaleLocation => _DNAMLocation!.Value.Min + 0xC0;
-        private bool _NoiseLayerThreeAmplitudeScale_IsSet => _DNAMLocation.HasValue;
+        private bool _NoiseLayerThreeAmplitudeScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerThreeAmplitudeScaleLocation + 1 >= 4;
         public Single NoiseLayerThreeAmplitudeScale => _NoiseLayerThreeAmplitudeScale_IsSet ? _recordData.Slice(_NoiseLayerThreeAmplitudeScaleLocation, 4).Float() : default(Single);
         #endregion
         #region WaterReflectionMagnitude
         private int _WaterReflectionMagnitudeLocation => _DNAMLocation!.Value.Min + 0xC4;
-        private bool _WaterReflectionMagnitude_IsSet => _DNAMLocation.HasValue;
+        private bool _WaterReflectionMagnitude_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _WaterReflectionMagnitudeLocation + 1 >= 4;
         public Single WaterReflectionMagnitude => _WaterReflectionMagnitude_IsSet ? _recordData.Slice(_WaterReflectionMagnitudeLocation, 4).Float() : default(Single);
         #endregion
         #region SpecularSunSparkleMagnitude
         private int _SpecularSunSparkleMagnitudeLocation => _DNAMLocation!.Value.Min + 0xC8;
-        private bool _SpecularSunSparkleMagnitude_IsSet => _DNAMLocation.HasValue;
+        private bool _SpecularSunSparkleMagnitude_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SpecularSunSparkleMagnitudeLocation + 1 >= 4;
         public Single SpecularSunSparkleMagnitude => _SpecularSunSparkleMagnitude_IsSet ? _recordData.Slice(_SpecularSunSparkleMagnitudeLocation, 4).Float() : default(Single);
         #endregion
         #region SpecularSunSpecularMagnitude
         private int _SpecularSunSpecularMagnitudeLocation => _DNAMLocation!.Value.Min + 0xCC;
-        private bool _SpecularSunSpecularMagnitude_IsSet => _DNAMLocation.HasValue;
+        private bool _SpecularSunSpecularMagnitude_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SpecularSunSpecularMagnitudeLocation + 1 >= 4;
         public Single SpecularSunSpecularMagnitude => _SpecularSunSpecularMagnitude_IsSet ? _recordData.Slice(_SpecularSunSpecularMagnitudeLocation, 4).Float() : default(Single);
         #endregion
         #region DepthReflections
         private int _DepthReflectionsLocation => _DNAMLocation!.Value.Min + 0xD0;
-        private bool _DepthReflections_IsSet => _DNAMLocation.HasValue;
+        private bool _DepthReflections_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DepthReflectionsLocation + 1 >= 4;
         public Single DepthReflections => _DepthReflections_IsSet ? _recordData.Slice(_DepthReflectionsLocation, 4).Float() : default(Single);
         #endregion
         #region DepthRefraction
         private int _DepthRefractionLocation => _DNAMLocation!.Value.Min + 0xD4;
-        private bool _DepthRefraction_IsSet => _DNAMLocation.HasValue;
+        private bool _DepthRefraction_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DepthRefractionLocation + 1 >= 4;
         public Single DepthRefraction => _DepthRefraction_IsSet ? _recordData.Slice(_DepthRefractionLocation, 4).Float() : default(Single);
         #endregion
         #region DepthNormals
         private int _DepthNormalsLocation => _DNAMLocation!.Value.Min + 0xD8;
-        private bool _DepthNormals_IsSet => _DNAMLocation.HasValue;
+        private bool _DepthNormals_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DepthNormalsLocation + 1 >= 4;
         public Single DepthNormals => _DepthNormals_IsSet ? _recordData.Slice(_DepthNormalsLocation, 4).Float() : default(Single);
         #endregion
         #region DepthSpecularLighting
         private int _DepthSpecularLightingLocation => _DNAMLocation!.Value.Min + 0xDC;
-        private bool _DepthSpecularLighting_IsSet => _DNAMLocation.HasValue;
+        private bool _DepthSpecularLighting_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DepthSpecularLightingLocation + 1 >= 4;
         public Single DepthSpecularLighting => _DepthSpecularLighting_IsSet ? _recordData.Slice(_DepthSpecularLightingLocation, 4).Float() : default(Single);
         #endregion
         #region SpecularSunSparklePower
         private int _SpecularSunSparklePowerLocation => _DNAMLocation!.Value.Min + 0xE0;
-        private bool _SpecularSunSparklePower_IsSet => _DNAMLocation.HasValue;
+        private bool _SpecularSunSparklePower_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SpecularSunSparklePowerLocation + 1 >= 4;
         public Single SpecularSunSparklePower => _SpecularSunSparklePower_IsSet ? _recordData.Slice(_SpecularSunSparklePowerLocation, 4).Float() : default(Single);
         #endregion
         #region NoiseFlowmapScale
         private int _NoiseFlowmapScaleLocation => _DNAMLocation!.Value.Min + 0xE4;
-        private bool _NoiseFlowmapScale_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Water.DNAMDataType.Break0);
+        private bool _NoiseFlowmapScale_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Water.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _NoiseFlowmapScaleLocation + 1 >= 4;
         public Single NoiseFlowmapScale => _NoiseFlowmapScale_IsSet ? _recordData.Slice(_NoiseFlowmapScaleLocation, 4).Float() : default(Single);
         #endregion
         #region GNAM

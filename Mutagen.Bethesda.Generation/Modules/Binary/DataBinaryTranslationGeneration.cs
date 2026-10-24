@@ -242,7 +242,12 @@ public class DataBinaryTranslationGeneration : BinaryTranslationGeneration
 
     public override async Task<int?> ExpectedLength(ObjectGeneration objGen, TypeGeneration typeGen) => null;
 
-    public static void GenerateWrapperExtraMembers(StructuredStringBuilder sb, DataType dataType, ObjectGeneration objGen, TypeGeneration typeGen, string posAccessor)
+    /// <param name="expectedLength">
+    /// Bytes the field needs.  When given, the field only counts as set if the data subrecord is long enough
+    /// to contain it, mirroring the short circuiting of the normal parse.  Data subrecords can be shorter than
+    /// the full struct, as older form versions often are, and reading past them would pick up the next subrecord
+    /// </param>
+    public static void GenerateWrapperExtraMembers(StructuredStringBuilder sb, DataType dataType, ObjectGeneration objGen, TypeGeneration typeGen, string posAccessor, int? expectedLength = null)
     {
         var fieldData = typeGen.GetFieldData();
         var dataMeta = dataType.IterateFieldsWithMeta().First(item => item.Field == typeGen);
@@ -263,6 +268,10 @@ public class DataBinaryTranslationGeneration : BinaryTranslationGeneration
         if (fieldData.HasModHeaderVersioning)
         {
             extraChecks.Add(VersioningModule.GetModHeaderVersionIfCheck(fieldData, "_package.MetaData.ModHeaderVersion!.Value"));
+        }
+        if (expectedLength.HasValue)
+        {
+            extraChecks.Add($"_{dataType.GetFieldData().RecordType}Location!.Value.Max - _{typeGen.Name}Location + 1 >= {expectedLength.Value}");
         }
         sb.AppendLine($"private int _{typeGen.Name}Location => {posAccessor};");
         switch (typeGen.GetFieldData().BinaryOverlayFallback)

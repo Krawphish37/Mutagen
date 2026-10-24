@@ -2648,22 +2648,22 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DATALocation;
         #region Categroy
         private int _CategroyLocation => _DATALocation!.Value.Min;
-        private bool _Categroy_IsSet => _DATALocation.HasValue;
+        private bool _Categroy_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CategroyLocation + 1 >= 1;
         public PerkCategory Categroy => _Categroy_IsSet ? (PerkCategory)_recordData.Span.Slice(_CategroyLocation, 0x1)[0] : default;
         #endregion
         #region SkillGroup
         private int _SkillGroupLocation => _DATALocation!.Value.Min + 0x1;
-        private bool _SkillGroup_IsSet => _DATALocation.HasValue;
+        private bool _SkillGroup_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SkillGroupLocation + 1 >= 1;
         public PerkSkillGroup SkillGroup => _SkillGroup_IsSet ? (PerkSkillGroup)_recordData.Span.Slice(_SkillGroupLocation, 0x1)[0] : default;
         #endregion
         #region CrewAssignment
         private int _CrewAssignmentLocation => _DATALocation!.Value.Min + 0x2;
-        private bool _CrewAssignment_IsSet => _DATALocation.HasValue;
+        private bool _CrewAssignment_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CrewAssignmentLocation + 1 >= 1;
         public Perk.PerkCrewAssignment CrewAssignment => _CrewAssignment_IsSet ? (Perk.PerkCrewAssignment)_recordData.Span.Slice(_CrewAssignmentLocation, 0x1)[0] : default;
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x3;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public Perk.Flag Flags => _Flags_IsSet ? (Perk.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region Restriction

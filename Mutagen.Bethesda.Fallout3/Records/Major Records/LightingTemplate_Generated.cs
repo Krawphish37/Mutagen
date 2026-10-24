@@ -1914,52 +1914,52 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region AmbientColor
         private int _AmbientColorLocation => _DATALocation!.Value.Min;
-        private bool _AmbientColor_IsSet => _DATALocation.HasValue;
+        private bool _AmbientColor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AmbientColorLocation + 1 >= 4;
         public Color AmbientColor => _AmbientColor_IsSet ? _recordData.Slice(_AmbientColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region DirectionalColor
         private int _DirectionalColorLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _DirectionalColor_IsSet => _DATALocation.HasValue;
+        private bool _DirectionalColor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DirectionalColorLocation + 1 >= 4;
         public Color DirectionalColor => _DirectionalColor_IsSet ? _recordData.Slice(_DirectionalColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region FogColor
         private int _FogColorLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _FogColor_IsSet => _DATALocation.HasValue;
+        private bool _FogColor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FogColorLocation + 1 >= 4;
         public Color FogColor => _FogColor_IsSet ? _recordData.Slice(_FogColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region FogNear
         private int _FogNearLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _FogNear_IsSet => _DATALocation.HasValue;
+        private bool _FogNear_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FogNearLocation + 1 >= 4;
         public Single FogNear => _FogNear_IsSet ? _recordData.Slice(_FogNearLocation, 4).Float() : default(Single);
         #endregion
         #region FogFar
         private int _FogFarLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _FogFar_IsSet => _DATALocation.HasValue;
+        private bool _FogFar_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FogFarLocation + 1 >= 4;
         public Single FogFar => _FogFar_IsSet ? _recordData.Slice(_FogFarLocation, 4).Float() : default(Single);
         #endregion
         #region DirectionalRotationXY
         private int _DirectionalRotationXYLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _DirectionalRotationXY_IsSet => _DATALocation.HasValue;
+        private bool _DirectionalRotationXY_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DirectionalRotationXYLocation + 1 >= 4;
         public Int32 DirectionalRotationXY => _DirectionalRotationXY_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_DirectionalRotationXYLocation, 4)) : default(Int32);
         #endregion
         #region DirectionalRotationZ
         private int _DirectionalRotationZLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _DirectionalRotationZ_IsSet => _DATALocation.HasValue;
+        private bool _DirectionalRotationZ_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DirectionalRotationZLocation + 1 >= 4;
         public Int32 DirectionalRotationZ => _DirectionalRotationZ_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_DirectionalRotationZLocation, 4)) : default(Int32);
         #endregion
         #region DirectionalFade
         private int _DirectionalFadeLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _DirectionalFade_IsSet => _DATALocation.HasValue;
+        private bool _DirectionalFade_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DirectionalFadeLocation + 1 >= 4;
         public Single DirectionalFade => _DirectionalFade_IsSet ? _recordData.Slice(_DirectionalFadeLocation, 4).Float() : default(Single);
         #endregion
         #region FogClipDistance
         private int _FogClipDistanceLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _FogClipDistance_IsSet => _DATALocation.HasValue;
+        private bool _FogClipDistance_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FogClipDistanceLocation + 1 >= 4;
         public Single FogClipDistance => _FogClipDistance_IsSet ? _recordData.Slice(_FogClipDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region FogPower
         private int _FogPowerLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _FogPower_IsSet => _DATALocation.HasValue;
+        private bool _FogPower_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FogPowerLocation + 1 >= 4;
         public Single FogPower => _FogPower_IsSet ? _recordData.Slice(_FogPowerLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(

@@ -7811,502 +7811,502 @@ namespace Mutagen.Bethesda.Skyrim
         public EffectShader.DATADataType DATADataTypeState { get; private set; }
         #region Unknown
         private int _UnknownLocation => _DATALocation!.Value.Min;
-        private bool _Unknown_IsSet => _DATALocation.HasValue;
+        private bool _Unknown_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
         #endregion
         #region MembraneSourceBlendMode
         private int _MembraneSourceBlendModeLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _MembraneSourceBlendMode_IsSet => _DATALocation.HasValue;
+        private bool _MembraneSourceBlendMode_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MembraneSourceBlendModeLocation + 1 >= 4;
         public EffectShader.BlendMode MembraneSourceBlendMode => _MembraneSourceBlendMode_IsSet ? (EffectShader.BlendMode)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MembraneSourceBlendModeLocation, 0x4)) : default;
         #endregion
         #region MembraneBlendOperation
         private int _MembraneBlendOperationLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _MembraneBlendOperation_IsSet => _DATALocation.HasValue;
+        private bool _MembraneBlendOperation_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MembraneBlendOperationLocation + 1 >= 4;
         public EffectShader.BlendOperation MembraneBlendOperation => _MembraneBlendOperation_IsSet ? (EffectShader.BlendOperation)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MembraneBlendOperationLocation, 0x4)) : default;
         #endregion
         #region MembraneZTest
         private int _MembraneZTestLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _MembraneZTest_IsSet => _DATALocation.HasValue;
+        private bool _MembraneZTest_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MembraneZTestLocation + 1 >= 4;
         public EffectShader.ZTest MembraneZTest => _MembraneZTest_IsSet ? (EffectShader.ZTest)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MembraneZTestLocation, 0x4)) : default;
         #endregion
         #region FillColorKey1
         private int _FillColorKey1Location => _DATALocation!.Value.Min + 0x10;
-        private bool _FillColorKey1_IsSet => _DATALocation.HasValue;
+        private bool _FillColorKey1_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FillColorKey1Location + 1 >= 4;
         public Color FillColorKey1 => _FillColorKey1_IsSet ? _recordData.Slice(_FillColorKey1Location, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region FillAlphaFadeInTime
         private int _FillAlphaFadeInTimeLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _FillAlphaFadeInTime_IsSet => _DATALocation.HasValue;
+        private bool _FillAlphaFadeInTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FillAlphaFadeInTimeLocation + 1 >= 4;
         public Single FillAlphaFadeInTime => _FillAlphaFadeInTime_IsSet ? _recordData.Slice(_FillAlphaFadeInTimeLocation, 4).Float() : default(Single);
         #endregion
         #region FillFullAlphaTime
         private int _FillFullAlphaTimeLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _FillFullAlphaTime_IsSet => _DATALocation.HasValue;
+        private bool _FillFullAlphaTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FillFullAlphaTimeLocation + 1 >= 4;
         public Single FillFullAlphaTime => _FillFullAlphaTime_IsSet ? _recordData.Slice(_FillFullAlphaTimeLocation, 4).Float() : default(Single);
         #endregion
         #region FillFadeOutTime
         private int _FillFadeOutTimeLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _FillFadeOutTime_IsSet => _DATALocation.HasValue;
+        private bool _FillFadeOutTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FillFadeOutTimeLocation + 1 >= 4;
         public Single FillFadeOutTime => _FillFadeOutTime_IsSet ? _recordData.Slice(_FillFadeOutTimeLocation, 4).Float() : default(Single);
         #endregion
         #region FillPersistentAlphaRatio
         private int _FillPersistentAlphaRatioLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _FillPersistentAlphaRatio_IsSet => _DATALocation.HasValue;
+        private bool _FillPersistentAlphaRatio_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FillPersistentAlphaRatioLocation + 1 >= 4;
         public Single FillPersistentAlphaRatio => _FillPersistentAlphaRatio_IsSet ? _recordData.Slice(_FillPersistentAlphaRatioLocation, 4).Float() : default(Single);
         #endregion
         #region FillAlphaPulseAmplitude
         private int _FillAlphaPulseAmplitudeLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _FillAlphaPulseAmplitude_IsSet => _DATALocation.HasValue;
+        private bool _FillAlphaPulseAmplitude_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FillAlphaPulseAmplitudeLocation + 1 >= 4;
         public Single FillAlphaPulseAmplitude => _FillAlphaPulseAmplitude_IsSet ? _recordData.Slice(_FillAlphaPulseAmplitudeLocation, 4).Float() : default(Single);
         #endregion
         #region FillAlphaPulseFrequency
         private int _FillAlphaPulseFrequencyLocation => _DATALocation!.Value.Min + 0x28;
-        private bool _FillAlphaPulseFrequency_IsSet => _DATALocation.HasValue;
+        private bool _FillAlphaPulseFrequency_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FillAlphaPulseFrequencyLocation + 1 >= 4;
         public Single FillAlphaPulseFrequency => _FillAlphaPulseFrequency_IsSet ? _recordData.Slice(_FillAlphaPulseFrequencyLocation, 4).Float() : default(Single);
         #endregion
         #region FillTextureAnimationSpeedU
         private int _FillTextureAnimationSpeedULocation => _DATALocation!.Value.Min + 0x2C;
-        private bool _FillTextureAnimationSpeedU_IsSet => _DATALocation.HasValue;
+        private bool _FillTextureAnimationSpeedU_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FillTextureAnimationSpeedULocation + 1 >= 4;
         public Single FillTextureAnimationSpeedU => _FillTextureAnimationSpeedU_IsSet ? _recordData.Slice(_FillTextureAnimationSpeedULocation, 4).Float() : default(Single);
         #endregion
         #region FillTextureAnimationSpeedV
         private int _FillTextureAnimationSpeedVLocation => _DATALocation!.Value.Min + 0x30;
-        private bool _FillTextureAnimationSpeedV_IsSet => _DATALocation.HasValue;
+        private bool _FillTextureAnimationSpeedV_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FillTextureAnimationSpeedVLocation + 1 >= 4;
         public Single FillTextureAnimationSpeedV => _FillTextureAnimationSpeedV_IsSet ? _recordData.Slice(_FillTextureAnimationSpeedVLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectFallOff
         private int _EdgeEffectFallOffLocation => _DATALocation!.Value.Min + 0x34;
-        private bool _EdgeEffectFallOff_IsSet => _DATALocation.HasValue;
+        private bool _EdgeEffectFallOff_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EdgeEffectFallOffLocation + 1 >= 4;
         public Single EdgeEffectFallOff => _EdgeEffectFallOff_IsSet ? _recordData.Slice(_EdgeEffectFallOffLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectColor
         private int _EdgeEffectColorLocation => _DATALocation!.Value.Min + 0x38;
-        private bool _EdgeEffectColor_IsSet => _DATALocation.HasValue;
+        private bool _EdgeEffectColor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EdgeEffectColorLocation + 1 >= 4;
         public Color EdgeEffectColor => _EdgeEffectColor_IsSet ? _recordData.Slice(_EdgeEffectColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region EdgeEffectAlphaFadeInTime
         private int _EdgeEffectAlphaFadeInTimeLocation => _DATALocation!.Value.Min + 0x3C;
-        private bool _EdgeEffectAlphaFadeInTime_IsSet => _DATALocation.HasValue;
+        private bool _EdgeEffectAlphaFadeInTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EdgeEffectAlphaFadeInTimeLocation + 1 >= 4;
         public Single EdgeEffectAlphaFadeInTime => _EdgeEffectAlphaFadeInTime_IsSet ? _recordData.Slice(_EdgeEffectAlphaFadeInTimeLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectFullAlphaTime
         private int _EdgeEffectFullAlphaTimeLocation => _DATALocation!.Value.Min + 0x40;
-        private bool _EdgeEffectFullAlphaTime_IsSet => _DATALocation.HasValue;
+        private bool _EdgeEffectFullAlphaTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EdgeEffectFullAlphaTimeLocation + 1 >= 4;
         public Single EdgeEffectFullAlphaTime => _EdgeEffectFullAlphaTime_IsSet ? _recordData.Slice(_EdgeEffectFullAlphaTimeLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectAlphaFadeOutTime
         private int _EdgeEffectAlphaFadeOutTimeLocation => _DATALocation!.Value.Min + 0x44;
-        private bool _EdgeEffectAlphaFadeOutTime_IsSet => _DATALocation.HasValue;
+        private bool _EdgeEffectAlphaFadeOutTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EdgeEffectAlphaFadeOutTimeLocation + 1 >= 4;
         public Single EdgeEffectAlphaFadeOutTime => _EdgeEffectAlphaFadeOutTime_IsSet ? _recordData.Slice(_EdgeEffectAlphaFadeOutTimeLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectPersistentAlphaRatio
         private int _EdgeEffectPersistentAlphaRatioLocation => _DATALocation!.Value.Min + 0x48;
-        private bool _EdgeEffectPersistentAlphaRatio_IsSet => _DATALocation.HasValue;
+        private bool _EdgeEffectPersistentAlphaRatio_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EdgeEffectPersistentAlphaRatioLocation + 1 >= 4;
         public Single EdgeEffectPersistentAlphaRatio => _EdgeEffectPersistentAlphaRatio_IsSet ? _recordData.Slice(_EdgeEffectPersistentAlphaRatioLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectAlphaPulseAmplitude
         private int _EdgeEffectAlphaPulseAmplitudeLocation => _DATALocation!.Value.Min + 0x4C;
-        private bool _EdgeEffectAlphaPulseAmplitude_IsSet => _DATALocation.HasValue;
+        private bool _EdgeEffectAlphaPulseAmplitude_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EdgeEffectAlphaPulseAmplitudeLocation + 1 >= 4;
         public Single EdgeEffectAlphaPulseAmplitude => _EdgeEffectAlphaPulseAmplitude_IsSet ? _recordData.Slice(_EdgeEffectAlphaPulseAmplitudeLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectAlphaPulseFrequency
         private int _EdgeEffectAlphaPulseFrequencyLocation => _DATALocation!.Value.Min + 0x50;
-        private bool _EdgeEffectAlphaPulseFrequency_IsSet => _DATALocation.HasValue;
+        private bool _EdgeEffectAlphaPulseFrequency_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EdgeEffectAlphaPulseFrequencyLocation + 1 >= 4;
         public Single EdgeEffectAlphaPulseFrequency => _EdgeEffectAlphaPulseFrequency_IsSet ? _recordData.Slice(_EdgeEffectAlphaPulseFrequencyLocation, 4).Float() : default(Single);
         #endregion
         #region FillFullAlphaRatio
         private int _FillFullAlphaRatioLocation => _DATALocation!.Value.Min + 0x54;
-        private bool _FillFullAlphaRatio_IsSet => _DATALocation.HasValue;
+        private bool _FillFullAlphaRatio_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FillFullAlphaRatioLocation + 1 >= 4;
         public Single FillFullAlphaRatio => _FillFullAlphaRatio_IsSet ? _recordData.Slice(_FillFullAlphaRatioLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectFullAlphaRatio
         private int _EdgeEffectFullAlphaRatioLocation => _DATALocation!.Value.Min + 0x58;
-        private bool _EdgeEffectFullAlphaRatio_IsSet => _DATALocation.HasValue;
+        private bool _EdgeEffectFullAlphaRatio_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EdgeEffectFullAlphaRatioLocation + 1 >= 4;
         public Single EdgeEffectFullAlphaRatio => _EdgeEffectFullAlphaRatio_IsSet ? _recordData.Slice(_EdgeEffectFullAlphaRatioLocation, 4).Float() : default(Single);
         #endregion
         #region MembraneDestBlendMode
         private int _MembraneDestBlendModeLocation => _DATALocation!.Value.Min + 0x5C;
-        private bool _MembraneDestBlendMode_IsSet => _DATALocation.HasValue;
+        private bool _MembraneDestBlendMode_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MembraneDestBlendModeLocation + 1 >= 4;
         public EffectShader.BlendMode MembraneDestBlendMode => _MembraneDestBlendMode_IsSet ? (EffectShader.BlendMode)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MembraneDestBlendModeLocation, 0x4)) : default;
         #endregion
         #region ParticleSourceBlendMode
         private int _ParticleSourceBlendModeLocation => _DATALocation!.Value.Min + 0x60;
-        private bool _ParticleSourceBlendMode_IsSet => _DATALocation.HasValue;
+        private bool _ParticleSourceBlendMode_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleSourceBlendModeLocation + 1 >= 4;
         public EffectShader.BlendMode ParticleSourceBlendMode => _ParticleSourceBlendMode_IsSet ? (EffectShader.BlendMode)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ParticleSourceBlendModeLocation, 0x4)) : default;
         #endregion
         #region ParticleBlendOperation
         private int _ParticleBlendOperationLocation => _DATALocation!.Value.Min + 0x64;
-        private bool _ParticleBlendOperation_IsSet => _DATALocation.HasValue;
+        private bool _ParticleBlendOperation_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleBlendOperationLocation + 1 >= 4;
         public EffectShader.BlendOperation ParticleBlendOperation => _ParticleBlendOperation_IsSet ? (EffectShader.BlendOperation)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ParticleBlendOperationLocation, 0x4)) : default;
         #endregion
         #region ParticleZTest
         private int _ParticleZTestLocation => _DATALocation!.Value.Min + 0x68;
-        private bool _ParticleZTest_IsSet => _DATALocation.HasValue;
+        private bool _ParticleZTest_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleZTestLocation + 1 >= 4;
         public EffectShader.ZTest ParticleZTest => _ParticleZTest_IsSet ? (EffectShader.ZTest)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ParticleZTestLocation, 0x4)) : default;
         #endregion
         #region ParticleDestBlendMode
         private int _ParticleDestBlendModeLocation => _DATALocation!.Value.Min + 0x6C;
-        private bool _ParticleDestBlendMode_IsSet => _DATALocation.HasValue;
+        private bool _ParticleDestBlendMode_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleDestBlendModeLocation + 1 >= 4;
         public EffectShader.BlendMode ParticleDestBlendMode => _ParticleDestBlendMode_IsSet ? (EffectShader.BlendMode)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ParticleDestBlendModeLocation, 0x4)) : default;
         #endregion
         #region ParticleBirthRampUpTime
         private int _ParticleBirthRampUpTimeLocation => _DATALocation!.Value.Min + 0x70;
-        private bool _ParticleBirthRampUpTime_IsSet => _DATALocation.HasValue;
+        private bool _ParticleBirthRampUpTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleBirthRampUpTimeLocation + 1 >= 4;
         public Single ParticleBirthRampUpTime => _ParticleBirthRampUpTime_IsSet ? _recordData.Slice(_ParticleBirthRampUpTimeLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleFullBirthTime
         private int _ParticleFullBirthTimeLocation => _DATALocation!.Value.Min + 0x74;
-        private bool _ParticleFullBirthTime_IsSet => _DATALocation.HasValue;
+        private bool _ParticleFullBirthTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleFullBirthTimeLocation + 1 >= 4;
         public Single ParticleFullBirthTime => _ParticleFullBirthTime_IsSet ? _recordData.Slice(_ParticleFullBirthTimeLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleBirthRampDownTime
         private int _ParticleBirthRampDownTimeLocation => _DATALocation!.Value.Min + 0x78;
-        private bool _ParticleBirthRampDownTime_IsSet => _DATALocation.HasValue;
+        private bool _ParticleBirthRampDownTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleBirthRampDownTimeLocation + 1 >= 4;
         public Single ParticleBirthRampDownTime => _ParticleBirthRampDownTime_IsSet ? _recordData.Slice(_ParticleBirthRampDownTimeLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleFullBirthRatio
         private int _ParticleFullBirthRatioLocation => _DATALocation!.Value.Min + 0x7C;
-        private bool _ParticleFullBirthRatio_IsSet => _DATALocation.HasValue;
+        private bool _ParticleFullBirthRatio_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleFullBirthRatioLocation + 1 >= 4;
         public Single ParticleFullBirthRatio => _ParticleFullBirthRatio_IsSet ? _recordData.Slice(_ParticleFullBirthRatioLocation, 4).Float() : default(Single);
         #endregion
         #region ParticlePeristentCount
         private int _ParticlePeristentCountLocation => _DATALocation!.Value.Min + 0x80;
-        private bool _ParticlePeristentCount_IsSet => _DATALocation.HasValue;
+        private bool _ParticlePeristentCount_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticlePeristentCountLocation + 1 >= 4;
         public Single ParticlePeristentCount => _ParticlePeristentCount_IsSet ? _recordData.Slice(_ParticlePeristentCountLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleLifetime
         private int _ParticleLifetimeLocation => _DATALocation!.Value.Min + 0x84;
-        private bool _ParticleLifetime_IsSet => _DATALocation.HasValue;
+        private bool _ParticleLifetime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleLifetimeLocation + 1 >= 4;
         public Single ParticleLifetime => _ParticleLifetime_IsSet ? _recordData.Slice(_ParticleLifetimeLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleLifetimePlusMinus
         private int _ParticleLifetimePlusMinusLocation => _DATALocation!.Value.Min + 0x88;
-        private bool _ParticleLifetimePlusMinus_IsSet => _DATALocation.HasValue;
+        private bool _ParticleLifetimePlusMinus_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleLifetimePlusMinusLocation + 1 >= 4;
         public Single ParticleLifetimePlusMinus => _ParticleLifetimePlusMinus_IsSet ? _recordData.Slice(_ParticleLifetimePlusMinusLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleInitialSpeedAlongNormal
         private int _ParticleInitialSpeedAlongNormalLocation => _DATALocation!.Value.Min + 0x8C;
-        private bool _ParticleInitialSpeedAlongNormal_IsSet => _DATALocation.HasValue;
+        private bool _ParticleInitialSpeedAlongNormal_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleInitialSpeedAlongNormalLocation + 1 >= 4;
         public Single ParticleInitialSpeedAlongNormal => _ParticleInitialSpeedAlongNormal_IsSet ? _recordData.Slice(_ParticleInitialSpeedAlongNormalLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleAccelerationAlongNormal
         private int _ParticleAccelerationAlongNormalLocation => _DATALocation!.Value.Min + 0x90;
-        private bool _ParticleAccelerationAlongNormal_IsSet => _DATALocation.HasValue;
+        private bool _ParticleAccelerationAlongNormal_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleAccelerationAlongNormalLocation + 1 >= 4;
         public Single ParticleAccelerationAlongNormal => _ParticleAccelerationAlongNormal_IsSet ? _recordData.Slice(_ParticleAccelerationAlongNormalLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleInitialVelocity1
         private int _ParticleInitialVelocity1Location => _DATALocation!.Value.Min + 0x94;
-        private bool _ParticleInitialVelocity1_IsSet => _DATALocation.HasValue;
+        private bool _ParticleInitialVelocity1_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleInitialVelocity1Location + 1 >= 4;
         public Single ParticleInitialVelocity1 => _ParticleInitialVelocity1_IsSet ? _recordData.Slice(_ParticleInitialVelocity1Location, 4).Float() : default(Single);
         #endregion
         #region ParticleInitialVelocity2
         private int _ParticleInitialVelocity2Location => _DATALocation!.Value.Min + 0x98;
-        private bool _ParticleInitialVelocity2_IsSet => _DATALocation.HasValue;
+        private bool _ParticleInitialVelocity2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleInitialVelocity2Location + 1 >= 4;
         public Single ParticleInitialVelocity2 => _ParticleInitialVelocity2_IsSet ? _recordData.Slice(_ParticleInitialVelocity2Location, 4).Float() : default(Single);
         #endregion
         #region ParticleInitialVelocity3
         private int _ParticleInitialVelocity3Location => _DATALocation!.Value.Min + 0x9C;
-        private bool _ParticleInitialVelocity3_IsSet => _DATALocation.HasValue;
+        private bool _ParticleInitialVelocity3_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleInitialVelocity3Location + 1 >= 4;
         public Single ParticleInitialVelocity3 => _ParticleInitialVelocity3_IsSet ? _recordData.Slice(_ParticleInitialVelocity3Location, 4).Float() : default(Single);
         #endregion
         #region ParticleAcceleration1
         private int _ParticleAcceleration1Location => _DATALocation!.Value.Min + 0xA0;
-        private bool _ParticleAcceleration1_IsSet => _DATALocation.HasValue;
+        private bool _ParticleAcceleration1_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleAcceleration1Location + 1 >= 4;
         public Single ParticleAcceleration1 => _ParticleAcceleration1_IsSet ? _recordData.Slice(_ParticleAcceleration1Location, 4).Float() : default(Single);
         #endregion
         #region ParticleAcceleration2
         private int _ParticleAcceleration2Location => _DATALocation!.Value.Min + 0xA4;
-        private bool _ParticleAcceleration2_IsSet => _DATALocation.HasValue;
+        private bool _ParticleAcceleration2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleAcceleration2Location + 1 >= 4;
         public Single ParticleAcceleration2 => _ParticleAcceleration2_IsSet ? _recordData.Slice(_ParticleAcceleration2Location, 4).Float() : default(Single);
         #endregion
         #region ParticleAcceleration3
         private int _ParticleAcceleration3Location => _DATALocation!.Value.Min + 0xA8;
-        private bool _ParticleAcceleration3_IsSet => _DATALocation.HasValue;
+        private bool _ParticleAcceleration3_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleAcceleration3Location + 1 >= 4;
         public Single ParticleAcceleration3 => _ParticleAcceleration3_IsSet ? _recordData.Slice(_ParticleAcceleration3Location, 4).Float() : default(Single);
         #endregion
         #region ParticleScaleKey1
         private int _ParticleScaleKey1Location => _DATALocation!.Value.Min + 0xAC;
-        private bool _ParticleScaleKey1_IsSet => _DATALocation.HasValue;
+        private bool _ParticleScaleKey1_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleScaleKey1Location + 1 >= 4;
         public Single ParticleScaleKey1 => _ParticleScaleKey1_IsSet ? _recordData.Slice(_ParticleScaleKey1Location, 4).Float() : default(Single);
         #endregion
         #region ParticleScaleKey2
         private int _ParticleScaleKey2Location => _DATALocation!.Value.Min + 0xB0;
-        private bool _ParticleScaleKey2_IsSet => _DATALocation.HasValue;
+        private bool _ParticleScaleKey2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleScaleKey2Location + 1 >= 4;
         public Single ParticleScaleKey2 => _ParticleScaleKey2_IsSet ? _recordData.Slice(_ParticleScaleKey2Location, 4).Float() : default(Single);
         #endregion
         #region ParticleScaleKey1Time
         private int _ParticleScaleKey1TimeLocation => _DATALocation!.Value.Min + 0xB4;
-        private bool _ParticleScaleKey1Time_IsSet => _DATALocation.HasValue;
+        private bool _ParticleScaleKey1Time_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleScaleKey1TimeLocation + 1 >= 4;
         public Single ParticleScaleKey1Time => _ParticleScaleKey1Time_IsSet ? _recordData.Slice(_ParticleScaleKey1TimeLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleScaleKey2Time
         private int _ParticleScaleKey2TimeLocation => _DATALocation!.Value.Min + 0xB8;
-        private bool _ParticleScaleKey2Time_IsSet => _DATALocation.HasValue;
+        private bool _ParticleScaleKey2Time_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleScaleKey2TimeLocation + 1 >= 4;
         public Single ParticleScaleKey2Time => _ParticleScaleKey2Time_IsSet ? _recordData.Slice(_ParticleScaleKey2TimeLocation, 4).Float() : default(Single);
         #endregion
         #region ColorKey1
         private int _ColorKey1Location => _DATALocation!.Value.Min + 0xBC;
-        private bool _ColorKey1_IsSet => _DATALocation.HasValue;
+        private bool _ColorKey1_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ColorKey1Location + 1 >= 4;
         public Color ColorKey1 => _ColorKey1_IsSet ? _recordData.Slice(_ColorKey1Location, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region ColorKey2
         private int _ColorKey2Location => _DATALocation!.Value.Min + 0xC0;
-        private bool _ColorKey2_IsSet => _DATALocation.HasValue;
+        private bool _ColorKey2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ColorKey2Location + 1 >= 4;
         public Color ColorKey2 => _ColorKey2_IsSet ? _recordData.Slice(_ColorKey2Location, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region ColorKey3
         private int _ColorKey3Location => _DATALocation!.Value.Min + 0xC4;
-        private bool _ColorKey3_IsSet => _DATALocation.HasValue;
+        private bool _ColorKey3_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ColorKey3Location + 1 >= 4;
         public Color ColorKey3 => _ColorKey3_IsSet ? _recordData.Slice(_ColorKey3Location, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region ColorKey1Alpha
         private int _ColorKey1AlphaLocation => _DATALocation!.Value.Min + 0xC8;
-        private bool _ColorKey1Alpha_IsSet => _DATALocation.HasValue;
+        private bool _ColorKey1Alpha_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ColorKey1AlphaLocation + 1 >= 4;
         public Single ColorKey1Alpha => _ColorKey1Alpha_IsSet ? _recordData.Slice(_ColorKey1AlphaLocation, 4).Float() : default(Single);
         #endregion
         #region ColorKey2Alpha
         private int _ColorKey2AlphaLocation => _DATALocation!.Value.Min + 0xCC;
-        private bool _ColorKey2Alpha_IsSet => _DATALocation.HasValue;
+        private bool _ColorKey2Alpha_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ColorKey2AlphaLocation + 1 >= 4;
         public Single ColorKey2Alpha => _ColorKey2Alpha_IsSet ? _recordData.Slice(_ColorKey2AlphaLocation, 4).Float() : default(Single);
         #endregion
         #region ColorKey3Alpha
         private int _ColorKey3AlphaLocation => _DATALocation!.Value.Min + 0xD0;
-        private bool _ColorKey3Alpha_IsSet => _DATALocation.HasValue;
+        private bool _ColorKey3Alpha_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ColorKey3AlphaLocation + 1 >= 4;
         public Single ColorKey3Alpha => _ColorKey3Alpha_IsSet ? _recordData.Slice(_ColorKey3AlphaLocation, 4).Float() : default(Single);
         #endregion
         #region ColorKey1Time
         private int _ColorKey1TimeLocation => _DATALocation!.Value.Min + 0xD4;
-        private bool _ColorKey1Time_IsSet => _DATALocation.HasValue;
+        private bool _ColorKey1Time_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ColorKey1TimeLocation + 1 >= 4;
         public Single ColorKey1Time => _ColorKey1Time_IsSet ? _recordData.Slice(_ColorKey1TimeLocation, 4).Float() : default(Single);
         #endregion
         #region ColorKey2Time
         private int _ColorKey2TimeLocation => _DATALocation!.Value.Min + 0xD8;
-        private bool _ColorKey2Time_IsSet => _DATALocation.HasValue;
+        private bool _ColorKey2Time_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ColorKey2TimeLocation + 1 >= 4;
         public Single ColorKey2Time => _ColorKey2Time_IsSet ? _recordData.Slice(_ColorKey2TimeLocation, 4).Float() : default(Single);
         #endregion
         #region ColorKey3Time
         private int _ColorKey3TimeLocation => _DATALocation!.Value.Min + 0xDC;
-        private bool _ColorKey3Time_IsSet => _DATALocation.HasValue;
+        private bool _ColorKey3Time_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ColorKey3TimeLocation + 1 >= 4;
         public Single ColorKey3Time => _ColorKey3Time_IsSet ? _recordData.Slice(_ColorKey3TimeLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleInitialSpeedAlongNormalPlusMinus
         private int _ParticleInitialSpeedAlongNormalPlusMinusLocation => _DATALocation!.Value.Min + 0xE0;
-        private bool _ParticleInitialSpeedAlongNormalPlusMinus_IsSet => _DATALocation.HasValue;
+        private bool _ParticleInitialSpeedAlongNormalPlusMinus_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleInitialSpeedAlongNormalPlusMinusLocation + 1 >= 4;
         public Single ParticleInitialSpeedAlongNormalPlusMinus => _ParticleInitialSpeedAlongNormalPlusMinus_IsSet ? _recordData.Slice(_ParticleInitialSpeedAlongNormalPlusMinusLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleInitialRotationDegree
         private int _ParticleInitialRotationDegreeLocation => _DATALocation!.Value.Min + 0xE4;
-        private bool _ParticleInitialRotationDegree_IsSet => _DATALocation.HasValue;
+        private bool _ParticleInitialRotationDegree_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleInitialRotationDegreeLocation + 1 >= 4;
         public Single ParticleInitialRotationDegree => _ParticleInitialRotationDegree_IsSet ? _recordData.Slice(_ParticleInitialRotationDegreeLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleInitialRotationDegreePlusMinus
         private int _ParticleInitialRotationDegreePlusMinusLocation => _DATALocation!.Value.Min + 0xE8;
-        private bool _ParticleInitialRotationDegreePlusMinus_IsSet => _DATALocation.HasValue;
+        private bool _ParticleInitialRotationDegreePlusMinus_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleInitialRotationDegreePlusMinusLocation + 1 >= 4;
         public Single ParticleInitialRotationDegreePlusMinus => _ParticleInitialRotationDegreePlusMinus_IsSet ? _recordData.Slice(_ParticleInitialRotationDegreePlusMinusLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleRotationSpeedDegreePerSec
         private int _ParticleRotationSpeedDegreePerSecLocation => _DATALocation!.Value.Min + 0xEC;
-        private bool _ParticleRotationSpeedDegreePerSec_IsSet => _DATALocation.HasValue;
+        private bool _ParticleRotationSpeedDegreePerSec_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleRotationSpeedDegreePerSecLocation + 1 >= 4;
         public Single ParticleRotationSpeedDegreePerSec => _ParticleRotationSpeedDegreePerSec_IsSet ? _recordData.Slice(_ParticleRotationSpeedDegreePerSecLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleRotationSpeedDegreePerSecPlusMinus
         private int _ParticleRotationSpeedDegreePerSecPlusMinusLocation => _DATALocation!.Value.Min + 0xF0;
-        private bool _ParticleRotationSpeedDegreePerSecPlusMinus_IsSet => _DATALocation.HasValue;
+        private bool _ParticleRotationSpeedDegreePerSecPlusMinus_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ParticleRotationSpeedDegreePerSecPlusMinusLocation + 1 >= 4;
         public Single ParticleRotationSpeedDegreePerSecPlusMinus => _ParticleRotationSpeedDegreePerSecPlusMinus_IsSet ? _recordData.Slice(_ParticleRotationSpeedDegreePerSecPlusMinusLocation, 4).Float() : default(Single);
         #endregion
         #region AddonModels
         private int _AddonModelsLocation => _DATALocation!.Value.Min + 0xF4;
-        private bool _AddonModels_IsSet => _DATALocation.HasValue;
+        private bool _AddonModels_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AddonModelsLocation + 1 >= 4;
         public IFormLinkGetter<IDebrisGetter> AddonModels => _AddonModels_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IDebrisGetter>(_package, _recordData.Span.Slice(_AddonModelsLocation, 0x4), isSet: _AddonModels_IsSet) : FormLink<IDebrisGetter>.Null;
         #endregion
         #region HolesStartTime
         private int _HolesStartTimeLocation => _DATALocation!.Value.Min + 0xF8;
-        private bool _HolesStartTime_IsSet => _DATALocation.HasValue;
+        private bool _HolesStartTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HolesStartTimeLocation + 1 >= 4;
         public Single HolesStartTime => _HolesStartTime_IsSet ? _recordData.Slice(_HolesStartTimeLocation, 4).Float() : default(Single);
         #endregion
         #region HolesEndTime
         private int _HolesEndTimeLocation => _DATALocation!.Value.Min + 0xFC;
-        private bool _HolesEndTime_IsSet => _DATALocation.HasValue;
+        private bool _HolesEndTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HolesEndTimeLocation + 1 >= 4;
         public Single HolesEndTime => _HolesEndTime_IsSet ? _recordData.Slice(_HolesEndTimeLocation, 4).Float() : default(Single);
         #endregion
         #region HolesStartValue
         private int _HolesStartValueLocation => _DATALocation!.Value.Min + 0x100;
-        private bool _HolesStartValue_IsSet => _DATALocation.HasValue;
+        private bool _HolesStartValue_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HolesStartValueLocation + 1 >= 4;
         public Single HolesStartValue => _HolesStartValue_IsSet ? _recordData.Slice(_HolesStartValueLocation, 4).Float() : default(Single);
         #endregion
         #region HolesEndValue
         private int _HolesEndValueLocation => _DATALocation!.Value.Min + 0x104;
-        private bool _HolesEndValue_IsSet => _DATALocation.HasValue;
+        private bool _HolesEndValue_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HolesEndValueLocation + 1 >= 4;
         public Single HolesEndValue => _HolesEndValue_IsSet ? _recordData.Slice(_HolesEndValueLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeWidth
         private int _EdgeWidthLocation => _DATALocation!.Value.Min + 0x108;
-        private bool _EdgeWidth_IsSet => _DATALocation.HasValue;
+        private bool _EdgeWidth_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EdgeWidthLocation + 1 >= 4;
         public Single EdgeWidth => _EdgeWidth_IsSet ? _recordData.Slice(_EdgeWidthLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeColor
         private int _EdgeColorLocation => _DATALocation!.Value.Min + 0x10C;
-        private bool _EdgeColor_IsSet => _DATALocation.HasValue;
+        private bool _EdgeColor_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _EdgeColorLocation + 1 >= 4;
         public Color EdgeColor => _EdgeColor_IsSet ? _recordData.Slice(_EdgeColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region ExplosionWindSpeed
         private int _ExplosionWindSpeedLocation => _DATALocation!.Value.Min + 0x110;
-        private bool _ExplosionWindSpeed_IsSet => _DATALocation.HasValue;
+        private bool _ExplosionWindSpeed_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ExplosionWindSpeedLocation + 1 >= 4;
         public Single ExplosionWindSpeed => _ExplosionWindSpeed_IsSet ? _recordData.Slice(_ExplosionWindSpeedLocation, 4).Float() : default(Single);
         #endregion
         #region TextureCountU
         private int _TextureCountULocation => _DATALocation!.Value.Min + 0x114;
-        private bool _TextureCountU_IsSet => _DATALocation.HasValue;
+        private bool _TextureCountU_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TextureCountULocation + 1 >= 4;
         public UInt32 TextureCountU => _TextureCountU_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_TextureCountULocation, 4)) : default(UInt32);
         #endregion
         #region TextureCountV
         private int _TextureCountVLocation => _DATALocation!.Value.Min + 0x118;
-        private bool _TextureCountV_IsSet => _DATALocation.HasValue;
+        private bool _TextureCountV_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TextureCountVLocation + 1 >= 4;
         public UInt32 TextureCountV => _TextureCountV_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_TextureCountVLocation, 4)) : default(UInt32);
         #endregion
         #region AddonModelsFadeInTime
         private int _AddonModelsFadeInTimeLocation => _DATALocation!.Value.Min + 0x11C;
-        private bool _AddonModelsFadeInTime_IsSet => _DATALocation.HasValue;
+        private bool _AddonModelsFadeInTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AddonModelsFadeInTimeLocation + 1 >= 4;
         public Single AddonModelsFadeInTime => _AddonModelsFadeInTime_IsSet ? _recordData.Slice(_AddonModelsFadeInTimeLocation, 4).Float() : default(Single);
         #endregion
         #region AddonModelsFadeOutTime
         private int _AddonModelsFadeOutTimeLocation => _DATALocation!.Value.Min + 0x120;
-        private bool _AddonModelsFadeOutTime_IsSet => _DATALocation.HasValue;
+        private bool _AddonModelsFadeOutTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AddonModelsFadeOutTimeLocation + 1 >= 4;
         public Single AddonModelsFadeOutTime => _AddonModelsFadeOutTime_IsSet ? _recordData.Slice(_AddonModelsFadeOutTimeLocation, 4).Float() : default(Single);
         #endregion
         #region AddonModelsScaleStart
         private int _AddonModelsScaleStartLocation => _DATALocation!.Value.Min + 0x124;
-        private bool _AddonModelsScaleStart_IsSet => _DATALocation.HasValue;
+        private bool _AddonModelsScaleStart_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AddonModelsScaleStartLocation + 1 >= 4;
         public Single AddonModelsScaleStart => _AddonModelsScaleStart_IsSet ? _recordData.Slice(_AddonModelsScaleStartLocation, 4).Float() : default(Single);
         #endregion
         #region AddonModelsScaleEnd
         private int _AddonModelsScaleEndLocation => _DATALocation!.Value.Min + 0x128;
-        private bool _AddonModelsScaleEnd_IsSet => _DATALocation.HasValue;
+        private bool _AddonModelsScaleEnd_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AddonModelsScaleEndLocation + 1 >= 4;
         public Single AddonModelsScaleEnd => _AddonModelsScaleEnd_IsSet ? _recordData.Slice(_AddonModelsScaleEndLocation, 4).Float() : default(Single);
         #endregion
         #region AddonModelsScaleInTime
         private int _AddonModelsScaleInTimeLocation => _DATALocation!.Value.Min + 0x12C;
-        private bool _AddonModelsScaleInTime_IsSet => _DATALocation.HasValue;
+        private bool _AddonModelsScaleInTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AddonModelsScaleInTimeLocation + 1 >= 4;
         public Single AddonModelsScaleInTime => _AddonModelsScaleInTime_IsSet ? _recordData.Slice(_AddonModelsScaleInTimeLocation, 4).Float() : default(Single);
         #endregion
         #region AddonModelsScaleOutTime
         private int _AddonModelsScaleOutTimeLocation => _DATALocation!.Value.Min + 0x130;
-        private bool _AddonModelsScaleOutTime_IsSet => _DATALocation.HasValue;
+        private bool _AddonModelsScaleOutTime_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _AddonModelsScaleOutTimeLocation + 1 >= 4;
         public Single AddonModelsScaleOutTime => _AddonModelsScaleOutTime_IsSet ? _recordData.Slice(_AddonModelsScaleOutTimeLocation, 4).Float() : default(Single);
         #endregion
         #region AmbientSound
         private int _AmbientSoundLocation => _DATALocation!.Value.Min + 0x134;
-        private bool _AmbientSound_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break0);
+        private bool _AmbientSound_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break0) && _DATALocation!.Value.Max - _AmbientSoundLocation + 1 >= 4;
         public IFormLinkGetter<ISoundGetter> AmbientSound => _AmbientSound_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISoundGetter>(_package, _recordData.Span.Slice(_AmbientSoundLocation, 0x4), isSet: _AmbientSound_IsSet) : FormLink<ISoundGetter>.Null;
         #endregion
         #region FillColorKey2
         private int _FillColorKey2Location => _DATALocation!.Value.Min + 0x138;
-        private bool _FillColorKey2_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1);
+        private bool _FillColorKey2_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1) && _DATALocation!.Value.Max - _FillColorKey2Location + 1 >= 4;
         public Color FillColorKey2 => _FillColorKey2_IsSet ? _recordData.Slice(_FillColorKey2Location, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region FillColorKey3
         private int _FillColorKey3Location => _DATALocation!.Value.Min + 0x13C;
-        private bool _FillColorKey3_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1);
+        private bool _FillColorKey3_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1) && _DATALocation!.Value.Max - _FillColorKey3Location + 1 >= 4;
         public Color FillColorKey3 => _FillColorKey3_IsSet ? _recordData.Slice(_FillColorKey3Location, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region FillColorKey1Scale
         private int _FillColorKey1ScaleLocation => _DATALocation!.Value.Min + 0x140;
-        private bool _FillColorKey1Scale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1);
+        private bool _FillColorKey1Scale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1) && _DATALocation!.Value.Max - _FillColorKey1ScaleLocation + 1 >= 4;
         public Single FillColorKey1Scale => _FillColorKey1Scale_IsSet ? _recordData.Slice(_FillColorKey1ScaleLocation, 4).Float() : default(Single);
         #endregion
         #region FillColorKey2Scale
         private int _FillColorKey2ScaleLocation => _DATALocation!.Value.Min + 0x144;
-        private bool _FillColorKey2Scale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1);
+        private bool _FillColorKey2Scale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1) && _DATALocation!.Value.Max - _FillColorKey2ScaleLocation + 1 >= 4;
         public Single FillColorKey2Scale => _FillColorKey2Scale_IsSet ? _recordData.Slice(_FillColorKey2ScaleLocation, 4).Float() : default(Single);
         #endregion
         #region FillColorKey3Scale
         private int _FillColorKey3ScaleLocation => _DATALocation!.Value.Min + 0x148;
-        private bool _FillColorKey3Scale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1);
+        private bool _FillColorKey3Scale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1) && _DATALocation!.Value.Max - _FillColorKey3ScaleLocation + 1 >= 4;
         public Single FillColorKey3Scale => _FillColorKey3Scale_IsSet ? _recordData.Slice(_FillColorKey3ScaleLocation, 4).Float() : default(Single);
         #endregion
         #region FillColorKey1Time
         private int _FillColorKey1TimeLocation => _DATALocation!.Value.Min + 0x14C;
-        private bool _FillColorKey1Time_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1);
+        private bool _FillColorKey1Time_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1) && _DATALocation!.Value.Max - _FillColorKey1TimeLocation + 1 >= 4;
         public Single FillColorKey1Time => _FillColorKey1Time_IsSet ? _recordData.Slice(_FillColorKey1TimeLocation, 4).Float() : default(Single);
         #endregion
         #region FillColorKey2Time
         private int _FillColorKey2TimeLocation => _DATALocation!.Value.Min + 0x150;
-        private bool _FillColorKey2Time_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1);
+        private bool _FillColorKey2Time_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1) && _DATALocation!.Value.Max - _FillColorKey2TimeLocation + 1 >= 4;
         public Single FillColorKey2Time => _FillColorKey2Time_IsSet ? _recordData.Slice(_FillColorKey2TimeLocation, 4).Float() : default(Single);
         #endregion
         #region FillColorKey3Time
         private int _FillColorKey3TimeLocation => _DATALocation!.Value.Min + 0x154;
-        private bool _FillColorKey3Time_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1);
+        private bool _FillColorKey3Time_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break1) && _DATALocation!.Value.Max - _FillColorKey3TimeLocation + 1 >= 4;
         public Single FillColorKey3Time => _FillColorKey3Time_IsSet ? _recordData.Slice(_FillColorKey3TimeLocation, 4).Float() : default(Single);
         #endregion
         #region ColorScale
         private int _ColorScaleLocation => _DATALocation!.Value.Min + 0x158;
-        private bool _ColorScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _ColorScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _ColorScaleLocation + 1 >= 4;
         public Single ColorScale => _ColorScale_IsSet ? _recordData.Slice(_ColorScaleLocation, 4).Float() : default(Single);
         #endregion
         #region BirthPositionOffset
         private int _BirthPositionOffsetLocation => _DATALocation!.Value.Min + 0x15C;
-        private bool _BirthPositionOffset_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _BirthPositionOffset_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _BirthPositionOffsetLocation + 1 >= 4;
         public Single BirthPositionOffset => _BirthPositionOffset_IsSet ? _recordData.Slice(_BirthPositionOffsetLocation, 4).Float() : default(Single);
         #endregion
         #region BirthPositionOffsetRangePlusMinus
         private int _BirthPositionOffsetRangePlusMinusLocation => _DATALocation!.Value.Min + 0x160;
-        private bool _BirthPositionOffsetRangePlusMinus_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _BirthPositionOffsetRangePlusMinus_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _BirthPositionOffsetRangePlusMinusLocation + 1 >= 4;
         public Single BirthPositionOffsetRangePlusMinus => _BirthPositionOffsetRangePlusMinus_IsSet ? _recordData.Slice(_BirthPositionOffsetRangePlusMinusLocation, 4).Float() : default(Single);
         #endregion
         #region ParticleAnimatedStartFrame
         private int _ParticleAnimatedStartFrameLocation => _DATALocation!.Value.Min + 0x164;
-        private bool _ParticleAnimatedStartFrame_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _ParticleAnimatedStartFrame_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _ParticleAnimatedStartFrameLocation + 1 >= 4;
         public UInt32 ParticleAnimatedStartFrame => _ParticleAnimatedStartFrame_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ParticleAnimatedStartFrameLocation, 4)) : default(UInt32);
         #endregion
         #region ParticleAnimatedStartFrameVariation
         private int _ParticleAnimatedStartFrameVariationLocation => _DATALocation!.Value.Min + 0x168;
-        private bool _ParticleAnimatedStartFrameVariation_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _ParticleAnimatedStartFrameVariation_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _ParticleAnimatedStartFrameVariationLocation + 1 >= 4;
         public UInt32 ParticleAnimatedStartFrameVariation => _ParticleAnimatedStartFrameVariation_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ParticleAnimatedStartFrameVariationLocation, 4)) : default(UInt32);
         #endregion
         #region ParticleAnimatedEndFrame
         private int _ParticleAnimatedEndFrameLocation => _DATALocation!.Value.Min + 0x16C;
-        private bool _ParticleAnimatedEndFrame_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _ParticleAnimatedEndFrame_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _ParticleAnimatedEndFrameLocation + 1 >= 4;
         public UInt32 ParticleAnimatedEndFrame => _ParticleAnimatedEndFrame_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ParticleAnimatedEndFrameLocation, 4)) : default(UInt32);
         #endregion
         #region ParticleAnimatedLoopStartFrame
         private int _ParticleAnimatedLoopStartFrameLocation => _DATALocation!.Value.Min + 0x170;
-        private bool _ParticleAnimatedLoopStartFrame_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _ParticleAnimatedLoopStartFrame_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _ParticleAnimatedLoopStartFrameLocation + 1 >= 4;
         public UInt32 ParticleAnimatedLoopStartFrame => _ParticleAnimatedLoopStartFrame_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ParticleAnimatedLoopStartFrameLocation, 4)) : default(UInt32);
         #endregion
         #region ParticleAnimatedLoopStartVariation
         private int _ParticleAnimatedLoopStartVariationLocation => _DATALocation!.Value.Min + 0x174;
-        private bool _ParticleAnimatedLoopStartVariation_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _ParticleAnimatedLoopStartVariation_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _ParticleAnimatedLoopStartVariationLocation + 1 >= 4;
         public UInt32 ParticleAnimatedLoopStartVariation => _ParticleAnimatedLoopStartVariation_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ParticleAnimatedLoopStartVariationLocation, 4)) : default(UInt32);
         #endregion
         #region ParticleAnimatedFrameCount
         private int _ParticleAnimatedFrameCountLocation => _DATALocation!.Value.Min + 0x178;
-        private bool _ParticleAnimatedFrameCount_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _ParticleAnimatedFrameCount_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _ParticleAnimatedFrameCountLocation + 1 >= 4;
         public UInt32 ParticleAnimatedFrameCount => _ParticleAnimatedFrameCount_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ParticleAnimatedFrameCountLocation, 4)) : default(UInt32);
         #endregion
         #region ParticleAnimatedFrameCountVariation
         private int _ParticleAnimatedFrameCountVariationLocation => _DATALocation!.Value.Min + 0x17C;
-        private bool _ParticleAnimatedFrameCountVariation_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _ParticleAnimatedFrameCountVariation_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _ParticleAnimatedFrameCountVariationLocation + 1 >= 4;
         public UInt32 ParticleAnimatedFrameCountVariation => _ParticleAnimatedFrameCountVariation_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ParticleAnimatedFrameCountVariationLocation, 4)) : default(UInt32);
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x180;
-        private bool _Flags_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _Flags_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public EffectShader.Flag Flags => _Flags_IsSet ? (EffectShader.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region FillTextureScaleU
         private int _FillTextureScaleULocation => _DATALocation!.Value.Min + 0x184;
-        private bool _FillTextureScaleU_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _FillTextureScaleU_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _FillTextureScaleULocation + 1 >= 4;
         public Single FillTextureScaleU => _FillTextureScaleU_IsSet ? _recordData.Slice(_FillTextureScaleULocation, 4).Float() : default(Single);
         #endregion
         #region FillTextureScaleV
         private int _FillTextureScaleVLocation => _DATALocation!.Value.Min + 0x188;
-        private bool _FillTextureScaleV_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2);
+        private bool _FillTextureScaleV_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break2) && _DATALocation!.Value.Max - _FillTextureScaleVLocation + 1 >= 4;
         public Single FillTextureScaleV => _FillTextureScaleV_IsSet ? _recordData.Slice(_FillTextureScaleVLocation, 4).Float() : default(Single);
         #endregion
         #region SceneGraphEmitDepthLimit
         private int _SceneGraphEmitDepthLimitLocation => _DATALocation!.Value.Min + 0x18C;
-        private bool _SceneGraphEmitDepthLimit_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break3);
+        private bool _SceneGraphEmitDepthLimit_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(EffectShader.DATADataType.Break3) && _DATALocation!.Value.Max - _SceneGraphEmitDepthLimitLocation + 1 >= 4;
         public UInt32 SceneGraphEmitDepthLimit => _SceneGraphEmitDepthLimit_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_SceneGraphEmitDepthLimitLocation, 4)) : default(UInt32);
         #endregion
         partial void CustomFactoryEnd(

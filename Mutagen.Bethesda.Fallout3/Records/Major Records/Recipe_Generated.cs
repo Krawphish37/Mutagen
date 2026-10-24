@@ -2353,22 +2353,22 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region Skill
         private int _SkillLocation => _DATALocation!.Value.Min;
-        private bool _Skill_IsSet => _DATALocation.HasValue;
+        private bool _Skill_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SkillLocation + 1 >= 4;
         public ActorValue Skill => _Skill_IsSet ? (ActorValue)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SkillLocation, 0x4)) : default;
         #endregion
         #region Level
         private int _LevelLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Level_IsSet => _DATALocation.HasValue;
+        private bool _Level_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LevelLocation + 1 >= 4;
         public UInt32 Level => _Level_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_LevelLocation, 4)) : default(UInt32);
         #endregion
         #region Category
         private int _CategoryLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Category_IsSet => _DATALocation.HasValue;
+        private bool _Category_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CategoryLocation + 1 >= 4;
         public IFormLinkGetter<IRecipeCategoryGetter> Category => _Category_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IRecipeCategoryGetter>(_package, _recordData.Span.Slice(_CategoryLocation, 0x4), isSet: _Category_IsSet) : FormLink<IRecipeCategoryGetter>.Null;
         #endregion
         #region SubCategory
         private int _SubCategoryLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _SubCategory_IsSet => _DATALocation.HasValue;
+        private bool _SubCategory_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SubCategoryLocation + 1 >= 4;
         public IFormLinkGetter<IRecipeCategoryGetter> SubCategory => _SubCategory_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IRecipeCategoryGetter>(_package, _recordData.Span.Slice(_SubCategoryLocation, 0x4), isSet: _SubCategory_IsSet) : FormLink<IRecipeCategoryGetter>.Null;
         #endregion
         public IReadOnlyList<IRecipeIngredientGetter> Ingredients { get; private set; } = [];

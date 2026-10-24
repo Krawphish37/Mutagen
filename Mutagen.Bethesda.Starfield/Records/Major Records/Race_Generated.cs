@@ -7314,7 +7314,7 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DAT2Location;
         #region Height
         private int _HeightLocation => _DAT2Location!.Value.Min;
-        private bool _Height_IsSet => _DAT2Location.HasValue;
+        private bool _Height_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _HeightLocation + 1 >= 8;
         public IGenderedItemGetter<Single> Height
         {
             get
@@ -7329,7 +7329,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region DefaultWeight
         private int _DefaultWeightLocation => _DAT2Location!.Value.Min + 0x8;
-        private bool _DefaultWeight_IsSet => _DAT2Location.HasValue;
+        private bool _DefaultWeight_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _DefaultWeightLocation + 1 >= 24;
         public IGenderedItemGetter<IWeightGetter> DefaultWeight
         {
             get
@@ -7344,22 +7344,22 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region Flags
         private int _FlagsLocation => _DAT2Location!.Value.Min + 0x20;
-        private bool _Flags_IsSet => _DAT2Location.HasValue;
+        private bool _Flags_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _FlagsLocation + 1 >= 8;
         public Race.Flag Flags => _Flags_IsSet ? (Race.Flag)BinaryPrimitives.ReadInt64LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x8)) : default;
         #endregion
         #region AccelerationRate
         private int _AccelerationRateLocation => _DAT2Location!.Value.Min + 0x28;
-        private bool _AccelerationRate_IsSet => _DAT2Location.HasValue;
+        private bool _AccelerationRate_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _AccelerationRateLocation + 1 >= 4;
         public Single AccelerationRate => _AccelerationRate_IsSet ? _recordData.Slice(_AccelerationRateLocation, 4).Float() : default(Single);
         #endregion
         #region DecelerationRate
         private int _DecelerationRateLocation => _DAT2Location!.Value.Min + 0x2C;
-        private bool _DecelerationRate_IsSet => _DAT2Location.HasValue;
+        private bool _DecelerationRate_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _DecelerationRateLocation + 1 >= 4;
         public Single DecelerationRate => _DecelerationRate_IsSet ? _recordData.Slice(_DecelerationRateLocation, 4).Float() : default(Single);
         #endregion
         #region Size
         private int _SizeLocation => _DAT2Location!.Value.Min + 0x30;
-        private bool _Size_IsSet => _DAT2Location.HasValue;
+        private bool _Size_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _SizeLocation + 1 >= 4;
         public Size Size => _Size_IsSet ? (Size)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SizeLocation, 0x4)) : default;
         #endregion
         #region DAT2Unknown1
@@ -7369,17 +7369,17 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region ShieldBipedObject
         private int _ShieldBipedObjectLocation => _DAT2Location!.Value.Min + 0x40;
-        private bool _ShieldBipedObject_IsSet => _DAT2Location.HasValue;
+        private bool _ShieldBipedObject_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ShieldBipedObjectLocation + 1 >= 4;
         public BipedObject ShieldBipedObject => _ShieldBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ShieldBipedObjectLocation, 0x4)) : default;
         #endregion
         #region BeardBipedObject
         private int _BeardBipedObjectLocation => _DAT2Location!.Value.Min + 0x44;
-        private bool _BeardBipedObject_IsSet => _DAT2Location.HasValue;
+        private bool _BeardBipedObject_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _BeardBipedObjectLocation + 1 >= 4;
         public BipedObject BeardBipedObject => _BeardBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_BeardBipedObjectLocation, 0x4)) : default;
         #endregion
         #region BodyBipedObject
         private int _BodyBipedObjectLocation => _DAT2Location!.Value.Min + 0x48;
-        private bool _BodyBipedObject_IsSet => _DAT2Location.HasValue;
+        private bool _BodyBipedObject_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _BodyBipedObjectLocation + 1 >= 4;
         public BipedObject BodyBipedObject => _BodyBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_BodyBipedObjectLocation, 0x4)) : default;
         #endregion
         #region DAT2Unknown2
@@ -7389,27 +7389,27 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region Explosion
         private int _ExplosionLocation => _DAT2Location!.Value.Min + 0x8C;
-        private bool _Explosion_IsSet => _DAT2Location.HasValue;
+        private bool _Explosion_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> Explosion => _Explosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_ExplosionLocation, 0x4), isSet: _Explosion_IsSet) : FormLink<IExplosionGetter>.Null;
         #endregion
         #region Debris
         private int _DebrisLocation => _DAT2Location!.Value.Min + 0x90;
-        private bool _Debris_IsSet => _DAT2Location.HasValue;
+        private bool _Debris_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _DebrisLocation + 1 >= 4;
         public IFormLinkGetter<IDebrisGetter> Debris => _Debris_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IDebrisGetter>(_package, _recordData.Span.Slice(_DebrisLocation, 0x4), isSet: _Debris_IsSet) : FormLink<IDebrisGetter>.Null;
         #endregion
         #region ImpactDataSet
         private int _ImpactDataSetLocation => _DAT2Location!.Value.Min + 0x94;
-        private bool _ImpactDataSet_IsSet => _DAT2Location.HasValue;
+        private bool _ImpactDataSet_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ImpactDataSetLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> ImpactDataSet => _ImpactDataSet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_ImpactDataSetLocation, 0x4), isSet: _ImpactDataSet_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region OrientationLimitsPitch
         private int _OrientationLimitsPitchLocation => _DAT2Location!.Value.Min + 0x98;
-        private bool _OrientationLimitsPitch_IsSet => _DAT2Location.HasValue;
+        private bool _OrientationLimitsPitch_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _OrientationLimitsPitchLocation + 1 >= 4;
         public Single OrientationLimitsPitch => _OrientationLimitsPitch_IsSet ? _recordData.Slice(_OrientationLimitsPitchLocation, 4).Float() : default(Single);
         #endregion
         #region OrientationLimitsRoll
         private int _OrientationLimitsRollLocation => _DAT2Location!.Value.Min + 0x9C;
-        private bool _OrientationLimitsRoll_IsSet => _DAT2Location.HasValue;
+        private bool _OrientationLimitsRoll_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _OrientationLimitsRollLocation + 1 >= 4;
         public Single OrientationLimitsRoll => _OrientationLimitsRoll_IsSet ? _recordData.Slice(_OrientationLimitsRollLocation, 4).Float() : default(Single);
         #endregion
         #region DAT2Unknown3

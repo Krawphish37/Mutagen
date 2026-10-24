@@ -13099,12 +13099,12 @@ namespace Mutagen.Bethesda.Fallout3
         public ImageSpaceAdapter.DNAMDataType DNAMDataTypeState { get; private set; }
         #region Animatable
         private int _AnimatableLocation => _DNAMLocation!.Value.Min;
-        private bool _Animatable_IsSet => _DNAMLocation.HasValue;
+        private bool _Animatable_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AnimatableLocation + 1 >= 4;
         public Boolean Animatable => _Animatable_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_AnimatableLocation, 4)) >= 1 : default(Boolean);
         #endregion
         #region Duration
         private int _DurationLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _Duration_IsSet => _DNAMLocation.HasValue;
+        private bool _Duration_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DurationLocation + 1 >= 4;
         public Single Duration => _Duration_IsSet ? _recordData.Slice(_DurationLocation, 4).Float() : default(Single);
         #endregion
         #region Counts1
@@ -13123,12 +13123,12 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region RadialBlurUseTarget
         private int _RadialBlurUseTargetLocation => _DNAMLocation!.Value.Min + 0xC8;
-        private bool _RadialBlurUseTarget_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(ImageSpaceAdapter.DNAMDataType.Break0);
+        private bool _RadialBlurUseTarget_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(ImageSpaceAdapter.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _RadialBlurUseTargetLocation + 1 >= 4;
         public Boolean RadialBlurUseTarget => _RadialBlurUseTarget_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_RadialBlurUseTargetLocation, 4)) >= 1 : default(Boolean);
         #endregion
         #region RadialBlurCenter
         private int _RadialBlurCenterLocation => _DNAMLocation!.Value.Min + 0xCC;
-        private bool _RadialBlurCenter_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(ImageSpaceAdapter.DNAMDataType.Break0);
+        private bool _RadialBlurCenter_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(ImageSpaceAdapter.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _RadialBlurCenterLocation + 1 >= 8;
         public P2Float RadialBlurCenter => _RadialBlurCenter_IsSet ? P2FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_RadialBlurCenterLocation, 8)) : default(P2Float);
         #endregion
         #region Counts3
@@ -13140,17 +13140,17 @@ namespace Mutagen.Bethesda.Fallout3
         #endregion
         #region DepthOfFieldUseTarget
         private int _DepthOfFieldUseTargetLocation => _DNAMLocation!.Value.Min + 0xE0;
-        private bool _DepthOfFieldUseTarget_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(ImageSpaceAdapter.DNAMDataType.Break0);
+        private bool _DepthOfFieldUseTarget_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(ImageSpaceAdapter.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _DepthOfFieldUseTargetLocation + 1 >= 1;
         public Boolean DepthOfFieldUseTarget => _DepthOfFieldUseTarget_IsSet ? _recordData.Slice(_DepthOfFieldUseTargetLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region DepthOfFieldFlags
         private int _DepthOfFieldFlagsLocation => _DNAMLocation!.Value.Min + 0xE1;
-        private bool _DepthOfFieldFlags_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(ImageSpaceAdapter.DNAMDataType.Break0);
+        private bool _DepthOfFieldFlags_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(ImageSpaceAdapter.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _DepthOfFieldFlagsLocation + 1 >= 1;
         public ImageSpaceAdapter.DepthOfFieldFlag DepthOfFieldFlags => _DepthOfFieldFlags_IsSet ? (ImageSpaceAdapter.DepthOfFieldFlag)_recordData.Span.Slice(_DepthOfFieldFlagsLocation, 0x1)[0] : default;
         #endregion
         #region Unused
         private int _UnusedLocation => _DNAMLocation!.Value.Min + 0xE2;
-        private bool _Unused_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(ImageSpaceAdapter.DNAMDataType.Break0);
+        private bool _Unused_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(ImageSpaceAdapter.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _UnusedLocation + 1 >= 2;
         public UInt16 Unused => _Unused_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_UnusedLocation, 2)) : default(UInt16);
         #endregion
         #region Counts4

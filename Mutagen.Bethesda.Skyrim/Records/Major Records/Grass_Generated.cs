@@ -2417,62 +2417,62 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _DATALocation;
         #region Density
         private int _DensityLocation => _DATALocation!.Value.Min;
-        private bool _Density_IsSet => _DATALocation.HasValue;
+        private bool _Density_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DensityLocation + 1 >= 1;
         public Byte Density => _Density_IsSet ? _recordData.Span[_DensityLocation] : default;
         #endregion
         #region MinSlope
         private int _MinSlopeLocation => _DATALocation!.Value.Min + 0x1;
-        private bool _MinSlope_IsSet => _DATALocation.HasValue;
+        private bool _MinSlope_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MinSlopeLocation + 1 >= 1;
         public Byte MinSlope => _MinSlope_IsSet ? _recordData.Span[_MinSlopeLocation] : default;
         #endregion
         #region MaxSlope
         private int _MaxSlopeLocation => _DATALocation!.Value.Min + 0x2;
-        private bool _MaxSlope_IsSet => _DATALocation.HasValue;
+        private bool _MaxSlope_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MaxSlopeLocation + 1 >= 1;
         public Byte MaxSlope => _MaxSlope_IsSet ? _recordData.Span[_MaxSlopeLocation] : default;
         #endregion
         #region Unknown
         private int _UnknownLocation => _DATALocation!.Value.Min + 0x3;
-        private bool _Unknown_IsSet => _DATALocation.HasValue;
+        private bool _Unknown_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownLocation + 1 >= 1;
         public Byte Unknown => _Unknown_IsSet ? _recordData.Span[_UnknownLocation] : default;
         #endregion
         #region UnitsFromWater
         private int _UnitsFromWaterLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _UnitsFromWater_IsSet => _DATALocation.HasValue;
+        private bool _UnitsFromWater_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnitsFromWaterLocation + 1 >= 2;
         public UInt16 UnitsFromWater => _UnitsFromWater_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_UnitsFromWaterLocation, 2)) : default(UInt16);
         #endregion
         #region Unknown2
         private int _Unknown2Location => _DATALocation!.Value.Min + 0x6;
-        private bool _Unknown2_IsSet => _DATALocation.HasValue;
+        private bool _Unknown2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Unknown2Location + 1 >= 2;
         public UInt16 Unknown2 => _Unknown2_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_Unknown2Location, 2)) : default(UInt16);
         #endregion
         #region UnitsFromWaterType
         private int _UnitsFromWaterTypeLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _UnitsFromWaterType_IsSet => _DATALocation.HasValue;
+        private bool _UnitsFromWaterType_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnitsFromWaterTypeLocation + 1 >= 4;
         public Grass.UnitsFromWaterTypeEnum UnitsFromWaterType => _UnitsFromWaterType_IsSet ? (Grass.UnitsFromWaterTypeEnum)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_UnitsFromWaterTypeLocation, 0x4)) : default;
         #endregion
         #region PositionRange
         private int _PositionRangeLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _PositionRange_IsSet => _DATALocation.HasValue;
+        private bool _PositionRange_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PositionRangeLocation + 1 >= 4;
         public Single PositionRange => _PositionRange_IsSet ? _recordData.Slice(_PositionRangeLocation, 4).Float() : default(Single);
         #endregion
         #region HeightRange
         private int _HeightRangeLocation => _DATALocation!.Value.Min + 0x10;
-        private bool _HeightRange_IsSet => _DATALocation.HasValue;
+        private bool _HeightRange_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HeightRangeLocation + 1 >= 4;
         public Single HeightRange => _HeightRange_IsSet ? _recordData.Slice(_HeightRangeLocation, 4).Float() : default(Single);
         #endregion
         #region ColorRange
         private int _ColorRangeLocation => _DATALocation!.Value.Min + 0x14;
-        private bool _ColorRange_IsSet => _DATALocation.HasValue;
+        private bool _ColorRange_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ColorRangeLocation + 1 >= 4;
         public Single ColorRange => _ColorRange_IsSet ? _recordData.Slice(_ColorRangeLocation, 4).Float() : default(Single);
         #endregion
         #region WavePeriod
         private int _WavePeriodLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _WavePeriod_IsSet => _DATALocation.HasValue;
+        private bool _WavePeriod_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _WavePeriodLocation + 1 >= 4;
         public Single WavePeriod => _WavePeriod_IsSet ? _recordData.Slice(_WavePeriodLocation, 4).Float() : default(Single);
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public Grass.Flag Flags => _Flags_IsSet ? (Grass.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region Unknown3

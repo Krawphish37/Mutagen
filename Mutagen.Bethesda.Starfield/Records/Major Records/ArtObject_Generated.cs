@@ -2857,12 +2857,12 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DNAMLocation;
         #region Type
         private int _TypeLocation => _DNAMLocation!.Value.Min;
-        private bool _Type_IsSet => _DNAMLocation.HasValue;
+        private bool _Type_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _TypeLocation + 1 >= 4;
         public ArtObject.TypeEnum Type => _Type_IsSet ? (ArtObject.TypeEnum)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default;
         #endregion
         #region Flags
         private int _FlagsLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _DNAMLocation.HasValue;
+        private bool _Flags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public ArtObject.Flag Flags => _Flags_IsSet ? (ArtObject.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region EffectShader

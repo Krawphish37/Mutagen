@@ -4092,72 +4092,72 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region DecksPercentBeforeShuffle
         private int _DecksPercentBeforeShuffleLocation => _DATALocation!.Value.Min;
-        private bool _DecksPercentBeforeShuffle_IsSet => _DATALocation.HasValue;
+        private bool _DecksPercentBeforeShuffle_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DecksPercentBeforeShuffleLocation + 1 >= 4;
         public Single DecksPercentBeforeShuffle => _DecksPercentBeforeShuffle_IsSet ? _recordData.Slice(_DecksPercentBeforeShuffleLocation, 4).Float() : default(Single);
         #endregion
         #region BlackJackPayoutRatio
         private int _BlackJackPayoutRatioLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _BlackJackPayoutRatio_IsSet => _DATALocation.HasValue;
+        private bool _BlackJackPayoutRatio_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BlackJackPayoutRatioLocation + 1 >= 4;
         public Single BlackJackPayoutRatio => _BlackJackPayoutRatio_IsSet ? _recordData.Slice(_BlackJackPayoutRatioLocation, 4).Float() : default(Single);
         #endregion
         #region SlotReelSymbol1
         private int _SlotReelSymbol1Location => _DATALocation!.Value.Min + 0x8;
-        private bool _SlotReelSymbol1_IsSet => _DATALocation.HasValue;
+        private bool _SlotReelSymbol1_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SlotReelSymbol1Location + 1 >= 4;
         public UInt32 SlotReelSymbol1 => _SlotReelSymbol1_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_SlotReelSymbol1Location, 4)) : default(UInt32);
         #endregion
         #region SlotReelSymbol2
         private int _SlotReelSymbol2Location => _DATALocation!.Value.Min + 0xC;
-        private bool _SlotReelSymbol2_IsSet => _DATALocation.HasValue;
+        private bool _SlotReelSymbol2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SlotReelSymbol2Location + 1 >= 4;
         public UInt32 SlotReelSymbol2 => _SlotReelSymbol2_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_SlotReelSymbol2Location, 4)) : default(UInt32);
         #endregion
         #region SlotReelSymbol3
         private int _SlotReelSymbol3Location => _DATALocation!.Value.Min + 0x10;
-        private bool _SlotReelSymbol3_IsSet => _DATALocation.HasValue;
+        private bool _SlotReelSymbol3_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SlotReelSymbol3Location + 1 >= 4;
         public UInt32 SlotReelSymbol3 => _SlotReelSymbol3_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_SlotReelSymbol3Location, 4)) : default(UInt32);
         #endregion
         #region SlotReelSymbol4
         private int _SlotReelSymbol4Location => _DATALocation!.Value.Min + 0x14;
-        private bool _SlotReelSymbol4_IsSet => _DATALocation.HasValue;
+        private bool _SlotReelSymbol4_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SlotReelSymbol4Location + 1 >= 4;
         public UInt32 SlotReelSymbol4 => _SlotReelSymbol4_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_SlotReelSymbol4Location, 4)) : default(UInt32);
         #endregion
         #region SlotReelSymbol5
         private int _SlotReelSymbol5Location => _DATALocation!.Value.Min + 0x18;
-        private bool _SlotReelSymbol5_IsSet => _DATALocation.HasValue;
+        private bool _SlotReelSymbol5_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SlotReelSymbol5Location + 1 >= 4;
         public UInt32 SlotReelSymbol5 => _SlotReelSymbol5_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_SlotReelSymbol5Location, 4)) : default(UInt32);
         #endregion
         #region SlotReelSymbol6
         private int _SlotReelSymbol6Location => _DATALocation!.Value.Min + 0x1C;
-        private bool _SlotReelSymbol6_IsSet => _DATALocation.HasValue;
+        private bool _SlotReelSymbol6_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SlotReelSymbol6Location + 1 >= 4;
         public UInt32 SlotReelSymbol6 => _SlotReelSymbol6_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_SlotReelSymbol6Location, 4)) : default(UInt32);
         #endregion
         #region SlotReelSymbolW
         private int _SlotReelSymbolWLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _SlotReelSymbolW_IsSet => _DATALocation.HasValue;
+        private bool _SlotReelSymbolW_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SlotReelSymbolWLocation + 1 >= 4;
         public UInt32 SlotReelSymbolW => _SlotReelSymbolW_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_SlotReelSymbolWLocation, 4)) : default(UInt32);
         #endregion
         #region NumberOfDecks
         private int _NumberOfDecksLocation => _DATALocation!.Value.Min + 0x24;
-        private bool _NumberOfDecks_IsSet => _DATALocation.HasValue;
+        private bool _NumberOfDecks_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _NumberOfDecksLocation + 1 >= 4;
         public UInt32 NumberOfDecks => _NumberOfDecks_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_NumberOfDecksLocation, 4)) : default(UInt32);
         #endregion
         #region MaxWinnings
         private int _MaxWinningsLocation => _DATALocation!.Value.Min + 0x28;
-        private bool _MaxWinnings_IsSet => _DATALocation.HasValue;
+        private bool _MaxWinnings_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MaxWinningsLocation + 1 >= 4;
         public UInt32 MaxWinnings => _MaxWinnings_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_MaxWinningsLocation, 4)) : default(UInt32);
         #endregion
         #region Currency
         private int _CurrencyLocation => _DATALocation!.Value.Min + 0x2C;
-        private bool _Currency_IsSet => _DATALocation.HasValue;
+        private bool _Currency_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CurrencyLocation + 1 >= 4;
         public IFormLinkGetter<ICasinoChipGetter> Currency => _Currency_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ICasinoChipGetter>(_package, _recordData.Span.Slice(_CurrencyLocation, 0x4), isSet: _Currency_IsSet) : FormLink<ICasinoChipGetter>.Null;
         #endregion
         #region CasinoWinningsQuest
         private int _CasinoWinningsQuestLocation => _DATALocation!.Value.Min + 0x30;
-        private bool _CasinoWinningsQuest_IsSet => _DATALocation.HasValue;
+        private bool _CasinoWinningsQuest_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CasinoWinningsQuestLocation + 1 >= 4;
         public IFormLinkGetter<IQuestGetter> CasinoWinningsQuest => _CasinoWinningsQuest_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IQuestGetter>(_package, _recordData.Span.Slice(_CasinoWinningsQuestLocation, 0x4), isSet: _CasinoWinningsQuest_IsSet) : FormLink<IQuestGetter>.Null;
         #endregion
         #region DealerStayOnSoft17
         private int _DealerStayOnSoft17Location => _DATALocation!.Value.Min + 0x34;
-        private bool _DealerStayOnSoft17_IsSet => _DATALocation.HasValue;
+        private bool _DealerStayOnSoft17_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DealerStayOnSoft17Location + 1 >= 4;
         public Boolean DealerStayOnSoft17 => _DealerStayOnSoft17_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_DealerStayOnSoft17Location, 4)) >= 1 : default(Boolean);
         #endregion
         #region ChipModelOneDollar

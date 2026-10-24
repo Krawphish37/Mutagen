@@ -5762,12 +5762,12 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _ONAMLocation;
         #region WorldMapOffsetScale
         private int _WorldMapOffsetScaleLocation => _ONAMLocation!.Value.Min;
-        private bool _WorldMapOffsetScale_IsSet => _ONAMLocation.HasValue;
+        private bool _WorldMapOffsetScale_IsSet => _ONAMLocation.HasValue && _ONAMLocation!.Value.Max - _WorldMapOffsetScaleLocation + 1 >= 4;
         public Single WorldMapOffsetScale => _WorldMapOffsetScale_IsSet ? _recordData.Slice(_WorldMapOffsetScaleLocation, 4).Float() : default(Single);
         #endregion
         #region WorldMapCellOffset
         private int _WorldMapCellOffsetLocation => _ONAMLocation!.Value.Min + 0x4;
-        private bool _WorldMapCellOffset_IsSet => _ONAMLocation.HasValue;
+        private bool _WorldMapCellOffset_IsSet => _ONAMLocation.HasValue && _ONAMLocation!.Value.Max - _WorldMapCellOffsetLocation + 1 >= 12;
         public P3Float WorldMapCellOffset => _WorldMapCellOffset_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_WorldMapCellOffsetLocation, 12)) : default(P3Float);
         #endregion
         #region DistantLodMultiplier

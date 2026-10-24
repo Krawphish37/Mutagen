@@ -2971,122 +2971,122 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _BPNDLocation;
         #region DamageMult
         private int _DamageMultLocation => _BPNDLocation!.Value.Min;
-        private bool _DamageMult_IsSet => _BPNDLocation.HasValue;
+        private bool _DamageMult_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _DamageMultLocation + 1 >= 4;
         public Single DamageMult => _DamageMult_IsSet ? _recordData.Slice(_DamageMultLocation, 4).Float() : default(Single);
         #endregion
         #region Flags
         private int _FlagsLocation => _BPNDLocation!.Value.Min + 0x4;
-        private bool _Flags_IsSet => _BPNDLocation.HasValue;
+        private bool _Flags_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public BodyPart.Flag Flags => _Flags_IsSet ? (BodyPart.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region Type
         private int _TypeLocation => _BPNDLocation!.Value.Min + 0x5;
-        private bool _Type_IsSet => _BPNDLocation.HasValue;
+        private bool _Type_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _TypeLocation + 1 >= 1;
         public BodyPart.PartType Type => _Type_IsSet ? (BodyPart.PartType)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default;
         #endregion
         #region HealthPercent
         private int _HealthPercentLocation => _BPNDLocation!.Value.Min + 0x6;
-        private bool _HealthPercent_IsSet => _BPNDLocation.HasValue;
+        private bool _HealthPercent_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _HealthPercentLocation + 1 >= 1;
         public Percent HealthPercent => _HealthPercent_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_HealthPercentLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region ActorValue
         private int _ActorValueLocation => _BPNDLocation!.Value.Min + 0x7;
-        private bool _ActorValue_IsSet => _BPNDLocation.HasValue;
+        private bool _ActorValue_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _ActorValueLocation + 1 >= 1;
         public ActorValue ActorValue => _ActorValue_IsSet ? (ActorValue)_recordData.Span.Slice(_ActorValueLocation, 0x1)[0] : default;
         #endregion
         #region ToHitChance
         private int _ToHitChanceLocation => _BPNDLocation!.Value.Min + 0x8;
-        private bool _ToHitChance_IsSet => _BPNDLocation.HasValue;
+        private bool _ToHitChance_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _ToHitChanceLocation + 1 >= 1;
         public Percent ToHitChance => _ToHitChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_ToHitChanceLocation, 1), FloatIntegerType.ByteHundred) : default(Percent);
         #endregion
         #region ExplosionChance
         private int _ExplosionChanceLocation => _BPNDLocation!.Value.Min + 0x9;
-        private bool _ExplosionChance_IsSet => _BPNDLocation.HasValue;
+        private bool _ExplosionChance_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _ExplosionChanceLocation + 1 >= 1;
         public Percent ExplosionChance => _ExplosionChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_ExplosionChanceLocation, 1), FloatIntegerType.ByteHundred) : default(Percent);
         #endregion
         #region DebrisCount
         private int _DebrisCountLocation => _BPNDLocation!.Value.Min + 0xA;
-        private bool _DebrisCount_IsSet => _BPNDLocation.HasValue;
+        private bool _DebrisCount_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _DebrisCountLocation + 1 >= 2;
         public UInt16 DebrisCount => _DebrisCount_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_DebrisCountLocation, 2)) : default(UInt16);
         #endregion
         #region Debris
         private int _DebrisLocation => _BPNDLocation!.Value.Min + 0xC;
-        private bool _Debris_IsSet => _BPNDLocation.HasValue;
+        private bool _Debris_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _DebrisLocation + 1 >= 4;
         public IFormLinkGetter<IDebrisGetter> Debris => _Debris_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IDebrisGetter>(_package, _recordData.Span.Slice(_DebrisLocation, 0x4), isSet: _Debris_IsSet) : FormLink<IDebrisGetter>.Null;
         #endregion
         #region Explosion
         private int _ExplosionLocation => _BPNDLocation!.Value.Min + 0x10;
-        private bool _Explosion_IsSet => _BPNDLocation.HasValue;
+        private bool _Explosion_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _ExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> Explosion => _Explosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_ExplosionLocation, 0x4), isSet: _Explosion_IsSet) : FormLink<IExplosionGetter>.Null;
         #endregion
         #region TrackingMaxAngle
         private int _TrackingMaxAngleLocation => _BPNDLocation!.Value.Min + 0x14;
-        private bool _TrackingMaxAngle_IsSet => _BPNDLocation.HasValue;
+        private bool _TrackingMaxAngle_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _TrackingMaxAngleLocation + 1 >= 4;
         public Single TrackingMaxAngle => _TrackingMaxAngle_IsSet ? _recordData.Slice(_TrackingMaxAngleLocation, 4).Float() : default(Single);
         #endregion
         #region DebrisScale
         private int _DebrisScaleLocation => _BPNDLocation!.Value.Min + 0x18;
-        private bool _DebrisScale_IsSet => _BPNDLocation.HasValue;
+        private bool _DebrisScale_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _DebrisScaleLocation + 1 >= 4;
         public Single DebrisScale => _DebrisScale_IsSet ? _recordData.Slice(_DebrisScaleLocation, 4).Float() : default(Single);
         #endregion
         #region SeverableDebrisCount
         private int _SeverableDebrisCountLocation => _BPNDLocation!.Value.Min + 0x1C;
-        private bool _SeverableDebrisCount_IsSet => _BPNDLocation.HasValue;
+        private bool _SeverableDebrisCount_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _SeverableDebrisCountLocation + 1 >= 4;
         public Int32 SeverableDebrisCount => _SeverableDebrisCount_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_SeverableDebrisCountLocation, 4)) : default(Int32);
         #endregion
         #region SeverableDebris
         private int _SeverableDebrisLocation => _BPNDLocation!.Value.Min + 0x20;
-        private bool _SeverableDebris_IsSet => _BPNDLocation.HasValue;
+        private bool _SeverableDebris_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _SeverableDebrisLocation + 1 >= 4;
         public IFormLinkGetter<IDebrisGetter> SeverableDebris => _SeverableDebris_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IDebrisGetter>(_package, _recordData.Span.Slice(_SeverableDebrisLocation, 0x4), isSet: _SeverableDebris_IsSet) : FormLink<IDebrisGetter>.Null;
         #endregion
         #region SeverableExplosion
         private int _SeverableExplosionLocation => _BPNDLocation!.Value.Min + 0x24;
-        private bool _SeverableExplosion_IsSet => _BPNDLocation.HasValue;
+        private bool _SeverableExplosion_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _SeverableExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> SeverableExplosion => _SeverableExplosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_SeverableExplosionLocation, 0x4), isSet: _SeverableExplosion_IsSet) : FormLink<IExplosionGetter>.Null;
         #endregion
         #region SeverableDebrisScale
         private int _SeverableDebrisScaleLocation => _BPNDLocation!.Value.Min + 0x28;
-        private bool _SeverableDebrisScale_IsSet => _BPNDLocation.HasValue;
+        private bool _SeverableDebrisScale_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _SeverableDebrisScaleLocation + 1 >= 4;
         public Single SeverableDebrisScale => _SeverableDebrisScale_IsSet ? _recordData.Slice(_SeverableDebrisScaleLocation, 4).Float() : default(Single);
         #endregion
         #region GorePositioning
         private int _GorePositioningLocation => _BPNDLocation!.Value.Min + 0x2C;
-        private bool _GorePositioning_IsSet => _BPNDLocation.HasValue;
+        private bool _GorePositioning_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _GorePositioningLocation + 1 >= 12;
         public P3Float GorePositioning => _GorePositioning_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_GorePositioningLocation, 12)) : default(P3Float);
         #endregion
         #region GoreRotation
         private int _GoreRotationLocation => _BPNDLocation!.Value.Min + 0x38;
-        private bool _GoreRotation_IsSet => _BPNDLocation.HasValue;
+        private bool _GoreRotation_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _GoreRotationLocation + 1 >= 12;
         public P3Float GoreRotation => _GoreRotation_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_GoreRotationLocation, 12)) : default(P3Float);
         #endregion
         #region SeverableImpactData
         private int _SeverableImpactDataLocation => _BPNDLocation!.Value.Min + 0x44;
-        private bool _SeverableImpactData_IsSet => _BPNDLocation.HasValue;
+        private bool _SeverableImpactData_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _SeverableImpactDataLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> SeverableImpactData => _SeverableImpactData_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_SeverableImpactDataLocation, 0x4), isSet: _SeverableImpactData_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region ExplodableImpactData
         private int _ExplodableImpactDataLocation => _BPNDLocation!.Value.Min + 0x48;
-        private bool _ExplodableImpactData_IsSet => _BPNDLocation.HasValue;
+        private bool _ExplodableImpactData_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _ExplodableImpactDataLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> ExplodableImpactData => _ExplodableImpactData_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_ExplodableImpactDataLocation, 0x4), isSet: _ExplodableImpactData_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region SeverableDecalCount
         private int _SeverableDecalCountLocation => _BPNDLocation!.Value.Min + 0x4C;
-        private bool _SeverableDecalCount_IsSet => _BPNDLocation.HasValue;
+        private bool _SeverableDecalCount_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _SeverableDecalCountLocation + 1 >= 1;
         public Byte SeverableDecalCount => _SeverableDecalCount_IsSet ? _recordData.Span[_SeverableDecalCountLocation] : default;
         #endregion
         #region ExplodableDecalCount
         private int _ExplodableDecalCountLocation => _BPNDLocation!.Value.Min + 0x4D;
-        private bool _ExplodableDecalCount_IsSet => _BPNDLocation.HasValue;
+        private bool _ExplodableDecalCount_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _ExplodableDecalCountLocation + 1 >= 1;
         public Byte ExplodableDecalCount => _ExplodableDecalCount_IsSet ? _recordData.Span[_ExplodableDecalCountLocation] : default;
         #endregion
         #region Unused
         private int _UnusedLocation => _BPNDLocation!.Value.Min + 0x4E;
-        private bool _Unused_IsSet => _BPNDLocation.HasValue;
+        private bool _Unused_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _UnusedLocation + 1 >= 2;
         public UInt16 Unused => _Unused_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_UnusedLocation, 2)) : default(UInt16);
         #endregion
         #region LimbReplacementScale
         private int _LimbReplacementScaleLocation => _BPNDLocation!.Value.Min + 0x50;
-        private bool _LimbReplacementScale_IsSet => _BPNDLocation.HasValue;
+        private bool _LimbReplacementScale_IsSet => _BPNDLocation.HasValue && _BPNDLocation!.Value.Max - _LimbReplacementScaleLocation + 1 >= 4;
         public Single LimbReplacementScale => _LimbReplacementScale_IsSet ? _recordData.Slice(_LimbReplacementScaleLocation, 4).Float() : default(Single);
         #endregion
         #region LimbReplacementModel

@@ -1287,12 +1287,12 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _ALCALocation;
         #region AliasID
         private int _AliasIDLocation => _ALCALocation!.Value.Min;
-        private bool _AliasID_IsSet => _ALCALocation.HasValue;
+        private bool _AliasID_IsSet => _ALCALocation.HasValue && _ALCALocation!.Value.Max - _AliasIDLocation + 1 >= 2;
         public Int16 AliasID => _AliasID_IsSet ? BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_AliasIDLocation, 2)) : default(Int16);
         #endregion
         #region Create
         private int _CreateLocation => _ALCALocation!.Value.Min + 0x2;
-        private bool _Create_IsSet => _ALCALocation.HasValue;
+        private bool _Create_IsSet => _ALCALocation.HasValue && _ALCALocation!.Value.Max - _CreateLocation + 1 >= 2;
         public CreateReferenceToObject.CreateEnum Create => _Create_IsSet ? (CreateReferenceToObject.CreateEnum)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_CreateLocation, 0x2)) : default;
         #endregion
         #region Level

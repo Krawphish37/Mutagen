@@ -1896,22 +1896,22 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _SPITLocation;
         #region Type
         private int _TypeLocation => _SPITLocation!.Value.Min;
-        private bool _Type_IsSet => _SPITLocation.HasValue;
+        private bool _Type_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _TypeLocation + 1 >= 4;
         public Spell.SpellType Type => _Type_IsSet ? (Spell.SpellType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default;
         #endregion
         #region Unused1
         private int _Unused1Location => _SPITLocation!.Value.Min + 0x4;
-        private bool _Unused1_IsSet => _SPITLocation.HasValue;
+        private bool _Unused1_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _Unused1Location + 1 >= 4;
         public UInt32 Unused1 => _Unused1_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_Unused1Location, 4)) : default(UInt32);
         #endregion
         #region Unused2
         private int _Unused2Location => _SPITLocation!.Value.Min + 0x8;
-        private bool _Unused2_IsSet => _SPITLocation.HasValue;
+        private bool _Unused2_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _Unused2Location + 1 >= 4;
         public UInt32 Unused2 => _Unused2_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_Unused2Location, 4)) : default(UInt32);
         #endregion
         #region Flags
         private int _FlagsLocation => _SPITLocation!.Value.Min + 0xC;
-        private bool _Flags_IsSet => _SPITLocation.HasValue;
+        private bool _Flags_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Spell.SpellFlag Flags => _Flags_IsSet ? (Spell.SpellFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         public IReadOnlyList<IEffectGetter> Effects { get; private set; } = [];

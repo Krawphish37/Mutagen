@@ -1312,7 +1312,7 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DATALocation;
         #region Percentage
         private int _PercentageLocation => _DATALocation!.Value.Min;
-        private bool _Percentage_IsSet => _DATALocation.HasValue;
+        private bool _Percentage_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PercentageLocation + 1 >= 1;
         public Byte Percentage => _Percentage_IsSet ? _recordData.Span[_PercentageLocation] : default;
         #endregion
         #region ModelFilename
@@ -1321,7 +1321,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region HasCollision
         private int _HasCollisionLocation => ModelFilenameEndingPos;
-        private bool _HasCollision_IsSet => _DATALocation.HasValue;
+        private bool _HasCollision_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HasCollisionLocation + 1 >= 1;
         public Boolean HasCollision => _HasCollision_IsSet ? _recordData.Slice(_HasCollisionLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region TextureFileHashes

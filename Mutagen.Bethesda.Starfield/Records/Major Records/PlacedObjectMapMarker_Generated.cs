@@ -1526,12 +1526,12 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _TNAMLocation;
         #region Type
         private int _TypeLocation => _TNAMLocation!.Value.Min;
-        private bool _Type_IsSet => _TNAMLocation.HasValue;
+        private bool _Type_IsSet => _TNAMLocation.HasValue && _TNAMLocation!.Value.Max - _TypeLocation + 1 >= 1;
         public SByte Type => _Type_IsSet ? (sbyte)_recordData.Slice(_TypeLocation, 1)[0] : default(SByte);
         #endregion
         #region Unknown
         private int _UnknownLocation => _TNAMLocation!.Value.Min + 0x1;
-        private bool _Unknown_IsSet => _TNAMLocation.HasValue;
+        private bool _Unknown_IsSet => _TNAMLocation.HasValue && _TNAMLocation!.Value.Max - _UnknownLocation + 1 >= 1;
         public Byte Unknown => _Unknown_IsSet ? _recordData.Span[_UnknownLocation] : default;
         #endregion
         #region VNAM

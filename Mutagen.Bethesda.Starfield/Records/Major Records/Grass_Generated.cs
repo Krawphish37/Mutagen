@@ -2956,72 +2956,72 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DNAMLocation;
         #region Contrast
         private int _ContrastLocation => _DNAMLocation!.Value.Min;
-        private bool _Contrast_IsSet => _DNAMLocation.HasValue;
+        private bool _Contrast_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ContrastLocation + 1 >= 4;
         public Single Contrast => _Contrast_IsSet ? _recordData.Slice(_ContrastLocation, 4).Float() : default(Single);
         #endregion
         #region ClusterScale
         private int _ClusterScaleLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _ClusterScale_IsSet => _DNAMLocation.HasValue;
+        private bool _ClusterScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ClusterScaleLocation + 1 >= 4;
         public Single ClusterScale => _ClusterScale_IsSet ? _recordData.Slice(_ClusterScaleLocation, 4).Float() : default(Single);
         #endregion
         #region HeightRange
         private int _HeightRangeLocation => _DNAMLocation!.Value.Min + 0x8;
-        private bool _HeightRange_IsSet => _DNAMLocation.HasValue;
+        private bool _HeightRange_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _HeightRangeLocation + 1 >= 4;
         public Percent HeightRange => _HeightRange_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_HeightRangeLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region ColorRange
         private int _ColorRangeLocation => _DNAMLocation!.Value.Min + 0xC;
-        private bool _ColorRange_IsSet => _DNAMLocation.HasValue;
+        private bool _ColorRange_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ColorRangeLocation + 1 >= 4;
         public Percent ColorRange => _ColorRange_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_ColorRangeLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region WindFrequency
         private int _WindFrequencyLocation => _DNAMLocation!.Value.Min + 0x10;
-        private bool _WindFrequency_IsSet => _DNAMLocation.HasValue;
+        private bool _WindFrequency_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _WindFrequencyLocation + 1 >= 4;
         public Single WindFrequency => _WindFrequency_IsSet ? _recordData.Slice(_WindFrequencyLocation, 4).Float() : default(Single);
         #endregion
         #region AboveWaterClamp
         private int _AboveWaterClampLocation => _DNAMLocation!.Value.Min + 0x14;
-        private bool _AboveWaterClamp_IsSet => _DNAMLocation.HasValue;
+        private bool _AboveWaterClamp_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AboveWaterClampLocation + 1 >= 4;
         public Single AboveWaterClamp => _AboveWaterClamp_IsSet ? _recordData.Slice(_AboveWaterClampLocation, 4).Float() : default(Single);
         #endregion
         #region BelowWaterClamp
         private int _BelowWaterClampLocation => _DNAMLocation!.Value.Min + 0x18;
-        private bool _BelowWaterClamp_IsSet => _DNAMLocation.HasValue;
+        private bool _BelowWaterClamp_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _BelowWaterClampLocation + 1 >= 4;
         public Single BelowWaterClamp => _BelowWaterClamp_IsSet ? _recordData.Slice(_BelowWaterClampLocation, 4).Float() : default(Single);
         #endregion
         #region MaxDensity
         private int _MaxDensityLocation => _DNAMLocation!.Value.Min + 0x1C;
-        private bool _MaxDensity_IsSet => _DNAMLocation.HasValue;
+        private bool _MaxDensity_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MaxDensityLocation + 1 >= 1;
         public Byte MaxDensity => _MaxDensity_IsSet ? _recordData.Span[_MaxDensityLocation] : default;
         #endregion
         #region MinSlope
         private int _MinSlopeLocation => _DNAMLocation!.Value.Min + 0x1D;
-        private bool _MinSlope_IsSet => _DNAMLocation.HasValue;
+        private bool _MinSlope_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MinSlopeLocation + 1 >= 1;
         public Byte MinSlope => _MinSlope_IsSet ? _recordData.Span[_MinSlopeLocation] : default;
         #endregion
         #region MaxSlope
         private int _MaxSlopeLocation => _DNAMLocation!.Value.Min + 0x1E;
-        private bool _MaxSlope_IsSet => _DNAMLocation.HasValue;
+        private bool _MaxSlope_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MaxSlopeLocation + 1 >= 1;
         public Byte MaxSlope => _MaxSlope_IsSet ? _recordData.Span[_MaxSlopeLocation] : default;
         #endregion
         #region Flags
         private int _FlagsLocation => _DNAMLocation!.Value.Min + 0x1F;
-        private bool _Flags_IsSet => _DNAMLocation.HasValue;
+        private bool _Flags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public Grass.Flag Flags => _Flags_IsSet ? (Grass.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region Coverage
         private int _CoverageLocation => _DNAMLocation!.Value.Min + 0x20;
-        private bool _Coverage_IsSet => _DNAMLocation.HasValue;
+        private bool _Coverage_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _CoverageLocation + 1 >= 4;
         public Single Coverage => _Coverage_IsSet ? _recordData.Slice(_CoverageLocation, 4).Float() : default(Single);
         #endregion
         #region DirtinessMin
         private int _DirtinessMinLocation => _DNAMLocation!.Value.Min + 0x24;
-        private bool _DirtinessMin_IsSet => _DNAMLocation.HasValue;
+        private bool _DirtinessMin_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DirtinessMinLocation + 1 >= 1;
         public Percent DirtinessMin => _DirtinessMin_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_DirtinessMinLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         #region DirtinessMax
         private int _DirtinessMaxLocation => _DNAMLocation!.Value.Min + 0x25;
-        private bool _DirtinessMax_IsSet => _DNAMLocation.HasValue;
+        private bool _DirtinessMax_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DirtinessMaxLocation + 1 >= 1;
         public Percent DirtinessMax => _DirtinessMax_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_DirtinessMaxLocation, 1), FloatIntegerType.Byte) : default(Percent);
         #endregion
         partial void CustomFactoryEnd(

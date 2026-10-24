@@ -1248,12 +1248,12 @@ namespace Mutagen.Bethesda.Fallout4
         private RangeInt32? _WLEVLocation;
         #region NorthwestCellCoords
         private int _NorthwestCellCoordsLocation => _WLEVLocation!.Value.Min;
-        private bool _NorthwestCellCoords_IsSet => _WLEVLocation.HasValue;
+        private bool _NorthwestCellCoords_IsSet => _WLEVLocation.HasValue && _WLEVLocation!.Value.Max - _NorthwestCellCoordsLocation + 1 >= 2;
         public P2UInt8 NorthwestCellCoords => _NorthwestCellCoords_IsSet ? P2UInt8BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_NorthwestCellCoordsLocation, 2)) : default(P2UInt8);
         #endregion
         #region NorthwestCellSize
         private int _NorthwestCellSizeLocation => _WLEVLocation!.Value.Min + 0x2;
-        private bool _NorthwestCellSize_IsSet => _WLEVLocation.HasValue;
+        private bool _NorthwestCellSize_IsSet => _WLEVLocation.HasValue && _WLEVLocation!.Value.Max - _NorthwestCellSizeLocation + 1 >= 2;
         public P2UInt8 NorthwestCellSize => _NorthwestCellSize_IsSet ? P2UInt8BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_NorthwestCellSizeLocation, 2)) : default(P2UInt8);
         #endregion
         #region Data

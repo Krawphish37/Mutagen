@@ -1221,17 +1221,17 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _SHWBLocation;
         #region Slot1
         private int _Slot1Location => _SHWBLocation!.Value.Min;
-        private bool _Slot1_IsSet => _SHWBLocation.HasValue;
+        private bool _Slot1_IsSet => _SHWBLocation.HasValue && _SHWBLocation!.Value.Max - _Slot1Location + 1 >= 4;
         public Int32 Slot1 => _Slot1_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_Slot1Location, 4)) : default(Int32);
         #endregion
         #region Slot2
         private int _Slot2Location => _SHWBLocation!.Value.Min + 0x4;
-        private bool _Slot2_IsSet => _SHWBLocation.HasValue;
+        private bool _Slot2_IsSet => _SHWBLocation.HasValue && _SHWBLocation!.Value.Max - _Slot2Location + 1 >= 4;
         public Int32 Slot2 => _Slot2_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_Slot2Location, 4)) : default(Int32);
         #endregion
         #region Slot3
         private int _Slot3Location => _SHWBLocation!.Value.Min + 0x8;
-        private bool _Slot3_IsSet => _SHWBLocation.HasValue;
+        private bool _Slot3_IsSet => _SHWBLocation.HasValue && _SHWBLocation!.Value.Max - _Slot3Location + 1 >= 4;
         public Int32 Slot3 => _Slot3_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_Slot3Location, 4)) : default(Int32);
         #endregion
         partial void CustomFactoryEnd(

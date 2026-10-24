@@ -5470,17 +5470,17 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _ONAMLocation;
         #region WorldMapScale
         private int _WorldMapScaleLocation => _ONAMLocation!.Value.Min;
-        private bool _WorldMapScale_IsSet => _ONAMLocation.HasValue;
+        private bool _WorldMapScale_IsSet => _ONAMLocation.HasValue && _ONAMLocation!.Value.Max - _WorldMapScaleLocation + 1 >= 4;
         public Single WorldMapScale => _WorldMapScale_IsSet ? _recordData.Slice(_WorldMapScaleLocation, 4).Float() : default(Single);
         #endregion
         #region CellXOffset
         private int _CellXOffsetLocation => _ONAMLocation!.Value.Min + 0x4;
-        private bool _CellXOffset_IsSet => _ONAMLocation.HasValue;
+        private bool _CellXOffset_IsSet => _ONAMLocation.HasValue && _ONAMLocation!.Value.Max - _CellXOffsetLocation + 1 >= 4;
         public Single CellXOffset => _CellXOffset_IsSet ? _recordData.Slice(_CellXOffsetLocation, 4).Float() : default(Single);
         #endregion
         #region CellYOffset
         private int _CellYOffsetLocation => _ONAMLocation!.Value.Min + 0x8;
-        private bool _CellYOffset_IsSet => _ONAMLocation.HasValue;
+        private bool _CellYOffset_IsSet => _ONAMLocation.HasValue && _ONAMLocation!.Value.Max - _CellYOffsetLocation + 1 >= 4;
         public Single CellYOffset => _CellYOffset_IsSet ? _recordData.Slice(_CellYOffsetLocation, 4).Float() : default(Single);
         #endregion
         #region ImageSpace

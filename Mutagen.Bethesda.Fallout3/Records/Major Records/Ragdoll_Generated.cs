@@ -2447,42 +2447,42 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region DynamicBoneCount
         private int _DynamicBoneCountLocation => _DATALocation!.Value.Min;
-        private bool _DynamicBoneCount_IsSet => _DATALocation.HasValue;
+        private bool _DynamicBoneCount_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DynamicBoneCountLocation + 1 >= 4;
         public UInt32 DynamicBoneCount => _DynamicBoneCount_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_DynamicBoneCountLocation, 4)) : default(UInt32);
         #endregion
         #region Unused
         private int _UnusedLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Unused_IsSet => _DATALocation.HasValue;
+        private bool _Unused_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnusedLocation + 1 >= 4;
         public UInt32 Unused => _Unused_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_UnusedLocation, 4)) : default(UInt32);
         #endregion
         #region FeedbackEnabled
         private int _FeedbackEnabledLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _FeedbackEnabled_IsSet => _DATALocation.HasValue;
+        private bool _FeedbackEnabled_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FeedbackEnabledLocation + 1 >= 1;
         public Boolean FeedbackEnabled => _FeedbackEnabled_IsSet ? _recordData.Slice(_FeedbackEnabledLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region FootIkEnabled
         private int _FootIkEnabledLocation => _DATALocation!.Value.Min + 0x9;
-        private bool _FootIkEnabled_IsSet => _DATALocation.HasValue;
+        private bool _FootIkEnabled_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FootIkEnabledLocation + 1 >= 1;
         public Boolean FootIkEnabled => _FootIkEnabled_IsSet ? _recordData.Slice(_FootIkEnabledLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region LookIkEnabled
         private int _LookIkEnabledLocation => _DATALocation!.Value.Min + 0xA;
-        private bool _LookIkEnabled_IsSet => _DATALocation.HasValue;
+        private bool _LookIkEnabled_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _LookIkEnabledLocation + 1 >= 1;
         public Boolean LookIkEnabled => _LookIkEnabled_IsSet ? _recordData.Slice(_LookIkEnabledLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region GrabIkEnabled
         private int _GrabIkEnabledLocation => _DATALocation!.Value.Min + 0xB;
-        private bool _GrabIkEnabled_IsSet => _DATALocation.HasValue;
+        private bool _GrabIkEnabled_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _GrabIkEnabledLocation + 1 >= 1;
         public Boolean GrabIkEnabled => _GrabIkEnabled_IsSet ? _recordData.Slice(_GrabIkEnabledLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region PoseMatchingEnabled
         private int _PoseMatchingEnabledLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _PoseMatchingEnabled_IsSet => _DATALocation.HasValue;
+        private bool _PoseMatchingEnabled_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PoseMatchingEnabledLocation + 1 >= 1;
         public Boolean PoseMatchingEnabled => _PoseMatchingEnabled_IsSet ? _recordData.Slice(_PoseMatchingEnabledLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region Unused2
         private int _Unused2Location => _DATALocation!.Value.Min + 0xD;
-        private bool _Unused2_IsSet => _DATALocation.HasValue;
+        private bool _Unused2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Unused2Location + 1 >= 1;
         public Byte Unused2 => _Unused2_IsSet ? _recordData.Span[_Unused2Location] : default;
         #endregion
         #region ActorBase

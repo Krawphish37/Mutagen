@@ -3453,73 +3453,73 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DNAMLocation;
         #region Sound
         private int _SoundLocation => _DNAMLocation!.Value.Min;
-        private bool _Sound_IsSet => _DNAMLocation.HasValue;
+        private bool _Sound_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SoundLocation + 1 >= 1;
         private ISoundReferenceGetter? _Sound => _Sound_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_SoundLocation), _package) : default;
         public ISoundReferenceGetter Sound => _Sound ?? new SoundReference();
         #endregion
         #region Effect
         private int _EffectLocation => _DNAMLocation!.Value.Min + 0x28;
-        private bool _Effect_IsSet => _DNAMLocation.HasValue;
+        private bool _Effect_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _EffectLocation + 1 >= 4;
         public IFormLinkGetter<IEffectRecordGetter> Effect => _Effect_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IEffectRecordGetter>(_package, _recordData.Span.Slice(_EffectLocation, 0x4), isSet: _Effect_IsSet) : FormLink<IEffectRecordGetter>.Null;
         #endregion
         #region Light
         private int _LightLocation => _DNAMLocation!.Value.Min + 0x2C;
-        private bool _Light_IsSet => _DNAMLocation.HasValue;
+        private bool _Light_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _LightLocation + 1 >= 4;
         public IFormLinkGetter<ILightGetter> Light => _Light_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILightGetter>(_package, _recordData.Span.Slice(_LightLocation, 0x4), isSet: _Light_IsSet) : FormLink<ILightGetter>.Null;
         #endregion
         #region ImpactDataSet
         private int _ImpactDataSetLocation => _DNAMLocation!.Value.Min + 0x30;
-        private bool _ImpactDataSet_IsSet => _DNAMLocation.HasValue;
+        private bool _ImpactDataSet_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ImpactDataSetLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> ImpactDataSet => _ImpactDataSet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_ImpactDataSetLocation, 0x4), isSet: _ImpactDataSet_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region Radius
         private int _RadiusLocation => _DNAMLocation!.Value.Min + 0x34;
-        private bool _Radius_IsSet => _DNAMLocation.HasValue;
+        private bool _Radius_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _RadiusLocation + 1 >= 4;
         public Single Radius => _Radius_IsSet ? _recordData.Slice(_RadiusLocation, 4).Float() : default(Single);
         #endregion
         #region Lifetime
         private int _LifetimeLocation => _DNAMLocation!.Value.Min + 0x38;
-        private bool _Lifetime_IsSet => _DNAMLocation.HasValue;
+        private bool _Lifetime_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _LifetimeLocation + 1 >= 4;
         public Single Lifetime => _Lifetime_IsSet ? _recordData.Slice(_LifetimeLocation, 4).Float() : default(Single);
         #endregion
         #region ImageSpaceRadius
         private int _ImageSpaceRadiusLocation => _DNAMLocation!.Value.Min + 0x3C;
-        private bool _ImageSpaceRadius_IsSet => _DNAMLocation.HasValue;
+        private bool _ImageSpaceRadius_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ImageSpaceRadiusLocation + 1 >= 4;
         public Single ImageSpaceRadius => _ImageSpaceRadius_IsSet ? _recordData.Slice(_ImageSpaceRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region TargetInterval
         private int _TargetIntervalLocation => _DNAMLocation!.Value.Min + 0x40;
-        private bool _TargetInterval_IsSet => _DNAMLocation.HasValue;
+        private bool _TargetInterval_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _TargetIntervalLocation + 1 >= 4;
         public Single TargetInterval => _TargetInterval_IsSet ? _recordData.Slice(_TargetIntervalLocation, 4).Float() : default(Single);
         #endregion
         #region TaperFullEffectRadius
         private int _TaperFullEffectRadiusLocation => _DNAMLocation!.Value.Min + 0x44;
-        private bool _TaperFullEffectRadius_IsSet => _DNAMLocation.HasValue;
+        private bool _TaperFullEffectRadius_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _TaperFullEffectRadiusLocation + 1 >= 4;
         public Single TaperFullEffectRadius => _TaperFullEffectRadius_IsSet ? _recordData.Slice(_TaperFullEffectRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region TaperWeight
         private int _TaperWeightLocation => _DNAMLocation!.Value.Min + 0x48;
-        private bool _TaperWeight_IsSet => _DNAMLocation.HasValue;
+        private bool _TaperWeight_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _TaperWeightLocation + 1 >= 4;
         public Single TaperWeight => _TaperWeight_IsSet ? _recordData.Slice(_TaperWeightLocation, 4).Float() : default(Single);
         #endregion
         #region TaperCurse
         private int _TaperCurseLocation => _DNAMLocation!.Value.Min + 0x4C;
-        private bool _TaperCurse_IsSet => _DNAMLocation.HasValue;
+        private bool _TaperCurse_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _TaperCurseLocation + 1 >= 4;
         public Single TaperCurse => _TaperCurse_IsSet ? _recordData.Slice(_TaperCurseLocation, 4).Float() : default(Single);
         #endregion
         #region Gravity
         private int _GravityLocation => _DNAMLocation!.Value.Min + 0x50;
-        private bool _Gravity_IsSet => _DNAMLocation.HasValue;
+        private bool _Gravity_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _GravityLocation + 1 >= 4;
         public Single Gravity => _Gravity_IsSet ? _recordData.Slice(_GravityLocation, 4).Float() : default(Single);
         #endregion
         #region Limit
         private int _LimitLocation => _DNAMLocation!.Value.Min + 0x54;
-        private bool _Limit_IsSet => _DNAMLocation.HasValue;
+        private bool _Limit_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _LimitLocation + 1 >= 4;
         public UInt32 Limit => _Limit_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_LimitLocation, 4)) : default(UInt32);
         #endregion
         #region Flags
         private int _FlagsLocation => _DNAMLocation!.Value.Min + 0x58;
-        private bool _Flags_IsSet => _DNAMLocation.HasValue;
+        private bool _Flags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Hazard.Flag Flags => _Flags_IsSet ? (Hazard.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         public IReadOnlyList<IConditionGetter> Conditions { get; private set; } = [];

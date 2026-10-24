@@ -2588,27 +2588,27 @@ namespace Mutagen.Bethesda.Skyrim
         private RangeInt32? _BNAMLocation;
         #region PercentFrequencyShift
         private int _PercentFrequencyShiftLocation => _BNAMLocation!.Value.Min;
-        private bool _PercentFrequencyShift_IsSet => _BNAMLocation.HasValue;
+        private bool _PercentFrequencyShift_IsSet => _BNAMLocation.HasValue && _BNAMLocation!.Value.Max - _PercentFrequencyShiftLocation + 1 >= 1;
         public SByte PercentFrequencyShift => _PercentFrequencyShift_IsSet ? (sbyte)_recordData.Slice(_PercentFrequencyShiftLocation, 1)[0] : default(SByte);
         #endregion
         #region PercentFrequencyVariance
         private int _PercentFrequencyVarianceLocation => _BNAMLocation!.Value.Min + 0x1;
-        private bool _PercentFrequencyVariance_IsSet => _BNAMLocation.HasValue;
+        private bool _PercentFrequencyVariance_IsSet => _BNAMLocation.HasValue && _BNAMLocation!.Value.Max - _PercentFrequencyVarianceLocation + 1 >= 1;
         public SByte PercentFrequencyVariance => _PercentFrequencyVariance_IsSet ? (sbyte)_recordData.Slice(_PercentFrequencyVarianceLocation, 1)[0] : default(SByte);
         #endregion
         #region Priority
         private int _PriorityLocation => _BNAMLocation!.Value.Min + 0x2;
-        private bool _Priority_IsSet => _BNAMLocation.HasValue;
+        private bool _Priority_IsSet => _BNAMLocation.HasValue && _BNAMLocation!.Value.Max - _PriorityLocation + 1 >= 1;
         public Byte Priority => _Priority_IsSet ? _recordData.Span[_PriorityLocation] : default;
         #endregion
         #region Variance
         private int _VarianceLocation => _BNAMLocation!.Value.Min + 0x3;
-        private bool _Variance_IsSet => _BNAMLocation.HasValue;
+        private bool _Variance_IsSet => _BNAMLocation.HasValue && _BNAMLocation!.Value.Max - _VarianceLocation + 1 >= 1;
         public Byte Variance => _Variance_IsSet ? _recordData.Span[_VarianceLocation] : default;
         #endregion
         #region StaticAttenuation
         private int _StaticAttenuationLocation => _BNAMLocation!.Value.Min + 0x4;
-        private bool _StaticAttenuation_IsSet => _BNAMLocation.HasValue;
+        private bool _StaticAttenuation_IsSet => _BNAMLocation.HasValue && _BNAMLocation!.Value.Max - _StaticAttenuationLocation + 1 >= 2;
         public Single StaticAttenuation => _StaticAttenuation_IsSet ? FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.GetFloat(_recordData.Slice(_StaticAttenuationLocation, 2), FloatIntegerType.UShort, multiplier: null, divisor: 100f) : default(Single);
         #endregion
         partial void CustomFactoryEnd(

@@ -1827,27 +1827,27 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DATALocation;
         #region Position
         private int _PositionLocation => _DATALocation!.Value.Min;
-        private bool _Position_IsSet => _DATALocation.HasValue;
+        private bool _Position_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PositionLocation + 1 >= 12;
         public P3Float Position => _Position_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_PositionLocation, 12)) : default(P3Float);
         #endregion
         #region Rotation
         private int _RotationLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _Rotation_IsSet => _DATALocation.HasValue;
+        private bool _Rotation_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RotationLocation + 1 >= 12;
         public P3Float Rotation => _Rotation_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_RotationLocation, 12)) : default(P3Float);
         #endregion
         #region Scale
         private int _ScaleLocation => _DATALocation!.Value.Min + 0x18;
-        private bool _Scale_IsSet => _DATALocation.HasValue;
+        private bool _Scale_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ScaleLocation + 1 >= 4;
         public Single Scale => _Scale_IsSet ? _recordData.Slice(_ScaleLocation, 4).Float() : default(Single);
         #endregion
         #region ZoomMin
         private int _ZoomMinLocation => _DATALocation!.Value.Min + 0x1C;
-        private bool _ZoomMin_IsSet => _DATALocation.HasValue;
+        private bool _ZoomMin_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ZoomMinLocation + 1 >= 4;
         public Single ZoomMin => _ZoomMin_IsSet ? _recordData.Slice(_ZoomMinLocation, 4).Float() : default(Single);
         #endregion
         #region ZoomMax
         private int _ZoomMaxLocation => _DATALocation!.Value.Min + 0x20;
-        private bool _ZoomMax_IsSet => _DATALocation.HasValue;
+        private bool _ZoomMax_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ZoomMaxLocation + 1 >= 4;
         public Single ZoomMax => _ZoomMax_IsSet ? _recordData.Slice(_ZoomMaxLocation, 4).Float() : default(Single);
         #endregion
         #region BNAM

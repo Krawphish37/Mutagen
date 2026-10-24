@@ -2374,37 +2374,37 @@ namespace Mutagen.Bethesda.Fallout3
         private RangeInt32? _DATALocation;
         #region Type
         private int _TypeLocation => _DATALocation!.Value.Min;
-        private bool _Type_IsSet => _DATALocation.HasValue;
+        private bool _Type_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TypeLocation + 1 >= 4;
         public Challenge.ChallengeType Type => _Type_IsSet ? (Challenge.ChallengeType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default;
         #endregion
         #region Threshold
         private int _ThresholdLocation => _DATALocation!.Value.Min + 0x4;
-        private bool _Threshold_IsSet => _DATALocation.HasValue;
+        private bool _Threshold_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ThresholdLocation + 1 >= 4;
         public UInt32 Threshold => _Threshold_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ThresholdLocation, 4)) : default(UInt32);
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 4;
         public Challenge.ChallengeFlag Flags => _Flags_IsSet ? (Challenge.ChallengeFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Interval
         private int _IntervalLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _Interval_IsSet => _DATALocation.HasValue;
+        private bool _Interval_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _IntervalLocation + 1 >= 4;
         public UInt32 Interval => _Interval_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_IntervalLocation, 4)) : default(UInt32);
         #endregion
         #region Value1
         private int _Value1Location => _DATALocation!.Value.Min + 0x10;
-        private bool _Value1_IsSet => _DATALocation.HasValue;
+        private bool _Value1_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Value1Location + 1 >= 2;
         public UInt16 Value1 => _Value1_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_Value1Location, 2)) : default(UInt16);
         #endregion
         #region Value2
         private int _Value2Location => _DATALocation!.Value.Min + 0x12;
-        private bool _Value2_IsSet => _DATALocation.HasValue;
+        private bool _Value2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Value2Location + 1 >= 2;
         public UInt16 Value2 => _Value2_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_Value2Location, 2)) : default(UInt16);
         #endregion
         #region Value3
         private int _Value3Location => _DATALocation!.Value.Min + 0x14;
-        private bool _Value3_IsSet => _DATALocation.HasValue;
+        private bool _Value3_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Value3Location + 1 >= 4;
         public UInt32 Value3 => _Value3_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_Value3Location, 4)) : default(UInt32);
         #endregion
         #region SNAM
