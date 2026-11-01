@@ -45,8 +45,8 @@
           <Float name="EmotionOut" />
         </Fields>
       </Data>
-      <FormLink name="TROI" recordType="TROI" refName="DialogResponses" unknown="true" />
       <RefList name="TROTs" refName="DialogResponseTROT" />
+      <FormLink name="TROI" recordType="TROI" refName="DialogResponses" unknown="true" />
       <String name="ResponseText" recordType="NAM1" translated="IL" nullable="False" />
       <String name="ScriptNotes" recordType="NAM2" nullable="False" />
       <String name="Edits" recordType="NAM3" nullable="False" />

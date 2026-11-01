@@ -16,12 +16,18 @@ public class DialogResponseTroiTests
 {
     private static readonly GameConstants Constants = GameConstants.Starfield;
     private const uint LinkedInfoId = 0x802;
+    private const uint LinkedVoiceTypeId = 0x803;
+    private const float TrotEmotionOut = 0.5f;
     private const uint NoEmotion = uint.MaxValue;
 
-    private static (string, byte[])[] Response(string text, byte[] hash, uint? troi)
+    private static (string, byte[])[] Response(string text, byte[] hash, uint? troi, bool withTrot = false)
     {
         var trda = U32(NoEmotion).Concat(U32(0)).Concat(BitConverter.GetBytes(0f)).ToArray();
         var subrecords = new List<(string, byte[])> { ("TRDA", trda) };
+        if (withTrot)
+        {
+            subrecords.Add(("TROT", U32(LinkedVoiceTypeId).Concat(BitConverter.GetBytes(TrotEmotionOut)).ToArray()));
+        }
         if (troi.HasValue)
         {
             subrecords.Add(("TROI", U32(troi.Value)));
@@ -114,6 +120,32 @@ public class DialogResponseTroiTests
 
         foreach (var info in ReadBoth(modKey, bytes))
         {
+            Write(modKey, info).ShouldBe(bytes);
+        }
+    }
+
+    [Theory, MutagenAutoData(GameRelease.Starfield)]
+    public void TrotThenTroi_ReadsBothAndRoundTrips(
+        ModKey modKey,
+        string text,
+        byte[] hash)
+    {
+        var bytes = Record(Constants, "INFO",
+        [
+            ("ENAM", U32(0)),
+            .. Response(text, hash, troi: LinkedInfoId, withTrot: true),
+            ("NAM0", Str(string.Empty)),
+            ("INAM", U32(0)),
+        ]);
+
+        foreach (var info in ReadBoth(modKey, bytes))
+        {
+            var response = info.Responses.ShouldHaveSingleItem();
+            var trot = response.TROTs.ShouldHaveSingleItem();
+            trot.VoiceType.FormKey.ShouldBe(new FormKey(modKey, LinkedVoiceTypeId));
+            trot.EmotionOut.ShouldBe(TrotEmotionOut);
+            response.TROI.FormKeyNullable.ShouldBe(new FormKey(modKey, LinkedInfoId));
+            response.ResponseText.String.ShouldBe(text);
             Write(modKey, info).ShouldBe(bytes);
         }
     }
