@@ -1,4 +1,4 @@
-using Noggog;
+﻿using Noggog;
 using System.Buffers.Binary;
 using System.Runtime.CompilerServices;
 using Mutagen.Bethesda.Plugins.Exceptions;
@@ -89,14 +89,8 @@ public sealed class FloatBinaryTranslation<TReader, TWriter> : PrimitiveBinaryTr
         {
             item = 0f;
         }
-        if (item == 0f)
-        {
-            writer.Write(0);
-        }
-        else
-        {
-            writer.Write(item);
-        }
+        // -0 is written as -0, so a read and write keeps the bytes the Creation Kit wrote
+        writer.Write(item);
     }
 
     public void Write(
