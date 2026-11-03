@@ -51,6 +51,15 @@ public class FloatBinaryTranslationTests
     }
     
     [Fact]
+    public void WriteNegativeZero()
+    {
+        GetWriteArray((transl, writer) =>
+        {
+            transl.Write(writer, -0f);
+        }).ShouldBe(new byte[] { 0x00, 0x00, 0x00, 0x80 });
+    }
+
+    [Fact]
     public void WriteZero()
     {
         RunTypicalWriteTest((transl, writer) =>
