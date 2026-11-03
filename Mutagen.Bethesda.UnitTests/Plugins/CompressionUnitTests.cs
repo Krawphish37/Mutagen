@@ -1,7 +1,11 @@
 ﻿using System.IO.Abstractions;
+using System.IO.Compression;
 using Shouldly;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Binary.Parameters;
+using Mutagen.Bethesda.Plugins.Binary.Streams;
+using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Meta;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Testing.AutoData;
 using Noggog.Testing.Extensions;
@@ -134,5 +138,27 @@ public class CompressionUnitTests
         var reimportKeyword = reimport.Keywords.ShouldHaveSingleItem();
         reimportKeyword.IsDeleted.ShouldBeTrue();
         reimportKeyword.IsCompressed.ShouldBeFalse();
+    }
+
+    [Fact]
+    public void CompressedExportUsesBestCompression()
+    {
+        var payload = Enumerable.Range(0, 4000).Select(i => (byte)(i * 7 % 251)).ToArray();
+        using var stream = new MemoryStream();
+        using (var writer = new MutagenWriter(stream, GameConstants.SkyrimSE, dispose: false))
+        using (CompressionExport.Compression(true, writer, out var writerToUse))
+        {
+            writerToUse.Write(payload);
+        }
+
+        var written = stream.ToArray();
+        written[4].ShouldBe((byte)0x78);
+        written[5].ShouldBe((byte)0xDA);
+        using var expected = new MemoryStream();
+        using (var zlib = new ZLibStream(expected, CompressionLevel.SmallestSize, leaveOpen: true))
+        {
+            zlib.Write(payload);
+        }
+        written.AsSpan(4).ToArray().ShouldBe(expected.ToArray());
     }
 }
