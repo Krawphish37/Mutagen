@@ -273,6 +273,32 @@ public class ZeroDropsTests
     }
 
     [Fact]
+    public void DeletedNpcReference_WithNoData_StaysWithout()
+    {
+        var bytes = Record("ACHR", 0x20, Subrecord("NAME", 0, 8, 0, 0));
+        var meta = Meta();
+        IPlacedNpcGetter[] placed =
+        [
+            PlacedNpc.CreateFromBinary(new MutagenFrame(new MutagenMemoryReadStream(bytes, Meta()))),
+            PlacedNpcBinaryOverlay.PlacedNpcFactory(new OverlayStream(bytes, meta), new BinaryOverlayFactoryPackage(meta)),
+        ];
+        foreach (var item in placed)
+        {
+            item.HasPlacementData.ShouldBeFalse();
+            Has(Write(w => item.WriteToBinary(w)), RecordTypes.DATA).ShouldBeFalse();
+        }
+    }
+
+    [Fact]
+    public void LeveledList_OverACountByte_KeepsTheLowByte()
+    {
+        var npc = new LeveledNpc(new FormKey(TestModKey, 0x800), StarfieldRelease.Starfield);
+        npc.Entries = new Noggog.ExtendedList<LeveledNpcEntry>();
+        for (int i = 0; i < 300; i++) npc.Entries.Add(new LeveledNpcEntry());
+        SubrecordContent(Write(w => npc.WriteToBinary(w)), new RecordType("LLCT")).ShouldBe(new byte[] { 44 });
+    }
+
+    [Fact]
     public void UnknownSubrecord_IsWrittenBack()
     {
         var bytes = Record(

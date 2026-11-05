@@ -100,9 +100,21 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region Name
         /// <summary>
-        /// Aspects: INamedRequired
+        /// Aspects: INamed, INamedRequired
         /// </summary>
-        public String Name { get; set; } = string.Empty;
+        public String? Name { get; set; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        String? ICollisionLayerGetter.Name => this.Name;
+        #region Aspects
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        string INamedRequiredGetter.Name => this.Name ?? string.Empty;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        string INamedRequired.Name
+        {
+            get => this.Name ?? string.Empty;
+            set => this.Name = value;
+        }
+        #endregion
         #endregion
         #region CollidesWith
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -824,6 +836,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         ILoquiObjectSetter<ICollisionLayerInternal>,
+        INamed,
         INamedRequired,
         IScripted,
         IStarfieldMajorRecordInternal
@@ -838,9 +851,9 @@ namespace Mutagen.Bethesda.Starfield
         new Color? DebugColor { get; set; }
         new CollisionLayer.Flag Flags { get; set; }
         /// <summary>
-        /// Aspects: INamedRequired
+        /// Aspects: INamed, INamedRequired
         /// </summary>
-        new String Name { get; set; }
+        new String? Name { get; set; }
         new ExtendedList<IFormLinkGetter<ICollisionLayerGetter>>? CollidesWith { get; set; }
     }
 
@@ -859,6 +872,7 @@ namespace Mutagen.Bethesda.Starfield
         IHaveVirtualMachineAdapterGetter,
         ILoquiObject<ICollisionLayerGetter>,
         IMapsToGetter<ICollisionLayerGetter>,
+        INamedGetter,
         INamedRequiredGetter,
         IScriptedGetter
     {
@@ -876,9 +890,9 @@ namespace Mutagen.Bethesda.Starfield
         CollisionLayer.Flag Flags { get; }
         #region Name
         /// <summary>
-        /// Aspects: INamedRequiredGetter
+        /// Aspects: INamedGetter, INamedRequiredGetter
         /// </summary>
-        String Name { get; }
+        String? Name { get; }
         #endregion
         IReadOnlyList<IFormLinkGetter<ICollisionLayerGetter>>? CollidesWith { get; }
 
@@ -1171,7 +1185,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Index = default(UInt32);
             item.DebugColor = default;
             item.Flags = default(CollisionLayer.Flag);
-            item.Name = string.Empty;
+            item.Name = default;
             item.CollidesWith = null;
             base.Clear(item);
         }
@@ -1351,9 +1365,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Flags, "Flags");
             }
-            if (printMask?.Name ?? true)
+            if ((printMask?.Name ?? true)
+                && item.Name is {} NameItem)
             {
-                sb.AppendItem(item.Name, "Name");
+                sb.AppendItem(NameItem, "Name");
             }
             if ((printMask?.CollidesWith?.Overall ?? true)
                 && item.CollidesWith is {} CollidesWithItem)
@@ -1510,7 +1525,10 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(DebugColoritem.ToArgb());
             }
             hash.Add(item.Flags);
-            hash.Add(item.Name);
+            if (item.Name is {} Nameitem)
+            {
+                hash.Add(Nameitem);
+            }
             if (item.CollidesWith is {} CollidesWithitem)
             {
                 foreach (var subItem in CollidesWithitem)
@@ -1933,7 +1951,7 @@ namespace Mutagen.Bethesda.Starfield
                 item.Flags,
                 length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.GNAM));
-            StringBinaryTranslation.Instance.Write(
+            StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.Name,
                 header: translationParams.ConvertToCustom(RecordTypes.MNAM),
@@ -2172,7 +2190,11 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region Name
         private int? _NameLocation;
-        public String Name => _NameLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NameLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
+        public String? Name => _NameLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NameLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region Aspects
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        string INamedRequiredGetter.Name => this.Name ?? string.Empty;
+        #endregion
         #endregion
         public IReadOnlyList<IFormLinkGetter<ICollisionLayerGetter>>? CollidesWith { get; private set; }
         partial void CustomFactoryEnd(
