@@ -5,7 +5,9 @@
       <String name="Name" recordType="FULL" translated="Normal" />
       <String name="Description" recordType="DESC" translated="DL" />
       <FormLink name="WorkbenchKeyword" refName="Keyword" recordType="BNAM" />
-      <RefList name="Conditions" refName="Condition" counterRecType="CITC" />
+      <RefList name="Conditions" refName="Condition" counterRecType="CITC" binary="Custom" />
+      <!-- Some plugins hold the conditions with no CITC count in front of them. -->
+      <Bool name="ConditionsHaveNoCount" binary="NoGeneration" />
       <RefList name="RequiredItems" refName="ResearchProjectRequiredItem" recordType="FVPA" />
       <RefList name="RequiredPerks" refName="ResearchProjectRequiredPerk" recordType="RQPK" />
       <FormLink name="CreatedItem" refName="StarfieldMajorRecord" recordType="CNAM" />

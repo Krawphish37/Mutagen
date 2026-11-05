@@ -204,6 +204,74 @@ public class ZeroDropsTests
         }
     }
 
+    private static IEnumerable<IPlacedObjectGetter> ReadPlaced(byte[] bytes)
+    {
+        yield return PlacedObject.CreateFromBinary(new MutagenFrame(new MutagenMemoryReadStream(bytes, Meta())));
+        var meta = Meta();
+        yield return PlacedObjectBinaryOverlay.PlacedObjectFactory(new OverlayStream(bytes, meta), new BinaryOverlayFactoryPackage(meta));
+    }
+
+    private static bool Has(byte[] record, RecordType type)
+    {
+        return GameConstants.Starfield.MajorRecord(record).EnumerateSubrecords().Any(x => x.RecordType == type);
+    }
+
+    [Fact]
+    public void DeletedReference_WithNoData_StaysWithout()
+    {
+        var bytes = Record("REFR", 0x20, Subrecord("NAME", 0, 8, 0, 0));
+        foreach (var placed in ReadPlaced(bytes))
+        {
+            placed.HasPlacementData.ShouldBeFalse();
+            Has(Write(w => placed.WriteToBinary(w)), RecordTypes.DATA).ShouldBeFalse();
+        }
+    }
+
+    [Fact]
+    public void DeletedReference_WithStoredZeros_KeepsThem()
+    {
+        var bytes = Record("REFR", 0x20, Subrecord("NAME", 0, 8, 0, 0), Subrecord("DATA", new byte[24]));
+        foreach (var placed in ReadPlaced(bytes))
+        {
+            placed.HasPlacementData.ShouldBeTrue();
+            Has(Write(w => placed.WriteToBinary(w)), RecordTypes.DATA).ShouldBeTrue();
+        }
+    }
+
+    [Fact]
+    public void Reference_Position_ReadsTheSameBothWays()
+    {
+        var data = BitConverter.GetBytes(1f).Concat(BitConverter.GetBytes(2f)).Concat(BitConverter.GetBytes(3f))
+            .Concat(BitConverter.GetBytes(4f)).Concat(BitConverter.GetBytes(5f)).Concat(BitConverter.GetBytes(6f)).ToArray();
+        var bytes = Record("REFR", 0, Subrecord("NAME", 0, 8, 0, 0), Subrecord("DATA", data));
+        foreach (var placed in ReadPlaced(bytes))
+        {
+            placed.Position.ShouldBe(new Noggog.P3Float(1, 2, 3));
+            placed.Rotation.ShouldBe(new Noggog.P3Float(4, 5, 6));
+            SubrecordContent(Write(w => placed.WriteToBinary(w)), RecordTypes.DATA).ShouldBe(data);
+        }
+    }
+
+    [Fact]
+    public void NewReference_StillGetsData()
+    {
+        var placed = new PlacedObject(new FormKey(TestModKey, 0x800), StarfieldRelease.Starfield);
+        Has(Write(w => placed.WriteToBinary(w)), RecordTypes.DATA).ShouldBeTrue();
+    }
+
+    [Fact]
+    public void Npc_StopMarker_OnlyIfTheOriginalHadOne()
+    {
+        var without = Record("NPC_", 0, Subrecord("EDID", Encoding.ASCII.GetBytes("TestNpc ")));
+        var with = Record("NPC_", 0, Subrecord("EDID", Encoding.ASCII.GetBytes("TestNpc ")), Subrecord("STOP"));
+        var meta = Meta();
+        var stop = new RecordType("STOP");
+        Has(Write(w => Npc.CreateFromBinary(new MutagenFrame(new MutagenMemoryReadStream(without, Meta()))).WriteToBinary(w)), stop).ShouldBeFalse();
+        Has(Write(w => Npc.CreateFromBinary(new MutagenFrame(new MutagenMemoryReadStream(with, Meta()))).WriteToBinary(w)), stop).ShouldBeTrue();
+        Has(Write(w => NpcBinaryOverlay.NpcFactory(new OverlayStream(without, meta), new BinaryOverlayFactoryPackage(meta)).WriteToBinary(w)), stop).ShouldBeFalse();
+        Has(Write(w => NpcBinaryOverlay.NpcFactory(new OverlayStream(with, meta), new BinaryOverlayFactoryPackage(meta)).WriteToBinary(w)), stop).ShouldBeTrue();
+    }
+
     [Fact]
     public void UnknownSubrecord_IsWrittenBack()
     {

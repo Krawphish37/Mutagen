@@ -86,7 +86,7 @@
       <FormLink name="FootstepSound" refName="FootstepSet" recordType="SNDD" />
       <FormLink name="ArtObject" refName="ArtObject" recordType="ONAM" />
       <FormLink name="BodyPartData" refName="BodyPartData" recordType="PNAM" />
-      <Enum name="ActorValueModulationGroupType" enumName="ActorValueModulation.GroupType" byteLength="4" recordType="MNAM" nullable="False" />
+      <Enum name="ActorValueModulationGroupType" enumName="ActorValueModulation.GroupType" byteLength="4" recordType="MNAM" />
       <String name="ActorValueModulationEntryType" recordType="TNAM" />
       <String name="ActorValueModulationSubType" recordType="SNAM" />
       <String name="ActorValueModulationEntryValue" recordType="VNAM" />

@@ -204,7 +204,9 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IBodyPartDataGetter> IArmorAddonGetter.BodyPartData => this.BodyPartData;
         #endregion
         #region ActorValueModulationGroupType
-        public ActorValueModulation.GroupType ActorValueModulationGroupType { get; set; } = default(ActorValueModulation.GroupType);
+        public ActorValueModulation.GroupType? ActorValueModulationGroupType { get; set; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ActorValueModulation.GroupType? IArmorAddonGetter.ActorValueModulationGroupType => this.ActorValueModulationGroupType;
         #endregion
         #region ActorValueModulationEntryType
         public String? ActorValueModulationEntryType { get; set; }
@@ -1649,7 +1651,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<IFootstepSetGetter> FootstepSound { get; set; }
         new IFormLinkNullable<IArtObjectGetter> ArtObject { get; set; }
         new IFormLinkNullable<IBodyPartDataGetter> BodyPartData { get; set; }
-        new ActorValueModulation.GroupType ActorValueModulationGroupType { get; set; }
+        new ActorValueModulation.GroupType? ActorValueModulationGroupType { get; set; }
         new String? ActorValueModulationEntryType { get; set; }
         new String? ActorValueModulationSubType { get; set; }
         new String? ActorValueModulationEntryValue { get; set; }
@@ -1710,7 +1712,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IFootstepSetGetter> FootstepSound { get; }
         IFormLinkNullableGetter<IArtObjectGetter> ArtObject { get; }
         IFormLinkNullableGetter<IBodyPartDataGetter> BodyPartData { get; }
-        ActorValueModulation.GroupType ActorValueModulationGroupType { get; }
+        ActorValueModulation.GroupType? ActorValueModulationGroupType { get; }
         String? ActorValueModulationEntryType { get; }
         String? ActorValueModulationSubType { get; }
         String? ActorValueModulationEntryValue { get; }
@@ -2158,7 +2160,7 @@ namespace Mutagen.Bethesda.Starfield
             item.FootstepSound.Clear();
             item.ArtObject.Clear();
             item.BodyPartData.Clear();
-            item.ActorValueModulationGroupType = default(ActorValueModulation.GroupType);
+            item.ActorValueModulationGroupType = default;
             item.ActorValueModulationEntryType = default;
             item.ActorValueModulationSubType = default;
             item.ActorValueModulationEntryValue = default;
@@ -2525,9 +2527,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.BodyPartData.FormKeyNullable, "BodyPartData");
             }
-            if (printMask?.ActorValueModulationGroupType ?? true)
+            if ((printMask?.ActorValueModulationGroupType ?? true)
+                && item.ActorValueModulationGroupType is {} ActorValueModulationGroupTypeItem)
             {
-                sb.AppendItem(item.ActorValueModulationGroupType, "ActorValueModulationGroupType");
+                sb.AppendItem(ActorValueModulationGroupTypeItem, "ActorValueModulationGroupType");
             }
             if ((printMask?.ActorValueModulationEntryType ?? true)
                 && item.ActorValueModulationEntryType is {} ActorValueModulationEntryTypeItem)
@@ -2788,7 +2791,10 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.FootstepSound);
             hash.Add(item.ArtObject);
             hash.Add(item.BodyPartData);
-            hash.Add(item.ActorValueModulationGroupType);
+            if (item.ActorValueModulationGroupType is {} ActorValueModulationGroupTypeitem)
+            {
+                hash.Add(ActorValueModulationGroupTypeitem);
+            }
             if (item.ActorValueModulationEntryType is {} ActorValueModulationEntryTypeitem)
             {
                 hash.Add(ActorValueModulationEntryTypeitem);
@@ -3578,7 +3584,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.BodyPartData,
                 header: translationParams.ConvertToCustom(RecordTypes.PNAM));
-            EnumBinaryTranslation<ActorValueModulation.GroupType, MutagenFrame, MutagenWriter>.Instance.Write(
+            EnumBinaryTranslation<ActorValueModulation.GroupType, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer,
                 item.ActorValueModulationGroupType,
                 length: 4,
@@ -4098,7 +4104,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region ActorValueModulationGroupType
         private int? _ActorValueModulationGroupTypeLocation;
-        public ActorValueModulation.GroupType ActorValueModulationGroupType => EnumBinaryTranslation<ActorValueModulation.GroupType, MutagenFrame, MutagenWriter>.Instance.ParseRecord(_ActorValueModulationGroupTypeLocation, _recordData, _package, 4);
+        public ActorValueModulation.GroupType? ActorValueModulationGroupType => EnumBinaryTranslation<ActorValueModulation.GroupType, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_ActorValueModulationGroupTypeLocation, _recordData, _package, 4);
         #endregion
         #region ActorValueModulationEntryType
         private int? _ActorValueModulationEntryTypeLocation;
