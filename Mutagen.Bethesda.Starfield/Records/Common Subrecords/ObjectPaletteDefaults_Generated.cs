@@ -72,20 +72,20 @@ namespace Mutagen.Bethesda.Starfield
         #region ScaleVariance
         public Single ScaleVariance { get; set; } = default(Single);
         #endregion
-        #region AngleXDegrees
-        public Single AngleXDegrees { get; set; } = default(Single);
+        #region AngleX
+        public Single AngleX { get; set; } = default(Single);
         #endregion
         #region AngleXVariance
         public Single AngleXVariance { get; set; } = default(Single);
         #endregion
-        #region AngleYDegrees
-        public Single AngleYDegrees { get; set; } = default(Single);
+        #region AngleY
+        public Single AngleY { get; set; } = default(Single);
         #endregion
         #region AngleYVariance
         public Single AngleYVariance { get; set; } = default(Single);
         #endregion
-        #region AngleZDegrees
-        public Single AngleZDegrees { get; set; } = default(Single);
+        #region AngleZ
+        public Single AngleZ { get; set; } = default(Single);
         #endregion
         #region AngleZVariance
         public Single AngleZVariance { get; set; } = default(Single);
@@ -99,8 +99,8 @@ namespace Mutagen.Bethesda.Starfield
         #region Density
         public Single Density { get; set; } = default(Single);
         #endregion
-        #region FrequencyPercent
-        public Single FrequencyPercent { get; set; } = default(Single);
+        #region Frequency
+        public Single Frequency { get; set; } = default(Single);
         #endregion
         #region SlopeLimit
         public Single SlopeLimit { get; set; } = default(Single);
@@ -157,16 +157,16 @@ namespace Mutagen.Bethesda.Starfield
                 this.FootprintSize = initialValue;
                 this.ScalePercent = initialValue;
                 this.ScaleVariance = initialValue;
-                this.AngleXDegrees = initialValue;
+                this.AngleX = initialValue;
                 this.AngleXVariance = initialValue;
-                this.AngleYDegrees = initialValue;
+                this.AngleY = initialValue;
                 this.AngleYVariance = initialValue;
-                this.AngleZDegrees = initialValue;
+                this.AngleZ = initialValue;
                 this.AngleZVariance = initialValue;
                 this.SlopePercent = initialValue;
                 this.SlopePercentVariance = initialValue;
                 this.Density = initialValue;
-                this.FrequencyPercent = initialValue;
+                this.Frequency = initialValue;
                 this.SlopeLimit = initialValue;
                 this.DistanceBelowWater = initialValue;
                 this.DistanceAboveWater = initialValue;
@@ -180,16 +180,16 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FootprintSize,
                 TItem ScalePercent,
                 TItem ScaleVariance,
-                TItem AngleXDegrees,
+                TItem AngleX,
                 TItem AngleXVariance,
-                TItem AngleYDegrees,
+                TItem AngleY,
                 TItem AngleYVariance,
-                TItem AngleZDegrees,
+                TItem AngleZ,
                 TItem AngleZVariance,
                 TItem SlopePercent,
                 TItem SlopePercentVariance,
                 TItem Density,
-                TItem FrequencyPercent,
+                TItem Frequency,
                 TItem SlopeLimit,
                 TItem DistanceBelowWater,
                 TItem DistanceAboveWater)
@@ -201,16 +201,16 @@ namespace Mutagen.Bethesda.Starfield
                 this.FootprintSize = FootprintSize;
                 this.ScalePercent = ScalePercent;
                 this.ScaleVariance = ScaleVariance;
-                this.AngleXDegrees = AngleXDegrees;
+                this.AngleX = AngleX;
                 this.AngleXVariance = AngleXVariance;
-                this.AngleYDegrees = AngleYDegrees;
+                this.AngleY = AngleY;
                 this.AngleYVariance = AngleYVariance;
-                this.AngleZDegrees = AngleZDegrees;
+                this.AngleZ = AngleZ;
                 this.AngleZVariance = AngleZVariance;
                 this.SlopePercent = SlopePercent;
                 this.SlopePercentVariance = SlopePercentVariance;
                 this.Density = Density;
-                this.FrequencyPercent = FrequencyPercent;
+                this.Frequency = Frequency;
                 this.SlopeLimit = SlopeLimit;
                 this.DistanceBelowWater = DistanceBelowWater;
                 this.DistanceAboveWater = DistanceAboveWater;
@@ -232,16 +232,16 @@ namespace Mutagen.Bethesda.Starfield
             public TItem FootprintSize;
             public TItem ScalePercent;
             public TItem ScaleVariance;
-            public TItem AngleXDegrees;
+            public TItem AngleX;
             public TItem AngleXVariance;
-            public TItem AngleYDegrees;
+            public TItem AngleY;
             public TItem AngleYVariance;
-            public TItem AngleZDegrees;
+            public TItem AngleZ;
             public TItem AngleZVariance;
             public TItem SlopePercent;
             public TItem SlopePercentVariance;
             public TItem Density;
-            public TItem FrequencyPercent;
+            public TItem Frequency;
             public TItem SlopeLimit;
             public TItem DistanceBelowWater;
             public TItem DistanceAboveWater;
@@ -264,16 +264,16 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.FootprintSize, rhs.FootprintSize)) return false;
                 if (!object.Equals(this.ScalePercent, rhs.ScalePercent)) return false;
                 if (!object.Equals(this.ScaleVariance, rhs.ScaleVariance)) return false;
-                if (!object.Equals(this.AngleXDegrees, rhs.AngleXDegrees)) return false;
+                if (!object.Equals(this.AngleX, rhs.AngleX)) return false;
                 if (!object.Equals(this.AngleXVariance, rhs.AngleXVariance)) return false;
-                if (!object.Equals(this.AngleYDegrees, rhs.AngleYDegrees)) return false;
+                if (!object.Equals(this.AngleY, rhs.AngleY)) return false;
                 if (!object.Equals(this.AngleYVariance, rhs.AngleYVariance)) return false;
-                if (!object.Equals(this.AngleZDegrees, rhs.AngleZDegrees)) return false;
+                if (!object.Equals(this.AngleZ, rhs.AngleZ)) return false;
                 if (!object.Equals(this.AngleZVariance, rhs.AngleZVariance)) return false;
                 if (!object.Equals(this.SlopePercent, rhs.SlopePercent)) return false;
                 if (!object.Equals(this.SlopePercentVariance, rhs.SlopePercentVariance)) return false;
                 if (!object.Equals(this.Density, rhs.Density)) return false;
-                if (!object.Equals(this.FrequencyPercent, rhs.FrequencyPercent)) return false;
+                if (!object.Equals(this.Frequency, rhs.Frequency)) return false;
                 if (!object.Equals(this.SlopeLimit, rhs.SlopeLimit)) return false;
                 if (!object.Equals(this.DistanceBelowWater, rhs.DistanceBelowWater)) return false;
                 if (!object.Equals(this.DistanceAboveWater, rhs.DistanceAboveWater)) return false;
@@ -289,16 +289,16 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.FootprintSize);
                 hash.Add(this.ScalePercent);
                 hash.Add(this.ScaleVariance);
-                hash.Add(this.AngleXDegrees);
+                hash.Add(this.AngleX);
                 hash.Add(this.AngleXVariance);
-                hash.Add(this.AngleYDegrees);
+                hash.Add(this.AngleY);
                 hash.Add(this.AngleYVariance);
-                hash.Add(this.AngleZDegrees);
+                hash.Add(this.AngleZ);
                 hash.Add(this.AngleZVariance);
                 hash.Add(this.SlopePercent);
                 hash.Add(this.SlopePercentVariance);
                 hash.Add(this.Density);
-                hash.Add(this.FrequencyPercent);
+                hash.Add(this.Frequency);
                 hash.Add(this.SlopeLimit);
                 hash.Add(this.DistanceBelowWater);
                 hash.Add(this.DistanceAboveWater);
@@ -317,16 +317,16 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.FootprintSize)) return false;
                 if (!eval(this.ScalePercent)) return false;
                 if (!eval(this.ScaleVariance)) return false;
-                if (!eval(this.AngleXDegrees)) return false;
+                if (!eval(this.AngleX)) return false;
                 if (!eval(this.AngleXVariance)) return false;
-                if (!eval(this.AngleYDegrees)) return false;
+                if (!eval(this.AngleY)) return false;
                 if (!eval(this.AngleYVariance)) return false;
-                if (!eval(this.AngleZDegrees)) return false;
+                if (!eval(this.AngleZ)) return false;
                 if (!eval(this.AngleZVariance)) return false;
                 if (!eval(this.SlopePercent)) return false;
                 if (!eval(this.SlopePercentVariance)) return false;
                 if (!eval(this.Density)) return false;
-                if (!eval(this.FrequencyPercent)) return false;
+                if (!eval(this.Frequency)) return false;
                 if (!eval(this.SlopeLimit)) return false;
                 if (!eval(this.DistanceBelowWater)) return false;
                 if (!eval(this.DistanceAboveWater)) return false;
@@ -344,16 +344,16 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.FootprintSize)) return true;
                 if (eval(this.ScalePercent)) return true;
                 if (eval(this.ScaleVariance)) return true;
-                if (eval(this.AngleXDegrees)) return true;
+                if (eval(this.AngleX)) return true;
                 if (eval(this.AngleXVariance)) return true;
-                if (eval(this.AngleYDegrees)) return true;
+                if (eval(this.AngleY)) return true;
                 if (eval(this.AngleYVariance)) return true;
-                if (eval(this.AngleZDegrees)) return true;
+                if (eval(this.AngleZ)) return true;
                 if (eval(this.AngleZVariance)) return true;
                 if (eval(this.SlopePercent)) return true;
                 if (eval(this.SlopePercentVariance)) return true;
                 if (eval(this.Density)) return true;
-                if (eval(this.FrequencyPercent)) return true;
+                if (eval(this.Frequency)) return true;
                 if (eval(this.SlopeLimit)) return true;
                 if (eval(this.DistanceBelowWater)) return true;
                 if (eval(this.DistanceAboveWater)) return true;
@@ -378,16 +378,16 @@ namespace Mutagen.Bethesda.Starfield
                 obj.FootprintSize = eval(this.FootprintSize);
                 obj.ScalePercent = eval(this.ScalePercent);
                 obj.ScaleVariance = eval(this.ScaleVariance);
-                obj.AngleXDegrees = eval(this.AngleXDegrees);
+                obj.AngleX = eval(this.AngleX);
                 obj.AngleXVariance = eval(this.AngleXVariance);
-                obj.AngleYDegrees = eval(this.AngleYDegrees);
+                obj.AngleY = eval(this.AngleY);
                 obj.AngleYVariance = eval(this.AngleYVariance);
-                obj.AngleZDegrees = eval(this.AngleZDegrees);
+                obj.AngleZ = eval(this.AngleZ);
                 obj.AngleZVariance = eval(this.AngleZVariance);
                 obj.SlopePercent = eval(this.SlopePercent);
                 obj.SlopePercentVariance = eval(this.SlopePercentVariance);
                 obj.Density = eval(this.Density);
-                obj.FrequencyPercent = eval(this.FrequencyPercent);
+                obj.Frequency = eval(this.Frequency);
                 obj.SlopeLimit = eval(this.SlopeLimit);
                 obj.DistanceBelowWater = eval(this.DistanceBelowWater);
                 obj.DistanceAboveWater = eval(this.DistanceAboveWater);
@@ -437,25 +437,25 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ScaleVariance, "ScaleVariance");
                     }
-                    if (printMask?.AngleXDegrees ?? true)
+                    if (printMask?.AngleX ?? true)
                     {
-                        sb.AppendItem(AngleXDegrees, "AngleXDegrees");
+                        sb.AppendItem(AngleX, "AngleX");
                     }
                     if (printMask?.AngleXVariance ?? true)
                     {
                         sb.AppendItem(AngleXVariance, "AngleXVariance");
                     }
-                    if (printMask?.AngleYDegrees ?? true)
+                    if (printMask?.AngleY ?? true)
                     {
-                        sb.AppendItem(AngleYDegrees, "AngleYDegrees");
+                        sb.AppendItem(AngleY, "AngleY");
                     }
                     if (printMask?.AngleYVariance ?? true)
                     {
                         sb.AppendItem(AngleYVariance, "AngleYVariance");
                     }
-                    if (printMask?.AngleZDegrees ?? true)
+                    if (printMask?.AngleZ ?? true)
                     {
-                        sb.AppendItem(AngleZDegrees, "AngleZDegrees");
+                        sb.AppendItem(AngleZ, "AngleZ");
                     }
                     if (printMask?.AngleZVariance ?? true)
                     {
@@ -473,9 +473,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Density, "Density");
                     }
-                    if (printMask?.FrequencyPercent ?? true)
+                    if (printMask?.Frequency ?? true)
                     {
-                        sb.AppendItem(FrequencyPercent, "FrequencyPercent");
+                        sb.AppendItem(Frequency, "Frequency");
                     }
                     if (printMask?.SlopeLimit ?? true)
                     {
@@ -520,16 +520,16 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? FootprintSize;
             public Exception? ScalePercent;
             public Exception? ScaleVariance;
-            public Exception? AngleXDegrees;
+            public Exception? AngleX;
             public Exception? AngleXVariance;
-            public Exception? AngleYDegrees;
+            public Exception? AngleY;
             public Exception? AngleYVariance;
-            public Exception? AngleZDegrees;
+            public Exception? AngleZ;
             public Exception? AngleZVariance;
             public Exception? SlopePercent;
             public Exception? SlopePercentVariance;
             public Exception? Density;
-            public Exception? FrequencyPercent;
+            public Exception? Frequency;
             public Exception? SlopeLimit;
             public Exception? DistanceBelowWater;
             public Exception? DistanceAboveWater;
@@ -555,16 +555,16 @@ namespace Mutagen.Bethesda.Starfield
                         return ScalePercent;
                     case ObjectPaletteDefaults_FieldIndex.ScaleVariance:
                         return ScaleVariance;
-                    case ObjectPaletteDefaults_FieldIndex.AngleXDegrees:
-                        return AngleXDegrees;
+                    case ObjectPaletteDefaults_FieldIndex.AngleX:
+                        return AngleX;
                     case ObjectPaletteDefaults_FieldIndex.AngleXVariance:
                         return AngleXVariance;
-                    case ObjectPaletteDefaults_FieldIndex.AngleYDegrees:
-                        return AngleYDegrees;
+                    case ObjectPaletteDefaults_FieldIndex.AngleY:
+                        return AngleY;
                     case ObjectPaletteDefaults_FieldIndex.AngleYVariance:
                         return AngleYVariance;
-                    case ObjectPaletteDefaults_FieldIndex.AngleZDegrees:
-                        return AngleZDegrees;
+                    case ObjectPaletteDefaults_FieldIndex.AngleZ:
+                        return AngleZ;
                     case ObjectPaletteDefaults_FieldIndex.AngleZVariance:
                         return AngleZVariance;
                     case ObjectPaletteDefaults_FieldIndex.SlopePercent:
@@ -573,8 +573,8 @@ namespace Mutagen.Bethesda.Starfield
                         return SlopePercentVariance;
                     case ObjectPaletteDefaults_FieldIndex.Density:
                         return Density;
-                    case ObjectPaletteDefaults_FieldIndex.FrequencyPercent:
-                        return FrequencyPercent;
+                    case ObjectPaletteDefaults_FieldIndex.Frequency:
+                        return Frequency;
                     case ObjectPaletteDefaults_FieldIndex.SlopeLimit:
                         return SlopeLimit;
                     case ObjectPaletteDefaults_FieldIndex.DistanceBelowWater:
@@ -612,20 +612,20 @@ namespace Mutagen.Bethesda.Starfield
                     case ObjectPaletteDefaults_FieldIndex.ScaleVariance:
                         this.ScaleVariance = ex;
                         break;
-                    case ObjectPaletteDefaults_FieldIndex.AngleXDegrees:
-                        this.AngleXDegrees = ex;
+                    case ObjectPaletteDefaults_FieldIndex.AngleX:
+                        this.AngleX = ex;
                         break;
                     case ObjectPaletteDefaults_FieldIndex.AngleXVariance:
                         this.AngleXVariance = ex;
                         break;
-                    case ObjectPaletteDefaults_FieldIndex.AngleYDegrees:
-                        this.AngleYDegrees = ex;
+                    case ObjectPaletteDefaults_FieldIndex.AngleY:
+                        this.AngleY = ex;
                         break;
                     case ObjectPaletteDefaults_FieldIndex.AngleYVariance:
                         this.AngleYVariance = ex;
                         break;
-                    case ObjectPaletteDefaults_FieldIndex.AngleZDegrees:
-                        this.AngleZDegrees = ex;
+                    case ObjectPaletteDefaults_FieldIndex.AngleZ:
+                        this.AngleZ = ex;
                         break;
                     case ObjectPaletteDefaults_FieldIndex.AngleZVariance:
                         this.AngleZVariance = ex;
@@ -639,8 +639,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ObjectPaletteDefaults_FieldIndex.Density:
                         this.Density = ex;
                         break;
-                    case ObjectPaletteDefaults_FieldIndex.FrequencyPercent:
-                        this.FrequencyPercent = ex;
+                    case ObjectPaletteDefaults_FieldIndex.Frequency:
+                        this.Frequency = ex;
                         break;
                     case ObjectPaletteDefaults_FieldIndex.SlopeLimit:
                         this.SlopeLimit = ex;
@@ -682,20 +682,20 @@ namespace Mutagen.Bethesda.Starfield
                     case ObjectPaletteDefaults_FieldIndex.ScaleVariance:
                         this.ScaleVariance = (Exception?)obj;
                         break;
-                    case ObjectPaletteDefaults_FieldIndex.AngleXDegrees:
-                        this.AngleXDegrees = (Exception?)obj;
+                    case ObjectPaletteDefaults_FieldIndex.AngleX:
+                        this.AngleX = (Exception?)obj;
                         break;
                     case ObjectPaletteDefaults_FieldIndex.AngleXVariance:
                         this.AngleXVariance = (Exception?)obj;
                         break;
-                    case ObjectPaletteDefaults_FieldIndex.AngleYDegrees:
-                        this.AngleYDegrees = (Exception?)obj;
+                    case ObjectPaletteDefaults_FieldIndex.AngleY:
+                        this.AngleY = (Exception?)obj;
                         break;
                     case ObjectPaletteDefaults_FieldIndex.AngleYVariance:
                         this.AngleYVariance = (Exception?)obj;
                         break;
-                    case ObjectPaletteDefaults_FieldIndex.AngleZDegrees:
-                        this.AngleZDegrees = (Exception?)obj;
+                    case ObjectPaletteDefaults_FieldIndex.AngleZ:
+                        this.AngleZ = (Exception?)obj;
                         break;
                     case ObjectPaletteDefaults_FieldIndex.AngleZVariance:
                         this.AngleZVariance = (Exception?)obj;
@@ -709,8 +709,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ObjectPaletteDefaults_FieldIndex.Density:
                         this.Density = (Exception?)obj;
                         break;
-                    case ObjectPaletteDefaults_FieldIndex.FrequencyPercent:
-                        this.FrequencyPercent = (Exception?)obj;
+                    case ObjectPaletteDefaults_FieldIndex.Frequency:
+                        this.Frequency = (Exception?)obj;
                         break;
                     case ObjectPaletteDefaults_FieldIndex.SlopeLimit:
                         this.SlopeLimit = (Exception?)obj;
@@ -736,16 +736,16 @@ namespace Mutagen.Bethesda.Starfield
                 if (FootprintSize != null) return true;
                 if (ScalePercent != null) return true;
                 if (ScaleVariance != null) return true;
-                if (AngleXDegrees != null) return true;
+                if (AngleX != null) return true;
                 if (AngleXVariance != null) return true;
-                if (AngleYDegrees != null) return true;
+                if (AngleY != null) return true;
                 if (AngleYVariance != null) return true;
-                if (AngleZDegrees != null) return true;
+                if (AngleZ != null) return true;
                 if (AngleZVariance != null) return true;
                 if (SlopePercent != null) return true;
                 if (SlopePercentVariance != null) return true;
                 if (Density != null) return true;
-                if (FrequencyPercent != null) return true;
+                if (Frequency != null) return true;
                 if (SlopeLimit != null) return true;
                 if (DistanceBelowWater != null) return true;
                 if (DistanceAboveWater != null) return true;
@@ -796,19 +796,19 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ScaleVariance, "ScaleVariance");
                 }
                 {
-                    sb.AppendItem(AngleXDegrees, "AngleXDegrees");
+                    sb.AppendItem(AngleX, "AngleX");
                 }
                 {
                     sb.AppendItem(AngleXVariance, "AngleXVariance");
                 }
                 {
-                    sb.AppendItem(AngleYDegrees, "AngleYDegrees");
+                    sb.AppendItem(AngleY, "AngleY");
                 }
                 {
                     sb.AppendItem(AngleYVariance, "AngleYVariance");
                 }
                 {
-                    sb.AppendItem(AngleZDegrees, "AngleZDegrees");
+                    sb.AppendItem(AngleZ, "AngleZ");
                 }
                 {
                     sb.AppendItem(AngleZVariance, "AngleZVariance");
@@ -823,7 +823,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Density, "Density");
                 }
                 {
-                    sb.AppendItem(FrequencyPercent, "FrequencyPercent");
+                    sb.AppendItem(Frequency, "Frequency");
                 }
                 {
                     sb.AppendItem(SlopeLimit, "SlopeLimit");
@@ -849,16 +849,16 @@ namespace Mutagen.Bethesda.Starfield
                 ret.FootprintSize = this.FootprintSize.Combine(rhs.FootprintSize);
                 ret.ScalePercent = this.ScalePercent.Combine(rhs.ScalePercent);
                 ret.ScaleVariance = this.ScaleVariance.Combine(rhs.ScaleVariance);
-                ret.AngleXDegrees = this.AngleXDegrees.Combine(rhs.AngleXDegrees);
+                ret.AngleX = this.AngleX.Combine(rhs.AngleX);
                 ret.AngleXVariance = this.AngleXVariance.Combine(rhs.AngleXVariance);
-                ret.AngleYDegrees = this.AngleYDegrees.Combine(rhs.AngleYDegrees);
+                ret.AngleY = this.AngleY.Combine(rhs.AngleY);
                 ret.AngleYVariance = this.AngleYVariance.Combine(rhs.AngleYVariance);
-                ret.AngleZDegrees = this.AngleZDegrees.Combine(rhs.AngleZDegrees);
+                ret.AngleZ = this.AngleZ.Combine(rhs.AngleZ);
                 ret.AngleZVariance = this.AngleZVariance.Combine(rhs.AngleZVariance);
                 ret.SlopePercent = this.SlopePercent.Combine(rhs.SlopePercent);
                 ret.SlopePercentVariance = this.SlopePercentVariance.Combine(rhs.SlopePercentVariance);
                 ret.Density = this.Density.Combine(rhs.Density);
-                ret.FrequencyPercent = this.FrequencyPercent.Combine(rhs.FrequencyPercent);
+                ret.Frequency = this.Frequency.Combine(rhs.Frequency);
                 ret.SlopeLimit = this.SlopeLimit.Combine(rhs.SlopeLimit);
                 ret.DistanceBelowWater = this.DistanceBelowWater.Combine(rhs.DistanceBelowWater);
                 ret.DistanceAboveWater = this.DistanceAboveWater.Combine(rhs.DistanceAboveWater);
@@ -892,16 +892,16 @@ namespace Mutagen.Bethesda.Starfield
             public bool FootprintSize;
             public bool ScalePercent;
             public bool ScaleVariance;
-            public bool AngleXDegrees;
+            public bool AngleX;
             public bool AngleXVariance;
-            public bool AngleYDegrees;
+            public bool AngleY;
             public bool AngleYVariance;
-            public bool AngleZDegrees;
+            public bool AngleZ;
             public bool AngleZVariance;
             public bool SlopePercent;
             public bool SlopePercentVariance;
             public bool Density;
-            public bool FrequencyPercent;
+            public bool Frequency;
             public bool SlopeLimit;
             public bool DistanceBelowWater;
             public bool DistanceAboveWater;
@@ -921,16 +921,16 @@ namespace Mutagen.Bethesda.Starfield
                 this.FootprintSize = defaultOn;
                 this.ScalePercent = defaultOn;
                 this.ScaleVariance = defaultOn;
-                this.AngleXDegrees = defaultOn;
+                this.AngleX = defaultOn;
                 this.AngleXVariance = defaultOn;
-                this.AngleYDegrees = defaultOn;
+                this.AngleY = defaultOn;
                 this.AngleYVariance = defaultOn;
-                this.AngleZDegrees = defaultOn;
+                this.AngleZ = defaultOn;
                 this.AngleZVariance = defaultOn;
                 this.SlopePercent = defaultOn;
                 this.SlopePercentVariance = defaultOn;
                 this.Density = defaultOn;
-                this.FrequencyPercent = defaultOn;
+                this.Frequency = defaultOn;
                 this.SlopeLimit = defaultOn;
                 this.DistanceBelowWater = defaultOn;
                 this.DistanceAboveWater = defaultOn;
@@ -956,16 +956,16 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((FootprintSize, null));
                 ret.Add((ScalePercent, null));
                 ret.Add((ScaleVariance, null));
-                ret.Add((AngleXDegrees, null));
+                ret.Add((AngleX, null));
                 ret.Add((AngleXVariance, null));
-                ret.Add((AngleYDegrees, null));
+                ret.Add((AngleY, null));
                 ret.Add((AngleYVariance, null));
-                ret.Add((AngleZDegrees, null));
+                ret.Add((AngleZ, null));
                 ret.Add((AngleZVariance, null));
                 ret.Add((SlopePercent, null));
                 ret.Add((SlopePercentVariance, null));
                 ret.Add((Density, null));
-                ret.Add((FrequencyPercent, null));
+                ret.Add((Frequency, null));
                 ret.Add((SlopeLimit, null));
                 ret.Add((DistanceBelowWater, null));
                 ret.Add((DistanceAboveWater, null));
@@ -1048,16 +1048,16 @@ namespace Mutagen.Bethesda.Starfield
         new ObjectPaletteDefaults.FootprintSizes FootprintSize { get; set; }
         new Single ScalePercent { get; set; }
         new Single ScaleVariance { get; set; }
-        new Single AngleXDegrees { get; set; }
+        new Single AngleX { get; set; }
         new Single AngleXVariance { get; set; }
-        new Single AngleYDegrees { get; set; }
+        new Single AngleY { get; set; }
         new Single AngleYVariance { get; set; }
-        new Single AngleZDegrees { get; set; }
+        new Single AngleZ { get; set; }
         new Single AngleZVariance { get; set; }
         new Single SlopePercent { get; set; }
         new Single SlopePercentVariance { get; set; }
         new Single Density { get; set; }
-        new Single FrequencyPercent { get; set; }
+        new Single Frequency { get; set; }
         new Single SlopeLimit { get; set; }
         new Single DistanceBelowWater { get; set; }
         new Single DistanceAboveWater { get; set; }
@@ -1082,16 +1082,16 @@ namespace Mutagen.Bethesda.Starfield
         ObjectPaletteDefaults.FootprintSizes FootprintSize { get; }
         Single ScalePercent { get; }
         Single ScaleVariance { get; }
-        Single AngleXDegrees { get; }
+        Single AngleX { get; }
         Single AngleXVariance { get; }
-        Single AngleYDegrees { get; }
+        Single AngleY { get; }
         Single AngleYVariance { get; }
-        Single AngleZDegrees { get; }
+        Single AngleZ { get; }
         Single AngleZVariance { get; }
         Single SlopePercent { get; }
         Single SlopePercentVariance { get; }
         Single Density { get; }
-        Single FrequencyPercent { get; }
+        Single Frequency { get; }
         Single SlopeLimit { get; }
         Single DistanceBelowWater { get; }
         Single DistanceAboveWater { get; }
@@ -1271,16 +1271,16 @@ namespace Mutagen.Bethesda.Starfield
         FootprintSize = 4,
         ScalePercent = 5,
         ScaleVariance = 6,
-        AngleXDegrees = 7,
+        AngleX = 7,
         AngleXVariance = 8,
-        AngleYDegrees = 9,
+        AngleY = 9,
         AngleYVariance = 10,
-        AngleZDegrees = 11,
+        AngleZ = 11,
         AngleZVariance = 12,
         SlopePercent = 13,
         SlopePercentVariance = 14,
         Density = 15,
-        FrequencyPercent = 16,
+        Frequency = 16,
         SlopeLimit = 17,
         DistanceBelowWater = 18,
         DistanceAboveWater = 19,
@@ -1376,16 +1376,16 @@ namespace Mutagen.Bethesda.Starfield
             item.FootprintSize = default(ObjectPaletteDefaults.FootprintSizes);
             item.ScalePercent = default(Single);
             item.ScaleVariance = default(Single);
-            item.AngleXDegrees = default(Single);
+            item.AngleX = default(Single);
             item.AngleXVariance = default(Single);
-            item.AngleYDegrees = default(Single);
+            item.AngleY = default(Single);
             item.AngleYVariance = default(Single);
-            item.AngleZDegrees = default(Single);
+            item.AngleZ = default(Single);
             item.AngleZVariance = default(Single);
             item.SlopePercent = default(Single);
             item.SlopePercentVariance = default(Single);
             item.Density = default(Single);
-            item.FrequencyPercent = default(Single);
+            item.Frequency = default(Single);
             item.SlopeLimit = default(Single);
             item.DistanceBelowWater = default(Single);
             item.DistanceAboveWater = default(Single);
@@ -1449,16 +1449,16 @@ namespace Mutagen.Bethesda.Starfield
             ret.FootprintSize = item.FootprintSize == rhs.FootprintSize;
             ret.ScalePercent = item.ScalePercent.EqualsWithin(rhs.ScalePercent);
             ret.ScaleVariance = item.ScaleVariance.EqualsWithin(rhs.ScaleVariance);
-            ret.AngleXDegrees = item.AngleXDegrees.EqualsWithin(rhs.AngleXDegrees);
+            ret.AngleX = item.AngleX.EqualsWithin(rhs.AngleX);
             ret.AngleXVariance = item.AngleXVariance.EqualsWithin(rhs.AngleXVariance);
-            ret.AngleYDegrees = item.AngleYDegrees.EqualsWithin(rhs.AngleYDegrees);
+            ret.AngleY = item.AngleY.EqualsWithin(rhs.AngleY);
             ret.AngleYVariance = item.AngleYVariance.EqualsWithin(rhs.AngleYVariance);
-            ret.AngleZDegrees = item.AngleZDegrees.EqualsWithin(rhs.AngleZDegrees);
+            ret.AngleZ = item.AngleZ.EqualsWithin(rhs.AngleZ);
             ret.AngleZVariance = item.AngleZVariance.EqualsWithin(rhs.AngleZVariance);
             ret.SlopePercent = item.SlopePercent.EqualsWithin(rhs.SlopePercent);
             ret.SlopePercentVariance = item.SlopePercentVariance.EqualsWithin(rhs.SlopePercentVariance);
             ret.Density = item.Density.EqualsWithin(rhs.Density);
-            ret.FrequencyPercent = item.FrequencyPercent.EqualsWithin(rhs.FrequencyPercent);
+            ret.Frequency = item.Frequency.EqualsWithin(rhs.Frequency);
             ret.SlopeLimit = item.SlopeLimit.EqualsWithin(rhs.SlopeLimit);
             ret.DistanceBelowWater = item.DistanceBelowWater.EqualsWithin(rhs.DistanceBelowWater);
             ret.DistanceAboveWater = item.DistanceAboveWater.EqualsWithin(rhs.DistanceAboveWater);
@@ -1534,25 +1534,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ScaleVariance, "ScaleVariance");
             }
-            if (printMask?.AngleXDegrees ?? true)
+            if (printMask?.AngleX ?? true)
             {
-                sb.AppendItem(item.AngleXDegrees, "AngleXDegrees");
+                sb.AppendItem(item.AngleX, "AngleX");
             }
             if (printMask?.AngleXVariance ?? true)
             {
                 sb.AppendItem(item.AngleXVariance, "AngleXVariance");
             }
-            if (printMask?.AngleYDegrees ?? true)
+            if (printMask?.AngleY ?? true)
             {
-                sb.AppendItem(item.AngleYDegrees, "AngleYDegrees");
+                sb.AppendItem(item.AngleY, "AngleY");
             }
             if (printMask?.AngleYVariance ?? true)
             {
                 sb.AppendItem(item.AngleYVariance, "AngleYVariance");
             }
-            if (printMask?.AngleZDegrees ?? true)
+            if (printMask?.AngleZ ?? true)
             {
-                sb.AppendItem(item.AngleZDegrees, "AngleZDegrees");
+                sb.AppendItem(item.AngleZ, "AngleZ");
             }
             if (printMask?.AngleZVariance ?? true)
             {
@@ -1570,9 +1570,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Density, "Density");
             }
-            if (printMask?.FrequencyPercent ?? true)
+            if (printMask?.Frequency ?? true)
             {
-                sb.AppendItem(item.FrequencyPercent, "FrequencyPercent");
+                sb.AppendItem(item.Frequency, "Frequency");
             }
             if (printMask?.SlopeLimit ?? true)
             {
@@ -1623,25 +1623,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ScaleVariance.EqualsWithin(rhs.ScaleVariance)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleXDegrees) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleX) ?? true))
             {
-                if (!lhs.AngleXDegrees.EqualsWithin(rhs.AngleXDegrees)) return false;
+                if (!lhs.AngleX.EqualsWithin(rhs.AngleX)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleXVariance) ?? true))
             {
                 if (!lhs.AngleXVariance.EqualsWithin(rhs.AngleXVariance)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleYDegrees) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleY) ?? true))
             {
-                if (!lhs.AngleYDegrees.EqualsWithin(rhs.AngleYDegrees)) return false;
+                if (!lhs.AngleY.EqualsWithin(rhs.AngleY)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleYVariance) ?? true))
             {
                 if (!lhs.AngleYVariance.EqualsWithin(rhs.AngleYVariance)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleZDegrees) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleZ) ?? true))
             {
-                if (!lhs.AngleZDegrees.EqualsWithin(rhs.AngleZDegrees)) return false;
+                if (!lhs.AngleZ.EqualsWithin(rhs.AngleZ)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleZVariance) ?? true))
             {
@@ -1659,9 +1659,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Density.EqualsWithin(rhs.Density)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.FrequencyPercent) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.Frequency) ?? true))
             {
-                if (!lhs.FrequencyPercent.EqualsWithin(rhs.FrequencyPercent)) return false;
+                if (!lhs.Frequency.EqualsWithin(rhs.Frequency)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.SlopeLimit) ?? true))
             {
@@ -1688,16 +1688,16 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.FootprintSize);
             hash.Add(item.ScalePercent);
             hash.Add(item.ScaleVariance);
-            hash.Add(item.AngleXDegrees);
+            hash.Add(item.AngleX);
             hash.Add(item.AngleXVariance);
-            hash.Add(item.AngleYDegrees);
+            hash.Add(item.AngleY);
             hash.Add(item.AngleYVariance);
-            hash.Add(item.AngleZDegrees);
+            hash.Add(item.AngleZ);
             hash.Add(item.AngleZVariance);
             hash.Add(item.SlopePercent);
             hash.Add(item.SlopePercentVariance);
             hash.Add(item.Density);
-            hash.Add(item.FrequencyPercent);
+            hash.Add(item.Frequency);
             hash.Add(item.SlopeLimit);
             hash.Add(item.DistanceBelowWater);
             hash.Add(item.DistanceAboveWater);
@@ -1761,25 +1761,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ScaleVariance = rhs.ScaleVariance;
             }
-            if ((copyMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleXDegrees) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleX) ?? true))
             {
-                item.AngleXDegrees = rhs.AngleXDegrees;
+                item.AngleX = rhs.AngleX;
             }
             if ((copyMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleXVariance) ?? true))
             {
                 item.AngleXVariance = rhs.AngleXVariance;
             }
-            if ((copyMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleYDegrees) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleY) ?? true))
             {
-                item.AngleYDegrees = rhs.AngleYDegrees;
+                item.AngleY = rhs.AngleY;
             }
             if ((copyMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleYVariance) ?? true))
             {
                 item.AngleYVariance = rhs.AngleYVariance;
             }
-            if ((copyMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleZDegrees) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleZ) ?? true))
             {
-                item.AngleZDegrees = rhs.AngleZDegrees;
+                item.AngleZ = rhs.AngleZ;
             }
             if ((copyMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.AngleZVariance) ?? true))
             {
@@ -1797,9 +1797,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Density = rhs.Density;
             }
-            if ((copyMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.FrequencyPercent) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.Frequency) ?? true))
             {
-                item.FrequencyPercent = rhs.FrequencyPercent;
+                item.Frequency = rhs.Frequency;
             }
             if ((copyMask?.GetShouldTranslate((int)ObjectPaletteDefaults_FieldIndex.SlopeLimit) ?? true))
             {
@@ -1946,34 +1946,22 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.ScaleVariance);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.AngleXDegrees,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.AngleX);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.AngleXVariance,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.AngleXVariance);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.AngleYDegrees,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.AngleY);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.AngleYVariance,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.AngleYVariance);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.AngleZDegrees,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.AngleZ);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.AngleZVariance,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.AngleZVariance);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.SlopePercent);
@@ -1985,14 +1973,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.Density);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.FrequencyPercent,
-                divisor: null,
-                multiplier: 100f);
+                item: item.Frequency);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.SlopeLimit,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.SlopeLimit);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.DistanceBelowWater);
@@ -2050,41 +2034,17 @@ namespace Mutagen.Bethesda.Starfield
                 length: 4);
             item.ScalePercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.ScaleVariance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.AngleXDegrees = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
-            item.AngleXVariance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
-            item.AngleYDegrees = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
-            item.AngleYVariance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
-            item.AngleZDegrees = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
-            item.AngleZVariance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
+            item.AngleX = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.AngleXVariance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.AngleY = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.AngleYVariance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.AngleZ = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.AngleZVariance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.SlopePercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.SlopePercentVariance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Density = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.FrequencyPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: null,
-                divisor: 100f);
-            item.SlopeLimit = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
+            item.Frequency = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.SlopeLimit = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.DistanceBelowWater = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.DistanceAboveWater = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
         }
@@ -2159,17 +2119,17 @@ namespace Mutagen.Bethesda.Starfield
         public ObjectPaletteDefaults.FootprintSizes FootprintSize => (ObjectPaletteDefaults.FootprintSizes)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x10, 0x4));
         public Single ScalePercent => _structData.Slice(0x14, 0x4).Float();
         public Single ScaleVariance => _structData.Slice(0x18, 0x4).Float();
-        public Single AngleXDegrees => _structData.Slice(0x1C, 0x4).Float() * 57.2958f;
-        public Single AngleXVariance => _structData.Slice(0x20, 0x4).Float() * 57.2958f;
-        public Single AngleYDegrees => _structData.Slice(0x24, 0x4).Float() * 57.2958f;
-        public Single AngleYVariance => _structData.Slice(0x28, 0x4).Float() * 57.2958f;
-        public Single AngleZDegrees => _structData.Slice(0x2C, 0x4).Float() * 57.2958f;
-        public Single AngleZVariance => _structData.Slice(0x30, 0x4).Float() * 57.2958f;
+        public Single AngleX => _structData.Slice(0x1C, 0x4).Float();
+        public Single AngleXVariance => _structData.Slice(0x20, 0x4).Float();
+        public Single AngleY => _structData.Slice(0x24, 0x4).Float();
+        public Single AngleYVariance => _structData.Slice(0x28, 0x4).Float();
+        public Single AngleZ => _structData.Slice(0x2C, 0x4).Float();
+        public Single AngleZVariance => _structData.Slice(0x30, 0x4).Float();
         public Single SlopePercent => _structData.Slice(0x34, 0x4).Float();
         public Single SlopePercentVariance => _structData.Slice(0x38, 0x4).Float();
         public Single Density => _structData.Slice(0x3C, 0x4).Float();
-        public Single FrequencyPercent => _structData.Slice(0x40, 0x4).Float() / 100f;
-        public Single SlopeLimit => _structData.Slice(0x44, 0x4).Float() * 57.2958f;
+        public Single Frequency => _structData.Slice(0x40, 0x4).Float();
+        public Single SlopeLimit => _structData.Slice(0x44, 0x4).Float();
         public Single DistanceBelowWater => _structData.Slice(0x48, 0x4).Float();
         public Single DistanceAboveWater => _structData.Slice(0x4C, 0x4).Float();
         partial void CustomFactoryEnd(

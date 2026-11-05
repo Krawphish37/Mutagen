@@ -335,9 +335,9 @@
       <String name="Name" recordType="BODS" nullable="false" />
       <Data recordType="BODV" >
         <Fields>
-          <Color name="Color1" binaryType="NoAlphaFloat" unknown="true" />
-          <Color name="Color2" binaryType="NoAlphaFloat" unknown="true" />
-          <Color name="Color3" binaryType="NoAlphaFloat" unknown="true" />
+          <P3Float name="Color1" unknown="true" />
+          <P3Float name="Color2" unknown="true" />
+          <P3Float name="Color3" unknown="true" />
           <Int32 name="Unknown" unknown="true" />
         </Fields>
       </Data>
@@ -539,7 +539,7 @@
       <Data>
         <Fields>
           <UInt64 name="Unknown1" />
-          <Float name="MassInSm" divisor="1.98847E30" multiplier="1" />
+          <Float name="MassInKg" />
           <Float name="RadiusInKm" />
           <Float name="Unknown2" />
         </Fields>
@@ -553,7 +553,7 @@
           <String name="CatalogueId" binaryType="PrependLength" />
           <String name="SpectralClass" binaryType="PrependLength" />
           <Float name="Magnitude" />
-          <Float name="MassInSm" divisor="1.98847E30" multiplier="1" />
+          <Float name="MassInKg" />
           <Float name="InnerHabitableZone" />
           <Float name="OuterHabitableZone" />
           <UInt32 name="HIP" />

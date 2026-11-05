@@ -54,8 +54,8 @@ namespace Mutagen.Bethesda.Starfield
         #region GravityWell
         public Double GravityWell { get; set; } = default(Double);
         #endregion
-        #region MassComparedToEarth
-        public Single MassComparedToEarth { get; set; } = default(Single);
+        #region MassInKg
+        public Single MassInKg { get; set; } = default(Single);
         #endregion
         #region RadiusInKilometers
         public Single RadiusInKilometers { get; set; } = default(Single);
@@ -106,7 +106,7 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.GravityWell = initialValue;
-                this.MassComparedToEarth = initialValue;
+                this.MassInKg = initialValue;
                 this.RadiusInKilometers = initialValue;
                 this.Gravity = initialValue;
                 this.Unknown2 = initialValue;
@@ -114,13 +114,13 @@ namespace Mutagen.Bethesda.Starfield
 
             public Mask(
                 TItem GravityWell,
-                TItem MassComparedToEarth,
+                TItem MassInKg,
                 TItem RadiusInKilometers,
                 TItem Gravity,
                 TItem Unknown2)
             {
                 this.GravityWell = GravityWell;
-                this.MassComparedToEarth = MassComparedToEarth;
+                this.MassInKg = MassInKg;
                 this.RadiusInKilometers = RadiusInKilometers;
                 this.Gravity = Gravity;
                 this.Unknown2 = Unknown2;
@@ -136,7 +136,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem GravityWell;
-            public TItem MassComparedToEarth;
+            public TItem MassInKg;
             public TItem RadiusInKilometers;
             public TItem Gravity;
             public TItem Unknown2;
@@ -153,7 +153,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.GravityWell, rhs.GravityWell)) return false;
-                if (!object.Equals(this.MassComparedToEarth, rhs.MassComparedToEarth)) return false;
+                if (!object.Equals(this.MassInKg, rhs.MassInKg)) return false;
                 if (!object.Equals(this.RadiusInKilometers, rhs.RadiusInKilometers)) return false;
                 if (!object.Equals(this.Gravity, rhs.Gravity)) return false;
                 if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
@@ -163,7 +163,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.GravityWell);
-                hash.Add(this.MassComparedToEarth);
+                hash.Add(this.MassInKg);
                 hash.Add(this.RadiusInKilometers);
                 hash.Add(this.Gravity);
                 hash.Add(this.Unknown2);
@@ -176,7 +176,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.GravityWell)) return false;
-                if (!eval(this.MassComparedToEarth)) return false;
+                if (!eval(this.MassInKg)) return false;
                 if (!eval(this.RadiusInKilometers)) return false;
                 if (!eval(this.Gravity)) return false;
                 if (!eval(this.Unknown2)) return false;
@@ -188,7 +188,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.GravityWell)) return true;
-                if (eval(this.MassComparedToEarth)) return true;
+                if (eval(this.MassInKg)) return true;
                 if (eval(this.RadiusInKilometers)) return true;
                 if (eval(this.Gravity)) return true;
                 if (eval(this.Unknown2)) return true;
@@ -207,7 +207,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.GravityWell = eval(this.GravityWell);
-                obj.MassComparedToEarth = eval(this.MassComparedToEarth);
+                obj.MassInKg = eval(this.MassInKg);
                 obj.RadiusInKilometers = eval(this.RadiusInKilometers);
                 obj.Gravity = eval(this.Gravity);
                 obj.Unknown2 = eval(this.Unknown2);
@@ -233,9 +233,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(GravityWell, "GravityWell");
                     }
-                    if (printMask?.MassComparedToEarth ?? true)
+                    if (printMask?.MassInKg ?? true)
                     {
-                        sb.AppendItem(MassComparedToEarth, "MassComparedToEarth");
+                        sb.AppendItem(MassInKg, "MassInKg");
                     }
                     if (printMask?.RadiusInKilometers ?? true)
                     {
@@ -274,7 +274,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? GravityWell;
-            public Exception? MassComparedToEarth;
+            public Exception? MassInKg;
             public Exception? RadiusInKilometers;
             public Exception? Gravity;
             public Exception? Unknown2;
@@ -288,8 +288,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case OrbitedData_FieldIndex.GravityWell:
                         return GravityWell;
-                    case OrbitedData_FieldIndex.MassComparedToEarth:
-                        return MassComparedToEarth;
+                    case OrbitedData_FieldIndex.MassInKg:
+                        return MassInKg;
                     case OrbitedData_FieldIndex.RadiusInKilometers:
                         return RadiusInKilometers;
                     case OrbitedData_FieldIndex.Gravity:
@@ -309,8 +309,8 @@ namespace Mutagen.Bethesda.Starfield
                     case OrbitedData_FieldIndex.GravityWell:
                         this.GravityWell = ex;
                         break;
-                    case OrbitedData_FieldIndex.MassComparedToEarth:
-                        this.MassComparedToEarth = ex;
+                    case OrbitedData_FieldIndex.MassInKg:
+                        this.MassInKg = ex;
                         break;
                     case OrbitedData_FieldIndex.RadiusInKilometers:
                         this.RadiusInKilometers = ex;
@@ -334,8 +334,8 @@ namespace Mutagen.Bethesda.Starfield
                     case OrbitedData_FieldIndex.GravityWell:
                         this.GravityWell = (Exception?)obj;
                         break;
-                    case OrbitedData_FieldIndex.MassComparedToEarth:
-                        this.MassComparedToEarth = (Exception?)obj;
+                    case OrbitedData_FieldIndex.MassInKg:
+                        this.MassInKg = (Exception?)obj;
                         break;
                     case OrbitedData_FieldIndex.RadiusInKilometers:
                         this.RadiusInKilometers = (Exception?)obj;
@@ -355,7 +355,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (GravityWell != null) return true;
-                if (MassComparedToEarth != null) return true;
+                if (MassInKg != null) return true;
                 if (RadiusInKilometers != null) return true;
                 if (Gravity != null) return true;
                 if (Unknown2 != null) return true;
@@ -388,7 +388,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(GravityWell, "GravityWell");
                 }
                 {
-                    sb.AppendItem(MassComparedToEarth, "MassComparedToEarth");
+                    sb.AppendItem(MassInKg, "MassInKg");
                 }
                 {
                     sb.AppendItem(RadiusInKilometers, "RadiusInKilometers");
@@ -408,7 +408,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.GravityWell = this.GravityWell.Combine(rhs.GravityWell);
-                ret.MassComparedToEarth = this.MassComparedToEarth.Combine(rhs.MassComparedToEarth);
+                ret.MassInKg = this.MassInKg.Combine(rhs.MassInKg);
                 ret.RadiusInKilometers = this.RadiusInKilometers.Combine(rhs.RadiusInKilometers);
                 ret.Gravity = this.Gravity.Combine(rhs.Gravity);
                 ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
@@ -436,7 +436,7 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool GravityWell;
-            public bool MassComparedToEarth;
+            public bool MassInKg;
             public bool RadiusInKilometers;
             public bool Gravity;
             public bool Unknown2;
@@ -450,7 +450,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.GravityWell = defaultOn;
-                this.MassComparedToEarth = defaultOn;
+                this.MassInKg = defaultOn;
                 this.RadiusInKilometers = defaultOn;
                 this.Gravity = defaultOn;
                 this.Unknown2 = defaultOn;
@@ -470,7 +470,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((GravityWell, null));
-                ret.Add((MassComparedToEarth, null));
+                ret.Add((MassInKg, null));
                 ret.Add((RadiusInKilometers, null));
                 ret.Add((Gravity, null));
                 ret.Add((Unknown2, null));
@@ -547,7 +547,7 @@ namespace Mutagen.Bethesda.Starfield
         IOrbitedDataGetter
     {
         new Double GravityWell { get; set; }
-        new Single MassComparedToEarth { get; set; }
+        new Single MassInKg { get; set; }
         new Single RadiusInKilometers { get; set; }
         new Single Gravity { get; set; }
         new Int32 Unknown2 { get; set; }
@@ -566,7 +566,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => OrbitedData_Registration.Instance;
         Double GravityWell { get; }
-        Single MassComparedToEarth { get; }
+        Single MassInKg { get; }
         Single RadiusInKilometers { get; }
         Single Gravity { get; }
         Int32 Unknown2 { get; }
@@ -740,7 +740,7 @@ namespace Mutagen.Bethesda.Starfield
     internal enum OrbitedData_FieldIndex
     {
         GravityWell = 0,
-        MassComparedToEarth = 1,
+        MassInKg = 1,
         RadiusInKilometers = 2,
         Gravity = 3,
         Unknown2 = 4,
@@ -830,7 +830,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.GravityWell = default(Double);
-            item.MassComparedToEarth = default(Single);
+            item.MassInKg = default(Single);
             item.RadiusInKilometers = default(Single);
             item.Gravity = default(Single);
             item.Unknown2 = default(Int32);
@@ -888,7 +888,7 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.GravityWell = item.GravityWell.EqualsWithin(rhs.GravityWell);
-            ret.MassComparedToEarth = item.MassComparedToEarth.EqualsWithin(rhs.MassComparedToEarth);
+            ret.MassInKg = item.MassInKg.EqualsWithin(rhs.MassInKg);
             ret.RadiusInKilometers = item.RadiusInKilometers.EqualsWithin(rhs.RadiusInKilometers);
             ret.Gravity = item.Gravity.EqualsWithin(rhs.Gravity);
             ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
@@ -940,9 +940,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.GravityWell, "GravityWell");
             }
-            if (printMask?.MassComparedToEarth ?? true)
+            if (printMask?.MassInKg ?? true)
             {
-                sb.AppendItem(item.MassComparedToEarth, "MassComparedToEarth");
+                sb.AppendItem(item.MassInKg, "MassInKg");
             }
             if (printMask?.RadiusInKilometers ?? true)
             {
@@ -969,9 +969,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.GravityWell.EqualsWithin(rhs.GravityWell)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)OrbitedData_FieldIndex.MassComparedToEarth) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)OrbitedData_FieldIndex.MassInKg) ?? true))
             {
-                if (!lhs.MassComparedToEarth.EqualsWithin(rhs.MassComparedToEarth)) return false;
+                if (!lhs.MassInKg.EqualsWithin(rhs.MassInKg)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)OrbitedData_FieldIndex.RadiusInKilometers) ?? true))
             {
@@ -992,7 +992,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.GravityWell);
-            hash.Add(item.MassComparedToEarth);
+            hash.Add(item.MassInKg);
             hash.Add(item.RadiusInKilometers);
             hash.Add(item.Gravity);
             hash.Add(item.Unknown2);
@@ -1032,9 +1032,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.GravityWell = rhs.GravityWell;
             }
-            if ((copyMask?.GetShouldTranslate((int)OrbitedData_FieldIndex.MassComparedToEarth) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)OrbitedData_FieldIndex.MassInKg) ?? true))
             {
-                item.MassComparedToEarth = rhs.MassComparedToEarth;
+                item.MassInKg = rhs.MassInKg;
             }
             if ((copyMask?.GetShouldTranslate((int)OrbitedData_FieldIndex.RadiusInKilometers) ?? true))
             {
@@ -1159,9 +1159,7 @@ namespace Mutagen.Bethesda.Starfield
             writer.Write(item.GravityWell);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.MassComparedToEarth,
-                divisor: null,
-                multiplier: 5.972E+24f);
+                item: item.MassInKg);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.RadiusInKilometers);
@@ -1210,10 +1208,7 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.GravityWell = frame.ReadDouble();
-            item.MassComparedToEarth = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: null,
-                divisor: 5.972E+24f);
+            item.MassInKg = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.RadiusInKilometers = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Gravity = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Unknown2 = frame.ReadInt32();
@@ -1283,7 +1278,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public Double GravityWell => BinaryPrimitives.ReadDoubleLittleEndian(_structData.Slice(0x0, 0x8));
-        public Single MassComparedToEarth => _structData.Slice(0x8, 0x4).Float() / 5.972E+24f;
+        public Single MassInKg => _structData.Slice(0x8, 0x4).Float();
         public Single RadiusInKilometers => _structData.Slice(0xC, 0x4).Float();
         public Single Gravity => _structData.Slice(0x10, 0x4).Float();
         public Int32 Unknown2 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x14, 0x4));

@@ -8,7 +8,8 @@
             <Interface>IOwner</Interface>
           </FormLink>
           <Int32 name="Unknown" />
-          <Bool name="NoCrime" byteLength="4" importantByteLength="1" />
+          <Bool name="NoCrime" byteLength="1" />
+          <ByteArray name="NoCrimeUnused" byteLength="3" nullable="false" />
         </Fields>
       </Data>
     </Fields>

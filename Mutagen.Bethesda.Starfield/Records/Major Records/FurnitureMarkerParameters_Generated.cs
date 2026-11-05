@@ -1167,9 +1167,7 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.Offset);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.RotationZ,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.RotationZ);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.Keyword);
@@ -1215,10 +1213,7 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.Offset = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.RotationZ = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
+            item.RotationZ = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Keyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.EntryTypes = EnumBinaryTranslation<Furniture.EntryParameterType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
@@ -1293,7 +1288,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public P3Float Offset => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x0, 0xC));
-        public Single RotationZ => _structData.Slice(0xC, 0x4).Float() * 57.2958f;
+        public Single RotationZ => _structData.Slice(0xC, 0x4).Float();
         public IFormLinkGetter<IKeywordGetter> Keyword => FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _structData.Span.Slice(0x10, 0x4));
         public Furniture.EntryParameterType EntryTypes => (Furniture.EntryParameterType)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x14, 0x4));
         public Furniture.EntryParameterType ExitTypes => (Furniture.EntryParameterType)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x18, 0x4));

@@ -4,7 +4,7 @@
     <Fields>
       <FormLink name="Parent" refName="MaterialType" recordType="PNAM" />
       <String name="Name" recordType="MNAM" />
-      <Color name="HavokDisplayColor" recordType="CNAM" binaryType="NoAlphaFloat" />
+      <P3Float name="HavokDisplayColor" recordType="CNAM" />
       <Float name="Buoyancy" recordType="BNAM" />
       <Enum name="Flags" enumName="MaterialType.Flag" recordType="FNAM" />
       <FormLink name="HavokImpactDataSet" recordType="HNAM" refName="ImpactDataSet" />

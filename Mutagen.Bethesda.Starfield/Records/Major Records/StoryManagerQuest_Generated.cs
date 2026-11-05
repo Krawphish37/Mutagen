@@ -62,10 +62,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IQuestGetter> IStoryManagerQuestGetter.Quest => this.Quest;
         #endregion
-        #region HoursUntilReset
-        public Single? HoursUntilReset { get; set; }
+        #region DaysUntilReset
+        public Single? DaysUntilReset { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Single? IStoryManagerQuestGetter.HoursUntilReset => this.HoursUntilReset;
+        Single? IStoryManagerQuestGetter.DaysUntilReset => this.DaysUntilReset;
         #endregion
 
         #region To String
@@ -107,15 +107,15 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.Quest = initialValue;
-                this.HoursUntilReset = initialValue;
+                this.DaysUntilReset = initialValue;
             }
 
             public Mask(
                 TItem Quest,
-                TItem HoursUntilReset)
+                TItem DaysUntilReset)
             {
                 this.Quest = Quest;
-                this.HoursUntilReset = HoursUntilReset;
+                this.DaysUntilReset = DaysUntilReset;
             }
 
             #pragma warning disable CS8618
@@ -128,7 +128,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem Quest;
-            public TItem HoursUntilReset;
+            public TItem DaysUntilReset;
             #endregion
 
             #region Equals
@@ -142,14 +142,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.Quest, rhs.Quest)) return false;
-                if (!object.Equals(this.HoursUntilReset, rhs.HoursUntilReset)) return false;
+                if (!object.Equals(this.DaysUntilReset, rhs.DaysUntilReset)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.Quest);
-                hash.Add(this.HoursUntilReset);
+                hash.Add(this.DaysUntilReset);
                 return hash.ToHashCode();
             }
 
@@ -159,7 +159,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.Quest)) return false;
-                if (!eval(this.HoursUntilReset)) return false;
+                if (!eval(this.DaysUntilReset)) return false;
                 return true;
             }
             #endregion
@@ -168,7 +168,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.Quest)) return true;
-                if (eval(this.HoursUntilReset)) return true;
+                if (eval(this.DaysUntilReset)) return true;
                 return false;
             }
             #endregion
@@ -184,7 +184,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.Quest = eval(this.Quest);
-                obj.HoursUntilReset = eval(this.HoursUntilReset);
+                obj.DaysUntilReset = eval(this.DaysUntilReset);
             }
             #endregion
 
@@ -207,9 +207,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Quest, "Quest");
                     }
-                    if (printMask?.HoursUntilReset ?? true)
+                    if (printMask?.DaysUntilReset ?? true)
                     {
-                        sb.AppendItem(HoursUntilReset, "HoursUntilReset");
+                        sb.AppendItem(DaysUntilReset, "DaysUntilReset");
                     }
                 }
             }
@@ -236,7 +236,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? Quest;
-            public Exception? HoursUntilReset;
+            public Exception? DaysUntilReset;
             #endregion
 
             #region IErrorMask
@@ -247,8 +247,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case StoryManagerQuest_FieldIndex.Quest:
                         return Quest;
-                    case StoryManagerQuest_FieldIndex.HoursUntilReset:
-                        return HoursUntilReset;
+                    case StoryManagerQuest_FieldIndex.DaysUntilReset:
+                        return DaysUntilReset;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -262,8 +262,8 @@ namespace Mutagen.Bethesda.Starfield
                     case StoryManagerQuest_FieldIndex.Quest:
                         this.Quest = ex;
                         break;
-                    case StoryManagerQuest_FieldIndex.HoursUntilReset:
-                        this.HoursUntilReset = ex;
+                    case StoryManagerQuest_FieldIndex.DaysUntilReset:
+                        this.DaysUntilReset = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -278,8 +278,8 @@ namespace Mutagen.Bethesda.Starfield
                     case StoryManagerQuest_FieldIndex.Quest:
                         this.Quest = (Exception?)obj;
                         break;
-                    case StoryManagerQuest_FieldIndex.HoursUntilReset:
-                        this.HoursUntilReset = (Exception?)obj;
+                    case StoryManagerQuest_FieldIndex.DaysUntilReset:
+                        this.DaysUntilReset = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -290,7 +290,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Quest != null) return true;
-                if (HoursUntilReset != null) return true;
+                if (DaysUntilReset != null) return true;
                 return false;
             }
             #endregion
@@ -320,7 +320,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Quest, "Quest");
                 }
                 {
-                    sb.AppendItem(HoursUntilReset, "HoursUntilReset");
+                    sb.AppendItem(DaysUntilReset, "DaysUntilReset");
                 }
             }
             #endregion
@@ -331,7 +331,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Quest = this.Quest.Combine(rhs.Quest);
-                ret.HoursUntilReset = this.HoursUntilReset.Combine(rhs.HoursUntilReset);
+                ret.DaysUntilReset = this.DaysUntilReset.Combine(rhs.DaysUntilReset);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -356,7 +356,7 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool Quest;
-            public bool HoursUntilReset;
+            public bool DaysUntilReset;
             #endregion
 
             #region Ctors
@@ -367,7 +367,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.Quest = defaultOn;
-                this.HoursUntilReset = defaultOn;
+                this.DaysUntilReset = defaultOn;
             }
 
             #endregion
@@ -384,7 +384,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((Quest, null));
-                ret.Add((HoursUntilReset, null));
+                ret.Add((DaysUntilReset, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -464,7 +464,7 @@ namespace Mutagen.Bethesda.Starfield
         IStoryManagerQuestGetter
     {
         new IFormLinkNullable<IQuestGetter> Quest { get; set; }
-        new Single? HoursUntilReset { get; set; }
+        new Single? DaysUntilReset { get; set; }
     }
 
     public partial interface IStoryManagerQuestGetter :
@@ -481,7 +481,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => StoryManagerQuest_Registration.Instance;
         IFormLinkNullableGetter<IQuestGetter> Quest { get; }
-        Single? HoursUntilReset { get; }
+        Single? DaysUntilReset { get; }
 
     }
 
@@ -652,7 +652,7 @@ namespace Mutagen.Bethesda.Starfield
     internal enum StoryManagerQuest_FieldIndex
     {
         Quest = 0,
-        HoursUntilReset = 1,
+        DaysUntilReset = 1,
     }
     #endregion
 
@@ -740,7 +740,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Quest.Clear();
-            item.HoursUntilReset = default;
+            item.DaysUntilReset = default;
         }
         
         #region Mutagen
@@ -792,7 +792,7 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Quest = item.Quest.Equals(rhs.Quest);
-            ret.HoursUntilReset = item.HoursUntilReset.EqualsWithin(rhs.HoursUntilReset);
+            ret.DaysUntilReset = item.DaysUntilReset.EqualsWithin(rhs.DaysUntilReset);
         }
         
         public string Print(
@@ -841,10 +841,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Quest.FormKeyNullable, "Quest");
             }
-            if ((printMask?.HoursUntilReset ?? true)
-                && item.HoursUntilReset is {} HoursUntilResetItem)
+            if ((printMask?.DaysUntilReset ?? true)
+                && item.DaysUntilReset is {} DaysUntilResetItem)
             {
-                sb.AppendItem(HoursUntilResetItem, "HoursUntilReset");
+                sb.AppendItem(DaysUntilResetItem, "DaysUntilReset");
             }
         }
         
@@ -859,9 +859,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Quest.Equals(rhs.Quest)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)StoryManagerQuest_FieldIndex.HoursUntilReset) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)StoryManagerQuest_FieldIndex.DaysUntilReset) ?? true))
             {
-                if (!lhs.HoursUntilReset.EqualsWithin(rhs.HoursUntilReset)) return false;
+                if (!lhs.DaysUntilReset.EqualsWithin(rhs.DaysUntilReset)) return false;
             }
             return true;
         }
@@ -870,9 +870,9 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Quest);
-            if (item.HoursUntilReset is {} HoursUntilResetitem)
+            if (item.DaysUntilReset is {} DaysUntilResetitem)
             {
-                hash.Add(HoursUntilResetitem);
+                hash.Add(DaysUntilResetitem);
             }
             return hash.ToHashCode();
         }
@@ -914,9 +914,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Quest.SetTo(rhs.Quest.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)StoryManagerQuest_FieldIndex.HoursUntilReset) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)StoryManagerQuest_FieldIndex.DaysUntilReset) ?? true))
             {
-                item.HoursUntilReset = rhs.HoursUntilReset;
+                item.DaysUntilReset = rhs.DaysUntilReset;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1033,10 +1033,8 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.NNAM));
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.HoursUntilReset,
-                header: translationParams.ConvertToCustom(RecordTypes.RNAM),
-                divisor: null,
-                multiplier: 24f);
+                item: item.DaysUntilReset,
+                header: translationParams.ConvertToCustom(RecordTypes.RNAM));
         }
 
         public void Write(
@@ -1088,13 +1086,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.RNAM:
                 {
-                    if (lastParsed.ShortCircuit((int)StoryManagerQuest_FieldIndex.HoursUntilReset, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)StoryManagerQuest_FieldIndex.DaysUntilReset, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.HoursUntilReset = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                        reader: frame.SpawnWithLength(contentLength),
-                        multiplier: null,
-                        divisor: 24f);
-                    return (int)StoryManagerQuest_FieldIndex.HoursUntilReset;
+                    item.DaysUntilReset = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)StoryManagerQuest_FieldIndex.DaysUntilReset;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1169,9 +1164,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _QuestLocation;
         public IFormLinkNullableGetter<IQuestGetter> Quest => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IQuestGetter>(_package, _recordData, _QuestLocation);
         #endregion
-        #region HoursUntilReset
-        private int? _HoursUntilResetLocation;
-        public Single? HoursUntilReset => _HoursUntilResetLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _HoursUntilResetLocation.Value, _package.MetaData.Constants).Float() / 24f : default(Single?);
+        #region DaysUntilReset
+        private int? _DaysUntilResetLocation;
+        public Single? DaysUntilReset => _DaysUntilResetLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DaysUntilResetLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1244,9 +1239,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.RNAM:
                 {
-                    if (lastParsed.ShortCircuit((int)StoryManagerQuest_FieldIndex.HoursUntilReset, translationParams)) return ParseResult.Stop;
-                    _HoursUntilResetLocation = (stream.Position - offset);
-                    return (int)StoryManagerQuest_FieldIndex.HoursUntilReset;
+                    if (lastParsed.ShortCircuit((int)StoryManagerQuest_FieldIndex.DaysUntilReset, translationParams)) return ParseResult.Stop;
+                    _DaysUntilResetLocation = (stream.Position - offset);
+                    return (int)StoryManagerQuest_FieldIndex.DaysUntilReset;
                 }
                 default:
                     return ParseResult.Stop;

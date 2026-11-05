@@ -30,7 +30,7 @@
   <Object name="StoryManagerQuest" objType="Subrecord">
     <Fields>
       <FormLink name="Quest" recordType="NNAM" refName="Quest" />
-      <Float name="HoursUntilReset" recordType="RNAM" divisor="24" />
+      <Float name="DaysUntilReset" recordType="RNAM" />
     </Fields>
   </Object>
   <Object name="StoryManagerEventNode" recordType="SMEN" baseClass="AStoryManagerNode" objType="Record">

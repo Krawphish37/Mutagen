@@ -55,7 +55,7 @@
   <Object name="FurnitureMarkerParameters" objType="Subrecord">
     <Fields>
       <P3Float name="Offset" />
-      <Float name="RotationZ" isRotation="true" />
+      <Float name="RotationZ" />
       <FormLink name="Keyword" refName="Keyword" />
       <Enum name="EntryTypes" byteLength="4" enumName="Furniture.EntryParameterType" />
       <Enum name="ExitTypes" byteLength="4" enumName="Furniture.EntryParameterType" />
