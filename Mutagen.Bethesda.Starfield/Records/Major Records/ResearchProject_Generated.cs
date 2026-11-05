@@ -122,6 +122,9 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
+        #region ConditionsHaveNoCount
+        public Boolean ConditionsHaveNoCount { get; set; } = default(Boolean);
+        #endregion
         #region RequiredItems
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ExtendedList<ResearchProjectRequiredItem>? _RequiredItems;
@@ -226,6 +229,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Description = initialValue;
                 this.WorkbenchKeyword = initialValue;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
+                this.ConditionsHaveNoCount = initialValue;
                 this.RequiredItems = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ResearchProjectRequiredItem.Mask<TItem>?>>?>(initialValue, []);
                 this.RequiredPerks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ResearchProjectRequiredPerk.Mask<TItem>?>>?>(initialValue, []);
                 this.CreatedItem = initialValue;
@@ -250,6 +254,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Description,
                 TItem WorkbenchKeyword,
                 TItem Conditions,
+                TItem ConditionsHaveNoCount,
                 TItem RequiredItems,
                 TItem RequiredPerks,
                 TItem CreatedItem,
@@ -273,6 +278,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Description = Description;
                 this.WorkbenchKeyword = WorkbenchKeyword;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
+                this.ConditionsHaveNoCount = ConditionsHaveNoCount;
                 this.RequiredItems = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ResearchProjectRequiredItem.Mask<TItem>?>>?>(RequiredItems, []);
                 this.RequiredPerks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ResearchProjectRequiredPerk.Mask<TItem>?>>?>(RequiredPerks, []);
                 this.CreatedItem = CreatedItem;
@@ -296,6 +302,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Description;
             public TItem WorkbenchKeyword;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
+            public TItem ConditionsHaveNoCount;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ResearchProjectRequiredItem.Mask<TItem>?>>?>? RequiredItems;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ResearchProjectRequiredPerk.Mask<TItem>?>>?>? RequiredPerks;
             public TItem CreatedItem;
@@ -321,6 +328,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Description, rhs.Description)) return false;
                 if (!object.Equals(this.WorkbenchKeyword, rhs.WorkbenchKeyword)) return false;
                 if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
+                if (!object.Equals(this.ConditionsHaveNoCount, rhs.ConditionsHaveNoCount)) return false;
                 if (!object.Equals(this.RequiredItems, rhs.RequiredItems)) return false;
                 if (!object.Equals(this.RequiredPerks, rhs.RequiredPerks)) return false;
                 if (!object.Equals(this.CreatedItem, rhs.CreatedItem)) return false;
@@ -338,6 +346,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Description);
                 hash.Add(this.WorkbenchKeyword);
                 hash.Add(this.Conditions);
+                hash.Add(this.ConditionsHaveNoCount);
                 hash.Add(this.RequiredItems);
                 hash.Add(this.RequiredPerks);
                 hash.Add(this.CreatedItem);
@@ -371,6 +380,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (!eval(this.ConditionsHaveNoCount)) return false;
                 if (this.RequiredItems != null)
                 {
                     if (!eval(this.RequiredItems.Overall)) return false;
@@ -434,6 +444,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (eval(this.ConditionsHaveNoCount)) return true;
                 if (this.RequiredItems != null)
                 {
                     if (eval(this.RequiredItems.Overall)) return true;
@@ -507,6 +518,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                obj.ConditionsHaveNoCount = eval(this.ConditionsHaveNoCount);
                 if (RequiredItems != null)
                 {
                     obj.RequiredItems = new MaskItem<R, IEnumerable<MaskItemIndexed<R, ResearchProjectRequiredItem.Mask<R>?>>?>(eval(this.RequiredItems.Overall), []);
@@ -605,6 +617,10 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
+                    if (printMask?.ConditionsHaveNoCount ?? true)
+                    {
+                        sb.AppendItem(ConditionsHaveNoCount, "ConditionsHaveNoCount");
+                    }
                     if ((printMask?.RequiredItems?.Overall ?? true)
                         && RequiredItems is {} RequiredItemsItem)
                     {
@@ -699,6 +715,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Description;
             public Exception? WorkbenchKeyword;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
+            public Exception? ConditionsHaveNoCount;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ResearchProjectRequiredItem.ErrorMask?>>?>? RequiredItems;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ResearchProjectRequiredPerk.ErrorMask?>>?>? RequiredPerks;
             public Exception? CreatedItem;
@@ -723,6 +740,8 @@ namespace Mutagen.Bethesda.Starfield
                         return WorkbenchKeyword;
                     case ResearchProject_FieldIndex.Conditions:
                         return Conditions;
+                    case ResearchProject_FieldIndex.ConditionsHaveNoCount:
+                        return ConditionsHaveNoCount;
                     case ResearchProject_FieldIndex.RequiredItems:
                         return RequiredItems;
                     case ResearchProject_FieldIndex.RequiredPerks:
@@ -760,6 +779,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case ResearchProject_FieldIndex.Conditions:
                         this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
+                        break;
+                    case ResearchProject_FieldIndex.ConditionsHaveNoCount:
+                        this.ConditionsHaveNoCount = ex;
                         break;
                     case ResearchProject_FieldIndex.RequiredItems:
                         this.RequiredItems = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ResearchProjectRequiredItem.ErrorMask?>>?>(ex, null);
@@ -808,6 +830,9 @@ namespace Mutagen.Bethesda.Starfield
                     case ResearchProject_FieldIndex.Conditions:
                         this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
                         break;
+                    case ResearchProject_FieldIndex.ConditionsHaveNoCount:
+                        this.ConditionsHaveNoCount = (Exception?)obj;
+                        break;
                     case ResearchProject_FieldIndex.RequiredItems:
                         this.RequiredItems = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ResearchProjectRequiredItem.ErrorMask?>>?>)obj;
                         break;
@@ -845,6 +870,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Description != null) return true;
                 if (WorkbenchKeyword != null) return true;
                 if (Conditions != null) return true;
+                if (ConditionsHaveNoCount != null) return true;
                 if (RequiredItems != null) return true;
                 if (RequiredPerks != null) return true;
                 if (CreatedItem != null) return true;
@@ -905,6 +931,9 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
+                }
+                {
+                    sb.AppendItem(ConditionsHaveNoCount, "ConditionsHaveNoCount");
                 }
                 if (RequiredItems is {} RequiredItemsItem)
                 {
@@ -989,6 +1018,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Description = this.Description.Combine(rhs.Description);
                 ret.WorkbenchKeyword = this.WorkbenchKeyword.Combine(rhs.WorkbenchKeyword);
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
+                ret.ConditionsHaveNoCount = this.ConditionsHaveNoCount.Combine(rhs.ConditionsHaveNoCount);
                 ret.RequiredItems = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ResearchProjectRequiredItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.RequiredItems?.Overall, rhs.RequiredItems?.Overall), Noggog.ExceptionExt.Combine(this.RequiredItems?.Specific, rhs.RequiredItems?.Specific));
                 ret.RequiredPerks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ResearchProjectRequiredPerk.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.RequiredPerks?.Overall, rhs.RequiredPerks?.Overall), Noggog.ExceptionExt.Combine(this.RequiredPerks?.Specific, rhs.RequiredPerks?.Specific));
                 ret.CreatedItem = this.CreatedItem.Combine(rhs.CreatedItem);
@@ -1023,6 +1053,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Description;
             public bool WorkbenchKeyword;
             public Condition.TranslationMask? Conditions;
+            public bool ConditionsHaveNoCount;
             public ResearchProjectRequiredItem.TranslationMask? RequiredItems;
             public ResearchProjectRequiredPerk.TranslationMask? RequiredPerks;
             public bool CreatedItem;
@@ -1042,6 +1073,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Name = defaultOn;
                 this.Description = defaultOn;
                 this.WorkbenchKeyword = defaultOn;
+                this.ConditionsHaveNoCount = defaultOn;
                 this.CreatedItem = defaultOn;
                 this.NumberCreated = defaultOn;
                 this.SortingPriority = defaultOn;
@@ -1059,6 +1091,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Description, null));
                 ret.Add((WorkbenchKeyword, null));
                 ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
+                ret.Add((ConditionsHaveNoCount, null));
                 ret.Add((RequiredItems == null ? DefaultOn : !RequiredItems.GetCrystal().CopyNothing, RequiredItems?.GetCrystal()));
                 ret.Add((RequiredPerks == null ? DefaultOn : !RequiredPerks.GetCrystal().CopyNothing, RequiredPerks?.GetCrystal()));
                 ret.Add((CreatedItem, null));
@@ -1225,6 +1258,7 @@ namespace Mutagen.Bethesda.Starfield
         new TranslatedString? Description { get; set; }
         new IFormLinkNullable<IKeywordGetter> WorkbenchKeyword { get; set; }
         new ExtendedList<Condition>? Conditions { get; set; }
+        new Boolean ConditionsHaveNoCount { get; set; }
         new ExtendedList<ResearchProjectRequiredItem>? RequiredItems { get; set; }
         new ExtendedList<ResearchProjectRequiredPerk>? RequiredPerks { get; set; }
         new IFormLinkNullable<IStarfieldMajorRecordGetter> CreatedItem { get; set; }
@@ -1264,6 +1298,7 @@ namespace Mutagen.Bethesda.Starfield
         ITranslatedStringGetter? Description { get; }
         IFormLinkNullableGetter<IKeywordGetter> WorkbenchKeyword { get; }
         IReadOnlyList<IConditionGetter>? Conditions { get; }
+        Boolean ConditionsHaveNoCount { get; }
         IReadOnlyList<IResearchProjectRequiredItemGetter>? RequiredItems { get; }
         IReadOnlyList<IResearchProjectRequiredPerkGetter>? RequiredPerks { get; }
         IFormLinkNullableGetter<IStarfieldMajorRecordGetter> CreatedItem { get; }
@@ -1454,14 +1489,15 @@ namespace Mutagen.Bethesda.Starfield
         Description = 10,
         WorkbenchKeyword = 11,
         Conditions = 12,
-        RequiredItems = 13,
-        RequiredPerks = 14,
-        CreatedItem = 15,
-        NumberCreated = 16,
-        SortingPriority = 17,
-        Tier = 18,
-        CategoryKeyword = 19,
-        RequiredProjects = 20,
+        ConditionsHaveNoCount = 13,
+        RequiredItems = 14,
+        RequiredPerks = 15,
+        CreatedItem = 16,
+        NumberCreated = 17,
+        SortingPriority = 18,
+        Tier = 19,
+        CategoryKeyword = 20,
+        RequiredProjects = 21,
     }
     #endregion
 
@@ -1472,9 +1508,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 12;
+        public const ushort AdditionalFieldCount = 13;
 
-        public const ushort FieldCount = 21;
+        public const ushort FieldCount = 22;
 
         public static readonly Type MaskType = typeof(ResearchProject.Mask<>);
 
@@ -1570,6 +1606,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Description = default;
             item.WorkbenchKeyword.Clear();
             item.Conditions = null;
+            item.ConditionsHaveNoCount = default(Boolean);
             item.RequiredItems = null;
             item.RequiredPerks = null;
             item.CreatedItem.Clear();
@@ -1676,6 +1713,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Conditions,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
+            ret.ConditionsHaveNoCount = item.ConditionsHaveNoCount == rhs.ConditionsHaveNoCount;
             ret.RequiredItems = item.RequiredItems.CollectionEqualsHelper(
                 rhs.RequiredItems,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -1770,6 +1808,10 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+            }
+            if (printMask?.ConditionsHaveNoCount ?? true)
+            {
+                sb.AppendItem(item.ConditionsHaveNoCount, "ConditionsHaveNoCount");
             }
             if ((printMask?.RequiredItems?.Overall ?? true)
                 && item.RequiredItems is {} RequiredItemsItem)
@@ -1911,6 +1953,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Conditions.SequenceEqualNullable(rhs.Conditions, (l, r) => ((ConditionCommon)((IConditionGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)ResearchProject_FieldIndex.Conditions)))) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)ResearchProject_FieldIndex.ConditionsHaveNoCount) ?? true))
+            {
+                if (lhs.ConditionsHaveNoCount != rhs.ConditionsHaveNoCount) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)ResearchProject_FieldIndex.RequiredItems) ?? true))
             {
                 if (!lhs.RequiredItems.SequenceEqualNullable(rhs.RequiredItems, (l, r) => ((ResearchProjectRequiredItemCommon)((IResearchProjectRequiredItemGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)ResearchProject_FieldIndex.RequiredItems)))) return false;
@@ -1987,6 +2033,7 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
+            hash.Add(item.ConditionsHaveNoCount);
             if (item.RequiredItems is {} RequiredItemsitem)
             {
                 foreach (var subItem in RequiredItemsitem)
@@ -2221,6 +2268,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     errorMask?.PopIndex();
                 }
+            }
+            if ((copyMask?.GetShouldTranslate((int)ResearchProject_FieldIndex.ConditionsHaveNoCount) ?? true))
+            {
+                item.ConditionsHaveNoCount = rhs.ConditionsHaveNoCount;
             }
             if ((copyMask?.GetShouldTranslate((int)ResearchProject_FieldIndex.RequiredItems) ?? true))
             {
@@ -2485,6 +2536,15 @@ namespace Mutagen.Bethesda.Starfield
     {
         public new static readonly ResearchProjectBinaryWriteTranslation Instance = new();
 
+        public static void WriteEmbedded(
+            IResearchProjectGetter item,
+            MutagenWriter writer)
+        {
+            StarfieldMajorRecordBinaryWriteTranslation.WriteEmbedded(
+                item: item,
+                writer: writer);
+        }
+
         public static void WriteRecordTypes(
             IResearchProjectGetter item,
             MutagenWriter writer,
@@ -2510,19 +2570,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.WorkbenchKeyword,
                 header: translationParams.ConvertToCustom(RecordTypes.BNAM));
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IConditionGetter>.Instance.WriteWithCounter(
+            ResearchProjectBinaryWriteTranslation.WriteBinaryConditions(
                 writer: writer,
-                items: item.Conditions,
-                counterType: RecordTypes.CITC,
-                counterLength: 4,
-                transl: (MutagenWriter subWriter, IConditionGetter subItem, TypedWriteParams conv) =>
-                {
-                    var Item = subItem;
-                    ((ConditionBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
-                        item: Item,
-                        writer: subWriter,
-                        translationParams: conv);
-                });
+                item: item);
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IResearchProjectRequiredItemGetter>.Instance.Write(
                 writer: writer,
                 items: item.RequiredItems,
@@ -2580,6 +2630,19 @@ namespace Mutagen.Bethesda.Starfield
                 });
         }
 
+        public static partial void WriteBinaryConditionsCustom(
+            MutagenWriter writer,
+            IResearchProjectGetter item);
+
+        public static void WriteBinaryConditions(
+            MutagenWriter writer,
+            IResearchProjectGetter item)
+        {
+            WriteBinaryConditionsCustom(
+                writer: writer,
+                item: item);
+        }
+
         public void Write(
             MutagenWriter writer,
             IResearchProjectGetter item,
@@ -2634,6 +2697,15 @@ namespace Mutagen.Bethesda.Starfield
         public new static readonly ResearchProjectBinaryCreateTranslation Instance = new ResearchProjectBinaryCreateTranslation();
 
         public override RecordType RecordType => RecordTypes.RSPJ;
+        public static void FillBinaryStructs(
+            IResearchProjectInternal item,
+            MutagenFrame frame)
+        {
+            StarfieldMajorRecordBinaryCreateTranslation.FillBinaryStructs(
+                item: item,
+                frame: frame);
+        }
+
         public static ParseResult FillBinaryRecordTypes(
             IResearchProjectInternal item,
             MutagenFrame frame,
@@ -2677,15 +2749,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 {
-                    item.Conditions = 
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.ParsePerItem(
-                            reader: frame,
-                            countLengthLength: 4,
-                            countRecord: RecordTypes.CITC,
-                            triggeringRecord: Condition_Registration.TriggerSpecs,
-                            translationParams: translationParams,
-                            transl: Condition.TryCreateFromBinary)
-                        .CastExtendedList<Condition>();
+                    ResearchProjectBinaryCreateTranslation.FillBinaryConditionsCustom(
+                        frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
+                        item: item,
+                        lastParsed: lastParsed);
                     return (int)ResearchProject_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.FVPA:
@@ -2761,6 +2828,11 @@ namespace Mutagen.Bethesda.Starfield
             }
         }
 
+        public static partial void FillBinaryConditionsCustom(
+            MutagenFrame frame,
+            IResearchProjectInternal item,
+            PreviousParse lastParsed);
+
     }
 
 }
@@ -2828,7 +2900,14 @@ namespace Mutagen.Bethesda.Starfield
         private int? _WorkbenchKeywordLocation;
         public IFormLinkNullableGetter<IKeywordGetter> WorkbenchKeyword => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IKeywordGetter>(_package, _recordData, _WorkbenchKeywordLocation);
         #endregion
-        public IReadOnlyList<IConditionGetter>? Conditions { get; private set; }
+        #region Conditions
+        partial void ConditionsCustomParse(
+            OverlayStream stream,
+            int finalPos,
+            int offset,
+            RecordType type,
+            PreviousParse lastParsed);
+        #endregion
         public IReadOnlyList<IResearchProjectRequiredItemGetter>? RequiredItems { get; private set; }
         public IReadOnlyList<IResearchProjectRequiredPerkGetter>? RequiredPerks { get; private set; }
         #region CreatedItem
@@ -2939,15 +3018,12 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 {
-                    this.Conditions = BinaryOverlayList.FactoryByCountPerItem<IConditionGetter>(
+                    ConditionsCustomParse(
                         stream: stream,
-                        package: _package,
-                        countLength: 4,
-                        trigger: Condition_Registration.TriggerSpecs,
-                        countType: RecordTypes.CITC,
-                        translationParams: translationParams,
-                        getter: (s, p, recConv) => ConditionBinaryOverlay.ConditionFactory(new OverlayStream(s, p), p, recConv),
-                        skipHeader: false);
+                        finalPos: finalPos,
+                        offset: offset,
+                        type: type,
+                        lastParsed: lastParsed);
                     return (int)ResearchProject_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.FVPA:

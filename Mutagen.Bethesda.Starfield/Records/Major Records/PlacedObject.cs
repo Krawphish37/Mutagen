@@ -1,5 +1,6 @@
+﻿using Mutagen.Bethesda.Translations.Binary;
 using Noggog;
-﻿using Mutagen.Bethesda.Plugins;
+using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
@@ -213,5 +214,70 @@ partial class PlacedObjectBinaryOverlay
     {
         Traversals = TraversalReferenceBinaryOverlay.Factory(stream, _package, finalPos, offset, lastParsed, out var fluffBytes, out _traversalFluff);
         NumTraversalFluffBytes = fluffBytes;
+    }
+}
+
+partial class PlacedObjectBinaryCreateTranslation
+{
+    public static partial ParseResult FillBinaryPlacementParseCustom(
+        MutagenFrame frame,
+        IPlacedObjectInternal item,
+        PreviousParse lastParsed)
+    {
+        frame.ReadSubrecordHeader();
+        item.Position = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(frame);
+        item.Rotation = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(frame);
+        item.HasPlacementData = true;
+        return (int)PlacedObject_FieldIndex.HasPlacementData;
+    }
+}
+
+partial class PlacedObjectBinaryWriteTranslation
+{
+    public static partial void WriteBinaryPlacementParseCustom(
+        MutagenWriter writer,
+        IPlacedObjectGetter item)
+    {
+        if (item.IsDeleted
+            && !item.HasPlacementData
+            && item.Position == default
+            && item.Rotation == default)
+        {
+            return;
+        }
+        using (HeaderExport.Subrecord(writer, RecordTypes.DATA))
+        {
+            P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(writer, item.Position);
+            P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(writer, item.Rotation);
+        }
+    }
+}
+
+partial class PlacedObjectBinaryOverlay
+{
+    private int? _placementLocation;
+
+    public bool HasPlacementData => _placementLocation.HasValue;
+
+    private ReadOnlyMemorySlice<byte> PlacementContent => HeaderTranslation.ExtractSubrecordMemory(
+        _recordData,
+        _placementLocation!.Value,
+        _package.MetaData.Constants);
+
+    public P3Float Position => _placementLocation.HasValue
+        ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(PlacementContent)
+        : default;
+
+    public P3Float Rotation => _placementLocation.HasValue
+        ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(PlacementContent.Slice(12))
+        : default;
+
+    public partial ParseResult PlacementParseCustomParse(
+        OverlayStream stream,
+        int offset,
+        PreviousParse lastParsed)
+    {
+        _placementLocation = stream.Position - offset;
+        return (int)PlacedObject_FieldIndex.HasPlacementData;
     }
 }

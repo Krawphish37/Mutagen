@@ -220,7 +220,9 @@ namespace Mutagen.Bethesda.Starfield
         IDialogSetParentQuestStageGetter? IDialogResponsesGetter.SetParentQuestStage => this.SetParentQuestStage;
         #endregion
         #region StartScenePhase
-        public String StartScenePhase { get; set; } = string.Empty;
+        public String? StartScenePhase { get; set; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        String? IDialogResponsesGetter.StartScenePhase => this.StartScenePhase;
         #endregion
         #region ResetGlobal
         private readonly IFormLinkNullable<IGlobalGetter> _ResetGlobal = new FormLinkNullable<IGlobalGetter>();
@@ -1538,7 +1540,7 @@ namespace Mutagen.Bethesda.Starfield
         new MemorySlice<Byte>? INTV { get; set; }
         new SoundReference? WED0 { get; set; }
         new DialogSetParentQuestStage? SetParentQuestStage { get; set; }
-        new String StartScenePhase { get; set; }
+        new String? StartScenePhase { get; set; }
         new IFormLinkNullable<IGlobalGetter> ResetGlobal { get; set; }
         new DialogResponses.SubtitlePriorityLevel? SubtitlePriority { get; set; }
         new Boolean COCT { get; set; }
@@ -1588,7 +1590,7 @@ namespace Mutagen.Bethesda.Starfield
         ReadOnlyMemorySlice<Byte>? INTV { get; }
         ISoundReferenceGetter? WED0 { get; }
         IDialogSetParentQuestStageGetter? SetParentQuestStage { get; }
-        String StartScenePhase { get; }
+        String? StartScenePhase { get; }
         IFormLinkNullableGetter<IGlobalGetter> ResetGlobal { get; }
         DialogResponses.SubtitlePriorityLevel? SubtitlePriority { get; }
         Boolean COCT { get; }
@@ -1937,7 +1939,7 @@ namespace Mutagen.Bethesda.Starfield
             item.INTV = default;
             item.WED0 = null;
             item.SetParentQuestStage = null;
-            item.StartScenePhase = string.Empty;
+            item.StartScenePhase = default;
             item.ResetGlobal.Clear();
             item.SubtitlePriority = default;
             item.COCT = default(Boolean);
@@ -2253,9 +2255,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 SetParentQuestStageItem?.Print(sb, "SetParentQuestStage");
             }
-            if (printMask?.StartScenePhase ?? true)
+            if ((printMask?.StartScenePhase ?? true)
+                && item.StartScenePhase is {} StartScenePhaseItem)
             {
-                sb.AppendItem(item.StartScenePhase, "StartScenePhase");
+                sb.AppendItem(StartScenePhaseItem, "StartScenePhase");
             }
             if (printMask?.ResetGlobal ?? true)
             {
@@ -2512,7 +2515,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(SetParentQuestStageitem);
             }
-            hash.Add(item.StartScenePhase);
+            if (item.StartScenePhase is {} StartScenePhaseitem)
+            {
+                hash.Add(StartScenePhaseitem);
+            }
             hash.Add(item.ResetGlobal);
             if (item.SubtitlePriority is {} SubtitlePriorityitem)
             {
@@ -3229,7 +3235,7 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     translationParams: translationParams);
             }
-            StringBinaryTranslation.Instance.Write(
+            StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.StartScenePhase,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM0),
@@ -3587,7 +3593,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region StartScenePhase
         private int? _StartScenePhaseLocation;
-        public String StartScenePhase => _StartScenePhaseLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _StartScenePhaseLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
+        public String? StartScenePhase => _StartScenePhaseLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _StartScenePhaseLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         #region ResetGlobal
         private int? _ResetGlobalLocation;

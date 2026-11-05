@@ -16,7 +16,7 @@
       <ByteArray name="INTV" recordType="INTV" unknown="true" />
       <RefDirect name="WED0" recordType="WED0" unknown="true" refName="SoundReference" />
       <RefDirect name="SetParentQuestStage" refName="DialogSetParentQuestStage" />
-      <String name="StartScenePhase" recordType="NAM0" nullable="false" />
+      <String name="StartScenePhase" recordType="NAM0" />
       <FormLink name="ResetGlobal" refName="Global" recordType="MODQ" />
       <Enum name="SubtitlePriority" enumName="DialogResponses.SubtitlePriorityLevel" recordType="INAM" byteLength="4" />
       <Bool name="COCT" recordType="COCT" boolAsMarker="True" unknown="true" />

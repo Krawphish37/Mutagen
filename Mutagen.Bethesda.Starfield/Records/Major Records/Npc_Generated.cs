@@ -517,6 +517,9 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
+        #region HasStopMarker
+        public Boolean HasStopMarker { get; set; } = default(Boolean);
+        #endregion
         #region Class
         private readonly IFormLinkNullable<IClassGetter> _Class = new FormLinkNullable<IClassGetter>();
         public IFormLinkNullable<IClassGetter> Class
@@ -945,6 +948,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.AttachParentSlots = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.ObjectTemplates = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectTemplate.Mask<TItem>?>>?>(initialValue, []);
+                this.HasStopMarker = initialValue;
                 this.Class = initialValue;
                 this.Name = initialValue;
                 this.ShortName = initialValue;
@@ -1047,6 +1051,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Keywords,
                 TItem AttachParentSlots,
                 TItem ObjectTemplates,
+                TItem HasStopMarker,
                 TItem Class,
                 TItem Name,
                 TItem ShortName,
@@ -1148,6 +1153,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
                 this.AttachParentSlots = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(AttachParentSlots, []);
                 this.ObjectTemplates = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectTemplate.Mask<TItem>?>>?>(ObjectTemplates, []);
+                this.HasStopMarker = HasStopMarker;
                 this.Class = Class;
                 this.Name = Name;
                 this.ShortName = ShortName;
@@ -1249,6 +1255,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? AttachParentSlots;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectTemplate.Mask<TItem>?>>?>? ObjectTemplates;
+            public TItem HasStopMarker;
             public TItem Class;
             public TItem Name;
             public TItem ShortName;
@@ -1352,6 +1359,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
                 if (!object.Equals(this.AttachParentSlots, rhs.AttachParentSlots)) return false;
                 if (!object.Equals(this.ObjectTemplates, rhs.ObjectTemplates)) return false;
+                if (!object.Equals(this.HasStopMarker, rhs.HasStopMarker)) return false;
                 if (!object.Equals(this.Class, rhs.Class)) return false;
                 if (!object.Equals(this.Name, rhs.Name)) return false;
                 if (!object.Equals(this.ShortName, rhs.ShortName)) return false;
@@ -1447,6 +1455,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Keywords);
                 hash.Add(this.AttachParentSlots);
                 hash.Add(this.ObjectTemplates);
+                hash.Add(this.HasStopMarker);
                 hash.Add(this.Class);
                 hash.Add(this.Name);
                 hash.Add(this.ShortName);
@@ -1717,6 +1726,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (!eval(this.HasStopMarker)) return false;
                 if (!eval(this.Class)) return false;
                 if (!eval(this.Name)) return false;
                 if (!eval(this.ShortName)) return false;
@@ -2058,6 +2068,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (eval(this.HasStopMarker)) return true;
                 if (eval(this.Class)) return true;
                 if (eval(this.Name)) return true;
                 if (eval(this.ShortName)) return true;
@@ -2413,6 +2424,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                obj.HasStopMarker = eval(this.HasStopMarker);
                 obj.Class = eval(this.Class);
                 obj.Name = eval(this.Name);
                 obj.ShortName = eval(this.ShortName);
@@ -2953,6 +2965,10 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
+                    if (printMask?.HasStopMarker ?? true)
+                    {
+                        sb.AppendItem(HasStopMarker, "HasStopMarker");
+                    }
                     if (printMask?.Class ?? true)
                     {
                         sb.AppendItem(Class, "Class");
@@ -3272,6 +3288,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? AttachParentSlots;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectTemplate.ErrorMask?>>?>? ObjectTemplates;
+            public Exception? HasStopMarker;
             public Exception? Class;
             public Exception? Name;
             public Exception? ShortName;
@@ -3418,6 +3435,8 @@ namespace Mutagen.Bethesda.Starfield
                         return AttachParentSlots;
                     case Npc_FieldIndex.ObjectTemplates:
                         return ObjectTemplates;
+                    case Npc_FieldIndex.HasStopMarker:
+                        return HasStopMarker;
                     case Npc_FieldIndex.Class:
                         return Class;
                     case Npc_FieldIndex.Name:
@@ -3655,6 +3674,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case Npc_FieldIndex.ObjectTemplates:
                         this.ObjectTemplates = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectTemplate.ErrorMask?>>?>(ex, null);
+                        break;
+                    case Npc_FieldIndex.HasStopMarker:
+                        this.HasStopMarker = ex;
                         break;
                     case Npc_FieldIndex.Class:
                         this.Class = ex;
@@ -3937,6 +3959,9 @@ namespace Mutagen.Bethesda.Starfield
                     case Npc_FieldIndex.ObjectTemplates:
                         this.ObjectTemplates = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectTemplate.ErrorMask?>>?>)obj;
                         break;
+                    case Npc_FieldIndex.HasStopMarker:
+                        this.HasStopMarker = (Exception?)obj;
+                        break;
                     case Npc_FieldIndex.Class:
                         this.Class = (Exception?)obj;
                         break;
@@ -4120,6 +4145,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Keywords != null) return true;
                 if (AttachParentSlots != null) return true;
                 if (ObjectTemplates != null) return true;
+                if (HasStopMarker != null) return true;
                 if (Class != null) return true;
                 if (Name != null) return true;
                 if (ShortName != null) return true;
@@ -4522,6 +4548,9 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
+                    sb.AppendItem(HasStopMarker, "HasStopMarker");
+                }
+                {
                     sb.AppendItem(Class, "Class");
                 }
                 {
@@ -4791,6 +4820,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
                 ret.AttachParentSlots = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.AttachParentSlots?.Overall, rhs.AttachParentSlots?.Overall), Noggog.ExceptionExt.Combine(this.AttachParentSlots?.Specific, rhs.AttachParentSlots?.Specific));
                 ret.ObjectTemplates = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectTemplate.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.ObjectTemplates?.Overall, rhs.ObjectTemplates?.Overall), Noggog.ExceptionExt.Combine(this.ObjectTemplates?.Specific, rhs.ObjectTemplates?.Specific));
+                ret.HasStopMarker = this.HasStopMarker.Combine(rhs.HasStopMarker);
                 ret.Class = this.Class.Combine(rhs.Class);
                 ret.Name = this.Name.Combine(rhs.Name);
                 ret.ShortName = this.ShortName.Combine(rhs.ShortName);
@@ -4903,6 +4933,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Keywords;
             public bool AttachParentSlots;
             public ObjectTemplate.TranslationMask? ObjectTemplates;
+            public bool HasStopMarker;
             public bool Class;
             public bool Name;
             public bool ShortName;
@@ -4985,6 +5016,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Packages = defaultOn;
                 this.Keywords = defaultOn;
                 this.AttachParentSlots = defaultOn;
+                this.HasStopMarker = defaultOn;
                 this.Class = defaultOn;
                 this.Name = defaultOn;
                 this.ShortName = defaultOn;
@@ -5075,6 +5107,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Keywords, null));
                 ret.Add((AttachParentSlots, null));
                 ret.Add((ObjectTemplates == null ? DefaultOn : !ObjectTemplates.GetCrystal().CopyNothing, ObjectTemplates?.GetCrystal()));
+                ret.Add((HasStopMarker, null));
                 ret.Add((Class, null));
                 ret.Add((Name, null));
                 ret.Add((ShortName, null));
@@ -5353,6 +5386,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; set; }
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? AttachParentSlots { get; set; }
         new ExtendedList<ObjectTemplate<Npc.Property>>? ObjectTemplates { get; set; }
+        new Boolean HasStopMarker { get; set; }
         new IFormLinkNullable<IClassGetter> Class { get; set; }
         /// <summary>
         /// Aspects: INamed, INamedRequired, ITranslatedNamed, ITranslatedNamedRequired
@@ -5508,6 +5542,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? AttachParentSlots { get; }
         IReadOnlyList<IObjectTemplateGetter<Npc.Property>>? ObjectTemplates { get; }
+        Boolean HasStopMarker { get; }
         IFormLinkNullableGetter<IClassGetter> Class { get; }
         #region Name
         /// <summary>
@@ -5785,48 +5820,49 @@ namespace Mutagen.Bethesda.Starfield
         Keywords = 54,
         AttachParentSlots = 55,
         ObjectTemplates = 56,
-        Class = 57,
-        Name = 58,
-        ShortName = 59,
-        LongName = 60,
-        CalculatedHealth = 61,
-        CalculatedActionPoints = 62,
-        FarAwayModelDistance = 63,
-        GearedUpWeapons = 64,
-        Unused = 65,
-        HCLR = 66,
-        BCLR = 67,
-        HeadParts = 68,
-        CombatStyle = 69,
-        NAM5 = 70,
-        HeightMin = 71,
-        HeightMax = 72,
-        Weight = 73,
-        Sounds = 74,
-        InheritsSoundsFrom = 75,
-        CompanionInfoQuest = 76,
-        CompanionInfoDialogue = 77,
-        DefaultOutfit = 78,
-        SpaceOutfit = 79,
-        DefaultPackageList = 80,
-        CrimeFaction = 81,
-        FormationFaction = 82,
-        Tints = 83,
-        BodyMorphRegionValues = 84,
-        FaceDialPositions = 85,
-        FaceMorphs = 86,
-        MorphBlends = 87,
-        ActivateTextOverride = 88,
-        SkinToneIndex = 89,
-        EYEC = 90,
-        HairColor = 91,
-        FacialHairColor = 92,
-        EyebrowColor = 93,
-        EyeColor = 94,
-        JewelryColor = 95,
-        TeethColor = 96,
-        Pronoun = 97,
-        ONA2 = 98,
+        HasStopMarker = 57,
+        Class = 58,
+        Name = 59,
+        ShortName = 60,
+        LongName = 61,
+        CalculatedHealth = 62,
+        CalculatedActionPoints = 63,
+        FarAwayModelDistance = 64,
+        GearedUpWeapons = 65,
+        Unused = 66,
+        HCLR = 67,
+        BCLR = 68,
+        HeadParts = 69,
+        CombatStyle = 70,
+        NAM5 = 71,
+        HeightMin = 72,
+        HeightMax = 73,
+        Weight = 74,
+        Sounds = 75,
+        InheritsSoundsFrom = 76,
+        CompanionInfoQuest = 77,
+        CompanionInfoDialogue = 78,
+        DefaultOutfit = 79,
+        SpaceOutfit = 80,
+        DefaultPackageList = 81,
+        CrimeFaction = 82,
+        FormationFaction = 83,
+        Tints = 84,
+        BodyMorphRegionValues = 85,
+        FaceDialPositions = 86,
+        FaceMorphs = 87,
+        MorphBlends = 88,
+        ActivateTextOverride = 89,
+        SkinToneIndex = 90,
+        EYEC = 91,
+        HairColor = 92,
+        FacialHairColor = 93,
+        EyebrowColor = 94,
+        EyeColor = 95,
+        JewelryColor = 96,
+        TeethColor = 97,
+        Pronoun = 98,
+        ONA2 = 99,
     }
     #endregion
 
@@ -5837,9 +5873,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 90;
+        public const ushort AdditionalFieldCount = 91;
 
-        public const ushort FieldCount = 99;
+        public const ushort FieldCount = 100;
 
         public static readonly Type MaskType = typeof(Npc.Mask<>);
 
@@ -6067,6 +6103,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Keywords = null;
             item.AttachParentSlots = null;
             item.ObjectTemplates = null;
+            item.HasStopMarker = default(Boolean);
             item.Class.Clear();
             item.Name = default;
             item.ShortName = default;
@@ -6378,6 +6415,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.ObjectTemplates,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
+            ret.HasStopMarker = item.HasStopMarker == rhs.HasStopMarker;
             ret.Class = item.Class.Equals(rhs.Class);
             ret.Name = object.Equals(item.Name, rhs.Name);
             ret.ShortName = object.Equals(item.ShortName, rhs.ShortName);
@@ -6831,6 +6869,10 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+            }
+            if (printMask?.HasStopMarker ?? true)
+            {
+                sb.AppendItem(item.HasStopMarker, "HasStopMarker");
             }
             if (printMask?.Class ?? true)
             {
@@ -7363,6 +7405,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ObjectTemplates.SequenceEqualNullable(rhs.ObjectTemplates, (l, r) => ((ObjectTemplateCommon<Npc.Property>)((IObjectTemplateGetter<Npc.Property>)l).CommonInstance(typeof(Npc.Property))!).Equals(l, r, equalsMask?.GetSubCrystal((int)Npc_FieldIndex.ObjectTemplates)))) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.HasStopMarker) ?? true))
+            {
+                if (lhs.HasStopMarker != rhs.HasStopMarker) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.Class) ?? true))
             {
                 if (!lhs.Class.Equals(rhs.Class)) return false;
@@ -7699,6 +7745,7 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
+            hash.Add(item.HasStopMarker);
             hash.Add(item.Class);
             if (item.Name is {} Nameitem)
             {
@@ -8836,6 +8883,10 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.HasStopMarker) ?? true))
+            {
+                item.HasStopMarker = rhs.HasStopMarker;
+            }
             if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.Class) ?? true))
             {
                 item.Class.SetTo(rhs.Class.FormKeyNullable);
@@ -9656,7 +9707,10 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            using (HeaderExport.Subrecord(writer, RecordTypes.STOP)) { }
+            BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
+                writer: writer,
+                item: item.HasStopMarker,
+                header: translationParams.ConvertToCustom(RecordTypes.STOP));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.Class,
@@ -10308,8 +10362,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.STOP:
                 {
-                    frame.ReadSubrecord();
-                    return default(int?);
+                    item.HasStopMarker = true;
+                    return (int)Npc_FieldIndex.HasStopMarker;
                 }
                 case RecordTypeInts.CNAM:
                 {
@@ -10868,6 +10922,10 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         public IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? AttachParentSlots { get; private set; }
         public IReadOnlyList<IObjectTemplateGetter<Npc.Property>>? ObjectTemplates { get; private set; }
+        #region HasStopMarker
+        private int? _HasStopMarkerLocation;
+        public Boolean HasStopMarker => _HasStopMarkerLocation.HasValue ? true : default(Boolean);
+        #endregion
         #region Class
         private int? _ClassLocation;
         public IFormLinkNullableGetter<IClassGetter> Class => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IClassGetter>(_package, _recordData, _ClassLocation);
@@ -11385,8 +11443,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.STOP:
                 {
-                    stream.ReadSubrecord();
-                    return default(int?);
+                    _HasStopMarkerLocation = (stream.Position - offset);
+                    return (int)Npc_FieldIndex.HasStopMarker;
                 }
                 case RecordTypeInts.CNAM:
                 {
