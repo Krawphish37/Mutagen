@@ -23,6 +23,9 @@ public sealed class StringsWriter : IDisposable
     private readonly List<ValueTuple<Language, string, uint>[]> _ilStrings = new();
     private readonly List<ValueTuple<Language, string, uint>[]> _dlStrings = new();
     private uint _index = 0;
+    private readonly object _indexLock = new();
+    private readonly HashSet<uint> _usedIndices = new();
+    private readonly Dictionary<(StringsSource Source, uint Key), ValueTuple<Language, string, uint>[]> _keptStrings = new();
 
     public StringsWriter(
         GameRelease release,
@@ -41,6 +44,10 @@ public sealed class StringsWriter : IDisposable
 
     public uint Register(ITranslatedStringGetter str, StringsSource source)
     {
+        if (TryRegisterOriginalKey(str, source, out var key))
+        {
+            return key;
+        }
         // ToDo
         // Add Count member to TranslatedString, or something similar to short circuit array creation if unnecessary
         return Register(source, str);
@@ -68,11 +75,7 @@ public sealed class StringsWriter : IDisposable
         };
         try
         {
-            var nextIndex = Interlocked.Increment(ref _index);
-            if (nextIndex == 0)
-            {
-                throw new OverflowException();
-            }
+            var nextIndex = NextIndex();
             lock (strsList)
             {
                 strsList.Add(strs.Select(x => new ValueTuple<Language, string, uint>(x.Key, x.Value, nextIndex)).ToArray());
@@ -82,6 +85,64 @@ public sealed class StringsWriter : IDisposable
         catch (OverflowException)
         {
             throw new OverflowException("Too many translated strings for current system to handle.");
+        }
+    }
+
+    /// <summary>
+    /// A string read from this same plugin keeps the ID it had, so saving a plugin back doesn't renumber its text.
+    /// Several records can share one ID. If the text under a shared ID was edited, the edited one gets a new ID.
+    /// </summary>
+    private bool TryRegisterOriginalKey(ITranslatedStringGetter str, StringsSource source, out uint key)
+    {
+        key = 0;
+        if (str is not TranslatedString { StringsKey: { } originalKey } translated
+            || translated.StringsSource != source
+            || translated.StringsMod != ModKey)
+        {
+            return false;
+        }
+
+        var entries = str.Select(x => new ValueTuple<Language, string, uint>(x.Key, x.Value, originalKey)).ToArray();
+        lock (_indexLock)
+        {
+            if (_keptStrings.TryGetValue((source, originalKey), out var existing))
+            {
+                if (!existing.SequenceEqual(entries)) return false;
+                key = originalKey;
+                return true;
+            }
+            if (!_usedIndices.Add(originalKey)) return false;
+            _keptStrings[(source, originalKey)] = entries;
+        }
+        // A key that holds no text in any language stays as it was, pointing at nothing
+        if (entries.Length > 0)
+        {
+            var strsList = source switch
+            {
+                StringsSource.Normal => _strings,
+                StringsSource.IL => _ilStrings,
+                StringsSource.DL => _dlStrings,
+                _ => throw new NotImplementedException(),
+            };
+            lock (strsList)
+            {
+                strsList.Add(entries);
+            }
+        }
+        key = originalKey;
+        return true;
+    }
+
+    private uint NextIndex()
+    {
+        lock (_indexLock)
+        {
+            do
+            {
+                _index = checked(_index + 1);
+            }
+            while (!_usedIndices.Add(_index));
+            return _index;
         }
     }
 
@@ -115,6 +176,12 @@ public sealed class StringsWriter : IDisposable
                 var list = subLists[lang.Item1];
                 list.Add((lang.Item2, lang.Item3));
             }
+        }
+
+        // In ID order, so the table doesn't depend on which record was written first
+        foreach (var list in subLists.Values)
+        {
+            list.Sort((x, y) => x.Index.CompareTo(y.Index));
         }
 
         foreach (var language in subLists)

@@ -1,3 +1,4 @@
+using Mutagen.Bethesda.Plugins;
 using System.Collections;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -47,6 +48,12 @@ public sealed class TranslatedString : ITranslatedString, IEquatable<TranslatedS
     public uint? StringsKey { get; internal set; }
     internal IStringsFolderLookup? StringsLookup;
     internal StringsSource StringsSource;
+    private ModKey? _resolvedFromMod;
+
+    /// <summary>
+    /// The plugin whose string tables StringsKey belongs to
+    /// </summary>
+    internal ModKey? StringsMod => (StringsLookup as StringsFolderLookupOverlay)?.ModKey ?? _resolvedFromMod;
 
     internal bool UsingLocalizationDictionary => _localization != null || StringsLookup != null;
 
@@ -285,6 +292,7 @@ public sealed class TranslatedString : ITranslatedString, IEquatable<TranslatedS
                     _localization.Remove(lang);
                 }
             }
+            _resolvedFromMod = StringsMod;
             StringsLookup = null;
         }
     }
