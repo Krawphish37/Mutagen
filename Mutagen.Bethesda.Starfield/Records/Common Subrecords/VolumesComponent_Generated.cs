@@ -1105,19 +1105,22 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IVolumesComponentItemGetter>.Instance.Write(
+            VolumesComponentBinaryWriteTranslation.WriteBinaryItems(
                 writer: writer,
-                items: item.Items,
-                recordType: translationParams.ConvertToCustom(RecordTypes.VLMS),
-                countLengthLength: 4,
-                transl: (MutagenWriter subWriter, IVolumesComponentItemGetter subItem, TypedWriteParams conv) =>
-                {
-                    var Item = subItem;
-                    ((VolumesComponentItemBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
-                        item: Item,
-                        writer: subWriter,
-                        translationParams: conv);
-                });
+                item: item);
+        }
+
+        public static partial void WriteBinaryItemsCustom(
+            MutagenWriter writer,
+            IVolumesComponentGetter item);
+
+        public static void WriteBinaryItems(
+            MutagenWriter writer,
+            IVolumesComponentGetter item)
+        {
+            WriteBinaryItemsCustom(
+                writer: writer,
+                item: item);
         }
 
         public void Write(
@@ -1174,13 +1177,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VLMS:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.Items = 
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<VolumesComponentItem>.Instance.Parse(
-                            amount: checked((int)frame.ReadUInt32()),
-                            reader: frame,
-                            transl: VolumesComponentItem.TryCreateFromBinary)
-                        .CastExtendedList<VolumesComponentItem>();
+                    VolumesComponentBinaryCreateTranslation.FillBinaryItemsCustom(
+                        frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
+                        item: item,
+                        lastParsed: lastParsed);
                     return (int)VolumesComponent_FieldIndex.Items;
                 }
                 default:
@@ -1194,6 +1194,11 @@ namespace Mutagen.Bethesda.Starfield
                         translationParams: translationParams.WithNoConverter());
             }
         }
+
+        public static partial void FillBinaryItemsCustom(
+            MutagenFrame frame,
+            IVolumesComponent item,
+            PreviousParse lastParsed);
 
     }
 
@@ -1239,7 +1244,14 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public IReadOnlyList<IVolumesComponentItemGetter>? Items { get; private set; }
+        #region Items
+        partial void ItemsCustomParse(
+            OverlayStream stream,
+            int finalPos,
+            int offset,
+            RecordType type,
+            PreviousParse lastParsed);
+        #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1305,13 +1317,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VLMS:
                 {
-                    stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    var count = stream.ReadUInt32();
-                    this.Items = BinaryOverlayList.FactoryByCount<IVolumesComponentItemGetter>(
+                    ItemsCustomParse(
                         stream: stream,
-                        package: _package,
-                        count: count,
-                        getter: (s, p) => VolumesComponentItemBinaryOverlay.VolumesComponentItemFactory(s, p));
+                        finalPos: finalPos,
+                        offset: offset,
+                        type: type,
+                        lastParsed: lastParsed);
                     return (int)VolumesComponent_FieldIndex.Items;
                 }
                 default:

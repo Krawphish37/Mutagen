@@ -132,8 +132,8 @@ public class VolumesComponentTests
         foreach (var placed in ReadBoth(bytes))
         {
             var item = Items(placed).ShouldHaveSingleItem();
-            item.Ender.ShouldBeAssignableTo<IVolumesUnknownEnderEmptyGetter>()!
-                .Unknown1.ShouldBe(2.5f);
+            item.Ender.ShouldBeAssignableTo<IVolumesUnknownEnderEmptyPaddedGetter>()!
+                .Unknown1.ShouldBe(BitConverter.SingleToUInt32Bits(2.5f));
             item.Unknown3.ShouldBe(1f);
             VlmsContent(Write(placed)).ShouldBe(vlms);
         }
@@ -149,10 +149,58 @@ public class VolumesComponentTests
         {
             var items = Items(placed);
             items.Count.ShouldBe(2);
-            items[0].Ender.ShouldBeAssignableTo<IVolumesUnknownEnderEmptyGetter>()!
-                .Unknown1.ShouldBe(0f);
+            items[0].Ender.ShouldBeAssignableTo<IVolumesUnknownEnderEmptyPaddedGetter>()!
+                .Unknown1.ShouldBe(0u);
             items[1].Ender.ShouldBeAssignableTo<IVolumesUnknownEnderSingleGetter>()!
                 .Unknown1.ShouldBe(2.5f);
+            VlmsContent(Write(placed)).ShouldBe(vlms);
+        }
+    }
+
+    [Fact]
+    public void Type11_WithoutValue_ReadAndRoundTrips()
+    {
+        var vlms = Vlms(Item(11));
+        vlms.Length.ShouldBe(84);
+        var bytes = MakePlacedObjectBytes(vlms);
+
+        foreach (var placed in ReadBoth(bytes))
+        {
+            var item = Items(placed).ShouldHaveSingleItem();
+            item.Ender.ShouldBeAssignableTo<IVolumesUnknownEnderEmptyGetter>();
+            VlmsContent(Write(placed)).ShouldBe(vlms);
+        }
+    }
+
+    [Fact]
+    public void Type11_WithoutValue_FollowedByAnotherItem_RoundTrips()
+    {
+        var vlms = Vlms(Item(11), Item(1, 2.5f));
+        var bytes = MakePlacedObjectBytes(vlms);
+
+        foreach (var placed in ReadBoth(bytes))
+        {
+            var items = Items(placed);
+            items.Count.ShouldBe(2);
+            items[0].Ender.ShouldBeAssignableTo<IVolumesUnknownEnderEmptyGetter>();
+            items[1].Ender.ShouldBeAssignableTo<IVolumesUnknownEnderSingleGetter>()!
+                .Unknown1.ShouldBe(2.5f);
+            VlmsContent(Write(placed)).ShouldBe(vlms);
+        }
+    }
+
+    [Fact]
+    public void Type11_BothLengthsInOneList_RoundTrips()
+    {
+        var vlms = Vlms(Item(11, 0f), Item(11), Item(5, 4f, 5f, 6f));
+        var bytes = MakePlacedObjectBytes(vlms);
+
+        foreach (var placed in ReadBoth(bytes))
+        {
+            var items = Items(placed);
+            items.Count.ShouldBe(3);
+            items[0].Ender.ShouldBeAssignableTo<IVolumesUnknownEnderEmptyPaddedGetter>();
+            items[1].Ender.ShouldBeAssignableTo<IVolumesUnknownEnderEmptyGetter>();
             VlmsContent(Write(placed)).ShouldBe(vlms);
         }
     }

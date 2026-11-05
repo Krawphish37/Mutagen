@@ -7,6 +7,10 @@
       <List name="MaterialSwaps" recordType="MOLM" counterLength="2"  >
         <FormLink refName="LayeredMaterialSwap" />
       </List>
+      <!-- A second MOLM exists on at least one record in Starfield.esm. -->
+      <List name="MaterialSwaps2" recordType="MOLM" counterLength="2"  >
+        <FormLink refName="LayeredMaterialSwap" />
+      </List>
       <UInt32 name="LightLayer" recordType="FLLD" />
       <Enum name="Flags" recordType="XFLG" enumName="Model.Flag" byteLength="1" />
       <Float name="ColorRemappingIndex" recordType="MODC" />

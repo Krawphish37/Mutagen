@@ -602,7 +602,9 @@ internal static class PluginUtilityTranslation
                        record: translationParams.ConvertToCustom(type)))
             {
                 writeEmbedded(item, writer);
-                if (item.IsDeleted)
+                // Starfield keeps what a deleted record holds. Writing the header only would lose it:
+                // a placed reference's base object, a global's value, a cell's data.
+                if (item.IsDeleted && writer.MetaData.Constants.Release.ToCategory() != GameCategory.Starfield)
                 {
                     if (item.IsCompressed)
                     {
