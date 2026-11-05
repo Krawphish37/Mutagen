@@ -12826,7 +12826,7 @@ namespace Mutagen.Bethesda.Starfield
         #region AccuracyBonus
         private int _AccuracyBonusLocation => _WAIMLocation!.Value.Min + 0xC;
         private bool _AccuracyBonus_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _AccuracyBonusLocation + 1 >= 1;
-        public Byte AccuracyBonus => _AccuracyBonus_IsSet ? _recordData.Span[_AccuracyBonusLocation] : default;
+        public Byte AccuracyBonus => _AccuracyBonus_IsSet ? _recordData.Span[_AccuracyBonusLocation] : default(Byte);
         #endregion
         #region HasScope
         private int _HasScopeLocation => _WAIMLocation!.Value.Min + 0xD;
@@ -12851,12 +12851,12 @@ namespace Mutagen.Bethesda.Starfield
         #region WAIMUnknown1
         private int _WAIMUnknown1Location => _WAIMLocation!.Value.Min + 0x1A;
         private bool _WAIMUnknown1_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _WAIMUnknown1Location + 1 >= 1;
-        public Byte WAIMUnknown1 => _WAIMUnknown1_IsSet ? _recordData.Span[_WAIMUnknown1Location] : default;
+        public Byte WAIMUnknown1 => _WAIMUnknown1_IsSet ? _recordData.Span[_WAIMUnknown1Location] : default(Byte);
         #endregion
         #region WAIMUnknown2
         private int _WAIMUnknown2Location => _WAIMLocation!.Value.Min + 0x1B;
         private bool _WAIMUnknown2_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _WAIMUnknown2Location + 1 >= 1;
-        public Byte WAIMUnknown2 => _WAIMUnknown2_IsSet ? _recordData.Span[_WAIMUnknown2Location] : default;
+        public Byte WAIMUnknown2 => _WAIMUnknown2_IsSet ? _recordData.Span[_WAIMUnknown2Location] : default(Byte);
         #endregion
         #region EnableMarkingTargets
         private int _EnableMarkingTargetsLocation => _WAIMLocation!.Value.Min + 0x1C;
@@ -12871,12 +12871,12 @@ namespace Mutagen.Bethesda.Starfield
         #region WAIMUnknown3
         private int _WAIMUnknown3Location => _WAIMLocation!.Value.Min + 0x21;
         private bool _WAIMUnknown3_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _WAIMUnknown3Location + 1 >= 1;
-        public Byte WAIMUnknown3 => _WAIMUnknown3_IsSet ? _recordData.Span[_WAIMUnknown3Location] : default;
+        public Byte WAIMUnknown3 => _WAIMUnknown3_IsSet ? _recordData.Span[_WAIMUnknown3Location] : default(Byte);
         #endregion
         #region WAIMUnknown4
         private int _WAIMUnknown4Location => _WAIMLocation!.Value.Min + 0x22;
         private bool _WAIMUnknown4_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _WAIMUnknown4Location + 1 >= 1;
-        public Byte WAIMUnknown4 => _WAIMUnknown4_IsSet ? _recordData.Span[_WAIMUnknown4Location] : default;
+        public Byte WAIMUnknown4 => _WAIMUnknown4_IsSet ? _recordData.Span[_WAIMUnknown4Location] : default(Byte);
         #endregion
         private RangeInt32? _WAM2Location;
         #region AmmoType
@@ -12907,7 +12907,7 @@ namespace Mutagen.Bethesda.Starfield
         #region ProjectilesCount
         private int _ProjectilesCountLocation => _WAM2Location!.Value.Min + 0x14;
         private bool _ProjectilesCount_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _ProjectilesCountLocation + 1 >= 1;
-        public Byte ProjectilesCount => _ProjectilesCount_IsSet ? _recordData.Span[_ProjectilesCountLocation] : default;
+        public Byte ProjectilesCount => _ProjectilesCount_IsSet ? _recordData.Span[_ProjectilesCountLocation] : default(Byte);
         #endregion
         #region NpcsUseAmmo
         private int _NpcsUseAmmoLocation => _WAM2Location!.Value.Min + 0x15;
@@ -12917,7 +12917,7 @@ namespace Mutagen.Bethesda.Starfield
         #region WAM2Unknown1
         private int _WAM2Unknown1Location => _WAM2Location!.Value.Min + 0x16;
         private bool _WAM2Unknown1_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _WAM2Unknown1Location + 1 >= 1;
-        public Byte WAM2Unknown1 => _WAM2Unknown1_IsSet ? _recordData.Span[_WAM2Unknown1Location] : default;
+        public Byte WAM2Unknown1 => _WAM2Unknown1_IsSet ? _recordData.Span[_WAM2Unknown1Location] : default(Byte);
         #endregion
         #region WAMM
         private int? _WAMMLocation;
@@ -12969,7 +12969,7 @@ namespace Mutagen.Bethesda.Starfield
         #region SoundLevel
         private int _SoundLevelLocation => _WAUDLocation!.Value.Min + 0x118;
         private bool _SoundLevel_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _SoundLevelLocation + 1 >= 4;
-        public SoundLevel SoundLevel => _SoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SoundLevelLocation, 0x4)) : default;
+        public SoundLevel SoundLevel => _SoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SoundLevelLocation, 0x4)) : default(SoundLevel);
         #endregion
         #region WAUDUnknown2
         private int _WAUDUnknown2Location => _WAUDLocation!.Value.Min + 0x11C;
@@ -13045,7 +13045,7 @@ namespace Mutagen.Bethesda.Starfield
         #region HitBehavior
         private int _HitBehaviorLocation => _WDMGLocation!.Value.Min + 0x19;
         private bool _HitBehavior_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _HitBehaviorLocation + 1 >= 1;
-        public HitBehavior HitBehavior => _HitBehavior_IsSet ? (HitBehavior)_recordData.Span.Slice(_HitBehaviorLocation, 0x1)[0] : default;
+        public HitBehavior HitBehavior => _HitBehavior_IsSet ? (HitBehavior)_recordData.Span.Slice(_HitBehaviorLocation, 0x1)[0] : default(HitBehavior);
         #endregion
         #region Resistance
         private int _ResistanceLocation => _WDMGLocation!.Value.Min + 0x1A;
@@ -13097,12 +13097,12 @@ namespace Mutagen.Bethesda.Starfield
         #region FiringType
         private int _FiringTypeLocation => _WFIRLocation!.Value.Min;
         private bool _FiringType_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _FiringTypeLocation + 1 >= 1;
-        public Weapon.FiringTypeEnum FiringType => _FiringType_IsSet ? (Weapon.FiringTypeEnum)_recordData.Span.Slice(_FiringTypeLocation, 0x1)[0] : default;
+        public Weapon.FiringTypeEnum FiringType => _FiringType_IsSet ? (Weapon.FiringTypeEnum)_recordData.Span.Slice(_FiringTypeLocation, 0x1)[0] : default(Weapon.FiringTypeEnum);
         #endregion
         #region BurstCount
         private int _BurstCountLocation => _WFIRLocation!.Value.Min + 0x1;
         private bool _BurstCount_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _BurstCountLocation + 1 >= 1;
-        public Byte BurstCount => _BurstCount_IsSet ? _recordData.Span[_BurstCountLocation] : default;
+        public Byte BurstCount => _BurstCount_IsSet ? _recordData.Span[_BurstCountLocation] : default(Byte);
         #endregion
         #region RepeatableFire
         private int _RepeatableFireLocation => _WFIRLocation!.Value.Min + 0x2;
@@ -13162,7 +13162,7 @@ namespace Mutagen.Bethesda.Starfield
         #region WFIRUnknown10
         private int _WFIRUnknown10Location => _WFIRLocation!.Value.Min + 0x22;
         private bool _WFIRUnknown10_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _WFIRUnknown10Location + 1 >= 1;
-        public Byte WFIRUnknown10 => _WFIRUnknown10_IsSet ? _recordData.Span[_WFIRUnknown10Location] : default;
+        public Byte WFIRUnknown10 => _WFIRUnknown10_IsSet ? _recordData.Span[_WFIRUnknown10Location] : default(Byte);
         #endregion
         #region TriggerThresholdSecondStage
         private int _TriggerThresholdSecondStageLocation => _WFIRLocation!.Value.Min + 0x23;
@@ -13284,7 +13284,7 @@ namespace Mutagen.Bethesda.Starfield
         #region WMELUnknown1
         private int _WMELUnknown1Location => _WMELLocation!.Value.Min;
         private bool _WMELUnknown1_IsSet => _WMELLocation.HasValue && _WMELLocation!.Value.Max - _WMELUnknown1Location + 1 >= 1;
-        public Byte WMELUnknown1 => _WMELUnknown1_IsSet ? _recordData.Span[_WMELUnknown1Location] : default;
+        public Byte WMELUnknown1 => _WMELUnknown1_IsSet ? _recordData.Span[_WMELUnknown1Location] : default(Byte);
         #endregion
         #region MeleeBashDamage
         private int _MeleeBashDamageLocation => _WMELLocation!.Value.Min + 0x1;
@@ -13299,7 +13299,7 @@ namespace Mutagen.Bethesda.Starfield
         #region MeleeStagger
         private int _MeleeStaggerLocation => _WMELLocation!.Value.Min + 0x9;
         private bool _MeleeStagger_IsSet => _WMELLocation.HasValue && _WMELLocation!.Value.Max - _MeleeStaggerLocation + 1 >= 4;
-        public Stagger MeleeStagger => _MeleeStagger_IsSet ? (Stagger)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MeleeStaggerLocation, 0x4)) : default;
+        public Stagger MeleeStagger => _MeleeStagger_IsSet ? (Stagger)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MeleeStaggerLocation, 0x4)) : default(Stagger);
         #endregion
         private RangeInt32? _QNAMLocation;
         #region Power
@@ -13335,7 +13335,7 @@ namespace Mutagen.Bethesda.Starfield
         #region QNAMUnknown1
         private int _QNAMUnknown1Location => _QNAMLocation!.Value.Min + 0x12;
         private bool _QNAMUnknown1_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _QNAMUnknown1Location + 1 >= 1;
-        public Byte QNAMUnknown1 => _QNAMUnknown1_IsSet ? _recordData.Span[_QNAMUnknown1Location] : default;
+        public Byte QNAMUnknown1 => _QNAMUnknown1_IsSet ? _recordData.Span[_QNAMUnknown1Location] : default(Byte);
         #endregion
         #region QNAMUnknown2
         private int _QNAMUnknown2Location => _QNAMLocation!.Value.Min + 0x13;
@@ -13345,7 +13345,7 @@ namespace Mutagen.Bethesda.Starfield
         #region QNAMUnknown3
         private int _QNAMUnknown3Location => _QNAMLocation!.Value.Min + 0x17;
         private bool _QNAMUnknown3_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _QNAMUnknown3Location + 1 >= 1;
-        public Byte QNAMUnknown3 => _QNAMUnknown3_IsSet ? _recordData.Span[_QNAMUnknown3Location] : default;
+        public Byte QNAMUnknown3 => _QNAMUnknown3_IsSet ? _recordData.Span[_QNAMUnknown3Location] : default(Byte);
         #endregion
         #region QNAMUnknown4
         private int _QNAMUnknown4Location => _QNAMLocation!.Value.Min + 0x18;
@@ -13494,7 +13494,7 @@ namespace Mutagen.Bethesda.Starfield
         #region WTRMUnknown2
         private int _WTRMUnknown2Location => _WTRMLocation!.Value.Min + 0x4;
         private bool _WTRMUnknown2_IsSet => _WTRMLocation.HasValue && _WTRMLocation!.Value.Max - _WTRMUnknown2Location + 1 >= 1;
-        public Byte WTRMUnknown2 => _WTRMUnknown2_IsSet ? _recordData.Span[_WTRMUnknown2Location] : default;
+        public Byte WTRMUnknown2 => _WTRMUnknown2_IsSet ? _recordData.Span[_WTRMUnknown2Location] : default(Byte);
         #endregion
         #region WTRMUnknown3
         private int _WTRMUnknown3Location => _WTRMLocation!.Value.Min + 0x5;

@@ -4152,7 +4152,7 @@ namespace Mutagen.Bethesda.Fallout4
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0xC;
         private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 4;
-        public Light.Flag Flags => _Flags_IsSet ? (Light.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
+        public Light.Flag Flags => _Flags_IsSet ? (Light.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default(Light.Flag);
         #endregion
         #region FalloffExponent
         private int _FalloffExponentLocation => _DATALocation!.Value.Min + 0x10;

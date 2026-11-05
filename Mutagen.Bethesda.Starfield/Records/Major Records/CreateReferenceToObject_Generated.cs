@@ -1293,7 +1293,7 @@ namespace Mutagen.Bethesda.Starfield
         #region Create
         private int _CreateLocation => _ALCALocation!.Value.Min + 0x2;
         private bool _Create_IsSet => _ALCALocation.HasValue && _ALCALocation!.Value.Max - _CreateLocation + 1 >= 2;
-        public CreateReferenceToObject.CreateEnum Create => _Create_IsSet ? (CreateReferenceToObject.CreateEnum)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_CreateLocation, 0x2)) : default;
+        public CreateReferenceToObject.CreateEnum Create => _Create_IsSet ? (CreateReferenceToObject.CreateEnum)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_CreateLocation, 0x2)) : default(CreateReferenceToObject.CreateEnum);
         #endregion
         #region Level
         private int? _LevelLocation;

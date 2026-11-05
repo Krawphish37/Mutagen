@@ -2044,7 +2044,7 @@ namespace Mutagen.Bethesda.Starfield
         #region FeatureType
         private int _FeatureTypeLocation => _FNAMLocation!.Value.Min;
         private bool _FeatureType_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _FeatureTypeLocation + 1 >= 1;
-        public PhotoModeFeature.Mode FeatureType => _FeatureType_IsSet ? (PhotoModeFeature.Mode)_recordData.Span.Slice(_FeatureTypeLocation, 0x1)[0] : default;
+        public PhotoModeFeature.Mode FeatureType => _FeatureType_IsSet ? (PhotoModeFeature.Mode)_recordData.Span.Slice(_FeatureTypeLocation, 0x1)[0] : default(PhotoModeFeature.Mode);
         #endregion
         #region XOffset
         private int _XOffsetLocation => _FNAMLocation!.Value.Min + 0x1;

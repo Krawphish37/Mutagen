@@ -5174,7 +5174,7 @@ namespace Mutagen.Bethesda.Starfield
         #region StaggerRating
         private int _StaggerRatingLocation => _FNAMLocation!.Value.Min + 0x4;
         private bool _StaggerRating_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _StaggerRatingLocation + 1 >= 1;
-        public Byte StaggerRating => _StaggerRating_IsSet ? _recordData.Span[_StaggerRatingLocation] : default;
+        public Byte StaggerRating => _StaggerRating_IsSet ? _recordData.Span[_StaggerRatingLocation] : default(Byte);
         #endregion
         #region Unused
         private int _UnusedLocation => _FNAMLocation!.Value.Min + 0x5;

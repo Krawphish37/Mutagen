@@ -56,14 +56,14 @@ namespace Mutagen.Bethesda.Starfield
         public Int32 Unknown { get; set; } = default(Int32);
         #endregion
         #region Mesh
-        private readonly IFormLink<INavigationMeshGetter> _Mesh = new FormLink<INavigationMeshGetter>();
-        public IFormLink<INavigationMeshGetter> Mesh
+        private readonly IFormLink<IStarfieldMajorRecordGetter> _Mesh = new FormLink<IStarfieldMajorRecordGetter>();
+        public IFormLink<IStarfieldMajorRecordGetter> Mesh
         {
             get => _Mesh;
             set => _Mesh.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<INavigationMeshGetter> IEdgeLinkGetter.Mesh => this.Mesh;
+        IFormLinkGetter<IStarfieldMajorRecordGetter> IEdgeLinkGetter.Mesh => this.Mesh;
         #endregion
         #region TriangleIndex
         public Int16 TriangleIndex { get; set; } = default(Int16);
@@ -528,7 +528,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IEdgeLink>
     {
         new Int32 Unknown { get; set; }
-        new IFormLink<INavigationMeshGetter> Mesh { get; set; }
+        new IFormLink<IStarfieldMajorRecordGetter> Mesh { get; set; }
         new Int16 TriangleIndex { get; set; }
         new SByte Unknown2 { get; set; }
     }
@@ -547,7 +547,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => EdgeLink_Registration.Instance;
         Int32 Unknown { get; }
-        IFormLinkGetter<INavigationMeshGetter> Mesh { get; }
+        IFormLinkGetter<IStarfieldMajorRecordGetter> Mesh { get; }
         Int16 TriangleIndex { get; }
         SByte Unknown2 { get; }
 
@@ -1221,7 +1221,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public Int32 Unknown => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x0, 0x4));
-        public IFormLinkGetter<INavigationMeshGetter> Mesh => FormLinkBinaryTranslation.Instance.OverlayFactory<INavigationMeshGetter>(_package, _structData.Span.Slice(0x4, 0x4));
+        public IFormLinkGetter<IStarfieldMajorRecordGetter> Mesh => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x4, 0x4));
         public Int16 TriangleIndex => BinaryPrimitives.ReadInt16LittleEndian(_structData.Slice(0x8, 0x2));
         public SByte Unknown2 => (sbyte)_structData.Slice(0xA, 0x1)[0];
         partial void CustomFactoryEnd(

@@ -4232,7 +4232,7 @@ namespace Mutagen.Bethesda.Starfield
         #region DataSlateType
         private int _DataSlateTypeLocation => _DNAMLocation!.Value.Min + 0xD;
         private bool _DataSlateType_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DataSlateTypeLocation + 1 >= 4;
-        public Book.DataSlateTypeEnum DataSlateType => _DataSlateType_IsSet ? (Book.DataSlateTypeEnum)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_DataSlateTypeLocation, 0x4)) : default;
+        public Book.DataSlateTypeEnum DataSlateType => _DataSlateType_IsSet ? (Book.DataSlateTypeEnum)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_DataSlateTypeLocation, 0x4)) : default(Book.DataSlateTypeEnum);
         #endregion
         #region Description
         private int? _DescriptionLocation;

@@ -3639,7 +3639,7 @@ namespace Mutagen.Bethesda.Starfield
         #region Flags
         private int _FlagsLocation => _DNAMLocation!.Value.Min + 0x58;
         private bool _Flags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlagsLocation + 1 >= 4;
-        public Hazard.Flag Flags => _Flags_IsSet ? (Hazard.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
+        public Hazard.Flag Flags => _Flags_IsSet ? (Hazard.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default(Hazard.Flag);
         #endregion
         public IReadOnlyList<IConditionGetter> Conditions { get; private set; } = [];
         partial void CustomFactoryEnd(

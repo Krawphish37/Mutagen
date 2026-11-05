@@ -1408,12 +1408,12 @@ namespace Mutagen.Bethesda.Fallout4
         #region Flags
         private int _FlagsLocation => _INDXLocation!.Value.Min + 0x2;
         private bool _Flags_IsSet => _INDXLocation.HasValue && _INDXLocation!.Value.Max - _FlagsLocation + 1 >= 1;
-        public QuestStage.Flag Flags => _Flags_IsSet ? (QuestStage.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
+        public QuestStage.Flag Flags => _Flags_IsSet ? (QuestStage.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default(QuestStage.Flag);
         #endregion
         #region Unknown
         private int _UnknownLocation => _INDXLocation!.Value.Min + 0x3;
         private bool _Unknown_IsSet => _INDXLocation.HasValue && _INDXLocation!.Value.Max - _UnknownLocation + 1 >= 1;
-        public Byte Unknown => _Unknown_IsSet ? _recordData.Span[_UnknownLocation] : default;
+        public Byte Unknown => _Unknown_IsSet ? _recordData.Span[_UnknownLocation] : default(Byte);
         #endregion
         public IReadOnlyList<IQuestLogEntryGetter> LogEntries { get; private set; } = [];
         partial void CustomFactoryEnd(

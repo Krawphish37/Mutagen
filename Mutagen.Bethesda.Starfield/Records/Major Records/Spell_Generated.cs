@@ -3432,12 +3432,12 @@ namespace Mutagen.Bethesda.Starfield
         #region Flags
         private int _FlagsLocation => _SPITLocation!.Value.Min + 0x4;
         private bool _Flags_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _FlagsLocation + 1 >= 4;
-        public Spell.Flag Flags => _Flags_IsSet ? (Spell.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
+        public Spell.Flag Flags => _Flags_IsSet ? (Spell.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default(Spell.Flag);
         #endregion
         #region Type
         private int _TypeLocation => _SPITLocation!.Value.Min + 0x8;
         private bool _Type_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _TypeLocation + 1 >= 1;
-        public Spell.SpellType Type => _Type_IsSet ? (Spell.SpellType)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default;
+        public Spell.SpellType Type => _Type_IsSet ? (Spell.SpellType)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default(Spell.SpellType);
         #endregion
         #region ChargeTime
         private int _ChargeTimeLocation => _SPITLocation!.Value.Min + 0x9;
@@ -3447,12 +3447,12 @@ namespace Mutagen.Bethesda.Starfield
         #region CastType
         private int _CastTypeLocation => _SPITLocation!.Value.Min + 0xD;
         private bool _CastType_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _CastTypeLocation + 1 >= 1;
-        public CastType CastType => _CastType_IsSet ? (CastType)_recordData.Span.Slice(_CastTypeLocation, 0x1)[0] : default;
+        public CastType CastType => _CastType_IsSet ? (CastType)_recordData.Span.Slice(_CastTypeLocation, 0x1)[0] : default(CastType);
         #endregion
         #region TargetType
         private int _TargetTypeLocation => _SPITLocation!.Value.Min + 0xE;
         private bool _TargetType_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _TargetTypeLocation + 1 >= 1;
-        public TargetType TargetType => _TargetType_IsSet ? (TargetType)_recordData.Span.Slice(_TargetTypeLocation, 0x1)[0] : default;
+        public TargetType TargetType => _TargetType_IsSet ? (TargetType)_recordData.Span.Slice(_TargetTypeLocation, 0x1)[0] : default(TargetType);
         #endregion
         #region CastDuration
         private int _CastDurationLocation => _SPITLocation!.Value.Min + 0xF;

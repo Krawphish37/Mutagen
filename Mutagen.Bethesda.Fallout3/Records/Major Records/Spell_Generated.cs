@@ -1897,7 +1897,7 @@ namespace Mutagen.Bethesda.Fallout3
         #region Type
         private int _TypeLocation => _SPITLocation!.Value.Min;
         private bool _Type_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _TypeLocation + 1 >= 4;
-        public Spell.SpellType Type => _Type_IsSet ? (Spell.SpellType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default;
+        public Spell.SpellType Type => _Type_IsSet ? (Spell.SpellType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default(Spell.SpellType);
         #endregion
         #region Unused1
         private int _Unused1Location => _SPITLocation!.Value.Min + 0x4;
@@ -1912,7 +1912,7 @@ namespace Mutagen.Bethesda.Fallout3
         #region Flags
         private int _FlagsLocation => _SPITLocation!.Value.Min + 0xC;
         private bool _Flags_IsSet => _SPITLocation.HasValue && _SPITLocation!.Value.Max - _FlagsLocation + 1 >= 4;
-        public Spell.SpellFlag Flags => _Flags_IsSet ? (Spell.SpellFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
+        public Spell.SpellFlag Flags => _Flags_IsSet ? (Spell.SpellFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default(Spell.SpellFlag);
         #endregion
         public IReadOnlyList<IEffectGetter> Effects { get; private set; } = [];
         partial void CustomFactoryEnd(

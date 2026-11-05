@@ -8571,17 +8571,17 @@ namespace Mutagen.Bethesda.Skyrim
         #region Size
         private int _SizeLocation => _DATALocation!.Value.Min + 0x40;
         private bool _Size_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SizeLocation + 1 >= 4;
-        public Size Size => _Size_IsSet ? (Size)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SizeLocation, 0x4)) : default;
+        public Size Size => _Size_IsSet ? (Size)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SizeLocation, 0x4)) : default(Size);
         #endregion
         #region HeadBipedObject
         private int _HeadBipedObjectLocation => _DATALocation!.Value.Min + 0x44;
         private bool _HeadBipedObject_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HeadBipedObjectLocation + 1 >= 4;
-        public BipedObject HeadBipedObject => _HeadBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_HeadBipedObjectLocation, 0x4)) : default;
+        public BipedObject HeadBipedObject => _HeadBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_HeadBipedObjectLocation, 0x4)) : Race.HeadBipedObjectDefault;
         #endregion
         #region HairBipedObject
         private int _HairBipedObjectLocation => _DATALocation!.Value.Min + 0x48;
         private bool _HairBipedObject_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _HairBipedObjectLocation + 1 >= 4;
-        public BipedObject HairBipedObject => _HairBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_HairBipedObjectLocation, 0x4)) : default;
+        public BipedObject HairBipedObject => _HairBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_HairBipedObjectLocation, 0x4)) : Race.HairBipedObjectDefault;
         #endregion
         #region InjuredHealthPercent
         private int _InjuredHealthPercentLocation => _DATALocation!.Value.Min + 0x4C;
@@ -8591,7 +8591,7 @@ namespace Mutagen.Bethesda.Skyrim
         #region ShieldBipedObject
         private int _ShieldBipedObjectLocation => _DATALocation!.Value.Min + 0x50;
         private bool _ShieldBipedObject_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ShieldBipedObjectLocation + 1 >= 4;
-        public BipedObject ShieldBipedObject => _ShieldBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ShieldBipedObjectLocation, 0x4)) : default;
+        public BipedObject ShieldBipedObject => _ShieldBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ShieldBipedObjectLocation, 0x4)) : Race.ShieldBipedObjectDefault;
         #endregion
         #region Regen
         private int _RegenLocation => _DATALocation!.Value.Min + 0x54;
@@ -8614,7 +8614,7 @@ namespace Mutagen.Bethesda.Skyrim
         #region BodyBipedObject
         private int _BodyBipedObjectLocation => _DATALocation!.Value.Min + 0x68;
         private bool _BodyBipedObject_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _BodyBipedObjectLocation + 1 >= 4;
-        public BipedObject BodyBipedObject => _BodyBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_BodyBipedObjectLocation, 0x4)) : default;
+        public BipedObject BodyBipedObject => _BodyBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_BodyBipedObjectLocation, 0x4)) : Race.BodyBipedObjectDefault;
         #endregion
         #region AimAngleTolerance
         private int _AimAngleToleranceLocation => _DATALocation!.Value.Min + 0x6C;

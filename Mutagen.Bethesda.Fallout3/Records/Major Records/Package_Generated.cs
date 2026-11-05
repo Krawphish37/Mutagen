@@ -4015,12 +4015,12 @@ namespace Mutagen.Bethesda.Fallout3
         #region ScheduleDayOfWeek
         private int _ScheduleDayOfWeekLocation => _PSDTLocation!.Value.Min + 0x1;
         private bool _ScheduleDayOfWeek_IsSet => _PSDTLocation.HasValue && _PSDTLocation!.Value.Max - _ScheduleDayOfWeekLocation + 1 >= 1;
-        public Package.DayOfWeek ScheduleDayOfWeek => _ScheduleDayOfWeek_IsSet ? (Package.DayOfWeek)_recordData.Span.Slice(_ScheduleDayOfWeekLocation, 0x1)[0] : default;
+        public Package.DayOfWeek ScheduleDayOfWeek => _ScheduleDayOfWeek_IsSet ? (Package.DayOfWeek)_recordData.Span.Slice(_ScheduleDayOfWeekLocation, 0x1)[0] : default(Package.DayOfWeek);
         #endregion
         #region ScheduleDate
         private int _ScheduleDateLocation => _PSDTLocation!.Value.Min + 0x2;
         private bool _ScheduleDate_IsSet => _PSDTLocation.HasValue && _PSDTLocation!.Value.Max - _ScheduleDateLocation + 1 >= 1;
-        public Byte ScheduleDate => _ScheduleDate_IsSet ? _recordData.Span[_ScheduleDateLocation] : default;
+        public Byte ScheduleDate => _ScheduleDate_IsSet ? _recordData.Span[_ScheduleDateLocation] : default(Byte);
         #endregion
         #region ScheduleTime
         private int _ScheduleTimeLocation => _PSDTLocation!.Value.Min + 0x3;

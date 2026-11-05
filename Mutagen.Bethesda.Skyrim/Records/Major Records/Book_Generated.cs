@@ -3363,7 +3363,7 @@ namespace Mutagen.Bethesda.Skyrim
         #region Type
         private int _TypeLocation => _DATALocation!.Value.Min + 0x1;
         private bool _Type_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _TypeLocation + 1 >= 1;
-        public Book.BookType Type => _Type_IsSet ? (Book.BookType)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default;
+        public Book.BookType Type => _Type_IsSet ? (Book.BookType)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default(Book.BookType);
         #endregion
         #region Unused
         private int _UnusedLocation => _DATALocation!.Value.Min + 0x2;

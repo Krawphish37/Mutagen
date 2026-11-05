@@ -2483,7 +2483,7 @@ namespace Mutagen.Bethesda.Fallout3
         #region Unused2
         private int _Unused2Location => _DATALocation!.Value.Min + 0xD;
         private bool _Unused2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Unused2Location + 1 >= 1;
-        public Byte Unused2 => _Unused2_IsSet ? _recordData.Span[_Unused2Location] : default;
+        public Byte Unused2 => _Unused2_IsSet ? _recordData.Span[_Unused2Location] : default(Byte);
         #endregion
         #region ActorBase
         private int? _ActorBaseLocation;
