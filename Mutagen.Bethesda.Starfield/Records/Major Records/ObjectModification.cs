@@ -261,13 +261,6 @@ partial class AObjectModificationBinaryOverlay
     private int AttachSlotsEnd => 4 + AttachSlotsStart + AttachParentSlots.Count * 4;
     public ushort Unknown => HasData ? BinaryPrimitives.ReadUInt16LittleEndian(_dataBytes.Slice(0x8, 2)) : default;
     public ushort Unknown2 => HasData ? BinaryPrimitives.ReadUInt16LittleEndian(_dataBytes.Slice(StringEnd)) : default;
-    public string DataName => StringBinaryTranslation.Instance.Parse(_dataBytes.Slice(10, StringLen), 
-        _package.MetaData.Encodings.NonTranslated, parseWhole: true);
-
-    public byte MaxRank => _dataBytes[0xE];
-
-    public byte LevelTierScaledOffset => _dataBytes[0xF];
-
     public IFormLinkGetter<IKeywordGetter> AttachPoint => HasData
         ? FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _dataBytes.Slice(StringEnd + 2, 0x4))
         : FormLink<IKeywordGetter>.Null;
