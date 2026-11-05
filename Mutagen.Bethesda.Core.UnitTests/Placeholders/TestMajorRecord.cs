@@ -59,6 +59,9 @@ public class TestMajorRecord : ITestMajorRecord
     public ILoquiRegistration Registration => throw new NotImplementedException();
     public FormKey FormKey { get; }
     public uint VersionControl { get; set; }
+    public Noggog.MemorySlice<byte>? UnknownSubrecords { get; set; }
+    public string? UnknownSubrecordsSource { get; set; }
+    Noggog.ReadOnlyMemorySlice<byte>? Mutagen.Bethesda.Plugins.Records.IMajorRecordGetter.UnknownSubrecords => UnknownSubrecords;
     public string? EditorID { get; set; }
 
     public TestMajorRecord(FormKey formKey)

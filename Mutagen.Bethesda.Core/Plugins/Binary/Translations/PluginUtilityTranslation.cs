@@ -619,6 +619,7 @@ internal static class PluginUtilityTranslation
                 using (CompressionExport.Compression(item.IsCompressed, writer, out var writerToUse))
                 {
                     writeRecordTypes(item, writerToUse, translationParams);
+                    MajorRecordUnknownSubrecords.Write(item, writer, writerToUse);
                     if (endMarker != null)
                     {
                         using (HeaderExport.Subrecord(writerToUse, endMarker.Value)) {}

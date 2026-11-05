@@ -507,6 +507,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -560,6 +562,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2764,54 +2768,56 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Name = 8,
-        MenuDisplayObject = 9,
-        Keywords = 10,
-        Flags = 11,
-        BaseCost = 12,
-        MagicSkill = 13,
-        ResistValue = 14,
-        CounterEffectCount = 15,
-        Unknown1 = 16,
-        CastingLight = 17,
-        TaperWeight = 18,
-        HitShader = 19,
-        EnchantShader = 20,
-        MinimumSkillLevel = 21,
-        SpellmakingArea = 22,
-        SpellmakingCastingTime = 23,
-        TaperCurve = 24,
-        TaperDuration = 25,
-        SecondActorValueWeight = 26,
-        Archetype = 27,
-        Projectile = 28,
-        Explosion = 29,
-        CastType = 30,
-        TargetType = 31,
-        SecondActorValue = 32,
-        CastingArt = 33,
-        HitEffectArt = 34,
-        ImpactData = 35,
-        SkillUsageMultiplier = 36,
-        DualCastArt = 37,
-        DualCastScale = 38,
-        EnchantArt = 39,
-        HitVisuals = 40,
-        EnchantVisuals = 41,
-        EquipAbility = 42,
-        ImageSpaceModifier = 43,
-        PerkToApply = 44,
-        CastingSoundLevel = 45,
-        ScriptEffectAIScore = 46,
-        ScriptEffectAIDelayTime = 47,
-        CounterEffects = 48,
-        Sounds = 49,
-        Description = 50,
-        Conditions = 51,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Name = 10,
+        MenuDisplayObject = 11,
+        Keywords = 12,
+        Flags = 13,
+        BaseCost = 14,
+        MagicSkill = 15,
+        ResistValue = 16,
+        CounterEffectCount = 17,
+        Unknown1 = 18,
+        CastingLight = 19,
+        TaperWeight = 20,
+        HitShader = 21,
+        EnchantShader = 22,
+        MinimumSkillLevel = 23,
+        SpellmakingArea = 24,
+        SpellmakingCastingTime = 25,
+        TaperCurve = 26,
+        TaperDuration = 27,
+        SecondActorValueWeight = 28,
+        Archetype = 29,
+        Projectile = 30,
+        Explosion = 31,
+        CastType = 32,
+        TargetType = 33,
+        SecondActorValue = 34,
+        CastingArt = 35,
+        HitEffectArt = 36,
+        ImpactData = 37,
+        SkillUsageMultiplier = 38,
+        DualCastArt = 39,
+        DualCastScale = 40,
+        EnchantArt = 41,
+        HitVisuals = 42,
+        EnchantVisuals = 43,
+        EquipAbility = 44,
+        ImageSpaceModifier = 45,
+        PerkToApply = 46,
+        CastingSoundLevel = 47,
+        ScriptEffectAIScore = 48,
+        ScriptEffectAIDelayTime = 49,
+        CounterEffects = 50,
+        Sounds = 51,
+        Description = 52,
+        Conditions = 53,
     }
     #endregion
 
@@ -2824,7 +2830,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 45;
 
-        public const ushort FieldCount = 52;
+        public const ushort FieldCount = 54;
 
         public static readonly Type MaskType = typeof(MagicEffect.Mask<>);
 
@@ -3417,6 +3423,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (MagicEffect_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (MagicEffect_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (MagicEffect_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (MagicEffect_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (MagicEffect_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -3439,6 +3449,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (MagicEffect_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (MagicEffect_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (MagicEffect_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (MagicEffect_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

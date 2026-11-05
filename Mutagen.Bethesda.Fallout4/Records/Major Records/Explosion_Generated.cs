@@ -306,6 +306,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -338,6 +340,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1652,33 +1656,35 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        ObjectBounds = 7,
-        Name = 8,
-        Model = 9,
-        ObjectEffect = 10,
-        ImageSpaceModifier = 11,
-        Light = 12,
-        Sound1 = 13,
-        Sound2 = 14,
-        ImpactDataSet = 15,
-        PlacedObject = 16,
-        SpawnProjectile = 17,
-        Force = 18,
-        Damage = 19,
-        InnerRadius = 20,
-        OuterRadius = 21,
-        ISRadius = 22,
-        VerticalOffsetMult = 23,
-        Flags = 24,
-        SoundLevel = 25,
-        PlacedObjectAutoFadeDelay = 26,
-        Stagger = 27,
-        SpawnPosition = 28,
-        SpawnSpreadDegrees = 29,
-        SpawnCount = 30,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        ObjectBounds = 9,
+        Name = 10,
+        Model = 11,
+        ObjectEffect = 12,
+        ImageSpaceModifier = 13,
+        Light = 14,
+        Sound1 = 15,
+        Sound2 = 16,
+        ImpactDataSet = 17,
+        PlacedObject = 18,
+        SpawnProjectile = 19,
+        Force = 20,
+        Damage = 21,
+        InnerRadius = 22,
+        OuterRadius = 23,
+        ISRadius = 24,
+        VerticalOffsetMult = 25,
+        Flags = 26,
+        SoundLevel = 27,
+        PlacedObjectAutoFadeDelay = 28,
+        Stagger = 29,
+        SpawnPosition = 30,
+        SpawnSpreadDegrees = 31,
+        SpawnCount = 32,
     }
     #endregion
 
@@ -1691,7 +1697,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 24;
 
-        public const ushort FieldCount = 31;
+        public const ushort FieldCount = 33;
 
         public static readonly Type MaskType = typeof(Explosion.Mask<>);
 
@@ -2083,6 +2089,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Explosion_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Explosion_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Explosion_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Explosion_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Explosion_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2105,6 +2115,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Explosion_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Explosion_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Explosion_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Explosion_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

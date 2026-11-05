@@ -292,6 +292,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -321,6 +323,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1804,30 +1808,32 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        Components = 7,
-        MasterWorldspaces = 8,
-        AddedWorldspaces = 9,
-        Biomes = 10,
-        SurfaceTree = 11,
-        ScanWorldspaceMultiplier = 12,
-        Name = 13,
-        EnvironmentMap = 14,
-        BodyType = 15,
-        SpaceCell = 16,
-        OrbitalData = 17,
-        OrbitedData = 18,
-        GalaxyData = 19,
-        Details = 20,
-        AtmosphereData = 21,
-        BiomeNoise = 22,
-        PlayerKnowledge = 23,
-        Temperature = 24,
-        Density = 25,
-        PerihelionAngleDegrees = 26,
-        ResourceCreationSeed = 27,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        Components = 9,
+        MasterWorldspaces = 10,
+        AddedWorldspaces = 11,
+        Biomes = 12,
+        SurfaceTree = 13,
+        ScanWorldspaceMultiplier = 14,
+        Name = 15,
+        EnvironmentMap = 16,
+        BodyType = 17,
+        SpaceCell = 18,
+        OrbitalData = 19,
+        OrbitedData = 20,
+        GalaxyData = 21,
+        Details = 22,
+        AtmosphereData = 23,
+        BiomeNoise = 24,
+        PlayerKnowledge = 25,
+        Temperature = 26,
+        Density = 27,
+        PerihelionAngleDegrees = 28,
+        ResourceCreationSeed = 29,
     }
     #endregion
 
@@ -1840,7 +1846,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 21;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 30;
 
         public static readonly Type MaskType = typeof(Planet.Mask<>);
 
@@ -2332,6 +2338,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Planet_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Planet_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Planet_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Planet_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Planet_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2354,6 +2364,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Planet_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Planet_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Planet_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Planet_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

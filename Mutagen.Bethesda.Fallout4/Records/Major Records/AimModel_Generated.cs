@@ -150,6 +150,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -174,6 +176,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1192,25 +1196,27 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        ConeOfFireMinAngle = 7,
-        ConeOfFireMaxAngle = 8,
-        ConeOfFireIncreasePerShot = 9,
-        ConeOfFireIncreasePerSec = 10,
-        ConeOfFireDecreaseDelayMilliseconds = 11,
-        ConeOfFireSneakMult = 12,
-        RecoilDiminishSpringForce = 13,
-        RecoilDiminishSightsMult = 14,
-        RecoilMaxPerShot = 15,
-        RecoilMinPerShot = 16,
-        RecoilHipMult = 17,
-        RunawayRecoilShots = 18,
-        RecoilArc = 19,
-        RecoilArcRotate = 20,
-        ConeOfFireIronSightsMult = 21,
-        BaseStability = 22,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        ConeOfFireMinAngle = 9,
+        ConeOfFireMaxAngle = 10,
+        ConeOfFireIncreasePerShot = 11,
+        ConeOfFireIncreasePerSec = 12,
+        ConeOfFireDecreaseDelayMilliseconds = 13,
+        ConeOfFireSneakMult = 14,
+        RecoilDiminishSpringForce = 15,
+        RecoilDiminishSightsMult = 16,
+        RecoilMaxPerShot = 17,
+        RecoilMinPerShot = 18,
+        RecoilHipMult = 19,
+        RunawayRecoilShots = 20,
+        RecoilArc = 21,
+        RecoilArcRotate = 22,
+        ConeOfFireIronSightsMult = 23,
+        BaseStability = 24,
     }
     #endregion
 
@@ -1223,7 +1229,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 16;
 
-        public const ushort FieldCount = 23;
+        public const ushort FieldCount = 25;
 
         public static readonly Type MaskType = typeof(AimModel.Mask<>);
 
@@ -1544,6 +1550,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (AimModel_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (AimModel_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (AimModel_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (AimModel_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (AimModel_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1566,6 +1576,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (AimModel_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (AimModel_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (AimModel_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (AimModel_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

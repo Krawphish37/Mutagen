@@ -174,6 +174,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -204,6 +206,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1402,31 +1406,33 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        InnerConeAngleDegrees = 7,
-        OuterConeAngleDegrees = 8,
-        SteeringDegreesPerSec = 9,
-        PitchScale = 10,
-        InnerSteeringRing = 11,
-        OuterSteeringRing = 12,
-        Friction = 13,
-        MoveFollowDegreesPerSec = 14,
-        AdsSnapSteeringMult = 15,
-        AdsSnapSeconds = 16,
-        AdsSnapConeAngleDegrees = 17,
-        NoSteering = 18,
-        BulletBendingConeAngleDegrees = 19,
-        AdsSnapSteeringMultiplierInnerRing = 20,
-        AdsSnapSteeringMultiplierOuterRing = 21,
-        AdsMultiplierInnerConeAngleDegrees = 22,
-        AdsMultiplierOuterConeAngleDegrees = 23,
-        AdsMultiplierInnerSteeringRing = 24,
-        AdsMultiplierOuterSteeringRing = 25,
-        AdsMultiplierFriction = 26,
-        AdsMultiplierSteeringDegreesPerSec = 27,
-        AimAssistEnabled = 28,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        InnerConeAngleDegrees = 9,
+        OuterConeAngleDegrees = 10,
+        SteeringDegreesPerSec = 11,
+        PitchScale = 12,
+        InnerSteeringRing = 13,
+        OuterSteeringRing = 14,
+        Friction = 15,
+        MoveFollowDegreesPerSec = 16,
+        AdsSnapSteeringMult = 17,
+        AdsSnapSeconds = 18,
+        AdsSnapConeAngleDegrees = 19,
+        NoSteering = 20,
+        BulletBendingConeAngleDegrees = 21,
+        AdsSnapSteeringMultiplierInnerRing = 22,
+        AdsSnapSteeringMultiplierOuterRing = 23,
+        AdsMultiplierInnerConeAngleDegrees = 24,
+        AdsMultiplierOuterConeAngleDegrees = 25,
+        AdsMultiplierInnerSteeringRing = 26,
+        AdsMultiplierOuterSteeringRing = 27,
+        AdsMultiplierFriction = 28,
+        AdsMultiplierSteeringDegreesPerSec = 29,
+        AimAssistEnabled = 30,
     }
     #endregion
 
@@ -1439,7 +1445,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 22;
 
-        public const ushort FieldCount = 29;
+        public const ushort FieldCount = 31;
 
         public static readonly Type MaskType = typeof(AimAssistModel.Mask<>);
 
@@ -1796,6 +1802,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (AimAssistModel_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (AimAssistModel_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (AimAssistModel_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (AimAssistModel_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (AimAssistModel_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1818,6 +1828,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (AimAssistModel_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (AimAssistModel_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (AimAssistModel_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (AimAssistModel_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

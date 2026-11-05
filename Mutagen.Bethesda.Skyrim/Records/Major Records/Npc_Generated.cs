@@ -641,6 +641,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -694,6 +696,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -3319,54 +3323,56 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        Configuration = 9,
-        Factions = 10,
-        DeathItem = 11,
-        Voice = 12,
-        Template = 13,
-        Race = 14,
-        ActorEffect = 15,
-        Destructible = 16,
-        WornArmor = 17,
-        FarAwayModel = 18,
-        AttackRace = 19,
-        Attacks = 20,
-        SpectatorOverridePackageList = 21,
-        ObserveDeadBodyOverridePackageList = 22,
-        GuardWarnOverridePackageList = 23,
-        CombatOverridePackageList = 24,
-        Perks = 25,
-        Items = 26,
-        AIData = 27,
-        Packages = 28,
-        Keywords = 29,
-        Class = 30,
-        Name = 31,
-        ShortName = 32,
-        PlayerSkills = 33,
-        HeadParts = 34,
-        HairColor = 35,
-        CombatStyle = 36,
-        GiftFilter = 37,
-        NAM5 = 38,
-        Height = 39,
-        Weight = 40,
-        SoundLevel = 41,
-        Sound = 42,
-        DefaultOutfit = 43,
-        SleepingOutfit = 44,
-        DefaultPackageList = 45,
-        CrimeFaction = 46,
-        HeadTexture = 47,
-        TextureLighting = 48,
-        FaceMorph = 49,
-        FaceParts = 50,
-        TintLayers = 51,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        Configuration = 11,
+        Factions = 12,
+        DeathItem = 13,
+        Voice = 14,
+        Template = 15,
+        Race = 16,
+        ActorEffect = 17,
+        Destructible = 18,
+        WornArmor = 19,
+        FarAwayModel = 20,
+        AttackRace = 21,
+        Attacks = 22,
+        SpectatorOverridePackageList = 23,
+        ObserveDeadBodyOverridePackageList = 24,
+        GuardWarnOverridePackageList = 25,
+        CombatOverridePackageList = 26,
+        Perks = 27,
+        Items = 28,
+        AIData = 29,
+        Packages = 30,
+        Keywords = 31,
+        Class = 32,
+        Name = 33,
+        ShortName = 34,
+        PlayerSkills = 35,
+        HeadParts = 36,
+        HairColor = 37,
+        CombatStyle = 38,
+        GiftFilter = 39,
+        NAM5 = 40,
+        Height = 41,
+        Weight = 42,
+        SoundLevel = 43,
+        Sound = 44,
+        DefaultOutfit = 45,
+        SleepingOutfit = 46,
+        DefaultPackageList = 47,
+        CrimeFaction = 48,
+        HeadTexture = 49,
+        TextureLighting = 50,
+        FaceMorph = 51,
+        FaceParts = 52,
+        TintLayers = 53,
     }
     #endregion
 
@@ -3379,7 +3385,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 45;
 
-        public const ushort FieldCount = 52;
+        public const ushort FieldCount = 54;
 
         public static readonly Type MaskType = typeof(Npc.Mask<>);
 
@@ -4160,6 +4166,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (Npc_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (Npc_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Npc_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Npc_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (Npc_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -4182,6 +4192,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Npc_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Npc_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Npc_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Npc_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

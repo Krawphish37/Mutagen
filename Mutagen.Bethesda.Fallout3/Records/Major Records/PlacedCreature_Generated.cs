@@ -303,6 +303,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -335,6 +337,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1740,33 +1744,35 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        Base = 7,
-        EncounterZone = 8,
-        RagdollData = 9,
-        RagdollBipedRotation = 10,
-        Patrol = 11,
-        LevelModifier = 12,
-        Owner = 13,
-        FactionRank = 14,
-        MerchantContainer = 15,
-        Count = 16,
-        Radius = 17,
-        Health = 18,
-        LinkedDecals = 19,
-        LinkedReference = 20,
-        LinkedReferenceColor = 21,
-        ActivateParents = 22,
-        EnableParent = 23,
-        EmittanceLight = 24,
-        MultiboundReference = 25,
-        ActivationPrompt = 26,
-        IsIgnoredBySandbox = 27,
-        Scale = 28,
-        Position = 29,
-        Rotation = 30,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        Base = 9,
+        EncounterZone = 10,
+        RagdollData = 11,
+        RagdollBipedRotation = 12,
+        Patrol = 13,
+        LevelModifier = 14,
+        Owner = 15,
+        FactionRank = 16,
+        MerchantContainer = 17,
+        Count = 18,
+        Radius = 19,
+        Health = 20,
+        LinkedDecals = 21,
+        LinkedReference = 22,
+        LinkedReferenceColor = 23,
+        ActivateParents = 24,
+        EnableParent = 25,
+        EmittanceLight = 26,
+        MultiboundReference = 27,
+        ActivationPrompt = 28,
+        IsIgnoredBySandbox = 29,
+        Scale = 30,
+        Position = 31,
+        Rotation = 32,
     }
     #endregion
 
@@ -1779,7 +1785,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 24;
 
-        public const ushort FieldCount = 31;
+        public const ushort FieldCount = 33;
 
         public static readonly Type MaskType = typeof(PlacedCreature.Mask<>);
 
@@ -2240,6 +2246,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (PlacedCreature_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (PlacedCreature_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedCreature_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (PlacedCreature_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (PlacedCreature_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2262,6 +2272,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PlacedCreature_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (PlacedCreature_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedCreature_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedCreature_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

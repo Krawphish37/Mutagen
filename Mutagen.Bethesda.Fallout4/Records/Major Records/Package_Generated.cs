@@ -308,6 +308,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -343,6 +345,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1966,36 +1970,38 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Flags = 8,
-        Type = 9,
-        InterruptOverride = 10,
-        PreferredSpeed = 11,
-        Unknown = 12,
-        InterruptFlags = 13,
-        Unknown2 = 14,
-        ScheduleMonth = 15,
-        ScheduleDayOfWeek = 16,
-        ScheduleDate = 17,
-        ScheduleHour = 18,
-        ScheduleMinute = 19,
-        Unknown3 = 20,
-        ScheduleDurationInMinutes = 21,
-        Conditions = 22,
-        IdleAnimations = 23,
-        CombatStyle = 24,
-        OwnerQuest = 25,
-        PackageTemplate = 26,
-        DataInputVersion = 27,
-        Data = 28,
-        XnamMarker = 29,
-        ProcedureTree = 30,
-        OnBegin = 31,
-        OnEnd = 32,
-        OnChange = 33,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Flags = 10,
+        Type = 11,
+        InterruptOverride = 12,
+        PreferredSpeed = 13,
+        Unknown = 14,
+        InterruptFlags = 15,
+        Unknown2 = 16,
+        ScheduleMonth = 17,
+        ScheduleDayOfWeek = 18,
+        ScheduleDate = 19,
+        ScheduleHour = 20,
+        ScheduleMinute = 21,
+        Unknown3 = 22,
+        ScheduleDurationInMinutes = 23,
+        Conditions = 24,
+        IdleAnimations = 25,
+        CombatStyle = 26,
+        OwnerQuest = 27,
+        PackageTemplate = 28,
+        DataInputVersion = 29,
+        Data = 30,
+        XnamMarker = 31,
+        ProcedureTree = 32,
+        OnBegin = 33,
+        OnEnd = 34,
+        OnChange = 35,
     }
     #endregion
 
@@ -2008,7 +2014,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 27;
 
-        public const ushort FieldCount = 34;
+        public const ushort FieldCount = 36;
 
         public static readonly Type MaskType = typeof(Package.Mask<>);
 
@@ -2496,6 +2502,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Package_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Package_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Package_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Package_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Package_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2518,6 +2528,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Package_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Package_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Package_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Package_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

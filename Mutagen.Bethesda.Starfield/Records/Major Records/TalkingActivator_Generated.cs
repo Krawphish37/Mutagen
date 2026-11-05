@@ -342,6 +342,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -368,6 +370,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1707,27 +1711,29 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        ObjectPaletteDefaults = 10,
-        Transforms = 11,
-        SnapTemplate = 12,
-        SnapBehavior = 13,
-        DefaultLayer = 14,
-        XALG = 15,
-        Components = 16,
-        Name = 17,
-        Model = 18,
-        Destructible = 19,
-        Keywords = 20,
-        MarkerColor = 21,
-        FNAM = 22,
-        ActivationAngle = 23,
-        Voice = 24,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        ObjectPaletteDefaults = 12,
+        Transforms = 13,
+        SnapTemplate = 14,
+        SnapBehavior = 15,
+        DefaultLayer = 16,
+        XALG = 17,
+        Components = 18,
+        Name = 19,
+        Model = 20,
+        Destructible = 21,
+        Keywords = 22,
+        MarkerColor = 23,
+        FNAM = 24,
+        ActivationAngle = 25,
+        Voice = 26,
     }
     #endregion
 
@@ -1740,7 +1746,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 18;
 
-        public const ushort FieldCount = 25;
+        public const ushort FieldCount = 27;
 
         public static readonly Type MaskType = typeof(TalkingActivator.Mask<>);
 
@@ -2209,6 +2215,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (TalkingActivator_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (TalkingActivator_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (TalkingActivator_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (TalkingActivator_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (TalkingActivator_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2231,6 +2241,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (TalkingActivator_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (TalkingActivator_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (TalkingActivator_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (TalkingActivator_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

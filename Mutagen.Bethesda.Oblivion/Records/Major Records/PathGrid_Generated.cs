@@ -144,6 +144,8 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem PointToPointConnections,
                 TItem PGAG,
@@ -154,6 +156,8 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.PointToPointConnections = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PathGridPoint.Mask<TItem>?>>?>(PointToPointConnections, []);
@@ -998,11 +1002,13 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        OblivionMajorRecordFlags = 4,
-        PointToPointConnections = 5,
-        PGAG = 6,
-        InterCellConnections = 7,
-        PointToReferenceMappings = 8,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        OblivionMajorRecordFlags = 6,
+        PointToPointConnections = 7,
+        PGAG = 8,
+        InterCellConnections = 9,
+        PointToReferenceMappings = 10,
     }
     #endregion
 
@@ -1015,7 +1021,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 4;
 
-        public const ushort FieldCount = 9;
+        public const ushort FieldCount = 11;
 
         public static readonly Type MaskType = typeof(PathGrid.Mask<>);
 
@@ -1311,6 +1317,10 @@ namespace Mutagen.Bethesda.Oblivion
                     return (PathGrid_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (PathGrid_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PathGrid_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (PathGrid_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (PathGrid_FieldIndex)((int)index);
                 default:
@@ -1329,6 +1339,10 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PathGrid_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (PathGrid_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PathGrid_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PathGrid_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

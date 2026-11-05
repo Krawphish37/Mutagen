@@ -376,6 +376,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -416,6 +418,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2121,41 +2125,43 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        ObjectBounds = 7,
-        DirtinessScale = 8,
-        ObjectPaletteDefaults = 9,
-        XALG = 10,
-        DefaultLayer = 11,
-        Components = 12,
-        Name = 13,
-        Model = 14,
-        ObjectEffect = 15,
-        ImageSpaceModifier = 16,
-        Light = 17,
-        Sound1 = 18,
-        Sound2 = 19,
-        ImpactDataSet = 20,
-        PlacedObject = 21,
-        SpawnProjectile = 22,
-        Condition = 23,
-        Force = 24,
-        Damage = 25,
-        InnerRadius = 26,
-        OuterRadius = 27,
-        ISRadius = 28,
-        VerticalOffsetMult = 29,
-        Flags = 30,
-        SoundLevel = 31,
-        PlacedObjectAutofadeDelay = 32,
-        Stagger = 33,
-        SpawnPoint = 34,
-        SpawnSpreadDegrees = 35,
-        Count = 36,
-        Duration = 37,
-        DamageType = 38,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        ObjectBounds = 9,
+        DirtinessScale = 10,
+        ObjectPaletteDefaults = 11,
+        XALG = 12,
+        DefaultLayer = 13,
+        Components = 14,
+        Name = 15,
+        Model = 16,
+        ObjectEffect = 17,
+        ImageSpaceModifier = 18,
+        Light = 19,
+        Sound1 = 20,
+        Sound2 = 21,
+        ImpactDataSet = 22,
+        PlacedObject = 23,
+        SpawnProjectile = 24,
+        Condition = 25,
+        Force = 26,
+        Damage = 27,
+        InnerRadius = 28,
+        OuterRadius = 29,
+        ISRadius = 30,
+        VerticalOffsetMult = 31,
+        Flags = 32,
+        SoundLevel = 33,
+        PlacedObjectAutofadeDelay = 34,
+        Stagger = 35,
+        SpawnPoint = 36,
+        SpawnSpreadDegrees = 37,
+        Count = 38,
+        Duration = 39,
+        DamageType = 40,
     }
     #endregion
 
@@ -2168,7 +2174,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 32;
 
-        public const ushort FieldCount = 39;
+        public const ushort FieldCount = 41;
 
         public static readonly Type MaskType = typeof(Explosion.Mask<>);
 
@@ -2687,6 +2693,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Explosion_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Explosion_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Explosion_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Explosion_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Explosion_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2709,6 +2719,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Explosion_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Explosion_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Explosion_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Explosion_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

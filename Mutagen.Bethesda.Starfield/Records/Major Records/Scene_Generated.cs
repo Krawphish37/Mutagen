@@ -403,6 +403,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -440,6 +442,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2467,38 +2471,40 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Flags = 8,
-        Phases = 9,
-        Actors = 10,
-        Actions = 11,
-        Quest = 12,
-        LastActionIndex = 13,
-        VNAM = 14,
-        Conditions = 15,
-        SetParentQuestStage = 16,
-        Notes = 17,
-        Template = 18,
-        BOLV = 19,
-        Index = 20,
-        SCPI = 21,
-        JNAM = 22,
-        SCPP = 23,
-        SCSP = 24,
-        SPMA = 25,
-        SPEX = 26,
-        SPRK = 27,
-        SPRW = 28,
-        SPRP = 29,
-        SPDF = 30,
-        SPPQ = 31,
-        SPKW = 32,
-        SPPK = 33,
-        SPKY = 34,
-        DEVT = 35,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Flags = 10,
+        Phases = 11,
+        Actors = 12,
+        Actions = 13,
+        Quest = 14,
+        LastActionIndex = 15,
+        VNAM = 16,
+        Conditions = 17,
+        SetParentQuestStage = 18,
+        Notes = 19,
+        Template = 20,
+        BOLV = 21,
+        Index = 22,
+        SCPI = 23,
+        JNAM = 24,
+        SCPP = 25,
+        SCSP = 26,
+        SPMA = 27,
+        SPEX = 28,
+        SPRK = 29,
+        SPRW = 30,
+        SPRP = 31,
+        SPDF = 32,
+        SPPQ = 33,
+        SPKW = 34,
+        SPPK = 35,
+        SPKY = 36,
+        DEVT = 37,
     }
     #endregion
 
@@ -2511,7 +2517,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 29;
 
-        public const ushort FieldCount = 36;
+        public const ushort FieldCount = 38;
 
         public static readonly Type MaskType = typeof(Scene.Mask<>);
 
@@ -3106,6 +3112,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Scene_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Scene_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Scene_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Scene_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Scene_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -3128,6 +3138,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Scene_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Scene_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Scene_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Scene_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

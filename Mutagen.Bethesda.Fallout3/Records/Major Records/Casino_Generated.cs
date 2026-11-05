@@ -334,6 +334,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -380,6 +382,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -2067,47 +2071,49 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        Name = 7,
-        DecksPercentBeforeShuffle = 8,
-        BlackJackPayoutRatio = 9,
-        SlotReelSymbol1 = 10,
-        SlotReelSymbol2 = 11,
-        SlotReelSymbol3 = 12,
-        SlotReelSymbol4 = 13,
-        SlotReelSymbol5 = 14,
-        SlotReelSymbol6 = 15,
-        SlotReelSymbolW = 16,
-        NumberOfDecks = 17,
-        MaxWinnings = 18,
-        Currency = 19,
-        CasinoWinningsQuest = 20,
-        DealerStayOnSoft17 = 21,
-        ChipModelOneDollar = 22,
-        ChipModelFiveDollar = 23,
-        ChipModelTenDollar = 24,
-        ChipModelTwentyFiveDollar = 25,
-        ChipModelOneHundredDollar = 26,
-        ChipModelFiveHundredDollar = 27,
-        ChipModelRoulette = 28,
-        SlotMachineModel = 29,
-        SlotMachineModel2 = 30,
-        BlackJackTableModel = 31,
-        BlackJackTableModelRelated = 32,
-        RouletteTableModel = 33,
-        SlotReelTextureSymbol1 = 34,
-        SlotReelTextureSymbol2 = 35,
-        SlotReelTextureSymbol3 = 36,
-        SlotReelTextureSymbol4 = 37,
-        SlotReelTextureSymbol5 = 38,
-        SlotReelTextureSymbol6 = 39,
-        SlotReelTextureSymbolW = 40,
-        BlackJackDeckTexture1 = 41,
-        BlackJackDeckTexture2 = 42,
-        BlackJackDeckTexture3 = 43,
-        BlackJackDeckTexture4 = 44,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        Name = 9,
+        DecksPercentBeforeShuffle = 10,
+        BlackJackPayoutRatio = 11,
+        SlotReelSymbol1 = 12,
+        SlotReelSymbol2 = 13,
+        SlotReelSymbol3 = 14,
+        SlotReelSymbol4 = 15,
+        SlotReelSymbol5 = 16,
+        SlotReelSymbol6 = 17,
+        SlotReelSymbolW = 18,
+        NumberOfDecks = 19,
+        MaxWinnings = 20,
+        Currency = 21,
+        CasinoWinningsQuest = 22,
+        DealerStayOnSoft17 = 23,
+        ChipModelOneDollar = 24,
+        ChipModelFiveDollar = 25,
+        ChipModelTenDollar = 26,
+        ChipModelTwentyFiveDollar = 27,
+        ChipModelOneHundredDollar = 28,
+        ChipModelFiveHundredDollar = 29,
+        ChipModelRoulette = 30,
+        SlotMachineModel = 31,
+        SlotMachineModel2 = 32,
+        BlackJackTableModel = 33,
+        BlackJackTableModelRelated = 34,
+        RouletteTableModel = 35,
+        SlotReelTextureSymbol1 = 36,
+        SlotReelTextureSymbol2 = 37,
+        SlotReelTextureSymbol3 = 38,
+        SlotReelTextureSymbol4 = 39,
+        SlotReelTextureSymbol5 = 40,
+        SlotReelTextureSymbol6 = 41,
+        SlotReelTextureSymbolW = 42,
+        BlackJackDeckTexture1 = 43,
+        BlackJackDeckTexture2 = 44,
+        BlackJackDeckTexture3 = 45,
+        BlackJackDeckTexture4 = 46,
     }
     #endregion
 
@@ -2120,7 +2126,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 38;
 
-        public const ushort FieldCount = 45;
+        public const ushort FieldCount = 47;
 
         public static readonly Type MaskType = typeof(Casino.Mask<>);
 
@@ -2607,6 +2613,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Casino_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Casino_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Casino_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Casino_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Casino_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2629,6 +2639,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Casino_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Casino_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Casino_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Casino_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

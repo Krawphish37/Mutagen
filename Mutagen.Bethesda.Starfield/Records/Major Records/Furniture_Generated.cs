@@ -500,6 +500,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -541,6 +543,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2729,42 +2733,44 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        ObjectPaletteDefaults = 10,
-        Transforms = 11,
-        SnapTemplate = 12,
-        SnapBehavior = 13,
-        XALG = 14,
-        Components = 15,
-        Name = 16,
-        Model = 17,
-        Destructible = 18,
-        Keywords = 19,
-        Properties = 20,
-        ForcedLocations = 21,
-        NativeTerminal = 22,
-        MarkerColor = 23,
-        LoopingSound = 24,
-        Water = 25,
-        ActivateTextOverride = 26,
-        Flags = 27,
-        ActivationAngleForPlayer = 28,
-        ActivationAngleInvertFacing = 29,
-        ContainerItems = 30,
-        MarkerFlags = 31,
-        ActivationAngleForSittingActor = 32,
-        BenchType = 33,
-        AssociatedForm = 34,
-        FurnitureTemplate = 35,
-        MarkerEntryPoints = 36,
-        MarkerModel = 37,
-        MarkerParameters = 38,
-        MarkerFiles = 39,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        ObjectPaletteDefaults = 12,
+        Transforms = 13,
+        SnapTemplate = 14,
+        SnapBehavior = 15,
+        XALG = 16,
+        Components = 17,
+        Name = 18,
+        Model = 19,
+        Destructible = 20,
+        Keywords = 21,
+        Properties = 22,
+        ForcedLocations = 23,
+        NativeTerminal = 24,
+        MarkerColor = 25,
+        LoopingSound = 26,
+        Water = 27,
+        ActivateTextOverride = 28,
+        Flags = 29,
+        ActivationAngleForPlayer = 30,
+        ActivationAngleInvertFacing = 31,
+        ContainerItems = 32,
+        MarkerFlags = 33,
+        ActivationAngleForSittingActor = 34,
+        BenchType = 35,
+        AssociatedForm = 36,
+        FurnitureTemplate = 37,
+        MarkerEntryPoints = 38,
+        MarkerModel = 39,
+        MarkerParameters = 40,
+        MarkerFiles = 41,
     }
     #endregion
 
@@ -2777,7 +2783,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 33;
 
-        public const ushort FieldCount = 40;
+        public const ushort FieldCount = 42;
 
         public static readonly Type MaskType = typeof(Furniture.Mask<>);
 
@@ -3456,6 +3462,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Furniture_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Furniture_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Furniture_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Furniture_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Furniture_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -3478,6 +3488,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Furniture_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Furniture_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Furniture_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Furniture_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

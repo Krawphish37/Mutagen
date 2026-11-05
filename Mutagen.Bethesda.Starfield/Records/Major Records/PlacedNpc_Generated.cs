@@ -434,6 +434,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -478,6 +480,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2560,45 +2564,47 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Components = 8,
-        XALG = 9,
-        Base = 10,
-        LevelModifier = 11,
-        Emittance = 12,
-        Radius = 13,
-        RagdollData = 14,
-        ReferenceGroup = 15,
-        SourcePackIn = 16,
-        PersistentLocation = 17,
-        IsIgnoredBySandbox = 18,
-        FactionRank = 19,
-        PowerLinks = 20,
-        LinkedReferences = 21,
-        IsLinkedRefTransient = 22,
-        ExternalEmittance = 23,
-        Ownership = 24,
-        EncounterLocation = 25,
-        GeometryDirtinessScale = 26,
-        GroupedPackIn = 27,
-        BlueprintPartOrigin = 28,
-        Layer = 29,
-        Location = 30,
-        HeadTrackingWeight = 31,
-        LocationRefTypes = 32,
-        LayeredMaterialSwaps = 33,
-        AttachRef = 34,
-        RagdollBipedRotation = 35,
-        Health = 36,
-        EnableParent = 37,
-        IsActivationPoint = 38,
-        Scale = 39,
-        Position = 40,
-        Rotation = 41,
-        Comments = 42,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Components = 10,
+        XALG = 11,
+        Base = 12,
+        LevelModifier = 13,
+        Emittance = 14,
+        Radius = 15,
+        RagdollData = 16,
+        ReferenceGroup = 17,
+        SourcePackIn = 18,
+        PersistentLocation = 19,
+        IsIgnoredBySandbox = 20,
+        FactionRank = 21,
+        PowerLinks = 22,
+        LinkedReferences = 23,
+        IsLinkedRefTransient = 24,
+        ExternalEmittance = 25,
+        Ownership = 26,
+        EncounterLocation = 27,
+        GeometryDirtinessScale = 28,
+        GroupedPackIn = 29,
+        BlueprintPartOrigin = 30,
+        Layer = 31,
+        Location = 32,
+        HeadTrackingWeight = 33,
+        LocationRefTypes = 34,
+        LayeredMaterialSwaps = 35,
+        AttachRef = 36,
+        RagdollBipedRotation = 37,
+        Health = 38,
+        EnableParent = 39,
+        IsActivationPoint = 40,
+        Scale = 41,
+        Position = 42,
+        Rotation = 43,
+        Comments = 44,
     }
     #endregion
 
@@ -2611,7 +2617,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 36;
 
-        public const ushort FieldCount = 43;
+        public const ushort FieldCount = 45;
 
         public static readonly Type MaskType = typeof(PlacedNpc.Mask<>);
 
@@ -3247,6 +3253,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (PlacedNpc_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (PlacedNpc_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedNpc_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (PlacedNpc_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (PlacedNpc_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -3269,6 +3279,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PlacedNpc_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (PlacedNpc_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedNpc_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedNpc_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

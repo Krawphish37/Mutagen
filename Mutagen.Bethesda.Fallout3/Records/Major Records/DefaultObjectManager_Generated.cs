@@ -461,6 +461,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -503,6 +505,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -2054,43 +2058,45 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        Stimpak = 7,
-        SuperStimpak = 8,
-        RadX = 9,
-        RadAway = 10,
-        Morphine = 11,
-        PerkParalysis = 12,
-        PlayerFaction = 13,
-        MysteriousStrangerNpc = 14,
-        MysteriousStrangerFaction = 15,
-        DefaultMusic = 16,
-        BattleMusic = 17,
-        DeathMusic = 18,
-        SuccessMusic = 19,
-        LevelUpMusic = 20,
-        PlayerVoiceMale = 21,
-        PlayerVoiceMaleChild = 22,
-        PlayerVoiceFemale = 23,
-        PlayerVoiceFemaleChild = 24,
-        EatPackageDefaultFood = 25,
-        EveryActorAbility = 26,
-        DrugWearsOffImageSpace = 27,
-        DoctorsBag = 28,
-        MissFortuneNpc = 29,
-        MissFortuneFaction = 30,
-        MeltdownExplosion = 31,
-        UnarmedForwardPa = 32,
-        UnarmedBackwardPa = 33,
-        UnarmedLeftPa = 34,
-        UnarmedRightPa = 35,
-        UnarmedCrouchPa = 36,
-        UnarmedCounterPa = 37,
-        SpotterEffect = 38,
-        ItemDetectedEffect = 39,
-        CateyeMobileEffect = 40,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        Stimpak = 9,
+        SuperStimpak = 10,
+        RadX = 11,
+        RadAway = 12,
+        Morphine = 13,
+        PerkParalysis = 14,
+        PlayerFaction = 15,
+        MysteriousStrangerNpc = 16,
+        MysteriousStrangerFaction = 17,
+        DefaultMusic = 18,
+        BattleMusic = 19,
+        DeathMusic = 20,
+        SuccessMusic = 21,
+        LevelUpMusic = 22,
+        PlayerVoiceMale = 23,
+        PlayerVoiceMaleChild = 24,
+        PlayerVoiceFemale = 25,
+        PlayerVoiceFemaleChild = 26,
+        EatPackageDefaultFood = 27,
+        EveryActorAbility = 28,
+        DrugWearsOffImageSpace = 29,
+        DoctorsBag = 30,
+        MissFortuneNpc = 31,
+        MissFortuneFaction = 32,
+        MeltdownExplosion = 33,
+        UnarmedForwardPa = 34,
+        UnarmedBackwardPa = 35,
+        UnarmedLeftPa = 36,
+        UnarmedRightPa = 37,
+        UnarmedCrouchPa = 38,
+        UnarmedCounterPa = 39,
+        SpotterEffect = 40,
+        ItemDetectedEffect = 41,
+        CateyeMobileEffect = 42,
     }
     #endregion
 
@@ -2103,7 +2109,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 34;
 
-        public const ushort FieldCount = 41;
+        public const ushort FieldCount = 43;
 
         public static readonly Type MaskType = typeof(DefaultObjectManager.Mask<>);
 
@@ -2566,6 +2572,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (DefaultObjectManager_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (DefaultObjectManager_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (DefaultObjectManager_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (DefaultObjectManager_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (DefaultObjectManager_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2588,6 +2598,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (DefaultObjectManager_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (DefaultObjectManager_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (DefaultObjectManager_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (DefaultObjectManager_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -272,6 +272,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -297,6 +299,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1379,26 +1383,28 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        OffensiveMult = 7,
-        DefensiveMult = 8,
-        GroupOffensiveMult = 9,
-        EquipmentScoreMultMelee = 10,
-        EquipmentScoreMultMagic = 11,
-        EquipmentScoreMultRanged = 12,
-        EquipmentScoreMultShout = 13,
-        EquipmentScoreMultUnarmed = 14,
-        EquipmentScoreMultStaff = 15,
-        AvoidThreatChance = 16,
-        CSMD = 17,
-        Melee = 18,
-        CloseRange = 19,
-        LongRangeStrafeMult = 20,
-        Flight = 21,
-        Flags = 22,
-        CSGDDataTypeState = 23,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        OffensiveMult = 9,
+        DefensiveMult = 10,
+        GroupOffensiveMult = 11,
+        EquipmentScoreMultMelee = 12,
+        EquipmentScoreMultMagic = 13,
+        EquipmentScoreMultRanged = 14,
+        EquipmentScoreMultShout = 15,
+        EquipmentScoreMultUnarmed = 16,
+        EquipmentScoreMultStaff = 17,
+        AvoidThreatChance = 18,
+        CSMD = 19,
+        Melee = 20,
+        CloseRange = 21,
+        LongRangeStrafeMult = 22,
+        Flight = 23,
+        Flags = 24,
+        CSGDDataTypeState = 25,
     }
     #endregion
 
@@ -1411,7 +1417,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 17;
 
-        public const ushort FieldCount = 24;
+        public const ushort FieldCount = 26;
 
         public static readonly Type MaskType = typeof(CombatStyle.Mask<>);
 
@@ -1762,6 +1768,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (CombatStyle_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (CombatStyle_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (CombatStyle_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (CombatStyle_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (CombatStyle_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1784,6 +1794,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (CombatStyle_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (CombatStyle_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (CombatStyle_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (CombatStyle_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

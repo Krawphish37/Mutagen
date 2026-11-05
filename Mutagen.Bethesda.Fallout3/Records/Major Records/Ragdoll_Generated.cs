@@ -178,6 +178,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -201,6 +203,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1259,24 +1263,26 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        Version = 7,
-        DynamicBoneCount = 8,
-        Unused = 9,
-        FeedbackEnabled = 10,
-        FootIkEnabled = 11,
-        LookIkEnabled = 12,
-        GrabIkEnabled = 13,
-        PoseMatchingEnabled = 14,
-        Unused2 = 15,
-        ActorBase = 16,
-        BodyPartData = 17,
-        FeedbackData = 18,
-        FeedbackDynamicBones = 19,
-        PoseMatchingData = 20,
-        DeathPose = 21,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        Version = 9,
+        DynamicBoneCount = 10,
+        Unused = 11,
+        FeedbackEnabled = 12,
+        FootIkEnabled = 13,
+        LookIkEnabled = 14,
+        GrabIkEnabled = 15,
+        PoseMatchingEnabled = 16,
+        Unused2 = 17,
+        ActorBase = 18,
+        BodyPartData = 19,
+        FeedbackData = 20,
+        FeedbackDynamicBones = 21,
+        PoseMatchingData = 22,
+        DeathPose = 23,
     }
     #endregion
 
@@ -1289,7 +1295,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 15;
 
-        public const ushort FieldCount = 22;
+        public const ushort FieldCount = 24;
 
         public static readonly Type MaskType = typeof(Ragdoll.Mask<>);
 
@@ -1628,6 +1634,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Ragdoll_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Ragdoll_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Ragdoll_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Ragdoll_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Ragdoll_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -1650,6 +1660,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Ragdoll_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Ragdoll_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Ragdoll_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Ragdoll_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

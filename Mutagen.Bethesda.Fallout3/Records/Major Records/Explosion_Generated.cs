@@ -260,6 +260,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -287,6 +289,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1430,28 +1434,30 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        ObjectBounds = 7,
-        Name = 8,
-        Model = 9,
-        ObjectEffect = 10,
-        ImageSpaceModifier = 11,
-        Force = 12,
-        Damage = 13,
-        Radius = 14,
-        Light = 15,
-        Sound1 = 16,
-        Flags = 17,
-        ISRadius = 18,
-        ImpactDataSet = 19,
-        Sound2 = 20,
-        RadiationLevel = 21,
-        RadiationDissipationTime = 22,
-        RadiationRadius = 23,
-        SoundLevel = 24,
-        PlacedImpactObject = 25,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        ObjectBounds = 9,
+        Name = 10,
+        Model = 11,
+        ObjectEffect = 12,
+        ImageSpaceModifier = 13,
+        Force = 14,
+        Damage = 15,
+        Radius = 16,
+        Light = 17,
+        Sound1 = 18,
+        Flags = 19,
+        ISRadius = 20,
+        ImpactDataSet = 21,
+        Sound2 = 22,
+        RadiationLevel = 23,
+        RadiationDissipationTime = 24,
+        RadiationRadius = 25,
+        SoundLevel = 26,
+        PlacedImpactObject = 27,
     }
     #endregion
 
@@ -1464,7 +1470,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 19;
 
-        public const ushort FieldCount = 26;
+        public const ushort FieldCount = 28;
 
         public static readonly Type MaskType = typeof(Explosion.Mask<>);
 
@@ -1827,6 +1833,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Explosion_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Explosion_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Explosion_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Explosion_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Explosion_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -1849,6 +1859,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Explosion_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Explosion_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Explosion_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Explosion_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
