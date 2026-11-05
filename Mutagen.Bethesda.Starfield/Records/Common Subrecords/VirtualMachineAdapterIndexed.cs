@@ -14,6 +14,13 @@ partial class VirtualMachineAdapterIndexedBinaryCreateTranslation
         };
 
         ret.Script = ReadEntry(frame, objFormat);
+        // Flags (1), zero property count (2) and zero fragment count (2) left after an empty script name
+        if (ret.Script.Name.IsNullOrEmpty() && frame.Remaining == 5 && frame.GetUInt16(offset: 1) == 0)
+        {
+            ret.EmptyScriptHasFlagsAndProperties = true;
+            ret.Script.Flags = (ScriptEntry.Flag)frame.ReadUInt8();
+            frame.Position += 2;
+        }
         ret.Fragments.SetTo(
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ScriptFragmentIndexed>.Instance.Parse(
                 amount: frame.ReadUInt16(),
@@ -35,6 +42,11 @@ partial class VirtualMachineAdapterIndexedBinaryWriteTranslation
         if (item.ScriptFragments is not { } frags) return;
         writer.Write(frags.ExtraBindDataVersion);
         WriteEntry(writer, frags.Script, item.ObjectFormat);
+        if (frags.EmptyScriptHasFlagsAndProperties && frags.Script.Name.IsNullOrWhitespace())
+        {
+            writer.Write((byte)frags.Script.Flags);
+            writer.Write((ushort)0);
+        }
         ListBinaryTranslation<MutagenWriter, MutagenFrame, IScriptFragmentIndexedGetter>.Instance.Write(
             writer,
             frags.Fragments, 

@@ -156,7 +156,7 @@
   </Object>
   <Object name="VolumesComponent" objType="Subrecord" baseClass="AComponent" >
     <Fields>
-      <RefList name="Items" refName="VolumesComponentItem" counterLength="4" recordType="VLMS" />
+      <RefList name="Items" refName="VolumesComponentItem" counterLength="4" recordType="VLMS" binary="Custom" />
     </Fields>
   </Object>
   <Object name="VolumesComponentItem" objType="Subrecord" >
@@ -204,7 +204,11 @@
   </Object>
   <Object name="VolumesUnknownEnderEmpty" objType="Subrecord" baseClass="AVolumesUnknownEnder" >
     <Fields>
-      <Float name="Unknown1" />
+    </Fields>
+  </Object>
+  <Object name="VolumesUnknownEnderEmptyPadded" objType="Subrecord" baseClass="AVolumesUnknownEnder" >
+    <Fields>
+      <UInt32 name="Unknown1" />
     </Fields>
   </Object>
   <Object name="PlanetContentManagerContentPropertiesComponent" objType="Subrecord" baseClass="AComponent">

@@ -62,6 +62,9 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IScriptEntryGetter IScriptFragmentsIndexedGetter.Script => Script;
         #endregion
+        #region EmptyScriptHasFlagsAndProperties
+        public Boolean EmptyScriptHasFlagsAndProperties { get; set; } = default(Boolean);
+        #endregion
         #region Fragments
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ExtendedList<ScriptFragmentIndexed> _Fragments = new ExtendedList<ScriptFragmentIndexed>();
@@ -117,16 +120,19 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.ExtraBindDataVersion = initialValue;
                 this.Script = new MaskItem<TItem, ScriptEntry.Mask<TItem>?>(initialValue, new ScriptEntry.Mask<TItem>(initialValue));
+                this.EmptyScriptHasFlagsAndProperties = initialValue;
                 this.Fragments = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ScriptFragmentIndexed.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
                 TItem ExtraBindDataVersion,
                 TItem Script,
+                TItem EmptyScriptHasFlagsAndProperties,
                 TItem Fragments)
             {
                 this.ExtraBindDataVersion = ExtraBindDataVersion;
                 this.Script = new MaskItem<TItem, ScriptEntry.Mask<TItem>?>(Script, new ScriptEntry.Mask<TItem>(Script));
+                this.EmptyScriptHasFlagsAndProperties = EmptyScriptHasFlagsAndProperties;
                 this.Fragments = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ScriptFragmentIndexed.Mask<TItem>?>>?>(Fragments, []);
             }
 
@@ -141,6 +147,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem ExtraBindDataVersion;
             public MaskItem<TItem, ScriptEntry.Mask<TItem>?>? Script { get; set; }
+            public TItem EmptyScriptHasFlagsAndProperties;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ScriptFragmentIndexed.Mask<TItem>?>>?>? Fragments;
             #endregion
 
@@ -156,6 +163,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.ExtraBindDataVersion, rhs.ExtraBindDataVersion)) return false;
                 if (!object.Equals(this.Script, rhs.Script)) return false;
+                if (!object.Equals(this.EmptyScriptHasFlagsAndProperties, rhs.EmptyScriptHasFlagsAndProperties)) return false;
                 if (!object.Equals(this.Fragments, rhs.Fragments)) return false;
                 return true;
             }
@@ -164,6 +172,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.ExtraBindDataVersion);
                 hash.Add(this.Script);
+                hash.Add(this.EmptyScriptHasFlagsAndProperties);
                 hash.Add(this.Fragments);
                 return hash.ToHashCode();
             }
@@ -179,6 +188,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.Script.Overall)) return false;
                     if (this.Script.Specific != null && !this.Script.Specific.All(eval)) return false;
                 }
+                if (!eval(this.EmptyScriptHasFlagsAndProperties)) return false;
                 if (this.Fragments != null)
                 {
                     if (!eval(this.Fragments.Overall)) return false;
@@ -204,6 +214,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.Script.Overall)) return true;
                     if (this.Script.Specific != null && this.Script.Specific.Any(eval)) return true;
                 }
+                if (eval(this.EmptyScriptHasFlagsAndProperties)) return true;
                 if (this.Fragments != null)
                 {
                     if (eval(this.Fragments.Overall)) return true;
@@ -232,6 +243,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.ExtraBindDataVersion = eval(this.ExtraBindDataVersion);
                 obj.Script = this.Script == null ? null : new MaskItem<R, ScriptEntry.Mask<R>?>(eval(this.Script.Overall), this.Script.Specific?.Translate(eval));
+                obj.EmptyScriptHasFlagsAndProperties = eval(this.EmptyScriptHasFlagsAndProperties);
                 if (Fragments != null)
                 {
                     obj.Fragments = new MaskItem<R, IEnumerable<MaskItemIndexed<R, ScriptFragmentIndexed.Mask<R>?>>?>(eval(this.Fragments.Overall), []);
@@ -272,6 +284,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (printMask?.Script?.Overall ?? true)
                     {
                         Script?.Print(sb);
+                    }
+                    if (printMask?.EmptyScriptHasFlagsAndProperties ?? true)
+                    {
+                        sb.AppendItem(EmptyScriptHasFlagsAndProperties, "EmptyScriptHasFlagsAndProperties");
                     }
                     if ((printMask?.Fragments?.Overall ?? true)
                         && Fragments is {} FragmentsItem)
@@ -318,6 +334,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? ExtraBindDataVersion;
             public MaskItem<Exception?, ScriptEntry.ErrorMask?>? Script;
+            public Exception? EmptyScriptHasFlagsAndProperties;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ScriptFragmentIndexed.ErrorMask?>>?>? Fragments;
             #endregion
 
@@ -331,6 +348,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ExtraBindDataVersion;
                     case ScriptFragmentsIndexed_FieldIndex.Script:
                         return Script;
+                    case ScriptFragmentsIndexed_FieldIndex.EmptyScriptHasFlagsAndProperties:
+                        return EmptyScriptHasFlagsAndProperties;
                     case ScriptFragmentsIndexed_FieldIndex.Fragments:
                         return Fragments;
                     default:
@@ -348,6 +367,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case ScriptFragmentsIndexed_FieldIndex.Script:
                         this.Script = new MaskItem<Exception?, ScriptEntry.ErrorMask?>(ex, null);
+                        break;
+                    case ScriptFragmentsIndexed_FieldIndex.EmptyScriptHasFlagsAndProperties:
+                        this.EmptyScriptHasFlagsAndProperties = ex;
                         break;
                     case ScriptFragmentsIndexed_FieldIndex.Fragments:
                         this.Fragments = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ScriptFragmentIndexed.ErrorMask?>>?>(ex, null);
@@ -368,6 +390,9 @@ namespace Mutagen.Bethesda.Starfield
                     case ScriptFragmentsIndexed_FieldIndex.Script:
                         this.Script = (MaskItem<Exception?, ScriptEntry.ErrorMask?>?)obj;
                         break;
+                    case ScriptFragmentsIndexed_FieldIndex.EmptyScriptHasFlagsAndProperties:
+                        this.EmptyScriptHasFlagsAndProperties = (Exception?)obj;
+                        break;
                     case ScriptFragmentsIndexed_FieldIndex.Fragments:
                         this.Fragments = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ScriptFragmentIndexed.ErrorMask?>>?>)obj;
                         break;
@@ -381,6 +406,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (ExtraBindDataVersion != null) return true;
                 if (Script != null) return true;
+                if (EmptyScriptHasFlagsAndProperties != null) return true;
                 if (Fragments != null) return true;
                 return false;
             }
@@ -411,6 +437,9 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ExtraBindDataVersion, "ExtraBindDataVersion");
                 }
                 Script?.Print(sb);
+                {
+                    sb.AppendItem(EmptyScriptHasFlagsAndProperties, "EmptyScriptHasFlagsAndProperties");
+                }
                 if (Fragments is {} FragmentsItem)
                 {
                     sb.AppendLine("Fragments =>");
@@ -439,6 +468,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.ExtraBindDataVersion = this.ExtraBindDataVersion.Combine(rhs.ExtraBindDataVersion);
                 ret.Script = this.Script.Combine(rhs.Script, (l, r) => l.Combine(r));
+                ret.EmptyScriptHasFlagsAndProperties = this.EmptyScriptHasFlagsAndProperties.Combine(rhs.EmptyScriptHasFlagsAndProperties);
                 ret.Fragments = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ScriptFragmentIndexed.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Fragments?.Overall, rhs.Fragments?.Overall), Noggog.ExceptionExt.Combine(this.Fragments?.Specific, rhs.Fragments?.Specific));
                 return ret;
             }
@@ -465,6 +495,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool ExtraBindDataVersion;
             public ScriptEntry.TranslationMask? Script;
+            public bool EmptyScriptHasFlagsAndProperties;
             public ScriptFragmentIndexed.TranslationMask? Fragments;
             #endregion
 
@@ -476,6 +507,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.ExtraBindDataVersion = defaultOn;
+                this.EmptyScriptHasFlagsAndProperties = defaultOn;
             }
 
             #endregion
@@ -493,6 +525,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((ExtraBindDataVersion, null));
                 ret.Add((Script != null ? Script.OnOverall : DefaultOn, Script?.GetCrystal()));
+                ret.Add((EmptyScriptHasFlagsAndProperties, null));
                 ret.Add((Fragments == null ? DefaultOn : !Fragments.GetCrystal().CopyNothing, Fragments?.GetCrystal()));
             }
 
@@ -574,6 +607,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new Byte ExtraBindDataVersion { get; set; }
         new ScriptEntry Script { get; set; }
+        new Boolean EmptyScriptHasFlagsAndProperties { get; set; }
         new ExtendedList<ScriptFragmentIndexed> Fragments { get; }
     }
 
@@ -592,6 +626,7 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => ScriptFragmentsIndexed_Registration.Instance;
         Byte ExtraBindDataVersion { get; }
         IScriptEntryGetter Script { get; }
+        Boolean EmptyScriptHasFlagsAndProperties { get; }
         IReadOnlyList<IScriptFragmentIndexedGetter> Fragments { get; }
 
     }
@@ -764,7 +799,8 @@ namespace Mutagen.Bethesda.Starfield
     {
         ExtraBindDataVersion = 0,
         Script = 1,
-        Fragments = 2,
+        EmptyScriptHasFlagsAndProperties = 2,
+        Fragments = 3,
     }
     #endregion
 
@@ -775,9 +811,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 3;
+        public const ushort AdditionalFieldCount = 4;
 
-        public const ushort FieldCount = 3;
+        public const ushort FieldCount = 4;
 
         public static readonly Type MaskType = typeof(ScriptFragmentsIndexed.Mask<>);
 
@@ -845,6 +881,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.ExtraBindDataVersion = ScriptFragmentsIndexed.ExtraBindDataVersionDefault;
             item.Script.Clear();
+            item.EmptyScriptHasFlagsAndProperties = default(Boolean);
             item.Fragments.Clear();
         }
         
@@ -898,6 +935,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.ExtraBindDataVersion = item.ExtraBindDataVersion == rhs.ExtraBindDataVersion;
             ret.Script = MaskItemExt.Factory(item.Script.GetEqualsMask(rhs.Script, include), include);
+            ret.EmptyScriptHasFlagsAndProperties = item.EmptyScriptHasFlagsAndProperties == rhs.EmptyScriptHasFlagsAndProperties;
             ret.Fragments = item.Fragments.CollectionEqualsHelper(
                 rhs.Fragments,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -954,6 +992,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Script?.Print(sb, "Script");
             }
+            if (printMask?.EmptyScriptHasFlagsAndProperties ?? true)
+            {
+                sb.AppendItem(item.EmptyScriptHasFlagsAndProperties, "EmptyScriptHasFlagsAndProperties");
+            }
             if (printMask?.Fragments?.Overall ?? true)
             {
                 sb.AppendLine("Fragments =>");
@@ -989,6 +1031,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isScriptEqual) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)ScriptFragmentsIndexed_FieldIndex.EmptyScriptHasFlagsAndProperties) ?? true))
+            {
+                if (lhs.EmptyScriptHasFlagsAndProperties != rhs.EmptyScriptHasFlagsAndProperties) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)ScriptFragmentsIndexed_FieldIndex.Fragments) ?? true))
             {
                 if (!lhs.Fragments.SequenceEqual(rhs.Fragments, (l, r) => ((ScriptFragmentIndexedCommon)((IScriptFragmentIndexedGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)ScriptFragmentsIndexed_FieldIndex.Fragments)))) return false;
@@ -1001,6 +1047,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.ExtraBindDataVersion);
             hash.Add(item.Script);
+            hash.Add(item.EmptyScriptHasFlagsAndProperties);
             foreach (var subItem in item.Fragments)
             {
                 hash.Add(subItem);
@@ -1069,6 +1116,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     errorMask?.PopIndex();
                 }
+            }
+            if ((copyMask?.GetShouldTranslate((int)ScriptFragmentsIndexed_FieldIndex.EmptyScriptHasFlagsAndProperties) ?? true))
+            {
+                item.EmptyScriptHasFlagsAndProperties = rhs.EmptyScriptHasFlagsAndProperties;
             }
             if ((copyMask?.GetShouldTranslate((int)ScriptFragmentsIndexed_FieldIndex.Fragments) ?? true))
             {

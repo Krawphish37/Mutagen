@@ -1360,6 +1360,7 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             VolumesMatrix_Registration.Instance,
             VolumesUnknownEnderDouble_Registration.Instance,
             VolumesUnknownEnderEmpty_Registration.Instance,
+            VolumesUnknownEnderEmptyPadded_Registration.Instance,
             VolumesUnknownEnderSingle_Registration.Instance,
             VolumesUnknownEnderTrio_Registration.Instance,
             VolumetricLighting_Registration.Instance,

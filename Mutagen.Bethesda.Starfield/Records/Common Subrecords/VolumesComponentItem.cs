@@ -3,6 +3,43 @@ using Mutagen.Bethesda.Plugins.Binary.Streams;
 
 namespace Mutagen.Bethesda.Starfield;
 
+internal static class VolumesComponentItemLayout
+{
+    // Type, four matrices and three floats: everything before the ender.
+    public const int FixedLength = 0x50;
+
+    /// <summary>
+    /// Type 11 is followed by nothing or by one 4 byte value, and the type doesn't say which.
+    /// Both occur in form version 582 plugins, as 84 and 88 byte single item VLMS subrecords.
+    /// Decides by what still fits in the subrecord after the item's fixed part.
+    /// </summary>
+    public static bool Type11HasValue(ReadOnlySpan<byte> rest)
+    {
+        return !Fits(rest) && rest.Length >= 4;
+    }
+
+    private static bool Fits(ReadOnlySpan<byte> rest)
+    {
+        if (rest.Length == 0) return true;
+        if (rest.Length < FixedLength) return false;
+        var type = BinaryPrimitives.ReadInt32LittleEndian(rest);
+        var after = rest.Slice(FixedLength);
+        switch (type)
+        {
+            case 1:
+                return after.Length >= 4 && Fits(after.Slice(4));
+            case 3:
+                return after.Length >= 8 && Fits(after.Slice(8));
+            case 5:
+                return after.Length >= 12 && Fits(after.Slice(12));
+            case 11:
+                return Fits(after) || (after.Length >= 4 && Fits(after.Slice(4)));
+            default:
+                return false;
+        }
+    }
+}
+
 partial class VolumesComponentItemBinaryWriteTranslation
 {
     public static partial void WriteBinaryTypeParseCustom(
@@ -15,6 +52,7 @@ partial class VolumesComponentItemBinaryWriteTranslation
             IVolumesUnknownEnderDoubleGetter _ => 3,
             IVolumesUnknownEnderTrioGetter _ => 5,
             IVolumesUnknownEnderEmptyGetter _ => 11,
+            IVolumesUnknownEnderEmptyPaddedGetter _ => 11,
             _ => throw new NotImplementedException()
         });
     }
@@ -57,12 +95,22 @@ partial class VolumesComponentItemBinaryCreateTranslation
         MutagenFrame frame,
         IVolumesComponentItem item)
     {
+        // Type 11 comes in two lengths, so the bytes left in the subrecord decide which one this is.
+        // The frame is bounded to the VLMS subrecord by FillBinaryItemsCustom.
+        if (item.Ender is VolumesUnknownEnderEmpty
+            && VolumesComponentItemLayout.Type11HasValue(frame.RemainingSpan.Slice(0, checked((int)frame.Remaining))))
+        {
+            item.Ender = new VolumesUnknownEnderEmptyPadded();
+        }
         item.Ender.CopyInFromBinary(frame);
     }
 }
 
 partial class VolumesComponentItemBinaryOverlay
 {
+    // _structData runs to the end of the VLMS subrecord, because VolumesComponent bounds it.
+    private bool Type11HasValue() => VolumesComponentItemLayout.Type11HasValue(_structData.Slice(VolumesComponentItemLayout.FixedLength));
+
     partial void CustomEnderEndPos()
     {
         var val = BinaryPrimitives.ReadInt32LittleEndian(_structData);
@@ -72,7 +120,7 @@ partial class VolumesComponentItemBinaryOverlay
             1 => 4,
             3 => 8,
             5 => 12,
-            11 => 4,
+            11 => Type11HasValue() ? 4 : 0,
             _ => throw new NotImplementedException()
         };
     }
@@ -87,6 +135,8 @@ partial class VolumesComponentItemBinaryOverlay
             3 => VolumesUnknownEnderDoubleBinaryOverlay.VolumesUnknownEnderDoubleFactory(_structData.Slice(location),
                 _package),
             5 => VolumesUnknownEnderTrioBinaryOverlay.VolumesUnknownEnderTrioFactory(_structData.Slice(location),
+                _package),
+            11 when Type11HasValue() => VolumesUnknownEnderEmptyPaddedBinaryOverlay.VolumesUnknownEnderEmptyPaddedFactory(_structData.Slice(location),
                 _package),
             11 => VolumesUnknownEnderEmptyBinaryOverlay.VolumesUnknownEnderEmptyFactory(_structData.Slice(location),
                 _package),

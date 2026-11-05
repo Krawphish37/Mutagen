@@ -2034,6 +2034,9 @@
     <Compile Include="Records\Common Subrecords\VirtualMachineAdapterIndexed.cs">
       <DependentUpon>VirtualMachineAdapter.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Common Subrecords\VolumesComponent.cs">
+      <DependentUpon>Component.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Common Subrecords\VolumesComponentItem.cs">
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
@@ -6942,6 +6945,9 @@
       <DependentUpon>TalkingActivator.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\Common Subrecords\CrowdComponentProperty_Generated.cs">
+      <DependentUpon>Component.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Common Subrecords\VolumesUnknownEnderEmptyPadded_Generated.cs">
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -141,6 +141,8 @@
     <Fields>
       <UInt8 name="ExtraBindDataVersion" default="3" binary="NoGeneration" />
       <RefDirect name="Script" refName="ScriptEntry" binary="NoGeneration" />
+      <!-- A script with no name is normally just its empty name. Some plugins also store its flags and a zero property count. -->
+      <Bool name="EmptyScriptHasFlagsAndProperties" binary="NoGeneration" />
       <RefList name="Fragments" refName="ScriptFragmentIndexed" binary="NoGeneration" />
     </Fields>
   </Object>

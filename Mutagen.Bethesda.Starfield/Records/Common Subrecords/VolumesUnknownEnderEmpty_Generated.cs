@@ -53,9 +53,6 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Unknown1
-        public Single Unknown1 { get; set; } = default(Single);
-        #endregion
 
         #region To String
 
@@ -94,11 +91,11 @@ namespace Mutagen.Bethesda.Starfield
             IMask<TItem>
         {
             #region Ctors
-            public Mask(TItem Unknown1)
-            : base()
+            public Mask(TItem initialValue)
+            : base(initialValue)
             {
-                this.Unknown1 = Unknown1;
             }
+
 
             #pragma warning disable CS8618
             protected Mask()
@@ -106,10 +103,6 @@ namespace Mutagen.Bethesda.Starfield
             }
             #pragma warning restore CS8618
 
-            #endregion
-
-            #region Members
-            public TItem Unknown1;
             #endregion
 
             #region Equals
@@ -123,13 +116,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Unknown1);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -140,7 +131,6 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.Unknown1)) return false;
                 return true;
             }
             #endregion
@@ -149,7 +139,6 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.Unknown1)) return true;
                 return false;
             }
             #endregion
@@ -165,7 +154,6 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.Unknown1 = eval(this.Unknown1);
             }
             #endregion
 
@@ -184,10 +172,6 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(VolumesUnknownEnderEmpty.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Unknown1 ?? true)
-                    {
-                        sb.AppendItem(Unknown1, "Unknown1");
-                    }
                 }
             }
             #endregion
@@ -198,18 +182,12 @@ namespace Mutagen.Bethesda.Starfield
             AVolumesUnknownEnder.ErrorMask,
             IErrorMask<ErrorMask>
         {
-            #region Members
-            public Exception? Unknown1;
-            #endregion
-
             #region IErrorMask
             public override object? GetNthMask(int index)
             {
                 VolumesUnknownEnderEmpty_FieldIndex enu = (VolumesUnknownEnderEmpty_FieldIndex)index;
                 switch (enu)
                 {
-                    case VolumesUnknownEnderEmpty_FieldIndex.Unknown1:
-                        return Unknown1;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -220,9 +198,6 @@ namespace Mutagen.Bethesda.Starfield
                 VolumesUnknownEnderEmpty_FieldIndex enu = (VolumesUnknownEnderEmpty_FieldIndex)index;
                 switch (enu)
                 {
-                    case VolumesUnknownEnderEmpty_FieldIndex.Unknown1:
-                        this.Unknown1 = ex;
-                        break;
                     default:
                         base.SetNthException(index, ex);
                         break;
@@ -234,9 +209,6 @@ namespace Mutagen.Bethesda.Starfield
                 VolumesUnknownEnderEmpty_FieldIndex enu = (VolumesUnknownEnderEmpty_FieldIndex)index;
                 switch (enu)
                 {
-                    case VolumesUnknownEnderEmpty_FieldIndex.Unknown1:
-                        this.Unknown1 = (Exception?)obj;
-                        break;
                     default:
                         base.SetNthMask(index, obj);
                         break;
@@ -246,7 +218,6 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Unknown1 != null) return true;
                 return false;
             }
             #endregion
@@ -273,9 +244,6 @@ namespace Mutagen.Bethesda.Starfield
             protected override void PrintFillInternal(StructuredStringBuilder sb)
             {
                 base.PrintFillInternal(sb);
-                {
-                    sb.AppendItem(Unknown1, "Unknown1");
-                }
             }
             #endregion
 
@@ -284,7 +252,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -306,26 +273,15 @@ namespace Mutagen.Bethesda.Starfield
             AVolumesUnknownEnder.TranslationMask,
             ITranslationMask
         {
-            #region Members
-            public bool Unknown1;
-            #endregion
-
             #region Ctors
             public TranslationMask(
                 bool defaultOn,
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.Unknown1 = defaultOn;
             }
 
             #endregion
-
-            protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
-            {
-                base.GetCrystal(ret);
-                ret.Add((Unknown1, null));
-            }
 
             public static implicit operator TranslationMask(bool defaultOn)
             {
@@ -396,7 +352,6 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IVolumesUnknownEnderEmpty>,
         IVolumesUnknownEnderEmptyGetter
     {
-        new Single Unknown1 { get; set; }
     }
 
     public partial interface IVolumesUnknownEnderEmptyGetter :
@@ -405,7 +360,6 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IVolumesUnknownEnderEmptyGetter>
     {
         static new ILoquiRegistration StaticRegistration => VolumesUnknownEnderEmpty_Registration.Instance;
-        Single Unknown1 { get; }
 
     }
 
@@ -550,7 +504,6 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum VolumesUnknownEnderEmpty_FieldIndex
     {
-        Unknown1 = 0,
     }
     #endregion
 
@@ -561,9 +514,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 1;
+        public const ushort AdditionalFieldCount = 0;
 
-        public const ushort FieldCount = 1;
+        public const ushort FieldCount = 0;
 
         public static readonly Type MaskType = typeof(VolumesUnknownEnderEmpty.Mask<>);
 
@@ -629,7 +582,6 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IVolumesUnknownEnderEmpty item)
         {
             ClearPartial();
-            item.Unknown1 = default(Single);
             base.Clear(item);
         }
         
@@ -651,11 +603,6 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame,
             TypedParseParams translationParams)
         {
-            PluginUtilityTranslation.SubrecordParse(
-                record: item,
-                frame: frame,
-                translationParams: translationParams,
-                fillStructs: VolumesUnknownEnderEmptyBinaryCreateTranslation.FillBinaryStructs);
         }
         
         public override void CopyInFromBinary(
@@ -696,7 +643,6 @@ namespace Mutagen.Bethesda.Starfield
             VolumesUnknownEnderEmpty.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Unknown1 = item.Unknown1.EqualsWithin(rhs.Unknown1);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -746,10 +692,6 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if (printMask?.Unknown1 ?? true)
-            {
-                sb.AppendItem(item.Unknown1, "Unknown1");
-            }
         }
         
         public static VolumesUnknownEnderEmpty_FieldIndex ConvertFieldIndex(AVolumesUnknownEnder_FieldIndex index)
@@ -769,10 +711,6 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IAVolumesUnknownEnderGetter)lhs, (IAVolumesUnknownEnderGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)VolumesUnknownEnderEmpty_FieldIndex.Unknown1) ?? true))
-            {
-                if (!lhs.Unknown1.EqualsWithin(rhs.Unknown1)) return false;
-            }
             return true;
         }
         
@@ -790,7 +728,6 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IVolumesUnknownEnderEmptyGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Unknown1);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -835,10 +772,6 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)VolumesUnknownEnderEmpty_FieldIndex.Unknown1) ?? true))
-            {
-                item.Unknown1 = rhs.Unknown1;
-            }
             DeepCopyInCustom(
                 item: item,
                 rhs: rhs,
@@ -955,23 +888,11 @@ namespace Mutagen.Bethesda.Starfield
     {
         public new static readonly VolumesUnknownEnderEmptyBinaryWriteTranslation Instance = new();
 
-        public static void WriteEmbedded(
-            IVolumesUnknownEnderEmptyGetter item,
-            MutagenWriter writer)
-        {
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.Unknown1);
-        }
-
         public void Write(
             MutagenWriter writer,
             IVolumesUnknownEnderEmptyGetter item,
             TypedWriteParams translationParams)
         {
-            WriteEmbedded(
-                item: item,
-                writer: writer);
         }
 
         public override void Write(
@@ -1001,13 +922,6 @@ namespace Mutagen.Bethesda.Starfield
     internal partial class VolumesUnknownEnderEmptyBinaryCreateTranslation : AVolumesUnknownEnderBinaryCreateTranslation
     {
         public new static readonly VolumesUnknownEnderEmptyBinaryCreateTranslation Instance = new VolumesUnknownEnderEmptyBinaryCreateTranslation();
-
-        public static void FillBinaryStructs(
-            IVolumesUnknownEnderEmpty item,
-            MutagenFrame frame)
-        {
-            item.Unknown1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-        }
 
     }
 
@@ -1053,7 +967,6 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Single Unknown1 => _structData.Slice(0x0, 0x4).Float();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1079,13 +992,12 @@ namespace Mutagen.Bethesda.Starfield
                 stream: stream,
                 meta: package.MetaData.Constants,
                 translationParams: translationParams,
-                length: 0x4,
                 memoryPair: out var memoryPair,
-                offset: out var offset);
+                offset: out var offset,
+                finalPos: out var finalPos);
             var ret = new VolumesUnknownEnderEmptyBinaryOverlay(
                 memoryPair: memoryPair,
                 package: package);
-            stream.Position += 0x4;
             ret.CustomFactoryEnd(
                 stream: stream,
                 finalPos: stream.Length,
