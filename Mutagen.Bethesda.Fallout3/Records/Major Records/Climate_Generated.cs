@@ -2367,7 +2367,7 @@ namespace Mutagen.Bethesda.Fallout3
         #region Volatility
         private int _VolatilityLocation => _TNAMLocation!.Value.Min + 0x4;
         private bool _Volatility_IsSet => _TNAMLocation.HasValue && _TNAMLocation!.Value.Max - _VolatilityLocation + 1 >= 1;
-        public Byte Volatility => _Volatility_IsSet ? _recordData.Span[_VolatilityLocation] : default;
+        public Byte Volatility => _Volatility_IsSet ? _recordData.Span[_VolatilityLocation] : default(Byte);
         #endregion
         #region MoonAndPhaseLength
         private int _MoonAndPhaseLengthLocation => _TNAMLocation!.Value.Min + 0x5;

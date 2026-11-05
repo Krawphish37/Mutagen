@@ -2306,12 +2306,12 @@ namespace Mutagen.Bethesda.Fallout3
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x10;
         private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 4;
-        public Class.Flag Flags => _Flags_IsSet ? (Class.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
+        public Class.Flag Flags => _Flags_IsSet ? (Class.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default(Class.Flag);
         #endregion
         #region Services
         private int _ServicesLocation => _DATALocation!.Value.Min + 0x14;
         private bool _Services_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ServicesLocation + 1 >= 4;
-        public Class.ClassService Services => _Services_IsSet ? (Class.ClassService)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ServicesLocation, 0x4)) : default;
+        public Class.ClassService Services => _Services_IsSet ? (Class.ClassService)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ServicesLocation, 0x4)) : default(Class.ClassService);
         #endregion
         #region Teaches
         private int _TeachesLocation => _DATALocation!.Value.Min + 0x18;
@@ -2330,7 +2330,7 @@ namespace Mutagen.Bethesda.Fallout3
         #region MaxTrainingLevel
         private int _MaxTrainingLevelLocation => _DATALocation!.Value.Min + 0x19;
         private bool _MaxTrainingLevel_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MaxTrainingLevelLocation + 1 >= 1;
-        public Byte MaxTrainingLevel => _MaxTrainingLevel_IsSet ? _recordData.Span[_MaxTrainingLevelLocation] : default;
+        public Byte MaxTrainingLevel => _MaxTrainingLevel_IsSet ? _recordData.Span[_MaxTrainingLevelLocation] : default(Byte);
         #endregion
         #region Unknown
         private int _UnknownLocation => _DATALocation!.Value.Min + 0x1A;

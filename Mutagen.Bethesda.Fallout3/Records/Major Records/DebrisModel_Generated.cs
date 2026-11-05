@@ -1368,7 +1368,7 @@ namespace Mutagen.Bethesda.Fallout3
         #region Percentage
         private int _PercentageLocation => _DATALocation!.Value.Min;
         private bool _Percentage_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PercentageLocation + 1 >= 1;
-        public Byte Percentage => _Percentage_IsSet ? _recordData.Span[_PercentageLocation] : default;
+        public Byte Percentage => _Percentage_IsSet ? _recordData.Span[_PercentageLocation] : default(Byte);
         #endregion
         #region ModelFileName
         public String ModelFileName { get; private set; } = string.Empty;

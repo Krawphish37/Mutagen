@@ -1751,7 +1751,7 @@ namespace Mutagen.Bethesda.Starfield
         #region UnknownByte
         private int _UnknownByteLocation => UnknownString1EndingPos;
         private bool _UnknownByte_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UnknownByteLocation + 1 >= 1;
-        public Byte UnknownByte => _UnknownByte_IsSet ? _recordData.Span[_UnknownByteLocation] : default;
+        public Byte UnknownByte => _UnknownByte_IsSet ? _recordData.Span[_UnknownByteLocation] : default(Byte);
         #endregion
         #region UnknownString2
         private int _UnknownString2Location => UnknownString1EndingPos + 0x1;

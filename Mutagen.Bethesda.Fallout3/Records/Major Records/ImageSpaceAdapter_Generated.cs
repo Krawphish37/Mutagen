@@ -13146,7 +13146,7 @@ namespace Mutagen.Bethesda.Fallout3
         #region DepthOfFieldFlags
         private int _DepthOfFieldFlagsLocation => _DNAMLocation!.Value.Min + 0xE1;
         private bool _DepthOfFieldFlags_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(ImageSpaceAdapter.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _DepthOfFieldFlagsLocation + 1 >= 1;
-        public ImageSpaceAdapter.DepthOfFieldFlag DepthOfFieldFlags => _DepthOfFieldFlags_IsSet ? (ImageSpaceAdapter.DepthOfFieldFlag)_recordData.Span.Slice(_DepthOfFieldFlagsLocation, 0x1)[0] : default;
+        public ImageSpaceAdapter.DepthOfFieldFlag DepthOfFieldFlags => _DepthOfFieldFlags_IsSet ? (ImageSpaceAdapter.DepthOfFieldFlag)_recordData.Span.Slice(_DepthOfFieldFlagsLocation, 0x1)[0] : default(ImageSpaceAdapter.DepthOfFieldFlag);
         #endregion
         #region Unused
         private int _UnusedLocation => _DNAMLocation!.Value.Min + 0xE2;

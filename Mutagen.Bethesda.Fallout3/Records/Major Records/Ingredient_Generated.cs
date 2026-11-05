@@ -2457,7 +2457,7 @@ namespace Mutagen.Bethesda.Fallout3
         #region Flags
         private int _FlagsLocation => _ENITLocation!.Value.Min + 0x4;
         private bool _Flags_IsSet => _ENITLocation.HasValue && _ENITLocation!.Value.Max - _FlagsLocation + 1 >= 4;
-        public Ingredient.IngredientFlag Flags => _Flags_IsSet ? (Ingredient.IngredientFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
+        public Ingredient.IngredientFlag Flags => _Flags_IsSet ? (Ingredient.IngredientFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default(Ingredient.IngredientFlag);
         #endregion
         public IReadOnlyList<IEffectGetter> Effects { get; private set; } = [];
         partial void CustomFactoryEnd(

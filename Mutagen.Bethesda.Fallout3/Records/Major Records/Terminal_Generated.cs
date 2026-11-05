@@ -2734,22 +2734,22 @@ namespace Mutagen.Bethesda.Fallout3
         #region BaseHackingDifficulty
         private int _BaseHackingDifficultyLocation => _DNAMLocation!.Value.Min;
         private bool _BaseHackingDifficulty_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _BaseHackingDifficultyLocation + 1 >= 1;
-        public Terminal.HackingDifficulty BaseHackingDifficulty => _BaseHackingDifficulty_IsSet ? (Terminal.HackingDifficulty)_recordData.Span.Slice(_BaseHackingDifficultyLocation, 0x1)[0] : default;
+        public Terminal.HackingDifficulty BaseHackingDifficulty => _BaseHackingDifficulty_IsSet ? (Terminal.HackingDifficulty)_recordData.Span.Slice(_BaseHackingDifficultyLocation, 0x1)[0] : default(Terminal.HackingDifficulty);
         #endregion
         #region Flags
         private int _FlagsLocation => _DNAMLocation!.Value.Min + 0x1;
         private bool _Flags_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlagsLocation + 1 >= 1;
-        public Terminal.TerminalFlag Flags => _Flags_IsSet ? (Terminal.TerminalFlag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
+        public Terminal.TerminalFlag Flags => _Flags_IsSet ? (Terminal.TerminalFlag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default(Terminal.TerminalFlag);
         #endregion
         #region ServerType
         private int _ServerTypeLocation => _DNAMLocation!.Value.Min + 0x2;
         private bool _ServerType_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _ServerTypeLocation + 1 >= 1;
-        public Terminal.TerminalServerType ServerType => _ServerType_IsSet ? (Terminal.TerminalServerType)_recordData.Span.Slice(_ServerTypeLocation, 0x1)[0] : default;
+        public Terminal.TerminalServerType ServerType => _ServerType_IsSet ? (Terminal.TerminalServerType)_recordData.Span.Slice(_ServerTypeLocation, 0x1)[0] : default(Terminal.TerminalServerType);
         #endregion
         #region Unused
         private int _UnusedLocation => _DNAMLocation!.Value.Min + 0x3;
         private bool _Unused_IsSet => _DNAMLocation.HasValue && !DNAMDataTypeState.HasFlag(Terminal.DNAMDataType.Break0) && _DNAMLocation!.Value.Max - _UnusedLocation + 1 >= 1;
-        public Byte Unused => _Unused_IsSet ? _recordData.Span[_UnusedLocation] : default;
+        public Byte Unused => _Unused_IsSet ? _recordData.Span[_UnusedLocation] : default(Byte);
         #endregion
         public IReadOnlyList<ITerminalMenuItemGetter> MenuItems { get; private set; } = [];
         partial void CustomFactoryEnd(

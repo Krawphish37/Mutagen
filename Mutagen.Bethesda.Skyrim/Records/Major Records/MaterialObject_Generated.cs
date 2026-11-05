@@ -2431,7 +2431,7 @@ namespace Mutagen.Bethesda.Skyrim
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x2C;
         private bool _Flags_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(MaterialObject.DATADataType.Break1) && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 4;
-        public MaterialObject.Flag Flags => _Flags_IsSet ? (MaterialObject.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
+        public MaterialObject.Flag Flags => _Flags_IsSet ? (MaterialObject.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default(MaterialObject.Flag);
         #endregion
         #region HasSnow
         private int _HasSnowLocation => _DATALocation!.Value.Min + 0x30;

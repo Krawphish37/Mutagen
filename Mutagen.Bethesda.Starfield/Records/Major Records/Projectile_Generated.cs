@@ -5255,12 +5255,12 @@ namespace Mutagen.Bethesda.Starfield
         #region Flags
         private int _FlagsLocation => _PRODLocation!.Value.Min;
         private bool _Flags_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _FlagsLocation + 1 >= 2;
-        public Projectile.Flag Flags => _Flags_IsSet ? (Projectile.Flag)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x2)) : default;
+        public Projectile.Flag Flags => _Flags_IsSet ? (Projectile.Flag)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x2)) : default(Projectile.Flag);
         #endregion
         #region Type
         private int _TypeLocation => _PRODLocation!.Value.Min + 0x2;
         private bool _Type_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _TypeLocation + 1 >= 2;
-        public Projectile.TypeEnum Type => _Type_IsSet ? (Projectile.TypeEnum)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x2)) : default;
+        public Projectile.TypeEnum Type => _Type_IsSet ? (Projectile.TypeEnum)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x2)) : default(Projectile.TypeEnum);
         #endregion
         #region Gravity
         private int _GravityLocation => _PRODLocation!.Value.Min + 0x4;
@@ -5355,7 +5355,7 @@ namespace Mutagen.Bethesda.Starfield
         #region TracerFrequency
         private int _TracerFrequencyLocation => _PRODLocation!.Value.Min + 0x4C;
         private bool _TracerFrequency_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _TracerFrequencyLocation + 1 >= 1;
-        public Byte TracerFrequency => _TracerFrequency_IsSet ? _recordData.Span[_TracerFrequencyLocation] : default;
+        public Byte TracerFrequency => _TracerFrequency_IsSet ? _recordData.Span[_TracerFrequencyLocation] : default(Byte);
         #endregion
         #region UnknownPROD1
         private int _UnknownPROD1Location => _PRODLocation!.Value.Min + 0x4D;
@@ -5381,7 +5381,7 @@ namespace Mutagen.Bethesda.Starfield
         #region UnknownPROD4
         private int _UnknownPROD4Location => UnknownPRODString1EndingPos + 0x8;
         private bool _UnknownPROD4_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _UnknownPROD4Location + 1 >= 1;
-        public Byte UnknownPROD4 => _UnknownPROD4_IsSet ? _recordData.Span[_UnknownPROD4Location] : default;
+        public Byte UnknownPROD4 => _UnknownPROD4_IsSet ? _recordData.Span[_UnknownPROD4Location] : default(Byte);
         #endregion
         #region UnknownPRODString2
         private int _UnknownPRODString2Location => UnknownPRODString1EndingPos + 0x9;
