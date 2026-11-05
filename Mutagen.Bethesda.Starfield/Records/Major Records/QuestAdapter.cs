@@ -12,6 +12,10 @@ partial class QuestAdapterBinaryCreateTranslation
     {
         var count = frame.ReadUInt16();
         item.Script = AVirtualMachineAdapterBinaryCreateTranslation.ReadEntry(frame, item.ObjectFormat);
+        if (count == 0)
+        {
+            AVirtualMachineAdapterBinaryCreateTranslation.ReadEmptyScriptExtras(frame, item.Script, bytesAfter: 2);
+        }
         item.Fragments.SetTo(
             ListBinaryTranslation<QuestScriptFragment>.Instance.Parse(
                 frame,
@@ -103,7 +107,12 @@ partial class QuestAdapterBinaryOverlay
                 _package.MetaData));
         if (frame.Complete) return;
         var count = frame.ReadUInt16();
-        _scriptEntry = AVirtualMachineAdapterBinaryCreateTranslation.ReadEntry(frame, this.ObjectFormat);
+        var scriptEntry = AVirtualMachineAdapterBinaryCreateTranslation.ReadEntry(frame, this.ObjectFormat);
+        if (count == 0)
+        {
+            AVirtualMachineAdapterBinaryCreateTranslation.ReadEmptyScriptExtras(frame, scriptEntry, bytesAfter: 2);
+        }
+        _scriptEntry = scriptEntry;
         Fragments =
             ListBinaryTranslation<QuestScriptFragment>.Instance.Parse(
                     frame,

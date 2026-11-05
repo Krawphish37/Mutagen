@@ -157,6 +157,8 @@
   <Object name="VolumesComponent" objType="Subrecord" baseClass="AComponent" >
     <Fields>
       <RefList name="Items" refName="VolumesComponentItem" counterLength="4" recordType="VLMS" binary="Custom" />
+      <!-- The whole subrecord, when it holds a type or length we can't read. Then there are no Items. -->
+      <ByteArray name="RawItems" nullable="True" binary="NoGeneration" />
     </Fields>
   </Object>
   <Object name="VolumesComponentItem" objType="Subrecord" >

@@ -30,6 +30,20 @@ partial class AVirtualMachineAdapterBinaryCreateTranslation
         return entry;
     }
 
+    /// <summary>
+    /// A script with no name can also hold its flags (1 byte) and a zero property count (2 bytes).
+    /// Only read when the bytes left prove it: those 3 plus what must follow.
+    /// </summary>
+    public static void ReadEmptyScriptExtras(MutagenFrame frame, IScriptEntry entry, int bytesAfter)
+    {
+        if (!string.IsNullOrEmpty(entry.Name)) return;
+        if (frame.Remaining != 3 + bytesAfter) return;
+        if (frame.GetUInt16(offset: 1) != 0) return;
+        entry.EmptyNameHasFlagsAndProperties = true;
+        entry.Flags = (ScriptEntry.Flag)frame.ReadUInt8();
+        frame.Position += 2;
+    }
+
     public static partial void FillBinaryScriptsCustom(MutagenFrame frame, IAVirtualMachineAdapter item)
     {
         item.Scripts.AddRange(ReadEntries(frame, item.ObjectFormat));
@@ -236,6 +250,11 @@ partial class AVirtualMachineAdapterBinaryWriteTranslation
                 if (properties.Count > 0)
                 {
                     throw new ArgumentException("Entry had no name, but had properties");
+                }
+                if (entry.EmptyNameHasFlagsAndProperties)
+                {
+                    writer.Write((byte)entry.Flags);
+                    writer.Write((ushort)0);
                 }
                 return;
             }
