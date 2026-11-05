@@ -146,6 +146,8 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem Texture,
                 TItem Opacity,
@@ -159,6 +161,8 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.Texture = Texture;
@@ -908,14 +912,16 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        OblivionMajorRecordFlags = 4,
-        Texture = 5,
-        Opacity = 6,
-        Flags = 7,
-        MaterialID = 8,
-        Sound = 9,
-        Data = 10,
-        RelatedWaters = 11,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        OblivionMajorRecordFlags = 6,
+        Texture = 7,
+        Opacity = 8,
+        Flags = 9,
+        MaterialID = 10,
+        Sound = 11,
+        Data = 12,
+        RelatedWaters = 13,
     }
     #endregion
 
@@ -928,7 +934,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 7;
 
-        public const ushort FieldCount = 12;
+        public const ushort FieldCount = 14;
 
         public static readonly Type MaskType = typeof(Water.Mask<>);
 
@@ -1217,6 +1223,10 @@ namespace Mutagen.Bethesda.Oblivion
                     return (Water_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (Water_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Water_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Water_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (Water_FieldIndex)((int)index);
                 default:
@@ -1235,6 +1245,10 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Water_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Water_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Water_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Water_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

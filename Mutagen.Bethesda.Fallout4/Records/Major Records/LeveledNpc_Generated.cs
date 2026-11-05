@@ -181,6 +181,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -197,6 +199,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1147,17 +1151,19 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        ObjectBounds = 7,
-        ChanceNone = 8,
-        MaxCount = 9,
-        Flags = 10,
-        Global = 11,
-        Entries = 12,
-        FilterKeywordChances = 13,
-        Model = 14,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        ObjectBounds = 9,
+        ChanceNone = 10,
+        MaxCount = 11,
+        Flags = 12,
+        Global = 13,
+        Entries = 14,
+        FilterKeywordChances = 15,
+        Model = 16,
     }
     #endregion
 
@@ -1170,7 +1176,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 8;
 
-        public const ushort FieldCount = 15;
+        public const ushort FieldCount = 17;
 
         public static readonly Type MaskType = typeof(LeveledNpc.Mask<>);
 
@@ -1492,6 +1498,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (LeveledNpc_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (LeveledNpc_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (LeveledNpc_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (LeveledNpc_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (LeveledNpc_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1514,6 +1524,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (LeveledNpc_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (LeveledNpc_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (LeveledNpc_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (LeveledNpc_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

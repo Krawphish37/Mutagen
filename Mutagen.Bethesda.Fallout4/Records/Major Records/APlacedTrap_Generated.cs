@@ -372,6 +372,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -408,6 +410,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2082,37 +2086,39 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        EncounterZone = 8,
-        HeadTrackingWeight = 9,
-        FavorCost = 10,
-        Reflections = 11,
-        LinkedReferences = 12,
-        ActivateParents = 13,
-        UnknownReference = 14,
-        XATP = 15,
-        AmmoCount = 16,
-        IsLinkedRefTransient = 17,
-        Layer = 18,
-        MaterialSwap = 19,
-        ReferenceGroup = 20,
-        XCVR = 21,
-        EnableParent = 22,
-        Ownership = 23,
-        FactionRank = 24,
-        Emittance = 25,
-        MultiBoundReference = 26,
-        IsIgnoredBySandbox = 27,
-        LocationRefTypes = 28,
-        LocationReference = 29,
-        Scale = 30,
-        DistantLodData = 31,
-        Position = 32,
-        Rotation = 33,
-        Comments = 34,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        EncounterZone = 10,
+        HeadTrackingWeight = 11,
+        FavorCost = 12,
+        Reflections = 13,
+        LinkedReferences = 14,
+        ActivateParents = 15,
+        UnknownReference = 16,
+        XATP = 17,
+        AmmoCount = 18,
+        IsLinkedRefTransient = 19,
+        Layer = 20,
+        MaterialSwap = 21,
+        ReferenceGroup = 22,
+        XCVR = 23,
+        EnableParent = 24,
+        Ownership = 25,
+        FactionRank = 26,
+        Emittance = 27,
+        MultiBoundReference = 28,
+        IsIgnoredBySandbox = 29,
+        LocationRefTypes = 30,
+        LocationReference = 31,
+        Scale = 32,
+        DistantLodData = 33,
+        Position = 34,
+        Rotation = 35,
+        Comments = 36,
     }
     #endregion
 
@@ -2125,7 +2131,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 28;
 
-        public const ushort FieldCount = 35;
+        public const ushort FieldCount = 37;
 
         public static readonly Type MaskType = typeof(APlacedTrap.Mask<>);
 
@@ -2684,6 +2690,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (APlacedTrap_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (APlacedTrap_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (APlacedTrap_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (APlacedTrap_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (APlacedTrap_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2706,6 +2716,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (APlacedTrap_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (APlacedTrap_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (APlacedTrap_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (APlacedTrap_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

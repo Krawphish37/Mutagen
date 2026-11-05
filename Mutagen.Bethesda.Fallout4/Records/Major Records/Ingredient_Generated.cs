@@ -311,6 +311,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -334,6 +336,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1579,24 +1583,26 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        Name = 9,
-        Keywords = 10,
-        Model = 11,
-        Icons = 12,
-        Destructible = 13,
-        EquipType = 14,
-        PickUpSound = 15,
-        PutDownSound = 16,
-        Value = 17,
-        Weight = 18,
-        IngredientValue = 19,
-        Flags = 20,
-        Effects = 21,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        Name = 11,
+        Keywords = 12,
+        Model = 13,
+        Icons = 14,
+        Destructible = 15,
+        EquipType = 16,
+        PickUpSound = 17,
+        PutDownSound = 18,
+        Value = 19,
+        Weight = 20,
+        IngredientValue = 21,
+        Flags = 22,
+        Effects = 23,
     }
     #endregion
 
@@ -1609,7 +1615,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 15;
 
-        public const ushort FieldCount = 22;
+        public const ushort FieldCount = 24;
 
         public static readonly Type MaskType = typeof(Ingredient.Mask<>);
 
@@ -2004,6 +2010,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Ingredient_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Ingredient_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Ingredient_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Ingredient_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Ingredient_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2026,6 +2036,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Ingredient_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Ingredient_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Ingredient_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Ingredient_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

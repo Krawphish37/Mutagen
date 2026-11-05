@@ -245,6 +245,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -262,6 +264,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1179,18 +1183,20 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        Name = 9,
-        Model = 10,
-        Destructible = 11,
-        OpenSound = 12,
-        CloseSound = 13,
-        LoopSound = 14,
-        Flags = 15,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        Name = 11,
+        Model = 12,
+        Destructible = 13,
+        OpenSound = 14,
+        CloseSound = 15,
+        LoopSound = 16,
+        Flags = 17,
     }
     #endregion
 
@@ -1203,7 +1209,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 9;
 
-        public const ushort FieldCount = 16;
+        public const ushort FieldCount = 18;
 
         public static readonly Type MaskType = typeof(Door.Mask<>);
 
@@ -1557,6 +1563,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (Door_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (Door_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Door_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Door_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (Door_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1579,6 +1589,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Door_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Door_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Door_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Door_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

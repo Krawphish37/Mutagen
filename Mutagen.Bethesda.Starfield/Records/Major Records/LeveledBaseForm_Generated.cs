@@ -270,6 +270,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -293,6 +295,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1612,24 +1616,26 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        ObjectPaletteDefaults = 10,
-        Transforms = 11,
-        XALG = 12,
-        Components = 13,
-        ChanceNone = 14,
-        MaxCount = 15,
-        Flags = 16,
-        UseGlobal = 17,
-        Conditions = 18,
-        Entries = 19,
-        FilterKeywordChances = 20,
-        Model = 21,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        ObjectPaletteDefaults = 12,
+        Transforms = 13,
+        XALG = 14,
+        Components = 15,
+        ChanceNone = 16,
+        MaxCount = 17,
+        Flags = 18,
+        UseGlobal = 19,
+        Conditions = 20,
+        Entries = 21,
+        FilterKeywordChances = 22,
+        Model = 23,
     }
     #endregion
 
@@ -1642,7 +1648,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 15;
 
-        public const ushort FieldCount = 22;
+        public const ushort FieldCount = 24;
 
         public static readonly Type MaskType = typeof(LeveledBaseForm.Mask<>);
 
@@ -2100,6 +2106,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (LeveledBaseForm_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (LeveledBaseForm_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (LeveledBaseForm_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (LeveledBaseForm_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (LeveledBaseForm_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2122,6 +2132,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (LeveledBaseForm_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (LeveledBaseForm_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (LeveledBaseForm_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (LeveledBaseForm_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

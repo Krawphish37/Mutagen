@@ -269,6 +269,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -293,6 +295,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1381,25 +1385,27 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        Description = 7,
-        Name = 8,
-        Icon = 9,
-        NAM0 = 10,
-        NAM1 = 11,
-        NAM2 = 12,
-        NAM3 = 13,
-        NAM4 = 14,
-        NAM5 = 15,
-        NAM6 = 16,
-        NAM7 = 17,
-        NAM8 = 18,
-        NAM9 = 19,
-        Flags = 20,
-        DisplayTime = 21,
-        MenuButtons = 22,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        Description = 9,
+        Name = 10,
+        Icon = 11,
+        NAM0 = 12,
+        NAM1 = 13,
+        NAM2 = 14,
+        NAM3 = 15,
+        NAM4 = 16,
+        NAM5 = 17,
+        NAM6 = 18,
+        NAM7 = 19,
+        NAM8 = 20,
+        NAM9 = 21,
+        Flags = 22,
+        DisplayTime = 23,
+        MenuButtons = 24,
     }
     #endregion
 
@@ -1412,7 +1418,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 16;
 
-        public const ushort FieldCount = 23;
+        public const ushort FieldCount = 25;
 
         public static readonly Type MaskType = typeof(Message.Mask<>);
 
@@ -1777,6 +1783,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Message_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Message_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Message_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Message_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Message_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -1799,6 +1809,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Message_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Message_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Message_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Message_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

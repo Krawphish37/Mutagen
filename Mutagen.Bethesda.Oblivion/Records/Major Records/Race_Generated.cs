@@ -256,6 +256,8 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem Name,
                 TItem Description,
@@ -279,6 +281,8 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.Name = Name;
@@ -1707,24 +1711,26 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        OblivionMajorRecordFlags = 4,
-        Name = 5,
-        Description = 6,
-        Spells = 7,
-        Relations = 8,
-        Data = 9,
-        Voices = 10,
-        DefaultHair = 11,
-        DefaultHairColor = 12,
-        FaceGenMainClamp = 13,
-        FaceGenFaceClamp = 14,
-        RaceStats = 15,
-        FaceData = 16,
-        BodyData = 17,
-        Hairs = 18,
-        Eyes = 19,
-        FaceGenData = 20,
-        SNAM = 21,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        OblivionMajorRecordFlags = 6,
+        Name = 7,
+        Description = 8,
+        Spells = 9,
+        Relations = 10,
+        Data = 11,
+        Voices = 12,
+        DefaultHair = 13,
+        DefaultHairColor = 14,
+        FaceGenMainClamp = 15,
+        FaceGenFaceClamp = 16,
+        RaceStats = 17,
+        FaceData = 18,
+        BodyData = 19,
+        Hairs = 20,
+        Eyes = 21,
+        FaceGenData = 22,
+        SNAM = 23,
     }
     #endregion
 
@@ -1737,7 +1743,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 17;
 
-        public const ushort FieldCount = 22;
+        public const ushort FieldCount = 24;
 
         public static readonly Type MaskType = typeof(Race.Mask<>);
 
@@ -2196,6 +2202,10 @@ namespace Mutagen.Bethesda.Oblivion
                     return (Race_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (Race_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Race_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Race_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (Race_FieldIndex)((int)index);
                 default:
@@ -2214,6 +2224,10 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Race_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Race_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Race_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Race_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

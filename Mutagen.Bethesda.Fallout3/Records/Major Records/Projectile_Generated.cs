@@ -359,6 +359,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -395,6 +397,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1833,37 +1837,39 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        ObjectBounds = 7,
-        Name = 8,
-        Model = 9,
-        Destructible = 10,
-        Flags = 11,
-        Type = 12,
-        Gravity = 13,
-        Speed = 14,
-        Range = 15,
-        Light = 16,
-        MuzzleFlashLight = 17,
-        TracerChance = 18,
-        ExplosionAltTriggerProximity = 19,
-        ExplosionAltTriggerTimer = 20,
-        Explosion = 21,
-        Sound = 22,
-        MuzzleFlashDuration = 23,
-        FadeDuration = 24,
-        ImpactForce = 25,
-        CountdownSound = 26,
-        DisableSound = 27,
-        DefaultWeaponSource = 28,
-        Rotation = 29,
-        BouncyMult = 30,
-        MuzzleFlashModel = 31,
-        MuzzleFlashModelTextureHashes = 32,
-        SoundLevel = 33,
-        DATADataTypeState = 34,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        ObjectBounds = 9,
+        Name = 10,
+        Model = 11,
+        Destructible = 12,
+        Flags = 13,
+        Type = 14,
+        Gravity = 15,
+        Speed = 16,
+        Range = 17,
+        Light = 18,
+        MuzzleFlashLight = 19,
+        TracerChance = 20,
+        ExplosionAltTriggerProximity = 21,
+        ExplosionAltTriggerTimer = 22,
+        Explosion = 23,
+        Sound = 24,
+        MuzzleFlashDuration = 25,
+        FadeDuration = 26,
+        ImpactForce = 27,
+        CountdownSound = 28,
+        DisableSound = 29,
+        DefaultWeaponSource = 30,
+        Rotation = 31,
+        BouncyMult = 32,
+        MuzzleFlashModel = 33,
+        MuzzleFlashModelTextureHashes = 34,
+        SoundLevel = 35,
+        DATADataTypeState = 36,
     }
     #endregion
 
@@ -1876,7 +1882,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 28;
 
-        public const ushort FieldCount = 35;
+        public const ushort FieldCount = 37;
 
         public static readonly Type MaskType = typeof(Projectile.Mask<>);
 
@@ -2302,6 +2308,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Projectile_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Projectile_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Projectile_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Projectile_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Projectile_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2324,6 +2334,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Projectile_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Projectile_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Projectile_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Projectile_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

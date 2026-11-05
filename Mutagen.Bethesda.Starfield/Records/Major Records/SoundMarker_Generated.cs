@@ -182,6 +182,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -198,6 +200,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1100,17 +1104,19 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        XALG = 10,
-        Keywords = 11,
-        SMLS = 12,
-        Unknown = 13,
-        Unknown2 = 14,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        XALG = 12,
+        Keywords = 13,
+        SMLS = 14,
+        Unknown = 15,
+        Unknown2 = 16,
     }
     #endregion
 
@@ -1123,7 +1129,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 8;
 
-        public const ushort FieldCount = 15;
+        public const ushort FieldCount = 17;
 
         public static readonly Type MaskType = typeof(SoundMarker.Mask<>);
 
@@ -1432,6 +1438,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (SoundMarker_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (SoundMarker_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (SoundMarker_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (SoundMarker_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (SoundMarker_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1454,6 +1464,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (SoundMarker_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (SoundMarker_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (SoundMarker_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (SoundMarker_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

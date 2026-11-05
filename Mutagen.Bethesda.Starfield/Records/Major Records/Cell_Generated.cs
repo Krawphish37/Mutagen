@@ -499,6 +499,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -547,6 +549,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -3145,49 +3149,51 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        Components = 7,
-        Name = 8,
-        Flags = 9,
-        Grid = 10,
-        Lighting = 11,
-        MaxHeightData = 12,
-        LightingTemplate = 13,
-        WaterHeight = 14,
-        XILS = 15,
-        XCLAs = 16,
-        WaterData = 17,
-        CellSkyRegion = 18,
-        Ownership = 19,
-        Location = 20,
-        Water = 21,
-        WaterType = 22,
-        ShipBlueprintSnapLinks = 23,
-        WaterVelocity = 24,
-        AcousticSpace = 25,
-        ImageSpace = 26,
-        WaterEnvironmentMap = 27,
-        LockList = 28,
-        Music = 29,
-        GlobalDirtLayerMaterial = 30,
-        GlobalDirtLayerInheritBiomeLayer = 31,
-        TimeOfDay = 32,
-        LinkedReferences = 33,
-        IsLinkedRefTransient = 34,
-        EnvironmentMap = 35,
-        Traversals = 36,
-        NumTraversalFluffBytes = 37,
-        NavigationMeshes = 38,
-        Timestamp = 39,
-        UnknownGroupData = 40,
-        PersistentTimestamp = 41,
-        PersistentUnknownGroupData = 42,
-        Persistent = 43,
-        TemporaryTimestamp = 44,
-        TemporaryUnknownGroupData = 45,
-        Temporary = 46,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        Components = 9,
+        Name = 10,
+        Flags = 11,
+        Grid = 12,
+        Lighting = 13,
+        MaxHeightData = 14,
+        LightingTemplate = 15,
+        WaterHeight = 16,
+        XILS = 17,
+        XCLAs = 18,
+        WaterData = 19,
+        CellSkyRegion = 20,
+        Ownership = 21,
+        Location = 22,
+        Water = 23,
+        WaterType = 24,
+        ShipBlueprintSnapLinks = 25,
+        WaterVelocity = 26,
+        AcousticSpace = 27,
+        ImageSpace = 28,
+        WaterEnvironmentMap = 29,
+        LockList = 30,
+        Music = 31,
+        GlobalDirtLayerMaterial = 32,
+        GlobalDirtLayerInheritBiomeLayer = 33,
+        TimeOfDay = 34,
+        LinkedReferences = 35,
+        IsLinkedRefTransient = 36,
+        EnvironmentMap = 37,
+        Traversals = 38,
+        NumTraversalFluffBytes = 39,
+        NavigationMeshes = 40,
+        Timestamp = 41,
+        UnknownGroupData = 42,
+        PersistentTimestamp = 43,
+        PersistentUnknownGroupData = 44,
+        Persistent = 45,
+        TemporaryTimestamp = 46,
+        TemporaryUnknownGroupData = 47,
+        Temporary = 48,
     }
     #endregion
 
@@ -3200,7 +3206,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 40;
 
-        public const ushort FieldCount = 47;
+        public const ushort FieldCount = 49;
 
         public static readonly Type MaskType = typeof(Cell.Mask<>);
 
@@ -4336,6 +4342,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Cell_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Cell_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Cell_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Cell_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Cell_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -4358,6 +4368,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Cell_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Cell_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Cell_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Cell_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

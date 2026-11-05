@@ -286,6 +286,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -316,6 +318,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1661,31 +1665,33 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        Base = 7,
-        EncounterZone = 8,
-        RagdollData = 9,
-        RagdollBipedRotation = 10,
-        Patrol = 11,
-        LevelModifier = 12,
-        MerchantContainer = 13,
-        Count = 14,
-        Radius = 15,
-        Health = 16,
-        LinkedDecals = 17,
-        LinkedReference = 18,
-        LinkedReferenceColor = 19,
-        ActivateParents = 20,
-        ActivationPrompt = 21,
-        EnableParent = 22,
-        Emittance = 23,
-        MultiBoundReference = 24,
-        IsIgnoredBySandbox = 25,
-        Scale = 26,
-        Position = 27,
-        Rotation = 28,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        Base = 9,
+        EncounterZone = 10,
+        RagdollData = 11,
+        RagdollBipedRotation = 12,
+        Patrol = 13,
+        LevelModifier = 14,
+        MerchantContainer = 15,
+        Count = 16,
+        Radius = 17,
+        Health = 18,
+        LinkedDecals = 19,
+        LinkedReference = 20,
+        LinkedReferenceColor = 21,
+        ActivateParents = 22,
+        ActivationPrompt = 23,
+        EnableParent = 24,
+        Emittance = 25,
+        MultiBoundReference = 26,
+        IsIgnoredBySandbox = 27,
+        Scale = 28,
+        Position = 29,
+        Rotation = 30,
     }
     #endregion
 
@@ -1698,7 +1704,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 22;
 
-        public const ushort FieldCount = 29;
+        public const ushort FieldCount = 31;
 
         public static readonly Type MaskType = typeof(PlacedNpc.Mask<>);
 
@@ -2143,6 +2149,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (PlacedNpc_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (PlacedNpc_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedNpc_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (PlacedNpc_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (PlacedNpc_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2165,6 +2175,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PlacedNpc_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (PlacedNpc_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedNpc_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedNpc_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

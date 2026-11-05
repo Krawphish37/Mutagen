@@ -301,6 +301,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -327,6 +329,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1705,27 +1709,29 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        EncounterZone = 8,
-        Owner = 9,
-        FactionRank = 10,
-        HeadTrackingWeight = 11,
-        FavorCost = 12,
-        Reflections = 13,
-        LinkedReferences = 14,
-        ActivateParents = 15,
-        EnableParent = 16,
-        Emittance = 17,
-        MultiBoundReference = 18,
-        IgnoredBySandbox = 19,
-        LocationRefTypes = 20,
-        LocationReference = 21,
-        DistantLodData = 22,
-        Scale = 23,
-        Placement = 24,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        EncounterZone = 10,
+        Owner = 11,
+        FactionRank = 12,
+        HeadTrackingWeight = 13,
+        FavorCost = 14,
+        Reflections = 15,
+        LinkedReferences = 16,
+        ActivateParents = 17,
+        EnableParent = 18,
+        Emittance = 19,
+        MultiBoundReference = 20,
+        IgnoredBySandbox = 21,
+        LocationRefTypes = 22,
+        LocationReference = 23,
+        DistantLodData = 24,
+        Scale = 25,
+        Placement = 26,
     }
     #endregion
 
@@ -1738,7 +1744,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 18;
 
-        public const ushort FieldCount = 25;
+        public const ushort FieldCount = 27;
 
         public static readonly Type MaskType = typeof(APlacedTrap.Mask<>);
 
@@ -2239,6 +2245,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (APlacedTrap_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (APlacedTrap_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (APlacedTrap_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (APlacedTrap_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (APlacedTrap_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -2261,6 +2271,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (APlacedTrap_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (APlacedTrap_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (APlacedTrap_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (APlacedTrap_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

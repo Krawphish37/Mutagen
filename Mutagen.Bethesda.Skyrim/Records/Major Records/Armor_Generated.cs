@@ -361,6 +361,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -391,6 +393,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1855,31 +1859,33 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        Name = 9,
-        ObjectEffect = 10,
-        EnchantmentAmount = 11,
-        WorldModel = 12,
-        BodyTemplate = 13,
-        Destructible = 14,
-        PickUpSound = 15,
-        PutDownSound = 16,
-        RagdollConstraintTemplate = 17,
-        EquipmentType = 18,
-        BashImpactDataSet = 19,
-        AlternateBlockMaterial = 20,
-        Race = 21,
-        Keywords = 22,
-        Description = 23,
-        Armature = 24,
-        Value = 25,
-        Weight = 26,
-        ArmorRating = 27,
-        TemplateArmor = 28,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        Name = 11,
+        ObjectEffect = 12,
+        EnchantmentAmount = 13,
+        WorldModel = 14,
+        BodyTemplate = 15,
+        Destructible = 16,
+        PickUpSound = 17,
+        PutDownSound = 18,
+        RagdollConstraintTemplate = 19,
+        EquipmentType = 20,
+        BashImpactDataSet = 21,
+        AlternateBlockMaterial = 22,
+        Race = 23,
+        Keywords = 24,
+        Description = 25,
+        Armature = 26,
+        Value = 27,
+        Weight = 28,
+        ArmorRating = 29,
+        TemplateArmor = 30,
     }
     #endregion
 
@@ -1892,7 +1898,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 22;
 
-        public const ushort FieldCount = 29;
+        public const ushort FieldCount = 31;
 
         public static readonly Type MaskType = typeof(Armor.Mask<>);
 
@@ -2414,6 +2420,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (Armor_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (Armor_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Armor_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Armor_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (Armor_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -2436,6 +2446,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Armor_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Armor_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Armor_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Armor_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

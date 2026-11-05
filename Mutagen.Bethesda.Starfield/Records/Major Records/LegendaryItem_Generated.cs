@@ -422,6 +422,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -453,6 +455,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2292,32 +2296,34 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        FLLD = 10,
-        Name = 11,
-        ObjectPaletteDefaults = 12,
-        Transforms = 13,
-        XALG = 14,
-        Components = 15,
-        Model = 16,
-        BaseObjectList = 17,
-        RankTemplate = 18,
-        MNAM = 19,
-        LegendaryMods = 20,
-        LnamEntries = 21,
-        IncludeFilters = 22,
-        ExcludeFilters = 23,
-        FNAM = 24,
-        KNAM = 25,
-        GNAM = 26,
-        HNAM = 27,
-        INAM = 28,
-        JNAM = 29,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        FLLD = 12,
+        Name = 13,
+        ObjectPaletteDefaults = 14,
+        Transforms = 15,
+        XALG = 16,
+        Components = 17,
+        Model = 18,
+        BaseObjectList = 19,
+        RankTemplate = 20,
+        MNAM = 21,
+        LegendaryMods = 22,
+        LnamEntries = 23,
+        IncludeFilters = 24,
+        ExcludeFilters = 25,
+        FNAM = 26,
+        KNAM = 27,
+        GNAM = 28,
+        HNAM = 29,
+        INAM = 30,
+        JNAM = 31,
     }
     #endregion
 
@@ -2330,7 +2336,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 23;
 
-        public const ushort FieldCount = 30;
+        public const ushort FieldCount = 32;
 
         public static readonly Type MaskType = typeof(LegendaryItem.Mask<>);
 
@@ -2915,6 +2921,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (LegendaryItem_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (LegendaryItem_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (LegendaryItem_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (LegendaryItem_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (LegendaryItem_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2937,6 +2947,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (LegendaryItem_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (LegendaryItem_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (LegendaryItem_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (LegendaryItem_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

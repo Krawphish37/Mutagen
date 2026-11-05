@@ -325,6 +325,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -351,6 +353,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1630,27 +1634,29 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        Name = 9,
-        Model = 10,
-        Icons = 11,
-        BookText = 12,
-        Destructible = 13,
-        PickUpSound = 14,
-        PutDownSound = 15,
-        Keywords = 16,
-        Flags = 17,
-        Type = 18,
-        Unused = 19,
-        Teaches = 20,
-        Value = 21,
-        Weight = 22,
-        InventoryArt = 23,
-        Description = 24,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        Name = 11,
+        Model = 12,
+        Icons = 13,
+        BookText = 14,
+        Destructible = 15,
+        PickUpSound = 16,
+        PutDownSound = 17,
+        Keywords = 18,
+        Flags = 19,
+        Type = 20,
+        Unused = 21,
+        Teaches = 22,
+        Value = 23,
+        Weight = 24,
+        InventoryArt = 25,
+        Description = 26,
     }
     #endregion
 
@@ -1663,7 +1669,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 18;
 
-        public const ushort FieldCount = 25;
+        public const ushort FieldCount = 27;
 
         public static readonly Type MaskType = typeof(Book.Mask<>);
 
@@ -2117,6 +2123,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (Book_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (Book_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Book_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Book_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (Book_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -2139,6 +2149,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Book_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Book_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Book_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Book_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

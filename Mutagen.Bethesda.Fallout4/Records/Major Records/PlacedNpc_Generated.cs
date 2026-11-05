@@ -400,6 +400,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -442,6 +444,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2324,43 +2328,45 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Base = 8,
-        EncounterZone = 9,
-        RagdollData = 10,
-        RagdollBipedRotation = 11,
-        Patrol = 12,
-        LevelModifier = 13,
-        Count = 14,
-        Radius = 15,
-        Health = 16,
-        LinkedReferences = 17,
-        ActivateParents = 18,
-        IsActivationPoint = 19,
-        IsLinkedRefTransient = 20,
-        ReferenceGroup = 21,
-        Layer = 22,
-        MaterialSwap = 23,
-        PersistentLocation = 24,
-        LocationReference = 25,
-        LocationRefTypes = 26,
-        IsIgnoredBySandbox = 27,
-        SplineConnections = 28,
-        HeadTrackingWeight = 29,
-        FavorCost = 30,
-        EnableParent = 31,
-        Ownership = 32,
-        FactionRank = 33,
-        Emittance = 34,
-        MultiBoundReference = 35,
-        IsIgnoredBySandbox2 = 36,
-        Scale = 37,
-        Position = 38,
-        Rotation = 39,
-        Comments = 40,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Base = 10,
+        EncounterZone = 11,
+        RagdollData = 12,
+        RagdollBipedRotation = 13,
+        Patrol = 14,
+        LevelModifier = 15,
+        Count = 16,
+        Radius = 17,
+        Health = 18,
+        LinkedReferences = 19,
+        ActivateParents = 20,
+        IsActivationPoint = 21,
+        IsLinkedRefTransient = 22,
+        ReferenceGroup = 23,
+        Layer = 24,
+        MaterialSwap = 25,
+        PersistentLocation = 26,
+        LocationReference = 27,
+        LocationRefTypes = 28,
+        IsIgnoredBySandbox = 29,
+        SplineConnections = 30,
+        HeadTrackingWeight = 31,
+        FavorCost = 32,
+        EnableParent = 33,
+        Ownership = 34,
+        FactionRank = 35,
+        Emittance = 36,
+        MultiBoundReference = 37,
+        IsIgnoredBySandbox2 = 38,
+        Scale = 39,
+        Position = 40,
+        Rotation = 41,
+        Comments = 42,
     }
     #endregion
 
@@ -2373,7 +2379,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 34;
 
-        public const ushort FieldCount = 41;
+        public const ushort FieldCount = 43;
 
         public static readonly Type MaskType = typeof(PlacedNpc.Mask<>);
 
@@ -2941,6 +2947,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (PlacedNpc_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (PlacedNpc_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedNpc_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (PlacedNpc_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (PlacedNpc_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2963,6 +2973,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PlacedNpc_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (PlacedNpc_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedNpc_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedNpc_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -304,6 +304,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -333,6 +335,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1673,30 +1677,32 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Flags = 8,
-        Topic = 9,
-        PreviousDialog = 10,
-        SharedDialog = 11,
-        DialogGroup = 12,
-        OverrideFileName = 13,
-        Responses = 14,
-        Conditions = 15,
-        Prompt = 16,
-        Speaker = 17,
-        StartScene = 18,
-        INTV = 19,
-        ForcedAlias = 20,
-        AudioOutputOverride = 21,
-        GreetDistance = 22,
-        SetParentQuestStage = 23,
-        StartScenePhase = 24,
-        Challenge = 25,
-        ResetGlobal = 26,
-        SubtitlePriority = 27,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Flags = 10,
+        Topic = 11,
+        PreviousDialog = 12,
+        SharedDialog = 13,
+        DialogGroup = 14,
+        OverrideFileName = 15,
+        Responses = 16,
+        Conditions = 17,
+        Prompt = 18,
+        Speaker = 19,
+        StartScene = 20,
+        INTV = 21,
+        ForcedAlias = 22,
+        AudioOutputOverride = 23,
+        GreetDistance = 24,
+        SetParentQuestStage = 25,
+        StartScenePhase = 26,
+        Challenge = 27,
+        ResetGlobal = 28,
+        SubtitlePriority = 29,
     }
     #endregion
 
@@ -1709,7 +1715,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 21;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 30;
 
         public static readonly Type MaskType = typeof(DialogResponses.Mask<>);
 
@@ -2153,6 +2159,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (DialogResponses_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (DialogResponses_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (DialogResponses_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (DialogResponses_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (DialogResponses_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2175,6 +2185,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (DialogResponses_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (DialogResponses_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (DialogResponses_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (DialogResponses_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

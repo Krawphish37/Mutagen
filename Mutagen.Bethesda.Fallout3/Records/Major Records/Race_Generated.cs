@@ -254,6 +254,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -279,6 +281,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1587,26 +1591,28 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        Name = 7,
-        Description = 8,
-        Relations = 9,
-        Data = 10,
-        Older = 11,
-        Younger = 12,
-        Voices = 13,
-        DefaultHairStyles = 14,
-        DefaultHairColors = 15,
-        FacegenMainClamp = 16,
-        FacegenFaceClamp = 17,
-        UnusedATTR = 18,
-        HeadData = 19,
-        BodyData = 20,
-        Hairs = 21,
-        Eyes = 22,
-        FaceGenData = 23,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        Name = 9,
+        Description = 10,
+        Relations = 11,
+        Data = 12,
+        Older = 13,
+        Younger = 14,
+        Voices = 15,
+        DefaultHairStyles = 16,
+        DefaultHairColors = 17,
+        FacegenMainClamp = 18,
+        FacegenFaceClamp = 19,
+        UnusedATTR = 20,
+        HeadData = 21,
+        BodyData = 22,
+        Hairs = 23,
+        Eyes = 24,
+        FaceGenData = 25,
     }
     #endregion
 
@@ -1619,7 +1625,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 17;
 
-        public const ushort FieldCount = 24;
+        public const ushort FieldCount = 26;
 
         public static readonly Type MaskType = typeof(Race.Mask<>);
 
@@ -2080,6 +2086,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Race_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Race_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Race_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Race_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Race_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2102,6 +2112,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Race_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Race_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Race_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Race_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -104,6 +104,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -118,6 +120,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags,
@@ -749,15 +753,17 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        Parent = 7,
-        PreviousSibling = 8,
-        Conditions = 9,
-        Flags = 10,
-        MaxConcurrentQuests = 11,
-        Type = 12,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        Parent = 9,
+        PreviousSibling = 10,
+        Conditions = 11,
+        Flags = 12,
+        MaxConcurrentQuests = 13,
+        Type = 14,
     }
     #endregion
 
@@ -770,7 +776,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 3;
 
-        public const ushort FieldCount = 13;
+        public const ushort FieldCount = 15;
 
         public static readonly Type MaskType = typeof(StoryManagerEventNode.Mask<>);
 
@@ -1080,6 +1086,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (StoryManagerEventNode_FieldIndex)((int)index);
                 case AStoryManagerNode_FieldIndex.EditorID:
                     return (StoryManagerEventNode_FieldIndex)((int)index);
+                case AStoryManagerNode_FieldIndex.UnknownSubrecords:
+                    return (StoryManagerEventNode_FieldIndex)((int)index);
+                case AStoryManagerNode_FieldIndex.UnknownSubrecordsSource:
+                    return (StoryManagerEventNode_FieldIndex)((int)index);
                 case AStoryManagerNode_FieldIndex.FormVersion:
                     return (StoryManagerEventNode_FieldIndex)((int)index);
                 case AStoryManagerNode_FieldIndex.Version2:
@@ -1109,6 +1119,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (StoryManagerEventNode_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (StoryManagerEventNode_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (StoryManagerEventNode_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (StoryManagerEventNode_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (StoryManagerEventNode_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1131,6 +1145,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (StoryManagerEventNode_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (StoryManagerEventNode_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (StoryManagerEventNode_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (StoryManagerEventNode_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -378,6 +378,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -408,6 +410,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1918,31 +1922,33 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        PTTA = 10,
-        ObjectPaletteDefaults = 11,
-        Transforms = 12,
-        SnapTemplate = 13,
-        SnapBehavior = 14,
-        XALG = 15,
-        DefaultLayer = 16,
-        Components = 17,
-        ForcedLocations = 18,
-        Model = 19,
-        Properties = 20,
-        Name = 21,
-        MaxAngle = 22,
-        UnknownDNAMFloat = 23,
-        LeafAmplitude = 24,
-        LeafFrequency = 25,
-        AmbientSound = 26,
-        NavmeshGeometry = 27,
-        DNAMDataTypeState = 28,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        PTTA = 12,
+        ObjectPaletteDefaults = 13,
+        Transforms = 14,
+        SnapTemplate = 15,
+        SnapBehavior = 16,
+        XALG = 17,
+        DefaultLayer = 18,
+        Components = 19,
+        ForcedLocations = 20,
+        Model = 21,
+        Properties = 22,
+        Name = 23,
+        MaxAngle = 24,
+        UnknownDNAMFloat = 25,
+        LeafAmplitude = 26,
+        LeafFrequency = 27,
+        AmbientSound = 28,
+        NavmeshGeometry = 29,
+        DNAMDataTypeState = 30,
     }
     #endregion
 
@@ -1955,7 +1961,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 22;
 
-        public const ushort FieldCount = 29;
+        public const ushort FieldCount = 31;
 
         public static readonly Type MaskType = typeof(Static.Mask<>);
 
@@ -2459,6 +2465,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Static_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Static_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Static_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Static_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Static_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2481,6 +2491,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Static_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Static_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Static_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Static_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

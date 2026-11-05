@@ -219,6 +219,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -245,6 +247,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1338,27 +1342,29 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        AmbientColor = 7,
-        DirectionalColor = 8,
-        FogNearColor = 9,
-        FogNear = 10,
-        FogFar = 11,
-        DirectionalRotationXY = 12,
-        DirectionalRotationZ = 13,
-        DirectionalFade = 14,
-        FogClipDistance = 15,
-        FogPower = 16,
-        AmbientColors = 17,
-        FogFarColor = 18,
-        FogMax = 19,
-        LightFadeStartDistance = 20,
-        LightFadeEndDistance = 21,
-        Unknown = 22,
-        DirectionalAmbientColors = 23,
-        DATADataTypeState = 24,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        AmbientColor = 9,
+        DirectionalColor = 10,
+        FogNearColor = 11,
+        FogNear = 12,
+        FogFar = 13,
+        DirectionalRotationXY = 14,
+        DirectionalRotationZ = 15,
+        DirectionalFade = 16,
+        FogClipDistance = 17,
+        FogPower = 18,
+        AmbientColors = 19,
+        FogFarColor = 20,
+        FogMax = 21,
+        LightFadeStartDistance = 22,
+        LightFadeEndDistance = 23,
+        Unknown = 24,
+        DirectionalAmbientColors = 25,
+        DATADataTypeState = 26,
     }
     #endregion
 
@@ -1371,7 +1377,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 18;
 
-        public const ushort FieldCount = 25;
+        public const ushort FieldCount = 27;
 
         public static readonly Type MaskType = typeof(LightingTemplate.Mask<>);
 
@@ -1710,6 +1716,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (LightingTemplate_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (LightingTemplate_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (LightingTemplate_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (LightingTemplate_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (LightingTemplate_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1732,6 +1742,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (LightingTemplate_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (LightingTemplate_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (LightingTemplate_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (LightingTemplate_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

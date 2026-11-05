@@ -130,6 +130,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -147,6 +149,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -959,18 +963,20 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        ImagespaceModifier = 7,
-        CameraOffset = 8,
-        FovMult = 9,
-        Overlay = 10,
-        AdsDistanceFromCameraOffset = 11,
-        AdsHeightDelayEnabled = 12,
-        AdsHeightDelaySeconds = 13,
-        AdsDepthEnabled = 14,
-        AdsDepthDelaySeconds = 15,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        ImagespaceModifier = 9,
+        CameraOffset = 10,
+        FovMult = 11,
+        Overlay = 12,
+        AdsDistanceFromCameraOffset = 13,
+        AdsHeightDelayEnabled = 14,
+        AdsHeightDelaySeconds = 15,
+        AdsDepthEnabled = 16,
+        AdsDepthDelaySeconds = 17,
     }
     #endregion
 
@@ -983,7 +989,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 9;
 
-        public const ushort FieldCount = 16;
+        public const ushort FieldCount = 18;
 
         public static readonly Type MaskType = typeof(Zoom.Mask<>);
 
@@ -1263,6 +1269,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Zoom_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Zoom_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Zoom_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Zoom_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Zoom_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1285,6 +1295,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Zoom_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Zoom_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Zoom_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Zoom_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
