@@ -9,17 +9,17 @@
       <Enum name="FootprintSize" enumName="ObjectPaletteDefaults.FootprintSizes" byteLength="4" />
       <Float name="ScalePercent" />
       <Float name="ScaleVariance" />
-      <Float name="AngleXDegrees" isRotation="true" />
-      <Float name="AngleXVariance" isRotation="true" />
-      <Float name="AngleYDegrees" isRotation="true" />
-      <Float name="AngleYVariance" isRotation="true" />
-      <Float name="AngleZDegrees" isRotation="true" />
-      <Float name="AngleZVariance" isRotation="true" />
+      <Float name="AngleX" />
+      <Float name="AngleXVariance" />
+      <Float name="AngleY" />
+      <Float name="AngleYVariance" />
+      <Float name="AngleZ" />
+      <Float name="AngleZVariance" />
       <Float name="SlopePercent" />
       <Float name="SlopePercentVariance" />
       <Float name="Density" />
-      <Float name="FrequencyPercent" divisor="100" />
-      <Float name="SlopeLimit" isRotation="true" />
+      <Float name="Frequency" />
+      <Float name="SlopeLimit" />
       <Float name="DistanceBelowWater" />
       <Float name="DistanceAboveWater" />
     </Fields>

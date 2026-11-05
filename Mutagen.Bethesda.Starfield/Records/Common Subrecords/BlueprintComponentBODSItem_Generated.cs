@@ -31,7 +31,6 @@ using RecordTypes = Mutagen.Bethesda.Starfield.Internals.RecordTypes;
 using System.Buffers.Binary;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 #endregion
@@ -60,13 +59,13 @@ namespace Mutagen.Bethesda.Starfield
         public String Name { get; set; } = string.Empty;
         #endregion
         #region Color1
-        public Color Color1 { get; set; } = default(Color);
+        public P3Float Color1 { get; set; } = default(P3Float);
         #endregion
         #region Color2
-        public Color Color2 { get; set; } = default(Color);
+        public P3Float Color2 { get; set; } = default(P3Float);
         #endregion
         #region Color3
-        public Color Color3 { get; set; } = default(Color);
+        public P3Float Color3 { get; set; } = default(P3Float);
         #endregion
         #region Unknown
         public Int32 Unknown { get; set; } = default(Int32);
@@ -556,9 +555,9 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: INamedRequired
         /// </summary>
         new String Name { get; set; }
-        new Color Color1 { get; set; }
-        new Color Color2 { get; set; }
-        new Color Color3 { get; set; }
+        new P3Float Color1 { get; set; }
+        new P3Float Color2 { get; set; }
+        new P3Float Color3 { get; set; }
         new Int32 Unknown { get; set; }
     }
 
@@ -581,9 +580,9 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         String Name { get; }
         #endregion
-        Color Color1 { get; }
-        Color Color2 { get; }
-        Color Color3 { get; }
+        P3Float Color1 { get; }
+        P3Float Color2 { get; }
+        P3Float Color3 { get; }
         Int32 Unknown { get; }
 
     }
@@ -850,9 +849,9 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Name = string.Empty;
-            item.Color1 = default(Color);
-            item.Color2 = default(Color);
-            item.Color3 = default(Color);
+            item.Color1 = default(P3Float);
+            item.Color2 = default(P3Float);
+            item.Color3 = default(P3Float);
             item.Unknown = default(Int32);
         }
         
@@ -904,9 +903,9 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Name = string.Equals(item.Name, rhs.Name);
-            ret.Color1 = item.Color1.ColorOnlyEquals(rhs.Color1);
-            ret.Color2 = item.Color2.ColorOnlyEquals(rhs.Color2);
-            ret.Color3 = item.Color3.ColorOnlyEquals(rhs.Color3);
+            ret.Color1 = item.Color1.Equals(rhs.Color1);
+            ret.Color2 = item.Color2.Equals(rhs.Color2);
+            ret.Color3 = item.Color3.Equals(rhs.Color3);
             ret.Unknown = item.Unknown == rhs.Unknown;
         }
         
@@ -987,15 +986,15 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)BlueprintComponentBODSItem_FieldIndex.Color1) ?? true))
             {
-                if (!lhs.Color1.ColorOnlyEquals(rhs.Color1)) return false;
+                if (!lhs.Color1.Equals(rhs.Color1)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)BlueprintComponentBODSItem_FieldIndex.Color2) ?? true))
             {
-                if (!lhs.Color2.ColorOnlyEquals(rhs.Color2)) return false;
+                if (!lhs.Color2.Equals(rhs.Color2)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)BlueprintComponentBODSItem_FieldIndex.Color3) ?? true))
             {
-                if (!lhs.Color3.ColorOnlyEquals(rhs.Color3)) return false;
+                if (!lhs.Color3.Equals(rhs.Color3)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)BlueprintComponentBODSItem_FieldIndex.Unknown) ?? true))
             {
@@ -1008,9 +1007,9 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Name);
-            hash.Add(item.Color1.ToArgb());
-            hash.Add(item.Color2.ToArgb());
-            hash.Add(item.Color3.ToArgb());
+            hash.Add(item.Color1);
+            hash.Add(item.Color2);
+            hash.Add(item.Color3);
             hash.Add(item.Unknown);
             return hash.ToHashCode();
         }
@@ -1180,18 +1179,15 @@ namespace Mutagen.Bethesda.Starfield
                 binaryType: StringBinaryType.NullTerminate);
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.BODV)))
             {
-                ColorBinaryTranslation.Instance.Write(
+                P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.Color1,
-                    binaryType: ColorBinaryType.NoAlphaFloat);
-                ColorBinaryTranslation.Instance.Write(
+                    item: item.Color1);
+                P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.Color2,
-                    binaryType: ColorBinaryType.NoAlphaFloat);
-                ColorBinaryTranslation.Instance.Write(
+                    item: item.Color2);
+                P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.Color3,
-                    binaryType: ColorBinaryType.NoAlphaFloat);
+                    item: item.Color3);
                 writer.Write(item.Unknown);
             }
         }
@@ -1251,11 +1247,11 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 12) return null;
-                    item.Color1 = dataFrame.ReadColor(ColorBinaryType.NoAlphaFloat);
+                    item.Color1 = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 12) return null;
-                    item.Color2 = dataFrame.ReadColor(ColorBinaryType.NoAlphaFloat);
+                    item.Color2 = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 12) return null;
-                    item.Color3 = dataFrame.ReadColor(ColorBinaryType.NoAlphaFloat);
+                    item.Color3 = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.Unknown = dataFrame.ReadInt32();
                     return (int)BlueprintComponentBODSItem_FieldIndex.Unknown;
@@ -1336,17 +1332,17 @@ namespace Mutagen.Bethesda.Starfield
         #region Color1
         private int _Color1Location => _BODVLocation!.Value.Min;
         private bool _Color1_IsSet => _BODVLocation.HasValue && _BODVLocation!.Value.Max - _Color1Location + 1 >= 12;
-        public Color Color1 => _Color1_IsSet ? _recordData.Slice(_Color1Location, 12).ReadColor(ColorBinaryType.NoAlphaFloat) : default(Color);
+        public P3Float Color1 => _Color1_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_Color1Location, 12)) : default(P3Float);
         #endregion
         #region Color2
         private int _Color2Location => _BODVLocation!.Value.Min + 0xC;
         private bool _Color2_IsSet => _BODVLocation.HasValue && _BODVLocation!.Value.Max - _Color2Location + 1 >= 12;
-        public Color Color2 => _Color2_IsSet ? _recordData.Slice(_Color2Location, 12).ReadColor(ColorBinaryType.NoAlphaFloat) : default(Color);
+        public P3Float Color2 => _Color2_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_Color2Location, 12)) : default(P3Float);
         #endregion
         #region Color3
         private int _Color3Location => _BODVLocation!.Value.Min + 0x18;
         private bool _Color3_IsSet => _BODVLocation.HasValue && _BODVLocation!.Value.Max - _Color3Location + 1 >= 12;
-        public Color Color3 => _Color3_IsSet ? _recordData.Slice(_Color3Location, 12).ReadColor(ColorBinaryType.NoAlphaFloat) : default(Color);
+        public P3Float Color3 => _Color3_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_Color3Location, 12)) : default(P3Float);
         #endregion
         #region Unknown
         private int _UnknownLocation => _BODVLocation!.Value.Min + 0x24;

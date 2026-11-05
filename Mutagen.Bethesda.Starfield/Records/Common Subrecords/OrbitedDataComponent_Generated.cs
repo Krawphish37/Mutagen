@@ -56,8 +56,8 @@ namespace Mutagen.Bethesda.Starfield
         #region Unknown1
         public UInt64 Unknown1 { get; set; } = default(UInt64);
         #endregion
-        #region MassInSm
-        public Single MassInSm { get; set; } = default(Single);
+        #region MassInKg
+        public Single MassInKg { get; set; } = default(Single);
         #endregion
         #region RadiusInKm
         public Single RadiusInKm { get; set; } = default(Single);
@@ -107,20 +107,20 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.Unknown1 = initialValue;
-                this.MassInSm = initialValue;
+                this.MassInKg = initialValue;
                 this.RadiusInKm = initialValue;
                 this.Unknown2 = initialValue;
             }
 
             public Mask(
                 TItem Unknown1,
-                TItem MassInSm,
+                TItem MassInKg,
                 TItem RadiusInKm,
                 TItem Unknown2)
             : base()
             {
                 this.Unknown1 = Unknown1;
-                this.MassInSm = MassInSm;
+                this.MassInKg = MassInKg;
                 this.RadiusInKm = RadiusInKm;
                 this.Unknown2 = Unknown2;
             }
@@ -135,7 +135,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem Unknown1;
-            public TItem MassInSm;
+            public TItem MassInKg;
             public TItem RadiusInKm;
             public TItem Unknown2;
             #endregion
@@ -152,7 +152,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
-                if (!object.Equals(this.MassInSm, rhs.MassInSm)) return false;
+                if (!object.Equals(this.MassInKg, rhs.MassInKg)) return false;
                 if (!object.Equals(this.RadiusInKm, rhs.RadiusInKm)) return false;
                 if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
                 return true;
@@ -161,7 +161,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.Unknown1);
-                hash.Add(this.MassInSm);
+                hash.Add(this.MassInKg);
                 hash.Add(this.RadiusInKm);
                 hash.Add(this.Unknown2);
                 hash.Add(base.GetHashCode());
@@ -175,7 +175,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!base.All(eval)) return false;
                 if (!eval(this.Unknown1)) return false;
-                if (!eval(this.MassInSm)) return false;
+                if (!eval(this.MassInKg)) return false;
                 if (!eval(this.RadiusInKm)) return false;
                 if (!eval(this.Unknown2)) return false;
                 return true;
@@ -187,7 +187,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (base.Any(eval)) return true;
                 if (eval(this.Unknown1)) return true;
-                if (eval(this.MassInSm)) return true;
+                if (eval(this.MassInKg)) return true;
                 if (eval(this.RadiusInKm)) return true;
                 if (eval(this.Unknown2)) return true;
                 return false;
@@ -206,7 +206,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.Translate_InternalFill(obj, eval);
                 obj.Unknown1 = eval(this.Unknown1);
-                obj.MassInSm = eval(this.MassInSm);
+                obj.MassInKg = eval(this.MassInKg);
                 obj.RadiusInKm = eval(this.RadiusInKm);
                 obj.Unknown2 = eval(this.Unknown2);
             }
@@ -231,9 +231,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Unknown1, "Unknown1");
                     }
-                    if (printMask?.MassInSm ?? true)
+                    if (printMask?.MassInKg ?? true)
                     {
-                        sb.AppendItem(MassInSm, "MassInSm");
+                        sb.AppendItem(MassInKg, "MassInKg");
                     }
                     if (printMask?.RadiusInKm ?? true)
                     {
@@ -255,7 +255,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public Exception? Unknown1;
-            public Exception? MassInSm;
+            public Exception? MassInKg;
             public Exception? RadiusInKm;
             public Exception? Unknown2;
             #endregion
@@ -268,8 +268,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case OrbitedDataComponent_FieldIndex.Unknown1:
                         return Unknown1;
-                    case OrbitedDataComponent_FieldIndex.MassInSm:
-                        return MassInSm;
+                    case OrbitedDataComponent_FieldIndex.MassInKg:
+                        return MassInKg;
                     case OrbitedDataComponent_FieldIndex.RadiusInKm:
                         return RadiusInKm;
                     case OrbitedDataComponent_FieldIndex.Unknown2:
@@ -287,8 +287,8 @@ namespace Mutagen.Bethesda.Starfield
                     case OrbitedDataComponent_FieldIndex.Unknown1:
                         this.Unknown1 = ex;
                         break;
-                    case OrbitedDataComponent_FieldIndex.MassInSm:
-                        this.MassInSm = ex;
+                    case OrbitedDataComponent_FieldIndex.MassInKg:
+                        this.MassInKg = ex;
                         break;
                     case OrbitedDataComponent_FieldIndex.RadiusInKm:
                         this.RadiusInKm = ex;
@@ -310,8 +310,8 @@ namespace Mutagen.Bethesda.Starfield
                     case OrbitedDataComponent_FieldIndex.Unknown1:
                         this.Unknown1 = (Exception?)obj;
                         break;
-                    case OrbitedDataComponent_FieldIndex.MassInSm:
-                        this.MassInSm = (Exception?)obj;
+                    case OrbitedDataComponent_FieldIndex.MassInKg:
+                        this.MassInKg = (Exception?)obj;
                         break;
                     case OrbitedDataComponent_FieldIndex.RadiusInKm:
                         this.RadiusInKm = (Exception?)obj;
@@ -329,7 +329,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Unknown1 != null) return true;
-                if (MassInSm != null) return true;
+                if (MassInKg != null) return true;
                 if (RadiusInKm != null) return true;
                 if (Unknown2 != null) return true;
                 return false;
@@ -362,7 +362,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Unknown1, "Unknown1");
                 }
                 {
-                    sb.AppendItem(MassInSm, "MassInSm");
+                    sb.AppendItem(MassInKg, "MassInKg");
                 }
                 {
                     sb.AppendItem(RadiusInKm, "RadiusInKm");
@@ -379,7 +379,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
-                ret.MassInSm = this.MassInSm.Combine(rhs.MassInSm);
+                ret.MassInKg = this.MassInKg.Combine(rhs.MassInKg);
                 ret.RadiusInKm = this.RadiusInKm.Combine(rhs.RadiusInKm);
                 ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
                 return ret;
@@ -405,7 +405,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public bool Unknown1;
-            public bool MassInSm;
+            public bool MassInKg;
             public bool RadiusInKm;
             public bool Unknown2;
             #endregion
@@ -417,7 +417,7 @@ namespace Mutagen.Bethesda.Starfield
                 : base(defaultOn, onOverall)
             {
                 this.Unknown1 = defaultOn;
-                this.MassInSm = defaultOn;
+                this.MassInKg = defaultOn;
                 this.RadiusInKm = defaultOn;
                 this.Unknown2 = defaultOn;
             }
@@ -428,7 +428,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((Unknown1, null));
-                ret.Add((MassInSm, null));
+                ret.Add((MassInKg, null));
                 ret.Add((RadiusInKm, null));
                 ret.Add((Unknown2, null));
             }
@@ -503,7 +503,7 @@ namespace Mutagen.Bethesda.Starfield
         IOrbitedDataComponentGetter
     {
         new UInt64 Unknown1 { get; set; }
-        new Single MassInSm { get; set; }
+        new Single MassInKg { get; set; }
         new Single RadiusInKm { get; set; }
         new Single Unknown2 { get; set; }
     }
@@ -515,7 +515,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         static new ILoquiRegistration StaticRegistration => OrbitedDataComponent_Registration.Instance;
         UInt64 Unknown1 { get; }
-        Single MassInSm { get; }
+        Single MassInKg { get; }
         Single RadiusInKm { get; }
         Single Unknown2 { get; }
 
@@ -663,7 +663,7 @@ namespace Mutagen.Bethesda.Starfield
     internal enum OrbitedDataComponent_FieldIndex
     {
         Unknown1 = 0,
-        MassInSm = 1,
+        MassInKg = 1,
         RadiusInKm = 2,
         Unknown2 = 3,
     }
@@ -757,7 +757,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Unknown1 = default(UInt64);
-            item.MassInSm = default(Single);
+            item.MassInKg = default(Single);
             item.RadiusInKm = default(Single);
             item.Unknown2 = default(Single);
             base.Clear(item);
@@ -828,7 +828,7 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Unknown1 = item.Unknown1 == rhs.Unknown1;
-            ret.MassInSm = item.MassInSm.EqualsWithin(rhs.MassInSm);
+            ret.MassInKg = item.MassInKg.EqualsWithin(rhs.MassInKg);
             ret.RadiusInKm = item.RadiusInKm.EqualsWithin(rhs.RadiusInKm);
             ret.Unknown2 = item.Unknown2.EqualsWithin(rhs.Unknown2);
             base.FillEqualsMask(item, rhs, ret, include);
@@ -884,9 +884,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Unknown1, "Unknown1");
             }
-            if (printMask?.MassInSm ?? true)
+            if (printMask?.MassInKg ?? true)
             {
-                sb.AppendItem(item.MassInSm, "MassInSm");
+                sb.AppendItem(item.MassInKg, "MassInKg");
             }
             if (printMask?.RadiusInKm ?? true)
             {
@@ -919,9 +919,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Unknown1 != rhs.Unknown1) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)OrbitedDataComponent_FieldIndex.MassInSm) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)OrbitedDataComponent_FieldIndex.MassInKg) ?? true))
             {
-                if (!lhs.MassInSm.EqualsWithin(rhs.MassInSm)) return false;
+                if (!lhs.MassInKg.EqualsWithin(rhs.MassInKg)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)OrbitedDataComponent_FieldIndex.RadiusInKm) ?? true))
             {
@@ -949,7 +949,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Unknown1);
-            hash.Add(item.MassInSm);
+            hash.Add(item.MassInKg);
             hash.Add(item.RadiusInKm);
             hash.Add(item.Unknown2);
             hash.Add(base.GetHashCode());
@@ -1004,9 +1004,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Unknown1 = rhs.Unknown1;
             }
-            if ((copyMask?.GetShouldTranslate((int)OrbitedDataComponent_FieldIndex.MassInSm) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)OrbitedDataComponent_FieldIndex.MassInKg) ?? true))
             {
-                item.MassInSm = rhs.MassInSm;
+                item.MassInKg = rhs.MassInKg;
             }
             if ((copyMask?.GetShouldTranslate((int)OrbitedDataComponent_FieldIndex.RadiusInKm) ?? true))
             {
@@ -1146,9 +1146,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer.Write(item.Unknown1);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.MassInSm,
-                    divisor: null,
-                    multiplier: 1.98847E+30f);
+                    item: item.MassInKg);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.RadiusInKm);
@@ -1217,10 +1215,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 8) return null;
                     item.Unknown1 = dataFrame.ReadUInt64();
                     if (dataFrame.Remaining < 4) return null;
-                    item.MassInSm = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                        reader: dataFrame,
-                        multiplier: null,
-                        divisor: 1.98847E+30f);
+                    item.MassInKg = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.RadiusInKm = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -1289,10 +1284,10 @@ namespace Mutagen.Bethesda.Starfield
         private bool _Unknown1_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _Unknown1Location + 1 >= 8;
         public UInt64 Unknown1 => _Unknown1_IsSet ? BinaryPrimitives.ReadUInt64LittleEndian(_recordData.Slice(_Unknown1Location, 8)) : default(UInt64);
         #endregion
-        #region MassInSm
-        private int _MassInSmLocation => _DATALocation!.Value.Min + 0x8;
-        private bool _MassInSm_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MassInSmLocation + 1 >= 4;
-        public Single MassInSm => _MassInSm_IsSet ? _recordData.Slice(_MassInSmLocation, 4).Float() / 1.98847E+30f : default(Single);
+        #region MassInKg
+        private int _MassInKgLocation => _DATALocation!.Value.Min + 0x8;
+        private bool _MassInKg_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MassInKgLocation + 1 >= 4;
+        public Single MassInKg => _MassInKg_IsSet ? _recordData.Slice(_MassInKgLocation, 4).Float() : default(Single);
         #endregion
         #region RadiusInKm
         private int _RadiusInKmLocation => _DATALocation!.Value.Min + 0xC;

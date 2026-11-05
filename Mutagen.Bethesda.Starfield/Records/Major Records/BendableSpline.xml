@@ -11,7 +11,7 @@
           <Float name="DefaultNumberOfTiles" />
           <UInt16 name="DefaultNumberOfSlices" />
           <Bool name="DefaultNumberOfTilesIsRelativeToLength" byteLength="2" />
-          <Color name="DefaultColor" binaryType="NoAlphaFloat" />
+          <P3Float name="DefaultColor" />
           <Float name="WindSensibility" />
           <Break />
           <Float name="WindFlexibility" />

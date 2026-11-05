@@ -36,7 +36,6 @@ using RecordTypes = Mutagen.Bethesda.Starfield.Internals.RecordTypes;
 using System.Buffers.Binary;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 #endregion
@@ -124,7 +123,7 @@ namespace Mutagen.Bethesda.Starfield
         public Boolean DefaultNumberOfTilesIsRelativeToLength { get; set; } = default(Boolean);
         #endregion
         #region DefaultColor
-        public Color DefaultColor { get; set; } = default(Color);
+        public P3Float DefaultColor { get; set; } = default(P3Float);
         #endregion
         #region WindSensibility
         public Single WindSensibility { get; set; } = default(Single);
@@ -1010,7 +1009,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single DefaultNumberOfTiles { get; set; }
         new UInt16 DefaultNumberOfSlices { get; set; }
         new Boolean DefaultNumberOfTilesIsRelativeToLength { get; set; }
-        new Color DefaultColor { get; set; }
+        new P3Float DefaultColor { get; set; }
         new Single WindSensibility { get; set; }
         new Single WindFlexibility { get; set; }
         new IFormLinkNullable<IMaterialPathGetter> MaterialPath { get; set; }
@@ -1057,7 +1056,7 @@ namespace Mutagen.Bethesda.Starfield
         Single DefaultNumberOfTiles { get; }
         UInt16 DefaultNumberOfSlices { get; }
         Boolean DefaultNumberOfTilesIsRelativeToLength { get; }
-        Color DefaultColor { get; }
+        P3Float DefaultColor { get; }
         Single WindSensibility { get; }
         Single WindFlexibility { get; }
         IFormLinkNullableGetter<IMaterialPathGetter> MaterialPath { get; }
@@ -1354,7 +1353,7 @@ namespace Mutagen.Bethesda.Starfield
             item.DefaultNumberOfTiles = default(Single);
             item.DefaultNumberOfSlices = default(UInt16);
             item.DefaultNumberOfTilesIsRelativeToLength = default(Boolean);
-            item.DefaultColor = default(Color);
+            item.DefaultColor = default(P3Float);
             item.WindSensibility = default(Single);
             item.WindFlexibility = default(Single);
             item.MaterialPath.Clear();
@@ -1488,7 +1487,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.DefaultNumberOfTiles = item.DefaultNumberOfTiles.EqualsWithin(rhs.DefaultNumberOfTiles);
             ret.DefaultNumberOfSlices = item.DefaultNumberOfSlices == rhs.DefaultNumberOfSlices;
             ret.DefaultNumberOfTilesIsRelativeToLength = item.DefaultNumberOfTilesIsRelativeToLength == rhs.DefaultNumberOfTilesIsRelativeToLength;
-            ret.DefaultColor = item.DefaultColor.ColorOnlyEquals(rhs.DefaultColor);
+            ret.DefaultColor = item.DefaultColor.Equals(rhs.DefaultColor);
             ret.WindSensibility = item.WindSensibility.EqualsWithin(rhs.WindSensibility);
             ret.WindFlexibility = item.WindFlexibility.EqualsWithin(rhs.WindFlexibility);
             ret.MaterialPath = item.MaterialPath.Equals(rhs.MaterialPath);
@@ -1690,7 +1689,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)BendableSpline_FieldIndex.DefaultColor) ?? true))
             {
-                if (!lhs.DefaultColor.ColorOnlyEquals(rhs.DefaultColor)) return false;
+                if (!lhs.DefaultColor.Equals(rhs.DefaultColor)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)BendableSpline_FieldIndex.WindSensibility) ?? true))
             {
@@ -1752,7 +1751,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.DefaultNumberOfTiles);
             hash.Add(item.DefaultNumberOfSlices);
             hash.Add(item.DefaultNumberOfTilesIsRelativeToLength);
-            hash.Add(item.DefaultColor.ToArgb());
+            hash.Add(item.DefaultColor);
             hash.Add(item.WindSensibility);
             hash.Add(item.WindFlexibility);
             hash.Add(item.MaterialPath);
@@ -2239,10 +2238,9 @@ namespace Mutagen.Bethesda.Starfield
                     item: item.DefaultNumberOfTiles);
                 writer.Write(item.DefaultNumberOfSlices);
                 writer.Write(item.DefaultNumberOfTilesIsRelativeToLength, length: 2);
-                ColorBinaryTranslation.Instance.Write(
+                P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.DefaultColor,
-                    binaryType: ColorBinaryType.NoAlphaFloat);
+                    item: item.DefaultColor);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.WindSensibility);
@@ -2377,7 +2375,7 @@ namespace Mutagen.Bethesda.Starfield
                         reader: dataFrame,
                         byteLength: 2);
                     if (dataFrame.Remaining < 12) return null;
-                    item.DefaultColor = dataFrame.ReadColor(ColorBinaryType.NoAlphaFloat);
+                    item.DefaultColor = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.WindSensibility = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Complete)
@@ -2495,7 +2493,7 @@ namespace Mutagen.Bethesda.Starfield
         #region DefaultColor
         private int _DefaultColorLocation => _DNAMLocation!.Value.Min + 0x8;
         private bool _DefaultColor_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DefaultColorLocation + 1 >= 12;
-        public Color DefaultColor => _DefaultColor_IsSet ? _recordData.Slice(_DefaultColorLocation, 12).ReadColor(ColorBinaryType.NoAlphaFloat) : default(Color);
+        public P3Float DefaultColor => _DefaultColor_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_DefaultColorLocation, 12)) : default(P3Float);
         #endregion
         #region WindSensibility
         private int _WindSensibilityLocation => _DNAMLocation!.Value.Min + 0x14;

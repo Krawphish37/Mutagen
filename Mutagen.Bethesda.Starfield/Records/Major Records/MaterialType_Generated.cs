@@ -36,7 +36,6 @@ using RecordTypes = Mutagen.Bethesda.Starfield.Internals.RecordTypes;
 using System.Buffers.Binary;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 #endregion
@@ -88,9 +87,9 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #endregion
         #region HavokDisplayColor
-        public Color? HavokDisplayColor { get; set; }
+        public P3Float? HavokDisplayColor { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Color? IMaterialTypeGetter.HavokDisplayColor => this.HavokDisplayColor;
+        P3Float? IMaterialTypeGetter.HavokDisplayColor => this.HavokDisplayColor;
         #endregion
         #region Buoyancy
         public Single? Buoyancy { get; set; }
@@ -825,7 +824,7 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: INamed, INamedRequired
         /// </summary>
         new String? Name { get; set; }
-        new Color? HavokDisplayColor { get; set; }
+        new P3Float? HavokDisplayColor { get; set; }
         new Single? Buoyancy { get; set; }
         new MaterialType.Flag? Flags { get; set; }
         new IFormLinkNullable<IImpactDataSetGetter> HavokImpactDataSet { get; set; }
@@ -864,7 +863,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         String? Name { get; }
         #endregion
-        Color? HavokDisplayColor { get; }
+        P3Float? HavokDisplayColor { get; }
         Single? Buoyancy { get; }
         MaterialType.Flag? Flags { get; }
         IFormLinkNullableGetter<IImpactDataSetGetter> HavokImpactDataSet { get; }
@@ -1288,7 +1287,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.Parent = item.Parent.Equals(rhs.Parent);
             ret.Name = string.Equals(item.Name, rhs.Name);
-            ret.HavokDisplayColor = item.HavokDisplayColor.ColorOnlyEquals(rhs.HavokDisplayColor);
+            ret.HavokDisplayColor = item.HavokDisplayColor.Equals(rhs.HavokDisplayColor);
             ret.Buoyancy = item.Buoyancy.EqualsWithin(rhs.Buoyancy);
             ret.Flags = item.Flags == rhs.Flags;
             ret.HavokImpactDataSet = item.HavokImpactDataSet.Equals(rhs.HavokImpactDataSet);
@@ -1451,7 +1450,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)MaterialType_FieldIndex.HavokDisplayColor) ?? true))
             {
-                if (!lhs.HavokDisplayColor.ColorOnlyEquals(rhs.HavokDisplayColor)) return false;
+                if (!lhs.HavokDisplayColor.Equals(rhs.HavokDisplayColor)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)MaterialType_FieldIndex.Buoyancy) ?? true))
             {
@@ -1516,7 +1515,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.HavokDisplayColor is {} HavokDisplayColoritem)
             {
-                hash.Add(HavokDisplayColoritem.ToArgb());
+                hash.Add(HavokDisplayColoritem);
             }
             if (item.Buoyancy is {} Buoyancyitem)
             {
@@ -1938,11 +1937,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.Name,
                 header: translationParams.ConvertToCustom(RecordTypes.MNAM),
                 binaryType: StringBinaryType.NullTerminate);
-            ColorBinaryTranslation.Instance.WriteNullable(
+            P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
                 item: item.HavokDisplayColor,
-                header: translationParams.ConvertToCustom(RecordTypes.CNAM),
-                binaryType: ColorBinaryType.NoAlphaFloat);
+                header: translationParams.ConvertToCustom(RecordTypes.CNAM));
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
                 item: item.Buoyancy,
@@ -2058,7 +2056,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.CNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.HavokDisplayColor = frame.ReadColor(ColorBinaryType.NoAlphaFloat);
+                    item.HavokDisplayColor = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
                     return (int)MaterialType_FieldIndex.HavokDisplayColor;
                 }
                 case RecordTypeInts.BNAM:
@@ -2204,7 +2202,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region HavokDisplayColor
         private int? _HavokDisplayColorLocation;
-        public Color? HavokDisplayColor => _HavokDisplayColorLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _HavokDisplayColorLocation.Value, _package.MetaData.Constants).ReadColor(ColorBinaryType.NoAlphaFloat) : default(Color?);
+        public P3Float? HavokDisplayColor => _HavokDisplayColorLocation.HasValue ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(HeaderTranslation.ExtractSubrecordMemory(_recordData, _HavokDisplayColorLocation.Value, _package.MetaData.Constants)) : default(P3Float?);
         #endregion
         #region Buoyancy
         private int? _BuoyancyLocation;

@@ -135,8 +135,8 @@
   <Object name="MovementRotationData" objType="Subrecord">
     <Fields>
       <Int32 name="Unused1" />
-      <Float name="Walk" isRotation="true" />
-      <Float name="Run" isRotation="true" />
+      <Float name="Walk" />
+      <Float name="Run" />
       <Int32 name="Unused2" />
     </Fields>
   </Object>

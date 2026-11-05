@@ -62,8 +62,8 @@ namespace Mutagen.Bethesda.Starfield
         #region Magnitude
         public Single Magnitude { get; set; } = default(Single);
         #endregion
-        #region MassInSm
-        public Single MassInSm { get; set; } = default(Single);
+        #region MassInKg
+        public Single MassInKg { get; set; } = default(Single);
         #endregion
         #region InnerHabitableZone
         public Single InnerHabitableZone { get; set; } = default(Single);
@@ -124,7 +124,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.CatalogueId = initialValue;
                 this.SpectralClass = initialValue;
                 this.Magnitude = initialValue;
-                this.MassInSm = initialValue;
+                this.MassInKg = initialValue;
                 this.InnerHabitableZone = initialValue;
                 this.OuterHabitableZone = initialValue;
                 this.HIP = initialValue;
@@ -136,7 +136,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem CatalogueId,
                 TItem SpectralClass,
                 TItem Magnitude,
-                TItem MassInSm,
+                TItem MassInKg,
                 TItem InnerHabitableZone,
                 TItem OuterHabitableZone,
                 TItem HIP,
@@ -147,7 +147,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.CatalogueId = CatalogueId;
                 this.SpectralClass = SpectralClass;
                 this.Magnitude = Magnitude;
-                this.MassInSm = MassInSm;
+                this.MassInKg = MassInKg;
                 this.InnerHabitableZone = InnerHabitableZone;
                 this.OuterHabitableZone = OuterHabitableZone;
                 this.HIP = HIP;
@@ -167,7 +167,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem CatalogueId;
             public TItem SpectralClass;
             public TItem Magnitude;
-            public TItem MassInSm;
+            public TItem MassInKg;
             public TItem InnerHabitableZone;
             public TItem OuterHabitableZone;
             public TItem HIP;
@@ -189,7 +189,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.CatalogueId, rhs.CatalogueId)) return false;
                 if (!object.Equals(this.SpectralClass, rhs.SpectralClass)) return false;
                 if (!object.Equals(this.Magnitude, rhs.Magnitude)) return false;
-                if (!object.Equals(this.MassInSm, rhs.MassInSm)) return false;
+                if (!object.Equals(this.MassInKg, rhs.MassInKg)) return false;
                 if (!object.Equals(this.InnerHabitableZone, rhs.InnerHabitableZone)) return false;
                 if (!object.Equals(this.OuterHabitableZone, rhs.OuterHabitableZone)) return false;
                 if (!object.Equals(this.HIP, rhs.HIP)) return false;
@@ -203,7 +203,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.CatalogueId);
                 hash.Add(this.SpectralClass);
                 hash.Add(this.Magnitude);
-                hash.Add(this.MassInSm);
+                hash.Add(this.MassInKg);
                 hash.Add(this.InnerHabitableZone);
                 hash.Add(this.OuterHabitableZone);
                 hash.Add(this.HIP);
@@ -222,7 +222,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.CatalogueId)) return false;
                 if (!eval(this.SpectralClass)) return false;
                 if (!eval(this.Magnitude)) return false;
-                if (!eval(this.MassInSm)) return false;
+                if (!eval(this.MassInKg)) return false;
                 if (!eval(this.InnerHabitableZone)) return false;
                 if (!eval(this.OuterHabitableZone)) return false;
                 if (!eval(this.HIP)) return false;
@@ -239,7 +239,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.CatalogueId)) return true;
                 if (eval(this.SpectralClass)) return true;
                 if (eval(this.Magnitude)) return true;
-                if (eval(this.MassInSm)) return true;
+                if (eval(this.MassInKg)) return true;
                 if (eval(this.InnerHabitableZone)) return true;
                 if (eval(this.OuterHabitableZone)) return true;
                 if (eval(this.HIP)) return true;
@@ -263,7 +263,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.CatalogueId = eval(this.CatalogueId);
                 obj.SpectralClass = eval(this.SpectralClass);
                 obj.Magnitude = eval(this.Magnitude);
-                obj.MassInSm = eval(this.MassInSm);
+                obj.MassInKg = eval(this.MassInKg);
                 obj.InnerHabitableZone = eval(this.InnerHabitableZone);
                 obj.OuterHabitableZone = eval(this.OuterHabitableZone);
                 obj.HIP = eval(this.HIP);
@@ -299,9 +299,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Magnitude, "Magnitude");
                     }
-                    if (printMask?.MassInSm ?? true)
+                    if (printMask?.MassInKg ?? true)
                     {
-                        sb.AppendItem(MassInSm, "MassInSm");
+                        sb.AppendItem(MassInKg, "MassInKg");
                     }
                     if (printMask?.InnerHabitableZone ?? true)
                     {
@@ -337,7 +337,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? CatalogueId;
             public Exception? SpectralClass;
             public Exception? Magnitude;
-            public Exception? MassInSm;
+            public Exception? MassInKg;
             public Exception? InnerHabitableZone;
             public Exception? OuterHabitableZone;
             public Exception? HIP;
@@ -357,8 +357,8 @@ namespace Mutagen.Bethesda.Starfield
                         return SpectralClass;
                     case StarDataComponent_FieldIndex.Magnitude:
                         return Magnitude;
-                    case StarDataComponent_FieldIndex.MassInSm:
-                        return MassInSm;
+                    case StarDataComponent_FieldIndex.MassInKg:
+                        return MassInKg;
                     case StarDataComponent_FieldIndex.InnerHabitableZone:
                         return InnerHabitableZone;
                     case StarDataComponent_FieldIndex.OuterHabitableZone:
@@ -388,8 +388,8 @@ namespace Mutagen.Bethesda.Starfield
                     case StarDataComponent_FieldIndex.Magnitude:
                         this.Magnitude = ex;
                         break;
-                    case StarDataComponent_FieldIndex.MassInSm:
-                        this.MassInSm = ex;
+                    case StarDataComponent_FieldIndex.MassInKg:
+                        this.MassInKg = ex;
                         break;
                     case StarDataComponent_FieldIndex.InnerHabitableZone:
                         this.InnerHabitableZone = ex;
@@ -426,8 +426,8 @@ namespace Mutagen.Bethesda.Starfield
                     case StarDataComponent_FieldIndex.Magnitude:
                         this.Magnitude = (Exception?)obj;
                         break;
-                    case StarDataComponent_FieldIndex.MassInSm:
-                        this.MassInSm = (Exception?)obj;
+                    case StarDataComponent_FieldIndex.MassInKg:
+                        this.MassInKg = (Exception?)obj;
                         break;
                     case StarDataComponent_FieldIndex.InnerHabitableZone:
                         this.InnerHabitableZone = (Exception?)obj;
@@ -456,7 +456,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (CatalogueId != null) return true;
                 if (SpectralClass != null) return true;
                 if (Magnitude != null) return true;
-                if (MassInSm != null) return true;
+                if (MassInKg != null) return true;
                 if (InnerHabitableZone != null) return true;
                 if (OuterHabitableZone != null) return true;
                 if (HIP != null) return true;
@@ -498,7 +498,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Magnitude, "Magnitude");
                 }
                 {
-                    sb.AppendItem(MassInSm, "MassInSm");
+                    sb.AppendItem(MassInKg, "MassInKg");
                 }
                 {
                     sb.AppendItem(InnerHabitableZone, "InnerHabitableZone");
@@ -526,7 +526,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.CatalogueId = this.CatalogueId.Combine(rhs.CatalogueId);
                 ret.SpectralClass = this.SpectralClass.Combine(rhs.SpectralClass);
                 ret.Magnitude = this.Magnitude.Combine(rhs.Magnitude);
-                ret.MassInSm = this.MassInSm.Combine(rhs.MassInSm);
+                ret.MassInKg = this.MassInKg.Combine(rhs.MassInKg);
                 ret.InnerHabitableZone = this.InnerHabitableZone.Combine(rhs.InnerHabitableZone);
                 ret.OuterHabitableZone = this.OuterHabitableZone.Combine(rhs.OuterHabitableZone);
                 ret.HIP = this.HIP.Combine(rhs.HIP);
@@ -557,7 +557,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool CatalogueId;
             public bool SpectralClass;
             public bool Magnitude;
-            public bool MassInSm;
+            public bool MassInKg;
             public bool InnerHabitableZone;
             public bool OuterHabitableZone;
             public bool HIP;
@@ -574,7 +574,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.CatalogueId = defaultOn;
                 this.SpectralClass = defaultOn;
                 this.Magnitude = defaultOn;
-                this.MassInSm = defaultOn;
+                this.MassInKg = defaultOn;
                 this.InnerHabitableZone = defaultOn;
                 this.OuterHabitableZone = defaultOn;
                 this.HIP = defaultOn;
@@ -590,7 +590,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((CatalogueId, null));
                 ret.Add((SpectralClass, null));
                 ret.Add((Magnitude, null));
-                ret.Add((MassInSm, null));
+                ret.Add((MassInKg, null));
                 ret.Add((InnerHabitableZone, null));
                 ret.Add((OuterHabitableZone, null));
                 ret.Add((HIP, null));
@@ -670,7 +670,7 @@ namespace Mutagen.Bethesda.Starfield
         new String CatalogueId { get; set; }
         new String SpectralClass { get; set; }
         new Single Magnitude { get; set; }
-        new Single MassInSm { get; set; }
+        new Single MassInKg { get; set; }
         new Single InnerHabitableZone { get; set; }
         new Single OuterHabitableZone { get; set; }
         new UInt32 HIP { get; set; }
@@ -687,7 +687,7 @@ namespace Mutagen.Bethesda.Starfield
         String CatalogueId { get; }
         String SpectralClass { get; }
         Single Magnitude { get; }
-        Single MassInSm { get; }
+        Single MassInKg { get; }
         Single InnerHabitableZone { get; }
         Single OuterHabitableZone { get; }
         UInt32 HIP { get; }
@@ -840,7 +840,7 @@ namespace Mutagen.Bethesda.Starfield
         CatalogueId = 0,
         SpectralClass = 1,
         Magnitude = 2,
-        MassInSm = 3,
+        MassInKg = 3,
         InnerHabitableZone = 4,
         OuterHabitableZone = 5,
         HIP = 6,
@@ -939,7 +939,7 @@ namespace Mutagen.Bethesda.Starfield
             item.CatalogueId = string.Empty;
             item.SpectralClass = string.Empty;
             item.Magnitude = default(Single);
-            item.MassInSm = default(Single);
+            item.MassInKg = default(Single);
             item.InnerHabitableZone = default(Single);
             item.OuterHabitableZone = default(Single);
             item.HIP = default(UInt32);
@@ -1015,7 +1015,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.CatalogueId = string.Equals(item.CatalogueId, rhs.CatalogueId);
             ret.SpectralClass = string.Equals(item.SpectralClass, rhs.SpectralClass);
             ret.Magnitude = item.Magnitude.EqualsWithin(rhs.Magnitude);
-            ret.MassInSm = item.MassInSm.EqualsWithin(rhs.MassInSm);
+            ret.MassInKg = item.MassInKg.EqualsWithin(rhs.MassInKg);
             ret.InnerHabitableZone = item.InnerHabitableZone.EqualsWithin(rhs.InnerHabitableZone);
             ret.OuterHabitableZone = item.OuterHabitableZone.EqualsWithin(rhs.OuterHabitableZone);
             ret.HIP = item.HIP == rhs.HIP;
@@ -1082,9 +1082,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Magnitude, "Magnitude");
             }
-            if (printMask?.MassInSm ?? true)
+            if (printMask?.MassInKg ?? true)
             {
-                sb.AppendItem(item.MassInSm, "MassInSm");
+                sb.AppendItem(item.MassInKg, "MassInKg");
             }
             if (printMask?.InnerHabitableZone ?? true)
             {
@@ -1137,9 +1137,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Magnitude.EqualsWithin(rhs.Magnitude)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)StarDataComponent_FieldIndex.MassInSm) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)StarDataComponent_FieldIndex.MassInKg) ?? true))
             {
-                if (!lhs.MassInSm.EqualsWithin(rhs.MassInSm)) return false;
+                if (!lhs.MassInKg.EqualsWithin(rhs.MassInKg)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)StarDataComponent_FieldIndex.InnerHabitableZone) ?? true))
             {
@@ -1181,7 +1181,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.CatalogueId);
             hash.Add(item.SpectralClass);
             hash.Add(item.Magnitude);
-            hash.Add(item.MassInSm);
+            hash.Add(item.MassInKg);
             hash.Add(item.InnerHabitableZone);
             hash.Add(item.OuterHabitableZone);
             hash.Add(item.HIP);
@@ -1247,9 +1247,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Magnitude = rhs.Magnitude;
             }
-            if ((copyMask?.GetShouldTranslate((int)StarDataComponent_FieldIndex.MassInSm) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)StarDataComponent_FieldIndex.MassInKg) ?? true))
             {
-                item.MassInSm = rhs.MassInSm;
+                item.MassInKg = rhs.MassInKg;
             }
             if ((copyMask?.GetShouldTranslate((int)StarDataComponent_FieldIndex.InnerHabitableZone) ?? true))
             {
@@ -1411,9 +1411,7 @@ namespace Mutagen.Bethesda.Starfield
                     item: item.Magnitude);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.MassInSm,
-                    divisor: null,
-                    multiplier: 1.98847E+30f);
+                    item: item.MassInKg);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.InnerHabitableZone);
@@ -1493,10 +1491,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 4) return null;
                     item.Magnitude = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.MassInSm = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                        reader: dataFrame,
-                        multiplier: null,
-                        divisor: 1.98847E+30f);
+                    item.MassInKg = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.InnerHabitableZone = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -1583,10 +1578,10 @@ namespace Mutagen.Bethesda.Starfield
         private bool _Magnitude_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MagnitudeLocation + 1 >= 4;
         public Single Magnitude => _Magnitude_IsSet ? _recordData.Slice(_MagnitudeLocation, 4).Float() : default(Single);
         #endregion
-        #region MassInSm
-        private int _MassInSmLocation => SpectralClassEndingPos + 0x4;
-        private bool _MassInSm_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MassInSmLocation + 1 >= 4;
-        public Single MassInSm => _MassInSm_IsSet ? _recordData.Slice(_MassInSmLocation, 4).Float() / 1.98847E+30f : default(Single);
+        #region MassInKg
+        private int _MassInKgLocation => SpectralClassEndingPos + 0x4;
+        private bool _MassInKg_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MassInKgLocation + 1 >= 4;
+        public Single MassInKg => _MassInKg_IsSet ? _recordData.Slice(_MassInKgLocation, 4).Float() : default(Single);
         #endregion
         #region InnerHabitableZone
         private int _InnerHabitableZoneLocation => SpectralClassEndingPos + 0x8;

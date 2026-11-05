@@ -61,7 +61,7 @@
   <Object name="OrbitedData" objType="Subrecord" recordType="FNAM">
     <Fields>
       <Double name="GravityWell" />
-      <Float name="MassComparedToEarth" divisor="5.972E24" />
+      <Float name="MassInKg" />
       <Float name="RadiusInKilometers" />
       <Float name="Gravity" />
       <Int32 name="Unknown2" unknown="true" />
@@ -141,8 +141,8 @@
       <Double name="MeanOrbit" />
       <Float name="AxialTilt" />
       <Float name="RotationalVelocity" />
-      <Float name="StartAngle" isRotation="true" />
-      <Float name="PerihelionAngle" isRotation="true" />
+      <Float name="StartAngle" />
+      <Float name="PerihelionAngle" />
       <Bool name="ApplyOrbitalVelocity" byteLength="1" />
       <Bool name="GeostationaryOrbit" byteLength="1" />
       <UInt32 name="Unknown1" />

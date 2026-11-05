@@ -30,7 +30,6 @@ using RecordTypes = Mutagen.Bethesda.Starfield.Internals.RecordTypes;
 using System.Buffers.Binary;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 #endregion
@@ -53,7 +52,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region Tint
-        public Color Tint { get; set; } = default(Color);
+        public P3Float Tint { get; set; } = default(P3Float);
         #endregion
         #region Width
         public Single Width { get; set; } = default(Single);
@@ -613,7 +612,7 @@ namespace Mutagen.Bethesda.Starfield
         ILensFlareSpriteDataGetter,
         ILoquiObjectSetter<ILensFlareSpriteData>
     {
-        new Color Tint { get; set; }
+        new P3Float Tint { get; set; }
         new Single Width { get; set; }
         new Single Height { get; set; }
         new Single Position { get; set; }
@@ -634,7 +633,7 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => LensFlareSpriteData_Registration.Instance;
-        Color Tint { get; }
+        P3Float Tint { get; }
         Single Width { get; }
         Single Height { get; }
         Single Position { get; }
@@ -902,7 +901,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ILensFlareSpriteData item)
         {
             ClearPartial();
-            item.Tint = default(Color);
+            item.Tint = default(P3Float);
             item.Width = default(Single);
             item.Height = default(Single);
             item.Position = default(Single);
@@ -962,7 +961,7 @@ namespace Mutagen.Bethesda.Starfield
             LensFlareSpriteData.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Tint = item.Tint.ColorOnlyEquals(rhs.Tint);
+            ret.Tint = item.Tint.Equals(rhs.Tint);
             ret.Width = item.Width.EqualsWithin(rhs.Width);
             ret.Height = item.Height.EqualsWithin(rhs.Height);
             ret.Position = item.Position.EqualsWithin(rhs.Position);
@@ -1052,7 +1051,7 @@ namespace Mutagen.Bethesda.Starfield
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if ((equalsMask?.GetShouldTranslate((int)LensFlareSpriteData_FieldIndex.Tint) ?? true))
             {
-                if (!lhs.Tint.ColorOnlyEquals(rhs.Tint)) return false;
+                if (!lhs.Tint.Equals(rhs.Tint)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)LensFlareSpriteData_FieldIndex.Width) ?? true))
             {
@@ -1084,7 +1083,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ILensFlareSpriteDataGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Tint.ToArgb());
+            hash.Add(item.Tint);
             hash.Add(item.Width);
             hash.Add(item.Height);
             hash.Add(item.Position);
@@ -1259,10 +1258,9 @@ namespace Mutagen.Bethesda.Starfield
             ILensFlareSpriteDataGetter item,
             MutagenWriter writer)
         {
-            ColorBinaryTranslation.Instance.Write(
+            P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Tint,
-                binaryType: ColorBinaryType.NoAlphaFloat);
+                item: item.Tint);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.Width);
@@ -1322,7 +1320,7 @@ namespace Mutagen.Bethesda.Starfield
             ILensFlareSpriteData item,
             MutagenFrame frame)
         {
-            item.Tint = frame.ReadColor(ColorBinaryType.NoAlphaFloat);
+            item.Tint = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Width = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Height = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Position = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
@@ -1396,7 +1394,7 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Color Tint => _structData.Slice(0x0, 0xC).ReadColor(ColorBinaryType.NoAlphaFloat);
+        public P3Float Tint => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x0, 0xC));
         public Single Width => _structData.Slice(0xC, 0x4).Float();
         public Single Height => _structData.Slice(0x10, 0x4).Float();
         public Single Position => _structData.Slice(0x14, 0x4).Float();

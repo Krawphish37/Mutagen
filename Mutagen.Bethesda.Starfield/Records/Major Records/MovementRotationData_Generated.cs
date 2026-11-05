@@ -1097,14 +1097,10 @@ namespace Mutagen.Bethesda.Starfield
             writer.Write(item.Unused1);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Walk,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.Walk);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Run,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.Run);
             writer.Write(item.Unused2);
         }
 
@@ -1140,14 +1136,8 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.Unused1 = frame.ReadInt32();
-            item.Walk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
-            item.Run = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
+            item.Walk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Run = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Unused2 = frame.ReadInt32();
         }
 
@@ -1215,8 +1205,8 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public Int32 Unused1 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x0, 0x4));
-        public Single Walk => _structData.Slice(0x4, 0x4).Float() * 57.2958f;
-        public Single Run => _structData.Slice(0x8, 0x4).Float() * 57.2958f;
+        public Single Walk => _structData.Slice(0x4, 0x4).Float();
+        public Single Run => _structData.Slice(0x8, 0x4).Float();
         public Int32 Unused2 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0xC, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,

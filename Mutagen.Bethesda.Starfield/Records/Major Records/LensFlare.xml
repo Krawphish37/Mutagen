@@ -20,7 +20,7 @@
   </Object>
   <Object name="LensFlareSpriteData" objType="Subrecord" recordType="LFSD">
     <Fields>
-      <Color name="Tint" binaryType="NoAlphaFloat" />
+      <P3Float name="Tint" />
       <Float name="Width" />
       <Float name="Height" />
       <Float name="Position" />

@@ -1629,14 +1629,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.RotationalVelocity);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.StartAngle,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.StartAngle);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.PerihelionAngle,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.PerihelionAngle);
             writer.Write(item.ApplyOrbitalVelocity);
             writer.Write(item.GeostationaryOrbit);
             writer.Write(item.Unknown1);
@@ -1689,14 +1685,8 @@ namespace Mutagen.Bethesda.Starfield
             item.MeanOrbit = frame.ReadDouble();
             item.AxialTilt = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.RotationalVelocity = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.StartAngle = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
-            item.PerihelionAngle = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
+            item.StartAngle = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.PerihelionAngle = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.ApplyOrbitalVelocity = frame.ReadBoolean();
             item.GeostationaryOrbit = frame.ReadBoolean();
             item.Unknown1 = frame.ReadUInt32();
@@ -1774,8 +1764,8 @@ namespace Mutagen.Bethesda.Starfield
         public Double MeanOrbit => BinaryPrimitives.ReadDoubleLittleEndian(_structData.Slice(0x28, 0x8));
         public Single AxialTilt => _structData.Slice(0x30, 0x4).Float();
         public Single RotationalVelocity => _structData.Slice(0x34, 0x4).Float();
-        public Single StartAngle => _structData.Slice(0x38, 0x4).Float() * 57.2958f;
-        public Single PerihelionAngle => _structData.Slice(0x3C, 0x4).Float() * 57.2958f;
+        public Single StartAngle => _structData.Slice(0x38, 0x4).Float();
+        public Single PerihelionAngle => _structData.Slice(0x3C, 0x4).Float();
         public Boolean ApplyOrbitalVelocity => _structData.Slice(0x40, 0x1)[0] >= 1;
         public Boolean GeostationaryOrbit => _structData.Slice(0x41, 0x1)[0] >= 1;
         public UInt32 Unknown1 => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x42, 0x4));
