@@ -50,7 +50,10 @@
   <Object name="EdgeLink" objType="Subrecord">
     <Fields>
       <Int32 name="Unknown" />
-      <FormLink name="Mesh" refName="NavigationMesh" />
+      <!-- A navigation mesh in NAVM records, a placed object in ship GenericBaseForms. -->
+      <FormLink name="Mesh">
+        <Interface>IStarfieldMajorRecord</Interface>
+      </FormLink>
       <Int16 name="TriangleIndex" />
       <Int8 name="Unknown2" />
     </Fields>
