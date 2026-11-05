@@ -1870,6 +1870,7 @@ internal class MergedWorldspaceCell : ICellGetter
     public String? EnvironmentMap => _primary.EnvironmentMap;
     public IReadOnlyList<ITraversalReferenceGetter>? Traversals => _primary.Traversals;
     public UInt32 NumTraversalFluffBytes => _primary.NumTraversalFluffBytes;
+    public ReadOnlyMemorySlice<Byte>? TraversalFluff => _primary.TraversalFluff;
     public IReadOnlyList<INavigationMeshGetter> NavigationMeshes => _primary.NavigationMeshes;
     public Int32 Timestamp => _primary.Timestamp;
     public Int32 UnknownGroupData => _primary.UnknownGroupData;

@@ -1,3 +1,4 @@
+using Noggog;
 ﻿using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
@@ -169,7 +170,7 @@ partial class PlacedObjectBinaryWriteTranslation
         MutagenWriter writer,
         IPlacedObjectGetter item)
     {
-        TraversalReferenceBinaryWriteTranslation.TraversalsListWriterHelper(writer, item.Traversals, item.NumTraversalFluffBytes);
+        TraversalReferenceBinaryWriteTranslation.TraversalsListWriterHelper(writer, item.Traversals, item.NumTraversalFluffBytes, item.TraversalFluff);
     }
 }
 
@@ -190,8 +191,9 @@ partial class PlacedObjectBinaryCreateTranslation
         {
             len = sub.ContentLength;
         }
-        item.Traversals = TraversalReferenceBinaryCreateTranslation.Parse(frame.SpawnWithLength(len), out var fluffBytes);
+        item.Traversals = TraversalReferenceBinaryCreateTranslation.Parse(frame.SpawnWithLength(len), out var fluffBytes, out var fluff);
         item.NumTraversalFluffBytes = fluffBytes;
+        item.TraversalFluff = fluff;
     }
 }
 
@@ -199,6 +201,8 @@ partial class PlacedObjectBinaryOverlay
 {
     public IReadOnlyList<ITraversalReferenceGetter>? Traversals { get; private set; }
     public uint NumTraversalFluffBytes { get; private set; }
+    public ReadOnlyMemorySlice<byte>? TraversalFluff => _traversalFluff;
+    private byte[]? _traversalFluff;
 
     partial void TraversalsCustomParse(
         OverlayStream stream,
@@ -207,7 +211,7 @@ partial class PlacedObjectBinaryOverlay
         RecordType type,
         PreviousParse lastParsed)
     {
-        Traversals = TraversalReferenceBinaryOverlay.Factory(stream, _package, finalPos, offset, lastParsed, out var fluffBytes);
+        Traversals = TraversalReferenceBinaryOverlay.Factory(stream, _package, finalPos, offset, lastParsed, out var fluffBytes, out _traversalFluff);
         NumTraversalFluffBytes = fluffBytes;
     }
 }

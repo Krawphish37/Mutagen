@@ -17,6 +17,7 @@ partial class PerkScriptFragmentsBinaryCreateTranslation
     {
         item.ExtraBindDataVersion = frame.ReadUInt8();
         item.Script = AVirtualMachineAdapterBinaryCreateTranslation.ReadEntry(frame, objectFormat);
+        AVirtualMachineAdapterBinaryCreateTranslation.ReadEmptyScriptExtras(frame, item.Script, bytesAfter: 2);
         item.Fragments.SetTo(
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PerkScriptFragment>.Instance.Parse(
                 amount: frame.ReadUInt16(),

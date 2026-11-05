@@ -812,6 +812,17 @@ namespace Mutagen.Bethesda.Starfield
         #region NumTraversalFluffBytes
         public UInt32 NumTraversalFluffBytes { get; set; } = default(UInt32);
         #endregion
+        #region TraversalFluff
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected MemorySlice<Byte>? _TraversalFluff;
+        public MemorySlice<Byte>? TraversalFluff
+        {
+            get => this._TraversalFluff;
+            set => this._TraversalFluff = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte>? IPlacedObjectGetter.TraversalFluff => this.TraversalFluff;
+        #endregion
         #region NavigationDoorLink
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private NavigationDoorLink? _NavigationDoorLink;
@@ -948,6 +959,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.EnableParent = new MaskItem<TItem, EnableParent.Mask<TItem>?>(initialValue, new EnableParent.Mask<TItem>(initialValue));
                 this.Traversals = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, TraversalReference.Mask<TItem>?>>?>(initialValue, []);
                 this.NumTraversalFluffBytes = initialValue;
+                this.TraversalFluff = initialValue;
                 this.NavigationDoorLink = new MaskItem<TItem, NavigationDoorLink.Mask<TItem>?>(initialValue, new NavigationDoorLink.Mask<TItem>(initialValue));
                 this.IsActivationPoint = initialValue;
                 this.Scale = initialValue;
@@ -1045,6 +1057,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem EnableParent,
                 TItem Traversals,
                 TItem NumTraversalFluffBytes,
+                TItem TraversalFluff,
                 TItem NavigationDoorLink,
                 TItem IsActivationPoint,
                 TItem Scale,
@@ -1141,6 +1154,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.EnableParent = new MaskItem<TItem, EnableParent.Mask<TItem>?>(EnableParent, new EnableParent.Mask<TItem>(EnableParent));
                 this.Traversals = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, TraversalReference.Mask<TItem>?>>?>(Traversals, []);
                 this.NumTraversalFluffBytes = NumTraversalFluffBytes;
+                this.TraversalFluff = TraversalFluff;
                 this.NavigationDoorLink = new MaskItem<TItem, NavigationDoorLink.Mask<TItem>?>(NavigationDoorLink, new NavigationDoorLink.Mask<TItem>(NavigationDoorLink));
                 this.IsActivationPoint = IsActivationPoint;
                 this.Scale = Scale;
@@ -1237,6 +1251,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, EnableParent.Mask<TItem>?>? EnableParent { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, TraversalReference.Mask<TItem>?>>?>? Traversals;
             public TItem NumTraversalFluffBytes;
+            public TItem TraversalFluff;
             public MaskItem<TItem, NavigationDoorLink.Mask<TItem>?>? NavigationDoorLink { get; set; }
             public TItem IsActivationPoint;
             public TItem Scale;
@@ -1335,6 +1350,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.EnableParent, rhs.EnableParent)) return false;
                 if (!object.Equals(this.Traversals, rhs.Traversals)) return false;
                 if (!object.Equals(this.NumTraversalFluffBytes, rhs.NumTraversalFluffBytes)) return false;
+                if (!object.Equals(this.TraversalFluff, rhs.TraversalFluff)) return false;
                 if (!object.Equals(this.NavigationDoorLink, rhs.NavigationDoorLink)) return false;
                 if (!object.Equals(this.IsActivationPoint, rhs.IsActivationPoint)) return false;
                 if (!object.Equals(this.Scale, rhs.Scale)) return false;
@@ -1425,6 +1441,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.EnableParent);
                 hash.Add(this.Traversals);
                 hash.Add(this.NumTraversalFluffBytes);
+                hash.Add(this.TraversalFluff);
                 hash.Add(this.NavigationDoorLink);
                 hash.Add(this.IsActivationPoint);
                 hash.Add(this.Scale);
@@ -1749,6 +1766,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.NumTraversalFluffBytes)) return false;
+                if (!eval(this.TraversalFluff)) return false;
                 if (NavigationDoorLink != null)
                 {
                     if (!eval(this.NavigationDoorLink.Overall)) return false;
@@ -2075,6 +2093,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.NumTraversalFluffBytes)) return true;
+                if (eval(this.TraversalFluff)) return true;
                 if (NavigationDoorLink != null)
                 {
                     if (eval(this.NavigationDoorLink.Overall)) return true;
@@ -2344,6 +2363,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.NumTraversalFluffBytes = eval(this.NumTraversalFluffBytes);
+                obj.TraversalFluff = eval(this.TraversalFluff);
                 obj.NavigationDoorLink = this.NavigationDoorLink == null ? null : new MaskItem<R, NavigationDoorLink.Mask<R>?>(eval(this.NavigationDoorLink.Overall), this.NavigationDoorLink.Specific?.Translate(eval));
                 obj.IsActivationPoint = eval(this.IsActivationPoint);
                 obj.Scale = eval(this.Scale);
@@ -2867,6 +2887,10 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(NumTraversalFluffBytes, "NumTraversalFluffBytes");
                     }
+                    if (printMask?.TraversalFluff ?? true)
+                    {
+                        sb.AppendItem(TraversalFluff, "TraversalFluff");
+                    }
                     if (printMask?.NavigationDoorLink?.Overall ?? true)
                     {
                         NavigationDoorLink?.Print(sb);
@@ -2984,6 +3008,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, EnableParent.ErrorMask?>? EnableParent;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, TraversalReference.ErrorMask?>>?>? Traversals;
             public Exception? NumTraversalFluffBytes;
+            public Exception? TraversalFluff;
             public MaskItem<Exception?, NavigationDoorLink.ErrorMask?>? NavigationDoorLink;
             public Exception? IsActivationPoint;
             public Exception? Scale;
@@ -3155,6 +3180,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Traversals;
                     case PlacedObject_FieldIndex.NumTraversalFluffBytes:
                         return NumTraversalFluffBytes;
+                    case PlacedObject_FieldIndex.TraversalFluff:
+                        return TraversalFluff;
                     case PlacedObject_FieldIndex.NavigationDoorLink:
                         return NavigationDoorLink;
                     case PlacedObject_FieldIndex.IsActivationPoint:
@@ -3412,6 +3439,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case PlacedObject_FieldIndex.NumTraversalFluffBytes:
                         this.NumTraversalFluffBytes = ex;
+                        break;
+                    case PlacedObject_FieldIndex.TraversalFluff:
+                        this.TraversalFluff = ex;
                         break;
                     case PlacedObject_FieldIndex.NavigationDoorLink:
                         this.NavigationDoorLink = new MaskItem<Exception?, NavigationDoorLink.ErrorMask?>(ex, null);
@@ -3679,6 +3709,9 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.NumTraversalFluffBytes:
                         this.NumTraversalFluffBytes = (Exception?)obj;
                         break;
+                    case PlacedObject_FieldIndex.TraversalFluff:
+                        this.TraversalFluff = (Exception?)obj;
+                        break;
                     case PlacedObject_FieldIndex.NavigationDoorLink:
                         this.NavigationDoorLink = (MaskItem<Exception?, NavigationDoorLink.ErrorMask?>?)obj;
                         break;
@@ -3787,6 +3820,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (EnableParent != null) return true;
                 if (Traversals != null) return true;
                 if (NumTraversalFluffBytes != null) return true;
+                if (TraversalFluff != null) return true;
                 if (NavigationDoorLink != null) return true;
                 if (IsActivationPoint != null) return true;
                 if (Scale != null) return true;
@@ -4190,6 +4224,9 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(NumTraversalFluffBytes, "NumTraversalFluffBytes");
                 }
+                {
+                    sb.AppendItem(TraversalFluff, "TraversalFluff");
+                }
                 NavigationDoorLink?.Print(sb);
                 {
                     sb.AppendItem(IsActivationPoint, "IsActivationPoint");
@@ -4295,6 +4332,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.EnableParent = this.EnableParent.Combine(rhs.EnableParent, (l, r) => l.Combine(r));
                 ret.Traversals = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, TraversalReference.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Traversals?.Overall, rhs.Traversals?.Overall), Noggog.ExceptionExt.Combine(this.Traversals?.Specific, rhs.Traversals?.Specific));
                 ret.NumTraversalFluffBytes = this.NumTraversalFluffBytes.Combine(rhs.NumTraversalFluffBytes);
+                ret.TraversalFluff = this.TraversalFluff.Combine(rhs.TraversalFluff);
                 ret.NavigationDoorLink = this.NavigationDoorLink.Combine(rhs.NavigationDoorLink, (l, r) => l.Combine(r));
                 ret.IsActivationPoint = this.IsActivationPoint.Combine(rhs.IsActivationPoint);
                 ret.Scale = this.Scale.Combine(rhs.Scale);
@@ -4402,6 +4440,7 @@ namespace Mutagen.Bethesda.Starfield
             public EnableParent.TranslationMask? EnableParent;
             public TraversalReference.TranslationMask? Traversals;
             public bool NumTraversalFluffBytes;
+            public bool TraversalFluff;
             public NavigationDoorLink.TranslationMask? NavigationDoorLink;
             public bool IsActivationPoint;
             public bool Scale;
@@ -4461,6 +4500,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.HealthPercent = defaultOn;
                 this.TimeOfDay = defaultOn;
                 this.NumTraversalFluffBytes = defaultOn;
+                this.TraversalFluff = defaultOn;
                 this.IsActivationPoint = defaultOn;
                 this.Scale = defaultOn;
                 this.OpenByDefault = defaultOn;
@@ -4552,6 +4592,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((EnableParent != null ? EnableParent.OnOverall : DefaultOn, EnableParent?.GetCrystal()));
                 ret.Add((Traversals == null ? DefaultOn : !Traversals.GetCrystal().CopyNothing, Traversals?.GetCrystal()));
                 ret.Add((NumTraversalFluffBytes, null));
+                ret.Add((TraversalFluff, null));
                 ret.Add((NavigationDoorLink != null ? NavigationDoorLink.OnOverall : DefaultOn, NavigationDoorLink?.GetCrystal()));
                 ret.Add((IsActivationPoint, null));
                 ret.Add((Scale, null));
@@ -4802,6 +4843,7 @@ namespace Mutagen.Bethesda.Starfield
         new EnableParent? EnableParent { get; set; }
         new ExtendedList<TraversalReference>? Traversals { get; set; }
         new UInt32 NumTraversalFluffBytes { get; set; }
+        new MemorySlice<Byte>? TraversalFluff { get; set; }
         new NavigationDoorLink? NavigationDoorLink { get; set; }
         new Boolean IsActivationPoint { get; set; }
         new Single? Scale { get; set; }
@@ -4921,6 +4963,7 @@ namespace Mutagen.Bethesda.Starfield
         IEnableParentGetter? EnableParent { get; }
         IReadOnlyList<ITraversalReferenceGetter>? Traversals { get; }
         UInt32 NumTraversalFluffBytes { get; }
+        ReadOnlyMemorySlice<Byte>? TraversalFluff { get; }
         INavigationDoorLinkGetter? NavigationDoorLink { get; }
         Boolean IsActivationPoint { get; }
         Single? Scale { get; }
@@ -5184,13 +5227,14 @@ namespace Mutagen.Bethesda.Starfield
         EnableParent = 84,
         Traversals = 85,
         NumTraversalFluffBytes = 86,
-        NavigationDoorLink = 87,
-        IsActivationPoint = 88,
-        Scale = 89,
-        OpenByDefault = 90,
-        Position = 91,
-        Rotation = 92,
-        Comments = 93,
+        TraversalFluff = 87,
+        NavigationDoorLink = 88,
+        IsActivationPoint = 89,
+        Scale = 90,
+        OpenByDefault = 91,
+        Position = 92,
+        Rotation = 93,
+        Comments = 94,
     }
     #endregion
 
@@ -5201,9 +5245,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 85;
+        public const ushort AdditionalFieldCount = 86;
 
-        public const ushort FieldCount = 94;
+        public const ushort FieldCount = 95;
 
         public static readonly Type MaskType = typeof(PlacedObject.Mask<>);
 
@@ -5445,6 +5489,7 @@ namespace Mutagen.Bethesda.Starfield
             item.EnableParent = null;
             item.Traversals = null;
             item.NumTraversalFluffBytes = default(UInt32);
+            item.TraversalFluff = default;
             item.NavigationDoorLink = null;
             item.IsActivationPoint = default(Boolean);
             item.Scale = default;
@@ -5814,6 +5859,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             ret.NumTraversalFluffBytes = item.NumTraversalFluffBytes == rhs.NumTraversalFluffBytes;
+            ret.TraversalFluff = MemorySliceExt.SequenceEqual(item.TraversalFluff, rhs.TraversalFluff);
             ret.NavigationDoorLink = EqualsMaskHelper.EqualsHelper(
                 item.NavigationDoorLink,
                 rhs.NavigationDoorLink,
@@ -6359,6 +6405,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.NumTraversalFluffBytes, "NumTraversalFluffBytes");
             }
+            if ((printMask?.TraversalFluff ?? true)
+                && item.TraversalFluff is {} TraversalFluffItem)
+            {
+                sb.AppendLine($"TraversalFluff => {SpanExt.ToHexString(TraversalFluffItem)}");
+            }
             if ((printMask?.NavigationDoorLink?.Overall ?? true)
                 && item.NavigationDoorLink is {} NavigationDoorLinkItem)
             {
@@ -6860,6 +6911,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.NumTraversalFluffBytes != rhs.NumTraversalFluffBytes) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.TraversalFluff) ?? true))
+            {
+                if (!MemorySliceExt.SequenceEqual(lhs.TraversalFluff, rhs.TraversalFluff)) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.NavigationDoorLink) ?? true))
             {
                 if (EqualsMaskHelper.RefEquality(lhs.NavigationDoorLink, rhs.NavigationDoorLink, out var lhsNavigationDoorLink, out var rhsNavigationDoorLink, out var isNavigationDoorLinkEqual))
@@ -7193,6 +7248,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             hash.Add(item.NumTraversalFluffBytes);
+            if (item.TraversalFluff is {} TraversalFluffItem)
+            {
+                hash.AddBytes(TraversalFluffItem);
+            }
             if (item.NavigationDoorLink is {} NavigationDoorLinkitem)
             {
                 hash.Add(NavigationDoorLinkitem);
@@ -8719,6 +8778,17 @@ namespace Mutagen.Bethesda.Starfield
             if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.NumTraversalFluffBytes) ?? true))
             {
                 item.NumTraversalFluffBytes = rhs.NumTraversalFluffBytes;
+            }
+            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.TraversalFluff) ?? true))
+            {
+                if(rhs.TraversalFluff is {} TraversalFluffrhs)
+                {
+                    item.TraversalFluff = TraversalFluffrhs.ToArray();
+                }
+                else
+                {
+                    item.TraversalFluff = default;
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.NavigationDoorLink) ?? true))
             {

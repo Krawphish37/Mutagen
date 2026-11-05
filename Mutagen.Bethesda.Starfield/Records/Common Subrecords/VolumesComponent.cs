@@ -19,6 +19,12 @@ partial class VolumesComponentBinaryCreateTranslation
         PreviousParse lastParsed)
     {
         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+        var content = frame.RemainingSpan.Slice(0, checked((int)frame.Remaining));
+        if (!VolumesComponentItemLayout.CanRead(content))
+        {
+            item.RawItems = frame.ReadBytes(checked((int)frame.Remaining));
+            return;
+        }
         item.Items =
             ListBinaryTranslation<VolumesComponentItem>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
@@ -34,6 +40,14 @@ partial class VolumesComponentBinaryWriteTranslation
         MutagenWriter writer,
         IVolumesComponentGetter item)
     {
+        if (item.RawItems is { } raw)
+        {
+            using (HeaderExport.Subrecord(writer, RecordTypes.VLMS))
+            {
+                writer.Write(raw);
+            }
+            return;
+        }
         ListBinaryTranslation<IVolumesComponentItemGetter>.Instance.Write(
             writer: writer,
             items: item.Items,
@@ -49,6 +63,7 @@ partial class VolumesComponentBinaryWriteTranslation
 partial class VolumesComponentBinaryOverlay
 {
     public IReadOnlyList<IVolumesComponentItemGetter>? Items { get; private set; }
+    public ReadOnlyMemorySlice<byte>? RawItems { get; private set; }
 
     partial void ItemsCustomParse(
         OverlayStream stream,
@@ -58,6 +73,11 @@ partial class VolumesComponentBinaryOverlay
         PreviousParse lastParsed)
     {
         var subrecord = stream.ReadSubrecord(RecordTypes.VLMS);
+        if (!VolumesComponentItemLayout.CanRead(subrecord.Content))
+        {
+            RawItems = subrecord.Content.ToArray();
+            return;
+        }
         var count = BinaryPrimitives.ReadUInt32LittleEndian(subrecord.Content);
         Items = BinaryOverlayList.FactoryByCount<IVolumesComponentItemGetter>(
             stream: new OverlayStream(subrecord.Content.Slice(4), _package),
