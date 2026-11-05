@@ -8,7 +8,7 @@
       <UInt32 name="Index" recordType="BNAM" nullable="False" />
       <Color name="DebugColor" binaryType="Alpha" recordType="FNAM" />
       <Enum name="Flags" enumName="CollisionLayer.Flag" recordType="GNAM" nullable="False" />
-      <String name="Name" recordType="MNAM" nullable="False" />
+      <String name="Name" recordType="MNAM" />
       <List name="CollidesWith" recordType="CNAM" >
         <FormLink refName="CollisionLayer" />
       </List>
