@@ -325,8 +325,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -357,8 +355,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1790,33 +1786,31 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Name = 10,
-        Keywords = 11,
-        MenuDisplayObject = 12,
-        EquipmentType = 13,
-        Description = 14,
-        Model = 15,
-        Destructible = 16,
-        PickUpSound = 17,
-        PutDownSound = 18,
-        Value = 19,
-        Weight = 20,
-        BaseCost = 21,
-        Flags = 22,
-        Type = 23,
-        ChargeTime = 24,
-        CastType = 25,
-        TargetType = 26,
-        CastDuration = 27,
-        Range = 28,
-        HalfCostPerk = 29,
-        Effects = 30,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Name = 8,
+        Keywords = 9,
+        MenuDisplayObject = 10,
+        EquipmentType = 11,
+        Description = 12,
+        Model = 13,
+        Destructible = 14,
+        PickUpSound = 15,
+        PutDownSound = 16,
+        Value = 17,
+        Weight = 18,
+        BaseCost = 19,
+        Flags = 20,
+        Type = 21,
+        ChargeTime = 22,
+        CastType = 23,
+        TargetType = 24,
+        CastDuration = 25,
+        Range = 26,
+        HalfCostPerk = 27,
+        Effects = 28,
     }
     #endregion
 
@@ -1829,7 +1823,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 22;
 
-        public const ushort FieldCount = 31;
+        public const ushort FieldCount = 29;
 
         public static readonly Type MaskType = typeof(Scroll.Mask<>);
 
@@ -2287,10 +2281,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (Scroll_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (Scroll_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Scroll_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Scroll_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (Scroll_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -2313,10 +2303,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Scroll_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Scroll_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Scroll_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Scroll_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

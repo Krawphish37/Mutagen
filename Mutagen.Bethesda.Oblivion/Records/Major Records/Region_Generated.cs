@@ -186,8 +186,6 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem Icon,
                 TItem MapColor,
@@ -203,8 +201,6 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.Icon = Icon;
@@ -1094,18 +1090,16 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        OblivionMajorRecordFlags = 6,
-        Icon = 7,
-        MapColor = 8,
-        Worldspace = 9,
-        Areas = 10,
-        Objects = 11,
-        Weather = 12,
-        MapName = 13,
-        Grasses = 14,
-        Sounds = 15,
+        OblivionMajorRecordFlags = 4,
+        Icon = 5,
+        MapColor = 6,
+        Worldspace = 7,
+        Areas = 8,
+        Objects = 9,
+        Weather = 10,
+        MapName = 11,
+        Grasses = 12,
+        Sounds = 13,
     }
     #endregion
 
@@ -1118,7 +1112,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 9;
 
-        public const ushort FieldCount = 16;
+        public const ushort FieldCount = 14;
 
         public static readonly Type MaskType = typeof(Region.Mask<>);
 
@@ -1447,10 +1441,6 @@ namespace Mutagen.Bethesda.Oblivion
                     return (Region_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (Region_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Region_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Region_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (Region_FieldIndex)((int)index);
                 default:
@@ -1469,10 +1459,6 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Region_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Region_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Region_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Region_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -257,8 +257,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -284,8 +282,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1392,28 +1388,26 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Name = 10,
-        Model = 11,
-        ImageSpaceModifier = 12,
-        Limit = 13,
-        Radius = 14,
-        Lifetime = 15,
-        ImageSpaceRadius = 16,
-        TargetInterval = 17,
-        Flags = 18,
-        Effect = 19,
-        Light = 20,
-        ImpactDataSet = 21,
-        Sound = 22,
-        TaperFullEffectRadius = 23,
-        TaperWeight = 24,
-        TaperCurse = 25,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Name = 8,
+        Model = 9,
+        ImageSpaceModifier = 10,
+        Limit = 11,
+        Radius = 12,
+        Lifetime = 13,
+        ImageSpaceRadius = 14,
+        TargetInterval = 15,
+        Flags = 16,
+        Effect = 17,
+        Light = 18,
+        ImpactDataSet = 19,
+        Sound = 20,
+        TaperFullEffectRadius = 21,
+        TaperWeight = 22,
+        TaperCurse = 23,
     }
     #endregion
 
@@ -1426,7 +1420,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 17;
 
-        public const ushort FieldCount = 26;
+        public const ushort FieldCount = 24;
 
         public static readonly Type MaskType = typeof(Hazard.Mask<>);
 
@@ -1772,10 +1766,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Hazard_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Hazard_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Hazard_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Hazard_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Hazard_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1798,10 +1788,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Hazard_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Hazard_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Hazard_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Hazard_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

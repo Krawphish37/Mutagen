@@ -104,8 +104,6 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem File,
                 TItem Data)
@@ -114,8 +112,6 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.File = File;
@@ -706,11 +702,9 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        OblivionMajorRecordFlags = 6,
-        File = 7,
-        Data = 8,
+        OblivionMajorRecordFlags = 4,
+        File = 5,
+        Data = 6,
     }
     #endregion
 
@@ -723,7 +717,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 2;
 
-        public const ushort FieldCount = 9;
+        public const ushort FieldCount = 7;
 
         public static readonly Type MaskType = typeof(Sound.Mask<>);
 
@@ -968,10 +962,6 @@ namespace Mutagen.Bethesda.Oblivion
                     return (Sound_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (Sound_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Sound_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Sound_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (Sound_FieldIndex)((int)index);
                 default:
@@ -990,10 +980,6 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Sound_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Sound_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Sound_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Sound_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

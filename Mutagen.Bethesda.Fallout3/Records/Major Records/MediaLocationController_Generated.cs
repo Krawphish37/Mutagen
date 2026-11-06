@@ -275,8 +275,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -301,8 +299,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1732,27 +1728,25 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        Name = 9,
-        NAM1 = 10,
-        NAM2 = 11,
-        NAM3 = 12,
-        LocationDelay = 13,
-        DayStart = 14,
-        NightStart = 15,
-        RetriggerDelay = 16,
-        NeutralSets = 17,
-        AllySets = 18,
-        FriendSets = 19,
-        EnemySets = 20,
-        LocationSets = 21,
-        BattleSets = 22,
-        ConditionalFaction = 23,
-        FNAM = 24,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        Name = 7,
+        NAM1 = 8,
+        NAM2 = 9,
+        NAM3 = 10,
+        LocationDelay = 11,
+        DayStart = 12,
+        NightStart = 13,
+        RetriggerDelay = 14,
+        NeutralSets = 15,
+        AllySets = 16,
+        FriendSets = 17,
+        EnemySets = 18,
+        LocationSets = 19,
+        BattleSets = 20,
+        ConditionalFaction = 21,
+        FNAM = 22,
     }
     #endregion
 
@@ -1765,7 +1759,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 16;
 
-        public const ushort FieldCount = 25;
+        public const ushort FieldCount = 23;
 
         public static readonly Type MaskType = typeof(MediaLocationController.Mask<>);
 
@@ -2195,10 +2189,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (MediaLocationController_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (MediaLocationController_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (MediaLocationController_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (MediaLocationController_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (MediaLocationController_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2221,10 +2211,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (MediaLocationController_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (MediaLocationController_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (MediaLocationController_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (MediaLocationController_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

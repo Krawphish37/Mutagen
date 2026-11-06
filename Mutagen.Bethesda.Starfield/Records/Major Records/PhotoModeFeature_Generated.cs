@@ -171,8 +171,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -191,8 +189,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1051,21 +1047,19 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        Name = 9,
-        FeatureType = 10,
-        XOffset = 11,
-        YOffset = 12,
-        UnknownFNAM1 = 13,
-        Width = 14,
-        Height = 15,
-        UnknownFNAM2 = 16,
-        Texture = 17,
-        ImageSpace = 18,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        Name = 7,
+        FeatureType = 8,
+        XOffset = 9,
+        YOffset = 10,
+        UnknownFNAM1 = 11,
+        Width = 12,
+        Height = 13,
+        UnknownFNAM2 = 14,
+        Texture = 15,
+        ImageSpace = 16,
     }
     #endregion
 
@@ -1078,7 +1072,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 10;
 
-        public const ushort FieldCount = 19;
+        public const ushort FieldCount = 17;
 
         public static readonly Type MaskType = typeof(PhotoModeFeature.Mask<>);
 
@@ -1369,10 +1363,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (PhotoModeFeature_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (PhotoModeFeature_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (PhotoModeFeature_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (PhotoModeFeature_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (PhotoModeFeature_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1395,10 +1385,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PhotoModeFeature_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (PhotoModeFeature_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (PhotoModeFeature_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PhotoModeFeature_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

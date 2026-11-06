@@ -113,8 +113,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -126,8 +124,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -760,14 +756,12 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        EffectArt = 9,
-        Shader = 10,
-        Flags = 11,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        EffectArt = 7,
+        Shader = 8,
+        Flags = 9,
     }
     #endregion
 
@@ -780,7 +774,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 3;
 
-        public const ushort FieldCount = 12;
+        public const ushort FieldCount = 10;
 
         public static readonly Type MaskType = typeof(VisualEffect.Mask<>);
 
@@ -1025,10 +1019,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (VisualEffect_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (VisualEffect_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (VisualEffect_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (VisualEffect_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (VisualEffect_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1051,10 +1041,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (VisualEffect_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (VisualEffect_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (VisualEffect_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (VisualEffect_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

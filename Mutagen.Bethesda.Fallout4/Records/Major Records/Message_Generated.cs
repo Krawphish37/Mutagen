@@ -183,8 +183,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -202,8 +200,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1097,20 +1093,18 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        Description = 9,
-        Name = 10,
-        INAM = 11,
-        OwnerQuest = 12,
-        Flags = 13,
-        DisplayTime = 14,
-        Swf = 15,
-        ShortTitle = 16,
-        MenuButtons = 17,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        Description = 7,
+        Name = 8,
+        INAM = 9,
+        OwnerQuest = 10,
+        Flags = 11,
+        DisplayTime = 12,
+        Swf = 13,
+        ShortTitle = 14,
+        MenuButtons = 15,
     }
     #endregion
 
@@ -1123,7 +1117,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 9;
 
-        public const ushort FieldCount = 18;
+        public const ushort FieldCount = 16;
 
         public static readonly Type MaskType = typeof(Message.Mask<>);
 
@@ -1432,10 +1426,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Message_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Message_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Message_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Message_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Message_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1458,10 +1448,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Message_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Message_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Message_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Message_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

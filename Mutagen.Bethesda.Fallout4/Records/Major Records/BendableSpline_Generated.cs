@@ -157,8 +157,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -176,8 +174,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1016,20 +1012,18 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        ObjectBounds = 9,
-        DefaultNumberOfTiles = 10,
-        DefaultNumberOfSlices = 11,
-        DefaultNumberOfTilesIsRelativeToLength = 12,
-        DefaultColor = 13,
-        WindSensibility = 14,
-        WindFlexibility = 15,
-        Texture = 16,
-        DNAMDataTypeState = 17,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        ObjectBounds = 7,
+        DefaultNumberOfTiles = 8,
+        DefaultNumberOfSlices = 9,
+        DefaultNumberOfTilesIsRelativeToLength = 10,
+        DefaultColor = 11,
+        WindSensibility = 12,
+        WindFlexibility = 13,
+        Texture = 14,
+        DNAMDataTypeState = 15,
     }
     #endregion
 
@@ -1042,7 +1036,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 9;
 
-        public const ushort FieldCount = 18;
+        public const ushort FieldCount = 16;
 
         public static readonly Type MaskType = typeof(BendableSpline.Mask<>);
 
@@ -1329,10 +1323,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (BendableSpline_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (BendableSpline_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (BendableSpline_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (BendableSpline_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (BendableSpline_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1355,10 +1345,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (BendableSpline_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (BendableSpline_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (BendableSpline_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (BendableSpline_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

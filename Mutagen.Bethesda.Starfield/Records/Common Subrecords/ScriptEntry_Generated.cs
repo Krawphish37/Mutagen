@@ -77,9 +77,6 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region EmptyNameHasFlagsAndProperties
-        public Boolean EmptyNameHasFlagsAndProperties { get; set; } = default(Boolean);
-        #endregion
 
         #region To String
 
@@ -122,19 +119,16 @@ namespace Mutagen.Bethesda.Starfield
                 this.Name = initialValue;
                 this.Flags = initialValue;
                 this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ScriptProperty.Mask<TItem>?>>?>(initialValue, []);
-                this.EmptyNameHasFlagsAndProperties = initialValue;
             }
 
             public Mask(
                 TItem Name,
                 TItem Flags,
-                TItem Properties,
-                TItem EmptyNameHasFlagsAndProperties)
+                TItem Properties)
             {
                 this.Name = Name;
                 this.Flags = Flags;
                 this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ScriptProperty.Mask<TItem>?>>?>(Properties, []);
-                this.EmptyNameHasFlagsAndProperties = EmptyNameHasFlagsAndProperties;
             }
 
             #pragma warning disable CS8618
@@ -149,7 +143,6 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Name;
             public TItem Flags;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ScriptProperty.Mask<TItem>?>>?>? Properties;
-            public TItem EmptyNameHasFlagsAndProperties;
             #endregion
 
             #region Equals
@@ -165,7 +158,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Name, rhs.Name)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.Properties, rhs.Properties)) return false;
-                if (!object.Equals(this.EmptyNameHasFlagsAndProperties, rhs.EmptyNameHasFlagsAndProperties)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -174,7 +166,6 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Name);
                 hash.Add(this.Flags);
                 hash.Add(this.Properties);
-                hash.Add(this.EmptyNameHasFlagsAndProperties);
                 return hash.ToHashCode();
             }
 
@@ -197,7 +188,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.EmptyNameHasFlagsAndProperties)) return false;
                 return true;
             }
             #endregion
@@ -219,7 +209,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.EmptyNameHasFlagsAndProperties)) return true;
                 return false;
             }
             #endregion
@@ -251,7 +240,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.EmptyNameHasFlagsAndProperties = eval(this.EmptyNameHasFlagsAndProperties);
             }
             #endregion
 
@@ -297,10 +285,6 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.EmptyNameHasFlagsAndProperties ?? true)
-                    {
-                        sb.AppendItem(EmptyNameHasFlagsAndProperties, "EmptyNameHasFlagsAndProperties");
-                    }
                 }
             }
             #endregion
@@ -328,7 +312,6 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Name;
             public Exception? Flags;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ScriptProperty.ErrorMask?>>?>? Properties;
-            public Exception? EmptyNameHasFlagsAndProperties;
             #endregion
 
             #region IErrorMask
@@ -343,8 +326,6 @@ namespace Mutagen.Bethesda.Starfield
                         return Flags;
                     case ScriptEntry_FieldIndex.Properties:
                         return Properties;
-                    case ScriptEntry_FieldIndex.EmptyNameHasFlagsAndProperties:
-                        return EmptyNameHasFlagsAndProperties;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -363,9 +344,6 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case ScriptEntry_FieldIndex.Properties:
                         this.Properties = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ScriptProperty.ErrorMask?>>?>(ex, null);
-                        break;
-                    case ScriptEntry_FieldIndex.EmptyNameHasFlagsAndProperties:
-                        this.EmptyNameHasFlagsAndProperties = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -386,9 +364,6 @@ namespace Mutagen.Bethesda.Starfield
                     case ScriptEntry_FieldIndex.Properties:
                         this.Properties = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ScriptProperty.ErrorMask?>>?>)obj;
                         break;
-                    case ScriptEntry_FieldIndex.EmptyNameHasFlagsAndProperties:
-                        this.EmptyNameHasFlagsAndProperties = (Exception?)obj;
-                        break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -400,7 +375,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (Name != null) return true;
                 if (Flags != null) return true;
                 if (Properties != null) return true;
-                if (EmptyNameHasFlagsAndProperties != null) return true;
                 return false;
             }
             #endregion
@@ -450,9 +424,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                {
-                    sb.AppendItem(EmptyNameHasFlagsAndProperties, "EmptyNameHasFlagsAndProperties");
-                }
             }
             #endregion
 
@@ -464,7 +435,6 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Name = this.Name.Combine(rhs.Name);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.Properties = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ScriptProperty.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Properties?.Overall, rhs.Properties?.Overall), Noggog.ExceptionExt.Combine(this.Properties?.Specific, rhs.Properties?.Specific));
-                ret.EmptyNameHasFlagsAndProperties = this.EmptyNameHasFlagsAndProperties.Combine(rhs.EmptyNameHasFlagsAndProperties);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -491,7 +461,6 @@ namespace Mutagen.Bethesda.Starfield
             public bool Name;
             public bool Flags;
             public ScriptProperty.TranslationMask? Properties;
-            public bool EmptyNameHasFlagsAndProperties;
             #endregion
 
             #region Ctors
@@ -503,7 +472,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.Name = defaultOn;
                 this.Flags = defaultOn;
-                this.EmptyNameHasFlagsAndProperties = defaultOn;
             }
 
             #endregion
@@ -522,7 +490,6 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Name, null));
                 ret.Add((Flags, null));
                 ret.Add((Properties == null ? DefaultOn : !Properties.GetCrystal().CopyNothing, Properties?.GetCrystal()));
-                ret.Add((EmptyNameHasFlagsAndProperties, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -608,7 +575,6 @@ namespace Mutagen.Bethesda.Starfield
         new String Name { get; set; }
         new ScriptEntry.Flag Flags { get; set; }
         new ExtendedList<ScriptProperty> Properties { get; }
-        new Boolean EmptyNameHasFlagsAndProperties { get; set; }
     }
 
     public partial interface IScriptEntryGetter :
@@ -633,7 +599,6 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         ScriptEntry.Flag Flags { get; }
         IReadOnlyList<IScriptPropertyGetter> Properties { get; }
-        Boolean EmptyNameHasFlagsAndProperties { get; }
 
     }
 
@@ -806,7 +771,6 @@ namespace Mutagen.Bethesda.Starfield
         Name = 0,
         Flags = 1,
         Properties = 2,
-        EmptyNameHasFlagsAndProperties = 3,
     }
     #endregion
 
@@ -817,9 +781,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 4;
+        public const ushort AdditionalFieldCount = 3;
 
-        public const ushort FieldCount = 4;
+        public const ushort FieldCount = 3;
 
         public static readonly Type MaskType = typeof(ScriptEntry.Mask<>);
 
@@ -888,7 +852,6 @@ namespace Mutagen.Bethesda.Starfield
             item.Name = string.Empty;
             item.Flags = default(ScriptEntry.Flag);
             item.Properties.Clear();
-            item.EmptyNameHasFlagsAndProperties = default(Boolean);
         }
         
         #region Mutagen
@@ -945,7 +908,6 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Properties,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.EmptyNameHasFlagsAndProperties = item.EmptyNameHasFlagsAndProperties == rhs.EmptyNameHasFlagsAndProperties;
         }
         
         public string Print(
@@ -1012,10 +974,6 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if (printMask?.EmptyNameHasFlagsAndProperties ?? true)
-            {
-                sb.AppendItem(item.EmptyNameHasFlagsAndProperties, "EmptyNameHasFlagsAndProperties");
-            }
         }
         
         #region Equals and Hash
@@ -1037,10 +995,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Properties.SequenceEqual(rhs.Properties, (l, r) => ((ScriptPropertyCommon)((IScriptPropertyGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)ScriptEntry_FieldIndex.Properties)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ScriptEntry_FieldIndex.EmptyNameHasFlagsAndProperties) ?? true))
-            {
-                if (lhs.EmptyNameHasFlagsAndProperties != rhs.EmptyNameHasFlagsAndProperties) return false;
-            }
             return true;
         }
         
@@ -1053,7 +1007,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(subItem);
             }
-            hash.Add(item.EmptyNameHasFlagsAndProperties);
             return hash.ToHashCode();
         }
         
@@ -1122,10 +1075,6 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     errorMask?.PopIndex();
                 }
-            }
-            if ((copyMask?.GetShouldTranslate((int)ScriptEntry_FieldIndex.EmptyNameHasFlagsAndProperties) ?? true))
-            {
-                item.EmptyNameHasFlagsAndProperties = rhs.EmptyNameHasFlagsAndProperties;
             }
             DeepCopyInCustom(
                 item: item,

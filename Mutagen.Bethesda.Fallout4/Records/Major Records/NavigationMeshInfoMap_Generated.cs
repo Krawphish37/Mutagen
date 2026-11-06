@@ -132,8 +132,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -146,8 +144,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -880,15 +876,13 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        NavMeshVersion = 9,
-        MapInfos = 10,
-        PreferredPathing = 11,
-        NVSI = 12,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        NavMeshVersion = 7,
+        MapInfos = 8,
+        PreferredPathing = 9,
+        NVSI = 10,
     }
     #endregion
 
@@ -901,7 +895,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 4;
 
-        public const ushort FieldCount = 13;
+        public const ushort FieldCount = 11;
 
         public static readonly Type MaskType = typeof(NavigationMeshInfoMap.Mask<>);
 
@@ -1175,10 +1169,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (NavigationMeshInfoMap_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (NavigationMeshInfoMap_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (NavigationMeshInfoMap_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (NavigationMeshInfoMap_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (NavigationMeshInfoMap_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1201,10 +1191,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (NavigationMeshInfoMap_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (NavigationMeshInfoMap_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (NavigationMeshInfoMap_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (NavigationMeshInfoMap_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

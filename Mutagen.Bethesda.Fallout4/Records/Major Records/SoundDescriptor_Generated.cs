@@ -210,8 +210,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -230,8 +228,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1350,21 +1346,19 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        Notes = 9,
-        Data = 10,
-        Category = 11,
-        AlternateSoundFor = 12,
-        SoundFiles = 13,
-        OutputModel = 14,
-        Conditions = 15,
-        LoopAndRumble = 16,
-        Descriptors = 17,
-        RatesOfFire = 18,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        Notes = 7,
+        Data = 8,
+        Category = 9,
+        AlternateSoundFor = 10,
+        SoundFiles = 11,
+        OutputModel = 12,
+        Conditions = 13,
+        LoopAndRumble = 14,
+        Descriptors = 15,
+        RatesOfFire = 16,
     }
     #endregion
 
@@ -1377,7 +1371,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 10;
 
-        public const ushort FieldCount = 19;
+        public const ushort FieldCount = 17;
 
         public static readonly Type MaskType = typeof(SoundDescriptor.Mask<>);
 
@@ -1748,10 +1742,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (SoundDescriptor_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (SoundDescriptor_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (SoundDescriptor_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (SoundDescriptor_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (SoundDescriptor_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1774,10 +1764,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (SoundDescriptor_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (SoundDescriptor_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (SoundDescriptor_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (SoundDescriptor_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

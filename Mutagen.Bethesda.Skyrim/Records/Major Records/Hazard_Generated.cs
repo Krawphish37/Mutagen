@@ -247,8 +247,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -271,8 +269,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1293,25 +1289,23 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Name = 10,
-        Model = 11,
-        ImageSpaceModifier = 12,
-        Limit = 13,
-        Radius = 14,
-        Lifetime = 15,
-        ImageSpaceRadius = 16,
-        TargetInterval = 17,
-        Flags = 18,
-        Spell = 19,
-        Light = 20,
-        ImpactDataSet = 21,
-        Sound = 22,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Name = 8,
+        Model = 9,
+        ImageSpaceModifier = 10,
+        Limit = 11,
+        Radius = 12,
+        Lifetime = 13,
+        ImageSpaceRadius = 14,
+        TargetInterval = 15,
+        Flags = 16,
+        Spell = 17,
+        Light = 18,
+        ImpactDataSet = 19,
+        Sound = 20,
     }
     #endregion
 
@@ -1324,7 +1318,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 14;
 
-        public const ushort FieldCount = 23;
+        public const ushort FieldCount = 21;
 
         public static readonly Type MaskType = typeof(Hazard.Mask<>);
 
@@ -1675,10 +1669,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (Hazard_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (Hazard_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Hazard_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Hazard_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (Hazard_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1701,10 +1691,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Hazard_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Hazard_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Hazard_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Hazard_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

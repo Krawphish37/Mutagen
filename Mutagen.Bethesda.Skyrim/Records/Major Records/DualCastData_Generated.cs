@@ -168,8 +168,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -185,8 +183,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -956,18 +952,16 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Projectile = 10,
-        Explosion = 11,
-        EffectShader = 12,
-        HitEffectArt = 13,
-        ImpactDataSet = 14,
-        InheritScale = 15,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Projectile = 8,
+        Explosion = 9,
+        EffectShader = 10,
+        HitEffectArt = 11,
+        ImpactDataSet = 12,
+        InheritScale = 13,
     }
     #endregion
 
@@ -980,7 +974,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 7;
 
-        public const ushort FieldCount = 16;
+        public const ushort FieldCount = 14;
 
         public static readonly Type MaskType = typeof(DualCastData.Mask<>);
 
@@ -1253,10 +1247,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (DualCastData_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (DualCastData_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (DualCastData_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (DualCastData_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (DualCastData_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1279,10 +1269,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (DualCastData_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (DualCastData_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (DualCastData_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (DualCastData_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

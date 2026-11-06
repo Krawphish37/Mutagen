@@ -176,8 +176,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -200,8 +198,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1182,25 +1178,23 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        Name = 9,
-        LeftWalk = 10,
-        LeftRun = 11,
-        RightWalk = 12,
-        RightRun = 13,
-        ForwardWalk = 14,
-        ForwardRun = 15,
-        BackWalk = 16,
-        BackRun = 17,
-        RotateInPlaceWalk = 18,
-        RotateInPlaceRun = 19,
-        RotateWhileMovingRun = 20,
-        AnimationChangeThresholds = 21,
-        SPEDDataTypeState = 22,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        Name = 7,
+        LeftWalk = 8,
+        LeftRun = 9,
+        RightWalk = 10,
+        RightRun = 11,
+        ForwardWalk = 12,
+        ForwardRun = 13,
+        BackWalk = 14,
+        BackRun = 15,
+        RotateInPlaceWalk = 16,
+        RotateInPlaceRun = 17,
+        RotateWhileMovingRun = 18,
+        AnimationChangeThresholds = 19,
+        SPEDDataTypeState = 20,
     }
     #endregion
 
@@ -1213,7 +1207,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 14;
 
-        public const ushort FieldCount = 23;
+        public const ushort FieldCount = 21;
 
         public static readonly Type MaskType = typeof(MovementType.Mask<>);
 
@@ -1530,10 +1524,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (MovementType_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (MovementType_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (MovementType_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (MovementType_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (MovementType_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1556,10 +1546,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (MovementType_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (MovementType_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (MovementType_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (MovementType_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

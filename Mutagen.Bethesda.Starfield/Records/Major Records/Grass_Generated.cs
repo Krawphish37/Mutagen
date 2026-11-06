@@ -226,8 +226,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -256,8 +254,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1512,31 +1508,29 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        ObjectBounds = 9,
-        DirtinessScale = 10,
-        ObjectPaletteDefaults = 11,
-        XALG = 12,
-        Components = 13,
-        Model = 14,
-        Contrast = 15,
-        ClusterScale = 16,
-        HeightRange = 17,
-        ColorRange = 18,
-        WindFrequency = 19,
-        AboveWaterClamp = 20,
-        BelowWaterClamp = 21,
-        MaxDensity = 22,
-        MinSlope = 23,
-        MaxSlope = 24,
-        Flags = 25,
-        Coverage = 26,
-        DirtinessMin = 27,
-        DirtinessMax = 28,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        ObjectBounds = 7,
+        DirtinessScale = 8,
+        ObjectPaletteDefaults = 9,
+        XALG = 10,
+        Components = 11,
+        Model = 12,
+        Contrast = 13,
+        ClusterScale = 14,
+        HeightRange = 15,
+        ColorRange = 16,
+        WindFrequency = 17,
+        AboveWaterClamp = 18,
+        BelowWaterClamp = 19,
+        MaxDensity = 20,
+        MinSlope = 21,
+        MaxSlope = 22,
+        Flags = 23,
+        Coverage = 24,
+        DirtinessMin = 25,
+        DirtinessMax = 26,
     }
     #endregion
 
@@ -1549,7 +1543,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 20;
 
-        public const ushort FieldCount = 29;
+        public const ushort FieldCount = 27;
 
         public static readonly Type MaskType = typeof(Grass.Mask<>);
 
@@ -1965,10 +1959,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (Grass_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Grass_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Grass_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Grass_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Grass_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1991,10 +1981,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Grass_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Grass_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Grass_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Grass_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

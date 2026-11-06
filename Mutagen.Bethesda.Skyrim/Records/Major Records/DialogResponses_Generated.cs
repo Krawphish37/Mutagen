@@ -272,8 +272,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -297,8 +295,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1592,26 +1588,24 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        DATA = 10,
-        Flags = 11,
-        Topic = 12,
-        PreviousDialog = 13,
-        FavorLevel = 14,
-        LinkTo = 15,
-        ResponseData = 16,
-        Responses = 17,
-        Conditions = 18,
-        UnknownData = 19,
-        Prompt = 20,
-        Speaker = 21,
-        WalkAwayTopic = 22,
-        AudioOutputOverride = 23,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        DATA = 8,
+        Flags = 9,
+        Topic = 10,
+        PreviousDialog = 11,
+        FavorLevel = 12,
+        LinkTo = 13,
+        ResponseData = 14,
+        Responses = 15,
+        Conditions = 16,
+        UnknownData = 17,
+        Prompt = 18,
+        Speaker = 19,
+        WalkAwayTopic = 20,
+        AudioOutputOverride = 21,
     }
     #endregion
 
@@ -1624,7 +1618,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 15;
 
-        public const ushort FieldCount = 24;
+        public const ushort FieldCount = 22;
 
         public static readonly Type MaskType = typeof(DialogResponses.Mask<>);
 
@@ -2072,10 +2066,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (DialogResponses_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (DialogResponses_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (DialogResponses_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (DialogResponses_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (DialogResponses_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -2098,10 +2088,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (DialogResponses_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (DialogResponses_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (DialogResponses_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (DialogResponses_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

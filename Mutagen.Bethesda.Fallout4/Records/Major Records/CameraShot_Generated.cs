@@ -224,8 +224,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -252,8 +250,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1422,29 +1418,27 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        Model = 9,
-        Conditions = 10,
-        Action = 11,
-        Location = 12,
-        Target = 13,
-        Flags = 14,
-        TimeMultiplierPlayer = 15,
-        TimeMultiplierTarget = 16,
-        TimeMultiplierGlobal = 17,
-        MaxTime = 18,
-        MinTime = 19,
-        TargetPercentBetweenActors = 20,
-        NearTargetDistance = 21,
-        LocationSpring = 22,
-        TargetSpring = 23,
-        RotationOffset = 24,
-        ImageSpaceModifier = 25,
-        DATADataTypeState = 26,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        Model = 7,
+        Conditions = 8,
+        Action = 9,
+        Location = 10,
+        Target = 11,
+        Flags = 12,
+        TimeMultiplierPlayer = 13,
+        TimeMultiplierTarget = 14,
+        TimeMultiplierGlobal = 15,
+        MaxTime = 16,
+        MinTime = 17,
+        TargetPercentBetweenActors = 18,
+        NearTargetDistance = 19,
+        LocationSpring = 20,
+        TargetSpring = 21,
+        RotationOffset = 22,
+        ImageSpaceModifier = 23,
+        DATADataTypeState = 24,
     }
     #endregion
 
@@ -1457,7 +1451,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 18;
 
-        public const ushort FieldCount = 27;
+        public const ushort FieldCount = 25;
 
         public static readonly Type MaskType = typeof(CameraShot.Mask<>);
 
@@ -1819,10 +1813,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (CameraShot_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (CameraShot_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (CameraShot_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (CameraShot_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (CameraShot_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1845,10 +1835,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (CameraShot_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (CameraShot_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (CameraShot_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (CameraShot_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

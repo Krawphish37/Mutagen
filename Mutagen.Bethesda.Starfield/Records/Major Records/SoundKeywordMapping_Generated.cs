@@ -142,8 +142,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -155,8 +153,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -936,14 +932,12 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        WED0 = 9,
-        Keywords = 10,
-        Items = 11,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        WED0 = 7,
+        Keywords = 8,
+        Items = 9,
     }
     #endregion
 
@@ -956,7 +950,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 3;
 
-        public const ushort FieldCount = 12;
+        public const ushort FieldCount = 10;
 
         public static readonly Type MaskType = typeof(SoundKeywordMapping.Mask<>);
 
@@ -1236,10 +1230,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (SoundKeywordMapping_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (SoundKeywordMapping_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (SoundKeywordMapping_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (SoundKeywordMapping_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (SoundKeywordMapping_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1262,10 +1252,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (SoundKeywordMapping_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (SoundKeywordMapping_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (SoundKeywordMapping_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (SoundKeywordMapping_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -365,8 +365,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -427,8 +425,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2546,63 +2542,61 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        FillTexture = 9,
-        ParticleShaderTexture = 10,
-        HolesTexture = 11,
-        MembranePaletteTexture = 12,
-        ParticlePaletteTexture = 13,
-        DATA = 14,
-        Unknown = 15,
-        MembraneSourceBlendMode = 16,
-        MembraneBlendOperation = 17,
-        MembraneZTest = 18,
-        FillColorKey1 = 19,
-        FillAlphaFadeInTime = 20,
-        FillFullAlphaTime = 21,
-        FillFadeOutTime = 22,
-        FillPersistentAlphaRatio = 23,
-        FillAlphaPulseAmplitude = 24,
-        FillAlphaPulseFrequency = 25,
-        FillTextureAnimationSpeedU = 26,
-        FillTextureAnimationSpeedV = 27,
-        EdgeEffectFallOff = 28,
-        EdgeEffectColor = 29,
-        EdgeEffectAlphaFadeInTime = 30,
-        EdgeEffectFullAlphaTime = 31,
-        EdgeEffectAlphaFadeOutTime = 32,
-        EdgeEffectPersistentAlphaRatio = 33,
-        EdgeEffectAlphaPulseAmplitude = 34,
-        EdgeEffectAlphaPulseFrequency = 35,
-        FillFullAlphaRatio = 36,
-        EdgeEffectFullAlphaRatio = 37,
-        MembraneDestBlendMode = 38,
-        Unknown2 = 39,
-        HolesAnimationStartTime = 40,
-        HolesAnimationEndTime = 41,
-        HolesAnimationStartValue = 42,
-        HolesAnimationEndValue = 43,
-        Unknown3 = 44,
-        AmbientSound = 45,
-        FillColorKey2 = 46,
-        FillColorKey3 = 47,
-        Unknown4 = 48,
-        FillColorKey1Scale = 49,
-        FillColorKey2Scale = 50,
-        FillColorKey3Scale = 51,
-        FillColorKey1Time = 52,
-        FillColorKey2Time = 53,
-        FillColorKey3Time = 54,
-        Unknown5 = 55,
-        Flags = 56,
-        FillTextureScaleU = 57,
-        FillTextureScaleV = 58,
-        Unknown6 = 59,
-        Model = 60,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        FillTexture = 7,
+        ParticleShaderTexture = 8,
+        HolesTexture = 9,
+        MembranePaletteTexture = 10,
+        ParticlePaletteTexture = 11,
+        DATA = 12,
+        Unknown = 13,
+        MembraneSourceBlendMode = 14,
+        MembraneBlendOperation = 15,
+        MembraneZTest = 16,
+        FillColorKey1 = 17,
+        FillAlphaFadeInTime = 18,
+        FillFullAlphaTime = 19,
+        FillFadeOutTime = 20,
+        FillPersistentAlphaRatio = 21,
+        FillAlphaPulseAmplitude = 22,
+        FillAlphaPulseFrequency = 23,
+        FillTextureAnimationSpeedU = 24,
+        FillTextureAnimationSpeedV = 25,
+        EdgeEffectFallOff = 26,
+        EdgeEffectColor = 27,
+        EdgeEffectAlphaFadeInTime = 28,
+        EdgeEffectFullAlphaTime = 29,
+        EdgeEffectAlphaFadeOutTime = 30,
+        EdgeEffectPersistentAlphaRatio = 31,
+        EdgeEffectAlphaPulseAmplitude = 32,
+        EdgeEffectAlphaPulseFrequency = 33,
+        FillFullAlphaRatio = 34,
+        EdgeEffectFullAlphaRatio = 35,
+        MembraneDestBlendMode = 36,
+        Unknown2 = 37,
+        HolesAnimationStartTime = 38,
+        HolesAnimationEndTime = 39,
+        HolesAnimationStartValue = 40,
+        HolesAnimationEndValue = 41,
+        Unknown3 = 42,
+        AmbientSound = 43,
+        FillColorKey2 = 44,
+        FillColorKey3 = 45,
+        Unknown4 = 46,
+        FillColorKey1Scale = 47,
+        FillColorKey2Scale = 48,
+        FillColorKey3Scale = 49,
+        FillColorKey1Time = 50,
+        FillColorKey2Time = 51,
+        FillColorKey3Time = 52,
+        Unknown5 = 53,
+        Flags = 54,
+        FillTextureScaleU = 55,
+        FillTextureScaleV = 56,
+        Unknown6 = 57,
+        Model = 58,
     }
     #endregion
 
@@ -2615,7 +2609,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 52;
 
-        public const ushort FieldCount = 61;
+        public const ushort FieldCount = 59;
 
         public static readonly Type MaskType = typeof(EffectShader.Mask<>);
 
@@ -3175,10 +3169,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (EffectShader_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (EffectShader_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (EffectShader_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (EffectShader_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (EffectShader_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -3201,10 +3191,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (EffectShader_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (EffectShader_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (EffectShader_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (EffectShader_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

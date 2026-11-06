@@ -128,8 +128,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -147,8 +145,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags,
@@ -939,20 +935,18 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        Parent = 9,
-        PreviousSibling = 10,
-        Conditions = 11,
-        Flags = 12,
-        QuestFlags = 13,
-        MaxConcurrentQuests = 14,
-        MaxNumQuestsToRun = 15,
-        HoursUntilReset = 16,
-        Quests = 17,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        Parent = 7,
+        PreviousSibling = 8,
+        Conditions = 9,
+        Flags = 10,
+        QuestFlags = 11,
+        MaxConcurrentQuests = 12,
+        MaxNumQuestsToRun = 13,
+        HoursUntilReset = 14,
+        Quests = 15,
     }
     #endregion
 
@@ -965,7 +959,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 6;
 
-        public const ushort FieldCount = 18;
+        public const ushort FieldCount = 16;
 
         public static readonly Type MaskType = typeof(StoryManagerQuestNode.Mask<>);
 
@@ -1265,10 +1259,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (StoryManagerQuestNode_FieldIndex)((int)index);
                 case AStoryManagerNode_FieldIndex.EditorID:
                     return (StoryManagerQuestNode_FieldIndex)((int)index);
-                case AStoryManagerNode_FieldIndex.UnknownSubrecords:
-                    return (StoryManagerQuestNode_FieldIndex)((int)index);
-                case AStoryManagerNode_FieldIndex.UnknownSubrecordsSource:
-                    return (StoryManagerQuestNode_FieldIndex)((int)index);
                 case AStoryManagerNode_FieldIndex.FormVersion:
                     return (StoryManagerQuestNode_FieldIndex)((int)index);
                 case AStoryManagerNode_FieldIndex.Version2:
@@ -1298,10 +1288,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (StoryManagerQuestNode_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (StoryManagerQuestNode_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (StoryManagerQuestNode_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (StoryManagerQuestNode_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (StoryManagerQuestNode_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1324,10 +1310,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (StoryManagerQuestNode_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (StoryManagerQuestNode_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (StoryManagerQuestNode_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (StoryManagerQuestNode_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

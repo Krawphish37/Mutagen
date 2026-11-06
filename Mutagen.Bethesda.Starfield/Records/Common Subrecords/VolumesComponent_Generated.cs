@@ -67,17 +67,6 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region RawItems
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _RawItems;
-        public MemorySlice<Byte>? RawItems
-        {
-            get => this._RawItems;
-            set => this._RawItems = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IVolumesComponentGetter.RawItems => this.RawItems;
-        #endregion
 
         #region To String
 
@@ -116,20 +105,10 @@ namespace Mutagen.Bethesda.Starfield
             IMask<TItem>
         {
             #region Ctors
-            public Mask(TItem initialValue)
-            : base(initialValue)
-            {
-                this.Items = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, VolumesComponentItem.Mask<TItem>?>>?>(initialValue, []);
-                this.RawItems = initialValue;
-            }
-
-            public Mask(
-                TItem Items,
-                TItem RawItems)
+            public Mask(TItem Items)
             : base()
             {
                 this.Items = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, VolumesComponentItem.Mask<TItem>?>>?>(Items, []);
-                this.RawItems = RawItems;
             }
 
             #pragma warning disable CS8618
@@ -142,7 +121,6 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, VolumesComponentItem.Mask<TItem>?>>?>? Items;
-            public TItem RawItems;
             #endregion
 
             #region Equals
@@ -157,14 +135,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.Items, rhs.Items)) return false;
-                if (!object.Equals(this.RawItems, rhs.RawItems)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.Items);
-                hash.Add(this.RawItems);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -187,7 +163,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.RawItems)) return false;
                 return true;
             }
             #endregion
@@ -208,7 +183,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.RawItems)) return true;
                 return false;
             }
             #endregion
@@ -239,7 +213,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.RawItems = eval(this.RawItems);
             }
             #endregion
 
@@ -277,10 +250,6 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.RawItems ?? true)
-                    {
-                        sb.AppendItem(RawItems, "RawItems");
-                    }
                 }
             }
             #endregion
@@ -293,7 +262,6 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, VolumesComponentItem.ErrorMask?>>?>? Items;
-            public Exception? RawItems;
             #endregion
 
             #region IErrorMask
@@ -304,8 +272,6 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case VolumesComponent_FieldIndex.Items:
                         return Items;
-                    case VolumesComponent_FieldIndex.RawItems:
-                        return RawItems;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -318,9 +284,6 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case VolumesComponent_FieldIndex.Items:
                         this.Items = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, VolumesComponentItem.ErrorMask?>>?>(ex, null);
-                        break;
-                    case VolumesComponent_FieldIndex.RawItems:
-                        this.RawItems = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -336,9 +299,6 @@ namespace Mutagen.Bethesda.Starfield
                     case VolumesComponent_FieldIndex.Items:
                         this.Items = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, VolumesComponentItem.ErrorMask?>>?>)obj;
                         break;
-                    case VolumesComponent_FieldIndex.RawItems:
-                        this.RawItems = (Exception?)obj;
-                        break;
                     default:
                         base.SetNthMask(index, obj);
                         break;
@@ -349,7 +309,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Items != null) return true;
-                if (RawItems != null) return true;
                 return false;
             }
             #endregion
@@ -394,9 +353,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                {
-                    sb.AppendItem(RawItems, "RawItems");
-                }
             }
             #endregion
 
@@ -406,7 +362,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Items = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, VolumesComponentItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Items?.Overall, rhs.Items?.Overall), Noggog.ExceptionExt.Combine(this.Items?.Specific, rhs.Items?.Specific));
-                ret.RawItems = this.RawItems.Combine(rhs.RawItems);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -430,7 +385,6 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public VolumesComponentItem.TranslationMask? Items;
-            public bool RawItems;
             #endregion
 
             #region Ctors
@@ -439,7 +393,6 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.RawItems = defaultOn;
             }
 
             #endregion
@@ -448,7 +401,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((Items == null ? DefaultOn : !Items.GetCrystal().CopyNothing, Items?.GetCrystal()));
-                ret.Add((RawItems, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -521,7 +473,6 @@ namespace Mutagen.Bethesda.Starfield
         IVolumesComponentGetter
     {
         new ExtendedList<VolumesComponentItem>? Items { get; set; }
-        new MemorySlice<Byte>? RawItems { get; set; }
     }
 
     public partial interface IVolumesComponentGetter :
@@ -531,7 +482,6 @@ namespace Mutagen.Bethesda.Starfield
     {
         static new ILoquiRegistration StaticRegistration => VolumesComponent_Registration.Instance;
         IReadOnlyList<IVolumesComponentItemGetter>? Items { get; }
-        ReadOnlyMemorySlice<Byte>? RawItems { get; }
 
     }
 
@@ -677,7 +627,6 @@ namespace Mutagen.Bethesda.Starfield
     internal enum VolumesComponent_FieldIndex
     {
         Items = 0,
-        RawItems = 1,
     }
     #endregion
 
@@ -688,9 +637,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 2;
+        public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 2;
+        public const ushort FieldCount = 1;
 
         public static readonly Type MaskType = typeof(VolumesComponent.Mask<>);
 
@@ -769,7 +718,6 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Items = null;
-            item.RawItems = default;
             base.Clear(item);
         }
         
@@ -796,7 +744,6 @@ namespace Mutagen.Bethesda.Starfield
                 record: item,
                 frame: frame,
                 translationParams: translationParams,
-                fillStructs: VolumesComponentBinaryCreateTranslation.FillBinaryStructs,
                 fillTyped: VolumesComponentBinaryCreateTranslation.FillBinaryRecordTypes);
         }
         
@@ -842,7 +789,6 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Items,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.RawItems = MemorySliceExt.SequenceEqual(item.RawItems, rhs.RawItems);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -907,11 +853,6 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.RawItems ?? true)
-                && item.RawItems is {} RawItemsItem)
-            {
-                sb.AppendLine($"RawItems => {SpanExt.ToHexString(RawItemsItem)}");
-            }
         }
         
         public static VolumesComponent_FieldIndex ConvertFieldIndex(AComponent_FieldIndex index)
@@ -934,10 +875,6 @@ namespace Mutagen.Bethesda.Starfield
             if ((equalsMask?.GetShouldTranslate((int)VolumesComponent_FieldIndex.Items) ?? true))
             {
                 if (!lhs.Items.SequenceEqualNullable(rhs.Items, (l, r) => ((VolumesComponentItemCommon)((IVolumesComponentItemGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)VolumesComponent_FieldIndex.Items)))) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)VolumesComponent_FieldIndex.RawItems) ?? true))
-            {
-                if (!MemorySliceExt.SequenceEqual(lhs.RawItems, rhs.RawItems)) return false;
             }
             return true;
         }
@@ -962,10 +899,6 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     hash.Add(subItem);
                 }
-            }
-            if (item.RawItems is {} RawItemsItem)
-            {
-                hash.AddBytes(RawItemsItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1045,17 +978,6 @@ namespace Mutagen.Bethesda.Starfield
                 finally
                 {
                     errorMask?.PopIndex();
-                }
-            }
-            if ((copyMask?.GetShouldTranslate((int)VolumesComponent_FieldIndex.RawItems) ?? true))
-            {
-                if(rhs.RawItems is {} RawItemsrhs)
-                {
-                    item.RawItems = RawItemsrhs.ToArray();
-                }
-                else
-                {
-                    item.RawItems = default;
                 }
             }
             DeepCopyInCustom(
@@ -1174,12 +1096,6 @@ namespace Mutagen.Bethesda.Starfield
     {
         public new static readonly VolumesComponentBinaryWriteTranslation Instance = new();
 
-        public static void WriteEmbedded(
-            IVolumesComponentGetter item,
-            MutagenWriter writer)
-        {
-        }
-
         public static void WriteRecordTypes(
             IVolumesComponentGetter item,
             MutagenWriter writer,
@@ -1212,9 +1128,6 @@ namespace Mutagen.Bethesda.Starfield
             IVolumesComponentGetter item,
             TypedWriteParams translationParams)
         {
-            WriteEmbedded(
-                item: item,
-                writer: writer);
             WriteRecordTypes(
                 item: item,
                 writer: writer,
@@ -1249,12 +1162,6 @@ namespace Mutagen.Bethesda.Starfield
     internal partial class VolumesComponentBinaryCreateTranslation : AComponentBinaryCreateTranslation
     {
         public new static readonly VolumesComponentBinaryCreateTranslation Instance = new VolumesComponentBinaryCreateTranslation();
-
-        public static void FillBinaryStructs(
-            IVolumesComponent item,
-            MutagenFrame frame)
-        {
-        }
 
         public static ParseResult FillBinaryRecordTypes(
             IVolumesComponent item,

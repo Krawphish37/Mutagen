@@ -438,8 +438,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -477,8 +475,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2342,40 +2338,38 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        ObjectBounds = 10,
-        PreviewTransform = 11,
-        Name = 12,
-        ObjectEffect = 13,
-        WorldModel = 14,
-        BipedBodyTemplate = 15,
-        Destructible = 16,
-        PickUpSound = 17,
-        PutDownSound = 18,
-        EquipmentType = 19,
-        BlockBashImpactDataSet = 20,
-        AlternateBlockMaterial = 21,
-        Race = 22,
-        Keywords = 23,
-        Description = 24,
-        InstanceNaming = 25,
-        Armatures = 26,
-        Value = 27,
-        Weight = 28,
-        Health = 29,
-        ArmorRating = 30,
-        BaseAddonIndex = 31,
-        StaggerRating = 32,
-        Unused = 33,
-        Resistances = 34,
-        TemplateArmor = 35,
-        AttachParentSlots = 36,
-        ObjectTemplates = 37,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        ObjectBounds = 8,
+        PreviewTransform = 9,
+        Name = 10,
+        ObjectEffect = 11,
+        WorldModel = 12,
+        BipedBodyTemplate = 13,
+        Destructible = 14,
+        PickUpSound = 15,
+        PutDownSound = 16,
+        EquipmentType = 17,
+        BlockBashImpactDataSet = 18,
+        AlternateBlockMaterial = 19,
+        Race = 20,
+        Keywords = 21,
+        Description = 22,
+        InstanceNaming = 23,
+        Armatures = 24,
+        Value = 25,
+        Weight = 26,
+        Health = 27,
+        ArmorRating = 28,
+        BaseAddonIndex = 29,
+        StaggerRating = 30,
+        Unused = 31,
+        Resistances = 32,
+        TemplateArmor = 33,
+        AttachParentSlots = 34,
+        ObjectTemplates = 35,
     }
     #endregion
 
@@ -2388,7 +2382,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 29;
 
-        public const ushort FieldCount = 38;
+        public const ushort FieldCount = 36;
 
         public static readonly Type MaskType = typeof(Armor.Mask<>);
 
@@ -2963,10 +2957,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Armor_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Armor_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Armor_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Armor_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Armor_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2989,10 +2979,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Armor_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Armor_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Armor_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Armor_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

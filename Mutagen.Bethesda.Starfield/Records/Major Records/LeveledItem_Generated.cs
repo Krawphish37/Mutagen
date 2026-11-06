@@ -326,8 +326,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -357,8 +355,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1947,32 +1943,30 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        ObjectBounds = 10,
-        DirtinessScale = 11,
-        ObjectPaletteDefaults = 12,
-        Components = 13,
-        XALG = 14,
-        ChanceNone = 15,
-        MaxCount = 16,
-        Flags = 17,
-        Conditions = 18,
-        UseChanceNoneGlobal = 19,
-        RequiredBiome = 20,
-        RequiredResourceVein = 21,
-        Entries = 22,
-        FilterKeywordChances = 23,
-        EpicLootChance = 24,
-        MarkerColor = 25,
-        OverrideName = 26,
-        LegendaryItemDefaultListRank = 27,
-        Model = 28,
-        ForcedLocations = 29,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        ObjectBounds = 8,
+        DirtinessScale = 9,
+        ObjectPaletteDefaults = 10,
+        Components = 11,
+        XALG = 12,
+        ChanceNone = 13,
+        MaxCount = 14,
+        Flags = 15,
+        Conditions = 16,
+        UseChanceNoneGlobal = 17,
+        RequiredBiome = 18,
+        RequiredResourceVein = 19,
+        Entries = 20,
+        FilterKeywordChances = 21,
+        EpicLootChance = 22,
+        MarkerColor = 23,
+        OverrideName = 24,
+        LegendaryItemDefaultListRank = 25,
+        Model = 26,
+        ForcedLocations = 27,
     }
     #endregion
 
@@ -1985,7 +1979,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 21;
 
-        public const ushort FieldCount = 30;
+        public const ushort FieldCount = 28;
 
         public static readonly Type MaskType = typeof(LeveledItem.Mask<>);
 
@@ -2500,10 +2494,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (LeveledItem_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (LeveledItem_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (LeveledItem_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (LeveledItem_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (LeveledItem_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2526,10 +2516,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (LeveledItem_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (LeveledItem_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (LeveledItem_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (LeveledItem_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

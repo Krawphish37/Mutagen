@@ -1,6 +1,4 @@
-﻿using Mutagen.Bethesda.Translations.Binary;
-using Noggog;
-using Mutagen.Bethesda.Plugins;
+﻿using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
@@ -171,7 +169,7 @@ partial class PlacedObjectBinaryWriteTranslation
         MutagenWriter writer,
         IPlacedObjectGetter item)
     {
-        TraversalReferenceBinaryWriteTranslation.TraversalsListWriterHelper(writer, item.Traversals, item.NumTraversalFluffBytes, item.TraversalFluff);
+        TraversalReferenceBinaryWriteTranslation.TraversalsListWriterHelper(writer, item.Traversals, item.NumTraversalFluffBytes);
     }
 }
 
@@ -192,9 +190,8 @@ partial class PlacedObjectBinaryCreateTranslation
         {
             len = sub.ContentLength;
         }
-        item.Traversals = TraversalReferenceBinaryCreateTranslation.Parse(frame.SpawnWithLength(len), out var fluffBytes, out var fluff);
+        item.Traversals = TraversalReferenceBinaryCreateTranslation.Parse(frame.SpawnWithLength(len), out var fluffBytes);
         item.NumTraversalFluffBytes = fluffBytes;
-        item.TraversalFluff = fluff;
     }
 }
 
@@ -202,8 +199,6 @@ partial class PlacedObjectBinaryOverlay
 {
     public IReadOnlyList<ITraversalReferenceGetter>? Traversals { get; private set; }
     public uint NumTraversalFluffBytes { get; private set; }
-    public ReadOnlyMemorySlice<byte>? TraversalFluff => _traversalFluff;
-    private byte[]? _traversalFluff;
 
     partial void TraversalsCustomParse(
         OverlayStream stream,
@@ -212,72 +207,7 @@ partial class PlacedObjectBinaryOverlay
         RecordType type,
         PreviousParse lastParsed)
     {
-        Traversals = TraversalReferenceBinaryOverlay.Factory(stream, _package, finalPos, offset, lastParsed, out var fluffBytes, out _traversalFluff);
+        Traversals = TraversalReferenceBinaryOverlay.Factory(stream, _package, finalPos, offset, lastParsed, out var fluffBytes);
         NumTraversalFluffBytes = fluffBytes;
-    }
-}
-
-partial class PlacedObjectBinaryCreateTranslation
-{
-    public static partial ParseResult FillBinaryPlacementParseCustom(
-        MutagenFrame frame,
-        IPlacedObjectInternal item,
-        PreviousParse lastParsed)
-    {
-        frame.ReadSubrecordHeader();
-        item.Position = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(frame);
-        item.Rotation = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(frame);
-        item.HasPlacementData = true;
-        return (int)PlacedObject_FieldIndex.HasPlacementData;
-    }
-}
-
-partial class PlacedObjectBinaryWriteTranslation
-{
-    public static partial void WriteBinaryPlacementParseCustom(
-        MutagenWriter writer,
-        IPlacedObjectGetter item)
-    {
-        if (item.IsDeleted
-            && !item.HasPlacementData
-            && item.Position == default
-            && item.Rotation == default)
-        {
-            return;
-        }
-        using (HeaderExport.Subrecord(writer, RecordTypes.DATA))
-        {
-            P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(writer, item.Position);
-            P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(writer, item.Rotation);
-        }
-    }
-}
-
-partial class PlacedObjectBinaryOverlay
-{
-    private int? _placementLocation;
-
-    public bool HasPlacementData => _placementLocation.HasValue;
-
-    private ReadOnlyMemorySlice<byte> PlacementContent => HeaderTranslation.ExtractSubrecordMemory(
-        _recordData,
-        _placementLocation!.Value,
-        _package.MetaData.Constants);
-
-    public P3Float Position => _placementLocation.HasValue
-        ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(PlacementContent)
-        : default;
-
-    public P3Float Rotation => _placementLocation.HasValue
-        ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(PlacementContent.Slice(12))
-        : default;
-
-    public partial ParseResult PlacementParseCustomParse(
-        OverlayStream stream,
-        int offset,
-        PreviousParse lastParsed)
-    {
-        _placementLocation = stream.Position - offset;
-        return (int)PlacedObject_FieldIndex.HasPlacementData;
     }
 }

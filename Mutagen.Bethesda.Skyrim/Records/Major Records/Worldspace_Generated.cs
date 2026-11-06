@@ -402,8 +402,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -445,8 +443,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -2444,44 +2440,42 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        LargeReferences = 9,
-        MaxHeight = 10,
-        Name = 11,
-        FixedDimensionsCenterCell = 12,
-        InteriorLighting = 13,
-        EncounterZone = 14,
-        Location = 15,
-        Parent = 16,
-        Climate = 17,
-        Water = 18,
-        LodWater = 19,
-        LodWaterHeight = 20,
-        LandDefaults = 21,
-        MapImage = 22,
-        CloudModel = 23,
-        MapData = 24,
-        WorldMapOffsetScale = 25,
-        WorldMapCellOffset = 26,
-        DistantLodMultiplier = 27,
-        Flags = 28,
-        ObjectBoundsMin = 29,
-        ObjectBoundsMax = 30,
-        Music = 31,
-        CanopyShadow = 32,
-        WaterNoiseTexture = 33,
-        HdLodDiffuseTexture = 34,
-        HdLodNormalTexture = 35,
-        WaterEnvironmentMap = 36,
-        OffsetData = 37,
-        TopCell = 38,
-        SubCellsTimestamp = 39,
-        SubCellsUnknown = 40,
-        SubCells = 41,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        LargeReferences = 7,
+        MaxHeight = 8,
+        Name = 9,
+        FixedDimensionsCenterCell = 10,
+        InteriorLighting = 11,
+        EncounterZone = 12,
+        Location = 13,
+        Parent = 14,
+        Climate = 15,
+        Water = 16,
+        LodWater = 17,
+        LodWaterHeight = 18,
+        LandDefaults = 19,
+        MapImage = 20,
+        CloudModel = 21,
+        MapData = 22,
+        WorldMapOffsetScale = 23,
+        WorldMapCellOffset = 24,
+        DistantLodMultiplier = 25,
+        Flags = 26,
+        ObjectBoundsMin = 27,
+        ObjectBoundsMax = 28,
+        Music = 29,
+        CanopyShadow = 30,
+        WaterNoiseTexture = 31,
+        HdLodDiffuseTexture = 32,
+        HdLodNormalTexture = 33,
+        WaterEnvironmentMap = 34,
+        OffsetData = 35,
+        TopCell = 36,
+        SubCellsTimestamp = 37,
+        SubCellsUnknown = 38,
+        SubCells = 39,
     }
     #endregion
 
@@ -2494,7 +2488,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 33;
 
-        public const ushort FieldCount = 42;
+        public const ushort FieldCount = 40;
 
         public static readonly Type MaskType = typeof(Worldspace.Mask<>);
 
@@ -3439,10 +3433,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (Worldspace_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (Worldspace_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Worldspace_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Worldspace_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (Worldspace_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -3465,10 +3455,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Worldspace_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Worldspace_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Worldspace_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Worldspace_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

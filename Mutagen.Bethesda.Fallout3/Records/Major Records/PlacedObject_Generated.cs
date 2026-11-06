@@ -585,8 +585,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -646,8 +644,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -3265,62 +3261,60 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        RCLR = 9,
-        Base = 10,
-        EncounterZone = 11,
-        RagdollData = 12,
-        RagdollBipedRotation = 13,
-        Primitive = 14,
-        CollisionLayer = 15,
-        IsMultiBoundPrimitive = 16,
-        BoundHalfExtents = 17,
-        TeleportDestination = 18,
-        MapMarker = 19,
-        AudioData = 20,
-        SpecialRenderingFlags = 21,
-        SpecialRenderingData = 22,
-        Target = 23,
-        LevelModifier = 24,
-        Patrol = 25,
-        RadioData = 26,
-        Ownership = 27,
-        Lock = 28,
-        Count = 29,
-        Radius = 30,
-        Health = 31,
-        Radiation = 32,
-        Charge = 33,
-        AmmoType = 34,
-        AmmoCount = 35,
-        Reflections = 36,
-        LitWater = 37,
-        LinkedDecals = 38,
-        LinkedReference = 39,
-        LinkedReferenceColor = 40,
-        ActivateParents = 41,
-        ActivationPrompt = 42,
-        EnableParent = 43,
-        Emittance = 44,
-        MultiBoundReference = 45,
-        ActionFlag = 46,
-        IsOpenByDefault = 47,
-        IsIgnoredBySandbox = 48,
-        NavigationDoorLink = 49,
-        Portals = 50,
-        PortalRoom = 51,
-        SpeedTreeSeed = 52,
-        Unknown = 53,
-        LinkedRooms = 54,
-        OcclusionPlane = 55,
-        LinkedOcclusionPlanes = 56,
-        DistantLodData = 57,
-        Scale = 58,
-        Placement = 59,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        RCLR = 7,
+        Base = 8,
+        EncounterZone = 9,
+        RagdollData = 10,
+        RagdollBipedRotation = 11,
+        Primitive = 12,
+        CollisionLayer = 13,
+        IsMultiBoundPrimitive = 14,
+        BoundHalfExtents = 15,
+        TeleportDestination = 16,
+        MapMarker = 17,
+        AudioData = 18,
+        SpecialRenderingFlags = 19,
+        SpecialRenderingData = 20,
+        Target = 21,
+        LevelModifier = 22,
+        Patrol = 23,
+        RadioData = 24,
+        Ownership = 25,
+        Lock = 26,
+        Count = 27,
+        Radius = 28,
+        Health = 29,
+        Radiation = 30,
+        Charge = 31,
+        AmmoType = 32,
+        AmmoCount = 33,
+        Reflections = 34,
+        LitWater = 35,
+        LinkedDecals = 36,
+        LinkedReference = 37,
+        LinkedReferenceColor = 38,
+        ActivateParents = 39,
+        ActivationPrompt = 40,
+        EnableParent = 41,
+        Emittance = 42,
+        MultiBoundReference = 43,
+        ActionFlag = 44,
+        IsOpenByDefault = 45,
+        IsIgnoredBySandbox = 46,
+        NavigationDoorLink = 47,
+        Portals = 48,
+        PortalRoom = 49,
+        SpeedTreeSeed = 50,
+        Unknown = 51,
+        LinkedRooms = 52,
+        OcclusionPlane = 53,
+        LinkedOcclusionPlanes = 54,
+        DistantLodData = 55,
+        Scale = 56,
+        Placement = 57,
     }
     #endregion
 
@@ -3333,7 +3327,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 51;
 
-        public const ushort FieldCount = 60;
+        public const ushort FieldCount = 58;
 
         public static readonly Type MaskType = typeof(PlacedObject.Mask<>);
 
@@ -4133,10 +4127,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (PlacedObject_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (PlacedObject_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (PlacedObject_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (PlacedObject_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (PlacedObject_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -4159,10 +4149,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PlacedObject_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (PlacedObject_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (PlacedObject_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedObject_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

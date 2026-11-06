@@ -92,16 +92,12 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
                 VersionControl: VersionControl,
-                EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource)
+                EditorID: EditorID)
             {
                 this.OblivionMajorRecordFlags = OblivionMajorRecordFlags;
             }
@@ -907,9 +903,7 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        OblivionMajorRecordFlags = 6,
+        OblivionMajorRecordFlags = 4,
     }
     #endregion
 
@@ -922,7 +916,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 7;
+        public const ushort FieldCount = 5;
 
         public static readonly Type MaskType = typeof(OblivionMajorRecord.Mask<>);
 
@@ -1227,10 +1221,6 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (OblivionMajorRecord_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (OblivionMajorRecord_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (OblivionMajorRecord_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (OblivionMajorRecord_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

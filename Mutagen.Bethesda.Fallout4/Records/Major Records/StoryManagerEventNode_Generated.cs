@@ -104,8 +104,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -120,8 +118,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags,
@@ -753,17 +749,15 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        Parent = 9,
-        PreviousSibling = 10,
-        Conditions = 11,
-        Flags = 12,
-        MaxConcurrentQuests = 13,
-        Type = 14,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        Parent = 7,
+        PreviousSibling = 8,
+        Conditions = 9,
+        Flags = 10,
+        MaxConcurrentQuests = 11,
+        Type = 12,
     }
     #endregion
 
@@ -776,7 +770,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 3;
 
-        public const ushort FieldCount = 15;
+        public const ushort FieldCount = 13;
 
         public static readonly Type MaskType = typeof(StoryManagerEventNode.Mask<>);
 
@@ -1083,10 +1077,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (StoryManagerEventNode_FieldIndex)((int)index);
                 case AStoryManagerNode_FieldIndex.EditorID:
                     return (StoryManagerEventNode_FieldIndex)((int)index);
-                case AStoryManagerNode_FieldIndex.UnknownSubrecords:
-                    return (StoryManagerEventNode_FieldIndex)((int)index);
-                case AStoryManagerNode_FieldIndex.UnknownSubrecordsSource:
-                    return (StoryManagerEventNode_FieldIndex)((int)index);
                 case AStoryManagerNode_FieldIndex.FormVersion:
                     return (StoryManagerEventNode_FieldIndex)((int)index);
                 case AStoryManagerNode_FieldIndex.Version2:
@@ -1116,10 +1106,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (StoryManagerEventNode_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (StoryManagerEventNode_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (StoryManagerEventNode_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (StoryManagerEventNode_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (StoryManagerEventNode_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1142,10 +1128,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (StoryManagerEventNode_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (StoryManagerEventNode_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (StoryManagerEventNode_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (StoryManagerEventNode_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

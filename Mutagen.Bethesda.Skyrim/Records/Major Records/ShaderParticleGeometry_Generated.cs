@@ -168,8 +168,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -192,8 +190,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1163,25 +1159,23 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        GravityVelocity = 9,
-        RotationVelocity = 10,
-        ParticleSizeX = 11,
-        ParticleSizeY = 12,
-        CenterOffsetMin = 13,
-        CenterOffsetMax = 14,
-        InitialRotationRange = 15,
-        NumSubtexturesX = 16,
-        NumSubtexturesY = 17,
-        Type = 18,
-        BoxSize = 19,
-        ParticleDensity = 20,
-        ParticleTexture = 21,
-        DATADataTypeState = 22,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        GravityVelocity = 7,
+        RotationVelocity = 8,
+        ParticleSizeX = 9,
+        ParticleSizeY = 10,
+        CenterOffsetMin = 11,
+        CenterOffsetMax = 12,
+        InitialRotationRange = 13,
+        NumSubtexturesX = 14,
+        NumSubtexturesY = 15,
+        Type = 16,
+        BoxSize = 17,
+        ParticleDensity = 18,
+        ParticleTexture = 19,
+        DATADataTypeState = 20,
     }
     #endregion
 
@@ -1194,7 +1188,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 14;
 
-        public const ushort FieldCount = 23;
+        public const ushort FieldCount = 21;
 
         public static readonly Type MaskType = typeof(ShaderParticleGeometry.Mask<>);
 
@@ -1531,10 +1525,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ShaderParticleGeometry_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (ShaderParticleGeometry_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1557,10 +1547,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (ShaderParticleGeometry_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ShaderParticleGeometry_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

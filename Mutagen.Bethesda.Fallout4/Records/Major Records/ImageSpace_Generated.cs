@@ -206,8 +206,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -240,8 +238,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1505,35 +1501,33 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        HdrEyeAdaptSpeed = 9,
-        HdrTonemapE = 10,
-        HdrBloomThreshold = 11,
-        HdrBloomScale = 12,
-        HdrAutoExposureMax = 13,
-        HdrAutoExposureMin = 14,
-        HdrSunlightScale = 15,
-        HdrSkyScale = 16,
-        HdrMiddleGray = 17,
-        CinematicSaturation = 18,
-        CinematicBrightness = 19,
-        CinematicContrast = 20,
-        TintAmount = 21,
-        TintColor = 22,
-        DepthOfFieldStrength = 23,
-        DepthOfFieldDistance = 24,
-        DepthOfFieldRange = 25,
-        DepthOfFieldUnused = 26,
-        DepthOfFieldBlurRadius = 27,
-        DepthOfFieldSky = 28,
-        DepthOfFieldVignetteRadius = 29,
-        DepthOfFieldVignetteStrength = 30,
-        Lut = 31,
-        DNAMDataTypeState = 32,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        HdrEyeAdaptSpeed = 7,
+        HdrTonemapE = 8,
+        HdrBloomThreshold = 9,
+        HdrBloomScale = 10,
+        HdrAutoExposureMax = 11,
+        HdrAutoExposureMin = 12,
+        HdrSunlightScale = 13,
+        HdrSkyScale = 14,
+        HdrMiddleGray = 15,
+        CinematicSaturation = 16,
+        CinematicBrightness = 17,
+        CinematicContrast = 18,
+        TintAmount = 19,
+        TintColor = 20,
+        DepthOfFieldStrength = 21,
+        DepthOfFieldDistance = 22,
+        DepthOfFieldRange = 23,
+        DepthOfFieldUnused = 24,
+        DepthOfFieldBlurRadius = 25,
+        DepthOfFieldSky = 26,
+        DepthOfFieldVignetteRadius = 27,
+        DepthOfFieldVignetteStrength = 28,
+        Lut = 29,
+        DNAMDataTypeState = 30,
     }
     #endregion
 
@@ -1546,7 +1540,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 24;
 
-        public const ushort FieldCount = 33;
+        public const ushort FieldCount = 31;
 
         public static readonly Type MaskType = typeof(ImageSpace.Mask<>);
 
@@ -1921,10 +1915,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (ImageSpace_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (ImageSpace_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ImageSpace_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (ImageSpace_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (ImageSpace_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1947,10 +1937,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ImageSpace_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (ImageSpace_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ImageSpace_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ImageSpace_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

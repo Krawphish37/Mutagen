@@ -979,8 +979,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -1053,8 +1051,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -7223,75 +7219,73 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        Animatable = 9,
-        Duration = 10,
-        RadialBlurUseTarget = 11,
-        RadialBlurCenter = 12,
-        DepthOfFieldFlags = 13,
-        Unknown = 14,
-        BlurRadius = 15,
-        DoubleVisionStrength = 16,
-        TintColor = 17,
-        FadeColor = 18,
-        RadialBlurStrength = 19,
-        RadialBlurRampUp = 20,
-        RadialBlurStart = 21,
-        RadialBlurRampDown = 22,
-        RadialBlurDownStart = 23,
-        DepthOfFieldStrength = 24,
-        DepthOfFieldDistance = 25,
-        DepthOfFieldRange = 26,
-        DepthOfFieldVignetteRadius = 27,
-        DepthOfFieldVignetteStrength = 28,
-        MotionBlurStrength = 29,
-        HdrEyeAdaptSpeedMult = 30,
-        HdrEyeAdaptSpeedAdd = 31,
-        HdrBloomBlurRadiusMult = 32,
-        HdrBloomBlurRadiusAdd = 33,
-        HdrBloomThresholdMult = 34,
-        HdrBloomThresholdAdd = 35,
-        HdrBloomScaleMult = 36,
-        HdrBloomScaleAdd = 37,
-        HdrTargetLumMinMult = 38,
-        HdrTargetLumMinAdd = 39,
-        HdrTargetLumMaxMult = 40,
-        HdrTargetLumMaxAdd = 41,
-        HdrSunlightScaleMult = 42,
-        HdrSunlightScaleAdd = 43,
-        HdrSkyScaleMult = 44,
-        HdrSkyScaleAdd = 45,
-        Unknown08 = 46,
-        Unknown48 = 47,
-        Unknown09 = 48,
-        Unknown49 = 49,
-        Unknown0A = 50,
-        Unknown4A = 51,
-        Unknown0B = 52,
-        Unknown4B = 53,
-        Unknown0C = 54,
-        Unknown4C = 55,
-        Unknown0D = 56,
-        Unknown4D = 57,
-        Unknown0E = 58,
-        Unknown4E = 59,
-        Unknown0F = 60,
-        Unknown4F = 61,
-        Unknown10 = 62,
-        Unknown50 = 63,
-        CinematicSaturationMult = 64,
-        CinematicSaturationAdd = 65,
-        CinematicBrightnessMult = 66,
-        CinematicBrightnessAdd = 67,
-        CinematicContrastMult = 68,
-        CinematicContrastAdd = 69,
-        Unknown14 = 70,
-        Unknown54 = 71,
-        DNAMDataTypeState = 72,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        Animatable = 7,
+        Duration = 8,
+        RadialBlurUseTarget = 9,
+        RadialBlurCenter = 10,
+        DepthOfFieldFlags = 11,
+        Unknown = 12,
+        BlurRadius = 13,
+        DoubleVisionStrength = 14,
+        TintColor = 15,
+        FadeColor = 16,
+        RadialBlurStrength = 17,
+        RadialBlurRampUp = 18,
+        RadialBlurStart = 19,
+        RadialBlurRampDown = 20,
+        RadialBlurDownStart = 21,
+        DepthOfFieldStrength = 22,
+        DepthOfFieldDistance = 23,
+        DepthOfFieldRange = 24,
+        DepthOfFieldVignetteRadius = 25,
+        DepthOfFieldVignetteStrength = 26,
+        MotionBlurStrength = 27,
+        HdrEyeAdaptSpeedMult = 28,
+        HdrEyeAdaptSpeedAdd = 29,
+        HdrBloomBlurRadiusMult = 30,
+        HdrBloomBlurRadiusAdd = 31,
+        HdrBloomThresholdMult = 32,
+        HdrBloomThresholdAdd = 33,
+        HdrBloomScaleMult = 34,
+        HdrBloomScaleAdd = 35,
+        HdrTargetLumMinMult = 36,
+        HdrTargetLumMinAdd = 37,
+        HdrTargetLumMaxMult = 38,
+        HdrTargetLumMaxAdd = 39,
+        HdrSunlightScaleMult = 40,
+        HdrSunlightScaleAdd = 41,
+        HdrSkyScaleMult = 42,
+        HdrSkyScaleAdd = 43,
+        Unknown08 = 44,
+        Unknown48 = 45,
+        Unknown09 = 46,
+        Unknown49 = 47,
+        Unknown0A = 48,
+        Unknown4A = 49,
+        Unknown0B = 50,
+        Unknown4B = 51,
+        Unknown0C = 52,
+        Unknown4C = 53,
+        Unknown0D = 54,
+        Unknown4D = 55,
+        Unknown0E = 56,
+        Unknown4E = 57,
+        Unknown0F = 58,
+        Unknown4F = 59,
+        Unknown10 = 60,
+        Unknown50 = 61,
+        CinematicSaturationMult = 62,
+        CinematicSaturationAdd = 63,
+        CinematicBrightnessMult = 64,
+        CinematicBrightnessAdd = 65,
+        CinematicContrastMult = 66,
+        CinematicContrastAdd = 67,
+        Unknown14 = 68,
+        Unknown54 = 69,
+        DNAMDataTypeState = 70,
     }
     #endregion
 
@@ -7304,7 +7298,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 64;
 
-        public const ushort FieldCount = 73;
+        public const ushort FieldCount = 71;
 
         public static readonly Type MaskType = typeof(ImageSpaceAdapter.Mask<>);
 
@@ -8768,10 +8762,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ImageSpaceAdapter_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (ImageSpaceAdapter_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -8794,10 +8784,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (ImageSpaceAdapter_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ImageSpaceAdapter_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

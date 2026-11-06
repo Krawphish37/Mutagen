@@ -165,8 +165,6 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem Name,
                 TItem Description,
@@ -179,8 +177,6 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.Name = Name;
@@ -989,15 +985,13 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        OblivionMajorRecordFlags = 6,
-        Name = 7,
-        Description = 8,
-        Icon = 9,
-        Model = 10,
-        Data = 11,
-        CounterEffects = 12,
+        OblivionMajorRecordFlags = 4,
+        Name = 5,
+        Description = 6,
+        Icon = 7,
+        Model = 8,
+        Data = 9,
+        CounterEffects = 10,
     }
     #endregion
 
@@ -1010,7 +1004,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 6;
 
-        public const ushort FieldCount = 13;
+        public const ushort FieldCount = 11;
 
         public static readonly Type MaskType = typeof(MagicEffect.Mask<>);
 
@@ -1304,10 +1298,6 @@ namespace Mutagen.Bethesda.Oblivion
                     return (MagicEffect_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (MagicEffect_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (MagicEffect_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (MagicEffect_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (MagicEffect_FieldIndex)((int)index);
                 default:
@@ -1326,10 +1316,6 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (MagicEffect_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (MagicEffect_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (MagicEffect_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (MagicEffect_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

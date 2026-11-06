@@ -1525,8 +1525,6 @@ public class MultiModOverlayModule : GenerationModule
         sb.AppendLine($"public string? EditorID => _primary.EditorID;");
         sb.AppendLine($"public int MajorRecordFlagsRaw => _primary.MajorRecordFlagsRaw;");
         sb.AppendLine($"public uint VersionControl => _primary.VersionControl;");
-        sb.AppendLine($"public ReadOnlyMemorySlice<byte>? UnknownSubrecords => _primary.UnknownSubrecords;");
-        sb.AppendLine($"public string? UnknownSubrecordsSource => _primary.UnknownSubrecordsSource;");
         if (hasFormVersion)
         {
             sb.AppendLine($"ushort I{gameName}MajorRecordGetter.FormVersion => _primary.FormVersion;");

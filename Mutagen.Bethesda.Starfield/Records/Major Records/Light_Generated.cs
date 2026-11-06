@@ -467,8 +467,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -521,8 +519,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2734,55 +2730,53 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        ObjectBounds = 10,
-        DirtinessScale = 11,
-        ObjectPaletteDefaults = 12,
-        Transforms = 13,
-        DefaultLayer = 14,
-        XALG = 15,
-        Components = 16,
-        Model = 17,
-        Destructible = 18,
-        Keywords = 19,
-        Properties = 20,
-        Name = 21,
-        Time = 22,
-        Radius = 23,
-        Color = 24,
-        Flags = 25,
-        FalloffExponent = 26,
-        FOV = 27,
-        NearClip = 28,
-        FlickerPeriod = 29,
-        FlickerIntensityAmplitude = 30,
-        FlickerMovementAmplitude = 31,
-        ShadowOffset = 32,
-        InnerFOV = 33,
-        PbrLightTemperatureK = 34,
-        PbrLuminousPowerLm = 35,
-        Type = 36,
-        FlickerEffect = 37,
-        UseAdaptiveLighting = 38,
-        UseAdaptiveLightingUnused = 39,
-        AdaptiveLightEc = 40,
-        AdaptiveLightEv100Min = 41,
-        AdaptiveLightEv100Max = 42,
-        RadiusFalloutExponent = 43,
-        Gobo = 44,
-        SoundReference = 45,
-        Lens = 46,
-        Barndoors = 47,
-        Roundness = 48,
-        GoboData = 49,
-        Layer = 50,
-        AreaLight = 51,
-        VolumetricLightIntensityScale = 52,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        ObjectBounds = 8,
+        DirtinessScale = 9,
+        ObjectPaletteDefaults = 10,
+        Transforms = 11,
+        DefaultLayer = 12,
+        XALG = 13,
+        Components = 14,
+        Model = 15,
+        Destructible = 16,
+        Keywords = 17,
+        Properties = 18,
+        Name = 19,
+        Time = 20,
+        Radius = 21,
+        Color = 22,
+        Flags = 23,
+        FalloffExponent = 24,
+        FOV = 25,
+        NearClip = 26,
+        FlickerPeriod = 27,
+        FlickerIntensityAmplitude = 28,
+        FlickerMovementAmplitude = 29,
+        ShadowOffset = 30,
+        InnerFOV = 31,
+        PbrLightTemperatureK = 32,
+        PbrLuminousPowerLm = 33,
+        Type = 34,
+        FlickerEffect = 35,
+        UseAdaptiveLighting = 36,
+        UseAdaptiveLightingUnused = 37,
+        AdaptiveLightEc = 38,
+        AdaptiveLightEv100Min = 39,
+        AdaptiveLightEv100Max = 40,
+        RadiusFalloutExponent = 41,
+        Gobo = 42,
+        SoundReference = 43,
+        Lens = 44,
+        Barndoors = 45,
+        Roundness = 46,
+        GoboData = 47,
+        Layer = 48,
+        AreaLight = 49,
+        VolumetricLightIntensityScale = 50,
     }
     #endregion
 
@@ -2795,7 +2789,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 44;
 
-        public const ushort FieldCount = 53;
+        public const ushort FieldCount = 51;
 
         public static readonly Type MaskType = typeof(Light.Mask<>);
 
@@ -3443,10 +3437,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (Light_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Light_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Light_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Light_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Light_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -3469,10 +3459,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Light_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Light_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Light_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Light_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

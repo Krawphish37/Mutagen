@@ -99,8 +99,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -131,8 +129,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags,
@@ -732,33 +728,31 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        Components = 10,
-        Emittance = 11,
-        RagdollData = 12,
-        ReferenceGroup = 13,
-        SourcePackIn = 14,
-        IgnoredBySandbox = 15,
-        OwnerFactionRank = 16,
-        LinkedReferences = 17,
-        IsLinkedRefTransient = 18,
-        Ownership = 19,
-        EncounterLocation = 20,
-        Layer = 21,
-        HeadTrackingWeight = 22,
-        LocationRefTypes = 23,
-        EnableParent = 24,
-        ActivationPoint = 25,
-        Scale = 26,
-        Position = 27,
-        Rotation = 28,
-        Comments = 29,
-        Projectile = 30,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        Components = 8,
+        Emittance = 9,
+        RagdollData = 10,
+        ReferenceGroup = 11,
+        SourcePackIn = 12,
+        IgnoredBySandbox = 13,
+        OwnerFactionRank = 14,
+        LinkedReferences = 15,
+        IsLinkedRefTransient = 16,
+        Ownership = 17,
+        EncounterLocation = 18,
+        Layer = 19,
+        HeadTrackingWeight = 20,
+        LocationRefTypes = 21,
+        EnableParent = 22,
+        ActivationPoint = 23,
+        Scale = 24,
+        Position = 25,
+        Rotation = 26,
+        Comments = 27,
+        Projectile = 28,
     }
     #endregion
 
@@ -771,7 +765,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 31;
+        public const ushort FieldCount = 29;
 
         public static readonly Type MaskType = typeof(PlacedFlame.Mask<>);
 
@@ -1014,10 +1008,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (PlacedFlame_FieldIndex)((int)index);
                 case APlacedTrap_FieldIndex.EditorID:
                     return (PlacedFlame_FieldIndex)((int)index);
-                case APlacedTrap_FieldIndex.UnknownSubrecords:
-                    return (PlacedFlame_FieldIndex)((int)index);
-                case APlacedTrap_FieldIndex.UnknownSubrecordsSource:
-                    return (PlacedFlame_FieldIndex)((int)index);
                 case APlacedTrap_FieldIndex.FormVersion:
                     return (PlacedFlame_FieldIndex)((int)index);
                 case APlacedTrap_FieldIndex.Version2:
@@ -1083,10 +1073,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (PlacedFlame_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (PlacedFlame_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (PlacedFlame_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (PlacedFlame_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (PlacedFlame_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1109,10 +1095,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PlacedFlame_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (PlacedFlame_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (PlacedFlame_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedFlame_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

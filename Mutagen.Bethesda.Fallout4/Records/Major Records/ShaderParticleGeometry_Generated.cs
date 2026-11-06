@@ -188,8 +188,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -223,8 +221,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1513,36 +1509,34 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        GravityVelocity = 9,
-        Unknown1 = 10,
-        RotationVelocity = 11,
-        Unknown2 = 12,
-        ParticleSizeX = 13,
-        Unknown3 = 14,
-        ParticleSizeY = 15,
-        Unknown4 = 16,
-        CenterOffsetMin = 17,
-        Unknown5 = 18,
-        CenterOffsetMax = 19,
-        Unknown6 = 20,
-        InitialRotation = 21,
-        Unknown7 = 22,
-        NumSubtexturesX = 23,
-        Unknown8 = 24,
-        NumSubtexturesY = 25,
-        Unknown9 = 26,
-        Type = 27,
-        Unknown10 = 28,
-        BoxSize = 29,
-        Unknown11 = 30,
-        ParticleDensity = 31,
-        Unknown12 = 32,
-        ParticleTexture = 33,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        GravityVelocity = 7,
+        Unknown1 = 8,
+        RotationVelocity = 9,
+        Unknown2 = 10,
+        ParticleSizeX = 11,
+        Unknown3 = 12,
+        ParticleSizeY = 13,
+        Unknown4 = 14,
+        CenterOffsetMin = 15,
+        Unknown5 = 16,
+        CenterOffsetMax = 17,
+        Unknown6 = 18,
+        InitialRotation = 19,
+        Unknown7 = 20,
+        NumSubtexturesX = 21,
+        Unknown8 = 22,
+        NumSubtexturesY = 23,
+        Unknown9 = 24,
+        Type = 25,
+        Unknown10 = 26,
+        BoxSize = 27,
+        Unknown11 = 28,
+        ParticleDensity = 29,
+        Unknown12 = 30,
+        ParticleTexture = 31,
     }
     #endregion
 
@@ -1555,7 +1549,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 25;
 
-        public const ushort FieldCount = 34;
+        public const ushort FieldCount = 32;
 
         public static readonly Type MaskType = typeof(ShaderParticleGeometry.Mask<>);
 
@@ -1932,10 +1926,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ShaderParticleGeometry_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (ShaderParticleGeometry_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1958,10 +1948,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (ShaderParticleGeometry_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ShaderParticleGeometry_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

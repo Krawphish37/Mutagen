@@ -245,8 +245,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -271,8 +269,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1353,27 +1349,25 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        ObjectBounds = 10,
-        DirtinessScale = 11,
-        ObjectPaletteDefaults = 12,
-        LoopingSound = 13,
-        InteriorSound = 14,
-        ExteriorSound = 15,
-        AmbientSet = 16,
-        MusicType = 17,
-        EnvironmentType = 18,
-        ExteriorWeatherAttenuation = 19,
-        InteriorExteriorRatio = 20,
-        IsInterior = 21,
-        AllowExterior = 22,
-        SoundDetectionLevel = 23,
-        DisableFlags = 24,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        ObjectBounds = 8,
+        DirtinessScale = 9,
+        ObjectPaletteDefaults = 10,
+        LoopingSound = 11,
+        InteriorSound = 12,
+        ExteriorSound = 13,
+        AmbientSet = 14,
+        MusicType = 15,
+        EnvironmentType = 16,
+        ExteriorWeatherAttenuation = 17,
+        InteriorExteriorRatio = 18,
+        IsInterior = 19,
+        AllowExterior = 20,
+        SoundDetectionLevel = 21,
+        DisableFlags = 22,
     }
     #endregion
 
@@ -1386,7 +1380,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 16;
 
-        public const ushort FieldCount = 25;
+        public const ushort FieldCount = 23;
 
         public static readonly Type MaskType = typeof(AcousticSpace.Mask<>);
 
@@ -1758,10 +1752,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (AcousticSpace_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (AcousticSpace_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (AcousticSpace_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (AcousticSpace_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (AcousticSpace_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1784,10 +1774,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (AcousticSpace_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (AcousticSpace_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (AcousticSpace_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (AcousticSpace_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

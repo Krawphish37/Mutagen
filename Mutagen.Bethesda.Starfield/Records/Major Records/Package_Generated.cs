@@ -328,8 +328,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -367,8 +365,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2123,40 +2119,38 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        Components = 10,
-        Flags = 11,
-        Type = 12,
-        InterruptOverride = 13,
-        PreferredSpeed = 14,
-        Unknown = 15,
-        InterruptFlags = 16,
-        Unknown2 = 17,
-        ScheduleMonth = 18,
-        ScheduleDayOfWeek = 19,
-        ScheduleDate = 20,
-        ScheduleHour = 21,
-        ScheduleMinute = 22,
-        Unknown3 = 23,
-        ScheduleDurationInMinutes = 24,
-        Conditions = 25,
-        IdleAnimations = 26,
-        CombatStyle = 27,
-        OwnerQuest = 28,
-        AnimationFlavor = 29,
-        PackageTemplate = 30,
-        DataInputVersion = 31,
-        Data = 32,
-        PackageGroup = 33,
-        ProcedureTree = 34,
-        OnBegin = 35,
-        OnEnd = 36,
-        OnChange = 37,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        Components = 8,
+        Flags = 9,
+        Type = 10,
+        InterruptOverride = 11,
+        PreferredSpeed = 12,
+        Unknown = 13,
+        InterruptFlags = 14,
+        Unknown2 = 15,
+        ScheduleMonth = 16,
+        ScheduleDayOfWeek = 17,
+        ScheduleDate = 18,
+        ScheduleHour = 19,
+        ScheduleMinute = 20,
+        Unknown3 = 21,
+        ScheduleDurationInMinutes = 22,
+        Conditions = 23,
+        IdleAnimations = 24,
+        CombatStyle = 25,
+        OwnerQuest = 26,
+        AnimationFlavor = 27,
+        PackageTemplate = 28,
+        DataInputVersion = 29,
+        Data = 30,
+        PackageGroup = 31,
+        ProcedureTree = 32,
+        OnBegin = 33,
+        OnEnd = 34,
+        OnChange = 35,
     }
     #endregion
 
@@ -2169,7 +2163,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 29;
 
-        public const ushort FieldCount = 38;
+        public const ushort FieldCount = 36;
 
         public static readonly Type MaskType = typeof(Package.Mask<>);
 
@@ -2710,10 +2704,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (Package_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Package_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Package_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Package_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Package_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2736,10 +2726,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Package_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Package_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Package_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Package_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

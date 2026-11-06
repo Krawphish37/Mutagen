@@ -43,11 +43,12 @@
       <RefDirect name="EnableParent" refName="EnableParent" />
       <Bool name="IsActivationPoint" boolAsMarker="XATP" />
       <Float name="Scale" recordType="XSCL" />
-      <CustomLogic name="PlacementParse" recordType="DATA" />
-      <P3Float name="Position" binary="NoGeneration" />
-      <P3Float name="Rotation" binary="NoGeneration" />
-      <!-- False on a reference read with no DATA. A deleted one then stays without it. -->
-      <Bool name="HasPlacementData" binary="NoGeneration" />
+      <Data>
+        <Fields>
+          <P3Float name="Position" />
+          <P3Float name="Rotation" />
+        </Fields>
+      </Data>
       <String name="Comments" recordType="MNAM" />
     </Fields>
     <LinkInterface>IPlaced</LinkInterface>

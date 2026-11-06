@@ -215,8 +215,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -232,8 +230,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1054,18 +1050,16 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Name = 10,
-        Model = 11,
-        Icons = 12,
-        PickUpSound = 13,
-        DropSound = 14,
-        AbsoluteValue = 15,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Name = 8,
+        Model = 9,
+        Icons = 10,
+        PickUpSound = 11,
+        DropSound = 12,
+        AbsoluteValue = 13,
     }
     #endregion
 
@@ -1078,7 +1072,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 7;
 
-        public const ushort FieldCount = 16;
+        public const ushort FieldCount = 14;
 
         public static readonly Type MaskType = typeof(CaravanMoney.Mask<>);
 
@@ -1396,10 +1390,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (CaravanMoney_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (CaravanMoney_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (CaravanMoney_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (CaravanMoney_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (CaravanMoney_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -1422,10 +1412,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (CaravanMoney_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (CaravanMoney_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (CaravanMoney_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (CaravanMoney_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

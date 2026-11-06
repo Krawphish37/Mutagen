@@ -136,8 +136,8 @@ public class AbsentValueWriteTests
     public void ObjectModification_DeletedNoData_Writes()
     {
         var bytes = Deleted(Record("OMOD", EditorId("TestOmod")));
-        // Starfield deleted records keep their content
-        var expected = bytes;
+        // Deleted records are written as their header only
+        var expected = Deleted(Record("OMOD"));
         foreach (var omod in ReadObjectModification(bytes))
         {
             Write(w => omod.WriteToBinary(w)).ShouldBe(expected);

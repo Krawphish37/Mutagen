@@ -812,17 +812,6 @@ namespace Mutagen.Bethesda.Starfield
         #region NumTraversalFluffBytes
         public UInt32 NumTraversalFluffBytes { get; set; } = default(UInt32);
         #endregion
-        #region TraversalFluff
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _TraversalFluff;
-        public MemorySlice<Byte>? TraversalFluff
-        {
-            get => this._TraversalFluff;
-            set => this._TraversalFluff = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IPlacedObjectGetter.TraversalFluff => this.TraversalFluff;
-        #endregion
         #region NavigationDoorLink
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private NavigationDoorLink? _NavigationDoorLink;
@@ -850,9 +839,6 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region Rotation
         public P3Float Rotation { get; set; } = default(P3Float);
-        #endregion
-        #region HasPlacementData
-        public Boolean HasPlacementData { get; set; } = default(Boolean);
         #endregion
         #region Comments
         public String? Comments { get; set; }
@@ -962,14 +948,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.EnableParent = new MaskItem<TItem, EnableParent.Mask<TItem>?>(initialValue, new EnableParent.Mask<TItem>(initialValue));
                 this.Traversals = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, TraversalReference.Mask<TItem>?>>?>(initialValue, []);
                 this.NumTraversalFluffBytes = initialValue;
-                this.TraversalFluff = initialValue;
                 this.NavigationDoorLink = new MaskItem<TItem, NavigationDoorLink.Mask<TItem>?>(initialValue, new NavigationDoorLink.Mask<TItem>(initialValue));
                 this.IsActivationPoint = initialValue;
                 this.Scale = initialValue;
                 this.OpenByDefault = initialValue;
                 this.Position = initialValue;
                 this.Rotation = initialValue;
-                this.HasPlacementData = initialValue;
                 this.Comments = initialValue;
             }
 
@@ -978,8 +962,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -1061,22 +1043,18 @@ namespace Mutagen.Bethesda.Starfield
                 TItem EnableParent,
                 TItem Traversals,
                 TItem NumTraversalFluffBytes,
-                TItem TraversalFluff,
                 TItem NavigationDoorLink,
                 TItem IsActivationPoint,
                 TItem Scale,
                 TItem OpenByDefault,
                 TItem Position,
                 TItem Rotation,
-                TItem HasPlacementData,
                 TItem Comments)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1159,14 +1137,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.EnableParent = new MaskItem<TItem, EnableParent.Mask<TItem>?>(EnableParent, new EnableParent.Mask<TItem>(EnableParent));
                 this.Traversals = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, TraversalReference.Mask<TItem>?>>?>(Traversals, []);
                 this.NumTraversalFluffBytes = NumTraversalFluffBytes;
-                this.TraversalFluff = TraversalFluff;
                 this.NavigationDoorLink = new MaskItem<TItem, NavigationDoorLink.Mask<TItem>?>(NavigationDoorLink, new NavigationDoorLink.Mask<TItem>(NavigationDoorLink));
                 this.IsActivationPoint = IsActivationPoint;
                 this.Scale = Scale;
                 this.OpenByDefault = OpenByDefault;
                 this.Position = Position;
                 this.Rotation = Rotation;
-                this.HasPlacementData = HasPlacementData;
                 this.Comments = Comments;
             }
 
@@ -1257,14 +1233,12 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, EnableParent.Mask<TItem>?>? EnableParent { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, TraversalReference.Mask<TItem>?>>?>? Traversals;
             public TItem NumTraversalFluffBytes;
-            public TItem TraversalFluff;
             public MaskItem<TItem, NavigationDoorLink.Mask<TItem>?>? NavigationDoorLink { get; set; }
             public TItem IsActivationPoint;
             public TItem Scale;
             public TItem OpenByDefault;
             public TItem Position;
             public TItem Rotation;
-            public TItem HasPlacementData;
             public TItem Comments;
             #endregion
 
@@ -1357,14 +1331,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.EnableParent, rhs.EnableParent)) return false;
                 if (!object.Equals(this.Traversals, rhs.Traversals)) return false;
                 if (!object.Equals(this.NumTraversalFluffBytes, rhs.NumTraversalFluffBytes)) return false;
-                if (!object.Equals(this.TraversalFluff, rhs.TraversalFluff)) return false;
                 if (!object.Equals(this.NavigationDoorLink, rhs.NavigationDoorLink)) return false;
                 if (!object.Equals(this.IsActivationPoint, rhs.IsActivationPoint)) return false;
                 if (!object.Equals(this.Scale, rhs.Scale)) return false;
                 if (!object.Equals(this.OpenByDefault, rhs.OpenByDefault)) return false;
                 if (!object.Equals(this.Position, rhs.Position)) return false;
                 if (!object.Equals(this.Rotation, rhs.Rotation)) return false;
-                if (!object.Equals(this.HasPlacementData, rhs.HasPlacementData)) return false;
                 if (!object.Equals(this.Comments, rhs.Comments)) return false;
                 return true;
             }
@@ -1449,14 +1421,12 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.EnableParent);
                 hash.Add(this.Traversals);
                 hash.Add(this.NumTraversalFluffBytes);
-                hash.Add(this.TraversalFluff);
                 hash.Add(this.NavigationDoorLink);
                 hash.Add(this.IsActivationPoint);
                 hash.Add(this.Scale);
                 hash.Add(this.OpenByDefault);
                 hash.Add(this.Position);
                 hash.Add(this.Rotation);
-                hash.Add(this.HasPlacementData);
                 hash.Add(this.Comments);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -1775,7 +1745,6 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.NumTraversalFluffBytes)) return false;
-                if (!eval(this.TraversalFluff)) return false;
                 if (NavigationDoorLink != null)
                 {
                     if (!eval(this.NavigationDoorLink.Overall)) return false;
@@ -1786,7 +1755,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.OpenByDefault)) return false;
                 if (!eval(this.Position)) return false;
                 if (!eval(this.Rotation)) return false;
-                if (!eval(this.HasPlacementData)) return false;
                 if (!eval(this.Comments)) return false;
                 return true;
             }
@@ -2103,7 +2071,6 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.NumTraversalFluffBytes)) return true;
-                if (eval(this.TraversalFluff)) return true;
                 if (NavigationDoorLink != null)
                 {
                     if (eval(this.NavigationDoorLink.Overall)) return true;
@@ -2114,7 +2081,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.OpenByDefault)) return true;
                 if (eval(this.Position)) return true;
                 if (eval(this.Rotation)) return true;
-                if (eval(this.HasPlacementData)) return true;
                 if (eval(this.Comments)) return true;
                 return false;
             }
@@ -2374,14 +2340,12 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.NumTraversalFluffBytes = eval(this.NumTraversalFluffBytes);
-                obj.TraversalFluff = eval(this.TraversalFluff);
                 obj.NavigationDoorLink = this.NavigationDoorLink == null ? null : new MaskItem<R, NavigationDoorLink.Mask<R>?>(eval(this.NavigationDoorLink.Overall), this.NavigationDoorLink.Specific?.Translate(eval));
                 obj.IsActivationPoint = eval(this.IsActivationPoint);
                 obj.Scale = eval(this.Scale);
                 obj.OpenByDefault = eval(this.OpenByDefault);
                 obj.Position = eval(this.Position);
                 obj.Rotation = eval(this.Rotation);
-                obj.HasPlacementData = eval(this.HasPlacementData);
                 obj.Comments = eval(this.Comments);
             }
             #endregion
@@ -2899,10 +2863,6 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(NumTraversalFluffBytes, "NumTraversalFluffBytes");
                     }
-                    if (printMask?.TraversalFluff ?? true)
-                    {
-                        sb.AppendItem(TraversalFluff, "TraversalFluff");
-                    }
                     if (printMask?.NavigationDoorLink?.Overall ?? true)
                     {
                         NavigationDoorLink?.Print(sb);
@@ -2926,10 +2886,6 @@ namespace Mutagen.Bethesda.Starfield
                     if (printMask?.Rotation ?? true)
                     {
                         sb.AppendItem(Rotation, "Rotation");
-                    }
-                    if (printMask?.HasPlacementData ?? true)
-                    {
-                        sb.AppendItem(HasPlacementData, "HasPlacementData");
                     }
                     if (printMask?.Comments ?? true)
                     {
@@ -3024,14 +2980,12 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, EnableParent.ErrorMask?>? EnableParent;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, TraversalReference.ErrorMask?>>?>? Traversals;
             public Exception? NumTraversalFluffBytes;
-            public Exception? TraversalFluff;
             public MaskItem<Exception?, NavigationDoorLink.ErrorMask?>? NavigationDoorLink;
             public Exception? IsActivationPoint;
             public Exception? Scale;
             public Exception? OpenByDefault;
             public Exception? Position;
             public Exception? Rotation;
-            public Exception? HasPlacementData;
             public Exception? Comments;
             #endregion
 
@@ -3197,8 +3151,6 @@ namespace Mutagen.Bethesda.Starfield
                         return Traversals;
                     case PlacedObject_FieldIndex.NumTraversalFluffBytes:
                         return NumTraversalFluffBytes;
-                    case PlacedObject_FieldIndex.TraversalFluff:
-                        return TraversalFluff;
                     case PlacedObject_FieldIndex.NavigationDoorLink:
                         return NavigationDoorLink;
                     case PlacedObject_FieldIndex.IsActivationPoint:
@@ -3211,8 +3163,6 @@ namespace Mutagen.Bethesda.Starfield
                         return Position;
                     case PlacedObject_FieldIndex.Rotation:
                         return Rotation;
-                    case PlacedObject_FieldIndex.HasPlacementData:
-                        return HasPlacementData;
                     case PlacedObject_FieldIndex.Comments:
                         return Comments;
                     default:
@@ -3459,9 +3409,6 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.NumTraversalFluffBytes:
                         this.NumTraversalFluffBytes = ex;
                         break;
-                    case PlacedObject_FieldIndex.TraversalFluff:
-                        this.TraversalFluff = ex;
-                        break;
                     case PlacedObject_FieldIndex.NavigationDoorLink:
                         this.NavigationDoorLink = new MaskItem<Exception?, NavigationDoorLink.ErrorMask?>(ex, null);
                         break;
@@ -3479,9 +3426,6 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case PlacedObject_FieldIndex.Rotation:
                         this.Rotation = ex;
-                        break;
-                    case PlacedObject_FieldIndex.HasPlacementData:
-                        this.HasPlacementData = ex;
                         break;
                     case PlacedObject_FieldIndex.Comments:
                         this.Comments = ex;
@@ -3731,9 +3675,6 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.NumTraversalFluffBytes:
                         this.NumTraversalFluffBytes = (Exception?)obj;
                         break;
-                    case PlacedObject_FieldIndex.TraversalFluff:
-                        this.TraversalFluff = (Exception?)obj;
-                        break;
                     case PlacedObject_FieldIndex.NavigationDoorLink:
                         this.NavigationDoorLink = (MaskItem<Exception?, NavigationDoorLink.ErrorMask?>?)obj;
                         break;
@@ -3751,9 +3692,6 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case PlacedObject_FieldIndex.Rotation:
                         this.Rotation = (Exception?)obj;
-                        break;
-                    case PlacedObject_FieldIndex.HasPlacementData:
-                        this.HasPlacementData = (Exception?)obj;
                         break;
                     case PlacedObject_FieldIndex.Comments:
                         this.Comments = (Exception?)obj;
@@ -3845,14 +3783,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (EnableParent != null) return true;
                 if (Traversals != null) return true;
                 if (NumTraversalFluffBytes != null) return true;
-                if (TraversalFluff != null) return true;
                 if (NavigationDoorLink != null) return true;
                 if (IsActivationPoint != null) return true;
                 if (Scale != null) return true;
                 if (OpenByDefault != null) return true;
                 if (Position != null) return true;
                 if (Rotation != null) return true;
-                if (HasPlacementData != null) return true;
                 if (Comments != null) return true;
                 return false;
             }
@@ -4250,9 +4186,6 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(NumTraversalFluffBytes, "NumTraversalFluffBytes");
                 }
-                {
-                    sb.AppendItem(TraversalFluff, "TraversalFluff");
-                }
                 NavigationDoorLink?.Print(sb);
                 {
                     sb.AppendItem(IsActivationPoint, "IsActivationPoint");
@@ -4268,9 +4201,6 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 {
                     sb.AppendItem(Rotation, "Rotation");
-                }
-                {
-                    sb.AppendItem(HasPlacementData, "HasPlacementData");
                 }
                 {
                     sb.AppendItem(Comments, "Comments");
@@ -4361,14 +4291,12 @@ namespace Mutagen.Bethesda.Starfield
                 ret.EnableParent = this.EnableParent.Combine(rhs.EnableParent, (l, r) => l.Combine(r));
                 ret.Traversals = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, TraversalReference.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Traversals?.Overall, rhs.Traversals?.Overall), Noggog.ExceptionExt.Combine(this.Traversals?.Specific, rhs.Traversals?.Specific));
                 ret.NumTraversalFluffBytes = this.NumTraversalFluffBytes.Combine(rhs.NumTraversalFluffBytes);
-                ret.TraversalFluff = this.TraversalFluff.Combine(rhs.TraversalFluff);
                 ret.NavigationDoorLink = this.NavigationDoorLink.Combine(rhs.NavigationDoorLink, (l, r) => l.Combine(r));
                 ret.IsActivationPoint = this.IsActivationPoint.Combine(rhs.IsActivationPoint);
                 ret.Scale = this.Scale.Combine(rhs.Scale);
                 ret.OpenByDefault = this.OpenByDefault.Combine(rhs.OpenByDefault);
                 ret.Position = this.Position.Combine(rhs.Position);
                 ret.Rotation = this.Rotation.Combine(rhs.Rotation);
-                ret.HasPlacementData = this.HasPlacementData.Combine(rhs.HasPlacementData);
                 ret.Comments = this.Comments.Combine(rhs.Comments);
                 return ret;
             }
@@ -4470,14 +4398,12 @@ namespace Mutagen.Bethesda.Starfield
             public EnableParent.TranslationMask? EnableParent;
             public TraversalReference.TranslationMask? Traversals;
             public bool NumTraversalFluffBytes;
-            public bool TraversalFluff;
             public NavigationDoorLink.TranslationMask? NavigationDoorLink;
             public bool IsActivationPoint;
             public bool Scale;
             public bool OpenByDefault;
             public bool Position;
             public bool Rotation;
-            public bool HasPlacementData;
             public bool Comments;
             #endregion
 
@@ -4531,13 +4457,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.HealthPercent = defaultOn;
                 this.TimeOfDay = defaultOn;
                 this.NumTraversalFluffBytes = defaultOn;
-                this.TraversalFluff = defaultOn;
                 this.IsActivationPoint = defaultOn;
                 this.Scale = defaultOn;
                 this.OpenByDefault = defaultOn;
                 this.Position = defaultOn;
                 this.Rotation = defaultOn;
-                this.HasPlacementData = defaultOn;
                 this.Comments = defaultOn;
             }
 
@@ -4624,14 +4548,12 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((EnableParent != null ? EnableParent.OnOverall : DefaultOn, EnableParent?.GetCrystal()));
                 ret.Add((Traversals == null ? DefaultOn : !Traversals.GetCrystal().CopyNothing, Traversals?.GetCrystal()));
                 ret.Add((NumTraversalFluffBytes, null));
-                ret.Add((TraversalFluff, null));
                 ret.Add((NavigationDoorLink != null ? NavigationDoorLink.OnOverall : DefaultOn, NavigationDoorLink?.GetCrystal()));
                 ret.Add((IsActivationPoint, null));
                 ret.Add((Scale, null));
                 ret.Add((OpenByDefault, null));
                 ret.Add((Position, null));
                 ret.Add((Rotation, null));
-                ret.Add((HasPlacementData, null));
                 ret.Add((Comments, null));
             }
 
@@ -4876,14 +4798,12 @@ namespace Mutagen.Bethesda.Starfield
         new EnableParent? EnableParent { get; set; }
         new ExtendedList<TraversalReference>? Traversals { get; set; }
         new UInt32 NumTraversalFluffBytes { get; set; }
-        new MemorySlice<Byte>? TraversalFluff { get; set; }
         new NavigationDoorLink? NavigationDoorLink { get; set; }
         new Boolean IsActivationPoint { get; set; }
         new Single? Scale { get; set; }
         new Boolean OpenByDefault { get; set; }
         new P3Float Position { get; set; }
         new P3Float Rotation { get; set; }
-        new Boolean HasPlacementData { get; set; }
         new String? Comments { get; set; }
     }
 
@@ -4997,14 +4917,12 @@ namespace Mutagen.Bethesda.Starfield
         IEnableParentGetter? EnableParent { get; }
         IReadOnlyList<ITraversalReferenceGetter>? Traversals { get; }
         UInt32 NumTraversalFluffBytes { get; }
-        ReadOnlyMemorySlice<Byte>? TraversalFluff { get; }
         INavigationDoorLinkGetter? NavigationDoorLink { get; }
         Boolean IsActivationPoint { get; }
         Single? Scale { get; }
         Boolean OpenByDefault { get; }
         P3Float Position { get; }
         P3Float Rotation { get; }
-        Boolean HasPlacementData { get; }
         String? Comments { get; }
 
     }
@@ -5179,98 +5097,94 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        XALG = 10,
-        Components = 11,
-        Base = 12,
-        XMSP = 13,
-        XPWR = 14,
-        XLTW = 15,
-        XTRV = 16,
-        VolumeData = 17,
-        ShipArrival = 18,
-        LevelModifier = 19,
-        Action = 20,
-        Primitive = 21,
-        PlacedObjectXCZRXCZA = 22,
-        VolumeReflectionProbeOffsetIntensity = 23,
-        DebugText = 24,
-        Emittance = 25,
-        Radius = 26,
-        Lighting = 27,
-        LightBarndoorData = 28,
-        LightArea = 29,
-        CurrentZoneCell = 30,
-        Patrol = 31,
-        RagdollData = 32,
-        TeleportDestination = 33,
-        TeleportName = 34,
-        ReferenceGroup = 35,
-        LocationRefTypes = 36,
-        LayeredMaterialSwaps = 37,
-        XPCK = 38,
-        SourcePackIn = 39,
-        PersistentLocation = 40,
-        ProjectedDecal = 41,
-        ProjectedDecalReferences = 42,
-        ConstrainedDecal = 43,
-        IsIgnoredBySandbox = 44,
-        FactionRank = 45,
-        GoboAnimatedProperties = 46,
-        Collision = 47,
-        PowerLinks = 48,
-        Count = 49,
-        XFLG = 50,
-        LightFlicker = 51,
-        MapMarker = 52,
-        LightLayerData = 53,
-        LightStaticShadowMap = 54,
-        LightVolumetricData = 55,
-        LightRadiusFalloutExponent = 56,
-        Ownership = 57,
-        LightColors = 58,
-        GroupedPackIn = 59,
-        BlueprintPartOrigin = 60,
-        Layer = 61,
-        BOLV = 62,
-        XWCN = 63,
-        XWCU = 64,
-        Location = 65,
-        XTRI = 66,
-        LightRoundedness = 67,
-        LinkedReferences = 68,
-        IsLinkedRefTransient = 69,
-        XLIB = 70,
-        SnapLinks = 71,
-        EncounterZone = 72,
-        GeometryDirtinessScale = 73,
-        Lock = 74,
-        Properties = 75,
-        ExternalEmittance = 76,
-        HeadTrackingWeight = 77,
-        Spline = 78,
-        XNSE = 79,
-        AttachRef = 80,
-        RagdollBipedRotation = 81,
-        HealthPercent = 82,
-        TimeOfDay = 83,
-        EnableParent = 84,
-        Traversals = 85,
-        NumTraversalFluffBytes = 86,
-        TraversalFluff = 87,
-        NavigationDoorLink = 88,
-        IsActivationPoint = 89,
-        Scale = 90,
-        OpenByDefault = 91,
-        Position = 92,
-        Rotation = 93,
-        HasPlacementData = 94,
-        Comments = 95,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        XALG = 8,
+        Components = 9,
+        Base = 10,
+        XMSP = 11,
+        XPWR = 12,
+        XLTW = 13,
+        XTRV = 14,
+        VolumeData = 15,
+        ShipArrival = 16,
+        LevelModifier = 17,
+        Action = 18,
+        Primitive = 19,
+        PlacedObjectXCZRXCZA = 20,
+        VolumeReflectionProbeOffsetIntensity = 21,
+        DebugText = 22,
+        Emittance = 23,
+        Radius = 24,
+        Lighting = 25,
+        LightBarndoorData = 26,
+        LightArea = 27,
+        CurrentZoneCell = 28,
+        Patrol = 29,
+        RagdollData = 30,
+        TeleportDestination = 31,
+        TeleportName = 32,
+        ReferenceGroup = 33,
+        LocationRefTypes = 34,
+        LayeredMaterialSwaps = 35,
+        XPCK = 36,
+        SourcePackIn = 37,
+        PersistentLocation = 38,
+        ProjectedDecal = 39,
+        ProjectedDecalReferences = 40,
+        ConstrainedDecal = 41,
+        IsIgnoredBySandbox = 42,
+        FactionRank = 43,
+        GoboAnimatedProperties = 44,
+        Collision = 45,
+        PowerLinks = 46,
+        Count = 47,
+        XFLG = 48,
+        LightFlicker = 49,
+        MapMarker = 50,
+        LightLayerData = 51,
+        LightStaticShadowMap = 52,
+        LightVolumetricData = 53,
+        LightRadiusFalloutExponent = 54,
+        Ownership = 55,
+        LightColors = 56,
+        GroupedPackIn = 57,
+        BlueprintPartOrigin = 58,
+        Layer = 59,
+        BOLV = 60,
+        XWCN = 61,
+        XWCU = 62,
+        Location = 63,
+        XTRI = 64,
+        LightRoundedness = 65,
+        LinkedReferences = 66,
+        IsLinkedRefTransient = 67,
+        XLIB = 68,
+        SnapLinks = 69,
+        EncounterZone = 70,
+        GeometryDirtinessScale = 71,
+        Lock = 72,
+        Properties = 73,
+        ExternalEmittance = 74,
+        HeadTrackingWeight = 75,
+        Spline = 76,
+        XNSE = 77,
+        AttachRef = 78,
+        RagdollBipedRotation = 79,
+        HealthPercent = 80,
+        TimeOfDay = 81,
+        EnableParent = 82,
+        Traversals = 83,
+        NumTraversalFluffBytes = 84,
+        NavigationDoorLink = 85,
+        IsActivationPoint = 86,
+        Scale = 87,
+        OpenByDefault = 88,
+        Position = 89,
+        Rotation = 90,
+        Comments = 91,
     }
     #endregion
 
@@ -5281,9 +5195,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 87;
+        public const ushort AdditionalFieldCount = 85;
 
-        public const ushort FieldCount = 96;
+        public const ushort FieldCount = 92;
 
         public static readonly Type MaskType = typeof(PlacedObject.Mask<>);
 
@@ -5525,14 +5439,12 @@ namespace Mutagen.Bethesda.Starfield
             item.EnableParent = null;
             item.Traversals = null;
             item.NumTraversalFluffBytes = default(UInt32);
-            item.TraversalFluff = default;
             item.NavigationDoorLink = null;
             item.IsActivationPoint = default(Boolean);
             item.Scale = default;
             item.OpenByDefault = default(Boolean);
             item.Position = default(P3Float);
             item.Rotation = default(P3Float);
-            item.HasPlacementData = default(Boolean);
             item.Comments = default;
             base.Clear(item);
         }
@@ -5896,7 +5808,6 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             ret.NumTraversalFluffBytes = item.NumTraversalFluffBytes == rhs.NumTraversalFluffBytes;
-            ret.TraversalFluff = MemorySliceExt.SequenceEqual(item.TraversalFluff, rhs.TraversalFluff);
             ret.NavigationDoorLink = EqualsMaskHelper.EqualsHelper(
                 item.NavigationDoorLink,
                 rhs.NavigationDoorLink,
@@ -5907,7 +5818,6 @@ namespace Mutagen.Bethesda.Starfield
             ret.OpenByDefault = item.OpenByDefault == rhs.OpenByDefault;
             ret.Position = item.Position.Equals(rhs.Position);
             ret.Rotation = item.Rotation.Equals(rhs.Rotation);
-            ret.HasPlacementData = item.HasPlacementData == rhs.HasPlacementData;
             ret.Comments = string.Equals(item.Comments, rhs.Comments);
             base.FillEqualsMask(item, rhs, ret, include);
         }
@@ -6443,11 +6353,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.NumTraversalFluffBytes, "NumTraversalFluffBytes");
             }
-            if ((printMask?.TraversalFluff ?? true)
-                && item.TraversalFluff is {} TraversalFluffItem)
-            {
-                sb.AppendLine($"TraversalFluff => {SpanExt.ToHexString(TraversalFluffItem)}");
-            }
             if ((printMask?.NavigationDoorLink?.Overall ?? true)
                 && item.NavigationDoorLink is {} NavigationDoorLinkItem)
             {
@@ -6474,10 +6379,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Rotation, "Rotation");
             }
-            if (printMask?.HasPlacementData ?? true)
-            {
-                sb.AppendItem(item.HasPlacementData, "HasPlacementData");
-            }
             if ((printMask?.Comments ?? true)
                 && item.Comments is {} CommentsItem)
             {
@@ -6496,10 +6397,6 @@ namespace Mutagen.Bethesda.Starfield
                 case StarfieldMajorRecord_FieldIndex.VersionControl:
                     return (PlacedObject_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
-                    return (PlacedObject_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (PlacedObject_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedObject_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (PlacedObject_FieldIndex)((int)index);
@@ -6523,10 +6420,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PlacedObject_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (PlacedObject_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (PlacedObject_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedObject_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
@@ -6953,10 +6846,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.NumTraversalFluffBytes != rhs.NumTraversalFluffBytes) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.TraversalFluff) ?? true))
-            {
-                if (!MemorySliceExt.SequenceEqual(lhs.TraversalFluff, rhs.TraversalFluff)) return false;
-            }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.NavigationDoorLink) ?? true))
             {
                 if (EqualsMaskHelper.RefEquality(lhs.NavigationDoorLink, rhs.NavigationDoorLink, out var lhsNavigationDoorLink, out var rhsNavigationDoorLink, out var isNavigationDoorLinkEqual))
@@ -6984,10 +6873,6 @@ namespace Mutagen.Bethesda.Starfield
             if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.Rotation) ?? true))
             {
                 if (!lhs.Rotation.Equals(rhs.Rotation)) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.HasPlacementData) ?? true))
-            {
-                if (lhs.HasPlacementData != rhs.HasPlacementData) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.Comments) ?? true))
             {
@@ -7294,10 +7179,6 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             hash.Add(item.NumTraversalFluffBytes);
-            if (item.TraversalFluff is {} TraversalFluffItem)
-            {
-                hash.AddBytes(TraversalFluffItem);
-            }
             if (item.NavigationDoorLink is {} NavigationDoorLinkitem)
             {
                 hash.Add(NavigationDoorLinkitem);
@@ -7310,7 +7191,6 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.OpenByDefault);
             hash.Add(item.Position);
             hash.Add(item.Rotation);
-            hash.Add(item.HasPlacementData);
             if (item.Comments is {} Commentsitem)
             {
                 hash.Add(Commentsitem);
@@ -8826,17 +8706,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.NumTraversalFluffBytes = rhs.NumTraversalFluffBytes;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.TraversalFluff) ?? true))
-            {
-                if(rhs.TraversalFluff is {} TraversalFluffrhs)
-                {
-                    item.TraversalFluff = TraversalFluffrhs.ToArray();
-                }
-                else
-                {
-                    item.TraversalFluff = default;
-                }
-            }
             if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.NavigationDoorLink) ?? true))
             {
                 errorMask?.PushIndex((int)PlacedObject_FieldIndex.NavigationDoorLink);
@@ -8882,10 +8751,6 @@ namespace Mutagen.Bethesda.Starfield
             if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.Rotation) ?? true))
             {
                 item.Rotation = rhs.Rotation;
-            }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.HasPlacementData) ?? true))
-            {
-                item.HasPlacementData = rhs.HasPlacementData;
             }
             if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.Comments) ?? true))
             {
@@ -9560,9 +9425,15 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.OpenByDefault,
                 header: translationParams.ConvertToCustom(RecordTypes.ONAM));
-            PlacedObjectBinaryWriteTranslation.WriteBinaryPlacementParse(
-                writer: writer,
-                item: item);
+            using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.DATA)))
+            {
+                P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.Position);
+                P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.Rotation);
+            }
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.Comments,
@@ -9579,19 +9450,6 @@ namespace Mutagen.Bethesda.Starfield
             IPlacedObjectGetter item)
         {
             WriteBinaryTraversalsCustom(
-                writer: writer,
-                item: item);
-        }
-
-        public static partial void WriteBinaryPlacementParseCustom(
-            MutagenWriter writer,
-            IPlacedObjectGetter item);
-
-        public static void WriteBinaryPlacementParse(
-            MutagenWriter writer,
-            IPlacedObjectGetter item)
-        {
-            WriteBinaryPlacementParseCustom(
                 writer: writer,
                 item: item);
         }
@@ -10203,10 +10061,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DATA:
                 {
-                    return PlacedObjectBinaryCreateTranslation.FillBinaryPlacementParseCustom(
-                        frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
-                        item: item,
-                        lastParsed: lastParsed);
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                    var dataFrame = frame.SpawnWithLength(contentLength);
+                    if (dataFrame.Remaining < 12) return null;
+                    item.Position = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 12) return null;
+                    item.Rotation = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    return (int)PlacedObject_FieldIndex.Rotation;
                 }
                 case RecordTypeInts.MNAM:
                 {
@@ -10235,11 +10096,6 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public static partial void FillBinaryTraversalsCustom(
-            MutagenFrame frame,
-            IPlacedObjectInternal item,
-            PreviousParse lastParsed);
-
-        public static partial ParseResult FillBinaryPlacementParseCustom(
             MutagenFrame frame,
             IPlacedObjectInternal item,
             PreviousParse lastParsed);
@@ -10568,11 +10424,16 @@ namespace Mutagen.Bethesda.Starfield
         private int? _OpenByDefaultLocation;
         public Boolean OpenByDefault => _OpenByDefaultLocation.HasValue ? true : default(Boolean);
         #endregion
-        #region PlacementParse
-        public partial ParseResult PlacementParseCustomParse(
-            OverlayStream stream,
-            int offset,
-            PreviousParse lastParsed);
+        private RangeInt32? _DATALocation;
+        #region Position
+        private int _PositionLocation => _DATALocation!.Value.Min;
+        private bool _Position_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PositionLocation + 1 >= 12;
+        public P3Float Position => _Position_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_PositionLocation, 12)) : default(P3Float);
+        #endregion
+        #region Rotation
+        private int _RotationLocation => _DATALocation!.Value.Min + 0xC;
+        private bool _Rotation_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RotationLocation + 1 >= 12;
+        public P3Float Rotation => _Rotation_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_RotationLocation, 12)) : default(P3Float);
         #endregion
         #region Comments
         private int? _CommentsLocation;
@@ -11164,10 +11025,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DATA:
                 {
-                    return PlacementParseCustomParse(
-                        stream,
-                        offset,
-                        lastParsed: lastParsed);
+                    _DATALocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
+                    return (int)PlacedObject_FieldIndex.Rotation;
                 }
                 case RecordTypeInts.MNAM:
                 {

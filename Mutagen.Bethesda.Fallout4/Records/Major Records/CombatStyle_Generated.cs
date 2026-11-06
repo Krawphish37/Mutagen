@@ -339,8 +339,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -401,8 +399,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2525,63 +2521,61 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        OffensiveMult = 9,
-        DefensiveMult = 10,
-        GroupOffensiveMult = 11,
-        EquipmentScoreMultMelee = 12,
-        EquipmentScoreMultMagic = 13,
-        EquipmentScoreMultRanged = 14,
-        EquipmentScoreMultShout = 15,
-        EquipmentScoreMultUnarmed = 16,
-        EquipmentScoreMultStaff = 17,
-        AvoidThreatChance = 18,
-        DodgeThreadChance = 19,
-        EvadeThreatChance = 20,
-        CSMD = 21,
-        MeleeAttackStaggeredMult = 22,
-        MeleePowerAttackStaggeredMult = 23,
-        MeleePowerAttackBlockingMult = 24,
-        MeleeBashMult = 25,
-        MeleeBashRecoilMult = 26,
-        MeleeBashAttackMult = 27,
-        MeleeBashPowerAttackMult = 28,
-        MeleeSpecialAttackMult = 29,
-        MeleeBlockWhenStaggeredMult = 30,
-        MeleeAttackWhenStaggeredMult = 31,
-        RangedAccuracyMult = 32,
-        CloseRangeDuelingCircleMult = 33,
-        CloseRangeDuelingFallbackMult = 34,
-        CloseRangeFlankDistance = 35,
-        CloseRangeFlankingStalkTime = 36,
-        CloseRangeChargeDistance = 37,
-        CloseRangeChargingThrowProbability = 38,
-        CloseRangeChargingSprintFastProbability = 39,
-        CloseRangeChargingSideswipeProbability = 40,
-        CloseRangeChargingDisengageProbability = 41,
-        CloseRangeChargingThrowMaxTargets = 42,
-        CloseRangeFlankingVariance = 43,
-        LongRangeStrafeMult = 44,
-        LongRangeAdjustRangeMult = 45,
-        LongRangeCrouchMult = 46,
-        LongRangeWaitMult = 47,
-        LongRangeRangeMult = 48,
-        CoverSearchDistanceMult = 49,
-        HoverChance = 50,
-        DiveBombChance = 51,
-        GroundAttackChance = 52,
-        HoverTime = 53,
-        GroundAttackTime = 54,
-        PerchAttackChance = 55,
-        PerchAttackTime = 56,
-        FlyingAttackChance = 57,
-        Flags = 58,
-        CSMEDataTypeState = 59,
-        CSLRDataTypeState = 60,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        OffensiveMult = 7,
+        DefensiveMult = 8,
+        GroupOffensiveMult = 9,
+        EquipmentScoreMultMelee = 10,
+        EquipmentScoreMultMagic = 11,
+        EquipmentScoreMultRanged = 12,
+        EquipmentScoreMultShout = 13,
+        EquipmentScoreMultUnarmed = 14,
+        EquipmentScoreMultStaff = 15,
+        AvoidThreatChance = 16,
+        DodgeThreadChance = 17,
+        EvadeThreatChance = 18,
+        CSMD = 19,
+        MeleeAttackStaggeredMult = 20,
+        MeleePowerAttackStaggeredMult = 21,
+        MeleePowerAttackBlockingMult = 22,
+        MeleeBashMult = 23,
+        MeleeBashRecoilMult = 24,
+        MeleeBashAttackMult = 25,
+        MeleeBashPowerAttackMult = 26,
+        MeleeSpecialAttackMult = 27,
+        MeleeBlockWhenStaggeredMult = 28,
+        MeleeAttackWhenStaggeredMult = 29,
+        RangedAccuracyMult = 30,
+        CloseRangeDuelingCircleMult = 31,
+        CloseRangeDuelingFallbackMult = 32,
+        CloseRangeFlankDistance = 33,
+        CloseRangeFlankingStalkTime = 34,
+        CloseRangeChargeDistance = 35,
+        CloseRangeChargingThrowProbability = 36,
+        CloseRangeChargingSprintFastProbability = 37,
+        CloseRangeChargingSideswipeProbability = 38,
+        CloseRangeChargingDisengageProbability = 39,
+        CloseRangeChargingThrowMaxTargets = 40,
+        CloseRangeFlankingVariance = 41,
+        LongRangeStrafeMult = 42,
+        LongRangeAdjustRangeMult = 43,
+        LongRangeCrouchMult = 44,
+        LongRangeWaitMult = 45,
+        LongRangeRangeMult = 46,
+        CoverSearchDistanceMult = 47,
+        HoverChance = 48,
+        DiveBombChance = 49,
+        GroundAttackChance = 50,
+        HoverTime = 51,
+        GroundAttackTime = 52,
+        PerchAttackChance = 53,
+        PerchAttackTime = 54,
+        FlyingAttackChance = 55,
+        Flags = 56,
+        CSMEDataTypeState = 57,
+        CSLRDataTypeState = 58,
     }
     #endregion
 
@@ -2594,7 +2588,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 52;
 
-        public const ushort FieldCount = 61;
+        public const ushort FieldCount = 59;
 
         public static readonly Type MaskType = typeof(CombatStyle.Mask<>);
 
@@ -3143,10 +3137,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (CombatStyle_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (CombatStyle_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (CombatStyle_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (CombatStyle_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (CombatStyle_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -3169,10 +3159,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (CombatStyle_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (CombatStyle_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (CombatStyle_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (CombatStyle_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -103,8 +103,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -130,8 +128,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags,
@@ -799,28 +795,26 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        Components = 10,
-        Name = 11,
-        Description = 12,
-        Model = 13,
-        Unknown = 14,
-        Unknown2 = 15,
-        AttachPoint = 16,
-        AttachParentSlots = 17,
-        Unknown3 = 18,
-        Includes = 19,
-        TargetOmodKeywords = 20,
-        FilterKeywords = 21,
-        LooseMod = 22,
-        Priority = 23,
-        Filter = 24,
-        Properties = 25,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        Components = 8,
+        Name = 9,
+        Description = 10,
+        Model = 11,
+        Unknown = 12,
+        Unknown2 = 13,
+        AttachPoint = 14,
+        AttachParentSlots = 15,
+        Unknown3 = 16,
+        Includes = 17,
+        TargetOmodKeywords = 18,
+        FilterKeywords = 19,
+        LooseMod = 20,
+        Priority = 21,
+        Filter = 22,
+        Properties = 23,
     }
     #endregion
 
@@ -833,7 +827,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 26;
+        public const ushort FieldCount = 24;
 
         public static readonly Type MaskType = typeof(ContainerModification.Mask<>);
 
@@ -1089,10 +1083,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (ContainerModification_FieldIndex)((int)index);
                 case AObjectModification_FieldIndex.EditorID:
                     return (ContainerModification_FieldIndex)((int)index);
-                case AObjectModification_FieldIndex.UnknownSubrecords:
-                    return (ContainerModification_FieldIndex)((int)index);
-                case AObjectModification_FieldIndex.UnknownSubrecordsSource:
-                    return (ContainerModification_FieldIndex)((int)index);
                 case AObjectModification_FieldIndex.FormVersion:
                     return (ContainerModification_FieldIndex)((int)index);
                 case AObjectModification_FieldIndex.Version2:
@@ -1148,10 +1138,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (ContainerModification_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (ContainerModification_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ContainerModification_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (ContainerModification_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (ContainerModification_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1174,10 +1160,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ContainerModification_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (ContainerModification_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ContainerModification_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ContainerModification_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

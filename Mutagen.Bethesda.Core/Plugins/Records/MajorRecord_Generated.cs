@@ -72,22 +72,6 @@ namespace Mutagen.Bethesda.Plugins.Records
         #region VersionControl
         public UInt32 VersionControl { get; set; } = default(UInt32);
         #endregion
-        #region UnknownSubrecords
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _UnknownSubrecords;
-        public MemorySlice<Byte>? UnknownSubrecords
-        {
-            get => this._UnknownSubrecords;
-            set => this._UnknownSubrecords = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IMajorRecordGetter.UnknownSubrecords => this.UnknownSubrecords;
-        #endregion
-        #region UnknownSubrecordsSource
-        public String? UnknownSubrecordsSource { get; set; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IMajorRecordGetter.UnknownSubrecordsSource => this.UnknownSubrecordsSource;
-        #endregion
 
         #region To String
 
@@ -115,24 +99,18 @@ namespace Mutagen.Bethesda.Plugins.Records
                 this.FormKey = initialValue;
                 this.VersionControl = initialValue;
                 this.EditorID = initialValue;
-                this.UnknownSubrecords = initialValue;
-                this.UnknownSubrecordsSource = initialValue;
             }
 
             public Mask(
                 TItem MajorRecordFlagsRaw,
                 TItem FormKey,
                 TItem VersionControl,
-                TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource)
+                TItem EditorID)
             {
                 this.MajorRecordFlagsRaw = MajorRecordFlagsRaw;
                 this.FormKey = FormKey;
                 this.VersionControl = VersionControl;
                 this.EditorID = EditorID;
-                this.UnknownSubrecords = UnknownSubrecords;
-                this.UnknownSubrecordsSource = UnknownSubrecordsSource;
             }
 
             #pragma warning disable CS8618
@@ -148,8 +126,6 @@ namespace Mutagen.Bethesda.Plugins.Records
             public TItem FormKey;
             public TItem VersionControl;
             public TItem EditorID;
-            public TItem UnknownSubrecords;
-            public TItem UnknownSubrecordsSource;
             #endregion
 
             #region Equals
@@ -166,8 +142,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                 if (!object.Equals(this.FormKey, rhs.FormKey)) return false;
                 if (!object.Equals(this.VersionControl, rhs.VersionControl)) return false;
                 if (!object.Equals(this.EditorID, rhs.EditorID)) return false;
-                if (!object.Equals(this.UnknownSubrecords, rhs.UnknownSubrecords)) return false;
-                if (!object.Equals(this.UnknownSubrecordsSource, rhs.UnknownSubrecordsSource)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -177,8 +151,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                 hash.Add(this.FormKey);
                 hash.Add(this.VersionControl);
                 hash.Add(this.EditorID);
-                hash.Add(this.UnknownSubrecords);
-                hash.Add(this.UnknownSubrecordsSource);
                 return hash.ToHashCode();
             }
 
@@ -191,8 +163,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                 if (!eval(this.FormKey)) return false;
                 if (!eval(this.VersionControl)) return false;
                 if (!eval(this.EditorID)) return false;
-                if (!eval(this.UnknownSubrecords)) return false;
-                if (!eval(this.UnknownSubrecordsSource)) return false;
                 return true;
             }
             #endregion
@@ -204,8 +174,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                 if (eval(this.FormKey)) return true;
                 if (eval(this.VersionControl)) return true;
                 if (eval(this.EditorID)) return true;
-                if (eval(this.UnknownSubrecords)) return true;
-                if (eval(this.UnknownSubrecordsSource)) return true;
                 return false;
             }
             #endregion
@@ -224,8 +192,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                 obj.FormKey = eval(this.FormKey);
                 obj.VersionControl = eval(this.VersionControl);
                 obj.EditorID = eval(this.EditorID);
-                obj.UnknownSubrecords = eval(this.UnknownSubrecords);
-                obj.UnknownSubrecordsSource = eval(this.UnknownSubrecordsSource);
             }
             #endregion
 
@@ -260,14 +226,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                     {
                         sb.AppendItem(EditorID, "EditorID");
                     }
-                    if (printMask?.UnknownSubrecords ?? true)
-                    {
-                        sb.AppendItem(UnknownSubrecords, "UnknownSubrecords");
-                    }
-                    if (printMask?.UnknownSubrecordsSource ?? true)
-                    {
-                        sb.AppendItem(UnknownSubrecordsSource, "UnknownSubrecordsSource");
-                    }
                 }
             }
             #endregion
@@ -296,8 +254,6 @@ namespace Mutagen.Bethesda.Plugins.Records
             public Exception? FormKey;
             public Exception? VersionControl;
             public Exception? EditorID;
-            public Exception? UnknownSubrecords;
-            public Exception? UnknownSubrecordsSource;
             #endregion
 
             #region IErrorMask
@@ -314,10 +270,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                         return VersionControl;
                     case MajorRecord_FieldIndex.EditorID:
                         return EditorID;
-                    case MajorRecord_FieldIndex.UnknownSubrecords:
-                        return UnknownSubrecords;
-                    case MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                        return UnknownSubrecordsSource;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -339,12 +291,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                         break;
                     case MajorRecord_FieldIndex.EditorID:
                         this.EditorID = ex;
-                        break;
-                    case MajorRecord_FieldIndex.UnknownSubrecords:
-                        this.UnknownSubrecords = ex;
-                        break;
-                    case MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                        this.UnknownSubrecordsSource = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -368,12 +314,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                     case MajorRecord_FieldIndex.EditorID:
                         this.EditorID = (Exception?)obj;
                         break;
-                    case MajorRecord_FieldIndex.UnknownSubrecords:
-                        this.UnknownSubrecords = (Exception?)obj;
-                        break;
-                    case MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                        this.UnknownSubrecordsSource = (Exception?)obj;
-                        break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -386,8 +326,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                 if (FormKey != null) return true;
                 if (VersionControl != null) return true;
                 if (EditorID != null) return true;
-                if (UnknownSubrecords != null) return true;
-                if (UnknownSubrecordsSource != null) return true;
                 return false;
             }
             #endregion
@@ -425,12 +363,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                 {
                     sb.AppendItem(EditorID, "EditorID");
                 }
-                {
-                    sb.AppendItem(UnknownSubrecords, "UnknownSubrecords");
-                }
-                {
-                    sb.AppendItem(UnknownSubrecordsSource, "UnknownSubrecordsSource");
-                }
             }
             #endregion
 
@@ -443,8 +375,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                 ret.FormKey = this.FormKey.Combine(rhs.FormKey);
                 ret.VersionControl = this.VersionControl.Combine(rhs.VersionControl);
                 ret.EditorID = this.EditorID.Combine(rhs.EditorID);
-                ret.UnknownSubrecords = this.UnknownSubrecords.Combine(rhs.UnknownSubrecords);
-                ret.UnknownSubrecordsSource = this.UnknownSubrecordsSource.Combine(rhs.UnknownSubrecordsSource);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -472,8 +402,6 @@ namespace Mutagen.Bethesda.Plugins.Records
             public bool FormKey;
             public bool VersionControl;
             public bool EditorID;
-            public bool UnknownSubrecords;
-            public bool UnknownSubrecordsSource;
             #endregion
 
             #region Ctors
@@ -487,8 +415,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                 this.FormKey = defaultOn;
                 this.VersionControl = defaultOn;
                 this.EditorID = defaultOn;
-                this.UnknownSubrecords = defaultOn;
-                this.UnknownSubrecordsSource = defaultOn;
             }
 
             #endregion
@@ -508,8 +434,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                 ret.Add((FormKey, null));
                 ret.Add((VersionControl, null));
                 ret.Add((EditorID, null));
-                ret.Add((UnknownSubrecords, null));
-                ret.Add((UnknownSubrecordsSource, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -662,8 +586,6 @@ namespace Mutagen.Bethesda.Plugins.Records
         new Int32 MajorRecordFlagsRaw { get; set; }
         new UInt32 VersionControl { get; set; }
         new String? EditorID { get; set; }
-        new MemorySlice<Byte>? UnknownSubrecords { get; set; }
-        new String? UnknownSubrecordsSource { get; set; }
     }
 
     public partial interface IMajorRecordInternal :
@@ -693,8 +615,6 @@ namespace Mutagen.Bethesda.Plugins.Records
         Int32 MajorRecordFlagsRaw { get; }
         UInt32 VersionControl { get; }
         String? EditorID { get; }
-        ReadOnlyMemorySlice<Byte>? UnknownSubrecords { get; }
-        String? UnknownSubrecordsSource { get; }
 
     }
 
@@ -1119,8 +1039,6 @@ namespace Mutagen.Bethesda.Plugins.Records
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
     }
     #endregion
 
@@ -1131,9 +1049,9 @@ namespace Mutagen.Bethesda.Plugins.Records
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Bethesda.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 6;
+        public const ushort AdditionalFieldCount = 4;
 
-        public const ushort FieldCount = 6;
+        public const ushort FieldCount = 4;
 
         public static readonly Type MaskType = typeof(MajorRecord.Mask<>);
 
@@ -1202,8 +1120,6 @@ namespace Mutagen.Bethesda.Plugins.Records
             item.MajorRecordFlagsRaw = default(Int32);
             item.VersionControl = default(UInt32);
             item.EditorID = default;
-            item.UnknownSubrecords = default;
-            item.UnknownSubrecordsSource = default;
         }
         
         #region Mutagen
@@ -1349,8 +1265,6 @@ namespace Mutagen.Bethesda.Plugins.Records
             ret.FormKey = item.FormKey == rhs.FormKey;
             ret.VersionControl = item.VersionControl == rhs.VersionControl;
             ret.EditorID = string.Equals(item.EditorID, rhs.EditorID);
-            ret.UnknownSubrecords = MemorySliceExt.SequenceEqual(item.UnknownSubrecords, rhs.UnknownSubrecords);
-            ret.UnknownSubrecordsSource = string.Equals(item.UnknownSubrecordsSource, rhs.UnknownSubrecordsSource);
         }
         
         public string Print(
@@ -1412,16 +1326,6 @@ namespace Mutagen.Bethesda.Plugins.Records
             {
                 sb.AppendItem(EditorIDItem, "EditorID");
             }
-            if ((printMask?.UnknownSubrecords ?? true)
-                && item.UnknownSubrecords is {} UnknownSubrecordsItem)
-            {
-                sb.AppendLine($"UnknownSubrecords => {SpanExt.ToHexString(UnknownSubrecordsItem)}");
-            }
-            if ((printMask?.UnknownSubrecordsSource ?? true)
-                && item.UnknownSubrecordsSource is {} UnknownSubrecordsSourceItem)
-            {
-                sb.AppendItem(UnknownSubrecordsSourceItem, "UnknownSubrecordsSource");
-            }
         }
         
         #region Equals and Hash
@@ -1447,14 +1351,6 @@ namespace Mutagen.Bethesda.Plugins.Records
             {
                 if (!string.Equals(lhs.EditorID, rhs.EditorID)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MajorRecord_FieldIndex.UnknownSubrecords) ?? true))
-            {
-                if (!MemorySliceExt.SequenceEqual(lhs.UnknownSubrecords, rhs.UnknownSubrecords)) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)MajorRecord_FieldIndex.UnknownSubrecordsSource) ?? true))
-            {
-                if (!string.Equals(lhs.UnknownSubrecordsSource, rhs.UnknownSubrecordsSource)) return false;
-            }
             return true;
         }
         
@@ -1467,14 +1363,6 @@ namespace Mutagen.Bethesda.Plugins.Records
             if (item.EditorID is {} EditorIDitem)
             {
                 hash.Add(EditorIDitem);
-            }
-            if (item.UnknownSubrecords is {} UnknownSubrecordsItem)
-            {
-                hash.AddBytes(UnknownSubrecordsItem);
-            }
-            if (item.UnknownSubrecordsSource is {} UnknownSubrecordsSourceitem)
-            {
-                hash.Add(UnknownSubrecordsSourceitem);
             }
             return hash.ToHashCode();
         }
@@ -1639,21 +1527,6 @@ namespace Mutagen.Bethesda.Plugins.Records
             if ((copyMask?.GetShouldTranslate((int)MajorRecord_FieldIndex.EditorID) ?? true))
             {
                 item.EditorID = rhs.EditorID;
-            }
-            if ((copyMask?.GetShouldTranslate((int)MajorRecord_FieldIndex.UnknownSubrecords) ?? true))
-            {
-                if(rhs.UnknownSubrecords is {} UnknownSubrecordsrhs)
-                {
-                    item.UnknownSubrecords = UnknownSubrecordsrhs.ToArray();
-                }
-                else
-                {
-                    item.UnknownSubrecords = default;
-                }
-            }
-            if ((copyMask?.GetShouldTranslate((int)MajorRecord_FieldIndex.UnknownSubrecordsSource) ?? true))
-            {
-                item.UnknownSubrecordsSource = rhs.UnknownSubrecordsSource;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1852,7 +1725,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                             edid: item.EditorID,
                             message: "Unexpected subrecord");
                     }
-                    Mutagen.Bethesda.Plugins.Records.MajorRecordUnknownSubrecords.Keep(item, frame, contentLength);
                     frame.Position += contentLength + frame.MetaData.Constants.SubConstants.HeaderLength;
                     return default(int?);
             }
@@ -1981,7 +1853,6 @@ namespace Mutagen.Bethesda.Plugins.Records
                             edid: EditorID,
                             message: "Unexpected subrecord");
                     }
-                    KeepUnknownSubrecord(stream);
                     return default(int?);
             }
         }

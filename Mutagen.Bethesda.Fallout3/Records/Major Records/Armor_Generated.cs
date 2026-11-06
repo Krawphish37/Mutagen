@@ -399,8 +399,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -441,8 +439,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -2098,43 +2094,41 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Name = 10,
-        Script = 11,
-        ObjectEffect = 12,
-        BipedData = 13,
-        MaleBipedModel = 14,
-        MaleWorldModel = 15,
-        MaleIcon = 16,
-        MaleMessageIcon = 17,
-        FemaleBipedModel = 18,
-        FemaleWorldModel = 19,
-        FemaleIcon = 20,
-        FemaleMessageIcon = 21,
-        RagdollConstraintTemplate = 22,
-        Destructible = 23,
-        RepairList = 24,
-        BipedModelList = 25,
-        EquipmentType = 26,
-        PickUpSound = 27,
-        DropSound = 28,
-        Value = 29,
-        Health = 30,
-        Weight = 31,
-        DamageResistance = 32,
-        DnamSlot1 = 33,
-        DamageThreshold = 34,
-        DnamSlot2 = 35,
-        DnamUnused = 36,
-        OverridesAnimationSounds = 37,
-        AnimationSounds = 38,
-        AnimationSoundsTemplate = 39,
-        DNAMDataTypeState = 40,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Name = 8,
+        Script = 9,
+        ObjectEffect = 10,
+        BipedData = 11,
+        MaleBipedModel = 12,
+        MaleWorldModel = 13,
+        MaleIcon = 14,
+        MaleMessageIcon = 15,
+        FemaleBipedModel = 16,
+        FemaleWorldModel = 17,
+        FemaleIcon = 18,
+        FemaleMessageIcon = 19,
+        RagdollConstraintTemplate = 20,
+        Destructible = 21,
+        RepairList = 22,
+        BipedModelList = 23,
+        EquipmentType = 24,
+        PickUpSound = 25,
+        DropSound = 26,
+        Value = 27,
+        Health = 28,
+        Weight = 29,
+        DamageResistance = 30,
+        DnamSlot1 = 31,
+        DamageThreshold = 32,
+        DnamSlot2 = 33,
+        DnamUnused = 34,
+        OverridesAnimationSounds = 35,
+        AnimationSounds = 36,
+        AnimationSoundsTemplate = 37,
+        DNAMDataTypeState = 38,
     }
     #endregion
 
@@ -2147,7 +2141,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 32;
 
-        public const ushort FieldCount = 41;
+        public const ushort FieldCount = 39;
 
         public static readonly Type MaskType = typeof(Armor.Mask<>);
 
@@ -2691,10 +2685,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Armor_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Armor_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Armor_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Armor_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Armor_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2717,10 +2707,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Armor_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Armor_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Armor_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Armor_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

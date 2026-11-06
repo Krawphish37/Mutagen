@@ -487,8 +487,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -541,8 +539,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -2725,55 +2721,53 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        Name = 10,
-        MenuDisplayObject = 11,
-        Keywords = 12,
-        Flags = 13,
-        BaseCost = 14,
-        MagicSkill = 15,
-        ResistValue = 16,
-        Unknown1 = 17,
-        CastingLight = 18,
-        TaperWeight = 19,
-        HitShader = 20,
-        EnchantShader = 21,
-        MinimumSkillLevel = 22,
-        SpellmakingArea = 23,
-        SpellmakingCastingTime = 24,
-        TaperCurve = 25,
-        TaperDuration = 26,
-        SecondActorValueWeight = 27,
-        Archetype = 28,
-        Projectile = 29,
-        Explosion = 30,
-        CastType = 31,
-        TargetType = 32,
-        SecondActorValue = 33,
-        CastingArt = 34,
-        HitEffectArt = 35,
-        ImpactData = 36,
-        SkillUsageMultiplier = 37,
-        DualCastArt = 38,
-        DualCastScale = 39,
-        EnchantArt = 40,
-        HitVisuals = 41,
-        EnchantVisuals = 42,
-        EquipAbility = 43,
-        ImageSpaceModifier = 44,
-        PerkToApply = 45,
-        CastingSoundLevel = 46,
-        ScriptEffectAIScore = 47,
-        ScriptEffectAIDelayTime = 48,
-        CounterEffects = 49,
-        Sounds = 50,
-        Description = 51,
-        Conditions = 52,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        Name = 8,
+        MenuDisplayObject = 9,
+        Keywords = 10,
+        Flags = 11,
+        BaseCost = 12,
+        MagicSkill = 13,
+        ResistValue = 14,
+        Unknown1 = 15,
+        CastingLight = 16,
+        TaperWeight = 17,
+        HitShader = 18,
+        EnchantShader = 19,
+        MinimumSkillLevel = 20,
+        SpellmakingArea = 21,
+        SpellmakingCastingTime = 22,
+        TaperCurve = 23,
+        TaperDuration = 24,
+        SecondActorValueWeight = 25,
+        Archetype = 26,
+        Projectile = 27,
+        Explosion = 28,
+        CastType = 29,
+        TargetType = 30,
+        SecondActorValue = 31,
+        CastingArt = 32,
+        HitEffectArt = 33,
+        ImpactData = 34,
+        SkillUsageMultiplier = 35,
+        DualCastArt = 36,
+        DualCastScale = 37,
+        EnchantArt = 38,
+        HitVisuals = 39,
+        EnchantVisuals = 40,
+        EquipAbility = 41,
+        ImageSpaceModifier = 42,
+        PerkToApply = 43,
+        CastingSoundLevel = 44,
+        ScriptEffectAIScore = 45,
+        ScriptEffectAIDelayTime = 46,
+        CounterEffects = 47,
+        Sounds = 48,
+        Description = 49,
+        Conditions = 50,
     }
     #endregion
 
@@ -2786,7 +2780,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 44;
 
-        public const ushort FieldCount = 53;
+        public const ushort FieldCount = 51;
 
         public static readonly Type MaskType = typeof(MagicEffect.Mask<>);
 
@@ -3396,10 +3390,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (MagicEffect_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (MagicEffect_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (MagicEffect_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (MagicEffect_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (MagicEffect_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -3422,10 +3412,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (MagicEffect_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (MagicEffect_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (MagicEffect_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (MagicEffect_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

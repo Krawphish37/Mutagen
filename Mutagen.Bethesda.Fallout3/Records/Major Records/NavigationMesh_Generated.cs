@@ -192,8 +192,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -210,8 +208,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1335,19 +1331,17 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        Version = 9,
-        Data = 10,
-        Vertices = 11,
-        Triangles = 12,
-        CoverTriangles = 13,
-        DoorLinks = 14,
-        NavmeshGrid = 15,
-        EdgeLinks = 16,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        Version = 7,
+        Data = 8,
+        Vertices = 9,
+        Triangles = 10,
+        CoverTriangles = 11,
+        DoorLinks = 12,
+        NavmeshGrid = 13,
+        EdgeLinks = 14,
     }
     #endregion
 
@@ -1360,7 +1354,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 8;
 
-        public const ushort FieldCount = 17;
+        public const ushort FieldCount = 15;
 
         public static readonly Type MaskType = typeof(NavigationMesh.Mask<>);
 
@@ -1724,10 +1718,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (NavigationMesh_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (NavigationMesh_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (NavigationMesh_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (NavigationMesh_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (NavigationMesh_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -1750,10 +1740,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (NavigationMesh_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (NavigationMesh_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (NavigationMesh_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (NavigationMesh_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

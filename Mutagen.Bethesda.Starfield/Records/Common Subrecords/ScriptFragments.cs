@@ -24,10 +24,6 @@ partial class ScriptFragmentsBinaryCreateTranslation
         ret.ExtraBindDataVersion = frame.ReadUInt8();
         var flag = (Flag)frame.ReadUInt8();
         ret.Script = AVirtualMachineAdapterBinaryCreateTranslation.ReadEntry(frame, objectFormat);
-        if (flag == default)
-        {
-            AVirtualMachineAdapterBinaryCreateTranslation.ReadEmptyScriptExtras(frame, ret.Script, bytesAfter: 0);
-        }
         if (flag.HasFlag(Flag.OnBegin))
         {
             ret.OnBegin = ScriptFragment.CreateFromBinary(frame);

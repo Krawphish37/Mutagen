@@ -439,8 +439,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -481,8 +479,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -2532,43 +2528,41 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Name = 10,
-        Model = 11,
-        ActorEffects = 12,
-        UnarmedAttackEffect = 13,
-        UnarmedAttackAnimation = 14,
-        Models = 15,
-        ModelListTextures = 16,
-        Configuration = 17,
-        Factions = 18,
-        DeathItem = 19,
-        Voice = 20,
-        Template = 21,
-        Destructible = 22,
-        Script = 23,
-        Items = 24,
-        AIData = 25,
-        Packages = 26,
-        Animations = 27,
-        Data = 28,
-        AttackReach = 29,
-        CombatStyle = 30,
-        BodyPartData = 31,
-        TurningSpeed = 32,
-        BaseScale = 33,
-        FootWeight = 34,
-        ImpactMaterialType = 35,
-        SoundLevel = 36,
-        InheritsSoundFrom = 37,
-        SoundTypes = 38,
-        ImpactDataset = 39,
-        MeleeWeaponList = 40,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Name = 8,
+        Model = 9,
+        ActorEffects = 10,
+        UnarmedAttackEffect = 11,
+        UnarmedAttackAnimation = 12,
+        Models = 13,
+        ModelListTextures = 14,
+        Configuration = 15,
+        Factions = 16,
+        DeathItem = 17,
+        Voice = 18,
+        Template = 19,
+        Destructible = 20,
+        Script = 21,
+        Items = 22,
+        AIData = 23,
+        Packages = 24,
+        Animations = 25,
+        Data = 26,
+        AttackReach = 27,
+        CombatStyle = 28,
+        BodyPartData = 29,
+        TurningSpeed = 30,
+        BaseScale = 31,
+        FootWeight = 32,
+        ImpactMaterialType = 33,
+        SoundLevel = 34,
+        InheritsSoundFrom = 35,
+        SoundTypes = 36,
+        ImpactDataset = 37,
+        MeleeWeaponList = 38,
     }
     #endregion
 
@@ -2581,7 +2575,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 32;
 
-        public const ushort FieldCount = 41;
+        public const ushort FieldCount = 39;
 
         public static readonly Type MaskType = typeof(Creature.Mask<>);
 
@@ -3159,10 +3153,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Creature_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Creature_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Creature_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Creature_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Creature_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -3185,10 +3175,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Creature_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Creature_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Creature_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Creature_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

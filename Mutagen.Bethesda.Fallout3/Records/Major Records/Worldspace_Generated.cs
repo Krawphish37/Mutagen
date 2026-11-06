@@ -346,8 +346,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -384,8 +382,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -2278,39 +2274,37 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        Name = 9,
-        EncounterZone = 10,
-        Parent = 11,
-        Climate = 12,
-        Water = 13,
-        LodWater = 14,
-        LodWaterHeight = 15,
-        LandData = 16,
-        MapImage = 17,
-        SmallMapImage = 18,
-        MapData = 19,
-        WorldMapScale = 20,
-        CellXOffset = 21,
-        CellYOffset = 22,
-        ImageSpace = 23,
-        Flags = 24,
-        ObjectBoundsMin = 25,
-        ObjectBoundsMax = 26,
-        Music = 27,
-        CanopyShadow = 28,
-        WaterNoiseTexture = 29,
-        ImpactSwapData = 30,
-        FootstepMaterials = 31,
-        OffsetData = 32,
-        TopCell = 33,
-        SubCellsTimestamp = 34,
-        SubCellsUnknownGroupData = 35,
-        SubCells = 36,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        Name = 7,
+        EncounterZone = 8,
+        Parent = 9,
+        Climate = 10,
+        Water = 11,
+        LodWater = 12,
+        LodWaterHeight = 13,
+        LandData = 14,
+        MapImage = 15,
+        SmallMapImage = 16,
+        MapData = 17,
+        WorldMapScale = 18,
+        CellXOffset = 19,
+        CellYOffset = 20,
+        ImageSpace = 21,
+        Flags = 22,
+        ObjectBoundsMin = 23,
+        ObjectBoundsMax = 24,
+        Music = 25,
+        CanopyShadow = 26,
+        WaterNoiseTexture = 27,
+        ImpactSwapData = 28,
+        FootstepMaterials = 29,
+        OffsetData = 30,
+        TopCell = 31,
+        SubCellsTimestamp = 32,
+        SubCellsUnknownGroupData = 33,
+        SubCells = 34,
     }
     #endregion
 
@@ -2323,7 +2317,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 28;
 
-        public const ushort FieldCount = 37;
+        public const ushort FieldCount = 35;
 
         public static readonly Type MaskType = typeof(Worldspace.Mask<>);
 
@@ -3162,10 +3156,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Worldspace_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Worldspace_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Worldspace_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Worldspace_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Worldspace_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -3188,10 +3178,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Worldspace_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Worldspace_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Worldspace_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Worldspace_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

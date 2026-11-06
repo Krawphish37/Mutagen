@@ -525,8 +525,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -581,8 +579,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2906,57 +2902,55 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        Components = 10,
-        Name = 11,
-        MenuDisplayObject = 12,
-        Keywords = 13,
-        MagicSkill = 14,
-        CastingArt = 15,
-        MovementType = 16,
-        HitShader = 17,
-        EnchantShader = 18,
-        EnchantArt = 19,
-        EquipAbility = 20,
-        Explosion = 21,
-        HitEffectArt = 22,
-        ImageSpaceModifier = 23,
-        ImpactData = 24,
-        CastingLight = 25,
-        PerkToApply = 26,
-        SecondActorValue = 27,
-        Projectile = 28,
-        ResistValue = 29,
-        ThirdActorValue = 30,
-        ScriptEffectAIDelayTime = 31,
-        ScriptEffectAIScore = 32,
-        Archetype = 33,
-        SpellmakingArea = 34,
-        SpellmakingCastingTime = 35,
-        BaseCost = 36,
-        CastingSoundLevel = 37,
-        CastType = 38,
-        TargetType = 39,
-        DualCastingScale = 40,
-        Flags = 41,
-        MinimumSkillLevel = 42,
-        UnknownCounterEffectCount = 43,
-        SecondActorValueWeight = 44,
-        SkillUsageMultiplier = 45,
-        TaperCurve = 46,
-        TaperDuration = 47,
-        TaperWeight = 48,
-        Unknown2 = 49,
-        CounterEffects = 50,
-        Sounds = 51,
-        Description = 52,
-        Conditions = 53,
-        DATADataTypeState = 54,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        Components = 8,
+        Name = 9,
+        MenuDisplayObject = 10,
+        Keywords = 11,
+        MagicSkill = 12,
+        CastingArt = 13,
+        MovementType = 14,
+        HitShader = 15,
+        EnchantShader = 16,
+        EnchantArt = 17,
+        EquipAbility = 18,
+        Explosion = 19,
+        HitEffectArt = 20,
+        ImageSpaceModifier = 21,
+        ImpactData = 22,
+        CastingLight = 23,
+        PerkToApply = 24,
+        SecondActorValue = 25,
+        Projectile = 26,
+        ResistValue = 27,
+        ThirdActorValue = 28,
+        ScriptEffectAIDelayTime = 29,
+        ScriptEffectAIScore = 30,
+        Archetype = 31,
+        SpellmakingArea = 32,
+        SpellmakingCastingTime = 33,
+        BaseCost = 34,
+        CastingSoundLevel = 35,
+        CastType = 36,
+        TargetType = 37,
+        DualCastingScale = 38,
+        Flags = 39,
+        MinimumSkillLevel = 40,
+        UnknownCounterEffectCount = 41,
+        SecondActorValueWeight = 42,
+        SkillUsageMultiplier = 43,
+        TaperCurve = 44,
+        TaperDuration = 45,
+        TaperWeight = 46,
+        Unknown2 = 47,
+        CounterEffects = 48,
+        Sounds = 49,
+        Description = 50,
+        Conditions = 51,
+        DATADataTypeState = 52,
     }
     #endregion
 
@@ -2969,7 +2963,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 46;
 
-        public const ushort FieldCount = 55;
+        public const ushort FieldCount = 53;
 
         public static readonly Type MaskType = typeof(MagicEffect.Mask<>);
 
@@ -3607,10 +3601,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (MagicEffect_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (MagicEffect_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (MagicEffect_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (MagicEffect_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (MagicEffect_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -3633,10 +3623,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (MagicEffect_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (MagicEffect_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (MagicEffect_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (MagicEffect_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

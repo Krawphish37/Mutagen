@@ -1377,8 +1377,6 @@ internal class MergedWorldspace : IWorldspaceGetter
     public string? EditorID => _primary.EditorID;
     public int MajorRecordFlagsRaw => _primary.MajorRecordFlagsRaw;
     public uint VersionControl => _primary.VersionControl;
-    public ReadOnlyMemorySlice<byte>? UnknownSubrecords => _primary.UnknownSubrecords;
-    public string? UnknownSubrecordsSource => _primary.UnknownSubrecordsSource;
     ushort IFallout4MajorRecordGetter.FormVersion => _primary.FormVersion;
     ushort? IMajorRecordGetter.FormVersion => _primary.FormVersion;
     ushort? IFormVersionGetter.FormVersion => _primary.FormVersion;
@@ -1609,8 +1607,6 @@ internal class MergedWorldspaceCell : ICellGetter
     public string? EditorID => _primary.EditorID;
     public int MajorRecordFlagsRaw => _primary.MajorRecordFlagsRaw;
     public uint VersionControl => _primary.VersionControl;
-    public ReadOnlyMemorySlice<byte>? UnknownSubrecords => _primary.UnknownSubrecords;
-    public string? UnknownSubrecordsSource => _primary.UnknownSubrecordsSource;
     ushort IFallout4MajorRecordGetter.FormVersion => _primary.FormVersion;
     ushort? IMajorRecordGetter.FormVersion => _primary.FormVersion;
     ushort? IFormVersionGetter.FormVersion => _primary.FormVersion;

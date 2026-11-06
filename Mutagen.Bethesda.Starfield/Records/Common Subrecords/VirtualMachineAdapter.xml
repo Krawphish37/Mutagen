@@ -18,8 +18,6 @@
       <String name="Name" binaryType="PrependLengthUShort" binary="NoGeneration" />
       <Enum name="Flags" byteLength="1" enumName="ScriptEntry.Flag" binary="NoGeneration" />
       <RefList name="Properties" refName="ScriptProperty" binary="NoGeneration" />
-      <!-- A script with no name is normally just its empty name. Some plugins also store its flags and a zero property count. -->
-      <Bool name="EmptyNameHasFlagsAndProperties" binary="NoGeneration" />
     </Fields>
   </Object>
   <Object name="ScriptProperty" objType="Subrecord">

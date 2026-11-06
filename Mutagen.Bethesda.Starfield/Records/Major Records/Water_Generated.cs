@@ -344,8 +344,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -378,8 +376,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1686,35 +1682,33 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        Name = 10,
-        Opacity = 11,
-        Flags = 12,
-        WASH = 13,
-        ConsumeSpell = 14,
-        ContactSpell = 15,
-        DATA = 16,
-        DNAM = 17,
-        GNAM = 18,
-        LinearVelocity = 19,
-        AngularVelocity = 20,
-        NAM2 = 21,
-        NAM3 = 22,
-        NAM4 = 23,
-        NAM5 = 24,
-        NAM6 = 25,
-        RiverAbsorptionCurve = 26,
-        OceanAbsorptionCurve = 27,
-        RiverScatteringCurve = 28,
-        OceanScatteringCurve = 29,
-        PhytoplanktonCurve = 30,
-        SedimentCurve = 31,
-        YelowMatterCurve = 32,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        Name = 8,
+        Opacity = 9,
+        Flags = 10,
+        WASH = 11,
+        ConsumeSpell = 12,
+        ContactSpell = 13,
+        DATA = 14,
+        DNAM = 15,
+        GNAM = 16,
+        LinearVelocity = 17,
+        AngularVelocity = 18,
+        NAM2 = 19,
+        NAM3 = 20,
+        NAM4 = 21,
+        NAM5 = 22,
+        NAM6 = 23,
+        RiverAbsorptionCurve = 24,
+        OceanAbsorptionCurve = 25,
+        RiverScatteringCurve = 26,
+        OceanScatteringCurve = 27,
+        PhytoplanktonCurve = 28,
+        SedimentCurve = 29,
+        YelowMatterCurve = 30,
     }
     #endregion
 
@@ -1727,7 +1721,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 24;
 
-        public const ushort FieldCount = 33;
+        public const ushort FieldCount = 31;
 
         public static readonly Type MaskType = typeof(Water.Mask<>);
 
@@ -2152,10 +2146,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (Water_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Water_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Water_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Water_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Water_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2178,10 +2168,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Water_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Water_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Water_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Water_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

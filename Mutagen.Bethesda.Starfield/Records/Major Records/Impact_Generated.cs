@@ -257,8 +257,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -286,8 +284,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1640,30 +1636,28 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        Components = 9,
-        Model = 10,
-        Duration = 11,
-        Orientation = 12,
-        AngleThreshold = 13,
-        PlacementRadius = 14,
-        SoundLevel = 15,
-        NoDecalData = 16,
-        Result = 17,
-        Unknown = 18,
-        ProjectedDecals = 19,
-        ScatterProjectedDecals = 20,
-        Decal = 21,
-        ImpactSoundDefault = 22,
-        ImpactSoundPlayerFirstShooter = 23,
-        ImpactSoundPlayerThirdTarget = 24,
-        FootstepExplosion = 25,
-        FootstepParticleMaxDist = 26,
-        DecalLifetime = 27,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        Components = 7,
+        Model = 8,
+        Duration = 9,
+        Orientation = 10,
+        AngleThreshold = 11,
+        PlacementRadius = 12,
+        SoundLevel = 13,
+        NoDecalData = 14,
+        Result = 15,
+        Unknown = 16,
+        ProjectedDecals = 17,
+        ScatterProjectedDecals = 18,
+        Decal = 19,
+        ImpactSoundDefault = 20,
+        ImpactSoundPlayerFirstShooter = 21,
+        ImpactSoundPlayerThirdTarget = 22,
+        FootstepExplosion = 23,
+        FootstepParticleMaxDist = 24,
+        DecalLifetime = 25,
     }
     #endregion
 
@@ -1676,7 +1670,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 19;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 26;
 
         public static readonly Type MaskType = typeof(Impact.Mask<>);
 
@@ -2141,10 +2135,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (Impact_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Impact_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Impact_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Impact_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Impact_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2167,10 +2157,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Impact_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Impact_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Impact_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Impact_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

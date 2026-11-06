@@ -264,8 +264,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -292,8 +290,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1507,29 +1503,27 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        ObjectBounds = 10,
-        DirtinessScale = 11,
-        ObjectPaletteDefaults = 12,
-        DefaultLayer = 13,
-        XALG = 14,
-        Components = 15,
-        Transforms = 16,
-        PTTA = 17,
-        SnapBehavior = 18,
-        Material = 19,
-        UnknownData1 = 20,
-        UnknownData2 = 21,
-        UnknownData3 = 22,
-        UnknownData4 = 23,
-        UnknownData5 = 24,
-        UnknownData6 = 25,
-        DATADataTypeState = 26,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        ObjectBounds = 8,
+        DirtinessScale = 9,
+        ObjectPaletteDefaults = 10,
+        DefaultLayer = 11,
+        XALG = 12,
+        Components = 13,
+        Transforms = 14,
+        PTTA = 15,
+        SnapBehavior = 16,
+        Material = 17,
+        UnknownData1 = 18,
+        UnknownData2 = 19,
+        UnknownData3 = 20,
+        UnknownData4 = 21,
+        UnknownData5 = 22,
+        UnknownData6 = 23,
+        DATADataTypeState = 24,
     }
     #endregion
 
@@ -1542,7 +1536,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 18;
 
-        public const ushort FieldCount = 27;
+        public const ushort FieldCount = 25;
 
         public static readonly Type MaskType = typeof(ProjectedDecal.Mask<>);
 
@@ -1953,10 +1947,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (ProjectedDecal_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (ProjectedDecal_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ProjectedDecal_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (ProjectedDecal_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (ProjectedDecal_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1979,10 +1969,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ProjectedDecal_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (ProjectedDecal_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ProjectedDecal_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ProjectedDecal_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

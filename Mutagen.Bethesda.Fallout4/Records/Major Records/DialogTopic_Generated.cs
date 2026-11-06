@@ -203,8 +203,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -225,8 +223,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1476,23 +1472,21 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        Name = 9,
-        Priority = 10,
-        Branch = 11,
-        Quest = 12,
-        Keyword = 13,
-        TopicFlags = 14,
-        Category = 15,
-        Subtype = 16,
-        SubtypeName = 17,
-        Timestamp = 18,
-        Unknown = 19,
-        Responses = 20,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        Name = 7,
+        Priority = 8,
+        Branch = 9,
+        Quest = 10,
+        Keyword = 11,
+        TopicFlags = 12,
+        Category = 13,
+        Subtype = 14,
+        SubtypeName = 15,
+        Timestamp = 16,
+        Unknown = 17,
+        Responses = 18,
     }
     #endregion
 
@@ -1505,7 +1499,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 12;
 
-        public const ushort FieldCount = 21;
+        public const ushort FieldCount = 19;
 
         public static readonly Type MaskType = typeof(DialogTopic.Mask<>);
 
@@ -1955,10 +1949,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (DialogTopic_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (DialogTopic_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (DialogTopic_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (DialogTopic_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (DialogTopic_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1981,10 +1971,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (DialogTopic_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (DialogTopic_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (DialogTopic_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (DialogTopic_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
