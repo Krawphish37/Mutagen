@@ -712,8 +712,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -781,8 +779,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -3592,70 +3588,68 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        Base = 10,
-        BoundHalfExtents = 11,
-        Primitive = 12,
-        XORD = 13,
-        OcclusionPlane = 14,
-        Portals = 15,
-        RoomPortal = 16,
-        Unknown = 17,
-        LightingTemplate = 18,
-        ImageSpace = 19,
-        LinkedRooms = 20,
-        IsMultiBoundPrimitive = 21,
-        RagdollData = 22,
-        RagdollBipedData = 23,
-        Radius = 24,
-        Reflections = 25,
-        LitWater = 26,
-        Emittance = 27,
-        LightData = 28,
-        Alpha = 29,
-        TeleportDestination = 30,
-        TeleportMessageBox = 31,
-        MultiBoundReference = 32,
-        XWCN = 33,
-        XWCS = 34,
-        WaterVelocity = 35,
-        XCVL = 36,
-        XCZR = 37,
-        XCZA = 38,
-        XCZC = 39,
-        Scale = 40,
-        SpawnContainer = 41,
-        ActivateParents = 42,
-        LeveledItemBaseObject = 43,
-        LevelModifier = 44,
-        PersistentLocation = 45,
-        CollisionLayer = 46,
-        Lock = 47,
-        EncounterZone = 48,
-        NavigationDoorLink = 49,
-        LocationRefTypes = 50,
-        IsIgnoredBySandbox = 51,
-        Owner = 52,
-        FactionRank = 53,
-        ItemCount = 54,
-        Charge = 55,
-        LocationReference = 56,
-        EnableParent = 57,
-        LinkedReferences = 58,
-        Patrol = 59,
-        Action = 60,
-        HeadTrackingWeight = 61,
-        FavorCost = 62,
-        IsOpenByDefault = 63,
-        MapMarker = 64,
-        AttachRef = 65,
-        DistantLodData = 66,
-        Placement = 67,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        Base = 8,
+        BoundHalfExtents = 9,
+        Primitive = 10,
+        XORD = 11,
+        OcclusionPlane = 12,
+        Portals = 13,
+        RoomPortal = 14,
+        Unknown = 15,
+        LightingTemplate = 16,
+        ImageSpace = 17,
+        LinkedRooms = 18,
+        IsMultiBoundPrimitive = 19,
+        RagdollData = 20,
+        RagdollBipedData = 21,
+        Radius = 22,
+        Reflections = 23,
+        LitWater = 24,
+        Emittance = 25,
+        LightData = 26,
+        Alpha = 27,
+        TeleportDestination = 28,
+        TeleportMessageBox = 29,
+        MultiBoundReference = 30,
+        XWCN = 31,
+        XWCS = 32,
+        WaterVelocity = 33,
+        XCVL = 34,
+        XCZR = 35,
+        XCZA = 36,
+        XCZC = 37,
+        Scale = 38,
+        SpawnContainer = 39,
+        ActivateParents = 40,
+        LeveledItemBaseObject = 41,
+        LevelModifier = 42,
+        PersistentLocation = 43,
+        CollisionLayer = 44,
+        Lock = 45,
+        EncounterZone = 46,
+        NavigationDoorLink = 47,
+        LocationRefTypes = 48,
+        IsIgnoredBySandbox = 49,
+        Owner = 50,
+        FactionRank = 51,
+        ItemCount = 52,
+        Charge = 53,
+        LocationReference = 54,
+        EnableParent = 55,
+        LinkedReferences = 56,
+        Patrol = 57,
+        Action = 58,
+        HeadTrackingWeight = 59,
+        FavorCost = 60,
+        IsOpenByDefault = 61,
+        MapMarker = 62,
+        AttachRef = 63,
+        DistantLodData = 64,
+        Placement = 65,
     }
     #endregion
 
@@ -3668,7 +3662,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 59;
 
-        public const ushort FieldCount = 68;
+        public const ushort FieldCount = 66;
 
         public static readonly Type MaskType = typeof(PlacedObject.Mask<>);
 
@@ -4534,10 +4528,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (PlacedObject_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (PlacedObject_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (PlacedObject_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (PlacedObject_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (PlacedObject_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -4560,10 +4550,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PlacedObject_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (PlacedObject_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (PlacedObject_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedObject_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

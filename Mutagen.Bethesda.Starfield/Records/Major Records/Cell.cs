@@ -70,9 +70,8 @@ partial class CellBinaryCreateTranslation
         {
             len = sub.ContentLength;
         }
-        item.Traversals = TraversalReferenceBinaryCreateTranslation.Parse(frame.SpawnWithLength(len), out var fluffBytes, out var fluff);
+        item.Traversals = TraversalReferenceBinaryCreateTranslation.Parse(frame.SpawnWithLength(len), out var fluffBytes);
         item.NumTraversalFluffBytes = fluffBytes;
-        item.TraversalFluff = fluff;
     }
     
     public static partial void CustomBinaryEndImport(MutagenFrame frame, ICellInternal obj)
@@ -279,7 +278,7 @@ partial class CellBinaryWriteTranslation
         MutagenWriter writer,
         ICellGetter cell)
     {
-        TraversalReferenceBinaryWriteTranslation.TraversalsListWriterHelper(writer, cell.Traversals, cell.NumTraversalFluffBytes, cell.TraversalFluff);
+        TraversalReferenceBinaryWriteTranslation.TraversalsListWriterHelper(writer, cell.Traversals, cell.NumTraversalFluffBytes);
     }
     
     public static partial void CustomBinaryEndExport(MutagenWriter writer, ICellGetter obj)
@@ -389,8 +388,6 @@ partial class CellBinaryOverlay
 
     public int TemporaryUnknownGroupData => _temporaryLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(_grupData!.Value.Slice(_temporaryLocation.Value + 20)) : 0;
     public uint NumTraversalFluffBytes { get; private set; }
-    public ReadOnlyMemorySlice<byte>? TraversalFluff => _traversalFluff;
-    private byte[]? _traversalFluff;
 
     public static int[] ParseRecordLocations(OverlayStream stream, BinaryOverlayFactoryPackage package)
     {
@@ -627,7 +624,7 @@ partial class CellBinaryOverlay
 
     partial void TraversalsCustomParse(OverlayStream stream, int finalPos, int offset, RecordType type, PreviousParse lastParsed)
     {
-        Traversals = TraversalReferenceBinaryOverlay.Factory(stream, _package, finalPos, offset, lastParsed, out var fluffBytes, out _traversalFluff);
+        Traversals = TraversalReferenceBinaryOverlay.Factory(stream, _package, finalPos, offset, lastParsed, out var fluffBytes);
         NumTraversalFluffBytes = fluffBytes;
     }
 }

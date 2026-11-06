@@ -138,8 +138,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -161,8 +159,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1091,24 +1087,22 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        DecayMilliseconds = 9,
-        HfReferenceHertz = 10,
-        RoomFilter = 11,
-        RoomHfFilter = 12,
-        Reflections = 13,
-        ReverbAmp = 14,
-        DecayHfRatio = 15,
-        ReflectDelayMS = 16,
-        ReverbDelayMS = 17,
-        DiffusionPercent = 18,
-        DensityPercent = 19,
-        Unknown = 20,
-        ReverbClass = 21,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        DecayMilliseconds = 7,
+        HfReferenceHertz = 8,
+        RoomFilter = 9,
+        RoomHfFilter = 10,
+        Reflections = 11,
+        ReverbAmp = 12,
+        DecayHfRatio = 13,
+        ReflectDelayMS = 14,
+        ReverbDelayMS = 15,
+        DiffusionPercent = 16,
+        DensityPercent = 17,
+        Unknown = 18,
+        ReverbClass = 19,
     }
     #endregion
 
@@ -1121,7 +1115,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 13;
 
-        public const ushort FieldCount = 22;
+        public const ushort FieldCount = 20;
 
         public static readonly Type MaskType = typeof(ReverbParameters.Mask<>);
 
@@ -1425,10 +1419,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (ReverbParameters_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (ReverbParameters_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ReverbParameters_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (ReverbParameters_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (ReverbParameters_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1451,10 +1441,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ReverbParameters_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (ReverbParameters_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ReverbParameters_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ReverbParameters_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

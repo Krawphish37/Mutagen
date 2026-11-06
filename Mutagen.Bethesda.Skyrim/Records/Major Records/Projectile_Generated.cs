@@ -372,8 +372,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -414,8 +412,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1997,43 +1993,41 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Name = 10,
-        Model = 11,
-        Destructible = 12,
-        Flags = 13,
-        Type = 14,
-        Gravity = 15,
-        Speed = 16,
-        Range = 17,
-        Light = 18,
-        MuzzleFlash = 19,
-        TracerChance = 20,
-        ExplosionAltTriggerProximity = 21,
-        ExplosionAltTriggerTimer = 22,
-        Explosion = 23,
-        Sound = 24,
-        MuzzleFlashDuration = 25,
-        FadeDuration = 26,
-        ImpactForce = 27,
-        CountdownSound = 28,
-        DisaleSound = 29,
-        DefaultWeaponSource = 30,
-        ConeSpread = 31,
-        CollisionRadius = 32,
-        Lifetime = 33,
-        RelaunchInterval = 34,
-        DecalData = 35,
-        CollisionLayer = 36,
-        MuzzleFlashModel = 37,
-        TextureFilesHashes = 38,
-        SoundLevel = 39,
-        DATADataTypeState = 40,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Name = 8,
+        Model = 9,
+        Destructible = 10,
+        Flags = 11,
+        Type = 12,
+        Gravity = 13,
+        Speed = 14,
+        Range = 15,
+        Light = 16,
+        MuzzleFlash = 17,
+        TracerChance = 18,
+        ExplosionAltTriggerProximity = 19,
+        ExplosionAltTriggerTimer = 20,
+        Explosion = 21,
+        Sound = 22,
+        MuzzleFlashDuration = 23,
+        FadeDuration = 24,
+        ImpactForce = 25,
+        CountdownSound = 26,
+        DisaleSound = 27,
+        DefaultWeaponSource = 28,
+        ConeSpread = 29,
+        CollisionRadius = 30,
+        Lifetime = 31,
+        RelaunchInterval = 32,
+        DecalData = 33,
+        CollisionLayer = 34,
+        MuzzleFlashModel = 35,
+        TextureFilesHashes = 36,
+        SoundLevel = 37,
+        DATADataTypeState = 38,
     }
     #endregion
 
@@ -2046,7 +2040,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 32;
 
-        public const ushort FieldCount = 41;
+        public const ushort FieldCount = 39;
 
         public static readonly Type MaskType = typeof(Projectile.Mask<>);
 
@@ -2534,10 +2528,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (Projectile_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (Projectile_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Projectile_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Projectile_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (Projectile_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -2560,10 +2550,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Projectile_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Projectile_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Projectile_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Projectile_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

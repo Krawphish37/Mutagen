@@ -532,8 +532,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -584,8 +582,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -3191,53 +3187,51 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        Name = 9,
-        Flags = 10,
-        PreVisFilesTimestamp = 11,
-        InPreVisFileOf = 12,
-        PreCombinedFilesTimestamp = 13,
-        Grid = 14,
-        Lighting = 15,
-        PrecombinedObjectLevelXY = 16,
-        PrecombinedObjectLevelZ = 17,
-        TVDT = 18,
-        MaxHeightData = 19,
-        LightingTemplate = 20,
-        WaterHeight = 21,
-        Regions = 22,
-        Location = 23,
-        XWCN = 24,
-        WaterVelocity = 25,
-        Water = 26,
-        Ownership = 27,
-        FactionRank = 28,
-        LockList = 29,
-        ExteriorLod = 30,
-        WaterEnvironmentMap = 31,
-        SkyAndWeatherFromRegion = 32,
-        AcousticSpace = 33,
-        EncounterZone = 34,
-        Music = 35,
-        ImageSpace = 36,
-        GodRays = 37,
-        PhysicsReferences = 38,
-        CombinedMeshes = 39,
-        CombinedMeshReferences = 40,
-        Landscape = 41,
-        NavigationMeshes = 42,
-        Timestamp = 43,
-        UnknownGroupData = 44,
-        PersistentTimestamp = 45,
-        PersistentUnknownGroupData = 46,
-        Persistent = 47,
-        TemporaryTimestamp = 48,
-        TemporaryUnknownGroupData = 49,
-        Temporary = 50,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        Name = 7,
+        Flags = 8,
+        PreVisFilesTimestamp = 9,
+        InPreVisFileOf = 10,
+        PreCombinedFilesTimestamp = 11,
+        Grid = 12,
+        Lighting = 13,
+        PrecombinedObjectLevelXY = 14,
+        PrecombinedObjectLevelZ = 15,
+        TVDT = 16,
+        MaxHeightData = 17,
+        LightingTemplate = 18,
+        WaterHeight = 19,
+        Regions = 20,
+        Location = 21,
+        XWCN = 22,
+        WaterVelocity = 23,
+        Water = 24,
+        Ownership = 25,
+        FactionRank = 26,
+        LockList = 27,
+        ExteriorLod = 28,
+        WaterEnvironmentMap = 29,
+        SkyAndWeatherFromRegion = 30,
+        AcousticSpace = 31,
+        EncounterZone = 32,
+        Music = 33,
+        ImageSpace = 34,
+        GodRays = 35,
+        PhysicsReferences = 36,
+        CombinedMeshes = 37,
+        CombinedMeshReferences = 38,
+        Landscape = 39,
+        NavigationMeshes = 40,
+        Timestamp = 41,
+        UnknownGroupData = 42,
+        PersistentTimestamp = 43,
+        PersistentUnknownGroupData = 44,
+        Persistent = 45,
+        TemporaryTimestamp = 46,
+        TemporaryUnknownGroupData = 47,
+        Temporary = 48,
     }
     #endregion
 
@@ -3250,7 +3244,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 42;
 
-        public const ushort FieldCount = 51;
+        public const ushort FieldCount = 49;
 
         public static readonly Type MaskType = typeof(Cell.Mask<>);
 
@@ -4196,10 +4190,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Cell_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Cell_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Cell_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Cell_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Cell_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -4222,10 +4212,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Cell_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Cell_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Cell_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Cell_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

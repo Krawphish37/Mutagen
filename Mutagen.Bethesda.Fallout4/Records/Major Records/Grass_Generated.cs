@@ -188,8 +188,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -213,8 +211,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1239,26 +1235,24 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Model = 10,
-        Density = 11,
-        MinSlope = 12,
-        MaxSlope = 13,
-        Unknown = 14,
-        UnitsFromWater = 15,
-        Unknown2 = 16,
-        UnitsFromWaterType = 17,
-        PositionRange = 18,
-        HeightRange = 19,
-        ColorRange = 20,
-        WavePeriod = 21,
-        Flags = 22,
-        Unknown3 = 23,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Model = 8,
+        Density = 9,
+        MinSlope = 10,
+        MaxSlope = 11,
+        Unknown = 12,
+        UnitsFromWater = 13,
+        Unknown2 = 14,
+        UnitsFromWaterType = 15,
+        PositionRange = 16,
+        HeightRange = 17,
+        ColorRange = 18,
+        WavePeriod = 19,
+        Flags = 20,
+        Unknown3 = 21,
     }
     #endregion
 
@@ -1271,7 +1265,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 15;
 
-        public const ushort FieldCount = 24;
+        public const ushort FieldCount = 22;
 
         public static readonly Type MaskType = typeof(Grass.Mask<>);
 
@@ -1597,10 +1591,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Grass_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Grass_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Grass_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Grass_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Grass_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1623,10 +1613,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Grass_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Grass_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Grass_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Grass_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

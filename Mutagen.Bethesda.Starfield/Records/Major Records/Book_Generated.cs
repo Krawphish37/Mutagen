@@ -394,8 +394,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -431,8 +429,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2047,38 +2043,36 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        ObjectBounds = 10,
-        DirtinessScale = 11,
-        Transforms = 12,
-        DefaultLayer = 13,
-        XALG = 14,
-        Components = 15,
-        Name = 16,
-        Model = 17,
-        Text = 18,
-        Destructible = 19,
-        PickupSound = 20,
-        DropdownSound = 21,
-        Keywords = 22,
-        FeaturedItemMessage = 23,
-        Value = 24,
-        Weight = 25,
-        Flags = 26,
-        Teaches = 27,
-        TextOffsetX = 28,
-        TextOffsetY = 29,
-        DataSlateType = 30,
-        Description = 31,
-        DataSlateHeaderLeft = 32,
-        DataSlateHeaderRight = 33,
-        InventoryArt = 34,
-        Scene = 35,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        ObjectBounds = 8,
+        DirtinessScale = 9,
+        Transforms = 10,
+        DefaultLayer = 11,
+        XALG = 12,
+        Components = 13,
+        Name = 14,
+        Model = 15,
+        Text = 16,
+        Destructible = 17,
+        PickupSound = 18,
+        DropdownSound = 19,
+        Keywords = 20,
+        FeaturedItemMessage = 21,
+        Value = 22,
+        Weight = 23,
+        Flags = 24,
+        Teaches = 25,
+        TextOffsetX = 26,
+        TextOffsetY = 27,
+        DataSlateType = 28,
+        Description = 29,
+        DataSlateHeaderLeft = 30,
+        DataSlateHeaderRight = 31,
+        InventoryArt = 32,
+        Scene = 33,
     }
     #endregion
 
@@ -2091,7 +2085,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 27;
 
-        public const ushort FieldCount = 36;
+        public const ushort FieldCount = 34;
 
         public static readonly Type MaskType = typeof(Book.Mask<>);
 
@@ -2631,10 +2625,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (Book_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Book_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Book_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Book_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Book_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2657,10 +2647,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Book_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Book_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Book_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Book_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

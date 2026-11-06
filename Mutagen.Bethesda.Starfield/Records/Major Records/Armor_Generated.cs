@@ -469,8 +469,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -511,8 +509,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2551,43 +2547,41 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        ObjectBounds = 10,
-        DirtinessScale = 11,
-        Transforms = 12,
-        Components = 13,
-        Name = 14,
-        ObjectEffect = 15,
-        WorldModel = 16,
-        FirstPersonFlags = 17,
-        Destructible = 18,
-        PickupSound = 19,
-        DropdownSound = 20,
-        EquipmentType = 21,
-        BlockBashImpactDataSet = 22,
-        AlternateBlockMaterial = 23,
-        Race = 24,
-        Keywords = 25,
-        Description = 26,
-        InstanceNaming = 27,
-        Armatures = 28,
-        Value = 29,
-        Weight = 30,
-        Health = 31,
-        ArmorRating = 32,
-        BaseAddonIndex = 33,
-        StaggerRating = 34,
-        Unused = 35,
-        Resistances = 36,
-        AttachParentSlots = 37,
-        ObjectTemplates = 38,
-        Voice = 39,
-        Foley = 40,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        ObjectBounds = 8,
+        DirtinessScale = 9,
+        Transforms = 10,
+        Components = 11,
+        Name = 12,
+        ObjectEffect = 13,
+        WorldModel = 14,
+        FirstPersonFlags = 15,
+        Destructible = 16,
+        PickupSound = 17,
+        DropdownSound = 18,
+        EquipmentType = 19,
+        BlockBashImpactDataSet = 20,
+        AlternateBlockMaterial = 21,
+        Race = 22,
+        Keywords = 23,
+        Description = 24,
+        InstanceNaming = 25,
+        Armatures = 26,
+        Value = 27,
+        Weight = 28,
+        Health = 29,
+        ArmorRating = 30,
+        BaseAddonIndex = 31,
+        StaggerRating = 32,
+        Unused = 33,
+        Resistances = 34,
+        AttachParentSlots = 35,
+        ObjectTemplates = 36,
+        Voice = 37,
+        Foley = 38,
     }
     #endregion
 
@@ -2600,7 +2594,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 32;
 
-        public const ushort FieldCount = 41;
+        public const ushort FieldCount = 39;
 
         public static readonly Type MaskType = typeof(Armor.Mask<>);
 
@@ -3279,10 +3273,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (Armor_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Armor_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Armor_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Armor_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Armor_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -3305,10 +3295,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Armor_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Armor_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Armor_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Armor_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

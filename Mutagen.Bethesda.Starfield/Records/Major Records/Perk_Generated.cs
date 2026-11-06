@@ -227,8 +227,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -249,8 +247,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1335,23 +1331,21 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        Name = 10,
-        Description = 11,
-        Categroy = 12,
-        SkillGroup = 13,
-        CrewAssignment = 14,
-        Flags = 15,
-        Restriction = 16,
-        PerkIcon = 17,
-        Training = 18,
-        Ranks = 19,
-        BackgroundSkills = 20,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        Name = 8,
+        Description = 9,
+        Categroy = 10,
+        SkillGroup = 11,
+        CrewAssignment = 12,
+        Flags = 13,
+        Restriction = 14,
+        PerkIcon = 15,
+        Training = 16,
+        Ranks = 17,
+        BackgroundSkills = 18,
     }
     #endregion
 
@@ -1364,7 +1358,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 12;
 
-        public const ushort FieldCount = 21;
+        public const ushort FieldCount = 19;
 
         public static readonly Type MaskType = typeof(Perk.Mask<>);
 
@@ -1753,10 +1747,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (Perk_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Perk_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Perk_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Perk_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Perk_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1779,10 +1769,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Perk_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Perk_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Perk_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Perk_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -342,8 +342,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -372,8 +370,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1594,31 +1590,29 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        ObjectBounds = 10,
-        Name = 11,
-        Model = 12,
-        ObjectEffect = 13,
-        ImageSpaceModifier = 14,
-        Light = 15,
-        Sound1 = 16,
-        Sound2 = 17,
-        ImpactDataSet = 18,
-        PlacedObject = 19,
-        SpawnProjectile = 20,
-        Force = 21,
-        Damage = 22,
-        Radius = 23,
-        ISRadius = 24,
-        VerticalOffsetMult = 25,
-        Flags = 26,
-        SoundLevel = 27,
-        DATADataTypeState = 28,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        ObjectBounds = 8,
+        Name = 9,
+        Model = 10,
+        ObjectEffect = 11,
+        ImageSpaceModifier = 12,
+        Light = 13,
+        Sound1 = 14,
+        Sound2 = 15,
+        ImpactDataSet = 16,
+        PlacedObject = 17,
+        SpawnProjectile = 18,
+        Force = 19,
+        Damage = 20,
+        Radius = 21,
+        ISRadius = 22,
+        VerticalOffsetMult = 23,
+        Flags = 24,
+        SoundLevel = 25,
+        DATADataTypeState = 26,
     }
     #endregion
 
@@ -1631,7 +1625,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 20;
 
-        public const ushort FieldCount = 29;
+        public const ushort FieldCount = 27;
 
         public static readonly Type MaskType = typeof(Explosion.Mask<>);
 
@@ -2038,10 +2032,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (Explosion_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (Explosion_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Explosion_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Explosion_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (Explosion_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -2064,10 +2054,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Explosion_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Explosion_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Explosion_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Explosion_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

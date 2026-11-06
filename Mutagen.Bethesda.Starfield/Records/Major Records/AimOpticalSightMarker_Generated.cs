@@ -181,8 +181,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -206,8 +204,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1271,26 +1267,24 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        Components = 9,
-        ActivateSightOnSightedMode = 10,
-        OpticalSightAttachNode = 11,
-        DelayBeforeSightActivation = 12,
-        DelayBeforeSightDeactivation = 13,
-        OpticalSightLight = 14,
-        FocalPointDistance = 15,
-        FocalPointDistanceDuringAiming = 16,
-        DelayBetweenShots = 17,
-        LaserArtObject = 18,
-        LaserDotArtObject = 19,
-        MaxLaserPointerDistance = 20,
-        SightControlsFiringDirection = 21,
-        ActivateSightOnNonSightedMode = 22,
-        ActivateSightOnScopedMode = 23,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        Components = 7,
+        ActivateSightOnSightedMode = 8,
+        OpticalSightAttachNode = 9,
+        DelayBeforeSightActivation = 10,
+        DelayBeforeSightDeactivation = 11,
+        OpticalSightLight = 12,
+        FocalPointDistance = 13,
+        FocalPointDistanceDuringAiming = 14,
+        DelayBetweenShots = 15,
+        LaserArtObject = 16,
+        LaserDotArtObject = 17,
+        MaxLaserPointerDistance = 18,
+        SightControlsFiringDirection = 19,
+        ActivateSightOnNonSightedMode = 20,
+        ActivateSightOnScopedMode = 21,
     }
     #endregion
 
@@ -1303,7 +1297,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 15;
 
-        public const ushort FieldCount = 24;
+        public const ushort FieldCount = 22;
 
         public static readonly Type MaskType = typeof(AimOpticalSightMarker.Mask<>);
 
@@ -1661,10 +1655,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (AimOpticalSightMarker_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (AimOpticalSightMarker_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (AimOpticalSightMarker_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (AimOpticalSightMarker_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (AimOpticalSightMarker_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1687,10 +1677,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (AimOpticalSightMarker_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (AimOpticalSightMarker_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (AimOpticalSightMarker_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (AimOpticalSightMarker_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

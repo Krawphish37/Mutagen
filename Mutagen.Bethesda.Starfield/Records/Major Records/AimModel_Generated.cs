@@ -154,8 +154,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -181,8 +179,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1231,28 +1227,26 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        ConeOfFireDegreesX = 9,
-        ConeOfFireDegreesY = 10,
-        ConeOfFireIncreasePerShot = 11,
-        ConeOfFireIncreasePerSec = 12,
-        ConeOfFireDecreaseDelaySeconds = 13,
-        ConeOfFireSneakMult = 14,
-        RecoilDiminishSpringForce = 15,
-        RecoilDiminishSightsMult = 16,
-        RecoilDegreesPerShotX = 17,
-        RecoilDegreesPerShotY = 18,
-        RecoilHipMult = 19,
-        RecoilShotsForRunaway = 20,
-        RecoilArc = 21,
-        RecoilArcRotate = 22,
-        ConeOfFireIronSightsMult = 23,
-        RecoilBaseStability = 24,
-        ConeOfFireIgnoresMovement = 25,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        ConeOfFireDegreesX = 7,
+        ConeOfFireDegreesY = 8,
+        ConeOfFireIncreasePerShot = 9,
+        ConeOfFireIncreasePerSec = 10,
+        ConeOfFireDecreaseDelaySeconds = 11,
+        ConeOfFireSneakMult = 12,
+        RecoilDiminishSpringForce = 13,
+        RecoilDiminishSightsMult = 14,
+        RecoilDegreesPerShotX = 15,
+        RecoilDegreesPerShotY = 16,
+        RecoilHipMult = 17,
+        RecoilShotsForRunaway = 18,
+        RecoilArc = 19,
+        RecoilArcRotate = 20,
+        ConeOfFireIronSightsMult = 21,
+        RecoilBaseStability = 22,
+        ConeOfFireIgnoresMovement = 23,
     }
     #endregion
 
@@ -1265,7 +1259,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 17;
 
-        public const ushort FieldCount = 26;
+        public const ushort FieldCount = 24;
 
         public static readonly Type MaskType = typeof(AimModel.Mask<>);
 
@@ -1592,10 +1586,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (AimModel_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (AimModel_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (AimModel_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (AimModel_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (AimModel_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1618,10 +1608,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (AimModel_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (AimModel_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (AimModel_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (AimModel_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

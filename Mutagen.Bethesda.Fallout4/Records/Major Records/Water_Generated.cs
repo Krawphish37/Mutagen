@@ -432,8 +432,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -494,8 +492,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2638,63 +2634,61 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        Name = 9,
-        Opacity = 10,
-        Flags = 11,
-        Material = 12,
-        OpenSound = 13,
-        ConsumeSpell = 14,
-        ContactSpell = 15,
-        ImageSpace = 16,
-        DATA = 17,
-        FogDepthAmount = 18,
-        FogShallowColor = 19,
-        FogDeepColor = 20,
-        FogColorShallowRange = 21,
-        FogColorDeepRange = 22,
-        FogShallowAlpha = 23,
-        FogDeepAlpha = 24,
-        FogAlphaShallowRange = 25,
-        FogAlphaDeepRange = 26,
-        FogUnderwaterColor = 27,
-        FogUnderwaterAmount = 28,
-        FogUnderwaterNear = 29,
-        FogUnderwaterFar = 30,
-        PhysicalNormalMagnitude = 31,
-        PhysicalShallowNormalFalloff = 32,
-        PhysicalDeepNormalFalloff = 33,
-        PhysicalReflectivityAmount = 34,
-        PhysicalFresnelAmount = 35,
-        PhysicalSurfaceEffectFalloff = 36,
-        PhysicalDisplacementSimulatorForce = 37,
-        PhysicalDisplacementSimulatorVelocity = 38,
-        PhysicalDisplacementSimulatorFalloff = 39,
-        PhysicalDisplacementSimulatorDampener = 40,
-        PhysicalDisplacementSimulatorStartingSize = 41,
-        PhysicalReflectionColor = 42,
-        SpecularSunSpecularPower = 43,
-        SpecularSunSpecularMagnitude = 44,
-        SpecularSunSparklePower = 45,
-        SpecularSunSparkleMagnitude = 46,
-        SpecularInteriorSpecularRadius = 47,
-        SpecularInteriorSpecularBrightness = 48,
-        SpecularInteriorSpecularPower = 49,
-        SiltAmount = 50,
-        SiltLightColor = 51,
-        SiltDarkColor = 52,
-        ScreenSpaceReflections = 53,
-        NoiseLayerOne = 54,
-        NoiseLayerTwo = 55,
-        NoiseLayerThree = 56,
-        GNAM = 57,
-        LinearVelocity = 58,
-        AngularVelocity = 59,
-        DNAMDataTypeState = 60,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        Name = 7,
+        Opacity = 8,
+        Flags = 9,
+        Material = 10,
+        OpenSound = 11,
+        ConsumeSpell = 12,
+        ContactSpell = 13,
+        ImageSpace = 14,
+        DATA = 15,
+        FogDepthAmount = 16,
+        FogShallowColor = 17,
+        FogDeepColor = 18,
+        FogColorShallowRange = 19,
+        FogColorDeepRange = 20,
+        FogShallowAlpha = 21,
+        FogDeepAlpha = 22,
+        FogAlphaShallowRange = 23,
+        FogAlphaDeepRange = 24,
+        FogUnderwaterColor = 25,
+        FogUnderwaterAmount = 26,
+        FogUnderwaterNear = 27,
+        FogUnderwaterFar = 28,
+        PhysicalNormalMagnitude = 29,
+        PhysicalShallowNormalFalloff = 30,
+        PhysicalDeepNormalFalloff = 31,
+        PhysicalReflectivityAmount = 32,
+        PhysicalFresnelAmount = 33,
+        PhysicalSurfaceEffectFalloff = 34,
+        PhysicalDisplacementSimulatorForce = 35,
+        PhysicalDisplacementSimulatorVelocity = 36,
+        PhysicalDisplacementSimulatorFalloff = 37,
+        PhysicalDisplacementSimulatorDampener = 38,
+        PhysicalDisplacementSimulatorStartingSize = 39,
+        PhysicalReflectionColor = 40,
+        SpecularSunSpecularPower = 41,
+        SpecularSunSpecularMagnitude = 42,
+        SpecularSunSparklePower = 43,
+        SpecularSunSparkleMagnitude = 44,
+        SpecularInteriorSpecularRadius = 45,
+        SpecularInteriorSpecularBrightness = 46,
+        SpecularInteriorSpecularPower = 47,
+        SiltAmount = 48,
+        SiltLightColor = 49,
+        SiltDarkColor = 50,
+        ScreenSpaceReflections = 51,
+        NoiseLayerOne = 52,
+        NoiseLayerTwo = 53,
+        NoiseLayerThree = 54,
+        GNAM = 55,
+        LinearVelocity = 56,
+        AngularVelocity = 57,
+        DNAMDataTypeState = 58,
     }
     #endregion
 
@@ -2707,7 +2701,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 52;
 
-        public const ushort FieldCount = 61;
+        public const ushort FieldCount = 59;
 
         public static readonly Type MaskType = typeof(Water.Mask<>);
 
@@ -3269,10 +3263,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Water_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Water_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Water_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Water_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Water_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -3295,10 +3285,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Water_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Water_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Water_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Water_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

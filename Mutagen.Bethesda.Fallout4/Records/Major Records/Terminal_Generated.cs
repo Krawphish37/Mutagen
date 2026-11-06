@@ -364,8 +364,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -393,8 +391,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1993,30 +1989,28 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        ObjectBounds = 10,
-        PreviewTransform = 11,
-        HeaderText = 12,
-        WelcomeText = 13,
-        Name = 14,
-        Model = 15,
-        Keywords = 16,
-        Properties = 17,
-        PNAM = 18,
-        LoopingSound = 19,
-        FNAM = 20,
-        Holotapes = 21,
-        Flags = 22,
-        WorkbenchData = 23,
-        MarkerModel = 24,
-        MarkerParameters = 25,
-        BodyTexts = 26,
-        MenuItems = 27,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        ObjectBounds = 8,
+        PreviewTransform = 9,
+        HeaderText = 10,
+        WelcomeText = 11,
+        Name = 12,
+        Model = 13,
+        Keywords = 14,
+        Properties = 15,
+        PNAM = 16,
+        LoopingSound = 17,
+        FNAM = 18,
+        Holotapes = 19,
+        Flags = 20,
+        WorkbenchData = 21,
+        MarkerModel = 22,
+        MarkerParameters = 23,
+        BodyTexts = 24,
+        MenuItems = 25,
     }
     #endregion
 
@@ -2029,7 +2023,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 19;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 26;
 
         public static readonly Type MaskType = typeof(Terminal.Mask<>);
 
@@ -2514,10 +2508,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Terminal_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Terminal_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Terminal_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Terminal_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Terminal_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2540,10 +2530,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Terminal_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Terminal_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Terminal_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Terminal_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

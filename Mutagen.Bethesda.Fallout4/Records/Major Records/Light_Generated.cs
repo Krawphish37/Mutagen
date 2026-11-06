@@ -426,8 +426,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -467,8 +465,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2215,42 +2211,40 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        ObjectBounds = 10,
-        PreviewTransform = 11,
-        Model = 12,
-        Keywords = 13,
-        Destructible = 14,
-        Properties = 15,
-        Name = 16,
-        Icons = 17,
-        Time = 18,
-        Radius = 19,
-        Color = 20,
-        Flags = 21,
-        FalloffExponent = 22,
-        FOV = 23,
-        NearClip = 24,
-        FlickerPeriod = 25,
-        FlickerIntensityAmplitude = 26,
-        FlickerMovementAmplitude = 27,
-        Constant = 28,
-        Scalar = 29,
-        Exponent = 30,
-        GodRaysNearClip = 31,
-        Value = 32,
-        Weight = 33,
-        FadeValue = 34,
-        Gobo = 35,
-        Lens = 36,
-        GodRays = 37,
-        Sound = 38,
-        DATADataTypeState = 39,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        ObjectBounds = 8,
+        PreviewTransform = 9,
+        Model = 10,
+        Keywords = 11,
+        Destructible = 12,
+        Properties = 13,
+        Name = 14,
+        Icons = 15,
+        Time = 16,
+        Radius = 17,
+        Color = 18,
+        Flags = 19,
+        FalloffExponent = 20,
+        FOV = 21,
+        NearClip = 22,
+        FlickerPeriod = 23,
+        FlickerIntensityAmplitude = 24,
+        FlickerMovementAmplitude = 25,
+        Constant = 26,
+        Scalar = 27,
+        Exponent = 28,
+        GodRaysNearClip = 29,
+        Value = 30,
+        Weight = 31,
+        FadeValue = 32,
+        Gobo = 33,
+        Lens = 34,
+        GodRays = 35,
+        Sound = 36,
+        DATADataTypeState = 37,
     }
     #endregion
 
@@ -2263,7 +2257,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 31;
 
-        public const ushort FieldCount = 40;
+        public const ushort FieldCount = 38;
 
         public static readonly Type MaskType = typeof(Light.Mask<>);
 
@@ -2755,10 +2749,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Light_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Light_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Light_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Light_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Light_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2781,10 +2771,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Light_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Light_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Light_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Light_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

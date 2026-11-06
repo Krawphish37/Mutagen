@@ -380,8 +380,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -419,8 +417,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -2032,40 +2028,38 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        Base = 10,
-        EncounterZone = 11,
-        RagdollData = 12,
-        RagdollBipedData = 13,
-        Patrol = 14,
-        LevelModifier = 15,
-        MerchantContainer = 16,
-        Count = 17,
-        Radius = 18,
-        Health = 19,
-        LinkedReferences = 20,
-        ActivateParents = 21,
-        LinkedReferenceColor = 22,
-        PersistentLocation = 23,
-        LocationReference = 24,
-        IsIgnoredBySandbox = 25,
-        LocationRefTypes = 26,
-        HeadTrackingWeight = 27,
-        Horse = 28,
-        FavorCost = 29,
-        EnableParent = 30,
-        Owner = 31,
-        FactionRank = 32,
-        Emittance = 33,
-        MultiBoundReference = 34,
-        IsIgnoredBySandbox2 = 35,
-        Scale = 36,
-        Placement = 37,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        Base = 8,
+        EncounterZone = 9,
+        RagdollData = 10,
+        RagdollBipedData = 11,
+        Patrol = 12,
+        LevelModifier = 13,
+        MerchantContainer = 14,
+        Count = 15,
+        Radius = 16,
+        Health = 17,
+        LinkedReferences = 18,
+        ActivateParents = 19,
+        LinkedReferenceColor = 20,
+        PersistentLocation = 21,
+        LocationReference = 22,
+        IsIgnoredBySandbox = 23,
+        LocationRefTypes = 24,
+        HeadTrackingWeight = 25,
+        Horse = 26,
+        FavorCost = 27,
+        EnableParent = 28,
+        Owner = 29,
+        FactionRank = 30,
+        Emittance = 31,
+        MultiBoundReference = 32,
+        IsIgnoredBySandbox2 = 33,
+        Scale = 34,
+        Placement = 35,
     }
     #endregion
 
@@ -2078,7 +2072,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 29;
 
-        public const ushort FieldCount = 38;
+        public const ushort FieldCount = 36;
 
         public static readonly Type MaskType = typeof(PlacedNpc.Mask<>);
 
@@ -2614,10 +2608,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (PlacedNpc_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (PlacedNpc_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (PlacedNpc_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (PlacedNpc_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (PlacedNpc_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -2640,10 +2630,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PlacedNpc_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (PlacedNpc_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (PlacedNpc_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedNpc_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

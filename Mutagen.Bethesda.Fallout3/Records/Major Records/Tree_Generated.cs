@@ -223,8 +223,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -248,8 +246,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1383,26 +1379,24 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Model = 10,
-        Icons = 11,
-        Destructible = 12,
-        SpeedTreeSeeds = 13,
-        LeafCurvature = 14,
-        MinimumLeafAngle = 15,
-        MaximumLeafAngle = 16,
-        BranchDimmingValue = 17,
-        LeafDimmingValue = 18,
-        ShadowRadius = 19,
-        RockSpeed = 20,
-        RustleSpeed = 21,
-        Width = 22,
-        Height = 23,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Model = 8,
+        Icons = 9,
+        Destructible = 10,
+        SpeedTreeSeeds = 11,
+        LeafCurvature = 12,
+        MinimumLeafAngle = 13,
+        MaximumLeafAngle = 14,
+        BranchDimmingValue = 15,
+        LeafDimmingValue = 16,
+        ShadowRadius = 17,
+        RockSpeed = 18,
+        RustleSpeed = 19,
+        Width = 20,
+        Height = 21,
     }
     #endregion
 
@@ -1415,7 +1409,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 15;
 
-        public const ushort FieldCount = 24;
+        public const ushort FieldCount = 22;
 
         public static readonly Type MaskType = typeof(Tree.Mask<>);
 
@@ -1797,10 +1791,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Tree_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Tree_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Tree_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Tree_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Tree_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -1823,10 +1813,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Tree_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Tree_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Tree_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Tree_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

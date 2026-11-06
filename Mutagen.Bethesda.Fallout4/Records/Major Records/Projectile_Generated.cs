@@ -387,8 +387,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -430,8 +428,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2035,44 +2031,42 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Name = 10,
-        Model = 11,
-        Destructible = 12,
-        Unused = 13,
-        Flags = 14,
-        Type = 15,
-        Gravity = 16,
-        Speed = 17,
-        Range = 18,
-        Light = 19,
-        MuzzleFlash = 20,
-        ExplosionAltTriggerProximity = 21,
-        ExplosionAltTriggerTimer = 22,
-        Explosion = 23,
-        Sound = 24,
-        MuzzleFlashDuration = 25,
-        FadeDuration = 26,
-        ImpactForce = 27,
-        CountdownSound = 28,
-        DisaleSound = 29,
-        DefaultWeaponSource = 30,
-        ConeSpread = 31,
-        CollisionRadius = 32,
-        Lifetime = 33,
-        RelaunchInterval = 34,
-        DecalData = 35,
-        CollisionLayer = 36,
-        TracerFrequency = 37,
-        VATSProjectile = 38,
-        MuzzleFlashModel = 39,
-        TextureFilesHashes = 40,
-        SoundLevel = 41,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Name = 8,
+        Model = 9,
+        Destructible = 10,
+        Unused = 11,
+        Flags = 12,
+        Type = 13,
+        Gravity = 14,
+        Speed = 15,
+        Range = 16,
+        Light = 17,
+        MuzzleFlash = 18,
+        ExplosionAltTriggerProximity = 19,
+        ExplosionAltTriggerTimer = 20,
+        Explosion = 21,
+        Sound = 22,
+        MuzzleFlashDuration = 23,
+        FadeDuration = 24,
+        ImpactForce = 25,
+        CountdownSound = 26,
+        DisaleSound = 27,
+        DefaultWeaponSource = 28,
+        ConeSpread = 29,
+        CollisionRadius = 30,
+        Lifetime = 31,
+        RelaunchInterval = 32,
+        DecalData = 33,
+        CollisionLayer = 34,
+        TracerFrequency = 35,
+        VATSProjectile = 36,
+        MuzzleFlashModel = 37,
+        TextureFilesHashes = 38,
+        SoundLevel = 39,
     }
     #endregion
 
@@ -2085,7 +2079,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 33;
 
-        public const ushort FieldCount = 42;
+        public const ushort FieldCount = 40;
 
         public static readonly Type MaskType = typeof(Projectile.Mask<>);
 
@@ -2546,10 +2540,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Projectile_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Projectile_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Projectile_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Projectile_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Projectile_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2572,10 +2562,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Projectile_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Projectile_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Projectile_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Projectile_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

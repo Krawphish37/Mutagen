@@ -18,42 +18,6 @@ internal static class VolumesComponentItemLayout
         return !Fits(rest) && rest.Length >= 4;
     }
 
-    /// <summary>
-    /// Whether the items can all be read, the same way the reader will read them.
-    /// VLMS holds only floats and type numbers, so a list that can't be read is safe to keep as raw bytes.
-    /// </summary>
-    public static bool CanRead(ReadOnlySpan<byte> content)
-    {
-        if (content.Length < 4) return false;
-        var count = BinaryPrimitives.ReadUInt32LittleEndian(content);
-        var pos = 4;
-        for (uint i = 0; i < count; i++)
-        {
-            if (pos + FixedLength > content.Length) return false;
-            var type = BinaryPrimitives.ReadInt32LittleEndian(content.Slice(pos));
-            pos += FixedLength;
-            switch (type)
-            {
-                case 1:
-                    pos += 4;
-                    break;
-                case 3:
-                    pos += 8;
-                    break;
-                case 5:
-                    pos += 12;
-                    break;
-                case 11:
-                    pos += Type11HasValue(content.Slice(pos)) ? 4 : 0;
-                    break;
-                default:
-                    return false;
-            }
-            if (pos > content.Length) return false;
-        }
-        return pos == content.Length;
-    }
-
     private static bool Fits(ReadOnlySpan<byte> rest)
     {
         if (rest.Length == 0) return true;

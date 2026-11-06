@@ -285,8 +285,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -312,8 +310,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1768,28 +1764,26 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        Data = 9,
-        Quest = 10,
-        PreviousTopic = 11,
-        PreviousInfo = 12,
-        AddTopics = 13,
-        Responses = 14,
-        Conditions = 15,
-        Choices = 16,
-        LinkFrom = 17,
-        FollowUp = 18,
-        BeginScript = 19,
-        EndScript = 20,
-        UnusedSound = 21,
-        Prompt = 22,
-        Speaker = 23,
-        ActorValuePerk = 24,
-        SpeechChallenge = 25,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        Data = 7,
+        Quest = 8,
+        PreviousTopic = 9,
+        PreviousInfo = 10,
+        AddTopics = 11,
+        Responses = 12,
+        Conditions = 13,
+        Choices = 14,
+        LinkFrom = 15,
+        FollowUp = 16,
+        BeginScript = 17,
+        EndScript = 18,
+        UnusedSound = 19,
+        Prompt = 20,
+        Speaker = 21,
+        ActorValuePerk = 22,
+        SpeechChallenge = 23,
     }
     #endregion
 
@@ -1802,7 +1796,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 17;
 
-        public const ushort FieldCount = 26;
+        public const ushort FieldCount = 24;
 
         public static readonly Type MaskType = typeof(DialogResponses.Mask<>);
 
@@ -2254,10 +2248,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (DialogResponses_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (DialogResponses_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (DialogResponses_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (DialogResponses_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (DialogResponses_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2280,10 +2270,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (DialogResponses_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (DialogResponses_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (DialogResponses_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (DialogResponses_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

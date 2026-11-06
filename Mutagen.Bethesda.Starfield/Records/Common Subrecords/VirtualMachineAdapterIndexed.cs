@@ -14,8 +14,6 @@ partial class VirtualMachineAdapterIndexedBinaryCreateTranslation
         };
 
         ret.Script = ReadEntry(frame, objFormat);
-        // The fragment count (2 bytes) must follow
-        ReadEmptyScriptExtras(frame, ret.Script, bytesAfter: 2);
         ret.Fragments.SetTo(
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ScriptFragmentIndexed>.Instance.Parse(
                 amount: frame.ReadUInt16(),

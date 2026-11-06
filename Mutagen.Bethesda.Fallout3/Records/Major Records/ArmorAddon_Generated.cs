@@ -262,8 +262,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -292,8 +290,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1486,31 +1482,29 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Name = 10,
-        BipedData = 11,
-        MaleBipedModel = 12,
-        MaleWorldModel = 13,
-        MaleIcon = 14,
-        MaleMessageIcon = 15,
-        FemaleBipedModel = 16,
-        FemaleWorldModel = 17,
-        FemaleIcon = 18,
-        FemaleMessageIcon = 19,
-        EquipmentType = 20,
-        Value = 21,
-        MaxCondition = 22,
-        Weight = 23,
-        DamageResistance = 24,
-        ModulatesVoice = 25,
-        DamageThreshold = 26,
-        Unused = 27,
-        DNAMDataTypeState = 28,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Name = 8,
+        BipedData = 9,
+        MaleBipedModel = 10,
+        MaleWorldModel = 11,
+        MaleIcon = 12,
+        MaleMessageIcon = 13,
+        FemaleBipedModel = 14,
+        FemaleWorldModel = 15,
+        FemaleIcon = 16,
+        FemaleMessageIcon = 17,
+        EquipmentType = 18,
+        Value = 19,
+        MaxCondition = 20,
+        Weight = 21,
+        DamageResistance = 22,
+        ModulatesVoice = 23,
+        DamageThreshold = 24,
+        Unused = 25,
+        DNAMDataTypeState = 26,
     }
     #endregion
 
@@ -1523,7 +1517,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 20;
 
-        public const ushort FieldCount = 29;
+        public const ushort FieldCount = 27;
 
         public static readonly Type MaskType = typeof(ArmorAddon.Mask<>);
 
@@ -1954,10 +1948,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (ArmorAddon_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (ArmorAddon_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ArmorAddon_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (ArmorAddon_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (ArmorAddon_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -1980,10 +1970,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ArmorAddon_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (ArmorAddon_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ArmorAddon_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ArmorAddon_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

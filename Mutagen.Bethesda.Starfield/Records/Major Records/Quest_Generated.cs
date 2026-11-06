@@ -488,8 +488,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -530,8 +528,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -3216,43 +3212,41 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        Name = 10,
-        Components = 11,
-        Data = 12,
-        QuestType = 13,
-        QuestFaction = 14,
-        Event = 15,
-        Location = 16,
-        QuestTimeLimit = 17,
-        SourceQuest = 18,
-        QDUPs = 19,
-        TextDisplayGlobals = 20,
-        Filter = 21,
-        Summary = 22,
-        DialogConditions = 23,
-        UnusedConditions = 24,
-        Stages = 25,
-        Objectives = 26,
-        NextAliasID = 27,
-        Aliases = 28,
-        QuestGroup = 29,
-        SwfFile = 30,
-        MissionTypeKeyword = 31,
-        MissionBoardDescription = 32,
-        MissionBoardInfoPanels = 33,
-        Keywords = 34,
-        ScriptComment = 35,
-        Timestamp = 36,
-        Unknown = 37,
-        DialogBranches = 38,
-        DialogTopics = 39,
-        Scenes = 40,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        Name = 8,
+        Components = 9,
+        Data = 10,
+        QuestType = 11,
+        QuestFaction = 12,
+        Event = 13,
+        Location = 14,
+        QuestTimeLimit = 15,
+        SourceQuest = 16,
+        QDUPs = 17,
+        TextDisplayGlobals = 18,
+        Filter = 19,
+        Summary = 20,
+        DialogConditions = 21,
+        UnusedConditions = 22,
+        Stages = 23,
+        Objectives = 24,
+        NextAliasID = 25,
+        Aliases = 26,
+        QuestGroup = 27,
+        SwfFile = 28,
+        MissionTypeKeyword = 29,
+        MissionBoardDescription = 30,
+        MissionBoardInfoPanels = 31,
+        Keywords = 32,
+        ScriptComment = 33,
+        Timestamp = 34,
+        Unknown = 35,
+        DialogBranches = 36,
+        DialogTopics = 37,
+        Scenes = 38,
     }
     #endregion
 
@@ -3265,7 +3259,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 32;
 
-        public const ushort FieldCount = 41;
+        public const ushort FieldCount = 39;
 
         public static readonly Type MaskType = typeof(Quest.Mask<>);
 
@@ -4574,10 +4568,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (Quest_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Quest_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Quest_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Quest_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Quest_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -4600,10 +4590,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Quest_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Quest_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Quest_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Quest_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

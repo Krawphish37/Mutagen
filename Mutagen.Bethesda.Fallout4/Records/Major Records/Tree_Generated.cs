@@ -269,8 +269,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -298,8 +296,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1503,30 +1499,28 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        ObjectBounds = 10,
-        Model = 11,
-        Ingredient = 12,
-        HarvestSound = 13,
-        Production = 14,
-        Name = 15,
-        TrunkFlexibility = 16,
-        BranchFlexibility = 17,
-        TrunkAmplitude = 18,
-        FrontAmplitude = 19,
-        BackAmplitude = 20,
-        SideAmplitude = 21,
-        FrontFrequency = 22,
-        BackFrequency = 23,
-        SideFrequency = 24,
-        LeafFlexibility = 25,
-        LeafAmplitude = 26,
-        LeafFrequency = 27,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        ObjectBounds = 8,
+        Model = 9,
+        Ingredient = 10,
+        HarvestSound = 11,
+        Production = 12,
+        Name = 13,
+        TrunkFlexibility = 14,
+        BranchFlexibility = 15,
+        TrunkAmplitude = 16,
+        FrontAmplitude = 17,
+        BackAmplitude = 18,
+        SideAmplitude = 19,
+        FrontFrequency = 20,
+        BackFrequency = 21,
+        SideFrequency = 22,
+        LeafFlexibility = 23,
+        LeafAmplitude = 24,
+        LeafFrequency = 25,
     }
     #endregion
 
@@ -1539,7 +1533,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 19;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 26;
 
         public static readonly Type MaskType = typeof(Tree.Mask<>);
 
@@ -1909,10 +1903,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Tree_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Tree_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Tree_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Tree_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Tree_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1935,10 +1925,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Tree_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Tree_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Tree_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Tree_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

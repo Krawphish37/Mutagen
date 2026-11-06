@@ -92,8 +92,6 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem Data)
             : base(
@@ -101,8 +99,6 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.Data = Data;
@@ -658,10 +654,8 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        OblivionMajorRecordFlags = 6,
-        Data = 7,
+        OblivionMajorRecordFlags = 4,
+        Data = 5,
     }
     #endregion
 
@@ -674,7 +668,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 8;
+        public const ushort FieldCount = 6;
 
         public static readonly Type MaskType = typeof(GameSettingFloat.Mask<>);
 
@@ -922,10 +916,6 @@ namespace Mutagen.Bethesda.Oblivion
                     return (GameSettingFloat_FieldIndex)((int)index);
                 case GameSetting_FieldIndex.EditorID:
                     return (GameSettingFloat_FieldIndex)((int)index);
-                case GameSetting_FieldIndex.UnknownSubrecords:
-                    return (GameSettingFloat_FieldIndex)((int)index);
-                case GameSetting_FieldIndex.UnknownSubrecordsSource:
-                    return (GameSettingFloat_FieldIndex)((int)index);
                 case GameSetting_FieldIndex.OblivionMajorRecordFlags:
                     return (GameSettingFloat_FieldIndex)((int)index);
                 default:
@@ -945,10 +935,6 @@ namespace Mutagen.Bethesda.Oblivion
                     return (GameSettingFloat_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (GameSettingFloat_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (GameSettingFloat_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (GameSettingFloat_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (GameSettingFloat_FieldIndex)((int)index);
                 default:
@@ -967,10 +953,6 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (GameSettingFloat_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (GameSettingFloat_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (GameSettingFloat_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (GameSettingFloat_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

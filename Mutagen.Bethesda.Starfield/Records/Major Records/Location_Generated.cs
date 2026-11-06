@@ -564,8 +564,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -608,8 +606,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -3618,45 +3614,43 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        Components = 10,
-        Properties = 11,
-        AddedPersistLocationReferences = 12,
-        MasterPersistLocationReferences = 13,
-        RemovedPersistLocationReferences = 14,
-        AddedUniqueBaseForms = 15,
-        LocationCellUniqueReferences = 16,
-        RemovedUniqueBaseForms = 17,
-        AddedUniqueNpcs = 18,
-        MasterUniqueNpcs = 19,
-        RemovedUniqueNpcs = 20,
-        AddedSpecialReferences = 21,
-        MasterSpecialReferences = 22,
-        RemovedSpecialReferences = 23,
-        MasterWorldspaceCells = 24,
-        AddedInitiallyDisabledReferences = 25,
-        MasterInitiallyDisabledReferences = 26,
-        AddedEnablePointReferences = 27,
-        MasterEnablePointReferences = 28,
-        Name = 29,
-        Keywords = 30,
-        Properties2 = 31,
-        Owner = 32,
-        ParentLocation = 33,
-        MusicType = 34,
-        UnreportedCrimeFaction = 35,
-        WorldLocationMarkerRef = 36,
-        WorldLocationRadius = 37,
-        ActorFadeMult = 38,
-        RandomConversionTimer = 39,
-        Color = 40,
-        StarID = 41,
-        PlanetID = 42,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        Components = 8,
+        Properties = 9,
+        AddedPersistLocationReferences = 10,
+        MasterPersistLocationReferences = 11,
+        RemovedPersistLocationReferences = 12,
+        AddedUniqueBaseForms = 13,
+        LocationCellUniqueReferences = 14,
+        RemovedUniqueBaseForms = 15,
+        AddedUniqueNpcs = 16,
+        MasterUniqueNpcs = 17,
+        RemovedUniqueNpcs = 18,
+        AddedSpecialReferences = 19,
+        MasterSpecialReferences = 20,
+        RemovedSpecialReferences = 21,
+        MasterWorldspaceCells = 22,
+        AddedInitiallyDisabledReferences = 23,
+        MasterInitiallyDisabledReferences = 24,
+        AddedEnablePointReferences = 25,
+        MasterEnablePointReferences = 26,
+        Name = 27,
+        Keywords = 28,
+        Properties2 = 29,
+        Owner = 30,
+        ParentLocation = 31,
+        MusicType = 32,
+        UnreportedCrimeFaction = 33,
+        WorldLocationMarkerRef = 34,
+        WorldLocationRadius = 35,
+        ActorFadeMult = 36,
+        RandomConversionTimer = 37,
+        Color = 38,
+        StarID = 39,
+        PlanetID = 40,
     }
     #endregion
 
@@ -3669,7 +3663,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 34;
 
-        public const ushort FieldCount = 43;
+        public const ushort FieldCount = 41;
 
         public static readonly Type MaskType = typeof(Location.Mask<>);
 
@@ -4492,10 +4486,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (Location_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Location_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Location_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Location_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Location_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -4518,10 +4508,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Location_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Location_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Location_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Location_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

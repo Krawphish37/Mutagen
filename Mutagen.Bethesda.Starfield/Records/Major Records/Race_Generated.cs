@@ -664,8 +664,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -732,8 +730,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -3884,69 +3880,67 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        XALG = 10,
-        Components = 11,
-        Name = 12,
-        Description = 13,
-        ActorEffect = 14,
-        Skin = 15,
-        FirstPersonFlags = 16,
-        Keywords = 17,
-        Properties = 18,
-        BodyPartData = 19,
-        Height = 20,
-        DefaultWeight = 21,
-        Flags = 22,
-        AccelerationRate = 23,
-        DecelerationRate = 24,
-        Size = 25,
-        DAT2Unknown1 = 26,
-        ShieldBipedObject = 27,
-        BeardBipedObject = 28,
-        BodyBipedObject = 29,
-        DAT2Unknown2 = 30,
-        Explosion = 31,
-        Debris = 32,
-        ImpactDataSet = 33,
-        OrientationLimitsPitch = 34,
-        OrientationLimitsRoll = 35,
-        DAT2Unknown3 = 36,
-        SkeletalModel = 37,
-        MovementTypeNames = 38,
-        Voices = 39,
-        FacegenMainClamp = 40,
-        FacegenFaceClamp = 41,
-        Attacks = 42,
-        BodyData = 43,
-        AimAssistPose = 44,
-        ImpactMaterialType = 45,
-        WED0 = 46,
-        WED1 = 47,
-        BipedObjects = 48,
-        MovementDataOverrides = 49,
-        EquipmentFlags = 50,
-        EquipmentSlots = 51,
-        UnarmedWeapon = 52,
-        BaseMovementDefault = 53,
-        BaseMovementSwimDefault = 54,
-        BaseMovementFlyDefault = 55,
-        ChargenAndSkintones = 56,
-        MorphRace = 57,
-        ArmorRace = 58,
-        SubgraphTemplateRace = 59,
-        Subgraphs = 60,
-        IdleChatterTimeMin = 61,
-        IdleChatterTimeMax = 62,
-        DialogueQuest = 63,
-        HeadPartsAndBoneModifiers = 64,
-        MannequinSkinSwaps = 65,
-        PluralName = 66,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        XALG = 8,
+        Components = 9,
+        Name = 10,
+        Description = 11,
+        ActorEffect = 12,
+        Skin = 13,
+        FirstPersonFlags = 14,
+        Keywords = 15,
+        Properties = 16,
+        BodyPartData = 17,
+        Height = 18,
+        DefaultWeight = 19,
+        Flags = 20,
+        AccelerationRate = 21,
+        DecelerationRate = 22,
+        Size = 23,
+        DAT2Unknown1 = 24,
+        ShieldBipedObject = 25,
+        BeardBipedObject = 26,
+        BodyBipedObject = 27,
+        DAT2Unknown2 = 28,
+        Explosion = 29,
+        Debris = 30,
+        ImpactDataSet = 31,
+        OrientationLimitsPitch = 32,
+        OrientationLimitsRoll = 33,
+        DAT2Unknown3 = 34,
+        SkeletalModel = 35,
+        MovementTypeNames = 36,
+        Voices = 37,
+        FacegenMainClamp = 38,
+        FacegenFaceClamp = 39,
+        Attacks = 40,
+        BodyData = 41,
+        AimAssistPose = 42,
+        ImpactMaterialType = 43,
+        WED0 = 44,
+        WED1 = 45,
+        BipedObjects = 46,
+        MovementDataOverrides = 47,
+        EquipmentFlags = 48,
+        EquipmentSlots = 49,
+        UnarmedWeapon = 50,
+        BaseMovementDefault = 51,
+        BaseMovementSwimDefault = 52,
+        BaseMovementFlyDefault = 53,
+        ChargenAndSkintones = 54,
+        MorphRace = 55,
+        ArmorRace = 56,
+        SubgraphTemplateRace = 57,
+        Subgraphs = 58,
+        IdleChatterTimeMin = 59,
+        IdleChatterTimeMax = 60,
+        DialogueQuest = 61,
+        HeadPartsAndBoneModifiers = 62,
+        MannequinSkinSwaps = 63,
+        PluralName = 64,
     }
     #endregion
 
@@ -3959,7 +3953,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 58;
 
-        public const ushort FieldCount = 67;
+        public const ushort FieldCount = 65;
 
         public static readonly Type MaskType = typeof(Race.Mask<>);
 
@@ -4879,10 +4873,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (Race_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Race_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Race_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Race_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Race_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -4905,10 +4895,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Race_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Race_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Race_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Race_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

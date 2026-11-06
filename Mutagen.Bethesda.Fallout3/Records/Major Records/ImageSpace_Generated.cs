@@ -283,8 +283,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -332,8 +330,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -2037,50 +2033,48 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        HdrEyeAdaptSpeed = 9,
-        HdrBlurRadius = 10,
-        HdrBlurPasses = 11,
-        HdrEmissiveMult = 12,
-        HdrTargetLum = 13,
-        HdrUpperLumClamp = 14,
-        HdrBrightScale = 15,
-        HdrBrightClamp = 16,
-        HdrLumRampNoTex = 17,
-        HdrLumRampMin = 18,
-        HdrLumRampMax = 19,
-        HdrSunlightDimmer = 20,
-        HdrGrassDimmer = 21,
-        HdrTreeDimmer = 22,
-        HdrSkinDimmer = 23,
-        BloomBlurRadius = 24,
-        BloomAlphaMultInterior = 25,
-        BloomAlphaMultExterior = 26,
-        GetHitBlurRadius = 27,
-        GetHitBlurDampingConstant = 28,
-        GetHitDampingConstant = 29,
-        NightEyeTintRed = 30,
-        NightEyeTintGreen = 31,
-        NightEyeTintBlue = 32,
-        NightEyeBrightness = 33,
-        CinematicSaturation = 34,
-        CinematicContrastAvgLumValue = 35,
-        CinematicContrastValue = 36,
-        CinematicBrightnessValue = 37,
-        CinematicTintRed = 38,
-        CinematicTintGreen = 39,
-        CinematicTintBlue = 40,
-        CinematicTintValue = 41,
-        Unknown = 42,
-        Unused1 = 43,
-        Unused2 = 44,
-        Unused3 = 45,
-        Flags = 46,
-        DNAMDataTypeState = 47,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        HdrEyeAdaptSpeed = 7,
+        HdrBlurRadius = 8,
+        HdrBlurPasses = 9,
+        HdrEmissiveMult = 10,
+        HdrTargetLum = 11,
+        HdrUpperLumClamp = 12,
+        HdrBrightScale = 13,
+        HdrBrightClamp = 14,
+        HdrLumRampNoTex = 15,
+        HdrLumRampMin = 16,
+        HdrLumRampMax = 17,
+        HdrSunlightDimmer = 18,
+        HdrGrassDimmer = 19,
+        HdrTreeDimmer = 20,
+        HdrSkinDimmer = 21,
+        BloomBlurRadius = 22,
+        BloomAlphaMultInterior = 23,
+        BloomAlphaMultExterior = 24,
+        GetHitBlurRadius = 25,
+        GetHitBlurDampingConstant = 26,
+        GetHitDampingConstant = 27,
+        NightEyeTintRed = 28,
+        NightEyeTintGreen = 29,
+        NightEyeTintBlue = 30,
+        NightEyeBrightness = 31,
+        CinematicSaturation = 32,
+        CinematicContrastAvgLumValue = 33,
+        CinematicContrastValue = 34,
+        CinematicBrightnessValue = 35,
+        CinematicTintRed = 36,
+        CinematicTintGreen = 37,
+        CinematicTintBlue = 38,
+        CinematicTintValue = 39,
+        Unknown = 40,
+        Unused1 = 41,
+        Unused2 = 42,
+        Unused3 = 43,
+        Flags = 44,
+        DNAMDataTypeState = 45,
     }
     #endregion
 
@@ -2093,7 +2087,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 39;
 
-        public const ushort FieldCount = 48;
+        public const ushort FieldCount = 46;
 
         public static readonly Type MaskType = typeof(ImageSpace.Mask<>);
 
@@ -2552,10 +2546,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (ImageSpace_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (ImageSpace_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ImageSpace_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (ImageSpace_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (ImageSpace_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2578,10 +2568,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ImageSpace_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (ImageSpace_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ImageSpace_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ImageSpace_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

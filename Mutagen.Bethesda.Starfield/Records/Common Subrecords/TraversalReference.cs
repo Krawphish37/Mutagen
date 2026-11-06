@@ -60,56 +60,37 @@ partial class TraversalReferenceBinaryCreateTranslation
         item.Unknown = frame.ReadBytes(8);
     }
  
-    public static ExtendedList<TraversalReference> Parse(
+    public static ExtendedList<TraversalReference> Parse( 
         MutagenFrame reader,
         out uint fluffBytes)
     {
-        return Parse(reader, out fluffBytes, out _);
-    }
-
-    /// <param name="fluff">The bytes after the last entry, only when they aren't all zeros</param>
-    public static ExtendedList<TraversalReference> Parse(
-        MutagenFrame reader,
-        out uint fluffBytes,
-        out byte[]? fluff)
-    {
         fluffBytes = 0;
-        fluff = null;
-        var ret = new ExtendedList<TraversalReference>();
-        while (!reader.Complete)
+        var ret = new ExtendedList<TraversalReference>(); 
+        while (!reader.Complete) 
         {
             var remaining = checked((uint)reader.Remaining);
-            var startPos = reader.Position;
-            bool stop;
             try
             {
-                stop = !TraversalReference.TryCreateFromBinary(reader, out var subItem)
-                    || Zeroed.Equals(subItem, _equalsMask);
-                if (!stop)
+                if (!TraversalReference.TryCreateFromBinary(reader, out var subItem)
+                    || Zeroed.Equals(subItem, _equalsMask))
                 {
-                    ret.Add(subItem!);
-                }
+                    fluffBytes = remaining;
+                    reader.SkipRemainingBytes();
+                    break;
+                } 
+            
+                ret.Add(subItem); 
             }
             catch (ArgumentOutOfRangeException)
             {
                 // Expected to occur within Starfield.esm, due to fluff bytes of unknown length
-                stop = true;
-            }
-            if (stop)
-            {
                 fluffBytes = remaining;
-                reader.Position = startPos;
-                fluff = KeepIfNotZeros(reader.ReadBytes(checked((int)remaining)));
+                reader.SkipRemainingBytes();
                 break;
             }
-        }
-        return ret;
-    }
-
-    public static byte[]? KeepIfNotZeros(ReadOnlySpan<byte> bytes)
-    {
-        return bytes.ContainsAnyExcept((byte)0) ? bytes.ToArray() : null;
-    }
+        } 
+        return ret; 
+    } 
 }
 
 partial class TraversalReferenceBinaryWriteTranslation
@@ -131,8 +112,7 @@ partial class TraversalReferenceBinaryWriteTranslation
     public static void TraversalsListWriterHelper(
         MutagenWriter writer,
         IReadOnlyList<ITraversalReferenceGetter>? items,
-        uint numTraversalFluffBytes,
-        ReadOnlyMemorySlice<byte>? fluff = null)
+        uint numTraversalFluffBytes)
     {
         if (items == null) return; 
         try 
@@ -151,14 +131,7 @@ partial class TraversalReferenceBinaryWriteTranslation
                             item: item,
                             writer: writerToUse);
                     } 
-                    if (fluff is { } kept)
-                    {
-                        writerToUse.Write(kept);
-                    }
-                    else
-                    {
-                        writerToUse.WriteZeros(numTraversalFluffBytes);
-                    }
+                    writerToUse.WriteZeros(numTraversalFluffBytes);
                 } 
             } 
             catch (OverflowException overflow) 
@@ -203,32 +176,15 @@ partial class TraversalReferenceBinaryOverlay
         long finalPos, int offset, PreviousParse lastParsed,
         out uint fluffBytes)
     {
-        return Factory(stream, package, finalPos, offset, lastParsed, out fluffBytes, out _);
-    }
-
-    /// <param name="fluff">The bytes after the last entry, only when they aren't all zeros</param>
-    public static IReadOnlyList<ITraversalReferenceGetter> Factory(
-        OverlayStream stream, BinaryOverlayFactoryPackage package,
-        long finalPos, int offset, PreviousParse lastParsed,
-        out uint fluffBytes,
-        out byte[]? fluff)
-    {
         stream.ReadSubrecordHeader(RecordTypes.XTV2);
-        var mem = stream.RemainingMemory;
-        var startPos = stream.Position;
-        var locs = GetLocs(stream, package, finalPos, offset, lastParsed, out fluffBytes);
-        fluff = fluffBytes == 0
-            ? null
-            : TraversalReferenceBinaryCreateTranslation.KeepIfNotZeros(
-                mem.Slice(checked((int)(finalPos - fluffBytes - startPos)), checked((int)fluffBytes)));
         return BinaryOverlayList.FactoryByArray(
-            mem: mem,
+            mem: stream.RemainingMemory,
             package: package,
             getter: (s, p) =>
             {
                 return TraversalReferenceFactory(s, p);
             },
-            locs: locs);
+            locs: GetLocs(stream, package, finalPos, offset, lastParsed, out fluffBytes));
     }
 
     public static IReadOnlyList<int> GetLocs(

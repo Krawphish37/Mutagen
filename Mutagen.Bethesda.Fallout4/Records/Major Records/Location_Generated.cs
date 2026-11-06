@@ -451,8 +451,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -486,8 +484,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2936,36 +2932,34 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        PersistentActorReferencesAdded = 9,
-        PersistentActorReferencesStatic = 10,
-        PersistentActorReferencesRemoved = 11,
-        UniqueActorReferencesAdded = 12,
-        UniqueActorReferencesStatic = 13,
-        UniqueActorReferencesRemoved = 14,
-        LocationRefTypeReferencesAdded = 15,
-        LocationRefTypeReferencesStatic = 16,
-        LocationRefTypeReferencesRemoved = 17,
-        WorldspaceCellsAdded = 18,
-        WorldspaceCellsStatic = 19,
-        WorldspaceCellsRemoved = 20,
-        InitiallyDisabledReferencesAdded = 21,
-        InitiallyDisabledReferencesStatic = 22,
-        EnableParentReferencesAdded = 23,
-        EnableParentReferencesStatic = 24,
-        Name = 25,
-        Keywords = 26,
-        ParentLocation = 27,
-        Music = 28,
-        UnreportedCrimeFaction = 29,
-        WorldLocationMarkerRef = 30,
-        WorldLocationRadius = 31,
-        ActorFadeMult = 32,
-        Color = 33,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        PersistentActorReferencesAdded = 7,
+        PersistentActorReferencesStatic = 8,
+        PersistentActorReferencesRemoved = 9,
+        UniqueActorReferencesAdded = 10,
+        UniqueActorReferencesStatic = 11,
+        UniqueActorReferencesRemoved = 12,
+        LocationRefTypeReferencesAdded = 13,
+        LocationRefTypeReferencesStatic = 14,
+        LocationRefTypeReferencesRemoved = 15,
+        WorldspaceCellsAdded = 16,
+        WorldspaceCellsStatic = 17,
+        WorldspaceCellsRemoved = 18,
+        InitiallyDisabledReferencesAdded = 19,
+        InitiallyDisabledReferencesStatic = 20,
+        EnableParentReferencesAdded = 21,
+        EnableParentReferencesStatic = 22,
+        Name = 23,
+        Keywords = 24,
+        ParentLocation = 25,
+        Music = 26,
+        UnreportedCrimeFaction = 27,
+        WorldLocationMarkerRef = 28,
+        WorldLocationRadius = 29,
+        ActorFadeMult = 30,
+        Color = 31,
     }
     #endregion
 
@@ -2978,7 +2972,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 25;
 
-        public const ushort FieldCount = 34;
+        public const ushort FieldCount = 32;
 
         public static readonly Type MaskType = typeof(Location.Mask<>);
 
@@ -3640,10 +3634,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Location_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Location_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Location_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Location_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Location_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -3666,10 +3656,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Location_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Location_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Location_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Location_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

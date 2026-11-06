@@ -24,6 +24,4 @@ partial class ScriptEntryBinaryOverlay
     public string Name => throw new NotImplementedException();
 
     public ScriptEntry.Flag Flags => throw new NotImplementedException();
-
-    public bool EmptyNameHasFlagsAndProperties => throw new NotImplementedException();
 }

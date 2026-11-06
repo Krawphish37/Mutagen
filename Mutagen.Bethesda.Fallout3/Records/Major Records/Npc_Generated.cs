@@ -551,8 +551,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -607,8 +605,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -3018,57 +3014,55 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        ObjectBounds = 9,
-        Name = 10,
-        Model = 11,
-        Configuration = 12,
-        Factions = 13,
-        DeathItem = 14,
-        Voice = 15,
-        Template = 16,
-        Race = 17,
-        ActorEffects = 18,
-        UnarmedAttackEffect = 19,
-        UnarmedAttackAnimation = 20,
-        Destructible = 21,
-        Script = 22,
-        Items = 23,
-        AIData = 24,
-        Packages = 25,
-        Animations = 26,
-        Class = 27,
-        BaseHealth = 28,
-        Strength = 29,
-        Perception = 30,
-        Endurance = 31,
-        Charisma = 32,
-        Intelligence = 33,
-        Agility = 34,
-        Luck = 35,
-        Unused1 = 36,
-        Unused2 = 37,
-        Unused3 = 38,
-        Unused4 = 39,
-        PlayerSkills = 40,
-        HeadParts = 41,
-        Hair = 42,
-        HairLength = 43,
-        Eyes = 44,
-        HairColor = 45,
-        CombatStyle = 46,
-        ImpactMaterialType = 47,
-        FaceGenGeometrySymmetric = 48,
-        FaceGenGeometryAsymmetric = 49,
-        FaceGenTextureSymmetric = 50,
-        NAM5 = 51,
-        Height = 52,
-        Weight = 53,
-        DATADataTypeState = 54,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        ObjectBounds = 7,
+        Name = 8,
+        Model = 9,
+        Configuration = 10,
+        Factions = 11,
+        DeathItem = 12,
+        Voice = 13,
+        Template = 14,
+        Race = 15,
+        ActorEffects = 16,
+        UnarmedAttackEffect = 17,
+        UnarmedAttackAnimation = 18,
+        Destructible = 19,
+        Script = 20,
+        Items = 21,
+        AIData = 22,
+        Packages = 23,
+        Animations = 24,
+        Class = 25,
+        BaseHealth = 26,
+        Strength = 27,
+        Perception = 28,
+        Endurance = 29,
+        Charisma = 30,
+        Intelligence = 31,
+        Agility = 32,
+        Luck = 33,
+        Unused1 = 34,
+        Unused2 = 35,
+        Unused3 = 36,
+        Unused4 = 37,
+        PlayerSkills = 38,
+        HeadParts = 39,
+        Hair = 40,
+        HairLength = 41,
+        Eyes = 42,
+        HairColor = 43,
+        CombatStyle = 44,
+        ImpactMaterialType = 45,
+        FaceGenGeometrySymmetric = 46,
+        FaceGenGeometryAsymmetric = 47,
+        FaceGenTextureSymmetric = 48,
+        NAM5 = 49,
+        Height = 50,
+        Weight = 51,
+        DATADataTypeState = 52,
     }
     #endregion
 
@@ -3081,7 +3075,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 46;
 
-        public const ushort FieldCount = 55;
+        public const ushort FieldCount = 53;
 
         public static readonly Type MaskType = typeof(Npc.Mask<>);
 
@@ -3738,10 +3732,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Npc_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Npc_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Npc_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Npc_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Npc_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -3764,10 +3754,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Npc_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Npc_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Npc_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Npc_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

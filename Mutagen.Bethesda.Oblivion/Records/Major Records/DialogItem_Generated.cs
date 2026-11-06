@@ -215,8 +215,6 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem Data,
                 TItem Quest,
@@ -233,8 +231,6 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.Data = new MaskItem<TItem, DialogItemData.Mask<TItem>?>(Data, new DialogItemData.Mask<TItem>(Data));
@@ -1406,19 +1402,17 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        OblivionMajorRecordFlags = 6,
-        Data = 7,
-        Quest = 8,
-        Topic = 9,
-        PreviousItem = 10,
-        Topics = 11,
-        Responses = 12,
-        Conditions = 13,
-        Choices = 14,
-        LinkFrom = 15,
-        Script = 16,
+        OblivionMajorRecordFlags = 4,
+        Data = 5,
+        Quest = 6,
+        Topic = 7,
+        PreviousItem = 8,
+        Topics = 9,
+        Responses = 10,
+        Conditions = 11,
+        Choices = 12,
+        LinkFrom = 13,
+        Script = 14,
     }
     #endregion
 
@@ -1431,7 +1425,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 10;
 
-        public const ushort FieldCount = 17;
+        public const ushort FieldCount = 15;
 
         public static readonly Type MaskType = typeof(DialogItem.Mask<>);
 
@@ -1805,10 +1799,6 @@ namespace Mutagen.Bethesda.Oblivion
                     return (DialogItem_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (DialogItem_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (DialogItem_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (DialogItem_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (DialogItem_FieldIndex)((int)index);
                 default:
@@ -1827,10 +1817,6 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (DialogItem_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (DialogItem_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (DialogItem_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (DialogItem_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

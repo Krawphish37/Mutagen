@@ -325,8 +325,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -356,8 +354,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1774,32 +1770,30 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        Components = 10,
-        Flags = 11,
-        TPIC = 12,
-        SharedDialog = 13,
-        DialogGroup = 14,
-        Responses = 15,
-        Conditions = 16,
-        Prompt = 17,
-        Speaker = 18,
-        StartScene = 19,
-        INTV = 20,
-        WED0 = 21,
-        SetParentQuestStage = 22,
-        StartScenePhase = 23,
-        ResetGlobal = 24,
-        SubtitlePriority = 25,
-        COCT = 26,
-        AffinityEvent = 27,
-        SpeechChallenge = 28,
-        Perk = 29,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        Components = 8,
+        Flags = 9,
+        TPIC = 10,
+        SharedDialog = 11,
+        DialogGroup = 12,
+        Responses = 13,
+        Conditions = 14,
+        Prompt = 15,
+        Speaker = 16,
+        StartScene = 17,
+        INTV = 18,
+        WED0 = 19,
+        SetParentQuestStage = 20,
+        StartScenePhase = 21,
+        ResetGlobal = 22,
+        SubtitlePriority = 23,
+        COCT = 24,
+        AffinityEvent = 25,
+        SpeechChallenge = 26,
+        Perk = 27,
     }
     #endregion
 
@@ -1812,7 +1806,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 21;
 
-        public const ushort FieldCount = 30;
+        public const ushort FieldCount = 28;
 
         public static readonly Type MaskType = typeof(DialogResponses.Mask<>);
 
@@ -2299,10 +2293,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (DialogResponses_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (DialogResponses_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (DialogResponses_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (DialogResponses_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (DialogResponses_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2325,10 +2315,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (DialogResponses_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (DialogResponses_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (DialogResponses_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (DialogResponses_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -163,8 +163,6 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -184,8 +182,6 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1138,22 +1134,20 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout4MajorRecordFlags = 8,
-        Weathers = 9,
-        SunTexture = 10,
-        SunGlareTexture = 11,
-        Model = 12,
-        SunriseBegin = 13,
-        SunriseEnd = 14,
-        SunsetBegin = 15,
-        SunsetEnd = 16,
-        Volatility = 17,
-        Moons = 18,
-        PhaseLength = 19,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout4MajorRecordFlags = 6,
+        Weathers = 7,
+        SunTexture = 8,
+        SunGlareTexture = 9,
+        Model = 10,
+        SunriseBegin = 11,
+        SunriseEnd = 12,
+        SunsetBegin = 13,
+        SunsetEnd = 14,
+        Volatility = 15,
+        Moons = 16,
+        PhaseLength = 17,
     }
     #endregion
 
@@ -1166,7 +1160,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 11;
 
-        public const ushort FieldCount = 20;
+        public const ushort FieldCount = 18;
 
         public static readonly Type MaskType = typeof(Climate.Mask<>);
 
@@ -1487,10 +1481,6 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Climate_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Climate_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Climate_FieldIndex)((int)index);
-                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Climate_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Climate_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1513,10 +1503,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Climate_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Climate_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Climate_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Climate_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

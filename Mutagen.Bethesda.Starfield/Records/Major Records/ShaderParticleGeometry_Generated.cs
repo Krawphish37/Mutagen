@@ -211,8 +211,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -247,8 +245,6 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1588,37 +1584,35 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        StarfieldMajorRecordFlags = 8,
-        VirtualMachineAdapter = 9,
-        GravityVelocity = 10,
-        Unknown1 = 11,
-        RotationVelocity = 12,
-        Unknown2 = 13,
-        ParticleSizeX = 14,
-        Unknown3 = 15,
-        ParticleSizeY = 16,
-        Unknown4 = 17,
-        CenterOffsetMin = 18,
-        Unknown5 = 19,
-        CenterOffsetMax = 20,
-        Unknown6 = 21,
-        InitialRotation = 22,
-        Unknown7 = 23,
-        NumSubtexturesX = 24,
-        Unknown8 = 25,
-        NumSubtexturesY = 26,
-        Unknown9 = 27,
-        Type = 28,
-        Unknown10 = 29,
-        BoxSize = 30,
-        Unknown11 = 31,
-        ParticleDensity = 32,
-        Unknown12 = 33,
-        ParticleTexture = 34,
+        FormVersion = 4,
+        Version2 = 5,
+        StarfieldMajorRecordFlags = 6,
+        VirtualMachineAdapter = 7,
+        GravityVelocity = 8,
+        Unknown1 = 9,
+        RotationVelocity = 10,
+        Unknown2 = 11,
+        ParticleSizeX = 12,
+        Unknown3 = 13,
+        ParticleSizeY = 14,
+        Unknown4 = 15,
+        CenterOffsetMin = 16,
+        Unknown5 = 17,
+        CenterOffsetMax = 18,
+        Unknown6 = 19,
+        InitialRotation = 20,
+        Unknown7 = 21,
+        NumSubtexturesX = 22,
+        Unknown8 = 23,
+        NumSubtexturesY = 24,
+        Unknown9 = 25,
+        Type = 26,
+        Unknown10 = 27,
+        BoxSize = 28,
+        Unknown11 = 29,
+        ParticleDensity = 30,
+        Unknown12 = 31,
+        ParticleTexture = 32,
     }
     #endregion
 
@@ -1631,7 +1625,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 26;
 
-        public const ushort FieldCount = 35;
+        public const ushort FieldCount = 33;
 
         public static readonly Type MaskType = typeof(ShaderParticleGeometry.Mask<>);
 
@@ -2022,10 +2016,6 @@ namespace Mutagen.Bethesda.Starfield
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ShaderParticleGeometry_FieldIndex)((int)index);
-                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (ShaderParticleGeometry_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2048,10 +2038,6 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (ShaderParticleGeometry_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ShaderParticleGeometry_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ShaderParticleGeometry_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -1268,7 +1268,6 @@ public class PluginTranslationModule : BinaryTranslationModule
                                             c.Add("message: \"Unexpected subrecord\"");
                                         }
                                     }
-                                    sb.AppendLine("Mutagen.Bethesda.Plugins.Records.MajorRecordUnknownSubrecords.Keep(item, frame, contentLength);");
                                 }
 
                                 string addString;
@@ -2012,7 +2011,6 @@ public class PluginTranslationModule : BinaryTranslationModule
                                         c.Add("message: \"Unexpected subrecord\"");
                                     }
                                 }
-                                sb.AppendLine("KeepUnknownSubrecord(stream);");
                             }
                             if (obj.GetObjectType() == ObjectType.Subrecord)
                             {

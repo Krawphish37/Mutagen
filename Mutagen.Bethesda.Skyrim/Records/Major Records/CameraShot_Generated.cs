@@ -178,8 +178,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -202,8 +200,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1192,25 +1188,23 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        Model = 9,
-        Action = 10,
-        Location = 11,
-        Target = 12,
-        Flags = 13,
-        TimeMultiplierPlayer = 14,
-        TimeMultiplierTarget = 15,
-        TimeMultiplierGlobal = 16,
-        MaxTime = 17,
-        MinTime = 18,
-        TargetPercentBetweenActors = 19,
-        NearTargetDistance = 20,
-        ImageSpaceModifier = 21,
-        DATADataTypeState = 22,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        Model = 7,
+        Action = 8,
+        Location = 9,
+        Target = 10,
+        Flags = 11,
+        TimeMultiplierPlayer = 12,
+        TimeMultiplierTarget = 13,
+        TimeMultiplierGlobal = 14,
+        MaxTime = 15,
+        MinTime = 16,
+        TargetPercentBetweenActors = 17,
+        NearTargetDistance = 18,
+        ImageSpaceModifier = 19,
+        DATADataTypeState = 20,
     }
     #endregion
 
@@ -1223,7 +1217,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 14;
 
-        public const ushort FieldCount = 23;
+        public const ushort FieldCount = 21;
 
         public static readonly Type MaskType = typeof(CameraShot.Mask<>);
 
@@ -1567,10 +1561,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (CameraShot_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (CameraShot_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (CameraShot_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (CameraShot_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (CameraShot_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1593,10 +1583,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (CameraShot_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (CameraShot_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (CameraShot_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (CameraShot_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

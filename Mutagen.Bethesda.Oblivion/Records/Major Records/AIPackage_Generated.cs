@@ -150,8 +150,6 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem Data,
                 TItem Location,
@@ -163,8 +161,6 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.Data = new MaskItem<TItem, AIPackageData.Mask<TItem>?>(Data, new AIPackageData.Mask<TItem>(Data));
@@ -929,14 +925,12 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        OblivionMajorRecordFlags = 6,
-        Data = 7,
-        Location = 8,
-        Schedule = 9,
-        Target = 10,
-        Conditions = 11,
+        OblivionMajorRecordFlags = 4,
+        Data = 5,
+        Location = 6,
+        Schedule = 7,
+        Target = 8,
+        Conditions = 9,
     }
     #endregion
 
@@ -949,7 +943,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 5;
 
-        public const ushort FieldCount = 12;
+        public const ushort FieldCount = 10;
 
         public static readonly Type MaskType = typeof(AIPackage.Mask<>);
 
@@ -1243,10 +1237,6 @@ namespace Mutagen.Bethesda.Oblivion
                     return (AIPackage_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (AIPackage_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (AIPackage_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (AIPackage_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (AIPackage_FieldIndex)((int)index);
                 default:
@@ -1265,10 +1255,6 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (AIPackage_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (AIPackage_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (AIPackage_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (AIPackage_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -162,8 +162,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -184,8 +182,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1084,23 +1080,21 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        Intensity = 9,
-        CustomColorContribution = 10,
-        ColorR = 11,
-        ColorG = 12,
-        ColorB = 13,
-        DensityContribution = 14,
-        DensitySize = 15,
-        DensityWindSpeed = 16,
-        DensityFallingSpeed = 17,
-        PhaseFunctionContribution = 18,
-        PhaseFunctionScattering = 19,
-        SamplingRepartitionRangeFactor = 20,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        Intensity = 7,
+        CustomColorContribution = 8,
+        ColorR = 9,
+        ColorG = 10,
+        ColorB = 11,
+        DensityContribution = 12,
+        DensitySize = 13,
+        DensityWindSpeed = 14,
+        DensityFallingSpeed = 15,
+        PhaseFunctionContribution = 16,
+        PhaseFunctionScattering = 17,
+        SamplingRepartitionRangeFactor = 18,
     }
     #endregion
 
@@ -1113,7 +1107,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 12;
 
-        public const ushort FieldCount = 21;
+        public const ushort FieldCount = 19;
 
         public static readonly Type MaskType = typeof(VolumetricLighting.Mask<>);
 
@@ -1433,10 +1427,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (VolumetricLighting_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (VolumetricLighting_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (VolumetricLighting_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (VolumetricLighting_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (VolumetricLighting_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1459,10 +1449,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (VolumetricLighting_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (VolumetricLighting_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (VolumetricLighting_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (VolumetricLighting_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

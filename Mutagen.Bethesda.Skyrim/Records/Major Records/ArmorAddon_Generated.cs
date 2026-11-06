@@ -191,8 +191,6 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -216,8 +214,6 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1328,26 +1324,24 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        SkyrimMajorRecordFlags = 8,
-        BodyTemplate = 9,
-        Race = 10,
-        Priority = 11,
-        WeightSliderEnabled = 12,
-        Unknown = 13,
-        DetectionSoundValue = 14,
-        Unknown2 = 15,
-        WeaponAdjust = 16,
-        WorldModel = 17,
-        FirstPersonModel = 18,
-        SkinTexture = 19,
-        TextureSwapList = 20,
-        AdditionalRaces = 21,
-        FootstepSound = 22,
-        ArtObject = 23,
+        FormVersion = 4,
+        Version2 = 5,
+        SkyrimMajorRecordFlags = 6,
+        BodyTemplate = 7,
+        Race = 8,
+        Priority = 9,
+        WeightSliderEnabled = 10,
+        Unknown = 11,
+        DetectionSoundValue = 12,
+        Unknown2 = 13,
+        WeaponAdjust = 14,
+        WorldModel = 15,
+        FirstPersonModel = 16,
+        SkinTexture = 17,
+        TextureSwapList = 18,
+        AdditionalRaces = 19,
+        FootstepSound = 20,
+        ArtObject = 21,
     }
     #endregion
 
@@ -1360,7 +1354,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 15;
 
-        public const ushort FieldCount = 24;
+        public const ushort FieldCount = 22;
 
         public static readonly Type MaskType = typeof(ArmorAddon.Mask<>);
 
@@ -1829,10 +1823,6 @@ namespace Mutagen.Bethesda.Skyrim
                     return (ArmorAddon_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (ArmorAddon_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ArmorAddon_FieldIndex)((int)index);
-                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (ArmorAddon_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (ArmorAddon_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1855,10 +1845,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ArmorAddon_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (ArmorAddon_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (ArmorAddon_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ArmorAddon_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

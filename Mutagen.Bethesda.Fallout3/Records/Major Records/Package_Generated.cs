@@ -314,8 +314,6 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -353,8 +351,6 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1881,40 +1877,38 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        FormVersion = 6,
-        Version2 = 7,
-        Fallout3MajorRecordFlags = 8,
-        GeneralFlags = 9,
-        Unused = 10,
-        BehaviorFlags = 11,
-        Flags = 12,
-        Unused2 = 13,
-        Location = 14,
-        Location2 = 15,
-        ScheduleMonth = 16,
-        ScheduleDayOfWeek = 17,
-        ScheduleDate = 18,
-        ScheduleTime = 19,
-        Duration = 20,
-        Target = 21,
-        Conditions = 22,
-        IdleAnimations = 23,
-        CombatStyle = 24,
-        IsEatMarker = 25,
-        EscortDistance = 26,
-        FollowStartLocationTriggerRadius = 27,
-        IsRepeatable = 28,
-        WeaponData = 29,
-        Target2 = 30,
-        IsUseItem = 31,
-        IsAmbush = 32,
-        DialogueData = 33,
-        DialogueLocation = 34,
-        OnBegin = 35,
-        OnEnd = 36,
-        OnChange = 37,
+        FormVersion = 4,
+        Version2 = 5,
+        Fallout3MajorRecordFlags = 6,
+        GeneralFlags = 7,
+        Unused = 8,
+        BehaviorFlags = 9,
+        Flags = 10,
+        Unused2 = 11,
+        Location = 12,
+        Location2 = 13,
+        ScheduleMonth = 14,
+        ScheduleDayOfWeek = 15,
+        ScheduleDate = 16,
+        ScheduleTime = 17,
+        Duration = 18,
+        Target = 19,
+        Conditions = 20,
+        IdleAnimations = 21,
+        CombatStyle = 22,
+        IsEatMarker = 23,
+        EscortDistance = 24,
+        FollowStartLocationTriggerRadius = 25,
+        IsRepeatable = 26,
+        WeaponData = 27,
+        Target2 = 28,
+        IsUseItem = 29,
+        IsAmbush = 30,
+        DialogueData = 31,
+        DialogueLocation = 32,
+        OnBegin = 33,
+        OnEnd = 34,
+        OnChange = 35,
     }
     #endregion
 
@@ -1927,7 +1921,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 29;
 
-        public const ushort FieldCount = 38;
+        public const ushort FieldCount = 36;
 
         public static readonly Type MaskType = typeof(Package.Mask<>);
 
@@ -2434,10 +2428,6 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Package_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Package_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Package_FieldIndex)((int)index);
-                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (Package_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Package_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2460,10 +2450,6 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Package_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (Package_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (Package_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Package_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

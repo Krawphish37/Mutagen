@@ -1302,10 +1302,7 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
 
             if (count > maxCount)
             {
-                // Starfield keeps the low bytes of the real count, which is what a plugin with too many entries holds.
-                count = writer.MetaData.Constants.Release.ToCategory() == GameCategory.Starfield
-                    ? count & maxCount
-                    : 0;
+                count = 0;
             }
             writer.Write(count, counterLength); 
         } 

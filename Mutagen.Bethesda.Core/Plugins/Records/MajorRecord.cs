@@ -4,10 +4,7 @@ using Mutagen.Bethesda.Assets;
 using Mutagen.Bethesda.Plugins.Assets;
 using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Exceptions;
-using Mutagen.Bethesda.Plugins.Binary.Overlay;
-using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Internals;
-using Mutagen.Bethesda.Plugins.Masters;
 
 namespace Mutagen.Bethesda.Plugins.Records;
 
@@ -143,72 +140,11 @@ public static class IMajorRecordGetterExt
     }
 }
     
-/// <summary>
-/// Subrecords a record holds but no field claims. They're kept as raw bytes and written back at the end of the record.
-/// FormIDs inside them can't be corrected, so they're only written to a plugin with the same name and master list they came from.
-/// </summary>
-public static class MajorRecordUnknownSubrecords
-{
-    /// <summary>
-    /// Called when a record's unknown subrecords can't be written, because the plugin being saved has other masters.
-    /// </summary>
-    public static Action<string> NotWritten { get; set; } = message => Console.Error.WriteLine(message);
-
-    internal static string SourceKey(IReadOnlyMasterReferenceCollection masters)
-    {
-        return masters.CurrentMod + "|" + string.Join("|", masters.Masters.Select(x => x.Master.ToString()));
-    }
-
-    internal static byte[] Append(byte[]? existing, ReadOnlySpan<byte> subrecord)
-    {
-        var ret = new byte[(existing?.Length ?? 0) + subrecord.Length];
-        existing?.CopyTo(ret, 0);
-        subrecord.CopyTo(ret.AsSpan(existing?.Length ?? 0));
-        return ret;
-    }
-
-    internal static void Keep(IMajorRecordInternal item, MutagenFrame frame, int contentLength)
-    {
-        var total = frame.MetaData.Constants.SubConstants.HeaderLength + contentLength;
-        var pos = frame.Position;
-        var memory = frame.ReadMemory(total);
-        frame.Position = pos;
-        item.UnknownSubrecords = Append(item.UnknownSubrecords?.ToArray(), memory);
-        item.UnknownSubrecordsSource = SourceKey(frame.MetaData.MasterReferences.Raw);
-    }
-
-    internal static void Write(IMajorRecordGetter item, MutagenWriter writer, MutagenWriter target)
-    {
-        if (item.UnknownSubrecords is not { } bytes) return;
-        var masters = writer.MetaData.MasterReferences;
-        if (masters != null && item.UnknownSubrecordsSource != SourceKey(masters))
-        {
-            NotWritten($"{item.FormKey} {item.EditorID}: {bytes.Length} bytes of unknown subrecords were not written, because this plugin's masters differ from {item.UnknownSubrecordsSource}");
-            return;
-        }
-        target.Write(bytes);
-    }
-}
-
 [DebuggerDisplay("{GetType().Name} {this.EditorID?.ToString()} {this.FormKey.ToString()}")]
 internal abstract partial class MajorRecordBinaryOverlay : IMajorRecordGetter
 {
     public bool IsCompressed => Enums.HasFlag(MajorRecordFlagsRaw, Constants.CompressedFlag);
     public bool IsDeleted => Enums.HasFlag(MajorRecordFlagsRaw, Constants.DeletedFlag);
-
-    public ReadOnlyMemorySlice<byte>? UnknownSubrecords => _unknownSubrecords;
-    private byte[]? _unknownSubrecords;
-    public string? UnknownSubrecordsSource { get; private set; }
-
-    /// <summary>
-    /// Keeps a subrecord no field claimed, with its header. The stream stays where it is.
-    /// </summary>
-    protected void KeepUnknownSubrecord(OverlayStream stream)
-    {
-        var header = stream.GetSubrecordHeader();
-        _unknownSubrecords = MajorRecordUnknownSubrecords.Append(_unknownSubrecords, stream.RemainingMemory.Slice(0, header.TotalLength));
-        UnknownSubrecordsSource = MajorRecordUnknownSubrecords.SourceKey(_package.MetaData.MasterReferences.Raw);
-    }
 
     protected abstract ushort? FormVersionAbstract { get; }
     ushort? IMajorRecordGetter.FormVersion => FormVersionAbstract;

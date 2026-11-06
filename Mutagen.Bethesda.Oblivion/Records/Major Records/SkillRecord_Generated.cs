@@ -140,8 +140,6 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
-                TItem UnknownSubrecords,
-                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem Skill,
                 TItem Description,
@@ -156,8 +154,6 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
-                UnknownSubrecords: UnknownSubrecords,
-                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.Skill = Skill;
@@ -928,17 +924,15 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        UnknownSubrecords = 4,
-        UnknownSubrecordsSource = 5,
-        OblivionMajorRecordFlags = 6,
-        Skill = 7,
-        Description = 8,
-        Icon = 9,
-        Data = 10,
-        ApprenticeText = 11,
-        JourneymanText = 12,
-        ExpertText = 13,
-        MasterText = 14,
+        OblivionMajorRecordFlags = 4,
+        Skill = 5,
+        Description = 6,
+        Icon = 7,
+        Data = 8,
+        ApprenticeText = 9,
+        JourneymanText = 10,
+        ExpertText = 11,
+        MasterText = 12,
     }
     #endregion
 
@@ -951,7 +945,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 8;
 
-        public const ushort FieldCount = 15;
+        public const ushort FieldCount = 13;
 
         public static readonly Type MaskType = typeof(SkillRecord.Mask<>);
 
@@ -1243,10 +1237,6 @@ namespace Mutagen.Bethesda.Oblivion
                     return (SkillRecord_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (SkillRecord_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (SkillRecord_FieldIndex)((int)index);
-                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (SkillRecord_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (SkillRecord_FieldIndex)((int)index);
                 default:
@@ -1265,10 +1255,6 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (SkillRecord_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (SkillRecord_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (SkillRecord_FieldIndex)((int)index);
-                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (SkillRecord_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
