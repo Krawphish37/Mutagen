@@ -43,6 +43,8 @@ public partial class Npc
         Skin = RecordTypeInts.NSKN,
         Spell = RecordTypeInts.NSPL,
         XPOverride = RecordTypeInts.NXPO,
+        // Object templates (OBTS) on the record itself store these small ids, not the 4-letter OMOD codes above (xEdit wbObjectModPropertiesNPCEnum).
+        TemplateLayeredMaterialSwap = 6,
     }
 
     [Flags]

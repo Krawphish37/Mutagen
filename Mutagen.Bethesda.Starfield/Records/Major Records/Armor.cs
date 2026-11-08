@@ -30,5 +30,7 @@ public partial class Armor
         Health = RecordTypeInts.AHLT,
         AddonIndex = RecordTypeInts.AIND,
         ModCount = RecordTypeInts.ATMC,
+        // Object templates (OBTS) on the record itself store these small ids, not the 4-letter OMOD codes above (xEdit wbObjectModPropertiesARMOEnum).
+        TemplateLayeredMaterialSwap = 14,
     }
 }

@@ -156,6 +156,11 @@ public partial class Weapon
         Overlay = RecordTypeInts.ZOVL,
         FOVMult = RecordTypeInts.ZFOV,
         Template = RecordTypeInts.ZDTA,
+        // Object templates (OBTS) on the record itself store these small ids, not the 4-letter OMOD codes above (xEdit wbObjectModPropertiesWEAPEnum).
+        TemplatePhysicalWeaponDamage = 28,
+        TemplateUnknown29 = 29,
+        TemplateDamageTypeValue = 71,
+        TemplateLayeredMaterialSwap = 85,
     }
     
     IFormLinkNullableGetter<IObjectEffectGetter> IEnchantableGetter.ObjectEffect => this.ObjectEffect;
