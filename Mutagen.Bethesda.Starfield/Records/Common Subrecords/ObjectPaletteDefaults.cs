@@ -12,12 +12,13 @@ public partial class ObjectPaletteDefaults
         OutsideWaterHeight = 0x00020,
     }
 
+    // Starfield stores X-Large 0, Large 1, Medium 2, Small 3 and None 5; there is no 4
     public enum FootprintSizes
     {
-        XLarge,
-        Large,
-        Medium,
-        Small,
-        None
-    } 
+        XLarge = 0,
+        Large = 1,
+        Medium = 2,
+        Small = 3,
+        None = 5
+    }
 }
