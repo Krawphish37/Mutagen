@@ -214,7 +214,7 @@
       <FormLink name="REPL" refName="ImageSpaceAdapter" recordType="REPL" nullable="false" />
       <Float name="HNAM" recordType="HNAM" nullable="false" />
       <Float name="VCLR" recordType="VCLR" nullable="false" />
-      <Int32 name="BTXT" recordType="BTXT" nullable="false" />
+      <Float name="StartTime" recordType="BTXT" nullable="false" />
       <Int32 name="FLMV" recordType="FLMV" nullable="false" />
       <RefDirect name="WED0" recordType="WED0" unknown="true" refName="SoundReference" />
       <RefList name="Conditions" refName="Condition" />
