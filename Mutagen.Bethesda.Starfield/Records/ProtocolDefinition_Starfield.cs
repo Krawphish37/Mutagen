@@ -107,6 +107,7 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             BipedObjectData_Registration.Instance,
             BlockCellHeightGridComponent_Registration.Instance,
             BlockEditorMetaDataComponent_Registration.Instance,
+            BlockEditorMetaDataItem_Registration.Instance,
             BlockHeightAdjustmentComponent_Registration.Instance,
             BlockHeightAdjustmentComponentItem_Registration.Instance,
             BlueprintComponent_Registration.Instance,
