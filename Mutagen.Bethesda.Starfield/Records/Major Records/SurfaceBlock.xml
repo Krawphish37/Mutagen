@@ -29,8 +29,8 @@
   </Object>
   <Object name="SurfaceBlockFloatItem" objType="Subrecord">
     <Fields>
-      <UInt32 name="First" />
-      <UInt32 name="Second" />
+      <Float name="Min" />
+      <Float name="Max" />
     </Fields>
   </Object>
 </Loqui>
