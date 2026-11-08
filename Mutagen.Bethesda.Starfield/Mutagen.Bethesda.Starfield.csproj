@@ -177,6 +177,7 @@
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\Common Subrecords\BlockEditorMetaDataComponent.cs">
+    <Compile Include="Records\Common Subrecords\SurfaceTreePatternSwapInfoComponentData.cs">
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\Common Subrecords\AObjectModProperty_Generated.cs">

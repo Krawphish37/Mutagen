@@ -539,7 +539,12 @@
   </Object>
   <Object name="SurfaceTreePatternSwapInfoComponentData" objType="Subrecord" recordType="DAT2" >
     <Fields>
-      <RefList name="Data" refName="SurfaceTreePatternSwapInfoItem" counterLength="4" />
+      <CustomLogic name="DataLogic" />
+      <List name="Data" binary="NoGeneration">
+        <Ref>
+          <Direct refName="SurfaceTreePatternSwapInfoItem" />
+        </Ref>
+      </List>
       <ByteArray name="Unknown" />
     </Fields>
   </Object>
@@ -547,6 +552,8 @@
     <Fields>
       <FormLink name="SurfacePattern" refName="SurfacePattern" />
       <Int8 name="Unknown" />
+      <!-- xEdit: 4 more bytes on every item but the last, "usually an index to the pattern array". Read and written by DataLogic. -->
+      <UInt32 name="Unknown2" nullable="True" binary="NoGeneration" />
     </Fields>
   </Object>
   <Object name="OrbitedDataComponent" objType="Subrecord" baseClass="AComponent">

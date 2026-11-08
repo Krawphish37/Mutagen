@@ -1137,21 +1137,25 @@ namespace Mutagen.Bethesda.Starfield
             ISurfaceTreePatternSwapInfoComponentDataGetter item,
             MutagenWriter writer)
         {
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ISurfaceTreePatternSwapInfoItemGetter>.Instance.Write(
+            SurfaceTreePatternSwapInfoComponentDataBinaryWriteTranslation.WriteBinaryDataLogic(
                 writer: writer,
-                items: item.Data,
-                countLengthLength: 4,
-                transl: (MutagenWriter subWriter, ISurfaceTreePatternSwapInfoItemGetter subItem, TypedWriteParams conv) =>
-                {
-                    var Item = subItem;
-                    ((SurfaceTreePatternSwapInfoItemBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
-                        item: Item,
-                        writer: subWriter,
-                        translationParams: conv);
-                });
+                item: item);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.Unknown);
+        }
+
+        public static partial void WriteBinaryDataLogicCustom(
+            MutagenWriter writer,
+            ISurfaceTreePatternSwapInfoComponentDataGetter item);
+
+        public static void WriteBinaryDataLogic(
+            MutagenWriter writer,
+            ISurfaceTreePatternSwapInfoComponentDataGetter item)
+        {
+            WriteBinaryDataLogicCustom(
+                writer: writer,
+                item: item);
         }
 
         public void Write(
@@ -1192,13 +1196,15 @@ namespace Mutagen.Bethesda.Starfield
             ISurfaceTreePatternSwapInfoComponentData item,
             MutagenFrame frame)
         {
-            item.Data.SetTo(
-                Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SurfaceTreePatternSwapInfoItem>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
-                    reader: frame,
-                    transl: SurfaceTreePatternSwapInfoItem.TryCreateFromBinary));
+            SurfaceTreePatternSwapInfoComponentDataBinaryCreateTranslation.FillBinaryDataLogicCustom(
+                frame: frame,
+                item: item);
             item.Unknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
         }
+
+        public static partial void FillBinaryDataLogicCustom(
+            MutagenFrame frame,
+            ISurfaceTreePatternSwapInfoComponentData item);
 
     }
 
@@ -1264,12 +1270,14 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region Data
-        public IReadOnlyList<ISurfaceTreePatternSwapInfoItemGetter> Data => BinaryOverlayList.FactoryByCountLength<ISurfaceTreePatternSwapInfoItemGetter>(_structData, _package, 5, countLength: 4, (s, p) => SurfaceTreePatternSwapInfoItemBinaryOverlay.SurfaceTreePatternSwapInfoItemFactory(s, p));
-        protected int DataEndingPos;
+        #region DataLogic
+        partial void DataLogicCustomParse(
+            OverlayStream stream,
+            int offset);
+        protected int DataLogicEndingPos;
         #endregion
         #region Unknown
-        public ReadOnlyMemorySlice<Byte> Unknown => _structData.Span.Slice(DataEndingPos).ToArray();
+        public ReadOnlyMemorySlice<Byte> Unknown => _structData.Span.Slice(DataLogicEndingPos).ToArray();
         protected int UnknownEndingPos;
         #endregion
         partial void CustomFactoryEnd(
@@ -1288,13 +1296,6 @@ namespace Mutagen.Bethesda.Starfield
             this.CustomCtor();
         }
 
-        public static void SurfaceTreePatternSwapInfoComponentDataParseEndingPositions(
-            SurfaceTreePatternSwapInfoComponentDataBinaryOverlay ret,
-            BinaryOverlayFactoryPackage package)
-        {
-            ret.DataEndingPos = BinaryPrimitives.ReadInt32LittleEndian(ret._structData) * 5 + 4;
-        }
-
         public static ISurfaceTreePatternSwapInfoComponentDataGetter SurfaceTreePatternSwapInfoComponentDataFactory(
             OverlayStream stream,
             BinaryOverlayFactoryPackage package,
@@ -1310,7 +1311,6 @@ namespace Mutagen.Bethesda.Starfield
             var ret = new SurfaceTreePatternSwapInfoComponentDataBinaryOverlay(
                 memoryPair: memoryPair,
                 package: package);
-            SurfaceTreePatternSwapInfoComponentDataParseEndingPositions(ret, package);
             ret.CustomFactoryEnd(
                 stream: stream,
                 finalPos: stream.Length,
