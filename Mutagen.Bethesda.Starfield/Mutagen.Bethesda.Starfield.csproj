@@ -177,6 +177,8 @@
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\Common Subrecords\BlockEditorMetaDataComponent.cs">
+      <DependentUpon>Component.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Common Subrecords\SurfaceTreePatternSwapInfoComponentData.cs">
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
@@ -6952,6 +6954,8 @@
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\Common Subrecords\VolumesUnknownEnderEmptyPadded_Generated.cs">
+      <DependentUpon>Component.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Common Subrecords\BlockEditorMetaDataItem_Generated.cs">
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>

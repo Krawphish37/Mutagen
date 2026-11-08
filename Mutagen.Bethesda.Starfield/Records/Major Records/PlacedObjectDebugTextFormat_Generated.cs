@@ -52,11 +52,11 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Size
-        public UInt32 Size { get; set; } = default(UInt32);
-        #endregion
         #region Color
         public Color Color { get; set; } = default(Color);
+        #endregion
+        #region Size
+        public UInt32 Size { get; set; } = default(UInt32);
         #endregion
 
         #region To String
@@ -97,16 +97,16 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Size = initialValue;
                 this.Color = initialValue;
+                this.Size = initialValue;
             }
 
             public Mask(
-                TItem Size,
-                TItem Color)
+                TItem Color,
+                TItem Size)
             {
-                this.Size = Size;
                 this.Color = Color;
+                this.Size = Size;
             }
 
             #pragma warning disable CS8618
@@ -118,8 +118,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Size;
             public TItem Color;
+            public TItem Size;
             #endregion
 
             #region Equals
@@ -132,15 +132,15 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Size, rhs.Size)) return false;
                 if (!object.Equals(this.Color, rhs.Color)) return false;
+                if (!object.Equals(this.Size, rhs.Size)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Size);
                 hash.Add(this.Color);
+                hash.Add(this.Size);
                 return hash.ToHashCode();
             }
 
@@ -149,8 +149,8 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Size)) return false;
                 if (!eval(this.Color)) return false;
+                if (!eval(this.Size)) return false;
                 return true;
             }
             #endregion
@@ -158,8 +158,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Size)) return true;
                 if (eval(this.Color)) return true;
+                if (eval(this.Size)) return true;
                 return false;
             }
             #endregion
@@ -174,8 +174,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Size = eval(this.Size);
                 obj.Color = eval(this.Color);
+                obj.Size = eval(this.Size);
             }
             #endregion
 
@@ -194,13 +194,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(PlacedObjectDebugTextFormat.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Size ?? true)
-                    {
-                        sb.AppendItem(Size, "Size");
-                    }
                     if (printMask?.Color ?? true)
                     {
                         sb.AppendItem(Color, "Color");
+                    }
+                    if (printMask?.Size ?? true)
+                    {
+                        sb.AppendItem(Size, "Size");
                     }
                 }
             }
@@ -226,8 +226,8 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Size;
             public Exception? Color;
+            public Exception? Size;
             #endregion
 
             #region IErrorMask
@@ -236,10 +236,10 @@ namespace Mutagen.Bethesda.Starfield
                 PlacedObjectDebugTextFormat_FieldIndex enu = (PlacedObjectDebugTextFormat_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlacedObjectDebugTextFormat_FieldIndex.Size:
-                        return Size;
                     case PlacedObjectDebugTextFormat_FieldIndex.Color:
                         return Color;
+                    case PlacedObjectDebugTextFormat_FieldIndex.Size:
+                        return Size;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -250,11 +250,11 @@ namespace Mutagen.Bethesda.Starfield
                 PlacedObjectDebugTextFormat_FieldIndex enu = (PlacedObjectDebugTextFormat_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlacedObjectDebugTextFormat_FieldIndex.Size:
-                        this.Size = ex;
-                        break;
                     case PlacedObjectDebugTextFormat_FieldIndex.Color:
                         this.Color = ex;
+                        break;
+                    case PlacedObjectDebugTextFormat_FieldIndex.Size:
+                        this.Size = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -266,11 +266,11 @@ namespace Mutagen.Bethesda.Starfield
                 PlacedObjectDebugTextFormat_FieldIndex enu = (PlacedObjectDebugTextFormat_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlacedObjectDebugTextFormat_FieldIndex.Size:
-                        this.Size = (Exception?)obj;
-                        break;
                     case PlacedObjectDebugTextFormat_FieldIndex.Color:
                         this.Color = (Exception?)obj;
+                        break;
+                    case PlacedObjectDebugTextFormat_FieldIndex.Size:
+                        this.Size = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -280,8 +280,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Size != null) return true;
                 if (Color != null) return true;
+                if (Size != null) return true;
                 return false;
             }
             #endregion
@@ -308,10 +308,10 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Size, "Size");
+                    sb.AppendItem(Color, "Color");
                 }
                 {
-                    sb.AppendItem(Color, "Color");
+                    sb.AppendItem(Size, "Size");
                 }
             }
             #endregion
@@ -321,8 +321,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Size = this.Size.Combine(rhs.Size);
                 ret.Color = this.Color.Combine(rhs.Color);
+                ret.Size = this.Size.Combine(rhs.Size);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -346,8 +346,8 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Size;
             public bool Color;
+            public bool Size;
             #endregion
 
             #region Ctors
@@ -357,8 +357,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Size = defaultOn;
                 this.Color = defaultOn;
+                this.Size = defaultOn;
             }
 
             #endregion
@@ -374,8 +374,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Size, null));
                 ret.Add((Color, null));
+                ret.Add((Size, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -448,8 +448,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IPlacedObjectDebugTextFormat>,
         IPlacedObjectDebugTextFormatGetter
     {
-        new UInt32 Size { get; set; }
         new Color Color { get; set; }
+        new UInt32 Size { get; set; }
     }
 
     public partial interface IPlacedObjectDebugTextFormatGetter :
@@ -464,8 +464,8 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => PlacedObjectDebugTextFormat_Registration.Instance;
-        UInt32 Size { get; }
         Color Color { get; }
+        UInt32 Size { get; }
 
     }
 
@@ -635,8 +635,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum PlacedObjectDebugTextFormat_FieldIndex
     {
-        Size = 0,
-        Color = 1,
+        Color = 0,
+        Size = 1,
     }
     #endregion
 
@@ -722,8 +722,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IPlacedObjectDebugTextFormat item)
         {
             ClearPartial();
-            item.Size = default(UInt32);
             item.Color = default(Color);
+            item.Size = default(UInt32);
         }
         
         #region Mutagen
@@ -777,8 +777,8 @@ namespace Mutagen.Bethesda.Starfield
             PlacedObjectDebugTextFormat.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Size = item.Size == rhs.Size;
             ret.Color = item.Color.ColorOnlyEquals(rhs.Color);
+            ret.Size = item.Size == rhs.Size;
         }
         
         public string Print(
@@ -823,13 +823,13 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             PlacedObjectDebugTextFormat.Mask<bool>? printMask = null)
         {
-            if (printMask?.Size ?? true)
-            {
-                sb.AppendItem(item.Size, "Size");
-            }
             if (printMask?.Color ?? true)
             {
                 sb.AppendItem(item.Color, "Color");
+            }
+            if (printMask?.Size ?? true)
+            {
+                sb.AppendItem(item.Size, "Size");
             }
         }
         
@@ -840,13 +840,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectDebugTextFormat_FieldIndex.Size) ?? true))
-            {
-                if (lhs.Size != rhs.Size) return false;
-            }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObjectDebugTextFormat_FieldIndex.Color) ?? true))
             {
                 if (!lhs.Color.ColorOnlyEquals(rhs.Color)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectDebugTextFormat_FieldIndex.Size) ?? true))
+            {
+                if (lhs.Size != rhs.Size) return false;
             }
             return true;
         }
@@ -854,8 +854,8 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IPlacedObjectDebugTextFormatGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Size);
             hash.Add(item.Color.ToArgb());
+            hash.Add(item.Size);
             return hash.ToHashCode();
         }
         
@@ -888,13 +888,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectDebugTextFormat_FieldIndex.Size) ?? true))
-            {
-                item.Size = rhs.Size;
-            }
             if ((copyMask?.GetShouldTranslate((int)PlacedObjectDebugTextFormat_FieldIndex.Color) ?? true))
             {
                 item.Color = rhs.Color;
+            }
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectDebugTextFormat_FieldIndex.Size) ?? true))
+            {
+                item.Size = rhs.Size;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1004,10 +1004,10 @@ namespace Mutagen.Bethesda.Starfield
             IPlacedObjectDebugTextFormatGetter item,
             MutagenWriter writer)
         {
-            writer.Write(item.Size);
             ColorBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.Color);
+            writer.Write(item.Size);
         }
 
         public void Write(
@@ -1048,8 +1048,8 @@ namespace Mutagen.Bethesda.Starfield
             IPlacedObjectDebugTextFormat item,
             MutagenFrame frame)
         {
-            item.Size = frame.ReadUInt32();
             item.Color = frame.ReadColor(ColorBinaryType.Alpha);
+            item.Size = frame.ReadUInt32();
         }
 
     }
@@ -1115,8 +1115,8 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public UInt32 Size => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x0, 0x4));
-        public Color Color => _structData.Slice(0x4, 0x4).ReadColor(ColorBinaryType.Alpha);
+        public Color Color => _structData.Slice(0x0, 0x4).ReadColor(ColorBinaryType.Alpha);
+        public UInt32 Size => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x4, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

@@ -53,54 +53,54 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region UnknownString1
-        public String UnknownString1 { get; set; } = string.Empty;
+        #region CreatedTime
+        public String CreatedTime { get; set; } = string.Empty;
         #endregion
-        #region UnknownByte
-        public Byte UnknownByte { get; set; } = default(Byte);
+        #region SourceType
+        public BlockEditorMetaDataComponent.SourceTypeOption SourceType { get; set; } = default(BlockEditorMetaDataComponent.SourceTypeOption);
         #endregion
-        #region UnknownString2
-        public String UnknownString2 { get; set; } = string.Empty;
+        #region AlsoCreatedTime
+        public String AlsoCreatedTime { get; set; } = string.Empty;
         #endregion
-        #region UnknownString3
-        public String UnknownString3 { get; set; } = string.Empty;
+        #region SourceEditorID
+        public String SourceEditorID { get; set; } = string.Empty;
         #endregion
-        #region UnknownInts
+        #region UnknownItems
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<Int32> _UnknownInts = new ExtendedList<Int32>();
-        public ExtendedList<Int32> UnknownInts
+        private ExtendedList<BlockEditorMetaDataItem> _UnknownItems = new ExtendedList<BlockEditorMetaDataItem>();
+        public ExtendedList<BlockEditorMetaDataItem> UnknownItems
         {
-            get => this._UnknownInts;
-            init => this._UnknownInts = value;
+            get => this._UnknownItems;
+            init => this._UnknownItems = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<Int32> IBlockEditorMetaDataComponentGetter.UnknownInts => _UnknownInts;
+        IReadOnlyList<IBlockEditorMetaDataItemGetter> IBlockEditorMetaDataComponentGetter.UnknownItems => _UnknownItems;
         #endregion
 
         #endregion
-        #region UnknownInt1
-        public Int32 UnknownInt1 { get; set; } = default(Int32);
+        #region LocationX
+        public Int32 LocationX { get; set; } = default(Int32);
         #endregion
-        #region UnknownInt2
-        public Int32 UnknownInt2 { get; set; } = default(Int32);
+        #region LocationY
+        public Int32 LocationY { get; set; } = default(Int32);
         #endregion
-        #region UnknownInt3
-        public Int32 UnknownInt3 { get; set; } = default(Int32);
+        #region PlanetSystemId
+        public Int32 PlanetSystemId { get; set; } = default(Int32);
         #endregion
-        #region UnknownInt4
-        public Int32 UnknownInt4 { get; set; } = default(Int32);
+        #region SatelliteId
+        public Int32 SatelliteId { get; set; } = default(Int32);
         #endregion
-        #region UnknownEnding
+        #region LongitudeLatitude
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _UnknownEnding = new byte[0];
-        public MemorySlice<Byte> UnknownEnding
+        private MemorySlice<Byte> _LongitudeLatitude = new byte[0];
+        public MemorySlice<Byte> LongitudeLatitude
         {
-            get => _UnknownEnding;
-            set => this._UnknownEnding = value;
+            get => _LongitudeLatitude;
+            set => this._LongitudeLatitude = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IBlockEditorMetaDataComponentGetter.UnknownEnding => this.UnknownEnding;
+        ReadOnlyMemorySlice<Byte> IBlockEditorMetaDataComponentGetter.LongitudeLatitude => this.LongitudeLatitude;
         #endregion
 
         #region To String
@@ -143,41 +143,41 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.UnknownString1 = initialValue;
-                this.UnknownByte = initialValue;
-                this.UnknownString2 = initialValue;
-                this.UnknownString3 = initialValue;
-                this.UnknownInts = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.UnknownInt1 = initialValue;
-                this.UnknownInt2 = initialValue;
-                this.UnknownInt3 = initialValue;
-                this.UnknownInt4 = initialValue;
-                this.UnknownEnding = initialValue;
+                this.CreatedTime = initialValue;
+                this.SourceType = initialValue;
+                this.AlsoCreatedTime = initialValue;
+                this.SourceEditorID = initialValue;
+                this.UnknownItems = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, BlockEditorMetaDataItem.Mask<TItem>?>>?>(initialValue, []);
+                this.LocationX = initialValue;
+                this.LocationY = initialValue;
+                this.PlanetSystemId = initialValue;
+                this.SatelliteId = initialValue;
+                this.LongitudeLatitude = initialValue;
             }
 
             public Mask(
-                TItem UnknownString1,
-                TItem UnknownByte,
-                TItem UnknownString2,
-                TItem UnknownString3,
-                TItem UnknownInts,
-                TItem UnknownInt1,
-                TItem UnknownInt2,
-                TItem UnknownInt3,
-                TItem UnknownInt4,
-                TItem UnknownEnding)
+                TItem CreatedTime,
+                TItem SourceType,
+                TItem AlsoCreatedTime,
+                TItem SourceEditorID,
+                TItem UnknownItems,
+                TItem LocationX,
+                TItem LocationY,
+                TItem PlanetSystemId,
+                TItem SatelliteId,
+                TItem LongitudeLatitude)
             : base()
             {
-                this.UnknownString1 = UnknownString1;
-                this.UnknownByte = UnknownByte;
-                this.UnknownString2 = UnknownString2;
-                this.UnknownString3 = UnknownString3;
-                this.UnknownInts = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(UnknownInts, []);
-                this.UnknownInt1 = UnknownInt1;
-                this.UnknownInt2 = UnknownInt2;
-                this.UnknownInt3 = UnknownInt3;
-                this.UnknownInt4 = UnknownInt4;
-                this.UnknownEnding = UnknownEnding;
+                this.CreatedTime = CreatedTime;
+                this.SourceType = SourceType;
+                this.AlsoCreatedTime = AlsoCreatedTime;
+                this.SourceEditorID = SourceEditorID;
+                this.UnknownItems = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, BlockEditorMetaDataItem.Mask<TItem>?>>?>(UnknownItems, []);
+                this.LocationX = LocationX;
+                this.LocationY = LocationY;
+                this.PlanetSystemId = PlanetSystemId;
+                this.SatelliteId = SatelliteId;
+                this.LongitudeLatitude = LongitudeLatitude;
             }
 
             #pragma warning disable CS8618
@@ -189,16 +189,16 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem UnknownString1;
-            public TItem UnknownByte;
-            public TItem UnknownString2;
-            public TItem UnknownString3;
-            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? UnknownInts;
-            public TItem UnknownInt1;
-            public TItem UnknownInt2;
-            public TItem UnknownInt3;
-            public TItem UnknownInt4;
-            public TItem UnknownEnding;
+            public TItem CreatedTime;
+            public TItem SourceType;
+            public TItem AlsoCreatedTime;
+            public TItem SourceEditorID;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, BlockEditorMetaDataItem.Mask<TItem>?>>?>? UnknownItems;
+            public TItem LocationX;
+            public TItem LocationY;
+            public TItem PlanetSystemId;
+            public TItem SatelliteId;
+            public TItem LongitudeLatitude;
             #endregion
 
             #region Equals
@@ -212,31 +212,31 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.UnknownString1, rhs.UnknownString1)) return false;
-                if (!object.Equals(this.UnknownByte, rhs.UnknownByte)) return false;
-                if (!object.Equals(this.UnknownString2, rhs.UnknownString2)) return false;
-                if (!object.Equals(this.UnknownString3, rhs.UnknownString3)) return false;
-                if (!object.Equals(this.UnknownInts, rhs.UnknownInts)) return false;
-                if (!object.Equals(this.UnknownInt1, rhs.UnknownInt1)) return false;
-                if (!object.Equals(this.UnknownInt2, rhs.UnknownInt2)) return false;
-                if (!object.Equals(this.UnknownInt3, rhs.UnknownInt3)) return false;
-                if (!object.Equals(this.UnknownInt4, rhs.UnknownInt4)) return false;
-                if (!object.Equals(this.UnknownEnding, rhs.UnknownEnding)) return false;
+                if (!object.Equals(this.CreatedTime, rhs.CreatedTime)) return false;
+                if (!object.Equals(this.SourceType, rhs.SourceType)) return false;
+                if (!object.Equals(this.AlsoCreatedTime, rhs.AlsoCreatedTime)) return false;
+                if (!object.Equals(this.SourceEditorID, rhs.SourceEditorID)) return false;
+                if (!object.Equals(this.UnknownItems, rhs.UnknownItems)) return false;
+                if (!object.Equals(this.LocationX, rhs.LocationX)) return false;
+                if (!object.Equals(this.LocationY, rhs.LocationY)) return false;
+                if (!object.Equals(this.PlanetSystemId, rhs.PlanetSystemId)) return false;
+                if (!object.Equals(this.SatelliteId, rhs.SatelliteId)) return false;
+                if (!object.Equals(this.LongitudeLatitude, rhs.LongitudeLatitude)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.UnknownString1);
-                hash.Add(this.UnknownByte);
-                hash.Add(this.UnknownString2);
-                hash.Add(this.UnknownString3);
-                hash.Add(this.UnknownInts);
-                hash.Add(this.UnknownInt1);
-                hash.Add(this.UnknownInt2);
-                hash.Add(this.UnknownInt3);
-                hash.Add(this.UnknownInt4);
-                hash.Add(this.UnknownEnding);
+                hash.Add(this.CreatedTime);
+                hash.Add(this.SourceType);
+                hash.Add(this.AlsoCreatedTime);
+                hash.Add(this.SourceEditorID);
+                hash.Add(this.UnknownItems);
+                hash.Add(this.LocationX);
+                hash.Add(this.LocationY);
+                hash.Add(this.PlanetSystemId);
+                hash.Add(this.SatelliteId);
+                hash.Add(this.LongitudeLatitude);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -247,26 +247,27 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.UnknownString1)) return false;
-                if (!eval(this.UnknownByte)) return false;
-                if (!eval(this.UnknownString2)) return false;
-                if (!eval(this.UnknownString3)) return false;
-                if (this.UnknownInts != null)
+                if (!eval(this.CreatedTime)) return false;
+                if (!eval(this.SourceType)) return false;
+                if (!eval(this.AlsoCreatedTime)) return false;
+                if (!eval(this.SourceEditorID)) return false;
+                if (this.UnknownItems != null)
                 {
-                    if (!eval(this.UnknownInts.Overall)) return false;
-                    if (this.UnknownInts.Specific != null)
+                    if (!eval(this.UnknownItems.Overall)) return false;
+                    if (this.UnknownItems.Specific != null)
                     {
-                        foreach (var item in this.UnknownInts.Specific)
+                        foreach (var item in this.UnknownItems.Specific)
                         {
-                            if (!eval(item.Value)) return false;
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
                         }
                     }
                 }
-                if (!eval(this.UnknownInt1)) return false;
-                if (!eval(this.UnknownInt2)) return false;
-                if (!eval(this.UnknownInt3)) return false;
-                if (!eval(this.UnknownInt4)) return false;
-                if (!eval(this.UnknownEnding)) return false;
+                if (!eval(this.LocationX)) return false;
+                if (!eval(this.LocationY)) return false;
+                if (!eval(this.PlanetSystemId)) return false;
+                if (!eval(this.SatelliteId)) return false;
+                if (!eval(this.LongitudeLatitude)) return false;
                 return true;
             }
             #endregion
@@ -275,26 +276,27 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.UnknownString1)) return true;
-                if (eval(this.UnknownByte)) return true;
-                if (eval(this.UnknownString2)) return true;
-                if (eval(this.UnknownString3)) return true;
-                if (this.UnknownInts != null)
+                if (eval(this.CreatedTime)) return true;
+                if (eval(this.SourceType)) return true;
+                if (eval(this.AlsoCreatedTime)) return true;
+                if (eval(this.SourceEditorID)) return true;
+                if (this.UnknownItems != null)
                 {
-                    if (eval(this.UnknownInts.Overall)) return true;
-                    if (this.UnknownInts.Specific != null)
+                    if (eval(this.UnknownItems.Overall)) return true;
+                    if (this.UnknownItems.Specific != null)
                     {
-                        foreach (var item in this.UnknownInts.Specific)
+                        foreach (var item in this.UnknownItems.Specific)
                         {
-                            if (!eval(item.Value)) return false;
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
                         }
                     }
                 }
-                if (eval(this.UnknownInt1)) return true;
-                if (eval(this.UnknownInt2)) return true;
-                if (eval(this.UnknownInt3)) return true;
-                if (eval(this.UnknownInt4)) return true;
-                if (eval(this.UnknownEnding)) return true;
+                if (eval(this.LocationX)) return true;
+                if (eval(this.LocationY)) return true;
+                if (eval(this.PlanetSystemId)) return true;
+                if (eval(this.SatelliteId)) return true;
+                if (eval(this.LongitudeLatitude)) return true;
                 return false;
             }
             #endregion
@@ -310,29 +312,30 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.UnknownString1 = eval(this.UnknownString1);
-                obj.UnknownByte = eval(this.UnknownByte);
-                obj.UnknownString2 = eval(this.UnknownString2);
-                obj.UnknownString3 = eval(this.UnknownString3);
-                if (UnknownInts != null)
+                obj.CreatedTime = eval(this.CreatedTime);
+                obj.SourceType = eval(this.SourceType);
+                obj.AlsoCreatedTime = eval(this.AlsoCreatedTime);
+                obj.SourceEditorID = eval(this.SourceEditorID);
+                if (UnknownItems != null)
                 {
-                    obj.UnknownInts = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.UnknownInts.Overall), []);
-                    if (UnknownInts.Specific != null)
+                    obj.UnknownItems = new MaskItem<R, IEnumerable<MaskItemIndexed<R, BlockEditorMetaDataItem.Mask<R>?>>?>(eval(this.UnknownItems.Overall), []);
+                    if (UnknownItems.Specific != null)
                     {
-                        var l = new List<(int Index, R Item)>();
-                        obj.UnknownInts.Specific = l;
-                        foreach (var item in UnknownInts.Specific)
+                        var l = new List<MaskItemIndexed<R, BlockEditorMetaDataItem.Mask<R>?>>();
+                        obj.UnknownItems.Specific = l;
+                        foreach (var item in UnknownItems.Specific)
                         {
-                            R mask = eval(item.Value);
-                            l.Add((item.Index, mask));
+                            MaskItemIndexed<R, BlockEditorMetaDataItem.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, BlockEditorMetaDataItem.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
                         }
                     }
                 }
-                obj.UnknownInt1 = eval(this.UnknownInt1);
-                obj.UnknownInt2 = eval(this.UnknownInt2);
-                obj.UnknownInt3 = eval(this.UnknownInt3);
-                obj.UnknownInt4 = eval(this.UnknownInt4);
-                obj.UnknownEnding = eval(this.UnknownEnding);
+                obj.LocationX = eval(this.LocationX);
+                obj.LocationY = eval(this.LocationY);
+                obj.PlanetSystemId = eval(this.PlanetSystemId);
+                obj.SatelliteId = eval(this.SatelliteId);
+                obj.LongitudeLatitude = eval(this.LongitudeLatitude);
             }
             #endregion
 
@@ -351,62 +354,60 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(BlockEditorMetaDataComponent.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.UnknownString1 ?? true)
+                    if (printMask?.CreatedTime ?? true)
                     {
-                        sb.AppendItem(UnknownString1, "UnknownString1");
+                        sb.AppendItem(CreatedTime, "CreatedTime");
                     }
-                    if (printMask?.UnknownByte ?? true)
+                    if (printMask?.SourceType ?? true)
                     {
-                        sb.AppendItem(UnknownByte, "UnknownByte");
+                        sb.AppendItem(SourceType, "SourceType");
                     }
-                    if (printMask?.UnknownString2 ?? true)
+                    if (printMask?.AlsoCreatedTime ?? true)
                     {
-                        sb.AppendItem(UnknownString2, "UnknownString2");
+                        sb.AppendItem(AlsoCreatedTime, "AlsoCreatedTime");
                     }
-                    if (printMask?.UnknownString3 ?? true)
+                    if (printMask?.SourceEditorID ?? true)
                     {
-                        sb.AppendItem(UnknownString3, "UnknownString3");
+                        sb.AppendItem(SourceEditorID, "SourceEditorID");
                     }
-                    if ((printMask?.UnknownInts?.Overall ?? true)
-                        && UnknownInts is {} UnknownIntsItem)
+                    if ((printMask?.UnknownItems?.Overall ?? true)
+                        && UnknownItems is {} UnknownItemsItem)
                     {
-                        sb.AppendLine("UnknownInts =>");
+                        sb.AppendLine("UnknownItems =>");
                         using (sb.Brace())
                         {
-                            sb.AppendItem(UnknownIntsItem.Overall);
-                            if (UnknownIntsItem.Specific != null)
+                            sb.AppendItem(UnknownItemsItem.Overall);
+                            if (UnknownItemsItem.Specific != null)
                             {
-                                foreach (var subItem in UnknownIntsItem.Specific)
+                                foreach (var subItem in UnknownItemsItem.Specific)
                                 {
                                     using (sb.Brace())
                                     {
-                                        {
-                                            sb.AppendItem(subItem);
-                                        }
+                                        subItem?.Print(sb);
                                     }
                                 }
                             }
                         }
                     }
-                    if (printMask?.UnknownInt1 ?? true)
+                    if (printMask?.LocationX ?? true)
                     {
-                        sb.AppendItem(UnknownInt1, "UnknownInt1");
+                        sb.AppendItem(LocationX, "LocationX");
                     }
-                    if (printMask?.UnknownInt2 ?? true)
+                    if (printMask?.LocationY ?? true)
                     {
-                        sb.AppendItem(UnknownInt2, "UnknownInt2");
+                        sb.AppendItem(LocationY, "LocationY");
                     }
-                    if (printMask?.UnknownInt3 ?? true)
+                    if (printMask?.PlanetSystemId ?? true)
                     {
-                        sb.AppendItem(UnknownInt3, "UnknownInt3");
+                        sb.AppendItem(PlanetSystemId, "PlanetSystemId");
                     }
-                    if (printMask?.UnknownInt4 ?? true)
+                    if (printMask?.SatelliteId ?? true)
                     {
-                        sb.AppendItem(UnknownInt4, "UnknownInt4");
+                        sb.AppendItem(SatelliteId, "SatelliteId");
                     }
-                    if (printMask?.UnknownEnding ?? true)
+                    if (printMask?.LongitudeLatitude ?? true)
                     {
-                        sb.AppendItem(UnknownEnding, "UnknownEnding");
+                        sb.AppendItem(LongitudeLatitude, "LongitudeLatitude");
                     }
                 }
             }
@@ -419,16 +420,16 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? UnknownString1;
-            public Exception? UnknownByte;
-            public Exception? UnknownString2;
-            public Exception? UnknownString3;
-            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? UnknownInts;
-            public Exception? UnknownInt1;
-            public Exception? UnknownInt2;
-            public Exception? UnknownInt3;
-            public Exception? UnknownInt4;
-            public Exception? UnknownEnding;
+            public Exception? CreatedTime;
+            public Exception? SourceType;
+            public Exception? AlsoCreatedTime;
+            public Exception? SourceEditorID;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, BlockEditorMetaDataItem.ErrorMask?>>?>? UnknownItems;
+            public Exception? LocationX;
+            public Exception? LocationY;
+            public Exception? PlanetSystemId;
+            public Exception? SatelliteId;
+            public Exception? LongitudeLatitude;
             #endregion
 
             #region IErrorMask
@@ -437,26 +438,26 @@ namespace Mutagen.Bethesda.Starfield
                 BlockEditorMetaDataComponent_FieldIndex enu = (BlockEditorMetaDataComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownString1:
-                        return UnknownString1;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownByte:
-                        return UnknownByte;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownString2:
-                        return UnknownString2;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownString3:
-                        return UnknownString3;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInts:
-                        return UnknownInts;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInt1:
-                        return UnknownInt1;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInt2:
-                        return UnknownInt2;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInt3:
-                        return UnknownInt3;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInt4:
-                        return UnknownInt4;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownEnding:
-                        return UnknownEnding;
+                    case BlockEditorMetaDataComponent_FieldIndex.CreatedTime:
+                        return CreatedTime;
+                    case BlockEditorMetaDataComponent_FieldIndex.SourceType:
+                        return SourceType;
+                    case BlockEditorMetaDataComponent_FieldIndex.AlsoCreatedTime:
+                        return AlsoCreatedTime;
+                    case BlockEditorMetaDataComponent_FieldIndex.SourceEditorID:
+                        return SourceEditorID;
+                    case BlockEditorMetaDataComponent_FieldIndex.UnknownItems:
+                        return UnknownItems;
+                    case BlockEditorMetaDataComponent_FieldIndex.LocationX:
+                        return LocationX;
+                    case BlockEditorMetaDataComponent_FieldIndex.LocationY:
+                        return LocationY;
+                    case BlockEditorMetaDataComponent_FieldIndex.PlanetSystemId:
+                        return PlanetSystemId;
+                    case BlockEditorMetaDataComponent_FieldIndex.SatelliteId:
+                        return SatelliteId;
+                    case BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude:
+                        return LongitudeLatitude;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -467,35 +468,35 @@ namespace Mutagen.Bethesda.Starfield
                 BlockEditorMetaDataComponent_FieldIndex enu = (BlockEditorMetaDataComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownString1:
-                        this.UnknownString1 = ex;
+                    case BlockEditorMetaDataComponent_FieldIndex.CreatedTime:
+                        this.CreatedTime = ex;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownByte:
-                        this.UnknownByte = ex;
+                    case BlockEditorMetaDataComponent_FieldIndex.SourceType:
+                        this.SourceType = ex;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownString2:
-                        this.UnknownString2 = ex;
+                    case BlockEditorMetaDataComponent_FieldIndex.AlsoCreatedTime:
+                        this.AlsoCreatedTime = ex;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownString3:
-                        this.UnknownString3 = ex;
+                    case BlockEditorMetaDataComponent_FieldIndex.SourceEditorID:
+                        this.SourceEditorID = ex;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInts:
-                        this.UnknownInts = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
+                    case BlockEditorMetaDataComponent_FieldIndex.UnknownItems:
+                        this.UnknownItems = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, BlockEditorMetaDataItem.ErrorMask?>>?>(ex, null);
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInt1:
-                        this.UnknownInt1 = ex;
+                    case BlockEditorMetaDataComponent_FieldIndex.LocationX:
+                        this.LocationX = ex;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInt2:
-                        this.UnknownInt2 = ex;
+                    case BlockEditorMetaDataComponent_FieldIndex.LocationY:
+                        this.LocationY = ex;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInt3:
-                        this.UnknownInt3 = ex;
+                    case BlockEditorMetaDataComponent_FieldIndex.PlanetSystemId:
+                        this.PlanetSystemId = ex;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInt4:
-                        this.UnknownInt4 = ex;
+                    case BlockEditorMetaDataComponent_FieldIndex.SatelliteId:
+                        this.SatelliteId = ex;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownEnding:
-                        this.UnknownEnding = ex;
+                    case BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude:
+                        this.LongitudeLatitude = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -508,35 +509,35 @@ namespace Mutagen.Bethesda.Starfield
                 BlockEditorMetaDataComponent_FieldIndex enu = (BlockEditorMetaDataComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownString1:
-                        this.UnknownString1 = (Exception?)obj;
+                    case BlockEditorMetaDataComponent_FieldIndex.CreatedTime:
+                        this.CreatedTime = (Exception?)obj;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownByte:
-                        this.UnknownByte = (Exception?)obj;
+                    case BlockEditorMetaDataComponent_FieldIndex.SourceType:
+                        this.SourceType = (Exception?)obj;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownString2:
-                        this.UnknownString2 = (Exception?)obj;
+                    case BlockEditorMetaDataComponent_FieldIndex.AlsoCreatedTime:
+                        this.AlsoCreatedTime = (Exception?)obj;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownString3:
-                        this.UnknownString3 = (Exception?)obj;
+                    case BlockEditorMetaDataComponent_FieldIndex.SourceEditorID:
+                        this.SourceEditorID = (Exception?)obj;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInts:
-                        this.UnknownInts = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
+                    case BlockEditorMetaDataComponent_FieldIndex.UnknownItems:
+                        this.UnknownItems = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, BlockEditorMetaDataItem.ErrorMask?>>?>)obj;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInt1:
-                        this.UnknownInt1 = (Exception?)obj;
+                    case BlockEditorMetaDataComponent_FieldIndex.LocationX:
+                        this.LocationX = (Exception?)obj;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInt2:
-                        this.UnknownInt2 = (Exception?)obj;
+                    case BlockEditorMetaDataComponent_FieldIndex.LocationY:
+                        this.LocationY = (Exception?)obj;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInt3:
-                        this.UnknownInt3 = (Exception?)obj;
+                    case BlockEditorMetaDataComponent_FieldIndex.PlanetSystemId:
+                        this.PlanetSystemId = (Exception?)obj;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownInt4:
-                        this.UnknownInt4 = (Exception?)obj;
+                    case BlockEditorMetaDataComponent_FieldIndex.SatelliteId:
+                        this.SatelliteId = (Exception?)obj;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.UnknownEnding:
-                        this.UnknownEnding = (Exception?)obj;
+                    case BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude:
+                        this.LongitudeLatitude = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -547,16 +548,16 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (UnknownString1 != null) return true;
-                if (UnknownByte != null) return true;
-                if (UnknownString2 != null) return true;
-                if (UnknownString3 != null) return true;
-                if (UnknownInts != null) return true;
-                if (UnknownInt1 != null) return true;
-                if (UnknownInt2 != null) return true;
-                if (UnknownInt3 != null) return true;
-                if (UnknownInt4 != null) return true;
-                if (UnknownEnding != null) return true;
+                if (CreatedTime != null) return true;
+                if (SourceType != null) return true;
+                if (AlsoCreatedTime != null) return true;
+                if (SourceEditorID != null) return true;
+                if (UnknownItems != null) return true;
+                if (LocationX != null) return true;
+                if (LocationY != null) return true;
+                if (PlanetSystemId != null) return true;
+                if (SatelliteId != null) return true;
+                if (LongitudeLatitude != null) return true;
                 return false;
             }
             #endregion
@@ -584,51 +585,49 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(UnknownString1, "UnknownString1");
+                    sb.AppendItem(CreatedTime, "CreatedTime");
                 }
                 {
-                    sb.AppendItem(UnknownByte, "UnknownByte");
+                    sb.AppendItem(SourceType, "SourceType");
                 }
                 {
-                    sb.AppendItem(UnknownString2, "UnknownString2");
+                    sb.AppendItem(AlsoCreatedTime, "AlsoCreatedTime");
                 }
                 {
-                    sb.AppendItem(UnknownString3, "UnknownString3");
+                    sb.AppendItem(SourceEditorID, "SourceEditorID");
                 }
-                if (UnknownInts is {} UnknownIntsItem)
+                if (UnknownItems is {} UnknownItemsItem)
                 {
-                    sb.AppendLine("UnknownInts =>");
+                    sb.AppendLine("UnknownItems =>");
                     using (sb.Brace())
                     {
-                        sb.AppendItem(UnknownIntsItem.Overall);
-                        if (UnknownIntsItem.Specific != null)
+                        sb.AppendItem(UnknownItemsItem.Overall);
+                        if (UnknownItemsItem.Specific != null)
                         {
-                            foreach (var subItem in UnknownIntsItem.Specific)
+                            foreach (var subItem in UnknownItemsItem.Specific)
                             {
                                 using (sb.Brace())
                                 {
-                                    {
-                                        sb.AppendItem(subItem);
-                                    }
+                                    subItem?.Print(sb);
                                 }
                             }
                         }
                     }
                 }
                 {
-                    sb.AppendItem(UnknownInt1, "UnknownInt1");
+                    sb.AppendItem(LocationX, "LocationX");
                 }
                 {
-                    sb.AppendItem(UnknownInt2, "UnknownInt2");
+                    sb.AppendItem(LocationY, "LocationY");
                 }
                 {
-                    sb.AppendItem(UnknownInt3, "UnknownInt3");
+                    sb.AppendItem(PlanetSystemId, "PlanetSystemId");
                 }
                 {
-                    sb.AppendItem(UnknownInt4, "UnknownInt4");
+                    sb.AppendItem(SatelliteId, "SatelliteId");
                 }
                 {
-                    sb.AppendItem(UnknownEnding, "UnknownEnding");
+                    sb.AppendItem(LongitudeLatitude, "LongitudeLatitude");
                 }
             }
             #endregion
@@ -638,16 +637,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.UnknownString1 = this.UnknownString1.Combine(rhs.UnknownString1);
-                ret.UnknownByte = this.UnknownByte.Combine(rhs.UnknownByte);
-                ret.UnknownString2 = this.UnknownString2.Combine(rhs.UnknownString2);
-                ret.UnknownString3 = this.UnknownString3.Combine(rhs.UnknownString3);
-                ret.UnknownInts = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.UnknownInts?.Overall, rhs.UnknownInts?.Overall), Noggog.ExceptionExt.Combine(this.UnknownInts?.Specific, rhs.UnknownInts?.Specific));
-                ret.UnknownInt1 = this.UnknownInt1.Combine(rhs.UnknownInt1);
-                ret.UnknownInt2 = this.UnknownInt2.Combine(rhs.UnknownInt2);
-                ret.UnknownInt3 = this.UnknownInt3.Combine(rhs.UnknownInt3);
-                ret.UnknownInt4 = this.UnknownInt4.Combine(rhs.UnknownInt4);
-                ret.UnknownEnding = this.UnknownEnding.Combine(rhs.UnknownEnding);
+                ret.CreatedTime = this.CreatedTime.Combine(rhs.CreatedTime);
+                ret.SourceType = this.SourceType.Combine(rhs.SourceType);
+                ret.AlsoCreatedTime = this.AlsoCreatedTime.Combine(rhs.AlsoCreatedTime);
+                ret.SourceEditorID = this.SourceEditorID.Combine(rhs.SourceEditorID);
+                ret.UnknownItems = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, BlockEditorMetaDataItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.UnknownItems?.Overall, rhs.UnknownItems?.Overall), Noggog.ExceptionExt.Combine(this.UnknownItems?.Specific, rhs.UnknownItems?.Specific));
+                ret.LocationX = this.LocationX.Combine(rhs.LocationX);
+                ret.LocationY = this.LocationY.Combine(rhs.LocationY);
+                ret.PlanetSystemId = this.PlanetSystemId.Combine(rhs.PlanetSystemId);
+                ret.SatelliteId = this.SatelliteId.Combine(rhs.SatelliteId);
+                ret.LongitudeLatitude = this.LongitudeLatitude.Combine(rhs.LongitudeLatitude);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -670,16 +669,16 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool UnknownString1;
-            public bool UnknownByte;
-            public bool UnknownString2;
-            public bool UnknownString3;
-            public bool UnknownInts;
-            public bool UnknownInt1;
-            public bool UnknownInt2;
-            public bool UnknownInt3;
-            public bool UnknownInt4;
-            public bool UnknownEnding;
+            public bool CreatedTime;
+            public bool SourceType;
+            public bool AlsoCreatedTime;
+            public bool SourceEditorID;
+            public BlockEditorMetaDataItem.TranslationMask? UnknownItems;
+            public bool LocationX;
+            public bool LocationY;
+            public bool PlanetSystemId;
+            public bool SatelliteId;
+            public bool LongitudeLatitude;
             #endregion
 
             #region Ctors
@@ -688,16 +687,15 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.UnknownString1 = defaultOn;
-                this.UnknownByte = defaultOn;
-                this.UnknownString2 = defaultOn;
-                this.UnknownString3 = defaultOn;
-                this.UnknownInts = defaultOn;
-                this.UnknownInt1 = defaultOn;
-                this.UnknownInt2 = defaultOn;
-                this.UnknownInt3 = defaultOn;
-                this.UnknownInt4 = defaultOn;
-                this.UnknownEnding = defaultOn;
+                this.CreatedTime = defaultOn;
+                this.SourceType = defaultOn;
+                this.AlsoCreatedTime = defaultOn;
+                this.SourceEditorID = defaultOn;
+                this.LocationX = defaultOn;
+                this.LocationY = defaultOn;
+                this.PlanetSystemId = defaultOn;
+                this.SatelliteId = defaultOn;
+                this.LongitudeLatitude = defaultOn;
             }
 
             #endregion
@@ -705,16 +703,16 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((UnknownString1, null));
-                ret.Add((UnknownByte, null));
-                ret.Add((UnknownString2, null));
-                ret.Add((UnknownString3, null));
-                ret.Add((UnknownInts, null));
-                ret.Add((UnknownInt1, null));
-                ret.Add((UnknownInt2, null));
-                ret.Add((UnknownInt3, null));
-                ret.Add((UnknownInt4, null));
-                ret.Add((UnknownEnding, null));
+                ret.Add((CreatedTime, null));
+                ret.Add((SourceType, null));
+                ret.Add((AlsoCreatedTime, null));
+                ret.Add((SourceEditorID, null));
+                ret.Add((UnknownItems == null ? DefaultOn : !UnknownItems.GetCrystal().CopyNothing, UnknownItems?.GetCrystal()));
+                ret.Add((LocationX, null));
+                ret.Add((LocationY, null));
+                ret.Add((PlanetSystemId, null));
+                ret.Add((SatelliteId, null));
+                ret.Add((LongitudeLatitude, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -786,16 +784,16 @@ namespace Mutagen.Bethesda.Starfield
         IBlockEditorMetaDataComponentGetter,
         ILoquiObjectSetter<IBlockEditorMetaDataComponent>
     {
-        new String UnknownString1 { get; set; }
-        new Byte UnknownByte { get; set; }
-        new String UnknownString2 { get; set; }
-        new String UnknownString3 { get; set; }
-        new ExtendedList<Int32> UnknownInts { get; }
-        new Int32 UnknownInt1 { get; set; }
-        new Int32 UnknownInt2 { get; set; }
-        new Int32 UnknownInt3 { get; set; }
-        new Int32 UnknownInt4 { get; set; }
-        new MemorySlice<Byte> UnknownEnding { get; set; }
+        new String CreatedTime { get; set; }
+        new BlockEditorMetaDataComponent.SourceTypeOption SourceType { get; set; }
+        new String AlsoCreatedTime { get; set; }
+        new String SourceEditorID { get; set; }
+        new ExtendedList<BlockEditorMetaDataItem> UnknownItems { get; }
+        new Int32 LocationX { get; set; }
+        new Int32 LocationY { get; set; }
+        new Int32 PlanetSystemId { get; set; }
+        new Int32 SatelliteId { get; set; }
+        new MemorySlice<Byte> LongitudeLatitude { get; set; }
     }
 
     public partial interface IBlockEditorMetaDataComponentGetter :
@@ -804,16 +802,16 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IBlockEditorMetaDataComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => BlockEditorMetaDataComponent_Registration.Instance;
-        String UnknownString1 { get; }
-        Byte UnknownByte { get; }
-        String UnknownString2 { get; }
-        String UnknownString3 { get; }
-        IReadOnlyList<Int32> UnknownInts { get; }
-        Int32 UnknownInt1 { get; }
-        Int32 UnknownInt2 { get; }
-        Int32 UnknownInt3 { get; }
-        Int32 UnknownInt4 { get; }
-        ReadOnlyMemorySlice<Byte> UnknownEnding { get; }
+        String CreatedTime { get; }
+        BlockEditorMetaDataComponent.SourceTypeOption SourceType { get; }
+        String AlsoCreatedTime { get; }
+        String SourceEditorID { get; }
+        IReadOnlyList<IBlockEditorMetaDataItemGetter> UnknownItems { get; }
+        Int32 LocationX { get; }
+        Int32 LocationY { get; }
+        Int32 PlanetSystemId { get; }
+        Int32 SatelliteId { get; }
+        ReadOnlyMemorySlice<Byte> LongitudeLatitude { get; }
 
     }
 
@@ -958,16 +956,16 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum BlockEditorMetaDataComponent_FieldIndex
     {
-        UnknownString1 = 0,
-        UnknownByte = 1,
-        UnknownString2 = 2,
-        UnknownString3 = 3,
-        UnknownInts = 4,
-        UnknownInt1 = 5,
-        UnknownInt2 = 6,
-        UnknownInt3 = 7,
-        UnknownInt4 = 8,
-        UnknownEnding = 9,
+        CreatedTime = 0,
+        SourceType = 1,
+        AlsoCreatedTime = 2,
+        SourceEditorID = 3,
+        UnknownItems = 4,
+        LocationX = 5,
+        LocationY = 6,
+        PlanetSystemId = 7,
+        SatelliteId = 8,
+        LongitudeLatitude = 9,
     }
     #endregion
 
@@ -1058,16 +1056,16 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IBlockEditorMetaDataComponent item)
         {
             ClearPartial();
-            item.UnknownString1 = string.Empty;
-            item.UnknownByte = default(Byte);
-            item.UnknownString2 = string.Empty;
-            item.UnknownString3 = string.Empty;
-            item.UnknownInts.Clear();
-            item.UnknownInt1 = default(Int32);
-            item.UnknownInt2 = default(Int32);
-            item.UnknownInt3 = default(Int32);
-            item.UnknownInt4 = default(Int32);
-            item.UnknownEnding = [];
+            item.CreatedTime = string.Empty;
+            item.SourceType = default(BlockEditorMetaDataComponent.SourceTypeOption);
+            item.AlsoCreatedTime = string.Empty;
+            item.SourceEditorID = string.Empty;
+            item.UnknownItems.Clear();
+            item.LocationX = default(Int32);
+            item.LocationY = default(Int32);
+            item.PlanetSystemId = default(Int32);
+            item.SatelliteId = default(Int32);
+            item.LongitudeLatitude = [];
             base.Clear(item);
         }
         
@@ -1135,19 +1133,19 @@ namespace Mutagen.Bethesda.Starfield
             BlockEditorMetaDataComponent.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.UnknownString1 = string.Equals(item.UnknownString1, rhs.UnknownString1);
-            ret.UnknownByte = item.UnknownByte == rhs.UnknownByte;
-            ret.UnknownString2 = string.Equals(item.UnknownString2, rhs.UnknownString2);
-            ret.UnknownString3 = string.Equals(item.UnknownString3, rhs.UnknownString3);
-            ret.UnknownInts = item.UnknownInts.CollectionEqualsHelper(
-                rhs.UnknownInts,
-                (l, r) => l == r,
+            ret.CreatedTime = string.Equals(item.CreatedTime, rhs.CreatedTime);
+            ret.SourceType = item.SourceType == rhs.SourceType;
+            ret.AlsoCreatedTime = string.Equals(item.AlsoCreatedTime, rhs.AlsoCreatedTime);
+            ret.SourceEditorID = string.Equals(item.SourceEditorID, rhs.SourceEditorID);
+            ret.UnknownItems = item.UnknownItems.CollectionEqualsHelper(
+                rhs.UnknownItems,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.UnknownInt1 = item.UnknownInt1 == rhs.UnknownInt1;
-            ret.UnknownInt2 = item.UnknownInt2 == rhs.UnknownInt2;
-            ret.UnknownInt3 = item.UnknownInt3 == rhs.UnknownInt3;
-            ret.UnknownInt4 = item.UnknownInt4 == rhs.UnknownInt4;
-            ret.UnknownEnding = MemoryExtensions.SequenceEqual(item.UnknownEnding.Span, rhs.UnknownEnding.Span);
+            ret.LocationX = item.LocationX == rhs.LocationX;
+            ret.LocationY = item.LocationY == rhs.LocationY;
+            ret.PlanetSystemId = item.PlanetSystemId == rhs.PlanetSystemId;
+            ret.SatelliteId = item.SatelliteId == rhs.SatelliteId;
+            ret.LongitudeLatitude = MemoryExtensions.SequenceEqual(item.LongitudeLatitude.Span, rhs.LongitudeLatitude.Span);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1197,55 +1195,55 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if (printMask?.UnknownString1 ?? true)
+            if (printMask?.CreatedTime ?? true)
             {
-                sb.AppendItem(item.UnknownString1, "UnknownString1");
+                sb.AppendItem(item.CreatedTime, "CreatedTime");
             }
-            if (printMask?.UnknownByte ?? true)
+            if (printMask?.SourceType ?? true)
             {
-                sb.AppendItem(item.UnknownByte, "UnknownByte");
+                sb.AppendItem(item.SourceType, "SourceType");
             }
-            if (printMask?.UnknownString2 ?? true)
+            if (printMask?.AlsoCreatedTime ?? true)
             {
-                sb.AppendItem(item.UnknownString2, "UnknownString2");
+                sb.AppendItem(item.AlsoCreatedTime, "AlsoCreatedTime");
             }
-            if (printMask?.UnknownString3 ?? true)
+            if (printMask?.SourceEditorID ?? true)
             {
-                sb.AppendItem(item.UnknownString3, "UnknownString3");
+                sb.AppendItem(item.SourceEditorID, "SourceEditorID");
             }
-            if (printMask?.UnknownInts?.Overall ?? true)
+            if (printMask?.UnknownItems?.Overall ?? true)
             {
-                sb.AppendLine("UnknownInts =>");
+                sb.AppendLine("UnknownItems =>");
                 using (sb.Brace())
                 {
-                    foreach (var subItem in item.UnknownInts)
+                    foreach (var subItem in item.UnknownItems)
                     {
                         using (sb.Brace())
                         {
-                            sb.AppendItem(subItem);
+                            subItem?.Print(sb, "Item");
                         }
                     }
                 }
             }
-            if (printMask?.UnknownInt1 ?? true)
+            if (printMask?.LocationX ?? true)
             {
-                sb.AppendItem(item.UnknownInt1, "UnknownInt1");
+                sb.AppendItem(item.LocationX, "LocationX");
             }
-            if (printMask?.UnknownInt2 ?? true)
+            if (printMask?.LocationY ?? true)
             {
-                sb.AppendItem(item.UnknownInt2, "UnknownInt2");
+                sb.AppendItem(item.LocationY, "LocationY");
             }
-            if (printMask?.UnknownInt3 ?? true)
+            if (printMask?.PlanetSystemId ?? true)
             {
-                sb.AppendItem(item.UnknownInt3, "UnknownInt3");
+                sb.AppendItem(item.PlanetSystemId, "PlanetSystemId");
             }
-            if (printMask?.UnknownInt4 ?? true)
+            if (printMask?.SatelliteId ?? true)
             {
-                sb.AppendItem(item.UnknownInt4, "UnknownInt4");
+                sb.AppendItem(item.SatelliteId, "SatelliteId");
             }
-            if (printMask?.UnknownEnding ?? true)
+            if (printMask?.LongitudeLatitude ?? true)
             {
-                sb.AppendLine($"UnknownEnding => {SpanExt.ToHexString(item.UnknownEnding)}");
+                sb.AppendLine($"LongitudeLatitude => {SpanExt.ToHexString(item.LongitudeLatitude)}");
             }
         }
         
@@ -1266,45 +1264,45 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IAComponentGetter)lhs, (IAComponentGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownString1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.CreatedTime) ?? true))
             {
-                if (!string.Equals(lhs.UnknownString1, rhs.UnknownString1)) return false;
+                if (!string.Equals(lhs.CreatedTime, rhs.CreatedTime)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownByte) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.SourceType) ?? true))
             {
-                if (lhs.UnknownByte != rhs.UnknownByte) return false;
+                if (lhs.SourceType != rhs.SourceType) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownString2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.AlsoCreatedTime) ?? true))
             {
-                if (!string.Equals(lhs.UnknownString2, rhs.UnknownString2)) return false;
+                if (!string.Equals(lhs.AlsoCreatedTime, rhs.AlsoCreatedTime)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownString3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.SourceEditorID) ?? true))
             {
-                if (!string.Equals(lhs.UnknownString3, rhs.UnknownString3)) return false;
+                if (!string.Equals(lhs.SourceEditorID, rhs.SourceEditorID)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownInts) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownItems) ?? true))
             {
-                if (!lhs.UnknownInts.SequenceEqualNullable(rhs.UnknownInts)) return false;
+                if (!lhs.UnknownItems.SequenceEqual(rhs.UnknownItems, (l, r) => ((BlockEditorMetaDataItemCommon)((IBlockEditorMetaDataItemGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)BlockEditorMetaDataComponent_FieldIndex.UnknownItems)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownInt1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.LocationX) ?? true))
             {
-                if (lhs.UnknownInt1 != rhs.UnknownInt1) return false;
+                if (lhs.LocationX != rhs.LocationX) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownInt2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.LocationY) ?? true))
             {
-                if (lhs.UnknownInt2 != rhs.UnknownInt2) return false;
+                if (lhs.LocationY != rhs.LocationY) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownInt3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.PlanetSystemId) ?? true))
             {
-                if (lhs.UnknownInt3 != rhs.UnknownInt3) return false;
+                if (lhs.PlanetSystemId != rhs.PlanetSystemId) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownInt4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.SatelliteId) ?? true))
             {
-                if (lhs.UnknownInt4 != rhs.UnknownInt4) return false;
+                if (lhs.SatelliteId != rhs.SatelliteId) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownEnding) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.UnknownEnding.Span, rhs.UnknownEnding.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.LongitudeLatitude.Span, rhs.LongitudeLatitude.Span)) return false;
             }
             return true;
         }
@@ -1323,19 +1321,19 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IBlockEditorMetaDataComponentGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.UnknownString1);
-            hash.Add(item.UnknownByte);
-            hash.Add(item.UnknownString2);
-            hash.Add(item.UnknownString3);
-            foreach (var subItem in item.UnknownInts)
+            hash.Add(item.CreatedTime);
+            hash.Add(item.SourceType);
+            hash.Add(item.AlsoCreatedTime);
+            hash.Add(item.SourceEditorID);
+            foreach (var subItem in item.UnknownItems)
             {
                 hash.Add(subItem);
             }
-            hash.Add(item.UnknownInt1);
-            hash.Add(item.UnknownInt2);
-            hash.Add(item.UnknownInt3);
-            hash.Add(item.UnknownInt4);
-            hash.AddBytes(item.UnknownEnding);
+            hash.Add(item.LocationX);
+            hash.Add(item.LocationY);
+            hash.Add(item.PlanetSystemId);
+            hash.Add(item.SatelliteId);
+            hash.AddBytes(item.LongitudeLatitude);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1384,28 +1382,35 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownString1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.CreatedTime) ?? true))
             {
-                item.UnknownString1 = rhs.UnknownString1;
+                item.CreatedTime = rhs.CreatedTime;
             }
-            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownByte) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.SourceType) ?? true))
             {
-                item.UnknownByte = rhs.UnknownByte;
+                item.SourceType = rhs.SourceType;
             }
-            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownString2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.AlsoCreatedTime) ?? true))
             {
-                item.UnknownString2 = rhs.UnknownString2;
+                item.AlsoCreatedTime = rhs.AlsoCreatedTime;
             }
-            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownString3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.SourceEditorID) ?? true))
             {
-                item.UnknownString3 = rhs.UnknownString3;
+                item.SourceEditorID = rhs.SourceEditorID;
             }
-            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownInts) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownItems) ?? true))
             {
-                errorMask?.PushIndex((int)BlockEditorMetaDataComponent_FieldIndex.UnknownInts);
+                errorMask?.PushIndex((int)BlockEditorMetaDataComponent_FieldIndex.UnknownItems);
                 try
                 {
-                    item.UnknownInts.SetTo(rhs.UnknownInts);
+                    item.UnknownItems.SetTo(
+                        rhs.UnknownItems
+                        .Select(r =>
+                        {
+                            return r.DeepCopy(
+                                errorMask: errorMask,
+                                default(TranslationCrystal));
+                        }));
                 }
                 catch (Exception ex)
                 when (errorMask != null)
@@ -1417,25 +1422,25 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownInt1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.LocationX) ?? true))
             {
-                item.UnknownInt1 = rhs.UnknownInt1;
+                item.LocationX = rhs.LocationX;
             }
-            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownInt2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.LocationY) ?? true))
             {
-                item.UnknownInt2 = rhs.UnknownInt2;
+                item.LocationY = rhs.LocationY;
             }
-            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownInt3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.PlanetSystemId) ?? true))
             {
-                item.UnknownInt3 = rhs.UnknownInt3;
+                item.PlanetSystemId = rhs.PlanetSystemId;
             }
-            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownInt4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.SatelliteId) ?? true))
             {
-                item.UnknownInt4 = rhs.UnknownInt4;
+                item.SatelliteId = rhs.SatelliteId;
             }
-            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownEnding) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude) ?? true))
             {
-                item.UnknownEnding = rhs.UnknownEnding.ToArray();
+                item.LongitudeLatitude = rhs.LongitudeLatitude.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1571,29 +1576,39 @@ namespace Mutagen.Bethesda.Starfield
             {
                 StringBinaryTranslation.Instance.Write(
                     writer: writer,
-                    item: item.UnknownString1,
+                    item: item.CreatedTime,
                     binaryType: StringBinaryType.PrependLength);
-                writer.Write(item.UnknownByte);
+                EnumBinaryTranslation<BlockEditorMetaDataComponent.SourceTypeOption, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.SourceType,
+                    length: 1);
                 StringBinaryTranslation.Instance.Write(
                     writer: writer,
-                    item: item.UnknownString2,
+                    item: item.AlsoCreatedTime,
                     binaryType: StringBinaryType.PrependLength);
                 StringBinaryTranslation.Instance.Write(
                     writer: writer,
-                    item: item.UnknownString3,
+                    item: item.SourceEditorID,
                     binaryType: StringBinaryType.PrependLength);
-                Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Int32>.Instance.Write(
+                Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IBlockEditorMetaDataItemGetter>.Instance.Write(
                     writer: writer,
-                    items: item.UnknownInts,
+                    items: item.UnknownItems,
                     countLengthLength: 4,
-                    transl: Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write);
-                writer.Write(item.UnknownInt1);
-                writer.Write(item.UnknownInt2);
-                writer.Write(item.UnknownInt3);
-                writer.Write(item.UnknownInt4);
+                    transl: (MutagenWriter subWriter, IBlockEditorMetaDataItemGetter subItem, TypedWriteParams conv) =>
+                    {
+                        var Item = subItem;
+                        ((BlockEditorMetaDataItemBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                            item: Item,
+                            writer: subWriter,
+                            translationParams: conv);
+                    });
+                writer.Write(item.LocationX);
+                writer.Write(item.LocationY);
+                writer.Write(item.PlanetSystemId);
+                writer.Write(item.SatelliteId);
                 ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UnknownEnding);
+                    item: item.LongitudeLatitude);
             }
         }
 
@@ -1655,35 +1670,37 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
-                    item.UnknownString1 = StringBinaryTranslation.Instance.Parse(
+                    item.CreatedTime = StringBinaryTranslation.Instance.Parse(
                         reader: dataFrame,
                         stringBinaryType: StringBinaryType.PrependLength,
                         parseWhole: true);
                     if (dataFrame.Remaining < 1) return null;
-                    item.UnknownByte = dataFrame.ReadUInt8();
-                    item.UnknownString2 = StringBinaryTranslation.Instance.Parse(
+                    item.SourceType = EnumBinaryTranslation<BlockEditorMetaDataComponent.SourceTypeOption, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 1);
+                    item.AlsoCreatedTime = StringBinaryTranslation.Instance.Parse(
                         reader: dataFrame,
                         stringBinaryType: StringBinaryType.PrependLength,
                         parseWhole: true);
-                    item.UnknownString3 = StringBinaryTranslation.Instance.Parse(
+                    item.SourceEditorID = StringBinaryTranslation.Instance.Parse(
                         reader: dataFrame,
                         stringBinaryType: StringBinaryType.PrependLength,
                         parseWhole: true);
-                    item.UnknownInts.SetTo(
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Int32>.Instance.Parse(
+                    item.UnknownItems.SetTo(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BlockEditorMetaDataItem>.Instance.Parse(
                             amount: checked((int)frame.ReadUInt32()),
                             reader: frame,
-                            transl: Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
+                            transl: BlockEditorMetaDataItem.TryCreateFromBinary));
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownInt1 = dataFrame.ReadInt32();
+                    item.LocationX = dataFrame.ReadInt32();
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownInt2 = dataFrame.ReadInt32();
+                    item.LocationY = dataFrame.ReadInt32();
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownInt3 = dataFrame.ReadInt32();
+                    item.PlanetSystemId = dataFrame.ReadInt32();
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownInt4 = dataFrame.ReadInt32();
-                    item.UnknownEnding = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    return (int)BlockEditorMetaDataComponent_FieldIndex.UnknownEnding;
+                    item.SatelliteId = dataFrame.ReadInt32();
+                    item.LongitudeLatitude = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    return (int)BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude;
                 }
                 default:
                     return AComponentBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1742,58 +1759,58 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         private RangeInt32? _DAT2Location;
-        #region UnknownString1
-        private int _UnknownString1Location => _DAT2Location!.Value.Min;
-        private bool _UnknownString1_IsSet => _DAT2Location.HasValue;
-        public String UnknownString1 => _UnknownString1_IsSet ? BinaryStringUtility.ParsePrependedString(_recordData.Slice(_UnknownString1Location), lengthLength: 4, encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
-        protected int UnknownString1EndingPos;
+        #region CreatedTime
+        private int _CreatedTimeLocation => _DAT2Location!.Value.Min;
+        private bool _CreatedTime_IsSet => _DAT2Location.HasValue;
+        public String CreatedTime => _CreatedTime_IsSet ? BinaryStringUtility.ParsePrependedString(_recordData.Slice(_CreatedTimeLocation), lengthLength: 4, encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
+        protected int CreatedTimeEndingPos;
         #endregion
-        #region UnknownByte
-        private int _UnknownByteLocation => UnknownString1EndingPos;
-        private bool _UnknownByte_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UnknownByteLocation + 1 >= 1;
-        public Byte UnknownByte => _UnknownByte_IsSet ? _recordData.Span[_UnknownByteLocation] : default(Byte);
+        #region SourceType
+        private int _SourceTypeLocation => CreatedTimeEndingPos;
+        private bool _SourceType_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _SourceTypeLocation + 1 >= 1;
+        public BlockEditorMetaDataComponent.SourceTypeOption SourceType => _SourceType_IsSet ? (BlockEditorMetaDataComponent.SourceTypeOption)_recordData.Span.Slice(_SourceTypeLocation, 0x1)[0] : default(BlockEditorMetaDataComponent.SourceTypeOption);
         #endregion
-        #region UnknownString2
-        private int _UnknownString2Location => UnknownString1EndingPos + 0x1;
-        private bool _UnknownString2_IsSet => _DAT2Location.HasValue;
-        public String UnknownString2 => _UnknownString2_IsSet ? BinaryStringUtility.ParsePrependedString(_recordData.Slice(_UnknownString2Location), lengthLength: 4, encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
-        protected int UnknownString2EndingPos;
+        #region AlsoCreatedTime
+        private int _AlsoCreatedTimeLocation => CreatedTimeEndingPos + 0x1;
+        private bool _AlsoCreatedTime_IsSet => _DAT2Location.HasValue;
+        public String AlsoCreatedTime => _AlsoCreatedTime_IsSet ? BinaryStringUtility.ParsePrependedString(_recordData.Slice(_AlsoCreatedTimeLocation), lengthLength: 4, encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
+        protected int AlsoCreatedTimeEndingPos;
         #endregion
-        #region UnknownString3
-        private int _UnknownString3Location => UnknownString2EndingPos;
-        private bool _UnknownString3_IsSet => _DAT2Location.HasValue;
-        public String UnknownString3 => _UnknownString3_IsSet ? BinaryStringUtility.ParsePrependedString(_recordData.Slice(_UnknownString3Location), lengthLength: 4, encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
-        protected int UnknownString3EndingPos;
+        #region SourceEditorID
+        private int _SourceEditorIDLocation => AlsoCreatedTimeEndingPos;
+        private bool _SourceEditorID_IsSet => _DAT2Location.HasValue;
+        public String SourceEditorID => _SourceEditorID_IsSet ? BinaryStringUtility.ParsePrependedString(_recordData.Slice(_SourceEditorIDLocation), lengthLength: 4, encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
+        protected int SourceEditorIDEndingPos;
         #endregion
-        #region UnknownInts
-        public IReadOnlyList<Int32> UnknownInts => _DAT2Location.HasValue ? BinaryOverlayList.FactoryByCountLength<Int32>(_recordData.Slice(UnknownString3EndingPos), _package, 4, countLength: 4, (s, p) => BinaryPrimitives.ReadInt32LittleEndian(s)) : Array.Empty<Int32>();
-        protected int UnknownIntsEndingPos;
+        #region UnknownItems
+        public IReadOnlyList<IBlockEditorMetaDataItemGetter> UnknownItems => _DAT2Location.HasValue ? BinaryOverlayList.FactoryByCountLength<IBlockEditorMetaDataItemGetter>(_recordData.Slice(SourceEditorIDEndingPos), _package, 5, countLength: 4, (s, p) => BlockEditorMetaDataItemBinaryOverlay.BlockEditorMetaDataItemFactory(s, p)) : Array.Empty<IBlockEditorMetaDataItemGetter>();
+        protected int UnknownItemsEndingPos;
         #endregion
-        #region UnknownInt1
-        private int _UnknownInt1Location => UnknownIntsEndingPos;
-        private bool _UnknownInt1_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UnknownInt1Location + 1 >= 4;
-        public Int32 UnknownInt1 => _UnknownInt1_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownInt1Location, 4)) : default(Int32);
+        #region LocationX
+        private int _LocationXLocation => UnknownItemsEndingPos;
+        private bool _LocationX_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _LocationXLocation + 1 >= 4;
+        public Int32 LocationX => _LocationX_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_LocationXLocation, 4)) : default(Int32);
         #endregion
-        #region UnknownInt2
-        private int _UnknownInt2Location => UnknownIntsEndingPos + 0x4;
-        private bool _UnknownInt2_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UnknownInt2Location + 1 >= 4;
-        public Int32 UnknownInt2 => _UnknownInt2_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownInt2Location, 4)) : default(Int32);
+        #region LocationY
+        private int _LocationYLocation => UnknownItemsEndingPos + 0x4;
+        private bool _LocationY_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _LocationYLocation + 1 >= 4;
+        public Int32 LocationY => _LocationY_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_LocationYLocation, 4)) : default(Int32);
         #endregion
-        #region UnknownInt3
-        private int _UnknownInt3Location => UnknownIntsEndingPos + 0x8;
-        private bool _UnknownInt3_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UnknownInt3Location + 1 >= 4;
-        public Int32 UnknownInt3 => _UnknownInt3_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownInt3Location, 4)) : default(Int32);
+        #region PlanetSystemId
+        private int _PlanetSystemIdLocation => UnknownItemsEndingPos + 0x8;
+        private bool _PlanetSystemId_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _PlanetSystemIdLocation + 1 >= 4;
+        public Int32 PlanetSystemId => _PlanetSystemId_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_PlanetSystemIdLocation, 4)) : default(Int32);
         #endregion
-        #region UnknownInt4
-        private int _UnknownInt4Location => UnknownIntsEndingPos + 0xC;
-        private bool _UnknownInt4_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UnknownInt4Location + 1 >= 4;
-        public Int32 UnknownInt4 => _UnknownInt4_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownInt4Location, 4)) : default(Int32);
+        #region SatelliteId
+        private int _SatelliteIdLocation => UnknownItemsEndingPos + 0xC;
+        private bool _SatelliteId_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _SatelliteIdLocation + 1 >= 4;
+        public Int32 SatelliteId => _SatelliteId_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_SatelliteIdLocation, 4)) : default(Int32);
         #endregion
-        #region UnknownEnding
-        private int _UnknownEndingLocation => UnknownIntsEndingPos + 0x10;
-        private bool _UnknownEnding_IsSet => _DAT2Location.HasValue;
-        public ReadOnlyMemorySlice<Byte> UnknownEnding => _UnknownEnding_IsSet ? _recordData.Span.Slice(_UnknownEndingLocation, _DAT2Location!.Value.Max - _UnknownEndingLocation + 1).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
-        protected int UnknownEndingEndingPos;
+        #region LongitudeLatitude
+        private int _LongitudeLatitudeLocation => UnknownItemsEndingPos + 0x10;
+        private bool _LongitudeLatitude_IsSet => _DAT2Location.HasValue;
+        public ReadOnlyMemorySlice<Byte> LongitudeLatitude => _LongitudeLatitude_IsSet ? _recordData.Span.Slice(_LongitudeLatitudeLocation, _DAT2Location!.Value.Max - _LongitudeLatitudeLocation + 1).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        protected int LongitudeLatitudeEndingPos;
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1834,10 +1851,10 @@ namespace Mutagen.Bethesda.Starfield
                 fill: ret.FillRecordType);
             if (ret._DAT2Location.HasValue)
             {
-                ret.UnknownString1EndingPos = ret._DAT2Location!.Value.Min + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret._DAT2Location!.Value.Min)) + 4;
-                ret.UnknownString2EndingPos = ret.UnknownString1EndingPos + 0x1 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.UnknownString1EndingPos + 0x1)) + 4;
-                ret.UnknownString3EndingPos = ret.UnknownString2EndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.UnknownString2EndingPos)) + 4;
-                ret.UnknownIntsEndingPos = ret.UnknownString3EndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.UnknownString3EndingPos)) * 4 + 4;
+                ret.CreatedTimeEndingPos = ret._DAT2Location!.Value.Min + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret._DAT2Location!.Value.Min)) + 4;
+                ret.AlsoCreatedTimeEndingPos = ret.CreatedTimeEndingPos + 0x1 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.CreatedTimeEndingPos + 0x1)) + 4;
+                ret.SourceEditorIDEndingPos = ret.AlsoCreatedTimeEndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.AlsoCreatedTimeEndingPos)) + 4;
+                ret.UnknownItemsEndingPos = ret.SourceEditorIDEndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.SourceEditorIDEndingPos)) * 5 + 4;
             }
             return ret;
         }
@@ -1870,7 +1887,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DAT2:
                 {
                     _DAT2Location = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)BlockEditorMetaDataComponent_FieldIndex.UnknownEnding;
+                    return (int)BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude;
                 }
                 default:
                     return base.FillRecordType(
