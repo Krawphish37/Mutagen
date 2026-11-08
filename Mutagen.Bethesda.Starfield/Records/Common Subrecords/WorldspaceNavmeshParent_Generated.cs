@@ -1044,7 +1044,8 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.Parent);
             P2Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Coordinates);
+                item: item.Coordinates,
+                swapCoords: true);
         }
 
         public void Write(
@@ -1090,7 +1091,9 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.Parent.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.Coordinates = P2Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Coordinates = P2Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                swapCoords: true);
         }
 
     }
@@ -1139,7 +1142,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public IFormLinkGetter<IWorldspaceGetter> Parent => FormLinkBinaryTranslation.Instance.OverlayFactory<IWorldspaceGetter>(_package, _structData.Span.Slice(0x0, 0x4));
-        public P2Int16 Coordinates => P2Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x4, 0x4));
+        public P2Int16 Coordinates => P2Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x4, 0x4), swapCoords: true);
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
