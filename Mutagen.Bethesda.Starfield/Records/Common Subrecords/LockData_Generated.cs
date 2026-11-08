@@ -55,6 +55,17 @@ namespace Mutagen.Bethesda.Starfield
         #region Level
         public LockLevel Level { get; set; } = default(LockLevel);
         #endregion
+        #region LevelUnused
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private MemorySlice<Byte> _LevelUnused = new byte[3];
+        public MemorySlice<Byte> LevelUnused
+        {
+            get => _LevelUnused;
+            set => this._LevelUnused = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte> ILockDataGetter.LevelUnused => this.LevelUnused;
+        #endregion
         #region Key
         private readonly IFormLink<IKeyGetter> _Key = new FormLink<IKeyGetter>();
         public IFormLink<IKeyGetter> Key
@@ -68,8 +79,19 @@ namespace Mutagen.Bethesda.Starfield
         #region Flags
         public LockData.Flag Flags { get; set; } = default(LockData.Flag);
         #endregion
-        #region Unused
-        public Int32 Unused { get; set; } = default(Int32);
+        #region FlagsUnused
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private MemorySlice<Byte> _FlagsUnused = new byte[3];
+        public MemorySlice<Byte> FlagsUnused
+        {
+            get => _FlagsUnused;
+            set => this._FlagsUnused = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte> ILockDataGetter.FlagsUnused => this.FlagsUnused;
+        #endregion
+        #region Unknown
+        public Int32 Unknown { get; set; } = default(Int32);
         #endregion
 
         #region To String
@@ -111,21 +133,27 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.Level = initialValue;
+                this.LevelUnused = initialValue;
                 this.Key = initialValue;
                 this.Flags = initialValue;
-                this.Unused = initialValue;
+                this.FlagsUnused = initialValue;
+                this.Unknown = initialValue;
             }
 
             public Mask(
                 TItem Level,
+                TItem LevelUnused,
                 TItem Key,
                 TItem Flags,
-                TItem Unused)
+                TItem FlagsUnused,
+                TItem Unknown)
             {
                 this.Level = Level;
+                this.LevelUnused = LevelUnused;
                 this.Key = Key;
                 this.Flags = Flags;
-                this.Unused = Unused;
+                this.FlagsUnused = FlagsUnused;
+                this.Unknown = Unknown;
             }
 
             #pragma warning disable CS8618
@@ -138,9 +166,11 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem Level;
+            public TItem LevelUnused;
             public TItem Key;
             public TItem Flags;
-            public TItem Unused;
+            public TItem FlagsUnused;
+            public TItem Unknown;
             #endregion
 
             #region Equals
@@ -154,18 +184,22 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.Level, rhs.Level)) return false;
+                if (!object.Equals(this.LevelUnused, rhs.LevelUnused)) return false;
                 if (!object.Equals(this.Key, rhs.Key)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
-                if (!object.Equals(this.Unused, rhs.Unused)) return false;
+                if (!object.Equals(this.FlagsUnused, rhs.FlagsUnused)) return false;
+                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.Level);
+                hash.Add(this.LevelUnused);
                 hash.Add(this.Key);
                 hash.Add(this.Flags);
-                hash.Add(this.Unused);
+                hash.Add(this.FlagsUnused);
+                hash.Add(this.Unknown);
                 return hash.ToHashCode();
             }
 
@@ -175,9 +209,11 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.Level)) return false;
+                if (!eval(this.LevelUnused)) return false;
                 if (!eval(this.Key)) return false;
                 if (!eval(this.Flags)) return false;
-                if (!eval(this.Unused)) return false;
+                if (!eval(this.FlagsUnused)) return false;
+                if (!eval(this.Unknown)) return false;
                 return true;
             }
             #endregion
@@ -186,9 +222,11 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.Level)) return true;
+                if (eval(this.LevelUnused)) return true;
                 if (eval(this.Key)) return true;
                 if (eval(this.Flags)) return true;
-                if (eval(this.Unused)) return true;
+                if (eval(this.FlagsUnused)) return true;
+                if (eval(this.Unknown)) return true;
                 return false;
             }
             #endregion
@@ -204,9 +242,11 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.Level = eval(this.Level);
+                obj.LevelUnused = eval(this.LevelUnused);
                 obj.Key = eval(this.Key);
                 obj.Flags = eval(this.Flags);
-                obj.Unused = eval(this.Unused);
+                obj.FlagsUnused = eval(this.FlagsUnused);
+                obj.Unknown = eval(this.Unknown);
             }
             #endregion
 
@@ -229,6 +269,10 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Level, "Level");
                     }
+                    if (printMask?.LevelUnused ?? true)
+                    {
+                        sb.AppendItem(LevelUnused, "LevelUnused");
+                    }
                     if (printMask?.Key ?? true)
                     {
                         sb.AppendItem(Key, "Key");
@@ -237,9 +281,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.Unused ?? true)
+                    if (printMask?.FlagsUnused ?? true)
                     {
-                        sb.AppendItem(Unused, "Unused");
+                        sb.AppendItem(FlagsUnused, "FlagsUnused");
+                    }
+                    if (printMask?.Unknown ?? true)
+                    {
+                        sb.AppendItem(Unknown, "Unknown");
                     }
                 }
             }
@@ -266,9 +314,11 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? Level;
+            public Exception? LevelUnused;
             public Exception? Key;
             public Exception? Flags;
-            public Exception? Unused;
+            public Exception? FlagsUnused;
+            public Exception? Unknown;
             #endregion
 
             #region IErrorMask
@@ -279,12 +329,16 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case LockData_FieldIndex.Level:
                         return Level;
+                    case LockData_FieldIndex.LevelUnused:
+                        return LevelUnused;
                     case LockData_FieldIndex.Key:
                         return Key;
                     case LockData_FieldIndex.Flags:
                         return Flags;
-                    case LockData_FieldIndex.Unused:
-                        return Unused;
+                    case LockData_FieldIndex.FlagsUnused:
+                        return FlagsUnused;
+                    case LockData_FieldIndex.Unknown:
+                        return Unknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -298,14 +352,20 @@ namespace Mutagen.Bethesda.Starfield
                     case LockData_FieldIndex.Level:
                         this.Level = ex;
                         break;
+                    case LockData_FieldIndex.LevelUnused:
+                        this.LevelUnused = ex;
+                        break;
                     case LockData_FieldIndex.Key:
                         this.Key = ex;
                         break;
                     case LockData_FieldIndex.Flags:
                         this.Flags = ex;
                         break;
-                    case LockData_FieldIndex.Unused:
-                        this.Unused = ex;
+                    case LockData_FieldIndex.FlagsUnused:
+                        this.FlagsUnused = ex;
+                        break;
+                    case LockData_FieldIndex.Unknown:
+                        this.Unknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -320,14 +380,20 @@ namespace Mutagen.Bethesda.Starfield
                     case LockData_FieldIndex.Level:
                         this.Level = (Exception?)obj;
                         break;
+                    case LockData_FieldIndex.LevelUnused:
+                        this.LevelUnused = (Exception?)obj;
+                        break;
                     case LockData_FieldIndex.Key:
                         this.Key = (Exception?)obj;
                         break;
                     case LockData_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
                         break;
-                    case LockData_FieldIndex.Unused:
-                        this.Unused = (Exception?)obj;
+                    case LockData_FieldIndex.FlagsUnused:
+                        this.FlagsUnused = (Exception?)obj;
+                        break;
+                    case LockData_FieldIndex.Unknown:
+                        this.Unknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -338,9 +404,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Level != null) return true;
+                if (LevelUnused != null) return true;
                 if (Key != null) return true;
                 if (Flags != null) return true;
-                if (Unused != null) return true;
+                if (FlagsUnused != null) return true;
+                if (Unknown != null) return true;
                 return false;
             }
             #endregion
@@ -370,13 +438,19 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Level, "Level");
                 }
                 {
+                    sb.AppendItem(LevelUnused, "LevelUnused");
+                }
+                {
                     sb.AppendItem(Key, "Key");
                 }
                 {
                     sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(Unused, "Unused");
+                    sb.AppendItem(FlagsUnused, "FlagsUnused");
+                }
+                {
+                    sb.AppendItem(Unknown, "Unknown");
                 }
             }
             #endregion
@@ -387,9 +461,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Level = this.Level.Combine(rhs.Level);
+                ret.LevelUnused = this.LevelUnused.Combine(rhs.LevelUnused);
                 ret.Key = this.Key.Combine(rhs.Key);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
-                ret.Unused = this.Unused.Combine(rhs.Unused);
+                ret.FlagsUnused = this.FlagsUnused.Combine(rhs.FlagsUnused);
+                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -414,9 +490,11 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool Level;
+            public bool LevelUnused;
             public bool Key;
             public bool Flags;
-            public bool Unused;
+            public bool FlagsUnused;
+            public bool Unknown;
             #endregion
 
             #region Ctors
@@ -427,9 +505,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.Level = defaultOn;
+                this.LevelUnused = defaultOn;
                 this.Key = defaultOn;
                 this.Flags = defaultOn;
-                this.Unused = defaultOn;
+                this.FlagsUnused = defaultOn;
+                this.Unknown = defaultOn;
             }
 
             #endregion
@@ -446,9 +526,11 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((Level, null));
+                ret.Add((LevelUnused, null));
                 ret.Add((Key, null));
                 ret.Add((Flags, null));
-                ret.Add((Unused, null));
+                ret.Add((FlagsUnused, null));
+                ret.Add((Unknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -528,9 +610,11 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<ILockData>
     {
         new LockLevel Level { get; set; }
+        new MemorySlice<Byte> LevelUnused { get; set; }
         new IFormLink<IKeyGetter> Key { get; set; }
         new LockData.Flag Flags { get; set; }
-        new Int32 Unused { get; set; }
+        new MemorySlice<Byte> FlagsUnused { get; set; }
+        new Int32 Unknown { get; set; }
     }
 
     public partial interface ILockDataGetter :
@@ -547,9 +631,11 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => LockData_Registration.Instance;
         LockLevel Level { get; }
+        ReadOnlyMemorySlice<Byte> LevelUnused { get; }
         IFormLinkGetter<IKeyGetter> Key { get; }
         LockData.Flag Flags { get; }
-        Int32 Unused { get; }
+        ReadOnlyMemorySlice<Byte> FlagsUnused { get; }
+        Int32 Unknown { get; }
 
     }
 
@@ -720,9 +806,11 @@ namespace Mutagen.Bethesda.Starfield
     internal enum LockData_FieldIndex
     {
         Level = 0,
-        Key = 1,
-        Flags = 2,
-        Unused = 3,
+        LevelUnused = 1,
+        Key = 2,
+        Flags = 3,
+        FlagsUnused = 4,
+        Unknown = 5,
     }
     #endregion
 
@@ -733,9 +821,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 4;
+        public const ushort AdditionalFieldCount = 6;
 
-        public const ushort FieldCount = 4;
+        public const ushort FieldCount = 6;
 
         public static readonly Type MaskType = typeof(LockData.Mask<>);
 
@@ -809,9 +897,11 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Level = default(LockLevel);
+            item.LevelUnused = new byte[3];
             item.Key.Clear();
             item.Flags = default(LockData.Flag);
-            item.Unused = default(Int32);
+            item.FlagsUnused = new byte[3];
+            item.Unknown = default(Int32);
         }
         
         #region Mutagen
@@ -867,9 +957,11 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Level = item.Level == rhs.Level;
+            ret.LevelUnused = MemoryExtensions.SequenceEqual(item.LevelUnused.Span, rhs.LevelUnused.Span);
             ret.Key = item.Key.Equals(rhs.Key);
             ret.Flags = item.Flags == rhs.Flags;
-            ret.Unused = item.Unused == rhs.Unused;
+            ret.FlagsUnused = MemoryExtensions.SequenceEqual(item.FlagsUnused.Span, rhs.FlagsUnused.Span);
+            ret.Unknown = item.Unknown == rhs.Unknown;
         }
         
         public string Print(
@@ -918,6 +1010,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Level, "Level");
             }
+            if (printMask?.LevelUnused ?? true)
+            {
+                sb.AppendLine($"LevelUnused => {SpanExt.ToHexString(item.LevelUnused)}");
+            }
             if (printMask?.Key ?? true)
             {
                 sb.AppendItem(item.Key.FormKey, "Key");
@@ -926,9 +1022,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Flags, "Flags");
             }
-            if (printMask?.Unused ?? true)
+            if (printMask?.FlagsUnused ?? true)
             {
-                sb.AppendItem(item.Unused, "Unused");
+                sb.AppendLine($"FlagsUnused => {SpanExt.ToHexString(item.FlagsUnused)}");
+            }
+            if (printMask?.Unknown ?? true)
+            {
+                sb.AppendItem(item.Unknown, "Unknown");
             }
         }
         
@@ -943,6 +1043,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Level != rhs.Level) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)LockData_FieldIndex.LevelUnused) ?? true))
+            {
+                if (!MemoryExtensions.SequenceEqual(lhs.LevelUnused.Span, rhs.LevelUnused.Span)) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)LockData_FieldIndex.Key) ?? true))
             {
                 if (!lhs.Key.Equals(rhs.Key)) return false;
@@ -951,9 +1055,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)LockData_FieldIndex.Unused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)LockData_FieldIndex.FlagsUnused) ?? true))
             {
-                if (lhs.Unused != rhs.Unused) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.FlagsUnused.Span, rhs.FlagsUnused.Span)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)LockData_FieldIndex.Unknown) ?? true))
+            {
+                if (lhs.Unknown != rhs.Unknown) return false;
             }
             return true;
         }
@@ -962,9 +1070,11 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Level);
+            hash.Add(item.LevelUnused);
             hash.Add(item.Key);
             hash.Add(item.Flags);
-            hash.Add(item.Unused);
+            hash.Add(item.FlagsUnused);
+            hash.Add(item.Unknown);
             return hash.ToHashCode();
         }
         
@@ -1002,6 +1112,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Level = rhs.Level;
             }
+            if ((copyMask?.GetShouldTranslate((int)LockData_FieldIndex.LevelUnused) ?? true))
+            {
+                item.LevelUnused = rhs.LevelUnused.ToArray();
+            }
             if ((copyMask?.GetShouldTranslate((int)LockData_FieldIndex.Key) ?? true))
             {
                 item.Key.SetTo(rhs.Key.FormKey);
@@ -1010,9 +1124,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)LockData_FieldIndex.Unused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)LockData_FieldIndex.FlagsUnused) ?? true))
             {
-                item.Unused = rhs.Unused;
+                item.FlagsUnused = rhs.FlagsUnused.ToArray();
+            }
+            if ((copyMask?.GetShouldTranslate((int)LockData_FieldIndex.Unknown) ?? true))
+            {
+                item.Unknown = rhs.Unknown;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1125,15 +1243,21 @@ namespace Mutagen.Bethesda.Starfield
             EnumBinaryTranslation<LockLevel, MutagenFrame, MutagenWriter>.Instance.Write(
                 writer,
                 item.Level,
-                length: 4);
+                length: 1);
+            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.LevelUnused);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.Key);
             EnumBinaryTranslation<LockData.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
                 writer,
                 item.Flags,
-                length: 4);
-            writer.Write(item.Unused);
+                length: 1);
+            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.FlagsUnused);
+            writer.Write(item.Unknown);
         }
 
         public void Write(
@@ -1176,12 +1300,14 @@ namespace Mutagen.Bethesda.Starfield
         {
             item.Level = EnumBinaryTranslation<LockLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
-                length: 4);
+                length: 1);
+            item.LevelUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
             item.Key.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.Flags = EnumBinaryTranslation<LockData.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
-                length: 4);
-            item.Unused = frame.ReadInt32();
+                length: 1);
+            item.FlagsUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            item.Unknown = frame.ReadInt32();
         }
 
     }
@@ -1248,10 +1374,12 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public LockLevel Level => (LockLevel)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x0, 0x4));
+        public LockLevel Level => (LockLevel)_structData.Span.Slice(0x0, 0x1)[0];
+        public ReadOnlyMemorySlice<Byte> LevelUnused => _structData.Span.Slice(0x1, 0x3).ToArray();
         public IFormLinkGetter<IKeyGetter> Key => FormLinkBinaryTranslation.Instance.OverlayFactory<IKeyGetter>(_package, _structData.Span.Slice(0x4, 0x4));
-        public LockData.Flag Flags => (LockData.Flag)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x8, 0x4));
-        public Int32 Unused => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0xC, 0x4));
+        public LockData.Flag Flags => (LockData.Flag)_structData.Span.Slice(0x8, 0x1)[0];
+        public ReadOnlyMemorySlice<Byte> FlagsUnused => _structData.Span.Slice(0x9, 0x3).ToArray();
+        public Int32 Unknown => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0xC, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
