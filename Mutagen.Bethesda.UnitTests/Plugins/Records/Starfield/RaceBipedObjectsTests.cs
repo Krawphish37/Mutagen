@@ -87,8 +87,8 @@ public class RaceBipedObjectsTests
 
         direct.BipedObjects.Count.ShouldBe(NumBipedObjects);
         overlay.BipedObjects.Count.ShouldBe(NumBipedObjects);
-        overlay.BipedObjects[BipedObject.HairTop].Name.ShouldBe(string.Empty);
-        overlay.BipedObjects[BipedObject.HairTop].Conditions.IsNull.ShouldBeTrue();
+        overlay.BipedObjects[BipedObject.HideHair].Name.ShouldBe(string.Empty);
+        overlay.BipedObjects[BipedObject.HideHair].Conditions.IsNull.ShouldBeTrue();
         overlay.DeepCopy().BipedObjects.Count.ShouldBe(NumBipedObjects);
         // Whole record Equals is not usable here, gendered fields compare by reference
         overlay.BipedObjects.SequenceEqual(direct.BipedObjects).ShouldBeTrue();
@@ -109,7 +109,7 @@ public class RaceBipedObjectsTests
     {
         var expected = Write(NewRace());
         var race = NewRace();
-        race.BipedObjects.Remove(BipedObject.HairTop);
+        race.BipedObjects.Remove(BipedObject.HideHair);
         Write(race).ShouldBe(expected);
         race.BipedObjects.Clear();
         Write(race).ShouldBe(expected);
