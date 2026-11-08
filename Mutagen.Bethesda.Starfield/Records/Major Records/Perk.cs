@@ -20,8 +20,10 @@ public partial class Perk
     {
         PcTrait = 0x001,
         PcPlayable = 0x002,
+        Hidden = 0x004,
         ShowInCrewUi = 0x008,
         PcBackground = 0x010,
+        HiddenOnDataMenu = 0x020,
     }
 
     public enum EffectType
