@@ -14,8 +14,7 @@
       <ByteArray name="Unused" recordType="DATA" />
       <Data recordType="PROD">
         <Fields>
-          <Enum name="Flags" enumName="Projectile.Flag" byteLength="2" />
-          <Enum name="Type" enumName="Projectile.TypeEnum" byteLength="2" />
+          <Enum name="Flags" enumName="Projectile.Flag" byteLength="4" />
           <Float name="Gravity" />
           <Float name="Speed" />
           <Float name="Range" />
@@ -35,16 +34,16 @@
           <FormLink name="DecalData" refName="TextureSet" />
           <FormLink name="CollisionLayer" refName="CollisionLayer" />
           <UInt8 name="TracerFrequency" />
-          <UInt32 name="UnknownPROD1" />
-          <String name="UnknownPRODString1" binaryType="PrependLengthWithNullIfContent" />
-          <Float name="UnknownPROD2" />
-          <UInt32 name="UnknownPROD3" />
-          <UInt8 name="UnknownPROD4" />
-          <String name="UnknownPRODString2" binaryType="PrependLengthWithNullIfContent" />
-          <Float name="UnknownPROD5" />
-          <Float name="UnknownPROD6" />
-          <Float name="UnknownPROD7" />
-          <Float name="UnknownPROD8" />
+          <FormLink name="VatsProjectile" refName="Projectile" />
+          <String name="MuzzleFlashParticleDefine" binaryType="PrependLengthWithNullIfContent" />
+          <Float name="SeekStrength" />
+          <Enum name="SoundActivationCondition" enumName="Projectile.SoundActivationConditionOption" byteLength="4" />
+          <Enum name="Type" enumName="Projectile.TypeEnum" byteLength="1" />
+          <String name="ParticleDefine" binaryType="PrependLengthWithNullIfContent" />
+          <Float name="TracerSpeed" />
+          <Float name="ZeroGRecoilStrength" />
+          <Float name="ZeroGRecoilLength" />
+          <Float name="ExplosionDelayBeforeRemoval" />
         </Fields>
       </Data>
       <String name="MuzzleFlashModel" recordType="NAM1" nullable="False" />
