@@ -1,5 +1,7 @@
 ﻿namespace Mutagen.Bethesda.Starfield;
 
+// Starfield's armor slots (BO64): bit n is biped slot n (see BipedObject); a set of flags
+[Flags]
 public enum FirstPersonFlag : ulong
 {
     HideHair = 0x1,
@@ -54,6 +56,6 @@ public enum FirstPersonFlag : ulong
     SSAddonRig = 0x10000000000000,
     SSBackpackMisc = 0x20000000000000,
     SSChronoMark = 0x40000000000000,
-    SSMorphBeard = 0x80000000000000,
-    FaceLights = 0x800000000000000,
+    SSMorphBeard = 0x800000000000000,
+    FaceLights = 0x8000000000000000,
 }

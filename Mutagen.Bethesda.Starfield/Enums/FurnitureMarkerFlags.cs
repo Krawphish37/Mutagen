@@ -1,5 +1,6 @@
 ﻿namespace Mutagen.Bethesda.Starfield;
 
+[Flags]
 public enum FurnitureMarkerFlags : uint
 {
     InteractionPoint0 = 0x0000_0001,
