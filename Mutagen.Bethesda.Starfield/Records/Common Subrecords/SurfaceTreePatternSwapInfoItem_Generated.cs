@@ -65,6 +65,11 @@ namespace Mutagen.Bethesda.Starfield
         #region Unknown
         public SByte Unknown { get; set; } = default(SByte);
         #endregion
+        #region Unknown2
+        public UInt32? Unknown2 { get; set; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        UInt32? ISurfaceTreePatternSwapInfoItemGetter.Unknown2 => this.Unknown2;
+        #endregion
 
         #region To String
 
@@ -106,14 +111,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.SurfacePattern = initialValue;
                 this.Unknown = initialValue;
+                this.Unknown2 = initialValue;
             }
 
             public Mask(
                 TItem SurfacePattern,
-                TItem Unknown)
+                TItem Unknown,
+                TItem Unknown2)
             {
                 this.SurfacePattern = SurfacePattern;
                 this.Unknown = Unknown;
+                this.Unknown2 = Unknown2;
             }
 
             #pragma warning disable CS8618
@@ -127,6 +135,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem SurfacePattern;
             public TItem Unknown;
+            public TItem Unknown2;
             #endregion
 
             #region Equals
@@ -141,6 +150,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.SurfacePattern, rhs.SurfacePattern)) return false;
                 if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -148,6 +158,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.SurfacePattern);
                 hash.Add(this.Unknown);
+                hash.Add(this.Unknown2);
                 return hash.ToHashCode();
             }
 
@@ -158,6 +169,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.SurfacePattern)) return false;
                 if (!eval(this.Unknown)) return false;
+                if (!eval(this.Unknown2)) return false;
                 return true;
             }
             #endregion
@@ -167,6 +179,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.SurfacePattern)) return true;
                 if (eval(this.Unknown)) return true;
+                if (eval(this.Unknown2)) return true;
                 return false;
             }
             #endregion
@@ -183,6 +196,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.SurfacePattern = eval(this.SurfacePattern);
                 obj.Unknown = eval(this.Unknown);
+                obj.Unknown2 = eval(this.Unknown2);
             }
             #endregion
 
@@ -208,6 +222,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (printMask?.Unknown ?? true)
                     {
                         sb.AppendItem(Unknown, "Unknown");
+                    }
+                    if (printMask?.Unknown2 ?? true)
+                    {
+                        sb.AppendItem(Unknown2, "Unknown2");
                     }
                 }
             }
@@ -235,6 +253,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? SurfacePattern;
             public Exception? Unknown;
+            public Exception? Unknown2;
             #endregion
 
             #region IErrorMask
@@ -247,6 +266,8 @@ namespace Mutagen.Bethesda.Starfield
                         return SurfacePattern;
                     case SurfaceTreePatternSwapInfoItem_FieldIndex.Unknown:
                         return Unknown;
+                    case SurfaceTreePatternSwapInfoItem_FieldIndex.Unknown2:
+                        return Unknown2;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -262,6 +283,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case SurfaceTreePatternSwapInfoItem_FieldIndex.Unknown:
                         this.Unknown = ex;
+                        break;
+                    case SurfaceTreePatternSwapInfoItem_FieldIndex.Unknown2:
+                        this.Unknown2 = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -279,6 +303,9 @@ namespace Mutagen.Bethesda.Starfield
                     case SurfaceTreePatternSwapInfoItem_FieldIndex.Unknown:
                         this.Unknown = (Exception?)obj;
                         break;
+                    case SurfaceTreePatternSwapInfoItem_FieldIndex.Unknown2:
+                        this.Unknown2 = (Exception?)obj;
+                        break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -289,6 +316,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (SurfacePattern != null) return true;
                 if (Unknown != null) return true;
+                if (Unknown2 != null) return true;
                 return false;
             }
             #endregion
@@ -320,6 +348,9 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(Unknown, "Unknown");
                 }
+                {
+                    sb.AppendItem(Unknown2, "Unknown2");
+                }
             }
             #endregion
 
@@ -330,6 +361,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.SurfacePattern = this.SurfacePattern.Combine(rhs.SurfacePattern);
                 ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -355,6 +387,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool SurfacePattern;
             public bool Unknown;
+            public bool Unknown2;
             #endregion
 
             #region Ctors
@@ -366,6 +399,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.SurfacePattern = defaultOn;
                 this.Unknown = defaultOn;
+                this.Unknown2 = defaultOn;
             }
 
             #endregion
@@ -383,6 +417,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((SurfacePattern, null));
                 ret.Add((Unknown, null));
+                ret.Add((Unknown2, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -463,6 +498,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new IFormLink<ISurfacePatternGetter> SurfacePattern { get; set; }
         new SByte Unknown { get; set; }
+        new UInt32? Unknown2 { get; set; }
     }
 
     public partial interface ISurfaceTreePatternSwapInfoItemGetter :
@@ -480,6 +516,7 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => SurfaceTreePatternSwapInfoItem_Registration.Instance;
         IFormLinkGetter<ISurfacePatternGetter> SurfacePattern { get; }
         SByte Unknown { get; }
+        UInt32? Unknown2 { get; }
 
     }
 
@@ -651,6 +688,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         SurfacePattern = 0,
         Unknown = 1,
+        Unknown2 = 2,
     }
     #endregion
 
@@ -661,9 +699,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 2;
+        public const ushort AdditionalFieldCount = 3;
 
-        public const ushort FieldCount = 2;
+        public const ushort FieldCount = 3;
 
         public static readonly Type MaskType = typeof(SurfaceTreePatternSwapInfoItem.Mask<>);
 
@@ -731,6 +769,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.SurfacePattern.Clear();
             item.Unknown = default(SByte);
+            item.Unknown2 = default;
         }
         
         #region Mutagen
@@ -783,6 +822,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.SurfacePattern = item.SurfacePattern.Equals(rhs.SurfacePattern);
             ret.Unknown = item.Unknown == rhs.Unknown;
+            ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
         }
         
         public string Print(
@@ -835,6 +875,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Unknown, "Unknown");
             }
+            if ((printMask?.Unknown2 ?? true)
+                && item.Unknown2 is {} Unknown2Item)
+            {
+                sb.AppendItem(Unknown2Item, "Unknown2");
+            }
         }
         
         #region Equals and Hash
@@ -852,6 +897,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Unknown != rhs.Unknown) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)SurfaceTreePatternSwapInfoItem_FieldIndex.Unknown2) ?? true))
+            {
+                if (lhs.Unknown2 != rhs.Unknown2) return false;
+            }
             return true;
         }
         
@@ -860,6 +909,10 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.SurfacePattern);
             hash.Add(item.Unknown);
+            if (item.Unknown2 is {} Unknown2item)
+            {
+                hash.Add(Unknown2item);
+            }
             return hash.ToHashCode();
         }
         
@@ -900,6 +953,10 @@ namespace Mutagen.Bethesda.Starfield
             if ((copyMask?.GetShouldTranslate((int)SurfaceTreePatternSwapInfoItem_FieldIndex.Unknown) ?? true))
             {
                 item.Unknown = rhs.Unknown;
+            }
+            if ((copyMask?.GetShouldTranslate((int)SurfaceTreePatternSwapInfoItem_FieldIndex.Unknown2) ?? true))
+            {
+                item.Unknown2 = rhs.Unknown2;
             }
             DeepCopyInCustom(
                 item: item,
