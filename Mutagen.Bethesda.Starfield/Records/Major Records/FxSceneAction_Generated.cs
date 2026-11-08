@@ -71,8 +71,8 @@ namespace Mutagen.Bethesda.Starfield
         #region VCLR
         public Single VCLR { get; set; } = default(Single);
         #endregion
-        #region BTXT
-        public Int32 BTXT { get; set; } = default(Int32);
+        #region StartTime
+        public Single StartTime { get; set; } = default(Single);
         #endregion
         #region FLMV
         public Int32 FLMV { get; set; } = default(Int32);
@@ -161,7 +161,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.REPL = initialValue;
                 this.HNAM = initialValue;
                 this.VCLR = initialValue;
-                this.BTXT = initialValue;
+                this.StartTime = initialValue;
                 this.FLMV = initialValue;
                 this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
@@ -180,7 +180,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem REPL,
                 TItem HNAM,
                 TItem VCLR,
-                TItem BTXT,
+                TItem StartTime,
                 TItem FLMV,
                 TItem WED0,
                 TItem Conditions,
@@ -198,7 +198,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.REPL = REPL;
                 this.HNAM = HNAM;
                 this.VCLR = VCLR;
-                this.BTXT = BTXT;
+                this.StartTime = StartTime;
                 this.FLMV = FLMV;
                 this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WED0, new SoundReference.Mask<TItem>(WED0));
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
@@ -218,7 +218,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem REPL;
             public TItem HNAM;
             public TItem VCLR;
-            public TItem BTXT;
+            public TItem StartTime;
             public TItem FLMV;
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? WED0 { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
@@ -240,7 +240,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.REPL, rhs.REPL)) return false;
                 if (!object.Equals(this.HNAM, rhs.HNAM)) return false;
                 if (!object.Equals(this.VCLR, rhs.VCLR)) return false;
-                if (!object.Equals(this.BTXT, rhs.BTXT)) return false;
+                if (!object.Equals(this.StartTime, rhs.StartTime)) return false;
                 if (!object.Equals(this.FLMV, rhs.FLMV)) return false;
                 if (!object.Equals(this.WED0, rhs.WED0)) return false;
                 if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
@@ -254,7 +254,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.REPL);
                 hash.Add(this.HNAM);
                 hash.Add(this.VCLR);
-                hash.Add(this.BTXT);
+                hash.Add(this.StartTime);
                 hash.Add(this.FLMV);
                 hash.Add(this.WED0);
                 hash.Add(this.Conditions);
@@ -273,7 +273,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.REPL)) return false;
                 if (!eval(this.HNAM)) return false;
                 if (!eval(this.VCLR)) return false;
-                if (!eval(this.BTXT)) return false;
+                if (!eval(this.StartTime)) return false;
                 if (!eval(this.FLMV)) return false;
                 if (WED0 != null)
                 {
@@ -305,7 +305,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.REPL)) return true;
                 if (eval(this.HNAM)) return true;
                 if (eval(this.VCLR)) return true;
-                if (eval(this.BTXT)) return true;
+                if (eval(this.StartTime)) return true;
                 if (eval(this.FLMV)) return true;
                 if (WED0 != null)
                 {
@@ -344,7 +344,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.REPL = eval(this.REPL);
                 obj.HNAM = eval(this.HNAM);
                 obj.VCLR = eval(this.VCLR);
-                obj.BTXT = eval(this.BTXT);
+                obj.StartTime = eval(this.StartTime);
                 obj.FLMV = eval(this.FLMV);
                 obj.WED0 = this.WED0 == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WED0.Overall), this.WED0.Specific?.Translate(eval));
                 if (Conditions != null)
@@ -394,9 +394,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(VCLR, "VCLR");
                     }
-                    if (printMask?.BTXT ?? true)
+                    if (printMask?.StartTime ?? true)
                     {
-                        sb.AppendItem(BTXT, "BTXT");
+                        sb.AppendItem(StartTime, "StartTime");
                     }
                     if (printMask?.FLMV ?? true)
                     {
@@ -447,7 +447,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? REPL;
             public Exception? HNAM;
             public Exception? VCLR;
-            public Exception? BTXT;
+            public Exception? StartTime;
             public Exception? FLMV;
             public MaskItem<Exception?, SoundReference.ErrorMask?>? WED0;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
@@ -467,8 +467,8 @@ namespace Mutagen.Bethesda.Starfield
                         return HNAM;
                     case FxSceneAction_FieldIndex.VCLR:
                         return VCLR;
-                    case FxSceneAction_FieldIndex.BTXT:
-                        return BTXT;
+                    case FxSceneAction_FieldIndex.StartTime:
+                        return StartTime;
                     case FxSceneAction_FieldIndex.FLMV:
                         return FLMV;
                     case FxSceneAction_FieldIndex.WED0:
@@ -498,8 +498,8 @@ namespace Mutagen.Bethesda.Starfield
                     case FxSceneAction_FieldIndex.VCLR:
                         this.VCLR = ex;
                         break;
-                    case FxSceneAction_FieldIndex.BTXT:
-                        this.BTXT = ex;
+                    case FxSceneAction_FieldIndex.StartTime:
+                        this.StartTime = ex;
                         break;
                     case FxSceneAction_FieldIndex.FLMV:
                         this.FLMV = ex;
@@ -536,8 +536,8 @@ namespace Mutagen.Bethesda.Starfield
                     case FxSceneAction_FieldIndex.VCLR:
                         this.VCLR = (Exception?)obj;
                         break;
-                    case FxSceneAction_FieldIndex.BTXT:
-                        this.BTXT = (Exception?)obj;
+                    case FxSceneAction_FieldIndex.StartTime:
+                        this.StartTime = (Exception?)obj;
                         break;
                     case FxSceneAction_FieldIndex.FLMV:
                         this.FLMV = (Exception?)obj;
@@ -566,7 +566,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (REPL != null) return true;
                 if (HNAM != null) return true;
                 if (VCLR != null) return true;
-                if (BTXT != null) return true;
+                if (StartTime != null) return true;
                 if (FLMV != null) return true;
                 if (WED0 != null) return true;
                 if (Conditions != null) return true;
@@ -608,7 +608,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(VCLR, "VCLR");
                 }
                 {
-                    sb.AppendItem(BTXT, "BTXT");
+                    sb.AppendItem(StartTime, "StartTime");
                 }
                 {
                     sb.AppendItem(FLMV, "FLMV");
@@ -649,7 +649,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.REPL = this.REPL.Combine(rhs.REPL);
                 ret.HNAM = this.HNAM.Combine(rhs.HNAM);
                 ret.VCLR = this.VCLR.Combine(rhs.VCLR);
-                ret.BTXT = this.BTXT.Combine(rhs.BTXT);
+                ret.StartTime = this.StartTime.Combine(rhs.StartTime);
                 ret.FLMV = this.FLMV.Combine(rhs.FLMV);
                 ret.WED0 = this.WED0.Combine(rhs.WED0, (l, r) => l.Combine(r));
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
@@ -680,7 +680,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool REPL;
             public bool HNAM;
             public bool VCLR;
-            public bool BTXT;
+            public bool StartTime;
             public bool FLMV;
             public SoundReference.TranslationMask? WED0;
             public Condition.TranslationMask? Conditions;
@@ -697,7 +697,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.REPL = defaultOn;
                 this.HNAM = defaultOn;
                 this.VCLR = defaultOn;
-                this.BTXT = defaultOn;
+                this.StartTime = defaultOn;
                 this.FLMV = defaultOn;
                 this.BIPL = defaultOn;
                 this.LVLO = defaultOn;
@@ -711,7 +711,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((REPL, null));
                 ret.Add((HNAM, null));
                 ret.Add((VCLR, null));
-                ret.Add((BTXT, null));
+                ret.Add((StartTime, null));
                 ret.Add((FLMV, null));
                 ret.Add((WED0 != null ? WED0.OnOverall : DefaultOn, WED0?.GetCrystal()));
                 ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
@@ -798,7 +798,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<IImageSpaceAdapterGetter> REPL { get; set; }
         new Single HNAM { get; set; }
         new Single VCLR { get; set; }
-        new Int32 BTXT { get; set; }
+        new Single StartTime { get; set; }
         new Int32 FLMV { get; set; }
         new SoundReference? WED0 { get; set; }
         new ExtendedList<Condition> Conditions { get; }
@@ -817,7 +817,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IImageSpaceAdapterGetter> REPL { get; }
         Single HNAM { get; }
         Single VCLR { get; }
-        Int32 BTXT { get; }
+        Single StartTime { get; }
         Int32 FLMV { get; }
         ISoundReferenceGetter? WED0 { get; }
         IReadOnlyList<IConditionGetter> Conditions { get; }
@@ -977,7 +977,7 @@ namespace Mutagen.Bethesda.Starfield
         REPL = 7,
         HNAM = 8,
         VCLR = 9,
-        BTXT = 10,
+        StartTime = 10,
         FLMV = 11,
         WED0 = 12,
         Conditions = 13,
@@ -1087,7 +1087,7 @@ namespace Mutagen.Bethesda.Starfield
             item.REPL.Clear();
             item.HNAM = default(Single);
             item.VCLR = default(Single);
-            item.BTXT = default(Int32);
+            item.StartTime = default(Single);
             item.FLMV = default(Int32);
             item.WED0 = null;
             item.Conditions.Clear();
@@ -1167,7 +1167,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.REPL = item.REPL.Equals(rhs.REPL);
             ret.HNAM = item.HNAM.EqualsWithin(rhs.HNAM);
             ret.VCLR = item.VCLR.EqualsWithin(rhs.VCLR);
-            ret.BTXT = item.BTXT == rhs.BTXT;
+            ret.StartTime = item.StartTime.EqualsWithin(rhs.StartTime);
             ret.FLMV = item.FLMV == rhs.FLMV;
             ret.WED0 = EqualsMaskHelper.EqualsHelper(
                 item.WED0,
@@ -1241,9 +1241,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.VCLR, "VCLR");
             }
-            if (printMask?.BTXT ?? true)
+            if (printMask?.StartTime ?? true)
             {
-                sb.AppendItem(item.BTXT, "BTXT");
+                sb.AppendItem(item.StartTime, "StartTime");
             }
             if (printMask?.FLMV ?? true)
             {
@@ -1322,9 +1322,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.VCLR.EqualsWithin(rhs.VCLR)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.BTXT) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.StartTime) ?? true))
             {
-                if (lhs.BTXT != rhs.BTXT) return false;
+                if (!lhs.StartTime.EqualsWithin(rhs.StartTime)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.FLMV) ?? true))
             {
@@ -1370,7 +1370,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.REPL);
             hash.Add(item.HNAM);
             hash.Add(item.VCLR);
-            hash.Add(item.BTXT);
+            hash.Add(item.StartTime);
             hash.Add(item.FLMV);
             if (item.WED0 is {} WED0item)
             {
@@ -1455,9 +1455,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.VCLR = rhs.VCLR;
             }
-            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.BTXT) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.StartTime) ?? true))
             {
-                item.BTXT = rhs.BTXT;
+                item.StartTime = rhs.StartTime;
             }
             if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.FLMV) ?? true))
             {
@@ -1658,9 +1658,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.VCLR,
                 header: translationParams.ConvertToCustom(RecordTypes.VCLR));
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.BTXT,
+                item: item.StartTime,
                 header: translationParams.ConvertToCustom(RecordTypes.BTXT));
             Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
@@ -1769,8 +1769,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.BTXT:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BTXT = frame.ReadInt32();
-                    return (int)FxSceneAction_FieldIndex.BTXT;
+                    item.StartTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)FxSceneAction_FieldIndex.StartTime;
                 }
                 case RecordTypeInts.FLMV:
                 {
@@ -1875,9 +1875,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _VCLRLocation;
         public Single VCLR => _VCLRLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _VCLRLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
-        #region BTXT
-        private int? _BTXTLocation;
-        public Int32 BTXT => _BTXTLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _BTXTLocation.Value, _package.MetaData.Constants)) : default(Int32);
+        #region StartTime
+        private int? _StartTimeLocation;
+        public Single StartTime => _StartTimeLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _StartTimeLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
         #region FLMV
         private int? _FLMVLocation;
@@ -1973,8 +1973,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BTXT:
                 {
-                    _BTXTLocation = (stream.Position - offset);
-                    return (int)FxSceneAction_FieldIndex.BTXT;
+                    _StartTimeLocation = (stream.Position - offset);
+                    return (int)FxSceneAction_FieldIndex.StartTime;
                 }
                 case RecordTypeInts.FLMV:
                 {
