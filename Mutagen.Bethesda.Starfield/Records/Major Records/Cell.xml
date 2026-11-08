@@ -103,7 +103,8 @@
       <Float name="FogHighFarScale" />
       <Float name="FarHeightMid" />
       <Float name="FarHeightRange" />
-      <Enum name="InteriorType" enumName="Cell.InteriorType" byteLength="4" />
+      <Enum name="InteriorType" enumName="Cell.InteriorType" byteLength="1" />
+      <ByteArray name="InteriorTypeUnused" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="CellWaterVelocity" objType="Subrecord" recordType="XWCU">
