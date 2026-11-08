@@ -193,9 +193,9 @@ namespace Mutagen.Bethesda.Starfield
         SoundLevel? IAcousticSpaceGetter.SoundDetectionLevel => this.SoundDetectionLevel;
         #endregion
         #region DisableFlags
-        public SoundLevel? DisableFlags { get; set; }
+        public AcousticSpace.DisableFlag? DisableFlags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        SoundLevel? IAcousticSpaceGetter.DisableFlags => this.DisableFlags;
+        AcousticSpace.DisableFlag? IAcousticSpaceGetter.DisableFlags => this.DisableFlags;
         #endregion
 
         #region To String
@@ -1123,7 +1123,7 @@ namespace Mutagen.Bethesda.Starfield
         new Boolean IsInterior { get; set; }
         new Boolean AllowExterior { get; set; }
         new SoundLevel? SoundDetectionLevel { get; set; }
-        new SoundLevel? DisableFlags { get; set; }
+        new AcousticSpace.DisableFlag? DisableFlags { get; set; }
     }
 
     public partial interface IAcousticSpaceInternal :
@@ -1171,7 +1171,7 @@ namespace Mutagen.Bethesda.Starfield
         Boolean IsInterior { get; }
         Boolean AllowExterior { get; }
         SoundLevel? SoundDetectionLevel { get; }
-        SoundLevel? DisableFlags { get; }
+        AcousticSpace.DisableFlag? DisableFlags { get; }
 
     }
 
@@ -2553,7 +2553,7 @@ namespace Mutagen.Bethesda.Starfield
                 item.SoundDetectionLevel,
                 length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.DEVT));
-            EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            EnumBinaryTranslation<AcousticSpace.DisableFlag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer,
                 item.DisableFlags,
                 length: 8,
@@ -2722,7 +2722,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ASDF:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DisableFlags = EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
+                    item.DisableFlags = EnumBinaryTranslation<AcousticSpace.DisableFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
                     return (int)AcousticSpace_FieldIndex.DisableFlags;
@@ -2847,7 +2847,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region DisableFlags
         private int? _DisableFlagsLocation;
-        public SoundLevel? DisableFlags => EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_DisableFlagsLocation, _recordData, _package, 8);
+        public AcousticSpace.DisableFlag? DisableFlags => EnumBinaryTranslation<AcousticSpace.DisableFlag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_DisableFlagsLocation, _recordData, _package, 8);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
