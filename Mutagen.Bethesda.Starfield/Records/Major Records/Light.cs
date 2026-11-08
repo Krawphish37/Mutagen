@@ -14,17 +14,18 @@ partial class Light
         PortalStrict = 0x1000_0000
     }
 
+    // Starfield's light flags (DAT2), as in xEdit's Starfield definitions; bit 0 has no name
     [Flags]
     public enum Flag
     {
         CanBeCarried = 0x0000_0002,
-        OffByDefault = 0x0000_0020,
-        DisableSpecular = 0x0000_0040,
-        DisableDistanceAttenuation = 0x0000_0080,
-        IsDirectSpotlight = 0x0000_0100,
-        UsePbrValue = 0x0000_0200,
-        FocusSpotlightBeam = 0x0000_0400,
-        ExternallyControlled = 0x0000_2000,
+        OffByDefault = 0x0000_0010,
+        DisableSpecular = 0x0000_0020,
+        DisableDistanceAttenuation = 0x0000_0040,
+        IsDirectSpotlight = 0x0000_0080,
+        UsePbrValue = 0x0000_0100,
+        FocusSpotlightBeam = 0x0000_0200,
+        ExternallyControlled = 0x0000_1000,
     }
 
     public enum LightType
