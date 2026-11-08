@@ -241,10 +241,11 @@
   </Object>
   <Object name="PlacedObjectLightFlicker" objType="Subrecord" recordType="XLFD" >
     <Fields>
-      <Float name="Unknown1" />
-      <Float name="Unknown2" />
-      <UInt32 name="Unknown3" />
-      <UInt32 name="Unknown4" />
+      <Float name="Period" />
+      <Float name="IntensityAmplitude" />
+      <Float name="MovementAmplitude" />
+      <Enum name="FlickerEffect" enumName="Light.FlickerEffectOption" byteLength="1" />
+      <ByteArray name="FlickerEffectUnused" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="PlacedObjectMapMarker" objType="Subrecord">
