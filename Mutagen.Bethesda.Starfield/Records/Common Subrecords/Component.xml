@@ -463,21 +463,31 @@
     <Fields>
       <Data recordType="DAT2">
         <Fields>
-          <String name="UnknownString1" binaryType="PrependLength" />
-          <UInt8 name="UnknownByte" />
-          <String name="UnknownString2" binaryType="PrependLength" />
-          <String name="UnknownString3" binaryType="PrependLength" />
-          <List name="UnknownInts" counterLength="4" >
-            <Int32 />
+          <String name="CreatedTime" binaryType="PrependLength" />
+          <Enum name="SourceType" enumName="BlockEditorMetaDataComponent.SourceTypeOption" byteLength="1" />
+          <String name="AlsoCreatedTime" binaryType="PrependLength" />
+          <String name="SourceEditorID" binaryType="PrependLength" />
+          <List name="UnknownItems" counterLength="4" >
+            <Ref>
+              <Direct refName="BlockEditorMetaDataItem" />
+            </Ref>
           </List>
-          <Int32 name="UnknownInt1" />
-          <Int32 name="UnknownInt2" />
-          <Int32 name="UnknownInt3" />
-          <Int32 name="UnknownInt4" />
-          <ByteArray name="UnknownEnding" />
+          <Int32 name="LocationX" />
+          <Int32 name="LocationY" />
+          <Int32 name="PlanetSystemId" />
+          <Int32 name="SatelliteId" />
+          <!-- xEdit: Longitude and Latitude, 2 doubles (one old record in Starfield.esm has only 8 bytes). Kept raw: a Break after the
+               variable-length list above is not handled by the overlay generator (coverage bug C59). -->
+          <ByteArray name="LongitudeLatitude" />
         </Fields>
         <RecordTypeVersioning formVersion="558" recordType="DATA" />
       </Data>
+    </Fields>
+  </Object>
+  <Object name="BlockEditorMetaDataItem" objType="Subrecord">
+    <Fields>
+      <UInt32 name="Unknown" />
+      <UInt8 name="Unknown2" />
     </Fields>
   </Object>
   <Object name="BlockCellHeightGridComponent" objType="Subrecord" baseClass="AComponent">

@@ -176,6 +176,9 @@
     <Compile Include="Records\Common Subrecords\AComponent.cs">
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Common Subrecords\BlockEditorMetaDataComponent.cs">
+      <DependentUpon>Component.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Common Subrecords\AObjectModProperty_Generated.cs">
       <DependentUpon>ObjectTemplate.xml</DependentUpon>
     </Compile>
@@ -6948,6 +6951,7 @@
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\Common Subrecords\VolumesUnknownEnderEmptyPadded_Generated.cs">
+    <Compile Include="Records\Common Subrecords\BlockEditorMetaDataItem_Generated.cs">
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
   </ItemGroup>
