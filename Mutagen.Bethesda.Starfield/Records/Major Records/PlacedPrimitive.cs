@@ -13,6 +13,8 @@ public partial class PlacedPrimitive
         Plane,
         Line,
         Ellipsoid,
+        // 6 is unused (xEdit's Starfield definitions)
+        Cylinder = 7,
     }
 }
 
