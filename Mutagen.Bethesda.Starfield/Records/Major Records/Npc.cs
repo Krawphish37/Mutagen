@@ -65,7 +65,9 @@ public partial class Npc
         SimpleActor = 0x0010_0000,
         NoActivationOrHellos = 0x0080_0000,
         DiffuseAlphaTest = 0x0100_0000,
+        ForcedStartsDead = 0x0200_0000,
         IsGhost = 0x2000_0000,
+        IgnoreFriendlyHits = 0x4000_0000,
         Invulnerable = 0x8000_0000
     }
 
