@@ -3,12 +3,17 @@
 partial class SceneActor
 {
     [Flags]
+    // Starfield's actor flags (LNAM), as in xEdit's Starfield definitions
     public enum Flag
     {
         NoPlayerActivation = 0x01,
         Optional = 0x02,
-        RunOnlyScenePackages = 0x04,
-        NoCommandState = 0x08,
+        CanBeRemoved = 0x04,
+        RunOnlyScenePackages = 0x08,
+        NoCommandState = 0x10,
+        NoPlayerDialogue = 0x20,
+        TimelineHeadtracking = 0x40,
+        TimelineCameras = 0x80,
     }
 
     [Flags]
