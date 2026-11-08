@@ -17,9 +17,9 @@
           <Float name="DamageMult" />
           <Enum name="Flags" enumName="BodyPart.Flag" byteLength="1" />
           <Enum name="Type" enumName="BodyPart.PartType" byteLength="1" />
-          <Percent name="HealthPercent" integerType="Byte" />
+          <Percent name="HealthPercent" integerType="ByteHundred" />
           <FormLink name="ActorValue" refName="ActorValueInformation" />
-          <Percent name="ToHitChance" integerType="Byte" />
+          <Percent name="ToHitChance" integerType="ByteHundred" />
           <FormLink name="OnCrippleArtObject" refName="ArtObject" />
           <FormLink name="OnCrippleDebris" refName="Debris" />
           <FormLink name="OnCrippleExplosion" refName="Explosion" />
