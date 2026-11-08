@@ -44,11 +44,12 @@ partial class DialogResponses
         DoNotDoAllBeforeRepeating = 0x800,
     }
     
+    // Starfield stores Low 0, Normal 1, High 2, Force 3 (xEdit's Starfield definitions)
     public enum SubtitlePriorityLevel
     {
-        Low = 1,
-        Normal = 2,
-        High = 3,
-        Force = 4,
+        Low = 0,
+        Normal = 1,
+        High = 2,
+        Force = 3,
     }
 }
