@@ -87,13 +87,13 @@ public class EmptyComponentTests
         var overlay = ReadOverlay(MakeSurfaceBlockBytes(AComponent.ComponentType.BGSBlockEditorMetaData_Component));
 
         var component = overlay.Components.ShouldHaveSingleItem().ShouldBeAssignableTo<IBlockEditorMetaDataComponentGetter>()!;
-        component.UnknownString1.ShouldBeEmpty();
-        component.UnknownByte.ShouldBe((byte)0);
-        component.UnknownString2.ShouldBeEmpty();
-        component.UnknownString3.ShouldBeEmpty();
-        component.UnknownInts.ShouldBeEmpty();
-        component.UnknownInt1.ShouldBe(0);
-        component.UnknownInt4.ShouldBe(0);
-        component.UnknownEnding.Length.ShouldBe(0);
+        component.CreatedTime.ShouldBeEmpty();
+        component.SourceType.ShouldBe((BlockEditorMetaDataComponent.SourceTypeOption)0);
+        component.AlsoCreatedTime.ShouldBeEmpty();
+        component.SourceEditorID.ShouldBeEmpty();
+        component.UnknownItems.ShouldBeEmpty();
+        component.LocationX.ShouldBe(0);
+        component.SatelliteId.ShouldBe(0);
+        component.LongitudeLatitude.Length.ShouldBe(0);
     }
 }
