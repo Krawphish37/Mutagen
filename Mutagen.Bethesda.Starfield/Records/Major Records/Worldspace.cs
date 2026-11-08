@@ -34,18 +34,25 @@ partial class Worldspace
 
 partial class WorldspaceBinaryCreateTranslation
 {
+    // Worldspace bounds (NAM0/NAM9) are stored in units and shown in cells. A Starfield cell is 100 units (xEdit's
+    // wbWorldObjectBounds: IsSF1(1/100, 1/4096)); 4096 is Skyrim's and Fallout 4's cell size.
+    public const float BoundsUnitsPerCell = 100f;
+}
+
+partial class WorldspaceBinaryCreateTranslation
+{
     public static partial void FillBinaryObjectBoundsMinCustom(MutagenFrame frame, IWorldspaceInternal item)
     {
         item.ObjectBoundsMin = new P2Float(
-            frame.ReadFloat() / 4096f,
-            frame.ReadFloat() / 4096f);
+            frame.ReadFloat() / WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell,
+            frame.ReadFloat() / WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell);
     }
 
     public static partial void FillBinaryObjectBoundsMaxCustom(MutagenFrame frame, IWorldspaceInternal item)
     {
         item.ObjectBoundsMax = new P2Float(
-            frame.ReadFloat() / 4096f,
-            frame.ReadFloat() / 4096f);
+            frame.ReadFloat() / WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell,
+            frame.ReadFloat() / WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell);
     }
 
     public static partial void CustomBinaryEndImport(MutagenFrame frame, IWorldspaceInternal obj)
@@ -118,15 +125,15 @@ partial class WorldspaceBinaryWriteTranslation
     public static partial void WriteBinaryObjectBoundsMinCustom(MutagenWriter writer, IWorldspaceGetter item)
     {
         var min = item.ObjectBoundsMin;
-        writer.Write(min.X * 4096f);
-        writer.Write(min.Y * 4096f);
+        writer.Write(min.X * WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell);
+        writer.Write(min.Y * WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell);
     }
 
     public static partial void WriteBinaryObjectBoundsMaxCustom(MutagenWriter writer, IWorldspaceGetter item)
     {
         var max = item.ObjectBoundsMax;
-        writer.Write(max.X * 4096f);
-        writer.Write(max.Y * 4096f);
+        writer.Write(max.X * WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell);
+        writer.Write(max.Y * WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell);
     }
 
     public static partial void CustomBinaryEndExport(MutagenWriter writer, IWorldspaceGetter obj)
@@ -168,14 +175,14 @@ partial class WorldspaceBinaryOverlay
 {
     public partial P2Float GetObjectBoundsMinCustom() => _NAM0Location.HasValue
         ? new P2Float(
-            _recordData.Slice(_NAM0Location.Value.Min).Float() / 4096f,
-            _recordData.Slice(_NAM0Location.Value.Min + 4).Float() / 4096f)
+            _recordData.Slice(_NAM0Location.Value.Min).Float() / WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell,
+            _recordData.Slice(_NAM0Location.Value.Min + 4).Float() / WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell)
         : default;
 
     public partial P2Float GetObjectBoundsMaxCustom() => _NAM9Location.HasValue
         ? new P2Float(
-            _recordData.Slice(_NAM9Location.Value.Min).Float() / 4096f,
-            _recordData.Slice(_NAM9Location.Value.Min + 4).Float() / 4096f)
+            _recordData.Slice(_NAM9Location.Value.Min).Float() / WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell,
+            _recordData.Slice(_NAM9Location.Value.Min + 4).Float() / WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell)
         : default;
 
     private ReadOnlyMemorySlice<byte>? _grupData;
