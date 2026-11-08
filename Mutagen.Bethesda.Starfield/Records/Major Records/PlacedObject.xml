@@ -187,8 +187,8 @@
   </Object>
   <Object name="PlacedObjectDebugTextFormat" objType="Subrecord" recordType="XDTF">
     <Fields>
-      <UInt32 name="Size" />
       <Color name="Color" binaryType="Alpha" />
+      <UInt32 name="Size" />
     </Fields>
   </Object>
   <Object name="PlacedObjectLighting" objType="Subrecord" recordType="XLIG">
