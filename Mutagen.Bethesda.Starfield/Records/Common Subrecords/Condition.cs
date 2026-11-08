@@ -48,10 +48,15 @@ public partial class Condition
         QuestAlias = 5,
         PackageData = 6,
         EventData = 7,
-        CommandTarget = 9,
-        EventCameraRef = 10,
-        MyKiller = 11,
-        PlayerShip = 14
+        // Starfield's values from 8 up, as in xEdit's Starfield definitions
+        CommandTarget = 8,
+        EventCameraRef = 9,
+        MyKiller = 10,
+        SelfPackin = 11,
+        TargetPackin = 12,
+        MyShip = 13,
+        PlayerShip = 14,
+        Player = 15,
     }
 
     public enum ParameterType
