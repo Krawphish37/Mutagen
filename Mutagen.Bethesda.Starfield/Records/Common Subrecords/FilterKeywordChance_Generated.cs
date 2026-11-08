@@ -63,7 +63,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IKeywordGetter> IFilterKeywordChanceGetter.Keyword => this.Keyword;
         #endregion
         #region Chance
-        public Percent Chance { get; set; } = default(Percent);
+        public UInt32 Chance { get; set; } = default(UInt32);
         #endregion
         #region Unknown
         public Int32 Unknown { get; set; } = default(Int32);
@@ -495,7 +495,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IFilterKeywordChance>
     {
         new IFormLink<IKeywordGetter> Keyword { get; set; }
-        new Percent Chance { get; set; }
+        new UInt32 Chance { get; set; }
         new Int32 Unknown { get; set; }
     }
 
@@ -513,7 +513,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => FilterKeywordChance_Registration.Instance;
         IFormLinkGetter<IKeywordGetter> Keyword { get; }
-        Percent Chance { get; }
+        UInt32 Chance { get; }
         Int32 Unknown { get; }
 
     }
@@ -766,7 +766,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Keyword.Clear();
-            item.Chance = default(Percent);
+            item.Chance = default(UInt32);
             item.Unknown = default(Int32);
         }
         
@@ -819,7 +819,7 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Keyword = item.Keyword.Equals(rhs.Keyword);
-            ret.Chance = item.Chance.Equals(rhs.Chance);
+            ret.Chance = item.Chance == rhs.Chance;
             ret.Unknown = item.Unknown == rhs.Unknown;
         }
         
@@ -892,7 +892,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)FilterKeywordChance_FieldIndex.Chance) ?? true))
             {
-                if (!lhs.Chance.Equals(rhs.Chance)) return false;
+                if (lhs.Chance != rhs.Chance) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)FilterKeywordChance_FieldIndex.Unknown) ?? true))
             {
@@ -1063,10 +1063,7 @@ namespace Mutagen.Bethesda.Starfield
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.Keyword);
-            PercentBinaryTranslation.Write(
-                writer: writer,
-                item: item.Chance,
-                integerType: FloatIntegerType.UInt);
+            writer.Write(item.Chance);
             writer.Write(item.Unknown);
         }
 
@@ -1102,9 +1099,7 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.Keyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.Chance = PercentBinaryTranslation.Parse(
-                reader: frame,
-                integerType: FloatIntegerType.UInt);
+            item.Chance = frame.ReadUInt32();
             item.Unknown = frame.ReadInt32();
         }
 
@@ -1173,7 +1168,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public IFormLinkGetter<IKeywordGetter> Keyword => FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _structData.Span.Slice(0x0, 0x4));
-        public Percent Chance => PercentBinaryTranslation.GetPercent(_structData.Slice(0x4, 0x4), FloatIntegerType.UInt);
+        public UInt32 Chance => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x4, 0x4));
         public Int32 Unknown => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x8, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
