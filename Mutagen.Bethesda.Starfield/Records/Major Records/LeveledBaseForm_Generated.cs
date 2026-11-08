@@ -151,7 +151,7 @@ namespace Mutagen.Bethesda.Starfield
         Byte? ILeveledBaseFormGetter.MaxCount => this.MaxCount;
         #endregion
         #region Flags
-        public LeveledItem.Flag Flags { get; set; } = default(LeveledItem.Flag);
+        public LeveledBaseForm.Flag Flags { get; set; } = default(LeveledBaseForm.Flag);
         #endregion
         #region UseGlobal
         private readonly IFormLinkNullable<IGlobalGetter> _UseGlobal = new FormLinkNullable<IGlobalGetter>();
@@ -1375,7 +1375,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<AComponent> Components { get; }
         new Single ChanceNone { get; set; }
         new Byte? MaxCount { get; set; }
-        new LeveledItem.Flag Flags { get; set; }
+        new LeveledBaseForm.Flag Flags { get; set; }
         new IFormLinkNullable<IGlobalGetter> UseGlobal { get; set; }
         new ExtendedList<Condition> Conditions { get; }
         new ExtendedList<LeveledBaseFormEntry>? Entries { get; set; }
@@ -1428,7 +1428,7 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IAComponentGetter> Components { get; }
         Single ChanceNone { get; }
         Byte? MaxCount { get; }
-        LeveledItem.Flag Flags { get; }
+        LeveledBaseForm.Flag Flags { get; }
         IFormLinkNullableGetter<IGlobalGetter> UseGlobal { get; }
         IReadOnlyList<IConditionGetter> Conditions { get; }
         IReadOnlyList<ILeveledBaseFormEntryGetter>? Entries { get; }
@@ -1756,7 +1756,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Components.Clear();
             item.ChanceNone = default(Single);
             item.MaxCount = default;
-            item.Flags = default(LeveledItem.Flag);
+            item.Flags = default(LeveledBaseForm.Flag);
             item.UseGlobal.Clear();
             item.Conditions.Clear();
             item.Entries = null;
@@ -2956,7 +2956,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.MaxCount,
                 header: translationParams.ConvertToCustom(RecordTypes.LVLM));
-            EnumBinaryTranslation<LeveledItem.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
+            EnumBinaryTranslation<LeveledBaseForm.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
                 writer,
                 item.Flags,
                 length: 2,
@@ -3137,7 +3137,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.LVLF:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.Flags = EnumBinaryTranslation<LeveledItem.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                    item.Flags = EnumBinaryTranslation<LeveledBaseForm.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
                     return (int)LeveledBaseForm_FieldIndex.Flags;
@@ -3298,7 +3298,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region Flags
         private int? _FlagsLocation;
-        public LeveledItem.Flag Flags => EnumBinaryTranslation<LeveledItem.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecord(_FlagsLocation, _recordData, _package, 2);
+        public LeveledBaseForm.Flag Flags => EnumBinaryTranslation<LeveledBaseForm.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecord(_FlagsLocation, _recordData, _package, 2);
         #endregion
         #region UseGlobal
         private int? _UseGlobalLocation;
