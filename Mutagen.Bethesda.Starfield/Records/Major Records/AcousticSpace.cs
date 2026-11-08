@@ -3,7 +3,7 @@
 public partial class AcousticSpace
 {
     [Flags]
-    public enum DisableFlag
+    public enum DisableFlag : ulong
     {
         EnvironmentType = 0x00001,
         MusicType = 0x00002,
@@ -11,7 +11,7 @@ public partial class AcousticSpace
         LoopingSound = 0x00008,
         ExteriorWeatherAttenuation = 0x00010,
         IsInterior = 0x00020,
-        CrowdWalls = 0x00040,
+        CrowdWalla = 0x00040,
         AffectsParentedSoundMarkers = 0x00080,
     }
 }

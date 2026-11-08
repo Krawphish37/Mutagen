@@ -17,7 +17,7 @@
       <Bool name="IsInterior" recordType="XTRI" byteLength="1" nullable="false" />
       <Bool name="AllowExterior" recordType="BOLV" byteLength="1" nullable="false" />
       <Enum name="SoundDetectionLevel" recordType="DEVT" enumName="SoundLevel" byteLength="4" />
-      <Enum name="DisableFlags" recordType="ASDF" enumName="SoundLevel" byteLength="8" />
+      <Enum name="DisableFlags" recordType="ASDF" enumName="AcousticSpace.DisableFlag" byteLength="8" />
     </Fields>
     <LinkInterface>IBaseObject</LinkInterface>
     <LinkInterface>IPlaceableObject</LinkInterface>
