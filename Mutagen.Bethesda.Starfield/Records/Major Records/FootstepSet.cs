@@ -21,11 +21,12 @@ partial class FootstepSetBinaryCreateTranslation
             }
         }
 
-        item.WalkFootsteps.SetTo(ReadIn(counts[0]));
-        item.RunFootsteps.SetTo(ReadIn(counts[1]));
-        item.SprintFootsteps.SetTo(ReadIn(counts[2]));
-        item.SneakFootsteps.SetTo(ReadIn(counts[3]));
+        // XCNT counts are Walking ... Swimming, but DATA stores the lists the other way round (xEdit).
         item.SwimFootsteps.SetTo(ReadIn(counts[4]));
+        item.SneakFootsteps.SetTo(ReadIn(counts[3]));
+        item.SprintFootsteps.SetTo(ReadIn(counts[2]));
+        item.RunFootsteps.SetTo(ReadIn(counts[1]));
+        item.WalkFootsteps.SetTo(ReadIn(counts[0]));
         frame.Position = dataEnd;
 
         return null;
@@ -96,11 +97,12 @@ partial class FootstepSetBinaryWriteTranslation
 
         using (HeaderExport.Subrecord(writer, RecordTypes.DATA))
         {
-            WriteListOfFormKeys(walkFootsteps);
-            WriteListOfFormKeys(runFootsteps);
-            WriteListOfFormKeys(sprint);
-            WriteListOfFormKeys(sneak);
+            // DATA order: Swimming, Sneaking, Sprinting, Running, Walking (the reverse of XCNT).
             WriteListOfFormKeys(swim);
+            WriteListOfFormKeys(sneak);
+            WriteListOfFormKeys(sprint);
+            WriteListOfFormKeys(runFootsteps);
+            WriteListOfFormKeys(walkFootsteps);
         }
     }
 }
@@ -133,11 +135,11 @@ partial class FootstepSetBinaryOverlay
             return ret;
         }
 
-        WalkFootsteps = Get(0);
-        RunFootsteps = Get(1);
-        SprintFootsteps = Get(2);
-        SneakFootsteps = Get(3);
         SwimFootsteps = Get(4);
+        SneakFootsteps = Get(3);
+        SprintFootsteps = Get(2);
+        RunFootsteps = Get(1);
+        WalkFootsteps = Get(0);
         stream.Position = checked((int)dataEnd);
 
         return null;
