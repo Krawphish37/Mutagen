@@ -24,20 +24,27 @@ partial class Package
         MustComplete = 0x0000_0004,
         MaintainSpeedAtGoal = 0x0000_0008,
         TreatAsPlayerFollower = 0x0000_0010,
+        AfterCombatReset = 0x0000_0020,
         UnlockDoorsAtPackageStart = 0x0000_0040,
         UnlockDoorsAtPackageEnd = 0x0000_0080,
         RequestBlockIdles = 0x0000_0100,
         ContinueIfPcNear = 0x0000_0200,
         OncePerDay = 0x0000_0400,
+        LowPriority = 0x0000_0800,
         SkipLoadIntoFurniture = 0x0000_1000,
         PreferredSpeed = 0x0000_2000,
+        DisableHeadtracking = 0x0001_0000,
         AlwaysSneak = 0x0002_0000,
         AllowSwimming = 0x0004_0000,
+        DisableAdvancedTraversals = 0x0008_0000,
         IgnoreCombat = 0x0010_0000,
         WeaponsUnequipped = 0x0020_0000,
         WeaponDrawn = 0x0080_0000,
         NoCombatAlert = 0x0800_0000,
-        WearSleepOutfit = 2000_0000
+        // Starfield's bit 29 (Fallout 4's Wear Sleep Outfit, which was written here as 2000_0000 without 0x)
+        WeaponDrawnReady = 0x2000_0000,
+        GroupPackage = 0x4000_0000,
+        WeaponDrawnAlert = 0x8000_0000,
     }
 
     public enum Interrupt
@@ -73,6 +80,7 @@ partial class Package
         AllowIdleChatter = 0x0080,
         WorldInteractions = 0x0200,
         OffForImportantScene = 0x0400,
+        ReactToWarn = 0x0800,
     }
 
     public enum DayOfWeek
