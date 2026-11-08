@@ -16,7 +16,7 @@
   <Object name="EffectData" objType="Subrecord" recordType="EFIT">
     <Fields>
       <Float name="Magnitude" />
-      <Int32 name="Area" />
+      <Float name="Area" />
       <Int32 name="Duration" />
     </Fields>
   </Object>

@@ -55,7 +55,7 @@ namespace Mutagen.Bethesda.Starfield
         public Single Magnitude { get; set; } = default(Single);
         #endregion
         #region Area
-        public Int32 Area { get; set; } = default(Int32);
+        public Single Area { get; set; } = default(Single);
         #endregion
         #region Duration
         public Int32 Duration { get; set; } = default(Int32);
@@ -481,7 +481,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IEffectData>
     {
         new Single Magnitude { get; set; }
-        new Int32 Area { get; set; }
+        new Single Area { get; set; }
         new Int32 Duration { get; set; }
     }
 
@@ -498,7 +498,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => EffectData_Registration.Instance;
         Single Magnitude { get; }
-        Int32 Area { get; }
+        Single Area { get; }
         Int32 Duration { get; }
 
     }
@@ -758,7 +758,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Magnitude = default(Single);
-            item.Area = default(Int32);
+            item.Area = default(Single);
             item.Duration = default(Int32);
         }
         
@@ -814,7 +814,7 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Magnitude = item.Magnitude.EqualsWithin(rhs.Magnitude);
-            ret.Area = item.Area == rhs.Area;
+            ret.Area = item.Area.EqualsWithin(rhs.Area);
             ret.Duration = item.Duration == rhs.Duration;
         }
         
@@ -887,7 +887,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)EffectData_FieldIndex.Area) ?? true))
             {
-                if (lhs.Area != rhs.Area) return false;
+                if (!lhs.Area.EqualsWithin(rhs.Area)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)EffectData_FieldIndex.Duration) ?? true))
             {
@@ -1057,7 +1057,9 @@ namespace Mutagen.Bethesda.Starfield
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.Magnitude);
-            writer.Write(item.Area);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.Area);
             writer.Write(item.Duration);
         }
 
@@ -1100,7 +1102,7 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.Magnitude = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Area = frame.ReadInt32();
+            item.Area = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Duration = frame.ReadInt32();
         }
 
@@ -1168,7 +1170,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public Single Magnitude => _structData.Slice(0x0, 0x4).Float();
-        public Int32 Area => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x4, 0x4));
+        public Single Area => _structData.Slice(0x4, 0x4).Float();
         public Int32 Duration => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x8, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
