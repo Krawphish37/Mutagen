@@ -10,8 +10,8 @@ public partial class HeadPart
         Female = 0x04,
         IsExtraPart = 0x08,
         UseSolidTint = 0x10,
-        UsesBodyTexture = 0x40,
-        HideWithHideEarMorph = 0x80,
+        UsesBodyTexture = 0x20,
+        HideWithHideEarMorph = 0x40,
     }
 
     [Flags]
