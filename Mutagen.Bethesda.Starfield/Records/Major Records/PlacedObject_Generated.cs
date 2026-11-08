@@ -840,6 +840,9 @@ namespace Mutagen.Bethesda.Starfield
         #region Rotation
         public P3Float Rotation { get; set; } = default(P3Float);
         #endregion
+        #region HasPlacementData
+        public Boolean HasPlacementData { get; set; } = default(Boolean);
+        #endregion
         #region Comments
         public String? Comments { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -954,6 +957,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OpenByDefault = initialValue;
                 this.Position = initialValue;
                 this.Rotation = initialValue;
+                this.HasPlacementData = initialValue;
                 this.Comments = initialValue;
             }
 
@@ -1049,6 +1053,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem OpenByDefault,
                 TItem Position,
                 TItem Rotation,
+                TItem HasPlacementData,
                 TItem Comments)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
@@ -1143,6 +1148,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OpenByDefault = OpenByDefault;
                 this.Position = Position;
                 this.Rotation = Rotation;
+                this.HasPlacementData = HasPlacementData;
                 this.Comments = Comments;
             }
 
@@ -1239,6 +1245,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem OpenByDefault;
             public TItem Position;
             public TItem Rotation;
+            public TItem HasPlacementData;
             public TItem Comments;
             #endregion
 
@@ -1337,6 +1344,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.OpenByDefault, rhs.OpenByDefault)) return false;
                 if (!object.Equals(this.Position, rhs.Position)) return false;
                 if (!object.Equals(this.Rotation, rhs.Rotation)) return false;
+                if (!object.Equals(this.HasPlacementData, rhs.HasPlacementData)) return false;
                 if (!object.Equals(this.Comments, rhs.Comments)) return false;
                 return true;
             }
@@ -1427,6 +1435,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.OpenByDefault);
                 hash.Add(this.Position);
                 hash.Add(this.Rotation);
+                hash.Add(this.HasPlacementData);
                 hash.Add(this.Comments);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -1755,6 +1764,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.OpenByDefault)) return false;
                 if (!eval(this.Position)) return false;
                 if (!eval(this.Rotation)) return false;
+                if (!eval(this.HasPlacementData)) return false;
                 if (!eval(this.Comments)) return false;
                 return true;
             }
@@ -2081,6 +2091,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.OpenByDefault)) return true;
                 if (eval(this.Position)) return true;
                 if (eval(this.Rotation)) return true;
+                if (eval(this.HasPlacementData)) return true;
                 if (eval(this.Comments)) return true;
                 return false;
             }
@@ -2346,6 +2357,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.OpenByDefault = eval(this.OpenByDefault);
                 obj.Position = eval(this.Position);
                 obj.Rotation = eval(this.Rotation);
+                obj.HasPlacementData = eval(this.HasPlacementData);
                 obj.Comments = eval(this.Comments);
             }
             #endregion
@@ -2887,6 +2899,10 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Rotation, "Rotation");
                     }
+                    if (printMask?.HasPlacementData ?? true)
+                    {
+                        sb.AppendItem(HasPlacementData, "HasPlacementData");
+                    }
                     if (printMask?.Comments ?? true)
                     {
                         sb.AppendItem(Comments, "Comments");
@@ -2986,6 +3002,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? OpenByDefault;
             public Exception? Position;
             public Exception? Rotation;
+            public Exception? HasPlacementData;
             public Exception? Comments;
             #endregion
 
@@ -3163,6 +3180,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Position;
                     case PlacedObject_FieldIndex.Rotation:
                         return Rotation;
+                    case PlacedObject_FieldIndex.HasPlacementData:
+                        return HasPlacementData;
                     case PlacedObject_FieldIndex.Comments:
                         return Comments;
                     default:
@@ -3426,6 +3445,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case PlacedObject_FieldIndex.Rotation:
                         this.Rotation = ex;
+                        break;
+                    case PlacedObject_FieldIndex.HasPlacementData:
+                        this.HasPlacementData = ex;
                         break;
                     case PlacedObject_FieldIndex.Comments:
                         this.Comments = ex;
@@ -3693,6 +3715,9 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.Rotation:
                         this.Rotation = (Exception?)obj;
                         break;
+                    case PlacedObject_FieldIndex.HasPlacementData:
+                        this.HasPlacementData = (Exception?)obj;
+                        break;
                     case PlacedObject_FieldIndex.Comments:
                         this.Comments = (Exception?)obj;
                         break;
@@ -3789,6 +3814,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (OpenByDefault != null) return true;
                 if (Position != null) return true;
                 if (Rotation != null) return true;
+                if (HasPlacementData != null) return true;
                 if (Comments != null) return true;
                 return false;
             }
@@ -4203,6 +4229,9 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Rotation, "Rotation");
                 }
                 {
+                    sb.AppendItem(HasPlacementData, "HasPlacementData");
+                }
+                {
                     sb.AppendItem(Comments, "Comments");
                 }
             }
@@ -4297,6 +4326,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.OpenByDefault = this.OpenByDefault.Combine(rhs.OpenByDefault);
                 ret.Position = this.Position.Combine(rhs.Position);
                 ret.Rotation = this.Rotation.Combine(rhs.Rotation);
+                ret.HasPlacementData = this.HasPlacementData.Combine(rhs.HasPlacementData);
                 ret.Comments = this.Comments.Combine(rhs.Comments);
                 return ret;
             }
@@ -4404,6 +4434,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OpenByDefault;
             public bool Position;
             public bool Rotation;
+            public bool HasPlacementData;
             public bool Comments;
             #endregion
 
@@ -4462,6 +4493,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OpenByDefault = defaultOn;
                 this.Position = defaultOn;
                 this.Rotation = defaultOn;
+                this.HasPlacementData = defaultOn;
                 this.Comments = defaultOn;
             }
 
@@ -4554,6 +4586,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((OpenByDefault, null));
                 ret.Add((Position, null));
                 ret.Add((Rotation, null));
+                ret.Add((HasPlacementData, null));
                 ret.Add((Comments, null));
             }
 
@@ -4804,6 +4837,7 @@ namespace Mutagen.Bethesda.Starfield
         new Boolean OpenByDefault { get; set; }
         new P3Float Position { get; set; }
         new P3Float Rotation { get; set; }
+        new Boolean HasPlacementData { get; set; }
         new String? Comments { get; set; }
     }
 
@@ -4923,6 +4957,7 @@ namespace Mutagen.Bethesda.Starfield
         Boolean OpenByDefault { get; }
         P3Float Position { get; }
         P3Float Rotation { get; }
+        Boolean HasPlacementData { get; }
         String? Comments { get; }
 
     }
@@ -5184,7 +5219,8 @@ namespace Mutagen.Bethesda.Starfield
         OpenByDefault = 88,
         Position = 89,
         Rotation = 90,
-        Comments = 91,
+        HasPlacementData = 91,
+        Comments = 92,
     }
     #endregion
 
@@ -5195,9 +5231,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 85;
+        public const ushort AdditionalFieldCount = 86;
 
-        public const ushort FieldCount = 92;
+        public const ushort FieldCount = 93;
 
         public static readonly Type MaskType = typeof(PlacedObject.Mask<>);
 
@@ -5445,6 +5481,7 @@ namespace Mutagen.Bethesda.Starfield
             item.OpenByDefault = default(Boolean);
             item.Position = default(P3Float);
             item.Rotation = default(P3Float);
+            item.HasPlacementData = default(Boolean);
             item.Comments = default;
             base.Clear(item);
         }
@@ -5818,6 +5855,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.OpenByDefault = item.OpenByDefault == rhs.OpenByDefault;
             ret.Position = item.Position.Equals(rhs.Position);
             ret.Rotation = item.Rotation.Equals(rhs.Rotation);
+            ret.HasPlacementData = item.HasPlacementData == rhs.HasPlacementData;
             ret.Comments = string.Equals(item.Comments, rhs.Comments);
             base.FillEqualsMask(item, rhs, ret, include);
         }
@@ -6379,6 +6417,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Rotation, "Rotation");
             }
+            if (printMask?.HasPlacementData ?? true)
+            {
+                sb.AppendItem(item.HasPlacementData, "HasPlacementData");
+            }
             if ((printMask?.Comments ?? true)
                 && item.Comments is {} CommentsItem)
             {
@@ -6874,6 +6916,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Rotation.Equals(rhs.Rotation)) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.HasPlacementData) ?? true))
+            {
+                if (lhs.HasPlacementData != rhs.HasPlacementData) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.Comments) ?? true))
             {
                 if (!string.Equals(lhs.Comments, rhs.Comments)) return false;
@@ -7191,6 +7237,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.OpenByDefault);
             hash.Add(item.Position);
             hash.Add(item.Rotation);
+            hash.Add(item.HasPlacementData);
             if (item.Comments is {} Commentsitem)
             {
                 hash.Add(Commentsitem);
@@ -8752,6 +8799,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Rotation = rhs.Rotation;
             }
+            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.HasPlacementData) ?? true))
+            {
+                item.HasPlacementData = rhs.HasPlacementData;
+            }
             if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.Comments) ?? true))
             {
                 item.Comments = rhs.Comments;
@@ -9425,15 +9476,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.OpenByDefault,
                 header: translationParams.ConvertToCustom(RecordTypes.ONAM));
-            using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.DATA)))
-            {
-                P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                    writer: writer,
-                    item: item.Position);
-                P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                    writer: writer,
-                    item: item.Rotation);
-            }
+            PlacedObjectBinaryWriteTranslation.WriteBinaryPlacementParse(
+                writer: writer,
+                item: item);
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.Comments,
@@ -9450,6 +9495,19 @@ namespace Mutagen.Bethesda.Starfield
             IPlacedObjectGetter item)
         {
             WriteBinaryTraversalsCustom(
+                writer: writer,
+                item: item);
+        }
+
+        public static partial void WriteBinaryPlacementParseCustom(
+            MutagenWriter writer,
+            IPlacedObjectGetter item);
+
+        public static void WriteBinaryPlacementParse(
+            MutagenWriter writer,
+            IPlacedObjectGetter item)
+        {
+            WriteBinaryPlacementParseCustom(
                 writer: writer,
                 item: item);
         }
@@ -10061,13 +10119,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DATA:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    var dataFrame = frame.SpawnWithLength(contentLength);
-                    if (dataFrame.Remaining < 12) return null;
-                    item.Position = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    if (dataFrame.Remaining < 12) return null;
-                    item.Rotation = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    return (int)PlacedObject_FieldIndex.Rotation;
+                    return PlacedObjectBinaryCreateTranslation.FillBinaryPlacementParseCustom(
+                        frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
+                        item: item,
+                        lastParsed: lastParsed);
                 }
                 case RecordTypeInts.MNAM:
                 {
@@ -10096,6 +10151,11 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public static partial void FillBinaryTraversalsCustom(
+            MutagenFrame frame,
+            IPlacedObjectInternal item,
+            PreviousParse lastParsed);
+
+        public static partial ParseResult FillBinaryPlacementParseCustom(
             MutagenFrame frame,
             IPlacedObjectInternal item,
             PreviousParse lastParsed);
@@ -10424,16 +10484,11 @@ namespace Mutagen.Bethesda.Starfield
         private int? _OpenByDefaultLocation;
         public Boolean OpenByDefault => _OpenByDefaultLocation.HasValue ? true : default(Boolean);
         #endregion
-        private RangeInt32? _DATALocation;
-        #region Position
-        private int _PositionLocation => _DATALocation!.Value.Min;
-        private bool _Position_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _PositionLocation + 1 >= 12;
-        public P3Float Position => _Position_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_PositionLocation, 12)) : default(P3Float);
-        #endregion
-        #region Rotation
-        private int _RotationLocation => _DATALocation!.Value.Min + 0xC;
-        private bool _Rotation_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _RotationLocation + 1 >= 12;
-        public P3Float Rotation => _Rotation_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_RotationLocation, 12)) : default(P3Float);
+        #region PlacementParse
+        public partial ParseResult PlacementParseCustomParse(
+            OverlayStream stream,
+            int offset,
+            PreviousParse lastParsed);
         #endregion
         #region Comments
         private int? _CommentsLocation;
@@ -11025,8 +11080,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DATA:
                 {
-                    _DATALocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)PlacedObject_FieldIndex.Rotation;
+                    return PlacementParseCustomParse(
+                        stream,
+                        offset,
+                        lastParsed: lastParsed);
                 }
                 case RecordTypeInts.MNAM:
                 {

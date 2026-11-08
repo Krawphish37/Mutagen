@@ -126,7 +126,8 @@ public class CompressionUnitTests
             .Construct();
         var overlayKeyword = overlay.Keywords.ShouldHaveSingleItem();
         overlayKeyword.IsDeleted.ShouldBeTrue();
-        overlayKeyword.IsCompressed.ShouldBeFalse();
+        overlayKeyword.IsCompressed.ShouldBeTrue();
+        overlayKeyword.EditorID.ShouldBe("Test123");
 
         var reimport = StarfieldMod.Create(mod.StarfieldRelease)
             .FromPath(filePath)
@@ -137,7 +138,8 @@ public class CompressionUnitTests
             .Construct();
         var reimportKeyword = reimport.Keywords.ShouldHaveSingleItem();
         reimportKeyword.IsDeleted.ShouldBeTrue();
-        reimportKeyword.IsCompressed.ShouldBeFalse();
+        reimportKeyword.IsCompressed.ShouldBeTrue();
+        reimportKeyword.EditorID.ShouldBe("Test123");
     }
 
     [Fact]
