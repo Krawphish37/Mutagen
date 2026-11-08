@@ -57,7 +57,7 @@ namespace Mutagen.Bethesda.Starfield
         public LocationTargetRadius.VersioningBreaks Versioning { get; set; } = default(LocationTargetRadius.VersioningBreaks);
         #endregion
         #region Radius
-        public UInt32 Radius { get; set; } = default(UInt32);
+        public Single Radius { get; set; } = default(Single);
         #endregion
         #region CollectionIndex
         public UInt32 CollectionIndex { get; set; } = default(UInt32);
@@ -530,7 +530,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new LocationTargetRadius.VersioningBreaks Versioning { get; set; }
         new ALocationTarget Target { get; set; }
-        new UInt32 Radius { get; set; }
+        new Single Radius { get; set; }
         new UInt32 CollectionIndex { get; set; }
     }
 
@@ -549,7 +549,7 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => LocationTargetRadius_Registration.Instance;
         LocationTargetRadius.VersioningBreaks Versioning { get; }
         IALocationTargetGetter Target { get; }
-        UInt32 Radius { get; }
+        Single Radius { get; }
         UInt32 CollectionIndex { get; }
 
     }
@@ -804,7 +804,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.Versioning = default(LocationTargetRadius.VersioningBreaks);
             item.Target.Clear();
-            item.Radius = default(UInt32);
+            item.Radius = default(Single);
             item.CollectionIndex = default(UInt32);
         }
         
@@ -858,7 +858,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.Versioning = item.Versioning == rhs.Versioning;
             ret.Target = MaskItemExt.Factory(item.Target.GetEqualsMask(rhs.Target, include), include);
-            ret.Radius = item.Radius == rhs.Radius;
+            ret.Radius = item.Radius.EqualsWithin(rhs.Radius);
             ret.CollectionIndex = item.CollectionIndex == rhs.CollectionIndex;
         }
         
@@ -943,7 +943,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)LocationTargetRadius_FieldIndex.Radius) ?? true))
             {
-                if (lhs.Radius != rhs.Radius) return false;
+                if (!lhs.Radius.EqualsWithin(rhs.Radius)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)LocationTargetRadius_FieldIndex.CollectionIndex) ?? true))
             {
@@ -1144,7 +1144,9 @@ namespace Mutagen.Bethesda.Starfield
             LocationTargetRadiusBinaryWriteTranslation.WriteBinaryTarget(
                 writer: writer,
                 item: item);
-            writer.Write(item.Radius);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.Radius);
             if (!item.Versioning.HasFlag(LocationTargetRadius.VersioningBreaks.Break0))
             {
                 writer.Write(item.CollectionIndex);
@@ -1198,7 +1200,7 @@ namespace Mutagen.Bethesda.Starfield
             LocationTargetRadiusBinaryCreateTranslation.FillBinaryTargetCustom(
                 frame: frame,
                 item: item);
-            item.Radius = frame.ReadUInt32();
+            item.Radius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             if (frame.Complete)
             {
                 item.Versioning |= LocationTargetRadius.VersioningBreaks.Break0;
@@ -1276,7 +1278,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public LocationTargetRadius.VersioningBreaks Versioning { get; private set; }
-        public UInt32 Radius => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x8, 0x4));
+        public Single Radius => _structData.Slice(0x8, 0x4).Float();
         public UInt32 CollectionIndex => _structData.Length <= 0xC ? default : BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0xC, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
