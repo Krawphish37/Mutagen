@@ -113,6 +113,7 @@ public partial class Npc
         HelpsFriendsAndAllies,
     }
 
+    [Flags]
     public enum TemplateActorType
     {
         Traits = 0x1,
@@ -128,6 +129,8 @@ public partial class Npc
         DefPackList = 0x400,
         AttackData = 0x800,
         Keywords = 0x1000,
+        ReactionRadius = 0x2000,
+        CombatStyle = 0x4000,
     }
 
     public ANpcLevel Level { get; set; } = new NpcLevel();
