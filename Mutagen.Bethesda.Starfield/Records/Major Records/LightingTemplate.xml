@@ -14,16 +14,24 @@
           <Float name="DirectionalFade" />
           <Float name="FogClipDistance" />
           <Float name="FogPower" />
-          <ByteArray name="Unused" byteLength="32" nullable="false" />
           <Color name="FogFarColor" binaryType="Alpha" />
           <Float name="FogMax" />
           <Float name="LightFadeStartDistance" />
           <Float name="LightFadeEndDistance" />
           <Int32 name="Unknown" />
+          <Break />
           <Float name="NearHeightMid" />
           <Float name="NearHeightRange" />
           <Color name="FogColorHighNear" binaryType="Alpha" />
           <Color name="FogColorHighFar" binaryType="Alpha" />
+          <Float name="HighDensityScale" />
+          <Float name="FogNearScale" />
+          <Float name="FogFarScale" />
+          <Float name="HighNearScale" />
+          <Float name="HighFarScale" />
+          <Float name="FarHeightMid" />
+          <Float name="FarHeightRange" />
+          <ByteArray name="Unknown2" byteLength="4" nullable="false" />
         </Fields>
       </Data>
       <RefDirect name="DirectionalAmbientColors" refName="AmbientColors" recordType="DALC" />

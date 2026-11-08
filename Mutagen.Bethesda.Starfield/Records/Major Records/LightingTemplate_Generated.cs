@@ -85,17 +85,6 @@ namespace Mutagen.Bethesda.Starfield
         #region FogPower
         public Single FogPower { get; set; } = default(Single);
         #endregion
-        #region Unused
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _Unused = new byte[32];
-        public MemorySlice<Byte> Unused
-        {
-            get => _Unused;
-            set => this._Unused = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> ILightingTemplateGetter.Unused => this.Unused;
-        #endregion
         #region FogFarColor
         public Color FogFarColor { get; set; } = default(Color);
         #endregion
@@ -112,16 +101,158 @@ namespace Mutagen.Bethesda.Starfield
         public Int32 Unknown { get; set; } = default(Int32);
         #endregion
         #region NearHeightMid
-        public Single NearHeightMid { get; set; } = default(Single);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Single _NearHeightMid;
+        public Single NearHeightMid
+        {
+            get => this._NearHeightMid;
+            set
+            {
+                this.DATADataTypeState &= ~DATADataType.Break0;
+                this._NearHeightMid = value;
+            }
+        }
         #endregion
         #region NearHeightRange
-        public Single NearHeightRange { get; set; } = default(Single);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Single _NearHeightRange;
+        public Single NearHeightRange
+        {
+            get => this._NearHeightRange;
+            set
+            {
+                this.DATADataTypeState &= ~DATADataType.Break0;
+                this._NearHeightRange = value;
+            }
+        }
         #endregion
         #region FogColorHighNear
-        public Color FogColorHighNear { get; set; } = default(Color);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Color _FogColorHighNear;
+        public Color FogColorHighNear
+        {
+            get => this._FogColorHighNear;
+            set
+            {
+                this.DATADataTypeState &= ~DATADataType.Break0;
+                this._FogColorHighNear = value;
+            }
+        }
         #endregion
         #region FogColorHighFar
-        public Color FogColorHighFar { get; set; } = default(Color);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Color _FogColorHighFar;
+        public Color FogColorHighFar
+        {
+            get => this._FogColorHighFar;
+            set
+            {
+                this.DATADataTypeState &= ~DATADataType.Break0;
+                this._FogColorHighFar = value;
+            }
+        }
+        #endregion
+        #region HighDensityScale
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Single _HighDensityScale;
+        public Single HighDensityScale
+        {
+            get => this._HighDensityScale;
+            set
+            {
+                this.DATADataTypeState &= ~DATADataType.Break0;
+                this._HighDensityScale = value;
+            }
+        }
+        #endregion
+        #region FogNearScale
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Single _FogNearScale;
+        public Single FogNearScale
+        {
+            get => this._FogNearScale;
+            set
+            {
+                this.DATADataTypeState &= ~DATADataType.Break0;
+                this._FogNearScale = value;
+            }
+        }
+        #endregion
+        #region FogFarScale
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Single _FogFarScale;
+        public Single FogFarScale
+        {
+            get => this._FogFarScale;
+            set
+            {
+                this.DATADataTypeState &= ~DATADataType.Break0;
+                this._FogFarScale = value;
+            }
+        }
+        #endregion
+        #region HighNearScale
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Single _HighNearScale;
+        public Single HighNearScale
+        {
+            get => this._HighNearScale;
+            set
+            {
+                this.DATADataTypeState &= ~DATADataType.Break0;
+                this._HighNearScale = value;
+            }
+        }
+        #endregion
+        #region HighFarScale
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Single _HighFarScale;
+        public Single HighFarScale
+        {
+            get => this._HighFarScale;
+            set
+            {
+                this.DATADataTypeState &= ~DATADataType.Break0;
+                this._HighFarScale = value;
+            }
+        }
+        #endregion
+        #region FarHeightMid
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Single _FarHeightMid;
+        public Single FarHeightMid
+        {
+            get => this._FarHeightMid;
+            set
+            {
+                this.DATADataTypeState &= ~DATADataType.Break0;
+                this._FarHeightMid = value;
+            }
+        }
+        #endregion
+        #region FarHeightRange
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Single _FarHeightRange;
+        public Single FarHeightRange
+        {
+            get => this._FarHeightRange;
+            set
+            {
+                this.DATADataTypeState &= ~DATADataType.Break0;
+                this._FarHeightRange = value;
+            }
+        }
+        #endregion
+        #region Unknown2
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private MemorySlice<Byte> _Unknown2 = new byte[4];
+        public MemorySlice<Byte> Unknown2
+        {
+            get => _Unknown2;
+            set => this._Unknown2 = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte> ILightingTemplateGetter.Unknown2 => this.Unknown2;
         #endregion
         #region DirectionalAmbientColors
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -133,6 +264,9 @@ namespace Mutagen.Bethesda.Starfield
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IAmbientColorsGetter? ILightingTemplateGetter.DirectionalAmbientColors => this.DirectionalAmbientColors;
+        #endregion
+        #region DATADataTypeState
+        public LightingTemplate.DATADataType DATADataTypeState { get; set; } = default(LightingTemplate.DATADataType);
         #endregion
 
         #region To String
@@ -169,7 +303,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirectionalFade = initialValue;
                 this.FogClipDistance = initialValue;
                 this.FogPower = initialValue;
-                this.Unused = initialValue;
                 this.FogFarColor = initialValue;
                 this.FogMax = initialValue;
                 this.LightFadeStartDistance = initialValue;
@@ -179,7 +312,16 @@ namespace Mutagen.Bethesda.Starfield
                 this.NearHeightRange = initialValue;
                 this.FogColorHighNear = initialValue;
                 this.FogColorHighFar = initialValue;
+                this.HighDensityScale = initialValue;
+                this.FogNearScale = initialValue;
+                this.FogFarScale = initialValue;
+                this.HighNearScale = initialValue;
+                this.HighFarScale = initialValue;
+                this.FarHeightMid = initialValue;
+                this.FarHeightRange = initialValue;
+                this.Unknown2 = initialValue;
                 this.DirectionalAmbientColors = new MaskItem<TItem, AmbientColors.Mask<TItem>?>(initialValue, new AmbientColors.Mask<TItem>(initialValue));
+                this.DATADataTypeState = initialValue;
             }
 
             public Mask(
@@ -200,7 +342,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem DirectionalFade,
                 TItem FogClipDistance,
                 TItem FogPower,
-                TItem Unused,
                 TItem FogFarColor,
                 TItem FogMax,
                 TItem LightFadeStartDistance,
@@ -210,7 +351,16 @@ namespace Mutagen.Bethesda.Starfield
                 TItem NearHeightRange,
                 TItem FogColorHighNear,
                 TItem FogColorHighFar,
-                TItem DirectionalAmbientColors)
+                TItem HighDensityScale,
+                TItem FogNearScale,
+                TItem FogFarScale,
+                TItem HighNearScale,
+                TItem HighFarScale,
+                TItem FarHeightMid,
+                TItem FarHeightRange,
+                TItem Unknown2,
+                TItem DirectionalAmbientColors,
+                TItem DATADataTypeState)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -230,7 +380,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirectionalFade = DirectionalFade;
                 this.FogClipDistance = FogClipDistance;
                 this.FogPower = FogPower;
-                this.Unused = Unused;
                 this.FogFarColor = FogFarColor;
                 this.FogMax = FogMax;
                 this.LightFadeStartDistance = LightFadeStartDistance;
@@ -240,7 +389,16 @@ namespace Mutagen.Bethesda.Starfield
                 this.NearHeightRange = NearHeightRange;
                 this.FogColorHighNear = FogColorHighNear;
                 this.FogColorHighFar = FogColorHighFar;
+                this.HighDensityScale = HighDensityScale;
+                this.FogNearScale = FogNearScale;
+                this.FogFarScale = FogFarScale;
+                this.HighNearScale = HighNearScale;
+                this.HighFarScale = HighFarScale;
+                this.FarHeightMid = FarHeightMid;
+                this.FarHeightRange = FarHeightRange;
+                this.Unknown2 = Unknown2;
                 this.DirectionalAmbientColors = new MaskItem<TItem, AmbientColors.Mask<TItem>?>(DirectionalAmbientColors, new AmbientColors.Mask<TItem>(DirectionalAmbientColors));
+                this.DATADataTypeState = DATADataTypeState;
             }
 
             #pragma warning disable CS8618
@@ -262,7 +420,6 @@ namespace Mutagen.Bethesda.Starfield
             public TItem DirectionalFade;
             public TItem FogClipDistance;
             public TItem FogPower;
-            public TItem Unused;
             public TItem FogFarColor;
             public TItem FogMax;
             public TItem LightFadeStartDistance;
@@ -272,7 +429,16 @@ namespace Mutagen.Bethesda.Starfield
             public TItem NearHeightRange;
             public TItem FogColorHighNear;
             public TItem FogColorHighFar;
+            public TItem HighDensityScale;
+            public TItem FogNearScale;
+            public TItem FogFarScale;
+            public TItem HighNearScale;
+            public TItem HighFarScale;
+            public TItem FarHeightMid;
+            public TItem FarHeightRange;
+            public TItem Unknown2;
             public MaskItem<TItem, AmbientColors.Mask<TItem>?>? DirectionalAmbientColors { get; set; }
+            public TItem DATADataTypeState;
             #endregion
 
             #region Equals
@@ -296,7 +462,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.DirectionalFade, rhs.DirectionalFade)) return false;
                 if (!object.Equals(this.FogClipDistance, rhs.FogClipDistance)) return false;
                 if (!object.Equals(this.FogPower, rhs.FogPower)) return false;
-                if (!object.Equals(this.Unused, rhs.Unused)) return false;
                 if (!object.Equals(this.FogFarColor, rhs.FogFarColor)) return false;
                 if (!object.Equals(this.FogMax, rhs.FogMax)) return false;
                 if (!object.Equals(this.LightFadeStartDistance, rhs.LightFadeStartDistance)) return false;
@@ -306,7 +471,16 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.NearHeightRange, rhs.NearHeightRange)) return false;
                 if (!object.Equals(this.FogColorHighNear, rhs.FogColorHighNear)) return false;
                 if (!object.Equals(this.FogColorHighFar, rhs.FogColorHighFar)) return false;
+                if (!object.Equals(this.HighDensityScale, rhs.HighDensityScale)) return false;
+                if (!object.Equals(this.FogNearScale, rhs.FogNearScale)) return false;
+                if (!object.Equals(this.FogFarScale, rhs.FogFarScale)) return false;
+                if (!object.Equals(this.HighNearScale, rhs.HighNearScale)) return false;
+                if (!object.Equals(this.HighFarScale, rhs.HighFarScale)) return false;
+                if (!object.Equals(this.FarHeightMid, rhs.FarHeightMid)) return false;
+                if (!object.Equals(this.FarHeightRange, rhs.FarHeightRange)) return false;
+                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
                 if (!object.Equals(this.DirectionalAmbientColors, rhs.DirectionalAmbientColors)) return false;
+                if (!object.Equals(this.DATADataTypeState, rhs.DATADataTypeState)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -322,7 +496,6 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.DirectionalFade);
                 hash.Add(this.FogClipDistance);
                 hash.Add(this.FogPower);
-                hash.Add(this.Unused);
                 hash.Add(this.FogFarColor);
                 hash.Add(this.FogMax);
                 hash.Add(this.LightFadeStartDistance);
@@ -332,7 +505,16 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.NearHeightRange);
                 hash.Add(this.FogColorHighNear);
                 hash.Add(this.FogColorHighFar);
+                hash.Add(this.HighDensityScale);
+                hash.Add(this.FogNearScale);
+                hash.Add(this.FogFarScale);
+                hash.Add(this.HighNearScale);
+                hash.Add(this.HighFarScale);
+                hash.Add(this.FarHeightMid);
+                hash.Add(this.FarHeightRange);
+                hash.Add(this.Unknown2);
                 hash.Add(this.DirectionalAmbientColors);
+                hash.Add(this.DATADataTypeState);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -353,7 +535,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.DirectionalFade)) return false;
                 if (!eval(this.FogClipDistance)) return false;
                 if (!eval(this.FogPower)) return false;
-                if (!eval(this.Unused)) return false;
                 if (!eval(this.FogFarColor)) return false;
                 if (!eval(this.FogMax)) return false;
                 if (!eval(this.LightFadeStartDistance)) return false;
@@ -363,11 +544,20 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.NearHeightRange)) return false;
                 if (!eval(this.FogColorHighNear)) return false;
                 if (!eval(this.FogColorHighFar)) return false;
+                if (!eval(this.HighDensityScale)) return false;
+                if (!eval(this.FogNearScale)) return false;
+                if (!eval(this.FogFarScale)) return false;
+                if (!eval(this.HighNearScale)) return false;
+                if (!eval(this.HighFarScale)) return false;
+                if (!eval(this.FarHeightMid)) return false;
+                if (!eval(this.FarHeightRange)) return false;
+                if (!eval(this.Unknown2)) return false;
                 if (DirectionalAmbientColors != null)
                 {
                     if (!eval(this.DirectionalAmbientColors.Overall)) return false;
                     if (this.DirectionalAmbientColors.Specific != null && !this.DirectionalAmbientColors.Specific.All(eval)) return false;
                 }
+                if (!eval(this.DATADataTypeState)) return false;
                 return true;
             }
             #endregion
@@ -386,7 +576,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.DirectionalFade)) return true;
                 if (eval(this.FogClipDistance)) return true;
                 if (eval(this.FogPower)) return true;
-                if (eval(this.Unused)) return true;
                 if (eval(this.FogFarColor)) return true;
                 if (eval(this.FogMax)) return true;
                 if (eval(this.LightFadeStartDistance)) return true;
@@ -396,11 +585,20 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.NearHeightRange)) return true;
                 if (eval(this.FogColorHighNear)) return true;
                 if (eval(this.FogColorHighFar)) return true;
+                if (eval(this.HighDensityScale)) return true;
+                if (eval(this.FogNearScale)) return true;
+                if (eval(this.FogFarScale)) return true;
+                if (eval(this.HighNearScale)) return true;
+                if (eval(this.HighFarScale)) return true;
+                if (eval(this.FarHeightMid)) return true;
+                if (eval(this.FarHeightRange)) return true;
+                if (eval(this.Unknown2)) return true;
                 if (DirectionalAmbientColors != null)
                 {
                     if (eval(this.DirectionalAmbientColors.Overall)) return true;
                     if (this.DirectionalAmbientColors.Specific != null && this.DirectionalAmbientColors.Specific.Any(eval)) return true;
                 }
+                if (eval(this.DATADataTypeState)) return true;
                 return false;
             }
             #endregion
@@ -426,7 +624,6 @@ namespace Mutagen.Bethesda.Starfield
                 obj.DirectionalFade = eval(this.DirectionalFade);
                 obj.FogClipDistance = eval(this.FogClipDistance);
                 obj.FogPower = eval(this.FogPower);
-                obj.Unused = eval(this.Unused);
                 obj.FogFarColor = eval(this.FogFarColor);
                 obj.FogMax = eval(this.FogMax);
                 obj.LightFadeStartDistance = eval(this.LightFadeStartDistance);
@@ -436,7 +633,16 @@ namespace Mutagen.Bethesda.Starfield
                 obj.NearHeightRange = eval(this.NearHeightRange);
                 obj.FogColorHighNear = eval(this.FogColorHighNear);
                 obj.FogColorHighFar = eval(this.FogColorHighFar);
+                obj.HighDensityScale = eval(this.HighDensityScale);
+                obj.FogNearScale = eval(this.FogNearScale);
+                obj.FogFarScale = eval(this.FogFarScale);
+                obj.HighNearScale = eval(this.HighNearScale);
+                obj.HighFarScale = eval(this.HighFarScale);
+                obj.FarHeightMid = eval(this.FarHeightMid);
+                obj.FarHeightRange = eval(this.FarHeightRange);
+                obj.Unknown2 = eval(this.Unknown2);
                 obj.DirectionalAmbientColors = this.DirectionalAmbientColors == null ? null : new MaskItem<R, AmbientColors.Mask<R>?>(eval(this.DirectionalAmbientColors.Overall), this.DirectionalAmbientColors.Specific?.Translate(eval));
+                obj.DATADataTypeState = eval(this.DATADataTypeState);
             }
             #endregion
 
@@ -495,10 +701,6 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(FogPower, "FogPower");
                     }
-                    if (printMask?.Unused ?? true)
-                    {
-                        sb.AppendItem(Unused, "Unused");
-                    }
                     if (printMask?.FogFarColor ?? true)
                     {
                         sb.AppendItem(FogFarColor, "FogFarColor");
@@ -535,9 +737,45 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(FogColorHighFar, "FogColorHighFar");
                     }
+                    if (printMask?.HighDensityScale ?? true)
+                    {
+                        sb.AppendItem(HighDensityScale, "HighDensityScale");
+                    }
+                    if (printMask?.FogNearScale ?? true)
+                    {
+                        sb.AppendItem(FogNearScale, "FogNearScale");
+                    }
+                    if (printMask?.FogFarScale ?? true)
+                    {
+                        sb.AppendItem(FogFarScale, "FogFarScale");
+                    }
+                    if (printMask?.HighNearScale ?? true)
+                    {
+                        sb.AppendItem(HighNearScale, "HighNearScale");
+                    }
+                    if (printMask?.HighFarScale ?? true)
+                    {
+                        sb.AppendItem(HighFarScale, "HighFarScale");
+                    }
+                    if (printMask?.FarHeightMid ?? true)
+                    {
+                        sb.AppendItem(FarHeightMid, "FarHeightMid");
+                    }
+                    if (printMask?.FarHeightRange ?? true)
+                    {
+                        sb.AppendItem(FarHeightRange, "FarHeightRange");
+                    }
+                    if (printMask?.Unknown2 ?? true)
+                    {
+                        sb.AppendItem(Unknown2, "Unknown2");
+                    }
                     if (printMask?.DirectionalAmbientColors?.Overall ?? true)
                     {
                         DirectionalAmbientColors?.Print(sb);
+                    }
+                    if (printMask?.DATADataTypeState ?? true)
+                    {
+                        sb.AppendItem(DATADataTypeState, "DATADataTypeState");
                     }
                 }
             }
@@ -560,7 +798,6 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? DirectionalFade;
             public Exception? FogClipDistance;
             public Exception? FogPower;
-            public Exception? Unused;
             public Exception? FogFarColor;
             public Exception? FogMax;
             public Exception? LightFadeStartDistance;
@@ -570,7 +807,16 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? NearHeightRange;
             public Exception? FogColorHighNear;
             public Exception? FogColorHighFar;
+            public Exception? HighDensityScale;
+            public Exception? FogNearScale;
+            public Exception? FogFarScale;
+            public Exception? HighNearScale;
+            public Exception? HighFarScale;
+            public Exception? FarHeightMid;
+            public Exception? FarHeightRange;
+            public Exception? Unknown2;
             public MaskItem<Exception?, AmbientColors.ErrorMask?>? DirectionalAmbientColors;
+            public Exception? DATADataTypeState;
             #endregion
 
             #region IErrorMask
@@ -599,8 +845,6 @@ namespace Mutagen.Bethesda.Starfield
                         return FogClipDistance;
                     case LightingTemplate_FieldIndex.FogPower:
                         return FogPower;
-                    case LightingTemplate_FieldIndex.Unused:
-                        return Unused;
                     case LightingTemplate_FieldIndex.FogFarColor:
                         return FogFarColor;
                     case LightingTemplate_FieldIndex.FogMax:
@@ -619,8 +863,26 @@ namespace Mutagen.Bethesda.Starfield
                         return FogColorHighNear;
                     case LightingTemplate_FieldIndex.FogColorHighFar:
                         return FogColorHighFar;
+                    case LightingTemplate_FieldIndex.HighDensityScale:
+                        return HighDensityScale;
+                    case LightingTemplate_FieldIndex.FogNearScale:
+                        return FogNearScale;
+                    case LightingTemplate_FieldIndex.FogFarScale:
+                        return FogFarScale;
+                    case LightingTemplate_FieldIndex.HighNearScale:
+                        return HighNearScale;
+                    case LightingTemplate_FieldIndex.HighFarScale:
+                        return HighFarScale;
+                    case LightingTemplate_FieldIndex.FarHeightMid:
+                        return FarHeightMid;
+                    case LightingTemplate_FieldIndex.FarHeightRange:
+                        return FarHeightRange;
+                    case LightingTemplate_FieldIndex.Unknown2:
+                        return Unknown2;
                     case LightingTemplate_FieldIndex.DirectionalAmbientColors:
                         return DirectionalAmbientColors;
+                    case LightingTemplate_FieldIndex.DATADataTypeState:
+                        return DATADataTypeState;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -661,9 +923,6 @@ namespace Mutagen.Bethesda.Starfield
                     case LightingTemplate_FieldIndex.FogPower:
                         this.FogPower = ex;
                         break;
-                    case LightingTemplate_FieldIndex.Unused:
-                        this.Unused = ex;
-                        break;
                     case LightingTemplate_FieldIndex.FogFarColor:
                         this.FogFarColor = ex;
                         break;
@@ -691,8 +950,35 @@ namespace Mutagen.Bethesda.Starfield
                     case LightingTemplate_FieldIndex.FogColorHighFar:
                         this.FogColorHighFar = ex;
                         break;
+                    case LightingTemplate_FieldIndex.HighDensityScale:
+                        this.HighDensityScale = ex;
+                        break;
+                    case LightingTemplate_FieldIndex.FogNearScale:
+                        this.FogNearScale = ex;
+                        break;
+                    case LightingTemplate_FieldIndex.FogFarScale:
+                        this.FogFarScale = ex;
+                        break;
+                    case LightingTemplate_FieldIndex.HighNearScale:
+                        this.HighNearScale = ex;
+                        break;
+                    case LightingTemplate_FieldIndex.HighFarScale:
+                        this.HighFarScale = ex;
+                        break;
+                    case LightingTemplate_FieldIndex.FarHeightMid:
+                        this.FarHeightMid = ex;
+                        break;
+                    case LightingTemplate_FieldIndex.FarHeightRange:
+                        this.FarHeightRange = ex;
+                        break;
+                    case LightingTemplate_FieldIndex.Unknown2:
+                        this.Unknown2 = ex;
+                        break;
                     case LightingTemplate_FieldIndex.DirectionalAmbientColors:
                         this.DirectionalAmbientColors = new MaskItem<Exception?, AmbientColors.ErrorMask?>(ex, null);
+                        break;
+                    case LightingTemplate_FieldIndex.DATADataTypeState:
+                        this.DATADataTypeState = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -735,9 +1021,6 @@ namespace Mutagen.Bethesda.Starfield
                     case LightingTemplate_FieldIndex.FogPower:
                         this.FogPower = (Exception?)obj;
                         break;
-                    case LightingTemplate_FieldIndex.Unused:
-                        this.Unused = (Exception?)obj;
-                        break;
                     case LightingTemplate_FieldIndex.FogFarColor:
                         this.FogFarColor = (Exception?)obj;
                         break;
@@ -765,8 +1048,35 @@ namespace Mutagen.Bethesda.Starfield
                     case LightingTemplate_FieldIndex.FogColorHighFar:
                         this.FogColorHighFar = (Exception?)obj;
                         break;
+                    case LightingTemplate_FieldIndex.HighDensityScale:
+                        this.HighDensityScale = (Exception?)obj;
+                        break;
+                    case LightingTemplate_FieldIndex.FogNearScale:
+                        this.FogNearScale = (Exception?)obj;
+                        break;
+                    case LightingTemplate_FieldIndex.FogFarScale:
+                        this.FogFarScale = (Exception?)obj;
+                        break;
+                    case LightingTemplate_FieldIndex.HighNearScale:
+                        this.HighNearScale = (Exception?)obj;
+                        break;
+                    case LightingTemplate_FieldIndex.HighFarScale:
+                        this.HighFarScale = (Exception?)obj;
+                        break;
+                    case LightingTemplate_FieldIndex.FarHeightMid:
+                        this.FarHeightMid = (Exception?)obj;
+                        break;
+                    case LightingTemplate_FieldIndex.FarHeightRange:
+                        this.FarHeightRange = (Exception?)obj;
+                        break;
+                    case LightingTemplate_FieldIndex.Unknown2:
+                        this.Unknown2 = (Exception?)obj;
+                        break;
                     case LightingTemplate_FieldIndex.DirectionalAmbientColors:
                         this.DirectionalAmbientColors = (MaskItem<Exception?, AmbientColors.ErrorMask?>?)obj;
+                        break;
+                    case LightingTemplate_FieldIndex.DATADataTypeState:
+                        this.DATADataTypeState = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -787,7 +1097,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (DirectionalFade != null) return true;
                 if (FogClipDistance != null) return true;
                 if (FogPower != null) return true;
-                if (Unused != null) return true;
                 if (FogFarColor != null) return true;
                 if (FogMax != null) return true;
                 if (LightFadeStartDistance != null) return true;
@@ -797,7 +1106,16 @@ namespace Mutagen.Bethesda.Starfield
                 if (NearHeightRange != null) return true;
                 if (FogColorHighNear != null) return true;
                 if (FogColorHighFar != null) return true;
+                if (HighDensityScale != null) return true;
+                if (FogNearScale != null) return true;
+                if (FogFarScale != null) return true;
+                if (HighNearScale != null) return true;
+                if (HighFarScale != null) return true;
+                if (FarHeightMid != null) return true;
+                if (FarHeightRange != null) return true;
+                if (Unknown2 != null) return true;
                 if (DirectionalAmbientColors != null) return true;
+                if (DATADataTypeState != null) return true;
                 return false;
             }
             #endregion
@@ -855,9 +1173,6 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(FogPower, "FogPower");
                 }
                 {
-                    sb.AppendItem(Unused, "Unused");
-                }
-                {
                     sb.AppendItem(FogFarColor, "FogFarColor");
                 }
                 {
@@ -884,7 +1199,34 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(FogColorHighFar, "FogColorHighFar");
                 }
+                {
+                    sb.AppendItem(HighDensityScale, "HighDensityScale");
+                }
+                {
+                    sb.AppendItem(FogNearScale, "FogNearScale");
+                }
+                {
+                    sb.AppendItem(FogFarScale, "FogFarScale");
+                }
+                {
+                    sb.AppendItem(HighNearScale, "HighNearScale");
+                }
+                {
+                    sb.AppendItem(HighFarScale, "HighFarScale");
+                }
+                {
+                    sb.AppendItem(FarHeightMid, "FarHeightMid");
+                }
+                {
+                    sb.AppendItem(FarHeightRange, "FarHeightRange");
+                }
+                {
+                    sb.AppendItem(Unknown2, "Unknown2");
+                }
                 DirectionalAmbientColors?.Print(sb);
+                {
+                    sb.AppendItem(DATADataTypeState, "DATADataTypeState");
+                }
             }
             #endregion
 
@@ -903,7 +1245,6 @@ namespace Mutagen.Bethesda.Starfield
                 ret.DirectionalFade = this.DirectionalFade.Combine(rhs.DirectionalFade);
                 ret.FogClipDistance = this.FogClipDistance.Combine(rhs.FogClipDistance);
                 ret.FogPower = this.FogPower.Combine(rhs.FogPower);
-                ret.Unused = this.Unused.Combine(rhs.Unused);
                 ret.FogFarColor = this.FogFarColor.Combine(rhs.FogFarColor);
                 ret.FogMax = this.FogMax.Combine(rhs.FogMax);
                 ret.LightFadeStartDistance = this.LightFadeStartDistance.Combine(rhs.LightFadeStartDistance);
@@ -913,7 +1254,16 @@ namespace Mutagen.Bethesda.Starfield
                 ret.NearHeightRange = this.NearHeightRange.Combine(rhs.NearHeightRange);
                 ret.FogColorHighNear = this.FogColorHighNear.Combine(rhs.FogColorHighNear);
                 ret.FogColorHighFar = this.FogColorHighFar.Combine(rhs.FogColorHighFar);
+                ret.HighDensityScale = this.HighDensityScale.Combine(rhs.HighDensityScale);
+                ret.FogNearScale = this.FogNearScale.Combine(rhs.FogNearScale);
+                ret.FogFarScale = this.FogFarScale.Combine(rhs.FogFarScale);
+                ret.HighNearScale = this.HighNearScale.Combine(rhs.HighNearScale);
+                ret.HighFarScale = this.HighFarScale.Combine(rhs.HighFarScale);
+                ret.FarHeightMid = this.FarHeightMid.Combine(rhs.FarHeightMid);
+                ret.FarHeightRange = this.FarHeightRange.Combine(rhs.FarHeightRange);
+                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
                 ret.DirectionalAmbientColors = this.DirectionalAmbientColors.Combine(rhs.DirectionalAmbientColors, (l, r) => l.Combine(r));
+                ret.DATADataTypeState = this.DATADataTypeState.Combine(rhs.DATADataTypeState);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -946,7 +1296,6 @@ namespace Mutagen.Bethesda.Starfield
             public bool DirectionalFade;
             public bool FogClipDistance;
             public bool FogPower;
-            public bool Unused;
             public bool FogFarColor;
             public bool FogMax;
             public bool LightFadeStartDistance;
@@ -956,7 +1305,16 @@ namespace Mutagen.Bethesda.Starfield
             public bool NearHeightRange;
             public bool FogColorHighNear;
             public bool FogColorHighFar;
+            public bool HighDensityScale;
+            public bool FogNearScale;
+            public bool FogFarScale;
+            public bool HighNearScale;
+            public bool HighFarScale;
+            public bool FarHeightMid;
+            public bool FarHeightRange;
+            public bool Unknown2;
             public AmbientColors.TranslationMask? DirectionalAmbientColors;
+            public bool DATADataTypeState;
             #endregion
 
             #region Ctors
@@ -975,7 +1333,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirectionalFade = defaultOn;
                 this.FogClipDistance = defaultOn;
                 this.FogPower = defaultOn;
-                this.Unused = defaultOn;
                 this.FogFarColor = defaultOn;
                 this.FogMax = defaultOn;
                 this.LightFadeStartDistance = defaultOn;
@@ -985,6 +1342,15 @@ namespace Mutagen.Bethesda.Starfield
                 this.NearHeightRange = defaultOn;
                 this.FogColorHighNear = defaultOn;
                 this.FogColorHighFar = defaultOn;
+                this.HighDensityScale = defaultOn;
+                this.FogNearScale = defaultOn;
+                this.FogFarScale = defaultOn;
+                this.HighNearScale = defaultOn;
+                this.HighFarScale = defaultOn;
+                this.FarHeightMid = defaultOn;
+                this.FarHeightRange = defaultOn;
+                this.Unknown2 = defaultOn;
+                this.DATADataTypeState = defaultOn;
             }
 
             #endregion
@@ -1002,7 +1368,6 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((DirectionalFade, null));
                 ret.Add((FogClipDistance, null));
                 ret.Add((FogPower, null));
-                ret.Add((Unused, null));
                 ret.Add((FogFarColor, null));
                 ret.Add((FogMax, null));
                 ret.Add((LightFadeStartDistance, null));
@@ -1012,7 +1377,16 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((NearHeightRange, null));
                 ret.Add((FogColorHighNear, null));
                 ret.Add((FogColorHighFar, null));
+                ret.Add((HighDensityScale, null));
+                ret.Add((FogNearScale, null));
+                ret.Add((FogFarScale, null));
+                ret.Add((HighNearScale, null));
+                ret.Add((HighFarScale, null));
+                ret.Add((FarHeightMid, null));
+                ret.Add((FarHeightRange, null));
+                ret.Add((Unknown2, null));
                 ret.Add((DirectionalAmbientColors != null ? DirectionalAmbientColors.OnOverall : DefaultOn, DirectionalAmbientColors?.GetCrystal()));
+                ret.Add((DATADataTypeState, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -1074,6 +1448,11 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(ILightingTemplate);
 
+        [Flags]
+        public enum DATADataType
+        {
+            Break0 = 1
+        }
         #region Equals and Hash
         public override bool Equals(object? obj)
         {
@@ -1167,7 +1546,6 @@ namespace Mutagen.Bethesda.Starfield
         new Single DirectionalFade { get; set; }
         new Single FogClipDistance { get; set; }
         new Single FogPower { get; set; }
-        new MemorySlice<Byte> Unused { get; set; }
         new Color FogFarColor { get; set; }
         new Single FogMax { get; set; }
         new Single LightFadeStartDistance { get; set; }
@@ -1177,7 +1555,16 @@ namespace Mutagen.Bethesda.Starfield
         new Single NearHeightRange { get; set; }
         new Color FogColorHighNear { get; set; }
         new Color FogColorHighFar { get; set; }
+        new Single HighDensityScale { get; set; }
+        new Single FogNearScale { get; set; }
+        new Single FogFarScale { get; set; }
+        new Single HighNearScale { get; set; }
+        new Single HighFarScale { get; set; }
+        new Single FarHeightMid { get; set; }
+        new Single FarHeightRange { get; set; }
+        new MemorySlice<Byte> Unknown2 { get; set; }
         new AmbientColors? DirectionalAmbientColors { get; set; }
+        new LightingTemplate.DATADataType DATADataTypeState { get; set; }
     }
 
     public partial interface ILightingTemplateInternal :
@@ -1205,7 +1592,6 @@ namespace Mutagen.Bethesda.Starfield
         Single DirectionalFade { get; }
         Single FogClipDistance { get; }
         Single FogPower { get; }
-        ReadOnlyMemorySlice<Byte> Unused { get; }
         Color FogFarColor { get; }
         Single FogMax { get; }
         Single LightFadeStartDistance { get; }
@@ -1215,7 +1601,16 @@ namespace Mutagen.Bethesda.Starfield
         Single NearHeightRange { get; }
         Color FogColorHighNear { get; }
         Color FogColorHighFar { get; }
+        Single HighDensityScale { get; }
+        Single FogNearScale { get; }
+        Single FogFarScale { get; }
+        Single HighNearScale { get; }
+        Single HighFarScale { get; }
+        Single FarHeightMid { get; }
+        Single FarHeightRange { get; }
+        ReadOnlyMemorySlice<Byte> Unknown2 { get; }
         IAmbientColorsGetter? DirectionalAmbientColors { get; }
+        LightingTemplate.DATADataType DATADataTypeState { get; }
 
     }
 
@@ -1402,17 +1797,25 @@ namespace Mutagen.Bethesda.Starfield
         DirectionalFade = 14,
         FogClipDistance = 15,
         FogPower = 16,
-        Unused = 17,
-        FogFarColor = 18,
-        FogMax = 19,
-        LightFadeStartDistance = 20,
-        LightFadeEndDistance = 21,
-        Unknown = 22,
-        NearHeightMid = 23,
-        NearHeightRange = 24,
-        FogColorHighNear = 25,
-        FogColorHighFar = 26,
-        DirectionalAmbientColors = 27,
+        FogFarColor = 17,
+        FogMax = 18,
+        LightFadeStartDistance = 19,
+        LightFadeEndDistance = 20,
+        Unknown = 21,
+        NearHeightMid = 22,
+        NearHeightRange = 23,
+        FogColorHighNear = 24,
+        FogColorHighFar = 25,
+        HighDensityScale = 26,
+        FogNearScale = 27,
+        FogFarScale = 28,
+        HighNearScale = 29,
+        HighFarScale = 30,
+        FarHeightMid = 31,
+        FarHeightRange = 32,
+        Unknown2 = 33,
+        DirectionalAmbientColors = 34,
+        DATADataTypeState = 35,
     }
     #endregion
 
@@ -1423,9 +1826,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 21;
+        public const ushort AdditionalFieldCount = 29;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 36;
 
         public static readonly Type MaskType = typeof(LightingTemplate.Mask<>);
 
@@ -1514,7 +1917,6 @@ namespace Mutagen.Bethesda.Starfield
             item.DirectionalFade = default(Single);
             item.FogClipDistance = default(Single);
             item.FogPower = default(Single);
-            item.Unused = new byte[32];
             item.FogFarColor = default(Color);
             item.FogMax = default(Single);
             item.LightFadeStartDistance = default(Single);
@@ -1524,7 +1926,16 @@ namespace Mutagen.Bethesda.Starfield
             item.NearHeightRange = default(Single);
             item.FogColorHighNear = default(Color);
             item.FogColorHighFar = default(Color);
+            item.HighDensityScale = default(Single);
+            item.FogNearScale = default(Single);
+            item.FogFarScale = default(Single);
+            item.HighNearScale = default(Single);
+            item.HighFarScale = default(Single);
+            item.FarHeightMid = default(Single);
+            item.FarHeightRange = default(Single);
+            item.Unknown2 = new byte[4];
             item.DirectionalAmbientColors = null;
+            item.DATADataTypeState = default(LightingTemplate.DATADataType);
             base.Clear(item);
         }
         
@@ -1619,7 +2030,6 @@ namespace Mutagen.Bethesda.Starfield
             ret.DirectionalFade = item.DirectionalFade.EqualsWithin(rhs.DirectionalFade);
             ret.FogClipDistance = item.FogClipDistance.EqualsWithin(rhs.FogClipDistance);
             ret.FogPower = item.FogPower.EqualsWithin(rhs.FogPower);
-            ret.Unused = MemoryExtensions.SequenceEqual(item.Unused.Span, rhs.Unused.Span);
             ret.FogFarColor = item.FogFarColor.ColorOnlyEquals(rhs.FogFarColor);
             ret.FogMax = item.FogMax.EqualsWithin(rhs.FogMax);
             ret.LightFadeStartDistance = item.LightFadeStartDistance.EqualsWithin(rhs.LightFadeStartDistance);
@@ -1629,11 +2039,20 @@ namespace Mutagen.Bethesda.Starfield
             ret.NearHeightRange = item.NearHeightRange.EqualsWithin(rhs.NearHeightRange);
             ret.FogColorHighNear = item.FogColorHighNear.ColorOnlyEquals(rhs.FogColorHighNear);
             ret.FogColorHighFar = item.FogColorHighFar.ColorOnlyEquals(rhs.FogColorHighFar);
+            ret.HighDensityScale = item.HighDensityScale.EqualsWithin(rhs.HighDensityScale);
+            ret.FogNearScale = item.FogNearScale.EqualsWithin(rhs.FogNearScale);
+            ret.FogFarScale = item.FogFarScale.EqualsWithin(rhs.FogFarScale);
+            ret.HighNearScale = item.HighNearScale.EqualsWithin(rhs.HighNearScale);
+            ret.HighFarScale = item.HighFarScale.EqualsWithin(rhs.HighFarScale);
+            ret.FarHeightMid = item.FarHeightMid.EqualsWithin(rhs.FarHeightMid);
+            ret.FarHeightRange = item.FarHeightRange.EqualsWithin(rhs.FarHeightRange);
+            ret.Unknown2 = MemoryExtensions.SequenceEqual(item.Unknown2.Span, rhs.Unknown2.Span);
             ret.DirectionalAmbientColors = EqualsMaskHelper.EqualsHelper(
                 item.DirectionalAmbientColors,
                 rhs.DirectionalAmbientColors,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
+            ret.DATADataTypeState = item.DATADataTypeState == rhs.DATADataTypeState;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1723,10 +2142,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.FogPower, "FogPower");
             }
-            if (printMask?.Unused ?? true)
-            {
-                sb.AppendLine($"Unused => {SpanExt.ToHexString(item.Unused)}");
-            }
             if (printMask?.FogFarColor ?? true)
             {
                 sb.AppendItem(item.FogFarColor, "FogFarColor");
@@ -1763,10 +2178,46 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.FogColorHighFar, "FogColorHighFar");
             }
+            if (printMask?.HighDensityScale ?? true)
+            {
+                sb.AppendItem(item.HighDensityScale, "HighDensityScale");
+            }
+            if (printMask?.FogNearScale ?? true)
+            {
+                sb.AppendItem(item.FogNearScale, "FogNearScale");
+            }
+            if (printMask?.FogFarScale ?? true)
+            {
+                sb.AppendItem(item.FogFarScale, "FogFarScale");
+            }
+            if (printMask?.HighNearScale ?? true)
+            {
+                sb.AppendItem(item.HighNearScale, "HighNearScale");
+            }
+            if (printMask?.HighFarScale ?? true)
+            {
+                sb.AppendItem(item.HighFarScale, "HighFarScale");
+            }
+            if (printMask?.FarHeightMid ?? true)
+            {
+                sb.AppendItem(item.FarHeightMid, "FarHeightMid");
+            }
+            if (printMask?.FarHeightRange ?? true)
+            {
+                sb.AppendItem(item.FarHeightRange, "FarHeightRange");
+            }
+            if (printMask?.Unknown2 ?? true)
+            {
+                sb.AppendLine($"Unknown2 => {SpanExt.ToHexString(item.Unknown2)}");
+            }
             if ((printMask?.DirectionalAmbientColors?.Overall ?? true)
                 && item.DirectionalAmbientColors is {} DirectionalAmbientColorsItem)
             {
                 DirectionalAmbientColorsItem?.Print(sb, "DirectionalAmbientColors");
+            }
+            if (printMask?.DATADataTypeState ?? true)
+            {
+                sb.AppendItem(item.DATADataTypeState, "DATADataTypeState");
             }
         }
         
@@ -1858,10 +2309,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.FogPower.EqualsWithin(rhs.FogPower)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.Unused) ?? true))
-            {
-                if (!MemoryExtensions.SequenceEqual(lhs.Unused.Span, rhs.Unused.Span)) return false;
-            }
             if ((equalsMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.FogFarColor) ?? true))
             {
                 if (!lhs.FogFarColor.ColorOnlyEquals(rhs.FogFarColor)) return false;
@@ -1898,6 +2345,38 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.FogColorHighFar.ColorOnlyEquals(rhs.FogColorHighFar)) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.HighDensityScale) ?? true))
+            {
+                if (!lhs.HighDensityScale.EqualsWithin(rhs.HighDensityScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.FogNearScale) ?? true))
+            {
+                if (!lhs.FogNearScale.EqualsWithin(rhs.FogNearScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.FogFarScale) ?? true))
+            {
+                if (!lhs.FogFarScale.EqualsWithin(rhs.FogFarScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.HighNearScale) ?? true))
+            {
+                if (!lhs.HighNearScale.EqualsWithin(rhs.HighNearScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.HighFarScale) ?? true))
+            {
+                if (!lhs.HighFarScale.EqualsWithin(rhs.HighFarScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.FarHeightMid) ?? true))
+            {
+                if (!lhs.FarHeightMid.EqualsWithin(rhs.FarHeightMid)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.FarHeightRange) ?? true))
+            {
+                if (!lhs.FarHeightRange.EqualsWithin(rhs.FarHeightRange)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.Unknown2) ?? true))
+            {
+                if (!MemoryExtensions.SequenceEqual(lhs.Unknown2.Span, rhs.Unknown2.Span)) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.DirectionalAmbientColors) ?? true))
             {
                 if (EqualsMaskHelper.RefEquality(lhs.DirectionalAmbientColors, rhs.DirectionalAmbientColors, out var lhsDirectionalAmbientColors, out var rhsDirectionalAmbientColors, out var isDirectionalAmbientColorsEqual))
@@ -1905,6 +2384,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (!((AmbientColorsCommon)((IAmbientColorsGetter)lhsDirectionalAmbientColors).CommonInstance()!).Equals(lhsDirectionalAmbientColors, rhsDirectionalAmbientColors, equalsMask?.GetSubCrystal((int)LightingTemplate_FieldIndex.DirectionalAmbientColors))) return false;
                 }
                 else if (!isDirectionalAmbientColorsEqual) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.DATADataTypeState) ?? true))
+            {
+                if (lhs.DATADataTypeState != rhs.DATADataTypeState) return false;
             }
             return true;
         }
@@ -1944,7 +2427,6 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.DirectionalFade);
             hash.Add(item.FogClipDistance);
             hash.Add(item.FogPower);
-            hash.Add(item.Unused);
             hash.Add(item.FogFarColor);
             hash.Add(item.FogMax);
             hash.Add(item.LightFadeStartDistance);
@@ -1954,10 +2436,19 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.NearHeightRange);
             hash.Add(item.FogColorHighNear);
             hash.Add(item.FogColorHighFar);
+            hash.Add(item.HighDensityScale);
+            hash.Add(item.FogNearScale);
+            hash.Add(item.FogFarScale);
+            hash.Add(item.HighNearScale);
+            hash.Add(item.HighFarScale);
+            hash.Add(item.FarHeightMid);
+            hash.Add(item.FarHeightRange);
+            hash.Add(item.Unknown2);
             if (item.DirectionalAmbientColors is {} DirectionalAmbientColorsitem)
             {
                 hash.Add(DirectionalAmbientColorsitem);
             }
+            hash.Add(item.DATADataTypeState);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -2123,10 +2614,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.FogPower = rhs.FogPower;
             }
-            if ((copyMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.Unused) ?? true))
-            {
-                item.Unused = rhs.Unused.ToArray();
-            }
             if ((copyMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.FogFarColor) ?? true))
             {
                 item.FogFarColor = rhs.FogFarColor;
@@ -2163,6 +2650,38 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.FogColorHighFar = rhs.FogColorHighFar;
             }
+            if ((copyMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.HighDensityScale) ?? true))
+            {
+                item.HighDensityScale = rhs.HighDensityScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.FogNearScale) ?? true))
+            {
+                item.FogNearScale = rhs.FogNearScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.FogFarScale) ?? true))
+            {
+                item.FogFarScale = rhs.FogFarScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.HighNearScale) ?? true))
+            {
+                item.HighNearScale = rhs.HighNearScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.HighFarScale) ?? true))
+            {
+                item.HighFarScale = rhs.HighFarScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.FarHeightMid) ?? true))
+            {
+                item.FarHeightMid = rhs.FarHeightMid;
+            }
+            if ((copyMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.FarHeightRange) ?? true))
+            {
+                item.FarHeightRange = rhs.FarHeightRange;
+            }
+            if ((copyMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.Unknown2) ?? true))
+            {
+                item.Unknown2 = rhs.Unknown2.ToArray();
+            }
             if ((copyMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.DirectionalAmbientColors) ?? true))
             {
                 errorMask?.PushIndex((int)LightingTemplate_FieldIndex.DirectionalAmbientColors);
@@ -2188,6 +2707,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     errorMask?.PopIndex();
                 }
+            }
+            if ((copyMask?.GetShouldTranslate((int)LightingTemplate_FieldIndex.DATADataTypeState) ?? true))
+            {
+                item.DATADataTypeState = rhs.DATADataTypeState;
             }
             DeepCopyInCustom(
                 item: item,
@@ -2349,6 +2872,15 @@ namespace Mutagen.Bethesda.Starfield
     {
         public new static readonly LightingTemplateBinaryWriteTranslation Instance = new();
 
+        public static void WriteEmbedded(
+            ILightingTemplateGetter item,
+            MutagenWriter writer)
+        {
+            StarfieldMajorRecordBinaryWriteTranslation.WriteEmbedded(
+                item: item,
+                writer: writer);
+        }
+
         public static void WriteRecordTypes(
             ILightingTemplateGetter item,
             MutagenWriter writer,
@@ -2386,9 +2918,6 @@ namespace Mutagen.Bethesda.Starfield
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.FogPower);
-                ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                    writer: writer,
-                    item: item.Unused);
                 ColorBinaryTranslation.Instance.Write(
                     writer: writer,
                     item: item.FogFarColor);
@@ -2402,18 +2931,45 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     item: item.LightFadeEndDistance);
                 writer.Write(item.Unknown);
-                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                    writer: writer,
-                    item: item.NearHeightMid);
-                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                    writer: writer,
-                    item: item.NearHeightRange);
-                ColorBinaryTranslation.Instance.Write(
-                    writer: writer,
-                    item: item.FogColorHighNear);
-                ColorBinaryTranslation.Instance.Write(
-                    writer: writer,
-                    item: item.FogColorHighFar);
+                if (!item.DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0))
+                {
+                    FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer: writer,
+                        item: item.NearHeightMid);
+                    FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer: writer,
+                        item: item.NearHeightRange);
+                    ColorBinaryTranslation.Instance.Write(
+                        writer: writer,
+                        item: item.FogColorHighNear);
+                    ColorBinaryTranslation.Instance.Write(
+                        writer: writer,
+                        item: item.FogColorHighFar);
+                    FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer: writer,
+                        item: item.HighDensityScale);
+                    FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer: writer,
+                        item: item.FogNearScale);
+                    FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer: writer,
+                        item: item.FogFarScale);
+                    FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer: writer,
+                        item: item.HighNearScale);
+                    FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer: writer,
+                        item: item.HighFarScale);
+                    FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer: writer,
+                        item: item.FarHeightMid);
+                    FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer: writer,
+                        item: item.FarHeightRange);
+                    ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer: writer,
+                        item: item.Unknown2);
+                }
             }
             if (item.DirectionalAmbientColors is {} DirectionalAmbientColorsItem)
             {
@@ -2481,6 +3037,15 @@ namespace Mutagen.Bethesda.Starfield
         public new static readonly LightingTemplateBinaryCreateTranslation Instance = new LightingTemplateBinaryCreateTranslation();
 
         public override RecordType RecordType => RecordTypes.LGTM;
+        public static void FillBinaryStructs(
+            ILightingTemplateInternal item,
+            MutagenFrame frame)
+        {
+            StarfieldMajorRecordBinaryCreateTranslation.FillBinaryStructs(
+                item: item,
+                frame: frame);
+        }
+
         public static ParseResult FillBinaryRecordTypes(
             ILightingTemplateInternal item,
             MutagenFrame frame,
@@ -2517,7 +3082,6 @@ namespace Mutagen.Bethesda.Starfield
                     item.FogClipDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.FogPower = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    item.Unused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(32));
                     if (dataFrame.Remaining < 4) return null;
                     item.FogFarColor = dataFrame.ReadColor(ColorBinaryType.Alpha);
                     if (dataFrame.Remaining < 4) return null;
@@ -2528,6 +3092,11 @@ namespace Mutagen.Bethesda.Starfield
                     item.LightFadeEndDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.Unknown = dataFrame.ReadInt32();
+                    if (dataFrame.Complete)
+                    {
+                        item.DATADataTypeState |= LightingTemplate.DATADataType.Break0;
+                        return (int)LightingTemplate_FieldIndex.Unknown;
+                    }
                     if (dataFrame.Remaining < 4) return null;
                     item.NearHeightMid = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -2536,7 +3105,22 @@ namespace Mutagen.Bethesda.Starfield
                     item.FogColorHighNear = dataFrame.ReadColor(ColorBinaryType.Alpha);
                     if (dataFrame.Remaining < 4) return null;
                     item.FogColorHighFar = dataFrame.ReadColor(ColorBinaryType.Alpha);
-                    return (int)LightingTemplate_FieldIndex.FogColorHighFar;
+                    if (dataFrame.Remaining < 4) return null;
+                    item.HighDensityScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.FogNearScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.FogFarScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.HighNearScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.HighFarScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.FarHeightMid = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.FarHeightRange = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.Unknown2 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(4));
+                    return (int)LightingTemplate_FieldIndex.Unknown2;
                 }
                 case RecordTypeInts.DALC:
                 {
@@ -2603,6 +3187,7 @@ namespace Mutagen.Bethesda.Starfield
 
 
         private RangeInt32? _DATALocation;
+        public LightingTemplate.DATADataType DATADataTypeState { get; private set; }
         #region AmbientColor
         private int _AmbientColorLocation => _DATALocation!.Value.Min;
         private bool _AmbientColor_IsSet => _DATALocation.HasValue;
@@ -2653,55 +3238,90 @@ namespace Mutagen.Bethesda.Starfield
         private bool _FogPower_IsSet => _DATALocation.HasValue;
         public Single FogPower => _FogPower_IsSet ? _recordData.Slice(_FogPowerLocation, 4).Float() : default(Single);
         #endregion
-        #region Unused
-        private int _UnusedLocation => _DATALocation!.Value.Min + 0x28;
-        private bool _Unused_IsSet => _DATALocation.HasValue;
-        public ReadOnlyMemorySlice<Byte> Unused => _Unused_IsSet ? _recordData.Span.Slice(_UnusedLocation, 32).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
-        #endregion
         #region FogFarColor
-        private int _FogFarColorLocation => _DATALocation!.Value.Min + 0x48;
+        private int _FogFarColorLocation => _DATALocation!.Value.Min + 0x28;
         private bool _FogFarColor_IsSet => _DATALocation.HasValue;
         public Color FogFarColor => _FogFarColor_IsSet ? _recordData.Slice(_FogFarColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region FogMax
-        private int _FogMaxLocation => _DATALocation!.Value.Min + 0x4C;
+        private int _FogMaxLocation => _DATALocation!.Value.Min + 0x2C;
         private bool _FogMax_IsSet => _DATALocation.HasValue;
         public Single FogMax => _FogMax_IsSet ? _recordData.Slice(_FogMaxLocation, 4).Float() : default(Single);
         #endregion
         #region LightFadeStartDistance
-        private int _LightFadeStartDistanceLocation => _DATALocation!.Value.Min + 0x50;
+        private int _LightFadeStartDistanceLocation => _DATALocation!.Value.Min + 0x30;
         private bool _LightFadeStartDistance_IsSet => _DATALocation.HasValue;
         public Single LightFadeStartDistance => _LightFadeStartDistance_IsSet ? _recordData.Slice(_LightFadeStartDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region LightFadeEndDistance
-        private int _LightFadeEndDistanceLocation => _DATALocation!.Value.Min + 0x54;
+        private int _LightFadeEndDistanceLocation => _DATALocation!.Value.Min + 0x34;
         private bool _LightFadeEndDistance_IsSet => _DATALocation.HasValue;
         public Single LightFadeEndDistance => _LightFadeEndDistance_IsSet ? _recordData.Slice(_LightFadeEndDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown
-        private int _UnknownLocation => _DATALocation!.Value.Min + 0x58;
+        private int _UnknownLocation => _DATALocation!.Value.Min + 0x38;
         private bool _Unknown_IsSet => _DATALocation.HasValue;
         public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
         #endregion
         #region NearHeightMid
-        private int _NearHeightMidLocation => _DATALocation!.Value.Min + 0x5C;
-        private bool _NearHeightMid_IsSet => _DATALocation.HasValue;
+        private int _NearHeightMidLocation => _DATALocation!.Value.Min + 0x3C;
+        private bool _NearHeightMid_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
         public Single NearHeightMid => _NearHeightMid_IsSet ? _recordData.Slice(_NearHeightMidLocation, 4).Float() : default(Single);
         #endregion
         #region NearHeightRange
-        private int _NearHeightRangeLocation => _DATALocation!.Value.Min + 0x60;
-        private bool _NearHeightRange_IsSet => _DATALocation.HasValue;
+        private int _NearHeightRangeLocation => _DATALocation!.Value.Min + 0x40;
+        private bool _NearHeightRange_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
         public Single NearHeightRange => _NearHeightRange_IsSet ? _recordData.Slice(_NearHeightRangeLocation, 4).Float() : default(Single);
         #endregion
         #region FogColorHighNear
-        private int _FogColorHighNearLocation => _DATALocation!.Value.Min + 0x64;
-        private bool _FogColorHighNear_IsSet => _DATALocation.HasValue;
+        private int _FogColorHighNearLocation => _DATALocation!.Value.Min + 0x44;
+        private bool _FogColorHighNear_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
         public Color FogColorHighNear => _FogColorHighNear_IsSet ? _recordData.Slice(_FogColorHighNearLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region FogColorHighFar
-        private int _FogColorHighFarLocation => _DATALocation!.Value.Min + 0x68;
-        private bool _FogColorHighFar_IsSet => _DATALocation.HasValue;
+        private int _FogColorHighFarLocation => _DATALocation!.Value.Min + 0x48;
+        private bool _FogColorHighFar_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
         public Color FogColorHighFar => _FogColorHighFar_IsSet ? _recordData.Slice(_FogColorHighFarLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
+        #endregion
+        #region HighDensityScale
+        private int _HighDensityScaleLocation => _DATALocation!.Value.Min + 0x4C;
+        private bool _HighDensityScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        public Single HighDensityScale => _HighDensityScale_IsSet ? _recordData.Slice(_HighDensityScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region FogNearScale
+        private int _FogNearScaleLocation => _DATALocation!.Value.Min + 0x50;
+        private bool _FogNearScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        public Single FogNearScale => _FogNearScale_IsSet ? _recordData.Slice(_FogNearScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region FogFarScale
+        private int _FogFarScaleLocation => _DATALocation!.Value.Min + 0x54;
+        private bool _FogFarScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        public Single FogFarScale => _FogFarScale_IsSet ? _recordData.Slice(_FogFarScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region HighNearScale
+        private int _HighNearScaleLocation => _DATALocation!.Value.Min + 0x58;
+        private bool _HighNearScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        public Single HighNearScale => _HighNearScale_IsSet ? _recordData.Slice(_HighNearScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region HighFarScale
+        private int _HighFarScaleLocation => _DATALocation!.Value.Min + 0x5C;
+        private bool _HighFarScale_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        public Single HighFarScale => _HighFarScale_IsSet ? _recordData.Slice(_HighFarScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region FarHeightMid
+        private int _FarHeightMidLocation => _DATALocation!.Value.Min + 0x60;
+        private bool _FarHeightMid_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        public Single FarHeightMid => _FarHeightMid_IsSet ? _recordData.Slice(_FarHeightMidLocation, 4).Float() : default(Single);
+        #endregion
+        #region FarHeightRange
+        private int _FarHeightRangeLocation => _DATALocation!.Value.Min + 0x64;
+        private bool _FarHeightRange_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        public Single FarHeightRange => _FarHeightRange_IsSet ? _recordData.Slice(_FarHeightRangeLocation, 4).Float() : default(Single);
+        #endregion
+        #region Unknown2
+        private int _Unknown2Location => _DATALocation!.Value.Min + 0x68;
+        private bool _Unknown2_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(LightingTemplate.DATADataType.Break0);
+        public ReadOnlyMemorySlice<Byte> Unknown2 => _Unknown2_IsSet ? _recordData.Span.Slice(_Unknown2Location, 4).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
         #endregion
         public IAmbientColorsGetter? DirectionalAmbientColors { get; private set; }
         partial void CustomFactoryEnd(
@@ -2776,7 +3396,12 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DATA:
                 {
                     _DATALocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)LightingTemplate_FieldIndex.FogColorHighFar;
+                    var subLen = _package.MetaData.Constants.SubrecordHeader(_recordData.Slice((stream.Position - offset))).ContentLength;
+                    if (subLen <= 0x3C)
+                    {
+                        this.DATADataTypeState |= LightingTemplate.DATADataType.Break0;
+                    }
+                    return (int)LightingTemplate_FieldIndex.Unknown2;
                 }
                 case RecordTypeInts.DALC:
                 {
