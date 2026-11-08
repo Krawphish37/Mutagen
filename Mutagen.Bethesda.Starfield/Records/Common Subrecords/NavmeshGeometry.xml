@@ -26,7 +26,7 @@
   <Object name="WorldspaceNavmeshParent" objType="Subrecord" baseClass="ANavmeshParent">
     <Fields>
       <FormLink name="Parent" refName="Worldspace" />
-      <P2Int16 name="Coordinates" />
+      <P2Int16 name="Coordinates" swapCoords="true" />
     </Fields>
   </Object>
   <Object name="CellNavmeshParent" objType="Subrecord" baseClass="ANavmeshParent">

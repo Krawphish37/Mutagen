@@ -38,7 +38,7 @@ partial class NavmeshGeometryBinaryCreateTranslation
         {
             var wrld = new WorldspaceNavmeshParent();
             wrld.Parent.SetTo(formKey);
-            wrld.Coordinates = P2Int16BinaryTranslation<TReader, MutagenWriter>.Instance.Parse(reader: frame);
+            wrld.Coordinates = P2Int16BinaryTranslation<TReader, MutagenWriter>.Instance.Parse(reader: frame, swapCoords: true);
             return wrld;
         }
     }
