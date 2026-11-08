@@ -43,7 +43,7 @@
           <FormLink name="Reference">
             <Interface>IItem</Interface>
           </FormLink>
-          <Int16 name="Count" />
+          <UInt16 name="Count" />
           <Percent name="ChanceNone" integerType="ByteHundred" />
           <Int8 name="Unused2" />
         </Fields>

@@ -70,7 +70,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<ILeveledPackInTargetGetter> ILeveledPackInEntryGetter.Reference => this.Reference;
         #endregion
         #region Count
-        public Int16 Count { get; set; } = default(Int16);
+        public UInt16 Count { get; set; } = default(UInt16);
         #endregion
         #region ChanceNone
         public Percent ChanceNone { get; set; } = default(Percent);
@@ -706,7 +706,7 @@ namespace Mutagen.Bethesda.Starfield
         new Int16 Level { get; set; }
         new Int16 Unused { get; set; }
         new IFormLink<ILeveledPackInTargetGetter> Reference { get; set; }
-        new Int16 Count { get; set; }
+        new UInt16 Count { get; set; }
         new Percent ChanceNone { get; set; }
         new SByte Unused2 { get; set; }
         new ExtendedList<Condition> Conditions { get; }
@@ -728,7 +728,7 @@ namespace Mutagen.Bethesda.Starfield
         Int16 Level { get; }
         Int16 Unused { get; }
         IFormLinkGetter<ILeveledPackInTargetGetter> Reference { get; }
-        Int16 Count { get; }
+        UInt16 Count { get; }
         Percent ChanceNone { get; }
         SByte Unused2 { get; }
         IReadOnlyList<IConditionGetter> Conditions { get; }
@@ -1004,7 +1004,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Level = default(Int16);
             item.Unused = default(Int16);
             item.Reference.Clear();
-            item.Count = default(Int16);
+            item.Count = default(UInt16);
             item.ChanceNone = default(Percent);
             item.Unused2 = default(SByte);
             item.Conditions.Clear();
@@ -1474,7 +1474,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 4) return null;
                     item.Reference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     if (dataFrame.Remaining < 2) return null;
-                    item.Count = dataFrame.ReadInt16();
+                    item.Count = dataFrame.ReadUInt16();
                     if (dataFrame.Remaining < 1) return null;
                     item.ChanceNone = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
@@ -1581,7 +1581,7 @@ namespace Mutagen.Bethesda.Starfield
         #region Count
         private int _CountLocation => _LVLOLocation!.Value.Min + 0x8;
         private bool _Count_IsSet => _LVLOLocation.HasValue;
-        public Int16 Count => _Count_IsSet ? BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_CountLocation, 2)) : default(Int16);
+        public UInt16 Count => _Count_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_CountLocation, 2)) : default(UInt16);
         #endregion
         #region ChanceNone
         private int _ChanceNoneLocation => _LVLOLocation!.Value.Min + 0xA;
