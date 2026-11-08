@@ -507,7 +507,8 @@
   <Object name="UniqueOverlayListComponentItem" objType="Subrecord">
     <Fields>
       <FormLink name="Worldspace" refName="Worldspace" />
-      <P2Float name="Grid" swapCoords="true" />
+      <Int32 name="GridY" />
+      <Int32 name="GridX" />
     </Fields>
   </Object>
   <Object name="UniquePatternPlacementInfoComponent" objType="Subrecord" baseClass="AComponent">

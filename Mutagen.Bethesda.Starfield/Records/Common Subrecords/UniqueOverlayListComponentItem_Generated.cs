@@ -62,8 +62,11 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<IWorldspaceGetter> IUniqueOverlayListComponentItemGetter.Worldspace => this.Worldspace;
         #endregion
-        #region Grid
-        public P2Float Grid { get; set; } = default(P2Float);
+        #region GridY
+        public Int32 GridY { get; set; } = default(Int32);
+        #endregion
+        #region GridX
+        public Int32 GridX { get; set; } = default(Int32);
         #endregion
 
         #region To String
@@ -105,15 +108,18 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.Worldspace = initialValue;
-                this.Grid = initialValue;
+                this.GridY = initialValue;
+                this.GridX = initialValue;
             }
 
             public Mask(
                 TItem Worldspace,
-                TItem Grid)
+                TItem GridY,
+                TItem GridX)
             {
                 this.Worldspace = Worldspace;
-                this.Grid = Grid;
+                this.GridY = GridY;
+                this.GridX = GridX;
             }
 
             #pragma warning disable CS8618
@@ -126,7 +132,8 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem Worldspace;
-            public TItem Grid;
+            public TItem GridY;
+            public TItem GridX;
             #endregion
 
             #region Equals
@@ -140,14 +147,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.Worldspace, rhs.Worldspace)) return false;
-                if (!object.Equals(this.Grid, rhs.Grid)) return false;
+                if (!object.Equals(this.GridY, rhs.GridY)) return false;
+                if (!object.Equals(this.GridX, rhs.GridX)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.Worldspace);
-                hash.Add(this.Grid);
+                hash.Add(this.GridY);
+                hash.Add(this.GridX);
                 return hash.ToHashCode();
             }
 
@@ -157,7 +166,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.Worldspace)) return false;
-                if (!eval(this.Grid)) return false;
+                if (!eval(this.GridY)) return false;
+                if (!eval(this.GridX)) return false;
                 return true;
             }
             #endregion
@@ -166,7 +176,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.Worldspace)) return true;
-                if (eval(this.Grid)) return true;
+                if (eval(this.GridY)) return true;
+                if (eval(this.GridX)) return true;
                 return false;
             }
             #endregion
@@ -182,7 +193,8 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.Worldspace = eval(this.Worldspace);
-                obj.Grid = eval(this.Grid);
+                obj.GridY = eval(this.GridY);
+                obj.GridX = eval(this.GridX);
             }
             #endregion
 
@@ -205,9 +217,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Worldspace, "Worldspace");
                     }
-                    if (printMask?.Grid ?? true)
+                    if (printMask?.GridY ?? true)
                     {
-                        sb.AppendItem(Grid, "Grid");
+                        sb.AppendItem(GridY, "GridY");
+                    }
+                    if (printMask?.GridX ?? true)
+                    {
+                        sb.AppendItem(GridX, "GridX");
                     }
                 }
             }
@@ -234,7 +250,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? Worldspace;
-            public Exception? Grid;
+            public Exception? GridY;
+            public Exception? GridX;
             #endregion
 
             #region IErrorMask
@@ -245,8 +262,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case UniqueOverlayListComponentItem_FieldIndex.Worldspace:
                         return Worldspace;
-                    case UniqueOverlayListComponentItem_FieldIndex.Grid:
-                        return Grid;
+                    case UniqueOverlayListComponentItem_FieldIndex.GridY:
+                        return GridY;
+                    case UniqueOverlayListComponentItem_FieldIndex.GridX:
+                        return GridX;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -260,8 +279,11 @@ namespace Mutagen.Bethesda.Starfield
                     case UniqueOverlayListComponentItem_FieldIndex.Worldspace:
                         this.Worldspace = ex;
                         break;
-                    case UniqueOverlayListComponentItem_FieldIndex.Grid:
-                        this.Grid = ex;
+                    case UniqueOverlayListComponentItem_FieldIndex.GridY:
+                        this.GridY = ex;
+                        break;
+                    case UniqueOverlayListComponentItem_FieldIndex.GridX:
+                        this.GridX = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -276,8 +298,11 @@ namespace Mutagen.Bethesda.Starfield
                     case UniqueOverlayListComponentItem_FieldIndex.Worldspace:
                         this.Worldspace = (Exception?)obj;
                         break;
-                    case UniqueOverlayListComponentItem_FieldIndex.Grid:
-                        this.Grid = (Exception?)obj;
+                    case UniqueOverlayListComponentItem_FieldIndex.GridY:
+                        this.GridY = (Exception?)obj;
+                        break;
+                    case UniqueOverlayListComponentItem_FieldIndex.GridX:
+                        this.GridX = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -288,7 +313,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Worldspace != null) return true;
-                if (Grid != null) return true;
+                if (GridY != null) return true;
+                if (GridX != null) return true;
                 return false;
             }
             #endregion
@@ -318,7 +344,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Worldspace, "Worldspace");
                 }
                 {
-                    sb.AppendItem(Grid, "Grid");
+                    sb.AppendItem(GridY, "GridY");
+                }
+                {
+                    sb.AppendItem(GridX, "GridX");
                 }
             }
             #endregion
@@ -329,7 +358,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Worldspace = this.Worldspace.Combine(rhs.Worldspace);
-                ret.Grid = this.Grid.Combine(rhs.Grid);
+                ret.GridY = this.GridY.Combine(rhs.GridY);
+                ret.GridX = this.GridX.Combine(rhs.GridX);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -354,7 +384,8 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool Worldspace;
-            public bool Grid;
+            public bool GridY;
+            public bool GridX;
             #endregion
 
             #region Ctors
@@ -365,7 +396,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.Worldspace = defaultOn;
-                this.Grid = defaultOn;
+                this.GridY = defaultOn;
+                this.GridX = defaultOn;
             }
 
             #endregion
@@ -382,7 +414,8 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((Worldspace, null));
-                ret.Add((Grid, null));
+                ret.Add((GridY, null));
+                ret.Add((GridX, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -462,7 +495,8 @@ namespace Mutagen.Bethesda.Starfield
         IUniqueOverlayListComponentItemGetter
     {
         new IFormLink<IWorldspaceGetter> Worldspace { get; set; }
-        new P2Float Grid { get; set; }
+        new Int32 GridY { get; set; }
+        new Int32 GridX { get; set; }
     }
 
     public partial interface IUniqueOverlayListComponentItemGetter :
@@ -479,7 +513,8 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => UniqueOverlayListComponentItem_Registration.Instance;
         IFormLinkGetter<IWorldspaceGetter> Worldspace { get; }
-        P2Float Grid { get; }
+        Int32 GridY { get; }
+        Int32 GridX { get; }
 
     }
 
@@ -650,7 +685,8 @@ namespace Mutagen.Bethesda.Starfield
     internal enum UniqueOverlayListComponentItem_FieldIndex
     {
         Worldspace = 0,
-        Grid = 1,
+        GridY = 1,
+        GridX = 2,
     }
     #endregion
 
@@ -661,9 +697,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 2;
+        public const ushort AdditionalFieldCount = 3;
 
-        public const ushort FieldCount = 2;
+        public const ushort FieldCount = 3;
 
         public static readonly Type MaskType = typeof(UniqueOverlayListComponentItem.Mask<>);
 
@@ -730,7 +766,8 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Worldspace.Clear();
-            item.Grid = default(P2Float);
+            item.GridY = default(Int32);
+            item.GridX = default(Int32);
         }
         
         #region Mutagen
@@ -782,7 +819,8 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Worldspace = item.Worldspace.Equals(rhs.Worldspace);
-            ret.Grid = item.Grid.Equals(rhs.Grid);
+            ret.GridY = item.GridY == rhs.GridY;
+            ret.GridX = item.GridX == rhs.GridX;
         }
         
         public string Print(
@@ -831,9 +869,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Worldspace.FormKey, "Worldspace");
             }
-            if (printMask?.Grid ?? true)
+            if (printMask?.GridY ?? true)
             {
-                sb.AppendItem(item.Grid, "Grid");
+                sb.AppendItem(item.GridY, "GridY");
+            }
+            if (printMask?.GridX ?? true)
+            {
+                sb.AppendItem(item.GridX, "GridX");
             }
         }
         
@@ -848,9 +890,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Worldspace.Equals(rhs.Worldspace)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)UniqueOverlayListComponentItem_FieldIndex.Grid) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)UniqueOverlayListComponentItem_FieldIndex.GridY) ?? true))
             {
-                if (!lhs.Grid.Equals(rhs.Grid)) return false;
+                if (lhs.GridY != rhs.GridY) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)UniqueOverlayListComponentItem_FieldIndex.GridX) ?? true))
+            {
+                if (lhs.GridX != rhs.GridX) return false;
             }
             return true;
         }
@@ -859,7 +905,8 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Worldspace);
-            hash.Add(item.Grid);
+            hash.Add(item.GridY);
+            hash.Add(item.GridX);
             return hash.ToHashCode();
         }
         
@@ -897,9 +944,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Worldspace.SetTo(rhs.Worldspace.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)UniqueOverlayListComponentItem_FieldIndex.Grid) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)UniqueOverlayListComponentItem_FieldIndex.GridY) ?? true))
             {
-                item.Grid = rhs.Grid;
+                item.GridY = rhs.GridY;
+            }
+            if ((copyMask?.GetShouldTranslate((int)UniqueOverlayListComponentItem_FieldIndex.GridX) ?? true))
+            {
+                item.GridX = rhs.GridX;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1012,9 +1063,8 @@ namespace Mutagen.Bethesda.Starfield
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.Worldspace);
-            P2FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.Grid);
+            writer.Write(item.GridY);
+            writer.Write(item.GridX);
         }
 
         public void Write(
@@ -1049,7 +1099,8 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.Worldspace.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.Grid = P2FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.GridY = frame.ReadInt32();
+            item.GridX = frame.ReadInt32();
         }
 
     }
@@ -1117,7 +1168,8 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public IFormLinkGetter<IWorldspaceGetter> Worldspace => FormLinkBinaryTranslation.Instance.OverlayFactory<IWorldspaceGetter>(_package, _structData.Span.Slice(0x0, 0x4));
-        public P2Float Grid => P2FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x4, 0x8));
+        public Int32 GridY => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x4, 0x4));
+        public Int32 GridX => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x8, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
