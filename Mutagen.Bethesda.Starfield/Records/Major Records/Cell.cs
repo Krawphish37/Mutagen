@@ -41,6 +41,10 @@ public partial class Cell
         SunlightShadows = 0x0800,
         DistantLodOnly = 0x1000,
         PlayerFollowersCannotTravelHere = 0x2000,
+        UseLocationAsName = 0x1_0000,
+        UsePlanetGravity = 0x2_0000,
+        UseImageSpaceVolumesInteriorCriteria = 0x8_0000,
+        DoNotApplyBiomeLayeredMaterialSwaps = 0x10_0000,
     }
 
     public enum InteriorType
