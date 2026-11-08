@@ -32,6 +32,7 @@ public partial class MagicEffectArchetype
         SoulTrap = 23,
         TurnUndead = 24,
         Guide = 25,
+        SummonDuplicate = 26,
         CureParalysis = 27,
         CureAddiction = 28,
         CurePoison = 29,
@@ -41,6 +42,7 @@ public partial class MagicEffectArchetype
         Stagger = 33,
         PeakValueModifier = 34,
         Cloak = 35,
+        Command = 36,
         SlowTime = 37,
         Rally = 38,
         EnhanceWeapon = 39,
@@ -54,6 +56,12 @@ public partial class MagicEffectArchetype
         PermanentReanimate = 47,
         Jetpack = 48,
         Chameleon = 49,
+        CapacityValueModifier = 50,
+        ResetFlora = 51,
+        DropResources = 52,
+        Antigravity = 53,
+        TrackDamage = 54,
+        GravityWielder = 55,
     }
 
     public MagicEffectArchetype(TypeEnum type = TypeEnum.ValueModifier)
