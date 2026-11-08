@@ -101,9 +101,9 @@ namespace Mutagen.Bethesda.Starfield
         public Byte HavokRestitution { get; set; } = default(Byte);
         #endregion
         #region Dirtiness
-        public Percent? Dirtiness { get; set; }
+        public Single? Dirtiness { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Percent? ILandscapeTextureGetter.Dirtiness => this.Dirtiness;
+        Single? ILandscapeTextureGetter.Dirtiness => this.Dirtiness;
         #endregion
 
         #region To String
@@ -696,7 +696,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<IMaterialTypeGetter> MaterialType { get; set; }
         new Byte HavokFriction { get; set; }
         new Byte HavokRestitution { get; set; }
-        new Percent? Dirtiness { get; set; }
+        new Single? Dirtiness { get; set; }
     }
 
     public partial interface ILandscapeTextureInternal :
@@ -728,7 +728,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IMaterialTypeGetter> MaterialType { get; }
         Byte HavokFriction { get; }
         Byte HavokRestitution { get; }
-        Percent? Dirtiness { get; }
+        Single? Dirtiness { get; }
 
     }
 
@@ -1133,7 +1133,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.MaterialType = item.MaterialType.Equals(rhs.MaterialType);
             ret.HavokFriction = item.HavokFriction == rhs.HavokFriction;
             ret.HavokRestitution = item.HavokRestitution == rhs.HavokRestitution;
-            ret.Dirtiness = item.Dirtiness.Equals(rhs.Dirtiness);
+            ret.Dirtiness = item.Dirtiness.EqualsWithin(rhs.Dirtiness);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1286,7 +1286,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)LandscapeTexture_FieldIndex.Dirtiness) ?? true))
             {
-                if (!lhs.Dirtiness.Equals(rhs.Dirtiness)) return false;
+                if (!lhs.Dirtiness.EqualsWithin(rhs.Dirtiness)) return false;
             }
             return true;
         }
@@ -1713,10 +1713,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer.Write(item.HavokFriction);
                 writer.Write(item.HavokRestitution);
             }
-            PercentBinaryTranslation.Write(
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
                 item: item.Dirtiness,
-                integerType: FloatIntegerType.UInt,
                 header: translationParams.ConvertToCustom(RecordTypes.QNAM));
         }
 
@@ -1818,9 +1817,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.QNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.Dirtiness = PercentBinaryTranslation.Parse(
-                        reader: frame,
-                        integerType: FloatIntegerType.UInt);
+                    item.Dirtiness = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
                     return (int)LandscapeTexture_FieldIndex.Dirtiness;
                 }
                 case RecordTypeInts.XXXX:
@@ -1915,7 +1912,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region Dirtiness
         private int? _DirtinessLocation;
-        public Percent? Dirtiness => _DirtinessLocation.HasValue ? PercentBinaryTranslation.GetPercent(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessLocation.Value, _package.MetaData.Constants), FloatIntegerType.UInt) : default(Percent?);
+        public Single? Dirtiness => _DirtinessLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,

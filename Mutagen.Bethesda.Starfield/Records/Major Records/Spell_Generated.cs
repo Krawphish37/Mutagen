@@ -98,7 +98,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #endregion
         #region DirtinessScale
-        public Percent DirtinessScale { get; set; } = default(Percent);
+        public Single DirtinessScale { get; set; } = default(Single);
         #endregion
         #region Name
         /// <summary>
@@ -1446,7 +1446,7 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IObjectBounded
         /// </summary>
         new ObjectBounds ObjectBounds { get; set; }
-        new Percent DirtinessScale { get; set; }
+        new Single DirtinessScale { get; set; }
         /// <summary>
         /// Aspects: INamed, INamedRequired, ITranslatedNamed, ITranslatedNamedRequired
         /// </summary>
@@ -1515,7 +1515,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IObjectBoundsGetter ObjectBounds { get; }
         #endregion
-        Percent DirtinessScale { get; }
+        Single DirtinessScale { get; }
         #region Name
         /// <summary>
         /// Aspects: INamedGetter, INamedRequiredGetter, ITranslatedNamedGetter, ITranslatedNamedRequiredGetter
@@ -1856,7 +1856,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.VirtualMachineAdapter = null;
             item.ObjectBounds.Clear();
-            item.DirtinessScale = default(Percent);
+            item.DirtinessScale = default(Single);
             item.Name = default;
             item.Keywords = null;
             item.EquipmentType.Clear();
@@ -1972,7 +1972,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.ObjectBounds = MaskItemExt.Factory(item.ObjectBounds.GetEqualsMask(rhs.ObjectBounds, include), include);
-            ret.DirtinessScale = item.DirtinessScale.Equals(rhs.DirtinessScale);
+            ret.DirtinessScale = item.DirtinessScale.EqualsWithin(rhs.DirtinessScale);
             ret.Name = object.Equals(item.Name, rhs.Name);
             ret.Keywords = item.Keywords.CollectionEqualsHelper(
                 rhs.Keywords,
@@ -2233,7 +2233,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)Spell_FieldIndex.DirtinessScale) ?? true))
             {
-                if (!lhs.DirtinessScale.Equals(rhs.DirtinessScale)) return false;
+                if (!lhs.DirtinessScale.EqualsWithin(rhs.DirtinessScale)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Spell_FieldIndex.Name) ?? true))
             {
@@ -2945,10 +2945,9 @@ namespace Mutagen.Bethesda.Starfield
                 item: ObjectBoundsItem,
                 writer: writer,
                 translationParams: translationParams);
-            PercentBinaryTranslation.Write(
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.DirtinessScale,
-                integerType: FloatIntegerType.UInt,
                 header: translationParams.ConvertToCustom(RecordTypes.ODTY));
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -3132,9 +3131,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ODTY:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DirtinessScale = PercentBinaryTranslation.Parse(
-                        reader: frame,
-                        integerType: FloatIntegerType.UInt);
+                    item.DirtinessScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
                     return (int)Spell_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.FULL:
@@ -3395,7 +3392,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region DirtinessScale
         private int? _DirtinessScaleLocation;
-        public Percent DirtinessScale => _DirtinessScaleLocation.HasValue ? PercentBinaryTranslation.GetPercent(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants), FloatIntegerType.UInt) : default(Percent);
+        public Single DirtinessScale => _DirtinessScaleLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
         #region Name
         private int? _NameLocation;

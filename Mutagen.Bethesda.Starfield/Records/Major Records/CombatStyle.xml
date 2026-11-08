@@ -4,18 +4,18 @@
     <Fields>
       <Data recordType="CSGD">
         <Fields>
-          <Percent name="OffensiveMult" />
-          <Percent name="DefensiveMult" />
-          <Percent name="GroupOffensiveMult" />
+          <Float name="OffensiveMult" />
+          <Float name="DefensiveMult" />
+          <Float name="GroupOffensiveMult" />
           <Float name="EquipmentScoreMultMelee" min="0" max="10" />
           <Float name="EquipmentScoreMultMagic" min="0" max="10" />
           <Float name="EquipmentScoreMultRanged" min="0" max="10" />
           <Float name="EquipmentScoreMultShout" min="0" max="10" />
           <Float name="EquipmentScoreMultUnarmed" min="0" max="10" />
           <Float name="EquipmentScoreMultStaff" min="0" max="10" />
-          <Percent name="AvoidThreatChance" />
-          <Percent name="DodgeThreadChance" />
-          <Percent name="EvadeThreatChance" />
+          <Float name="AvoidThreatChance" />
+          <Float name="DodgeThreadChance" />
+          <Float name="EvadeThreatChance" />
           <Float name="HealAllyDistance" min="0" max="100" />
           <Float name="JumpCostMult" min="0" max="10" />
           <Float name="TauntDelayMult" min="0" max="10" />
@@ -37,66 +37,66 @@
       </Data>
       <Data recordType="CSRA">
         <Fields>
-          <Percent name="RangedAccuracyMult" />
-          <Percent name="RangedThrowMult" />
-          <Percent name="RangedGrenadeAdvancedThrowingMult" />
-          <Percent name="RangedGrenadeFlashTargetMult" />
-          <Percent name="RangedGrenadeThrowAtGroupMult" />
-          <Percent name="RangedGrenadeCloseRangeAttackChanceMult" />
+          <Float name="RangedAccuracyMult" />
+          <Float name="RangedThrowMult" />
+          <Float name="RangedGrenadeAdvancedThrowingMult" />
+          <Float name="RangedGrenadeFlashTargetMult" />
+          <Float name="RangedGrenadeThrowAtGroupMult" />
+          <Float name="RangedGrenadeCloseRangeAttackChanceMult" />
         </Fields>
       </Data>
       <Data recordType="CSCR">
         <Fields>
-          <Percent name="CloseRangeDuelingCircleMult" />
-          <Percent name="CloseRangeDuelingFallbackMult" />
-          <Percent name="CloseRangeFlankDistance" />
-          <Percent name="CloseRangeFlankingStalkTime" />
-          <Percent name="CloseRangeChargeDistance" />
-          <Percent name="CloseRangeChargingThrowProbability" />
-          <Percent name="CloseRangeChargingSprintFastProbability" />
-          <Percent name="CloseRangeChargingSideswipeProbability" />
-          <Percent name="CloseRangeChargingDisengageProbability" />
+          <Float name="CloseRangeDuelingCircleMult" />
+          <Float name="CloseRangeDuelingFallbackMult" />
+          <Float name="CloseRangeFlankDistance" />
+          <Float name="CloseRangeFlankingStalkTime" />
+          <Float name="CloseRangeChargeDistance" />
+          <Float name="CloseRangeChargingThrowProbability" />
+          <Float name="CloseRangeChargingSprintFastProbability" />
+          <Float name="CloseRangeChargingSideswipeProbability" />
+          <Float name="CloseRangeChargingDisengageProbability" />
           <UInt32 name="CloseRangeChargingThrowMaxTargets" />
-          <Percent name="CloseRangeFlankingVariance" />
-          <Percent name="CloseRangeRetreatChance" />
-          <Percent name="CloseRangeRetreatDistanceMult" />
+          <Float name="CloseRangeFlankingVariance" />
+          <Float name="CloseRangeRetreatChance" />
+          <Float name="CloseRangeRetreatDistanceMult" />
         </Fields>
       </Data>
       <Data recordType="CSLR">
         <Fields>
-          <Percent name="LongRangeStrafeMult" />
-          <Percent name="LongRangeAdjustRangeMult" />
-          <Percent name="LongRangeCrouchMult" />
-          <Percent name="LongRangeWaitMult" />
-          <Percent name="LongRangeRangeMult" />
-          <Percent name="LongRangeProvideSuppressiveFireMult" />
-          <Percent name="LongRangeRetreatChance" />
-          <Percent name="LongRangeRetreatHideTimeMult" />
-          <Percent name="LongRangeRetreatDistanceMult" />
+          <Float name="LongRangeStrafeMult" />
+          <Float name="LongRangeAdjustRangeMult" />
+          <Float name="LongRangeCrouchMult" />
+          <Float name="LongRangeWaitMult" />
+          <Float name="LongRangeRangeMult" />
+          <Float name="LongRangeProvideSuppressiveFireMult" />
+          <Float name="LongRangeRetreatChance" />
+          <Float name="LongRangeRetreatHideTimeMult" />
+          <Float name="LongRangeRetreatDistanceMult" />
         </Fields>
       </Data>
       <Data recordType="CSCV">
         <Fields>
-          <Percent name="CoverSearchDistanceMult" />
-          <Percent name="CoverSearchSuppressionSensitivity" />
+          <Float name="CoverSearchDistanceMult" />
+          <Float name="CoverSearchSuppressionSensitivity" />
         </Fields>
       </Data>
       <Data recordType="CSFL">
         <Fields>
-          <Percent name="FlightHoverChance" />
-          <Percent name="FlightDiveBombChance" />
-          <Percent name="FlightGroundAttackChance" />
-          <Percent name="FlightHoverTime" />
-          <Percent name="FlightGroundAttackTime" />
-          <Percent name="FlightPerchAttackChance" />
-          <Percent name="FlightPerchAttackTime" />
-          <Percent name="FlightFlyingAttackChance" />
+          <Float name="FlightHoverChance" />
+          <Float name="FlightDiveBombChance" />
+          <Float name="FlightGroundAttackChance" />
+          <Float name="FlightHoverTime" />
+          <Float name="FlightGroundAttackTime" />
+          <Float name="FlightPerchAttackChance" />
+          <Float name="FlightPerchAttackTime" />
+          <Float name="FlightFlyingAttackChance" />
         </Fields>
       </Data>
       <Data recordType="CSTN">
         <Fields>
           <Float name="TunnelCostMult" min="0" max="10" />
-          <Percent name="TunnelChance" />
+          <Float name="TunnelChance" />
           <Float name="TunnelMaxDistance" min="0" max="1000" />
           <Float name="TunnelSpeedMult" min="0" max="10" />
           <Float name="TunnelMinTime" min="0" max="30" />
@@ -107,24 +107,24 @@
       </Data>
       <Data recordType="CSSG">
         <Fields>
-          <Percent name="SpaceGeneralPilotSkill" />
-          <Percent name="SpaceGeneralAccuracy" />
-          <Percent name="SpaceGeneralTargetShield" />
+          <Float name="SpaceGeneralPilotSkill" />
+          <Float name="SpaceGeneralAccuracy" />
+          <Float name="SpaceGeneralTargetShield" />
           <Float name="SpaceGeneralAdjustment" min="0" max="60" />
-          <Percent name="SpaceGeneralEngageManeuverChanceDirectAttack" />
-          <Percent name="SpaceGeneralEngageManeuverChancePass" />
-          <Percent name="SpaceGeneralEngageManeuverChanceLeadTurn" />
-          <Percent name="SpaceGeneralEngageManeuverChanceSlideTurn" />
-          <Percent name="SpaceGeneralEngageManeuverChanceBarrelRoll" />
-          <Percent name="SpaceGeneralEvadeManeuverChanceBreak" />
-          <Percent name="SpaceGeneralEvadeManeuverChanceScissors" />
-          <Percent name="SpaceGeneralEvadeManeuverChanceCut" />
-          <Percent name="SpaceGeneralEvadeManeuverChanceBoost" />
-          <Percent name="SpaceGeneralAcquireManeuverChanceSliceback" />
-          <Percent name="SpaceGeneralAcquireManeuverChanceStrafeTurn" />
-          <Percent name="SpaceGeneralAcquireManeuverChanceAcquire" />
-          <Percent name="SpaceGeneralAcquireManeuverChanceTurn" />
-          <Percent name="SpaceGeneralDisengageManeuverChance" />
+          <Float name="SpaceGeneralEngageManeuverChanceDirectAttack" />
+          <Float name="SpaceGeneralEngageManeuverChancePass" />
+          <Float name="SpaceGeneralEngageManeuverChanceLeadTurn" />
+          <Float name="SpaceGeneralEngageManeuverChanceSlideTurn" />
+          <Float name="SpaceGeneralEngageManeuverChanceBarrelRoll" />
+          <Float name="SpaceGeneralEvadeManeuverChanceBreak" />
+          <Float name="SpaceGeneralEvadeManeuverChanceScissors" />
+          <Float name="SpaceGeneralEvadeManeuverChanceCut" />
+          <Float name="SpaceGeneralEvadeManeuverChanceBoost" />
+          <Float name="SpaceGeneralAcquireManeuverChanceSliceback" />
+          <Float name="SpaceGeneralAcquireManeuverChanceStrafeTurn" />
+          <Float name="SpaceGeneralAcquireManeuverChanceAcquire" />
+          <Float name="SpaceGeneralAcquireManeuverChanceTurn" />
+          <Float name="SpaceGeneralDisengageManeuverChance" />
           <Float name="SpaceGeneralMissileSeekingStrength" min="0" max="10" />
           <Float name="SpaceGeneralMinTimeBetweenBoosts" min="0" max="60" />
           <Bool name="SpaceGeneralCombatStrafing" byteLength="1" />
@@ -141,16 +141,16 @@
       </Data>
       <Data recordType="CSSR">
         <Fields>
-          <Percent name="SpaceRepairDamageThreshold" />
-          <Percent name="SpaceRepairFarawayDistance" />
-          <Percent name="SpaceRepairPowerToUse" />
+          <Float name="SpaceRepairDamageThreshold" />
+          <Float name="SpaceRepairFarawayDistance" />
+          <Float name="SpaceRepairPowerToUse" />
           <RefDirect name="SpaceRepairInClosePowerWeightingTables" refName="CombatStylePowerWeighting" />
           <RefDirect name="SpaceRepairFarawayPowerWeightingTables" refName="CombatStylePowerWeighting" />
         </Fields>
       </Data>
       <Data recordType="CSSA">
         <Fields>
-          <Percent name="SpaceApproachingMinDistance" />
+          <Float name="SpaceApproachingMinDistance" />
           <RefDirect name="SpaceApproachingWeighting" refName="CombatStylePowerWeighting" />
         </Fields>
       </Data>

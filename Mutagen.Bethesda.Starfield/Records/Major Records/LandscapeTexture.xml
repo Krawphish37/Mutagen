@@ -11,7 +11,7 @@
           <UInt8 name="HavokRestitution" />
         </Fields>
       </Data>
-      <Percent name="Dirtiness" recordType="QNAM" unknown="True" />
+      <Float name="Dirtiness" recordType="QNAM" unknown="True" />
     </Fields>
   </Object>
 </Loqui>

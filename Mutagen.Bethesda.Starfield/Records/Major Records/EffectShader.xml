@@ -12,10 +12,10 @@
           <Float name="EdgeEffectAlphaFadeInTime" />
           <Float name="EdgeEffectFullAlphaTime" />
           <Float name="EdgeEffectAlphaFadeOutTime" />
-          <Percent name="EdgeEffectPersistentAlphaRatio" />
+          <Float name="EdgeEffectPersistentAlphaRatio" />
           <Float name="EdgeEffectAlphaPulseAmplitude" />
           <Float name="EdgeEffectAlphaPulseFrequency" />
-          <Percent name="EdgeEffectFullAlphaRatio" />
+          <Float name="EdgeEffectFullAlphaRatio" />
           <Float name="HolesAlphaTestAnimationStartTime" />
           <Float name="HolesAlphaTestAnimationStopTime" />
           <Float name="HolesAlphaTestAnimationStartValue" />
