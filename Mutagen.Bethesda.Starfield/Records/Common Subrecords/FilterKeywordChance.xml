@@ -3,7 +3,7 @@
   <Object name="FilterKeywordChance" objType="Subrecord" >
     <Fields>
       <FormLink name="Keyword" refName="Keyword" />
-      <Percent name="Chance" integerType="UInt" />
+      <UInt32 name="Chance" />
       <Int32 name="Unknown" />
     </Fields>
   </Object>
