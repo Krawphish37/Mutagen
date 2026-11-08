@@ -56,13 +56,13 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region OffensiveMult
-        public Percent OffensiveMult { get; set; } = default(Percent);
+        public Single OffensiveMult { get; set; } = default(Single);
         #endregion
         #region DefensiveMult
-        public Percent DefensiveMult { get; set; } = default(Percent);
+        public Single DefensiveMult { get; set; } = default(Single);
         #endregion
         #region GroupOffensiveMult
-        public Percent GroupOffensiveMult { get; set; } = default(Percent);
+        public Single GroupOffensiveMult { get; set; } = default(Single);
         #endregion
         #region EquipmentScoreMultMelee
         public Single EquipmentScoreMultMelee { get; set; } = default(Single);
@@ -89,13 +89,13 @@ namespace Mutagen.Bethesda.Starfield
         public static RangeFloat EquipmentScoreMultStaff_Range = new RangeFloat(0f, 10f);
         #endregion
         #region AvoidThreatChance
-        public Percent AvoidThreatChance { get; set; } = default(Percent);
+        public Single AvoidThreatChance { get; set; } = default(Single);
         #endregion
         #region DodgeThreadChance
-        public Percent DodgeThreadChance { get; set; } = default(Percent);
+        public Single DodgeThreadChance { get; set; } = default(Single);
         #endregion
         #region EvadeThreatChance
-        public Percent EvadeThreatChance { get; set; } = default(Percent);
+        public Single EvadeThreatChance { get; set; } = default(Single);
         #endregion
         #region HealAllyDistance
         public Single HealAllyDistance { get; set; } = default(Single);
@@ -150,125 +150,125 @@ namespace Mutagen.Bethesda.Starfield
         public static RangeFloat MeleeAttackWhenStaggeredMult_Range = new RangeFloat(0f, 10f);
         #endregion
         #region RangedAccuracyMult
-        public Percent RangedAccuracyMult { get; set; } = default(Percent);
+        public Single RangedAccuracyMult { get; set; } = default(Single);
         #endregion
         #region RangedThrowMult
-        public Percent RangedThrowMult { get; set; } = default(Percent);
+        public Single RangedThrowMult { get; set; } = default(Single);
         #endregion
         #region RangedGrenadeAdvancedThrowingMult
-        public Percent RangedGrenadeAdvancedThrowingMult { get; set; } = default(Percent);
+        public Single RangedGrenadeAdvancedThrowingMult { get; set; } = default(Single);
         #endregion
         #region RangedGrenadeFlashTargetMult
-        public Percent RangedGrenadeFlashTargetMult { get; set; } = default(Percent);
+        public Single RangedGrenadeFlashTargetMult { get; set; } = default(Single);
         #endregion
         #region RangedGrenadeThrowAtGroupMult
-        public Percent RangedGrenadeThrowAtGroupMult { get; set; } = default(Percent);
+        public Single RangedGrenadeThrowAtGroupMult { get; set; } = default(Single);
         #endregion
         #region RangedGrenadeCloseRangeAttackChanceMult
-        public Percent RangedGrenadeCloseRangeAttackChanceMult { get; set; } = default(Percent);
+        public Single RangedGrenadeCloseRangeAttackChanceMult { get; set; } = default(Single);
         #endregion
         #region CloseRangeDuelingCircleMult
-        public Percent CloseRangeDuelingCircleMult { get; set; } = default(Percent);
+        public Single CloseRangeDuelingCircleMult { get; set; } = default(Single);
         #endregion
         #region CloseRangeDuelingFallbackMult
-        public Percent CloseRangeDuelingFallbackMult { get; set; } = default(Percent);
+        public Single CloseRangeDuelingFallbackMult { get; set; } = default(Single);
         #endregion
         #region CloseRangeFlankDistance
-        public Percent CloseRangeFlankDistance { get; set; } = default(Percent);
+        public Single CloseRangeFlankDistance { get; set; } = default(Single);
         #endregion
         #region CloseRangeFlankingStalkTime
-        public Percent CloseRangeFlankingStalkTime { get; set; } = default(Percent);
+        public Single CloseRangeFlankingStalkTime { get; set; } = default(Single);
         #endregion
         #region CloseRangeChargeDistance
-        public Percent CloseRangeChargeDistance { get; set; } = default(Percent);
+        public Single CloseRangeChargeDistance { get; set; } = default(Single);
         #endregion
         #region CloseRangeChargingThrowProbability
-        public Percent CloseRangeChargingThrowProbability { get; set; } = default(Percent);
+        public Single CloseRangeChargingThrowProbability { get; set; } = default(Single);
         #endregion
         #region CloseRangeChargingSprintFastProbability
-        public Percent CloseRangeChargingSprintFastProbability { get; set; } = default(Percent);
+        public Single CloseRangeChargingSprintFastProbability { get; set; } = default(Single);
         #endregion
         #region CloseRangeChargingSideswipeProbability
-        public Percent CloseRangeChargingSideswipeProbability { get; set; } = default(Percent);
+        public Single CloseRangeChargingSideswipeProbability { get; set; } = default(Single);
         #endregion
         #region CloseRangeChargingDisengageProbability
-        public Percent CloseRangeChargingDisengageProbability { get; set; } = default(Percent);
+        public Single CloseRangeChargingDisengageProbability { get; set; } = default(Single);
         #endregion
         #region CloseRangeChargingThrowMaxTargets
         public UInt32 CloseRangeChargingThrowMaxTargets { get; set; } = default(UInt32);
         #endregion
         #region CloseRangeFlankingVariance
-        public Percent CloseRangeFlankingVariance { get; set; } = default(Percent);
+        public Single CloseRangeFlankingVariance { get; set; } = default(Single);
         #endregion
         #region CloseRangeRetreatChance
-        public Percent CloseRangeRetreatChance { get; set; } = default(Percent);
+        public Single CloseRangeRetreatChance { get; set; } = default(Single);
         #endregion
         #region CloseRangeRetreatDistanceMult
-        public Percent CloseRangeRetreatDistanceMult { get; set; } = default(Percent);
+        public Single CloseRangeRetreatDistanceMult { get; set; } = default(Single);
         #endregion
         #region LongRangeStrafeMult
-        public Percent LongRangeStrafeMult { get; set; } = default(Percent);
+        public Single LongRangeStrafeMult { get; set; } = default(Single);
         #endregion
         #region LongRangeAdjustRangeMult
-        public Percent LongRangeAdjustRangeMult { get; set; } = default(Percent);
+        public Single LongRangeAdjustRangeMult { get; set; } = default(Single);
         #endregion
         #region LongRangeCrouchMult
-        public Percent LongRangeCrouchMult { get; set; } = default(Percent);
+        public Single LongRangeCrouchMult { get; set; } = default(Single);
         #endregion
         #region LongRangeWaitMult
-        public Percent LongRangeWaitMult { get; set; } = default(Percent);
+        public Single LongRangeWaitMult { get; set; } = default(Single);
         #endregion
         #region LongRangeRangeMult
-        public Percent LongRangeRangeMult { get; set; } = default(Percent);
+        public Single LongRangeRangeMult { get; set; } = default(Single);
         #endregion
         #region LongRangeProvideSuppressiveFireMult
-        public Percent LongRangeProvideSuppressiveFireMult { get; set; } = default(Percent);
+        public Single LongRangeProvideSuppressiveFireMult { get; set; } = default(Single);
         #endregion
         #region LongRangeRetreatChance
-        public Percent LongRangeRetreatChance { get; set; } = default(Percent);
+        public Single LongRangeRetreatChance { get; set; } = default(Single);
         #endregion
         #region LongRangeRetreatHideTimeMult
-        public Percent LongRangeRetreatHideTimeMult { get; set; } = default(Percent);
+        public Single LongRangeRetreatHideTimeMult { get; set; } = default(Single);
         #endregion
         #region LongRangeRetreatDistanceMult
-        public Percent LongRangeRetreatDistanceMult { get; set; } = default(Percent);
+        public Single LongRangeRetreatDistanceMult { get; set; } = default(Single);
         #endregion
         #region CoverSearchDistanceMult
-        public Percent CoverSearchDistanceMult { get; set; } = default(Percent);
+        public Single CoverSearchDistanceMult { get; set; } = default(Single);
         #endregion
         #region CoverSearchSuppressionSensitivity
-        public Percent CoverSearchSuppressionSensitivity { get; set; } = default(Percent);
+        public Single CoverSearchSuppressionSensitivity { get; set; } = default(Single);
         #endregion
         #region FlightHoverChance
-        public Percent FlightHoverChance { get; set; } = default(Percent);
+        public Single FlightHoverChance { get; set; } = default(Single);
         #endregion
         #region FlightDiveBombChance
-        public Percent FlightDiveBombChance { get; set; } = default(Percent);
+        public Single FlightDiveBombChance { get; set; } = default(Single);
         #endregion
         #region FlightGroundAttackChance
-        public Percent FlightGroundAttackChance { get; set; } = default(Percent);
+        public Single FlightGroundAttackChance { get; set; } = default(Single);
         #endregion
         #region FlightHoverTime
-        public Percent FlightHoverTime { get; set; } = default(Percent);
+        public Single FlightHoverTime { get; set; } = default(Single);
         #endregion
         #region FlightGroundAttackTime
-        public Percent FlightGroundAttackTime { get; set; } = default(Percent);
+        public Single FlightGroundAttackTime { get; set; } = default(Single);
         #endregion
         #region FlightPerchAttackChance
-        public Percent FlightPerchAttackChance { get; set; } = default(Percent);
+        public Single FlightPerchAttackChance { get; set; } = default(Single);
         #endregion
         #region FlightPerchAttackTime
-        public Percent FlightPerchAttackTime { get; set; } = default(Percent);
+        public Single FlightPerchAttackTime { get; set; } = default(Single);
         #endregion
         #region FlightFlyingAttackChance
-        public Percent FlightFlyingAttackChance { get; set; } = default(Percent);
+        public Single FlightFlyingAttackChance { get; set; } = default(Single);
         #endregion
         #region TunnelCostMult
         public Single TunnelCostMult { get; set; } = default(Single);
         public static RangeFloat TunnelCostMult_Range = new RangeFloat(0f, 10f);
         #endregion
         #region TunnelChance
-        public Percent TunnelChance { get; set; } = default(Percent);
+        public Single TunnelChance { get; set; } = default(Single);
         #endregion
         #region TunnelMaxDistance
         public Single TunnelMaxDistance { get; set; } = default(Single);
@@ -295,59 +295,59 @@ namespace Mutagen.Bethesda.Starfield
         public static RangeFloat TunnelCooldown_Range = new RangeFloat(0f, 30f);
         #endregion
         #region SpaceGeneralPilotSkill
-        public Percent SpaceGeneralPilotSkill { get; set; } = default(Percent);
+        public Single SpaceGeneralPilotSkill { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralAccuracy
-        public Percent SpaceGeneralAccuracy { get; set; } = default(Percent);
+        public Single SpaceGeneralAccuracy { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralTargetShield
-        public Percent SpaceGeneralTargetShield { get; set; } = default(Percent);
+        public Single SpaceGeneralTargetShield { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralAdjustment
         public Single SpaceGeneralAdjustment { get; set; } = default(Single);
         public static RangeFloat SpaceGeneralAdjustment_Range = new RangeFloat(0f, 60f);
         #endregion
         #region SpaceGeneralEngageManeuverChanceDirectAttack
-        public Percent SpaceGeneralEngageManeuverChanceDirectAttack { get; set; } = default(Percent);
+        public Single SpaceGeneralEngageManeuverChanceDirectAttack { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralEngageManeuverChancePass
-        public Percent SpaceGeneralEngageManeuverChancePass { get; set; } = default(Percent);
+        public Single SpaceGeneralEngageManeuverChancePass { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralEngageManeuverChanceLeadTurn
-        public Percent SpaceGeneralEngageManeuverChanceLeadTurn { get; set; } = default(Percent);
+        public Single SpaceGeneralEngageManeuverChanceLeadTurn { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralEngageManeuverChanceSlideTurn
-        public Percent SpaceGeneralEngageManeuverChanceSlideTurn { get; set; } = default(Percent);
+        public Single SpaceGeneralEngageManeuverChanceSlideTurn { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralEngageManeuverChanceBarrelRoll
-        public Percent SpaceGeneralEngageManeuverChanceBarrelRoll { get; set; } = default(Percent);
+        public Single SpaceGeneralEngageManeuverChanceBarrelRoll { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralEvadeManeuverChanceBreak
-        public Percent SpaceGeneralEvadeManeuverChanceBreak { get; set; } = default(Percent);
+        public Single SpaceGeneralEvadeManeuverChanceBreak { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralEvadeManeuverChanceScissors
-        public Percent SpaceGeneralEvadeManeuverChanceScissors { get; set; } = default(Percent);
+        public Single SpaceGeneralEvadeManeuverChanceScissors { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralEvadeManeuverChanceCut
-        public Percent SpaceGeneralEvadeManeuverChanceCut { get; set; } = default(Percent);
+        public Single SpaceGeneralEvadeManeuverChanceCut { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralEvadeManeuverChanceBoost
-        public Percent SpaceGeneralEvadeManeuverChanceBoost { get; set; } = default(Percent);
+        public Single SpaceGeneralEvadeManeuverChanceBoost { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralAcquireManeuverChanceSliceback
-        public Percent SpaceGeneralAcquireManeuverChanceSliceback { get; set; } = default(Percent);
+        public Single SpaceGeneralAcquireManeuverChanceSliceback { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralAcquireManeuverChanceStrafeTurn
-        public Percent SpaceGeneralAcquireManeuverChanceStrafeTurn { get; set; } = default(Percent);
+        public Single SpaceGeneralAcquireManeuverChanceStrafeTurn { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralAcquireManeuverChanceAcquire
-        public Percent SpaceGeneralAcquireManeuverChanceAcquire { get; set; } = default(Percent);
+        public Single SpaceGeneralAcquireManeuverChanceAcquire { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralAcquireManeuverChanceTurn
-        public Percent SpaceGeneralAcquireManeuverChanceTurn { get; set; } = default(Percent);
+        public Single SpaceGeneralAcquireManeuverChanceTurn { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralDisengageManeuverChance
-        public Percent SpaceGeneralDisengageManeuverChance { get; set; } = default(Percent);
+        public Single SpaceGeneralDisengageManeuverChance { get; set; } = default(Single);
         #endregion
         #region SpaceGeneralMissileSeekingStrength
         public Single SpaceGeneralMissileSeekingStrength { get; set; } = default(Single);
@@ -382,13 +382,13 @@ namespace Mutagen.Bethesda.Starfield
         ICombatStyleManeuverTimingGetter ICombatStyleGetter.SpaceManeuverTypesReentryDelays => SpaceManeuverTypesReentryDelays;
         #endregion
         #region SpaceRepairDamageThreshold
-        public Percent SpaceRepairDamageThreshold { get; set; } = default(Percent);
+        public Single SpaceRepairDamageThreshold { get; set; } = default(Single);
         #endregion
         #region SpaceRepairFarawayDistance
-        public Percent SpaceRepairFarawayDistance { get; set; } = default(Percent);
+        public Single SpaceRepairFarawayDistance { get; set; } = default(Single);
         #endregion
         #region SpaceRepairPowerToUse
-        public Percent SpaceRepairPowerToUse { get; set; } = default(Percent);
+        public Single SpaceRepairPowerToUse { get; set; } = default(Single);
         #endregion
         #region SpaceRepairInClosePowerWeightingTables
         public CombatStylePowerWeighting SpaceRepairInClosePowerWeightingTables { get; set; } = new CombatStylePowerWeighting();
@@ -401,7 +401,7 @@ namespace Mutagen.Bethesda.Starfield
         ICombatStylePowerWeightingGetter ICombatStyleGetter.SpaceRepairFarawayPowerWeightingTables => SpaceRepairFarawayPowerWeightingTables;
         #endregion
         #region SpaceApproachingMinDistance
-        public Percent SpaceApproachingMinDistance { get; set; } = default(Percent);
+        public Single SpaceApproachingMinDistance { get; set; } = default(Single);
         #endregion
         #region SpaceApproachingWeighting
         public CombatStylePowerWeighting SpaceApproachingWeighting { get; set; } = new CombatStylePowerWeighting();
@@ -4215,18 +4215,18 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<ICombatStyleInternal>,
         IStarfieldMajorRecordInternal
     {
-        new Percent OffensiveMult { get; set; }
-        new Percent DefensiveMult { get; set; }
-        new Percent GroupOffensiveMult { get; set; }
+        new Single OffensiveMult { get; set; }
+        new Single DefensiveMult { get; set; }
+        new Single GroupOffensiveMult { get; set; }
         new Single EquipmentScoreMultMelee { get; set; }
         new Single EquipmentScoreMultMagic { get; set; }
         new Single EquipmentScoreMultRanged { get; set; }
         new Single EquipmentScoreMultShout { get; set; }
         new Single EquipmentScoreMultUnarmed { get; set; }
         new Single EquipmentScoreMultStaff { get; set; }
-        new Percent AvoidThreatChance { get; set; }
-        new Percent DodgeThreadChance { get; set; }
-        new Percent EvadeThreatChance { get; set; }
+        new Single AvoidThreatChance { get; set; }
+        new Single DodgeThreadChance { get; set; }
+        new Single EvadeThreatChance { get; set; }
         new Single HealAllyDistance { get; set; }
         new Single JumpCostMult { get; set; }
         new Single TauntDelayMult { get; set; }
@@ -4240,70 +4240,70 @@ namespace Mutagen.Bethesda.Starfield
         new Single MeleeSpecialAttackMult { get; set; }
         new Single MeleeBlockWhenStaggeredMult { get; set; }
         new Single MeleeAttackWhenStaggeredMult { get; set; }
-        new Percent RangedAccuracyMult { get; set; }
-        new Percent RangedThrowMult { get; set; }
-        new Percent RangedGrenadeAdvancedThrowingMult { get; set; }
-        new Percent RangedGrenadeFlashTargetMult { get; set; }
-        new Percent RangedGrenadeThrowAtGroupMult { get; set; }
-        new Percent RangedGrenadeCloseRangeAttackChanceMult { get; set; }
-        new Percent CloseRangeDuelingCircleMult { get; set; }
-        new Percent CloseRangeDuelingFallbackMult { get; set; }
-        new Percent CloseRangeFlankDistance { get; set; }
-        new Percent CloseRangeFlankingStalkTime { get; set; }
-        new Percent CloseRangeChargeDistance { get; set; }
-        new Percent CloseRangeChargingThrowProbability { get; set; }
-        new Percent CloseRangeChargingSprintFastProbability { get; set; }
-        new Percent CloseRangeChargingSideswipeProbability { get; set; }
-        new Percent CloseRangeChargingDisengageProbability { get; set; }
+        new Single RangedAccuracyMult { get; set; }
+        new Single RangedThrowMult { get; set; }
+        new Single RangedGrenadeAdvancedThrowingMult { get; set; }
+        new Single RangedGrenadeFlashTargetMult { get; set; }
+        new Single RangedGrenadeThrowAtGroupMult { get; set; }
+        new Single RangedGrenadeCloseRangeAttackChanceMult { get; set; }
+        new Single CloseRangeDuelingCircleMult { get; set; }
+        new Single CloseRangeDuelingFallbackMult { get; set; }
+        new Single CloseRangeFlankDistance { get; set; }
+        new Single CloseRangeFlankingStalkTime { get; set; }
+        new Single CloseRangeChargeDistance { get; set; }
+        new Single CloseRangeChargingThrowProbability { get; set; }
+        new Single CloseRangeChargingSprintFastProbability { get; set; }
+        new Single CloseRangeChargingSideswipeProbability { get; set; }
+        new Single CloseRangeChargingDisengageProbability { get; set; }
         new UInt32 CloseRangeChargingThrowMaxTargets { get; set; }
-        new Percent CloseRangeFlankingVariance { get; set; }
-        new Percent CloseRangeRetreatChance { get; set; }
-        new Percent CloseRangeRetreatDistanceMult { get; set; }
-        new Percent LongRangeStrafeMult { get; set; }
-        new Percent LongRangeAdjustRangeMult { get; set; }
-        new Percent LongRangeCrouchMult { get; set; }
-        new Percent LongRangeWaitMult { get; set; }
-        new Percent LongRangeRangeMult { get; set; }
-        new Percent LongRangeProvideSuppressiveFireMult { get; set; }
-        new Percent LongRangeRetreatChance { get; set; }
-        new Percent LongRangeRetreatHideTimeMult { get; set; }
-        new Percent LongRangeRetreatDistanceMult { get; set; }
-        new Percent CoverSearchDistanceMult { get; set; }
-        new Percent CoverSearchSuppressionSensitivity { get; set; }
-        new Percent FlightHoverChance { get; set; }
-        new Percent FlightDiveBombChance { get; set; }
-        new Percent FlightGroundAttackChance { get; set; }
-        new Percent FlightHoverTime { get; set; }
-        new Percent FlightGroundAttackTime { get; set; }
-        new Percent FlightPerchAttackChance { get; set; }
-        new Percent FlightPerchAttackTime { get; set; }
-        new Percent FlightFlyingAttackChance { get; set; }
+        new Single CloseRangeFlankingVariance { get; set; }
+        new Single CloseRangeRetreatChance { get; set; }
+        new Single CloseRangeRetreatDistanceMult { get; set; }
+        new Single LongRangeStrafeMult { get; set; }
+        new Single LongRangeAdjustRangeMult { get; set; }
+        new Single LongRangeCrouchMult { get; set; }
+        new Single LongRangeWaitMult { get; set; }
+        new Single LongRangeRangeMult { get; set; }
+        new Single LongRangeProvideSuppressiveFireMult { get; set; }
+        new Single LongRangeRetreatChance { get; set; }
+        new Single LongRangeRetreatHideTimeMult { get; set; }
+        new Single LongRangeRetreatDistanceMult { get; set; }
+        new Single CoverSearchDistanceMult { get; set; }
+        new Single CoverSearchSuppressionSensitivity { get; set; }
+        new Single FlightHoverChance { get; set; }
+        new Single FlightDiveBombChance { get; set; }
+        new Single FlightGroundAttackChance { get; set; }
+        new Single FlightHoverTime { get; set; }
+        new Single FlightGroundAttackTime { get; set; }
+        new Single FlightPerchAttackChance { get; set; }
+        new Single FlightPerchAttackTime { get; set; }
+        new Single FlightFlyingAttackChance { get; set; }
         new Single TunnelCostMult { get; set; }
-        new Percent TunnelChance { get; set; }
+        new Single TunnelChance { get; set; }
         new Single TunnelMaxDistance { get; set; }
         new Single TunnelSpeedMult { get; set; }
         new Single TunnelMinTime { get; set; }
         new Single TunnelMaxTime { get; set; }
         new Single TunnelMaximumTime { get; set; }
         new Single TunnelCooldown { get; set; }
-        new Percent SpaceGeneralPilotSkill { get; set; }
-        new Percent SpaceGeneralAccuracy { get; set; }
-        new Percent SpaceGeneralTargetShield { get; set; }
+        new Single SpaceGeneralPilotSkill { get; set; }
+        new Single SpaceGeneralAccuracy { get; set; }
+        new Single SpaceGeneralTargetShield { get; set; }
         new Single SpaceGeneralAdjustment { get; set; }
-        new Percent SpaceGeneralEngageManeuverChanceDirectAttack { get; set; }
-        new Percent SpaceGeneralEngageManeuverChancePass { get; set; }
-        new Percent SpaceGeneralEngageManeuverChanceLeadTurn { get; set; }
-        new Percent SpaceGeneralEngageManeuverChanceSlideTurn { get; set; }
-        new Percent SpaceGeneralEngageManeuverChanceBarrelRoll { get; set; }
-        new Percent SpaceGeneralEvadeManeuverChanceBreak { get; set; }
-        new Percent SpaceGeneralEvadeManeuverChanceScissors { get; set; }
-        new Percent SpaceGeneralEvadeManeuverChanceCut { get; set; }
-        new Percent SpaceGeneralEvadeManeuverChanceBoost { get; set; }
-        new Percent SpaceGeneralAcquireManeuverChanceSliceback { get; set; }
-        new Percent SpaceGeneralAcquireManeuverChanceStrafeTurn { get; set; }
-        new Percent SpaceGeneralAcquireManeuverChanceAcquire { get; set; }
-        new Percent SpaceGeneralAcquireManeuverChanceTurn { get; set; }
-        new Percent SpaceGeneralDisengageManeuverChance { get; set; }
+        new Single SpaceGeneralEngageManeuverChanceDirectAttack { get; set; }
+        new Single SpaceGeneralEngageManeuverChancePass { get; set; }
+        new Single SpaceGeneralEngageManeuverChanceLeadTurn { get; set; }
+        new Single SpaceGeneralEngageManeuverChanceSlideTurn { get; set; }
+        new Single SpaceGeneralEngageManeuverChanceBarrelRoll { get; set; }
+        new Single SpaceGeneralEvadeManeuverChanceBreak { get; set; }
+        new Single SpaceGeneralEvadeManeuverChanceScissors { get; set; }
+        new Single SpaceGeneralEvadeManeuverChanceCut { get; set; }
+        new Single SpaceGeneralEvadeManeuverChanceBoost { get; set; }
+        new Single SpaceGeneralAcquireManeuverChanceSliceback { get; set; }
+        new Single SpaceGeneralAcquireManeuverChanceStrafeTurn { get; set; }
+        new Single SpaceGeneralAcquireManeuverChanceAcquire { get; set; }
+        new Single SpaceGeneralAcquireManeuverChanceTurn { get; set; }
+        new Single SpaceGeneralDisengageManeuverChance { get; set; }
         new Single SpaceGeneralMissileSeekingStrength { get; set; }
         new Single SpaceGeneralMinTimeBetweenBoosts { get; set; }
         new Boolean SpaceGeneralCombatStrafing { get; set; }
@@ -4312,12 +4312,12 @@ namespace Mutagen.Bethesda.Starfield
         new CombatStylePowerWeighting SpaceGeneralPowerWeighting { get; set; }
         new CombatStyleManeuverTiming SpaceManeuverTypesMaxTime { get; set; }
         new CombatStyleManeuverTiming SpaceManeuverTypesReentryDelays { get; set; }
-        new Percent SpaceRepairDamageThreshold { get; set; }
-        new Percent SpaceRepairFarawayDistance { get; set; }
-        new Percent SpaceRepairPowerToUse { get; set; }
+        new Single SpaceRepairDamageThreshold { get; set; }
+        new Single SpaceRepairFarawayDistance { get; set; }
+        new Single SpaceRepairPowerToUse { get; set; }
         new CombatStylePowerWeighting SpaceRepairInClosePowerWeightingTables { get; set; }
         new CombatStylePowerWeighting SpaceRepairFarawayPowerWeightingTables { get; set; }
-        new Percent SpaceApproachingMinDistance { get; set; }
+        new Single SpaceApproachingMinDistance { get; set; }
         new CombatStylePowerWeighting SpaceApproachingWeighting { get; set; }
         new Single SpaceDetectionRating1 { get; set; }
         new Single SpaceDetectionRating2 { get; set; }
@@ -4348,18 +4348,18 @@ namespace Mutagen.Bethesda.Starfield
         IMapsToGetter<ICombatStyleGetter>
     {
         static new ILoquiRegistration StaticRegistration => CombatStyle_Registration.Instance;
-        Percent OffensiveMult { get; }
-        Percent DefensiveMult { get; }
-        Percent GroupOffensiveMult { get; }
+        Single OffensiveMult { get; }
+        Single DefensiveMult { get; }
+        Single GroupOffensiveMult { get; }
         Single EquipmentScoreMultMelee { get; }
         Single EquipmentScoreMultMagic { get; }
         Single EquipmentScoreMultRanged { get; }
         Single EquipmentScoreMultShout { get; }
         Single EquipmentScoreMultUnarmed { get; }
         Single EquipmentScoreMultStaff { get; }
-        Percent AvoidThreatChance { get; }
-        Percent DodgeThreadChance { get; }
-        Percent EvadeThreatChance { get; }
+        Single AvoidThreatChance { get; }
+        Single DodgeThreadChance { get; }
+        Single EvadeThreatChance { get; }
         Single HealAllyDistance { get; }
         Single JumpCostMult { get; }
         Single TauntDelayMult { get; }
@@ -4373,70 +4373,70 @@ namespace Mutagen.Bethesda.Starfield
         Single MeleeSpecialAttackMult { get; }
         Single MeleeBlockWhenStaggeredMult { get; }
         Single MeleeAttackWhenStaggeredMult { get; }
-        Percent RangedAccuracyMult { get; }
-        Percent RangedThrowMult { get; }
-        Percent RangedGrenadeAdvancedThrowingMult { get; }
-        Percent RangedGrenadeFlashTargetMult { get; }
-        Percent RangedGrenadeThrowAtGroupMult { get; }
-        Percent RangedGrenadeCloseRangeAttackChanceMult { get; }
-        Percent CloseRangeDuelingCircleMult { get; }
-        Percent CloseRangeDuelingFallbackMult { get; }
-        Percent CloseRangeFlankDistance { get; }
-        Percent CloseRangeFlankingStalkTime { get; }
-        Percent CloseRangeChargeDistance { get; }
-        Percent CloseRangeChargingThrowProbability { get; }
-        Percent CloseRangeChargingSprintFastProbability { get; }
-        Percent CloseRangeChargingSideswipeProbability { get; }
-        Percent CloseRangeChargingDisengageProbability { get; }
+        Single RangedAccuracyMult { get; }
+        Single RangedThrowMult { get; }
+        Single RangedGrenadeAdvancedThrowingMult { get; }
+        Single RangedGrenadeFlashTargetMult { get; }
+        Single RangedGrenadeThrowAtGroupMult { get; }
+        Single RangedGrenadeCloseRangeAttackChanceMult { get; }
+        Single CloseRangeDuelingCircleMult { get; }
+        Single CloseRangeDuelingFallbackMult { get; }
+        Single CloseRangeFlankDistance { get; }
+        Single CloseRangeFlankingStalkTime { get; }
+        Single CloseRangeChargeDistance { get; }
+        Single CloseRangeChargingThrowProbability { get; }
+        Single CloseRangeChargingSprintFastProbability { get; }
+        Single CloseRangeChargingSideswipeProbability { get; }
+        Single CloseRangeChargingDisengageProbability { get; }
         UInt32 CloseRangeChargingThrowMaxTargets { get; }
-        Percent CloseRangeFlankingVariance { get; }
-        Percent CloseRangeRetreatChance { get; }
-        Percent CloseRangeRetreatDistanceMult { get; }
-        Percent LongRangeStrafeMult { get; }
-        Percent LongRangeAdjustRangeMult { get; }
-        Percent LongRangeCrouchMult { get; }
-        Percent LongRangeWaitMult { get; }
-        Percent LongRangeRangeMult { get; }
-        Percent LongRangeProvideSuppressiveFireMult { get; }
-        Percent LongRangeRetreatChance { get; }
-        Percent LongRangeRetreatHideTimeMult { get; }
-        Percent LongRangeRetreatDistanceMult { get; }
-        Percent CoverSearchDistanceMult { get; }
-        Percent CoverSearchSuppressionSensitivity { get; }
-        Percent FlightHoverChance { get; }
-        Percent FlightDiveBombChance { get; }
-        Percent FlightGroundAttackChance { get; }
-        Percent FlightHoverTime { get; }
-        Percent FlightGroundAttackTime { get; }
-        Percent FlightPerchAttackChance { get; }
-        Percent FlightPerchAttackTime { get; }
-        Percent FlightFlyingAttackChance { get; }
+        Single CloseRangeFlankingVariance { get; }
+        Single CloseRangeRetreatChance { get; }
+        Single CloseRangeRetreatDistanceMult { get; }
+        Single LongRangeStrafeMult { get; }
+        Single LongRangeAdjustRangeMult { get; }
+        Single LongRangeCrouchMult { get; }
+        Single LongRangeWaitMult { get; }
+        Single LongRangeRangeMult { get; }
+        Single LongRangeProvideSuppressiveFireMult { get; }
+        Single LongRangeRetreatChance { get; }
+        Single LongRangeRetreatHideTimeMult { get; }
+        Single LongRangeRetreatDistanceMult { get; }
+        Single CoverSearchDistanceMult { get; }
+        Single CoverSearchSuppressionSensitivity { get; }
+        Single FlightHoverChance { get; }
+        Single FlightDiveBombChance { get; }
+        Single FlightGroundAttackChance { get; }
+        Single FlightHoverTime { get; }
+        Single FlightGroundAttackTime { get; }
+        Single FlightPerchAttackChance { get; }
+        Single FlightPerchAttackTime { get; }
+        Single FlightFlyingAttackChance { get; }
         Single TunnelCostMult { get; }
-        Percent TunnelChance { get; }
+        Single TunnelChance { get; }
         Single TunnelMaxDistance { get; }
         Single TunnelSpeedMult { get; }
         Single TunnelMinTime { get; }
         Single TunnelMaxTime { get; }
         Single TunnelMaximumTime { get; }
         Single TunnelCooldown { get; }
-        Percent SpaceGeneralPilotSkill { get; }
-        Percent SpaceGeneralAccuracy { get; }
-        Percent SpaceGeneralTargetShield { get; }
+        Single SpaceGeneralPilotSkill { get; }
+        Single SpaceGeneralAccuracy { get; }
+        Single SpaceGeneralTargetShield { get; }
         Single SpaceGeneralAdjustment { get; }
-        Percent SpaceGeneralEngageManeuverChanceDirectAttack { get; }
-        Percent SpaceGeneralEngageManeuverChancePass { get; }
-        Percent SpaceGeneralEngageManeuverChanceLeadTurn { get; }
-        Percent SpaceGeneralEngageManeuverChanceSlideTurn { get; }
-        Percent SpaceGeneralEngageManeuverChanceBarrelRoll { get; }
-        Percent SpaceGeneralEvadeManeuverChanceBreak { get; }
-        Percent SpaceGeneralEvadeManeuverChanceScissors { get; }
-        Percent SpaceGeneralEvadeManeuverChanceCut { get; }
-        Percent SpaceGeneralEvadeManeuverChanceBoost { get; }
-        Percent SpaceGeneralAcquireManeuverChanceSliceback { get; }
-        Percent SpaceGeneralAcquireManeuverChanceStrafeTurn { get; }
-        Percent SpaceGeneralAcquireManeuverChanceAcquire { get; }
-        Percent SpaceGeneralAcquireManeuverChanceTurn { get; }
-        Percent SpaceGeneralDisengageManeuverChance { get; }
+        Single SpaceGeneralEngageManeuverChanceDirectAttack { get; }
+        Single SpaceGeneralEngageManeuverChancePass { get; }
+        Single SpaceGeneralEngageManeuverChanceLeadTurn { get; }
+        Single SpaceGeneralEngageManeuverChanceSlideTurn { get; }
+        Single SpaceGeneralEngageManeuverChanceBarrelRoll { get; }
+        Single SpaceGeneralEvadeManeuverChanceBreak { get; }
+        Single SpaceGeneralEvadeManeuverChanceScissors { get; }
+        Single SpaceGeneralEvadeManeuverChanceCut { get; }
+        Single SpaceGeneralEvadeManeuverChanceBoost { get; }
+        Single SpaceGeneralAcquireManeuverChanceSliceback { get; }
+        Single SpaceGeneralAcquireManeuverChanceStrafeTurn { get; }
+        Single SpaceGeneralAcquireManeuverChanceAcquire { get; }
+        Single SpaceGeneralAcquireManeuverChanceTurn { get; }
+        Single SpaceGeneralDisengageManeuverChance { get; }
         Single SpaceGeneralMissileSeekingStrength { get; }
         Single SpaceGeneralMinTimeBetweenBoosts { get; }
         Boolean SpaceGeneralCombatStrafing { get; }
@@ -4445,12 +4445,12 @@ namespace Mutagen.Bethesda.Starfield
         ICombatStylePowerWeightingGetter SpaceGeneralPowerWeighting { get; }
         ICombatStyleManeuverTimingGetter SpaceManeuverTypesMaxTime { get; }
         ICombatStyleManeuverTimingGetter SpaceManeuverTypesReentryDelays { get; }
-        Percent SpaceRepairDamageThreshold { get; }
-        Percent SpaceRepairFarawayDistance { get; }
-        Percent SpaceRepairPowerToUse { get; }
+        Single SpaceRepairDamageThreshold { get; }
+        Single SpaceRepairFarawayDistance { get; }
+        Single SpaceRepairPowerToUse { get; }
         ICombatStylePowerWeightingGetter SpaceRepairInClosePowerWeightingTables { get; }
         ICombatStylePowerWeightingGetter SpaceRepairFarawayPowerWeightingTables { get; }
-        Percent SpaceApproachingMinDistance { get; }
+        Single SpaceApproachingMinDistance { get; }
         ICombatStylePowerWeightingGetter SpaceApproachingWeighting { get; }
         Single SpaceDetectionRating1 { get; }
         Single SpaceDetectionRating2 { get; }
@@ -4856,18 +4856,18 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ICombatStyleInternal item)
         {
             ClearPartial();
-            item.OffensiveMult = default(Percent);
-            item.DefensiveMult = default(Percent);
-            item.GroupOffensiveMult = default(Percent);
+            item.OffensiveMult = default(Single);
+            item.DefensiveMult = default(Single);
+            item.GroupOffensiveMult = default(Single);
             item.EquipmentScoreMultMelee = default(Single);
             item.EquipmentScoreMultMagic = default(Single);
             item.EquipmentScoreMultRanged = default(Single);
             item.EquipmentScoreMultShout = default(Single);
             item.EquipmentScoreMultUnarmed = default(Single);
             item.EquipmentScoreMultStaff = default(Single);
-            item.AvoidThreatChance = default(Percent);
-            item.DodgeThreadChance = default(Percent);
-            item.EvadeThreatChance = default(Percent);
+            item.AvoidThreatChance = default(Single);
+            item.DodgeThreadChance = default(Single);
+            item.EvadeThreatChance = default(Single);
             item.HealAllyDistance = default(Single);
             item.JumpCostMult = default(Single);
             item.TauntDelayMult = default(Single);
@@ -4881,70 +4881,70 @@ namespace Mutagen.Bethesda.Starfield
             item.MeleeSpecialAttackMult = default(Single);
             item.MeleeBlockWhenStaggeredMult = default(Single);
             item.MeleeAttackWhenStaggeredMult = default(Single);
-            item.RangedAccuracyMult = default(Percent);
-            item.RangedThrowMult = default(Percent);
-            item.RangedGrenadeAdvancedThrowingMult = default(Percent);
-            item.RangedGrenadeFlashTargetMult = default(Percent);
-            item.RangedGrenadeThrowAtGroupMult = default(Percent);
-            item.RangedGrenadeCloseRangeAttackChanceMult = default(Percent);
-            item.CloseRangeDuelingCircleMult = default(Percent);
-            item.CloseRangeDuelingFallbackMult = default(Percent);
-            item.CloseRangeFlankDistance = default(Percent);
-            item.CloseRangeFlankingStalkTime = default(Percent);
-            item.CloseRangeChargeDistance = default(Percent);
-            item.CloseRangeChargingThrowProbability = default(Percent);
-            item.CloseRangeChargingSprintFastProbability = default(Percent);
-            item.CloseRangeChargingSideswipeProbability = default(Percent);
-            item.CloseRangeChargingDisengageProbability = default(Percent);
+            item.RangedAccuracyMult = default(Single);
+            item.RangedThrowMult = default(Single);
+            item.RangedGrenadeAdvancedThrowingMult = default(Single);
+            item.RangedGrenadeFlashTargetMult = default(Single);
+            item.RangedGrenadeThrowAtGroupMult = default(Single);
+            item.RangedGrenadeCloseRangeAttackChanceMult = default(Single);
+            item.CloseRangeDuelingCircleMult = default(Single);
+            item.CloseRangeDuelingFallbackMult = default(Single);
+            item.CloseRangeFlankDistance = default(Single);
+            item.CloseRangeFlankingStalkTime = default(Single);
+            item.CloseRangeChargeDistance = default(Single);
+            item.CloseRangeChargingThrowProbability = default(Single);
+            item.CloseRangeChargingSprintFastProbability = default(Single);
+            item.CloseRangeChargingSideswipeProbability = default(Single);
+            item.CloseRangeChargingDisengageProbability = default(Single);
             item.CloseRangeChargingThrowMaxTargets = default(UInt32);
-            item.CloseRangeFlankingVariance = default(Percent);
-            item.CloseRangeRetreatChance = default(Percent);
-            item.CloseRangeRetreatDistanceMult = default(Percent);
-            item.LongRangeStrafeMult = default(Percent);
-            item.LongRangeAdjustRangeMult = default(Percent);
-            item.LongRangeCrouchMult = default(Percent);
-            item.LongRangeWaitMult = default(Percent);
-            item.LongRangeRangeMult = default(Percent);
-            item.LongRangeProvideSuppressiveFireMult = default(Percent);
-            item.LongRangeRetreatChance = default(Percent);
-            item.LongRangeRetreatHideTimeMult = default(Percent);
-            item.LongRangeRetreatDistanceMult = default(Percent);
-            item.CoverSearchDistanceMult = default(Percent);
-            item.CoverSearchSuppressionSensitivity = default(Percent);
-            item.FlightHoverChance = default(Percent);
-            item.FlightDiveBombChance = default(Percent);
-            item.FlightGroundAttackChance = default(Percent);
-            item.FlightHoverTime = default(Percent);
-            item.FlightGroundAttackTime = default(Percent);
-            item.FlightPerchAttackChance = default(Percent);
-            item.FlightPerchAttackTime = default(Percent);
-            item.FlightFlyingAttackChance = default(Percent);
+            item.CloseRangeFlankingVariance = default(Single);
+            item.CloseRangeRetreatChance = default(Single);
+            item.CloseRangeRetreatDistanceMult = default(Single);
+            item.LongRangeStrafeMult = default(Single);
+            item.LongRangeAdjustRangeMult = default(Single);
+            item.LongRangeCrouchMult = default(Single);
+            item.LongRangeWaitMult = default(Single);
+            item.LongRangeRangeMult = default(Single);
+            item.LongRangeProvideSuppressiveFireMult = default(Single);
+            item.LongRangeRetreatChance = default(Single);
+            item.LongRangeRetreatHideTimeMult = default(Single);
+            item.LongRangeRetreatDistanceMult = default(Single);
+            item.CoverSearchDistanceMult = default(Single);
+            item.CoverSearchSuppressionSensitivity = default(Single);
+            item.FlightHoverChance = default(Single);
+            item.FlightDiveBombChance = default(Single);
+            item.FlightGroundAttackChance = default(Single);
+            item.FlightHoverTime = default(Single);
+            item.FlightGroundAttackTime = default(Single);
+            item.FlightPerchAttackChance = default(Single);
+            item.FlightPerchAttackTime = default(Single);
+            item.FlightFlyingAttackChance = default(Single);
             item.TunnelCostMult = default(Single);
-            item.TunnelChance = default(Percent);
+            item.TunnelChance = default(Single);
             item.TunnelMaxDistance = default(Single);
             item.TunnelSpeedMult = default(Single);
             item.TunnelMinTime = default(Single);
             item.TunnelMaxTime = default(Single);
             item.TunnelMaximumTime = default(Single);
             item.TunnelCooldown = default(Single);
-            item.SpaceGeneralPilotSkill = default(Percent);
-            item.SpaceGeneralAccuracy = default(Percent);
-            item.SpaceGeneralTargetShield = default(Percent);
+            item.SpaceGeneralPilotSkill = default(Single);
+            item.SpaceGeneralAccuracy = default(Single);
+            item.SpaceGeneralTargetShield = default(Single);
             item.SpaceGeneralAdjustment = default(Single);
-            item.SpaceGeneralEngageManeuverChanceDirectAttack = default(Percent);
-            item.SpaceGeneralEngageManeuverChancePass = default(Percent);
-            item.SpaceGeneralEngageManeuverChanceLeadTurn = default(Percent);
-            item.SpaceGeneralEngageManeuverChanceSlideTurn = default(Percent);
-            item.SpaceGeneralEngageManeuverChanceBarrelRoll = default(Percent);
-            item.SpaceGeneralEvadeManeuverChanceBreak = default(Percent);
-            item.SpaceGeneralEvadeManeuverChanceScissors = default(Percent);
-            item.SpaceGeneralEvadeManeuverChanceCut = default(Percent);
-            item.SpaceGeneralEvadeManeuverChanceBoost = default(Percent);
-            item.SpaceGeneralAcquireManeuverChanceSliceback = default(Percent);
-            item.SpaceGeneralAcquireManeuverChanceStrafeTurn = default(Percent);
-            item.SpaceGeneralAcquireManeuverChanceAcquire = default(Percent);
-            item.SpaceGeneralAcquireManeuverChanceTurn = default(Percent);
-            item.SpaceGeneralDisengageManeuverChance = default(Percent);
+            item.SpaceGeneralEngageManeuverChanceDirectAttack = default(Single);
+            item.SpaceGeneralEngageManeuverChancePass = default(Single);
+            item.SpaceGeneralEngageManeuverChanceLeadTurn = default(Single);
+            item.SpaceGeneralEngageManeuverChanceSlideTurn = default(Single);
+            item.SpaceGeneralEngageManeuverChanceBarrelRoll = default(Single);
+            item.SpaceGeneralEvadeManeuverChanceBreak = default(Single);
+            item.SpaceGeneralEvadeManeuverChanceScissors = default(Single);
+            item.SpaceGeneralEvadeManeuverChanceCut = default(Single);
+            item.SpaceGeneralEvadeManeuverChanceBoost = default(Single);
+            item.SpaceGeneralAcquireManeuverChanceSliceback = default(Single);
+            item.SpaceGeneralAcquireManeuverChanceStrafeTurn = default(Single);
+            item.SpaceGeneralAcquireManeuverChanceAcquire = default(Single);
+            item.SpaceGeneralAcquireManeuverChanceTurn = default(Single);
+            item.SpaceGeneralDisengageManeuverChance = default(Single);
             item.SpaceGeneralMissileSeekingStrength = default(Single);
             item.SpaceGeneralMinTimeBetweenBoosts = default(Single);
             item.SpaceGeneralCombatStrafing = default(Boolean);
@@ -4953,12 +4953,12 @@ namespace Mutagen.Bethesda.Starfield
             item.SpaceGeneralPowerWeighting.Clear();
             item.SpaceManeuverTypesMaxTime.Clear();
             item.SpaceManeuverTypesReentryDelays.Clear();
-            item.SpaceRepairDamageThreshold = default(Percent);
-            item.SpaceRepairFarawayDistance = default(Percent);
-            item.SpaceRepairPowerToUse = default(Percent);
+            item.SpaceRepairDamageThreshold = default(Single);
+            item.SpaceRepairFarawayDistance = default(Single);
+            item.SpaceRepairPowerToUse = default(Single);
             item.SpaceRepairInClosePowerWeightingTables.Clear();
             item.SpaceRepairFarawayPowerWeightingTables.Clear();
-            item.SpaceApproachingMinDistance = default(Percent);
+            item.SpaceApproachingMinDistance = default(Single);
             item.SpaceApproachingWeighting.Clear();
             item.SpaceDetectionRating1 = default(Single);
             item.SpaceDetectionRating2 = default(Single);
@@ -5053,18 +5053,18 @@ namespace Mutagen.Bethesda.Starfield
             CombatStyle.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.OffensiveMult = item.OffensiveMult.Equals(rhs.OffensiveMult);
-            ret.DefensiveMult = item.DefensiveMult.Equals(rhs.DefensiveMult);
-            ret.GroupOffensiveMult = item.GroupOffensiveMult.Equals(rhs.GroupOffensiveMult);
+            ret.OffensiveMult = item.OffensiveMult.EqualsWithin(rhs.OffensiveMult);
+            ret.DefensiveMult = item.DefensiveMult.EqualsWithin(rhs.DefensiveMult);
+            ret.GroupOffensiveMult = item.GroupOffensiveMult.EqualsWithin(rhs.GroupOffensiveMult);
             ret.EquipmentScoreMultMelee = item.EquipmentScoreMultMelee.EqualsWithin(rhs.EquipmentScoreMultMelee);
             ret.EquipmentScoreMultMagic = item.EquipmentScoreMultMagic.EqualsWithin(rhs.EquipmentScoreMultMagic);
             ret.EquipmentScoreMultRanged = item.EquipmentScoreMultRanged.EqualsWithin(rhs.EquipmentScoreMultRanged);
             ret.EquipmentScoreMultShout = item.EquipmentScoreMultShout.EqualsWithin(rhs.EquipmentScoreMultShout);
             ret.EquipmentScoreMultUnarmed = item.EquipmentScoreMultUnarmed.EqualsWithin(rhs.EquipmentScoreMultUnarmed);
             ret.EquipmentScoreMultStaff = item.EquipmentScoreMultStaff.EqualsWithin(rhs.EquipmentScoreMultStaff);
-            ret.AvoidThreatChance = item.AvoidThreatChance.Equals(rhs.AvoidThreatChance);
-            ret.DodgeThreadChance = item.DodgeThreadChance.Equals(rhs.DodgeThreadChance);
-            ret.EvadeThreatChance = item.EvadeThreatChance.Equals(rhs.EvadeThreatChance);
+            ret.AvoidThreatChance = item.AvoidThreatChance.EqualsWithin(rhs.AvoidThreatChance);
+            ret.DodgeThreadChance = item.DodgeThreadChance.EqualsWithin(rhs.DodgeThreadChance);
+            ret.EvadeThreatChance = item.EvadeThreatChance.EqualsWithin(rhs.EvadeThreatChance);
             ret.HealAllyDistance = item.HealAllyDistance.EqualsWithin(rhs.HealAllyDistance);
             ret.JumpCostMult = item.JumpCostMult.EqualsWithin(rhs.JumpCostMult);
             ret.TauntDelayMult = item.TauntDelayMult.EqualsWithin(rhs.TauntDelayMult);
@@ -5078,70 +5078,70 @@ namespace Mutagen.Bethesda.Starfield
             ret.MeleeSpecialAttackMult = item.MeleeSpecialAttackMult.EqualsWithin(rhs.MeleeSpecialAttackMult);
             ret.MeleeBlockWhenStaggeredMult = item.MeleeBlockWhenStaggeredMult.EqualsWithin(rhs.MeleeBlockWhenStaggeredMult);
             ret.MeleeAttackWhenStaggeredMult = item.MeleeAttackWhenStaggeredMult.EqualsWithin(rhs.MeleeAttackWhenStaggeredMult);
-            ret.RangedAccuracyMult = item.RangedAccuracyMult.Equals(rhs.RangedAccuracyMult);
-            ret.RangedThrowMult = item.RangedThrowMult.Equals(rhs.RangedThrowMult);
-            ret.RangedGrenadeAdvancedThrowingMult = item.RangedGrenadeAdvancedThrowingMult.Equals(rhs.RangedGrenadeAdvancedThrowingMult);
-            ret.RangedGrenadeFlashTargetMult = item.RangedGrenadeFlashTargetMult.Equals(rhs.RangedGrenadeFlashTargetMult);
-            ret.RangedGrenadeThrowAtGroupMult = item.RangedGrenadeThrowAtGroupMult.Equals(rhs.RangedGrenadeThrowAtGroupMult);
-            ret.RangedGrenadeCloseRangeAttackChanceMult = item.RangedGrenadeCloseRangeAttackChanceMult.Equals(rhs.RangedGrenadeCloseRangeAttackChanceMult);
-            ret.CloseRangeDuelingCircleMult = item.CloseRangeDuelingCircleMult.Equals(rhs.CloseRangeDuelingCircleMult);
-            ret.CloseRangeDuelingFallbackMult = item.CloseRangeDuelingFallbackMult.Equals(rhs.CloseRangeDuelingFallbackMult);
-            ret.CloseRangeFlankDistance = item.CloseRangeFlankDistance.Equals(rhs.CloseRangeFlankDistance);
-            ret.CloseRangeFlankingStalkTime = item.CloseRangeFlankingStalkTime.Equals(rhs.CloseRangeFlankingStalkTime);
-            ret.CloseRangeChargeDistance = item.CloseRangeChargeDistance.Equals(rhs.CloseRangeChargeDistance);
-            ret.CloseRangeChargingThrowProbability = item.CloseRangeChargingThrowProbability.Equals(rhs.CloseRangeChargingThrowProbability);
-            ret.CloseRangeChargingSprintFastProbability = item.CloseRangeChargingSprintFastProbability.Equals(rhs.CloseRangeChargingSprintFastProbability);
-            ret.CloseRangeChargingSideswipeProbability = item.CloseRangeChargingSideswipeProbability.Equals(rhs.CloseRangeChargingSideswipeProbability);
-            ret.CloseRangeChargingDisengageProbability = item.CloseRangeChargingDisengageProbability.Equals(rhs.CloseRangeChargingDisengageProbability);
+            ret.RangedAccuracyMult = item.RangedAccuracyMult.EqualsWithin(rhs.RangedAccuracyMult);
+            ret.RangedThrowMult = item.RangedThrowMult.EqualsWithin(rhs.RangedThrowMult);
+            ret.RangedGrenadeAdvancedThrowingMult = item.RangedGrenadeAdvancedThrowingMult.EqualsWithin(rhs.RangedGrenadeAdvancedThrowingMult);
+            ret.RangedGrenadeFlashTargetMult = item.RangedGrenadeFlashTargetMult.EqualsWithin(rhs.RangedGrenadeFlashTargetMult);
+            ret.RangedGrenadeThrowAtGroupMult = item.RangedGrenadeThrowAtGroupMult.EqualsWithin(rhs.RangedGrenadeThrowAtGroupMult);
+            ret.RangedGrenadeCloseRangeAttackChanceMult = item.RangedGrenadeCloseRangeAttackChanceMult.EqualsWithin(rhs.RangedGrenadeCloseRangeAttackChanceMult);
+            ret.CloseRangeDuelingCircleMult = item.CloseRangeDuelingCircleMult.EqualsWithin(rhs.CloseRangeDuelingCircleMult);
+            ret.CloseRangeDuelingFallbackMult = item.CloseRangeDuelingFallbackMult.EqualsWithin(rhs.CloseRangeDuelingFallbackMult);
+            ret.CloseRangeFlankDistance = item.CloseRangeFlankDistance.EqualsWithin(rhs.CloseRangeFlankDistance);
+            ret.CloseRangeFlankingStalkTime = item.CloseRangeFlankingStalkTime.EqualsWithin(rhs.CloseRangeFlankingStalkTime);
+            ret.CloseRangeChargeDistance = item.CloseRangeChargeDistance.EqualsWithin(rhs.CloseRangeChargeDistance);
+            ret.CloseRangeChargingThrowProbability = item.CloseRangeChargingThrowProbability.EqualsWithin(rhs.CloseRangeChargingThrowProbability);
+            ret.CloseRangeChargingSprintFastProbability = item.CloseRangeChargingSprintFastProbability.EqualsWithin(rhs.CloseRangeChargingSprintFastProbability);
+            ret.CloseRangeChargingSideswipeProbability = item.CloseRangeChargingSideswipeProbability.EqualsWithin(rhs.CloseRangeChargingSideswipeProbability);
+            ret.CloseRangeChargingDisengageProbability = item.CloseRangeChargingDisengageProbability.EqualsWithin(rhs.CloseRangeChargingDisengageProbability);
             ret.CloseRangeChargingThrowMaxTargets = item.CloseRangeChargingThrowMaxTargets == rhs.CloseRangeChargingThrowMaxTargets;
-            ret.CloseRangeFlankingVariance = item.CloseRangeFlankingVariance.Equals(rhs.CloseRangeFlankingVariance);
-            ret.CloseRangeRetreatChance = item.CloseRangeRetreatChance.Equals(rhs.CloseRangeRetreatChance);
-            ret.CloseRangeRetreatDistanceMult = item.CloseRangeRetreatDistanceMult.Equals(rhs.CloseRangeRetreatDistanceMult);
-            ret.LongRangeStrafeMult = item.LongRangeStrafeMult.Equals(rhs.LongRangeStrafeMult);
-            ret.LongRangeAdjustRangeMult = item.LongRangeAdjustRangeMult.Equals(rhs.LongRangeAdjustRangeMult);
-            ret.LongRangeCrouchMult = item.LongRangeCrouchMult.Equals(rhs.LongRangeCrouchMult);
-            ret.LongRangeWaitMult = item.LongRangeWaitMult.Equals(rhs.LongRangeWaitMult);
-            ret.LongRangeRangeMult = item.LongRangeRangeMult.Equals(rhs.LongRangeRangeMult);
-            ret.LongRangeProvideSuppressiveFireMult = item.LongRangeProvideSuppressiveFireMult.Equals(rhs.LongRangeProvideSuppressiveFireMult);
-            ret.LongRangeRetreatChance = item.LongRangeRetreatChance.Equals(rhs.LongRangeRetreatChance);
-            ret.LongRangeRetreatHideTimeMult = item.LongRangeRetreatHideTimeMult.Equals(rhs.LongRangeRetreatHideTimeMult);
-            ret.LongRangeRetreatDistanceMult = item.LongRangeRetreatDistanceMult.Equals(rhs.LongRangeRetreatDistanceMult);
-            ret.CoverSearchDistanceMult = item.CoverSearchDistanceMult.Equals(rhs.CoverSearchDistanceMult);
-            ret.CoverSearchSuppressionSensitivity = item.CoverSearchSuppressionSensitivity.Equals(rhs.CoverSearchSuppressionSensitivity);
-            ret.FlightHoverChance = item.FlightHoverChance.Equals(rhs.FlightHoverChance);
-            ret.FlightDiveBombChance = item.FlightDiveBombChance.Equals(rhs.FlightDiveBombChance);
-            ret.FlightGroundAttackChance = item.FlightGroundAttackChance.Equals(rhs.FlightGroundAttackChance);
-            ret.FlightHoverTime = item.FlightHoverTime.Equals(rhs.FlightHoverTime);
-            ret.FlightGroundAttackTime = item.FlightGroundAttackTime.Equals(rhs.FlightGroundAttackTime);
-            ret.FlightPerchAttackChance = item.FlightPerchAttackChance.Equals(rhs.FlightPerchAttackChance);
-            ret.FlightPerchAttackTime = item.FlightPerchAttackTime.Equals(rhs.FlightPerchAttackTime);
-            ret.FlightFlyingAttackChance = item.FlightFlyingAttackChance.Equals(rhs.FlightFlyingAttackChance);
+            ret.CloseRangeFlankingVariance = item.CloseRangeFlankingVariance.EqualsWithin(rhs.CloseRangeFlankingVariance);
+            ret.CloseRangeRetreatChance = item.CloseRangeRetreatChance.EqualsWithin(rhs.CloseRangeRetreatChance);
+            ret.CloseRangeRetreatDistanceMult = item.CloseRangeRetreatDistanceMult.EqualsWithin(rhs.CloseRangeRetreatDistanceMult);
+            ret.LongRangeStrafeMult = item.LongRangeStrafeMult.EqualsWithin(rhs.LongRangeStrafeMult);
+            ret.LongRangeAdjustRangeMult = item.LongRangeAdjustRangeMult.EqualsWithin(rhs.LongRangeAdjustRangeMult);
+            ret.LongRangeCrouchMult = item.LongRangeCrouchMult.EqualsWithin(rhs.LongRangeCrouchMult);
+            ret.LongRangeWaitMult = item.LongRangeWaitMult.EqualsWithin(rhs.LongRangeWaitMult);
+            ret.LongRangeRangeMult = item.LongRangeRangeMult.EqualsWithin(rhs.LongRangeRangeMult);
+            ret.LongRangeProvideSuppressiveFireMult = item.LongRangeProvideSuppressiveFireMult.EqualsWithin(rhs.LongRangeProvideSuppressiveFireMult);
+            ret.LongRangeRetreatChance = item.LongRangeRetreatChance.EqualsWithin(rhs.LongRangeRetreatChance);
+            ret.LongRangeRetreatHideTimeMult = item.LongRangeRetreatHideTimeMult.EqualsWithin(rhs.LongRangeRetreatHideTimeMult);
+            ret.LongRangeRetreatDistanceMult = item.LongRangeRetreatDistanceMult.EqualsWithin(rhs.LongRangeRetreatDistanceMult);
+            ret.CoverSearchDistanceMult = item.CoverSearchDistanceMult.EqualsWithin(rhs.CoverSearchDistanceMult);
+            ret.CoverSearchSuppressionSensitivity = item.CoverSearchSuppressionSensitivity.EqualsWithin(rhs.CoverSearchSuppressionSensitivity);
+            ret.FlightHoverChance = item.FlightHoverChance.EqualsWithin(rhs.FlightHoverChance);
+            ret.FlightDiveBombChance = item.FlightDiveBombChance.EqualsWithin(rhs.FlightDiveBombChance);
+            ret.FlightGroundAttackChance = item.FlightGroundAttackChance.EqualsWithin(rhs.FlightGroundAttackChance);
+            ret.FlightHoverTime = item.FlightHoverTime.EqualsWithin(rhs.FlightHoverTime);
+            ret.FlightGroundAttackTime = item.FlightGroundAttackTime.EqualsWithin(rhs.FlightGroundAttackTime);
+            ret.FlightPerchAttackChance = item.FlightPerchAttackChance.EqualsWithin(rhs.FlightPerchAttackChance);
+            ret.FlightPerchAttackTime = item.FlightPerchAttackTime.EqualsWithin(rhs.FlightPerchAttackTime);
+            ret.FlightFlyingAttackChance = item.FlightFlyingAttackChance.EqualsWithin(rhs.FlightFlyingAttackChance);
             ret.TunnelCostMult = item.TunnelCostMult.EqualsWithin(rhs.TunnelCostMult);
-            ret.TunnelChance = item.TunnelChance.Equals(rhs.TunnelChance);
+            ret.TunnelChance = item.TunnelChance.EqualsWithin(rhs.TunnelChance);
             ret.TunnelMaxDistance = item.TunnelMaxDistance.EqualsWithin(rhs.TunnelMaxDistance);
             ret.TunnelSpeedMult = item.TunnelSpeedMult.EqualsWithin(rhs.TunnelSpeedMult);
             ret.TunnelMinTime = item.TunnelMinTime.EqualsWithin(rhs.TunnelMinTime);
             ret.TunnelMaxTime = item.TunnelMaxTime.EqualsWithin(rhs.TunnelMaxTime);
             ret.TunnelMaximumTime = item.TunnelMaximumTime.EqualsWithin(rhs.TunnelMaximumTime);
             ret.TunnelCooldown = item.TunnelCooldown.EqualsWithin(rhs.TunnelCooldown);
-            ret.SpaceGeneralPilotSkill = item.SpaceGeneralPilotSkill.Equals(rhs.SpaceGeneralPilotSkill);
-            ret.SpaceGeneralAccuracy = item.SpaceGeneralAccuracy.Equals(rhs.SpaceGeneralAccuracy);
-            ret.SpaceGeneralTargetShield = item.SpaceGeneralTargetShield.Equals(rhs.SpaceGeneralTargetShield);
+            ret.SpaceGeneralPilotSkill = item.SpaceGeneralPilotSkill.EqualsWithin(rhs.SpaceGeneralPilotSkill);
+            ret.SpaceGeneralAccuracy = item.SpaceGeneralAccuracy.EqualsWithin(rhs.SpaceGeneralAccuracy);
+            ret.SpaceGeneralTargetShield = item.SpaceGeneralTargetShield.EqualsWithin(rhs.SpaceGeneralTargetShield);
             ret.SpaceGeneralAdjustment = item.SpaceGeneralAdjustment.EqualsWithin(rhs.SpaceGeneralAdjustment);
-            ret.SpaceGeneralEngageManeuverChanceDirectAttack = item.SpaceGeneralEngageManeuverChanceDirectAttack.Equals(rhs.SpaceGeneralEngageManeuverChanceDirectAttack);
-            ret.SpaceGeneralEngageManeuverChancePass = item.SpaceGeneralEngageManeuverChancePass.Equals(rhs.SpaceGeneralEngageManeuverChancePass);
-            ret.SpaceGeneralEngageManeuverChanceLeadTurn = item.SpaceGeneralEngageManeuverChanceLeadTurn.Equals(rhs.SpaceGeneralEngageManeuverChanceLeadTurn);
-            ret.SpaceGeneralEngageManeuverChanceSlideTurn = item.SpaceGeneralEngageManeuverChanceSlideTurn.Equals(rhs.SpaceGeneralEngageManeuverChanceSlideTurn);
-            ret.SpaceGeneralEngageManeuverChanceBarrelRoll = item.SpaceGeneralEngageManeuverChanceBarrelRoll.Equals(rhs.SpaceGeneralEngageManeuverChanceBarrelRoll);
-            ret.SpaceGeneralEvadeManeuverChanceBreak = item.SpaceGeneralEvadeManeuverChanceBreak.Equals(rhs.SpaceGeneralEvadeManeuverChanceBreak);
-            ret.SpaceGeneralEvadeManeuverChanceScissors = item.SpaceGeneralEvadeManeuverChanceScissors.Equals(rhs.SpaceGeneralEvadeManeuverChanceScissors);
-            ret.SpaceGeneralEvadeManeuverChanceCut = item.SpaceGeneralEvadeManeuverChanceCut.Equals(rhs.SpaceGeneralEvadeManeuverChanceCut);
-            ret.SpaceGeneralEvadeManeuverChanceBoost = item.SpaceGeneralEvadeManeuverChanceBoost.Equals(rhs.SpaceGeneralEvadeManeuverChanceBoost);
-            ret.SpaceGeneralAcquireManeuverChanceSliceback = item.SpaceGeneralAcquireManeuverChanceSliceback.Equals(rhs.SpaceGeneralAcquireManeuverChanceSliceback);
-            ret.SpaceGeneralAcquireManeuverChanceStrafeTurn = item.SpaceGeneralAcquireManeuverChanceStrafeTurn.Equals(rhs.SpaceGeneralAcquireManeuverChanceStrafeTurn);
-            ret.SpaceGeneralAcquireManeuverChanceAcquire = item.SpaceGeneralAcquireManeuverChanceAcquire.Equals(rhs.SpaceGeneralAcquireManeuverChanceAcquire);
-            ret.SpaceGeneralAcquireManeuverChanceTurn = item.SpaceGeneralAcquireManeuverChanceTurn.Equals(rhs.SpaceGeneralAcquireManeuverChanceTurn);
-            ret.SpaceGeneralDisengageManeuverChance = item.SpaceGeneralDisengageManeuverChance.Equals(rhs.SpaceGeneralDisengageManeuverChance);
+            ret.SpaceGeneralEngageManeuverChanceDirectAttack = item.SpaceGeneralEngageManeuverChanceDirectAttack.EqualsWithin(rhs.SpaceGeneralEngageManeuverChanceDirectAttack);
+            ret.SpaceGeneralEngageManeuverChancePass = item.SpaceGeneralEngageManeuverChancePass.EqualsWithin(rhs.SpaceGeneralEngageManeuverChancePass);
+            ret.SpaceGeneralEngageManeuverChanceLeadTurn = item.SpaceGeneralEngageManeuverChanceLeadTurn.EqualsWithin(rhs.SpaceGeneralEngageManeuverChanceLeadTurn);
+            ret.SpaceGeneralEngageManeuverChanceSlideTurn = item.SpaceGeneralEngageManeuverChanceSlideTurn.EqualsWithin(rhs.SpaceGeneralEngageManeuverChanceSlideTurn);
+            ret.SpaceGeneralEngageManeuverChanceBarrelRoll = item.SpaceGeneralEngageManeuverChanceBarrelRoll.EqualsWithin(rhs.SpaceGeneralEngageManeuverChanceBarrelRoll);
+            ret.SpaceGeneralEvadeManeuverChanceBreak = item.SpaceGeneralEvadeManeuverChanceBreak.EqualsWithin(rhs.SpaceGeneralEvadeManeuverChanceBreak);
+            ret.SpaceGeneralEvadeManeuverChanceScissors = item.SpaceGeneralEvadeManeuverChanceScissors.EqualsWithin(rhs.SpaceGeneralEvadeManeuverChanceScissors);
+            ret.SpaceGeneralEvadeManeuverChanceCut = item.SpaceGeneralEvadeManeuverChanceCut.EqualsWithin(rhs.SpaceGeneralEvadeManeuverChanceCut);
+            ret.SpaceGeneralEvadeManeuverChanceBoost = item.SpaceGeneralEvadeManeuverChanceBoost.EqualsWithin(rhs.SpaceGeneralEvadeManeuverChanceBoost);
+            ret.SpaceGeneralAcquireManeuverChanceSliceback = item.SpaceGeneralAcquireManeuverChanceSliceback.EqualsWithin(rhs.SpaceGeneralAcquireManeuverChanceSliceback);
+            ret.SpaceGeneralAcquireManeuverChanceStrafeTurn = item.SpaceGeneralAcquireManeuverChanceStrafeTurn.EqualsWithin(rhs.SpaceGeneralAcquireManeuverChanceStrafeTurn);
+            ret.SpaceGeneralAcquireManeuverChanceAcquire = item.SpaceGeneralAcquireManeuverChanceAcquire.EqualsWithin(rhs.SpaceGeneralAcquireManeuverChanceAcquire);
+            ret.SpaceGeneralAcquireManeuverChanceTurn = item.SpaceGeneralAcquireManeuverChanceTurn.EqualsWithin(rhs.SpaceGeneralAcquireManeuverChanceTurn);
+            ret.SpaceGeneralDisengageManeuverChance = item.SpaceGeneralDisengageManeuverChance.EqualsWithin(rhs.SpaceGeneralDisengageManeuverChance);
             ret.SpaceGeneralMissileSeekingStrength = item.SpaceGeneralMissileSeekingStrength.EqualsWithin(rhs.SpaceGeneralMissileSeekingStrength);
             ret.SpaceGeneralMinTimeBetweenBoosts = item.SpaceGeneralMinTimeBetweenBoosts.EqualsWithin(rhs.SpaceGeneralMinTimeBetweenBoosts);
             ret.SpaceGeneralCombatStrafing = item.SpaceGeneralCombatStrafing == rhs.SpaceGeneralCombatStrafing;
@@ -5150,12 +5150,12 @@ namespace Mutagen.Bethesda.Starfield
             ret.SpaceGeneralPowerWeighting = MaskItemExt.Factory(item.SpaceGeneralPowerWeighting.GetEqualsMask(rhs.SpaceGeneralPowerWeighting, include), include);
             ret.SpaceManeuverTypesMaxTime = MaskItemExt.Factory(item.SpaceManeuverTypesMaxTime.GetEqualsMask(rhs.SpaceManeuverTypesMaxTime, include), include);
             ret.SpaceManeuverTypesReentryDelays = MaskItemExt.Factory(item.SpaceManeuverTypesReentryDelays.GetEqualsMask(rhs.SpaceManeuverTypesReentryDelays, include), include);
-            ret.SpaceRepairDamageThreshold = item.SpaceRepairDamageThreshold.Equals(rhs.SpaceRepairDamageThreshold);
-            ret.SpaceRepairFarawayDistance = item.SpaceRepairFarawayDistance.Equals(rhs.SpaceRepairFarawayDistance);
-            ret.SpaceRepairPowerToUse = item.SpaceRepairPowerToUse.Equals(rhs.SpaceRepairPowerToUse);
+            ret.SpaceRepairDamageThreshold = item.SpaceRepairDamageThreshold.EqualsWithin(rhs.SpaceRepairDamageThreshold);
+            ret.SpaceRepairFarawayDistance = item.SpaceRepairFarawayDistance.EqualsWithin(rhs.SpaceRepairFarawayDistance);
+            ret.SpaceRepairPowerToUse = item.SpaceRepairPowerToUse.EqualsWithin(rhs.SpaceRepairPowerToUse);
             ret.SpaceRepairInClosePowerWeightingTables = MaskItemExt.Factory(item.SpaceRepairInClosePowerWeightingTables.GetEqualsMask(rhs.SpaceRepairInClosePowerWeightingTables, include), include);
             ret.SpaceRepairFarawayPowerWeightingTables = MaskItemExt.Factory(item.SpaceRepairFarawayPowerWeightingTables.GetEqualsMask(rhs.SpaceRepairFarawayPowerWeightingTables, include), include);
-            ret.SpaceApproachingMinDistance = item.SpaceApproachingMinDistance.Equals(rhs.SpaceApproachingMinDistance);
+            ret.SpaceApproachingMinDistance = item.SpaceApproachingMinDistance.EqualsWithin(rhs.SpaceApproachingMinDistance);
             ret.SpaceApproachingWeighting = MaskItemExt.Factory(item.SpaceApproachingWeighting.GetEqualsMask(rhs.SpaceApproachingWeighting, include), include);
             ret.SpaceDetectionRating1 = item.SpaceDetectionRating1.EqualsWithin(rhs.SpaceDetectionRating1);
             ret.SpaceDetectionRating2 = item.SpaceDetectionRating2.EqualsWithin(rhs.SpaceDetectionRating2);
@@ -5716,15 +5716,15 @@ namespace Mutagen.Bethesda.Starfield
             if (!base.Equals((IStarfieldMajorRecordGetter)lhs, (IStarfieldMajorRecordGetter)rhs, equalsMask)) return false;
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.OffensiveMult) ?? true))
             {
-                if (!lhs.OffensiveMult.Equals(rhs.OffensiveMult)) return false;
+                if (!lhs.OffensiveMult.EqualsWithin(rhs.OffensiveMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.DefensiveMult) ?? true))
             {
-                if (!lhs.DefensiveMult.Equals(rhs.DefensiveMult)) return false;
+                if (!lhs.DefensiveMult.EqualsWithin(rhs.DefensiveMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.GroupOffensiveMult) ?? true))
             {
-                if (!lhs.GroupOffensiveMult.Equals(rhs.GroupOffensiveMult)) return false;
+                if (!lhs.GroupOffensiveMult.EqualsWithin(rhs.GroupOffensiveMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.EquipmentScoreMultMelee) ?? true))
             {
@@ -5752,15 +5752,15 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.AvoidThreatChance) ?? true))
             {
-                if (!lhs.AvoidThreatChance.Equals(rhs.AvoidThreatChance)) return false;
+                if (!lhs.AvoidThreatChance.EqualsWithin(rhs.AvoidThreatChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.DodgeThreadChance) ?? true))
             {
-                if (!lhs.DodgeThreadChance.Equals(rhs.DodgeThreadChance)) return false;
+                if (!lhs.DodgeThreadChance.EqualsWithin(rhs.DodgeThreadChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.EvadeThreatChance) ?? true))
             {
-                if (!lhs.EvadeThreatChance.Equals(rhs.EvadeThreatChance)) return false;
+                if (!lhs.EvadeThreatChance.EqualsWithin(rhs.EvadeThreatChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.HealAllyDistance) ?? true))
             {
@@ -5816,63 +5816,63 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.RangedAccuracyMult) ?? true))
             {
-                if (!lhs.RangedAccuracyMult.Equals(rhs.RangedAccuracyMult)) return false;
+                if (!lhs.RangedAccuracyMult.EqualsWithin(rhs.RangedAccuracyMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.RangedThrowMult) ?? true))
             {
-                if (!lhs.RangedThrowMult.Equals(rhs.RangedThrowMult)) return false;
+                if (!lhs.RangedThrowMult.EqualsWithin(rhs.RangedThrowMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.RangedGrenadeAdvancedThrowingMult) ?? true))
             {
-                if (!lhs.RangedGrenadeAdvancedThrowingMult.Equals(rhs.RangedGrenadeAdvancedThrowingMult)) return false;
+                if (!lhs.RangedGrenadeAdvancedThrowingMult.EqualsWithin(rhs.RangedGrenadeAdvancedThrowingMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.RangedGrenadeFlashTargetMult) ?? true))
             {
-                if (!lhs.RangedGrenadeFlashTargetMult.Equals(rhs.RangedGrenadeFlashTargetMult)) return false;
+                if (!lhs.RangedGrenadeFlashTargetMult.EqualsWithin(rhs.RangedGrenadeFlashTargetMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.RangedGrenadeThrowAtGroupMult) ?? true))
             {
-                if (!lhs.RangedGrenadeThrowAtGroupMult.Equals(rhs.RangedGrenadeThrowAtGroupMult)) return false;
+                if (!lhs.RangedGrenadeThrowAtGroupMult.EqualsWithin(rhs.RangedGrenadeThrowAtGroupMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.RangedGrenadeCloseRangeAttackChanceMult) ?? true))
             {
-                if (!lhs.RangedGrenadeCloseRangeAttackChanceMult.Equals(rhs.RangedGrenadeCloseRangeAttackChanceMult)) return false;
+                if (!lhs.RangedGrenadeCloseRangeAttackChanceMult.EqualsWithin(rhs.RangedGrenadeCloseRangeAttackChanceMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeDuelingCircleMult) ?? true))
             {
-                if (!lhs.CloseRangeDuelingCircleMult.Equals(rhs.CloseRangeDuelingCircleMult)) return false;
+                if (!lhs.CloseRangeDuelingCircleMult.EqualsWithin(rhs.CloseRangeDuelingCircleMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeDuelingFallbackMult) ?? true))
             {
-                if (!lhs.CloseRangeDuelingFallbackMult.Equals(rhs.CloseRangeDuelingFallbackMult)) return false;
+                if (!lhs.CloseRangeDuelingFallbackMult.EqualsWithin(rhs.CloseRangeDuelingFallbackMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeFlankDistance) ?? true))
             {
-                if (!lhs.CloseRangeFlankDistance.Equals(rhs.CloseRangeFlankDistance)) return false;
+                if (!lhs.CloseRangeFlankDistance.EqualsWithin(rhs.CloseRangeFlankDistance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeFlankingStalkTime) ?? true))
             {
-                if (!lhs.CloseRangeFlankingStalkTime.Equals(rhs.CloseRangeFlankingStalkTime)) return false;
+                if (!lhs.CloseRangeFlankingStalkTime.EqualsWithin(rhs.CloseRangeFlankingStalkTime)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeChargeDistance) ?? true))
             {
-                if (!lhs.CloseRangeChargeDistance.Equals(rhs.CloseRangeChargeDistance)) return false;
+                if (!lhs.CloseRangeChargeDistance.EqualsWithin(rhs.CloseRangeChargeDistance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeChargingThrowProbability) ?? true))
             {
-                if (!lhs.CloseRangeChargingThrowProbability.Equals(rhs.CloseRangeChargingThrowProbability)) return false;
+                if (!lhs.CloseRangeChargingThrowProbability.EqualsWithin(rhs.CloseRangeChargingThrowProbability)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeChargingSprintFastProbability) ?? true))
             {
-                if (!lhs.CloseRangeChargingSprintFastProbability.Equals(rhs.CloseRangeChargingSprintFastProbability)) return false;
+                if (!lhs.CloseRangeChargingSprintFastProbability.EqualsWithin(rhs.CloseRangeChargingSprintFastProbability)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeChargingSideswipeProbability) ?? true))
             {
-                if (!lhs.CloseRangeChargingSideswipeProbability.Equals(rhs.CloseRangeChargingSideswipeProbability)) return false;
+                if (!lhs.CloseRangeChargingSideswipeProbability.EqualsWithin(rhs.CloseRangeChargingSideswipeProbability)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeChargingDisengageProbability) ?? true))
             {
-                if (!lhs.CloseRangeChargingDisengageProbability.Equals(rhs.CloseRangeChargingDisengageProbability)) return false;
+                if (!lhs.CloseRangeChargingDisengageProbability.EqualsWithin(rhs.CloseRangeChargingDisengageProbability)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeChargingThrowMaxTargets) ?? true))
             {
@@ -5880,91 +5880,91 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeFlankingVariance) ?? true))
             {
-                if (!lhs.CloseRangeFlankingVariance.Equals(rhs.CloseRangeFlankingVariance)) return false;
+                if (!lhs.CloseRangeFlankingVariance.EqualsWithin(rhs.CloseRangeFlankingVariance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeRetreatChance) ?? true))
             {
-                if (!lhs.CloseRangeRetreatChance.Equals(rhs.CloseRangeRetreatChance)) return false;
+                if (!lhs.CloseRangeRetreatChance.EqualsWithin(rhs.CloseRangeRetreatChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CloseRangeRetreatDistanceMult) ?? true))
             {
-                if (!lhs.CloseRangeRetreatDistanceMult.Equals(rhs.CloseRangeRetreatDistanceMult)) return false;
+                if (!lhs.CloseRangeRetreatDistanceMult.EqualsWithin(rhs.CloseRangeRetreatDistanceMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.LongRangeStrafeMult) ?? true))
             {
-                if (!lhs.LongRangeStrafeMult.Equals(rhs.LongRangeStrafeMult)) return false;
+                if (!lhs.LongRangeStrafeMult.EqualsWithin(rhs.LongRangeStrafeMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.LongRangeAdjustRangeMult) ?? true))
             {
-                if (!lhs.LongRangeAdjustRangeMult.Equals(rhs.LongRangeAdjustRangeMult)) return false;
+                if (!lhs.LongRangeAdjustRangeMult.EqualsWithin(rhs.LongRangeAdjustRangeMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.LongRangeCrouchMult) ?? true))
             {
-                if (!lhs.LongRangeCrouchMult.Equals(rhs.LongRangeCrouchMult)) return false;
+                if (!lhs.LongRangeCrouchMult.EqualsWithin(rhs.LongRangeCrouchMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.LongRangeWaitMult) ?? true))
             {
-                if (!lhs.LongRangeWaitMult.Equals(rhs.LongRangeWaitMult)) return false;
+                if (!lhs.LongRangeWaitMult.EqualsWithin(rhs.LongRangeWaitMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.LongRangeRangeMult) ?? true))
             {
-                if (!lhs.LongRangeRangeMult.Equals(rhs.LongRangeRangeMult)) return false;
+                if (!lhs.LongRangeRangeMult.EqualsWithin(rhs.LongRangeRangeMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.LongRangeProvideSuppressiveFireMult) ?? true))
             {
-                if (!lhs.LongRangeProvideSuppressiveFireMult.Equals(rhs.LongRangeProvideSuppressiveFireMult)) return false;
+                if (!lhs.LongRangeProvideSuppressiveFireMult.EqualsWithin(rhs.LongRangeProvideSuppressiveFireMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.LongRangeRetreatChance) ?? true))
             {
-                if (!lhs.LongRangeRetreatChance.Equals(rhs.LongRangeRetreatChance)) return false;
+                if (!lhs.LongRangeRetreatChance.EqualsWithin(rhs.LongRangeRetreatChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.LongRangeRetreatHideTimeMult) ?? true))
             {
-                if (!lhs.LongRangeRetreatHideTimeMult.Equals(rhs.LongRangeRetreatHideTimeMult)) return false;
+                if (!lhs.LongRangeRetreatHideTimeMult.EqualsWithin(rhs.LongRangeRetreatHideTimeMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.LongRangeRetreatDistanceMult) ?? true))
             {
-                if (!lhs.LongRangeRetreatDistanceMult.Equals(rhs.LongRangeRetreatDistanceMult)) return false;
+                if (!lhs.LongRangeRetreatDistanceMult.EqualsWithin(rhs.LongRangeRetreatDistanceMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CoverSearchDistanceMult) ?? true))
             {
-                if (!lhs.CoverSearchDistanceMult.Equals(rhs.CoverSearchDistanceMult)) return false;
+                if (!lhs.CoverSearchDistanceMult.EqualsWithin(rhs.CoverSearchDistanceMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.CoverSearchSuppressionSensitivity) ?? true))
             {
-                if (!lhs.CoverSearchSuppressionSensitivity.Equals(rhs.CoverSearchSuppressionSensitivity)) return false;
+                if (!lhs.CoverSearchSuppressionSensitivity.EqualsWithin(rhs.CoverSearchSuppressionSensitivity)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.FlightHoverChance) ?? true))
             {
-                if (!lhs.FlightHoverChance.Equals(rhs.FlightHoverChance)) return false;
+                if (!lhs.FlightHoverChance.EqualsWithin(rhs.FlightHoverChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.FlightDiveBombChance) ?? true))
             {
-                if (!lhs.FlightDiveBombChance.Equals(rhs.FlightDiveBombChance)) return false;
+                if (!lhs.FlightDiveBombChance.EqualsWithin(rhs.FlightDiveBombChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.FlightGroundAttackChance) ?? true))
             {
-                if (!lhs.FlightGroundAttackChance.Equals(rhs.FlightGroundAttackChance)) return false;
+                if (!lhs.FlightGroundAttackChance.EqualsWithin(rhs.FlightGroundAttackChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.FlightHoverTime) ?? true))
             {
-                if (!lhs.FlightHoverTime.Equals(rhs.FlightHoverTime)) return false;
+                if (!lhs.FlightHoverTime.EqualsWithin(rhs.FlightHoverTime)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.FlightGroundAttackTime) ?? true))
             {
-                if (!lhs.FlightGroundAttackTime.Equals(rhs.FlightGroundAttackTime)) return false;
+                if (!lhs.FlightGroundAttackTime.EqualsWithin(rhs.FlightGroundAttackTime)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.FlightPerchAttackChance) ?? true))
             {
-                if (!lhs.FlightPerchAttackChance.Equals(rhs.FlightPerchAttackChance)) return false;
+                if (!lhs.FlightPerchAttackChance.EqualsWithin(rhs.FlightPerchAttackChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.FlightPerchAttackTime) ?? true))
             {
-                if (!lhs.FlightPerchAttackTime.Equals(rhs.FlightPerchAttackTime)) return false;
+                if (!lhs.FlightPerchAttackTime.EqualsWithin(rhs.FlightPerchAttackTime)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.FlightFlyingAttackChance) ?? true))
             {
-                if (!lhs.FlightFlyingAttackChance.Equals(rhs.FlightFlyingAttackChance)) return false;
+                if (!lhs.FlightFlyingAttackChance.EqualsWithin(rhs.FlightFlyingAttackChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.TunnelCostMult) ?? true))
             {
@@ -5972,7 +5972,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.TunnelChance) ?? true))
             {
-                if (!lhs.TunnelChance.Equals(rhs.TunnelChance)) return false;
+                if (!lhs.TunnelChance.EqualsWithin(rhs.TunnelChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.TunnelMaxDistance) ?? true))
             {
@@ -6000,15 +6000,15 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralPilotSkill) ?? true))
             {
-                if (!lhs.SpaceGeneralPilotSkill.Equals(rhs.SpaceGeneralPilotSkill)) return false;
+                if (!lhs.SpaceGeneralPilotSkill.EqualsWithin(rhs.SpaceGeneralPilotSkill)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralAccuracy) ?? true))
             {
-                if (!lhs.SpaceGeneralAccuracy.Equals(rhs.SpaceGeneralAccuracy)) return false;
+                if (!lhs.SpaceGeneralAccuracy.EqualsWithin(rhs.SpaceGeneralAccuracy)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralTargetShield) ?? true))
             {
-                if (!lhs.SpaceGeneralTargetShield.Equals(rhs.SpaceGeneralTargetShield)) return false;
+                if (!lhs.SpaceGeneralTargetShield.EqualsWithin(rhs.SpaceGeneralTargetShield)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralAdjustment) ?? true))
             {
@@ -6016,59 +6016,59 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralEngageManeuverChanceDirectAttack) ?? true))
             {
-                if (!lhs.SpaceGeneralEngageManeuverChanceDirectAttack.Equals(rhs.SpaceGeneralEngageManeuverChanceDirectAttack)) return false;
+                if (!lhs.SpaceGeneralEngageManeuverChanceDirectAttack.EqualsWithin(rhs.SpaceGeneralEngageManeuverChanceDirectAttack)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralEngageManeuverChancePass) ?? true))
             {
-                if (!lhs.SpaceGeneralEngageManeuverChancePass.Equals(rhs.SpaceGeneralEngageManeuverChancePass)) return false;
+                if (!lhs.SpaceGeneralEngageManeuverChancePass.EqualsWithin(rhs.SpaceGeneralEngageManeuverChancePass)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralEngageManeuverChanceLeadTurn) ?? true))
             {
-                if (!lhs.SpaceGeneralEngageManeuverChanceLeadTurn.Equals(rhs.SpaceGeneralEngageManeuverChanceLeadTurn)) return false;
+                if (!lhs.SpaceGeneralEngageManeuverChanceLeadTurn.EqualsWithin(rhs.SpaceGeneralEngageManeuverChanceLeadTurn)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralEngageManeuverChanceSlideTurn) ?? true))
             {
-                if (!lhs.SpaceGeneralEngageManeuverChanceSlideTurn.Equals(rhs.SpaceGeneralEngageManeuverChanceSlideTurn)) return false;
+                if (!lhs.SpaceGeneralEngageManeuverChanceSlideTurn.EqualsWithin(rhs.SpaceGeneralEngageManeuverChanceSlideTurn)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralEngageManeuverChanceBarrelRoll) ?? true))
             {
-                if (!lhs.SpaceGeneralEngageManeuverChanceBarrelRoll.Equals(rhs.SpaceGeneralEngageManeuverChanceBarrelRoll)) return false;
+                if (!lhs.SpaceGeneralEngageManeuverChanceBarrelRoll.EqualsWithin(rhs.SpaceGeneralEngageManeuverChanceBarrelRoll)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralEvadeManeuverChanceBreak) ?? true))
             {
-                if (!lhs.SpaceGeneralEvadeManeuverChanceBreak.Equals(rhs.SpaceGeneralEvadeManeuverChanceBreak)) return false;
+                if (!lhs.SpaceGeneralEvadeManeuverChanceBreak.EqualsWithin(rhs.SpaceGeneralEvadeManeuverChanceBreak)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralEvadeManeuverChanceScissors) ?? true))
             {
-                if (!lhs.SpaceGeneralEvadeManeuverChanceScissors.Equals(rhs.SpaceGeneralEvadeManeuverChanceScissors)) return false;
+                if (!lhs.SpaceGeneralEvadeManeuverChanceScissors.EqualsWithin(rhs.SpaceGeneralEvadeManeuverChanceScissors)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralEvadeManeuverChanceCut) ?? true))
             {
-                if (!lhs.SpaceGeneralEvadeManeuverChanceCut.Equals(rhs.SpaceGeneralEvadeManeuverChanceCut)) return false;
+                if (!lhs.SpaceGeneralEvadeManeuverChanceCut.EqualsWithin(rhs.SpaceGeneralEvadeManeuverChanceCut)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralEvadeManeuverChanceBoost) ?? true))
             {
-                if (!lhs.SpaceGeneralEvadeManeuverChanceBoost.Equals(rhs.SpaceGeneralEvadeManeuverChanceBoost)) return false;
+                if (!lhs.SpaceGeneralEvadeManeuverChanceBoost.EqualsWithin(rhs.SpaceGeneralEvadeManeuverChanceBoost)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralAcquireManeuverChanceSliceback) ?? true))
             {
-                if (!lhs.SpaceGeneralAcquireManeuverChanceSliceback.Equals(rhs.SpaceGeneralAcquireManeuverChanceSliceback)) return false;
+                if (!lhs.SpaceGeneralAcquireManeuverChanceSliceback.EqualsWithin(rhs.SpaceGeneralAcquireManeuverChanceSliceback)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralAcquireManeuverChanceStrafeTurn) ?? true))
             {
-                if (!lhs.SpaceGeneralAcquireManeuverChanceStrafeTurn.Equals(rhs.SpaceGeneralAcquireManeuverChanceStrafeTurn)) return false;
+                if (!lhs.SpaceGeneralAcquireManeuverChanceStrafeTurn.EqualsWithin(rhs.SpaceGeneralAcquireManeuverChanceStrafeTurn)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralAcquireManeuverChanceAcquire) ?? true))
             {
-                if (!lhs.SpaceGeneralAcquireManeuverChanceAcquire.Equals(rhs.SpaceGeneralAcquireManeuverChanceAcquire)) return false;
+                if (!lhs.SpaceGeneralAcquireManeuverChanceAcquire.EqualsWithin(rhs.SpaceGeneralAcquireManeuverChanceAcquire)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralAcquireManeuverChanceTurn) ?? true))
             {
-                if (!lhs.SpaceGeneralAcquireManeuverChanceTurn.Equals(rhs.SpaceGeneralAcquireManeuverChanceTurn)) return false;
+                if (!lhs.SpaceGeneralAcquireManeuverChanceTurn.EqualsWithin(rhs.SpaceGeneralAcquireManeuverChanceTurn)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralDisengageManeuverChance) ?? true))
             {
-                if (!lhs.SpaceGeneralDisengageManeuverChance.Equals(rhs.SpaceGeneralDisengageManeuverChance)) return false;
+                if (!lhs.SpaceGeneralDisengageManeuverChance.EqualsWithin(rhs.SpaceGeneralDisengageManeuverChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceGeneralMissileSeekingStrength) ?? true))
             {
@@ -6116,15 +6116,15 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceRepairDamageThreshold) ?? true))
             {
-                if (!lhs.SpaceRepairDamageThreshold.Equals(rhs.SpaceRepairDamageThreshold)) return false;
+                if (!lhs.SpaceRepairDamageThreshold.EqualsWithin(rhs.SpaceRepairDamageThreshold)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceRepairFarawayDistance) ?? true))
             {
-                if (!lhs.SpaceRepairFarawayDistance.Equals(rhs.SpaceRepairFarawayDistance)) return false;
+                if (!lhs.SpaceRepairFarawayDistance.EqualsWithin(rhs.SpaceRepairFarawayDistance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceRepairPowerToUse) ?? true))
             {
-                if (!lhs.SpaceRepairPowerToUse.Equals(rhs.SpaceRepairPowerToUse)) return false;
+                if (!lhs.SpaceRepairPowerToUse.EqualsWithin(rhs.SpaceRepairPowerToUse)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceRepairInClosePowerWeightingTables) ?? true))
             {
@@ -6144,7 +6144,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceApproachingMinDistance) ?? true))
             {
-                if (!lhs.SpaceApproachingMinDistance.Equals(rhs.SpaceApproachingMinDistance)) return false;
+                if (!lhs.SpaceApproachingMinDistance.EqualsWithin(rhs.SpaceApproachingMinDistance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.SpaceApproachingWeighting) ?? true))
             {
@@ -7222,18 +7222,15 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.CSGD)))
             {
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.OffensiveMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.OffensiveMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.DefensiveMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.DefensiveMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.GroupOffensiveMult,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.GroupOffensiveMult);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.EquipmentScoreMultMelee);
@@ -7252,18 +7249,15 @@ namespace Mutagen.Bethesda.Starfield
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.EquipmentScoreMultStaff);
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.AvoidThreatChance,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.AvoidThreatChance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.DodgeThreadChance,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.DodgeThreadChance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.EvadeThreatChance,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.EvadeThreatChance);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.HealAllyDistance);
@@ -7309,177 +7303,139 @@ namespace Mutagen.Bethesda.Starfield
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.CSRA)))
             {
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.RangedAccuracyMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.RangedAccuracyMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.RangedThrowMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.RangedThrowMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.RangedGrenadeAdvancedThrowingMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.RangedGrenadeAdvancedThrowingMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.RangedGrenadeFlashTargetMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.RangedGrenadeFlashTargetMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.RangedGrenadeThrowAtGroupMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.RangedGrenadeThrowAtGroupMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.RangedGrenadeCloseRangeAttackChanceMult,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.RangedGrenadeCloseRangeAttackChanceMult);
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.CSCR)))
             {
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CloseRangeDuelingCircleMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.CloseRangeDuelingCircleMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CloseRangeDuelingFallbackMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.CloseRangeDuelingFallbackMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CloseRangeFlankDistance,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.CloseRangeFlankDistance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CloseRangeFlankingStalkTime,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.CloseRangeFlankingStalkTime);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CloseRangeChargeDistance,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.CloseRangeChargeDistance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CloseRangeChargingThrowProbability,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.CloseRangeChargingThrowProbability);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CloseRangeChargingSprintFastProbability,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.CloseRangeChargingSprintFastProbability);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CloseRangeChargingSideswipeProbability,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.CloseRangeChargingSideswipeProbability);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CloseRangeChargingDisengageProbability,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.CloseRangeChargingDisengageProbability);
                 writer.Write(item.CloseRangeChargingThrowMaxTargets);
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CloseRangeFlankingVariance,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.CloseRangeFlankingVariance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CloseRangeRetreatChance,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.CloseRangeRetreatChance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CloseRangeRetreatDistanceMult,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.CloseRangeRetreatDistanceMult);
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.CSLR)))
             {
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.LongRangeStrafeMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.LongRangeStrafeMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.LongRangeAdjustRangeMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.LongRangeAdjustRangeMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.LongRangeCrouchMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.LongRangeCrouchMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.LongRangeWaitMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.LongRangeWaitMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.LongRangeRangeMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.LongRangeRangeMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.LongRangeProvideSuppressiveFireMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.LongRangeProvideSuppressiveFireMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.LongRangeRetreatChance,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.LongRangeRetreatChance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.LongRangeRetreatHideTimeMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.LongRangeRetreatHideTimeMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.LongRangeRetreatDistanceMult,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.LongRangeRetreatDistanceMult);
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.CSCV)))
             {
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CoverSearchDistanceMult,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.CoverSearchDistanceMult);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.CoverSearchSuppressionSensitivity,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.CoverSearchSuppressionSensitivity);
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.CSFL)))
             {
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.FlightHoverChance,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.FlightHoverChance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.FlightDiveBombChance,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.FlightDiveBombChance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.FlightGroundAttackChance,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.FlightGroundAttackChance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.FlightHoverTime,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.FlightHoverTime);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.FlightGroundAttackTime,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.FlightGroundAttackTime);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.FlightPerchAttackChance,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.FlightPerchAttackChance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.FlightPerchAttackTime,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.FlightPerchAttackTime);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.FlightFlyingAttackChance,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.FlightFlyingAttackChance);
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.CSTN)))
             {
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.TunnelCostMult);
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.TunnelChance,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.TunnelChance);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.TunnelMaxDistance);
@@ -7501,77 +7457,60 @@ namespace Mutagen.Bethesda.Starfield
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.CSSG)))
             {
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralPilotSkill,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralPilotSkill);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralAccuracy,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralAccuracy);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralTargetShield,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.SpaceGeneralTargetShield);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.SpaceGeneralAdjustment);
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralEngageManeuverChanceDirectAttack,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralEngageManeuverChanceDirectAttack);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralEngageManeuverChancePass,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralEngageManeuverChancePass);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralEngageManeuverChanceLeadTurn,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralEngageManeuverChanceLeadTurn);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralEngageManeuverChanceSlideTurn,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralEngageManeuverChanceSlideTurn);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralEngageManeuverChanceBarrelRoll,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralEngageManeuverChanceBarrelRoll);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralEvadeManeuverChanceBreak,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralEvadeManeuverChanceBreak);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralEvadeManeuverChanceScissors,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralEvadeManeuverChanceScissors);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralEvadeManeuverChanceCut,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralEvadeManeuverChanceCut);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralEvadeManeuverChanceBoost,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralEvadeManeuverChanceBoost);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralAcquireManeuverChanceSliceback,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralAcquireManeuverChanceSliceback);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralAcquireManeuverChanceStrafeTurn,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralAcquireManeuverChanceStrafeTurn);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralAcquireManeuverChanceAcquire,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralAcquireManeuverChanceAcquire);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralAcquireManeuverChanceTurn,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceGeneralAcquireManeuverChanceTurn);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceGeneralDisengageManeuverChance,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.SpaceGeneralDisengageManeuverChance);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.SpaceGeneralMissileSeekingStrength);
@@ -7602,18 +7541,15 @@ namespace Mutagen.Bethesda.Starfield
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.CSSR)))
             {
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceRepairDamageThreshold,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceRepairDamageThreshold);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceRepairFarawayDistance,
-                    integerType: FloatIntegerType.UInt);
-                PercentBinaryTranslation.Write(
+                    item: item.SpaceRepairFarawayDistance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceRepairPowerToUse,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.SpaceRepairPowerToUse);
                 var SpaceRepairInClosePowerWeightingTablesItem = item.SpaceRepairInClosePowerWeightingTables;
                 ((CombatStylePowerWeightingBinaryWriteTranslation)((IBinaryItem)SpaceRepairInClosePowerWeightingTablesItem).BinaryWriteTranslator).Write(
                     item: SpaceRepairInClosePowerWeightingTablesItem,
@@ -7627,10 +7563,9 @@ namespace Mutagen.Bethesda.Starfield
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.CSSA)))
             {
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SpaceApproachingMinDistance,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.SpaceApproachingMinDistance);
                 var SpaceApproachingWeightingItem = item.SpaceApproachingWeighting;
                 ((CombatStylePowerWeightingBinaryWriteTranslation)((IBinaryItem)SpaceApproachingWeightingItem).BinaryWriteTranslator).Write(
                     item: SpaceApproachingWeightingItem,
@@ -7742,17 +7677,11 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.OffensiveMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.OffensiveMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.DefensiveMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.DefensiveMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.GroupOffensiveMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.GroupOffensiveMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.EquipmentScoreMultMelee = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -7766,17 +7695,11 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 4) return null;
                     item.EquipmentScoreMultStaff = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.AvoidThreatChance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.AvoidThreatChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.DodgeThreadChance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.DodgeThreadChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.EvadeThreatChance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.EvadeThreatChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.HealAllyDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -7816,29 +7739,17 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.RangedAccuracyMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.RangedAccuracyMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.RangedThrowMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.RangedThrowMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.RangedGrenadeAdvancedThrowingMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.RangedGrenadeAdvancedThrowingMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.RangedGrenadeFlashTargetMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.RangedGrenadeFlashTargetMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.RangedGrenadeThrowAtGroupMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.RangedGrenadeThrowAtGroupMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.RangedGrenadeCloseRangeAttackChanceMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.RangedGrenadeCloseRangeAttackChanceMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     return (int)CombatStyle_FieldIndex.RangedGrenadeCloseRangeAttackChanceMult;
                 }
                 case RecordTypeInts.CSCR:
@@ -7846,55 +7757,31 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CloseRangeDuelingCircleMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CloseRangeDuelingCircleMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CloseRangeDuelingFallbackMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CloseRangeDuelingFallbackMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CloseRangeFlankDistance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CloseRangeFlankDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CloseRangeFlankingStalkTime = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CloseRangeFlankingStalkTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CloseRangeChargeDistance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CloseRangeChargeDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CloseRangeChargingThrowProbability = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CloseRangeChargingThrowProbability = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CloseRangeChargingSprintFastProbability = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CloseRangeChargingSprintFastProbability = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CloseRangeChargingSideswipeProbability = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CloseRangeChargingSideswipeProbability = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CloseRangeChargingDisengageProbability = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CloseRangeChargingDisengageProbability = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.CloseRangeChargingThrowMaxTargets = dataFrame.ReadUInt32();
                     if (dataFrame.Remaining < 4) return null;
-                    item.CloseRangeFlankingVariance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CloseRangeFlankingVariance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CloseRangeRetreatChance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CloseRangeRetreatChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CloseRangeRetreatDistanceMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CloseRangeRetreatDistanceMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     return (int)CombatStyle_FieldIndex.CloseRangeRetreatDistanceMult;
                 }
                 case RecordTypeInts.CSLR:
@@ -7902,41 +7789,23 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.LongRangeStrafeMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.LongRangeStrafeMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.LongRangeAdjustRangeMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.LongRangeAdjustRangeMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.LongRangeCrouchMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.LongRangeCrouchMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.LongRangeWaitMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.LongRangeWaitMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.LongRangeRangeMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.LongRangeRangeMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.LongRangeProvideSuppressiveFireMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.LongRangeProvideSuppressiveFireMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.LongRangeRetreatChance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.LongRangeRetreatChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.LongRangeRetreatHideTimeMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.LongRangeRetreatHideTimeMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.LongRangeRetreatDistanceMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.LongRangeRetreatDistanceMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     return (int)CombatStyle_FieldIndex.LongRangeRetreatDistanceMult;
                 }
                 case RecordTypeInts.CSCV:
@@ -7944,13 +7813,9 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CoverSearchDistanceMult = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CoverSearchDistanceMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.CoverSearchSuppressionSensitivity = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.CoverSearchSuppressionSensitivity = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     return (int)CombatStyle_FieldIndex.CoverSearchSuppressionSensitivity;
                 }
                 case RecordTypeInts.CSFL:
@@ -7958,37 +7823,21 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.FlightHoverChance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.FlightHoverChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.FlightDiveBombChance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.FlightDiveBombChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.FlightGroundAttackChance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.FlightGroundAttackChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.FlightHoverTime = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.FlightHoverTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.FlightGroundAttackTime = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.FlightGroundAttackTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.FlightPerchAttackChance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.FlightPerchAttackChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.FlightPerchAttackTime = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.FlightPerchAttackTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.FlightFlyingAttackChance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.FlightFlyingAttackChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     return (int)CombatStyle_FieldIndex.FlightFlyingAttackChance;
                 }
                 case RecordTypeInts.CSTN:
@@ -7998,9 +7847,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 4) return null;
                     item.TunnelCostMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.TunnelChance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.TunnelChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.TunnelMaxDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -8020,75 +7867,41 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralPilotSkill = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralPilotSkill = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralAccuracy = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralAccuracy = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralTargetShield = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralTargetShield = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.SpaceGeneralAdjustment = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralEngageManeuverChanceDirectAttack = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralEngageManeuverChanceDirectAttack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralEngageManeuverChancePass = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralEngageManeuverChancePass = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralEngageManeuverChanceLeadTurn = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralEngageManeuverChanceLeadTurn = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralEngageManeuverChanceSlideTurn = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralEngageManeuverChanceSlideTurn = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralEngageManeuverChanceBarrelRoll = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralEngageManeuverChanceBarrelRoll = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralEvadeManeuverChanceBreak = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralEvadeManeuverChanceBreak = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralEvadeManeuverChanceScissors = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralEvadeManeuverChanceScissors = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralEvadeManeuverChanceCut = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralEvadeManeuverChanceCut = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralEvadeManeuverChanceBoost = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralEvadeManeuverChanceBoost = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralAcquireManeuverChanceSliceback = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralAcquireManeuverChanceSliceback = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralAcquireManeuverChanceStrafeTurn = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralAcquireManeuverChanceStrafeTurn = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralAcquireManeuverChanceAcquire = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralAcquireManeuverChanceAcquire = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralAcquireManeuverChanceTurn = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralAcquireManeuverChanceTurn = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceGeneralDisengageManeuverChance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceGeneralDisengageManeuverChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.SpaceGeneralMissileSeekingStrength = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -8118,17 +7931,11 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceRepairDamageThreshold = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceRepairDamageThreshold = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceRepairFarawayDistance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceRepairFarawayDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceRepairPowerToUse = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceRepairPowerToUse = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Complete) return null;
                     item.SpaceRepairInClosePowerWeightingTables = Mutagen.Bethesda.Starfield.CombatStylePowerWeighting.CreateFromBinary(frame: dataFrame);
                     if (dataFrame.Complete) return null;
@@ -8140,9 +7947,7 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SpaceApproachingMinDistance = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.SpaceApproachingMinDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Complete) return null;
                     item.SpaceApproachingWeighting = Mutagen.Bethesda.Starfield.CombatStylePowerWeighting.CreateFromBinary(frame: dataFrame);
                     return (int)CombatStyle_FieldIndex.SpaceApproachingWeighting;
@@ -8248,17 +8053,17 @@ namespace Mutagen.Bethesda.Starfield
         #region OffensiveMult
         private int _OffensiveMultLocation => _CSGDLocation!.Value.Min;
         private bool _OffensiveMult_IsSet => _CSGDLocation.HasValue;
-        public Percent OffensiveMult => _OffensiveMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_OffensiveMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single OffensiveMult => _OffensiveMult_IsSet ? _recordData.Slice(_OffensiveMultLocation, 4).Float() : default(Single);
         #endregion
         #region DefensiveMult
         private int _DefensiveMultLocation => _CSGDLocation!.Value.Min + 0x4;
         private bool _DefensiveMult_IsSet => _CSGDLocation.HasValue;
-        public Percent DefensiveMult => _DefensiveMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_DefensiveMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single DefensiveMult => _DefensiveMult_IsSet ? _recordData.Slice(_DefensiveMultLocation, 4).Float() : default(Single);
         #endregion
         #region GroupOffensiveMult
         private int _GroupOffensiveMultLocation => _CSGDLocation!.Value.Min + 0x8;
         private bool _GroupOffensiveMult_IsSet => _CSGDLocation.HasValue;
-        public Percent GroupOffensiveMult => _GroupOffensiveMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_GroupOffensiveMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single GroupOffensiveMult => _GroupOffensiveMult_IsSet ? _recordData.Slice(_GroupOffensiveMultLocation, 4).Float() : default(Single);
         #endregion
         #region EquipmentScoreMultMelee
         private int _EquipmentScoreMultMeleeLocation => _CSGDLocation!.Value.Min + 0xC;
@@ -8293,17 +8098,17 @@ namespace Mutagen.Bethesda.Starfield
         #region AvoidThreatChance
         private int _AvoidThreatChanceLocation => _CSGDLocation!.Value.Min + 0x24;
         private bool _AvoidThreatChance_IsSet => _CSGDLocation.HasValue;
-        public Percent AvoidThreatChance => _AvoidThreatChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_AvoidThreatChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single AvoidThreatChance => _AvoidThreatChance_IsSet ? _recordData.Slice(_AvoidThreatChanceLocation, 4).Float() : default(Single);
         #endregion
         #region DodgeThreadChance
         private int _DodgeThreadChanceLocation => _CSGDLocation!.Value.Min + 0x28;
         private bool _DodgeThreadChance_IsSet => _CSGDLocation.HasValue;
-        public Percent DodgeThreadChance => _DodgeThreadChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_DodgeThreadChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single DodgeThreadChance => _DodgeThreadChance_IsSet ? _recordData.Slice(_DodgeThreadChanceLocation, 4).Float() : default(Single);
         #endregion
         #region EvadeThreatChance
         private int _EvadeThreatChanceLocation => _CSGDLocation!.Value.Min + 0x2C;
         private bool _EvadeThreatChance_IsSet => _CSGDLocation.HasValue;
-        public Percent EvadeThreatChance => _EvadeThreatChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_EvadeThreatChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single EvadeThreatChance => _EvadeThreatChance_IsSet ? _recordData.Slice(_EvadeThreatChanceLocation, 4).Float() : default(Single);
         #endregion
         #region HealAllyDistance
         private int _HealAllyDistanceLocation => _CSGDLocation!.Value.Min + 0x30;
@@ -8375,78 +8180,78 @@ namespace Mutagen.Bethesda.Starfield
         #region RangedAccuracyMult
         private int _RangedAccuracyMultLocation => _CSRALocation!.Value.Min;
         private bool _RangedAccuracyMult_IsSet => _CSRALocation.HasValue;
-        public Percent RangedAccuracyMult => _RangedAccuracyMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_RangedAccuracyMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single RangedAccuracyMult => _RangedAccuracyMult_IsSet ? _recordData.Slice(_RangedAccuracyMultLocation, 4).Float() : default(Single);
         #endregion
         #region RangedThrowMult
         private int _RangedThrowMultLocation => _CSRALocation!.Value.Min + 0x4;
         private bool _RangedThrowMult_IsSet => _CSRALocation.HasValue;
-        public Percent RangedThrowMult => _RangedThrowMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_RangedThrowMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single RangedThrowMult => _RangedThrowMult_IsSet ? _recordData.Slice(_RangedThrowMultLocation, 4).Float() : default(Single);
         #endregion
         #region RangedGrenadeAdvancedThrowingMult
         private int _RangedGrenadeAdvancedThrowingMultLocation => _CSRALocation!.Value.Min + 0x8;
         private bool _RangedGrenadeAdvancedThrowingMult_IsSet => _CSRALocation.HasValue;
-        public Percent RangedGrenadeAdvancedThrowingMult => _RangedGrenadeAdvancedThrowingMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_RangedGrenadeAdvancedThrowingMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single RangedGrenadeAdvancedThrowingMult => _RangedGrenadeAdvancedThrowingMult_IsSet ? _recordData.Slice(_RangedGrenadeAdvancedThrowingMultLocation, 4).Float() : default(Single);
         #endregion
         #region RangedGrenadeFlashTargetMult
         private int _RangedGrenadeFlashTargetMultLocation => _CSRALocation!.Value.Min + 0xC;
         private bool _RangedGrenadeFlashTargetMult_IsSet => _CSRALocation.HasValue;
-        public Percent RangedGrenadeFlashTargetMult => _RangedGrenadeFlashTargetMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_RangedGrenadeFlashTargetMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single RangedGrenadeFlashTargetMult => _RangedGrenadeFlashTargetMult_IsSet ? _recordData.Slice(_RangedGrenadeFlashTargetMultLocation, 4).Float() : default(Single);
         #endregion
         #region RangedGrenadeThrowAtGroupMult
         private int _RangedGrenadeThrowAtGroupMultLocation => _CSRALocation!.Value.Min + 0x10;
         private bool _RangedGrenadeThrowAtGroupMult_IsSet => _CSRALocation.HasValue;
-        public Percent RangedGrenadeThrowAtGroupMult => _RangedGrenadeThrowAtGroupMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_RangedGrenadeThrowAtGroupMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single RangedGrenadeThrowAtGroupMult => _RangedGrenadeThrowAtGroupMult_IsSet ? _recordData.Slice(_RangedGrenadeThrowAtGroupMultLocation, 4).Float() : default(Single);
         #endregion
         #region RangedGrenadeCloseRangeAttackChanceMult
         private int _RangedGrenadeCloseRangeAttackChanceMultLocation => _CSRALocation!.Value.Min + 0x14;
         private bool _RangedGrenadeCloseRangeAttackChanceMult_IsSet => _CSRALocation.HasValue;
-        public Percent RangedGrenadeCloseRangeAttackChanceMult => _RangedGrenadeCloseRangeAttackChanceMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_RangedGrenadeCloseRangeAttackChanceMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single RangedGrenadeCloseRangeAttackChanceMult => _RangedGrenadeCloseRangeAttackChanceMult_IsSet ? _recordData.Slice(_RangedGrenadeCloseRangeAttackChanceMultLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _CSCRLocation;
         #region CloseRangeDuelingCircleMult
         private int _CloseRangeDuelingCircleMultLocation => _CSCRLocation!.Value.Min;
         private bool _CloseRangeDuelingCircleMult_IsSet => _CSCRLocation.HasValue;
-        public Percent CloseRangeDuelingCircleMult => _CloseRangeDuelingCircleMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeDuelingCircleMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CloseRangeDuelingCircleMult => _CloseRangeDuelingCircleMult_IsSet ? _recordData.Slice(_CloseRangeDuelingCircleMultLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeDuelingFallbackMult
         private int _CloseRangeDuelingFallbackMultLocation => _CSCRLocation!.Value.Min + 0x4;
         private bool _CloseRangeDuelingFallbackMult_IsSet => _CSCRLocation.HasValue;
-        public Percent CloseRangeDuelingFallbackMult => _CloseRangeDuelingFallbackMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeDuelingFallbackMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CloseRangeDuelingFallbackMult => _CloseRangeDuelingFallbackMult_IsSet ? _recordData.Slice(_CloseRangeDuelingFallbackMultLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeFlankDistance
         private int _CloseRangeFlankDistanceLocation => _CSCRLocation!.Value.Min + 0x8;
         private bool _CloseRangeFlankDistance_IsSet => _CSCRLocation.HasValue;
-        public Percent CloseRangeFlankDistance => _CloseRangeFlankDistance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeFlankDistanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CloseRangeFlankDistance => _CloseRangeFlankDistance_IsSet ? _recordData.Slice(_CloseRangeFlankDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeFlankingStalkTime
         private int _CloseRangeFlankingStalkTimeLocation => _CSCRLocation!.Value.Min + 0xC;
         private bool _CloseRangeFlankingStalkTime_IsSet => _CSCRLocation.HasValue;
-        public Percent CloseRangeFlankingStalkTime => _CloseRangeFlankingStalkTime_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeFlankingStalkTimeLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CloseRangeFlankingStalkTime => _CloseRangeFlankingStalkTime_IsSet ? _recordData.Slice(_CloseRangeFlankingStalkTimeLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeChargeDistance
         private int _CloseRangeChargeDistanceLocation => _CSCRLocation!.Value.Min + 0x10;
         private bool _CloseRangeChargeDistance_IsSet => _CSCRLocation.HasValue;
-        public Percent CloseRangeChargeDistance => _CloseRangeChargeDistance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeChargeDistanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CloseRangeChargeDistance => _CloseRangeChargeDistance_IsSet ? _recordData.Slice(_CloseRangeChargeDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeChargingThrowProbability
         private int _CloseRangeChargingThrowProbabilityLocation => _CSCRLocation!.Value.Min + 0x14;
         private bool _CloseRangeChargingThrowProbability_IsSet => _CSCRLocation.HasValue;
-        public Percent CloseRangeChargingThrowProbability => _CloseRangeChargingThrowProbability_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeChargingThrowProbabilityLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CloseRangeChargingThrowProbability => _CloseRangeChargingThrowProbability_IsSet ? _recordData.Slice(_CloseRangeChargingThrowProbabilityLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeChargingSprintFastProbability
         private int _CloseRangeChargingSprintFastProbabilityLocation => _CSCRLocation!.Value.Min + 0x18;
         private bool _CloseRangeChargingSprintFastProbability_IsSet => _CSCRLocation.HasValue;
-        public Percent CloseRangeChargingSprintFastProbability => _CloseRangeChargingSprintFastProbability_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeChargingSprintFastProbabilityLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CloseRangeChargingSprintFastProbability => _CloseRangeChargingSprintFastProbability_IsSet ? _recordData.Slice(_CloseRangeChargingSprintFastProbabilityLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeChargingSideswipeProbability
         private int _CloseRangeChargingSideswipeProbabilityLocation => _CSCRLocation!.Value.Min + 0x1C;
         private bool _CloseRangeChargingSideswipeProbability_IsSet => _CSCRLocation.HasValue;
-        public Percent CloseRangeChargingSideswipeProbability => _CloseRangeChargingSideswipeProbability_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeChargingSideswipeProbabilityLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CloseRangeChargingSideswipeProbability => _CloseRangeChargingSideswipeProbability_IsSet ? _recordData.Slice(_CloseRangeChargingSideswipeProbabilityLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeChargingDisengageProbability
         private int _CloseRangeChargingDisengageProbabilityLocation => _CSCRLocation!.Value.Min + 0x20;
         private bool _CloseRangeChargingDisengageProbability_IsSet => _CSCRLocation.HasValue;
-        public Percent CloseRangeChargingDisengageProbability => _CloseRangeChargingDisengageProbability_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeChargingDisengageProbabilityLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CloseRangeChargingDisengageProbability => _CloseRangeChargingDisengageProbability_IsSet ? _recordData.Slice(_CloseRangeChargingDisengageProbabilityLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeChargingThrowMaxTargets
         private int _CloseRangeChargingThrowMaxTargetsLocation => _CSCRLocation!.Value.Min + 0x24;
@@ -8456,115 +8261,115 @@ namespace Mutagen.Bethesda.Starfield
         #region CloseRangeFlankingVariance
         private int _CloseRangeFlankingVarianceLocation => _CSCRLocation!.Value.Min + 0x28;
         private bool _CloseRangeFlankingVariance_IsSet => _CSCRLocation.HasValue;
-        public Percent CloseRangeFlankingVariance => _CloseRangeFlankingVariance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeFlankingVarianceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CloseRangeFlankingVariance => _CloseRangeFlankingVariance_IsSet ? _recordData.Slice(_CloseRangeFlankingVarianceLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeRetreatChance
         private int _CloseRangeRetreatChanceLocation => _CSCRLocation!.Value.Min + 0x2C;
         private bool _CloseRangeRetreatChance_IsSet => _CSCRLocation.HasValue;
-        public Percent CloseRangeRetreatChance => _CloseRangeRetreatChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeRetreatChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CloseRangeRetreatChance => _CloseRangeRetreatChance_IsSet ? _recordData.Slice(_CloseRangeRetreatChanceLocation, 4).Float() : default(Single);
         #endregion
         #region CloseRangeRetreatDistanceMult
         private int _CloseRangeRetreatDistanceMultLocation => _CSCRLocation!.Value.Min + 0x30;
         private bool _CloseRangeRetreatDistanceMult_IsSet => _CSCRLocation.HasValue;
-        public Percent CloseRangeRetreatDistanceMult => _CloseRangeRetreatDistanceMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CloseRangeRetreatDistanceMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CloseRangeRetreatDistanceMult => _CloseRangeRetreatDistanceMult_IsSet ? _recordData.Slice(_CloseRangeRetreatDistanceMultLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _CSLRLocation;
         #region LongRangeStrafeMult
         private int _LongRangeStrafeMultLocation => _CSLRLocation!.Value.Min;
         private bool _LongRangeStrafeMult_IsSet => _CSLRLocation.HasValue;
-        public Percent LongRangeStrafeMult => _LongRangeStrafeMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeStrafeMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single LongRangeStrafeMult => _LongRangeStrafeMult_IsSet ? _recordData.Slice(_LongRangeStrafeMultLocation, 4).Float() : default(Single);
         #endregion
         #region LongRangeAdjustRangeMult
         private int _LongRangeAdjustRangeMultLocation => _CSLRLocation!.Value.Min + 0x4;
         private bool _LongRangeAdjustRangeMult_IsSet => _CSLRLocation.HasValue;
-        public Percent LongRangeAdjustRangeMult => _LongRangeAdjustRangeMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeAdjustRangeMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single LongRangeAdjustRangeMult => _LongRangeAdjustRangeMult_IsSet ? _recordData.Slice(_LongRangeAdjustRangeMultLocation, 4).Float() : default(Single);
         #endregion
         #region LongRangeCrouchMult
         private int _LongRangeCrouchMultLocation => _CSLRLocation!.Value.Min + 0x8;
         private bool _LongRangeCrouchMult_IsSet => _CSLRLocation.HasValue;
-        public Percent LongRangeCrouchMult => _LongRangeCrouchMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeCrouchMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single LongRangeCrouchMult => _LongRangeCrouchMult_IsSet ? _recordData.Slice(_LongRangeCrouchMultLocation, 4).Float() : default(Single);
         #endregion
         #region LongRangeWaitMult
         private int _LongRangeWaitMultLocation => _CSLRLocation!.Value.Min + 0xC;
         private bool _LongRangeWaitMult_IsSet => _CSLRLocation.HasValue;
-        public Percent LongRangeWaitMult => _LongRangeWaitMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeWaitMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single LongRangeWaitMult => _LongRangeWaitMult_IsSet ? _recordData.Slice(_LongRangeWaitMultLocation, 4).Float() : default(Single);
         #endregion
         #region LongRangeRangeMult
         private int _LongRangeRangeMultLocation => _CSLRLocation!.Value.Min + 0x10;
         private bool _LongRangeRangeMult_IsSet => _CSLRLocation.HasValue;
-        public Percent LongRangeRangeMult => _LongRangeRangeMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeRangeMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single LongRangeRangeMult => _LongRangeRangeMult_IsSet ? _recordData.Slice(_LongRangeRangeMultLocation, 4).Float() : default(Single);
         #endregion
         #region LongRangeProvideSuppressiveFireMult
         private int _LongRangeProvideSuppressiveFireMultLocation => _CSLRLocation!.Value.Min + 0x14;
         private bool _LongRangeProvideSuppressiveFireMult_IsSet => _CSLRLocation.HasValue;
-        public Percent LongRangeProvideSuppressiveFireMult => _LongRangeProvideSuppressiveFireMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeProvideSuppressiveFireMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single LongRangeProvideSuppressiveFireMult => _LongRangeProvideSuppressiveFireMult_IsSet ? _recordData.Slice(_LongRangeProvideSuppressiveFireMultLocation, 4).Float() : default(Single);
         #endregion
         #region LongRangeRetreatChance
         private int _LongRangeRetreatChanceLocation => _CSLRLocation!.Value.Min + 0x18;
         private bool _LongRangeRetreatChance_IsSet => _CSLRLocation.HasValue;
-        public Percent LongRangeRetreatChance => _LongRangeRetreatChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeRetreatChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single LongRangeRetreatChance => _LongRangeRetreatChance_IsSet ? _recordData.Slice(_LongRangeRetreatChanceLocation, 4).Float() : default(Single);
         #endregion
         #region LongRangeRetreatHideTimeMult
         private int _LongRangeRetreatHideTimeMultLocation => _CSLRLocation!.Value.Min + 0x1C;
         private bool _LongRangeRetreatHideTimeMult_IsSet => _CSLRLocation.HasValue;
-        public Percent LongRangeRetreatHideTimeMult => _LongRangeRetreatHideTimeMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeRetreatHideTimeMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single LongRangeRetreatHideTimeMult => _LongRangeRetreatHideTimeMult_IsSet ? _recordData.Slice(_LongRangeRetreatHideTimeMultLocation, 4).Float() : default(Single);
         #endregion
         #region LongRangeRetreatDistanceMult
         private int _LongRangeRetreatDistanceMultLocation => _CSLRLocation!.Value.Min + 0x20;
         private bool _LongRangeRetreatDistanceMult_IsSet => _CSLRLocation.HasValue;
-        public Percent LongRangeRetreatDistanceMult => _LongRangeRetreatDistanceMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_LongRangeRetreatDistanceMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single LongRangeRetreatDistanceMult => _LongRangeRetreatDistanceMult_IsSet ? _recordData.Slice(_LongRangeRetreatDistanceMultLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _CSCVLocation;
         #region CoverSearchDistanceMult
         private int _CoverSearchDistanceMultLocation => _CSCVLocation!.Value.Min;
         private bool _CoverSearchDistanceMult_IsSet => _CSCVLocation.HasValue;
-        public Percent CoverSearchDistanceMult => _CoverSearchDistanceMult_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CoverSearchDistanceMultLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CoverSearchDistanceMult => _CoverSearchDistanceMult_IsSet ? _recordData.Slice(_CoverSearchDistanceMultLocation, 4).Float() : default(Single);
         #endregion
         #region CoverSearchSuppressionSensitivity
         private int _CoverSearchSuppressionSensitivityLocation => _CSCVLocation!.Value.Min + 0x4;
         private bool _CoverSearchSuppressionSensitivity_IsSet => _CSCVLocation.HasValue;
-        public Percent CoverSearchSuppressionSensitivity => _CoverSearchSuppressionSensitivity_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_CoverSearchSuppressionSensitivityLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single CoverSearchSuppressionSensitivity => _CoverSearchSuppressionSensitivity_IsSet ? _recordData.Slice(_CoverSearchSuppressionSensitivityLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _CSFLLocation;
         #region FlightHoverChance
         private int _FlightHoverChanceLocation => _CSFLLocation!.Value.Min;
         private bool _FlightHoverChance_IsSet => _CSFLLocation.HasValue;
-        public Percent FlightHoverChance => _FlightHoverChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightHoverChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single FlightHoverChance => _FlightHoverChance_IsSet ? _recordData.Slice(_FlightHoverChanceLocation, 4).Float() : default(Single);
         #endregion
         #region FlightDiveBombChance
         private int _FlightDiveBombChanceLocation => _CSFLLocation!.Value.Min + 0x4;
         private bool _FlightDiveBombChance_IsSet => _CSFLLocation.HasValue;
-        public Percent FlightDiveBombChance => _FlightDiveBombChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightDiveBombChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single FlightDiveBombChance => _FlightDiveBombChance_IsSet ? _recordData.Slice(_FlightDiveBombChanceLocation, 4).Float() : default(Single);
         #endregion
         #region FlightGroundAttackChance
         private int _FlightGroundAttackChanceLocation => _CSFLLocation!.Value.Min + 0x8;
         private bool _FlightGroundAttackChance_IsSet => _CSFLLocation.HasValue;
-        public Percent FlightGroundAttackChance => _FlightGroundAttackChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightGroundAttackChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single FlightGroundAttackChance => _FlightGroundAttackChance_IsSet ? _recordData.Slice(_FlightGroundAttackChanceLocation, 4).Float() : default(Single);
         #endregion
         #region FlightHoverTime
         private int _FlightHoverTimeLocation => _CSFLLocation!.Value.Min + 0xC;
         private bool _FlightHoverTime_IsSet => _CSFLLocation.HasValue;
-        public Percent FlightHoverTime => _FlightHoverTime_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightHoverTimeLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single FlightHoverTime => _FlightHoverTime_IsSet ? _recordData.Slice(_FlightHoverTimeLocation, 4).Float() : default(Single);
         #endregion
         #region FlightGroundAttackTime
         private int _FlightGroundAttackTimeLocation => _CSFLLocation!.Value.Min + 0x10;
         private bool _FlightGroundAttackTime_IsSet => _CSFLLocation.HasValue;
-        public Percent FlightGroundAttackTime => _FlightGroundAttackTime_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightGroundAttackTimeLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single FlightGroundAttackTime => _FlightGroundAttackTime_IsSet ? _recordData.Slice(_FlightGroundAttackTimeLocation, 4).Float() : default(Single);
         #endregion
         #region FlightPerchAttackChance
         private int _FlightPerchAttackChanceLocation => _CSFLLocation!.Value.Min + 0x14;
         private bool _FlightPerchAttackChance_IsSet => _CSFLLocation.HasValue;
-        public Percent FlightPerchAttackChance => _FlightPerchAttackChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightPerchAttackChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single FlightPerchAttackChance => _FlightPerchAttackChance_IsSet ? _recordData.Slice(_FlightPerchAttackChanceLocation, 4).Float() : default(Single);
         #endregion
         #region FlightPerchAttackTime
         private int _FlightPerchAttackTimeLocation => _CSFLLocation!.Value.Min + 0x18;
         private bool _FlightPerchAttackTime_IsSet => _CSFLLocation.HasValue;
-        public Percent FlightPerchAttackTime => _FlightPerchAttackTime_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightPerchAttackTimeLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single FlightPerchAttackTime => _FlightPerchAttackTime_IsSet ? _recordData.Slice(_FlightPerchAttackTimeLocation, 4).Float() : default(Single);
         #endregion
         #region FlightFlyingAttackChance
         private int _FlightFlyingAttackChanceLocation => _CSFLLocation!.Value.Min + 0x1C;
         private bool _FlightFlyingAttackChance_IsSet => _CSFLLocation.HasValue;
-        public Percent FlightFlyingAttackChance => _FlightFlyingAttackChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_FlightFlyingAttackChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single FlightFlyingAttackChance => _FlightFlyingAttackChance_IsSet ? _recordData.Slice(_FlightFlyingAttackChanceLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _CSTNLocation;
         #region TunnelCostMult
@@ -8575,7 +8380,7 @@ namespace Mutagen.Bethesda.Starfield
         #region TunnelChance
         private int _TunnelChanceLocation => _CSTNLocation!.Value.Min + 0x4;
         private bool _TunnelChance_IsSet => _CSTNLocation.HasValue;
-        public Percent TunnelChance => _TunnelChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_TunnelChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single TunnelChance => _TunnelChance_IsSet ? _recordData.Slice(_TunnelChanceLocation, 4).Float() : default(Single);
         #endregion
         #region TunnelMaxDistance
         private int _TunnelMaxDistanceLocation => _CSTNLocation!.Value.Min + 0x8;
@@ -8611,17 +8416,17 @@ namespace Mutagen.Bethesda.Starfield
         #region SpaceGeneralPilotSkill
         private int _SpaceGeneralPilotSkillLocation => _CSSGLocation!.Value.Min;
         private bool _SpaceGeneralPilotSkill_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralPilotSkill => _SpaceGeneralPilotSkill_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralPilotSkillLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralPilotSkill => _SpaceGeneralPilotSkill_IsSet ? _recordData.Slice(_SpaceGeneralPilotSkillLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralAccuracy
         private int _SpaceGeneralAccuracyLocation => _CSSGLocation!.Value.Min + 0x4;
         private bool _SpaceGeneralAccuracy_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralAccuracy => _SpaceGeneralAccuracy_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralAccuracyLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralAccuracy => _SpaceGeneralAccuracy_IsSet ? _recordData.Slice(_SpaceGeneralAccuracyLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralTargetShield
         private int _SpaceGeneralTargetShieldLocation => _CSSGLocation!.Value.Min + 0x8;
         private bool _SpaceGeneralTargetShield_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralTargetShield => _SpaceGeneralTargetShield_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralTargetShieldLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralTargetShield => _SpaceGeneralTargetShield_IsSet ? _recordData.Slice(_SpaceGeneralTargetShieldLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralAdjustment
         private int _SpaceGeneralAdjustmentLocation => _CSSGLocation!.Value.Min + 0xC;
@@ -8631,72 +8436,72 @@ namespace Mutagen.Bethesda.Starfield
         #region SpaceGeneralEngageManeuverChanceDirectAttack
         private int _SpaceGeneralEngageManeuverChanceDirectAttackLocation => _CSSGLocation!.Value.Min + 0x10;
         private bool _SpaceGeneralEngageManeuverChanceDirectAttack_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralEngageManeuverChanceDirectAttack => _SpaceGeneralEngageManeuverChanceDirectAttack_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEngageManeuverChanceDirectAttackLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralEngageManeuverChanceDirectAttack => _SpaceGeneralEngageManeuverChanceDirectAttack_IsSet ? _recordData.Slice(_SpaceGeneralEngageManeuverChanceDirectAttackLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralEngageManeuverChancePass
         private int _SpaceGeneralEngageManeuverChancePassLocation => _CSSGLocation!.Value.Min + 0x14;
         private bool _SpaceGeneralEngageManeuverChancePass_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralEngageManeuverChancePass => _SpaceGeneralEngageManeuverChancePass_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEngageManeuverChancePassLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralEngageManeuverChancePass => _SpaceGeneralEngageManeuverChancePass_IsSet ? _recordData.Slice(_SpaceGeneralEngageManeuverChancePassLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralEngageManeuverChanceLeadTurn
         private int _SpaceGeneralEngageManeuverChanceLeadTurnLocation => _CSSGLocation!.Value.Min + 0x18;
         private bool _SpaceGeneralEngageManeuverChanceLeadTurn_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralEngageManeuverChanceLeadTurn => _SpaceGeneralEngageManeuverChanceLeadTurn_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEngageManeuverChanceLeadTurnLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralEngageManeuverChanceLeadTurn => _SpaceGeneralEngageManeuverChanceLeadTurn_IsSet ? _recordData.Slice(_SpaceGeneralEngageManeuverChanceLeadTurnLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralEngageManeuverChanceSlideTurn
         private int _SpaceGeneralEngageManeuverChanceSlideTurnLocation => _CSSGLocation!.Value.Min + 0x1C;
         private bool _SpaceGeneralEngageManeuverChanceSlideTurn_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralEngageManeuverChanceSlideTurn => _SpaceGeneralEngageManeuverChanceSlideTurn_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEngageManeuverChanceSlideTurnLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralEngageManeuverChanceSlideTurn => _SpaceGeneralEngageManeuverChanceSlideTurn_IsSet ? _recordData.Slice(_SpaceGeneralEngageManeuverChanceSlideTurnLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralEngageManeuverChanceBarrelRoll
         private int _SpaceGeneralEngageManeuverChanceBarrelRollLocation => _CSSGLocation!.Value.Min + 0x20;
         private bool _SpaceGeneralEngageManeuverChanceBarrelRoll_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralEngageManeuverChanceBarrelRoll => _SpaceGeneralEngageManeuverChanceBarrelRoll_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEngageManeuverChanceBarrelRollLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralEngageManeuverChanceBarrelRoll => _SpaceGeneralEngageManeuverChanceBarrelRoll_IsSet ? _recordData.Slice(_SpaceGeneralEngageManeuverChanceBarrelRollLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralEvadeManeuverChanceBreak
         private int _SpaceGeneralEvadeManeuverChanceBreakLocation => _CSSGLocation!.Value.Min + 0x24;
         private bool _SpaceGeneralEvadeManeuverChanceBreak_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralEvadeManeuverChanceBreak => _SpaceGeneralEvadeManeuverChanceBreak_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEvadeManeuverChanceBreakLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralEvadeManeuverChanceBreak => _SpaceGeneralEvadeManeuverChanceBreak_IsSet ? _recordData.Slice(_SpaceGeneralEvadeManeuverChanceBreakLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralEvadeManeuverChanceScissors
         private int _SpaceGeneralEvadeManeuverChanceScissorsLocation => _CSSGLocation!.Value.Min + 0x28;
         private bool _SpaceGeneralEvadeManeuverChanceScissors_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralEvadeManeuverChanceScissors => _SpaceGeneralEvadeManeuverChanceScissors_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEvadeManeuverChanceScissorsLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralEvadeManeuverChanceScissors => _SpaceGeneralEvadeManeuverChanceScissors_IsSet ? _recordData.Slice(_SpaceGeneralEvadeManeuverChanceScissorsLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralEvadeManeuverChanceCut
         private int _SpaceGeneralEvadeManeuverChanceCutLocation => _CSSGLocation!.Value.Min + 0x2C;
         private bool _SpaceGeneralEvadeManeuverChanceCut_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralEvadeManeuverChanceCut => _SpaceGeneralEvadeManeuverChanceCut_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEvadeManeuverChanceCutLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralEvadeManeuverChanceCut => _SpaceGeneralEvadeManeuverChanceCut_IsSet ? _recordData.Slice(_SpaceGeneralEvadeManeuverChanceCutLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralEvadeManeuverChanceBoost
         private int _SpaceGeneralEvadeManeuverChanceBoostLocation => _CSSGLocation!.Value.Min + 0x30;
         private bool _SpaceGeneralEvadeManeuverChanceBoost_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralEvadeManeuverChanceBoost => _SpaceGeneralEvadeManeuverChanceBoost_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralEvadeManeuverChanceBoostLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralEvadeManeuverChanceBoost => _SpaceGeneralEvadeManeuverChanceBoost_IsSet ? _recordData.Slice(_SpaceGeneralEvadeManeuverChanceBoostLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralAcquireManeuverChanceSliceback
         private int _SpaceGeneralAcquireManeuverChanceSlicebackLocation => _CSSGLocation!.Value.Min + 0x34;
         private bool _SpaceGeneralAcquireManeuverChanceSliceback_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralAcquireManeuverChanceSliceback => _SpaceGeneralAcquireManeuverChanceSliceback_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralAcquireManeuverChanceSlicebackLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralAcquireManeuverChanceSliceback => _SpaceGeneralAcquireManeuverChanceSliceback_IsSet ? _recordData.Slice(_SpaceGeneralAcquireManeuverChanceSlicebackLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralAcquireManeuverChanceStrafeTurn
         private int _SpaceGeneralAcquireManeuverChanceStrafeTurnLocation => _CSSGLocation!.Value.Min + 0x38;
         private bool _SpaceGeneralAcquireManeuverChanceStrafeTurn_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralAcquireManeuverChanceStrafeTurn => _SpaceGeneralAcquireManeuverChanceStrafeTurn_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralAcquireManeuverChanceStrafeTurnLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralAcquireManeuverChanceStrafeTurn => _SpaceGeneralAcquireManeuverChanceStrafeTurn_IsSet ? _recordData.Slice(_SpaceGeneralAcquireManeuverChanceStrafeTurnLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralAcquireManeuverChanceAcquire
         private int _SpaceGeneralAcquireManeuverChanceAcquireLocation => _CSSGLocation!.Value.Min + 0x3C;
         private bool _SpaceGeneralAcquireManeuverChanceAcquire_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralAcquireManeuverChanceAcquire => _SpaceGeneralAcquireManeuverChanceAcquire_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralAcquireManeuverChanceAcquireLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralAcquireManeuverChanceAcquire => _SpaceGeneralAcquireManeuverChanceAcquire_IsSet ? _recordData.Slice(_SpaceGeneralAcquireManeuverChanceAcquireLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralAcquireManeuverChanceTurn
         private int _SpaceGeneralAcquireManeuverChanceTurnLocation => _CSSGLocation!.Value.Min + 0x40;
         private bool _SpaceGeneralAcquireManeuverChanceTurn_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralAcquireManeuverChanceTurn => _SpaceGeneralAcquireManeuverChanceTurn_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralAcquireManeuverChanceTurnLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralAcquireManeuverChanceTurn => _SpaceGeneralAcquireManeuverChanceTurn_IsSet ? _recordData.Slice(_SpaceGeneralAcquireManeuverChanceTurnLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralDisengageManeuverChance
         private int _SpaceGeneralDisengageManeuverChanceLocation => _CSSGLocation!.Value.Min + 0x44;
         private bool _SpaceGeneralDisengageManeuverChance_IsSet => _CSSGLocation.HasValue;
-        public Percent SpaceGeneralDisengageManeuverChance => _SpaceGeneralDisengageManeuverChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceGeneralDisengageManeuverChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceGeneralDisengageManeuverChance => _SpaceGeneralDisengageManeuverChance_IsSet ? _recordData.Slice(_SpaceGeneralDisengageManeuverChanceLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceGeneralMissileSeekingStrength
         private int _SpaceGeneralMissileSeekingStrengthLocation => _CSSGLocation!.Value.Min + 0x48;
@@ -8746,17 +8551,17 @@ namespace Mutagen.Bethesda.Starfield
         #region SpaceRepairDamageThreshold
         private int _SpaceRepairDamageThresholdLocation => _CSSRLocation!.Value.Min;
         private bool _SpaceRepairDamageThreshold_IsSet => _CSSRLocation.HasValue;
-        public Percent SpaceRepairDamageThreshold => _SpaceRepairDamageThreshold_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceRepairDamageThresholdLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceRepairDamageThreshold => _SpaceRepairDamageThreshold_IsSet ? _recordData.Slice(_SpaceRepairDamageThresholdLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceRepairFarawayDistance
         private int _SpaceRepairFarawayDistanceLocation => _CSSRLocation!.Value.Min + 0x4;
         private bool _SpaceRepairFarawayDistance_IsSet => _CSSRLocation.HasValue;
-        public Percent SpaceRepairFarawayDistance => _SpaceRepairFarawayDistance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceRepairFarawayDistanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceRepairFarawayDistance => _SpaceRepairFarawayDistance_IsSet ? _recordData.Slice(_SpaceRepairFarawayDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceRepairPowerToUse
         private int _SpaceRepairPowerToUseLocation => _CSSRLocation!.Value.Min + 0x8;
         private bool _SpaceRepairPowerToUse_IsSet => _CSSRLocation.HasValue;
-        public Percent SpaceRepairPowerToUse => _SpaceRepairPowerToUse_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceRepairPowerToUseLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceRepairPowerToUse => _SpaceRepairPowerToUse_IsSet ? _recordData.Slice(_SpaceRepairPowerToUseLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceRepairInClosePowerWeightingTables
         private int _SpaceRepairInClosePowerWeightingTablesLocation => _CSSRLocation!.Value.Min + 0xC;
@@ -8774,7 +8579,7 @@ namespace Mutagen.Bethesda.Starfield
         #region SpaceApproachingMinDistance
         private int _SpaceApproachingMinDistanceLocation => _CSSALocation!.Value.Min;
         private bool _SpaceApproachingMinDistance_IsSet => _CSSALocation.HasValue;
-        public Percent SpaceApproachingMinDistance => _SpaceApproachingMinDistance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_SpaceApproachingMinDistanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single SpaceApproachingMinDistance => _SpaceApproachingMinDistance_IsSet ? _recordData.Slice(_SpaceApproachingMinDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region SpaceApproachingWeighting
         private int _SpaceApproachingWeightingLocation => _CSSALocation!.Value.Min + 0x4;

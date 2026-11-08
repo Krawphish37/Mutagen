@@ -99,7 +99,7 @@ namespace Mutagen.Bethesda.Starfield
         public Single EdgeEffectAlphaFadeOutTime { get; set; } = default(Single);
         #endregion
         #region EdgeEffectPersistentAlphaRatio
-        public Percent EdgeEffectPersistentAlphaRatio { get; set; } = default(Percent);
+        public Single EdgeEffectPersistentAlphaRatio { get; set; } = default(Single);
         #endregion
         #region EdgeEffectAlphaPulseAmplitude
         public Single EdgeEffectAlphaPulseAmplitude { get; set; } = default(Single);
@@ -108,7 +108,7 @@ namespace Mutagen.Bethesda.Starfield
         public Single EdgeEffectAlphaPulseFrequency { get; set; } = default(Single);
         #endregion
         #region EdgeEffectFullAlphaRatio
-        public Percent EdgeEffectFullAlphaRatio { get; set; } = default(Percent);
+        public Single EdgeEffectFullAlphaRatio { get; set; } = default(Single);
         #endregion
         #region HolesAlphaTestAnimationStartTime
         public Single HolesAlphaTestAnimationStartTime { get; set; } = default(Single);
@@ -1200,10 +1200,10 @@ namespace Mutagen.Bethesda.Starfield
         new Single EdgeEffectAlphaFadeInTime { get; set; }
         new Single EdgeEffectFullAlphaTime { get; set; }
         new Single EdgeEffectAlphaFadeOutTime { get; set; }
-        new Percent EdgeEffectPersistentAlphaRatio { get; set; }
+        new Single EdgeEffectPersistentAlphaRatio { get; set; }
         new Single EdgeEffectAlphaPulseAmplitude { get; set; }
         new Single EdgeEffectAlphaPulseFrequency { get; set; }
-        new Percent EdgeEffectFullAlphaRatio { get; set; }
+        new Single EdgeEffectFullAlphaRatio { get; set; }
         new Single HolesAlphaTestAnimationStartTime { get; set; }
         new Single HolesAlphaTestAnimationStopTime { get; set; }
         new Single HolesAlphaTestAnimationStartValue { get; set; }
@@ -1242,10 +1242,10 @@ namespace Mutagen.Bethesda.Starfield
         Single EdgeEffectAlphaFadeInTime { get; }
         Single EdgeEffectFullAlphaTime { get; }
         Single EdgeEffectAlphaFadeOutTime { get; }
-        Percent EdgeEffectPersistentAlphaRatio { get; }
+        Single EdgeEffectPersistentAlphaRatio { get; }
         Single EdgeEffectAlphaPulseAmplitude { get; }
         Single EdgeEffectAlphaPulseFrequency { get; }
-        Percent EdgeEffectFullAlphaRatio { get; }
+        Single EdgeEffectFullAlphaRatio { get; }
         Single HolesAlphaTestAnimationStartTime { get; }
         Single HolesAlphaTestAnimationStopTime { get; }
         Single HolesAlphaTestAnimationStartValue { get; }
@@ -1562,10 +1562,10 @@ namespace Mutagen.Bethesda.Starfield
             item.EdgeEffectAlphaFadeInTime = default(Single);
             item.EdgeEffectFullAlphaTime = default(Single);
             item.EdgeEffectAlphaFadeOutTime = default(Single);
-            item.EdgeEffectPersistentAlphaRatio = default(Percent);
+            item.EdgeEffectPersistentAlphaRatio = default(Single);
             item.EdgeEffectAlphaPulseAmplitude = default(Single);
             item.EdgeEffectAlphaPulseFrequency = default(Single);
-            item.EdgeEffectFullAlphaRatio = default(Percent);
+            item.EdgeEffectFullAlphaRatio = default(Single);
             item.HolesAlphaTestAnimationStartTime = default(Single);
             item.HolesAlphaTestAnimationStopTime = default(Single);
             item.HolesAlphaTestAnimationStartValue = default(Single);
@@ -1704,10 +1704,10 @@ namespace Mutagen.Bethesda.Starfield
             ret.EdgeEffectAlphaFadeInTime = item.EdgeEffectAlphaFadeInTime.EqualsWithin(rhs.EdgeEffectAlphaFadeInTime);
             ret.EdgeEffectFullAlphaTime = item.EdgeEffectFullAlphaTime.EqualsWithin(rhs.EdgeEffectFullAlphaTime);
             ret.EdgeEffectAlphaFadeOutTime = item.EdgeEffectAlphaFadeOutTime.EqualsWithin(rhs.EdgeEffectAlphaFadeOutTime);
-            ret.EdgeEffectPersistentAlphaRatio = item.EdgeEffectPersistentAlphaRatio.Equals(rhs.EdgeEffectPersistentAlphaRatio);
+            ret.EdgeEffectPersistentAlphaRatio = item.EdgeEffectPersistentAlphaRatio.EqualsWithin(rhs.EdgeEffectPersistentAlphaRatio);
             ret.EdgeEffectAlphaPulseAmplitude = item.EdgeEffectAlphaPulseAmplitude.EqualsWithin(rhs.EdgeEffectAlphaPulseAmplitude);
             ret.EdgeEffectAlphaPulseFrequency = item.EdgeEffectAlphaPulseFrequency.EqualsWithin(rhs.EdgeEffectAlphaPulseFrequency);
-            ret.EdgeEffectFullAlphaRatio = item.EdgeEffectFullAlphaRatio.Equals(rhs.EdgeEffectFullAlphaRatio);
+            ret.EdgeEffectFullAlphaRatio = item.EdgeEffectFullAlphaRatio.EqualsWithin(rhs.EdgeEffectFullAlphaRatio);
             ret.HolesAlphaTestAnimationStartTime = item.HolesAlphaTestAnimationStartTime.EqualsWithin(rhs.HolesAlphaTestAnimationStartTime);
             ret.HolesAlphaTestAnimationStopTime = item.HolesAlphaTestAnimationStopTime.EqualsWithin(rhs.HolesAlphaTestAnimationStopTime);
             ret.HolesAlphaTestAnimationStartValue = item.HolesAlphaTestAnimationStartValue.EqualsWithin(rhs.HolesAlphaTestAnimationStartValue);
@@ -1936,7 +1936,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)EffectShader_FieldIndex.EdgeEffectPersistentAlphaRatio) ?? true))
             {
-                if (!lhs.EdgeEffectPersistentAlphaRatio.Equals(rhs.EdgeEffectPersistentAlphaRatio)) return false;
+                if (!lhs.EdgeEffectPersistentAlphaRatio.EqualsWithin(rhs.EdgeEffectPersistentAlphaRatio)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)EffectShader_FieldIndex.EdgeEffectAlphaPulseAmplitude) ?? true))
             {
@@ -1948,7 +1948,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)EffectShader_FieldIndex.EdgeEffectFullAlphaRatio) ?? true))
             {
-                if (!lhs.EdgeEffectFullAlphaRatio.Equals(rhs.EdgeEffectFullAlphaRatio)) return false;
+                if (!lhs.EdgeEffectFullAlphaRatio.EqualsWithin(rhs.EdgeEffectFullAlphaRatio)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)EffectShader_FieldIndex.HolesAlphaTestAnimationStartTime) ?? true))
             {
@@ -2544,20 +2544,18 @@ namespace Mutagen.Bethesda.Starfield
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.EdgeEffectAlphaFadeOutTime);
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.EdgeEffectPersistentAlphaRatio,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.EdgeEffectPersistentAlphaRatio);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.EdgeEffectAlphaPulseAmplitude);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.EdgeEffectAlphaPulseFrequency);
-                PercentBinaryTranslation.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.EdgeEffectFullAlphaRatio,
-                    integerType: FloatIntegerType.UInt);
+                    item: item.EdgeEffectFullAlphaRatio);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.HolesAlphaTestAnimationStartTime);
@@ -2692,17 +2690,13 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 4) return null;
                     item.EdgeEffectAlphaFadeOutTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.EdgeEffectPersistentAlphaRatio = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.EdgeEffectPersistentAlphaRatio = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.EdgeEffectAlphaPulseAmplitude = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.EdgeEffectAlphaPulseFrequency = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.EdgeEffectFullAlphaRatio = PercentBinaryTranslation.Parse(
-                        reader: dataFrame,
-                        integerType: FloatIntegerType.UInt);
+                    item.EdgeEffectFullAlphaRatio = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.HolesAlphaTestAnimationStartTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -2828,7 +2822,7 @@ namespace Mutagen.Bethesda.Starfield
         #region EdgeEffectPersistentAlphaRatio
         private int _EdgeEffectPersistentAlphaRatioLocation => _DNAMLocation!.Value.Min + 0x14;
         private bool _EdgeEffectPersistentAlphaRatio_IsSet => _DNAMLocation.HasValue;
-        public Percent EdgeEffectPersistentAlphaRatio => _EdgeEffectPersistentAlphaRatio_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_EdgeEffectPersistentAlphaRatioLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single EdgeEffectPersistentAlphaRatio => _EdgeEffectPersistentAlphaRatio_IsSet ? _recordData.Slice(_EdgeEffectPersistentAlphaRatioLocation, 4).Float() : default(Single);
         #endregion
         #region EdgeEffectAlphaPulseAmplitude
         private int _EdgeEffectAlphaPulseAmplitudeLocation => _DNAMLocation!.Value.Min + 0x18;
@@ -2843,7 +2837,7 @@ namespace Mutagen.Bethesda.Starfield
         #region EdgeEffectFullAlphaRatio
         private int _EdgeEffectFullAlphaRatioLocation => _DNAMLocation!.Value.Min + 0x20;
         private bool _EdgeEffectFullAlphaRatio_IsSet => _DNAMLocation.HasValue;
-        public Percent EdgeEffectFullAlphaRatio => _EdgeEffectFullAlphaRatio_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_EdgeEffectFullAlphaRatioLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        public Single EdgeEffectFullAlphaRatio => _EdgeEffectFullAlphaRatio_IsSet ? _recordData.Slice(_EdgeEffectFullAlphaRatioLocation, 4).Float() : default(Single);
         #endregion
         #region HolesAlphaTestAnimationStartTime
         private int _HolesAlphaTestAnimationStartTimeLocation => _DNAMLocation!.Value.Min + 0x24;
