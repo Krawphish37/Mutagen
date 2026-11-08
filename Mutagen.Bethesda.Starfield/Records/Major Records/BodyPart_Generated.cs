@@ -2216,14 +2216,14 @@ namespace Mutagen.Bethesda.Starfield
                 PercentBinaryTranslation.Write(
                     writer: writer,
                     item: item.HealthPercent,
-                    integerType: FloatIntegerType.Byte);
+                    integerType: FloatIntegerType.ByteHundred);
                 FormLinkBinaryTranslation.Instance.Write(
                     writer: writer,
                     item: item.ActorValue);
                 PercentBinaryTranslation.Write(
                     writer: writer,
                     item: item.ToHitChance,
-                    integerType: FloatIntegerType.Byte);
+                    integerType: FloatIntegerType.ByteHundred);
                 FormLinkBinaryTranslation.Instance.Write(
                     writer: writer,
                     item: item.OnCrippleArtObject);
@@ -2360,13 +2360,13 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 1) return null;
                     item.HealthPercent = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
-                        integerType: FloatIntegerType.Byte);
+                        integerType: FloatIntegerType.ByteHundred);
                     if (dataFrame.Remaining < 4) return null;
                     item.ActorValue.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     if (dataFrame.Remaining < 1) return null;
                     item.ToHitChance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
-                        integerType: FloatIntegerType.Byte);
+                        integerType: FloatIntegerType.ByteHundred);
                     if (dataFrame.Remaining < 4) return null;
                     item.OnCrippleArtObject.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     if (dataFrame.Remaining < 4) return null;
@@ -2539,7 +2539,7 @@ namespace Mutagen.Bethesda.Starfield
         #region HealthPercent
         private int _HealthPercentLocation => _BPD2Location!.Value.Min + 0x6;
         private bool _HealthPercent_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _HealthPercentLocation + 1 >= 1;
-        public Percent HealthPercent => _HealthPercent_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_HealthPercentLocation, 1), FloatIntegerType.Byte) : default(Percent);
+        public Percent HealthPercent => _HealthPercent_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_HealthPercentLocation, 1), FloatIntegerType.ByteHundred) : default(Percent);
         #endregion
         #region ActorValue
         private int _ActorValueLocation => _BPD2Location!.Value.Min + 0x7;
@@ -2549,7 +2549,7 @@ namespace Mutagen.Bethesda.Starfield
         #region ToHitChance
         private int _ToHitChanceLocation => _BPD2Location!.Value.Min + 0xB;
         private bool _ToHitChance_IsSet => _BPD2Location.HasValue && _BPD2Location!.Value.Max - _ToHitChanceLocation + 1 >= 1;
-        public Percent ToHitChance => _ToHitChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_ToHitChanceLocation, 1), FloatIntegerType.Byte) : default(Percent);
+        public Percent ToHitChance => _ToHitChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_ToHitChanceLocation, 1), FloatIntegerType.ByteHundred) : default(Percent);
         #endregion
         #region OnCrippleArtObject
         private int _OnCrippleArtObjectLocation => _BPD2Location!.Value.Min + 0xC;

@@ -2085,7 +2085,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.FarHeightMid);
             hash.Add(item.FarHeightRange);
             hash.Add(item.InteriorType);
-            hash.Add(item.InteriorTypeUnused);
+            hash.AddBytes(item.InteriorTypeUnused);
             return hash.ToHashCode();
         }
         

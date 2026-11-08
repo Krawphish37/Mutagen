@@ -1003,7 +1003,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.IntensityAmplitude);
             hash.Add(item.MovementAmplitude);
             hash.Add(item.FlickerEffect);
-            hash.Add(item.FlickerEffectUnused);
+            hash.AddBytes(item.FlickerEffectUnused);
             return hash.ToHashCode();
         }
         

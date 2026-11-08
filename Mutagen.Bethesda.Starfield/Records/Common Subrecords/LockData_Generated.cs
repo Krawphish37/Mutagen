@@ -1070,10 +1070,10 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Level);
-            hash.Add(item.LevelUnused);
+            hash.AddBytes(item.LevelUnused);
             hash.Add(item.Key);
             hash.Add(item.Flags);
-            hash.Add(item.FlagsUnused);
+            hash.AddBytes(item.FlagsUnused);
             hash.Add(item.Unknown);
             return hash.ToHashCode();
         }
