@@ -2,10 +2,12 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="LockData" objType="Subrecord" recordType="XLOC">
     <Fields>
-      <Enum name="Level" enumName="LockLevel" byteLength="4" />
+      <Enum name="Level" enumName="LockLevel" byteLength="1" />
+      <ByteArray name="LevelUnused" byteLength="3" nullable="False" />
       <FormLink name="Key" refName="Key" />
-      <Enum name="Flags" enumName="LockData.Flag" byteLength="4" />
-      <Int32 name="Unused" unknown="true" />
+      <Enum name="Flags" enumName="LockData.Flag" byteLength="1" />
+      <ByteArray name="FlagsUnused" byteLength="3" nullable="False" />
+      <Int32 name="Unknown" unknown="true" />
     </Fields>
   </Object>
 </Loqui>
