@@ -10,17 +10,24 @@ namespace Mutagen.Bethesda.Starfield;
 
 public partial class Scene
 {
+    // Starfield's scene flags (FNAM), as in xEdit's Starfield definitions; the list was Fallout 4's from bit 2 up
     [Flags]
     public enum Flag
     {
         BeginOnQuestStart = 0x0001,
         StopOnQuestEnd = 0x0002,
-        ShowAllText = 0x0004,
-        RepeatConditionsWhileTrue = 0x0008,
-        Interruptable = 0x0010,
-        PreventPlayerExitDialogue = 0x0040,
-        DisableDialogueCamera = 0x0800,
-        NoFollowerIdleChatter = 0x1000,
+        TopLevelTopicsOnEnd = 0x0004,
+        Interruptable = 0x0008,
+        PlayerDialogue = 0x0010,
+        PreventPlayerExitDialogue = 0x0020,
+        SpeechChallenge = 0x0100,
+        AllowDisableDialogueCamera = 0x0400,
+        NoFollowerIdleChatter = 0x0800,
+        Greeting = 0x1000,
+        TopLevel = 0x2000,
+        ForcePrimaryActorAlias = 0x4000,
+        Hailing = 0x8000,
+        ShipDialogueOnly = 0x1_0000,
     }
 }
 
