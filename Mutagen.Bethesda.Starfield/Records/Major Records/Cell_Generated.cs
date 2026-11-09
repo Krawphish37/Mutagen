@@ -181,17 +181,6 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region WaterData
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _WaterData;
-        public MemorySlice<Byte>? WaterData
-        {
-            get => this._WaterData;
-            set => this._WaterData = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ICellGetter.WaterData => this.WaterData;
-        #endregion
         #region CellSkyRegion
         private readonly IFormLinkNullable<IRegionGetter> _CellSkyRegion = new FormLinkNullable<IRegionGetter>();
         public IFormLinkNullable<IRegionGetter> CellSkyRegion
@@ -252,16 +241,19 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region WaterVelocity
+        #region WaterCurrentVelocities
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private CellWaterVelocity? _WaterVelocity;
-        public CellWaterVelocity? WaterVelocity
+        private ExtendedList<WaterCurrentVelocity>? _WaterCurrentVelocities;
+        public ExtendedList<WaterCurrentVelocity>? WaterCurrentVelocities
         {
-            get => _WaterVelocity;
-            set => _WaterVelocity = value;
+            get => this._WaterCurrentVelocities;
+            set => this._WaterCurrentVelocities = value;
         }
+        #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ICellWaterVelocityGetter? ICellGetter.WaterVelocity => this.WaterVelocity;
+        IReadOnlyList<IWaterCurrentVelocityGetter>? ICellGetter.WaterCurrentVelocities => _WaterCurrentVelocities;
+        #endregion
+
         #endregion
         #region AcousticSpace
         private readonly IFormLinkNullable<IAcousticSpaceGetter> _AcousticSpace = new FormLinkNullable<IAcousticSpaceGetter>();
@@ -462,14 +454,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.WaterHeight = initialValue;
                 this.XILS = initialValue;
                 this.XCLAs = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CellXCLAItem.Mask<TItem>?>>?>(initialValue, []);
-                this.WaterData = initialValue;
                 this.CellSkyRegion = initialValue;
                 this.Ownership = new MaskItem<TItem, Ownership.Mask<TItem>?>(initialValue, new Ownership.Mask<TItem>(initialValue));
                 this.Location = initialValue;
                 this.Water = initialValue;
                 this.WaterType = initialValue;
                 this.ShipBlueprintSnapLinks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CellShipBlueprintSnapLink.Mask<TItem>?>>?>(initialValue, []);
-                this.WaterVelocity = new MaskItem<TItem, CellWaterVelocity.Mask<TItem>?>(initialValue, new CellWaterVelocity.Mask<TItem>(initialValue));
+                this.WaterCurrentVelocities = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WaterCurrentVelocity.Mask<TItem>?>>?>(initialValue, []);
                 this.AcousticSpace = initialValue;
                 this.ImageSpace = initialValue;
                 this.WaterEnvironmentMap = initialValue;
@@ -512,14 +503,13 @@ namespace Mutagen.Bethesda.Starfield
                 TItem WaterHeight,
                 TItem XILS,
                 TItem XCLAs,
-                TItem WaterData,
                 TItem CellSkyRegion,
                 TItem Ownership,
                 TItem Location,
                 TItem Water,
                 TItem WaterType,
                 TItem ShipBlueprintSnapLinks,
-                TItem WaterVelocity,
+                TItem WaterCurrentVelocities,
                 TItem AcousticSpace,
                 TItem ImageSpace,
                 TItem WaterEnvironmentMap,
@@ -561,14 +551,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.WaterHeight = WaterHeight;
                 this.XILS = XILS;
                 this.XCLAs = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CellXCLAItem.Mask<TItem>?>>?>(XCLAs, []);
-                this.WaterData = WaterData;
                 this.CellSkyRegion = CellSkyRegion;
                 this.Ownership = new MaskItem<TItem, Ownership.Mask<TItem>?>(Ownership, new Ownership.Mask<TItem>(Ownership));
                 this.Location = Location;
                 this.Water = Water;
                 this.WaterType = WaterType;
                 this.ShipBlueprintSnapLinks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CellShipBlueprintSnapLink.Mask<TItem>?>>?>(ShipBlueprintSnapLinks, []);
-                this.WaterVelocity = new MaskItem<TItem, CellWaterVelocity.Mask<TItem>?>(WaterVelocity, new CellWaterVelocity.Mask<TItem>(WaterVelocity));
+                this.WaterCurrentVelocities = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WaterCurrentVelocity.Mask<TItem>?>>?>(WaterCurrentVelocities, []);
                 this.AcousticSpace = AcousticSpace;
                 this.ImageSpace = ImageSpace;
                 this.WaterEnvironmentMap = WaterEnvironmentMap;
@@ -612,14 +601,13 @@ namespace Mutagen.Bethesda.Starfield
             public TItem WaterHeight;
             public TItem XILS;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CellXCLAItem.Mask<TItem>?>>?>? XCLAs;
-            public TItem WaterData;
             public TItem CellSkyRegion;
             public MaskItem<TItem, Ownership.Mask<TItem>?>? Ownership { get; set; }
             public TItem Location;
             public TItem Water;
             public TItem WaterType;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CellShipBlueprintSnapLink.Mask<TItem>?>>?>? ShipBlueprintSnapLinks;
-            public MaskItem<TItem, CellWaterVelocity.Mask<TItem>?>? WaterVelocity { get; set; }
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WaterCurrentVelocity.Mask<TItem>?>>?>? WaterCurrentVelocities;
             public TItem AcousticSpace;
             public TItem ImageSpace;
             public TItem WaterEnvironmentMap;
@@ -665,14 +653,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.WaterHeight, rhs.WaterHeight)) return false;
                 if (!object.Equals(this.XILS, rhs.XILS)) return false;
                 if (!object.Equals(this.XCLAs, rhs.XCLAs)) return false;
-                if (!object.Equals(this.WaterData, rhs.WaterData)) return false;
                 if (!object.Equals(this.CellSkyRegion, rhs.CellSkyRegion)) return false;
                 if (!object.Equals(this.Ownership, rhs.Ownership)) return false;
                 if (!object.Equals(this.Location, rhs.Location)) return false;
                 if (!object.Equals(this.Water, rhs.Water)) return false;
                 if (!object.Equals(this.WaterType, rhs.WaterType)) return false;
                 if (!object.Equals(this.ShipBlueprintSnapLinks, rhs.ShipBlueprintSnapLinks)) return false;
-                if (!object.Equals(this.WaterVelocity, rhs.WaterVelocity)) return false;
+                if (!object.Equals(this.WaterCurrentVelocities, rhs.WaterCurrentVelocities)) return false;
                 if (!object.Equals(this.AcousticSpace, rhs.AcousticSpace)) return false;
                 if (!object.Equals(this.ImageSpace, rhs.ImageSpace)) return false;
                 if (!object.Equals(this.WaterEnvironmentMap, rhs.WaterEnvironmentMap)) return false;
@@ -710,14 +697,13 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.WaterHeight);
                 hash.Add(this.XILS);
                 hash.Add(this.XCLAs);
-                hash.Add(this.WaterData);
                 hash.Add(this.CellSkyRegion);
                 hash.Add(this.Ownership);
                 hash.Add(this.Location);
                 hash.Add(this.Water);
                 hash.Add(this.WaterType);
                 hash.Add(this.ShipBlueprintSnapLinks);
-                hash.Add(this.WaterVelocity);
+                hash.Add(this.WaterCurrentVelocities);
                 hash.Add(this.AcousticSpace);
                 hash.Add(this.ImageSpace);
                 hash.Add(this.WaterEnvironmentMap);
@@ -794,7 +780,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.WaterData)) return false;
                 if (!eval(this.CellSkyRegion)) return false;
                 if (Ownership != null)
                 {
@@ -816,10 +801,17 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (WaterVelocity != null)
+                if (this.WaterCurrentVelocities != null)
                 {
-                    if (!eval(this.WaterVelocity.Overall)) return false;
-                    if (this.WaterVelocity.Specific != null && !this.WaterVelocity.Specific.All(eval)) return false;
+                    if (!eval(this.WaterCurrentVelocities.Overall)) return false;
+                    if (this.WaterCurrentVelocities.Specific != null)
+                    {
+                        foreach (var item in this.WaterCurrentVelocities.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
                 }
                 if (!eval(this.AcousticSpace)) return false;
                 if (!eval(this.ImageSpace)) return false;
@@ -950,7 +942,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.WaterData)) return true;
                 if (eval(this.CellSkyRegion)) return true;
                 if (Ownership != null)
                 {
@@ -972,10 +963,17 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (WaterVelocity != null)
+                if (this.WaterCurrentVelocities != null)
                 {
-                    if (eval(this.WaterVelocity.Overall)) return true;
-                    if (this.WaterVelocity.Specific != null && this.WaterVelocity.Specific.Any(eval)) return true;
+                    if (eval(this.WaterCurrentVelocities.Overall)) return true;
+                    if (this.WaterCurrentVelocities.Specific != null)
+                    {
+                        foreach (var item in this.WaterCurrentVelocities.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
                 }
                 if (eval(this.AcousticSpace)) return true;
                 if (eval(this.ImageSpace)) return true;
@@ -1107,7 +1105,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.WaterData = eval(this.WaterData);
                 obj.CellSkyRegion = eval(this.CellSkyRegion);
                 obj.Ownership = this.Ownership == null ? null : new MaskItem<R, Ownership.Mask<R>?>(eval(this.Ownership.Overall), this.Ownership.Specific?.Translate(eval));
                 obj.Location = eval(this.Location);
@@ -1128,7 +1125,21 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.WaterVelocity = this.WaterVelocity == null ? null : new MaskItem<R, CellWaterVelocity.Mask<R>?>(eval(this.WaterVelocity.Overall), this.WaterVelocity.Specific?.Translate(eval));
+                if (WaterCurrentVelocities != null)
+                {
+                    obj.WaterCurrentVelocities = new MaskItem<R, IEnumerable<MaskItemIndexed<R, WaterCurrentVelocity.Mask<R>?>>?>(eval(this.WaterCurrentVelocities.Overall), []);
+                    if (WaterCurrentVelocities.Specific != null)
+                    {
+                        var l = new List<MaskItemIndexed<R, WaterCurrentVelocity.Mask<R>?>>();
+                        obj.WaterCurrentVelocities.Specific = l;
+                        foreach (var item in WaterCurrentVelocities.Specific)
+                        {
+                            MaskItemIndexed<R, WaterCurrentVelocity.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, WaterCurrentVelocity.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
+                        }
+                    }
+                }
                 obj.AcousticSpace = eval(this.AcousticSpace);
                 obj.ImageSpace = eval(this.ImageSpace);
                 obj.WaterEnvironmentMap = eval(this.WaterEnvironmentMap);
@@ -1311,10 +1322,6 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.WaterData ?? true)
-                    {
-                        sb.AppendItem(WaterData, "WaterData");
-                    }
                     if (printMask?.CellSkyRegion ?? true)
                     {
                         sb.AppendItem(CellSkyRegion, "CellSkyRegion");
@@ -1354,9 +1361,24 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.WaterVelocity?.Overall ?? true)
+                    if ((printMask?.WaterCurrentVelocities?.Overall ?? true)
+                        && WaterCurrentVelocities is {} WaterCurrentVelocitiesItem)
                     {
-                        WaterVelocity?.Print(sb);
+                        sb.AppendLine("WaterCurrentVelocities =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(WaterCurrentVelocitiesItem.Overall);
+                            if (WaterCurrentVelocitiesItem.Specific != null)
+                            {
+                                foreach (var subItem in WaterCurrentVelocitiesItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        subItem?.Print(sb);
+                                    }
+                                }
+                            }
+                        }
                     }
                     if (printMask?.AcousticSpace ?? true)
                     {
@@ -1542,14 +1564,13 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? WaterHeight;
             public Exception? XILS;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellXCLAItem.ErrorMask?>>?>? XCLAs;
-            public Exception? WaterData;
             public Exception? CellSkyRegion;
             public MaskItem<Exception?, Ownership.ErrorMask?>? Ownership;
             public Exception? Location;
             public Exception? Water;
             public Exception? WaterType;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellShipBlueprintSnapLink.ErrorMask?>>?>? ShipBlueprintSnapLinks;
-            public MaskItem<Exception?, CellWaterVelocity.ErrorMask?>? WaterVelocity;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WaterCurrentVelocity.ErrorMask?>>?>? WaterCurrentVelocities;
             public Exception? AcousticSpace;
             public Exception? ImageSpace;
             public Exception? WaterEnvironmentMap;
@@ -1600,8 +1621,6 @@ namespace Mutagen.Bethesda.Starfield
                         return XILS;
                     case Cell_FieldIndex.XCLAs:
                         return XCLAs;
-                    case Cell_FieldIndex.WaterData:
-                        return WaterData;
                     case Cell_FieldIndex.CellSkyRegion:
                         return CellSkyRegion;
                     case Cell_FieldIndex.Ownership:
@@ -1614,8 +1633,8 @@ namespace Mutagen.Bethesda.Starfield
                         return WaterType;
                     case Cell_FieldIndex.ShipBlueprintSnapLinks:
                         return ShipBlueprintSnapLinks;
-                    case Cell_FieldIndex.WaterVelocity:
-                        return WaterVelocity;
+                    case Cell_FieldIndex.WaterCurrentVelocities:
+                        return WaterCurrentVelocities;
                     case Cell_FieldIndex.AcousticSpace:
                         return AcousticSpace;
                     case Cell_FieldIndex.ImageSpace:
@@ -1700,9 +1719,6 @@ namespace Mutagen.Bethesda.Starfield
                     case Cell_FieldIndex.XCLAs:
                         this.XCLAs = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellXCLAItem.ErrorMask?>>?>(ex, null);
                         break;
-                    case Cell_FieldIndex.WaterData:
-                        this.WaterData = ex;
-                        break;
                     case Cell_FieldIndex.CellSkyRegion:
                         this.CellSkyRegion = ex;
                         break;
@@ -1721,8 +1737,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Cell_FieldIndex.ShipBlueprintSnapLinks:
                         this.ShipBlueprintSnapLinks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellShipBlueprintSnapLink.ErrorMask?>>?>(ex, null);
                         break;
-                    case Cell_FieldIndex.WaterVelocity:
-                        this.WaterVelocity = new MaskItem<Exception?, CellWaterVelocity.ErrorMask?>(ex, null);
+                    case Cell_FieldIndex.WaterCurrentVelocities:
+                        this.WaterCurrentVelocities = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WaterCurrentVelocity.ErrorMask?>>?>(ex, null);
                         break;
                     case Cell_FieldIndex.AcousticSpace:
                         this.AcousticSpace = ex;
@@ -1831,9 +1847,6 @@ namespace Mutagen.Bethesda.Starfield
                     case Cell_FieldIndex.XCLAs:
                         this.XCLAs = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellXCLAItem.ErrorMask?>>?>)obj;
                         break;
-                    case Cell_FieldIndex.WaterData:
-                        this.WaterData = (Exception?)obj;
-                        break;
                     case Cell_FieldIndex.CellSkyRegion:
                         this.CellSkyRegion = (Exception?)obj;
                         break;
@@ -1852,8 +1865,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Cell_FieldIndex.ShipBlueprintSnapLinks:
                         this.ShipBlueprintSnapLinks = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellShipBlueprintSnapLink.ErrorMask?>>?>)obj;
                         break;
-                    case Cell_FieldIndex.WaterVelocity:
-                        this.WaterVelocity = (MaskItem<Exception?, CellWaterVelocity.ErrorMask?>?)obj;
+                    case Cell_FieldIndex.WaterCurrentVelocities:
+                        this.WaterCurrentVelocities = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WaterCurrentVelocity.ErrorMask?>>?>)obj;
                         break;
                     case Cell_FieldIndex.AcousticSpace:
                         this.AcousticSpace = (Exception?)obj;
@@ -1940,14 +1953,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (WaterHeight != null) return true;
                 if (XILS != null) return true;
                 if (XCLAs != null) return true;
-                if (WaterData != null) return true;
                 if (CellSkyRegion != null) return true;
                 if (Ownership != null) return true;
                 if (Location != null) return true;
                 if (Water != null) return true;
                 if (WaterType != null) return true;
                 if (ShipBlueprintSnapLinks != null) return true;
-                if (WaterVelocity != null) return true;
+                if (WaterCurrentVelocities != null) return true;
                 if (AcousticSpace != null) return true;
                 if (ImageSpace != null) return true;
                 if (WaterEnvironmentMap != null) return true;
@@ -2051,9 +2063,6 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(WaterData, "WaterData");
-                }
-                {
                     sb.AppendItem(CellSkyRegion, "CellSkyRegion");
                 }
                 Ownership?.Print(sb);
@@ -2084,7 +2093,24 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                WaterVelocity?.Print(sb);
+                if (WaterCurrentVelocities is {} WaterCurrentVelocitiesItem)
+                {
+                    sb.AppendLine("WaterCurrentVelocities =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(WaterCurrentVelocitiesItem.Overall);
+                        if (WaterCurrentVelocitiesItem.Specific != null)
+                        {
+                            foreach (var subItem in WaterCurrentVelocitiesItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    subItem?.Print(sb);
+                                }
+                            }
+                        }
+                    }
+                }
                 {
                     sb.AppendItem(AcousticSpace, "AcousticSpace");
                 }
@@ -2244,14 +2270,13 @@ namespace Mutagen.Bethesda.Starfield
                 ret.WaterHeight = this.WaterHeight.Combine(rhs.WaterHeight);
                 ret.XILS = this.XILS.Combine(rhs.XILS);
                 ret.XCLAs = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellXCLAItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.XCLAs?.Overall, rhs.XCLAs?.Overall), Noggog.ExceptionExt.Combine(this.XCLAs?.Specific, rhs.XCLAs?.Specific));
-                ret.WaterData = this.WaterData.Combine(rhs.WaterData);
                 ret.CellSkyRegion = this.CellSkyRegion.Combine(rhs.CellSkyRegion);
                 ret.Ownership = this.Ownership.Combine(rhs.Ownership, (l, r) => l.Combine(r));
                 ret.Location = this.Location.Combine(rhs.Location);
                 ret.Water = this.Water.Combine(rhs.Water);
                 ret.WaterType = this.WaterType.Combine(rhs.WaterType);
                 ret.ShipBlueprintSnapLinks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellShipBlueprintSnapLink.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.ShipBlueprintSnapLinks?.Overall, rhs.ShipBlueprintSnapLinks?.Overall), Noggog.ExceptionExt.Combine(this.ShipBlueprintSnapLinks?.Specific, rhs.ShipBlueprintSnapLinks?.Specific));
-                ret.WaterVelocity = this.WaterVelocity.Combine(rhs.WaterVelocity, (l, r) => l.Combine(r));
+                ret.WaterCurrentVelocities = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WaterCurrentVelocity.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.WaterCurrentVelocities?.Overall, rhs.WaterCurrentVelocities?.Overall), Noggog.ExceptionExt.Combine(this.WaterCurrentVelocities?.Specific, rhs.WaterCurrentVelocities?.Specific));
                 ret.AcousticSpace = this.AcousticSpace.Combine(rhs.AcousticSpace);
                 ret.ImageSpace = this.ImageSpace.Combine(rhs.ImageSpace);
                 ret.WaterEnvironmentMap = this.WaterEnvironmentMap.Combine(rhs.WaterEnvironmentMap);
@@ -2306,14 +2331,13 @@ namespace Mutagen.Bethesda.Starfield
             public bool WaterHeight;
             public bool XILS;
             public CellXCLAItem.TranslationMask? XCLAs;
-            public bool WaterData;
             public bool CellSkyRegion;
             public Ownership.TranslationMask? Ownership;
             public bool Location;
             public bool Water;
             public bool WaterType;
             public CellShipBlueprintSnapLink.TranslationMask? ShipBlueprintSnapLinks;
-            public CellWaterVelocity.TranslationMask? WaterVelocity;
+            public WaterCurrentVelocity.TranslationMask? WaterCurrentVelocities;
             public bool AcousticSpace;
             public bool ImageSpace;
             public bool WaterEnvironmentMap;
@@ -2349,7 +2373,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.LightingTemplate = defaultOn;
                 this.WaterHeight = defaultOn;
                 this.XILS = defaultOn;
-                this.WaterData = defaultOn;
                 this.CellSkyRegion = defaultOn;
                 this.Location = defaultOn;
                 this.Water = defaultOn;
@@ -2390,14 +2413,13 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((WaterHeight, null));
                 ret.Add((XILS, null));
                 ret.Add((XCLAs == null ? DefaultOn : !XCLAs.GetCrystal().CopyNothing, XCLAs?.GetCrystal()));
-                ret.Add((WaterData, null));
                 ret.Add((CellSkyRegion, null));
                 ret.Add((Ownership != null ? Ownership.OnOverall : DefaultOn, Ownership?.GetCrystal()));
                 ret.Add((Location, null));
                 ret.Add((Water, null));
                 ret.Add((WaterType, null));
                 ret.Add((ShipBlueprintSnapLinks == null ? DefaultOn : !ShipBlueprintSnapLinks.GetCrystal().CopyNothing, ShipBlueprintSnapLinks?.GetCrystal()));
-                ret.Add((WaterVelocity != null ? WaterVelocity.OnOverall : DefaultOn, WaterVelocity?.GetCrystal()));
+                ret.Add((WaterCurrentVelocities == null ? DefaultOn : !WaterCurrentVelocities.GetCrystal().CopyNothing, WaterCurrentVelocities?.GetCrystal()));
                 ret.Add((AcousticSpace, null));
                 ret.Add((ImageSpace, null));
                 ret.Add((WaterEnvironmentMap, null));
@@ -2636,14 +2658,13 @@ namespace Mutagen.Bethesda.Starfield
         new Single? WaterHeight { get; set; }
         new Single? XILS { get; set; }
         new ExtendedList<CellXCLAItem> XCLAs { get; }
-        new MemorySlice<Byte>? WaterData { get; set; }
         new IFormLinkNullable<IRegionGetter> CellSkyRegion { get; set; }
         new Ownership? Ownership { get; set; }
         new IFormLinkNullable<ILocationGetter> Location { get; set; }
         new IFormLinkNullable<IWaterGetter> Water { get; set; }
         new String? WaterType { get; set; }
         new ExtendedList<CellShipBlueprintSnapLink>? ShipBlueprintSnapLinks { get; set; }
-        new CellWaterVelocity? WaterVelocity { get; set; }
+        new ExtendedList<WaterCurrentVelocity>? WaterCurrentVelocities { get; set; }
         new IFormLinkNullable<IAcousticSpaceGetter> AcousticSpace { get; set; }
         new IFormLinkNullable<IImageSpaceGetter> ImageSpace { get; set; }
         new String? WaterEnvironmentMap { get; set; }
@@ -2712,14 +2733,13 @@ namespace Mutagen.Bethesda.Starfield
         Single? WaterHeight { get; }
         Single? XILS { get; }
         IReadOnlyList<ICellXCLAItemGetter> XCLAs { get; }
-        ReadOnlyMemorySlice<Byte>? WaterData { get; }
         IFormLinkNullableGetter<IRegionGetter> CellSkyRegion { get; }
         IOwnershipGetter? Ownership { get; }
         IFormLinkNullableGetter<ILocationGetter> Location { get; }
         IFormLinkNullableGetter<IWaterGetter> Water { get; }
         String? WaterType { get; }
         IReadOnlyList<ICellShipBlueprintSnapLinkGetter>? ShipBlueprintSnapLinks { get; }
-        ICellWaterVelocityGetter? WaterVelocity { get; }
+        IReadOnlyList<IWaterCurrentVelocityGetter>? WaterCurrentVelocities { get; }
         IFormLinkNullableGetter<IAcousticSpaceGetter> AcousticSpace { get; }
         IFormLinkNullableGetter<IImageSpaceGetter> ImageSpace { get; }
         String? WaterEnvironmentMap { get; }
@@ -3158,36 +3178,35 @@ namespace Mutagen.Bethesda.Starfield
         WaterHeight = 14,
         XILS = 15,
         XCLAs = 16,
-        WaterData = 17,
-        CellSkyRegion = 18,
-        Ownership = 19,
-        Location = 20,
-        Water = 21,
-        WaterType = 22,
-        ShipBlueprintSnapLinks = 23,
-        WaterVelocity = 24,
-        AcousticSpace = 25,
-        ImageSpace = 26,
-        WaterEnvironmentMap = 27,
-        LockList = 28,
-        Music = 29,
-        GlobalDirtLayerMaterial = 30,
-        GlobalDirtLayerInheritBiomeLayer = 31,
-        TimeOfDay = 32,
-        LinkedReferences = 33,
-        IsLinkedRefTransient = 34,
-        EnvironmentMap = 35,
-        Traversals = 36,
-        NumTraversalFluffBytes = 37,
-        NavigationMeshes = 38,
-        Timestamp = 39,
-        UnknownGroupData = 40,
-        PersistentTimestamp = 41,
-        PersistentUnknownGroupData = 42,
-        Persistent = 43,
-        TemporaryTimestamp = 44,
-        TemporaryUnknownGroupData = 45,
-        Temporary = 46,
+        CellSkyRegion = 17,
+        Ownership = 18,
+        Location = 19,
+        Water = 20,
+        WaterType = 21,
+        ShipBlueprintSnapLinks = 22,
+        WaterCurrentVelocities = 23,
+        AcousticSpace = 24,
+        ImageSpace = 25,
+        WaterEnvironmentMap = 26,
+        LockList = 27,
+        Music = 28,
+        GlobalDirtLayerMaterial = 29,
+        GlobalDirtLayerInheritBiomeLayer = 30,
+        TimeOfDay = 31,
+        LinkedReferences = 32,
+        IsLinkedRefTransient = 33,
+        EnvironmentMap = 34,
+        Traversals = 35,
+        NumTraversalFluffBytes = 36,
+        NavigationMeshes = 37,
+        Timestamp = 38,
+        UnknownGroupData = 39,
+        PersistentTimestamp = 40,
+        PersistentUnknownGroupData = 41,
+        Persistent = 42,
+        TemporaryTimestamp = 43,
+        TemporaryUnknownGroupData = 44,
+        Temporary = 45,
     }
     #endregion
 
@@ -3198,9 +3217,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 40;
+        public const ushort AdditionalFieldCount = 39;
 
-        public const ushort FieldCount = 47;
+        public const ushort FieldCount = 46;
 
         public static readonly Type MaskType = typeof(Cell.Mask<>);
 
@@ -3245,7 +3264,6 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.XILS,
                 RecordTypes.XCLA,
                 RecordTypes.XCLD,
-                RecordTypes.XWCN,
                 RecordTypes.XCCM,
                 RecordTypes.XOWN,
                 RecordTypes.XLCN,
@@ -3253,6 +3271,7 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.XCWM,
                 RecordTypes.XBPS,
                 RecordTypes.XWCU,
+                RecordTypes.XWCN,
                 RecordTypes.XCAS,
                 RecordTypes.XCIM,
                 RecordTypes.XWEM,
@@ -3342,14 +3361,13 @@ namespace Mutagen.Bethesda.Starfield
             item.WaterHeight = default;
             item.XILS = default;
             item.XCLAs.Clear();
-            item.WaterData = default;
             item.CellSkyRegion.Clear();
             item.Ownership = null;
             item.Location.Clear();
             item.Water.Clear();
             item.WaterType = default;
             item.ShipBlueprintSnapLinks = null;
-            item.WaterVelocity = null;
+            item.WaterCurrentVelocities = null;
             item.AcousticSpace.Clear();
             item.ImageSpace.Clear();
             item.WaterEnvironmentMap = default;
@@ -3728,45 +3746,10 @@ namespace Mutagen.Bethesda.Starfield
                 case "ICellXCLAItemGetter":
                 case "ICellXCLAItem":
                     break;
-                case "IBiomeObjectPackInTarget":
-                case "IBiomeObjectPackInTargetGetter":
-                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IBiomeObjectPackInTargetGetter);
-                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IBiomeObjectPackInTargetGetter);
-                    break;
-                case "ICellOrObject":
-                case "ICellOrObjectGetter":
-                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is ICellOrObjectGetter);
-                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is ICellOrObjectGetter);
-                    break;
-                case "IKeywordLinkedReference":
-                case "IKeywordLinkedReferenceGetter":
-                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IKeywordLinkedReferenceGetter);
-                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IKeywordLinkedReferenceGetter);
-                    break;
-                case "IOwner":
-                case "IOwnerGetter":
-                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IOwnerGetter);
-                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IOwnerGetter);
-                    break;
                 case "IPlaced":
                 case "IPlacedGetter":
                     obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey));
                     obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey));
-                    break;
-                case "IPlacedSimple":
-                case "IPlacedSimpleGetter":
-                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedSimpleGetter);
-                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedSimpleGetter);
-                    break;
-                case "IPlacedThing":
-                case "IPlacedThingGetter":
-                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedThingGetter);
-                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedThingGetter);
-                    break;
-                case "ITraversalTarget":
-                case "ITraversalTargetGetter":
-                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is ITraversalTargetGetter);
-                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is ITraversalTargetGetter);
                     break;
                 case "LinkedReferences":
                 case "ILinkedReferencesGetter":
@@ -3796,11 +3779,11 @@ namespace Mutagen.Bethesda.Starfield
                 case "ITraversalReferenceGetter":
                 case "ITraversalReference":
                     break;
+                case "WaterCurrentVelocity":
+                case "IWaterCurrentVelocityGetter":
+                case "IWaterCurrentVelocity":
+                    break;
                 default:
-                    if (InterfaceEnumerationHelper.TryRemoveInterfaceRecordsFor(GameCategory.Starfield, obj, keys, type))
-                    {
-                        break;
-                    }
                     if (throwIfUnknown)
                     {
                         throw new ArgumentException($"Unknown major record type: {type}");
@@ -3960,7 +3943,6 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.XCLAs,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.WaterData = MemorySliceExt.SequenceEqual(item.WaterData, rhs.WaterData);
             ret.CellSkyRegion = item.CellSkyRegion.Equals(rhs.CellSkyRegion);
             ret.Ownership = EqualsMaskHelper.EqualsHelper(
                 item.Ownership,
@@ -3974,10 +3956,9 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.ShipBlueprintSnapLinks,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.WaterVelocity = EqualsMaskHelper.EqualsHelper(
-                item.WaterVelocity,
-                rhs.WaterVelocity,
-                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+            ret.WaterCurrentVelocities = item.WaterCurrentVelocities.CollectionEqualsHelper(
+                rhs.WaterCurrentVelocities,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             ret.AcousticSpace = item.AcousticSpace.Equals(rhs.AcousticSpace);
             ret.ImageSpace = item.ImageSpace.Equals(rhs.ImageSpace);
@@ -4132,11 +4113,6 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.WaterData ?? true)
-                && item.WaterData is {} WaterDataItem)
-            {
-                sb.AppendLine($"WaterData => {SpanExt.ToHexString(WaterDataItem)}");
-            }
             if (printMask?.CellSkyRegion ?? true)
             {
                 sb.AppendItem(item.CellSkyRegion.FormKeyNullable, "CellSkyRegion");
@@ -4174,10 +4150,20 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.WaterVelocity?.Overall ?? true)
-                && item.WaterVelocity is {} WaterVelocityItem)
+            if ((printMask?.WaterCurrentVelocities?.Overall ?? true)
+                && item.WaterCurrentVelocities is {} WaterCurrentVelocitiesItem)
             {
-                WaterVelocityItem?.Print(sb, "WaterVelocity");
+                sb.AppendLine("WaterCurrentVelocities =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in WaterCurrentVelocitiesItem)
+                    {
+                        using (sb.Brace())
+                        {
+                            subItem?.Print(sb, "Item");
+                        }
+                    }
+                }
             }
             if (printMask?.AcousticSpace ?? true)
             {
@@ -4424,10 +4410,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.XCLAs.SequenceEqual(rhs.XCLAs, (l, r) => ((CellXCLAItemCommon)((ICellXCLAItemGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Cell_FieldIndex.XCLAs)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Cell_FieldIndex.WaterData) ?? true))
-            {
-                if (!MemorySliceExt.SequenceEqual(lhs.WaterData, rhs.WaterData)) return false;
-            }
             if ((equalsMask?.GetShouldTranslate((int)Cell_FieldIndex.CellSkyRegion) ?? true))
             {
                 if (!lhs.CellSkyRegion.Equals(rhs.CellSkyRegion)) return false;
@@ -4456,13 +4438,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ShipBlueprintSnapLinks.SequenceEqualNullable(rhs.ShipBlueprintSnapLinks, (l, r) => ((CellShipBlueprintSnapLinkCommon)((ICellShipBlueprintSnapLinkGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Cell_FieldIndex.ShipBlueprintSnapLinks)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Cell_FieldIndex.WaterVelocity) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Cell_FieldIndex.WaterCurrentVelocities) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.WaterVelocity, rhs.WaterVelocity, out var lhsWaterVelocity, out var rhsWaterVelocity, out var isWaterVelocityEqual))
-                {
-                    if (!((CellWaterVelocityCommon)((ICellWaterVelocityGetter)lhsWaterVelocity).CommonInstance()!).Equals(lhsWaterVelocity, rhsWaterVelocity, equalsMask?.GetSubCrystal((int)Cell_FieldIndex.WaterVelocity))) return false;
-                }
-                else if (!isWaterVelocityEqual) return false;
+                if (!lhs.WaterCurrentVelocities.SequenceEqualNullable(rhs.WaterCurrentVelocities, (l, r) => ((WaterCurrentVelocityCommon)((IWaterCurrentVelocityGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Cell_FieldIndex.WaterCurrentVelocities)))) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Cell_FieldIndex.AcousticSpace) ?? true))
             {
@@ -4580,10 +4558,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ICellGetter item)
         {
             var hash = new HashCode();
-            foreach (var subItem in item.Components)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.Components);
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -4613,14 +4588,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XILSitem);
             }
-            foreach (var subItem in item.XCLAs)
-            {
-                hash.Add(subItem);
-            }
-            if (item.WaterData is {} WaterDataItem)
-            {
-                hash.AddBytes(WaterDataItem);
-            }
+            hash.Add(item.XCLAs);
             hash.Add(item.CellSkyRegion);
             if (item.Ownership is {} Ownershipitem)
             {
@@ -4632,17 +4600,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(WaterTypeitem);
             }
-            if (item.ShipBlueprintSnapLinks is {} ShipBlueprintSnapLinksitem)
-            {
-                foreach (var subItem in ShipBlueprintSnapLinksitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
-            if (item.WaterVelocity is {} WaterVelocityitem)
-            {
-                hash.Add(WaterVelocityitem);
-            }
+            hash.Add(item.ShipBlueprintSnapLinks);
+            hash.Add(item.WaterCurrentVelocities);
             hash.Add(item.AcousticSpace);
             hash.Add(item.ImageSpace);
             if (item.WaterEnvironmentMap is {} WaterEnvironmentMapitem)
@@ -4660,41 +4619,23 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(GlobalDirtLayerInheritBiomeLayeritem);
             }
             hash.Add(item.TimeOfDay);
-            foreach (var subItem in item.LinkedReferences)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.LinkedReferences);
             hash.Add(item.IsLinkedRefTransient);
             if (item.EnvironmentMap is {} EnvironmentMapitem)
             {
                 hash.Add(EnvironmentMapitem);
             }
-            if (item.Traversals is {} Traversalsitem)
-            {
-                foreach (var subItem in Traversalsitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
+            hash.Add(item.Traversals);
             hash.Add(item.NumTraversalFluffBytes);
-            foreach (var subItem in item.NavigationMeshes)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.NavigationMeshes);
             hash.Add(item.Timestamp);
             hash.Add(item.UnknownGroupData);
             hash.Add(item.PersistentTimestamp);
             hash.Add(item.PersistentUnknownGroupData);
-            foreach (var subItem in item.Persistent)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.Persistent);
             hash.Add(item.TemporaryTimestamp);
             hash.Add(item.TemporaryUnknownGroupData);
-            foreach (var subItem in item.Temporary)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.Temporary);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -4894,21 +4835,19 @@ namespace Mutagen.Bethesda.Starfield
                 case "IAPlacedTrapGetter":
                 case "IAPlacedTrap":
                 case "IAPlacedTrapInternal":
-                case "PlacedArrow":
-                case "PlacedBeam":
-                case "PlacedFlame":
-                case "PlacedCone":
-                case "PlacedBarrier":
-                case "PlacedTrap":
-                case "PlacedHazard":
-                case "PlacedMissile":
-                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Persistent)
                     {
-                        yield return subItem;
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return subItem;
+                        }
                     }
-                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Temporary)
                     {
-                        yield return subItem;
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return subItem;
+                        }
                     }
                     yield break;
                 case "CellShipBlueprintSnapLink":
@@ -4921,13 +4860,19 @@ namespace Mutagen.Bethesda.Starfield
                     yield break;
                 case "IPlacedGetter":
                 case "IPlaced":
-                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Persistent)
                     {
-                        yield return subItem;
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return subItem;
+                        }
                     }
-                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Temporary)
                     {
-                        yield return subItem;
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return subItem;
+                        }
                     }
                     yield break;
                 case "LinkedReferences":
@@ -4954,31 +4899,47 @@ namespace Mutagen.Bethesda.Starfield
                 case "IPlacedNpcGetter":
                 case "IPlacedNpc":
                 case "IPlacedNpcInternal":
-                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Persistent)
                     {
-                        yield return subItem;
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return subItem;
+                        }
                     }
-                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Temporary)
                     {
-                        yield return subItem;
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return subItem;
+                        }
                     }
                     yield break;
                 case "PlacedObject":
                 case "IPlacedObjectGetter":
                 case "IPlacedObject":
                 case "IPlacedObjectInternal":
-                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Persistent)
                     {
-                        yield return subItem;
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return subItem;
+                        }
                     }
-                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Temporary)
                     {
-                        yield return subItem;
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return subItem;
+                        }
                     }
                     yield break;
                 case "TraversalReference":
                 case "ITraversalReferenceGetter":
                 case "ITraversalReference":
+                    yield break;
+                case "WaterCurrentVelocity":
+                case "IWaterCurrentVelocityGetter":
+                case "IWaterCurrentVelocity":
                     yield break;
                 default:
                     if (InterfaceEnumerationHelper.TryEnumerateInterfaceRecordsFor(GameCategory.Starfield, obj, type, out var linkInterfaces))
@@ -5137,57 +5098,55 @@ namespace Mutagen.Bethesda.Starfield
                 case "IAPlacedTrapGetter":
                 case "IAPlacedTrap":
                 case "IAPlacedTrapInternal":
-                case "PlacedArrow":
-                case "PlacedBeam":
-                case "PlacedFlame":
-                case "PlacedCone":
-                case "PlacedBarrier":
-                case "PlacedTrap":
-                case "PlacedHazard":
-                case "PlacedMissile":
-                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Persistent)
                     {
-                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                            modKey: modKey,
-                            record: subItem,
-                            parent: curContext,
-                            getOrAddAsOverride: (m, r) =>
-                            {
-                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                if (ret != null) return ret;
-                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                parent.Persistent.Add(ret);
-                                return ret;
-                            },
-                            duplicateInto: (m, r, e, f) =>
-                            {
-                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                return dup;
-                            });
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                                modKey: modKey,
+                                record: subItem,
+                                parent: curContext,
+                                getOrAddAsOverride: (m, r) =>
+                                {
+                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                    if (ret != null) return ret;
+                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                    parent.Persistent.Add(ret);
+                                    return ret;
+                                },
+                                duplicateInto: (m, r, e, f) =>
+                                {
+                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                    return dup;
+                                });
+                        }
                     }
-                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Temporary)
                     {
-                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                            modKey: modKey,
-                            record: subItem,
-                            parent: curContext,
-                            getOrAddAsOverride: (m, r) =>
-                            {
-                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                if (ret != null) return ret;
-                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                parent.Temporary.Add(ret);
-                                return ret;
-                            },
-                            duplicateInto: (m, r, e, f) =>
-                            {
-                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                return dup;
-                            });
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                                modKey: modKey,
+                                record: subItem,
+                                parent: curContext,
+                                getOrAddAsOverride: (m, r) =>
+                                {
+                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                    if (ret != null) return ret;
+                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                    parent.Temporary.Add(ret);
+                                    return ret;
+                                },
+                                duplicateInto: (m, r, e, f) =>
+                                {
+                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                    return dup;
+                                });
+                        }
                     }
                     yield break;
                 case "CellShipBlueprintSnapLink":
@@ -5200,49 +5159,55 @@ namespace Mutagen.Bethesda.Starfield
                     yield break;
                 case "IPlacedGetter":
                 case "IPlaced":
-                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Persistent)
                     {
-                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                            modKey: modKey,
-                            record: subItem,
-                            parent: curContext,
-                            getOrAddAsOverride: (m, r) =>
-                            {
-                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                if (ret != null) return ret;
-                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                parent.Persistent.Add(ret);
-                                return ret;
-                            },
-                            duplicateInto: (m, r, e, f) =>
-                            {
-                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                return dup;
-                            });
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                                modKey: modKey,
+                                record: subItem,
+                                parent: curContext,
+                                getOrAddAsOverride: (m, r) =>
+                                {
+                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                    if (ret != null) return ret;
+                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                    parent.Persistent.Add(ret);
+                                    return ret;
+                                },
+                                duplicateInto: (m, r, e, f) =>
+                                {
+                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                    return dup;
+                                });
+                        }
                     }
-                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Temporary)
                     {
-                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                            modKey: modKey,
-                            record: subItem,
-                            parent: curContext,
-                            getOrAddAsOverride: (m, r) =>
-                            {
-                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                if (ret != null) return ret;
-                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                parent.Temporary.Add(ret);
-                                return ret;
-                            },
-                            duplicateInto: (m, r, e, f) =>
-                            {
-                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                return dup;
-                            });
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                                modKey: modKey,
+                                record: subItem,
+                                parent: curContext,
+                                getOrAddAsOverride: (m, r) =>
+                                {
+                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                    if (ret != null) return ret;
+                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                    parent.Temporary.Add(ret);
+                                    return ret;
+                                },
+                                duplicateInto: (m, r, e, f) =>
+                                {
+                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                    return dup;
+                                });
+                        }
                     }
                     yield break;
                 case "LinkedReferences":
@@ -5283,103 +5248,119 @@ namespace Mutagen.Bethesda.Starfield
                 case "IPlacedNpcGetter":
                 case "IPlacedNpc":
                 case "IPlacedNpcInternal":
-                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Persistent)
                     {
-                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                            modKey: modKey,
-                            record: subItem,
-                            parent: curContext,
-                            getOrAddAsOverride: (m, r) =>
-                            {
-                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                if (ret != null) return ret;
-                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                parent.Persistent.Add(ret);
-                                return ret;
-                            },
-                            duplicateInto: (m, r, e, f) =>
-                            {
-                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                return dup;
-                            });
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                                modKey: modKey,
+                                record: subItem,
+                                parent: curContext,
+                                getOrAddAsOverride: (m, r) =>
+                                {
+                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                    if (ret != null) return ret;
+                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                    parent.Persistent.Add(ret);
+                                    return ret;
+                                },
+                                duplicateInto: (m, r, e, f) =>
+                                {
+                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                    return dup;
+                                });
+                        }
                     }
-                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Temporary)
                     {
-                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                            modKey: modKey,
-                            record: subItem,
-                            parent: curContext,
-                            getOrAddAsOverride: (m, r) =>
-                            {
-                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                if (ret != null) return ret;
-                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                parent.Temporary.Add(ret);
-                                return ret;
-                            },
-                            duplicateInto: (m, r, e, f) =>
-                            {
-                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                return dup;
-                            });
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                                modKey: modKey,
+                                record: subItem,
+                                parent: curContext,
+                                getOrAddAsOverride: (m, r) =>
+                                {
+                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                    if (ret != null) return ret;
+                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                    parent.Temporary.Add(ret);
+                                    return ret;
+                                },
+                                duplicateInto: (m, r, e, f) =>
+                                {
+                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                    return dup;
+                                });
+                        }
                     }
                     yield break;
                 case "PlacedObject":
                 case "IPlacedObjectGetter":
                 case "IPlacedObject":
                 case "IPlacedObjectInternal":
-                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Persistent)
                     {
-                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                            modKey: modKey,
-                            record: subItem,
-                            parent: curContext,
-                            getOrAddAsOverride: (m, r) =>
-                            {
-                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                if (ret != null) return ret;
-                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                parent.Persistent.Add(ret);
-                                return ret;
-                            },
-                            duplicateInto: (m, r, e, f) =>
-                            {
-                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                return dup;
-                            });
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                                modKey: modKey,
+                                record: subItem,
+                                parent: curContext,
+                                getOrAddAsOverride: (m, r) =>
+                                {
+                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                    if (ret != null) return ret;
+                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                    parent.Persistent.Add(ret);
+                                    return ret;
+                                },
+                                duplicateInto: (m, r, e, f) =>
+                                {
+                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                    return dup;
+                                });
+                        }
                     }
-                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
+                    foreach (var subItem in obj.Temporary)
                     {
-                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                            modKey: modKey,
-                            record: subItem,
-                            parent: curContext,
-                            getOrAddAsOverride: (m, r) =>
-                            {
-                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                if (ret != null) return ret;
-                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                parent.Temporary.Add(ret);
-                                return ret;
-                            },
-                            duplicateInto: (m, r, e, f) =>
-                            {
-                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                return dup;
-                            });
+                        if (type.IsAssignableFrom(subItem.GetType()))
+                        {
+                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                                modKey: modKey,
+                                record: subItem,
+                                parent: curContext,
+                                getOrAddAsOverride: (m, r) =>
+                                {
+                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                    if (ret != null) return ret;
+                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                    parent.Temporary.Add(ret);
+                                    return ret;
+                                },
+                                duplicateInto: (m, r, e, f) =>
+                                {
+                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                    return dup;
+                                });
+                        }
                     }
                     yield break;
                 case "TraversalReference":
                 case "ITraversalReferenceGetter":
                 case "ITraversalReference":
+                    yield break;
+                case "WaterCurrentVelocity":
+                case "IWaterCurrentVelocityGetter":
+                case "IWaterCurrentVelocity":
                     yield break;
                 default:
                     if (InterfaceEnumerationHelper.TryEnumerateInterfaceContextsFor<ICellGetter, IStarfieldMod, IStarfieldModGetter>(
@@ -5446,21 +5427,13 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         #region Duplicate
-        private static readonly Cell.TranslationMask DuplicateMask = new(defaultOn: true)
-        {
-            NavigationMeshes = false,
-            Persistent = false,
-            Temporary = false,
-        };
-        private static readonly TranslationCrystal DuplicateCrystal = DuplicateMask.GetCrystal();
-        
         public Cell Duplicate(
             ICellGetter item,
             FormKey formKey,
             TranslationCrystal? copyMask)
         {
             var newRec = new Cell(formKey, item.FormVersion);
-            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask ?? DuplicateCrystal);
+            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask);
             return newRec;
         }
         
@@ -5692,17 +5665,6 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Cell_FieldIndex.WaterData) ?? true))
-            {
-                if(rhs.WaterData is {} WaterDatarhs)
-                {
-                    item.WaterData = WaterDatarhs.ToArray();
-                }
-                else
-                {
-                    item.WaterData = default;
-                }
-            }
             if ((copyMask?.GetShouldTranslate((int)Cell_FieldIndex.CellSkyRegion) ?? true))
             {
                 item.CellSkyRegion.SetTo(rhs.CellSkyRegion.FormKeyNullable);
@@ -5777,20 +5739,26 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Cell_FieldIndex.WaterVelocity) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Cell_FieldIndex.WaterCurrentVelocities) ?? true))
             {
-                errorMask?.PushIndex((int)Cell_FieldIndex.WaterVelocity);
+                errorMask?.PushIndex((int)Cell_FieldIndex.WaterCurrentVelocities);
                 try
                 {
-                    if(rhs.WaterVelocity is {} rhsWaterVelocity)
+                    if ((rhs.WaterCurrentVelocities != null))
                     {
-                        item.WaterVelocity = rhsWaterVelocity.DeepCopy(
-                            errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)Cell_FieldIndex.WaterVelocity));
+                        item.WaterCurrentVelocities = 
+                            rhs.WaterCurrentVelocities
+                            .Select(r =>
+                            {
+                                return r.DeepCopy(
+                                    errorMask: errorMask,
+                                    default(TranslationCrystal));
+                            })
+                            .ToExtendedList<WaterCurrentVelocity>();
                     }
                     else
                     {
-                        item.WaterVelocity = default;
+                        item.WaterCurrentVelocities = null;
                     }
                 }
                 catch (Exception ex)
@@ -6239,10 +6207,6 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.WaterData,
-                header: translationParams.ConvertToCustom(RecordTypes.XWCN));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.CellSkyRegion,
@@ -6279,13 +6243,20 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            if (item.WaterVelocity is {} WaterVelocityItem)
-            {
-                ((CellWaterVelocityBinaryWriteTranslation)((IBinaryItem)WaterVelocityItem).BinaryWriteTranslator).Write(
-                    item: WaterVelocityItem,
-                    writer: writer,
-                    translationParams: translationParams);
-            }
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IWaterCurrentVelocityGetter>.Instance.WriteWithCounter(
+                writer: writer,
+                items: item.WaterCurrentVelocities,
+                counterType: RecordTypes.XWCN,
+                counterLength: 4,
+                recordType: translationParams.ConvertToCustom(RecordTypes.XWCU),
+                transl: (MutagenWriter subWriter, IWaterCurrentVelocityGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((WaterCurrentVelocityBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.AcousticSpace,
@@ -6520,12 +6491,6 @@ namespace Mutagen.Bethesda.Starfield
                             transl: CellXCLAItem.TryCreateFromBinary));
                     return (int)Cell_FieldIndex.XCLAs;
                 }
-                case RecordTypeInts.XWCN:
-                {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.WaterData = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Cell_FieldIndex.WaterData;
-                }
                 case RecordTypeInts.XCCM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -6568,10 +6533,19 @@ namespace Mutagen.Bethesda.Starfield
                         .CastExtendedList<CellShipBlueprintSnapLink>();
                     return (int)Cell_FieldIndex.ShipBlueprintSnapLinks;
                 }
+                case RecordTypeInts.XWCN:
                 case RecordTypeInts.XWCU:
                 {
-                    item.WaterVelocity = Mutagen.Bethesda.Starfield.CellWaterVelocity.CreateFromBinary(frame: frame);
-                    return (int)Cell_FieldIndex.WaterVelocity;
+                    item.WaterCurrentVelocities = 
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<WaterCurrentVelocity>.Instance.Parse(
+                            reader: frame,
+                            countLengthLength: 4,
+                            countRecord: translationParams.ConvertToCustom(RecordTypes.XWCN),
+                            triggeringRecord: translationParams.ConvertToCustom(RecordTypes.XWCU),
+                            skipHeader: true,
+                            transl: WaterCurrentVelocity.TryCreateFromBinary)
+                        .CastExtendedList<WaterCurrentVelocity>();
+                    return (int)Cell_FieldIndex.WaterCurrentVelocities;
                 }
                 case RecordTypeInts.XCAS:
                 {
@@ -6789,10 +6763,6 @@ namespace Mutagen.Bethesda.Starfield
         public Single? XILS => _XILSLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _XILSLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
         public IReadOnlyList<ICellXCLAItemGetter> XCLAs { get; private set; } = [];
-        #region WaterData
-        private int? _WaterDataLocation;
-        public ReadOnlyMemorySlice<Byte>? WaterData => _WaterDataLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _WaterDataLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
-        #endregion
         #region CellSkyRegion
         private int? _CellSkyRegionLocation;
         public IFormLinkNullableGetter<IRegionGetter> CellSkyRegion => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IRegionGetter>(_package, _recordData, _CellSkyRegionLocation);
@@ -6811,10 +6781,7 @@ namespace Mutagen.Bethesda.Starfield
         public String? WaterType => _WaterTypeLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _WaterTypeLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         public IReadOnlyList<ICellShipBlueprintSnapLinkGetter>? ShipBlueprintSnapLinks { get; private set; }
-        #region WaterVelocity
-        private RangeInt32? _WaterVelocityLocation;
-        public ICellWaterVelocityGetter? WaterVelocity => _WaterVelocityLocation.HasValue ? CellWaterVelocityBinaryOverlay.CellWaterVelocityFactory(_recordData.Slice(_WaterVelocityLocation!.Value.Min), _package) : default;
-        #endregion
+        public IReadOnlyList<IWaterCurrentVelocityGetter>? WaterCurrentVelocities { get; private set; }
         #region AcousticSpace
         private int? _AcousticSpaceLocation;
         public IFormLinkNullableGetter<IAcousticSpaceGetter> AcousticSpace => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IAcousticSpaceGetter>(_package, _recordData, _AcousticSpaceLocation);
@@ -7001,11 +6968,6 @@ namespace Mutagen.Bethesda.Starfield
                         factory: CellXCLAItemBinaryOverlay.CellXCLAItemFactory);
                     return (int)Cell_FieldIndex.XCLAs;
                 }
-                case RecordTypeInts.XWCN:
-                {
-                    _WaterDataLocation = (stream.Position - offset);
-                    return (int)Cell_FieldIndex.WaterData;
-                }
                 case RecordTypeInts.XCCM:
                 {
                     _CellSkyRegionLocation = (stream.Position - offset);
@@ -7044,10 +7006,18 @@ namespace Mutagen.Bethesda.Starfield
                         getter: (s, p) => CellShipBlueprintSnapLinkBinaryOverlay.CellShipBlueprintSnapLinkFactory(s, p));
                     return (int)Cell_FieldIndex.ShipBlueprintSnapLinks;
                 }
+                case RecordTypeInts.XWCN:
                 case RecordTypeInts.XWCU:
                 {
-                    _WaterVelocityLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
-                    return (int)Cell_FieldIndex.WaterVelocity;
+                    this.WaterCurrentVelocities = BinaryOverlayList.FactoryByCount<IWaterCurrentVelocityGetter>(
+                        stream: stream,
+                        package: _package,
+                        itemLength: 0x10,
+                        countLength: 4,
+                        countType: RecordTypes.XWCN,
+                        trigger: RecordTypes.XWCU,
+                        getter: (s, p) => WaterCurrentVelocityBinaryOverlay.WaterCurrentVelocityFactory(s, p));
+                    return (int)Cell_FieldIndex.WaterCurrentVelocities;
                 }
                 case RecordTypeInts.XCAS:
                 {

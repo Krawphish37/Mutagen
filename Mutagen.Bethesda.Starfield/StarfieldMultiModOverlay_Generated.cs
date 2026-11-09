@@ -1845,14 +1845,13 @@ internal class MergedWorldspaceCell : ICellGetter
     public Single? WaterHeight => _primary.WaterHeight;
     public Single? XILS => _primary.XILS;
     public IReadOnlyList<ICellXCLAItemGetter> XCLAs => _primary.XCLAs;
-    public ReadOnlyMemorySlice<Byte>? WaterData => _primary.WaterData;
     public IFormLinkNullableGetter<IRegionGetter> CellSkyRegion => _primary.CellSkyRegion;
     public IOwnershipGetter? Ownership => _primary.Ownership;
     public IFormLinkNullableGetter<ILocationGetter> Location => _primary.Location;
     public IFormLinkNullableGetter<IWaterGetter> Water => _primary.Water;
     public String? WaterType => _primary.WaterType;
     public IReadOnlyList<ICellShipBlueprintSnapLinkGetter>? ShipBlueprintSnapLinks => _primary.ShipBlueprintSnapLinks;
-    public ICellWaterVelocityGetter? WaterVelocity => _primary.WaterVelocity;
+    public IReadOnlyList<IWaterCurrentVelocityGetter>? WaterCurrentVelocities => _primary.WaterCurrentVelocities;
     public IFormLinkNullableGetter<IAcousticSpaceGetter> AcousticSpace => _primary.AcousticSpace;
     public IFormLinkNullableGetter<IImageSpaceGetter> ImageSpace => _primary.ImageSpace;
     public String? WaterEnvironmentMap => _primary.WaterEnvironmentMap;
