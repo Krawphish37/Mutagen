@@ -600,6 +600,8 @@ public abstract class Processor
     public void ProcessZeroFloat(ReadOnlySpan<byte> span, ref long offsetLoc)
     {
         offsetLoc += 4;
+        // Games with exact floats write -0.0 and float.Epsilon back as stored
+        if (Meta.ExactFloats) return;
         var f = span.Float();
         if (f == float.Epsilon)
         {
