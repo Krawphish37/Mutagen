@@ -37,6 +37,19 @@ public partial class Weapon
         Mounted = 12,
     }
 
+    // WAIM Reticle Type (xEdit)
+    public enum ReticleTypeEnum
+    {
+        None = 0,
+        Unarmed = 1,
+        Pistol = 2,
+        Shotgun = 3,
+        Rifle = 4,
+        Laser = 5,
+        Tool = 6,
+        CustomCrosshair1 = 7,
+    }
+
     // WMEL Attack Speed (xEdit)
     public enum AttackSpeedEnum
     {

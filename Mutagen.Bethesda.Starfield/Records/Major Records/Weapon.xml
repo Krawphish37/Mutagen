@@ -46,12 +46,12 @@
           <FormLink name="AimAssistTemplate" refName="AimAssistModel" />
           <FormLink name="AimOpticalSightModel" refName="AimOpticalSightMarker" />
           <FormLink name="MeleeAimAssistModel" refName="MeleeAimAssistModel" />
-          <UInt8 name="WAIMUnknown1" unknown="true" />
-          <UInt8 name="WAIMUnknown2" unknown="true" />
+          <Bool name="UpdateAdvancedAimInfo" byteLength="1" />
+          <Bool name="EnableOrientFireNodesToAimingDirection" byteLength="1" />
           <Bool name="EnableMarkingTargets" byteLength="1" />
-          <UInt32 name="ReticleType" />
-          <UInt8 name="WAIMUnknown3" unknown="true" />
-          <UInt8 name="WAIMUnknown4" unknown="true" />
+          <Enum name="ReticleType" enumName="Weapon.ReticleTypeEnum" byteLength="4" />
+          <Bool name="InverseReticleSpread" byteLength="1" />
+          <Bool name="DisplayedReticleIgnoresPlayerMovement" byteLength="1" />
         </Fields>
       </Data>
       <Data recordType="WAM2" >
@@ -63,7 +63,7 @@
           <FormLink name="OverrideShellCasing" refName="ArtObject" />
           <UInt8 name="ProjectilesCount" />
           <Bool name="NpcsUseAmmo" byteLength="1" />
-          <UInt8 name="WAM2Unknown1" unknown="true" />
+          <UInt8 name="NumberOfImpactSounds" />
         </Fields>
       </Data>
       <ByteArray name="WAMM" recordType="WAMM" unknown="true" />
@@ -102,12 +102,12 @@
           <Enum name="HitBehavior" enumName="HitBehavior" byteLength="1" />
           <FormLink name="Resistance" refName="ActorValueInformation" />
           <FormLink name="Skill" refName="ActorValueInformation" />
-          <Float name="WDMGUnknown4" unknown="true" />
-          <Float name="WDMGUnknown5" unknown="true" />
-          <Float name="WDMGUnknown6" unknown="true" />
-          <Float name="WDMGUnknown7" unknown="true" />
-          <Float name="WDMGUnknown8" unknown="true" />
-          <Float name="WDMGUnknown9" unknown="true" />
+          <Float name="LowGravityScaleControlPoint" />
+          <Float name="LowGravityRangeMultMin" />
+          <Float name="LowGravityRangeMultMax" />
+          <Float name="HighGravityScaleControlPoint" />
+          <Float name="HighGravityRangeMultMin" />
+          <Float name="HighGravityRangeMultMax" />
           <Float name="CritChanceIncMult" />
         </Fields>
       </Data>
@@ -124,30 +124,30 @@
           <Bool name="BoltAction" byteLength="1" />
           <Bool name="DisableShellCaseEject" byteLength="1" />
           <Float name="ShotsPerSecond" />
-          <Float name="WFIRUnknown7" unknown="true" />
+          <Float name="WeaponAttackAnimationDuration" />
           <Bool name="OverrideRateOfFire" byteLength="1" />
           <Float name="TriggerThresholdPrimaryTrigger" />
-          <UInt8 name="WFIRUnknown10" unknown="true" />
+          <Bool name="OverrideTriggerThreshold" byteLength="1" />
           <Float name="TriggerThresholdSecondStage" />
           <Bool name="HasStagedTrigger" byteLength="1" />
           <Bool name="HasDualTrigger" byteLength="1" />
-          <Float name="BurstDelaySeconds" unknown="true" />
+          <Float name="BurstDelaySeconds" />
         </Fields>
       </Data>
       <Data recordType="WFLG" >
         <Fields>
           <Bool name="NonPlayable" byteLength="1" />
           <Bool name="PlayerOnly" byteLength="1" />
-          <Bool name="WFLGUnknown1" byteLength="1" unknown="true" />
-          <Bool name="WFLGUnknown2" byteLength="1" unknown="true" />
+          <Bool name="PreventUseInNormalCombat" byteLength="1" />
+          <Bool name="IsSecondary" byteLength="1" />
           <Bool name="CannotDrop" byteLength="1" />
           <Bool name="MinorCrime" byteLength="1" />
           <Bool name="NonHostile" byteLength="1" />
-          <Bool name="WFLGUnknown3" byteLength="1" unknown="true" />
-          <Bool name="WFLGUnknown4" byteLength="1" unknown="true" />
-          <Bool name="WFLGUnknown5" byteLength="1" unknown="true" />
-          <Bool name="WFLGUnknown6" byteLength="1" unknown="true" />
-          <Bool name="WFLGUnknown7" byteLength="1" unknown="true" />
+          <Bool name="Bound" byteLength="1" />
+          <Bool name="NpcPrefersLongBursts" byteLength="1" />
+          <Bool name="NpcsOnlyFireWhenMagazineFull" byteLength="1" />
+          <Bool name="UseSequentialFireNodes" byteLength="1" />
+          <Bool name="UseRandomFireNodes" byteLength="1" />
         </Fields>
       </Data>
       <Data recordType="WGEN" >
@@ -177,18 +177,18 @@
           <Bool name="ConsumeAmmo" byteLength="1" />
           <FormLink name="PowerBonus" refName="ActorValueInformation" />
           <Bool name="UsePower" byteLength="1" />
-          <UInt8 name="QNAMUnknown1" unknown="true" />
-          <Float name="QNAMUnknown2" unknown="true" />
-          <UInt8 name="QNAMUnknown3" unknown="true" />
-          <FormLink name="QNAMUnknown4" refName="CurveTable" unknown="true" />
-          <Float name="QNAMUnknown5" unknown="true" />
+          <Bool name="VariablePowerEnabled" byteLength="1" />
+          <Float name="VariablePowerTransitionDuration" />
+          <Bool name="UseChargeOnlyInFocusMode" byteLength="1" />
+          <FormLink name="PowerIntensityCurve" refName="CurveTable" />
+          <Float name="PowerDamageMultiplier" />
           <FormLink name="PowerConsumption" refName="CurveTable" />
         </Fields>
       </Data>
       <Data recordType="WRLO" >
         <Fields>
-          <Float name="WRLOUnknown1" unknown="true" />
-          <Float name="ReloadSpeed" unknown="true" />
+          <Float name="ReloadSeconds" />
+          <Float name="ReloadSpeed" />
           <Bool name="ReloadCharging" byteLength="1" />
           <Bool name="ReloadSingle" byteLength="1" />
         </Fields>
@@ -224,11 +224,11 @@
       </Data>
       <Data recordType="WTRM">
         <Fields>
-          <Float name="WTRMUnknown1" unknown="true" />
-          <UInt8 name="WTRMUnknown2" unknown="true" />
-          <Float name="WTRMUnknown3" unknown="true" />
-          <Float name="WTRMUnknown4" unknown="true" />
-          <Float name="WTRMUnknown5" unknown="true" />
+          <Float name="AttackActionPointCost" />
+          <Bool name="OverrideDefaultCameraShake" byteLength="1" />
+          <Float name="FiringCameraShakeIntensity" />
+          <Float name="FiringCameraShakeDuration" />
+          <Float name="AiFiringArc" />
         </Fields>
       </Data>
     </Fields>
