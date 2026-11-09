@@ -29,7 +29,8 @@ partial class Furniture
     [Flags]
     public enum Flag
     {
-        IgnoredBySandbox = 0000_0002,
+        Unknown0 = 0x0001,
+        IgnoredBySandbox = 0x0002,
     }
     
     public enum BenchTypes
@@ -44,6 +45,7 @@ partial class Furniture
         Armor = 7,
         PowerArmor = 8,
         RobotMod = 9,
+        Extractor = 10,
         Research = 11,
     }
 
