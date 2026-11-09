@@ -251,15 +251,10 @@
     <Fields>
       <Enum name="Flags" enumName="PlacedObjectMapMarker.Flag" recordType="FNAM" byteLength="4" nullable="False" />
       <String name="Name" recordType="FULL" nullable="False" translated="Normal" />
-      <Data recordType="TNAM">
-        <Fields>
-          <Int8 name="Type" />
-          <UInt8 name="Unknown" />
-        </Fields>
-      </Data>
-      <UInt16 name="VNAM" recordType="VNAM" unknown="true" />
-      <String name="UNAM" recordType="UNAM" unknown="true" translated="Normal" />
-      <UInt8 name="VISI" recordType="VISI" unknown="true" />
+      <Enum name="Type" enumName="PlacedObjectMapMarker.MarkerType" recordType="TNAM" byteLength="2" nullable="False" />
+      <Enum name="Category" enumName="PlacedObjectMapMarker.MarkerCategory" recordType="VNAM" byteLength="2" />
+      <String name="UnexploredName" recordType="UNAM" translated="Normal" />
+      <Enum name="UndiscoveredVisibility" enumName="PlacedObjectMapMarker.Visibility" recordType="VISI" byteLength="1" />
     </Fields>
   </Object>
   <Object name="GroupedPackIn" objType="Subrecord" endMarkerType="XWPK" markerType="XWPK" >
