@@ -209,20 +209,21 @@
   <Object name="PlanetContentManagerContentPropertiesComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
       <UInt32 name="ZNAM" recordType="ZNAM" unknown="true" />
-      <UInt8 name="YNAM" recordType="YNAM" unknown="true" />
-      <UInt32 name="XNAM" recordType="XNAM" unknown="true" />
-      <UInt32 name="WNAM" recordType="WNAM" unknown="true" />
-      <UInt8 name="VNAM" recordType="VNAM" unknown="true" />
-      <UInt32 name="UNAM" recordType="UNAM" unknown="true" />
-      <Float name="NAM1" recordType="NAM1" unknown="true" />
+      <!-- Names per xEdit. The 3 bool bytes stay UInt8 so any stored value round-trips. Global (NAM2) keeps its name: xEdit "Minimum Density Chance GLOB". -->
+      <UInt8 name="DoAllBeforeRepeating" recordType="YNAM" />
+      <UInt32 name="NumberOfTimesAllowedGlobal" recordType="XNAM" />
+      <UInt32 name="NumberOfTimesAllowedPerSystem" recordType="WNAM" />
+      <UInt8 name="SavePlacement" recordType="VNAM" />
+      <FormLink name="DaysUntilResetGlobal" recordType="UNAM" refName="Global" />
+      <Float name="MinimumDensityChance" recordType="NAM1" />
       <FormLink name="Global" recordType="NAM2" refName="Global" />
-      <UInt32 name="NAM3" recordType="NAM3" unknown="true" />
-      <ByteArray name="NAM4" recordType="NAM4" unknown="true" />
-      <UInt32 name="NAM5" recordType="NAM5" unknown="true" />
-      <UInt32 name="NAM6" recordType="NAM6" unknown="true" />
-      <UInt32 name="NAM7" recordType="NAM7" unknown="true" />
-      <UInt8 name="NAM8" recordType="NAM8" unknown="true" />
-      <UInt32 name="NAM9" recordType="NAM9" unknown="true" />
+      <UInt32 name="NumberOfTimesAllowedPerPlanet" recordType="NAM3" />
+      <Color name="DebugColor" recordType="NAM4" binaryType="Alpha" />
+      <FormLink name="NumberOfTimesPerRequestCurve" recordType="NAM5" refName="CurveTable" />
+      <FormLink name="SpawnGroupsLimitCurve" recordType="NAM6" refName="CurveTable" />
+      <FormLink name="SpawnGroupDistanceOverrideCurve" recordType="NAM7" refName="CurveTable" />
+      <UInt8 name="AllowInvalidBiomeMarkers" recordType="NAM8" />
+      <UInt32 name="NumberOfTimesAllowedPerPlanetWorld" recordType="NAM9" />
       <RefList name="Conditions" refName="Condition" counterRecType="CITC" />
     </Fields>
   </Object>
