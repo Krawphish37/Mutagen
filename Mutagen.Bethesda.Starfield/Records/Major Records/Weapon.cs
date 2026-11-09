@@ -19,6 +19,34 @@ public partial class Weapon
         Automatic,
     }
 
+    // WGEN Type (xEdit; Fallout 4's list plus Mounted)
+    public enum AnimationTypes
+    {
+        Unarmed = 0,
+        OneHandSword = 1,
+        OneHandDagger = 2,
+        OneHandAxe = 3,
+        OneHandMace = 4,
+        TwoHandSword = 5,
+        TwoHandAxe = 6,
+        Bow = 7,
+        Staff = 8,
+        Gun = 9,
+        Grenade = 10,
+        Mine = 11,
+        Mounted = 12,
+    }
+
+    // WMEL Attack Speed (xEdit)
+    public enum AttackSpeedEnum
+    {
+        VerySlow = 0,
+        Slow = 1,
+        Medium = 2,
+        Fast = 3,
+        VeryFast = 4,
+    }
+
     public const string ObjectModificationName = "TESObjectWEAP_InstanceData";
     
     public enum Property

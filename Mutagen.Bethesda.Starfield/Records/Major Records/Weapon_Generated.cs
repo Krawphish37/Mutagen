@@ -100,7 +100,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #endregion
         #region DirtinessScale
-        public Single DirtinessScale { get; set; } = default(Single);
+        public Percent DirtinessScale { get; set; } = default(Percent);
         #endregion
         #region ObjectPaletteDefaults
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -527,8 +527,8 @@ namespace Mutagen.Bethesda.Starfield
         #region SoundLevel
         public SoundLevel SoundLevel { get; set; } = default(SoundLevel);
         #endregion
-        #region WAUDUnknown2
-        public Int32 WAUDUnknown2 { get; set; } = default(Int32);
+        #region MeleeDetectionSoundLevel
+        public SoundLevel MeleeDetectionSoundLevel { get; set; } = default(SoundLevel);
         #endregion
         #region WTUR
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -732,8 +732,8 @@ namespace Mutagen.Bethesda.Starfield
         #region WFLGUnknown7
         public Boolean WFLGUnknown7 { get; set; } = default(Boolean);
         #endregion
-        #region WGENUnknown1
-        public UInt32 WGENUnknown1 { get; set; } = default(UInt32);
+        #region AnimationType
+        public Weapon.AnimationTypes AnimationType { get; set; } = default(Weapon.AnimationTypes);
         #endregion
         #region BaseWeight
         public Single BaseWeight { get; set; } = default(Single);
@@ -762,8 +762,8 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ITranslatedStringGetter? IWeaponGetter.General => this.General;
         #endregion
-        #region WMELUnknown1
-        public Byte WMELUnknown1 { get; set; } = default(Byte);
+        #region AttackSpeed
+        public Weapon.AttackSpeedEnum AttackSpeed { get; set; } = default(Weapon.AttackSpeedEnum);
         #endregion
         #region MeleeBashDamage
         public Single MeleeBashDamage { get; set; } = default(Single);
@@ -1037,7 +1037,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Unequip = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.FastEquip = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.SoundLevel = initialValue;
-                this.WAUDUnknown2 = initialValue;
+                this.MeleeDetectionSoundLevel = initialValue;
                 this.WTUR = initialValue;
                 this.ChargeFullPowerSeconds = initialValue;
                 this.ChargeMinPowerPerShot = initialValue;
@@ -1092,14 +1092,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.WFLGUnknown5 = initialValue;
                 this.WFLGUnknown6 = initialValue;
                 this.WFLGUnknown7 = initialValue;
-                this.WGENUnknown1 = initialValue;
+                this.AnimationType = initialValue;
                 this.BaseWeight = initialValue;
                 this.BaseValue = initialValue;
                 this.BaseSpeed = initialValue;
                 this.AttackOxygenCost = initialValue;
                 this.WeaponBarrel = initialValue;
                 this.General = initialValue;
-                this.WMELUnknown1 = initialValue;
+                this.AttackSpeed = initialValue;
                 this.MeleeBashDamage = initialValue;
                 this.MeleeReach = initialValue;
                 this.MeleeStagger = initialValue;
@@ -1209,7 +1209,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Unequip,
                 TItem FastEquip,
                 TItem SoundLevel,
-                TItem WAUDUnknown2,
+                TItem MeleeDetectionSoundLevel,
                 TItem WTUR,
                 TItem ChargeFullPowerSeconds,
                 TItem ChargeMinPowerPerShot,
@@ -1264,14 +1264,14 @@ namespace Mutagen.Bethesda.Starfield
                 TItem WFLGUnknown5,
                 TItem WFLGUnknown6,
                 TItem WFLGUnknown7,
-                TItem WGENUnknown1,
+                TItem AnimationType,
                 TItem BaseWeight,
                 TItem BaseValue,
                 TItem BaseSpeed,
                 TItem AttackOxygenCost,
                 TItem WeaponBarrel,
                 TItem General,
-                TItem WMELUnknown1,
+                TItem AttackSpeed,
                 TItem MeleeBashDamage,
                 TItem MeleeReach,
                 TItem MeleeStagger,
@@ -1380,7 +1380,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Unequip = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Unequip, new SoundReference.Mask<TItem>(Unequip));
                 this.FastEquip = new MaskItem<TItem, SoundReference.Mask<TItem>?>(FastEquip, new SoundReference.Mask<TItem>(FastEquip));
                 this.SoundLevel = SoundLevel;
-                this.WAUDUnknown2 = WAUDUnknown2;
+                this.MeleeDetectionSoundLevel = MeleeDetectionSoundLevel;
                 this.WTUR = WTUR;
                 this.ChargeFullPowerSeconds = ChargeFullPowerSeconds;
                 this.ChargeMinPowerPerShot = ChargeMinPowerPerShot;
@@ -1435,14 +1435,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.WFLGUnknown5 = WFLGUnknown5;
                 this.WFLGUnknown6 = WFLGUnknown6;
                 this.WFLGUnknown7 = WFLGUnknown7;
-                this.WGENUnknown1 = WGENUnknown1;
+                this.AnimationType = AnimationType;
                 this.BaseWeight = BaseWeight;
                 this.BaseValue = BaseValue;
                 this.BaseSpeed = BaseSpeed;
                 this.AttackOxygenCost = AttackOxygenCost;
                 this.WeaponBarrel = WeaponBarrel;
                 this.General = General;
-                this.WMELUnknown1 = WMELUnknown1;
+                this.AttackSpeed = AttackSpeed;
                 this.MeleeBashDamage = MeleeBashDamage;
                 this.MeleeReach = MeleeReach;
                 this.MeleeStagger = MeleeStagger;
@@ -1553,7 +1553,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? Unequip { get; set; }
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? FastEquip { get; set; }
             public TItem SoundLevel;
-            public TItem WAUDUnknown2;
+            public TItem MeleeDetectionSoundLevel;
             public TItem WTUR;
             public TItem ChargeFullPowerSeconds;
             public TItem ChargeMinPowerPerShot;
@@ -1608,14 +1608,14 @@ namespace Mutagen.Bethesda.Starfield
             public TItem WFLGUnknown5;
             public TItem WFLGUnknown6;
             public TItem WFLGUnknown7;
-            public TItem WGENUnknown1;
+            public TItem AnimationType;
             public TItem BaseWeight;
             public TItem BaseValue;
             public TItem BaseSpeed;
             public TItem AttackOxygenCost;
             public TItem WeaponBarrel;
             public TItem General;
-            public TItem WMELUnknown1;
+            public TItem AttackSpeed;
             public TItem MeleeBashDamage;
             public TItem MeleeReach;
             public TItem MeleeStagger;
@@ -1728,7 +1728,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Unequip, rhs.Unequip)) return false;
                 if (!object.Equals(this.FastEquip, rhs.FastEquip)) return false;
                 if (!object.Equals(this.SoundLevel, rhs.SoundLevel)) return false;
-                if (!object.Equals(this.WAUDUnknown2, rhs.WAUDUnknown2)) return false;
+                if (!object.Equals(this.MeleeDetectionSoundLevel, rhs.MeleeDetectionSoundLevel)) return false;
                 if (!object.Equals(this.WTUR, rhs.WTUR)) return false;
                 if (!object.Equals(this.ChargeFullPowerSeconds, rhs.ChargeFullPowerSeconds)) return false;
                 if (!object.Equals(this.ChargeMinPowerPerShot, rhs.ChargeMinPowerPerShot)) return false;
@@ -1783,14 +1783,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.WFLGUnknown5, rhs.WFLGUnknown5)) return false;
                 if (!object.Equals(this.WFLGUnknown6, rhs.WFLGUnknown6)) return false;
                 if (!object.Equals(this.WFLGUnknown7, rhs.WFLGUnknown7)) return false;
-                if (!object.Equals(this.WGENUnknown1, rhs.WGENUnknown1)) return false;
+                if (!object.Equals(this.AnimationType, rhs.AnimationType)) return false;
                 if (!object.Equals(this.BaseWeight, rhs.BaseWeight)) return false;
                 if (!object.Equals(this.BaseValue, rhs.BaseValue)) return false;
                 if (!object.Equals(this.BaseSpeed, rhs.BaseSpeed)) return false;
                 if (!object.Equals(this.AttackOxygenCost, rhs.AttackOxygenCost)) return false;
                 if (!object.Equals(this.WeaponBarrel, rhs.WeaponBarrel)) return false;
                 if (!object.Equals(this.General, rhs.General)) return false;
-                if (!object.Equals(this.WMELUnknown1, rhs.WMELUnknown1)) return false;
+                if (!object.Equals(this.AttackSpeed, rhs.AttackSpeed)) return false;
                 if (!object.Equals(this.MeleeBashDamage, rhs.MeleeBashDamage)) return false;
                 if (!object.Equals(this.MeleeReach, rhs.MeleeReach)) return false;
                 if (!object.Equals(this.MeleeStagger, rhs.MeleeStagger)) return false;
@@ -1895,7 +1895,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Unequip);
                 hash.Add(this.FastEquip);
                 hash.Add(this.SoundLevel);
-                hash.Add(this.WAUDUnknown2);
+                hash.Add(this.MeleeDetectionSoundLevel);
                 hash.Add(this.WTUR);
                 hash.Add(this.ChargeFullPowerSeconds);
                 hash.Add(this.ChargeMinPowerPerShot);
@@ -1950,14 +1950,14 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.WFLGUnknown5);
                 hash.Add(this.WFLGUnknown6);
                 hash.Add(this.WFLGUnknown7);
-                hash.Add(this.WGENUnknown1);
+                hash.Add(this.AnimationType);
                 hash.Add(this.BaseWeight);
                 hash.Add(this.BaseValue);
                 hash.Add(this.BaseSpeed);
                 hash.Add(this.AttackOxygenCost);
                 hash.Add(this.WeaponBarrel);
                 hash.Add(this.General);
-                hash.Add(this.WMELUnknown1);
+                hash.Add(this.AttackSpeed);
                 hash.Add(this.MeleeBashDamage);
                 hash.Add(this.MeleeReach);
                 hash.Add(this.MeleeStagger);
@@ -2165,7 +2165,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.FastEquip.Specific != null && !this.FastEquip.Specific.All(eval)) return false;
                 }
                 if (!eval(this.SoundLevel)) return false;
-                if (!eval(this.WAUDUnknown2)) return false;
+                if (!eval(this.MeleeDetectionSoundLevel)) return false;
                 if (!eval(this.WTUR)) return false;
                 if (!eval(this.ChargeFullPowerSeconds)) return false;
                 if (!eval(this.ChargeMinPowerPerShot)) return false;
@@ -2231,14 +2231,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.WFLGUnknown5)) return false;
                 if (!eval(this.WFLGUnknown6)) return false;
                 if (!eval(this.WFLGUnknown7)) return false;
-                if (!eval(this.WGENUnknown1)) return false;
+                if (!eval(this.AnimationType)) return false;
                 if (!eval(this.BaseWeight)) return false;
                 if (!eval(this.BaseValue)) return false;
                 if (!eval(this.BaseSpeed)) return false;
                 if (!eval(this.AttackOxygenCost)) return false;
                 if (!eval(this.WeaponBarrel)) return false;
                 if (!eval(this.General)) return false;
-                if (!eval(this.WMELUnknown1)) return false;
+                if (!eval(this.AttackSpeed)) return false;
                 if (!eval(this.MeleeBashDamage)) return false;
                 if (!eval(this.MeleeReach)) return false;
                 if (!eval(this.MeleeStagger)) return false;
@@ -2448,7 +2448,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.FastEquip.Specific != null && this.FastEquip.Specific.Any(eval)) return true;
                 }
                 if (eval(this.SoundLevel)) return true;
-                if (eval(this.WAUDUnknown2)) return true;
+                if (eval(this.MeleeDetectionSoundLevel)) return true;
                 if (eval(this.WTUR)) return true;
                 if (eval(this.ChargeFullPowerSeconds)) return true;
                 if (eval(this.ChargeMinPowerPerShot)) return true;
@@ -2514,14 +2514,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.WFLGUnknown5)) return true;
                 if (eval(this.WFLGUnknown6)) return true;
                 if (eval(this.WFLGUnknown7)) return true;
-                if (eval(this.WGENUnknown1)) return true;
+                if (eval(this.AnimationType)) return true;
                 if (eval(this.BaseWeight)) return true;
                 if (eval(this.BaseValue)) return true;
                 if (eval(this.BaseSpeed)) return true;
                 if (eval(this.AttackOxygenCost)) return true;
                 if (eval(this.WeaponBarrel)) return true;
                 if (eval(this.General)) return true;
-                if (eval(this.WMELUnknown1)) return true;
+                if (eval(this.AttackSpeed)) return true;
                 if (eval(this.MeleeBashDamage)) return true;
                 if (eval(this.MeleeReach)) return true;
                 if (eval(this.MeleeStagger)) return true;
@@ -2694,7 +2694,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Unequip = this.Unequip == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Unequip.Overall), this.Unequip.Specific?.Translate(eval));
                 obj.FastEquip = this.FastEquip == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.FastEquip.Overall), this.FastEquip.Specific?.Translate(eval));
                 obj.SoundLevel = eval(this.SoundLevel);
-                obj.WAUDUnknown2 = eval(this.WAUDUnknown2);
+                obj.MeleeDetectionSoundLevel = eval(this.MeleeDetectionSoundLevel);
                 obj.WTUR = eval(this.WTUR);
                 obj.ChargeFullPowerSeconds = eval(this.ChargeFullPowerSeconds);
                 obj.ChargeMinPowerPerShot = eval(this.ChargeMinPowerPerShot);
@@ -2763,14 +2763,14 @@ namespace Mutagen.Bethesda.Starfield
                 obj.WFLGUnknown5 = eval(this.WFLGUnknown5);
                 obj.WFLGUnknown6 = eval(this.WFLGUnknown6);
                 obj.WFLGUnknown7 = eval(this.WFLGUnknown7);
-                obj.WGENUnknown1 = eval(this.WGENUnknown1);
+                obj.AnimationType = eval(this.AnimationType);
                 obj.BaseWeight = eval(this.BaseWeight);
                 obj.BaseValue = eval(this.BaseValue);
                 obj.BaseSpeed = eval(this.BaseSpeed);
                 obj.AttackOxygenCost = eval(this.AttackOxygenCost);
                 obj.WeaponBarrel = eval(this.WeaponBarrel);
                 obj.General = eval(this.General);
-                obj.WMELUnknown1 = eval(this.WMELUnknown1);
+                obj.AttackSpeed = eval(this.AttackSpeed);
                 obj.MeleeBashDamage = eval(this.MeleeBashDamage);
                 obj.MeleeReach = eval(this.MeleeReach);
                 obj.MeleeStagger = eval(this.MeleeStagger);
@@ -3114,9 +3114,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(SoundLevel, "SoundLevel");
                     }
-                    if (printMask?.WAUDUnknown2 ?? true)
+                    if (printMask?.MeleeDetectionSoundLevel ?? true)
                     {
-                        sb.AppendItem(WAUDUnknown2, "WAUDUnknown2");
+                        sb.AppendItem(MeleeDetectionSoundLevel, "MeleeDetectionSoundLevel");
                     }
                     if (printMask?.WTUR ?? true)
                     {
@@ -3349,9 +3349,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(WFLGUnknown7, "WFLGUnknown7");
                     }
-                    if (printMask?.WGENUnknown1 ?? true)
+                    if (printMask?.AnimationType ?? true)
                     {
-                        sb.AppendItem(WGENUnknown1, "WGENUnknown1");
+                        sb.AppendItem(AnimationType, "AnimationType");
                     }
                     if (printMask?.BaseWeight ?? true)
                     {
@@ -3377,9 +3377,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(General, "General");
                     }
-                    if (printMask?.WMELUnknown1 ?? true)
+                    if (printMask?.AttackSpeed ?? true)
                     {
-                        sb.AppendItem(WMELUnknown1, "WMELUnknown1");
+                        sb.AppendItem(AttackSpeed, "AttackSpeed");
                     }
                     if (printMask?.MeleeBashDamage ?? true)
                     {
@@ -3626,7 +3626,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, SoundReference.ErrorMask?>? Unequip;
             public MaskItem<Exception?, SoundReference.ErrorMask?>? FastEquip;
             public Exception? SoundLevel;
-            public Exception? WAUDUnknown2;
+            public Exception? MeleeDetectionSoundLevel;
             public Exception? WTUR;
             public Exception? ChargeFullPowerSeconds;
             public Exception? ChargeMinPowerPerShot;
@@ -3681,14 +3681,14 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? WFLGUnknown5;
             public Exception? WFLGUnknown6;
             public Exception? WFLGUnknown7;
-            public Exception? WGENUnknown1;
+            public Exception? AnimationType;
             public Exception? BaseWeight;
             public Exception? BaseValue;
             public Exception? BaseSpeed;
             public Exception? AttackOxygenCost;
             public Exception? WeaponBarrel;
             public Exception? General;
-            public Exception? WMELUnknown1;
+            public Exception? AttackSpeed;
             public Exception? MeleeBashDamage;
             public Exception? MeleeReach;
             public Exception? MeleeStagger;
@@ -3850,8 +3850,8 @@ namespace Mutagen.Bethesda.Starfield
                         return FastEquip;
                     case Weapon_FieldIndex.SoundLevel:
                         return SoundLevel;
-                    case Weapon_FieldIndex.WAUDUnknown2:
-                        return WAUDUnknown2;
+                    case Weapon_FieldIndex.MeleeDetectionSoundLevel:
+                        return MeleeDetectionSoundLevel;
                     case Weapon_FieldIndex.WTUR:
                         return WTUR;
                     case Weapon_FieldIndex.ChargeFullPowerSeconds:
@@ -3960,8 +3960,8 @@ namespace Mutagen.Bethesda.Starfield
                         return WFLGUnknown6;
                     case Weapon_FieldIndex.WFLGUnknown7:
                         return WFLGUnknown7;
-                    case Weapon_FieldIndex.WGENUnknown1:
-                        return WGENUnknown1;
+                    case Weapon_FieldIndex.AnimationType:
+                        return AnimationType;
                     case Weapon_FieldIndex.BaseWeight:
                         return BaseWeight;
                     case Weapon_FieldIndex.BaseValue:
@@ -3974,8 +3974,8 @@ namespace Mutagen.Bethesda.Starfield
                         return WeaponBarrel;
                     case Weapon_FieldIndex.General:
                         return General;
-                    case Weapon_FieldIndex.WMELUnknown1:
-                        return WMELUnknown1;
+                    case Weapon_FieldIndex.AttackSpeed:
+                        return AttackSpeed;
                     case Weapon_FieldIndex.MeleeBashDamage:
                         return MeleeBashDamage;
                     case Weapon_FieldIndex.MeleeReach:
@@ -4238,8 +4238,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.SoundLevel:
                         this.SoundLevel = ex;
                         break;
-                    case Weapon_FieldIndex.WAUDUnknown2:
-                        this.WAUDUnknown2 = ex;
+                    case Weapon_FieldIndex.MeleeDetectionSoundLevel:
+                        this.MeleeDetectionSoundLevel = ex;
                         break;
                     case Weapon_FieldIndex.WTUR:
                         this.WTUR = ex;
@@ -4403,8 +4403,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.WFLGUnknown7:
                         this.WFLGUnknown7 = ex;
                         break;
-                    case Weapon_FieldIndex.WGENUnknown1:
-                        this.WGENUnknown1 = ex;
+                    case Weapon_FieldIndex.AnimationType:
+                        this.AnimationType = ex;
                         break;
                     case Weapon_FieldIndex.BaseWeight:
                         this.BaseWeight = ex;
@@ -4424,8 +4424,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.General:
                         this.General = ex;
                         break;
-                    case Weapon_FieldIndex.WMELUnknown1:
-                        this.WMELUnknown1 = ex;
+                    case Weapon_FieldIndex.AttackSpeed:
+                        this.AttackSpeed = ex;
                         break;
                     case Weapon_FieldIndex.MeleeBashDamage:
                         this.MeleeBashDamage = ex;
@@ -4735,8 +4735,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.SoundLevel:
                         this.SoundLevel = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WAUDUnknown2:
-                        this.WAUDUnknown2 = (Exception?)obj;
+                    case Weapon_FieldIndex.MeleeDetectionSoundLevel:
+                        this.MeleeDetectionSoundLevel = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.WTUR:
                         this.WTUR = (Exception?)obj;
@@ -4900,8 +4900,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.WFLGUnknown7:
                         this.WFLGUnknown7 = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WGENUnknown1:
-                        this.WGENUnknown1 = (Exception?)obj;
+                    case Weapon_FieldIndex.AnimationType:
+                        this.AnimationType = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.BaseWeight:
                         this.BaseWeight = (Exception?)obj;
@@ -4921,8 +4921,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.General:
                         this.General = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WMELUnknown1:
-                        this.WMELUnknown1 = (Exception?)obj;
+                    case Weapon_FieldIndex.AttackSpeed:
+                        this.AttackSpeed = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.MeleeBashDamage:
                         this.MeleeBashDamage = (Exception?)obj;
@@ -5122,7 +5122,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Unequip != null) return true;
                 if (FastEquip != null) return true;
                 if (SoundLevel != null) return true;
-                if (WAUDUnknown2 != null) return true;
+                if (MeleeDetectionSoundLevel != null) return true;
                 if (WTUR != null) return true;
                 if (ChargeFullPowerSeconds != null) return true;
                 if (ChargeMinPowerPerShot != null) return true;
@@ -5177,14 +5177,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (WFLGUnknown5 != null) return true;
                 if (WFLGUnknown6 != null) return true;
                 if (WFLGUnknown7 != null) return true;
-                if (WGENUnknown1 != null) return true;
+                if (AnimationType != null) return true;
                 if (BaseWeight != null) return true;
                 if (BaseValue != null) return true;
                 if (BaseSpeed != null) return true;
                 if (AttackOxygenCost != null) return true;
                 if (WeaponBarrel != null) return true;
                 if (General != null) return true;
-                if (WMELUnknown1 != null) return true;
+                if (AttackSpeed != null) return true;
                 if (MeleeBashDamage != null) return true;
                 if (MeleeReach != null) return true;
                 if (MeleeStagger != null) return true;
@@ -5455,7 +5455,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(SoundLevel, "SoundLevel");
                 }
                 {
-                    sb.AppendItem(WAUDUnknown2, "WAUDUnknown2");
+                    sb.AppendItem(MeleeDetectionSoundLevel, "MeleeDetectionSoundLevel");
                 }
                 {
                     sb.AppendItem(WTUR, "WTUR");
@@ -5635,7 +5635,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(WFLGUnknown7, "WFLGUnknown7");
                 }
                 {
-                    sb.AppendItem(WGENUnknown1, "WGENUnknown1");
+                    sb.AppendItem(AnimationType, "AnimationType");
                 }
                 {
                     sb.AppendItem(BaseWeight, "BaseWeight");
@@ -5656,7 +5656,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(General, "General");
                 }
                 {
-                    sb.AppendItem(WMELUnknown1, "WMELUnknown1");
+                    sb.AppendItem(AttackSpeed, "AttackSpeed");
                 }
                 {
                     sb.AppendItem(MeleeBashDamage, "MeleeBashDamage");
@@ -5853,7 +5853,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Unequip = this.Unequip.Combine(rhs.Unequip, (l, r) => l.Combine(r));
                 ret.FastEquip = this.FastEquip.Combine(rhs.FastEquip, (l, r) => l.Combine(r));
                 ret.SoundLevel = this.SoundLevel.Combine(rhs.SoundLevel);
-                ret.WAUDUnknown2 = this.WAUDUnknown2.Combine(rhs.WAUDUnknown2);
+                ret.MeleeDetectionSoundLevel = this.MeleeDetectionSoundLevel.Combine(rhs.MeleeDetectionSoundLevel);
                 ret.WTUR = this.WTUR.Combine(rhs.WTUR);
                 ret.ChargeFullPowerSeconds = this.ChargeFullPowerSeconds.Combine(rhs.ChargeFullPowerSeconds);
                 ret.ChargeMinPowerPerShot = this.ChargeMinPowerPerShot.Combine(rhs.ChargeMinPowerPerShot);
@@ -5908,14 +5908,14 @@ namespace Mutagen.Bethesda.Starfield
                 ret.WFLGUnknown5 = this.WFLGUnknown5.Combine(rhs.WFLGUnknown5);
                 ret.WFLGUnknown6 = this.WFLGUnknown6.Combine(rhs.WFLGUnknown6);
                 ret.WFLGUnknown7 = this.WFLGUnknown7.Combine(rhs.WFLGUnknown7);
-                ret.WGENUnknown1 = this.WGENUnknown1.Combine(rhs.WGENUnknown1);
+                ret.AnimationType = this.AnimationType.Combine(rhs.AnimationType);
                 ret.BaseWeight = this.BaseWeight.Combine(rhs.BaseWeight);
                 ret.BaseValue = this.BaseValue.Combine(rhs.BaseValue);
                 ret.BaseSpeed = this.BaseSpeed.Combine(rhs.BaseSpeed);
                 ret.AttackOxygenCost = this.AttackOxygenCost.Combine(rhs.AttackOxygenCost);
                 ret.WeaponBarrel = this.WeaponBarrel.Combine(rhs.WeaponBarrel);
                 ret.General = this.General.Combine(rhs.General);
-                ret.WMELUnknown1 = this.WMELUnknown1.Combine(rhs.WMELUnknown1);
+                ret.AttackSpeed = this.AttackSpeed.Combine(rhs.AttackSpeed);
                 ret.MeleeBashDamage = this.MeleeBashDamage.Combine(rhs.MeleeBashDamage);
                 ret.MeleeReach = this.MeleeReach.Combine(rhs.MeleeReach);
                 ret.MeleeStagger = this.MeleeStagger.Combine(rhs.MeleeStagger);
@@ -6037,7 +6037,7 @@ namespace Mutagen.Bethesda.Starfield
             public SoundReference.TranslationMask? Unequip;
             public SoundReference.TranslationMask? FastEquip;
             public bool SoundLevel;
-            public bool WAUDUnknown2;
+            public bool MeleeDetectionSoundLevel;
             public bool WTUR;
             public bool ChargeFullPowerSeconds;
             public bool ChargeMinPowerPerShot;
@@ -6092,14 +6092,14 @@ namespace Mutagen.Bethesda.Starfield
             public bool WFLGUnknown5;
             public bool WFLGUnknown6;
             public bool WFLGUnknown7;
-            public bool WGENUnknown1;
+            public bool AnimationType;
             public bool BaseWeight;
             public bool BaseValue;
             public bool BaseSpeed;
             public bool AttackOxygenCost;
             public bool WeaponBarrel;
             public bool General;
-            public bool WMELUnknown1;
+            public bool AttackSpeed;
             public bool MeleeBashDamage;
             public bool MeleeReach;
             public bool MeleeStagger;
@@ -6191,7 +6191,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.WAM2Unknown1 = defaultOn;
                 this.WAMM = defaultOn;
                 this.SoundLevel = defaultOn;
-                this.WAUDUnknown2 = defaultOn;
+                this.MeleeDetectionSoundLevel = defaultOn;
                 this.WTUR = defaultOn;
                 this.ChargeFullPowerSeconds = defaultOn;
                 this.ChargeMinPowerPerShot = defaultOn;
@@ -6245,14 +6245,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.WFLGUnknown5 = defaultOn;
                 this.WFLGUnknown6 = defaultOn;
                 this.WFLGUnknown7 = defaultOn;
-                this.WGENUnknown1 = defaultOn;
+                this.AnimationType = defaultOn;
                 this.BaseWeight = defaultOn;
                 this.BaseValue = defaultOn;
                 this.BaseSpeed = defaultOn;
                 this.AttackOxygenCost = defaultOn;
                 this.WeaponBarrel = defaultOn;
                 this.General = defaultOn;
-                this.WMELUnknown1 = defaultOn;
+                this.AttackSpeed = defaultOn;
                 this.MeleeBashDamage = defaultOn;
                 this.MeleeReach = defaultOn;
                 this.MeleeStagger = defaultOn;
@@ -6358,7 +6358,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Unequip != null ? Unequip.OnOverall : DefaultOn, Unequip?.GetCrystal()));
                 ret.Add((FastEquip != null ? FastEquip.OnOverall : DefaultOn, FastEquip?.GetCrystal()));
                 ret.Add((SoundLevel, null));
-                ret.Add((WAUDUnknown2, null));
+                ret.Add((MeleeDetectionSoundLevel, null));
                 ret.Add((WTUR, null));
                 ret.Add((ChargeFullPowerSeconds, null));
                 ret.Add((ChargeMinPowerPerShot, null));
@@ -6413,14 +6413,14 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((WFLGUnknown5, null));
                 ret.Add((WFLGUnknown6, null));
                 ret.Add((WFLGUnknown7, null));
-                ret.Add((WGENUnknown1, null));
+                ret.Add((AnimationType, null));
                 ret.Add((BaseWeight, null));
                 ret.Add((BaseValue, null));
                 ret.Add((BaseSpeed, null));
                 ret.Add((AttackOxygenCost, null));
                 ret.Add((WeaponBarrel, null));
                 ret.Add((General, null));
-                ret.Add((WMELUnknown1, null));
+                ret.Add((AttackSpeed, null));
                 ret.Add((MeleeBashDamage, null));
                 ret.Add((MeleeReach, null));
                 ret.Add((MeleeStagger, null));
@@ -6622,7 +6622,6 @@ namespace Mutagen.Bethesda.Starfield
         IBindableEquipment,
         IConstructibleObjectTarget,
         IEnchantable,
-        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         IItem,
@@ -6632,7 +6631,6 @@ namespace Mutagen.Bethesda.Starfield
         INamed,
         INamedRequired,
         IObjectBounded,
-        IPlaceableObject,
         IResearchResourceTarget,
         IScripted,
         IStarfieldMajorRecordInternal,
@@ -6649,7 +6647,7 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IObjectBounded
         /// </summary>
         new ObjectBounds ObjectBounds { get; set; }
-        new Single DirtinessScale { get; set; }
+        new Percent DirtinessScale { get; set; }
         new ObjectPaletteDefaults? ObjectPaletteDefaults { get; set; }
         new Transforms? Transforms { get; set; }
         new UInt64? XALG { get; set; }
@@ -6710,7 +6708,7 @@ namespace Mutagen.Bethesda.Starfield
         new SoundReference Unequip { get; set; }
         new SoundReference FastEquip { get; set; }
         new SoundLevel SoundLevel { get; set; }
-        new Int32 WAUDUnknown2 { get; set; }
+        new SoundLevel MeleeDetectionSoundLevel { get; set; }
         new MemorySlice<Byte>? WTUR { get; set; }
         new Single ChargeFullPowerSeconds { get; set; }
         new Single ChargeMinPowerPerShot { get; set; }
@@ -6765,14 +6763,14 @@ namespace Mutagen.Bethesda.Starfield
         new Boolean WFLGUnknown5 { get; set; }
         new Boolean WFLGUnknown6 { get; set; }
         new Boolean WFLGUnknown7 { get; set; }
-        new UInt32 WGENUnknown1 { get; set; }
+        new Weapon.AnimationTypes AnimationType { get; set; }
         new Single BaseWeight { get; set; }
         new UInt32 BaseValue { get; set; }
         new Single BaseSpeed { get; set; }
         new Single AttackOxygenCost { get; set; }
         new IFormLink<IWeaponBarrelModelGetter> WeaponBarrel { get; set; }
         new TranslatedString? General { get; set; }
-        new Byte WMELUnknown1 { get; set; }
+        new Weapon.AttackSpeedEnum AttackSpeed { get; set; }
         new Single MeleeBashDamage { get; set; }
         new Single MeleeReach { get; set; }
         new Stagger MeleeStagger { get; set; }
@@ -6840,7 +6838,6 @@ namespace Mutagen.Bethesda.Starfield
         IBindableEquipmentGetter,
         IConstructibleObjectTargetGetter,
         IEnchantableGetter,
-        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         IItemGetter,
@@ -6851,7 +6848,6 @@ namespace Mutagen.Bethesda.Starfield
         INamedGetter,
         INamedRequiredGetter,
         IObjectBoundedGetter,
-        IPlaceableObjectGetter,
         IResearchResourceTargetGetter,
         IScriptedGetter,
         IStaticTargetGetter,
@@ -6871,7 +6867,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IObjectBoundsGetter ObjectBounds { get; }
         #endregion
-        Single DirtinessScale { get; }
+        Percent DirtinessScale { get; }
         IObjectPaletteDefaultsGetter? ObjectPaletteDefaults { get; }
         ITransformsGetter? Transforms { get; }
         UInt64? XALG { get; }
@@ -6938,7 +6934,7 @@ namespace Mutagen.Bethesda.Starfield
         ISoundReferenceGetter Unequip { get; }
         ISoundReferenceGetter FastEquip { get; }
         SoundLevel SoundLevel { get; }
-        Int32 WAUDUnknown2 { get; }
+        SoundLevel MeleeDetectionSoundLevel { get; }
         ReadOnlyMemorySlice<Byte>? WTUR { get; }
         Single ChargeFullPowerSeconds { get; }
         Single ChargeMinPowerPerShot { get; }
@@ -6993,14 +6989,14 @@ namespace Mutagen.Bethesda.Starfield
         Boolean WFLGUnknown5 { get; }
         Boolean WFLGUnknown6 { get; }
         Boolean WFLGUnknown7 { get; }
-        UInt32 WGENUnknown1 { get; }
+        Weapon.AnimationTypes AnimationType { get; }
         Single BaseWeight { get; }
         UInt32 BaseValue { get; }
         Single BaseSpeed { get; }
         Single AttackOxygenCost { get; }
         IFormLinkGetter<IWeaponBarrelModelGetter> WeaponBarrel { get; }
         ITranslatedStringGetter? General { get; }
-        Byte WMELUnknown1 { get; }
+        Weapon.AttackSpeedEnum AttackSpeed { get; }
         Single MeleeBashDamage { get; }
         Single MeleeReach { get; }
         Stagger MeleeStagger { get; }
@@ -7280,7 +7276,7 @@ namespace Mutagen.Bethesda.Starfield
         Unequip = 58,
         FastEquip = 59,
         SoundLevel = 60,
-        WAUDUnknown2 = 61,
+        MeleeDetectionSoundLevel = 61,
         WTUR = 62,
         ChargeFullPowerSeconds = 63,
         ChargeMinPowerPerShot = 64,
@@ -7335,14 +7331,14 @@ namespace Mutagen.Bethesda.Starfield
         WFLGUnknown5 = 113,
         WFLGUnknown6 = 114,
         WFLGUnknown7 = 115,
-        WGENUnknown1 = 116,
+        AnimationType = 116,
         BaseWeight = 117,
         BaseValue = 118,
         BaseSpeed = 119,
         AttackOxygenCost = 120,
         WeaponBarrel = 121,
         General = 122,
-        WMELUnknown1 = 123,
+        AttackSpeed = 123,
         MeleeBashDamage = 124,
         MeleeReach = 125,
         MeleeStagger = 126,
@@ -7536,7 +7532,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.VirtualMachineAdapter = null;
             item.ObjectBounds.Clear();
-            item.DirtinessScale = default(Single);
+            item.DirtinessScale = default(Percent);
             item.ObjectPaletteDefaults = null;
             item.Transforms = null;
             item.XALG = default;
@@ -7588,7 +7584,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Unequip.Clear();
             item.FastEquip.Clear();
             item.SoundLevel = default(SoundLevel);
-            item.WAUDUnknown2 = default(Int32);
+            item.MeleeDetectionSoundLevel = default(SoundLevel);
             item.WTUR = default;
             item.ChargeFullPowerSeconds = default(Single);
             item.ChargeMinPowerPerShot = default(Single);
@@ -7643,14 +7639,14 @@ namespace Mutagen.Bethesda.Starfield
             item.WFLGUnknown5 = default(Boolean);
             item.WFLGUnknown6 = default(Boolean);
             item.WFLGUnknown7 = default(Boolean);
-            item.WGENUnknown1 = default(UInt32);
+            item.AnimationType = default(Weapon.AnimationTypes);
             item.BaseWeight = default(Single);
             item.BaseValue = default(UInt32);
             item.BaseSpeed = default(Single);
             item.AttackOxygenCost = default(Single);
             item.WeaponBarrel.Clear();
             item.General = default;
-            item.WMELUnknown1 = default(Byte);
+            item.AttackSpeed = default(Weapon.AttackSpeedEnum);
             item.MeleeBashDamage = default(Single);
             item.MeleeReach = default(Single);
             item.MeleeStagger = default(Stagger);
@@ -7869,7 +7865,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.ObjectBounds = MaskItemExt.Factory(item.ObjectBounds.GetEqualsMask(rhs.ObjectBounds, include), include);
-            ret.DirtinessScale = item.DirtinessScale.EqualsWithin(rhs.DirtinessScale);
+            ret.DirtinessScale = item.DirtinessScale.Equals(rhs.DirtinessScale);
             ret.ObjectPaletteDefaults = EqualsMaskHelper.EqualsHelper(
                 item.ObjectPaletteDefaults,
                 rhs.ObjectPaletteDefaults,
@@ -7953,7 +7949,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Unequip = MaskItemExt.Factory(item.Unequip.GetEqualsMask(rhs.Unequip, include), include);
             ret.FastEquip = MaskItemExt.Factory(item.FastEquip.GetEqualsMask(rhs.FastEquip, include), include);
             ret.SoundLevel = item.SoundLevel == rhs.SoundLevel;
-            ret.WAUDUnknown2 = item.WAUDUnknown2 == rhs.WAUDUnknown2;
+            ret.MeleeDetectionSoundLevel = item.MeleeDetectionSoundLevel == rhs.MeleeDetectionSoundLevel;
             ret.WTUR = MemorySliceExt.SequenceEqual(item.WTUR, rhs.WTUR);
             ret.ChargeFullPowerSeconds = item.ChargeFullPowerSeconds.EqualsWithin(rhs.ChargeFullPowerSeconds);
             ret.ChargeMinPowerPerShot = item.ChargeMinPowerPerShot.EqualsWithin(rhs.ChargeMinPowerPerShot);
@@ -8011,14 +8007,14 @@ namespace Mutagen.Bethesda.Starfield
             ret.WFLGUnknown5 = item.WFLGUnknown5 == rhs.WFLGUnknown5;
             ret.WFLGUnknown6 = item.WFLGUnknown6 == rhs.WFLGUnknown6;
             ret.WFLGUnknown7 = item.WFLGUnknown7 == rhs.WFLGUnknown7;
-            ret.WGENUnknown1 = item.WGENUnknown1 == rhs.WGENUnknown1;
+            ret.AnimationType = item.AnimationType == rhs.AnimationType;
             ret.BaseWeight = item.BaseWeight.EqualsWithin(rhs.BaseWeight);
             ret.BaseValue = item.BaseValue == rhs.BaseValue;
             ret.BaseSpeed = item.BaseSpeed.EqualsWithin(rhs.BaseSpeed);
             ret.AttackOxygenCost = item.AttackOxygenCost.EqualsWithin(rhs.AttackOxygenCost);
             ret.WeaponBarrel = item.WeaponBarrel.Equals(rhs.WeaponBarrel);
             ret.General = object.Equals(item.General, rhs.General);
-            ret.WMELUnknown1 = item.WMELUnknown1 == rhs.WMELUnknown1;
+            ret.AttackSpeed = item.AttackSpeed == rhs.AttackSpeed;
             ret.MeleeBashDamage = item.MeleeBashDamage.EqualsWithin(rhs.MeleeBashDamage);
             ret.MeleeReach = item.MeleeReach.EqualsWithin(rhs.MeleeReach);
             ret.MeleeStagger = item.MeleeStagger == rhs.MeleeStagger;
@@ -8388,9 +8384,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.SoundLevel, "SoundLevel");
             }
-            if (printMask?.WAUDUnknown2 ?? true)
+            if (printMask?.MeleeDetectionSoundLevel ?? true)
             {
-                sb.AppendItem(item.WAUDUnknown2, "WAUDUnknown2");
+                sb.AppendItem(item.MeleeDetectionSoundLevel, "MeleeDetectionSoundLevel");
             }
             if ((printMask?.WTUR ?? true)
                 && item.WTUR is {} WTURItem)
@@ -8620,9 +8616,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.WFLGUnknown7, "WFLGUnknown7");
             }
-            if (printMask?.WGENUnknown1 ?? true)
+            if (printMask?.AnimationType ?? true)
             {
-                sb.AppendItem(item.WGENUnknown1, "WGENUnknown1");
+                sb.AppendItem(item.AnimationType, "AnimationType");
             }
             if (printMask?.BaseWeight ?? true)
             {
@@ -8649,9 +8645,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(GeneralItem, "General");
             }
-            if (printMask?.WMELUnknown1 ?? true)
+            if (printMask?.AttackSpeed ?? true)
             {
-                sb.AppendItem(item.WMELUnknown1, "WMELUnknown1");
+                sb.AppendItem(item.AttackSpeed, "AttackSpeed");
             }
             if (printMask?.MeleeBashDamage ?? true)
             {
@@ -8903,7 +8899,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.DirtinessScale) ?? true))
             {
-                if (!lhs.DirtinessScale.EqualsWithin(rhs.DirtinessScale)) return false;
+                if (!lhs.DirtinessScale.Equals(rhs.DirtinessScale)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.ObjectPaletteDefaults) ?? true))
             {
@@ -9157,9 +9153,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.SoundLevel != rhs.SoundLevel) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAUDUnknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.MeleeDetectionSoundLevel) ?? true))
             {
-                if (lhs.WAUDUnknown2 != rhs.WAUDUnknown2) return false;
+                if (lhs.MeleeDetectionSoundLevel != rhs.MeleeDetectionSoundLevel) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTUR) ?? true))
             {
@@ -9377,9 +9373,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.WFLGUnknown7 != rhs.WFLGUnknown7) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WGENUnknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.AnimationType) ?? true))
             {
-                if (lhs.WGENUnknown1 != rhs.WGENUnknown1) return false;
+                if (lhs.AnimationType != rhs.AnimationType) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.BaseWeight) ?? true))
             {
@@ -9405,9 +9401,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!object.Equals(lhs.General, rhs.General)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WMELUnknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.AttackSpeed) ?? true))
             {
-                if (lhs.WMELUnknown1 != rhs.WMELUnknown1) return false;
+                if (lhs.AttackSpeed != rhs.AttackSpeed) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.MeleeBashDamage) ?? true))
             {
@@ -9639,10 +9635,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XALGitem);
             }
-            foreach (var subItem in item.Components)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.Components);
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -9667,36 +9660,18 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(DropdownSounditem);
             }
-            if (item.Keywords is {} Keywordsitem)
-            {
-                foreach (var subItem in Keywordsitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
+            hash.Add(item.Keywords);
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
             }
             hash.Add(item.InstanceNaming);
-            if (item.AttachParentSlots is {} AttachParentSlotsitem)
-            {
-                foreach (var subItem in AttachParentSlotsitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
-            if (item.ObjectTemplates is {} ObjectTemplatesitem)
-            {
-                foreach (var subItem in ObjectTemplatesitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
+            hash.Add(item.AttachParentSlots);
+            hash.Add(item.ObjectTemplates);
             hash.Add(item.EmbeddedWeaponMod);
             if (item.BNAM is {} BNAMItem)
             {
-                hash.AddBytes(BNAMItem);
+                hash.Add(BNAMItem);
             }
             hash.Add(item.SightedTransitionSeconds);
             hash.Add(item.AimDownSightTemplate);
@@ -9722,7 +9697,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.WAM2Unknown1);
             if (item.WAMM is {} WAMMItem)
             {
-                hash.AddBytes(WAMMItem);
+                hash.Add(WAMMItem);
             }
             hash.Add(item.MeleeOrCreature);
             hash.Add(item.PrimedExplosive);
@@ -9732,10 +9707,10 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Unequip);
             hash.Add(item.FastEquip);
             hash.Add(item.SoundLevel);
-            hash.Add(item.WAUDUnknown2);
+            hash.Add(item.MeleeDetectionSoundLevel);
             if (item.WTUR is {} WTURItem)
             {
-                hash.AddBytes(WTURItem);
+                hash.Add(WTURItem);
             }
             hash.Add(item.ChargeFullPowerSeconds);
             hash.Add(item.ChargeMinPowerPerShot);
@@ -9759,13 +9734,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.WDMGUnknown8);
             hash.Add(item.WDMGUnknown9);
             hash.Add(item.CritChanceIncMult);
-            if (item.DamageTypes is {} DamageTypesitem)
-            {
-                foreach (var subItem in DamageTypesitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
+            hash.Add(item.DamageTypes);
             hash.Add(item.FiringType);
             hash.Add(item.BurstCount);
             hash.Add(item.RepeatableFire);
@@ -9796,7 +9765,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.WFLGUnknown5);
             hash.Add(item.WFLGUnknown6);
             hash.Add(item.WFLGUnknown7);
-            hash.Add(item.WGENUnknown1);
+            hash.Add(item.AnimationType);
             hash.Add(item.BaseWeight);
             hash.Add(item.BaseValue);
             hash.Add(item.BaseSpeed);
@@ -9806,7 +9775,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Generalitem);
             }
-            hash.Add(item.WMELUnknown1);
+            hash.Add(item.AttackSpeed);
             hash.Add(item.MeleeBashDamage);
             hash.Add(item.MeleeReach);
             hash.Add(item.MeleeStagger);
@@ -9828,7 +9797,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ReloadSingle);
             if (item.WRUM is {} WRUMItem)
             {
-                hash.AddBytes(WRUMItem);
+                hash.Add(WRUMItem);
             }
             hash.Add(item.ApertureValueMin);
             hash.Add(item.ApertureValueMax);
@@ -10757,9 +10726,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.SoundLevel = rhs.SoundLevel;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAUDUnknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.MeleeDetectionSoundLevel) ?? true))
             {
-                item.WAUDUnknown2 = rhs.WAUDUnknown2;
+                item.MeleeDetectionSoundLevel = rhs.MeleeDetectionSoundLevel;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTUR) ?? true))
             {
@@ -11012,9 +10981,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.WFLGUnknown7 = rhs.WFLGUnknown7;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WGENUnknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.AnimationType) ?? true))
             {
-                item.WGENUnknown1 = rhs.WGENUnknown1;
+                item.AnimationType = rhs.AnimationType;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.BaseWeight) ?? true))
             {
@@ -11040,9 +11009,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.General = rhs.General?.DeepCopy();
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WMELUnknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.AttackSpeed) ?? true))
             {
-                item.WMELUnknown1 = rhs.WMELUnknown1;
+                item.AttackSpeed = rhs.AttackSpeed;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.MeleeBashDamage) ?? true))
             {
@@ -11434,9 +11403,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: ObjectBoundsItem,
                 writer: writer,
                 translationParams: translationParams);
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            PercentBinaryTranslation.Write(
                 writer: writer,
                 item: item.DirtinessScale,
+                integerType: FloatIntegerType.UInt,
                 header: translationParams.ConvertToCustom(RecordTypes.ODTY));
             if (item.ObjectPaletteDefaults is {} ObjectPaletteDefaultsItem)
             {
@@ -11667,7 +11637,10 @@ namespace Mutagen.Bethesda.Starfield
                     writer,
                     item.SoundLevel,
                     length: 4);
-                writer.Write(item.WAUDUnknown2);
+                EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.MeleeDetectionSoundLevel,
+                    length: 4);
             }
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
@@ -11811,7 +11784,10 @@ namespace Mutagen.Bethesda.Starfield
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.WGEN)))
             {
-                writer.Write(item.WGENUnknown1);
+                EnumBinaryTranslation<Weapon.AnimationTypes, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.AnimationType,
+                    length: 4);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.BaseWeight);
@@ -11834,7 +11810,10 @@ namespace Mutagen.Bethesda.Starfield
                 source: StringsSource.Normal);
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.WMEL)))
             {
-                writer.Write(item.WMELUnknown1);
+                EnumBinaryTranslation<Weapon.AttackSpeedEnum, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.AttackSpeed,
+                    length: 1);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.MeleeBashDamage);
@@ -12053,7 +12032,9 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ODTY:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DirtinessScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    item.DirtinessScale = PercentBinaryTranslation.Parse(
+                        reader: frame,
+                        integerType: FloatIntegerType.UInt);
                     return (int)Weapon_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.OPDS:
@@ -12332,8 +12313,10 @@ namespace Mutagen.Bethesda.Starfield
                         reader: dataFrame,
                         length: 4);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WAUDUnknown2 = dataFrame.ReadInt32();
-                    return (int)Weapon_FieldIndex.WAUDUnknown2;
+                    item.MeleeDetectionSoundLevel = EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    return (int)Weapon_FieldIndex.MeleeDetectionSoundLevel;
                 }
                 case RecordTypeInts.WTUR:
                 {
@@ -12488,7 +12471,9 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WGENUnknown1 = dataFrame.ReadUInt32();
+                    item.AnimationType = EnumBinaryTranslation<Weapon.AnimationTypes, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
                     if (dataFrame.Remaining < 4) return null;
                     item.BaseWeight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -12517,7 +12502,9 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
-                    item.WMELUnknown1 = dataFrame.ReadUInt8();
+                    item.AttackSpeed = EnumBinaryTranslation<Weapon.AttackSpeedEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 1);
                     if (dataFrame.Remaining < 4) return null;
                     item.MeleeBashDamage = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -12732,7 +12719,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region DirtinessScale
         private int? _DirtinessScaleLocation;
-        public Single DirtinessScale => _DirtinessScaleLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants).Float() : default(Single);
+        public Percent DirtinessScale => _DirtinessScaleLocation.HasValue ? PercentBinaryTranslation.GetPercent(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region ObjectPaletteDefaults
         private RangeInt32? _ObjectPaletteDefaultsLocation;
@@ -12807,114 +12794,114 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _WAIMLocation;
         #region SightedTransitionSeconds
         private int _SightedTransitionSecondsLocation => _WAIMLocation!.Value.Min;
-        private bool _SightedTransitionSeconds_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _SightedTransitionSecondsLocation + 1 >= 4;
+        private bool _SightedTransitionSeconds_IsSet => _WAIMLocation.HasValue;
         public Single SightedTransitionSeconds => _SightedTransitionSeconds_IsSet ? _recordData.Slice(_SightedTransitionSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region AimDownSightTemplate
         private int _AimDownSightTemplateLocation => _WAIMLocation!.Value.Min + 0x4;
-        private bool _AimDownSightTemplate_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _AimDownSightTemplateLocation + 1 >= 4;
+        private bool _AimDownSightTemplate_IsSet => _WAIMLocation.HasValue;
         public IFormLinkGetter<IZoomGetter> AimDownSightTemplate => _AimDownSightTemplate_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IZoomGetter>(_package, _recordData.Span.Slice(_AimDownSightTemplateLocation, 0x4), isSet: _AimDownSightTemplate_IsSet) : FormLink<IZoomGetter>.Null;
         #endregion
         #region AimModel
         private int _AimModelLocation => _WAIMLocation!.Value.Min + 0x8;
-        private bool _AimModel_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _AimModelLocation + 1 >= 4;
+        private bool _AimModel_IsSet => _WAIMLocation.HasValue;
         public IFormLinkGetter<IAimModelGetter> AimModel => _AimModel_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IAimModelGetter>(_package, _recordData.Span.Slice(_AimModelLocation, 0x4), isSet: _AimModel_IsSet) : FormLink<IAimModelGetter>.Null;
         #endregion
         #region AccuracyBonus
         private int _AccuracyBonusLocation => _WAIMLocation!.Value.Min + 0xC;
-        private bool _AccuracyBonus_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _AccuracyBonusLocation + 1 >= 1;
-        public Byte AccuracyBonus => _AccuracyBonus_IsSet ? _recordData.Span[_AccuracyBonusLocation] : default(Byte);
+        private bool _AccuracyBonus_IsSet => _WAIMLocation.HasValue;
+        public Byte AccuracyBonus => _AccuracyBonus_IsSet ? _recordData.Span[_AccuracyBonusLocation] : default;
         #endregion
         #region HasScope
         private int _HasScopeLocation => _WAIMLocation!.Value.Min + 0xD;
-        private bool _HasScope_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _HasScopeLocation + 1 >= 1;
+        private bool _HasScope_IsSet => _WAIMLocation.HasValue;
         public Boolean HasScope => _HasScope_IsSet ? _recordData.Slice(_HasScopeLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region AimAssistTemplate
         private int _AimAssistTemplateLocation => _WAIMLocation!.Value.Min + 0xE;
-        private bool _AimAssistTemplate_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _AimAssistTemplateLocation + 1 >= 4;
+        private bool _AimAssistTemplate_IsSet => _WAIMLocation.HasValue;
         public IFormLinkGetter<IAimAssistModelGetter> AimAssistTemplate => _AimAssistTemplate_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IAimAssistModelGetter>(_package, _recordData.Span.Slice(_AimAssistTemplateLocation, 0x4), isSet: _AimAssistTemplate_IsSet) : FormLink<IAimAssistModelGetter>.Null;
         #endregion
         #region AimOpticalSightModel
         private int _AimOpticalSightModelLocation => _WAIMLocation!.Value.Min + 0x12;
-        private bool _AimOpticalSightModel_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _AimOpticalSightModelLocation + 1 >= 4;
+        private bool _AimOpticalSightModel_IsSet => _WAIMLocation.HasValue;
         public IFormLinkGetter<IAimOpticalSightMarkerGetter> AimOpticalSightModel => _AimOpticalSightModel_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IAimOpticalSightMarkerGetter>(_package, _recordData.Span.Slice(_AimOpticalSightModelLocation, 0x4), isSet: _AimOpticalSightModel_IsSet) : FormLink<IAimOpticalSightMarkerGetter>.Null;
         #endregion
         #region MeleeAimAssistModel
         private int _MeleeAimAssistModelLocation => _WAIMLocation!.Value.Min + 0x16;
-        private bool _MeleeAimAssistModel_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _MeleeAimAssistModelLocation + 1 >= 4;
+        private bool _MeleeAimAssistModel_IsSet => _WAIMLocation.HasValue;
         public IFormLinkGetter<IMeleeAimAssistModelGetter> MeleeAimAssistModel => _MeleeAimAssistModel_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IMeleeAimAssistModelGetter>(_package, _recordData.Span.Slice(_MeleeAimAssistModelLocation, 0x4), isSet: _MeleeAimAssistModel_IsSet) : FormLink<IMeleeAimAssistModelGetter>.Null;
         #endregion
         #region WAIMUnknown1
         private int _WAIMUnknown1Location => _WAIMLocation!.Value.Min + 0x1A;
-        private bool _WAIMUnknown1_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _WAIMUnknown1Location + 1 >= 1;
-        public Byte WAIMUnknown1 => _WAIMUnknown1_IsSet ? _recordData.Span[_WAIMUnknown1Location] : default(Byte);
+        private bool _WAIMUnknown1_IsSet => _WAIMLocation.HasValue;
+        public Byte WAIMUnknown1 => _WAIMUnknown1_IsSet ? _recordData.Span[_WAIMUnknown1Location] : default;
         #endregion
         #region WAIMUnknown2
         private int _WAIMUnknown2Location => _WAIMLocation!.Value.Min + 0x1B;
-        private bool _WAIMUnknown2_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _WAIMUnknown2Location + 1 >= 1;
-        public Byte WAIMUnknown2 => _WAIMUnknown2_IsSet ? _recordData.Span[_WAIMUnknown2Location] : default(Byte);
+        private bool _WAIMUnknown2_IsSet => _WAIMLocation.HasValue;
+        public Byte WAIMUnknown2 => _WAIMUnknown2_IsSet ? _recordData.Span[_WAIMUnknown2Location] : default;
         #endregion
         #region EnableMarkingTargets
         private int _EnableMarkingTargetsLocation => _WAIMLocation!.Value.Min + 0x1C;
-        private bool _EnableMarkingTargets_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _EnableMarkingTargetsLocation + 1 >= 1;
+        private bool _EnableMarkingTargets_IsSet => _WAIMLocation.HasValue;
         public Boolean EnableMarkingTargets => _EnableMarkingTargets_IsSet ? _recordData.Slice(_EnableMarkingTargetsLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region ReticleType
         private int _ReticleTypeLocation => _WAIMLocation!.Value.Min + 0x1D;
-        private bool _ReticleType_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _ReticleTypeLocation + 1 >= 4;
+        private bool _ReticleType_IsSet => _WAIMLocation.HasValue;
         public UInt32 ReticleType => _ReticleType_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ReticleTypeLocation, 4)) : default(UInt32);
         #endregion
         #region WAIMUnknown3
         private int _WAIMUnknown3Location => _WAIMLocation!.Value.Min + 0x21;
-        private bool _WAIMUnknown3_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _WAIMUnknown3Location + 1 >= 1;
-        public Byte WAIMUnknown3 => _WAIMUnknown3_IsSet ? _recordData.Span[_WAIMUnknown3Location] : default(Byte);
+        private bool _WAIMUnknown3_IsSet => _WAIMLocation.HasValue;
+        public Byte WAIMUnknown3 => _WAIMUnknown3_IsSet ? _recordData.Span[_WAIMUnknown3Location] : default;
         #endregion
         #region WAIMUnknown4
         private int _WAIMUnknown4Location => _WAIMLocation!.Value.Min + 0x22;
-        private bool _WAIMUnknown4_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _WAIMUnknown4Location + 1 >= 1;
-        public Byte WAIMUnknown4 => _WAIMUnknown4_IsSet ? _recordData.Span[_WAIMUnknown4Location] : default(Byte);
+        private bool _WAIMUnknown4_IsSet => _WAIMLocation.HasValue;
+        public Byte WAIMUnknown4 => _WAIMUnknown4_IsSet ? _recordData.Span[_WAIMUnknown4Location] : default;
         #endregion
         private RangeInt32? _WAM2Location;
         #region AmmoType
         private int _AmmoTypeLocation => _WAM2Location!.Value.Min;
-        private bool _AmmoType_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _AmmoTypeLocation + 1 >= 4;
+        private bool _AmmoType_IsSet => _WAM2Location.HasValue;
         public IFormLinkGetter<IAmmunitionGetter> AmmoType => _AmmoType_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IAmmunitionGetter>(_package, _recordData.Span.Slice(_AmmoTypeLocation, 0x4), isSet: _AmmoType_IsSet) : FormLink<IAmmunitionGetter>.Null;
         #endregion
         #region AmmoCapacity
         private int _AmmoCapacityLocation => _WAM2Location!.Value.Min + 0x4;
-        private bool _AmmoCapacity_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _AmmoCapacityLocation + 1 >= 4;
+        private bool _AmmoCapacity_IsSet => _WAM2Location.HasValue;
         public UInt32 AmmoCapacity => _AmmoCapacity_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_AmmoCapacityLocation, 4)) : default(UInt32);
         #endregion
         #region AmmoList
         private int _AmmoListLocation => _WAM2Location!.Value.Min + 0x8;
-        private bool _AmmoList_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _AmmoListLocation + 1 >= 4;
+        private bool _AmmoList_IsSet => _WAM2Location.HasValue;
         public IFormLinkGetter<ILeveledItemGetter> AmmoList => _AmmoList_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILeveledItemGetter>(_package, _recordData.Span.Slice(_AmmoListLocation, 0x4), isSet: _AmmoList_IsSet) : FormLink<ILeveledItemGetter>.Null;
         #endregion
         #region OverrideProjectile
         private int _OverrideProjectileLocation => _WAM2Location!.Value.Min + 0xC;
-        private bool _OverrideProjectile_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _OverrideProjectileLocation + 1 >= 4;
+        private bool _OverrideProjectile_IsSet => _WAM2Location.HasValue;
         public IFormLinkGetter<IProjectileGetter> OverrideProjectile => _OverrideProjectile_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IProjectileGetter>(_package, _recordData.Span.Slice(_OverrideProjectileLocation, 0x4), isSet: _OverrideProjectile_IsSet) : FormLink<IProjectileGetter>.Null;
         #endregion
         #region OverrideShellCasing
         private int _OverrideShellCasingLocation => _WAM2Location!.Value.Min + 0x10;
-        private bool _OverrideShellCasing_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _OverrideShellCasingLocation + 1 >= 4;
+        private bool _OverrideShellCasing_IsSet => _WAM2Location.HasValue;
         public IFormLinkGetter<IArtObjectGetter> OverrideShellCasing => _OverrideShellCasing_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IArtObjectGetter>(_package, _recordData.Span.Slice(_OverrideShellCasingLocation, 0x4), isSet: _OverrideShellCasing_IsSet) : FormLink<IArtObjectGetter>.Null;
         #endregion
         #region ProjectilesCount
         private int _ProjectilesCountLocation => _WAM2Location!.Value.Min + 0x14;
-        private bool _ProjectilesCount_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _ProjectilesCountLocation + 1 >= 1;
-        public Byte ProjectilesCount => _ProjectilesCount_IsSet ? _recordData.Span[_ProjectilesCountLocation] : default(Byte);
+        private bool _ProjectilesCount_IsSet => _WAM2Location.HasValue;
+        public Byte ProjectilesCount => _ProjectilesCount_IsSet ? _recordData.Span[_ProjectilesCountLocation] : default;
         #endregion
         #region NpcsUseAmmo
         private int _NpcsUseAmmoLocation => _WAM2Location!.Value.Min + 0x15;
-        private bool _NpcsUseAmmo_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _NpcsUseAmmoLocation + 1 >= 1;
+        private bool _NpcsUseAmmo_IsSet => _WAM2Location.HasValue;
         public Boolean NpcsUseAmmo => _NpcsUseAmmo_IsSet ? _recordData.Slice(_NpcsUseAmmoLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region WAM2Unknown1
         private int _WAM2Unknown1Location => _WAM2Location!.Value.Min + 0x16;
-        private bool _WAM2Unknown1_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _WAM2Unknown1Location + 1 >= 1;
-        public Byte WAM2Unknown1 => _WAM2Unknown1_IsSet ? _recordData.Span[_WAM2Unknown1Location] : default(Byte);
+        private bool _WAM2Unknown1_IsSet => _WAM2Location.HasValue;
+        public Byte WAM2Unknown1 => _WAM2Unknown1_IsSet ? _recordData.Span[_WAM2Unknown1Location] : default;
         #endregion
         #region WAMM
         private int? _WAMMLocation;
@@ -12923,55 +12910,55 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _WAUDLocation;
         #region MeleeOrCreature
         private int _MeleeOrCreatureLocation => _WAUDLocation!.Value.Min;
-        private bool _MeleeOrCreature_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _MeleeOrCreatureLocation + 1 >= 1;
+        private bool _MeleeOrCreature_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _MeleeOrCreature => _MeleeOrCreature_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_MeleeOrCreatureLocation), _package) : default;
         public ISoundReferenceGetter MeleeOrCreature => _MeleeOrCreature ?? new SoundReference();
         #endregion
         #region PrimedExplosive
         private int _PrimedExplosiveLocation => _WAUDLocation!.Value.Min + 0x28;
-        private bool _PrimedExplosive_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _PrimedExplosiveLocation + 1 >= 1;
+        private bool _PrimedExplosive_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _PrimedExplosive => _PrimedExplosive_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_PrimedExplosiveLocation), _package) : default;
         public ISoundReferenceGetter PrimedExplosive => _PrimedExplosive ?? new SoundReference();
         #endregion
         #region DryFire
         private int _DryFireLocation => _WAUDLocation!.Value.Min + 0x50;
-        private bool _DryFire_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _DryFireLocation + 1 >= 1;
+        private bool _DryFire_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _DryFire => _DryFire_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_DryFireLocation), _package) : default;
         public ISoundReferenceGetter DryFire => _DryFire ?? new SoundReference();
         #endregion
         #region Idle
         private int _IdleLocation => _WAUDLocation!.Value.Min + 0x78;
-        private bool _Idle_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _IdleLocation + 1 >= 1;
+        private bool _Idle_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _Idle => _Idle_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_IdleLocation), _package) : default;
         public ISoundReferenceGetter Idle => _Idle ?? new SoundReference();
         #endregion
         #region Equip
         private int _EquipLocation => _WAUDLocation!.Value.Min + 0xA0;
-        private bool _Equip_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _EquipLocation + 1 >= 1;
+        private bool _Equip_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _Equip => _Equip_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_EquipLocation), _package) : default;
         public ISoundReferenceGetter Equip => _Equip ?? new SoundReference();
         #endregion
         #region Unequip
         private int _UnequipLocation => _WAUDLocation!.Value.Min + 0xC8;
-        private bool _Unequip_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _UnequipLocation + 1 >= 1;
+        private bool _Unequip_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _Unequip => _Unequip_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_UnequipLocation), _package) : default;
         public ISoundReferenceGetter Unequip => _Unequip ?? new SoundReference();
         #endregion
         #region FastEquip
         private int _FastEquipLocation => _WAUDLocation!.Value.Min + 0xF0;
-        private bool _FastEquip_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _FastEquipLocation + 1 >= 1;
+        private bool _FastEquip_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _FastEquip => _FastEquip_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_FastEquipLocation), _package) : default;
         public ISoundReferenceGetter FastEquip => _FastEquip ?? new SoundReference();
         #endregion
         #region SoundLevel
         private int _SoundLevelLocation => _WAUDLocation!.Value.Min + 0x118;
-        private bool _SoundLevel_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _SoundLevelLocation + 1 >= 4;
-        public SoundLevel SoundLevel => _SoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SoundLevelLocation, 0x4)) : default(SoundLevel);
+        private bool _SoundLevel_IsSet => _WAUDLocation.HasValue;
+        public SoundLevel SoundLevel => _SoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SoundLevelLocation, 0x4)) : default;
         #endregion
-        #region WAUDUnknown2
-        private int _WAUDUnknown2Location => _WAUDLocation!.Value.Min + 0x11C;
-        private bool _WAUDUnknown2_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _WAUDUnknown2Location + 1 >= 4;
-        public Int32 WAUDUnknown2 => _WAUDUnknown2_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_WAUDUnknown2Location, 4)) : default(Int32);
+        #region MeleeDetectionSoundLevel
+        private int _MeleeDetectionSoundLevelLocation => _WAUDLocation!.Value.Min + 0x11C;
+        private bool _MeleeDetectionSoundLevel_IsSet => _WAUDLocation.HasValue;
+        public SoundLevel MeleeDetectionSoundLevel => _MeleeDetectionSoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MeleeDetectionSoundLevelLocation, 0x4)) : default;
         #endregion
         #region WTUR
         private int? _WTURLocation;
@@ -12980,297 +12967,297 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _WCHGLocation;
         #region ChargeFullPowerSeconds
         private int _ChargeFullPowerSecondsLocation => _WCHGLocation!.Value.Min;
-        private bool _ChargeFullPowerSeconds_IsSet => _WCHGLocation.HasValue && _WCHGLocation!.Value.Max - _ChargeFullPowerSecondsLocation + 1 >= 4;
+        private bool _ChargeFullPowerSeconds_IsSet => _WCHGLocation.HasValue;
         public Single ChargeFullPowerSeconds => _ChargeFullPowerSeconds_IsSet ? _recordData.Slice(_ChargeFullPowerSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region ChargeMinPowerPerShot
         private int _ChargeMinPowerPerShotLocation => _WCHGLocation!.Value.Min + 0x4;
-        private bool _ChargeMinPowerPerShot_IsSet => _WCHGLocation.HasValue && _WCHGLocation!.Value.Max - _ChargeMinPowerPerShotLocation + 1 >= 4;
+        private bool _ChargeMinPowerPerShot_IsSet => _WCHGLocation.HasValue;
         public Single ChargeMinPowerPerShot => _ChargeMinPowerPerShot_IsSet ? _recordData.Slice(_ChargeMinPowerPerShotLocation, 4).Float() : default(Single);
         #endregion
         #region ChargeCritBonus
         private int _ChargeCritBonusLocation => _WCHGLocation!.Value.Min + 0x8;
-        private bool _ChargeCritBonus_IsSet => _WCHGLocation.HasValue && _WCHGLocation!.Value.Max - _ChargeCritBonusLocation + 1 >= 4;
+        private bool _ChargeCritBonus_IsSet => _WCHGLocation.HasValue;
         public Single ChargeCritBonus => _ChargeCritBonus_IsSet ? _recordData.Slice(_ChargeCritBonusLocation, 4).Float() : default(Single);
         #endregion
         #region ChargeHoldInput
         private int _ChargeHoldInputLocation => _WCHGLocation!.Value.Min + 0xC;
-        private bool _ChargeHoldInput_IsSet => _WCHGLocation.HasValue && _WCHGLocation!.Value.Max - _ChargeHoldInputLocation + 1 >= 1;
+        private bool _ChargeHoldInput_IsSet => _WCHGLocation.HasValue;
         public Boolean ChargeHoldInput => _ChargeHoldInput_IsSet ? _recordData.Slice(_ChargeHoldInputLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region ChargingAttack
         private int _ChargingAttackLocation => _WCHGLocation!.Value.Min + 0xD;
-        private bool _ChargingAttack_IsSet => _WCHGLocation.HasValue && _WCHGLocation!.Value.Max - _ChargingAttackLocation + 1 >= 1;
+        private bool _ChargingAttack_IsSet => _WCHGLocation.HasValue;
         public Boolean ChargingAttack => _ChargingAttack_IsSet ? _recordData.Slice(_ChargingAttackLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         private RangeInt32? _WDMGLocation;
         #region AttackDamage
         private int _AttackDamageLocation => _WDMGLocation!.Value.Min;
-        private bool _AttackDamage_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _AttackDamageLocation + 1 >= 4;
+        private bool _AttackDamage_IsSet => _WDMGLocation.HasValue;
         public Single AttackDamage => _AttackDamage_IsSet ? _recordData.Slice(_AttackDamageLocation, 4).Float() : default(Single);
         #endregion
         #region MinRange
         private int _MinRangeLocation => _WDMGLocation!.Value.Min + 0x4;
-        private bool _MinRange_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _MinRangeLocation + 1 >= 4;
+        private bool _MinRange_IsSet => _WDMGLocation.HasValue;
         public Single MinRange => _MinRange_IsSet ? _recordData.Slice(_MinRangeLocation, 4).Float() : default(Single);
         #endregion
         #region MaxRange
         private int _MaxRangeLocation => _WDMGLocation!.Value.Min + 0x8;
-        private bool _MaxRange_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _MaxRangeLocation + 1 >= 4;
+        private bool _MaxRange_IsSet => _WDMGLocation.HasValue;
         public Single MaxRange => _MaxRange_IsSet ? _recordData.Slice(_MaxRangeLocation, 4).Float() : default(Single);
         #endregion
         #region OutOfRangeDamageMult
         private int _OutOfRangeDamageMultLocation => _WDMGLocation!.Value.Min + 0xC;
-        private bool _OutOfRangeDamageMult_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _OutOfRangeDamageMultLocation + 1 >= 4;
+        private bool _OutOfRangeDamageMult_IsSet => _WDMGLocation.HasValue;
         public Single OutOfRangeDamageMult => _OutOfRangeDamageMult_IsSet ? _recordData.Slice(_OutOfRangeDamageMultLocation, 4).Float() : default(Single);
         #endregion
         #region CritDamageMult
         private int _CritDamageMultLocation => _WDMGLocation!.Value.Min + 0x10;
-        private bool _CritDamageMult_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _CritDamageMultLocation + 1 >= 4;
+        private bool _CritDamageMult_IsSet => _WDMGLocation.HasValue;
         public Single CritDamageMult => _CritDamageMult_IsSet ? _recordData.Slice(_CritDamageMultLocation, 4).Float() : default(Single);
         #endregion
         #region CriticalHitSpell
         private int _CriticalHitSpellLocation => _WDMGLocation!.Value.Min + 0x14;
-        private bool _CriticalHitSpell_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _CriticalHitSpellLocation + 1 >= 4;
+        private bool _CriticalHitSpell_IsSet => _WDMGLocation.HasValue;
         public IFormLinkGetter<ISpellGetter> CriticalHitSpell => _CriticalHitSpell_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_CriticalHitSpellLocation, 0x4), isSet: _CriticalHitSpell_IsSet) : FormLink<ISpellGetter>.Null;
         #endregion
         #region CritEffectOnDeathOnly
         private int _CritEffectOnDeathOnlyLocation => _WDMGLocation!.Value.Min + 0x18;
-        private bool _CritEffectOnDeathOnly_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _CritEffectOnDeathOnlyLocation + 1 >= 1;
+        private bool _CritEffectOnDeathOnly_IsSet => _WDMGLocation.HasValue;
         public Boolean CritEffectOnDeathOnly => _CritEffectOnDeathOnly_IsSet ? _recordData.Slice(_CritEffectOnDeathOnlyLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region HitBehavior
         private int _HitBehaviorLocation => _WDMGLocation!.Value.Min + 0x19;
-        private bool _HitBehavior_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _HitBehaviorLocation + 1 >= 1;
-        public HitBehavior HitBehavior => _HitBehavior_IsSet ? (HitBehavior)_recordData.Span.Slice(_HitBehaviorLocation, 0x1)[0] : default(HitBehavior);
+        private bool _HitBehavior_IsSet => _WDMGLocation.HasValue;
+        public HitBehavior HitBehavior => _HitBehavior_IsSet ? (HitBehavior)_recordData.Span.Slice(_HitBehaviorLocation, 0x1)[0] : default;
         #endregion
         #region Resistance
         private int _ResistanceLocation => _WDMGLocation!.Value.Min + 0x1A;
-        private bool _Resistance_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _ResistanceLocation + 1 >= 4;
+        private bool _Resistance_IsSet => _WDMGLocation.HasValue;
         public IFormLinkGetter<IActorValueInformationGetter> Resistance => _Resistance_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IActorValueInformationGetter>(_package, _recordData.Span.Slice(_ResistanceLocation, 0x4), isSet: _Resistance_IsSet) : FormLink<IActorValueInformationGetter>.Null;
         #endregion
         #region Skill
         private int _SkillLocation => _WDMGLocation!.Value.Min + 0x1E;
-        private bool _Skill_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _SkillLocation + 1 >= 4;
+        private bool _Skill_IsSet => _WDMGLocation.HasValue;
         public IFormLinkGetter<IActorValueInformationGetter> Skill => _Skill_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IActorValueInformationGetter>(_package, _recordData.Span.Slice(_SkillLocation, 0x4), isSet: _Skill_IsSet) : FormLink<IActorValueInformationGetter>.Null;
         #endregion
         #region WDMGUnknown4
         private int _WDMGUnknown4Location => _WDMGLocation!.Value.Min + 0x22;
-        private bool _WDMGUnknown4_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _WDMGUnknown4Location + 1 >= 4;
+        private bool _WDMGUnknown4_IsSet => _WDMGLocation.HasValue;
         public Single WDMGUnknown4 => _WDMGUnknown4_IsSet ? _recordData.Slice(_WDMGUnknown4Location, 4).Float() : default(Single);
         #endregion
         #region WDMGUnknown5
         private int _WDMGUnknown5Location => _WDMGLocation!.Value.Min + 0x26;
-        private bool _WDMGUnknown5_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _WDMGUnknown5Location + 1 >= 4;
+        private bool _WDMGUnknown5_IsSet => _WDMGLocation.HasValue;
         public Single WDMGUnknown5 => _WDMGUnknown5_IsSet ? _recordData.Slice(_WDMGUnknown5Location, 4).Float() : default(Single);
         #endregion
         #region WDMGUnknown6
         private int _WDMGUnknown6Location => _WDMGLocation!.Value.Min + 0x2A;
-        private bool _WDMGUnknown6_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _WDMGUnknown6Location + 1 >= 4;
+        private bool _WDMGUnknown6_IsSet => _WDMGLocation.HasValue;
         public Single WDMGUnknown6 => _WDMGUnknown6_IsSet ? _recordData.Slice(_WDMGUnknown6Location, 4).Float() : default(Single);
         #endregion
         #region WDMGUnknown7
         private int _WDMGUnknown7Location => _WDMGLocation!.Value.Min + 0x2E;
-        private bool _WDMGUnknown7_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _WDMGUnknown7Location + 1 >= 4;
+        private bool _WDMGUnknown7_IsSet => _WDMGLocation.HasValue;
         public Single WDMGUnknown7 => _WDMGUnknown7_IsSet ? _recordData.Slice(_WDMGUnknown7Location, 4).Float() : default(Single);
         #endregion
         #region WDMGUnknown8
         private int _WDMGUnknown8Location => _WDMGLocation!.Value.Min + 0x32;
-        private bool _WDMGUnknown8_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _WDMGUnknown8Location + 1 >= 4;
+        private bool _WDMGUnknown8_IsSet => _WDMGLocation.HasValue;
         public Single WDMGUnknown8 => _WDMGUnknown8_IsSet ? _recordData.Slice(_WDMGUnknown8Location, 4).Float() : default(Single);
         #endregion
         #region WDMGUnknown9
         private int _WDMGUnknown9Location => _WDMGLocation!.Value.Min + 0x36;
-        private bool _WDMGUnknown9_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _WDMGUnknown9Location + 1 >= 4;
+        private bool _WDMGUnknown9_IsSet => _WDMGLocation.HasValue;
         public Single WDMGUnknown9 => _WDMGUnknown9_IsSet ? _recordData.Slice(_WDMGUnknown9Location, 4).Float() : default(Single);
         #endregion
         #region CritChanceIncMult
         private int _CritChanceIncMultLocation => _WDMGLocation!.Value.Min + 0x3A;
-        private bool _CritChanceIncMult_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _CritChanceIncMultLocation + 1 >= 4;
+        private bool _CritChanceIncMult_IsSet => _WDMGLocation.HasValue;
         public Single CritChanceIncMult => _CritChanceIncMult_IsSet ? _recordData.Slice(_CritChanceIncMultLocation, 4).Float() : default(Single);
         #endregion
         public IReadOnlyList<IWeaponDamageTypeGetter>? DamageTypes { get; private set; }
         private RangeInt32? _WFIRLocation;
         #region FiringType
         private int _FiringTypeLocation => _WFIRLocation!.Value.Min;
-        private bool _FiringType_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _FiringTypeLocation + 1 >= 1;
-        public Weapon.FiringTypeEnum FiringType => _FiringType_IsSet ? (Weapon.FiringTypeEnum)_recordData.Span.Slice(_FiringTypeLocation, 0x1)[0] : default(Weapon.FiringTypeEnum);
+        private bool _FiringType_IsSet => _WFIRLocation.HasValue;
+        public Weapon.FiringTypeEnum FiringType => _FiringType_IsSet ? (Weapon.FiringTypeEnum)_recordData.Span.Slice(_FiringTypeLocation, 0x1)[0] : default;
         #endregion
         #region BurstCount
         private int _BurstCountLocation => _WFIRLocation!.Value.Min + 0x1;
-        private bool _BurstCount_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _BurstCountLocation + 1 >= 1;
-        public Byte BurstCount => _BurstCount_IsSet ? _recordData.Span[_BurstCountLocation] : default(Byte);
+        private bool _BurstCount_IsSet => _WFIRLocation.HasValue;
+        public Byte BurstCount => _BurstCount_IsSet ? _recordData.Span[_BurstCountLocation] : default;
         #endregion
         #region RepeatableFire
         private int _RepeatableFireLocation => _WFIRLocation!.Value.Min + 0x2;
-        private bool _RepeatableFire_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _RepeatableFireLocation + 1 >= 1;
+        private bool _RepeatableFire_IsSet => _WFIRLocation.HasValue;
         public Boolean RepeatableFire => _RepeatableFire_IsSet ? _recordData.Slice(_RepeatableFireLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region AttackSeconds
         private int _AttackSecondsLocation => _WFIRLocation!.Value.Min + 0x3;
-        private bool _AttackSeconds_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _AttackSecondsLocation + 1 >= 4;
+        private bool _AttackSeconds_IsSet => _WFIRLocation.HasValue;
         public Single AttackSeconds => _AttackSeconds_IsSet ? _recordData.Slice(_AttackSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region FireSeconds
         private int _FireSecondsLocation => _WFIRLocation!.Value.Min + 0x7;
-        private bool _FireSeconds_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _FireSecondsLocation + 1 >= 4;
+        private bool _FireSeconds_IsSet => _WFIRLocation.HasValue;
         public Single FireSeconds => _FireSeconds_IsSet ? _recordData.Slice(_FireSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region AttackDelaySeconds
         private int _AttackDelaySecondsLocation => _WFIRLocation!.Value.Min + 0xB;
-        private bool _AttackDelaySeconds_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _AttackDelaySecondsLocation + 1 >= 4;
+        private bool _AttackDelaySeconds_IsSet => _WFIRLocation.HasValue;
         public Single AttackDelaySeconds => _AttackDelaySeconds_IsSet ? _recordData.Slice(_AttackDelaySecondsLocation, 4).Float() : default(Single);
         #endregion
         #region BoltChargeSeconds
         private int _BoltChargeSecondsLocation => _WFIRLocation!.Value.Min + 0xF;
-        private bool _BoltChargeSeconds_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _BoltChargeSecondsLocation + 1 >= 4;
+        private bool _BoltChargeSeconds_IsSet => _WFIRLocation.HasValue;
         public Single BoltChargeSeconds => _BoltChargeSeconds_IsSet ? _recordData.Slice(_BoltChargeSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region BoltAction
         private int _BoltActionLocation => _WFIRLocation!.Value.Min + 0x13;
-        private bool _BoltAction_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _BoltActionLocation + 1 >= 1;
+        private bool _BoltAction_IsSet => _WFIRLocation.HasValue;
         public Boolean BoltAction => _BoltAction_IsSet ? _recordData.Slice(_BoltActionLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region DisableShellCaseEject
         private int _DisableShellCaseEjectLocation => _WFIRLocation!.Value.Min + 0x14;
-        private bool _DisableShellCaseEject_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _DisableShellCaseEjectLocation + 1 >= 1;
+        private bool _DisableShellCaseEject_IsSet => _WFIRLocation.HasValue;
         public Boolean DisableShellCaseEject => _DisableShellCaseEject_IsSet ? _recordData.Slice(_DisableShellCaseEjectLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region ShotsPerSecond
         private int _ShotsPerSecondLocation => _WFIRLocation!.Value.Min + 0x15;
-        private bool _ShotsPerSecond_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _ShotsPerSecondLocation + 1 >= 4;
+        private bool _ShotsPerSecond_IsSet => _WFIRLocation.HasValue;
         public Single ShotsPerSecond => _ShotsPerSecond_IsSet ? _recordData.Slice(_ShotsPerSecondLocation, 4).Float() : default(Single);
         #endregion
         #region WFIRUnknown7
         private int _WFIRUnknown7Location => _WFIRLocation!.Value.Min + 0x19;
-        private bool _WFIRUnknown7_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _WFIRUnknown7Location + 1 >= 4;
+        private bool _WFIRUnknown7_IsSet => _WFIRLocation.HasValue;
         public Single WFIRUnknown7 => _WFIRUnknown7_IsSet ? _recordData.Slice(_WFIRUnknown7Location, 4).Float() : default(Single);
         #endregion
         #region OverrideRateOfFire
         private int _OverrideRateOfFireLocation => _WFIRLocation!.Value.Min + 0x1D;
-        private bool _OverrideRateOfFire_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _OverrideRateOfFireLocation + 1 >= 1;
+        private bool _OverrideRateOfFire_IsSet => _WFIRLocation.HasValue;
         public Boolean OverrideRateOfFire => _OverrideRateOfFire_IsSet ? _recordData.Slice(_OverrideRateOfFireLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region TriggerThresholdPrimaryTrigger
         private int _TriggerThresholdPrimaryTriggerLocation => _WFIRLocation!.Value.Min + 0x1E;
-        private bool _TriggerThresholdPrimaryTrigger_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _TriggerThresholdPrimaryTriggerLocation + 1 >= 4;
+        private bool _TriggerThresholdPrimaryTrigger_IsSet => _WFIRLocation.HasValue;
         public Single TriggerThresholdPrimaryTrigger => _TriggerThresholdPrimaryTrigger_IsSet ? _recordData.Slice(_TriggerThresholdPrimaryTriggerLocation, 4).Float() : default(Single);
         #endregion
         #region WFIRUnknown10
         private int _WFIRUnknown10Location => _WFIRLocation!.Value.Min + 0x22;
-        private bool _WFIRUnknown10_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _WFIRUnknown10Location + 1 >= 1;
-        public Byte WFIRUnknown10 => _WFIRUnknown10_IsSet ? _recordData.Span[_WFIRUnknown10Location] : default(Byte);
+        private bool _WFIRUnknown10_IsSet => _WFIRLocation.HasValue;
+        public Byte WFIRUnknown10 => _WFIRUnknown10_IsSet ? _recordData.Span[_WFIRUnknown10Location] : default;
         #endregion
         #region TriggerThresholdSecondStage
         private int _TriggerThresholdSecondStageLocation => _WFIRLocation!.Value.Min + 0x23;
-        private bool _TriggerThresholdSecondStage_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _TriggerThresholdSecondStageLocation + 1 >= 4;
+        private bool _TriggerThresholdSecondStage_IsSet => _WFIRLocation.HasValue;
         public Single TriggerThresholdSecondStage => _TriggerThresholdSecondStage_IsSet ? _recordData.Slice(_TriggerThresholdSecondStageLocation, 4).Float() : default(Single);
         #endregion
         #region HasStagedTrigger
         private int _HasStagedTriggerLocation => _WFIRLocation!.Value.Min + 0x27;
-        private bool _HasStagedTrigger_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _HasStagedTriggerLocation + 1 >= 1;
+        private bool _HasStagedTrigger_IsSet => _WFIRLocation.HasValue;
         public Boolean HasStagedTrigger => _HasStagedTrigger_IsSet ? _recordData.Slice(_HasStagedTriggerLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region HasDualTrigger
         private int _HasDualTriggerLocation => _WFIRLocation!.Value.Min + 0x28;
-        private bool _HasDualTrigger_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _HasDualTriggerLocation + 1 >= 1;
+        private bool _HasDualTrigger_IsSet => _WFIRLocation.HasValue;
         public Boolean HasDualTrigger => _HasDualTrigger_IsSet ? _recordData.Slice(_HasDualTriggerLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region BurstDelaySeconds
         private int _BurstDelaySecondsLocation => _WFIRLocation!.Value.Min + 0x29;
-        private bool _BurstDelaySeconds_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _BurstDelaySecondsLocation + 1 >= 4;
+        private bool _BurstDelaySeconds_IsSet => _WFIRLocation.HasValue;
         public Single BurstDelaySeconds => _BurstDelaySeconds_IsSet ? _recordData.Slice(_BurstDelaySecondsLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _WFLGLocation;
         #region NonPlayable
         private int _NonPlayableLocation => _WFLGLocation!.Value.Min;
-        private bool _NonPlayable_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _NonPlayableLocation + 1 >= 1;
+        private bool _NonPlayable_IsSet => _WFLGLocation.HasValue;
         public Boolean NonPlayable => _NonPlayable_IsSet ? _recordData.Slice(_NonPlayableLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region PlayerOnly
         private int _PlayerOnlyLocation => _WFLGLocation!.Value.Min + 0x1;
-        private bool _PlayerOnly_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _PlayerOnlyLocation + 1 >= 1;
+        private bool _PlayerOnly_IsSet => _WFLGLocation.HasValue;
         public Boolean PlayerOnly => _PlayerOnly_IsSet ? _recordData.Slice(_PlayerOnlyLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region WFLGUnknown1
         private int _WFLGUnknown1Location => _WFLGLocation!.Value.Min + 0x2;
-        private bool _WFLGUnknown1_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown1Location + 1 >= 1;
+        private bool _WFLGUnknown1_IsSet => _WFLGLocation.HasValue;
         public Boolean WFLGUnknown1 => _WFLGUnknown1_IsSet ? _recordData.Slice(_WFLGUnknown1Location, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region WFLGUnknown2
         private int _WFLGUnknown2Location => _WFLGLocation!.Value.Min + 0x3;
-        private bool _WFLGUnknown2_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown2Location + 1 >= 1;
+        private bool _WFLGUnknown2_IsSet => _WFLGLocation.HasValue;
         public Boolean WFLGUnknown2 => _WFLGUnknown2_IsSet ? _recordData.Slice(_WFLGUnknown2Location, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region CannotDrop
         private int _CannotDropLocation => _WFLGLocation!.Value.Min + 0x4;
-        private bool _CannotDrop_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _CannotDropLocation + 1 >= 1;
+        private bool _CannotDrop_IsSet => _WFLGLocation.HasValue;
         public Boolean CannotDrop => _CannotDrop_IsSet ? _recordData.Slice(_CannotDropLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region MinorCrime
         private int _MinorCrimeLocation => _WFLGLocation!.Value.Min + 0x5;
-        private bool _MinorCrime_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _MinorCrimeLocation + 1 >= 1;
+        private bool _MinorCrime_IsSet => _WFLGLocation.HasValue;
         public Boolean MinorCrime => _MinorCrime_IsSet ? _recordData.Slice(_MinorCrimeLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region NonHostile
         private int _NonHostileLocation => _WFLGLocation!.Value.Min + 0x6;
-        private bool _NonHostile_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _NonHostileLocation + 1 >= 1;
+        private bool _NonHostile_IsSet => _WFLGLocation.HasValue;
         public Boolean NonHostile => _NonHostile_IsSet ? _recordData.Slice(_NonHostileLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region WFLGUnknown3
         private int _WFLGUnknown3Location => _WFLGLocation!.Value.Min + 0x7;
-        private bool _WFLGUnknown3_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown3Location + 1 >= 1;
+        private bool _WFLGUnknown3_IsSet => _WFLGLocation.HasValue;
         public Boolean WFLGUnknown3 => _WFLGUnknown3_IsSet ? _recordData.Slice(_WFLGUnknown3Location, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region WFLGUnknown4
         private int _WFLGUnknown4Location => _WFLGLocation!.Value.Min + 0x8;
-        private bool _WFLGUnknown4_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown4Location + 1 >= 1;
+        private bool _WFLGUnknown4_IsSet => _WFLGLocation.HasValue;
         public Boolean WFLGUnknown4 => _WFLGUnknown4_IsSet ? _recordData.Slice(_WFLGUnknown4Location, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region WFLGUnknown5
         private int _WFLGUnknown5Location => _WFLGLocation!.Value.Min + 0x9;
-        private bool _WFLGUnknown5_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown5Location + 1 >= 1;
+        private bool _WFLGUnknown5_IsSet => _WFLGLocation.HasValue;
         public Boolean WFLGUnknown5 => _WFLGUnknown5_IsSet ? _recordData.Slice(_WFLGUnknown5Location, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region WFLGUnknown6
         private int _WFLGUnknown6Location => _WFLGLocation!.Value.Min + 0xA;
-        private bool _WFLGUnknown6_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown6Location + 1 >= 1;
+        private bool _WFLGUnknown6_IsSet => _WFLGLocation.HasValue;
         public Boolean WFLGUnknown6 => _WFLGUnknown6_IsSet ? _recordData.Slice(_WFLGUnknown6Location, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region WFLGUnknown7
         private int _WFLGUnknown7Location => _WFLGLocation!.Value.Min + 0xB;
-        private bool _WFLGUnknown7_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown7Location + 1 >= 1;
+        private bool _WFLGUnknown7_IsSet => _WFLGLocation.HasValue;
         public Boolean WFLGUnknown7 => _WFLGUnknown7_IsSet ? _recordData.Slice(_WFLGUnknown7Location, 1)[0] >= 1 : default(Boolean);
         #endregion
         private RangeInt32? _WGENLocation;
-        #region WGENUnknown1
-        private int _WGENUnknown1Location => _WGENLocation!.Value.Min;
-        private bool _WGENUnknown1_IsSet => _WGENLocation.HasValue && _WGENLocation!.Value.Max - _WGENUnknown1Location + 1 >= 4;
-        public UInt32 WGENUnknown1 => _WGENUnknown1_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WGENUnknown1Location, 4)) : default(UInt32);
+        #region AnimationType
+        private int _AnimationTypeLocation => _WGENLocation!.Value.Min;
+        private bool _AnimationType_IsSet => _WGENLocation.HasValue;
+        public Weapon.AnimationTypes AnimationType => _AnimationType_IsSet ? (Weapon.AnimationTypes)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_AnimationTypeLocation, 0x4)) : default;
         #endregion
         #region BaseWeight
         private int _BaseWeightLocation => _WGENLocation!.Value.Min + 0x4;
-        private bool _BaseWeight_IsSet => _WGENLocation.HasValue && _WGENLocation!.Value.Max - _BaseWeightLocation + 1 >= 4;
+        private bool _BaseWeight_IsSet => _WGENLocation.HasValue;
         public Single BaseWeight => _BaseWeight_IsSet ? _recordData.Slice(_BaseWeightLocation, 4).Float() : default(Single);
         #endregion
         #region BaseValue
         private int _BaseValueLocation => _WGENLocation!.Value.Min + 0x8;
-        private bool _BaseValue_IsSet => _WGENLocation.HasValue && _WGENLocation!.Value.Max - _BaseValueLocation + 1 >= 4;
+        private bool _BaseValue_IsSet => _WGENLocation.HasValue;
         public UInt32 BaseValue => _BaseValue_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_BaseValueLocation, 4)) : default(UInt32);
         #endregion
         #region BaseSpeed
         private int _BaseSpeedLocation => _WGENLocation!.Value.Min + 0xC;
-        private bool _BaseSpeed_IsSet => _WGENLocation.HasValue && _WGENLocation!.Value.Max - _BaseSpeedLocation + 1 >= 4;
+        private bool _BaseSpeed_IsSet => _WGENLocation.HasValue;
         public Single BaseSpeed => _BaseSpeed_IsSet ? _recordData.Slice(_BaseSpeedLocation, 4).Float() : default(Single);
         #endregion
         #region AttackOxygenCost
         private int _AttackOxygenCostLocation => _WGENLocation!.Value.Min + 0x10;
-        private bool _AttackOxygenCost_IsSet => _WGENLocation.HasValue && _WGENLocation!.Value.Max - _AttackOxygenCostLocation + 1 >= 4;
+        private bool _AttackOxygenCost_IsSet => _WGENLocation.HasValue;
         public Single AttackOxygenCost => _AttackOxygenCost_IsSet ? _recordData.Slice(_AttackOxygenCostLocation, 4).Float() : default(Single);
         #endregion
         #region WeaponBarrel
         private int _WeaponBarrelLocation => _WGENLocation!.Value.Min + 0x14;
-        private bool _WeaponBarrel_IsSet => _WGENLocation.HasValue && _WGENLocation!.Value.Max - _WeaponBarrelLocation + 1 >= 4;
+        private bool _WeaponBarrel_IsSet => _WGENLocation.HasValue;
         public IFormLinkGetter<IWeaponBarrelModelGetter> WeaponBarrel => _WeaponBarrel_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IWeaponBarrelModelGetter>(_package, _recordData.Span.Slice(_WeaponBarrelLocation, 0x4), isSet: _WeaponBarrel_IsSet) : FormLink<IWeaponBarrelModelGetter>.Null;
         #endregion
         #region General
@@ -13278,106 +13265,106 @@ namespace Mutagen.Bethesda.Starfield
         public ITranslatedStringGetter? General => _GeneralLocation.HasValue ? StringBinaryTranslation.Instance.Parse(HeaderTranslation.ExtractSubrecordMemory(_recordData, _GeneralLocation.Value, _package.MetaData.Constants), StringsSource.Normal, parsingBundle: _package.MetaData, eager: false) : default(TranslatedString?);
         #endregion
         private RangeInt32? _WMELLocation;
-        #region WMELUnknown1
-        private int _WMELUnknown1Location => _WMELLocation!.Value.Min;
-        private bool _WMELUnknown1_IsSet => _WMELLocation.HasValue && _WMELLocation!.Value.Max - _WMELUnknown1Location + 1 >= 1;
-        public Byte WMELUnknown1 => _WMELUnknown1_IsSet ? _recordData.Span[_WMELUnknown1Location] : default(Byte);
+        #region AttackSpeed
+        private int _AttackSpeedLocation => _WMELLocation!.Value.Min;
+        private bool _AttackSpeed_IsSet => _WMELLocation.HasValue;
+        public Weapon.AttackSpeedEnum AttackSpeed => _AttackSpeed_IsSet ? (Weapon.AttackSpeedEnum)_recordData.Span.Slice(_AttackSpeedLocation, 0x1)[0] : default;
         #endregion
         #region MeleeBashDamage
         private int _MeleeBashDamageLocation => _WMELLocation!.Value.Min + 0x1;
-        private bool _MeleeBashDamage_IsSet => _WMELLocation.HasValue && _WMELLocation!.Value.Max - _MeleeBashDamageLocation + 1 >= 4;
+        private bool _MeleeBashDamage_IsSet => _WMELLocation.HasValue;
         public Single MeleeBashDamage => _MeleeBashDamage_IsSet ? _recordData.Slice(_MeleeBashDamageLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeReach
         private int _MeleeReachLocation => _WMELLocation!.Value.Min + 0x5;
-        private bool _MeleeReach_IsSet => _WMELLocation.HasValue && _WMELLocation!.Value.Max - _MeleeReachLocation + 1 >= 4;
+        private bool _MeleeReach_IsSet => _WMELLocation.HasValue;
         public Single MeleeReach => _MeleeReach_IsSet ? _recordData.Slice(_MeleeReachLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeStagger
         private int _MeleeStaggerLocation => _WMELLocation!.Value.Min + 0x9;
-        private bool _MeleeStagger_IsSet => _WMELLocation.HasValue && _WMELLocation!.Value.Max - _MeleeStaggerLocation + 1 >= 4;
-        public Stagger MeleeStagger => _MeleeStagger_IsSet ? (Stagger)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MeleeStaggerLocation, 0x4)) : default(Stagger);
+        private bool _MeleeStagger_IsSet => _WMELLocation.HasValue;
+        public Stagger MeleeStagger => _MeleeStagger_IsSet ? (Stagger)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MeleeStaggerLocation, 0x4)) : default;
         #endregion
         private RangeInt32? _QNAMLocation;
         #region Power
         private int _PowerLocation => _QNAMLocation!.Value.Min;
-        private bool _Power_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _PowerLocation + 1 >= 4;
+        private bool _Power_IsSet => _QNAMLocation.HasValue;
         public IFormLinkGetter<IActorValueInformationGetter> Power => _Power_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IActorValueInformationGetter>(_package, _recordData.Span.Slice(_PowerLocation, 0x4), isSet: _Power_IsSet) : FormLink<IActorValueInformationGetter>.Null;
         #endregion
         #region PowerRechargeTime
         private int _PowerRechargeTimeLocation => _QNAMLocation!.Value.Min + 0x4;
-        private bool _PowerRechargeTime_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _PowerRechargeTimeLocation + 1 >= 4;
+        private bool _PowerRechargeTime_IsSet => _QNAMLocation.HasValue;
         public Single PowerRechargeTime => _PowerRechargeTime_IsSet ? _recordData.Slice(_PowerRechargeTimeLocation, 4).Float() : default(Single);
         #endregion
         #region PowerRechargeDelay
         private int _PowerRechargeDelayLocation => _QNAMLocation!.Value.Min + 0x8;
-        private bool _PowerRechargeDelay_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _PowerRechargeDelayLocation + 1 >= 4;
+        private bool _PowerRechargeDelay_IsSet => _QNAMLocation.HasValue;
         public Single PowerRechargeDelay => _PowerRechargeDelay_IsSet ? _recordData.Slice(_PowerRechargeDelayLocation, 4).Float() : default(Single);
         #endregion
         #region ConsumeAmmo
         private int _ConsumeAmmoLocation => _QNAMLocation!.Value.Min + 0xC;
-        private bool _ConsumeAmmo_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _ConsumeAmmoLocation + 1 >= 1;
+        private bool _ConsumeAmmo_IsSet => _QNAMLocation.HasValue;
         public Boolean ConsumeAmmo => _ConsumeAmmo_IsSet ? _recordData.Slice(_ConsumeAmmoLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region PowerBonus
         private int _PowerBonusLocation => _QNAMLocation!.Value.Min + 0xD;
-        private bool _PowerBonus_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _PowerBonusLocation + 1 >= 4;
+        private bool _PowerBonus_IsSet => _QNAMLocation.HasValue;
         public IFormLinkGetter<IActorValueInformationGetter> PowerBonus => _PowerBonus_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IActorValueInformationGetter>(_package, _recordData.Span.Slice(_PowerBonusLocation, 0x4), isSet: _PowerBonus_IsSet) : FormLink<IActorValueInformationGetter>.Null;
         #endregion
         #region UsePower
         private int _UsePowerLocation => _QNAMLocation!.Value.Min + 0x11;
-        private bool _UsePower_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _UsePowerLocation + 1 >= 1;
+        private bool _UsePower_IsSet => _QNAMLocation.HasValue;
         public Boolean UsePower => _UsePower_IsSet ? _recordData.Slice(_UsePowerLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region QNAMUnknown1
         private int _QNAMUnknown1Location => _QNAMLocation!.Value.Min + 0x12;
-        private bool _QNAMUnknown1_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _QNAMUnknown1Location + 1 >= 1;
-        public Byte QNAMUnknown1 => _QNAMUnknown1_IsSet ? _recordData.Span[_QNAMUnknown1Location] : default(Byte);
+        private bool _QNAMUnknown1_IsSet => _QNAMLocation.HasValue;
+        public Byte QNAMUnknown1 => _QNAMUnknown1_IsSet ? _recordData.Span[_QNAMUnknown1Location] : default;
         #endregion
         #region QNAMUnknown2
         private int _QNAMUnknown2Location => _QNAMLocation!.Value.Min + 0x13;
-        private bool _QNAMUnknown2_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _QNAMUnknown2Location + 1 >= 4;
+        private bool _QNAMUnknown2_IsSet => _QNAMLocation.HasValue;
         public Single QNAMUnknown2 => _QNAMUnknown2_IsSet ? _recordData.Slice(_QNAMUnknown2Location, 4).Float() : default(Single);
         #endregion
         #region QNAMUnknown3
         private int _QNAMUnknown3Location => _QNAMLocation!.Value.Min + 0x17;
-        private bool _QNAMUnknown3_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _QNAMUnknown3Location + 1 >= 1;
-        public Byte QNAMUnknown3 => _QNAMUnknown3_IsSet ? _recordData.Span[_QNAMUnknown3Location] : default(Byte);
+        private bool _QNAMUnknown3_IsSet => _QNAMLocation.HasValue;
+        public Byte QNAMUnknown3 => _QNAMUnknown3_IsSet ? _recordData.Span[_QNAMUnknown3Location] : default;
         #endregion
         #region QNAMUnknown4
         private int _QNAMUnknown4Location => _QNAMLocation!.Value.Min + 0x18;
-        private bool _QNAMUnknown4_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _QNAMUnknown4Location + 1 >= 4;
+        private bool _QNAMUnknown4_IsSet => _QNAMLocation.HasValue;
         public IFormLinkGetter<ICurveTableGetter> QNAMUnknown4 => _QNAMUnknown4_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ICurveTableGetter>(_package, _recordData.Span.Slice(_QNAMUnknown4Location, 0x4), isSet: _QNAMUnknown4_IsSet) : FormLink<ICurveTableGetter>.Null;
         #endregion
         #region QNAMUnknown5
         private int _QNAMUnknown5Location => _QNAMLocation!.Value.Min + 0x1C;
-        private bool _QNAMUnknown5_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _QNAMUnknown5Location + 1 >= 4;
+        private bool _QNAMUnknown5_IsSet => _QNAMLocation.HasValue;
         public Single QNAMUnknown5 => _QNAMUnknown5_IsSet ? _recordData.Slice(_QNAMUnknown5Location, 4).Float() : default(Single);
         #endregion
         #region PowerConsumption
         private int _PowerConsumptionLocation => _QNAMLocation!.Value.Min + 0x20;
-        private bool _PowerConsumption_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _PowerConsumptionLocation + 1 >= 4;
+        private bool _PowerConsumption_IsSet => _QNAMLocation.HasValue;
         public IFormLinkGetter<ICurveTableGetter> PowerConsumption => _PowerConsumption_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ICurveTableGetter>(_package, _recordData.Span.Slice(_PowerConsumptionLocation, 0x4), isSet: _PowerConsumption_IsSet) : FormLink<ICurveTableGetter>.Null;
         #endregion
         private RangeInt32? _WRLOLocation;
         #region WRLOUnknown1
         private int _WRLOUnknown1Location => _WRLOLocation!.Value.Min;
-        private bool _WRLOUnknown1_IsSet => _WRLOLocation.HasValue && _WRLOLocation!.Value.Max - _WRLOUnknown1Location + 1 >= 4;
+        private bool _WRLOUnknown1_IsSet => _WRLOLocation.HasValue;
         public Single WRLOUnknown1 => _WRLOUnknown1_IsSet ? _recordData.Slice(_WRLOUnknown1Location, 4).Float() : default(Single);
         #endregion
         #region ReloadSpeed
         private int _ReloadSpeedLocation => _WRLOLocation!.Value.Min + 0x4;
-        private bool _ReloadSpeed_IsSet => _WRLOLocation.HasValue && _WRLOLocation!.Value.Max - _ReloadSpeedLocation + 1 >= 4;
+        private bool _ReloadSpeed_IsSet => _WRLOLocation.HasValue;
         public Single ReloadSpeed => _ReloadSpeed_IsSet ? _recordData.Slice(_ReloadSpeedLocation, 4).Float() : default(Single);
         #endregion
         #region ReloadCharging
         private int _ReloadChargingLocation => _WRLOLocation!.Value.Min + 0x8;
-        private bool _ReloadCharging_IsSet => _WRLOLocation.HasValue && _WRLOLocation!.Value.Max - _ReloadChargingLocation + 1 >= 1;
+        private bool _ReloadCharging_IsSet => _WRLOLocation.HasValue;
         public Boolean ReloadCharging => _ReloadCharging_IsSet ? _recordData.Slice(_ReloadChargingLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region ReloadSingle
         private int _ReloadSingleLocation => _WRLOLocation!.Value.Min + 0x9;
-        private bool _ReloadSingle_IsSet => _WRLOLocation.HasValue && _WRLOLocation!.Value.Max - _ReloadSingleLocation + 1 >= 1;
+        private bool _ReloadSingle_IsSet => _WRLOLocation.HasValue;
         public Boolean ReloadSingle => _ReloadSingle_IsSet ? _recordData.Slice(_ReloadSingleLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region WRUM
@@ -13387,125 +13374,125 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _WVARLocation;
         #region ApertureValueMin
         private int _ApertureValueMinLocation => _WVARLocation!.Value.Min;
-        private bool _ApertureValueMin_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _ApertureValueMinLocation + 1 >= 4;
+        private bool _ApertureValueMin_IsSet => _WVARLocation.HasValue;
         public Single ApertureValueMin => _ApertureValueMin_IsSet ? _recordData.Slice(_ApertureValueMinLocation, 4).Float() : default(Single);
         #endregion
         #region ApertureValueMax
         private int _ApertureValueMaxLocation => _WVARLocation!.Value.Min + 0x4;
-        private bool _ApertureValueMax_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _ApertureValueMaxLocation + 1 >= 4;
+        private bool _ApertureValueMax_IsSet => _WVARLocation.HasValue;
         public Single ApertureValueMax => _ApertureValueMax_IsSet ? _recordData.Slice(_ApertureValueMaxLocation, 4).Float() : default(Single);
         #endregion
         #region ApertureInputMin
         private int _ApertureInputMinLocation => _WVARLocation!.Value.Min + 0x8;
-        private bool _ApertureInputMin_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _ApertureInputMinLocation + 1 >= 4;
+        private bool _ApertureInputMin_IsSet => _WVARLocation.HasValue;
         public Single ApertureInputMin => _ApertureInputMin_IsSet ? _recordData.Slice(_ApertureInputMinLocation, 4).Float() : default(Single);
         #endregion
         #region ApertureInputMax
         private int _ApertureInputMaxLocation => _WVARLocation!.Value.Min + 0xC;
-        private bool _ApertureInputMax_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _ApertureInputMaxLocation + 1 >= 4;
+        private bool _ApertureInputMax_IsSet => _WVARLocation.HasValue;
         public Single ApertureInputMax => _ApertureInputMax_IsSet ? _recordData.Slice(_ApertureInputMaxLocation, 4).Float() : default(Single);
         #endregion
         #region ApertureAcceleration
         private int _ApertureAccelerationLocation => _WVARLocation!.Value.Min + 0x10;
-        private bool _ApertureAcceleration_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _ApertureAccelerationLocation + 1 >= 4;
+        private bool _ApertureAcceleration_IsSet => _WVARLocation.HasValue;
         public Single ApertureAcceleration => _ApertureAcceleration_IsSet ? _recordData.Slice(_ApertureAccelerationLocation, 4).Float() : default(Single);
         #endregion
         #region ApertureDeceleration
         private int _ApertureDecelerationLocation => _WVARLocation!.Value.Min + 0x14;
-        private bool _ApertureDeceleration_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _ApertureDecelerationLocation + 1 >= 4;
+        private bool _ApertureDeceleration_IsSet => _WVARLocation.HasValue;
         public Single ApertureDeceleration => _ApertureDeceleration_IsSet ? _recordData.Slice(_ApertureDecelerationLocation, 4).Float() : default(Single);
         #endregion
         #region DistanceValueMin
         private int _DistanceValueMinLocation => _WVARLocation!.Value.Min + 0x18;
-        private bool _DistanceValueMin_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _DistanceValueMinLocation + 1 >= 4;
+        private bool _DistanceValueMin_IsSet => _WVARLocation.HasValue;
         public Single DistanceValueMin => _DistanceValueMin_IsSet ? _recordData.Slice(_DistanceValueMinLocation, 4).Float() : default(Single);
         #endregion
         #region DistanceValueMax
         private int _DistanceValueMaxLocation => _WVARLocation!.Value.Min + 0x1C;
-        private bool _DistanceValueMax_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _DistanceValueMaxLocation + 1 >= 4;
+        private bool _DistanceValueMax_IsSet => _WVARLocation.HasValue;
         public Single DistanceValueMax => _DistanceValueMax_IsSet ? _recordData.Slice(_DistanceValueMaxLocation, 4).Float() : default(Single);
         #endregion
         #region DistanceInputMin
         private int _DistanceInputMinLocation => _WVARLocation!.Value.Min + 0x20;
-        private bool _DistanceInputMin_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _DistanceInputMinLocation + 1 >= 4;
+        private bool _DistanceInputMin_IsSet => _WVARLocation.HasValue;
         public Single DistanceInputMin => _DistanceInputMin_IsSet ? _recordData.Slice(_DistanceInputMinLocation, 4).Float() : default(Single);
         #endregion
         #region DistanceInputMax
         private int _DistanceInputMaxLocation => _WVARLocation!.Value.Min + 0x24;
-        private bool _DistanceInputMax_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _DistanceInputMaxLocation + 1 >= 4;
+        private bool _DistanceInputMax_IsSet => _WVARLocation.HasValue;
         public Single DistanceInputMax => _DistanceInputMax_IsSet ? _recordData.Slice(_DistanceInputMaxLocation, 4).Float() : default(Single);
         #endregion
         #region DistanceAcceleration
         private int _DistanceAccelerationLocation => _WVARLocation!.Value.Min + 0x28;
-        private bool _DistanceAcceleration_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _DistanceAccelerationLocation + 1 >= 4;
+        private bool _DistanceAcceleration_IsSet => _WVARLocation.HasValue;
         public Single DistanceAcceleration => _DistanceAcceleration_IsSet ? _recordData.Slice(_DistanceAccelerationLocation, 4).Float() : default(Single);
         #endregion
         #region DistanceDeceleration
         private int _DistanceDecelerationLocation => _WVARLocation!.Value.Min + 0x2C;
-        private bool _DistanceDeceleration_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _DistanceDecelerationLocation + 1 >= 4;
+        private bool _DistanceDeceleration_IsSet => _WVARLocation.HasValue;
         public Single DistanceDeceleration => _DistanceDeceleration_IsSet ? _recordData.Slice(_DistanceDecelerationLocation, 4).Float() : default(Single);
         #endregion
         #region UseVariableRange
         private int _UseVariableRangeLocation => _WVARLocation!.Value.Min + 0x30;
-        private bool _UseVariableRange_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _UseVariableRangeLocation + 1 >= 1;
+        private bool _UseVariableRange_IsSet => _WVARLocation.HasValue;
         public Boolean UseVariableRange => _UseVariableRange_IsSet ? _recordData.Slice(_UseVariableRangeLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         public IFirstPersonModelGetter? FirstPersonModel { get; private set; }
         private RangeInt32? _WVISLocation;
         #region WVISUnknown1
         private int _WVISUnknown1Location => _WVISLocation!.Value.Min;
-        private bool _WVISUnknown1_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _WVISUnknown1Location + 1 >= 4;
+        private bool _WVISUnknown1_IsSet => _WVISLocation.HasValue;
         public UInt32 WVISUnknown1 => _WVISUnknown1_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WVISUnknown1Location, 4)) : default(UInt32);
         #endregion
         #region WVISUnknown2
         private int _WVISUnknown2Location => _WVISLocation!.Value.Min + 0x4;
-        private bool _WVISUnknown2_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _WVISUnknown2Location + 1 >= 4;
+        private bool _WVISUnknown2_IsSet => _WVISLocation.HasValue;
         public UInt32 WVISUnknown2 => _WVISUnknown2_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WVISUnknown2Location, 4)) : default(UInt32);
         #endregion
         #region WVISUnknown3
         private int _WVISUnknown3Location => _WVISLocation!.Value.Min + 0x8;
-        private bool _WVISUnknown3_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _WVISUnknown3Location + 1 >= 4;
+        private bool _WVISUnknown3_IsSet => _WVISLocation.HasValue;
         public UInt32 WVISUnknown3 => _WVISUnknown3_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WVISUnknown3Location, 4)) : default(UInt32);
         #endregion
         #region ImpactDataSet
         private int _ImpactDataSetLocation => _WVISLocation!.Value.Min + 0xC;
-        private bool _ImpactDataSet_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _ImpactDataSetLocation + 1 >= 4;
+        private bool _ImpactDataSet_IsSet => _WVISLocation.HasValue;
         public IFormLinkGetter<IImpactDataSetGetter> ImpactDataSet => _ImpactDataSet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_ImpactDataSetLocation, 0x4), isSet: _ImpactDataSet_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region ColorRemappingIndex
         private int _ColorRemappingIndexLocation => _WVISLocation!.Value.Min + 0x10;
-        private bool _ColorRemappingIndex_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _ColorRemappingIndexLocation + 1 >= 4;
+        private bool _ColorRemappingIndex_IsSet => _WVISLocation.HasValue;
         public Single ColorRemappingIndex => _ColorRemappingIndex_IsSet ? _recordData.Slice(_ColorRemappingIndexLocation, 4).Float() : default(Single);
         #endregion
         #region ImageSpaceAdapter
         private int _ImageSpaceAdapterLocation => _WVISLocation!.Value.Min + 0x14;
-        private bool _ImageSpaceAdapter_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _ImageSpaceAdapterLocation + 1 >= 4;
+        private bool _ImageSpaceAdapter_IsSet => _WVISLocation.HasValue;
         public IFormLinkGetter<IImageSpaceAdapterGetter> ImageSpaceAdapter => _ImageSpaceAdapter_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImageSpaceAdapterGetter>(_package, _recordData.Span.Slice(_ImageSpaceAdapterLocation, 0x4), isSet: _ImageSpaceAdapter_IsSet) : FormLink<IImageSpaceAdapterGetter>.Null;
         #endregion
         private RangeInt32? _WTRMLocation;
         #region WTRMUnknown1
         private int _WTRMUnknown1Location => _WTRMLocation!.Value.Min;
-        private bool _WTRMUnknown1_IsSet => _WTRMLocation.HasValue && _WTRMLocation!.Value.Max - _WTRMUnknown1Location + 1 >= 4;
+        private bool _WTRMUnknown1_IsSet => _WTRMLocation.HasValue;
         public Single WTRMUnknown1 => _WTRMUnknown1_IsSet ? _recordData.Slice(_WTRMUnknown1Location, 4).Float() : default(Single);
         #endregion
         #region WTRMUnknown2
         private int _WTRMUnknown2Location => _WTRMLocation!.Value.Min + 0x4;
-        private bool _WTRMUnknown2_IsSet => _WTRMLocation.HasValue && _WTRMLocation!.Value.Max - _WTRMUnknown2Location + 1 >= 1;
-        public Byte WTRMUnknown2 => _WTRMUnknown2_IsSet ? _recordData.Span[_WTRMUnknown2Location] : default(Byte);
+        private bool _WTRMUnknown2_IsSet => _WTRMLocation.HasValue;
+        public Byte WTRMUnknown2 => _WTRMUnknown2_IsSet ? _recordData.Span[_WTRMUnknown2Location] : default;
         #endregion
         #region WTRMUnknown3
         private int _WTRMUnknown3Location => _WTRMLocation!.Value.Min + 0x5;
-        private bool _WTRMUnknown3_IsSet => _WTRMLocation.HasValue && _WTRMLocation!.Value.Max - _WTRMUnknown3Location + 1 >= 4;
+        private bool _WTRMUnknown3_IsSet => _WTRMLocation.HasValue;
         public Single WTRMUnknown3 => _WTRMUnknown3_IsSet ? _recordData.Slice(_WTRMUnknown3Location, 4).Float() : default(Single);
         #endregion
         #region WTRMUnknown4
         private int _WTRMUnknown4Location => _WTRMLocation!.Value.Min + 0x9;
-        private bool _WTRMUnknown4_IsSet => _WTRMLocation.HasValue && _WTRMLocation!.Value.Max - _WTRMUnknown4Location + 1 >= 4;
+        private bool _WTRMUnknown4_IsSet => _WTRMLocation.HasValue;
         public Single WTRMUnknown4 => _WTRMUnknown4_IsSet ? _recordData.Slice(_WTRMUnknown4Location, 4).Float() : default(Single);
         #endregion
         #region WTRMUnknown5
         private int _WTRMUnknown5Location => _WTRMLocation!.Value.Min + 0xD;
-        private bool _WTRMUnknown5_IsSet => _WTRMLocation.HasValue && _WTRMLocation!.Value.Max - _WTRMUnknown5Location + 1 >= 4;
+        private bool _WTRMUnknown5_IsSet => _WTRMLocation.HasValue;
         public Single WTRMUnknown5 => _WTRMUnknown5_IsSet ? _recordData.Slice(_WTRMUnknown5Location, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(
@@ -13798,7 +13785,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WAUD:
                 {
                     _WAUDLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)Weapon_FieldIndex.WAUDUnknown2;
+                    return (int)Weapon_FieldIndex.MeleeDetectionSoundLevel;
                 }
                 case RecordTypeInts.WTUR:
                 {
