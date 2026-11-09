@@ -100,7 +100,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #endregion
         #region DirtinessScale
-        public Single DirtinessScale { get; set; } = default(Single);
+        public Percent DirtinessScale { get; set; } = default(Percent);
         #endregion
         #region ObjectPaletteDefaults
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -408,23 +408,23 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<IMeleeAimAssistModelGetter> IWeaponGetter.MeleeAimAssistModel => this.MeleeAimAssistModel;
         #endregion
-        #region WAIMUnknown1
-        public Byte WAIMUnknown1 { get; set; } = default(Byte);
+        #region UpdateAdvancedAimInfo
+        public Boolean UpdateAdvancedAimInfo { get; set; } = default(Boolean);
         #endregion
-        #region WAIMUnknown2
-        public Byte WAIMUnknown2 { get; set; } = default(Byte);
+        #region EnableOrientFireNodesToAimingDirection
+        public Boolean EnableOrientFireNodesToAimingDirection { get; set; } = default(Boolean);
         #endregion
         #region EnableMarkingTargets
         public Boolean EnableMarkingTargets { get; set; } = default(Boolean);
         #endregion
         #region ReticleType
-        public UInt32 ReticleType { get; set; } = default(UInt32);
+        public Weapon.ReticleTypeEnum ReticleType { get; set; } = default(Weapon.ReticleTypeEnum);
         #endregion
-        #region WAIMUnknown3
-        public Byte WAIMUnknown3 { get; set; } = default(Byte);
+        #region InverseReticleSpread
+        public Boolean InverseReticleSpread { get; set; } = default(Boolean);
         #endregion
-        #region WAIMUnknown4
-        public Byte WAIMUnknown4 { get; set; } = default(Byte);
+        #region DisplayedReticleIgnoresPlayerMovement
+        public Boolean DisplayedReticleIgnoresPlayerMovement { get; set; } = default(Boolean);
         #endregion
         #region AmmoType
         private readonly IFormLink<IAmmunitionGetter> _AmmoType = new FormLink<IAmmunitionGetter>();
@@ -475,8 +475,8 @@ namespace Mutagen.Bethesda.Starfield
         #region NpcsUseAmmo
         public Boolean NpcsUseAmmo { get; set; } = default(Boolean);
         #endregion
-        #region WAM2Unknown1
-        public Byte WAM2Unknown1 { get; set; } = default(Byte);
+        #region NumberOfImpactSounds
+        public Byte NumberOfImpactSounds { get; set; } = default(Byte);
         #endregion
         #region WAMM
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -607,23 +607,23 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<IActorValueInformationGetter> IWeaponGetter.Skill => this.Skill;
         #endregion
-        #region WDMGUnknown4
-        public Single WDMGUnknown4 { get; set; } = default(Single);
+        #region LowGravityScaleControlPoint
+        public Single LowGravityScaleControlPoint { get; set; } = default(Single);
         #endregion
-        #region WDMGUnknown5
-        public Single WDMGUnknown5 { get; set; } = default(Single);
+        #region LowGravityRangeMultMin
+        public Single LowGravityRangeMultMin { get; set; } = default(Single);
         #endregion
-        #region WDMGUnknown6
-        public Single WDMGUnknown6 { get; set; } = default(Single);
+        #region LowGravityRangeMultMax
+        public Single LowGravityRangeMultMax { get; set; } = default(Single);
         #endregion
-        #region WDMGUnknown7
-        public Single WDMGUnknown7 { get; set; } = default(Single);
+        #region HighGravityScaleControlPoint
+        public Single HighGravityScaleControlPoint { get; set; } = default(Single);
         #endregion
-        #region WDMGUnknown8
-        public Single WDMGUnknown8 { get; set; } = default(Single);
+        #region HighGravityRangeMultMin
+        public Single HighGravityRangeMultMin { get; set; } = default(Single);
         #endregion
-        #region WDMGUnknown9
-        public Single WDMGUnknown9 { get; set; } = default(Single);
+        #region HighGravityRangeMultMax
+        public Single HighGravityRangeMultMax { get; set; } = default(Single);
         #endregion
         #region CritChanceIncMult
         public Single CritChanceIncMult { get; set; } = default(Single);
@@ -672,8 +672,8 @@ namespace Mutagen.Bethesda.Starfield
         #region ShotsPerSecond
         public Single ShotsPerSecond { get; set; } = default(Single);
         #endregion
-        #region WFIRUnknown7
-        public Single WFIRUnknown7 { get; set; } = default(Single);
+        #region WeaponAttackAnimationDuration
+        public Single WeaponAttackAnimationDuration { get; set; } = default(Single);
         #endregion
         #region OverrideRateOfFire
         public Boolean OverrideRateOfFire { get; set; } = default(Boolean);
@@ -681,8 +681,8 @@ namespace Mutagen.Bethesda.Starfield
         #region TriggerThresholdPrimaryTrigger
         public Single TriggerThresholdPrimaryTrigger { get; set; } = default(Single);
         #endregion
-        #region WFIRUnknown10
-        public Byte WFIRUnknown10 { get; set; } = default(Byte);
+        #region OverrideTriggerThreshold
+        public Boolean OverrideTriggerThreshold { get; set; } = default(Boolean);
         #endregion
         #region TriggerThresholdSecondStage
         public Single TriggerThresholdSecondStage { get; set; } = default(Single);
@@ -702,11 +702,11 @@ namespace Mutagen.Bethesda.Starfield
         #region PlayerOnly
         public Boolean PlayerOnly { get; set; } = default(Boolean);
         #endregion
-        #region WFLGUnknown1
-        public Boolean WFLGUnknown1 { get; set; } = default(Boolean);
+        #region PreventUseInNormalCombat
+        public Boolean PreventUseInNormalCombat { get; set; } = default(Boolean);
         #endregion
-        #region WFLGUnknown2
-        public Boolean WFLGUnknown2 { get; set; } = default(Boolean);
+        #region IsSecondary
+        public Boolean IsSecondary { get; set; } = default(Boolean);
         #endregion
         #region CannotDrop
         public Boolean CannotDrop { get; set; } = default(Boolean);
@@ -717,20 +717,20 @@ namespace Mutagen.Bethesda.Starfield
         #region NonHostile
         public Boolean NonHostile { get; set; } = default(Boolean);
         #endregion
-        #region WFLGUnknown3
-        public Boolean WFLGUnknown3 { get; set; } = default(Boolean);
+        #region Bound
+        public Boolean Bound { get; set; } = default(Boolean);
         #endregion
-        #region WFLGUnknown4
-        public Boolean WFLGUnknown4 { get; set; } = default(Boolean);
+        #region NpcPrefersLongBursts
+        public Boolean NpcPrefersLongBursts { get; set; } = default(Boolean);
         #endregion
-        #region WFLGUnknown5
-        public Boolean WFLGUnknown5 { get; set; } = default(Boolean);
+        #region NpcsOnlyFireWhenMagazineFull
+        public Boolean NpcsOnlyFireWhenMagazineFull { get; set; } = default(Boolean);
         #endregion
-        #region WFLGUnknown6
-        public Boolean WFLGUnknown6 { get; set; } = default(Boolean);
+        #region UseSequentialFireNodes
+        public Boolean UseSequentialFireNodes { get; set; } = default(Boolean);
         #endregion
-        #region WFLGUnknown7
-        public Boolean WFLGUnknown7 { get; set; } = default(Boolean);
+        #region UseRandomFireNodes
+        public Boolean UseRandomFireNodes { get; set; } = default(Boolean);
         #endregion
         #region AnimationType
         public Weapon.AnimationTypes AnimationType { get; set; } = default(Weapon.AnimationTypes);
@@ -806,27 +806,27 @@ namespace Mutagen.Bethesda.Starfield
         #region UsePower
         public Boolean UsePower { get; set; } = default(Boolean);
         #endregion
-        #region QNAMUnknown1
-        public Byte QNAMUnknown1 { get; set; } = default(Byte);
+        #region VariablePowerEnabled
+        public Boolean VariablePowerEnabled { get; set; } = default(Boolean);
         #endregion
-        #region QNAMUnknown2
-        public Single QNAMUnknown2 { get; set; } = default(Single);
+        #region VariablePowerTransitionDuration
+        public Single VariablePowerTransitionDuration { get; set; } = default(Single);
         #endregion
-        #region QNAMUnknown3
-        public Byte QNAMUnknown3 { get; set; } = default(Byte);
+        #region UseChargeOnlyInFocusMode
+        public Boolean UseChargeOnlyInFocusMode { get; set; } = default(Boolean);
         #endregion
-        #region QNAMUnknown4
-        private readonly IFormLink<ICurveTableGetter> _QNAMUnknown4 = new FormLink<ICurveTableGetter>();
-        public IFormLink<ICurveTableGetter> QNAMUnknown4
+        #region PowerIntensityCurve
+        private readonly IFormLink<ICurveTableGetter> _PowerIntensityCurve = new FormLink<ICurveTableGetter>();
+        public IFormLink<ICurveTableGetter> PowerIntensityCurve
         {
-            get => _QNAMUnknown4;
-            set => _QNAMUnknown4.SetTo(value);
+            get => _PowerIntensityCurve;
+            set => _PowerIntensityCurve.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<ICurveTableGetter> IWeaponGetter.QNAMUnknown4 => this.QNAMUnknown4;
+        IFormLinkGetter<ICurveTableGetter> IWeaponGetter.PowerIntensityCurve => this.PowerIntensityCurve;
         #endregion
-        #region QNAMUnknown5
-        public Single QNAMUnknown5 { get; set; } = default(Single);
+        #region PowerDamageMultiplier
+        public Single PowerDamageMultiplier { get; set; } = default(Single);
         #endregion
         #region PowerConsumption
         private readonly IFormLink<ICurveTableGetter> _PowerConsumption = new FormLink<ICurveTableGetter>();
@@ -838,8 +838,8 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<ICurveTableGetter> IWeaponGetter.PowerConsumption => this.PowerConsumption;
         #endregion
-        #region WRLOUnknown1
-        public Single WRLOUnknown1 { get; set; } = default(Single);
+        #region ReloadSeconds
+        public Single ReloadSeconds { get; set; } = default(Single);
         #endregion
         #region ReloadSpeed
         public Single ReloadSpeed { get; set; } = default(Single);
@@ -943,20 +943,20 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<IImageSpaceAdapterGetter> IWeaponGetter.ImageSpaceAdapter => this.ImageSpaceAdapter;
         #endregion
-        #region WTRMUnknown1
-        public Single WTRMUnknown1 { get; set; } = default(Single);
+        #region AttackActionPointCost
+        public Single AttackActionPointCost { get; set; } = default(Single);
         #endregion
-        #region WTRMUnknown2
-        public Byte WTRMUnknown2 { get; set; } = default(Byte);
+        #region OverrideDefaultCameraShake
+        public Boolean OverrideDefaultCameraShake { get; set; } = default(Boolean);
         #endregion
-        #region WTRMUnknown3
-        public Single WTRMUnknown3 { get; set; } = default(Single);
+        #region FiringCameraShakeIntensity
+        public Single FiringCameraShakeIntensity { get; set; } = default(Single);
         #endregion
-        #region WTRMUnknown4
-        public Single WTRMUnknown4 { get; set; } = default(Single);
+        #region FiringCameraShakeDuration
+        public Single FiringCameraShakeDuration { get; set; } = default(Single);
         #endregion
-        #region WTRMUnknown5
-        public Single WTRMUnknown5 { get; set; } = default(Single);
+        #region AiFiringArc
+        public Single AiFiringArc { get; set; } = default(Single);
         #endregion
 
         #region To String
@@ -1014,12 +1014,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.AimAssistTemplate = initialValue;
                 this.AimOpticalSightModel = initialValue;
                 this.MeleeAimAssistModel = initialValue;
-                this.WAIMUnknown1 = initialValue;
-                this.WAIMUnknown2 = initialValue;
+                this.UpdateAdvancedAimInfo = initialValue;
+                this.EnableOrientFireNodesToAimingDirection = initialValue;
                 this.EnableMarkingTargets = initialValue;
                 this.ReticleType = initialValue;
-                this.WAIMUnknown3 = initialValue;
-                this.WAIMUnknown4 = initialValue;
+                this.InverseReticleSpread = initialValue;
+                this.DisplayedReticleIgnoresPlayerMovement = initialValue;
                 this.AmmoType = initialValue;
                 this.AmmoCapacity = initialValue;
                 this.AmmoList = initialValue;
@@ -1027,7 +1027,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OverrideShellCasing = initialValue;
                 this.ProjectilesCount = initialValue;
                 this.NpcsUseAmmo = initialValue;
-                this.WAM2Unknown1 = initialValue;
+                this.NumberOfImpactSounds = initialValue;
                 this.WAMM = initialValue;
                 this.MeleeOrCreature = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.PrimedExplosive = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
@@ -1054,12 +1054,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.HitBehavior = initialValue;
                 this.Resistance = initialValue;
                 this.Skill = initialValue;
-                this.WDMGUnknown4 = initialValue;
-                this.WDMGUnknown5 = initialValue;
-                this.WDMGUnknown6 = initialValue;
-                this.WDMGUnknown7 = initialValue;
-                this.WDMGUnknown8 = initialValue;
-                this.WDMGUnknown9 = initialValue;
+                this.LowGravityScaleControlPoint = initialValue;
+                this.LowGravityRangeMultMin = initialValue;
+                this.LowGravityRangeMultMax = initialValue;
+                this.HighGravityScaleControlPoint = initialValue;
+                this.HighGravityRangeMultMin = initialValue;
+                this.HighGravityRangeMultMax = initialValue;
                 this.CritChanceIncMult = initialValue;
                 this.DamageTypes = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WeaponDamageType.Mask<TItem>?>>?>(initialValue, []);
                 this.FiringType = initialValue;
@@ -1072,26 +1072,26 @@ namespace Mutagen.Bethesda.Starfield
                 this.BoltAction = initialValue;
                 this.DisableShellCaseEject = initialValue;
                 this.ShotsPerSecond = initialValue;
-                this.WFIRUnknown7 = initialValue;
+                this.WeaponAttackAnimationDuration = initialValue;
                 this.OverrideRateOfFire = initialValue;
                 this.TriggerThresholdPrimaryTrigger = initialValue;
-                this.WFIRUnknown10 = initialValue;
+                this.OverrideTriggerThreshold = initialValue;
                 this.TriggerThresholdSecondStage = initialValue;
                 this.HasStagedTrigger = initialValue;
                 this.HasDualTrigger = initialValue;
                 this.BurstDelaySeconds = initialValue;
                 this.NonPlayable = initialValue;
                 this.PlayerOnly = initialValue;
-                this.WFLGUnknown1 = initialValue;
-                this.WFLGUnknown2 = initialValue;
+                this.PreventUseInNormalCombat = initialValue;
+                this.IsSecondary = initialValue;
                 this.CannotDrop = initialValue;
                 this.MinorCrime = initialValue;
                 this.NonHostile = initialValue;
-                this.WFLGUnknown3 = initialValue;
-                this.WFLGUnknown4 = initialValue;
-                this.WFLGUnknown5 = initialValue;
-                this.WFLGUnknown6 = initialValue;
-                this.WFLGUnknown7 = initialValue;
+                this.Bound = initialValue;
+                this.NpcPrefersLongBursts = initialValue;
+                this.NpcsOnlyFireWhenMagazineFull = initialValue;
+                this.UseSequentialFireNodes = initialValue;
+                this.UseRandomFireNodes = initialValue;
                 this.AnimationType = initialValue;
                 this.BaseWeight = initialValue;
                 this.BaseValue = initialValue;
@@ -1109,13 +1109,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.ConsumeAmmo = initialValue;
                 this.PowerBonus = initialValue;
                 this.UsePower = initialValue;
-                this.QNAMUnknown1 = initialValue;
-                this.QNAMUnknown2 = initialValue;
-                this.QNAMUnknown3 = initialValue;
-                this.QNAMUnknown4 = initialValue;
-                this.QNAMUnknown5 = initialValue;
+                this.VariablePowerEnabled = initialValue;
+                this.VariablePowerTransitionDuration = initialValue;
+                this.UseChargeOnlyInFocusMode = initialValue;
+                this.PowerIntensityCurve = initialValue;
+                this.PowerDamageMultiplier = initialValue;
                 this.PowerConsumption = initialValue;
-                this.WRLOUnknown1 = initialValue;
+                this.ReloadSeconds = initialValue;
                 this.ReloadSpeed = initialValue;
                 this.ReloadCharging = initialValue;
                 this.ReloadSingle = initialValue;
@@ -1140,11 +1140,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.ImpactDataSet = initialValue;
                 this.ColorRemappingIndex = initialValue;
                 this.ImageSpaceAdapter = initialValue;
-                this.WTRMUnknown1 = initialValue;
-                this.WTRMUnknown2 = initialValue;
-                this.WTRMUnknown3 = initialValue;
-                this.WTRMUnknown4 = initialValue;
-                this.WTRMUnknown5 = initialValue;
+                this.AttackActionPointCost = initialValue;
+                this.OverrideDefaultCameraShake = initialValue;
+                this.FiringCameraShakeIntensity = initialValue;
+                this.FiringCameraShakeDuration = initialValue;
+                this.AiFiringArc = initialValue;
             }
 
             public Mask(
@@ -1186,12 +1186,12 @@ namespace Mutagen.Bethesda.Starfield
                 TItem AimAssistTemplate,
                 TItem AimOpticalSightModel,
                 TItem MeleeAimAssistModel,
-                TItem WAIMUnknown1,
-                TItem WAIMUnknown2,
+                TItem UpdateAdvancedAimInfo,
+                TItem EnableOrientFireNodesToAimingDirection,
                 TItem EnableMarkingTargets,
                 TItem ReticleType,
-                TItem WAIMUnknown3,
-                TItem WAIMUnknown4,
+                TItem InverseReticleSpread,
+                TItem DisplayedReticleIgnoresPlayerMovement,
                 TItem AmmoType,
                 TItem AmmoCapacity,
                 TItem AmmoList,
@@ -1199,7 +1199,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem OverrideShellCasing,
                 TItem ProjectilesCount,
                 TItem NpcsUseAmmo,
-                TItem WAM2Unknown1,
+                TItem NumberOfImpactSounds,
                 TItem WAMM,
                 TItem MeleeOrCreature,
                 TItem PrimedExplosive,
@@ -1226,12 +1226,12 @@ namespace Mutagen.Bethesda.Starfield
                 TItem HitBehavior,
                 TItem Resistance,
                 TItem Skill,
-                TItem WDMGUnknown4,
-                TItem WDMGUnknown5,
-                TItem WDMGUnknown6,
-                TItem WDMGUnknown7,
-                TItem WDMGUnknown8,
-                TItem WDMGUnknown9,
+                TItem LowGravityScaleControlPoint,
+                TItem LowGravityRangeMultMin,
+                TItem LowGravityRangeMultMax,
+                TItem HighGravityScaleControlPoint,
+                TItem HighGravityRangeMultMin,
+                TItem HighGravityRangeMultMax,
                 TItem CritChanceIncMult,
                 TItem DamageTypes,
                 TItem FiringType,
@@ -1244,26 +1244,26 @@ namespace Mutagen.Bethesda.Starfield
                 TItem BoltAction,
                 TItem DisableShellCaseEject,
                 TItem ShotsPerSecond,
-                TItem WFIRUnknown7,
+                TItem WeaponAttackAnimationDuration,
                 TItem OverrideRateOfFire,
                 TItem TriggerThresholdPrimaryTrigger,
-                TItem WFIRUnknown10,
+                TItem OverrideTriggerThreshold,
                 TItem TriggerThresholdSecondStage,
                 TItem HasStagedTrigger,
                 TItem HasDualTrigger,
                 TItem BurstDelaySeconds,
                 TItem NonPlayable,
                 TItem PlayerOnly,
-                TItem WFLGUnknown1,
-                TItem WFLGUnknown2,
+                TItem PreventUseInNormalCombat,
+                TItem IsSecondary,
                 TItem CannotDrop,
                 TItem MinorCrime,
                 TItem NonHostile,
-                TItem WFLGUnknown3,
-                TItem WFLGUnknown4,
-                TItem WFLGUnknown5,
-                TItem WFLGUnknown6,
-                TItem WFLGUnknown7,
+                TItem Bound,
+                TItem NpcPrefersLongBursts,
+                TItem NpcsOnlyFireWhenMagazineFull,
+                TItem UseSequentialFireNodes,
+                TItem UseRandomFireNodes,
                 TItem AnimationType,
                 TItem BaseWeight,
                 TItem BaseValue,
@@ -1281,13 +1281,13 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ConsumeAmmo,
                 TItem PowerBonus,
                 TItem UsePower,
-                TItem QNAMUnknown1,
-                TItem QNAMUnknown2,
-                TItem QNAMUnknown3,
-                TItem QNAMUnknown4,
-                TItem QNAMUnknown5,
+                TItem VariablePowerEnabled,
+                TItem VariablePowerTransitionDuration,
+                TItem UseChargeOnlyInFocusMode,
+                TItem PowerIntensityCurve,
+                TItem PowerDamageMultiplier,
                 TItem PowerConsumption,
-                TItem WRLOUnknown1,
+                TItem ReloadSeconds,
                 TItem ReloadSpeed,
                 TItem ReloadCharging,
                 TItem ReloadSingle,
@@ -1312,11 +1312,11 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ImpactDataSet,
                 TItem ColorRemappingIndex,
                 TItem ImageSpaceAdapter,
-                TItem WTRMUnknown1,
-                TItem WTRMUnknown2,
-                TItem WTRMUnknown3,
-                TItem WTRMUnknown4,
-                TItem WTRMUnknown5)
+                TItem AttackActionPointCost,
+                TItem OverrideDefaultCameraShake,
+                TItem FiringCameraShakeIntensity,
+                TItem FiringCameraShakeDuration,
+                TItem AiFiringArc)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -1357,12 +1357,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.AimAssistTemplate = AimAssistTemplate;
                 this.AimOpticalSightModel = AimOpticalSightModel;
                 this.MeleeAimAssistModel = MeleeAimAssistModel;
-                this.WAIMUnknown1 = WAIMUnknown1;
-                this.WAIMUnknown2 = WAIMUnknown2;
+                this.UpdateAdvancedAimInfo = UpdateAdvancedAimInfo;
+                this.EnableOrientFireNodesToAimingDirection = EnableOrientFireNodesToAimingDirection;
                 this.EnableMarkingTargets = EnableMarkingTargets;
                 this.ReticleType = ReticleType;
-                this.WAIMUnknown3 = WAIMUnknown3;
-                this.WAIMUnknown4 = WAIMUnknown4;
+                this.InverseReticleSpread = InverseReticleSpread;
+                this.DisplayedReticleIgnoresPlayerMovement = DisplayedReticleIgnoresPlayerMovement;
                 this.AmmoType = AmmoType;
                 this.AmmoCapacity = AmmoCapacity;
                 this.AmmoList = AmmoList;
@@ -1370,7 +1370,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OverrideShellCasing = OverrideShellCasing;
                 this.ProjectilesCount = ProjectilesCount;
                 this.NpcsUseAmmo = NpcsUseAmmo;
-                this.WAM2Unknown1 = WAM2Unknown1;
+                this.NumberOfImpactSounds = NumberOfImpactSounds;
                 this.WAMM = WAMM;
                 this.MeleeOrCreature = new MaskItem<TItem, SoundReference.Mask<TItem>?>(MeleeOrCreature, new SoundReference.Mask<TItem>(MeleeOrCreature));
                 this.PrimedExplosive = new MaskItem<TItem, SoundReference.Mask<TItem>?>(PrimedExplosive, new SoundReference.Mask<TItem>(PrimedExplosive));
@@ -1397,12 +1397,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.HitBehavior = HitBehavior;
                 this.Resistance = Resistance;
                 this.Skill = Skill;
-                this.WDMGUnknown4 = WDMGUnknown4;
-                this.WDMGUnknown5 = WDMGUnknown5;
-                this.WDMGUnknown6 = WDMGUnknown6;
-                this.WDMGUnknown7 = WDMGUnknown7;
-                this.WDMGUnknown8 = WDMGUnknown8;
-                this.WDMGUnknown9 = WDMGUnknown9;
+                this.LowGravityScaleControlPoint = LowGravityScaleControlPoint;
+                this.LowGravityRangeMultMin = LowGravityRangeMultMin;
+                this.LowGravityRangeMultMax = LowGravityRangeMultMax;
+                this.HighGravityScaleControlPoint = HighGravityScaleControlPoint;
+                this.HighGravityRangeMultMin = HighGravityRangeMultMin;
+                this.HighGravityRangeMultMax = HighGravityRangeMultMax;
                 this.CritChanceIncMult = CritChanceIncMult;
                 this.DamageTypes = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WeaponDamageType.Mask<TItem>?>>?>(DamageTypes, []);
                 this.FiringType = FiringType;
@@ -1415,26 +1415,26 @@ namespace Mutagen.Bethesda.Starfield
                 this.BoltAction = BoltAction;
                 this.DisableShellCaseEject = DisableShellCaseEject;
                 this.ShotsPerSecond = ShotsPerSecond;
-                this.WFIRUnknown7 = WFIRUnknown7;
+                this.WeaponAttackAnimationDuration = WeaponAttackAnimationDuration;
                 this.OverrideRateOfFire = OverrideRateOfFire;
                 this.TriggerThresholdPrimaryTrigger = TriggerThresholdPrimaryTrigger;
-                this.WFIRUnknown10 = WFIRUnknown10;
+                this.OverrideTriggerThreshold = OverrideTriggerThreshold;
                 this.TriggerThresholdSecondStage = TriggerThresholdSecondStage;
                 this.HasStagedTrigger = HasStagedTrigger;
                 this.HasDualTrigger = HasDualTrigger;
                 this.BurstDelaySeconds = BurstDelaySeconds;
                 this.NonPlayable = NonPlayable;
                 this.PlayerOnly = PlayerOnly;
-                this.WFLGUnknown1 = WFLGUnknown1;
-                this.WFLGUnknown2 = WFLGUnknown2;
+                this.PreventUseInNormalCombat = PreventUseInNormalCombat;
+                this.IsSecondary = IsSecondary;
                 this.CannotDrop = CannotDrop;
                 this.MinorCrime = MinorCrime;
                 this.NonHostile = NonHostile;
-                this.WFLGUnknown3 = WFLGUnknown3;
-                this.WFLGUnknown4 = WFLGUnknown4;
-                this.WFLGUnknown5 = WFLGUnknown5;
-                this.WFLGUnknown6 = WFLGUnknown6;
-                this.WFLGUnknown7 = WFLGUnknown7;
+                this.Bound = Bound;
+                this.NpcPrefersLongBursts = NpcPrefersLongBursts;
+                this.NpcsOnlyFireWhenMagazineFull = NpcsOnlyFireWhenMagazineFull;
+                this.UseSequentialFireNodes = UseSequentialFireNodes;
+                this.UseRandomFireNodes = UseRandomFireNodes;
                 this.AnimationType = AnimationType;
                 this.BaseWeight = BaseWeight;
                 this.BaseValue = BaseValue;
@@ -1452,13 +1452,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.ConsumeAmmo = ConsumeAmmo;
                 this.PowerBonus = PowerBonus;
                 this.UsePower = UsePower;
-                this.QNAMUnknown1 = QNAMUnknown1;
-                this.QNAMUnknown2 = QNAMUnknown2;
-                this.QNAMUnknown3 = QNAMUnknown3;
-                this.QNAMUnknown4 = QNAMUnknown4;
-                this.QNAMUnknown5 = QNAMUnknown5;
+                this.VariablePowerEnabled = VariablePowerEnabled;
+                this.VariablePowerTransitionDuration = VariablePowerTransitionDuration;
+                this.UseChargeOnlyInFocusMode = UseChargeOnlyInFocusMode;
+                this.PowerIntensityCurve = PowerIntensityCurve;
+                this.PowerDamageMultiplier = PowerDamageMultiplier;
                 this.PowerConsumption = PowerConsumption;
-                this.WRLOUnknown1 = WRLOUnknown1;
+                this.ReloadSeconds = ReloadSeconds;
                 this.ReloadSpeed = ReloadSpeed;
                 this.ReloadCharging = ReloadCharging;
                 this.ReloadSingle = ReloadSingle;
@@ -1483,11 +1483,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.ImpactDataSet = ImpactDataSet;
                 this.ColorRemappingIndex = ColorRemappingIndex;
                 this.ImageSpaceAdapter = ImageSpaceAdapter;
-                this.WTRMUnknown1 = WTRMUnknown1;
-                this.WTRMUnknown2 = WTRMUnknown2;
-                this.WTRMUnknown3 = WTRMUnknown3;
-                this.WTRMUnknown4 = WTRMUnknown4;
-                this.WTRMUnknown5 = WTRMUnknown5;
+                this.AttackActionPointCost = AttackActionPointCost;
+                this.OverrideDefaultCameraShake = OverrideDefaultCameraShake;
+                this.FiringCameraShakeIntensity = FiringCameraShakeIntensity;
+                this.FiringCameraShakeDuration = FiringCameraShakeDuration;
+                this.AiFiringArc = AiFiringArc;
             }
 
             #pragma warning disable CS8618
@@ -1530,12 +1530,12 @@ namespace Mutagen.Bethesda.Starfield
             public TItem AimAssistTemplate;
             public TItem AimOpticalSightModel;
             public TItem MeleeAimAssistModel;
-            public TItem WAIMUnknown1;
-            public TItem WAIMUnknown2;
+            public TItem UpdateAdvancedAimInfo;
+            public TItem EnableOrientFireNodesToAimingDirection;
             public TItem EnableMarkingTargets;
             public TItem ReticleType;
-            public TItem WAIMUnknown3;
-            public TItem WAIMUnknown4;
+            public TItem InverseReticleSpread;
+            public TItem DisplayedReticleIgnoresPlayerMovement;
             public TItem AmmoType;
             public TItem AmmoCapacity;
             public TItem AmmoList;
@@ -1543,7 +1543,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem OverrideShellCasing;
             public TItem ProjectilesCount;
             public TItem NpcsUseAmmo;
-            public TItem WAM2Unknown1;
+            public TItem NumberOfImpactSounds;
             public TItem WAMM;
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? MeleeOrCreature { get; set; }
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? PrimedExplosive { get; set; }
@@ -1570,12 +1570,12 @@ namespace Mutagen.Bethesda.Starfield
             public TItem HitBehavior;
             public TItem Resistance;
             public TItem Skill;
-            public TItem WDMGUnknown4;
-            public TItem WDMGUnknown5;
-            public TItem WDMGUnknown6;
-            public TItem WDMGUnknown7;
-            public TItem WDMGUnknown8;
-            public TItem WDMGUnknown9;
+            public TItem LowGravityScaleControlPoint;
+            public TItem LowGravityRangeMultMin;
+            public TItem LowGravityRangeMultMax;
+            public TItem HighGravityScaleControlPoint;
+            public TItem HighGravityRangeMultMin;
+            public TItem HighGravityRangeMultMax;
             public TItem CritChanceIncMult;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WeaponDamageType.Mask<TItem>?>>?>? DamageTypes;
             public TItem FiringType;
@@ -1588,26 +1588,26 @@ namespace Mutagen.Bethesda.Starfield
             public TItem BoltAction;
             public TItem DisableShellCaseEject;
             public TItem ShotsPerSecond;
-            public TItem WFIRUnknown7;
+            public TItem WeaponAttackAnimationDuration;
             public TItem OverrideRateOfFire;
             public TItem TriggerThresholdPrimaryTrigger;
-            public TItem WFIRUnknown10;
+            public TItem OverrideTriggerThreshold;
             public TItem TriggerThresholdSecondStage;
             public TItem HasStagedTrigger;
             public TItem HasDualTrigger;
             public TItem BurstDelaySeconds;
             public TItem NonPlayable;
             public TItem PlayerOnly;
-            public TItem WFLGUnknown1;
-            public TItem WFLGUnknown2;
+            public TItem PreventUseInNormalCombat;
+            public TItem IsSecondary;
             public TItem CannotDrop;
             public TItem MinorCrime;
             public TItem NonHostile;
-            public TItem WFLGUnknown3;
-            public TItem WFLGUnknown4;
-            public TItem WFLGUnknown5;
-            public TItem WFLGUnknown6;
-            public TItem WFLGUnknown7;
+            public TItem Bound;
+            public TItem NpcPrefersLongBursts;
+            public TItem NpcsOnlyFireWhenMagazineFull;
+            public TItem UseSequentialFireNodes;
+            public TItem UseRandomFireNodes;
             public TItem AnimationType;
             public TItem BaseWeight;
             public TItem BaseValue;
@@ -1625,13 +1625,13 @@ namespace Mutagen.Bethesda.Starfield
             public TItem ConsumeAmmo;
             public TItem PowerBonus;
             public TItem UsePower;
-            public TItem QNAMUnknown1;
-            public TItem QNAMUnknown2;
-            public TItem QNAMUnknown3;
-            public TItem QNAMUnknown4;
-            public TItem QNAMUnknown5;
+            public TItem VariablePowerEnabled;
+            public TItem VariablePowerTransitionDuration;
+            public TItem UseChargeOnlyInFocusMode;
+            public TItem PowerIntensityCurve;
+            public TItem PowerDamageMultiplier;
             public TItem PowerConsumption;
-            public TItem WRLOUnknown1;
+            public TItem ReloadSeconds;
             public TItem ReloadSpeed;
             public TItem ReloadCharging;
             public TItem ReloadSingle;
@@ -1656,11 +1656,11 @@ namespace Mutagen.Bethesda.Starfield
             public TItem ImpactDataSet;
             public TItem ColorRemappingIndex;
             public TItem ImageSpaceAdapter;
-            public TItem WTRMUnknown1;
-            public TItem WTRMUnknown2;
-            public TItem WTRMUnknown3;
-            public TItem WTRMUnknown4;
-            public TItem WTRMUnknown5;
+            public TItem AttackActionPointCost;
+            public TItem OverrideDefaultCameraShake;
+            public TItem FiringCameraShakeIntensity;
+            public TItem FiringCameraShakeDuration;
+            public TItem AiFiringArc;
             #endregion
 
             #region Equals
@@ -1705,12 +1705,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.AimAssistTemplate, rhs.AimAssistTemplate)) return false;
                 if (!object.Equals(this.AimOpticalSightModel, rhs.AimOpticalSightModel)) return false;
                 if (!object.Equals(this.MeleeAimAssistModel, rhs.MeleeAimAssistModel)) return false;
-                if (!object.Equals(this.WAIMUnknown1, rhs.WAIMUnknown1)) return false;
-                if (!object.Equals(this.WAIMUnknown2, rhs.WAIMUnknown2)) return false;
+                if (!object.Equals(this.UpdateAdvancedAimInfo, rhs.UpdateAdvancedAimInfo)) return false;
+                if (!object.Equals(this.EnableOrientFireNodesToAimingDirection, rhs.EnableOrientFireNodesToAimingDirection)) return false;
                 if (!object.Equals(this.EnableMarkingTargets, rhs.EnableMarkingTargets)) return false;
                 if (!object.Equals(this.ReticleType, rhs.ReticleType)) return false;
-                if (!object.Equals(this.WAIMUnknown3, rhs.WAIMUnknown3)) return false;
-                if (!object.Equals(this.WAIMUnknown4, rhs.WAIMUnknown4)) return false;
+                if (!object.Equals(this.InverseReticleSpread, rhs.InverseReticleSpread)) return false;
+                if (!object.Equals(this.DisplayedReticleIgnoresPlayerMovement, rhs.DisplayedReticleIgnoresPlayerMovement)) return false;
                 if (!object.Equals(this.AmmoType, rhs.AmmoType)) return false;
                 if (!object.Equals(this.AmmoCapacity, rhs.AmmoCapacity)) return false;
                 if (!object.Equals(this.AmmoList, rhs.AmmoList)) return false;
@@ -1718,7 +1718,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.OverrideShellCasing, rhs.OverrideShellCasing)) return false;
                 if (!object.Equals(this.ProjectilesCount, rhs.ProjectilesCount)) return false;
                 if (!object.Equals(this.NpcsUseAmmo, rhs.NpcsUseAmmo)) return false;
-                if (!object.Equals(this.WAM2Unknown1, rhs.WAM2Unknown1)) return false;
+                if (!object.Equals(this.NumberOfImpactSounds, rhs.NumberOfImpactSounds)) return false;
                 if (!object.Equals(this.WAMM, rhs.WAMM)) return false;
                 if (!object.Equals(this.MeleeOrCreature, rhs.MeleeOrCreature)) return false;
                 if (!object.Equals(this.PrimedExplosive, rhs.PrimedExplosive)) return false;
@@ -1745,12 +1745,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.HitBehavior, rhs.HitBehavior)) return false;
                 if (!object.Equals(this.Resistance, rhs.Resistance)) return false;
                 if (!object.Equals(this.Skill, rhs.Skill)) return false;
-                if (!object.Equals(this.WDMGUnknown4, rhs.WDMGUnknown4)) return false;
-                if (!object.Equals(this.WDMGUnknown5, rhs.WDMGUnknown5)) return false;
-                if (!object.Equals(this.WDMGUnknown6, rhs.WDMGUnknown6)) return false;
-                if (!object.Equals(this.WDMGUnknown7, rhs.WDMGUnknown7)) return false;
-                if (!object.Equals(this.WDMGUnknown8, rhs.WDMGUnknown8)) return false;
-                if (!object.Equals(this.WDMGUnknown9, rhs.WDMGUnknown9)) return false;
+                if (!object.Equals(this.LowGravityScaleControlPoint, rhs.LowGravityScaleControlPoint)) return false;
+                if (!object.Equals(this.LowGravityRangeMultMin, rhs.LowGravityRangeMultMin)) return false;
+                if (!object.Equals(this.LowGravityRangeMultMax, rhs.LowGravityRangeMultMax)) return false;
+                if (!object.Equals(this.HighGravityScaleControlPoint, rhs.HighGravityScaleControlPoint)) return false;
+                if (!object.Equals(this.HighGravityRangeMultMin, rhs.HighGravityRangeMultMin)) return false;
+                if (!object.Equals(this.HighGravityRangeMultMax, rhs.HighGravityRangeMultMax)) return false;
                 if (!object.Equals(this.CritChanceIncMult, rhs.CritChanceIncMult)) return false;
                 if (!object.Equals(this.DamageTypes, rhs.DamageTypes)) return false;
                 if (!object.Equals(this.FiringType, rhs.FiringType)) return false;
@@ -1763,26 +1763,26 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.BoltAction, rhs.BoltAction)) return false;
                 if (!object.Equals(this.DisableShellCaseEject, rhs.DisableShellCaseEject)) return false;
                 if (!object.Equals(this.ShotsPerSecond, rhs.ShotsPerSecond)) return false;
-                if (!object.Equals(this.WFIRUnknown7, rhs.WFIRUnknown7)) return false;
+                if (!object.Equals(this.WeaponAttackAnimationDuration, rhs.WeaponAttackAnimationDuration)) return false;
                 if (!object.Equals(this.OverrideRateOfFire, rhs.OverrideRateOfFire)) return false;
                 if (!object.Equals(this.TriggerThresholdPrimaryTrigger, rhs.TriggerThresholdPrimaryTrigger)) return false;
-                if (!object.Equals(this.WFIRUnknown10, rhs.WFIRUnknown10)) return false;
+                if (!object.Equals(this.OverrideTriggerThreshold, rhs.OverrideTriggerThreshold)) return false;
                 if (!object.Equals(this.TriggerThresholdSecondStage, rhs.TriggerThresholdSecondStage)) return false;
                 if (!object.Equals(this.HasStagedTrigger, rhs.HasStagedTrigger)) return false;
                 if (!object.Equals(this.HasDualTrigger, rhs.HasDualTrigger)) return false;
                 if (!object.Equals(this.BurstDelaySeconds, rhs.BurstDelaySeconds)) return false;
                 if (!object.Equals(this.NonPlayable, rhs.NonPlayable)) return false;
                 if (!object.Equals(this.PlayerOnly, rhs.PlayerOnly)) return false;
-                if (!object.Equals(this.WFLGUnknown1, rhs.WFLGUnknown1)) return false;
-                if (!object.Equals(this.WFLGUnknown2, rhs.WFLGUnknown2)) return false;
+                if (!object.Equals(this.PreventUseInNormalCombat, rhs.PreventUseInNormalCombat)) return false;
+                if (!object.Equals(this.IsSecondary, rhs.IsSecondary)) return false;
                 if (!object.Equals(this.CannotDrop, rhs.CannotDrop)) return false;
                 if (!object.Equals(this.MinorCrime, rhs.MinorCrime)) return false;
                 if (!object.Equals(this.NonHostile, rhs.NonHostile)) return false;
-                if (!object.Equals(this.WFLGUnknown3, rhs.WFLGUnknown3)) return false;
-                if (!object.Equals(this.WFLGUnknown4, rhs.WFLGUnknown4)) return false;
-                if (!object.Equals(this.WFLGUnknown5, rhs.WFLGUnknown5)) return false;
-                if (!object.Equals(this.WFLGUnknown6, rhs.WFLGUnknown6)) return false;
-                if (!object.Equals(this.WFLGUnknown7, rhs.WFLGUnknown7)) return false;
+                if (!object.Equals(this.Bound, rhs.Bound)) return false;
+                if (!object.Equals(this.NpcPrefersLongBursts, rhs.NpcPrefersLongBursts)) return false;
+                if (!object.Equals(this.NpcsOnlyFireWhenMagazineFull, rhs.NpcsOnlyFireWhenMagazineFull)) return false;
+                if (!object.Equals(this.UseSequentialFireNodes, rhs.UseSequentialFireNodes)) return false;
+                if (!object.Equals(this.UseRandomFireNodes, rhs.UseRandomFireNodes)) return false;
                 if (!object.Equals(this.AnimationType, rhs.AnimationType)) return false;
                 if (!object.Equals(this.BaseWeight, rhs.BaseWeight)) return false;
                 if (!object.Equals(this.BaseValue, rhs.BaseValue)) return false;
@@ -1800,13 +1800,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ConsumeAmmo, rhs.ConsumeAmmo)) return false;
                 if (!object.Equals(this.PowerBonus, rhs.PowerBonus)) return false;
                 if (!object.Equals(this.UsePower, rhs.UsePower)) return false;
-                if (!object.Equals(this.QNAMUnknown1, rhs.QNAMUnknown1)) return false;
-                if (!object.Equals(this.QNAMUnknown2, rhs.QNAMUnknown2)) return false;
-                if (!object.Equals(this.QNAMUnknown3, rhs.QNAMUnknown3)) return false;
-                if (!object.Equals(this.QNAMUnknown4, rhs.QNAMUnknown4)) return false;
-                if (!object.Equals(this.QNAMUnknown5, rhs.QNAMUnknown5)) return false;
+                if (!object.Equals(this.VariablePowerEnabled, rhs.VariablePowerEnabled)) return false;
+                if (!object.Equals(this.VariablePowerTransitionDuration, rhs.VariablePowerTransitionDuration)) return false;
+                if (!object.Equals(this.UseChargeOnlyInFocusMode, rhs.UseChargeOnlyInFocusMode)) return false;
+                if (!object.Equals(this.PowerIntensityCurve, rhs.PowerIntensityCurve)) return false;
+                if (!object.Equals(this.PowerDamageMultiplier, rhs.PowerDamageMultiplier)) return false;
                 if (!object.Equals(this.PowerConsumption, rhs.PowerConsumption)) return false;
-                if (!object.Equals(this.WRLOUnknown1, rhs.WRLOUnknown1)) return false;
+                if (!object.Equals(this.ReloadSeconds, rhs.ReloadSeconds)) return false;
                 if (!object.Equals(this.ReloadSpeed, rhs.ReloadSpeed)) return false;
                 if (!object.Equals(this.ReloadCharging, rhs.ReloadCharging)) return false;
                 if (!object.Equals(this.ReloadSingle, rhs.ReloadSingle)) return false;
@@ -1831,11 +1831,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ImpactDataSet, rhs.ImpactDataSet)) return false;
                 if (!object.Equals(this.ColorRemappingIndex, rhs.ColorRemappingIndex)) return false;
                 if (!object.Equals(this.ImageSpaceAdapter, rhs.ImageSpaceAdapter)) return false;
-                if (!object.Equals(this.WTRMUnknown1, rhs.WTRMUnknown1)) return false;
-                if (!object.Equals(this.WTRMUnknown2, rhs.WTRMUnknown2)) return false;
-                if (!object.Equals(this.WTRMUnknown3, rhs.WTRMUnknown3)) return false;
-                if (!object.Equals(this.WTRMUnknown4, rhs.WTRMUnknown4)) return false;
-                if (!object.Equals(this.WTRMUnknown5, rhs.WTRMUnknown5)) return false;
+                if (!object.Equals(this.AttackActionPointCost, rhs.AttackActionPointCost)) return false;
+                if (!object.Equals(this.OverrideDefaultCameraShake, rhs.OverrideDefaultCameraShake)) return false;
+                if (!object.Equals(this.FiringCameraShakeIntensity, rhs.FiringCameraShakeIntensity)) return false;
+                if (!object.Equals(this.FiringCameraShakeDuration, rhs.FiringCameraShakeDuration)) return false;
+                if (!object.Equals(this.AiFiringArc, rhs.AiFiringArc)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -1872,12 +1872,12 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.AimAssistTemplate);
                 hash.Add(this.AimOpticalSightModel);
                 hash.Add(this.MeleeAimAssistModel);
-                hash.Add(this.WAIMUnknown1);
-                hash.Add(this.WAIMUnknown2);
+                hash.Add(this.UpdateAdvancedAimInfo);
+                hash.Add(this.EnableOrientFireNodesToAimingDirection);
                 hash.Add(this.EnableMarkingTargets);
                 hash.Add(this.ReticleType);
-                hash.Add(this.WAIMUnknown3);
-                hash.Add(this.WAIMUnknown4);
+                hash.Add(this.InverseReticleSpread);
+                hash.Add(this.DisplayedReticleIgnoresPlayerMovement);
                 hash.Add(this.AmmoType);
                 hash.Add(this.AmmoCapacity);
                 hash.Add(this.AmmoList);
@@ -1885,7 +1885,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.OverrideShellCasing);
                 hash.Add(this.ProjectilesCount);
                 hash.Add(this.NpcsUseAmmo);
-                hash.Add(this.WAM2Unknown1);
+                hash.Add(this.NumberOfImpactSounds);
                 hash.Add(this.WAMM);
                 hash.Add(this.MeleeOrCreature);
                 hash.Add(this.PrimedExplosive);
@@ -1912,12 +1912,12 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.HitBehavior);
                 hash.Add(this.Resistance);
                 hash.Add(this.Skill);
-                hash.Add(this.WDMGUnknown4);
-                hash.Add(this.WDMGUnknown5);
-                hash.Add(this.WDMGUnknown6);
-                hash.Add(this.WDMGUnknown7);
-                hash.Add(this.WDMGUnknown8);
-                hash.Add(this.WDMGUnknown9);
+                hash.Add(this.LowGravityScaleControlPoint);
+                hash.Add(this.LowGravityRangeMultMin);
+                hash.Add(this.LowGravityRangeMultMax);
+                hash.Add(this.HighGravityScaleControlPoint);
+                hash.Add(this.HighGravityRangeMultMin);
+                hash.Add(this.HighGravityRangeMultMax);
                 hash.Add(this.CritChanceIncMult);
                 hash.Add(this.DamageTypes);
                 hash.Add(this.FiringType);
@@ -1930,26 +1930,26 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.BoltAction);
                 hash.Add(this.DisableShellCaseEject);
                 hash.Add(this.ShotsPerSecond);
-                hash.Add(this.WFIRUnknown7);
+                hash.Add(this.WeaponAttackAnimationDuration);
                 hash.Add(this.OverrideRateOfFire);
                 hash.Add(this.TriggerThresholdPrimaryTrigger);
-                hash.Add(this.WFIRUnknown10);
+                hash.Add(this.OverrideTriggerThreshold);
                 hash.Add(this.TriggerThresholdSecondStage);
                 hash.Add(this.HasStagedTrigger);
                 hash.Add(this.HasDualTrigger);
                 hash.Add(this.BurstDelaySeconds);
                 hash.Add(this.NonPlayable);
                 hash.Add(this.PlayerOnly);
-                hash.Add(this.WFLGUnknown1);
-                hash.Add(this.WFLGUnknown2);
+                hash.Add(this.PreventUseInNormalCombat);
+                hash.Add(this.IsSecondary);
                 hash.Add(this.CannotDrop);
                 hash.Add(this.MinorCrime);
                 hash.Add(this.NonHostile);
-                hash.Add(this.WFLGUnknown3);
-                hash.Add(this.WFLGUnknown4);
-                hash.Add(this.WFLGUnknown5);
-                hash.Add(this.WFLGUnknown6);
-                hash.Add(this.WFLGUnknown7);
+                hash.Add(this.Bound);
+                hash.Add(this.NpcPrefersLongBursts);
+                hash.Add(this.NpcsOnlyFireWhenMagazineFull);
+                hash.Add(this.UseSequentialFireNodes);
+                hash.Add(this.UseRandomFireNodes);
                 hash.Add(this.AnimationType);
                 hash.Add(this.BaseWeight);
                 hash.Add(this.BaseValue);
@@ -1967,13 +1967,13 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ConsumeAmmo);
                 hash.Add(this.PowerBonus);
                 hash.Add(this.UsePower);
-                hash.Add(this.QNAMUnknown1);
-                hash.Add(this.QNAMUnknown2);
-                hash.Add(this.QNAMUnknown3);
-                hash.Add(this.QNAMUnknown4);
-                hash.Add(this.QNAMUnknown5);
+                hash.Add(this.VariablePowerEnabled);
+                hash.Add(this.VariablePowerTransitionDuration);
+                hash.Add(this.UseChargeOnlyInFocusMode);
+                hash.Add(this.PowerIntensityCurve);
+                hash.Add(this.PowerDamageMultiplier);
                 hash.Add(this.PowerConsumption);
-                hash.Add(this.WRLOUnknown1);
+                hash.Add(this.ReloadSeconds);
                 hash.Add(this.ReloadSpeed);
                 hash.Add(this.ReloadCharging);
                 hash.Add(this.ReloadSingle);
@@ -1998,11 +1998,11 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ImpactDataSet);
                 hash.Add(this.ColorRemappingIndex);
                 hash.Add(this.ImageSpaceAdapter);
-                hash.Add(this.WTRMUnknown1);
-                hash.Add(this.WTRMUnknown2);
-                hash.Add(this.WTRMUnknown3);
-                hash.Add(this.WTRMUnknown4);
-                hash.Add(this.WTRMUnknown5);
+                hash.Add(this.AttackActionPointCost);
+                hash.Add(this.OverrideDefaultCameraShake);
+                hash.Add(this.FiringCameraShakeIntensity);
+                hash.Add(this.FiringCameraShakeDuration);
+                hash.Add(this.AiFiringArc);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -2114,12 +2114,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.AimAssistTemplate)) return false;
                 if (!eval(this.AimOpticalSightModel)) return false;
                 if (!eval(this.MeleeAimAssistModel)) return false;
-                if (!eval(this.WAIMUnknown1)) return false;
-                if (!eval(this.WAIMUnknown2)) return false;
+                if (!eval(this.UpdateAdvancedAimInfo)) return false;
+                if (!eval(this.EnableOrientFireNodesToAimingDirection)) return false;
                 if (!eval(this.EnableMarkingTargets)) return false;
                 if (!eval(this.ReticleType)) return false;
-                if (!eval(this.WAIMUnknown3)) return false;
-                if (!eval(this.WAIMUnknown4)) return false;
+                if (!eval(this.InverseReticleSpread)) return false;
+                if (!eval(this.DisplayedReticleIgnoresPlayerMovement)) return false;
                 if (!eval(this.AmmoType)) return false;
                 if (!eval(this.AmmoCapacity)) return false;
                 if (!eval(this.AmmoList)) return false;
@@ -2127,7 +2127,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.OverrideShellCasing)) return false;
                 if (!eval(this.ProjectilesCount)) return false;
                 if (!eval(this.NpcsUseAmmo)) return false;
-                if (!eval(this.WAM2Unknown1)) return false;
+                if (!eval(this.NumberOfImpactSounds)) return false;
                 if (!eval(this.WAMM)) return false;
                 if (MeleeOrCreature != null)
                 {
@@ -2182,12 +2182,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.HitBehavior)) return false;
                 if (!eval(this.Resistance)) return false;
                 if (!eval(this.Skill)) return false;
-                if (!eval(this.WDMGUnknown4)) return false;
-                if (!eval(this.WDMGUnknown5)) return false;
-                if (!eval(this.WDMGUnknown6)) return false;
-                if (!eval(this.WDMGUnknown7)) return false;
-                if (!eval(this.WDMGUnknown8)) return false;
-                if (!eval(this.WDMGUnknown9)) return false;
+                if (!eval(this.LowGravityScaleControlPoint)) return false;
+                if (!eval(this.LowGravityRangeMultMin)) return false;
+                if (!eval(this.LowGravityRangeMultMax)) return false;
+                if (!eval(this.HighGravityScaleControlPoint)) return false;
+                if (!eval(this.HighGravityRangeMultMin)) return false;
+                if (!eval(this.HighGravityRangeMultMax)) return false;
                 if (!eval(this.CritChanceIncMult)) return false;
                 if (this.DamageTypes != null)
                 {
@@ -2211,26 +2211,26 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.BoltAction)) return false;
                 if (!eval(this.DisableShellCaseEject)) return false;
                 if (!eval(this.ShotsPerSecond)) return false;
-                if (!eval(this.WFIRUnknown7)) return false;
+                if (!eval(this.WeaponAttackAnimationDuration)) return false;
                 if (!eval(this.OverrideRateOfFire)) return false;
                 if (!eval(this.TriggerThresholdPrimaryTrigger)) return false;
-                if (!eval(this.WFIRUnknown10)) return false;
+                if (!eval(this.OverrideTriggerThreshold)) return false;
                 if (!eval(this.TriggerThresholdSecondStage)) return false;
                 if (!eval(this.HasStagedTrigger)) return false;
                 if (!eval(this.HasDualTrigger)) return false;
                 if (!eval(this.BurstDelaySeconds)) return false;
                 if (!eval(this.NonPlayable)) return false;
                 if (!eval(this.PlayerOnly)) return false;
-                if (!eval(this.WFLGUnknown1)) return false;
-                if (!eval(this.WFLGUnknown2)) return false;
+                if (!eval(this.PreventUseInNormalCombat)) return false;
+                if (!eval(this.IsSecondary)) return false;
                 if (!eval(this.CannotDrop)) return false;
                 if (!eval(this.MinorCrime)) return false;
                 if (!eval(this.NonHostile)) return false;
-                if (!eval(this.WFLGUnknown3)) return false;
-                if (!eval(this.WFLGUnknown4)) return false;
-                if (!eval(this.WFLGUnknown5)) return false;
-                if (!eval(this.WFLGUnknown6)) return false;
-                if (!eval(this.WFLGUnknown7)) return false;
+                if (!eval(this.Bound)) return false;
+                if (!eval(this.NpcPrefersLongBursts)) return false;
+                if (!eval(this.NpcsOnlyFireWhenMagazineFull)) return false;
+                if (!eval(this.UseSequentialFireNodes)) return false;
+                if (!eval(this.UseRandomFireNodes)) return false;
                 if (!eval(this.AnimationType)) return false;
                 if (!eval(this.BaseWeight)) return false;
                 if (!eval(this.BaseValue)) return false;
@@ -2248,13 +2248,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.ConsumeAmmo)) return false;
                 if (!eval(this.PowerBonus)) return false;
                 if (!eval(this.UsePower)) return false;
-                if (!eval(this.QNAMUnknown1)) return false;
-                if (!eval(this.QNAMUnknown2)) return false;
-                if (!eval(this.QNAMUnknown3)) return false;
-                if (!eval(this.QNAMUnknown4)) return false;
-                if (!eval(this.QNAMUnknown5)) return false;
+                if (!eval(this.VariablePowerEnabled)) return false;
+                if (!eval(this.VariablePowerTransitionDuration)) return false;
+                if (!eval(this.UseChargeOnlyInFocusMode)) return false;
+                if (!eval(this.PowerIntensityCurve)) return false;
+                if (!eval(this.PowerDamageMultiplier)) return false;
                 if (!eval(this.PowerConsumption)) return false;
-                if (!eval(this.WRLOUnknown1)) return false;
+                if (!eval(this.ReloadSeconds)) return false;
                 if (!eval(this.ReloadSpeed)) return false;
                 if (!eval(this.ReloadCharging)) return false;
                 if (!eval(this.ReloadSingle)) return false;
@@ -2283,11 +2283,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.ImpactDataSet)) return false;
                 if (!eval(this.ColorRemappingIndex)) return false;
                 if (!eval(this.ImageSpaceAdapter)) return false;
-                if (!eval(this.WTRMUnknown1)) return false;
-                if (!eval(this.WTRMUnknown2)) return false;
-                if (!eval(this.WTRMUnknown3)) return false;
-                if (!eval(this.WTRMUnknown4)) return false;
-                if (!eval(this.WTRMUnknown5)) return false;
+                if (!eval(this.AttackActionPointCost)) return false;
+                if (!eval(this.OverrideDefaultCameraShake)) return false;
+                if (!eval(this.FiringCameraShakeIntensity)) return false;
+                if (!eval(this.FiringCameraShakeDuration)) return false;
+                if (!eval(this.AiFiringArc)) return false;
                 return true;
             }
             #endregion
@@ -2397,12 +2397,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.AimAssistTemplate)) return true;
                 if (eval(this.AimOpticalSightModel)) return true;
                 if (eval(this.MeleeAimAssistModel)) return true;
-                if (eval(this.WAIMUnknown1)) return true;
-                if (eval(this.WAIMUnknown2)) return true;
+                if (eval(this.UpdateAdvancedAimInfo)) return true;
+                if (eval(this.EnableOrientFireNodesToAimingDirection)) return true;
                 if (eval(this.EnableMarkingTargets)) return true;
                 if (eval(this.ReticleType)) return true;
-                if (eval(this.WAIMUnknown3)) return true;
-                if (eval(this.WAIMUnknown4)) return true;
+                if (eval(this.InverseReticleSpread)) return true;
+                if (eval(this.DisplayedReticleIgnoresPlayerMovement)) return true;
                 if (eval(this.AmmoType)) return true;
                 if (eval(this.AmmoCapacity)) return true;
                 if (eval(this.AmmoList)) return true;
@@ -2410,7 +2410,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.OverrideShellCasing)) return true;
                 if (eval(this.ProjectilesCount)) return true;
                 if (eval(this.NpcsUseAmmo)) return true;
-                if (eval(this.WAM2Unknown1)) return true;
+                if (eval(this.NumberOfImpactSounds)) return true;
                 if (eval(this.WAMM)) return true;
                 if (MeleeOrCreature != null)
                 {
@@ -2465,12 +2465,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.HitBehavior)) return true;
                 if (eval(this.Resistance)) return true;
                 if (eval(this.Skill)) return true;
-                if (eval(this.WDMGUnknown4)) return true;
-                if (eval(this.WDMGUnknown5)) return true;
-                if (eval(this.WDMGUnknown6)) return true;
-                if (eval(this.WDMGUnknown7)) return true;
-                if (eval(this.WDMGUnknown8)) return true;
-                if (eval(this.WDMGUnknown9)) return true;
+                if (eval(this.LowGravityScaleControlPoint)) return true;
+                if (eval(this.LowGravityRangeMultMin)) return true;
+                if (eval(this.LowGravityRangeMultMax)) return true;
+                if (eval(this.HighGravityScaleControlPoint)) return true;
+                if (eval(this.HighGravityRangeMultMin)) return true;
+                if (eval(this.HighGravityRangeMultMax)) return true;
                 if (eval(this.CritChanceIncMult)) return true;
                 if (this.DamageTypes != null)
                 {
@@ -2494,26 +2494,26 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.BoltAction)) return true;
                 if (eval(this.DisableShellCaseEject)) return true;
                 if (eval(this.ShotsPerSecond)) return true;
-                if (eval(this.WFIRUnknown7)) return true;
+                if (eval(this.WeaponAttackAnimationDuration)) return true;
                 if (eval(this.OverrideRateOfFire)) return true;
                 if (eval(this.TriggerThresholdPrimaryTrigger)) return true;
-                if (eval(this.WFIRUnknown10)) return true;
+                if (eval(this.OverrideTriggerThreshold)) return true;
                 if (eval(this.TriggerThresholdSecondStage)) return true;
                 if (eval(this.HasStagedTrigger)) return true;
                 if (eval(this.HasDualTrigger)) return true;
                 if (eval(this.BurstDelaySeconds)) return true;
                 if (eval(this.NonPlayable)) return true;
                 if (eval(this.PlayerOnly)) return true;
-                if (eval(this.WFLGUnknown1)) return true;
-                if (eval(this.WFLGUnknown2)) return true;
+                if (eval(this.PreventUseInNormalCombat)) return true;
+                if (eval(this.IsSecondary)) return true;
                 if (eval(this.CannotDrop)) return true;
                 if (eval(this.MinorCrime)) return true;
                 if (eval(this.NonHostile)) return true;
-                if (eval(this.WFLGUnknown3)) return true;
-                if (eval(this.WFLGUnknown4)) return true;
-                if (eval(this.WFLGUnknown5)) return true;
-                if (eval(this.WFLGUnknown6)) return true;
-                if (eval(this.WFLGUnknown7)) return true;
+                if (eval(this.Bound)) return true;
+                if (eval(this.NpcPrefersLongBursts)) return true;
+                if (eval(this.NpcsOnlyFireWhenMagazineFull)) return true;
+                if (eval(this.UseSequentialFireNodes)) return true;
+                if (eval(this.UseRandomFireNodes)) return true;
                 if (eval(this.AnimationType)) return true;
                 if (eval(this.BaseWeight)) return true;
                 if (eval(this.BaseValue)) return true;
@@ -2531,13 +2531,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.ConsumeAmmo)) return true;
                 if (eval(this.PowerBonus)) return true;
                 if (eval(this.UsePower)) return true;
-                if (eval(this.QNAMUnknown1)) return true;
-                if (eval(this.QNAMUnknown2)) return true;
-                if (eval(this.QNAMUnknown3)) return true;
-                if (eval(this.QNAMUnknown4)) return true;
-                if (eval(this.QNAMUnknown5)) return true;
+                if (eval(this.VariablePowerEnabled)) return true;
+                if (eval(this.VariablePowerTransitionDuration)) return true;
+                if (eval(this.UseChargeOnlyInFocusMode)) return true;
+                if (eval(this.PowerIntensityCurve)) return true;
+                if (eval(this.PowerDamageMultiplier)) return true;
                 if (eval(this.PowerConsumption)) return true;
-                if (eval(this.WRLOUnknown1)) return true;
+                if (eval(this.ReloadSeconds)) return true;
                 if (eval(this.ReloadSpeed)) return true;
                 if (eval(this.ReloadCharging)) return true;
                 if (eval(this.ReloadSingle)) return true;
@@ -2566,11 +2566,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.ImpactDataSet)) return true;
                 if (eval(this.ColorRemappingIndex)) return true;
                 if (eval(this.ImageSpaceAdapter)) return true;
-                if (eval(this.WTRMUnknown1)) return true;
-                if (eval(this.WTRMUnknown2)) return true;
-                if (eval(this.WTRMUnknown3)) return true;
-                if (eval(this.WTRMUnknown4)) return true;
-                if (eval(this.WTRMUnknown5)) return true;
+                if (eval(this.AttackActionPointCost)) return true;
+                if (eval(this.OverrideDefaultCameraShake)) return true;
+                if (eval(this.FiringCameraShakeIntensity)) return true;
+                if (eval(this.FiringCameraShakeDuration)) return true;
+                if (eval(this.AiFiringArc)) return true;
                 return false;
             }
             #endregion
@@ -2671,12 +2671,12 @@ namespace Mutagen.Bethesda.Starfield
                 obj.AimAssistTemplate = eval(this.AimAssistTemplate);
                 obj.AimOpticalSightModel = eval(this.AimOpticalSightModel);
                 obj.MeleeAimAssistModel = eval(this.MeleeAimAssistModel);
-                obj.WAIMUnknown1 = eval(this.WAIMUnknown1);
-                obj.WAIMUnknown2 = eval(this.WAIMUnknown2);
+                obj.UpdateAdvancedAimInfo = eval(this.UpdateAdvancedAimInfo);
+                obj.EnableOrientFireNodesToAimingDirection = eval(this.EnableOrientFireNodesToAimingDirection);
                 obj.EnableMarkingTargets = eval(this.EnableMarkingTargets);
                 obj.ReticleType = eval(this.ReticleType);
-                obj.WAIMUnknown3 = eval(this.WAIMUnknown3);
-                obj.WAIMUnknown4 = eval(this.WAIMUnknown4);
+                obj.InverseReticleSpread = eval(this.InverseReticleSpread);
+                obj.DisplayedReticleIgnoresPlayerMovement = eval(this.DisplayedReticleIgnoresPlayerMovement);
                 obj.AmmoType = eval(this.AmmoType);
                 obj.AmmoCapacity = eval(this.AmmoCapacity);
                 obj.AmmoList = eval(this.AmmoList);
@@ -2684,7 +2684,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.OverrideShellCasing = eval(this.OverrideShellCasing);
                 obj.ProjectilesCount = eval(this.ProjectilesCount);
                 obj.NpcsUseAmmo = eval(this.NpcsUseAmmo);
-                obj.WAM2Unknown1 = eval(this.WAM2Unknown1);
+                obj.NumberOfImpactSounds = eval(this.NumberOfImpactSounds);
                 obj.WAMM = eval(this.WAMM);
                 obj.MeleeOrCreature = this.MeleeOrCreature == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.MeleeOrCreature.Overall), this.MeleeOrCreature.Specific?.Translate(eval));
                 obj.PrimedExplosive = this.PrimedExplosive == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.PrimedExplosive.Overall), this.PrimedExplosive.Specific?.Translate(eval));
@@ -2711,12 +2711,12 @@ namespace Mutagen.Bethesda.Starfield
                 obj.HitBehavior = eval(this.HitBehavior);
                 obj.Resistance = eval(this.Resistance);
                 obj.Skill = eval(this.Skill);
-                obj.WDMGUnknown4 = eval(this.WDMGUnknown4);
-                obj.WDMGUnknown5 = eval(this.WDMGUnknown5);
-                obj.WDMGUnknown6 = eval(this.WDMGUnknown6);
-                obj.WDMGUnknown7 = eval(this.WDMGUnknown7);
-                obj.WDMGUnknown8 = eval(this.WDMGUnknown8);
-                obj.WDMGUnknown9 = eval(this.WDMGUnknown9);
+                obj.LowGravityScaleControlPoint = eval(this.LowGravityScaleControlPoint);
+                obj.LowGravityRangeMultMin = eval(this.LowGravityRangeMultMin);
+                obj.LowGravityRangeMultMax = eval(this.LowGravityRangeMultMax);
+                obj.HighGravityScaleControlPoint = eval(this.HighGravityScaleControlPoint);
+                obj.HighGravityRangeMultMin = eval(this.HighGravityRangeMultMin);
+                obj.HighGravityRangeMultMax = eval(this.HighGravityRangeMultMax);
                 obj.CritChanceIncMult = eval(this.CritChanceIncMult);
                 if (DamageTypes != null)
                 {
@@ -2743,26 +2743,26 @@ namespace Mutagen.Bethesda.Starfield
                 obj.BoltAction = eval(this.BoltAction);
                 obj.DisableShellCaseEject = eval(this.DisableShellCaseEject);
                 obj.ShotsPerSecond = eval(this.ShotsPerSecond);
-                obj.WFIRUnknown7 = eval(this.WFIRUnknown7);
+                obj.WeaponAttackAnimationDuration = eval(this.WeaponAttackAnimationDuration);
                 obj.OverrideRateOfFire = eval(this.OverrideRateOfFire);
                 obj.TriggerThresholdPrimaryTrigger = eval(this.TriggerThresholdPrimaryTrigger);
-                obj.WFIRUnknown10 = eval(this.WFIRUnknown10);
+                obj.OverrideTriggerThreshold = eval(this.OverrideTriggerThreshold);
                 obj.TriggerThresholdSecondStage = eval(this.TriggerThresholdSecondStage);
                 obj.HasStagedTrigger = eval(this.HasStagedTrigger);
                 obj.HasDualTrigger = eval(this.HasDualTrigger);
                 obj.BurstDelaySeconds = eval(this.BurstDelaySeconds);
                 obj.NonPlayable = eval(this.NonPlayable);
                 obj.PlayerOnly = eval(this.PlayerOnly);
-                obj.WFLGUnknown1 = eval(this.WFLGUnknown1);
-                obj.WFLGUnknown2 = eval(this.WFLGUnknown2);
+                obj.PreventUseInNormalCombat = eval(this.PreventUseInNormalCombat);
+                obj.IsSecondary = eval(this.IsSecondary);
                 obj.CannotDrop = eval(this.CannotDrop);
                 obj.MinorCrime = eval(this.MinorCrime);
                 obj.NonHostile = eval(this.NonHostile);
-                obj.WFLGUnknown3 = eval(this.WFLGUnknown3);
-                obj.WFLGUnknown4 = eval(this.WFLGUnknown4);
-                obj.WFLGUnknown5 = eval(this.WFLGUnknown5);
-                obj.WFLGUnknown6 = eval(this.WFLGUnknown6);
-                obj.WFLGUnknown7 = eval(this.WFLGUnknown7);
+                obj.Bound = eval(this.Bound);
+                obj.NpcPrefersLongBursts = eval(this.NpcPrefersLongBursts);
+                obj.NpcsOnlyFireWhenMagazineFull = eval(this.NpcsOnlyFireWhenMagazineFull);
+                obj.UseSequentialFireNodes = eval(this.UseSequentialFireNodes);
+                obj.UseRandomFireNodes = eval(this.UseRandomFireNodes);
                 obj.AnimationType = eval(this.AnimationType);
                 obj.BaseWeight = eval(this.BaseWeight);
                 obj.BaseValue = eval(this.BaseValue);
@@ -2780,13 +2780,13 @@ namespace Mutagen.Bethesda.Starfield
                 obj.ConsumeAmmo = eval(this.ConsumeAmmo);
                 obj.PowerBonus = eval(this.PowerBonus);
                 obj.UsePower = eval(this.UsePower);
-                obj.QNAMUnknown1 = eval(this.QNAMUnknown1);
-                obj.QNAMUnknown2 = eval(this.QNAMUnknown2);
-                obj.QNAMUnknown3 = eval(this.QNAMUnknown3);
-                obj.QNAMUnknown4 = eval(this.QNAMUnknown4);
-                obj.QNAMUnknown5 = eval(this.QNAMUnknown5);
+                obj.VariablePowerEnabled = eval(this.VariablePowerEnabled);
+                obj.VariablePowerTransitionDuration = eval(this.VariablePowerTransitionDuration);
+                obj.UseChargeOnlyInFocusMode = eval(this.UseChargeOnlyInFocusMode);
+                obj.PowerIntensityCurve = eval(this.PowerIntensityCurve);
+                obj.PowerDamageMultiplier = eval(this.PowerDamageMultiplier);
                 obj.PowerConsumption = eval(this.PowerConsumption);
-                obj.WRLOUnknown1 = eval(this.WRLOUnknown1);
+                obj.ReloadSeconds = eval(this.ReloadSeconds);
                 obj.ReloadSpeed = eval(this.ReloadSpeed);
                 obj.ReloadCharging = eval(this.ReloadCharging);
                 obj.ReloadSingle = eval(this.ReloadSingle);
@@ -2811,11 +2811,11 @@ namespace Mutagen.Bethesda.Starfield
                 obj.ImpactDataSet = eval(this.ImpactDataSet);
                 obj.ColorRemappingIndex = eval(this.ColorRemappingIndex);
                 obj.ImageSpaceAdapter = eval(this.ImageSpaceAdapter);
-                obj.WTRMUnknown1 = eval(this.WTRMUnknown1);
-                obj.WTRMUnknown2 = eval(this.WTRMUnknown2);
-                obj.WTRMUnknown3 = eval(this.WTRMUnknown3);
-                obj.WTRMUnknown4 = eval(this.WTRMUnknown4);
-                obj.WTRMUnknown5 = eval(this.WTRMUnknown5);
+                obj.AttackActionPointCost = eval(this.AttackActionPointCost);
+                obj.OverrideDefaultCameraShake = eval(this.OverrideDefaultCameraShake);
+                obj.FiringCameraShakeIntensity = eval(this.FiringCameraShakeIntensity);
+                obj.FiringCameraShakeDuration = eval(this.FiringCameraShakeDuration);
+                obj.AiFiringArc = eval(this.AiFiringArc);
             }
             #endregion
 
@@ -3022,13 +3022,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(MeleeAimAssistModel, "MeleeAimAssistModel");
                     }
-                    if (printMask?.WAIMUnknown1 ?? true)
+                    if (printMask?.UpdateAdvancedAimInfo ?? true)
                     {
-                        sb.AppendItem(WAIMUnknown1, "WAIMUnknown1");
+                        sb.AppendItem(UpdateAdvancedAimInfo, "UpdateAdvancedAimInfo");
                     }
-                    if (printMask?.WAIMUnknown2 ?? true)
+                    if (printMask?.EnableOrientFireNodesToAimingDirection ?? true)
                     {
-                        sb.AppendItem(WAIMUnknown2, "WAIMUnknown2");
+                        sb.AppendItem(EnableOrientFireNodesToAimingDirection, "EnableOrientFireNodesToAimingDirection");
                     }
                     if (printMask?.EnableMarkingTargets ?? true)
                     {
@@ -3038,13 +3038,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ReticleType, "ReticleType");
                     }
-                    if (printMask?.WAIMUnknown3 ?? true)
+                    if (printMask?.InverseReticleSpread ?? true)
                     {
-                        sb.AppendItem(WAIMUnknown3, "WAIMUnknown3");
+                        sb.AppendItem(InverseReticleSpread, "InverseReticleSpread");
                     }
-                    if (printMask?.WAIMUnknown4 ?? true)
+                    if (printMask?.DisplayedReticleIgnoresPlayerMovement ?? true)
                     {
-                        sb.AppendItem(WAIMUnknown4, "WAIMUnknown4");
+                        sb.AppendItem(DisplayedReticleIgnoresPlayerMovement, "DisplayedReticleIgnoresPlayerMovement");
                     }
                     if (printMask?.AmmoType ?? true)
                     {
@@ -3074,9 +3074,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(NpcsUseAmmo, "NpcsUseAmmo");
                     }
-                    if (printMask?.WAM2Unknown1 ?? true)
+                    if (printMask?.NumberOfImpactSounds ?? true)
                     {
-                        sb.AppendItem(WAM2Unknown1, "WAM2Unknown1");
+                        sb.AppendItem(NumberOfImpactSounds, "NumberOfImpactSounds");
                     }
                     if (printMask?.WAMM ?? true)
                     {
@@ -3182,29 +3182,29 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Skill, "Skill");
                     }
-                    if (printMask?.WDMGUnknown4 ?? true)
+                    if (printMask?.LowGravityScaleControlPoint ?? true)
                     {
-                        sb.AppendItem(WDMGUnknown4, "WDMGUnknown4");
+                        sb.AppendItem(LowGravityScaleControlPoint, "LowGravityScaleControlPoint");
                     }
-                    if (printMask?.WDMGUnknown5 ?? true)
+                    if (printMask?.LowGravityRangeMultMin ?? true)
                     {
-                        sb.AppendItem(WDMGUnknown5, "WDMGUnknown5");
+                        sb.AppendItem(LowGravityRangeMultMin, "LowGravityRangeMultMin");
                     }
-                    if (printMask?.WDMGUnknown6 ?? true)
+                    if (printMask?.LowGravityRangeMultMax ?? true)
                     {
-                        sb.AppendItem(WDMGUnknown6, "WDMGUnknown6");
+                        sb.AppendItem(LowGravityRangeMultMax, "LowGravityRangeMultMax");
                     }
-                    if (printMask?.WDMGUnknown7 ?? true)
+                    if (printMask?.HighGravityScaleControlPoint ?? true)
                     {
-                        sb.AppendItem(WDMGUnknown7, "WDMGUnknown7");
+                        sb.AppendItem(HighGravityScaleControlPoint, "HighGravityScaleControlPoint");
                     }
-                    if (printMask?.WDMGUnknown8 ?? true)
+                    if (printMask?.HighGravityRangeMultMin ?? true)
                     {
-                        sb.AppendItem(WDMGUnknown8, "WDMGUnknown8");
+                        sb.AppendItem(HighGravityRangeMultMin, "HighGravityRangeMultMin");
                     }
-                    if (printMask?.WDMGUnknown9 ?? true)
+                    if (printMask?.HighGravityRangeMultMax ?? true)
                     {
-                        sb.AppendItem(WDMGUnknown9, "WDMGUnknown9");
+                        sb.AppendItem(HighGravityRangeMultMax, "HighGravityRangeMultMax");
                     }
                     if (printMask?.CritChanceIncMult ?? true)
                     {
@@ -3269,9 +3269,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ShotsPerSecond, "ShotsPerSecond");
                     }
-                    if (printMask?.WFIRUnknown7 ?? true)
+                    if (printMask?.WeaponAttackAnimationDuration ?? true)
                     {
-                        sb.AppendItem(WFIRUnknown7, "WFIRUnknown7");
+                        sb.AppendItem(WeaponAttackAnimationDuration, "WeaponAttackAnimationDuration");
                     }
                     if (printMask?.OverrideRateOfFire ?? true)
                     {
@@ -3281,9 +3281,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(TriggerThresholdPrimaryTrigger, "TriggerThresholdPrimaryTrigger");
                     }
-                    if (printMask?.WFIRUnknown10 ?? true)
+                    if (printMask?.OverrideTriggerThreshold ?? true)
                     {
-                        sb.AppendItem(WFIRUnknown10, "WFIRUnknown10");
+                        sb.AppendItem(OverrideTriggerThreshold, "OverrideTriggerThreshold");
                     }
                     if (printMask?.TriggerThresholdSecondStage ?? true)
                     {
@@ -3309,13 +3309,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(PlayerOnly, "PlayerOnly");
                     }
-                    if (printMask?.WFLGUnknown1 ?? true)
+                    if (printMask?.PreventUseInNormalCombat ?? true)
                     {
-                        sb.AppendItem(WFLGUnknown1, "WFLGUnknown1");
+                        sb.AppendItem(PreventUseInNormalCombat, "PreventUseInNormalCombat");
                     }
-                    if (printMask?.WFLGUnknown2 ?? true)
+                    if (printMask?.IsSecondary ?? true)
                     {
-                        sb.AppendItem(WFLGUnknown2, "WFLGUnknown2");
+                        sb.AppendItem(IsSecondary, "IsSecondary");
                     }
                     if (printMask?.CannotDrop ?? true)
                     {
@@ -3329,25 +3329,25 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(NonHostile, "NonHostile");
                     }
-                    if (printMask?.WFLGUnknown3 ?? true)
+                    if (printMask?.Bound ?? true)
                     {
-                        sb.AppendItem(WFLGUnknown3, "WFLGUnknown3");
+                        sb.AppendItem(Bound, "Bound");
                     }
-                    if (printMask?.WFLGUnknown4 ?? true)
+                    if (printMask?.NpcPrefersLongBursts ?? true)
                     {
-                        sb.AppendItem(WFLGUnknown4, "WFLGUnknown4");
+                        sb.AppendItem(NpcPrefersLongBursts, "NpcPrefersLongBursts");
                     }
-                    if (printMask?.WFLGUnknown5 ?? true)
+                    if (printMask?.NpcsOnlyFireWhenMagazineFull ?? true)
                     {
-                        sb.AppendItem(WFLGUnknown5, "WFLGUnknown5");
+                        sb.AppendItem(NpcsOnlyFireWhenMagazineFull, "NpcsOnlyFireWhenMagazineFull");
                     }
-                    if (printMask?.WFLGUnknown6 ?? true)
+                    if (printMask?.UseSequentialFireNodes ?? true)
                     {
-                        sb.AppendItem(WFLGUnknown6, "WFLGUnknown6");
+                        sb.AppendItem(UseSequentialFireNodes, "UseSequentialFireNodes");
                     }
-                    if (printMask?.WFLGUnknown7 ?? true)
+                    if (printMask?.UseRandomFireNodes ?? true)
                     {
-                        sb.AppendItem(WFLGUnknown7, "WFLGUnknown7");
+                        sb.AppendItem(UseRandomFireNodes, "UseRandomFireNodes");
                     }
                     if (printMask?.AnimationType ?? true)
                     {
@@ -3417,33 +3417,33 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(UsePower, "UsePower");
                     }
-                    if (printMask?.QNAMUnknown1 ?? true)
+                    if (printMask?.VariablePowerEnabled ?? true)
                     {
-                        sb.AppendItem(QNAMUnknown1, "QNAMUnknown1");
+                        sb.AppendItem(VariablePowerEnabled, "VariablePowerEnabled");
                     }
-                    if (printMask?.QNAMUnknown2 ?? true)
+                    if (printMask?.VariablePowerTransitionDuration ?? true)
                     {
-                        sb.AppendItem(QNAMUnknown2, "QNAMUnknown2");
+                        sb.AppendItem(VariablePowerTransitionDuration, "VariablePowerTransitionDuration");
                     }
-                    if (printMask?.QNAMUnknown3 ?? true)
+                    if (printMask?.UseChargeOnlyInFocusMode ?? true)
                     {
-                        sb.AppendItem(QNAMUnknown3, "QNAMUnknown3");
+                        sb.AppendItem(UseChargeOnlyInFocusMode, "UseChargeOnlyInFocusMode");
                     }
-                    if (printMask?.QNAMUnknown4 ?? true)
+                    if (printMask?.PowerIntensityCurve ?? true)
                     {
-                        sb.AppendItem(QNAMUnknown4, "QNAMUnknown4");
+                        sb.AppendItem(PowerIntensityCurve, "PowerIntensityCurve");
                     }
-                    if (printMask?.QNAMUnknown5 ?? true)
+                    if (printMask?.PowerDamageMultiplier ?? true)
                     {
-                        sb.AppendItem(QNAMUnknown5, "QNAMUnknown5");
+                        sb.AppendItem(PowerDamageMultiplier, "PowerDamageMultiplier");
                     }
                     if (printMask?.PowerConsumption ?? true)
                     {
                         sb.AppendItem(PowerConsumption, "PowerConsumption");
                     }
-                    if (printMask?.WRLOUnknown1 ?? true)
+                    if (printMask?.ReloadSeconds ?? true)
                     {
-                        sb.AppendItem(WRLOUnknown1, "WRLOUnknown1");
+                        sb.AppendItem(ReloadSeconds, "ReloadSeconds");
                     }
                     if (printMask?.ReloadSpeed ?? true)
                     {
@@ -3541,25 +3541,25 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ImageSpaceAdapter, "ImageSpaceAdapter");
                     }
-                    if (printMask?.WTRMUnknown1 ?? true)
+                    if (printMask?.AttackActionPointCost ?? true)
                     {
-                        sb.AppendItem(WTRMUnknown1, "WTRMUnknown1");
+                        sb.AppendItem(AttackActionPointCost, "AttackActionPointCost");
                     }
-                    if (printMask?.WTRMUnknown2 ?? true)
+                    if (printMask?.OverrideDefaultCameraShake ?? true)
                     {
-                        sb.AppendItem(WTRMUnknown2, "WTRMUnknown2");
+                        sb.AppendItem(OverrideDefaultCameraShake, "OverrideDefaultCameraShake");
                     }
-                    if (printMask?.WTRMUnknown3 ?? true)
+                    if (printMask?.FiringCameraShakeIntensity ?? true)
                     {
-                        sb.AppendItem(WTRMUnknown3, "WTRMUnknown3");
+                        sb.AppendItem(FiringCameraShakeIntensity, "FiringCameraShakeIntensity");
                     }
-                    if (printMask?.WTRMUnknown4 ?? true)
+                    if (printMask?.FiringCameraShakeDuration ?? true)
                     {
-                        sb.AppendItem(WTRMUnknown4, "WTRMUnknown4");
+                        sb.AppendItem(FiringCameraShakeDuration, "FiringCameraShakeDuration");
                     }
-                    if (printMask?.WTRMUnknown5 ?? true)
+                    if (printMask?.AiFiringArc ?? true)
                     {
-                        sb.AppendItem(WTRMUnknown5, "WTRMUnknown5");
+                        sb.AppendItem(AiFiringArc, "AiFiringArc");
                     }
                 }
             }
@@ -3603,12 +3603,12 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? AimAssistTemplate;
             public Exception? AimOpticalSightModel;
             public Exception? MeleeAimAssistModel;
-            public Exception? WAIMUnknown1;
-            public Exception? WAIMUnknown2;
+            public Exception? UpdateAdvancedAimInfo;
+            public Exception? EnableOrientFireNodesToAimingDirection;
             public Exception? EnableMarkingTargets;
             public Exception? ReticleType;
-            public Exception? WAIMUnknown3;
-            public Exception? WAIMUnknown4;
+            public Exception? InverseReticleSpread;
+            public Exception? DisplayedReticleIgnoresPlayerMovement;
             public Exception? AmmoType;
             public Exception? AmmoCapacity;
             public Exception? AmmoList;
@@ -3616,7 +3616,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? OverrideShellCasing;
             public Exception? ProjectilesCount;
             public Exception? NpcsUseAmmo;
-            public Exception? WAM2Unknown1;
+            public Exception? NumberOfImpactSounds;
             public Exception? WAMM;
             public MaskItem<Exception?, SoundReference.ErrorMask?>? MeleeOrCreature;
             public MaskItem<Exception?, SoundReference.ErrorMask?>? PrimedExplosive;
@@ -3643,12 +3643,12 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? HitBehavior;
             public Exception? Resistance;
             public Exception? Skill;
-            public Exception? WDMGUnknown4;
-            public Exception? WDMGUnknown5;
-            public Exception? WDMGUnknown6;
-            public Exception? WDMGUnknown7;
-            public Exception? WDMGUnknown8;
-            public Exception? WDMGUnknown9;
+            public Exception? LowGravityScaleControlPoint;
+            public Exception? LowGravityRangeMultMin;
+            public Exception? LowGravityRangeMultMax;
+            public Exception? HighGravityScaleControlPoint;
+            public Exception? HighGravityRangeMultMin;
+            public Exception? HighGravityRangeMultMax;
             public Exception? CritChanceIncMult;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WeaponDamageType.ErrorMask?>>?>? DamageTypes;
             public Exception? FiringType;
@@ -3661,26 +3661,26 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? BoltAction;
             public Exception? DisableShellCaseEject;
             public Exception? ShotsPerSecond;
-            public Exception? WFIRUnknown7;
+            public Exception? WeaponAttackAnimationDuration;
             public Exception? OverrideRateOfFire;
             public Exception? TriggerThresholdPrimaryTrigger;
-            public Exception? WFIRUnknown10;
+            public Exception? OverrideTriggerThreshold;
             public Exception? TriggerThresholdSecondStage;
             public Exception? HasStagedTrigger;
             public Exception? HasDualTrigger;
             public Exception? BurstDelaySeconds;
             public Exception? NonPlayable;
             public Exception? PlayerOnly;
-            public Exception? WFLGUnknown1;
-            public Exception? WFLGUnknown2;
+            public Exception? PreventUseInNormalCombat;
+            public Exception? IsSecondary;
             public Exception? CannotDrop;
             public Exception? MinorCrime;
             public Exception? NonHostile;
-            public Exception? WFLGUnknown3;
-            public Exception? WFLGUnknown4;
-            public Exception? WFLGUnknown5;
-            public Exception? WFLGUnknown6;
-            public Exception? WFLGUnknown7;
+            public Exception? Bound;
+            public Exception? NpcPrefersLongBursts;
+            public Exception? NpcsOnlyFireWhenMagazineFull;
+            public Exception? UseSequentialFireNodes;
+            public Exception? UseRandomFireNodes;
             public Exception? AnimationType;
             public Exception? BaseWeight;
             public Exception? BaseValue;
@@ -3698,13 +3698,13 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? ConsumeAmmo;
             public Exception? PowerBonus;
             public Exception? UsePower;
-            public Exception? QNAMUnknown1;
-            public Exception? QNAMUnknown2;
-            public Exception? QNAMUnknown3;
-            public Exception? QNAMUnknown4;
-            public Exception? QNAMUnknown5;
+            public Exception? VariablePowerEnabled;
+            public Exception? VariablePowerTransitionDuration;
+            public Exception? UseChargeOnlyInFocusMode;
+            public Exception? PowerIntensityCurve;
+            public Exception? PowerDamageMultiplier;
             public Exception? PowerConsumption;
-            public Exception? WRLOUnknown1;
+            public Exception? ReloadSeconds;
             public Exception? ReloadSpeed;
             public Exception? ReloadCharging;
             public Exception? ReloadSingle;
@@ -3729,11 +3729,11 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? ImpactDataSet;
             public Exception? ColorRemappingIndex;
             public Exception? ImageSpaceAdapter;
-            public Exception? WTRMUnknown1;
-            public Exception? WTRMUnknown2;
-            public Exception? WTRMUnknown3;
-            public Exception? WTRMUnknown4;
-            public Exception? WTRMUnknown5;
+            public Exception? AttackActionPointCost;
+            public Exception? OverrideDefaultCameraShake;
+            public Exception? FiringCameraShakeIntensity;
+            public Exception? FiringCameraShakeDuration;
+            public Exception? AiFiringArc;
             #endregion
 
             #region IErrorMask
@@ -3804,18 +3804,18 @@ namespace Mutagen.Bethesda.Starfield
                         return AimOpticalSightModel;
                     case Weapon_FieldIndex.MeleeAimAssistModel:
                         return MeleeAimAssistModel;
-                    case Weapon_FieldIndex.WAIMUnknown1:
-                        return WAIMUnknown1;
-                    case Weapon_FieldIndex.WAIMUnknown2:
-                        return WAIMUnknown2;
+                    case Weapon_FieldIndex.UpdateAdvancedAimInfo:
+                        return UpdateAdvancedAimInfo;
+                    case Weapon_FieldIndex.EnableOrientFireNodesToAimingDirection:
+                        return EnableOrientFireNodesToAimingDirection;
                     case Weapon_FieldIndex.EnableMarkingTargets:
                         return EnableMarkingTargets;
                     case Weapon_FieldIndex.ReticleType:
                         return ReticleType;
-                    case Weapon_FieldIndex.WAIMUnknown3:
-                        return WAIMUnknown3;
-                    case Weapon_FieldIndex.WAIMUnknown4:
-                        return WAIMUnknown4;
+                    case Weapon_FieldIndex.InverseReticleSpread:
+                        return InverseReticleSpread;
+                    case Weapon_FieldIndex.DisplayedReticleIgnoresPlayerMovement:
+                        return DisplayedReticleIgnoresPlayerMovement;
                     case Weapon_FieldIndex.AmmoType:
                         return AmmoType;
                     case Weapon_FieldIndex.AmmoCapacity:
@@ -3830,8 +3830,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ProjectilesCount;
                     case Weapon_FieldIndex.NpcsUseAmmo:
                         return NpcsUseAmmo;
-                    case Weapon_FieldIndex.WAM2Unknown1:
-                        return WAM2Unknown1;
+                    case Weapon_FieldIndex.NumberOfImpactSounds:
+                        return NumberOfImpactSounds;
                     case Weapon_FieldIndex.WAMM:
                         return WAMM;
                     case Weapon_FieldIndex.MeleeOrCreature:
@@ -3884,18 +3884,18 @@ namespace Mutagen.Bethesda.Starfield
                         return Resistance;
                     case Weapon_FieldIndex.Skill:
                         return Skill;
-                    case Weapon_FieldIndex.WDMGUnknown4:
-                        return WDMGUnknown4;
-                    case Weapon_FieldIndex.WDMGUnknown5:
-                        return WDMGUnknown5;
-                    case Weapon_FieldIndex.WDMGUnknown6:
-                        return WDMGUnknown6;
-                    case Weapon_FieldIndex.WDMGUnknown7:
-                        return WDMGUnknown7;
-                    case Weapon_FieldIndex.WDMGUnknown8:
-                        return WDMGUnknown8;
-                    case Weapon_FieldIndex.WDMGUnknown9:
-                        return WDMGUnknown9;
+                    case Weapon_FieldIndex.LowGravityScaleControlPoint:
+                        return LowGravityScaleControlPoint;
+                    case Weapon_FieldIndex.LowGravityRangeMultMin:
+                        return LowGravityRangeMultMin;
+                    case Weapon_FieldIndex.LowGravityRangeMultMax:
+                        return LowGravityRangeMultMax;
+                    case Weapon_FieldIndex.HighGravityScaleControlPoint:
+                        return HighGravityScaleControlPoint;
+                    case Weapon_FieldIndex.HighGravityRangeMultMin:
+                        return HighGravityRangeMultMin;
+                    case Weapon_FieldIndex.HighGravityRangeMultMax:
+                        return HighGravityRangeMultMax;
                     case Weapon_FieldIndex.CritChanceIncMult:
                         return CritChanceIncMult;
                     case Weapon_FieldIndex.DamageTypes:
@@ -3920,14 +3920,14 @@ namespace Mutagen.Bethesda.Starfield
                         return DisableShellCaseEject;
                     case Weapon_FieldIndex.ShotsPerSecond:
                         return ShotsPerSecond;
-                    case Weapon_FieldIndex.WFIRUnknown7:
-                        return WFIRUnknown7;
+                    case Weapon_FieldIndex.WeaponAttackAnimationDuration:
+                        return WeaponAttackAnimationDuration;
                     case Weapon_FieldIndex.OverrideRateOfFire:
                         return OverrideRateOfFire;
                     case Weapon_FieldIndex.TriggerThresholdPrimaryTrigger:
                         return TriggerThresholdPrimaryTrigger;
-                    case Weapon_FieldIndex.WFIRUnknown10:
-                        return WFIRUnknown10;
+                    case Weapon_FieldIndex.OverrideTriggerThreshold:
+                        return OverrideTriggerThreshold;
                     case Weapon_FieldIndex.TriggerThresholdSecondStage:
                         return TriggerThresholdSecondStage;
                     case Weapon_FieldIndex.HasStagedTrigger:
@@ -3940,26 +3940,26 @@ namespace Mutagen.Bethesda.Starfield
                         return NonPlayable;
                     case Weapon_FieldIndex.PlayerOnly:
                         return PlayerOnly;
-                    case Weapon_FieldIndex.WFLGUnknown1:
-                        return WFLGUnknown1;
-                    case Weapon_FieldIndex.WFLGUnknown2:
-                        return WFLGUnknown2;
+                    case Weapon_FieldIndex.PreventUseInNormalCombat:
+                        return PreventUseInNormalCombat;
+                    case Weapon_FieldIndex.IsSecondary:
+                        return IsSecondary;
                     case Weapon_FieldIndex.CannotDrop:
                         return CannotDrop;
                     case Weapon_FieldIndex.MinorCrime:
                         return MinorCrime;
                     case Weapon_FieldIndex.NonHostile:
                         return NonHostile;
-                    case Weapon_FieldIndex.WFLGUnknown3:
-                        return WFLGUnknown3;
-                    case Weapon_FieldIndex.WFLGUnknown4:
-                        return WFLGUnknown4;
-                    case Weapon_FieldIndex.WFLGUnknown5:
-                        return WFLGUnknown5;
-                    case Weapon_FieldIndex.WFLGUnknown6:
-                        return WFLGUnknown6;
-                    case Weapon_FieldIndex.WFLGUnknown7:
-                        return WFLGUnknown7;
+                    case Weapon_FieldIndex.Bound:
+                        return Bound;
+                    case Weapon_FieldIndex.NpcPrefersLongBursts:
+                        return NpcPrefersLongBursts;
+                    case Weapon_FieldIndex.NpcsOnlyFireWhenMagazineFull:
+                        return NpcsOnlyFireWhenMagazineFull;
+                    case Weapon_FieldIndex.UseSequentialFireNodes:
+                        return UseSequentialFireNodes;
+                    case Weapon_FieldIndex.UseRandomFireNodes:
+                        return UseRandomFireNodes;
                     case Weapon_FieldIndex.AnimationType:
                         return AnimationType;
                     case Weapon_FieldIndex.BaseWeight:
@@ -3994,20 +3994,20 @@ namespace Mutagen.Bethesda.Starfield
                         return PowerBonus;
                     case Weapon_FieldIndex.UsePower:
                         return UsePower;
-                    case Weapon_FieldIndex.QNAMUnknown1:
-                        return QNAMUnknown1;
-                    case Weapon_FieldIndex.QNAMUnknown2:
-                        return QNAMUnknown2;
-                    case Weapon_FieldIndex.QNAMUnknown3:
-                        return QNAMUnknown3;
-                    case Weapon_FieldIndex.QNAMUnknown4:
-                        return QNAMUnknown4;
-                    case Weapon_FieldIndex.QNAMUnknown5:
-                        return QNAMUnknown5;
+                    case Weapon_FieldIndex.VariablePowerEnabled:
+                        return VariablePowerEnabled;
+                    case Weapon_FieldIndex.VariablePowerTransitionDuration:
+                        return VariablePowerTransitionDuration;
+                    case Weapon_FieldIndex.UseChargeOnlyInFocusMode:
+                        return UseChargeOnlyInFocusMode;
+                    case Weapon_FieldIndex.PowerIntensityCurve:
+                        return PowerIntensityCurve;
+                    case Weapon_FieldIndex.PowerDamageMultiplier:
+                        return PowerDamageMultiplier;
                     case Weapon_FieldIndex.PowerConsumption:
                         return PowerConsumption;
-                    case Weapon_FieldIndex.WRLOUnknown1:
-                        return WRLOUnknown1;
+                    case Weapon_FieldIndex.ReloadSeconds:
+                        return ReloadSeconds;
                     case Weapon_FieldIndex.ReloadSpeed:
                         return ReloadSpeed;
                     case Weapon_FieldIndex.ReloadCharging:
@@ -4056,16 +4056,16 @@ namespace Mutagen.Bethesda.Starfield
                         return ColorRemappingIndex;
                     case Weapon_FieldIndex.ImageSpaceAdapter:
                         return ImageSpaceAdapter;
-                    case Weapon_FieldIndex.WTRMUnknown1:
-                        return WTRMUnknown1;
-                    case Weapon_FieldIndex.WTRMUnknown2:
-                        return WTRMUnknown2;
-                    case Weapon_FieldIndex.WTRMUnknown3:
-                        return WTRMUnknown3;
-                    case Weapon_FieldIndex.WTRMUnknown4:
-                        return WTRMUnknown4;
-                    case Weapon_FieldIndex.WTRMUnknown5:
-                        return WTRMUnknown5;
+                    case Weapon_FieldIndex.AttackActionPointCost:
+                        return AttackActionPointCost;
+                    case Weapon_FieldIndex.OverrideDefaultCameraShake:
+                        return OverrideDefaultCameraShake;
+                    case Weapon_FieldIndex.FiringCameraShakeIntensity:
+                        return FiringCameraShakeIntensity;
+                    case Weapon_FieldIndex.FiringCameraShakeDuration:
+                        return FiringCameraShakeDuration;
+                    case Weapon_FieldIndex.AiFiringArc:
+                        return AiFiringArc;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -4169,11 +4169,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.MeleeAimAssistModel:
                         this.MeleeAimAssistModel = ex;
                         break;
-                    case Weapon_FieldIndex.WAIMUnknown1:
-                        this.WAIMUnknown1 = ex;
+                    case Weapon_FieldIndex.UpdateAdvancedAimInfo:
+                        this.UpdateAdvancedAimInfo = ex;
                         break;
-                    case Weapon_FieldIndex.WAIMUnknown2:
-                        this.WAIMUnknown2 = ex;
+                    case Weapon_FieldIndex.EnableOrientFireNodesToAimingDirection:
+                        this.EnableOrientFireNodesToAimingDirection = ex;
                         break;
                     case Weapon_FieldIndex.EnableMarkingTargets:
                         this.EnableMarkingTargets = ex;
@@ -4181,11 +4181,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.ReticleType:
                         this.ReticleType = ex;
                         break;
-                    case Weapon_FieldIndex.WAIMUnknown3:
-                        this.WAIMUnknown3 = ex;
+                    case Weapon_FieldIndex.InverseReticleSpread:
+                        this.InverseReticleSpread = ex;
                         break;
-                    case Weapon_FieldIndex.WAIMUnknown4:
-                        this.WAIMUnknown4 = ex;
+                    case Weapon_FieldIndex.DisplayedReticleIgnoresPlayerMovement:
+                        this.DisplayedReticleIgnoresPlayerMovement = ex;
                         break;
                     case Weapon_FieldIndex.AmmoType:
                         this.AmmoType = ex;
@@ -4208,8 +4208,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.NpcsUseAmmo:
                         this.NpcsUseAmmo = ex;
                         break;
-                    case Weapon_FieldIndex.WAM2Unknown1:
-                        this.WAM2Unknown1 = ex;
+                    case Weapon_FieldIndex.NumberOfImpactSounds:
+                        this.NumberOfImpactSounds = ex;
                         break;
                     case Weapon_FieldIndex.WAMM:
                         this.WAMM = ex;
@@ -4289,23 +4289,23 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.Skill:
                         this.Skill = ex;
                         break;
-                    case Weapon_FieldIndex.WDMGUnknown4:
-                        this.WDMGUnknown4 = ex;
+                    case Weapon_FieldIndex.LowGravityScaleControlPoint:
+                        this.LowGravityScaleControlPoint = ex;
                         break;
-                    case Weapon_FieldIndex.WDMGUnknown5:
-                        this.WDMGUnknown5 = ex;
+                    case Weapon_FieldIndex.LowGravityRangeMultMin:
+                        this.LowGravityRangeMultMin = ex;
                         break;
-                    case Weapon_FieldIndex.WDMGUnknown6:
-                        this.WDMGUnknown6 = ex;
+                    case Weapon_FieldIndex.LowGravityRangeMultMax:
+                        this.LowGravityRangeMultMax = ex;
                         break;
-                    case Weapon_FieldIndex.WDMGUnknown7:
-                        this.WDMGUnknown7 = ex;
+                    case Weapon_FieldIndex.HighGravityScaleControlPoint:
+                        this.HighGravityScaleControlPoint = ex;
                         break;
-                    case Weapon_FieldIndex.WDMGUnknown8:
-                        this.WDMGUnknown8 = ex;
+                    case Weapon_FieldIndex.HighGravityRangeMultMin:
+                        this.HighGravityRangeMultMin = ex;
                         break;
-                    case Weapon_FieldIndex.WDMGUnknown9:
-                        this.WDMGUnknown9 = ex;
+                    case Weapon_FieldIndex.HighGravityRangeMultMax:
+                        this.HighGravityRangeMultMax = ex;
                         break;
                     case Weapon_FieldIndex.CritChanceIncMult:
                         this.CritChanceIncMult = ex;
@@ -4343,8 +4343,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.ShotsPerSecond:
                         this.ShotsPerSecond = ex;
                         break;
-                    case Weapon_FieldIndex.WFIRUnknown7:
-                        this.WFIRUnknown7 = ex;
+                    case Weapon_FieldIndex.WeaponAttackAnimationDuration:
+                        this.WeaponAttackAnimationDuration = ex;
                         break;
                     case Weapon_FieldIndex.OverrideRateOfFire:
                         this.OverrideRateOfFire = ex;
@@ -4352,8 +4352,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.TriggerThresholdPrimaryTrigger:
                         this.TriggerThresholdPrimaryTrigger = ex;
                         break;
-                    case Weapon_FieldIndex.WFIRUnknown10:
-                        this.WFIRUnknown10 = ex;
+                    case Weapon_FieldIndex.OverrideTriggerThreshold:
+                        this.OverrideTriggerThreshold = ex;
                         break;
                     case Weapon_FieldIndex.TriggerThresholdSecondStage:
                         this.TriggerThresholdSecondStage = ex;
@@ -4373,11 +4373,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.PlayerOnly:
                         this.PlayerOnly = ex;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown1:
-                        this.WFLGUnknown1 = ex;
+                    case Weapon_FieldIndex.PreventUseInNormalCombat:
+                        this.PreventUseInNormalCombat = ex;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown2:
-                        this.WFLGUnknown2 = ex;
+                    case Weapon_FieldIndex.IsSecondary:
+                        this.IsSecondary = ex;
                         break;
                     case Weapon_FieldIndex.CannotDrop:
                         this.CannotDrop = ex;
@@ -4388,20 +4388,20 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.NonHostile:
                         this.NonHostile = ex;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown3:
-                        this.WFLGUnknown3 = ex;
+                    case Weapon_FieldIndex.Bound:
+                        this.Bound = ex;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown4:
-                        this.WFLGUnknown4 = ex;
+                    case Weapon_FieldIndex.NpcPrefersLongBursts:
+                        this.NpcPrefersLongBursts = ex;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown5:
-                        this.WFLGUnknown5 = ex;
+                    case Weapon_FieldIndex.NpcsOnlyFireWhenMagazineFull:
+                        this.NpcsOnlyFireWhenMagazineFull = ex;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown6:
-                        this.WFLGUnknown6 = ex;
+                    case Weapon_FieldIndex.UseSequentialFireNodes:
+                        this.UseSequentialFireNodes = ex;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown7:
-                        this.WFLGUnknown7 = ex;
+                    case Weapon_FieldIndex.UseRandomFireNodes:
+                        this.UseRandomFireNodes = ex;
                         break;
                     case Weapon_FieldIndex.AnimationType:
                         this.AnimationType = ex;
@@ -4454,26 +4454,26 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.UsePower:
                         this.UsePower = ex;
                         break;
-                    case Weapon_FieldIndex.QNAMUnknown1:
-                        this.QNAMUnknown1 = ex;
+                    case Weapon_FieldIndex.VariablePowerEnabled:
+                        this.VariablePowerEnabled = ex;
                         break;
-                    case Weapon_FieldIndex.QNAMUnknown2:
-                        this.QNAMUnknown2 = ex;
+                    case Weapon_FieldIndex.VariablePowerTransitionDuration:
+                        this.VariablePowerTransitionDuration = ex;
                         break;
-                    case Weapon_FieldIndex.QNAMUnknown3:
-                        this.QNAMUnknown3 = ex;
+                    case Weapon_FieldIndex.UseChargeOnlyInFocusMode:
+                        this.UseChargeOnlyInFocusMode = ex;
                         break;
-                    case Weapon_FieldIndex.QNAMUnknown4:
-                        this.QNAMUnknown4 = ex;
+                    case Weapon_FieldIndex.PowerIntensityCurve:
+                        this.PowerIntensityCurve = ex;
                         break;
-                    case Weapon_FieldIndex.QNAMUnknown5:
-                        this.QNAMUnknown5 = ex;
+                    case Weapon_FieldIndex.PowerDamageMultiplier:
+                        this.PowerDamageMultiplier = ex;
                         break;
                     case Weapon_FieldIndex.PowerConsumption:
                         this.PowerConsumption = ex;
                         break;
-                    case Weapon_FieldIndex.WRLOUnknown1:
-                        this.WRLOUnknown1 = ex;
+                    case Weapon_FieldIndex.ReloadSeconds:
+                        this.ReloadSeconds = ex;
                         break;
                     case Weapon_FieldIndex.ReloadSpeed:
                         this.ReloadSpeed = ex;
@@ -4547,20 +4547,20 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.ImageSpaceAdapter:
                         this.ImageSpaceAdapter = ex;
                         break;
-                    case Weapon_FieldIndex.WTRMUnknown1:
-                        this.WTRMUnknown1 = ex;
+                    case Weapon_FieldIndex.AttackActionPointCost:
+                        this.AttackActionPointCost = ex;
                         break;
-                    case Weapon_FieldIndex.WTRMUnknown2:
-                        this.WTRMUnknown2 = ex;
+                    case Weapon_FieldIndex.OverrideDefaultCameraShake:
+                        this.OverrideDefaultCameraShake = ex;
                         break;
-                    case Weapon_FieldIndex.WTRMUnknown3:
-                        this.WTRMUnknown3 = ex;
+                    case Weapon_FieldIndex.FiringCameraShakeIntensity:
+                        this.FiringCameraShakeIntensity = ex;
                         break;
-                    case Weapon_FieldIndex.WTRMUnknown4:
-                        this.WTRMUnknown4 = ex;
+                    case Weapon_FieldIndex.FiringCameraShakeDuration:
+                        this.FiringCameraShakeDuration = ex;
                         break;
-                    case Weapon_FieldIndex.WTRMUnknown5:
-                        this.WTRMUnknown5 = ex;
+                    case Weapon_FieldIndex.AiFiringArc:
+                        this.AiFiringArc = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -4666,11 +4666,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.MeleeAimAssistModel:
                         this.MeleeAimAssistModel = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WAIMUnknown1:
-                        this.WAIMUnknown1 = (Exception?)obj;
+                    case Weapon_FieldIndex.UpdateAdvancedAimInfo:
+                        this.UpdateAdvancedAimInfo = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WAIMUnknown2:
-                        this.WAIMUnknown2 = (Exception?)obj;
+                    case Weapon_FieldIndex.EnableOrientFireNodesToAimingDirection:
+                        this.EnableOrientFireNodesToAimingDirection = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.EnableMarkingTargets:
                         this.EnableMarkingTargets = (Exception?)obj;
@@ -4678,11 +4678,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.ReticleType:
                         this.ReticleType = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WAIMUnknown3:
-                        this.WAIMUnknown3 = (Exception?)obj;
+                    case Weapon_FieldIndex.InverseReticleSpread:
+                        this.InverseReticleSpread = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WAIMUnknown4:
-                        this.WAIMUnknown4 = (Exception?)obj;
+                    case Weapon_FieldIndex.DisplayedReticleIgnoresPlayerMovement:
+                        this.DisplayedReticleIgnoresPlayerMovement = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.AmmoType:
                         this.AmmoType = (Exception?)obj;
@@ -4705,8 +4705,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.NpcsUseAmmo:
                         this.NpcsUseAmmo = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WAM2Unknown1:
-                        this.WAM2Unknown1 = (Exception?)obj;
+                    case Weapon_FieldIndex.NumberOfImpactSounds:
+                        this.NumberOfImpactSounds = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.WAMM:
                         this.WAMM = (Exception?)obj;
@@ -4786,23 +4786,23 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.Skill:
                         this.Skill = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WDMGUnknown4:
-                        this.WDMGUnknown4 = (Exception?)obj;
+                    case Weapon_FieldIndex.LowGravityScaleControlPoint:
+                        this.LowGravityScaleControlPoint = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WDMGUnknown5:
-                        this.WDMGUnknown5 = (Exception?)obj;
+                    case Weapon_FieldIndex.LowGravityRangeMultMin:
+                        this.LowGravityRangeMultMin = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WDMGUnknown6:
-                        this.WDMGUnknown6 = (Exception?)obj;
+                    case Weapon_FieldIndex.LowGravityRangeMultMax:
+                        this.LowGravityRangeMultMax = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WDMGUnknown7:
-                        this.WDMGUnknown7 = (Exception?)obj;
+                    case Weapon_FieldIndex.HighGravityScaleControlPoint:
+                        this.HighGravityScaleControlPoint = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WDMGUnknown8:
-                        this.WDMGUnknown8 = (Exception?)obj;
+                    case Weapon_FieldIndex.HighGravityRangeMultMin:
+                        this.HighGravityRangeMultMin = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WDMGUnknown9:
-                        this.WDMGUnknown9 = (Exception?)obj;
+                    case Weapon_FieldIndex.HighGravityRangeMultMax:
+                        this.HighGravityRangeMultMax = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.CritChanceIncMult:
                         this.CritChanceIncMult = (Exception?)obj;
@@ -4840,8 +4840,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.ShotsPerSecond:
                         this.ShotsPerSecond = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WFIRUnknown7:
-                        this.WFIRUnknown7 = (Exception?)obj;
+                    case Weapon_FieldIndex.WeaponAttackAnimationDuration:
+                        this.WeaponAttackAnimationDuration = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.OverrideRateOfFire:
                         this.OverrideRateOfFire = (Exception?)obj;
@@ -4849,8 +4849,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.TriggerThresholdPrimaryTrigger:
                         this.TriggerThresholdPrimaryTrigger = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WFIRUnknown10:
-                        this.WFIRUnknown10 = (Exception?)obj;
+                    case Weapon_FieldIndex.OverrideTriggerThreshold:
+                        this.OverrideTriggerThreshold = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.TriggerThresholdSecondStage:
                         this.TriggerThresholdSecondStage = (Exception?)obj;
@@ -4870,11 +4870,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.PlayerOnly:
                         this.PlayerOnly = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown1:
-                        this.WFLGUnknown1 = (Exception?)obj;
+                    case Weapon_FieldIndex.PreventUseInNormalCombat:
+                        this.PreventUseInNormalCombat = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown2:
-                        this.WFLGUnknown2 = (Exception?)obj;
+                    case Weapon_FieldIndex.IsSecondary:
+                        this.IsSecondary = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.CannotDrop:
                         this.CannotDrop = (Exception?)obj;
@@ -4885,20 +4885,20 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.NonHostile:
                         this.NonHostile = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown3:
-                        this.WFLGUnknown3 = (Exception?)obj;
+                    case Weapon_FieldIndex.Bound:
+                        this.Bound = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown4:
-                        this.WFLGUnknown4 = (Exception?)obj;
+                    case Weapon_FieldIndex.NpcPrefersLongBursts:
+                        this.NpcPrefersLongBursts = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown5:
-                        this.WFLGUnknown5 = (Exception?)obj;
+                    case Weapon_FieldIndex.NpcsOnlyFireWhenMagazineFull:
+                        this.NpcsOnlyFireWhenMagazineFull = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown6:
-                        this.WFLGUnknown6 = (Exception?)obj;
+                    case Weapon_FieldIndex.UseSequentialFireNodes:
+                        this.UseSequentialFireNodes = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WFLGUnknown7:
-                        this.WFLGUnknown7 = (Exception?)obj;
+                    case Weapon_FieldIndex.UseRandomFireNodes:
+                        this.UseRandomFireNodes = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.AnimationType:
                         this.AnimationType = (Exception?)obj;
@@ -4951,26 +4951,26 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.UsePower:
                         this.UsePower = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.QNAMUnknown1:
-                        this.QNAMUnknown1 = (Exception?)obj;
+                    case Weapon_FieldIndex.VariablePowerEnabled:
+                        this.VariablePowerEnabled = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.QNAMUnknown2:
-                        this.QNAMUnknown2 = (Exception?)obj;
+                    case Weapon_FieldIndex.VariablePowerTransitionDuration:
+                        this.VariablePowerTransitionDuration = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.QNAMUnknown3:
-                        this.QNAMUnknown3 = (Exception?)obj;
+                    case Weapon_FieldIndex.UseChargeOnlyInFocusMode:
+                        this.UseChargeOnlyInFocusMode = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.QNAMUnknown4:
-                        this.QNAMUnknown4 = (Exception?)obj;
+                    case Weapon_FieldIndex.PowerIntensityCurve:
+                        this.PowerIntensityCurve = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.QNAMUnknown5:
-                        this.QNAMUnknown5 = (Exception?)obj;
+                    case Weapon_FieldIndex.PowerDamageMultiplier:
+                        this.PowerDamageMultiplier = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.PowerConsumption:
                         this.PowerConsumption = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WRLOUnknown1:
-                        this.WRLOUnknown1 = (Exception?)obj;
+                    case Weapon_FieldIndex.ReloadSeconds:
+                        this.ReloadSeconds = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.ReloadSpeed:
                         this.ReloadSpeed = (Exception?)obj;
@@ -5044,20 +5044,20 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.ImageSpaceAdapter:
                         this.ImageSpaceAdapter = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WTRMUnknown1:
-                        this.WTRMUnknown1 = (Exception?)obj;
+                    case Weapon_FieldIndex.AttackActionPointCost:
+                        this.AttackActionPointCost = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WTRMUnknown2:
-                        this.WTRMUnknown2 = (Exception?)obj;
+                    case Weapon_FieldIndex.OverrideDefaultCameraShake:
+                        this.OverrideDefaultCameraShake = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WTRMUnknown3:
-                        this.WTRMUnknown3 = (Exception?)obj;
+                    case Weapon_FieldIndex.FiringCameraShakeIntensity:
+                        this.FiringCameraShakeIntensity = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WTRMUnknown4:
-                        this.WTRMUnknown4 = (Exception?)obj;
+                    case Weapon_FieldIndex.FiringCameraShakeDuration:
+                        this.FiringCameraShakeDuration = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WTRMUnknown5:
-                        this.WTRMUnknown5 = (Exception?)obj;
+                    case Weapon_FieldIndex.AiFiringArc:
+                        this.AiFiringArc = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -5099,12 +5099,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (AimAssistTemplate != null) return true;
                 if (AimOpticalSightModel != null) return true;
                 if (MeleeAimAssistModel != null) return true;
-                if (WAIMUnknown1 != null) return true;
-                if (WAIMUnknown2 != null) return true;
+                if (UpdateAdvancedAimInfo != null) return true;
+                if (EnableOrientFireNodesToAimingDirection != null) return true;
                 if (EnableMarkingTargets != null) return true;
                 if (ReticleType != null) return true;
-                if (WAIMUnknown3 != null) return true;
-                if (WAIMUnknown4 != null) return true;
+                if (InverseReticleSpread != null) return true;
+                if (DisplayedReticleIgnoresPlayerMovement != null) return true;
                 if (AmmoType != null) return true;
                 if (AmmoCapacity != null) return true;
                 if (AmmoList != null) return true;
@@ -5112,7 +5112,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (OverrideShellCasing != null) return true;
                 if (ProjectilesCount != null) return true;
                 if (NpcsUseAmmo != null) return true;
-                if (WAM2Unknown1 != null) return true;
+                if (NumberOfImpactSounds != null) return true;
                 if (WAMM != null) return true;
                 if (MeleeOrCreature != null) return true;
                 if (PrimedExplosive != null) return true;
@@ -5139,12 +5139,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (HitBehavior != null) return true;
                 if (Resistance != null) return true;
                 if (Skill != null) return true;
-                if (WDMGUnknown4 != null) return true;
-                if (WDMGUnknown5 != null) return true;
-                if (WDMGUnknown6 != null) return true;
-                if (WDMGUnknown7 != null) return true;
-                if (WDMGUnknown8 != null) return true;
-                if (WDMGUnknown9 != null) return true;
+                if (LowGravityScaleControlPoint != null) return true;
+                if (LowGravityRangeMultMin != null) return true;
+                if (LowGravityRangeMultMax != null) return true;
+                if (HighGravityScaleControlPoint != null) return true;
+                if (HighGravityRangeMultMin != null) return true;
+                if (HighGravityRangeMultMax != null) return true;
                 if (CritChanceIncMult != null) return true;
                 if (DamageTypes != null) return true;
                 if (FiringType != null) return true;
@@ -5157,26 +5157,26 @@ namespace Mutagen.Bethesda.Starfield
                 if (BoltAction != null) return true;
                 if (DisableShellCaseEject != null) return true;
                 if (ShotsPerSecond != null) return true;
-                if (WFIRUnknown7 != null) return true;
+                if (WeaponAttackAnimationDuration != null) return true;
                 if (OverrideRateOfFire != null) return true;
                 if (TriggerThresholdPrimaryTrigger != null) return true;
-                if (WFIRUnknown10 != null) return true;
+                if (OverrideTriggerThreshold != null) return true;
                 if (TriggerThresholdSecondStage != null) return true;
                 if (HasStagedTrigger != null) return true;
                 if (HasDualTrigger != null) return true;
                 if (BurstDelaySeconds != null) return true;
                 if (NonPlayable != null) return true;
                 if (PlayerOnly != null) return true;
-                if (WFLGUnknown1 != null) return true;
-                if (WFLGUnknown2 != null) return true;
+                if (PreventUseInNormalCombat != null) return true;
+                if (IsSecondary != null) return true;
                 if (CannotDrop != null) return true;
                 if (MinorCrime != null) return true;
                 if (NonHostile != null) return true;
-                if (WFLGUnknown3 != null) return true;
-                if (WFLGUnknown4 != null) return true;
-                if (WFLGUnknown5 != null) return true;
-                if (WFLGUnknown6 != null) return true;
-                if (WFLGUnknown7 != null) return true;
+                if (Bound != null) return true;
+                if (NpcPrefersLongBursts != null) return true;
+                if (NpcsOnlyFireWhenMagazineFull != null) return true;
+                if (UseSequentialFireNodes != null) return true;
+                if (UseRandomFireNodes != null) return true;
                 if (AnimationType != null) return true;
                 if (BaseWeight != null) return true;
                 if (BaseValue != null) return true;
@@ -5194,13 +5194,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (ConsumeAmmo != null) return true;
                 if (PowerBonus != null) return true;
                 if (UsePower != null) return true;
-                if (QNAMUnknown1 != null) return true;
-                if (QNAMUnknown2 != null) return true;
-                if (QNAMUnknown3 != null) return true;
-                if (QNAMUnknown4 != null) return true;
-                if (QNAMUnknown5 != null) return true;
+                if (VariablePowerEnabled != null) return true;
+                if (VariablePowerTransitionDuration != null) return true;
+                if (UseChargeOnlyInFocusMode != null) return true;
+                if (PowerIntensityCurve != null) return true;
+                if (PowerDamageMultiplier != null) return true;
                 if (PowerConsumption != null) return true;
-                if (WRLOUnknown1 != null) return true;
+                if (ReloadSeconds != null) return true;
                 if (ReloadSpeed != null) return true;
                 if (ReloadCharging != null) return true;
                 if (ReloadSingle != null) return true;
@@ -5225,11 +5225,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (ImpactDataSet != null) return true;
                 if (ColorRemappingIndex != null) return true;
                 if (ImageSpaceAdapter != null) return true;
-                if (WTRMUnknown1 != null) return true;
-                if (WTRMUnknown2 != null) return true;
-                if (WTRMUnknown3 != null) return true;
-                if (WTRMUnknown4 != null) return true;
-                if (WTRMUnknown5 != null) return true;
+                if (AttackActionPointCost != null) return true;
+                if (OverrideDefaultCameraShake != null) return true;
+                if (FiringCameraShakeIntensity != null) return true;
+                if (FiringCameraShakeDuration != null) return true;
+                if (AiFiringArc != null) return true;
                 return false;
             }
             #endregion
@@ -5400,10 +5400,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(MeleeAimAssistModel, "MeleeAimAssistModel");
                 }
                 {
-                    sb.AppendItem(WAIMUnknown1, "WAIMUnknown1");
+                    sb.AppendItem(UpdateAdvancedAimInfo, "UpdateAdvancedAimInfo");
                 }
                 {
-                    sb.AppendItem(WAIMUnknown2, "WAIMUnknown2");
+                    sb.AppendItem(EnableOrientFireNodesToAimingDirection, "EnableOrientFireNodesToAimingDirection");
                 }
                 {
                     sb.AppendItem(EnableMarkingTargets, "EnableMarkingTargets");
@@ -5412,10 +5412,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ReticleType, "ReticleType");
                 }
                 {
-                    sb.AppendItem(WAIMUnknown3, "WAIMUnknown3");
+                    sb.AppendItem(InverseReticleSpread, "InverseReticleSpread");
                 }
                 {
-                    sb.AppendItem(WAIMUnknown4, "WAIMUnknown4");
+                    sb.AppendItem(DisplayedReticleIgnoresPlayerMovement, "DisplayedReticleIgnoresPlayerMovement");
                 }
                 {
                     sb.AppendItem(AmmoType, "AmmoType");
@@ -5439,7 +5439,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(NpcsUseAmmo, "NpcsUseAmmo");
                 }
                 {
-                    sb.AppendItem(WAM2Unknown1, "WAM2Unknown1");
+                    sb.AppendItem(NumberOfImpactSounds, "NumberOfImpactSounds");
                 }
                 {
                     sb.AppendItem(WAMM, "WAMM");
@@ -5506,22 +5506,22 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Skill, "Skill");
                 }
                 {
-                    sb.AppendItem(WDMGUnknown4, "WDMGUnknown4");
+                    sb.AppendItem(LowGravityScaleControlPoint, "LowGravityScaleControlPoint");
                 }
                 {
-                    sb.AppendItem(WDMGUnknown5, "WDMGUnknown5");
+                    sb.AppendItem(LowGravityRangeMultMin, "LowGravityRangeMultMin");
                 }
                 {
-                    sb.AppendItem(WDMGUnknown6, "WDMGUnknown6");
+                    sb.AppendItem(LowGravityRangeMultMax, "LowGravityRangeMultMax");
                 }
                 {
-                    sb.AppendItem(WDMGUnknown7, "WDMGUnknown7");
+                    sb.AppendItem(HighGravityScaleControlPoint, "HighGravityScaleControlPoint");
                 }
                 {
-                    sb.AppendItem(WDMGUnknown8, "WDMGUnknown8");
+                    sb.AppendItem(HighGravityRangeMultMin, "HighGravityRangeMultMin");
                 }
                 {
-                    sb.AppendItem(WDMGUnknown9, "WDMGUnknown9");
+                    sb.AppendItem(HighGravityRangeMultMax, "HighGravityRangeMultMax");
                 }
                 {
                     sb.AppendItem(CritChanceIncMult, "CritChanceIncMult");
@@ -5575,7 +5575,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ShotsPerSecond, "ShotsPerSecond");
                 }
                 {
-                    sb.AppendItem(WFIRUnknown7, "WFIRUnknown7");
+                    sb.AppendItem(WeaponAttackAnimationDuration, "WeaponAttackAnimationDuration");
                 }
                 {
                     sb.AppendItem(OverrideRateOfFire, "OverrideRateOfFire");
@@ -5584,7 +5584,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(TriggerThresholdPrimaryTrigger, "TriggerThresholdPrimaryTrigger");
                 }
                 {
-                    sb.AppendItem(WFIRUnknown10, "WFIRUnknown10");
+                    sb.AppendItem(OverrideTriggerThreshold, "OverrideTriggerThreshold");
                 }
                 {
                     sb.AppendItem(TriggerThresholdSecondStage, "TriggerThresholdSecondStage");
@@ -5605,10 +5605,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(PlayerOnly, "PlayerOnly");
                 }
                 {
-                    sb.AppendItem(WFLGUnknown1, "WFLGUnknown1");
+                    sb.AppendItem(PreventUseInNormalCombat, "PreventUseInNormalCombat");
                 }
                 {
-                    sb.AppendItem(WFLGUnknown2, "WFLGUnknown2");
+                    sb.AppendItem(IsSecondary, "IsSecondary");
                 }
                 {
                     sb.AppendItem(CannotDrop, "CannotDrop");
@@ -5620,19 +5620,19 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(NonHostile, "NonHostile");
                 }
                 {
-                    sb.AppendItem(WFLGUnknown3, "WFLGUnknown3");
+                    sb.AppendItem(Bound, "Bound");
                 }
                 {
-                    sb.AppendItem(WFLGUnknown4, "WFLGUnknown4");
+                    sb.AppendItem(NpcPrefersLongBursts, "NpcPrefersLongBursts");
                 }
                 {
-                    sb.AppendItem(WFLGUnknown5, "WFLGUnknown5");
+                    sb.AppendItem(NpcsOnlyFireWhenMagazineFull, "NpcsOnlyFireWhenMagazineFull");
                 }
                 {
-                    sb.AppendItem(WFLGUnknown6, "WFLGUnknown6");
+                    sb.AppendItem(UseSequentialFireNodes, "UseSequentialFireNodes");
                 }
                 {
-                    sb.AppendItem(WFLGUnknown7, "WFLGUnknown7");
+                    sb.AppendItem(UseRandomFireNodes, "UseRandomFireNodes");
                 }
                 {
                     sb.AppendItem(AnimationType, "AnimationType");
@@ -5686,25 +5686,25 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(UsePower, "UsePower");
                 }
                 {
-                    sb.AppendItem(QNAMUnknown1, "QNAMUnknown1");
+                    sb.AppendItem(VariablePowerEnabled, "VariablePowerEnabled");
                 }
                 {
-                    sb.AppendItem(QNAMUnknown2, "QNAMUnknown2");
+                    sb.AppendItem(VariablePowerTransitionDuration, "VariablePowerTransitionDuration");
                 }
                 {
-                    sb.AppendItem(QNAMUnknown3, "QNAMUnknown3");
+                    sb.AppendItem(UseChargeOnlyInFocusMode, "UseChargeOnlyInFocusMode");
                 }
                 {
-                    sb.AppendItem(QNAMUnknown4, "QNAMUnknown4");
+                    sb.AppendItem(PowerIntensityCurve, "PowerIntensityCurve");
                 }
                 {
-                    sb.AppendItem(QNAMUnknown5, "QNAMUnknown5");
+                    sb.AppendItem(PowerDamageMultiplier, "PowerDamageMultiplier");
                 }
                 {
                     sb.AppendItem(PowerConsumption, "PowerConsumption");
                 }
                 {
-                    sb.AppendItem(WRLOUnknown1, "WRLOUnknown1");
+                    sb.AppendItem(ReloadSeconds, "ReloadSeconds");
                 }
                 {
                     sb.AppendItem(ReloadSpeed, "ReloadSpeed");
@@ -5777,19 +5777,19 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ImageSpaceAdapter, "ImageSpaceAdapter");
                 }
                 {
-                    sb.AppendItem(WTRMUnknown1, "WTRMUnknown1");
+                    sb.AppendItem(AttackActionPointCost, "AttackActionPointCost");
                 }
                 {
-                    sb.AppendItem(WTRMUnknown2, "WTRMUnknown2");
+                    sb.AppendItem(OverrideDefaultCameraShake, "OverrideDefaultCameraShake");
                 }
                 {
-                    sb.AppendItem(WTRMUnknown3, "WTRMUnknown3");
+                    sb.AppendItem(FiringCameraShakeIntensity, "FiringCameraShakeIntensity");
                 }
                 {
-                    sb.AppendItem(WTRMUnknown4, "WTRMUnknown4");
+                    sb.AppendItem(FiringCameraShakeDuration, "FiringCameraShakeDuration");
                 }
                 {
-                    sb.AppendItem(WTRMUnknown5, "WTRMUnknown5");
+                    sb.AppendItem(AiFiringArc, "AiFiringArc");
                 }
             }
             #endregion
@@ -5830,12 +5830,12 @@ namespace Mutagen.Bethesda.Starfield
                 ret.AimAssistTemplate = this.AimAssistTemplate.Combine(rhs.AimAssistTemplate);
                 ret.AimOpticalSightModel = this.AimOpticalSightModel.Combine(rhs.AimOpticalSightModel);
                 ret.MeleeAimAssistModel = this.MeleeAimAssistModel.Combine(rhs.MeleeAimAssistModel);
-                ret.WAIMUnknown1 = this.WAIMUnknown1.Combine(rhs.WAIMUnknown1);
-                ret.WAIMUnknown2 = this.WAIMUnknown2.Combine(rhs.WAIMUnknown2);
+                ret.UpdateAdvancedAimInfo = this.UpdateAdvancedAimInfo.Combine(rhs.UpdateAdvancedAimInfo);
+                ret.EnableOrientFireNodesToAimingDirection = this.EnableOrientFireNodesToAimingDirection.Combine(rhs.EnableOrientFireNodesToAimingDirection);
                 ret.EnableMarkingTargets = this.EnableMarkingTargets.Combine(rhs.EnableMarkingTargets);
                 ret.ReticleType = this.ReticleType.Combine(rhs.ReticleType);
-                ret.WAIMUnknown3 = this.WAIMUnknown3.Combine(rhs.WAIMUnknown3);
-                ret.WAIMUnknown4 = this.WAIMUnknown4.Combine(rhs.WAIMUnknown4);
+                ret.InverseReticleSpread = this.InverseReticleSpread.Combine(rhs.InverseReticleSpread);
+                ret.DisplayedReticleIgnoresPlayerMovement = this.DisplayedReticleIgnoresPlayerMovement.Combine(rhs.DisplayedReticleIgnoresPlayerMovement);
                 ret.AmmoType = this.AmmoType.Combine(rhs.AmmoType);
                 ret.AmmoCapacity = this.AmmoCapacity.Combine(rhs.AmmoCapacity);
                 ret.AmmoList = this.AmmoList.Combine(rhs.AmmoList);
@@ -5843,7 +5843,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.OverrideShellCasing = this.OverrideShellCasing.Combine(rhs.OverrideShellCasing);
                 ret.ProjectilesCount = this.ProjectilesCount.Combine(rhs.ProjectilesCount);
                 ret.NpcsUseAmmo = this.NpcsUseAmmo.Combine(rhs.NpcsUseAmmo);
-                ret.WAM2Unknown1 = this.WAM2Unknown1.Combine(rhs.WAM2Unknown1);
+                ret.NumberOfImpactSounds = this.NumberOfImpactSounds.Combine(rhs.NumberOfImpactSounds);
                 ret.WAMM = this.WAMM.Combine(rhs.WAMM);
                 ret.MeleeOrCreature = this.MeleeOrCreature.Combine(rhs.MeleeOrCreature, (l, r) => l.Combine(r));
                 ret.PrimedExplosive = this.PrimedExplosive.Combine(rhs.PrimedExplosive, (l, r) => l.Combine(r));
@@ -5870,12 +5870,12 @@ namespace Mutagen.Bethesda.Starfield
                 ret.HitBehavior = this.HitBehavior.Combine(rhs.HitBehavior);
                 ret.Resistance = this.Resistance.Combine(rhs.Resistance);
                 ret.Skill = this.Skill.Combine(rhs.Skill);
-                ret.WDMGUnknown4 = this.WDMGUnknown4.Combine(rhs.WDMGUnknown4);
-                ret.WDMGUnknown5 = this.WDMGUnknown5.Combine(rhs.WDMGUnknown5);
-                ret.WDMGUnknown6 = this.WDMGUnknown6.Combine(rhs.WDMGUnknown6);
-                ret.WDMGUnknown7 = this.WDMGUnknown7.Combine(rhs.WDMGUnknown7);
-                ret.WDMGUnknown8 = this.WDMGUnknown8.Combine(rhs.WDMGUnknown8);
-                ret.WDMGUnknown9 = this.WDMGUnknown9.Combine(rhs.WDMGUnknown9);
+                ret.LowGravityScaleControlPoint = this.LowGravityScaleControlPoint.Combine(rhs.LowGravityScaleControlPoint);
+                ret.LowGravityRangeMultMin = this.LowGravityRangeMultMin.Combine(rhs.LowGravityRangeMultMin);
+                ret.LowGravityRangeMultMax = this.LowGravityRangeMultMax.Combine(rhs.LowGravityRangeMultMax);
+                ret.HighGravityScaleControlPoint = this.HighGravityScaleControlPoint.Combine(rhs.HighGravityScaleControlPoint);
+                ret.HighGravityRangeMultMin = this.HighGravityRangeMultMin.Combine(rhs.HighGravityRangeMultMin);
+                ret.HighGravityRangeMultMax = this.HighGravityRangeMultMax.Combine(rhs.HighGravityRangeMultMax);
                 ret.CritChanceIncMult = this.CritChanceIncMult.Combine(rhs.CritChanceIncMult);
                 ret.DamageTypes = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WeaponDamageType.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.DamageTypes?.Overall, rhs.DamageTypes?.Overall), Noggog.ExceptionExt.Combine(this.DamageTypes?.Specific, rhs.DamageTypes?.Specific));
                 ret.FiringType = this.FiringType.Combine(rhs.FiringType);
@@ -5888,26 +5888,26 @@ namespace Mutagen.Bethesda.Starfield
                 ret.BoltAction = this.BoltAction.Combine(rhs.BoltAction);
                 ret.DisableShellCaseEject = this.DisableShellCaseEject.Combine(rhs.DisableShellCaseEject);
                 ret.ShotsPerSecond = this.ShotsPerSecond.Combine(rhs.ShotsPerSecond);
-                ret.WFIRUnknown7 = this.WFIRUnknown7.Combine(rhs.WFIRUnknown7);
+                ret.WeaponAttackAnimationDuration = this.WeaponAttackAnimationDuration.Combine(rhs.WeaponAttackAnimationDuration);
                 ret.OverrideRateOfFire = this.OverrideRateOfFire.Combine(rhs.OverrideRateOfFire);
                 ret.TriggerThresholdPrimaryTrigger = this.TriggerThresholdPrimaryTrigger.Combine(rhs.TriggerThresholdPrimaryTrigger);
-                ret.WFIRUnknown10 = this.WFIRUnknown10.Combine(rhs.WFIRUnknown10);
+                ret.OverrideTriggerThreshold = this.OverrideTriggerThreshold.Combine(rhs.OverrideTriggerThreshold);
                 ret.TriggerThresholdSecondStage = this.TriggerThresholdSecondStage.Combine(rhs.TriggerThresholdSecondStage);
                 ret.HasStagedTrigger = this.HasStagedTrigger.Combine(rhs.HasStagedTrigger);
                 ret.HasDualTrigger = this.HasDualTrigger.Combine(rhs.HasDualTrigger);
                 ret.BurstDelaySeconds = this.BurstDelaySeconds.Combine(rhs.BurstDelaySeconds);
                 ret.NonPlayable = this.NonPlayable.Combine(rhs.NonPlayable);
                 ret.PlayerOnly = this.PlayerOnly.Combine(rhs.PlayerOnly);
-                ret.WFLGUnknown1 = this.WFLGUnknown1.Combine(rhs.WFLGUnknown1);
-                ret.WFLGUnknown2 = this.WFLGUnknown2.Combine(rhs.WFLGUnknown2);
+                ret.PreventUseInNormalCombat = this.PreventUseInNormalCombat.Combine(rhs.PreventUseInNormalCombat);
+                ret.IsSecondary = this.IsSecondary.Combine(rhs.IsSecondary);
                 ret.CannotDrop = this.CannotDrop.Combine(rhs.CannotDrop);
                 ret.MinorCrime = this.MinorCrime.Combine(rhs.MinorCrime);
                 ret.NonHostile = this.NonHostile.Combine(rhs.NonHostile);
-                ret.WFLGUnknown3 = this.WFLGUnknown3.Combine(rhs.WFLGUnknown3);
-                ret.WFLGUnknown4 = this.WFLGUnknown4.Combine(rhs.WFLGUnknown4);
-                ret.WFLGUnknown5 = this.WFLGUnknown5.Combine(rhs.WFLGUnknown5);
-                ret.WFLGUnknown6 = this.WFLGUnknown6.Combine(rhs.WFLGUnknown6);
-                ret.WFLGUnknown7 = this.WFLGUnknown7.Combine(rhs.WFLGUnknown7);
+                ret.Bound = this.Bound.Combine(rhs.Bound);
+                ret.NpcPrefersLongBursts = this.NpcPrefersLongBursts.Combine(rhs.NpcPrefersLongBursts);
+                ret.NpcsOnlyFireWhenMagazineFull = this.NpcsOnlyFireWhenMagazineFull.Combine(rhs.NpcsOnlyFireWhenMagazineFull);
+                ret.UseSequentialFireNodes = this.UseSequentialFireNodes.Combine(rhs.UseSequentialFireNodes);
+                ret.UseRandomFireNodes = this.UseRandomFireNodes.Combine(rhs.UseRandomFireNodes);
                 ret.AnimationType = this.AnimationType.Combine(rhs.AnimationType);
                 ret.BaseWeight = this.BaseWeight.Combine(rhs.BaseWeight);
                 ret.BaseValue = this.BaseValue.Combine(rhs.BaseValue);
@@ -5925,13 +5925,13 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ConsumeAmmo = this.ConsumeAmmo.Combine(rhs.ConsumeAmmo);
                 ret.PowerBonus = this.PowerBonus.Combine(rhs.PowerBonus);
                 ret.UsePower = this.UsePower.Combine(rhs.UsePower);
-                ret.QNAMUnknown1 = this.QNAMUnknown1.Combine(rhs.QNAMUnknown1);
-                ret.QNAMUnknown2 = this.QNAMUnknown2.Combine(rhs.QNAMUnknown2);
-                ret.QNAMUnknown3 = this.QNAMUnknown3.Combine(rhs.QNAMUnknown3);
-                ret.QNAMUnknown4 = this.QNAMUnknown4.Combine(rhs.QNAMUnknown4);
-                ret.QNAMUnknown5 = this.QNAMUnknown5.Combine(rhs.QNAMUnknown5);
+                ret.VariablePowerEnabled = this.VariablePowerEnabled.Combine(rhs.VariablePowerEnabled);
+                ret.VariablePowerTransitionDuration = this.VariablePowerTransitionDuration.Combine(rhs.VariablePowerTransitionDuration);
+                ret.UseChargeOnlyInFocusMode = this.UseChargeOnlyInFocusMode.Combine(rhs.UseChargeOnlyInFocusMode);
+                ret.PowerIntensityCurve = this.PowerIntensityCurve.Combine(rhs.PowerIntensityCurve);
+                ret.PowerDamageMultiplier = this.PowerDamageMultiplier.Combine(rhs.PowerDamageMultiplier);
                 ret.PowerConsumption = this.PowerConsumption.Combine(rhs.PowerConsumption);
-                ret.WRLOUnknown1 = this.WRLOUnknown1.Combine(rhs.WRLOUnknown1);
+                ret.ReloadSeconds = this.ReloadSeconds.Combine(rhs.ReloadSeconds);
                 ret.ReloadSpeed = this.ReloadSpeed.Combine(rhs.ReloadSpeed);
                 ret.ReloadCharging = this.ReloadCharging.Combine(rhs.ReloadCharging);
                 ret.ReloadSingle = this.ReloadSingle.Combine(rhs.ReloadSingle);
@@ -5956,11 +5956,11 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ImpactDataSet = this.ImpactDataSet.Combine(rhs.ImpactDataSet);
                 ret.ColorRemappingIndex = this.ColorRemappingIndex.Combine(rhs.ColorRemappingIndex);
                 ret.ImageSpaceAdapter = this.ImageSpaceAdapter.Combine(rhs.ImageSpaceAdapter);
-                ret.WTRMUnknown1 = this.WTRMUnknown1.Combine(rhs.WTRMUnknown1);
-                ret.WTRMUnknown2 = this.WTRMUnknown2.Combine(rhs.WTRMUnknown2);
-                ret.WTRMUnknown3 = this.WTRMUnknown3.Combine(rhs.WTRMUnknown3);
-                ret.WTRMUnknown4 = this.WTRMUnknown4.Combine(rhs.WTRMUnknown4);
-                ret.WTRMUnknown5 = this.WTRMUnknown5.Combine(rhs.WTRMUnknown5);
+                ret.AttackActionPointCost = this.AttackActionPointCost.Combine(rhs.AttackActionPointCost);
+                ret.OverrideDefaultCameraShake = this.OverrideDefaultCameraShake.Combine(rhs.OverrideDefaultCameraShake);
+                ret.FiringCameraShakeIntensity = this.FiringCameraShakeIntensity.Combine(rhs.FiringCameraShakeIntensity);
+                ret.FiringCameraShakeDuration = this.FiringCameraShakeDuration.Combine(rhs.FiringCameraShakeDuration);
+                ret.AiFiringArc = this.AiFiringArc.Combine(rhs.AiFiringArc);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -6014,12 +6014,12 @@ namespace Mutagen.Bethesda.Starfield
             public bool AimAssistTemplate;
             public bool AimOpticalSightModel;
             public bool MeleeAimAssistModel;
-            public bool WAIMUnknown1;
-            public bool WAIMUnknown2;
+            public bool UpdateAdvancedAimInfo;
+            public bool EnableOrientFireNodesToAimingDirection;
             public bool EnableMarkingTargets;
             public bool ReticleType;
-            public bool WAIMUnknown3;
-            public bool WAIMUnknown4;
+            public bool InverseReticleSpread;
+            public bool DisplayedReticleIgnoresPlayerMovement;
             public bool AmmoType;
             public bool AmmoCapacity;
             public bool AmmoList;
@@ -6027,7 +6027,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OverrideShellCasing;
             public bool ProjectilesCount;
             public bool NpcsUseAmmo;
-            public bool WAM2Unknown1;
+            public bool NumberOfImpactSounds;
             public bool WAMM;
             public SoundReference.TranslationMask? MeleeOrCreature;
             public SoundReference.TranslationMask? PrimedExplosive;
@@ -6054,12 +6054,12 @@ namespace Mutagen.Bethesda.Starfield
             public bool HitBehavior;
             public bool Resistance;
             public bool Skill;
-            public bool WDMGUnknown4;
-            public bool WDMGUnknown5;
-            public bool WDMGUnknown6;
-            public bool WDMGUnknown7;
-            public bool WDMGUnknown8;
-            public bool WDMGUnknown9;
+            public bool LowGravityScaleControlPoint;
+            public bool LowGravityRangeMultMin;
+            public bool LowGravityRangeMultMax;
+            public bool HighGravityScaleControlPoint;
+            public bool HighGravityRangeMultMin;
+            public bool HighGravityRangeMultMax;
             public bool CritChanceIncMult;
             public WeaponDamageType.TranslationMask? DamageTypes;
             public bool FiringType;
@@ -6072,26 +6072,26 @@ namespace Mutagen.Bethesda.Starfield
             public bool BoltAction;
             public bool DisableShellCaseEject;
             public bool ShotsPerSecond;
-            public bool WFIRUnknown7;
+            public bool WeaponAttackAnimationDuration;
             public bool OverrideRateOfFire;
             public bool TriggerThresholdPrimaryTrigger;
-            public bool WFIRUnknown10;
+            public bool OverrideTriggerThreshold;
             public bool TriggerThresholdSecondStage;
             public bool HasStagedTrigger;
             public bool HasDualTrigger;
             public bool BurstDelaySeconds;
             public bool NonPlayable;
             public bool PlayerOnly;
-            public bool WFLGUnknown1;
-            public bool WFLGUnknown2;
+            public bool PreventUseInNormalCombat;
+            public bool IsSecondary;
             public bool CannotDrop;
             public bool MinorCrime;
             public bool NonHostile;
-            public bool WFLGUnknown3;
-            public bool WFLGUnknown4;
-            public bool WFLGUnknown5;
-            public bool WFLGUnknown6;
-            public bool WFLGUnknown7;
+            public bool Bound;
+            public bool NpcPrefersLongBursts;
+            public bool NpcsOnlyFireWhenMagazineFull;
+            public bool UseSequentialFireNodes;
+            public bool UseRandomFireNodes;
             public bool AnimationType;
             public bool BaseWeight;
             public bool BaseValue;
@@ -6109,13 +6109,13 @@ namespace Mutagen.Bethesda.Starfield
             public bool ConsumeAmmo;
             public bool PowerBonus;
             public bool UsePower;
-            public bool QNAMUnknown1;
-            public bool QNAMUnknown2;
-            public bool QNAMUnknown3;
-            public bool QNAMUnknown4;
-            public bool QNAMUnknown5;
+            public bool VariablePowerEnabled;
+            public bool VariablePowerTransitionDuration;
+            public bool UseChargeOnlyInFocusMode;
+            public bool PowerIntensityCurve;
+            public bool PowerDamageMultiplier;
             public bool PowerConsumption;
-            public bool WRLOUnknown1;
+            public bool ReloadSeconds;
             public bool ReloadSpeed;
             public bool ReloadCharging;
             public bool ReloadSingle;
@@ -6140,11 +6140,11 @@ namespace Mutagen.Bethesda.Starfield
             public bool ImpactDataSet;
             public bool ColorRemappingIndex;
             public bool ImageSpaceAdapter;
-            public bool WTRMUnknown1;
-            public bool WTRMUnknown2;
-            public bool WTRMUnknown3;
-            public bool WTRMUnknown4;
-            public bool WTRMUnknown5;
+            public bool AttackActionPointCost;
+            public bool OverrideDefaultCameraShake;
+            public bool FiringCameraShakeIntensity;
+            public bool FiringCameraShakeDuration;
+            public bool AiFiringArc;
             #endregion
 
             #region Ctors
@@ -6175,12 +6175,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.AimAssistTemplate = defaultOn;
                 this.AimOpticalSightModel = defaultOn;
                 this.MeleeAimAssistModel = defaultOn;
-                this.WAIMUnknown1 = defaultOn;
-                this.WAIMUnknown2 = defaultOn;
+                this.UpdateAdvancedAimInfo = defaultOn;
+                this.EnableOrientFireNodesToAimingDirection = defaultOn;
                 this.EnableMarkingTargets = defaultOn;
                 this.ReticleType = defaultOn;
-                this.WAIMUnknown3 = defaultOn;
-                this.WAIMUnknown4 = defaultOn;
+                this.InverseReticleSpread = defaultOn;
+                this.DisplayedReticleIgnoresPlayerMovement = defaultOn;
                 this.AmmoType = defaultOn;
                 this.AmmoCapacity = defaultOn;
                 this.AmmoList = defaultOn;
@@ -6188,7 +6188,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OverrideShellCasing = defaultOn;
                 this.ProjectilesCount = defaultOn;
                 this.NpcsUseAmmo = defaultOn;
-                this.WAM2Unknown1 = defaultOn;
+                this.NumberOfImpactSounds = defaultOn;
                 this.WAMM = defaultOn;
                 this.SoundLevel = defaultOn;
                 this.MeleeDetectionSoundLevel = defaultOn;
@@ -6208,12 +6208,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.HitBehavior = defaultOn;
                 this.Resistance = defaultOn;
                 this.Skill = defaultOn;
-                this.WDMGUnknown4 = defaultOn;
-                this.WDMGUnknown5 = defaultOn;
-                this.WDMGUnknown6 = defaultOn;
-                this.WDMGUnknown7 = defaultOn;
-                this.WDMGUnknown8 = defaultOn;
-                this.WDMGUnknown9 = defaultOn;
+                this.LowGravityScaleControlPoint = defaultOn;
+                this.LowGravityRangeMultMin = defaultOn;
+                this.LowGravityRangeMultMax = defaultOn;
+                this.HighGravityScaleControlPoint = defaultOn;
+                this.HighGravityRangeMultMin = defaultOn;
+                this.HighGravityRangeMultMax = defaultOn;
                 this.CritChanceIncMult = defaultOn;
                 this.FiringType = defaultOn;
                 this.BurstCount = defaultOn;
@@ -6225,26 +6225,26 @@ namespace Mutagen.Bethesda.Starfield
                 this.BoltAction = defaultOn;
                 this.DisableShellCaseEject = defaultOn;
                 this.ShotsPerSecond = defaultOn;
-                this.WFIRUnknown7 = defaultOn;
+                this.WeaponAttackAnimationDuration = defaultOn;
                 this.OverrideRateOfFire = defaultOn;
                 this.TriggerThresholdPrimaryTrigger = defaultOn;
-                this.WFIRUnknown10 = defaultOn;
+                this.OverrideTriggerThreshold = defaultOn;
                 this.TriggerThresholdSecondStage = defaultOn;
                 this.HasStagedTrigger = defaultOn;
                 this.HasDualTrigger = defaultOn;
                 this.BurstDelaySeconds = defaultOn;
                 this.NonPlayable = defaultOn;
                 this.PlayerOnly = defaultOn;
-                this.WFLGUnknown1 = defaultOn;
-                this.WFLGUnknown2 = defaultOn;
+                this.PreventUseInNormalCombat = defaultOn;
+                this.IsSecondary = defaultOn;
                 this.CannotDrop = defaultOn;
                 this.MinorCrime = defaultOn;
                 this.NonHostile = defaultOn;
-                this.WFLGUnknown3 = defaultOn;
-                this.WFLGUnknown4 = defaultOn;
-                this.WFLGUnknown5 = defaultOn;
-                this.WFLGUnknown6 = defaultOn;
-                this.WFLGUnknown7 = defaultOn;
+                this.Bound = defaultOn;
+                this.NpcPrefersLongBursts = defaultOn;
+                this.NpcsOnlyFireWhenMagazineFull = defaultOn;
+                this.UseSequentialFireNodes = defaultOn;
+                this.UseRandomFireNodes = defaultOn;
                 this.AnimationType = defaultOn;
                 this.BaseWeight = defaultOn;
                 this.BaseValue = defaultOn;
@@ -6262,13 +6262,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.ConsumeAmmo = defaultOn;
                 this.PowerBonus = defaultOn;
                 this.UsePower = defaultOn;
-                this.QNAMUnknown1 = defaultOn;
-                this.QNAMUnknown2 = defaultOn;
-                this.QNAMUnknown3 = defaultOn;
-                this.QNAMUnknown4 = defaultOn;
-                this.QNAMUnknown5 = defaultOn;
+                this.VariablePowerEnabled = defaultOn;
+                this.VariablePowerTransitionDuration = defaultOn;
+                this.UseChargeOnlyInFocusMode = defaultOn;
+                this.PowerIntensityCurve = defaultOn;
+                this.PowerDamageMultiplier = defaultOn;
                 this.PowerConsumption = defaultOn;
-                this.WRLOUnknown1 = defaultOn;
+                this.ReloadSeconds = defaultOn;
                 this.ReloadSpeed = defaultOn;
                 this.ReloadCharging = defaultOn;
                 this.ReloadSingle = defaultOn;
@@ -6292,11 +6292,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.ImpactDataSet = defaultOn;
                 this.ColorRemappingIndex = defaultOn;
                 this.ImageSpaceAdapter = defaultOn;
-                this.WTRMUnknown1 = defaultOn;
-                this.WTRMUnknown2 = defaultOn;
-                this.WTRMUnknown3 = defaultOn;
-                this.WTRMUnknown4 = defaultOn;
-                this.WTRMUnknown5 = defaultOn;
+                this.AttackActionPointCost = defaultOn;
+                this.OverrideDefaultCameraShake = defaultOn;
+                this.FiringCameraShakeIntensity = defaultOn;
+                this.FiringCameraShakeDuration = defaultOn;
+                this.AiFiringArc = defaultOn;
             }
 
             #endregion
@@ -6335,12 +6335,12 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((AimAssistTemplate, null));
                 ret.Add((AimOpticalSightModel, null));
                 ret.Add((MeleeAimAssistModel, null));
-                ret.Add((WAIMUnknown1, null));
-                ret.Add((WAIMUnknown2, null));
+                ret.Add((UpdateAdvancedAimInfo, null));
+                ret.Add((EnableOrientFireNodesToAimingDirection, null));
                 ret.Add((EnableMarkingTargets, null));
                 ret.Add((ReticleType, null));
-                ret.Add((WAIMUnknown3, null));
-                ret.Add((WAIMUnknown4, null));
+                ret.Add((InverseReticleSpread, null));
+                ret.Add((DisplayedReticleIgnoresPlayerMovement, null));
                 ret.Add((AmmoType, null));
                 ret.Add((AmmoCapacity, null));
                 ret.Add((AmmoList, null));
@@ -6348,7 +6348,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((OverrideShellCasing, null));
                 ret.Add((ProjectilesCount, null));
                 ret.Add((NpcsUseAmmo, null));
-                ret.Add((WAM2Unknown1, null));
+                ret.Add((NumberOfImpactSounds, null));
                 ret.Add((WAMM, null));
                 ret.Add((MeleeOrCreature != null ? MeleeOrCreature.OnOverall : DefaultOn, MeleeOrCreature?.GetCrystal()));
                 ret.Add((PrimedExplosive != null ? PrimedExplosive.OnOverall : DefaultOn, PrimedExplosive?.GetCrystal()));
@@ -6375,12 +6375,12 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((HitBehavior, null));
                 ret.Add((Resistance, null));
                 ret.Add((Skill, null));
-                ret.Add((WDMGUnknown4, null));
-                ret.Add((WDMGUnknown5, null));
-                ret.Add((WDMGUnknown6, null));
-                ret.Add((WDMGUnknown7, null));
-                ret.Add((WDMGUnknown8, null));
-                ret.Add((WDMGUnknown9, null));
+                ret.Add((LowGravityScaleControlPoint, null));
+                ret.Add((LowGravityRangeMultMin, null));
+                ret.Add((LowGravityRangeMultMax, null));
+                ret.Add((HighGravityScaleControlPoint, null));
+                ret.Add((HighGravityRangeMultMin, null));
+                ret.Add((HighGravityRangeMultMax, null));
                 ret.Add((CritChanceIncMult, null));
                 ret.Add((DamageTypes == null ? DefaultOn : !DamageTypes.GetCrystal().CopyNothing, DamageTypes?.GetCrystal()));
                 ret.Add((FiringType, null));
@@ -6393,26 +6393,26 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((BoltAction, null));
                 ret.Add((DisableShellCaseEject, null));
                 ret.Add((ShotsPerSecond, null));
-                ret.Add((WFIRUnknown7, null));
+                ret.Add((WeaponAttackAnimationDuration, null));
                 ret.Add((OverrideRateOfFire, null));
                 ret.Add((TriggerThresholdPrimaryTrigger, null));
-                ret.Add((WFIRUnknown10, null));
+                ret.Add((OverrideTriggerThreshold, null));
                 ret.Add((TriggerThresholdSecondStage, null));
                 ret.Add((HasStagedTrigger, null));
                 ret.Add((HasDualTrigger, null));
                 ret.Add((BurstDelaySeconds, null));
                 ret.Add((NonPlayable, null));
                 ret.Add((PlayerOnly, null));
-                ret.Add((WFLGUnknown1, null));
-                ret.Add((WFLGUnknown2, null));
+                ret.Add((PreventUseInNormalCombat, null));
+                ret.Add((IsSecondary, null));
                 ret.Add((CannotDrop, null));
                 ret.Add((MinorCrime, null));
                 ret.Add((NonHostile, null));
-                ret.Add((WFLGUnknown3, null));
-                ret.Add((WFLGUnknown4, null));
-                ret.Add((WFLGUnknown5, null));
-                ret.Add((WFLGUnknown6, null));
-                ret.Add((WFLGUnknown7, null));
+                ret.Add((Bound, null));
+                ret.Add((NpcPrefersLongBursts, null));
+                ret.Add((NpcsOnlyFireWhenMagazineFull, null));
+                ret.Add((UseSequentialFireNodes, null));
+                ret.Add((UseRandomFireNodes, null));
                 ret.Add((AnimationType, null));
                 ret.Add((BaseWeight, null));
                 ret.Add((BaseValue, null));
@@ -6430,13 +6430,13 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ConsumeAmmo, null));
                 ret.Add((PowerBonus, null));
                 ret.Add((UsePower, null));
-                ret.Add((QNAMUnknown1, null));
-                ret.Add((QNAMUnknown2, null));
-                ret.Add((QNAMUnknown3, null));
-                ret.Add((QNAMUnknown4, null));
-                ret.Add((QNAMUnknown5, null));
+                ret.Add((VariablePowerEnabled, null));
+                ret.Add((VariablePowerTransitionDuration, null));
+                ret.Add((UseChargeOnlyInFocusMode, null));
+                ret.Add((PowerIntensityCurve, null));
+                ret.Add((PowerDamageMultiplier, null));
                 ret.Add((PowerConsumption, null));
-                ret.Add((WRLOUnknown1, null));
+                ret.Add((ReloadSeconds, null));
                 ret.Add((ReloadSpeed, null));
                 ret.Add((ReloadCharging, null));
                 ret.Add((ReloadSingle, null));
@@ -6461,11 +6461,11 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ImpactDataSet, null));
                 ret.Add((ColorRemappingIndex, null));
                 ret.Add((ImageSpaceAdapter, null));
-                ret.Add((WTRMUnknown1, null));
-                ret.Add((WTRMUnknown2, null));
-                ret.Add((WTRMUnknown3, null));
-                ret.Add((WTRMUnknown4, null));
-                ret.Add((WTRMUnknown5, null));
+                ret.Add((AttackActionPointCost, null));
+                ret.Add((OverrideDefaultCameraShake, null));
+                ret.Add((FiringCameraShakeIntensity, null));
+                ret.Add((FiringCameraShakeDuration, null));
+                ret.Add((AiFiringArc, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -6622,7 +6622,6 @@ namespace Mutagen.Bethesda.Starfield
         IBindableEquipment,
         IConstructibleObjectTarget,
         IEnchantable,
-        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         IItem,
@@ -6632,7 +6631,6 @@ namespace Mutagen.Bethesda.Starfield
         INamed,
         INamedRequired,
         IObjectBounded,
-        IPlaceableObject,
         IResearchResourceTarget,
         IScripted,
         IStarfieldMajorRecordInternal,
@@ -6649,7 +6647,7 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IObjectBounded
         /// </summary>
         new ObjectBounds ObjectBounds { get; set; }
-        new Single DirtinessScale { get; set; }
+        new Percent DirtinessScale { get; set; }
         new ObjectPaletteDefaults? ObjectPaletteDefaults { get; set; }
         new Transforms? Transforms { get; set; }
         new UInt64? XALG { get; set; }
@@ -6687,12 +6685,12 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<IAimAssistModelGetter> AimAssistTemplate { get; set; }
         new IFormLink<IAimOpticalSightMarkerGetter> AimOpticalSightModel { get; set; }
         new IFormLink<IMeleeAimAssistModelGetter> MeleeAimAssistModel { get; set; }
-        new Byte WAIMUnknown1 { get; set; }
-        new Byte WAIMUnknown2 { get; set; }
+        new Boolean UpdateAdvancedAimInfo { get; set; }
+        new Boolean EnableOrientFireNodesToAimingDirection { get; set; }
         new Boolean EnableMarkingTargets { get; set; }
-        new UInt32 ReticleType { get; set; }
-        new Byte WAIMUnknown3 { get; set; }
-        new Byte WAIMUnknown4 { get; set; }
+        new Weapon.ReticleTypeEnum ReticleType { get; set; }
+        new Boolean InverseReticleSpread { get; set; }
+        new Boolean DisplayedReticleIgnoresPlayerMovement { get; set; }
         new IFormLink<IAmmunitionGetter> AmmoType { get; set; }
         new UInt32 AmmoCapacity { get; set; }
         new IFormLink<ILeveledItemGetter> AmmoList { get; set; }
@@ -6700,7 +6698,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<IArtObjectGetter> OverrideShellCasing { get; set; }
         new Byte ProjectilesCount { get; set; }
         new Boolean NpcsUseAmmo { get; set; }
-        new Byte WAM2Unknown1 { get; set; }
+        new Byte NumberOfImpactSounds { get; set; }
         new MemorySlice<Byte>? WAMM { get; set; }
         new SoundReference MeleeOrCreature { get; set; }
         new SoundReference PrimedExplosive { get; set; }
@@ -6727,12 +6725,12 @@ namespace Mutagen.Bethesda.Starfield
         new HitBehavior HitBehavior { get; set; }
         new IFormLink<IActorValueInformationGetter> Resistance { get; set; }
         new IFormLink<IActorValueInformationGetter> Skill { get; set; }
-        new Single WDMGUnknown4 { get; set; }
-        new Single WDMGUnknown5 { get; set; }
-        new Single WDMGUnknown6 { get; set; }
-        new Single WDMGUnknown7 { get; set; }
-        new Single WDMGUnknown8 { get; set; }
-        new Single WDMGUnknown9 { get; set; }
+        new Single LowGravityScaleControlPoint { get; set; }
+        new Single LowGravityRangeMultMin { get; set; }
+        new Single LowGravityRangeMultMax { get; set; }
+        new Single HighGravityScaleControlPoint { get; set; }
+        new Single HighGravityRangeMultMin { get; set; }
+        new Single HighGravityRangeMultMax { get; set; }
         new Single CritChanceIncMult { get; set; }
         new ExtendedList<WeaponDamageType>? DamageTypes { get; set; }
         new Weapon.FiringTypeEnum FiringType { get; set; }
@@ -6745,26 +6743,26 @@ namespace Mutagen.Bethesda.Starfield
         new Boolean BoltAction { get; set; }
         new Boolean DisableShellCaseEject { get; set; }
         new Single ShotsPerSecond { get; set; }
-        new Single WFIRUnknown7 { get; set; }
+        new Single WeaponAttackAnimationDuration { get; set; }
         new Boolean OverrideRateOfFire { get; set; }
         new Single TriggerThresholdPrimaryTrigger { get; set; }
-        new Byte WFIRUnknown10 { get; set; }
+        new Boolean OverrideTriggerThreshold { get; set; }
         new Single TriggerThresholdSecondStage { get; set; }
         new Boolean HasStagedTrigger { get; set; }
         new Boolean HasDualTrigger { get; set; }
         new Single BurstDelaySeconds { get; set; }
         new Boolean NonPlayable { get; set; }
         new Boolean PlayerOnly { get; set; }
-        new Boolean WFLGUnknown1 { get; set; }
-        new Boolean WFLGUnknown2 { get; set; }
+        new Boolean PreventUseInNormalCombat { get; set; }
+        new Boolean IsSecondary { get; set; }
         new Boolean CannotDrop { get; set; }
         new Boolean MinorCrime { get; set; }
         new Boolean NonHostile { get; set; }
-        new Boolean WFLGUnknown3 { get; set; }
-        new Boolean WFLGUnknown4 { get; set; }
-        new Boolean WFLGUnknown5 { get; set; }
-        new Boolean WFLGUnknown6 { get; set; }
-        new Boolean WFLGUnknown7 { get; set; }
+        new Boolean Bound { get; set; }
+        new Boolean NpcPrefersLongBursts { get; set; }
+        new Boolean NpcsOnlyFireWhenMagazineFull { get; set; }
+        new Boolean UseSequentialFireNodes { get; set; }
+        new Boolean UseRandomFireNodes { get; set; }
         new Weapon.AnimationTypes AnimationType { get; set; }
         new Single BaseWeight { get; set; }
         new UInt32 BaseValue { get; set; }
@@ -6782,13 +6780,13 @@ namespace Mutagen.Bethesda.Starfield
         new Boolean ConsumeAmmo { get; set; }
         new IFormLink<IActorValueInformationGetter> PowerBonus { get; set; }
         new Boolean UsePower { get; set; }
-        new Byte QNAMUnknown1 { get; set; }
-        new Single QNAMUnknown2 { get; set; }
-        new Byte QNAMUnknown3 { get; set; }
-        new IFormLink<ICurveTableGetter> QNAMUnknown4 { get; set; }
-        new Single QNAMUnknown5 { get; set; }
+        new Boolean VariablePowerEnabled { get; set; }
+        new Single VariablePowerTransitionDuration { get; set; }
+        new Boolean UseChargeOnlyInFocusMode { get; set; }
+        new IFormLink<ICurveTableGetter> PowerIntensityCurve { get; set; }
+        new Single PowerDamageMultiplier { get; set; }
         new IFormLink<ICurveTableGetter> PowerConsumption { get; set; }
-        new Single WRLOUnknown1 { get; set; }
+        new Single ReloadSeconds { get; set; }
         new Single ReloadSpeed { get; set; }
         new Boolean ReloadCharging { get; set; }
         new Boolean ReloadSingle { get; set; }
@@ -6813,11 +6811,11 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<IImpactDataSetGetter> ImpactDataSet { get; set; }
         new Single ColorRemappingIndex { get; set; }
         new IFormLink<IImageSpaceAdapterGetter> ImageSpaceAdapter { get; set; }
-        new Single WTRMUnknown1 { get; set; }
-        new Byte WTRMUnknown2 { get; set; }
-        new Single WTRMUnknown3 { get; set; }
-        new Single WTRMUnknown4 { get; set; }
-        new Single WTRMUnknown5 { get; set; }
+        new Single AttackActionPointCost { get; set; }
+        new Boolean OverrideDefaultCameraShake { get; set; }
+        new Single FiringCameraShakeIntensity { get; set; }
+        new Single FiringCameraShakeDuration { get; set; }
+        new Single AiFiringArc { get; set; }
         #region Mutagen
         new Weapon.MajorFlag MajorFlags { get; set; }
         #endregion
@@ -6840,7 +6838,6 @@ namespace Mutagen.Bethesda.Starfield
         IBindableEquipmentGetter,
         IConstructibleObjectTargetGetter,
         IEnchantableGetter,
-        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         IItemGetter,
@@ -6851,7 +6848,6 @@ namespace Mutagen.Bethesda.Starfield
         INamedGetter,
         INamedRequiredGetter,
         IObjectBoundedGetter,
-        IPlaceableObjectGetter,
         IResearchResourceTargetGetter,
         IScriptedGetter,
         IStaticTargetGetter,
@@ -6871,7 +6867,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IObjectBoundsGetter ObjectBounds { get; }
         #endregion
-        Single DirtinessScale { get; }
+        Percent DirtinessScale { get; }
         IObjectPaletteDefaultsGetter? ObjectPaletteDefaults { get; }
         ITransformsGetter? Transforms { get; }
         UInt64? XALG { get; }
@@ -6915,12 +6911,12 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IAimAssistModelGetter> AimAssistTemplate { get; }
         IFormLinkGetter<IAimOpticalSightMarkerGetter> AimOpticalSightModel { get; }
         IFormLinkGetter<IMeleeAimAssistModelGetter> MeleeAimAssistModel { get; }
-        Byte WAIMUnknown1 { get; }
-        Byte WAIMUnknown2 { get; }
+        Boolean UpdateAdvancedAimInfo { get; }
+        Boolean EnableOrientFireNodesToAimingDirection { get; }
         Boolean EnableMarkingTargets { get; }
-        UInt32 ReticleType { get; }
-        Byte WAIMUnknown3 { get; }
-        Byte WAIMUnknown4 { get; }
+        Weapon.ReticleTypeEnum ReticleType { get; }
+        Boolean InverseReticleSpread { get; }
+        Boolean DisplayedReticleIgnoresPlayerMovement { get; }
         IFormLinkGetter<IAmmunitionGetter> AmmoType { get; }
         UInt32 AmmoCapacity { get; }
         IFormLinkGetter<ILeveledItemGetter> AmmoList { get; }
@@ -6928,7 +6924,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IArtObjectGetter> OverrideShellCasing { get; }
         Byte ProjectilesCount { get; }
         Boolean NpcsUseAmmo { get; }
-        Byte WAM2Unknown1 { get; }
+        Byte NumberOfImpactSounds { get; }
         ReadOnlyMemorySlice<Byte>? WAMM { get; }
         ISoundReferenceGetter MeleeOrCreature { get; }
         ISoundReferenceGetter PrimedExplosive { get; }
@@ -6955,12 +6951,12 @@ namespace Mutagen.Bethesda.Starfield
         HitBehavior HitBehavior { get; }
         IFormLinkGetter<IActorValueInformationGetter> Resistance { get; }
         IFormLinkGetter<IActorValueInformationGetter> Skill { get; }
-        Single WDMGUnknown4 { get; }
-        Single WDMGUnknown5 { get; }
-        Single WDMGUnknown6 { get; }
-        Single WDMGUnknown7 { get; }
-        Single WDMGUnknown8 { get; }
-        Single WDMGUnknown9 { get; }
+        Single LowGravityScaleControlPoint { get; }
+        Single LowGravityRangeMultMin { get; }
+        Single LowGravityRangeMultMax { get; }
+        Single HighGravityScaleControlPoint { get; }
+        Single HighGravityRangeMultMin { get; }
+        Single HighGravityRangeMultMax { get; }
         Single CritChanceIncMult { get; }
         IReadOnlyList<IWeaponDamageTypeGetter>? DamageTypes { get; }
         Weapon.FiringTypeEnum FiringType { get; }
@@ -6973,26 +6969,26 @@ namespace Mutagen.Bethesda.Starfield
         Boolean BoltAction { get; }
         Boolean DisableShellCaseEject { get; }
         Single ShotsPerSecond { get; }
-        Single WFIRUnknown7 { get; }
+        Single WeaponAttackAnimationDuration { get; }
         Boolean OverrideRateOfFire { get; }
         Single TriggerThresholdPrimaryTrigger { get; }
-        Byte WFIRUnknown10 { get; }
+        Boolean OverrideTriggerThreshold { get; }
         Single TriggerThresholdSecondStage { get; }
         Boolean HasStagedTrigger { get; }
         Boolean HasDualTrigger { get; }
         Single BurstDelaySeconds { get; }
         Boolean NonPlayable { get; }
         Boolean PlayerOnly { get; }
-        Boolean WFLGUnknown1 { get; }
-        Boolean WFLGUnknown2 { get; }
+        Boolean PreventUseInNormalCombat { get; }
+        Boolean IsSecondary { get; }
         Boolean CannotDrop { get; }
         Boolean MinorCrime { get; }
         Boolean NonHostile { get; }
-        Boolean WFLGUnknown3 { get; }
-        Boolean WFLGUnknown4 { get; }
-        Boolean WFLGUnknown5 { get; }
-        Boolean WFLGUnknown6 { get; }
-        Boolean WFLGUnknown7 { get; }
+        Boolean Bound { get; }
+        Boolean NpcPrefersLongBursts { get; }
+        Boolean NpcsOnlyFireWhenMagazineFull { get; }
+        Boolean UseSequentialFireNodes { get; }
+        Boolean UseRandomFireNodes { get; }
         Weapon.AnimationTypes AnimationType { get; }
         Single BaseWeight { get; }
         UInt32 BaseValue { get; }
@@ -7010,13 +7006,13 @@ namespace Mutagen.Bethesda.Starfield
         Boolean ConsumeAmmo { get; }
         IFormLinkGetter<IActorValueInformationGetter> PowerBonus { get; }
         Boolean UsePower { get; }
-        Byte QNAMUnknown1 { get; }
-        Single QNAMUnknown2 { get; }
-        Byte QNAMUnknown3 { get; }
-        IFormLinkGetter<ICurveTableGetter> QNAMUnknown4 { get; }
-        Single QNAMUnknown5 { get; }
+        Boolean VariablePowerEnabled { get; }
+        Single VariablePowerTransitionDuration { get; }
+        Boolean UseChargeOnlyInFocusMode { get; }
+        IFormLinkGetter<ICurveTableGetter> PowerIntensityCurve { get; }
+        Single PowerDamageMultiplier { get; }
         IFormLinkGetter<ICurveTableGetter> PowerConsumption { get; }
-        Single WRLOUnknown1 { get; }
+        Single ReloadSeconds { get; }
         Single ReloadSpeed { get; }
         Boolean ReloadCharging { get; }
         Boolean ReloadSingle { get; }
@@ -7041,11 +7037,11 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IImpactDataSetGetter> ImpactDataSet { get; }
         Single ColorRemappingIndex { get; }
         IFormLinkGetter<IImageSpaceAdapterGetter> ImageSpaceAdapter { get; }
-        Single WTRMUnknown1 { get; }
-        Byte WTRMUnknown2 { get; }
-        Single WTRMUnknown3 { get; }
-        Single WTRMUnknown4 { get; }
-        Single WTRMUnknown5 { get; }
+        Single AttackActionPointCost { get; }
+        Boolean OverrideDefaultCameraShake { get; }
+        Single FiringCameraShakeIntensity { get; }
+        Single FiringCameraShakeDuration { get; }
+        Single AiFiringArc { get; }
 
         #region Mutagen
         Weapon.MajorFlag MajorFlags { get; }
@@ -7257,12 +7253,12 @@ namespace Mutagen.Bethesda.Starfield
         AimAssistTemplate = 35,
         AimOpticalSightModel = 36,
         MeleeAimAssistModel = 37,
-        WAIMUnknown1 = 38,
-        WAIMUnknown2 = 39,
+        UpdateAdvancedAimInfo = 38,
+        EnableOrientFireNodesToAimingDirection = 39,
         EnableMarkingTargets = 40,
         ReticleType = 41,
-        WAIMUnknown3 = 42,
-        WAIMUnknown4 = 43,
+        InverseReticleSpread = 42,
+        DisplayedReticleIgnoresPlayerMovement = 43,
         AmmoType = 44,
         AmmoCapacity = 45,
         AmmoList = 46,
@@ -7270,7 +7266,7 @@ namespace Mutagen.Bethesda.Starfield
         OverrideShellCasing = 48,
         ProjectilesCount = 49,
         NpcsUseAmmo = 50,
-        WAM2Unknown1 = 51,
+        NumberOfImpactSounds = 51,
         WAMM = 52,
         MeleeOrCreature = 53,
         PrimedExplosive = 54,
@@ -7297,12 +7293,12 @@ namespace Mutagen.Bethesda.Starfield
         HitBehavior = 75,
         Resistance = 76,
         Skill = 77,
-        WDMGUnknown4 = 78,
-        WDMGUnknown5 = 79,
-        WDMGUnknown6 = 80,
-        WDMGUnknown7 = 81,
-        WDMGUnknown8 = 82,
-        WDMGUnknown9 = 83,
+        LowGravityScaleControlPoint = 78,
+        LowGravityRangeMultMin = 79,
+        LowGravityRangeMultMax = 80,
+        HighGravityScaleControlPoint = 81,
+        HighGravityRangeMultMin = 82,
+        HighGravityRangeMultMax = 83,
         CritChanceIncMult = 84,
         DamageTypes = 85,
         FiringType = 86,
@@ -7315,26 +7311,26 @@ namespace Mutagen.Bethesda.Starfield
         BoltAction = 93,
         DisableShellCaseEject = 94,
         ShotsPerSecond = 95,
-        WFIRUnknown7 = 96,
+        WeaponAttackAnimationDuration = 96,
         OverrideRateOfFire = 97,
         TriggerThresholdPrimaryTrigger = 98,
-        WFIRUnknown10 = 99,
+        OverrideTriggerThreshold = 99,
         TriggerThresholdSecondStage = 100,
         HasStagedTrigger = 101,
         HasDualTrigger = 102,
         BurstDelaySeconds = 103,
         NonPlayable = 104,
         PlayerOnly = 105,
-        WFLGUnknown1 = 106,
-        WFLGUnknown2 = 107,
+        PreventUseInNormalCombat = 106,
+        IsSecondary = 107,
         CannotDrop = 108,
         MinorCrime = 109,
         NonHostile = 110,
-        WFLGUnknown3 = 111,
-        WFLGUnknown4 = 112,
-        WFLGUnknown5 = 113,
-        WFLGUnknown6 = 114,
-        WFLGUnknown7 = 115,
+        Bound = 111,
+        NpcPrefersLongBursts = 112,
+        NpcsOnlyFireWhenMagazineFull = 113,
+        UseSequentialFireNodes = 114,
+        UseRandomFireNodes = 115,
         AnimationType = 116,
         BaseWeight = 117,
         BaseValue = 118,
@@ -7352,13 +7348,13 @@ namespace Mutagen.Bethesda.Starfield
         ConsumeAmmo = 130,
         PowerBonus = 131,
         UsePower = 132,
-        QNAMUnknown1 = 133,
-        QNAMUnknown2 = 134,
-        QNAMUnknown3 = 135,
-        QNAMUnknown4 = 136,
-        QNAMUnknown5 = 137,
+        VariablePowerEnabled = 133,
+        VariablePowerTransitionDuration = 134,
+        UseChargeOnlyInFocusMode = 135,
+        PowerIntensityCurve = 136,
+        PowerDamageMultiplier = 137,
         PowerConsumption = 138,
-        WRLOUnknown1 = 139,
+        ReloadSeconds = 139,
         ReloadSpeed = 140,
         ReloadCharging = 141,
         ReloadSingle = 142,
@@ -7383,11 +7379,11 @@ namespace Mutagen.Bethesda.Starfield
         ImpactDataSet = 161,
         ColorRemappingIndex = 162,
         ImageSpaceAdapter = 163,
-        WTRMUnknown1 = 164,
-        WTRMUnknown2 = 165,
-        WTRMUnknown3 = 166,
-        WTRMUnknown4 = 167,
-        WTRMUnknown5 = 168,
+        AttackActionPointCost = 164,
+        OverrideDefaultCameraShake = 165,
+        FiringCameraShakeIntensity = 166,
+        FiringCameraShakeDuration = 167,
+        AiFiringArc = 168,
     }
     #endregion
 
@@ -7536,7 +7532,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.VirtualMachineAdapter = null;
             item.ObjectBounds.Clear();
-            item.DirtinessScale = default(Single);
+            item.DirtinessScale = default(Percent);
             item.ObjectPaletteDefaults = null;
             item.Transforms = null;
             item.XALG = default;
@@ -7565,12 +7561,12 @@ namespace Mutagen.Bethesda.Starfield
             item.AimAssistTemplate.Clear();
             item.AimOpticalSightModel.Clear();
             item.MeleeAimAssistModel.Clear();
-            item.WAIMUnknown1 = default(Byte);
-            item.WAIMUnknown2 = default(Byte);
+            item.UpdateAdvancedAimInfo = default(Boolean);
+            item.EnableOrientFireNodesToAimingDirection = default(Boolean);
             item.EnableMarkingTargets = default(Boolean);
-            item.ReticleType = default(UInt32);
-            item.WAIMUnknown3 = default(Byte);
-            item.WAIMUnknown4 = default(Byte);
+            item.ReticleType = default(Weapon.ReticleTypeEnum);
+            item.InverseReticleSpread = default(Boolean);
+            item.DisplayedReticleIgnoresPlayerMovement = default(Boolean);
             item.AmmoType.Clear();
             item.AmmoCapacity = default(UInt32);
             item.AmmoList.Clear();
@@ -7578,7 +7574,7 @@ namespace Mutagen.Bethesda.Starfield
             item.OverrideShellCasing.Clear();
             item.ProjectilesCount = default(Byte);
             item.NpcsUseAmmo = default(Boolean);
-            item.WAM2Unknown1 = default(Byte);
+            item.NumberOfImpactSounds = default(Byte);
             item.WAMM = default;
             item.MeleeOrCreature.Clear();
             item.PrimedExplosive.Clear();
@@ -7605,12 +7601,12 @@ namespace Mutagen.Bethesda.Starfield
             item.HitBehavior = default(HitBehavior);
             item.Resistance.Clear();
             item.Skill.Clear();
-            item.WDMGUnknown4 = default(Single);
-            item.WDMGUnknown5 = default(Single);
-            item.WDMGUnknown6 = default(Single);
-            item.WDMGUnknown7 = default(Single);
-            item.WDMGUnknown8 = default(Single);
-            item.WDMGUnknown9 = default(Single);
+            item.LowGravityScaleControlPoint = default(Single);
+            item.LowGravityRangeMultMin = default(Single);
+            item.LowGravityRangeMultMax = default(Single);
+            item.HighGravityScaleControlPoint = default(Single);
+            item.HighGravityRangeMultMin = default(Single);
+            item.HighGravityRangeMultMax = default(Single);
             item.CritChanceIncMult = default(Single);
             item.DamageTypes = null;
             item.FiringType = default(Weapon.FiringTypeEnum);
@@ -7623,26 +7619,26 @@ namespace Mutagen.Bethesda.Starfield
             item.BoltAction = default(Boolean);
             item.DisableShellCaseEject = default(Boolean);
             item.ShotsPerSecond = default(Single);
-            item.WFIRUnknown7 = default(Single);
+            item.WeaponAttackAnimationDuration = default(Single);
             item.OverrideRateOfFire = default(Boolean);
             item.TriggerThresholdPrimaryTrigger = default(Single);
-            item.WFIRUnknown10 = default(Byte);
+            item.OverrideTriggerThreshold = default(Boolean);
             item.TriggerThresholdSecondStage = default(Single);
             item.HasStagedTrigger = default(Boolean);
             item.HasDualTrigger = default(Boolean);
             item.BurstDelaySeconds = default(Single);
             item.NonPlayable = default(Boolean);
             item.PlayerOnly = default(Boolean);
-            item.WFLGUnknown1 = default(Boolean);
-            item.WFLGUnknown2 = default(Boolean);
+            item.PreventUseInNormalCombat = default(Boolean);
+            item.IsSecondary = default(Boolean);
             item.CannotDrop = default(Boolean);
             item.MinorCrime = default(Boolean);
             item.NonHostile = default(Boolean);
-            item.WFLGUnknown3 = default(Boolean);
-            item.WFLGUnknown4 = default(Boolean);
-            item.WFLGUnknown5 = default(Boolean);
-            item.WFLGUnknown6 = default(Boolean);
-            item.WFLGUnknown7 = default(Boolean);
+            item.Bound = default(Boolean);
+            item.NpcPrefersLongBursts = default(Boolean);
+            item.NpcsOnlyFireWhenMagazineFull = default(Boolean);
+            item.UseSequentialFireNodes = default(Boolean);
+            item.UseRandomFireNodes = default(Boolean);
             item.AnimationType = default(Weapon.AnimationTypes);
             item.BaseWeight = default(Single);
             item.BaseValue = default(UInt32);
@@ -7660,13 +7656,13 @@ namespace Mutagen.Bethesda.Starfield
             item.ConsumeAmmo = default(Boolean);
             item.PowerBonus.Clear();
             item.UsePower = default(Boolean);
-            item.QNAMUnknown1 = default(Byte);
-            item.QNAMUnknown2 = default(Single);
-            item.QNAMUnknown3 = default(Byte);
-            item.QNAMUnknown4.Clear();
-            item.QNAMUnknown5 = default(Single);
+            item.VariablePowerEnabled = default(Boolean);
+            item.VariablePowerTransitionDuration = default(Single);
+            item.UseChargeOnlyInFocusMode = default(Boolean);
+            item.PowerIntensityCurve.Clear();
+            item.PowerDamageMultiplier = default(Single);
             item.PowerConsumption.Clear();
-            item.WRLOUnknown1 = default(Single);
+            item.ReloadSeconds = default(Single);
             item.ReloadSpeed = default(Single);
             item.ReloadCharging = default(Boolean);
             item.ReloadSingle = default(Boolean);
@@ -7691,11 +7687,11 @@ namespace Mutagen.Bethesda.Starfield
             item.ImpactDataSet.Clear();
             item.ColorRemappingIndex = default(Single);
             item.ImageSpaceAdapter.Clear();
-            item.WTRMUnknown1 = default(Single);
-            item.WTRMUnknown2 = default(Byte);
-            item.WTRMUnknown3 = default(Single);
-            item.WTRMUnknown4 = default(Single);
-            item.WTRMUnknown5 = default(Single);
+            item.AttackActionPointCost = default(Single);
+            item.OverrideDefaultCameraShake = default(Boolean);
+            item.FiringCameraShakeIntensity = default(Single);
+            item.FiringCameraShakeDuration = default(Single);
+            item.AiFiringArc = default(Single);
             base.Clear(item);
         }
         
@@ -7751,7 +7747,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.WeaponBarrel.Relink(mapping);
             obj.Power.Relink(mapping);
             obj.PowerBonus.Relink(mapping);
-            obj.QNAMUnknown4.Relink(mapping);
+            obj.PowerIntensityCurve.Relink(mapping);
             obj.PowerConsumption.Relink(mapping);
             obj.FirstPersonModel?.RemapLinks(mapping);
             obj.ImpactDataSet.Relink(mapping);
@@ -7869,7 +7865,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.ObjectBounds = MaskItemExt.Factory(item.ObjectBounds.GetEqualsMask(rhs.ObjectBounds, include), include);
-            ret.DirtinessScale = item.DirtinessScale.EqualsWithin(rhs.DirtinessScale);
+            ret.DirtinessScale = item.DirtinessScale.Equals(rhs.DirtinessScale);
             ret.ObjectPaletteDefaults = EqualsMaskHelper.EqualsHelper(
                 item.ObjectPaletteDefaults,
                 rhs.ObjectPaletteDefaults,
@@ -7930,12 +7926,12 @@ namespace Mutagen.Bethesda.Starfield
             ret.AimAssistTemplate = item.AimAssistTemplate.Equals(rhs.AimAssistTemplate);
             ret.AimOpticalSightModel = item.AimOpticalSightModel.Equals(rhs.AimOpticalSightModel);
             ret.MeleeAimAssistModel = item.MeleeAimAssistModel.Equals(rhs.MeleeAimAssistModel);
-            ret.WAIMUnknown1 = item.WAIMUnknown1 == rhs.WAIMUnknown1;
-            ret.WAIMUnknown2 = item.WAIMUnknown2 == rhs.WAIMUnknown2;
+            ret.UpdateAdvancedAimInfo = item.UpdateAdvancedAimInfo == rhs.UpdateAdvancedAimInfo;
+            ret.EnableOrientFireNodesToAimingDirection = item.EnableOrientFireNodesToAimingDirection == rhs.EnableOrientFireNodesToAimingDirection;
             ret.EnableMarkingTargets = item.EnableMarkingTargets == rhs.EnableMarkingTargets;
             ret.ReticleType = item.ReticleType == rhs.ReticleType;
-            ret.WAIMUnknown3 = item.WAIMUnknown3 == rhs.WAIMUnknown3;
-            ret.WAIMUnknown4 = item.WAIMUnknown4 == rhs.WAIMUnknown4;
+            ret.InverseReticleSpread = item.InverseReticleSpread == rhs.InverseReticleSpread;
+            ret.DisplayedReticleIgnoresPlayerMovement = item.DisplayedReticleIgnoresPlayerMovement == rhs.DisplayedReticleIgnoresPlayerMovement;
             ret.AmmoType = item.AmmoType.Equals(rhs.AmmoType);
             ret.AmmoCapacity = item.AmmoCapacity == rhs.AmmoCapacity;
             ret.AmmoList = item.AmmoList.Equals(rhs.AmmoList);
@@ -7943,7 +7939,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.OverrideShellCasing = item.OverrideShellCasing.Equals(rhs.OverrideShellCasing);
             ret.ProjectilesCount = item.ProjectilesCount == rhs.ProjectilesCount;
             ret.NpcsUseAmmo = item.NpcsUseAmmo == rhs.NpcsUseAmmo;
-            ret.WAM2Unknown1 = item.WAM2Unknown1 == rhs.WAM2Unknown1;
+            ret.NumberOfImpactSounds = item.NumberOfImpactSounds == rhs.NumberOfImpactSounds;
             ret.WAMM = MemorySliceExt.SequenceEqual(item.WAMM, rhs.WAMM);
             ret.MeleeOrCreature = MaskItemExt.Factory(item.MeleeOrCreature.GetEqualsMask(rhs.MeleeOrCreature, include), include);
             ret.PrimedExplosive = MaskItemExt.Factory(item.PrimedExplosive.GetEqualsMask(rhs.PrimedExplosive, include), include);
@@ -7970,12 +7966,12 @@ namespace Mutagen.Bethesda.Starfield
             ret.HitBehavior = item.HitBehavior == rhs.HitBehavior;
             ret.Resistance = item.Resistance.Equals(rhs.Resistance);
             ret.Skill = item.Skill.Equals(rhs.Skill);
-            ret.WDMGUnknown4 = item.WDMGUnknown4.EqualsWithin(rhs.WDMGUnknown4);
-            ret.WDMGUnknown5 = item.WDMGUnknown5.EqualsWithin(rhs.WDMGUnknown5);
-            ret.WDMGUnknown6 = item.WDMGUnknown6.EqualsWithin(rhs.WDMGUnknown6);
-            ret.WDMGUnknown7 = item.WDMGUnknown7.EqualsWithin(rhs.WDMGUnknown7);
-            ret.WDMGUnknown8 = item.WDMGUnknown8.EqualsWithin(rhs.WDMGUnknown8);
-            ret.WDMGUnknown9 = item.WDMGUnknown9.EqualsWithin(rhs.WDMGUnknown9);
+            ret.LowGravityScaleControlPoint = item.LowGravityScaleControlPoint.EqualsWithin(rhs.LowGravityScaleControlPoint);
+            ret.LowGravityRangeMultMin = item.LowGravityRangeMultMin.EqualsWithin(rhs.LowGravityRangeMultMin);
+            ret.LowGravityRangeMultMax = item.LowGravityRangeMultMax.EqualsWithin(rhs.LowGravityRangeMultMax);
+            ret.HighGravityScaleControlPoint = item.HighGravityScaleControlPoint.EqualsWithin(rhs.HighGravityScaleControlPoint);
+            ret.HighGravityRangeMultMin = item.HighGravityRangeMultMin.EqualsWithin(rhs.HighGravityRangeMultMin);
+            ret.HighGravityRangeMultMax = item.HighGravityRangeMultMax.EqualsWithin(rhs.HighGravityRangeMultMax);
             ret.CritChanceIncMult = item.CritChanceIncMult.EqualsWithin(rhs.CritChanceIncMult);
             ret.DamageTypes = item.DamageTypes.CollectionEqualsHelper(
                 rhs.DamageTypes,
@@ -7991,26 +7987,26 @@ namespace Mutagen.Bethesda.Starfield
             ret.BoltAction = item.BoltAction == rhs.BoltAction;
             ret.DisableShellCaseEject = item.DisableShellCaseEject == rhs.DisableShellCaseEject;
             ret.ShotsPerSecond = item.ShotsPerSecond.EqualsWithin(rhs.ShotsPerSecond);
-            ret.WFIRUnknown7 = item.WFIRUnknown7.EqualsWithin(rhs.WFIRUnknown7);
+            ret.WeaponAttackAnimationDuration = item.WeaponAttackAnimationDuration.EqualsWithin(rhs.WeaponAttackAnimationDuration);
             ret.OverrideRateOfFire = item.OverrideRateOfFire == rhs.OverrideRateOfFire;
             ret.TriggerThresholdPrimaryTrigger = item.TriggerThresholdPrimaryTrigger.EqualsWithin(rhs.TriggerThresholdPrimaryTrigger);
-            ret.WFIRUnknown10 = item.WFIRUnknown10 == rhs.WFIRUnknown10;
+            ret.OverrideTriggerThreshold = item.OverrideTriggerThreshold == rhs.OverrideTriggerThreshold;
             ret.TriggerThresholdSecondStage = item.TriggerThresholdSecondStage.EqualsWithin(rhs.TriggerThresholdSecondStage);
             ret.HasStagedTrigger = item.HasStagedTrigger == rhs.HasStagedTrigger;
             ret.HasDualTrigger = item.HasDualTrigger == rhs.HasDualTrigger;
             ret.BurstDelaySeconds = item.BurstDelaySeconds.EqualsWithin(rhs.BurstDelaySeconds);
             ret.NonPlayable = item.NonPlayable == rhs.NonPlayable;
             ret.PlayerOnly = item.PlayerOnly == rhs.PlayerOnly;
-            ret.WFLGUnknown1 = item.WFLGUnknown1 == rhs.WFLGUnknown1;
-            ret.WFLGUnknown2 = item.WFLGUnknown2 == rhs.WFLGUnknown2;
+            ret.PreventUseInNormalCombat = item.PreventUseInNormalCombat == rhs.PreventUseInNormalCombat;
+            ret.IsSecondary = item.IsSecondary == rhs.IsSecondary;
             ret.CannotDrop = item.CannotDrop == rhs.CannotDrop;
             ret.MinorCrime = item.MinorCrime == rhs.MinorCrime;
             ret.NonHostile = item.NonHostile == rhs.NonHostile;
-            ret.WFLGUnknown3 = item.WFLGUnknown3 == rhs.WFLGUnknown3;
-            ret.WFLGUnknown4 = item.WFLGUnknown4 == rhs.WFLGUnknown4;
-            ret.WFLGUnknown5 = item.WFLGUnknown5 == rhs.WFLGUnknown5;
-            ret.WFLGUnknown6 = item.WFLGUnknown6 == rhs.WFLGUnknown6;
-            ret.WFLGUnknown7 = item.WFLGUnknown7 == rhs.WFLGUnknown7;
+            ret.Bound = item.Bound == rhs.Bound;
+            ret.NpcPrefersLongBursts = item.NpcPrefersLongBursts == rhs.NpcPrefersLongBursts;
+            ret.NpcsOnlyFireWhenMagazineFull = item.NpcsOnlyFireWhenMagazineFull == rhs.NpcsOnlyFireWhenMagazineFull;
+            ret.UseSequentialFireNodes = item.UseSequentialFireNodes == rhs.UseSequentialFireNodes;
+            ret.UseRandomFireNodes = item.UseRandomFireNodes == rhs.UseRandomFireNodes;
             ret.AnimationType = item.AnimationType == rhs.AnimationType;
             ret.BaseWeight = item.BaseWeight.EqualsWithin(rhs.BaseWeight);
             ret.BaseValue = item.BaseValue == rhs.BaseValue;
@@ -8028,13 +8024,13 @@ namespace Mutagen.Bethesda.Starfield
             ret.ConsumeAmmo = item.ConsumeAmmo == rhs.ConsumeAmmo;
             ret.PowerBonus = item.PowerBonus.Equals(rhs.PowerBonus);
             ret.UsePower = item.UsePower == rhs.UsePower;
-            ret.QNAMUnknown1 = item.QNAMUnknown1 == rhs.QNAMUnknown1;
-            ret.QNAMUnknown2 = item.QNAMUnknown2.EqualsWithin(rhs.QNAMUnknown2);
-            ret.QNAMUnknown3 = item.QNAMUnknown3 == rhs.QNAMUnknown3;
-            ret.QNAMUnknown4 = item.QNAMUnknown4.Equals(rhs.QNAMUnknown4);
-            ret.QNAMUnknown5 = item.QNAMUnknown5.EqualsWithin(rhs.QNAMUnknown5);
+            ret.VariablePowerEnabled = item.VariablePowerEnabled == rhs.VariablePowerEnabled;
+            ret.VariablePowerTransitionDuration = item.VariablePowerTransitionDuration.EqualsWithin(rhs.VariablePowerTransitionDuration);
+            ret.UseChargeOnlyInFocusMode = item.UseChargeOnlyInFocusMode == rhs.UseChargeOnlyInFocusMode;
+            ret.PowerIntensityCurve = item.PowerIntensityCurve.Equals(rhs.PowerIntensityCurve);
+            ret.PowerDamageMultiplier = item.PowerDamageMultiplier.EqualsWithin(rhs.PowerDamageMultiplier);
             ret.PowerConsumption = item.PowerConsumption.Equals(rhs.PowerConsumption);
-            ret.WRLOUnknown1 = item.WRLOUnknown1.EqualsWithin(rhs.WRLOUnknown1);
+            ret.ReloadSeconds = item.ReloadSeconds.EqualsWithin(rhs.ReloadSeconds);
             ret.ReloadSpeed = item.ReloadSpeed.EqualsWithin(rhs.ReloadSpeed);
             ret.ReloadCharging = item.ReloadCharging == rhs.ReloadCharging;
             ret.ReloadSingle = item.ReloadSingle == rhs.ReloadSingle;
@@ -8063,11 +8059,11 @@ namespace Mutagen.Bethesda.Starfield
             ret.ImpactDataSet = item.ImpactDataSet.Equals(rhs.ImpactDataSet);
             ret.ColorRemappingIndex = item.ColorRemappingIndex.EqualsWithin(rhs.ColorRemappingIndex);
             ret.ImageSpaceAdapter = item.ImageSpaceAdapter.Equals(rhs.ImageSpaceAdapter);
-            ret.WTRMUnknown1 = item.WTRMUnknown1.EqualsWithin(rhs.WTRMUnknown1);
-            ret.WTRMUnknown2 = item.WTRMUnknown2 == rhs.WTRMUnknown2;
-            ret.WTRMUnknown3 = item.WTRMUnknown3.EqualsWithin(rhs.WTRMUnknown3);
-            ret.WTRMUnknown4 = item.WTRMUnknown4.EqualsWithin(rhs.WTRMUnknown4);
-            ret.WTRMUnknown5 = item.WTRMUnknown5.EqualsWithin(rhs.WTRMUnknown5);
+            ret.AttackActionPointCost = item.AttackActionPointCost.EqualsWithin(rhs.AttackActionPointCost);
+            ret.OverrideDefaultCameraShake = item.OverrideDefaultCameraShake == rhs.OverrideDefaultCameraShake;
+            ret.FiringCameraShakeIntensity = item.FiringCameraShakeIntensity.EqualsWithin(rhs.FiringCameraShakeIntensity);
+            ret.FiringCameraShakeDuration = item.FiringCameraShakeDuration.EqualsWithin(rhs.FiringCameraShakeDuration);
+            ret.AiFiringArc = item.AiFiringArc.EqualsWithin(rhs.AiFiringArc);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -8295,13 +8291,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.MeleeAimAssistModel.FormKey, "MeleeAimAssistModel");
             }
-            if (printMask?.WAIMUnknown1 ?? true)
+            if (printMask?.UpdateAdvancedAimInfo ?? true)
             {
-                sb.AppendItem(item.WAIMUnknown1, "WAIMUnknown1");
+                sb.AppendItem(item.UpdateAdvancedAimInfo, "UpdateAdvancedAimInfo");
             }
-            if (printMask?.WAIMUnknown2 ?? true)
+            if (printMask?.EnableOrientFireNodesToAimingDirection ?? true)
             {
-                sb.AppendItem(item.WAIMUnknown2, "WAIMUnknown2");
+                sb.AppendItem(item.EnableOrientFireNodesToAimingDirection, "EnableOrientFireNodesToAimingDirection");
             }
             if (printMask?.EnableMarkingTargets ?? true)
             {
@@ -8311,13 +8307,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ReticleType, "ReticleType");
             }
-            if (printMask?.WAIMUnknown3 ?? true)
+            if (printMask?.InverseReticleSpread ?? true)
             {
-                sb.AppendItem(item.WAIMUnknown3, "WAIMUnknown3");
+                sb.AppendItem(item.InverseReticleSpread, "InverseReticleSpread");
             }
-            if (printMask?.WAIMUnknown4 ?? true)
+            if (printMask?.DisplayedReticleIgnoresPlayerMovement ?? true)
             {
-                sb.AppendItem(item.WAIMUnknown4, "WAIMUnknown4");
+                sb.AppendItem(item.DisplayedReticleIgnoresPlayerMovement, "DisplayedReticleIgnoresPlayerMovement");
             }
             if (printMask?.AmmoType ?? true)
             {
@@ -8347,9 +8343,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.NpcsUseAmmo, "NpcsUseAmmo");
             }
-            if (printMask?.WAM2Unknown1 ?? true)
+            if (printMask?.NumberOfImpactSounds ?? true)
             {
-                sb.AppendItem(item.WAM2Unknown1, "WAM2Unknown1");
+                sb.AppendItem(item.NumberOfImpactSounds, "NumberOfImpactSounds");
             }
             if ((printMask?.WAMM ?? true)
                 && item.WAMM is {} WAMMItem)
@@ -8457,29 +8453,29 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Skill.FormKey, "Skill");
             }
-            if (printMask?.WDMGUnknown4 ?? true)
+            if (printMask?.LowGravityScaleControlPoint ?? true)
             {
-                sb.AppendItem(item.WDMGUnknown4, "WDMGUnknown4");
+                sb.AppendItem(item.LowGravityScaleControlPoint, "LowGravityScaleControlPoint");
             }
-            if (printMask?.WDMGUnknown5 ?? true)
+            if (printMask?.LowGravityRangeMultMin ?? true)
             {
-                sb.AppendItem(item.WDMGUnknown5, "WDMGUnknown5");
+                sb.AppendItem(item.LowGravityRangeMultMin, "LowGravityRangeMultMin");
             }
-            if (printMask?.WDMGUnknown6 ?? true)
+            if (printMask?.LowGravityRangeMultMax ?? true)
             {
-                sb.AppendItem(item.WDMGUnknown6, "WDMGUnknown6");
+                sb.AppendItem(item.LowGravityRangeMultMax, "LowGravityRangeMultMax");
             }
-            if (printMask?.WDMGUnknown7 ?? true)
+            if (printMask?.HighGravityScaleControlPoint ?? true)
             {
-                sb.AppendItem(item.WDMGUnknown7, "WDMGUnknown7");
+                sb.AppendItem(item.HighGravityScaleControlPoint, "HighGravityScaleControlPoint");
             }
-            if (printMask?.WDMGUnknown8 ?? true)
+            if (printMask?.HighGravityRangeMultMin ?? true)
             {
-                sb.AppendItem(item.WDMGUnknown8, "WDMGUnknown8");
+                sb.AppendItem(item.HighGravityRangeMultMin, "HighGravityRangeMultMin");
             }
-            if (printMask?.WDMGUnknown9 ?? true)
+            if (printMask?.HighGravityRangeMultMax ?? true)
             {
-                sb.AppendItem(item.WDMGUnknown9, "WDMGUnknown9");
+                sb.AppendItem(item.HighGravityRangeMultMax, "HighGravityRangeMultMax");
             }
             if (printMask?.CritChanceIncMult ?? true)
             {
@@ -8540,9 +8536,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ShotsPerSecond, "ShotsPerSecond");
             }
-            if (printMask?.WFIRUnknown7 ?? true)
+            if (printMask?.WeaponAttackAnimationDuration ?? true)
             {
-                sb.AppendItem(item.WFIRUnknown7, "WFIRUnknown7");
+                sb.AppendItem(item.WeaponAttackAnimationDuration, "WeaponAttackAnimationDuration");
             }
             if (printMask?.OverrideRateOfFire ?? true)
             {
@@ -8552,9 +8548,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.TriggerThresholdPrimaryTrigger, "TriggerThresholdPrimaryTrigger");
             }
-            if (printMask?.WFIRUnknown10 ?? true)
+            if (printMask?.OverrideTriggerThreshold ?? true)
             {
-                sb.AppendItem(item.WFIRUnknown10, "WFIRUnknown10");
+                sb.AppendItem(item.OverrideTriggerThreshold, "OverrideTriggerThreshold");
             }
             if (printMask?.TriggerThresholdSecondStage ?? true)
             {
@@ -8580,13 +8576,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.PlayerOnly, "PlayerOnly");
             }
-            if (printMask?.WFLGUnknown1 ?? true)
+            if (printMask?.PreventUseInNormalCombat ?? true)
             {
-                sb.AppendItem(item.WFLGUnknown1, "WFLGUnknown1");
+                sb.AppendItem(item.PreventUseInNormalCombat, "PreventUseInNormalCombat");
             }
-            if (printMask?.WFLGUnknown2 ?? true)
+            if (printMask?.IsSecondary ?? true)
             {
-                sb.AppendItem(item.WFLGUnknown2, "WFLGUnknown2");
+                sb.AppendItem(item.IsSecondary, "IsSecondary");
             }
             if (printMask?.CannotDrop ?? true)
             {
@@ -8600,25 +8596,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.NonHostile, "NonHostile");
             }
-            if (printMask?.WFLGUnknown3 ?? true)
+            if (printMask?.Bound ?? true)
             {
-                sb.AppendItem(item.WFLGUnknown3, "WFLGUnknown3");
+                sb.AppendItem(item.Bound, "Bound");
             }
-            if (printMask?.WFLGUnknown4 ?? true)
+            if (printMask?.NpcPrefersLongBursts ?? true)
             {
-                sb.AppendItem(item.WFLGUnknown4, "WFLGUnknown4");
+                sb.AppendItem(item.NpcPrefersLongBursts, "NpcPrefersLongBursts");
             }
-            if (printMask?.WFLGUnknown5 ?? true)
+            if (printMask?.NpcsOnlyFireWhenMagazineFull ?? true)
             {
-                sb.AppendItem(item.WFLGUnknown5, "WFLGUnknown5");
+                sb.AppendItem(item.NpcsOnlyFireWhenMagazineFull, "NpcsOnlyFireWhenMagazineFull");
             }
-            if (printMask?.WFLGUnknown6 ?? true)
+            if (printMask?.UseSequentialFireNodes ?? true)
             {
-                sb.AppendItem(item.WFLGUnknown6, "WFLGUnknown6");
+                sb.AppendItem(item.UseSequentialFireNodes, "UseSequentialFireNodes");
             }
-            if (printMask?.WFLGUnknown7 ?? true)
+            if (printMask?.UseRandomFireNodes ?? true)
             {
-                sb.AppendItem(item.WFLGUnknown7, "WFLGUnknown7");
+                sb.AppendItem(item.UseRandomFireNodes, "UseRandomFireNodes");
             }
             if (printMask?.AnimationType ?? true)
             {
@@ -8689,33 +8685,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.UsePower, "UsePower");
             }
-            if (printMask?.QNAMUnknown1 ?? true)
+            if (printMask?.VariablePowerEnabled ?? true)
             {
-                sb.AppendItem(item.QNAMUnknown1, "QNAMUnknown1");
+                sb.AppendItem(item.VariablePowerEnabled, "VariablePowerEnabled");
             }
-            if (printMask?.QNAMUnknown2 ?? true)
+            if (printMask?.VariablePowerTransitionDuration ?? true)
             {
-                sb.AppendItem(item.QNAMUnknown2, "QNAMUnknown2");
+                sb.AppendItem(item.VariablePowerTransitionDuration, "VariablePowerTransitionDuration");
             }
-            if (printMask?.QNAMUnknown3 ?? true)
+            if (printMask?.UseChargeOnlyInFocusMode ?? true)
             {
-                sb.AppendItem(item.QNAMUnknown3, "QNAMUnknown3");
+                sb.AppendItem(item.UseChargeOnlyInFocusMode, "UseChargeOnlyInFocusMode");
             }
-            if (printMask?.QNAMUnknown4 ?? true)
+            if (printMask?.PowerIntensityCurve ?? true)
             {
-                sb.AppendItem(item.QNAMUnknown4.FormKey, "QNAMUnknown4");
+                sb.AppendItem(item.PowerIntensityCurve.FormKey, "PowerIntensityCurve");
             }
-            if (printMask?.QNAMUnknown5 ?? true)
+            if (printMask?.PowerDamageMultiplier ?? true)
             {
-                sb.AppendItem(item.QNAMUnknown5, "QNAMUnknown5");
+                sb.AppendItem(item.PowerDamageMultiplier, "PowerDamageMultiplier");
             }
             if (printMask?.PowerConsumption ?? true)
             {
                 sb.AppendItem(item.PowerConsumption.FormKey, "PowerConsumption");
             }
-            if (printMask?.WRLOUnknown1 ?? true)
+            if (printMask?.ReloadSeconds ?? true)
             {
-                sb.AppendItem(item.WRLOUnknown1, "WRLOUnknown1");
+                sb.AppendItem(item.ReloadSeconds, "ReloadSeconds");
             }
             if (printMask?.ReloadSpeed ?? true)
             {
@@ -8815,25 +8811,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ImageSpaceAdapter.FormKey, "ImageSpaceAdapter");
             }
-            if (printMask?.WTRMUnknown1 ?? true)
+            if (printMask?.AttackActionPointCost ?? true)
             {
-                sb.AppendItem(item.WTRMUnknown1, "WTRMUnknown1");
+                sb.AppendItem(item.AttackActionPointCost, "AttackActionPointCost");
             }
-            if (printMask?.WTRMUnknown2 ?? true)
+            if (printMask?.OverrideDefaultCameraShake ?? true)
             {
-                sb.AppendItem(item.WTRMUnknown2, "WTRMUnknown2");
+                sb.AppendItem(item.OverrideDefaultCameraShake, "OverrideDefaultCameraShake");
             }
-            if (printMask?.WTRMUnknown3 ?? true)
+            if (printMask?.FiringCameraShakeIntensity ?? true)
             {
-                sb.AppendItem(item.WTRMUnknown3, "WTRMUnknown3");
+                sb.AppendItem(item.FiringCameraShakeIntensity, "FiringCameraShakeIntensity");
             }
-            if (printMask?.WTRMUnknown4 ?? true)
+            if (printMask?.FiringCameraShakeDuration ?? true)
             {
-                sb.AppendItem(item.WTRMUnknown4, "WTRMUnknown4");
+                sb.AppendItem(item.FiringCameraShakeDuration, "FiringCameraShakeDuration");
             }
-            if (printMask?.WTRMUnknown5 ?? true)
+            if (printMask?.AiFiringArc ?? true)
             {
-                sb.AppendItem(item.WTRMUnknown5, "WTRMUnknown5");
+                sb.AppendItem(item.AiFiringArc, "AiFiringArc");
             }
         }
         
@@ -8903,7 +8899,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.DirtinessScale) ?? true))
             {
-                if (!lhs.DirtinessScale.EqualsWithin(rhs.DirtinessScale)) return false;
+                if (!lhs.DirtinessScale.Equals(rhs.DirtinessScale)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.ObjectPaletteDefaults) ?? true))
             {
@@ -9037,13 +9033,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.MeleeAimAssistModel.Equals(rhs.MeleeAimAssistModel)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAIMUnknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.UpdateAdvancedAimInfo) ?? true))
             {
-                if (lhs.WAIMUnknown1 != rhs.WAIMUnknown1) return false;
+                if (lhs.UpdateAdvancedAimInfo != rhs.UpdateAdvancedAimInfo) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAIMUnknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.EnableOrientFireNodesToAimingDirection) ?? true))
             {
-                if (lhs.WAIMUnknown2 != rhs.WAIMUnknown2) return false;
+                if (lhs.EnableOrientFireNodesToAimingDirection != rhs.EnableOrientFireNodesToAimingDirection) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.EnableMarkingTargets) ?? true))
             {
@@ -9053,13 +9049,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.ReticleType != rhs.ReticleType) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAIMUnknown3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.InverseReticleSpread) ?? true))
             {
-                if (lhs.WAIMUnknown3 != rhs.WAIMUnknown3) return false;
+                if (lhs.InverseReticleSpread != rhs.InverseReticleSpread) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAIMUnknown4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.DisplayedReticleIgnoresPlayerMovement) ?? true))
             {
-                if (lhs.WAIMUnknown4 != rhs.WAIMUnknown4) return false;
+                if (lhs.DisplayedReticleIgnoresPlayerMovement != rhs.DisplayedReticleIgnoresPlayerMovement) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.AmmoType) ?? true))
             {
@@ -9089,9 +9085,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.NpcsUseAmmo != rhs.NpcsUseAmmo) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAM2Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.NumberOfImpactSounds) ?? true))
             {
-                if (lhs.WAM2Unknown1 != rhs.WAM2Unknown1) return false;
+                if (lhs.NumberOfImpactSounds != rhs.NumberOfImpactSounds) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAMM) ?? true))
             {
@@ -9225,29 +9221,29 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Skill.Equals(rhs.Skill)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WDMGUnknown4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.LowGravityScaleControlPoint) ?? true))
             {
-                if (!lhs.WDMGUnknown4.EqualsWithin(rhs.WDMGUnknown4)) return false;
+                if (!lhs.LowGravityScaleControlPoint.EqualsWithin(rhs.LowGravityScaleControlPoint)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WDMGUnknown5) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.LowGravityRangeMultMin) ?? true))
             {
-                if (!lhs.WDMGUnknown5.EqualsWithin(rhs.WDMGUnknown5)) return false;
+                if (!lhs.LowGravityRangeMultMin.EqualsWithin(rhs.LowGravityRangeMultMin)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WDMGUnknown6) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.LowGravityRangeMultMax) ?? true))
             {
-                if (!lhs.WDMGUnknown6.EqualsWithin(rhs.WDMGUnknown6)) return false;
+                if (!lhs.LowGravityRangeMultMax.EqualsWithin(rhs.LowGravityRangeMultMax)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WDMGUnknown7) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.HighGravityScaleControlPoint) ?? true))
             {
-                if (!lhs.WDMGUnknown7.EqualsWithin(rhs.WDMGUnknown7)) return false;
+                if (!lhs.HighGravityScaleControlPoint.EqualsWithin(rhs.HighGravityScaleControlPoint)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WDMGUnknown8) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.HighGravityRangeMultMin) ?? true))
             {
-                if (!lhs.WDMGUnknown8.EqualsWithin(rhs.WDMGUnknown8)) return false;
+                if (!lhs.HighGravityRangeMultMin.EqualsWithin(rhs.HighGravityRangeMultMin)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WDMGUnknown9) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.HighGravityRangeMultMax) ?? true))
             {
-                if (!lhs.WDMGUnknown9.EqualsWithin(rhs.WDMGUnknown9)) return false;
+                if (!lhs.HighGravityRangeMultMax.EqualsWithin(rhs.HighGravityRangeMultMax)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.CritChanceIncMult) ?? true))
             {
@@ -9297,9 +9293,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ShotsPerSecond.EqualsWithin(rhs.ShotsPerSecond)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFIRUnknown7) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WeaponAttackAnimationDuration) ?? true))
             {
-                if (!lhs.WFIRUnknown7.EqualsWithin(rhs.WFIRUnknown7)) return false;
+                if (!lhs.WeaponAttackAnimationDuration.EqualsWithin(rhs.WeaponAttackAnimationDuration)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.OverrideRateOfFire) ?? true))
             {
@@ -9309,9 +9305,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.TriggerThresholdPrimaryTrigger.EqualsWithin(rhs.TriggerThresholdPrimaryTrigger)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFIRUnknown10) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.OverrideTriggerThreshold) ?? true))
             {
-                if (lhs.WFIRUnknown10 != rhs.WFIRUnknown10) return false;
+                if (lhs.OverrideTriggerThreshold != rhs.OverrideTriggerThreshold) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.TriggerThresholdSecondStage) ?? true))
             {
@@ -9337,13 +9333,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.PlayerOnly != rhs.PlayerOnly) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.PreventUseInNormalCombat) ?? true))
             {
-                if (lhs.WFLGUnknown1 != rhs.WFLGUnknown1) return false;
+                if (lhs.PreventUseInNormalCombat != rhs.PreventUseInNormalCombat) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.IsSecondary) ?? true))
             {
-                if (lhs.WFLGUnknown2 != rhs.WFLGUnknown2) return false;
+                if (lhs.IsSecondary != rhs.IsSecondary) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.CannotDrop) ?? true))
             {
@@ -9357,25 +9353,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.NonHostile != rhs.NonHostile) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.Bound) ?? true))
             {
-                if (lhs.WFLGUnknown3 != rhs.WFLGUnknown3) return false;
+                if (lhs.Bound != rhs.Bound) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.NpcPrefersLongBursts) ?? true))
             {
-                if (lhs.WFLGUnknown4 != rhs.WFLGUnknown4) return false;
+                if (lhs.NpcPrefersLongBursts != rhs.NpcPrefersLongBursts) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown5) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.NpcsOnlyFireWhenMagazineFull) ?? true))
             {
-                if (lhs.WFLGUnknown5 != rhs.WFLGUnknown5) return false;
+                if (lhs.NpcsOnlyFireWhenMagazineFull != rhs.NpcsOnlyFireWhenMagazineFull) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown6) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.UseSequentialFireNodes) ?? true))
             {
-                if (lhs.WFLGUnknown6 != rhs.WFLGUnknown6) return false;
+                if (lhs.UseSequentialFireNodes != rhs.UseSequentialFireNodes) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown7) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.UseRandomFireNodes) ?? true))
             {
-                if (lhs.WFLGUnknown7 != rhs.WFLGUnknown7) return false;
+                if (lhs.UseRandomFireNodes != rhs.UseRandomFireNodes) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.AnimationType) ?? true))
             {
@@ -9445,33 +9441,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.UsePower != rhs.UsePower) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.QNAMUnknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.VariablePowerEnabled) ?? true))
             {
-                if (lhs.QNAMUnknown1 != rhs.QNAMUnknown1) return false;
+                if (lhs.VariablePowerEnabled != rhs.VariablePowerEnabled) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.QNAMUnknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.VariablePowerTransitionDuration) ?? true))
             {
-                if (!lhs.QNAMUnknown2.EqualsWithin(rhs.QNAMUnknown2)) return false;
+                if (!lhs.VariablePowerTransitionDuration.EqualsWithin(rhs.VariablePowerTransitionDuration)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.QNAMUnknown3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.UseChargeOnlyInFocusMode) ?? true))
             {
-                if (lhs.QNAMUnknown3 != rhs.QNAMUnknown3) return false;
+                if (lhs.UseChargeOnlyInFocusMode != rhs.UseChargeOnlyInFocusMode) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.QNAMUnknown4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.PowerIntensityCurve) ?? true))
             {
-                if (!lhs.QNAMUnknown4.Equals(rhs.QNAMUnknown4)) return false;
+                if (!lhs.PowerIntensityCurve.Equals(rhs.PowerIntensityCurve)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.QNAMUnknown5) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.PowerDamageMultiplier) ?? true))
             {
-                if (!lhs.QNAMUnknown5.EqualsWithin(rhs.QNAMUnknown5)) return false;
+                if (!lhs.PowerDamageMultiplier.EqualsWithin(rhs.PowerDamageMultiplier)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.PowerConsumption) ?? true))
             {
                 if (!lhs.PowerConsumption.Equals(rhs.PowerConsumption)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WRLOUnknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.ReloadSeconds) ?? true))
             {
-                if (!lhs.WRLOUnknown1.EqualsWithin(rhs.WRLOUnknown1)) return false;
+                if (!lhs.ReloadSeconds.EqualsWithin(rhs.ReloadSeconds)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.ReloadSpeed) ?? true))
             {
@@ -9573,25 +9569,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ImageSpaceAdapter.Equals(rhs.ImageSpaceAdapter)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTRMUnknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.AttackActionPointCost) ?? true))
             {
-                if (!lhs.WTRMUnknown1.EqualsWithin(rhs.WTRMUnknown1)) return false;
+                if (!lhs.AttackActionPointCost.EqualsWithin(rhs.AttackActionPointCost)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTRMUnknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.OverrideDefaultCameraShake) ?? true))
             {
-                if (lhs.WTRMUnknown2 != rhs.WTRMUnknown2) return false;
+                if (lhs.OverrideDefaultCameraShake != rhs.OverrideDefaultCameraShake) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTRMUnknown3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.FiringCameraShakeIntensity) ?? true))
             {
-                if (!lhs.WTRMUnknown3.EqualsWithin(rhs.WTRMUnknown3)) return false;
+                if (!lhs.FiringCameraShakeIntensity.EqualsWithin(rhs.FiringCameraShakeIntensity)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTRMUnknown4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.FiringCameraShakeDuration) ?? true))
             {
-                if (!lhs.WTRMUnknown4.EqualsWithin(rhs.WTRMUnknown4)) return false;
+                if (!lhs.FiringCameraShakeDuration.EqualsWithin(rhs.FiringCameraShakeDuration)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTRMUnknown5) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.AiFiringArc) ?? true))
             {
-                if (!lhs.WTRMUnknown5.EqualsWithin(rhs.WTRMUnknown5)) return false;
+                if (!lhs.AiFiringArc.EqualsWithin(rhs.AiFiringArc)) return false;
             }
             return true;
         }
@@ -9639,10 +9635,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XALGitem);
             }
-            foreach (var subItem in item.Components)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.Components);
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -9667,36 +9660,18 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(DropdownSounditem);
             }
-            if (item.Keywords is {} Keywordsitem)
-            {
-                foreach (var subItem in Keywordsitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
+            hash.Add(item.Keywords);
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
             }
             hash.Add(item.InstanceNaming);
-            if (item.AttachParentSlots is {} AttachParentSlotsitem)
-            {
-                foreach (var subItem in AttachParentSlotsitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
-            if (item.ObjectTemplates is {} ObjectTemplatesitem)
-            {
-                foreach (var subItem in ObjectTemplatesitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
+            hash.Add(item.AttachParentSlots);
+            hash.Add(item.ObjectTemplates);
             hash.Add(item.EmbeddedWeaponMod);
             if (item.BNAM is {} BNAMItem)
             {
-                hash.AddBytes(BNAMItem);
+                hash.Add(BNAMItem);
             }
             hash.Add(item.SightedTransitionSeconds);
             hash.Add(item.AimDownSightTemplate);
@@ -9706,12 +9681,12 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.AimAssistTemplate);
             hash.Add(item.AimOpticalSightModel);
             hash.Add(item.MeleeAimAssistModel);
-            hash.Add(item.WAIMUnknown1);
-            hash.Add(item.WAIMUnknown2);
+            hash.Add(item.UpdateAdvancedAimInfo);
+            hash.Add(item.EnableOrientFireNodesToAimingDirection);
             hash.Add(item.EnableMarkingTargets);
             hash.Add(item.ReticleType);
-            hash.Add(item.WAIMUnknown3);
-            hash.Add(item.WAIMUnknown4);
+            hash.Add(item.InverseReticleSpread);
+            hash.Add(item.DisplayedReticleIgnoresPlayerMovement);
             hash.Add(item.AmmoType);
             hash.Add(item.AmmoCapacity);
             hash.Add(item.AmmoList);
@@ -9719,10 +9694,10 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.OverrideShellCasing);
             hash.Add(item.ProjectilesCount);
             hash.Add(item.NpcsUseAmmo);
-            hash.Add(item.WAM2Unknown1);
+            hash.Add(item.NumberOfImpactSounds);
             if (item.WAMM is {} WAMMItem)
             {
-                hash.AddBytes(WAMMItem);
+                hash.Add(WAMMItem);
             }
             hash.Add(item.MeleeOrCreature);
             hash.Add(item.PrimedExplosive);
@@ -9735,7 +9710,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.MeleeDetectionSoundLevel);
             if (item.WTUR is {} WTURItem)
             {
-                hash.AddBytes(WTURItem);
+                hash.Add(WTURItem);
             }
             hash.Add(item.ChargeFullPowerSeconds);
             hash.Add(item.ChargeMinPowerPerShot);
@@ -9752,20 +9727,14 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.HitBehavior);
             hash.Add(item.Resistance);
             hash.Add(item.Skill);
-            hash.Add(item.WDMGUnknown4);
-            hash.Add(item.WDMGUnknown5);
-            hash.Add(item.WDMGUnknown6);
-            hash.Add(item.WDMGUnknown7);
-            hash.Add(item.WDMGUnknown8);
-            hash.Add(item.WDMGUnknown9);
+            hash.Add(item.LowGravityScaleControlPoint);
+            hash.Add(item.LowGravityRangeMultMin);
+            hash.Add(item.LowGravityRangeMultMax);
+            hash.Add(item.HighGravityScaleControlPoint);
+            hash.Add(item.HighGravityRangeMultMin);
+            hash.Add(item.HighGravityRangeMultMax);
             hash.Add(item.CritChanceIncMult);
-            if (item.DamageTypes is {} DamageTypesitem)
-            {
-                foreach (var subItem in DamageTypesitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
+            hash.Add(item.DamageTypes);
             hash.Add(item.FiringType);
             hash.Add(item.BurstCount);
             hash.Add(item.RepeatableFire);
@@ -9776,26 +9745,26 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.BoltAction);
             hash.Add(item.DisableShellCaseEject);
             hash.Add(item.ShotsPerSecond);
-            hash.Add(item.WFIRUnknown7);
+            hash.Add(item.WeaponAttackAnimationDuration);
             hash.Add(item.OverrideRateOfFire);
             hash.Add(item.TriggerThresholdPrimaryTrigger);
-            hash.Add(item.WFIRUnknown10);
+            hash.Add(item.OverrideTriggerThreshold);
             hash.Add(item.TriggerThresholdSecondStage);
             hash.Add(item.HasStagedTrigger);
             hash.Add(item.HasDualTrigger);
             hash.Add(item.BurstDelaySeconds);
             hash.Add(item.NonPlayable);
             hash.Add(item.PlayerOnly);
-            hash.Add(item.WFLGUnknown1);
-            hash.Add(item.WFLGUnknown2);
+            hash.Add(item.PreventUseInNormalCombat);
+            hash.Add(item.IsSecondary);
             hash.Add(item.CannotDrop);
             hash.Add(item.MinorCrime);
             hash.Add(item.NonHostile);
-            hash.Add(item.WFLGUnknown3);
-            hash.Add(item.WFLGUnknown4);
-            hash.Add(item.WFLGUnknown5);
-            hash.Add(item.WFLGUnknown6);
-            hash.Add(item.WFLGUnknown7);
+            hash.Add(item.Bound);
+            hash.Add(item.NpcPrefersLongBursts);
+            hash.Add(item.NpcsOnlyFireWhenMagazineFull);
+            hash.Add(item.UseSequentialFireNodes);
+            hash.Add(item.UseRandomFireNodes);
             hash.Add(item.AnimationType);
             hash.Add(item.BaseWeight);
             hash.Add(item.BaseValue);
@@ -9816,19 +9785,19 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ConsumeAmmo);
             hash.Add(item.PowerBonus);
             hash.Add(item.UsePower);
-            hash.Add(item.QNAMUnknown1);
-            hash.Add(item.QNAMUnknown2);
-            hash.Add(item.QNAMUnknown3);
-            hash.Add(item.QNAMUnknown4);
-            hash.Add(item.QNAMUnknown5);
+            hash.Add(item.VariablePowerEnabled);
+            hash.Add(item.VariablePowerTransitionDuration);
+            hash.Add(item.UseChargeOnlyInFocusMode);
+            hash.Add(item.PowerIntensityCurve);
+            hash.Add(item.PowerDamageMultiplier);
             hash.Add(item.PowerConsumption);
-            hash.Add(item.WRLOUnknown1);
+            hash.Add(item.ReloadSeconds);
             hash.Add(item.ReloadSpeed);
             hash.Add(item.ReloadCharging);
             hash.Add(item.ReloadSingle);
             if (item.WRUM is {} WRUMItem)
             {
-                hash.AddBytes(WRUMItem);
+                hash.Add(WRUMItem);
             }
             hash.Add(item.ApertureValueMin);
             hash.Add(item.ApertureValueMax);
@@ -9853,11 +9822,11 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ImpactDataSet);
             hash.Add(item.ColorRemappingIndex);
             hash.Add(item.ImageSpaceAdapter);
-            hash.Add(item.WTRMUnknown1);
-            hash.Add(item.WTRMUnknown2);
-            hash.Add(item.WTRMUnknown3);
-            hash.Add(item.WTRMUnknown4);
-            hash.Add(item.WTRMUnknown5);
+            hash.Add(item.AttackActionPointCost);
+            hash.Add(item.OverrideDefaultCameraShake);
+            hash.Add(item.FiringCameraShakeIntensity);
+            hash.Add(item.FiringCameraShakeDuration);
+            hash.Add(item.AiFiringArc);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -10022,7 +9991,7 @@ namespace Mutagen.Bethesda.Starfield
             yield return FormLinkInformation.Factory(obj.WeaponBarrel);
             yield return FormLinkInformation.Factory(obj.Power);
             yield return FormLinkInformation.Factory(obj.PowerBonus);
-            yield return FormLinkInformation.Factory(obj.QNAMUnknown4);
+            yield return FormLinkInformation.Factory(obj.PowerIntensityCurve);
             yield return FormLinkInformation.Factory(obj.PowerConsumption);
             if (obj.FirstPersonModel is {} FirstPersonModelItems)
             {
@@ -10532,13 +10501,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.MeleeAimAssistModel.SetTo(rhs.MeleeAimAssistModel.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAIMUnknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.UpdateAdvancedAimInfo) ?? true))
             {
-                item.WAIMUnknown1 = rhs.WAIMUnknown1;
+                item.UpdateAdvancedAimInfo = rhs.UpdateAdvancedAimInfo;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAIMUnknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.EnableOrientFireNodesToAimingDirection) ?? true))
             {
-                item.WAIMUnknown2 = rhs.WAIMUnknown2;
+                item.EnableOrientFireNodesToAimingDirection = rhs.EnableOrientFireNodesToAimingDirection;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.EnableMarkingTargets) ?? true))
             {
@@ -10548,13 +10517,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ReticleType = rhs.ReticleType;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAIMUnknown3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.InverseReticleSpread) ?? true))
             {
-                item.WAIMUnknown3 = rhs.WAIMUnknown3;
+                item.InverseReticleSpread = rhs.InverseReticleSpread;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAIMUnknown4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.DisplayedReticleIgnoresPlayerMovement) ?? true))
             {
-                item.WAIMUnknown4 = rhs.WAIMUnknown4;
+                item.DisplayedReticleIgnoresPlayerMovement = rhs.DisplayedReticleIgnoresPlayerMovement;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.AmmoType) ?? true))
             {
@@ -10584,9 +10553,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.NpcsUseAmmo = rhs.NpcsUseAmmo;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAM2Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.NumberOfImpactSounds) ?? true))
             {
-                item.WAM2Unknown1 = rhs.WAM2Unknown1;
+                item.NumberOfImpactSounds = rhs.NumberOfImpactSounds;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAMM) ?? true))
             {
@@ -10832,29 +10801,29 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Skill.SetTo(rhs.Skill.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WDMGUnknown4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.LowGravityScaleControlPoint) ?? true))
             {
-                item.WDMGUnknown4 = rhs.WDMGUnknown4;
+                item.LowGravityScaleControlPoint = rhs.LowGravityScaleControlPoint;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WDMGUnknown5) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.LowGravityRangeMultMin) ?? true))
             {
-                item.WDMGUnknown5 = rhs.WDMGUnknown5;
+                item.LowGravityRangeMultMin = rhs.LowGravityRangeMultMin;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WDMGUnknown6) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.LowGravityRangeMultMax) ?? true))
             {
-                item.WDMGUnknown6 = rhs.WDMGUnknown6;
+                item.LowGravityRangeMultMax = rhs.LowGravityRangeMultMax;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WDMGUnknown7) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.HighGravityScaleControlPoint) ?? true))
             {
-                item.WDMGUnknown7 = rhs.WDMGUnknown7;
+                item.HighGravityScaleControlPoint = rhs.HighGravityScaleControlPoint;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WDMGUnknown8) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.HighGravityRangeMultMin) ?? true))
             {
-                item.WDMGUnknown8 = rhs.WDMGUnknown8;
+                item.HighGravityRangeMultMin = rhs.HighGravityRangeMultMin;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WDMGUnknown9) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.HighGravityRangeMultMax) ?? true))
             {
-                item.WDMGUnknown9 = rhs.WDMGUnknown9;
+                item.HighGravityRangeMultMax = rhs.HighGravityRangeMultMax;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.CritChanceIncMult) ?? true))
             {
@@ -10932,9 +10901,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ShotsPerSecond = rhs.ShotsPerSecond;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFIRUnknown7) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WeaponAttackAnimationDuration) ?? true))
             {
-                item.WFIRUnknown7 = rhs.WFIRUnknown7;
+                item.WeaponAttackAnimationDuration = rhs.WeaponAttackAnimationDuration;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.OverrideRateOfFire) ?? true))
             {
@@ -10944,9 +10913,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.TriggerThresholdPrimaryTrigger = rhs.TriggerThresholdPrimaryTrigger;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFIRUnknown10) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.OverrideTriggerThreshold) ?? true))
             {
-                item.WFIRUnknown10 = rhs.WFIRUnknown10;
+                item.OverrideTriggerThreshold = rhs.OverrideTriggerThreshold;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.TriggerThresholdSecondStage) ?? true))
             {
@@ -10972,13 +10941,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.PlayerOnly = rhs.PlayerOnly;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.PreventUseInNormalCombat) ?? true))
             {
-                item.WFLGUnknown1 = rhs.WFLGUnknown1;
+                item.PreventUseInNormalCombat = rhs.PreventUseInNormalCombat;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.IsSecondary) ?? true))
             {
-                item.WFLGUnknown2 = rhs.WFLGUnknown2;
+                item.IsSecondary = rhs.IsSecondary;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.CannotDrop) ?? true))
             {
@@ -10992,25 +10961,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.NonHostile = rhs.NonHostile;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.Bound) ?? true))
             {
-                item.WFLGUnknown3 = rhs.WFLGUnknown3;
+                item.Bound = rhs.Bound;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.NpcPrefersLongBursts) ?? true))
             {
-                item.WFLGUnknown4 = rhs.WFLGUnknown4;
+                item.NpcPrefersLongBursts = rhs.NpcPrefersLongBursts;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown5) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.NpcsOnlyFireWhenMagazineFull) ?? true))
             {
-                item.WFLGUnknown5 = rhs.WFLGUnknown5;
+                item.NpcsOnlyFireWhenMagazineFull = rhs.NpcsOnlyFireWhenMagazineFull;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown6) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.UseSequentialFireNodes) ?? true))
             {
-                item.WFLGUnknown6 = rhs.WFLGUnknown6;
+                item.UseSequentialFireNodes = rhs.UseSequentialFireNodes;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WFLGUnknown7) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.UseRandomFireNodes) ?? true))
             {
-                item.WFLGUnknown7 = rhs.WFLGUnknown7;
+                item.UseRandomFireNodes = rhs.UseRandomFireNodes;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.AnimationType) ?? true))
             {
@@ -11080,33 +11049,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.UsePower = rhs.UsePower;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.QNAMUnknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.VariablePowerEnabled) ?? true))
             {
-                item.QNAMUnknown1 = rhs.QNAMUnknown1;
+                item.VariablePowerEnabled = rhs.VariablePowerEnabled;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.QNAMUnknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.VariablePowerTransitionDuration) ?? true))
             {
-                item.QNAMUnknown2 = rhs.QNAMUnknown2;
+                item.VariablePowerTransitionDuration = rhs.VariablePowerTransitionDuration;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.QNAMUnknown3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.UseChargeOnlyInFocusMode) ?? true))
             {
-                item.QNAMUnknown3 = rhs.QNAMUnknown3;
+                item.UseChargeOnlyInFocusMode = rhs.UseChargeOnlyInFocusMode;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.QNAMUnknown4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.PowerIntensityCurve) ?? true))
             {
-                item.QNAMUnknown4.SetTo(rhs.QNAMUnknown4.FormKey);
+                item.PowerIntensityCurve.SetTo(rhs.PowerIntensityCurve.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.QNAMUnknown5) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.PowerDamageMultiplier) ?? true))
             {
-                item.QNAMUnknown5 = rhs.QNAMUnknown5;
+                item.PowerDamageMultiplier = rhs.PowerDamageMultiplier;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.PowerConsumption) ?? true))
             {
                 item.PowerConsumption.SetTo(rhs.PowerConsumption.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WRLOUnknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.ReloadSeconds) ?? true))
             {
-                item.WRLOUnknown1 = rhs.WRLOUnknown1;
+                item.ReloadSeconds = rhs.ReloadSeconds;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.ReloadSpeed) ?? true))
             {
@@ -11233,25 +11202,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ImageSpaceAdapter.SetTo(rhs.ImageSpaceAdapter.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTRMUnknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.AttackActionPointCost) ?? true))
             {
-                item.WTRMUnknown1 = rhs.WTRMUnknown1;
+                item.AttackActionPointCost = rhs.AttackActionPointCost;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTRMUnknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.OverrideDefaultCameraShake) ?? true))
             {
-                item.WTRMUnknown2 = rhs.WTRMUnknown2;
+                item.OverrideDefaultCameraShake = rhs.OverrideDefaultCameraShake;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTRMUnknown3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.FiringCameraShakeIntensity) ?? true))
             {
-                item.WTRMUnknown3 = rhs.WTRMUnknown3;
+                item.FiringCameraShakeIntensity = rhs.FiringCameraShakeIntensity;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTRMUnknown4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.FiringCameraShakeDuration) ?? true))
             {
-                item.WTRMUnknown4 = rhs.WTRMUnknown4;
+                item.FiringCameraShakeDuration = rhs.FiringCameraShakeDuration;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTRMUnknown5) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.AiFiringArc) ?? true))
             {
-                item.WTRMUnknown5 = rhs.WTRMUnknown5;
+                item.AiFiringArc = rhs.AiFiringArc;
             }
             DeepCopyInCustom(
                 item: item,
@@ -11434,9 +11403,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: ObjectBoundsItem,
                 writer: writer,
                 translationParams: translationParams);
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            PercentBinaryTranslation.Write(
                 writer: writer,
                 item: item.DirtinessScale,
+                integerType: FloatIntegerType.UInt,
                 header: translationParams.ConvertToCustom(RecordTypes.ODTY));
             if (item.ObjectPaletteDefaults is {} ObjectPaletteDefaultsItem)
             {
@@ -11596,12 +11566,15 @@ namespace Mutagen.Bethesda.Starfield
                 FormLinkBinaryTranslation.Instance.Write(
                     writer: writer,
                     item: item.MeleeAimAssistModel);
-                writer.Write(item.WAIMUnknown1);
-                writer.Write(item.WAIMUnknown2);
+                writer.Write(item.UpdateAdvancedAimInfo);
+                writer.Write(item.EnableOrientFireNodesToAimingDirection);
                 writer.Write(item.EnableMarkingTargets);
-                writer.Write(item.ReticleType);
-                writer.Write(item.WAIMUnknown3);
-                writer.Write(item.WAIMUnknown4);
+                EnumBinaryTranslation<Weapon.ReticleTypeEnum, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.ReticleType,
+                    length: 4);
+                writer.Write(item.InverseReticleSpread);
+                writer.Write(item.DisplayedReticleIgnoresPlayerMovement);
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.WAM2)))
             {
@@ -11620,7 +11593,7 @@ namespace Mutagen.Bethesda.Starfield
                     item: item.OverrideShellCasing);
                 writer.Write(item.ProjectilesCount);
                 writer.Write(item.NpcsUseAmmo);
-                writer.Write(item.WAM2Unknown1);
+                writer.Write(item.NumberOfImpactSounds);
             }
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
@@ -11723,22 +11696,22 @@ namespace Mutagen.Bethesda.Starfield
                     item: item.Skill);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.WDMGUnknown4);
+                    item: item.LowGravityScaleControlPoint);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.WDMGUnknown5);
+                    item: item.LowGravityRangeMultMin);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.WDMGUnknown6);
+                    item: item.LowGravityRangeMultMax);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.WDMGUnknown7);
+                    item: item.HighGravityScaleControlPoint);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.WDMGUnknown8);
+                    item: item.HighGravityRangeMultMin);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.WDMGUnknown9);
+                    item: item.HighGravityRangeMultMax);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.CritChanceIncMult);
@@ -11782,12 +11755,12 @@ namespace Mutagen.Bethesda.Starfield
                     item: item.ShotsPerSecond);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.WFIRUnknown7);
+                    item: item.WeaponAttackAnimationDuration);
                 writer.Write(item.OverrideRateOfFire);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.TriggerThresholdPrimaryTrigger);
-                writer.Write(item.WFIRUnknown10);
+                writer.Write(item.OverrideTriggerThreshold);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.TriggerThresholdSecondStage);
@@ -11801,16 +11774,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 writer.Write(item.NonPlayable);
                 writer.Write(item.PlayerOnly);
-                writer.Write(item.WFLGUnknown1);
-                writer.Write(item.WFLGUnknown2);
+                writer.Write(item.PreventUseInNormalCombat);
+                writer.Write(item.IsSecondary);
                 writer.Write(item.CannotDrop);
                 writer.Write(item.MinorCrime);
                 writer.Write(item.NonHostile);
-                writer.Write(item.WFLGUnknown3);
-                writer.Write(item.WFLGUnknown4);
-                writer.Write(item.WFLGUnknown5);
-                writer.Write(item.WFLGUnknown6);
-                writer.Write(item.WFLGUnknown7);
+                writer.Write(item.Bound);
+                writer.Write(item.NpcPrefersLongBursts);
+                writer.Write(item.NpcsOnlyFireWhenMagazineFull);
+                writer.Write(item.UseSequentialFireNodes);
+                writer.Write(item.UseRandomFireNodes);
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.WGEN)))
             {
@@ -11871,17 +11844,17 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     item: item.PowerBonus);
                 writer.Write(item.UsePower);
-                writer.Write(item.QNAMUnknown1);
+                writer.Write(item.VariablePowerEnabled);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.QNAMUnknown2);
-                writer.Write(item.QNAMUnknown3);
+                    item: item.VariablePowerTransitionDuration);
+                writer.Write(item.UseChargeOnlyInFocusMode);
                 FormLinkBinaryTranslation.Instance.Write(
                     writer: writer,
-                    item: item.QNAMUnknown4);
+                    item: item.PowerIntensityCurve);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.QNAMUnknown5);
+                    item: item.PowerDamageMultiplier);
                 FormLinkBinaryTranslation.Instance.Write(
                     writer: writer,
                     item: item.PowerConsumption);
@@ -11890,7 +11863,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.WRLOUnknown1);
+                    item: item.ReloadSeconds);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.ReloadSpeed);
@@ -11967,17 +11940,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.WTRMUnknown1);
-                writer.Write(item.WTRMUnknown2);
+                    item: item.AttackActionPointCost);
+                writer.Write(item.OverrideDefaultCameraShake);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.WTRMUnknown3);
+                    item: item.FiringCameraShakeIntensity);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.WTRMUnknown4);
+                    item: item.FiringCameraShakeDuration);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.WTRMUnknown5);
+                    item: item.AiFiringArc);
             }
         }
 
@@ -12062,7 +12035,9 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ODTY:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DirtinessScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    item.DirtinessScale = PercentBinaryTranslation.Parse(
+                        reader: frame,
+                        integerType: FloatIntegerType.UInt);
                     return (int)Weapon_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.OPDS:
@@ -12277,18 +12252,20 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 4) return null;
                     item.MeleeAimAssistModel.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     if (dataFrame.Remaining < 1) return null;
-                    item.WAIMUnknown1 = dataFrame.ReadUInt8();
+                    item.UpdateAdvancedAimInfo = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
-                    item.WAIMUnknown2 = dataFrame.ReadUInt8();
+                    item.EnableOrientFireNodesToAimingDirection = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
                     item.EnableMarkingTargets = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 4) return null;
-                    item.ReticleType = dataFrame.ReadUInt32();
+                    item.ReticleType = EnumBinaryTranslation<Weapon.ReticleTypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
                     if (dataFrame.Remaining < 1) return null;
-                    item.WAIMUnknown3 = dataFrame.ReadUInt8();
+                    item.InverseReticleSpread = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
-                    item.WAIMUnknown4 = dataFrame.ReadUInt8();
-                    return (int)Weapon_FieldIndex.WAIMUnknown4;
+                    item.DisplayedReticleIgnoresPlayerMovement = dataFrame.ReadBoolean();
+                    return (int)Weapon_FieldIndex.DisplayedReticleIgnoresPlayerMovement;
                 }
                 case RecordTypeInts.WAM2:
                 {
@@ -12309,8 +12286,8 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 1) return null;
                     item.NpcsUseAmmo = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
-                    item.WAM2Unknown1 = dataFrame.ReadUInt8();
-                    return (int)Weapon_FieldIndex.WAM2Unknown1;
+                    item.NumberOfImpactSounds = dataFrame.ReadUInt8();
+                    return (int)Weapon_FieldIndex.NumberOfImpactSounds;
                 }
                 case RecordTypeInts.WAMM:
                 {
@@ -12395,17 +12372,17 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 4) return null;
                     item.Skill.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     if (dataFrame.Remaining < 4) return null;
-                    item.WDMGUnknown4 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.LowGravityScaleControlPoint = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WDMGUnknown5 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.LowGravityRangeMultMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WDMGUnknown6 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.LowGravityRangeMultMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WDMGUnknown7 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.HighGravityScaleControlPoint = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WDMGUnknown8 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.HighGravityRangeMultMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WDMGUnknown9 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.HighGravityRangeMultMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.CritChanceIncMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     return (int)Weapon_FieldIndex.CritChanceIncMult;
@@ -12447,13 +12424,13 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 4) return null;
                     item.ShotsPerSecond = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WFIRUnknown7 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.WeaponAttackAnimationDuration = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 1) return null;
                     item.OverrideRateOfFire = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 4) return null;
                     item.TriggerThresholdPrimaryTrigger = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    item.WFIRUnknown10 = dataFrame.ReadUInt8();
+                    item.OverrideTriggerThreshold = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 4) return null;
                     item.TriggerThresholdSecondStage = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 1) return null;
@@ -12473,9 +12450,9 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 1) return null;
                     item.PlayerOnly = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
-                    item.WFLGUnknown1 = dataFrame.ReadBoolean();
+                    item.PreventUseInNormalCombat = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
-                    item.WFLGUnknown2 = dataFrame.ReadBoolean();
+                    item.IsSecondary = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
                     item.CannotDrop = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
@@ -12483,16 +12460,16 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 1) return null;
                     item.NonHostile = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
-                    item.WFLGUnknown3 = dataFrame.ReadBoolean();
+                    item.Bound = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
-                    item.WFLGUnknown4 = dataFrame.ReadBoolean();
+                    item.NpcPrefersLongBursts = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
-                    item.WFLGUnknown5 = dataFrame.ReadBoolean();
+                    item.NpcsOnlyFireWhenMagazineFull = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
-                    item.WFLGUnknown6 = dataFrame.ReadBoolean();
+                    item.UseSequentialFireNodes = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
-                    item.WFLGUnknown7 = dataFrame.ReadBoolean();
-                    return (int)Weapon_FieldIndex.WFLGUnknown7;
+                    item.UseRandomFireNodes = dataFrame.ReadBoolean();
+                    return (int)Weapon_FieldIndex.UseRandomFireNodes;
                 }
                 case RecordTypeInts.WGEN:
                 {
@@ -12560,15 +12537,15 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 1) return null;
                     item.UsePower = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 1) return null;
-                    item.QNAMUnknown1 = dataFrame.ReadUInt8();
+                    item.VariablePowerEnabled = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 4) return null;
-                    item.QNAMUnknown2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.VariablePowerTransitionDuration = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    item.QNAMUnknown3 = dataFrame.ReadUInt8();
+                    item.UseChargeOnlyInFocusMode = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 4) return null;
-                    item.QNAMUnknown4.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    item.PowerIntensityCurve.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     if (dataFrame.Remaining < 4) return null;
-                    item.QNAMUnknown5 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.PowerDamageMultiplier = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.PowerConsumption.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     return (int)Weapon_FieldIndex.PowerConsumption;
@@ -12578,7 +12555,7 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WRLOUnknown1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.ReloadSeconds = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.ReloadSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 1) return null;
@@ -12657,16 +12634,16 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WTRMUnknown1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.AttackActionPointCost = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    item.WTRMUnknown2 = dataFrame.ReadUInt8();
+                    item.OverrideDefaultCameraShake = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 4) return null;
-                    item.WTRMUnknown3 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.FiringCameraShakeIntensity = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WTRMUnknown4 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.FiringCameraShakeDuration = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WTRMUnknown5 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    return (int)Weapon_FieldIndex.WTRMUnknown5;
+                    item.AiFiringArc = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    return (int)Weapon_FieldIndex.AiFiringArc;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -12747,7 +12724,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region DirtinessScale
         private int? _DirtinessScaleLocation;
-        public Single DirtinessScale => _DirtinessScaleLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants).Float() : default(Single);
+        public Percent DirtinessScale => _DirtinessScaleLocation.HasValue ? PercentBinaryTranslation.GetPercent(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region ObjectPaletteDefaults
         private RangeInt32? _ObjectPaletteDefaultsLocation;
@@ -12822,114 +12799,114 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _WAIMLocation;
         #region SightedTransitionSeconds
         private int _SightedTransitionSecondsLocation => _WAIMLocation!.Value.Min;
-        private bool _SightedTransitionSeconds_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _SightedTransitionSecondsLocation + 1 >= 4;
+        private bool _SightedTransitionSeconds_IsSet => _WAIMLocation.HasValue;
         public Single SightedTransitionSeconds => _SightedTransitionSeconds_IsSet ? _recordData.Slice(_SightedTransitionSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region AimDownSightTemplate
         private int _AimDownSightTemplateLocation => _WAIMLocation!.Value.Min + 0x4;
-        private bool _AimDownSightTemplate_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _AimDownSightTemplateLocation + 1 >= 4;
+        private bool _AimDownSightTemplate_IsSet => _WAIMLocation.HasValue;
         public IFormLinkGetter<IZoomGetter> AimDownSightTemplate => _AimDownSightTemplate_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IZoomGetter>(_package, _recordData.Span.Slice(_AimDownSightTemplateLocation, 0x4), isSet: _AimDownSightTemplate_IsSet) : FormLink<IZoomGetter>.Null;
         #endregion
         #region AimModel
         private int _AimModelLocation => _WAIMLocation!.Value.Min + 0x8;
-        private bool _AimModel_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _AimModelLocation + 1 >= 4;
+        private bool _AimModel_IsSet => _WAIMLocation.HasValue;
         public IFormLinkGetter<IAimModelGetter> AimModel => _AimModel_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IAimModelGetter>(_package, _recordData.Span.Slice(_AimModelLocation, 0x4), isSet: _AimModel_IsSet) : FormLink<IAimModelGetter>.Null;
         #endregion
         #region AccuracyBonus
         private int _AccuracyBonusLocation => _WAIMLocation!.Value.Min + 0xC;
-        private bool _AccuracyBonus_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _AccuracyBonusLocation + 1 >= 1;
-        public Byte AccuracyBonus => _AccuracyBonus_IsSet ? _recordData.Span[_AccuracyBonusLocation] : default(Byte);
+        private bool _AccuracyBonus_IsSet => _WAIMLocation.HasValue;
+        public Byte AccuracyBonus => _AccuracyBonus_IsSet ? _recordData.Span[_AccuracyBonusLocation] : default;
         #endregion
         #region HasScope
         private int _HasScopeLocation => _WAIMLocation!.Value.Min + 0xD;
-        private bool _HasScope_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _HasScopeLocation + 1 >= 1;
+        private bool _HasScope_IsSet => _WAIMLocation.HasValue;
         public Boolean HasScope => _HasScope_IsSet ? _recordData.Slice(_HasScopeLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region AimAssistTemplate
         private int _AimAssistTemplateLocation => _WAIMLocation!.Value.Min + 0xE;
-        private bool _AimAssistTemplate_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _AimAssistTemplateLocation + 1 >= 4;
+        private bool _AimAssistTemplate_IsSet => _WAIMLocation.HasValue;
         public IFormLinkGetter<IAimAssistModelGetter> AimAssistTemplate => _AimAssistTemplate_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IAimAssistModelGetter>(_package, _recordData.Span.Slice(_AimAssistTemplateLocation, 0x4), isSet: _AimAssistTemplate_IsSet) : FormLink<IAimAssistModelGetter>.Null;
         #endregion
         #region AimOpticalSightModel
         private int _AimOpticalSightModelLocation => _WAIMLocation!.Value.Min + 0x12;
-        private bool _AimOpticalSightModel_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _AimOpticalSightModelLocation + 1 >= 4;
+        private bool _AimOpticalSightModel_IsSet => _WAIMLocation.HasValue;
         public IFormLinkGetter<IAimOpticalSightMarkerGetter> AimOpticalSightModel => _AimOpticalSightModel_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IAimOpticalSightMarkerGetter>(_package, _recordData.Span.Slice(_AimOpticalSightModelLocation, 0x4), isSet: _AimOpticalSightModel_IsSet) : FormLink<IAimOpticalSightMarkerGetter>.Null;
         #endregion
         #region MeleeAimAssistModel
         private int _MeleeAimAssistModelLocation => _WAIMLocation!.Value.Min + 0x16;
-        private bool _MeleeAimAssistModel_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _MeleeAimAssistModelLocation + 1 >= 4;
+        private bool _MeleeAimAssistModel_IsSet => _WAIMLocation.HasValue;
         public IFormLinkGetter<IMeleeAimAssistModelGetter> MeleeAimAssistModel => _MeleeAimAssistModel_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IMeleeAimAssistModelGetter>(_package, _recordData.Span.Slice(_MeleeAimAssistModelLocation, 0x4), isSet: _MeleeAimAssistModel_IsSet) : FormLink<IMeleeAimAssistModelGetter>.Null;
         #endregion
-        #region WAIMUnknown1
-        private int _WAIMUnknown1Location => _WAIMLocation!.Value.Min + 0x1A;
-        private bool _WAIMUnknown1_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _WAIMUnknown1Location + 1 >= 1;
-        public Byte WAIMUnknown1 => _WAIMUnknown1_IsSet ? _recordData.Span[_WAIMUnknown1Location] : default(Byte);
+        #region UpdateAdvancedAimInfo
+        private int _UpdateAdvancedAimInfoLocation => _WAIMLocation!.Value.Min + 0x1A;
+        private bool _UpdateAdvancedAimInfo_IsSet => _WAIMLocation.HasValue;
+        public Boolean UpdateAdvancedAimInfo => _UpdateAdvancedAimInfo_IsSet ? _recordData.Slice(_UpdateAdvancedAimInfoLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region WAIMUnknown2
-        private int _WAIMUnknown2Location => _WAIMLocation!.Value.Min + 0x1B;
-        private bool _WAIMUnknown2_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _WAIMUnknown2Location + 1 >= 1;
-        public Byte WAIMUnknown2 => _WAIMUnknown2_IsSet ? _recordData.Span[_WAIMUnknown2Location] : default(Byte);
+        #region EnableOrientFireNodesToAimingDirection
+        private int _EnableOrientFireNodesToAimingDirectionLocation => _WAIMLocation!.Value.Min + 0x1B;
+        private bool _EnableOrientFireNodesToAimingDirection_IsSet => _WAIMLocation.HasValue;
+        public Boolean EnableOrientFireNodesToAimingDirection => _EnableOrientFireNodesToAimingDirection_IsSet ? _recordData.Slice(_EnableOrientFireNodesToAimingDirectionLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region EnableMarkingTargets
         private int _EnableMarkingTargetsLocation => _WAIMLocation!.Value.Min + 0x1C;
-        private bool _EnableMarkingTargets_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _EnableMarkingTargetsLocation + 1 >= 1;
+        private bool _EnableMarkingTargets_IsSet => _WAIMLocation.HasValue;
         public Boolean EnableMarkingTargets => _EnableMarkingTargets_IsSet ? _recordData.Slice(_EnableMarkingTargetsLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region ReticleType
         private int _ReticleTypeLocation => _WAIMLocation!.Value.Min + 0x1D;
-        private bool _ReticleType_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _ReticleTypeLocation + 1 >= 4;
-        public UInt32 ReticleType => _ReticleType_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ReticleTypeLocation, 4)) : default(UInt32);
+        private bool _ReticleType_IsSet => _WAIMLocation.HasValue;
+        public Weapon.ReticleTypeEnum ReticleType => _ReticleType_IsSet ? (Weapon.ReticleTypeEnum)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ReticleTypeLocation, 0x4)) : default;
         #endregion
-        #region WAIMUnknown3
-        private int _WAIMUnknown3Location => _WAIMLocation!.Value.Min + 0x21;
-        private bool _WAIMUnknown3_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _WAIMUnknown3Location + 1 >= 1;
-        public Byte WAIMUnknown3 => _WAIMUnknown3_IsSet ? _recordData.Span[_WAIMUnknown3Location] : default(Byte);
+        #region InverseReticleSpread
+        private int _InverseReticleSpreadLocation => _WAIMLocation!.Value.Min + 0x21;
+        private bool _InverseReticleSpread_IsSet => _WAIMLocation.HasValue;
+        public Boolean InverseReticleSpread => _InverseReticleSpread_IsSet ? _recordData.Slice(_InverseReticleSpreadLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region WAIMUnknown4
-        private int _WAIMUnknown4Location => _WAIMLocation!.Value.Min + 0x22;
-        private bool _WAIMUnknown4_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _WAIMUnknown4Location + 1 >= 1;
-        public Byte WAIMUnknown4 => _WAIMUnknown4_IsSet ? _recordData.Span[_WAIMUnknown4Location] : default(Byte);
+        #region DisplayedReticleIgnoresPlayerMovement
+        private int _DisplayedReticleIgnoresPlayerMovementLocation => _WAIMLocation!.Value.Min + 0x22;
+        private bool _DisplayedReticleIgnoresPlayerMovement_IsSet => _WAIMLocation.HasValue;
+        public Boolean DisplayedReticleIgnoresPlayerMovement => _DisplayedReticleIgnoresPlayerMovement_IsSet ? _recordData.Slice(_DisplayedReticleIgnoresPlayerMovementLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         private RangeInt32? _WAM2Location;
         #region AmmoType
         private int _AmmoTypeLocation => _WAM2Location!.Value.Min;
-        private bool _AmmoType_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _AmmoTypeLocation + 1 >= 4;
+        private bool _AmmoType_IsSet => _WAM2Location.HasValue;
         public IFormLinkGetter<IAmmunitionGetter> AmmoType => _AmmoType_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IAmmunitionGetter>(_package, _recordData.Span.Slice(_AmmoTypeLocation, 0x4), isSet: _AmmoType_IsSet) : FormLink<IAmmunitionGetter>.Null;
         #endregion
         #region AmmoCapacity
         private int _AmmoCapacityLocation => _WAM2Location!.Value.Min + 0x4;
-        private bool _AmmoCapacity_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _AmmoCapacityLocation + 1 >= 4;
+        private bool _AmmoCapacity_IsSet => _WAM2Location.HasValue;
         public UInt32 AmmoCapacity => _AmmoCapacity_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_AmmoCapacityLocation, 4)) : default(UInt32);
         #endregion
         #region AmmoList
         private int _AmmoListLocation => _WAM2Location!.Value.Min + 0x8;
-        private bool _AmmoList_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _AmmoListLocation + 1 >= 4;
+        private bool _AmmoList_IsSet => _WAM2Location.HasValue;
         public IFormLinkGetter<ILeveledItemGetter> AmmoList => _AmmoList_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILeveledItemGetter>(_package, _recordData.Span.Slice(_AmmoListLocation, 0x4), isSet: _AmmoList_IsSet) : FormLink<ILeveledItemGetter>.Null;
         #endregion
         #region OverrideProjectile
         private int _OverrideProjectileLocation => _WAM2Location!.Value.Min + 0xC;
-        private bool _OverrideProjectile_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _OverrideProjectileLocation + 1 >= 4;
+        private bool _OverrideProjectile_IsSet => _WAM2Location.HasValue;
         public IFormLinkGetter<IProjectileGetter> OverrideProjectile => _OverrideProjectile_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IProjectileGetter>(_package, _recordData.Span.Slice(_OverrideProjectileLocation, 0x4), isSet: _OverrideProjectile_IsSet) : FormLink<IProjectileGetter>.Null;
         #endregion
         #region OverrideShellCasing
         private int _OverrideShellCasingLocation => _WAM2Location!.Value.Min + 0x10;
-        private bool _OverrideShellCasing_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _OverrideShellCasingLocation + 1 >= 4;
+        private bool _OverrideShellCasing_IsSet => _WAM2Location.HasValue;
         public IFormLinkGetter<IArtObjectGetter> OverrideShellCasing => _OverrideShellCasing_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IArtObjectGetter>(_package, _recordData.Span.Slice(_OverrideShellCasingLocation, 0x4), isSet: _OverrideShellCasing_IsSet) : FormLink<IArtObjectGetter>.Null;
         #endregion
         #region ProjectilesCount
         private int _ProjectilesCountLocation => _WAM2Location!.Value.Min + 0x14;
-        private bool _ProjectilesCount_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _ProjectilesCountLocation + 1 >= 1;
-        public Byte ProjectilesCount => _ProjectilesCount_IsSet ? _recordData.Span[_ProjectilesCountLocation] : default(Byte);
+        private bool _ProjectilesCount_IsSet => _WAM2Location.HasValue;
+        public Byte ProjectilesCount => _ProjectilesCount_IsSet ? _recordData.Span[_ProjectilesCountLocation] : default;
         #endregion
         #region NpcsUseAmmo
         private int _NpcsUseAmmoLocation => _WAM2Location!.Value.Min + 0x15;
-        private bool _NpcsUseAmmo_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _NpcsUseAmmoLocation + 1 >= 1;
+        private bool _NpcsUseAmmo_IsSet => _WAM2Location.HasValue;
         public Boolean NpcsUseAmmo => _NpcsUseAmmo_IsSet ? _recordData.Slice(_NpcsUseAmmoLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region WAM2Unknown1
-        private int _WAM2Unknown1Location => _WAM2Location!.Value.Min + 0x16;
-        private bool _WAM2Unknown1_IsSet => _WAM2Location.HasValue && _WAM2Location!.Value.Max - _WAM2Unknown1Location + 1 >= 1;
-        public Byte WAM2Unknown1 => _WAM2Unknown1_IsSet ? _recordData.Span[_WAM2Unknown1Location] : default(Byte);
+        #region NumberOfImpactSounds
+        private int _NumberOfImpactSoundsLocation => _WAM2Location!.Value.Min + 0x16;
+        private bool _NumberOfImpactSounds_IsSet => _WAM2Location.HasValue;
+        public Byte NumberOfImpactSounds => _NumberOfImpactSounds_IsSet ? _recordData.Span[_NumberOfImpactSoundsLocation] : default;
         #endregion
         #region WAMM
         private int? _WAMMLocation;
@@ -12938,55 +12915,55 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _WAUDLocation;
         #region MeleeOrCreature
         private int _MeleeOrCreatureLocation => _WAUDLocation!.Value.Min;
-        private bool _MeleeOrCreature_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _MeleeOrCreatureLocation + 1 >= 1;
+        private bool _MeleeOrCreature_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _MeleeOrCreature => _MeleeOrCreature_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_MeleeOrCreatureLocation), _package) : default;
         public ISoundReferenceGetter MeleeOrCreature => _MeleeOrCreature ?? new SoundReference();
         #endregion
         #region PrimedExplosive
         private int _PrimedExplosiveLocation => _WAUDLocation!.Value.Min + 0x28;
-        private bool _PrimedExplosive_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _PrimedExplosiveLocation + 1 >= 1;
+        private bool _PrimedExplosive_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _PrimedExplosive => _PrimedExplosive_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_PrimedExplosiveLocation), _package) : default;
         public ISoundReferenceGetter PrimedExplosive => _PrimedExplosive ?? new SoundReference();
         #endregion
         #region DryFire
         private int _DryFireLocation => _WAUDLocation!.Value.Min + 0x50;
-        private bool _DryFire_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _DryFireLocation + 1 >= 1;
+        private bool _DryFire_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _DryFire => _DryFire_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_DryFireLocation), _package) : default;
         public ISoundReferenceGetter DryFire => _DryFire ?? new SoundReference();
         #endregion
         #region Idle
         private int _IdleLocation => _WAUDLocation!.Value.Min + 0x78;
-        private bool _Idle_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _IdleLocation + 1 >= 1;
+        private bool _Idle_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _Idle => _Idle_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_IdleLocation), _package) : default;
         public ISoundReferenceGetter Idle => _Idle ?? new SoundReference();
         #endregion
         #region Equip
         private int _EquipLocation => _WAUDLocation!.Value.Min + 0xA0;
-        private bool _Equip_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _EquipLocation + 1 >= 1;
+        private bool _Equip_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _Equip => _Equip_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_EquipLocation), _package) : default;
         public ISoundReferenceGetter Equip => _Equip ?? new SoundReference();
         #endregion
         #region Unequip
         private int _UnequipLocation => _WAUDLocation!.Value.Min + 0xC8;
-        private bool _Unequip_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _UnequipLocation + 1 >= 1;
+        private bool _Unequip_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _Unequip => _Unequip_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_UnequipLocation), _package) : default;
         public ISoundReferenceGetter Unequip => _Unequip ?? new SoundReference();
         #endregion
         #region FastEquip
         private int _FastEquipLocation => _WAUDLocation!.Value.Min + 0xF0;
-        private bool _FastEquip_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _FastEquipLocation + 1 >= 1;
+        private bool _FastEquip_IsSet => _WAUDLocation.HasValue;
         private ISoundReferenceGetter? _FastEquip => _FastEquip_IsSet ? SoundReferenceBinaryOverlay.SoundReferenceFactory(_recordData.Slice(_FastEquipLocation), _package) : default;
         public ISoundReferenceGetter FastEquip => _FastEquip ?? new SoundReference();
         #endregion
         #region SoundLevel
         private int _SoundLevelLocation => _WAUDLocation!.Value.Min + 0x118;
-        private bool _SoundLevel_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _SoundLevelLocation + 1 >= 4;
-        public SoundLevel SoundLevel => _SoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SoundLevelLocation, 0x4)) : default(SoundLevel);
+        private bool _SoundLevel_IsSet => _WAUDLocation.HasValue;
+        public SoundLevel SoundLevel => _SoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SoundLevelLocation, 0x4)) : default;
         #endregion
         #region MeleeDetectionSoundLevel
         private int _MeleeDetectionSoundLevelLocation => _WAUDLocation!.Value.Min + 0x11C;
-        private bool _MeleeDetectionSoundLevel_IsSet => _WAUDLocation.HasValue && _WAUDLocation!.Value.Max - _MeleeDetectionSoundLevelLocation + 1 >= 4;
-        public SoundLevel MeleeDetectionSoundLevel => _MeleeDetectionSoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MeleeDetectionSoundLevelLocation, 0x4)) : default(SoundLevel);
+        private bool _MeleeDetectionSoundLevel_IsSet => _WAUDLocation.HasValue;
+        public SoundLevel MeleeDetectionSoundLevel => _MeleeDetectionSoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MeleeDetectionSoundLevelLocation, 0x4)) : default;
         #endregion
         #region WTUR
         private int? _WTURLocation;
@@ -12995,297 +12972,297 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _WCHGLocation;
         #region ChargeFullPowerSeconds
         private int _ChargeFullPowerSecondsLocation => _WCHGLocation!.Value.Min;
-        private bool _ChargeFullPowerSeconds_IsSet => _WCHGLocation.HasValue && _WCHGLocation!.Value.Max - _ChargeFullPowerSecondsLocation + 1 >= 4;
+        private bool _ChargeFullPowerSeconds_IsSet => _WCHGLocation.HasValue;
         public Single ChargeFullPowerSeconds => _ChargeFullPowerSeconds_IsSet ? _recordData.Slice(_ChargeFullPowerSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region ChargeMinPowerPerShot
         private int _ChargeMinPowerPerShotLocation => _WCHGLocation!.Value.Min + 0x4;
-        private bool _ChargeMinPowerPerShot_IsSet => _WCHGLocation.HasValue && _WCHGLocation!.Value.Max - _ChargeMinPowerPerShotLocation + 1 >= 4;
+        private bool _ChargeMinPowerPerShot_IsSet => _WCHGLocation.HasValue;
         public Single ChargeMinPowerPerShot => _ChargeMinPowerPerShot_IsSet ? _recordData.Slice(_ChargeMinPowerPerShotLocation, 4).Float() : default(Single);
         #endregion
         #region ChargeCritBonus
         private int _ChargeCritBonusLocation => _WCHGLocation!.Value.Min + 0x8;
-        private bool _ChargeCritBonus_IsSet => _WCHGLocation.HasValue && _WCHGLocation!.Value.Max - _ChargeCritBonusLocation + 1 >= 4;
+        private bool _ChargeCritBonus_IsSet => _WCHGLocation.HasValue;
         public Single ChargeCritBonus => _ChargeCritBonus_IsSet ? _recordData.Slice(_ChargeCritBonusLocation, 4).Float() : default(Single);
         #endregion
         #region ChargeHoldInput
         private int _ChargeHoldInputLocation => _WCHGLocation!.Value.Min + 0xC;
-        private bool _ChargeHoldInput_IsSet => _WCHGLocation.HasValue && _WCHGLocation!.Value.Max - _ChargeHoldInputLocation + 1 >= 1;
+        private bool _ChargeHoldInput_IsSet => _WCHGLocation.HasValue;
         public Boolean ChargeHoldInput => _ChargeHoldInput_IsSet ? _recordData.Slice(_ChargeHoldInputLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region ChargingAttack
         private int _ChargingAttackLocation => _WCHGLocation!.Value.Min + 0xD;
-        private bool _ChargingAttack_IsSet => _WCHGLocation.HasValue && _WCHGLocation!.Value.Max - _ChargingAttackLocation + 1 >= 1;
+        private bool _ChargingAttack_IsSet => _WCHGLocation.HasValue;
         public Boolean ChargingAttack => _ChargingAttack_IsSet ? _recordData.Slice(_ChargingAttackLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         private RangeInt32? _WDMGLocation;
         #region AttackDamage
         private int _AttackDamageLocation => _WDMGLocation!.Value.Min;
-        private bool _AttackDamage_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _AttackDamageLocation + 1 >= 4;
+        private bool _AttackDamage_IsSet => _WDMGLocation.HasValue;
         public Single AttackDamage => _AttackDamage_IsSet ? _recordData.Slice(_AttackDamageLocation, 4).Float() : default(Single);
         #endregion
         #region MinRange
         private int _MinRangeLocation => _WDMGLocation!.Value.Min + 0x4;
-        private bool _MinRange_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _MinRangeLocation + 1 >= 4;
+        private bool _MinRange_IsSet => _WDMGLocation.HasValue;
         public Single MinRange => _MinRange_IsSet ? _recordData.Slice(_MinRangeLocation, 4).Float() : default(Single);
         #endregion
         #region MaxRange
         private int _MaxRangeLocation => _WDMGLocation!.Value.Min + 0x8;
-        private bool _MaxRange_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _MaxRangeLocation + 1 >= 4;
+        private bool _MaxRange_IsSet => _WDMGLocation.HasValue;
         public Single MaxRange => _MaxRange_IsSet ? _recordData.Slice(_MaxRangeLocation, 4).Float() : default(Single);
         #endregion
         #region OutOfRangeDamageMult
         private int _OutOfRangeDamageMultLocation => _WDMGLocation!.Value.Min + 0xC;
-        private bool _OutOfRangeDamageMult_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _OutOfRangeDamageMultLocation + 1 >= 4;
+        private bool _OutOfRangeDamageMult_IsSet => _WDMGLocation.HasValue;
         public Single OutOfRangeDamageMult => _OutOfRangeDamageMult_IsSet ? _recordData.Slice(_OutOfRangeDamageMultLocation, 4).Float() : default(Single);
         #endregion
         #region CritDamageMult
         private int _CritDamageMultLocation => _WDMGLocation!.Value.Min + 0x10;
-        private bool _CritDamageMult_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _CritDamageMultLocation + 1 >= 4;
+        private bool _CritDamageMult_IsSet => _WDMGLocation.HasValue;
         public Single CritDamageMult => _CritDamageMult_IsSet ? _recordData.Slice(_CritDamageMultLocation, 4).Float() : default(Single);
         #endregion
         #region CriticalHitSpell
         private int _CriticalHitSpellLocation => _WDMGLocation!.Value.Min + 0x14;
-        private bool _CriticalHitSpell_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _CriticalHitSpellLocation + 1 >= 4;
+        private bool _CriticalHitSpell_IsSet => _WDMGLocation.HasValue;
         public IFormLinkGetter<ISpellGetter> CriticalHitSpell => _CriticalHitSpell_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _recordData.Span.Slice(_CriticalHitSpellLocation, 0x4), isSet: _CriticalHitSpell_IsSet) : FormLink<ISpellGetter>.Null;
         #endregion
         #region CritEffectOnDeathOnly
         private int _CritEffectOnDeathOnlyLocation => _WDMGLocation!.Value.Min + 0x18;
-        private bool _CritEffectOnDeathOnly_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _CritEffectOnDeathOnlyLocation + 1 >= 1;
+        private bool _CritEffectOnDeathOnly_IsSet => _WDMGLocation.HasValue;
         public Boolean CritEffectOnDeathOnly => _CritEffectOnDeathOnly_IsSet ? _recordData.Slice(_CritEffectOnDeathOnlyLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region HitBehavior
         private int _HitBehaviorLocation => _WDMGLocation!.Value.Min + 0x19;
-        private bool _HitBehavior_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _HitBehaviorLocation + 1 >= 1;
-        public HitBehavior HitBehavior => _HitBehavior_IsSet ? (HitBehavior)_recordData.Span.Slice(_HitBehaviorLocation, 0x1)[0] : default(HitBehavior);
+        private bool _HitBehavior_IsSet => _WDMGLocation.HasValue;
+        public HitBehavior HitBehavior => _HitBehavior_IsSet ? (HitBehavior)_recordData.Span.Slice(_HitBehaviorLocation, 0x1)[0] : default;
         #endregion
         #region Resistance
         private int _ResistanceLocation => _WDMGLocation!.Value.Min + 0x1A;
-        private bool _Resistance_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _ResistanceLocation + 1 >= 4;
+        private bool _Resistance_IsSet => _WDMGLocation.HasValue;
         public IFormLinkGetter<IActorValueInformationGetter> Resistance => _Resistance_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IActorValueInformationGetter>(_package, _recordData.Span.Slice(_ResistanceLocation, 0x4), isSet: _Resistance_IsSet) : FormLink<IActorValueInformationGetter>.Null;
         #endregion
         #region Skill
         private int _SkillLocation => _WDMGLocation!.Value.Min + 0x1E;
-        private bool _Skill_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _SkillLocation + 1 >= 4;
+        private bool _Skill_IsSet => _WDMGLocation.HasValue;
         public IFormLinkGetter<IActorValueInformationGetter> Skill => _Skill_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IActorValueInformationGetter>(_package, _recordData.Span.Slice(_SkillLocation, 0x4), isSet: _Skill_IsSet) : FormLink<IActorValueInformationGetter>.Null;
         #endregion
-        #region WDMGUnknown4
-        private int _WDMGUnknown4Location => _WDMGLocation!.Value.Min + 0x22;
-        private bool _WDMGUnknown4_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _WDMGUnknown4Location + 1 >= 4;
-        public Single WDMGUnknown4 => _WDMGUnknown4_IsSet ? _recordData.Slice(_WDMGUnknown4Location, 4).Float() : default(Single);
+        #region LowGravityScaleControlPoint
+        private int _LowGravityScaleControlPointLocation => _WDMGLocation!.Value.Min + 0x22;
+        private bool _LowGravityScaleControlPoint_IsSet => _WDMGLocation.HasValue;
+        public Single LowGravityScaleControlPoint => _LowGravityScaleControlPoint_IsSet ? _recordData.Slice(_LowGravityScaleControlPointLocation, 4).Float() : default(Single);
         #endregion
-        #region WDMGUnknown5
-        private int _WDMGUnknown5Location => _WDMGLocation!.Value.Min + 0x26;
-        private bool _WDMGUnknown5_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _WDMGUnknown5Location + 1 >= 4;
-        public Single WDMGUnknown5 => _WDMGUnknown5_IsSet ? _recordData.Slice(_WDMGUnknown5Location, 4).Float() : default(Single);
+        #region LowGravityRangeMultMin
+        private int _LowGravityRangeMultMinLocation => _WDMGLocation!.Value.Min + 0x26;
+        private bool _LowGravityRangeMultMin_IsSet => _WDMGLocation.HasValue;
+        public Single LowGravityRangeMultMin => _LowGravityRangeMultMin_IsSet ? _recordData.Slice(_LowGravityRangeMultMinLocation, 4).Float() : default(Single);
         #endregion
-        #region WDMGUnknown6
-        private int _WDMGUnknown6Location => _WDMGLocation!.Value.Min + 0x2A;
-        private bool _WDMGUnknown6_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _WDMGUnknown6Location + 1 >= 4;
-        public Single WDMGUnknown6 => _WDMGUnknown6_IsSet ? _recordData.Slice(_WDMGUnknown6Location, 4).Float() : default(Single);
+        #region LowGravityRangeMultMax
+        private int _LowGravityRangeMultMaxLocation => _WDMGLocation!.Value.Min + 0x2A;
+        private bool _LowGravityRangeMultMax_IsSet => _WDMGLocation.HasValue;
+        public Single LowGravityRangeMultMax => _LowGravityRangeMultMax_IsSet ? _recordData.Slice(_LowGravityRangeMultMaxLocation, 4).Float() : default(Single);
         #endregion
-        #region WDMGUnknown7
-        private int _WDMGUnknown7Location => _WDMGLocation!.Value.Min + 0x2E;
-        private bool _WDMGUnknown7_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _WDMGUnknown7Location + 1 >= 4;
-        public Single WDMGUnknown7 => _WDMGUnknown7_IsSet ? _recordData.Slice(_WDMGUnknown7Location, 4).Float() : default(Single);
+        #region HighGravityScaleControlPoint
+        private int _HighGravityScaleControlPointLocation => _WDMGLocation!.Value.Min + 0x2E;
+        private bool _HighGravityScaleControlPoint_IsSet => _WDMGLocation.HasValue;
+        public Single HighGravityScaleControlPoint => _HighGravityScaleControlPoint_IsSet ? _recordData.Slice(_HighGravityScaleControlPointLocation, 4).Float() : default(Single);
         #endregion
-        #region WDMGUnknown8
-        private int _WDMGUnknown8Location => _WDMGLocation!.Value.Min + 0x32;
-        private bool _WDMGUnknown8_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _WDMGUnknown8Location + 1 >= 4;
-        public Single WDMGUnknown8 => _WDMGUnknown8_IsSet ? _recordData.Slice(_WDMGUnknown8Location, 4).Float() : default(Single);
+        #region HighGravityRangeMultMin
+        private int _HighGravityRangeMultMinLocation => _WDMGLocation!.Value.Min + 0x32;
+        private bool _HighGravityRangeMultMin_IsSet => _WDMGLocation.HasValue;
+        public Single HighGravityRangeMultMin => _HighGravityRangeMultMin_IsSet ? _recordData.Slice(_HighGravityRangeMultMinLocation, 4).Float() : default(Single);
         #endregion
-        #region WDMGUnknown9
-        private int _WDMGUnknown9Location => _WDMGLocation!.Value.Min + 0x36;
-        private bool _WDMGUnknown9_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _WDMGUnknown9Location + 1 >= 4;
-        public Single WDMGUnknown9 => _WDMGUnknown9_IsSet ? _recordData.Slice(_WDMGUnknown9Location, 4).Float() : default(Single);
+        #region HighGravityRangeMultMax
+        private int _HighGravityRangeMultMaxLocation => _WDMGLocation!.Value.Min + 0x36;
+        private bool _HighGravityRangeMultMax_IsSet => _WDMGLocation.HasValue;
+        public Single HighGravityRangeMultMax => _HighGravityRangeMultMax_IsSet ? _recordData.Slice(_HighGravityRangeMultMaxLocation, 4).Float() : default(Single);
         #endregion
         #region CritChanceIncMult
         private int _CritChanceIncMultLocation => _WDMGLocation!.Value.Min + 0x3A;
-        private bool _CritChanceIncMult_IsSet => _WDMGLocation.HasValue && _WDMGLocation!.Value.Max - _CritChanceIncMultLocation + 1 >= 4;
+        private bool _CritChanceIncMult_IsSet => _WDMGLocation.HasValue;
         public Single CritChanceIncMult => _CritChanceIncMult_IsSet ? _recordData.Slice(_CritChanceIncMultLocation, 4).Float() : default(Single);
         #endregion
         public IReadOnlyList<IWeaponDamageTypeGetter>? DamageTypes { get; private set; }
         private RangeInt32? _WFIRLocation;
         #region FiringType
         private int _FiringTypeLocation => _WFIRLocation!.Value.Min;
-        private bool _FiringType_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _FiringTypeLocation + 1 >= 1;
-        public Weapon.FiringTypeEnum FiringType => _FiringType_IsSet ? (Weapon.FiringTypeEnum)_recordData.Span.Slice(_FiringTypeLocation, 0x1)[0] : default(Weapon.FiringTypeEnum);
+        private bool _FiringType_IsSet => _WFIRLocation.HasValue;
+        public Weapon.FiringTypeEnum FiringType => _FiringType_IsSet ? (Weapon.FiringTypeEnum)_recordData.Span.Slice(_FiringTypeLocation, 0x1)[0] : default;
         #endregion
         #region BurstCount
         private int _BurstCountLocation => _WFIRLocation!.Value.Min + 0x1;
-        private bool _BurstCount_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _BurstCountLocation + 1 >= 1;
-        public Byte BurstCount => _BurstCount_IsSet ? _recordData.Span[_BurstCountLocation] : default(Byte);
+        private bool _BurstCount_IsSet => _WFIRLocation.HasValue;
+        public Byte BurstCount => _BurstCount_IsSet ? _recordData.Span[_BurstCountLocation] : default;
         #endregion
         #region RepeatableFire
         private int _RepeatableFireLocation => _WFIRLocation!.Value.Min + 0x2;
-        private bool _RepeatableFire_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _RepeatableFireLocation + 1 >= 1;
+        private bool _RepeatableFire_IsSet => _WFIRLocation.HasValue;
         public Boolean RepeatableFire => _RepeatableFire_IsSet ? _recordData.Slice(_RepeatableFireLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region AttackSeconds
         private int _AttackSecondsLocation => _WFIRLocation!.Value.Min + 0x3;
-        private bool _AttackSeconds_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _AttackSecondsLocation + 1 >= 4;
+        private bool _AttackSeconds_IsSet => _WFIRLocation.HasValue;
         public Single AttackSeconds => _AttackSeconds_IsSet ? _recordData.Slice(_AttackSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region FireSeconds
         private int _FireSecondsLocation => _WFIRLocation!.Value.Min + 0x7;
-        private bool _FireSeconds_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _FireSecondsLocation + 1 >= 4;
+        private bool _FireSeconds_IsSet => _WFIRLocation.HasValue;
         public Single FireSeconds => _FireSeconds_IsSet ? _recordData.Slice(_FireSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region AttackDelaySeconds
         private int _AttackDelaySecondsLocation => _WFIRLocation!.Value.Min + 0xB;
-        private bool _AttackDelaySeconds_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _AttackDelaySecondsLocation + 1 >= 4;
+        private bool _AttackDelaySeconds_IsSet => _WFIRLocation.HasValue;
         public Single AttackDelaySeconds => _AttackDelaySeconds_IsSet ? _recordData.Slice(_AttackDelaySecondsLocation, 4).Float() : default(Single);
         #endregion
         #region BoltChargeSeconds
         private int _BoltChargeSecondsLocation => _WFIRLocation!.Value.Min + 0xF;
-        private bool _BoltChargeSeconds_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _BoltChargeSecondsLocation + 1 >= 4;
+        private bool _BoltChargeSeconds_IsSet => _WFIRLocation.HasValue;
         public Single BoltChargeSeconds => _BoltChargeSeconds_IsSet ? _recordData.Slice(_BoltChargeSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region BoltAction
         private int _BoltActionLocation => _WFIRLocation!.Value.Min + 0x13;
-        private bool _BoltAction_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _BoltActionLocation + 1 >= 1;
+        private bool _BoltAction_IsSet => _WFIRLocation.HasValue;
         public Boolean BoltAction => _BoltAction_IsSet ? _recordData.Slice(_BoltActionLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region DisableShellCaseEject
         private int _DisableShellCaseEjectLocation => _WFIRLocation!.Value.Min + 0x14;
-        private bool _DisableShellCaseEject_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _DisableShellCaseEjectLocation + 1 >= 1;
+        private bool _DisableShellCaseEject_IsSet => _WFIRLocation.HasValue;
         public Boolean DisableShellCaseEject => _DisableShellCaseEject_IsSet ? _recordData.Slice(_DisableShellCaseEjectLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region ShotsPerSecond
         private int _ShotsPerSecondLocation => _WFIRLocation!.Value.Min + 0x15;
-        private bool _ShotsPerSecond_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _ShotsPerSecondLocation + 1 >= 4;
+        private bool _ShotsPerSecond_IsSet => _WFIRLocation.HasValue;
         public Single ShotsPerSecond => _ShotsPerSecond_IsSet ? _recordData.Slice(_ShotsPerSecondLocation, 4).Float() : default(Single);
         #endregion
-        #region WFIRUnknown7
-        private int _WFIRUnknown7Location => _WFIRLocation!.Value.Min + 0x19;
-        private bool _WFIRUnknown7_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _WFIRUnknown7Location + 1 >= 4;
-        public Single WFIRUnknown7 => _WFIRUnknown7_IsSet ? _recordData.Slice(_WFIRUnknown7Location, 4).Float() : default(Single);
+        #region WeaponAttackAnimationDuration
+        private int _WeaponAttackAnimationDurationLocation => _WFIRLocation!.Value.Min + 0x19;
+        private bool _WeaponAttackAnimationDuration_IsSet => _WFIRLocation.HasValue;
+        public Single WeaponAttackAnimationDuration => _WeaponAttackAnimationDuration_IsSet ? _recordData.Slice(_WeaponAttackAnimationDurationLocation, 4).Float() : default(Single);
         #endregion
         #region OverrideRateOfFire
         private int _OverrideRateOfFireLocation => _WFIRLocation!.Value.Min + 0x1D;
-        private bool _OverrideRateOfFire_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _OverrideRateOfFireLocation + 1 >= 1;
+        private bool _OverrideRateOfFire_IsSet => _WFIRLocation.HasValue;
         public Boolean OverrideRateOfFire => _OverrideRateOfFire_IsSet ? _recordData.Slice(_OverrideRateOfFireLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region TriggerThresholdPrimaryTrigger
         private int _TriggerThresholdPrimaryTriggerLocation => _WFIRLocation!.Value.Min + 0x1E;
-        private bool _TriggerThresholdPrimaryTrigger_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _TriggerThresholdPrimaryTriggerLocation + 1 >= 4;
+        private bool _TriggerThresholdPrimaryTrigger_IsSet => _WFIRLocation.HasValue;
         public Single TriggerThresholdPrimaryTrigger => _TriggerThresholdPrimaryTrigger_IsSet ? _recordData.Slice(_TriggerThresholdPrimaryTriggerLocation, 4).Float() : default(Single);
         #endregion
-        #region WFIRUnknown10
-        private int _WFIRUnknown10Location => _WFIRLocation!.Value.Min + 0x22;
-        private bool _WFIRUnknown10_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _WFIRUnknown10Location + 1 >= 1;
-        public Byte WFIRUnknown10 => _WFIRUnknown10_IsSet ? _recordData.Span[_WFIRUnknown10Location] : default(Byte);
+        #region OverrideTriggerThreshold
+        private int _OverrideTriggerThresholdLocation => _WFIRLocation!.Value.Min + 0x22;
+        private bool _OverrideTriggerThreshold_IsSet => _WFIRLocation.HasValue;
+        public Boolean OverrideTriggerThreshold => _OverrideTriggerThreshold_IsSet ? _recordData.Slice(_OverrideTriggerThresholdLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region TriggerThresholdSecondStage
         private int _TriggerThresholdSecondStageLocation => _WFIRLocation!.Value.Min + 0x23;
-        private bool _TriggerThresholdSecondStage_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _TriggerThresholdSecondStageLocation + 1 >= 4;
+        private bool _TriggerThresholdSecondStage_IsSet => _WFIRLocation.HasValue;
         public Single TriggerThresholdSecondStage => _TriggerThresholdSecondStage_IsSet ? _recordData.Slice(_TriggerThresholdSecondStageLocation, 4).Float() : default(Single);
         #endregion
         #region HasStagedTrigger
         private int _HasStagedTriggerLocation => _WFIRLocation!.Value.Min + 0x27;
-        private bool _HasStagedTrigger_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _HasStagedTriggerLocation + 1 >= 1;
+        private bool _HasStagedTrigger_IsSet => _WFIRLocation.HasValue;
         public Boolean HasStagedTrigger => _HasStagedTrigger_IsSet ? _recordData.Slice(_HasStagedTriggerLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region HasDualTrigger
         private int _HasDualTriggerLocation => _WFIRLocation!.Value.Min + 0x28;
-        private bool _HasDualTrigger_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _HasDualTriggerLocation + 1 >= 1;
+        private bool _HasDualTrigger_IsSet => _WFIRLocation.HasValue;
         public Boolean HasDualTrigger => _HasDualTrigger_IsSet ? _recordData.Slice(_HasDualTriggerLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region BurstDelaySeconds
         private int _BurstDelaySecondsLocation => _WFIRLocation!.Value.Min + 0x29;
-        private bool _BurstDelaySeconds_IsSet => _WFIRLocation.HasValue && _WFIRLocation!.Value.Max - _BurstDelaySecondsLocation + 1 >= 4;
+        private bool _BurstDelaySeconds_IsSet => _WFIRLocation.HasValue;
         public Single BurstDelaySeconds => _BurstDelaySeconds_IsSet ? _recordData.Slice(_BurstDelaySecondsLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _WFLGLocation;
         #region NonPlayable
         private int _NonPlayableLocation => _WFLGLocation!.Value.Min;
-        private bool _NonPlayable_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _NonPlayableLocation + 1 >= 1;
+        private bool _NonPlayable_IsSet => _WFLGLocation.HasValue;
         public Boolean NonPlayable => _NonPlayable_IsSet ? _recordData.Slice(_NonPlayableLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region PlayerOnly
         private int _PlayerOnlyLocation => _WFLGLocation!.Value.Min + 0x1;
-        private bool _PlayerOnly_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _PlayerOnlyLocation + 1 >= 1;
+        private bool _PlayerOnly_IsSet => _WFLGLocation.HasValue;
         public Boolean PlayerOnly => _PlayerOnly_IsSet ? _recordData.Slice(_PlayerOnlyLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region WFLGUnknown1
-        private int _WFLGUnknown1Location => _WFLGLocation!.Value.Min + 0x2;
-        private bool _WFLGUnknown1_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown1Location + 1 >= 1;
-        public Boolean WFLGUnknown1 => _WFLGUnknown1_IsSet ? _recordData.Slice(_WFLGUnknown1Location, 1)[0] >= 1 : default(Boolean);
+        #region PreventUseInNormalCombat
+        private int _PreventUseInNormalCombatLocation => _WFLGLocation!.Value.Min + 0x2;
+        private bool _PreventUseInNormalCombat_IsSet => _WFLGLocation.HasValue;
+        public Boolean PreventUseInNormalCombat => _PreventUseInNormalCombat_IsSet ? _recordData.Slice(_PreventUseInNormalCombatLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region WFLGUnknown2
-        private int _WFLGUnknown2Location => _WFLGLocation!.Value.Min + 0x3;
-        private bool _WFLGUnknown2_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown2Location + 1 >= 1;
-        public Boolean WFLGUnknown2 => _WFLGUnknown2_IsSet ? _recordData.Slice(_WFLGUnknown2Location, 1)[0] >= 1 : default(Boolean);
+        #region IsSecondary
+        private int _IsSecondaryLocation => _WFLGLocation!.Value.Min + 0x3;
+        private bool _IsSecondary_IsSet => _WFLGLocation.HasValue;
+        public Boolean IsSecondary => _IsSecondary_IsSet ? _recordData.Slice(_IsSecondaryLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region CannotDrop
         private int _CannotDropLocation => _WFLGLocation!.Value.Min + 0x4;
-        private bool _CannotDrop_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _CannotDropLocation + 1 >= 1;
+        private bool _CannotDrop_IsSet => _WFLGLocation.HasValue;
         public Boolean CannotDrop => _CannotDrop_IsSet ? _recordData.Slice(_CannotDropLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region MinorCrime
         private int _MinorCrimeLocation => _WFLGLocation!.Value.Min + 0x5;
-        private bool _MinorCrime_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _MinorCrimeLocation + 1 >= 1;
+        private bool _MinorCrime_IsSet => _WFLGLocation.HasValue;
         public Boolean MinorCrime => _MinorCrime_IsSet ? _recordData.Slice(_MinorCrimeLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region NonHostile
         private int _NonHostileLocation => _WFLGLocation!.Value.Min + 0x6;
-        private bool _NonHostile_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _NonHostileLocation + 1 >= 1;
+        private bool _NonHostile_IsSet => _WFLGLocation.HasValue;
         public Boolean NonHostile => _NonHostile_IsSet ? _recordData.Slice(_NonHostileLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region WFLGUnknown3
-        private int _WFLGUnknown3Location => _WFLGLocation!.Value.Min + 0x7;
-        private bool _WFLGUnknown3_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown3Location + 1 >= 1;
-        public Boolean WFLGUnknown3 => _WFLGUnknown3_IsSet ? _recordData.Slice(_WFLGUnknown3Location, 1)[0] >= 1 : default(Boolean);
+        #region Bound
+        private int _BoundLocation => _WFLGLocation!.Value.Min + 0x7;
+        private bool _Bound_IsSet => _WFLGLocation.HasValue;
+        public Boolean Bound => _Bound_IsSet ? _recordData.Slice(_BoundLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region WFLGUnknown4
-        private int _WFLGUnknown4Location => _WFLGLocation!.Value.Min + 0x8;
-        private bool _WFLGUnknown4_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown4Location + 1 >= 1;
-        public Boolean WFLGUnknown4 => _WFLGUnknown4_IsSet ? _recordData.Slice(_WFLGUnknown4Location, 1)[0] >= 1 : default(Boolean);
+        #region NpcPrefersLongBursts
+        private int _NpcPrefersLongBurstsLocation => _WFLGLocation!.Value.Min + 0x8;
+        private bool _NpcPrefersLongBursts_IsSet => _WFLGLocation.HasValue;
+        public Boolean NpcPrefersLongBursts => _NpcPrefersLongBursts_IsSet ? _recordData.Slice(_NpcPrefersLongBurstsLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region WFLGUnknown5
-        private int _WFLGUnknown5Location => _WFLGLocation!.Value.Min + 0x9;
-        private bool _WFLGUnknown5_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown5Location + 1 >= 1;
-        public Boolean WFLGUnknown5 => _WFLGUnknown5_IsSet ? _recordData.Slice(_WFLGUnknown5Location, 1)[0] >= 1 : default(Boolean);
+        #region NpcsOnlyFireWhenMagazineFull
+        private int _NpcsOnlyFireWhenMagazineFullLocation => _WFLGLocation!.Value.Min + 0x9;
+        private bool _NpcsOnlyFireWhenMagazineFull_IsSet => _WFLGLocation.HasValue;
+        public Boolean NpcsOnlyFireWhenMagazineFull => _NpcsOnlyFireWhenMagazineFull_IsSet ? _recordData.Slice(_NpcsOnlyFireWhenMagazineFullLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region WFLGUnknown6
-        private int _WFLGUnknown6Location => _WFLGLocation!.Value.Min + 0xA;
-        private bool _WFLGUnknown6_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown6Location + 1 >= 1;
-        public Boolean WFLGUnknown6 => _WFLGUnknown6_IsSet ? _recordData.Slice(_WFLGUnknown6Location, 1)[0] >= 1 : default(Boolean);
+        #region UseSequentialFireNodes
+        private int _UseSequentialFireNodesLocation => _WFLGLocation!.Value.Min + 0xA;
+        private bool _UseSequentialFireNodes_IsSet => _WFLGLocation.HasValue;
+        public Boolean UseSequentialFireNodes => _UseSequentialFireNodes_IsSet ? _recordData.Slice(_UseSequentialFireNodesLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region WFLGUnknown7
-        private int _WFLGUnknown7Location => _WFLGLocation!.Value.Min + 0xB;
-        private bool _WFLGUnknown7_IsSet => _WFLGLocation.HasValue && _WFLGLocation!.Value.Max - _WFLGUnknown7Location + 1 >= 1;
-        public Boolean WFLGUnknown7 => _WFLGUnknown7_IsSet ? _recordData.Slice(_WFLGUnknown7Location, 1)[0] >= 1 : default(Boolean);
+        #region UseRandomFireNodes
+        private int _UseRandomFireNodesLocation => _WFLGLocation!.Value.Min + 0xB;
+        private bool _UseRandomFireNodes_IsSet => _WFLGLocation.HasValue;
+        public Boolean UseRandomFireNodes => _UseRandomFireNodes_IsSet ? _recordData.Slice(_UseRandomFireNodesLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         private RangeInt32? _WGENLocation;
         #region AnimationType
         private int _AnimationTypeLocation => _WGENLocation!.Value.Min;
-        private bool _AnimationType_IsSet => _WGENLocation.HasValue && _WGENLocation!.Value.Max - _AnimationTypeLocation + 1 >= 4;
-        public Weapon.AnimationTypes AnimationType => _AnimationType_IsSet ? (Weapon.AnimationTypes)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_AnimationTypeLocation, 0x4)) : default(Weapon.AnimationTypes);
+        private bool _AnimationType_IsSet => _WGENLocation.HasValue;
+        public Weapon.AnimationTypes AnimationType => _AnimationType_IsSet ? (Weapon.AnimationTypes)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_AnimationTypeLocation, 0x4)) : default;
         #endregion
         #region BaseWeight
         private int _BaseWeightLocation => _WGENLocation!.Value.Min + 0x4;
-        private bool _BaseWeight_IsSet => _WGENLocation.HasValue && _WGENLocation!.Value.Max - _BaseWeightLocation + 1 >= 4;
+        private bool _BaseWeight_IsSet => _WGENLocation.HasValue;
         public Single BaseWeight => _BaseWeight_IsSet ? _recordData.Slice(_BaseWeightLocation, 4).Float() : default(Single);
         #endregion
         #region BaseValue
         private int _BaseValueLocation => _WGENLocation!.Value.Min + 0x8;
-        private bool _BaseValue_IsSet => _WGENLocation.HasValue && _WGENLocation!.Value.Max - _BaseValueLocation + 1 >= 4;
+        private bool _BaseValue_IsSet => _WGENLocation.HasValue;
         public UInt32 BaseValue => _BaseValue_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_BaseValueLocation, 4)) : default(UInt32);
         #endregion
         #region BaseSpeed
         private int _BaseSpeedLocation => _WGENLocation!.Value.Min + 0xC;
-        private bool _BaseSpeed_IsSet => _WGENLocation.HasValue && _WGENLocation!.Value.Max - _BaseSpeedLocation + 1 >= 4;
+        private bool _BaseSpeed_IsSet => _WGENLocation.HasValue;
         public Single BaseSpeed => _BaseSpeed_IsSet ? _recordData.Slice(_BaseSpeedLocation, 4).Float() : default(Single);
         #endregion
         #region AttackOxygenCost
         private int _AttackOxygenCostLocation => _WGENLocation!.Value.Min + 0x10;
-        private bool _AttackOxygenCost_IsSet => _WGENLocation.HasValue && _WGENLocation!.Value.Max - _AttackOxygenCostLocation + 1 >= 4;
+        private bool _AttackOxygenCost_IsSet => _WGENLocation.HasValue;
         public Single AttackOxygenCost => _AttackOxygenCost_IsSet ? _recordData.Slice(_AttackOxygenCostLocation, 4).Float() : default(Single);
         #endregion
         #region WeaponBarrel
         private int _WeaponBarrelLocation => _WGENLocation!.Value.Min + 0x14;
-        private bool _WeaponBarrel_IsSet => _WGENLocation.HasValue && _WGENLocation!.Value.Max - _WeaponBarrelLocation + 1 >= 4;
+        private bool _WeaponBarrel_IsSet => _WGENLocation.HasValue;
         public IFormLinkGetter<IWeaponBarrelModelGetter> WeaponBarrel => _WeaponBarrel_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IWeaponBarrelModelGetter>(_package, _recordData.Span.Slice(_WeaponBarrelLocation, 0x4), isSet: _WeaponBarrel_IsSet) : FormLink<IWeaponBarrelModelGetter>.Null;
         #endregion
         #region General
@@ -13295,104 +13272,104 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _WMELLocation;
         #region AttackSpeed
         private int _AttackSpeedLocation => _WMELLocation!.Value.Min;
-        private bool _AttackSpeed_IsSet => _WMELLocation.HasValue && _WMELLocation!.Value.Max - _AttackSpeedLocation + 1 >= 1;
-        public Weapon.AttackSpeedEnum AttackSpeed => _AttackSpeed_IsSet ? (Weapon.AttackSpeedEnum)_recordData.Span.Slice(_AttackSpeedLocation, 0x1)[0] : default(Weapon.AttackSpeedEnum);
+        private bool _AttackSpeed_IsSet => _WMELLocation.HasValue;
+        public Weapon.AttackSpeedEnum AttackSpeed => _AttackSpeed_IsSet ? (Weapon.AttackSpeedEnum)_recordData.Span.Slice(_AttackSpeedLocation, 0x1)[0] : default;
         #endregion
         #region MeleeBashDamage
         private int _MeleeBashDamageLocation => _WMELLocation!.Value.Min + 0x1;
-        private bool _MeleeBashDamage_IsSet => _WMELLocation.HasValue && _WMELLocation!.Value.Max - _MeleeBashDamageLocation + 1 >= 4;
+        private bool _MeleeBashDamage_IsSet => _WMELLocation.HasValue;
         public Single MeleeBashDamage => _MeleeBashDamage_IsSet ? _recordData.Slice(_MeleeBashDamageLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeReach
         private int _MeleeReachLocation => _WMELLocation!.Value.Min + 0x5;
-        private bool _MeleeReach_IsSet => _WMELLocation.HasValue && _WMELLocation!.Value.Max - _MeleeReachLocation + 1 >= 4;
+        private bool _MeleeReach_IsSet => _WMELLocation.HasValue;
         public Single MeleeReach => _MeleeReach_IsSet ? _recordData.Slice(_MeleeReachLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeStagger
         private int _MeleeStaggerLocation => _WMELLocation!.Value.Min + 0x9;
-        private bool _MeleeStagger_IsSet => _WMELLocation.HasValue && _WMELLocation!.Value.Max - _MeleeStaggerLocation + 1 >= 4;
-        public Stagger MeleeStagger => _MeleeStagger_IsSet ? (Stagger)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MeleeStaggerLocation, 0x4)) : default(Stagger);
+        private bool _MeleeStagger_IsSet => _WMELLocation.HasValue;
+        public Stagger MeleeStagger => _MeleeStagger_IsSet ? (Stagger)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MeleeStaggerLocation, 0x4)) : default;
         #endregion
         private RangeInt32? _QNAMLocation;
         #region Power
         private int _PowerLocation => _QNAMLocation!.Value.Min;
-        private bool _Power_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _PowerLocation + 1 >= 4;
+        private bool _Power_IsSet => _QNAMLocation.HasValue;
         public IFormLinkGetter<IActorValueInformationGetter> Power => _Power_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IActorValueInformationGetter>(_package, _recordData.Span.Slice(_PowerLocation, 0x4), isSet: _Power_IsSet) : FormLink<IActorValueInformationGetter>.Null;
         #endregion
         #region PowerRechargeTime
         private int _PowerRechargeTimeLocation => _QNAMLocation!.Value.Min + 0x4;
-        private bool _PowerRechargeTime_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _PowerRechargeTimeLocation + 1 >= 4;
+        private bool _PowerRechargeTime_IsSet => _QNAMLocation.HasValue;
         public Single PowerRechargeTime => _PowerRechargeTime_IsSet ? _recordData.Slice(_PowerRechargeTimeLocation, 4).Float() : default(Single);
         #endregion
         #region PowerRechargeDelay
         private int _PowerRechargeDelayLocation => _QNAMLocation!.Value.Min + 0x8;
-        private bool _PowerRechargeDelay_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _PowerRechargeDelayLocation + 1 >= 4;
+        private bool _PowerRechargeDelay_IsSet => _QNAMLocation.HasValue;
         public Single PowerRechargeDelay => _PowerRechargeDelay_IsSet ? _recordData.Slice(_PowerRechargeDelayLocation, 4).Float() : default(Single);
         #endregion
         #region ConsumeAmmo
         private int _ConsumeAmmoLocation => _QNAMLocation!.Value.Min + 0xC;
-        private bool _ConsumeAmmo_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _ConsumeAmmoLocation + 1 >= 1;
+        private bool _ConsumeAmmo_IsSet => _QNAMLocation.HasValue;
         public Boolean ConsumeAmmo => _ConsumeAmmo_IsSet ? _recordData.Slice(_ConsumeAmmoLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region PowerBonus
         private int _PowerBonusLocation => _QNAMLocation!.Value.Min + 0xD;
-        private bool _PowerBonus_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _PowerBonusLocation + 1 >= 4;
+        private bool _PowerBonus_IsSet => _QNAMLocation.HasValue;
         public IFormLinkGetter<IActorValueInformationGetter> PowerBonus => _PowerBonus_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IActorValueInformationGetter>(_package, _recordData.Span.Slice(_PowerBonusLocation, 0x4), isSet: _PowerBonus_IsSet) : FormLink<IActorValueInformationGetter>.Null;
         #endregion
         #region UsePower
         private int _UsePowerLocation => _QNAMLocation!.Value.Min + 0x11;
-        private bool _UsePower_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _UsePowerLocation + 1 >= 1;
+        private bool _UsePower_IsSet => _QNAMLocation.HasValue;
         public Boolean UsePower => _UsePower_IsSet ? _recordData.Slice(_UsePowerLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region QNAMUnknown1
-        private int _QNAMUnknown1Location => _QNAMLocation!.Value.Min + 0x12;
-        private bool _QNAMUnknown1_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _QNAMUnknown1Location + 1 >= 1;
-        public Byte QNAMUnknown1 => _QNAMUnknown1_IsSet ? _recordData.Span[_QNAMUnknown1Location] : default(Byte);
+        #region VariablePowerEnabled
+        private int _VariablePowerEnabledLocation => _QNAMLocation!.Value.Min + 0x12;
+        private bool _VariablePowerEnabled_IsSet => _QNAMLocation.HasValue;
+        public Boolean VariablePowerEnabled => _VariablePowerEnabled_IsSet ? _recordData.Slice(_VariablePowerEnabledLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region QNAMUnknown2
-        private int _QNAMUnknown2Location => _QNAMLocation!.Value.Min + 0x13;
-        private bool _QNAMUnknown2_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _QNAMUnknown2Location + 1 >= 4;
-        public Single QNAMUnknown2 => _QNAMUnknown2_IsSet ? _recordData.Slice(_QNAMUnknown2Location, 4).Float() : default(Single);
+        #region VariablePowerTransitionDuration
+        private int _VariablePowerTransitionDurationLocation => _QNAMLocation!.Value.Min + 0x13;
+        private bool _VariablePowerTransitionDuration_IsSet => _QNAMLocation.HasValue;
+        public Single VariablePowerTransitionDuration => _VariablePowerTransitionDuration_IsSet ? _recordData.Slice(_VariablePowerTransitionDurationLocation, 4).Float() : default(Single);
         #endregion
-        #region QNAMUnknown3
-        private int _QNAMUnknown3Location => _QNAMLocation!.Value.Min + 0x17;
-        private bool _QNAMUnknown3_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _QNAMUnknown3Location + 1 >= 1;
-        public Byte QNAMUnknown3 => _QNAMUnknown3_IsSet ? _recordData.Span[_QNAMUnknown3Location] : default(Byte);
+        #region UseChargeOnlyInFocusMode
+        private int _UseChargeOnlyInFocusModeLocation => _QNAMLocation!.Value.Min + 0x17;
+        private bool _UseChargeOnlyInFocusMode_IsSet => _QNAMLocation.HasValue;
+        public Boolean UseChargeOnlyInFocusMode => _UseChargeOnlyInFocusMode_IsSet ? _recordData.Slice(_UseChargeOnlyInFocusModeLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region QNAMUnknown4
-        private int _QNAMUnknown4Location => _QNAMLocation!.Value.Min + 0x18;
-        private bool _QNAMUnknown4_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _QNAMUnknown4Location + 1 >= 4;
-        public IFormLinkGetter<ICurveTableGetter> QNAMUnknown4 => _QNAMUnknown4_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ICurveTableGetter>(_package, _recordData.Span.Slice(_QNAMUnknown4Location, 0x4), isSet: _QNAMUnknown4_IsSet) : FormLink<ICurveTableGetter>.Null;
+        #region PowerIntensityCurve
+        private int _PowerIntensityCurveLocation => _QNAMLocation!.Value.Min + 0x18;
+        private bool _PowerIntensityCurve_IsSet => _QNAMLocation.HasValue;
+        public IFormLinkGetter<ICurveTableGetter> PowerIntensityCurve => _PowerIntensityCurve_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ICurveTableGetter>(_package, _recordData.Span.Slice(_PowerIntensityCurveLocation, 0x4), isSet: _PowerIntensityCurve_IsSet) : FormLink<ICurveTableGetter>.Null;
         #endregion
-        #region QNAMUnknown5
-        private int _QNAMUnknown5Location => _QNAMLocation!.Value.Min + 0x1C;
-        private bool _QNAMUnknown5_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _QNAMUnknown5Location + 1 >= 4;
-        public Single QNAMUnknown5 => _QNAMUnknown5_IsSet ? _recordData.Slice(_QNAMUnknown5Location, 4).Float() : default(Single);
+        #region PowerDamageMultiplier
+        private int _PowerDamageMultiplierLocation => _QNAMLocation!.Value.Min + 0x1C;
+        private bool _PowerDamageMultiplier_IsSet => _QNAMLocation.HasValue;
+        public Single PowerDamageMultiplier => _PowerDamageMultiplier_IsSet ? _recordData.Slice(_PowerDamageMultiplierLocation, 4).Float() : default(Single);
         #endregion
         #region PowerConsumption
         private int _PowerConsumptionLocation => _QNAMLocation!.Value.Min + 0x20;
-        private bool _PowerConsumption_IsSet => _QNAMLocation.HasValue && _QNAMLocation!.Value.Max - _PowerConsumptionLocation + 1 >= 4;
+        private bool _PowerConsumption_IsSet => _QNAMLocation.HasValue;
         public IFormLinkGetter<ICurveTableGetter> PowerConsumption => _PowerConsumption_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ICurveTableGetter>(_package, _recordData.Span.Slice(_PowerConsumptionLocation, 0x4), isSet: _PowerConsumption_IsSet) : FormLink<ICurveTableGetter>.Null;
         #endregion
         private RangeInt32? _WRLOLocation;
-        #region WRLOUnknown1
-        private int _WRLOUnknown1Location => _WRLOLocation!.Value.Min;
-        private bool _WRLOUnknown1_IsSet => _WRLOLocation.HasValue && _WRLOLocation!.Value.Max - _WRLOUnknown1Location + 1 >= 4;
-        public Single WRLOUnknown1 => _WRLOUnknown1_IsSet ? _recordData.Slice(_WRLOUnknown1Location, 4).Float() : default(Single);
+        #region ReloadSeconds
+        private int _ReloadSecondsLocation => _WRLOLocation!.Value.Min;
+        private bool _ReloadSeconds_IsSet => _WRLOLocation.HasValue;
+        public Single ReloadSeconds => _ReloadSeconds_IsSet ? _recordData.Slice(_ReloadSecondsLocation, 4).Float() : default(Single);
         #endregion
         #region ReloadSpeed
         private int _ReloadSpeedLocation => _WRLOLocation!.Value.Min + 0x4;
-        private bool _ReloadSpeed_IsSet => _WRLOLocation.HasValue && _WRLOLocation!.Value.Max - _ReloadSpeedLocation + 1 >= 4;
+        private bool _ReloadSpeed_IsSet => _WRLOLocation.HasValue;
         public Single ReloadSpeed => _ReloadSpeed_IsSet ? _recordData.Slice(_ReloadSpeedLocation, 4).Float() : default(Single);
         #endregion
         #region ReloadCharging
         private int _ReloadChargingLocation => _WRLOLocation!.Value.Min + 0x8;
-        private bool _ReloadCharging_IsSet => _WRLOLocation.HasValue && _WRLOLocation!.Value.Max - _ReloadChargingLocation + 1 >= 1;
+        private bool _ReloadCharging_IsSet => _WRLOLocation.HasValue;
         public Boolean ReloadCharging => _ReloadCharging_IsSet ? _recordData.Slice(_ReloadChargingLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region ReloadSingle
         private int _ReloadSingleLocation => _WRLOLocation!.Value.Min + 0x9;
-        private bool _ReloadSingle_IsSet => _WRLOLocation.HasValue && _WRLOLocation!.Value.Max - _ReloadSingleLocation + 1 >= 1;
+        private bool _ReloadSingle_IsSet => _WRLOLocation.HasValue;
         public Boolean ReloadSingle => _ReloadSingle_IsSet ? _recordData.Slice(_ReloadSingleLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region WRUM
@@ -13402,126 +13379,126 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _WVARLocation;
         #region ApertureValueMin
         private int _ApertureValueMinLocation => _WVARLocation!.Value.Min;
-        private bool _ApertureValueMin_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _ApertureValueMinLocation + 1 >= 4;
+        private bool _ApertureValueMin_IsSet => _WVARLocation.HasValue;
         public Single ApertureValueMin => _ApertureValueMin_IsSet ? _recordData.Slice(_ApertureValueMinLocation, 4).Float() : default(Single);
         #endregion
         #region ApertureValueMax
         private int _ApertureValueMaxLocation => _WVARLocation!.Value.Min + 0x4;
-        private bool _ApertureValueMax_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _ApertureValueMaxLocation + 1 >= 4;
+        private bool _ApertureValueMax_IsSet => _WVARLocation.HasValue;
         public Single ApertureValueMax => _ApertureValueMax_IsSet ? _recordData.Slice(_ApertureValueMaxLocation, 4).Float() : default(Single);
         #endregion
         #region ApertureInputMin
         private int _ApertureInputMinLocation => _WVARLocation!.Value.Min + 0x8;
-        private bool _ApertureInputMin_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _ApertureInputMinLocation + 1 >= 4;
+        private bool _ApertureInputMin_IsSet => _WVARLocation.HasValue;
         public Single ApertureInputMin => _ApertureInputMin_IsSet ? _recordData.Slice(_ApertureInputMinLocation, 4).Float() : default(Single);
         #endregion
         #region ApertureInputMax
         private int _ApertureInputMaxLocation => _WVARLocation!.Value.Min + 0xC;
-        private bool _ApertureInputMax_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _ApertureInputMaxLocation + 1 >= 4;
+        private bool _ApertureInputMax_IsSet => _WVARLocation.HasValue;
         public Single ApertureInputMax => _ApertureInputMax_IsSet ? _recordData.Slice(_ApertureInputMaxLocation, 4).Float() : default(Single);
         #endregion
         #region ApertureAcceleration
         private int _ApertureAccelerationLocation => _WVARLocation!.Value.Min + 0x10;
-        private bool _ApertureAcceleration_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _ApertureAccelerationLocation + 1 >= 4;
+        private bool _ApertureAcceleration_IsSet => _WVARLocation.HasValue;
         public Single ApertureAcceleration => _ApertureAcceleration_IsSet ? _recordData.Slice(_ApertureAccelerationLocation, 4).Float() : default(Single);
         #endregion
         #region ApertureDeceleration
         private int _ApertureDecelerationLocation => _WVARLocation!.Value.Min + 0x14;
-        private bool _ApertureDeceleration_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _ApertureDecelerationLocation + 1 >= 4;
+        private bool _ApertureDeceleration_IsSet => _WVARLocation.HasValue;
         public Single ApertureDeceleration => _ApertureDeceleration_IsSet ? _recordData.Slice(_ApertureDecelerationLocation, 4).Float() : default(Single);
         #endregion
         #region DistanceValueMin
         private int _DistanceValueMinLocation => _WVARLocation!.Value.Min + 0x18;
-        private bool _DistanceValueMin_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _DistanceValueMinLocation + 1 >= 4;
+        private bool _DistanceValueMin_IsSet => _WVARLocation.HasValue;
         public Single DistanceValueMin => _DistanceValueMin_IsSet ? _recordData.Slice(_DistanceValueMinLocation, 4).Float() : default(Single);
         #endregion
         #region DistanceValueMax
         private int _DistanceValueMaxLocation => _WVARLocation!.Value.Min + 0x1C;
-        private bool _DistanceValueMax_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _DistanceValueMaxLocation + 1 >= 4;
+        private bool _DistanceValueMax_IsSet => _WVARLocation.HasValue;
         public Single DistanceValueMax => _DistanceValueMax_IsSet ? _recordData.Slice(_DistanceValueMaxLocation, 4).Float() : default(Single);
         #endregion
         #region DistanceInputMin
         private int _DistanceInputMinLocation => _WVARLocation!.Value.Min + 0x20;
-        private bool _DistanceInputMin_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _DistanceInputMinLocation + 1 >= 4;
+        private bool _DistanceInputMin_IsSet => _WVARLocation.HasValue;
         public Single DistanceInputMin => _DistanceInputMin_IsSet ? _recordData.Slice(_DistanceInputMinLocation, 4).Float() : default(Single);
         #endregion
         #region DistanceInputMax
         private int _DistanceInputMaxLocation => _WVARLocation!.Value.Min + 0x24;
-        private bool _DistanceInputMax_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _DistanceInputMaxLocation + 1 >= 4;
+        private bool _DistanceInputMax_IsSet => _WVARLocation.HasValue;
         public Single DistanceInputMax => _DistanceInputMax_IsSet ? _recordData.Slice(_DistanceInputMaxLocation, 4).Float() : default(Single);
         #endregion
         #region DistanceAcceleration
         private int _DistanceAccelerationLocation => _WVARLocation!.Value.Min + 0x28;
-        private bool _DistanceAcceleration_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _DistanceAccelerationLocation + 1 >= 4;
+        private bool _DistanceAcceleration_IsSet => _WVARLocation.HasValue;
         public Single DistanceAcceleration => _DistanceAcceleration_IsSet ? _recordData.Slice(_DistanceAccelerationLocation, 4).Float() : default(Single);
         #endregion
         #region DistanceDeceleration
         private int _DistanceDecelerationLocation => _WVARLocation!.Value.Min + 0x2C;
-        private bool _DistanceDeceleration_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _DistanceDecelerationLocation + 1 >= 4;
+        private bool _DistanceDeceleration_IsSet => _WVARLocation.HasValue;
         public Single DistanceDeceleration => _DistanceDeceleration_IsSet ? _recordData.Slice(_DistanceDecelerationLocation, 4).Float() : default(Single);
         #endregion
         #region UseVariableRange
         private int _UseVariableRangeLocation => _WVARLocation!.Value.Min + 0x30;
-        private bool _UseVariableRange_IsSet => _WVARLocation.HasValue && _WVARLocation!.Value.Max - _UseVariableRangeLocation + 1 >= 1;
+        private bool _UseVariableRange_IsSet => _WVARLocation.HasValue;
         public Boolean UseVariableRange => _UseVariableRange_IsSet ? _recordData.Slice(_UseVariableRangeLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         public IFirstPersonModelGetter? FirstPersonModel { get; private set; }
         private RangeInt32? _WVISLocation;
         #region WVISUnknown1
         private int _WVISUnknown1Location => _WVISLocation!.Value.Min;
-        private bool _WVISUnknown1_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _WVISUnknown1Location + 1 >= 4;
+        private bool _WVISUnknown1_IsSet => _WVISLocation.HasValue;
         public UInt32 WVISUnknown1 => _WVISUnknown1_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WVISUnknown1Location, 4)) : default(UInt32);
         #endregion
         #region WVISUnknown2
         private int _WVISUnknown2Location => _WVISLocation!.Value.Min + 0x4;
-        private bool _WVISUnknown2_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _WVISUnknown2Location + 1 >= 4;
+        private bool _WVISUnknown2_IsSet => _WVISLocation.HasValue;
         public UInt32 WVISUnknown2 => _WVISUnknown2_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WVISUnknown2Location, 4)) : default(UInt32);
         #endregion
         #region WVISUnknown3
         private int _WVISUnknown3Location => _WVISLocation!.Value.Min + 0x8;
-        private bool _WVISUnknown3_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _WVISUnknown3Location + 1 >= 4;
+        private bool _WVISUnknown3_IsSet => _WVISLocation.HasValue;
         public UInt32 WVISUnknown3 => _WVISUnknown3_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WVISUnknown3Location, 4)) : default(UInt32);
         #endregion
         #region ImpactDataSet
         private int _ImpactDataSetLocation => _WVISLocation!.Value.Min + 0xC;
-        private bool _ImpactDataSet_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _ImpactDataSetLocation + 1 >= 4;
+        private bool _ImpactDataSet_IsSet => _WVISLocation.HasValue;
         public IFormLinkGetter<IImpactDataSetGetter> ImpactDataSet => _ImpactDataSet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_ImpactDataSetLocation, 0x4), isSet: _ImpactDataSet_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region ColorRemappingIndex
         private int _ColorRemappingIndexLocation => _WVISLocation!.Value.Min + 0x10;
-        private bool _ColorRemappingIndex_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _ColorRemappingIndexLocation + 1 >= 4;
+        private bool _ColorRemappingIndex_IsSet => _WVISLocation.HasValue;
         public Single ColorRemappingIndex => _ColorRemappingIndex_IsSet ? _recordData.Slice(_ColorRemappingIndexLocation, 4).Float() : default(Single);
         #endregion
         #region ImageSpaceAdapter
         private int _ImageSpaceAdapterLocation => _WVISLocation!.Value.Min + 0x14;
-        private bool _ImageSpaceAdapter_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _ImageSpaceAdapterLocation + 1 >= 4;
+        private bool _ImageSpaceAdapter_IsSet => _WVISLocation.HasValue;
         public IFormLinkGetter<IImageSpaceAdapterGetter> ImageSpaceAdapter => _ImageSpaceAdapter_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImageSpaceAdapterGetter>(_package, _recordData.Span.Slice(_ImageSpaceAdapterLocation, 0x4), isSet: _ImageSpaceAdapter_IsSet) : FormLink<IImageSpaceAdapterGetter>.Null;
         #endregion
         private RangeInt32? _WTRMLocation;
-        #region WTRMUnknown1
-        private int _WTRMUnknown1Location => _WTRMLocation!.Value.Min;
-        private bool _WTRMUnknown1_IsSet => _WTRMLocation.HasValue && _WTRMLocation!.Value.Max - _WTRMUnknown1Location + 1 >= 4;
-        public Single WTRMUnknown1 => _WTRMUnknown1_IsSet ? _recordData.Slice(_WTRMUnknown1Location, 4).Float() : default(Single);
+        #region AttackActionPointCost
+        private int _AttackActionPointCostLocation => _WTRMLocation!.Value.Min;
+        private bool _AttackActionPointCost_IsSet => _WTRMLocation.HasValue;
+        public Single AttackActionPointCost => _AttackActionPointCost_IsSet ? _recordData.Slice(_AttackActionPointCostLocation, 4).Float() : default(Single);
         #endregion
-        #region WTRMUnknown2
-        private int _WTRMUnknown2Location => _WTRMLocation!.Value.Min + 0x4;
-        private bool _WTRMUnknown2_IsSet => _WTRMLocation.HasValue && _WTRMLocation!.Value.Max - _WTRMUnknown2Location + 1 >= 1;
-        public Byte WTRMUnknown2 => _WTRMUnknown2_IsSet ? _recordData.Span[_WTRMUnknown2Location] : default(Byte);
+        #region OverrideDefaultCameraShake
+        private int _OverrideDefaultCameraShakeLocation => _WTRMLocation!.Value.Min + 0x4;
+        private bool _OverrideDefaultCameraShake_IsSet => _WTRMLocation.HasValue;
+        public Boolean OverrideDefaultCameraShake => _OverrideDefaultCameraShake_IsSet ? _recordData.Slice(_OverrideDefaultCameraShakeLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region WTRMUnknown3
-        private int _WTRMUnknown3Location => _WTRMLocation!.Value.Min + 0x5;
-        private bool _WTRMUnknown3_IsSet => _WTRMLocation.HasValue && _WTRMLocation!.Value.Max - _WTRMUnknown3Location + 1 >= 4;
-        public Single WTRMUnknown3 => _WTRMUnknown3_IsSet ? _recordData.Slice(_WTRMUnknown3Location, 4).Float() : default(Single);
+        #region FiringCameraShakeIntensity
+        private int _FiringCameraShakeIntensityLocation => _WTRMLocation!.Value.Min + 0x5;
+        private bool _FiringCameraShakeIntensity_IsSet => _WTRMLocation.HasValue;
+        public Single FiringCameraShakeIntensity => _FiringCameraShakeIntensity_IsSet ? _recordData.Slice(_FiringCameraShakeIntensityLocation, 4).Float() : default(Single);
         #endregion
-        #region WTRMUnknown4
-        private int _WTRMUnknown4Location => _WTRMLocation!.Value.Min + 0x9;
-        private bool _WTRMUnknown4_IsSet => _WTRMLocation.HasValue && _WTRMLocation!.Value.Max - _WTRMUnknown4Location + 1 >= 4;
-        public Single WTRMUnknown4 => _WTRMUnknown4_IsSet ? _recordData.Slice(_WTRMUnknown4Location, 4).Float() : default(Single);
+        #region FiringCameraShakeDuration
+        private int _FiringCameraShakeDurationLocation => _WTRMLocation!.Value.Min + 0x9;
+        private bool _FiringCameraShakeDuration_IsSet => _WTRMLocation.HasValue;
+        public Single FiringCameraShakeDuration => _FiringCameraShakeDuration_IsSet ? _recordData.Slice(_FiringCameraShakeDurationLocation, 4).Float() : default(Single);
         #endregion
-        #region WTRMUnknown5
-        private int _WTRMUnknown5Location => _WTRMLocation!.Value.Min + 0xD;
-        private bool _WTRMUnknown5_IsSet => _WTRMLocation.HasValue && _WTRMLocation!.Value.Max - _WTRMUnknown5Location + 1 >= 4;
-        public Single WTRMUnknown5 => _WTRMUnknown5_IsSet ? _recordData.Slice(_WTRMUnknown5Location, 4).Float() : default(Single);
+        #region AiFiringArc
+        private int _AiFiringArcLocation => _WTRMLocation!.Value.Min + 0xD;
+        private bool _AiFiringArc_IsSet => _WTRMLocation.HasValue;
+        public Single AiFiringArc => _AiFiringArc_IsSet ? _recordData.Slice(_AiFiringArcLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -13798,12 +13775,12 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WAIM:
                 {
                     _WAIMLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)Weapon_FieldIndex.WAIMUnknown4;
+                    return (int)Weapon_FieldIndex.DisplayedReticleIgnoresPlayerMovement;
                 }
                 case RecordTypeInts.WAM2:
                 {
                     _WAM2Location = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)Weapon_FieldIndex.WAM2Unknown1;
+                    return (int)Weapon_FieldIndex.NumberOfImpactSounds;
                 }
                 case RecordTypeInts.WAMM:
                 {
@@ -13848,7 +13825,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WFLG:
                 {
                     _WFLGLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)Weapon_FieldIndex.WFLGUnknown7;
+                    return (int)Weapon_FieldIndex.UseRandomFireNodes;
                 }
                 case RecordTypeInts.WGEN:
                 {
@@ -13903,7 +13880,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WTRM:
                 {
                     _WTRMLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)Weapon_FieldIndex.WTRMUnknown5;
+                    return (int)Weapon_FieldIndex.AiFiringArc;
                 }
                 case RecordTypeInts.XXXX:
                 {
