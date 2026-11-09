@@ -64,6 +64,9 @@ namespace Mutagen.Bethesda.Starfield
         #region UnknownVector
         public P3Float UnknownVector { get; set; } = default(P3Float);
         #endregion
+        #region Flags
+        public TraversalReference.Flag Flags { get; set; } = default(TraversalReference.Flag);
+        #endregion
         #region Traversal
         private readonly IFormLinkNullable<ITraversalGetter> _Traversal = new FormLinkNullable<ITraversalGetter>();
         public IFormLinkNullable<ITraversalGetter> Traversal
@@ -128,6 +131,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.From = initialValue;
                 this.To = initialValue;
                 this.UnknownVector = initialValue;
+                this.Flags = initialValue;
                 this.Traversal = initialValue;
                 this.Unknown = initialValue;
             }
@@ -137,6 +141,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem From,
                 TItem To,
                 TItem UnknownVector,
+                TItem Flags,
                 TItem Traversal,
                 TItem Unknown)
             {
@@ -144,6 +149,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.From = From;
                 this.To = To;
                 this.UnknownVector = UnknownVector;
+                this.Flags = Flags;
                 this.Traversal = Traversal;
                 this.Unknown = Unknown;
             }
@@ -161,6 +167,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem From;
             public TItem To;
             public TItem UnknownVector;
+            public TItem Flags;
             public TItem Traversal;
             public TItem Unknown;
             #endregion
@@ -179,6 +186,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.From, rhs.From)) return false;
                 if (!object.Equals(this.To, rhs.To)) return false;
                 if (!object.Equals(this.UnknownVector, rhs.UnknownVector)) return false;
+                if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.Traversal, rhs.Traversal)) return false;
                 if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 return true;
@@ -190,6 +198,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.From);
                 hash.Add(this.To);
                 hash.Add(this.UnknownVector);
+                hash.Add(this.Flags);
                 hash.Add(this.Traversal);
                 hash.Add(this.Unknown);
                 return hash.ToHashCode();
@@ -204,6 +213,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.From)) return false;
                 if (!eval(this.To)) return false;
                 if (!eval(this.UnknownVector)) return false;
+                if (!eval(this.Flags)) return false;
                 if (!eval(this.Traversal)) return false;
                 if (!eval(this.Unknown)) return false;
                 return true;
@@ -217,6 +227,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.From)) return true;
                 if (eval(this.To)) return true;
                 if (eval(this.UnknownVector)) return true;
+                if (eval(this.Flags)) return true;
                 if (eval(this.Traversal)) return true;
                 if (eval(this.Unknown)) return true;
                 return false;
@@ -237,6 +248,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.From = eval(this.From);
                 obj.To = eval(this.To);
                 obj.UnknownVector = eval(this.UnknownVector);
+                obj.Flags = eval(this.Flags);
                 obj.Traversal = eval(this.Traversal);
                 obj.Unknown = eval(this.Unknown);
             }
@@ -272,6 +284,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (printMask?.UnknownVector ?? true)
                     {
                         sb.AppendItem(UnknownVector, "UnknownVector");
+                    }
+                    if (printMask?.Flags ?? true)
+                    {
+                        sb.AppendItem(Flags, "Flags");
                     }
                     if (printMask?.Traversal ?? true)
                     {
@@ -309,6 +325,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? From;
             public Exception? To;
             public Exception? UnknownVector;
+            public Exception? Flags;
             public Exception? Traversal;
             public Exception? Unknown;
             #endregion
@@ -327,6 +344,8 @@ namespace Mutagen.Bethesda.Starfield
                         return To;
                     case TraversalReference_FieldIndex.UnknownVector:
                         return UnknownVector;
+                    case TraversalReference_FieldIndex.Flags:
+                        return Flags;
                     case TraversalReference_FieldIndex.Traversal:
                         return Traversal;
                     case TraversalReference_FieldIndex.Unknown:
@@ -352,6 +371,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case TraversalReference_FieldIndex.UnknownVector:
                         this.UnknownVector = ex;
+                        break;
+                    case TraversalReference_FieldIndex.Flags:
+                        this.Flags = ex;
                         break;
                     case TraversalReference_FieldIndex.Traversal:
                         this.Traversal = ex;
@@ -381,6 +403,9 @@ namespace Mutagen.Bethesda.Starfield
                     case TraversalReference_FieldIndex.UnknownVector:
                         this.UnknownVector = (Exception?)obj;
                         break;
+                    case TraversalReference_FieldIndex.Flags:
+                        this.Flags = (Exception?)obj;
+                        break;
                     case TraversalReference_FieldIndex.Traversal:
                         this.Traversal = (Exception?)obj;
                         break;
@@ -399,6 +424,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (From != null) return true;
                 if (To != null) return true;
                 if (UnknownVector != null) return true;
+                if (Flags != null) return true;
                 if (Traversal != null) return true;
                 if (Unknown != null) return true;
                 return false;
@@ -439,6 +465,9 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(UnknownVector, "UnknownVector");
                 }
                 {
+                    sb.AppendItem(Flags, "Flags");
+                }
+                {
                     sb.AppendItem(Traversal, "Traversal");
                 }
                 {
@@ -456,6 +485,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.From = this.From.Combine(rhs.From);
                 ret.To = this.To.Combine(rhs.To);
                 ret.UnknownVector = this.UnknownVector.Combine(rhs.UnknownVector);
+                ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.Traversal = this.Traversal.Combine(rhs.Traversal);
                 ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 return ret;
@@ -485,6 +515,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool From;
             public bool To;
             public bool UnknownVector;
+            public bool Flags;
             public bool Traversal;
             public bool Unknown;
             #endregion
@@ -500,6 +531,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.From = defaultOn;
                 this.To = defaultOn;
                 this.UnknownVector = defaultOn;
+                this.Flags = defaultOn;
                 this.Traversal = defaultOn;
                 this.Unknown = defaultOn;
             }
@@ -521,6 +553,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((From, null));
                 ret.Add((To, null));
                 ret.Add((UnknownVector, null));
+                ret.Add((Flags, null));
                 ret.Add((Traversal, null));
                 ret.Add((Unknown, null));
             }
@@ -605,6 +638,7 @@ namespace Mutagen.Bethesda.Starfield
         new P3Float From { get; set; }
         new P3Float To { get; set; }
         new P3Float UnknownVector { get; set; }
+        new TraversalReference.Flag Flags { get; set; }
         new IFormLinkNullable<ITraversalGetter> Traversal { get; set; }
         new MemorySlice<Byte> Unknown { get; set; }
     }
@@ -626,6 +660,7 @@ namespace Mutagen.Bethesda.Starfield
         P3Float From { get; }
         P3Float To { get; }
         P3Float UnknownVector { get; }
+        TraversalReference.Flag Flags { get; }
         IFormLinkNullableGetter<ITraversalGetter> Traversal { get; }
         ReadOnlyMemorySlice<Byte> Unknown { get; }
 
@@ -801,8 +836,9 @@ namespace Mutagen.Bethesda.Starfield
         From = 1,
         To = 2,
         UnknownVector = 3,
-        Traversal = 4,
-        Unknown = 5,
+        Flags = 4,
+        Traversal = 5,
+        Unknown = 6,
     }
     #endregion
 
@@ -813,9 +849,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 6;
+        public const ushort AdditionalFieldCount = 7;
 
-        public const ushort FieldCount = 6;
+        public const ushort FieldCount = 7;
 
         public static readonly Type MaskType = typeof(TraversalReference.Mask<>);
 
@@ -885,6 +921,7 @@ namespace Mutagen.Bethesda.Starfield
             item.From = default(P3Float);
             item.To = default(P3Float);
             item.UnknownVector = default(P3Float);
+            item.Flags = default(TraversalReference.Flag);
             item.Traversal.Clear();
             item.Unknown = new byte[8];
         }
@@ -941,6 +978,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.From = item.From.Equals(rhs.From);
             ret.To = item.To.Equals(rhs.To);
             ret.UnknownVector = item.UnknownVector.Equals(rhs.UnknownVector);
+            ret.Flags = item.Flags == rhs.Flags;
             ret.Traversal = item.Traversal.Equals(rhs.Traversal);
             ret.Unknown = MemoryExtensions.SequenceEqual(item.Unknown.Span, rhs.Unknown.Span);
         }
@@ -1003,6 +1041,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.UnknownVector, "UnknownVector");
             }
+            if (printMask?.Flags ?? true)
+            {
+                sb.AppendItem(item.Flags, "Flags");
+            }
             if (printMask?.Traversal ?? true)
             {
                 sb.AppendItem(item.Traversal.FormKeyNullable, "Traversal");
@@ -1036,6 +1078,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.UnknownVector.Equals(rhs.UnknownVector)) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)TraversalReference_FieldIndex.Flags) ?? true))
+            {
+                if (lhs.Flags != rhs.Flags) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)TraversalReference_FieldIndex.Traversal) ?? true))
             {
                 if (!lhs.Traversal.Equals(rhs.Traversal)) return false;
@@ -1054,6 +1100,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.From);
             hash.Add(item.To);
             hash.Add(item.UnknownVector);
+            hash.Add(item.Flags);
             hash.Add(item.Traversal);
             hash.Add(item.Unknown);
             return hash.ToHashCode();
@@ -1107,6 +1154,10 @@ namespace Mutagen.Bethesda.Starfield
             if ((copyMask?.GetShouldTranslate((int)TraversalReference_FieldIndex.UnknownVector) ?? true))
             {
                 item.UnknownVector = rhs.UnknownVector;
+            }
+            if ((copyMask?.GetShouldTranslate((int)TraversalReference_FieldIndex.Flags) ?? true))
+            {
+                item.Flags = rhs.Flags;
             }
             if ((copyMask?.GetShouldTranslate((int)TraversalReference_FieldIndex.Traversal) ?? true))
             {
