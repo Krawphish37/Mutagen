@@ -2539,6 +2539,9 @@
     <Compile Include="Records\Major Records\ShaderParticleGeometry.cs">
       <DependentUpon>ShaderParticleGeometry.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\SoundEchoMarker.cs">
+      <DependentUpon>SoundEchoMarker.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\Spell.cs">
       <DependentUpon>Spell.xml</DependentUpon>
     </Compile>

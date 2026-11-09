@@ -53,10 +53,10 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region ECTE
-        public Guid? ECTE { get; set; }
+        #region WwiseGuid
+        public Guid? WwiseGuid { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Guid? IEchoMarkerGetter.ECTE => this.ECTE;
+        Guid? IEchoMarkerGetter.WwiseGuid => this.WwiseGuid;
         #endregion
         #region Sound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -69,54 +69,30 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ISoundReferenceGetter? IEchoMarkerGetter.Sound => this.Sound;
         #endregion
-        #region ANAM
+        #region VoiceCount
+        public UInt32? VoiceCount { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _ANAM;
-        public MemorySlice<Byte>? ANAM
-        {
-            get => this._ANAM;
-            set => this._ANAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IEchoMarkerGetter.ANAM => this.ANAM;
+        UInt32? IEchoMarkerGetter.VoiceCount => this.VoiceCount;
         #endregion
-        #region BNAM
-        public Single? BNAM { get; set; }
+        #region Duration
+        public Single? Duration { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Single? IEchoMarkerGetter.BNAM => this.BNAM;
+        Single? IEchoMarkerGetter.Duration => this.Duration;
         #endregion
-        #region CNAM
+        #region ActionAtLimit
+        public EchoMarker.ActionAtLimitType? ActionAtLimit { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _CNAM;
-        public MemorySlice<Byte>? CNAM
-        {
-            get => this._CNAM;
-            set => this._CNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IEchoMarkerGetter.CNAM => this.CNAM;
+        EchoMarker.ActionAtLimitType? IEchoMarkerGetter.ActionAtLimit => this.ActionAtLimit;
         #endregion
-        #region DNAM
+        #region Use
+        public EchoMarker.UseType? Use { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _DNAM;
-        public MemorySlice<Byte>? DNAM
-        {
-            get => this._DNAM;
-            set => this._DNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IEchoMarkerGetter.DNAM => this.DNAM;
+        EchoMarker.UseType? IEchoMarkerGetter.Use => this.Use;
         #endregion
-        #region ENAM
+        #region TriggerRelease
+        public Boolean? TriggerRelease { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _ENAM;
-        public MemorySlice<Byte>? ENAM
-        {
-            get => this._ENAM;
-            set => this._ENAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IEchoMarkerGetter.ENAM => this.ENAM;
+        Boolean? IEchoMarkerGetter.TriggerRelease => this.TriggerRelease;
         #endregion
         #region Description
         public String? Description { get; set; }
@@ -162,33 +138,33 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.ECTE = initialValue;
+                this.WwiseGuid = initialValue;
                 this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
-                this.ANAM = initialValue;
-                this.BNAM = initialValue;
-                this.CNAM = initialValue;
-                this.DNAM = initialValue;
-                this.ENAM = initialValue;
+                this.VoiceCount = initialValue;
+                this.Duration = initialValue;
+                this.ActionAtLimit = initialValue;
+                this.Use = initialValue;
+                this.TriggerRelease = initialValue;
                 this.Description = initialValue;
             }
 
             public Mask(
-                TItem ECTE,
+                TItem WwiseGuid,
                 TItem Sound,
-                TItem ANAM,
-                TItem BNAM,
-                TItem CNAM,
-                TItem DNAM,
-                TItem ENAM,
+                TItem VoiceCount,
+                TItem Duration,
+                TItem ActionAtLimit,
+                TItem Use,
+                TItem TriggerRelease,
                 TItem Description)
             {
-                this.ECTE = ECTE;
+                this.WwiseGuid = WwiseGuid;
                 this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Sound, new SoundReference.Mask<TItem>(Sound));
-                this.ANAM = ANAM;
-                this.BNAM = BNAM;
-                this.CNAM = CNAM;
-                this.DNAM = DNAM;
-                this.ENAM = ENAM;
+                this.VoiceCount = VoiceCount;
+                this.Duration = Duration;
+                this.ActionAtLimit = ActionAtLimit;
+                this.Use = Use;
+                this.TriggerRelease = TriggerRelease;
                 this.Description = Description;
             }
 
@@ -201,13 +177,13 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem ECTE;
+            public TItem WwiseGuid;
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? Sound { get; set; }
-            public TItem ANAM;
-            public TItem BNAM;
-            public TItem CNAM;
-            public TItem DNAM;
-            public TItem ENAM;
+            public TItem VoiceCount;
+            public TItem Duration;
+            public TItem ActionAtLimit;
+            public TItem Use;
+            public TItem TriggerRelease;
             public TItem Description;
             #endregion
 
@@ -221,26 +197,26 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.ECTE, rhs.ECTE)) return false;
+                if (!object.Equals(this.WwiseGuid, rhs.WwiseGuid)) return false;
                 if (!object.Equals(this.Sound, rhs.Sound)) return false;
-                if (!object.Equals(this.ANAM, rhs.ANAM)) return false;
-                if (!object.Equals(this.BNAM, rhs.BNAM)) return false;
-                if (!object.Equals(this.CNAM, rhs.CNAM)) return false;
-                if (!object.Equals(this.DNAM, rhs.DNAM)) return false;
-                if (!object.Equals(this.ENAM, rhs.ENAM)) return false;
+                if (!object.Equals(this.VoiceCount, rhs.VoiceCount)) return false;
+                if (!object.Equals(this.Duration, rhs.Duration)) return false;
+                if (!object.Equals(this.ActionAtLimit, rhs.ActionAtLimit)) return false;
+                if (!object.Equals(this.Use, rhs.Use)) return false;
+                if (!object.Equals(this.TriggerRelease, rhs.TriggerRelease)) return false;
                 if (!object.Equals(this.Description, rhs.Description)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.ECTE);
+                hash.Add(this.WwiseGuid);
                 hash.Add(this.Sound);
-                hash.Add(this.ANAM);
-                hash.Add(this.BNAM);
-                hash.Add(this.CNAM);
-                hash.Add(this.DNAM);
-                hash.Add(this.ENAM);
+                hash.Add(this.VoiceCount);
+                hash.Add(this.Duration);
+                hash.Add(this.ActionAtLimit);
+                hash.Add(this.Use);
+                hash.Add(this.TriggerRelease);
                 hash.Add(this.Description);
                 return hash.ToHashCode();
             }
@@ -250,17 +226,17 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.ECTE)) return false;
+                if (!eval(this.WwiseGuid)) return false;
                 if (Sound != null)
                 {
                     if (!eval(this.Sound.Overall)) return false;
                     if (this.Sound.Specific != null && !this.Sound.Specific.All(eval)) return false;
                 }
-                if (!eval(this.ANAM)) return false;
-                if (!eval(this.BNAM)) return false;
-                if (!eval(this.CNAM)) return false;
-                if (!eval(this.DNAM)) return false;
-                if (!eval(this.ENAM)) return false;
+                if (!eval(this.VoiceCount)) return false;
+                if (!eval(this.Duration)) return false;
+                if (!eval(this.ActionAtLimit)) return false;
+                if (!eval(this.Use)) return false;
+                if (!eval(this.TriggerRelease)) return false;
                 if (!eval(this.Description)) return false;
                 return true;
             }
@@ -269,17 +245,17 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.ECTE)) return true;
+                if (eval(this.WwiseGuid)) return true;
                 if (Sound != null)
                 {
                     if (eval(this.Sound.Overall)) return true;
                     if (this.Sound.Specific != null && this.Sound.Specific.Any(eval)) return true;
                 }
-                if (eval(this.ANAM)) return true;
-                if (eval(this.BNAM)) return true;
-                if (eval(this.CNAM)) return true;
-                if (eval(this.DNAM)) return true;
-                if (eval(this.ENAM)) return true;
+                if (eval(this.VoiceCount)) return true;
+                if (eval(this.Duration)) return true;
+                if (eval(this.ActionAtLimit)) return true;
+                if (eval(this.Use)) return true;
+                if (eval(this.TriggerRelease)) return true;
                 if (eval(this.Description)) return true;
                 return false;
             }
@@ -295,13 +271,13 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.ECTE = eval(this.ECTE);
+                obj.WwiseGuid = eval(this.WwiseGuid);
                 obj.Sound = this.Sound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
-                obj.ANAM = eval(this.ANAM);
-                obj.BNAM = eval(this.BNAM);
-                obj.CNAM = eval(this.CNAM);
-                obj.DNAM = eval(this.DNAM);
-                obj.ENAM = eval(this.ENAM);
+                obj.VoiceCount = eval(this.VoiceCount);
+                obj.Duration = eval(this.Duration);
+                obj.ActionAtLimit = eval(this.ActionAtLimit);
+                obj.Use = eval(this.Use);
+                obj.TriggerRelease = eval(this.TriggerRelease);
                 obj.Description = eval(this.Description);
             }
             #endregion
@@ -321,33 +297,33 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(EchoMarker.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.ECTE ?? true)
+                    if (printMask?.WwiseGuid ?? true)
                     {
-                        sb.AppendItem(ECTE, "ECTE");
+                        sb.AppendItem(WwiseGuid, "WwiseGuid");
                     }
                     if (printMask?.Sound?.Overall ?? true)
                     {
                         Sound?.Print(sb);
                     }
-                    if (printMask?.ANAM ?? true)
+                    if (printMask?.VoiceCount ?? true)
                     {
-                        sb.AppendItem(ANAM, "ANAM");
+                        sb.AppendItem(VoiceCount, "VoiceCount");
                     }
-                    if (printMask?.BNAM ?? true)
+                    if (printMask?.Duration ?? true)
                     {
-                        sb.AppendItem(BNAM, "BNAM");
+                        sb.AppendItem(Duration, "Duration");
                     }
-                    if (printMask?.CNAM ?? true)
+                    if (printMask?.ActionAtLimit ?? true)
                     {
-                        sb.AppendItem(CNAM, "CNAM");
+                        sb.AppendItem(ActionAtLimit, "ActionAtLimit");
                     }
-                    if (printMask?.DNAM ?? true)
+                    if (printMask?.Use ?? true)
                     {
-                        sb.AppendItem(DNAM, "DNAM");
+                        sb.AppendItem(Use, "Use");
                     }
-                    if (printMask?.ENAM ?? true)
+                    if (printMask?.TriggerRelease ?? true)
                     {
-                        sb.AppendItem(ENAM, "ENAM");
+                        sb.AppendItem(TriggerRelease, "TriggerRelease");
                     }
                     if (printMask?.Description ?? true)
                     {
@@ -377,13 +353,13 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? ECTE;
+            public Exception? WwiseGuid;
             public MaskItem<Exception?, SoundReference.ErrorMask?>? Sound;
-            public Exception? ANAM;
-            public Exception? BNAM;
-            public Exception? CNAM;
-            public Exception? DNAM;
-            public Exception? ENAM;
+            public Exception? VoiceCount;
+            public Exception? Duration;
+            public Exception? ActionAtLimit;
+            public Exception? Use;
+            public Exception? TriggerRelease;
             public Exception? Description;
             #endregion
 
@@ -393,20 +369,20 @@ namespace Mutagen.Bethesda.Starfield
                 EchoMarker_FieldIndex enu = (EchoMarker_FieldIndex)index;
                 switch (enu)
                 {
-                    case EchoMarker_FieldIndex.ECTE:
-                        return ECTE;
+                    case EchoMarker_FieldIndex.WwiseGuid:
+                        return WwiseGuid;
                     case EchoMarker_FieldIndex.Sound:
                         return Sound;
-                    case EchoMarker_FieldIndex.ANAM:
-                        return ANAM;
-                    case EchoMarker_FieldIndex.BNAM:
-                        return BNAM;
-                    case EchoMarker_FieldIndex.CNAM:
-                        return CNAM;
-                    case EchoMarker_FieldIndex.DNAM:
-                        return DNAM;
-                    case EchoMarker_FieldIndex.ENAM:
-                        return ENAM;
+                    case EchoMarker_FieldIndex.VoiceCount:
+                        return VoiceCount;
+                    case EchoMarker_FieldIndex.Duration:
+                        return Duration;
+                    case EchoMarker_FieldIndex.ActionAtLimit:
+                        return ActionAtLimit;
+                    case EchoMarker_FieldIndex.Use:
+                        return Use;
+                    case EchoMarker_FieldIndex.TriggerRelease:
+                        return TriggerRelease;
                     case EchoMarker_FieldIndex.Description:
                         return Description;
                     default:
@@ -419,26 +395,26 @@ namespace Mutagen.Bethesda.Starfield
                 EchoMarker_FieldIndex enu = (EchoMarker_FieldIndex)index;
                 switch (enu)
                 {
-                    case EchoMarker_FieldIndex.ECTE:
-                        this.ECTE = ex;
+                    case EchoMarker_FieldIndex.WwiseGuid:
+                        this.WwiseGuid = ex;
                         break;
                     case EchoMarker_FieldIndex.Sound:
                         this.Sound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
-                    case EchoMarker_FieldIndex.ANAM:
-                        this.ANAM = ex;
+                    case EchoMarker_FieldIndex.VoiceCount:
+                        this.VoiceCount = ex;
                         break;
-                    case EchoMarker_FieldIndex.BNAM:
-                        this.BNAM = ex;
+                    case EchoMarker_FieldIndex.Duration:
+                        this.Duration = ex;
                         break;
-                    case EchoMarker_FieldIndex.CNAM:
-                        this.CNAM = ex;
+                    case EchoMarker_FieldIndex.ActionAtLimit:
+                        this.ActionAtLimit = ex;
                         break;
-                    case EchoMarker_FieldIndex.DNAM:
-                        this.DNAM = ex;
+                    case EchoMarker_FieldIndex.Use:
+                        this.Use = ex;
                         break;
-                    case EchoMarker_FieldIndex.ENAM:
-                        this.ENAM = ex;
+                    case EchoMarker_FieldIndex.TriggerRelease:
+                        this.TriggerRelease = ex;
                         break;
                     case EchoMarker_FieldIndex.Description:
                         this.Description = ex;
@@ -453,26 +429,26 @@ namespace Mutagen.Bethesda.Starfield
                 EchoMarker_FieldIndex enu = (EchoMarker_FieldIndex)index;
                 switch (enu)
                 {
-                    case EchoMarker_FieldIndex.ECTE:
-                        this.ECTE = (Exception?)obj;
+                    case EchoMarker_FieldIndex.WwiseGuid:
+                        this.WwiseGuid = (Exception?)obj;
                         break;
                     case EchoMarker_FieldIndex.Sound:
                         this.Sound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
-                    case EchoMarker_FieldIndex.ANAM:
-                        this.ANAM = (Exception?)obj;
+                    case EchoMarker_FieldIndex.VoiceCount:
+                        this.VoiceCount = (Exception?)obj;
                         break;
-                    case EchoMarker_FieldIndex.BNAM:
-                        this.BNAM = (Exception?)obj;
+                    case EchoMarker_FieldIndex.Duration:
+                        this.Duration = (Exception?)obj;
                         break;
-                    case EchoMarker_FieldIndex.CNAM:
-                        this.CNAM = (Exception?)obj;
+                    case EchoMarker_FieldIndex.ActionAtLimit:
+                        this.ActionAtLimit = (Exception?)obj;
                         break;
-                    case EchoMarker_FieldIndex.DNAM:
-                        this.DNAM = (Exception?)obj;
+                    case EchoMarker_FieldIndex.Use:
+                        this.Use = (Exception?)obj;
                         break;
-                    case EchoMarker_FieldIndex.ENAM:
-                        this.ENAM = (Exception?)obj;
+                    case EchoMarker_FieldIndex.TriggerRelease:
+                        this.TriggerRelease = (Exception?)obj;
                         break;
                     case EchoMarker_FieldIndex.Description:
                         this.Description = (Exception?)obj;
@@ -485,13 +461,13 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (ECTE != null) return true;
+                if (WwiseGuid != null) return true;
                 if (Sound != null) return true;
-                if (ANAM != null) return true;
-                if (BNAM != null) return true;
-                if (CNAM != null) return true;
-                if (DNAM != null) return true;
-                if (ENAM != null) return true;
+                if (VoiceCount != null) return true;
+                if (Duration != null) return true;
+                if (ActionAtLimit != null) return true;
+                if (Use != null) return true;
+                if (TriggerRelease != null) return true;
                 if (Description != null) return true;
                 return false;
             }
@@ -519,23 +495,23 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(ECTE, "ECTE");
+                    sb.AppendItem(WwiseGuid, "WwiseGuid");
                 }
                 Sound?.Print(sb);
                 {
-                    sb.AppendItem(ANAM, "ANAM");
+                    sb.AppendItem(VoiceCount, "VoiceCount");
                 }
                 {
-                    sb.AppendItem(BNAM, "BNAM");
+                    sb.AppendItem(Duration, "Duration");
                 }
                 {
-                    sb.AppendItem(CNAM, "CNAM");
+                    sb.AppendItem(ActionAtLimit, "ActionAtLimit");
                 }
                 {
-                    sb.AppendItem(DNAM, "DNAM");
+                    sb.AppendItem(Use, "Use");
                 }
                 {
-                    sb.AppendItem(ENAM, "ENAM");
+                    sb.AppendItem(TriggerRelease, "TriggerRelease");
                 }
                 {
                     sb.AppendItem(Description, "Description");
@@ -548,13 +524,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.ECTE = this.ECTE.Combine(rhs.ECTE);
+                ret.WwiseGuid = this.WwiseGuid.Combine(rhs.WwiseGuid);
                 ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
-                ret.ANAM = this.ANAM.Combine(rhs.ANAM);
-                ret.BNAM = this.BNAM.Combine(rhs.BNAM);
-                ret.CNAM = this.CNAM.Combine(rhs.CNAM);
-                ret.DNAM = this.DNAM.Combine(rhs.DNAM);
-                ret.ENAM = this.ENAM.Combine(rhs.ENAM);
+                ret.VoiceCount = this.VoiceCount.Combine(rhs.VoiceCount);
+                ret.Duration = this.Duration.Combine(rhs.Duration);
+                ret.ActionAtLimit = this.ActionAtLimit.Combine(rhs.ActionAtLimit);
+                ret.Use = this.Use.Combine(rhs.Use);
+                ret.TriggerRelease = this.TriggerRelease.Combine(rhs.TriggerRelease);
                 ret.Description = this.Description.Combine(rhs.Description);
                 return ret;
             }
@@ -579,13 +555,13 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool ECTE;
+            public bool WwiseGuid;
             public SoundReference.TranslationMask? Sound;
-            public bool ANAM;
-            public bool BNAM;
-            public bool CNAM;
-            public bool DNAM;
-            public bool ENAM;
+            public bool VoiceCount;
+            public bool Duration;
+            public bool ActionAtLimit;
+            public bool Use;
+            public bool TriggerRelease;
             public bool Description;
             #endregion
 
@@ -596,12 +572,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.ECTE = defaultOn;
-                this.ANAM = defaultOn;
-                this.BNAM = defaultOn;
-                this.CNAM = defaultOn;
-                this.DNAM = defaultOn;
-                this.ENAM = defaultOn;
+                this.WwiseGuid = defaultOn;
+                this.VoiceCount = defaultOn;
+                this.Duration = defaultOn;
+                this.ActionAtLimit = defaultOn;
+                this.Use = defaultOn;
+                this.TriggerRelease = defaultOn;
                 this.Description = defaultOn;
             }
 
@@ -618,13 +594,13 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((ECTE, null));
+                ret.Add((WwiseGuid, null));
                 ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
-                ret.Add((ANAM, null));
-                ret.Add((BNAM, null));
-                ret.Add((CNAM, null));
-                ret.Add((DNAM, null));
-                ret.Add((ENAM, null));
+                ret.Add((VoiceCount, null));
+                ret.Add((Duration, null));
+                ret.Add((ActionAtLimit, null));
+                ret.Add((Use, null));
+                ret.Add((TriggerRelease, null));
                 ret.Add((Description, null));
             }
 
@@ -704,13 +680,13 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkContainer,
         ILoquiObjectSetter<IEchoMarker>
     {
-        new Guid? ECTE { get; set; }
+        new Guid? WwiseGuid { get; set; }
         new SoundReference? Sound { get; set; }
-        new MemorySlice<Byte>? ANAM { get; set; }
-        new Single? BNAM { get; set; }
-        new MemorySlice<Byte>? CNAM { get; set; }
-        new MemorySlice<Byte>? DNAM { get; set; }
-        new MemorySlice<Byte>? ENAM { get; set; }
+        new UInt32? VoiceCount { get; set; }
+        new Single? Duration { get; set; }
+        new EchoMarker.ActionAtLimitType? ActionAtLimit { get; set; }
+        new EchoMarker.UseType? Use { get; set; }
+        new Boolean? TriggerRelease { get; set; }
         new String? Description { get; set; }
     }
 
@@ -727,13 +703,13 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => EchoMarker_Registration.Instance;
-        Guid? ECTE { get; }
+        Guid? WwiseGuid { get; }
         ISoundReferenceGetter? Sound { get; }
-        ReadOnlyMemorySlice<Byte>? ANAM { get; }
-        Single? BNAM { get; }
-        ReadOnlyMemorySlice<Byte>? CNAM { get; }
-        ReadOnlyMemorySlice<Byte>? DNAM { get; }
-        ReadOnlyMemorySlice<Byte>? ENAM { get; }
+        UInt32? VoiceCount { get; }
+        Single? Duration { get; }
+        EchoMarker.ActionAtLimitType? ActionAtLimit { get; }
+        EchoMarker.UseType? Use { get; }
+        Boolean? TriggerRelease { get; }
         String? Description { get; }
 
     }
@@ -904,13 +880,13 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum EchoMarker_FieldIndex
     {
-        ECTE = 0,
+        WwiseGuid = 0,
         Sound = 1,
-        ANAM = 2,
-        BNAM = 3,
-        CNAM = 4,
-        DNAM = 5,
-        ENAM = 6,
+        VoiceCount = 2,
+        Duration = 3,
+        ActionAtLimit = 4,
+        Use = 5,
+        TriggerRelease = 6,
         Description = 7,
     }
     #endregion
@@ -1004,13 +980,13 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IEchoMarker item)
         {
             ClearPartial();
-            item.ECTE = default;
+            item.WwiseGuid = default;
             item.Sound = null;
-            item.ANAM = default;
-            item.BNAM = default;
-            item.CNAM = default;
-            item.DNAM = default;
-            item.ENAM = default;
+            item.VoiceCount = default;
+            item.Duration = default;
+            item.ActionAtLimit = default;
+            item.Use = default;
+            item.TriggerRelease = default;
             item.Description = default;
         }
         
@@ -1062,17 +1038,17 @@ namespace Mutagen.Bethesda.Starfield
             EchoMarker.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.ECTE = item.ECTE == rhs.ECTE;
+            ret.WwiseGuid = item.WwiseGuid == rhs.WwiseGuid;
             ret.Sound = EqualsMaskHelper.EqualsHelper(
                 item.Sound,
                 rhs.Sound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.ANAM = MemorySliceExt.SequenceEqual(item.ANAM, rhs.ANAM);
-            ret.BNAM = item.BNAM.EqualsWithin(rhs.BNAM);
-            ret.CNAM = MemorySliceExt.SequenceEqual(item.CNAM, rhs.CNAM);
-            ret.DNAM = MemorySliceExt.SequenceEqual(item.DNAM, rhs.DNAM);
-            ret.ENAM = MemorySliceExt.SequenceEqual(item.ENAM, rhs.ENAM);
+            ret.VoiceCount = item.VoiceCount == rhs.VoiceCount;
+            ret.Duration = item.Duration.EqualsWithin(rhs.Duration);
+            ret.ActionAtLimit = item.ActionAtLimit == rhs.ActionAtLimit;
+            ret.Use = item.Use == rhs.Use;
+            ret.TriggerRelease = item.TriggerRelease == rhs.TriggerRelease;
             ret.Description = string.Equals(item.Description, rhs.Description);
         }
         
@@ -1118,40 +1094,40 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             EchoMarker.Mask<bool>? printMask = null)
         {
-            if ((printMask?.ECTE ?? true)
-                && item.ECTE is {} ECTEItem)
+            if ((printMask?.WwiseGuid ?? true)
+                && item.WwiseGuid is {} WwiseGuidItem)
             {
-                sb.AppendItem(ECTEItem, "ECTE");
+                sb.AppendItem(WwiseGuidItem, "WwiseGuid");
             }
             if ((printMask?.Sound?.Overall ?? true)
                 && item.Sound is {} SoundItem)
             {
                 SoundItem?.Print(sb, "Sound");
             }
-            if ((printMask?.ANAM ?? true)
-                && item.ANAM is {} ANAMItem)
+            if ((printMask?.VoiceCount ?? true)
+                && item.VoiceCount is {} VoiceCountItem)
             {
-                sb.AppendLine($"ANAM => {SpanExt.ToHexString(ANAMItem)}");
+                sb.AppendItem(VoiceCountItem, "VoiceCount");
             }
-            if ((printMask?.BNAM ?? true)
-                && item.BNAM is {} BNAMItem)
+            if ((printMask?.Duration ?? true)
+                && item.Duration is {} DurationItem)
             {
-                sb.AppendItem(BNAMItem, "BNAM");
+                sb.AppendItem(DurationItem, "Duration");
             }
-            if ((printMask?.CNAM ?? true)
-                && item.CNAM is {} CNAMItem)
+            if ((printMask?.ActionAtLimit ?? true)
+                && item.ActionAtLimit is {} ActionAtLimitItem)
             {
-                sb.AppendLine($"CNAM => {SpanExt.ToHexString(CNAMItem)}");
+                sb.AppendItem(ActionAtLimitItem, "ActionAtLimit");
             }
-            if ((printMask?.DNAM ?? true)
-                && item.DNAM is {} DNAMItem)
+            if ((printMask?.Use ?? true)
+                && item.Use is {} UseItem)
             {
-                sb.AppendLine($"DNAM => {SpanExt.ToHexString(DNAMItem)}");
+                sb.AppendItem(UseItem, "Use");
             }
-            if ((printMask?.ENAM ?? true)
-                && item.ENAM is {} ENAMItem)
+            if ((printMask?.TriggerRelease ?? true)
+                && item.TriggerRelease is {} TriggerReleaseItem)
             {
-                sb.AppendLine($"ENAM => {SpanExt.ToHexString(ENAMItem)}");
+                sb.AppendItem(TriggerReleaseItem, "TriggerRelease");
             }
             if ((printMask?.Description ?? true)
                 && item.Description is {} DescriptionItem)
@@ -1167,9 +1143,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.ECTE) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.WwiseGuid) ?? true))
             {
-                if (lhs.ECTE != rhs.ECTE) return false;
+                if (lhs.WwiseGuid != rhs.WwiseGuid) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Sound) ?? true))
             {
@@ -1179,25 +1155,25 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isSoundEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.ANAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.VoiceCount) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.ANAM, rhs.ANAM)) return false;
+                if (lhs.VoiceCount != rhs.VoiceCount) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.BNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Duration) ?? true))
             {
-                if (!lhs.BNAM.EqualsWithin(rhs.BNAM)) return false;
+                if (!lhs.Duration.EqualsWithin(rhs.Duration)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.CNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.ActionAtLimit) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.CNAM, rhs.CNAM)) return false;
+                if (lhs.ActionAtLimit != rhs.ActionAtLimit) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.DNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Use) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.DNAM, rhs.DNAM)) return false;
+                if (lhs.Use != rhs.Use) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.ENAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.TriggerRelease) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.ENAM, rhs.ENAM)) return false;
+                if (lhs.TriggerRelease != rhs.TriggerRelease) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Description) ?? true))
             {
@@ -1209,33 +1185,33 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IEchoMarkerGetter item)
         {
             var hash = new HashCode();
-            if (item.ECTE is {} ECTEitem)
+            if (item.WwiseGuid is {} WwiseGuiditem)
             {
-                hash.Add(ECTEitem);
+                hash.Add(WwiseGuiditem);
             }
             if (item.Sound is {} Sounditem)
             {
                 hash.Add(Sounditem);
             }
-            if (item.ANAM is {} ANAMItem)
+            if (item.VoiceCount is {} VoiceCountitem)
             {
-                hash.Add(ANAMItem);
+                hash.Add(VoiceCountitem);
             }
-            if (item.BNAM is {} BNAMitem)
+            if (item.Duration is {} Durationitem)
             {
-                hash.Add(BNAMitem);
+                hash.Add(Durationitem);
             }
-            if (item.CNAM is {} CNAMItem)
+            if (item.ActionAtLimit is {} ActionAtLimititem)
             {
-                hash.Add(CNAMItem);
+                hash.Add(ActionAtLimititem);
             }
-            if (item.DNAM is {} DNAMItem)
+            if (item.Use is {} Useitem)
             {
-                hash.Add(DNAMItem);
+                hash.Add(Useitem);
             }
-            if (item.ENAM is {} ENAMItem)
+            if (item.TriggerRelease is {} TriggerReleaseitem)
             {
-                hash.Add(ENAMItem);
+                hash.Add(TriggerReleaseitem);
             }
             if (item.Description is {} Descriptionitem)
             {
@@ -1280,9 +1256,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.ECTE) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.WwiseGuid) ?? true))
             {
-                item.ECTE = rhs.ECTE;
+                item.WwiseGuid = rhs.WwiseGuid;
             }
             if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Sound) ?? true))
             {
@@ -1310,53 +1286,25 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.ANAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.VoiceCount) ?? true))
             {
-                if(rhs.ANAM is {} ANAMrhs)
-                {
-                    item.ANAM = ANAMrhs.ToArray();
-                }
-                else
-                {
-                    item.ANAM = default;
-                }
+                item.VoiceCount = rhs.VoiceCount;
             }
-            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.BNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Duration) ?? true))
             {
-                item.BNAM = rhs.BNAM;
+                item.Duration = rhs.Duration;
             }
-            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.CNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.ActionAtLimit) ?? true))
             {
-                if(rhs.CNAM is {} CNAMrhs)
-                {
-                    item.CNAM = CNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.CNAM = default;
-                }
+                item.ActionAtLimit = rhs.ActionAtLimit;
             }
-            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.DNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Use) ?? true))
             {
-                if(rhs.DNAM is {} DNAMrhs)
-                {
-                    item.DNAM = DNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.DNAM = default;
-                }
+                item.Use = rhs.Use;
             }
-            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.ENAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.TriggerRelease) ?? true))
             {
-                if(rhs.ENAM is {} ENAMrhs)
-                {
-                    item.ENAM = ENAMrhs.ToArray();
-                }
-                else
-                {
-                    item.ENAM = default;
-                }
+                item.TriggerRelease = rhs.TriggerRelease;
             }
             if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Description) ?? true))
             {
@@ -1473,7 +1421,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             GuidBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.ECTE,
+                item: item.WwiseGuid,
                 header: translationParams.ConvertToCustom(RecordTypes.ECTE));
             if (item.Sound is {} SoundItem)
             {
@@ -1485,25 +1433,27 @@ namespace Mutagen.Bethesda.Starfield
                         translationParams: translationParams);
                 }
             }
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.ANAM,
+                item: item.VoiceCount,
                 header: translationParams.ConvertToCustom(RecordTypes.ANAM));
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.BNAM,
+                item: item.Duration,
                 header: translationParams.ConvertToCustom(RecordTypes.BNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.CNAM,
+            EnumBinaryTranslation<EchoMarker.ActionAtLimitType, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.ActionAtLimit,
+                length: 1,
                 header: translationParams.ConvertToCustom(RecordTypes.CNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.DNAM,
+            EnumBinaryTranslation<EchoMarker.UseType, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Use,
+                length: 1,
                 header: translationParams.ConvertToCustom(RecordTypes.DNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            BooleanBinaryTranslation<MutagenFrame>.Instance.WriteNullable(
                 writer: writer,
-                item: item.ENAM,
+                item: item.TriggerRelease,
                 header: translationParams.ConvertToCustom(RecordTypes.ENAM));
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -1554,10 +1504,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.ECTE:
                 {
-                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.ECTE, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.WwiseGuid, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ECTE = GuidBinaryTranslation.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)EchoMarker_FieldIndex.ECTE;
+                    item.WwiseGuid = GuidBinaryTranslation.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)EchoMarker_FieldIndex.WwiseGuid;
                 }
                 case RecordTypeInts.ECSH:
                 {
@@ -1568,38 +1518,42 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ANAM:
                 {
-                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.ANAM, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.VoiceCount, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ANAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)EchoMarker_FieldIndex.ANAM;
+                    item.VoiceCount = frame.ReadUInt32();
+                    return (int)EchoMarker_FieldIndex.VoiceCount;
                 }
                 case RecordTypeInts.BNAM:
                 {
-                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.BNAM, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Duration, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BNAM = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)EchoMarker_FieldIndex.BNAM;
+                    item.Duration = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)EchoMarker_FieldIndex.Duration;
                 }
                 case RecordTypeInts.CNAM:
                 {
-                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.CNAM, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.ActionAtLimit, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.CNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)EchoMarker_FieldIndex.CNAM;
+                    item.ActionAtLimit = EnumBinaryTranslation<EchoMarker.ActionAtLimitType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)EchoMarker_FieldIndex.ActionAtLimit;
                 }
                 case RecordTypeInts.DNAM:
                 {
-                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.DNAM, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Use, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)EchoMarker_FieldIndex.DNAM;
+                    item.Use = EnumBinaryTranslation<EchoMarker.UseType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)EchoMarker_FieldIndex.Use;
                 }
                 case RecordTypeInts.ENAM:
                 {
-                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.ENAM, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.TriggerRelease, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ENAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)EchoMarker_FieldIndex.ENAM;
+                    item.TriggerRelease = frame.ReadBoolean();
+                    return (int)EchoMarker_FieldIndex.TriggerRelease;
                 }
                 case RecordTypeInts.NNAM:
                 {
@@ -1680,30 +1634,30 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region ECTE
-        private int? _ECTELocation;
-        public Guid? ECTE => _ECTELocation.HasValue ? new Guid(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ECTELocation.Value, _package.MetaData.Constants).Slice(0, 16)) : default(Guid?);
+        #region WwiseGuid
+        private int? _WwiseGuidLocation;
+        public Guid? WwiseGuid => _WwiseGuidLocation.HasValue ? new Guid(HeaderTranslation.ExtractSubrecordMemory(_recordData, _WwiseGuidLocation.Value, _package.MetaData.Constants).Slice(0, 16)) : default(Guid?);
         #endregion
         public ISoundReferenceGetter? Sound { get; private set; }
-        #region ANAM
-        private int? _ANAMLocation;
-        public ReadOnlyMemorySlice<Byte>? ANAM => _ANAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ANAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region VoiceCount
+        private int? _VoiceCountLocation;
+        public UInt32? VoiceCount => _VoiceCountLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _VoiceCountLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region BNAM
-        private int? _BNAMLocation;
-        public Single? BNAM => _BNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _BNAMLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
+        #region Duration
+        private int? _DurationLocation;
+        public Single? Duration => _DurationLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DurationLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
-        #region CNAM
-        private int? _CNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? CNAM => _CNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _CNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region ActionAtLimit
+        private int? _ActionAtLimitLocation;
+        public EchoMarker.ActionAtLimitType? ActionAtLimit => EnumBinaryTranslation<EchoMarker.ActionAtLimitType, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_ActionAtLimitLocation, _recordData, _package, 1);
         #endregion
-        #region DNAM
-        private int? _DNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? DNAM => _DNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Use
+        private int? _UseLocation;
+        public EchoMarker.UseType? Use => EnumBinaryTranslation<EchoMarker.UseType, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_UseLocation, _recordData, _package, 1);
         #endregion
-        #region ENAM
-        private int? _ENAMLocation;
-        public ReadOnlyMemorySlice<Byte>? ENAM => _ENAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ENAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region TriggerRelease
+        private int? _TriggerReleaseLocation;
+        public Boolean? TriggerRelease => _TriggerReleaseLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _TriggerReleaseLocation.Value, _package.MetaData.Constants)[0] >= 1 : default(Boolean?);
         #endregion
         #region Description
         private int? _DescriptionLocation;
@@ -1774,9 +1728,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.ECTE:
                 {
-                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.ECTE, translationParams)) return ParseResult.Stop;
-                    _ECTELocation = (stream.Position - offset);
-                    return (int)EchoMarker_FieldIndex.ECTE;
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.WwiseGuid, translationParams)) return ParseResult.Stop;
+                    _WwiseGuidLocation = (stream.Position - offset);
+                    return (int)EchoMarker_FieldIndex.WwiseGuid;
                 }
                 case RecordTypeInts.ECSH:
                 {
@@ -1790,33 +1744,33 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ANAM:
                 {
-                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.ANAM, translationParams)) return ParseResult.Stop;
-                    _ANAMLocation = (stream.Position - offset);
-                    return (int)EchoMarker_FieldIndex.ANAM;
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.VoiceCount, translationParams)) return ParseResult.Stop;
+                    _VoiceCountLocation = (stream.Position - offset);
+                    return (int)EchoMarker_FieldIndex.VoiceCount;
                 }
                 case RecordTypeInts.BNAM:
                 {
-                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.BNAM, translationParams)) return ParseResult.Stop;
-                    _BNAMLocation = (stream.Position - offset);
-                    return (int)EchoMarker_FieldIndex.BNAM;
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Duration, translationParams)) return ParseResult.Stop;
+                    _DurationLocation = (stream.Position - offset);
+                    return (int)EchoMarker_FieldIndex.Duration;
                 }
                 case RecordTypeInts.CNAM:
                 {
-                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.CNAM, translationParams)) return ParseResult.Stop;
-                    _CNAMLocation = (stream.Position - offset);
-                    return (int)EchoMarker_FieldIndex.CNAM;
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.ActionAtLimit, translationParams)) return ParseResult.Stop;
+                    _ActionAtLimitLocation = (stream.Position - offset);
+                    return (int)EchoMarker_FieldIndex.ActionAtLimit;
                 }
                 case RecordTypeInts.DNAM:
                 {
-                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.DNAM, translationParams)) return ParseResult.Stop;
-                    _DNAMLocation = (stream.Position - offset);
-                    return (int)EchoMarker_FieldIndex.DNAM;
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Use, translationParams)) return ParseResult.Stop;
+                    _UseLocation = (stream.Position - offset);
+                    return (int)EchoMarker_FieldIndex.Use;
                 }
                 case RecordTypeInts.ENAM:
                 {
-                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.ENAM, translationParams)) return ParseResult.Stop;
-                    _ENAMLocation = (stream.Position - offset);
-                    return (int)EchoMarker_FieldIndex.ENAM;
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.TriggerRelease, translationParams)) return ParseResult.Stop;
+                    _TriggerReleaseLocation = (stream.Position - offset);
+                    return (int)EchoMarker_FieldIndex.TriggerRelease;
                 }
                 case RecordTypeInts.NNAM:
                 {
