@@ -6,11 +6,11 @@
       <Enum name="Type" recordType="CNAM" enumName="MusicTrack.TypeEnum" byteLength="4" nullable="False" />
       <Float name="Duration" recordType="FLTV" />
       <Float name="FadeOut" recordType="DNAM" />
-      <RefDirect name="MTSH" recordType="MTSH" unknown="true" refName="SoundReference" />
+      <RefDirect name="SingleTrackSound" recordType="MTSH" refName="SoundReference" />
       <List name="CuePoints" recordType="FNAM">
         <Float />
       </List>
-      <ByteArray name="MSTF" recordType="MSTF" unknown="true" />
+      <Bool name="ConditionsCantFailAfterSuccess" recordType="MSTF" byteLength="1" />
       <RefList name="Conditions" refName="Condition" counterRecType="CITC" />
       <List name="Tracks" recordType="SNAM">
         <FormLink refName="MusicTrack" />
