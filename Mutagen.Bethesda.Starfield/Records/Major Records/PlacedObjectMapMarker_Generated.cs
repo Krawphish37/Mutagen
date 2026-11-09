@@ -82,25 +82,22 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #endregion
         #region Type
-        public SByte Type { get; set; } = default(SByte);
+        public PlacedObjectMapMarker.MarkerType Type { get; set; } = default(PlacedObjectMapMarker.MarkerType);
         #endregion
-        #region Unknown
-        public Byte Unknown { get; set; } = default(Byte);
-        #endregion
-        #region VNAM
-        public UInt16? VNAM { get; set; }
+        #region Category
+        public PlacedObjectMapMarker.MarkerCategory? Category { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt16? IPlacedObjectMapMarkerGetter.VNAM => this.VNAM;
+        PlacedObjectMapMarker.MarkerCategory? IPlacedObjectMapMarkerGetter.Category => this.Category;
         #endregion
-        #region UNAM
-        public TranslatedString? UNAM { get; set; }
+        #region UnexploredName
+        public TranslatedString? UnexploredName { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ITranslatedStringGetter? IPlacedObjectMapMarkerGetter.UNAM => this.UNAM;
+        ITranslatedStringGetter? IPlacedObjectMapMarkerGetter.UnexploredName => this.UnexploredName;
         #endregion
-        #region VISI
-        public Byte? VISI { get; set; }
+        #region UndiscoveredVisibility
+        public PlacedObjectMapMarker.Visibility? UndiscoveredVisibility { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Byte? IPlacedObjectMapMarkerGetter.VISI => this.VISI;
+        PlacedObjectMapMarker.Visibility? IPlacedObjectMapMarkerGetter.UndiscoveredVisibility => this.UndiscoveredVisibility;
         #endregion
 
         #region To String
@@ -144,28 +141,25 @@ namespace Mutagen.Bethesda.Starfield
                 this.Flags = initialValue;
                 this.Name = initialValue;
                 this.Type = initialValue;
-                this.Unknown = initialValue;
-                this.VNAM = initialValue;
-                this.UNAM = initialValue;
-                this.VISI = initialValue;
+                this.Category = initialValue;
+                this.UnexploredName = initialValue;
+                this.UndiscoveredVisibility = initialValue;
             }
 
             public Mask(
                 TItem Flags,
                 TItem Name,
                 TItem Type,
-                TItem Unknown,
-                TItem VNAM,
-                TItem UNAM,
-                TItem VISI)
+                TItem Category,
+                TItem UnexploredName,
+                TItem UndiscoveredVisibility)
             {
                 this.Flags = Flags;
                 this.Name = Name;
                 this.Type = Type;
-                this.Unknown = Unknown;
-                this.VNAM = VNAM;
-                this.UNAM = UNAM;
-                this.VISI = VISI;
+                this.Category = Category;
+                this.UnexploredName = UnexploredName;
+                this.UndiscoveredVisibility = UndiscoveredVisibility;
             }
 
             #pragma warning disable CS8618
@@ -180,10 +174,9 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Flags;
             public TItem Name;
             public TItem Type;
-            public TItem Unknown;
-            public TItem VNAM;
-            public TItem UNAM;
-            public TItem VISI;
+            public TItem Category;
+            public TItem UnexploredName;
+            public TItem UndiscoveredVisibility;
             #endregion
 
             #region Equals
@@ -199,10 +192,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.Name, rhs.Name)) return false;
                 if (!object.Equals(this.Type, rhs.Type)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
-                if (!object.Equals(this.VNAM, rhs.VNAM)) return false;
-                if (!object.Equals(this.UNAM, rhs.UNAM)) return false;
-                if (!object.Equals(this.VISI, rhs.VISI)) return false;
+                if (!object.Equals(this.Category, rhs.Category)) return false;
+                if (!object.Equals(this.UnexploredName, rhs.UnexploredName)) return false;
+                if (!object.Equals(this.UndiscoveredVisibility, rhs.UndiscoveredVisibility)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -211,10 +203,9 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Flags);
                 hash.Add(this.Name);
                 hash.Add(this.Type);
-                hash.Add(this.Unknown);
-                hash.Add(this.VNAM);
-                hash.Add(this.UNAM);
-                hash.Add(this.VISI);
+                hash.Add(this.Category);
+                hash.Add(this.UnexploredName);
+                hash.Add(this.UndiscoveredVisibility);
                 return hash.ToHashCode();
             }
 
@@ -226,10 +217,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Flags)) return false;
                 if (!eval(this.Name)) return false;
                 if (!eval(this.Type)) return false;
-                if (!eval(this.Unknown)) return false;
-                if (!eval(this.VNAM)) return false;
-                if (!eval(this.UNAM)) return false;
-                if (!eval(this.VISI)) return false;
+                if (!eval(this.Category)) return false;
+                if (!eval(this.UnexploredName)) return false;
+                if (!eval(this.UndiscoveredVisibility)) return false;
                 return true;
             }
             #endregion
@@ -240,10 +230,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Flags)) return true;
                 if (eval(this.Name)) return true;
                 if (eval(this.Type)) return true;
-                if (eval(this.Unknown)) return true;
-                if (eval(this.VNAM)) return true;
-                if (eval(this.UNAM)) return true;
-                if (eval(this.VISI)) return true;
+                if (eval(this.Category)) return true;
+                if (eval(this.UnexploredName)) return true;
+                if (eval(this.UndiscoveredVisibility)) return true;
                 return false;
             }
             #endregion
@@ -261,10 +250,9 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Flags = eval(this.Flags);
                 obj.Name = eval(this.Name);
                 obj.Type = eval(this.Type);
-                obj.Unknown = eval(this.Unknown);
-                obj.VNAM = eval(this.VNAM);
-                obj.UNAM = eval(this.UNAM);
-                obj.VISI = eval(this.VISI);
+                obj.Category = eval(this.Category);
+                obj.UnexploredName = eval(this.UnexploredName);
+                obj.UndiscoveredVisibility = eval(this.UndiscoveredVisibility);
             }
             #endregion
 
@@ -295,21 +283,17 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Type, "Type");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.Category ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(Category, "Category");
                     }
-                    if (printMask?.VNAM ?? true)
+                    if (printMask?.UnexploredName ?? true)
                     {
-                        sb.AppendItem(VNAM, "VNAM");
+                        sb.AppendItem(UnexploredName, "UnexploredName");
                     }
-                    if (printMask?.UNAM ?? true)
+                    if (printMask?.UndiscoveredVisibility ?? true)
                     {
-                        sb.AppendItem(UNAM, "UNAM");
-                    }
-                    if (printMask?.VISI ?? true)
-                    {
-                        sb.AppendItem(VISI, "VISI");
+                        sb.AppendItem(UndiscoveredVisibility, "UndiscoveredVisibility");
                     }
                 }
             }
@@ -338,10 +322,9 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Flags;
             public Exception? Name;
             public Exception? Type;
-            public Exception? Unknown;
-            public Exception? VNAM;
-            public Exception? UNAM;
-            public Exception? VISI;
+            public Exception? Category;
+            public Exception? UnexploredName;
+            public Exception? UndiscoveredVisibility;
             #endregion
 
             #region IErrorMask
@@ -356,14 +339,12 @@ namespace Mutagen.Bethesda.Starfield
                         return Name;
                     case PlacedObjectMapMarker_FieldIndex.Type:
                         return Type;
-                    case PlacedObjectMapMarker_FieldIndex.Unknown:
-                        return Unknown;
-                    case PlacedObjectMapMarker_FieldIndex.VNAM:
-                        return VNAM;
-                    case PlacedObjectMapMarker_FieldIndex.UNAM:
-                        return UNAM;
-                    case PlacedObjectMapMarker_FieldIndex.VISI:
-                        return VISI;
+                    case PlacedObjectMapMarker_FieldIndex.Category:
+                        return Category;
+                    case PlacedObjectMapMarker_FieldIndex.UnexploredName:
+                        return UnexploredName;
+                    case PlacedObjectMapMarker_FieldIndex.UndiscoveredVisibility:
+                        return UndiscoveredVisibility;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -383,17 +364,14 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObjectMapMarker_FieldIndex.Type:
                         this.Type = ex;
                         break;
-                    case PlacedObjectMapMarker_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case PlacedObjectMapMarker_FieldIndex.Category:
+                        this.Category = ex;
                         break;
-                    case PlacedObjectMapMarker_FieldIndex.VNAM:
-                        this.VNAM = ex;
+                    case PlacedObjectMapMarker_FieldIndex.UnexploredName:
+                        this.UnexploredName = ex;
                         break;
-                    case PlacedObjectMapMarker_FieldIndex.UNAM:
-                        this.UNAM = ex;
-                        break;
-                    case PlacedObjectMapMarker_FieldIndex.VISI:
-                        this.VISI = ex;
+                    case PlacedObjectMapMarker_FieldIndex.UndiscoveredVisibility:
+                        this.UndiscoveredVisibility = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -414,17 +392,14 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObjectMapMarker_FieldIndex.Type:
                         this.Type = (Exception?)obj;
                         break;
-                    case PlacedObjectMapMarker_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case PlacedObjectMapMarker_FieldIndex.Category:
+                        this.Category = (Exception?)obj;
                         break;
-                    case PlacedObjectMapMarker_FieldIndex.VNAM:
-                        this.VNAM = (Exception?)obj;
+                    case PlacedObjectMapMarker_FieldIndex.UnexploredName:
+                        this.UnexploredName = (Exception?)obj;
                         break;
-                    case PlacedObjectMapMarker_FieldIndex.UNAM:
-                        this.UNAM = (Exception?)obj;
-                        break;
-                    case PlacedObjectMapMarker_FieldIndex.VISI:
-                        this.VISI = (Exception?)obj;
+                    case PlacedObjectMapMarker_FieldIndex.UndiscoveredVisibility:
+                        this.UndiscoveredVisibility = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -437,10 +412,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (Flags != null) return true;
                 if (Name != null) return true;
                 if (Type != null) return true;
-                if (Unknown != null) return true;
-                if (VNAM != null) return true;
-                if (UNAM != null) return true;
-                if (VISI != null) return true;
+                if (Category != null) return true;
+                if (UnexploredName != null) return true;
+                if (UndiscoveredVisibility != null) return true;
                 return false;
             }
             #endregion
@@ -476,16 +450,13 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Type, "Type");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(Category, "Category");
                 }
                 {
-                    sb.AppendItem(VNAM, "VNAM");
+                    sb.AppendItem(UnexploredName, "UnexploredName");
                 }
                 {
-                    sb.AppendItem(UNAM, "UNAM");
-                }
-                {
-                    sb.AppendItem(VISI, "VISI");
+                    sb.AppendItem(UndiscoveredVisibility, "UndiscoveredVisibility");
                 }
             }
             #endregion
@@ -498,10 +469,9 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.Name = this.Name.Combine(rhs.Name);
                 ret.Type = this.Type.Combine(rhs.Type);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
-                ret.VNAM = this.VNAM.Combine(rhs.VNAM);
-                ret.UNAM = this.UNAM.Combine(rhs.UNAM);
-                ret.VISI = this.VISI.Combine(rhs.VISI);
+                ret.Category = this.Category.Combine(rhs.Category);
+                ret.UnexploredName = this.UnexploredName.Combine(rhs.UnexploredName);
+                ret.UndiscoveredVisibility = this.UndiscoveredVisibility.Combine(rhs.UndiscoveredVisibility);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -528,10 +498,9 @@ namespace Mutagen.Bethesda.Starfield
             public bool Flags;
             public bool Name;
             public bool Type;
-            public bool Unknown;
-            public bool VNAM;
-            public bool UNAM;
-            public bool VISI;
+            public bool Category;
+            public bool UnexploredName;
+            public bool UndiscoveredVisibility;
             #endregion
 
             #region Ctors
@@ -544,10 +513,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.Flags = defaultOn;
                 this.Name = defaultOn;
                 this.Type = defaultOn;
-                this.Unknown = defaultOn;
-                this.VNAM = defaultOn;
-                this.UNAM = defaultOn;
-                this.VISI = defaultOn;
+                this.Category = defaultOn;
+                this.UnexploredName = defaultOn;
+                this.UndiscoveredVisibility = defaultOn;
             }
 
             #endregion
@@ -566,10 +534,9 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Flags, null));
                 ret.Add((Name, null));
                 ret.Add((Type, null));
-                ret.Add((Unknown, null));
-                ret.Add((VNAM, null));
-                ret.Add((UNAM, null));
-                ret.Add((VISI, null));
+                ret.Add((Category, null));
+                ret.Add((UnexploredName, null));
+                ret.Add((UndiscoveredVisibility, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -649,11 +616,10 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: INamedRequired, ITranslatedNamedRequired
         /// </summary>
         new TranslatedString Name { get; set; }
-        new SByte Type { get; set; }
-        new Byte Unknown { get; set; }
-        new UInt16? VNAM { get; set; }
-        new TranslatedString? UNAM { get; set; }
-        new Byte? VISI { get; set; }
+        new PlacedObjectMapMarker.MarkerType Type { get; set; }
+        new PlacedObjectMapMarker.MarkerCategory? Category { get; set; }
+        new TranslatedString? UnexploredName { get; set; }
+        new PlacedObjectMapMarker.Visibility? UndiscoveredVisibility { get; set; }
     }
 
     public partial interface IPlacedObjectMapMarkerGetter :
@@ -677,11 +643,10 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         ITranslatedStringGetter Name { get; }
         #endregion
-        SByte Type { get; }
-        Byte Unknown { get; }
-        UInt16? VNAM { get; }
-        ITranslatedStringGetter? UNAM { get; }
-        Byte? VISI { get; }
+        PlacedObjectMapMarker.MarkerType Type { get; }
+        PlacedObjectMapMarker.MarkerCategory? Category { get; }
+        ITranslatedStringGetter? UnexploredName { get; }
+        PlacedObjectMapMarker.Visibility? UndiscoveredVisibility { get; }
 
     }
 
@@ -854,10 +819,9 @@ namespace Mutagen.Bethesda.Starfield
         Flags = 0,
         Name = 1,
         Type = 2,
-        Unknown = 3,
-        VNAM = 4,
-        UNAM = 5,
-        VISI = 6,
+        Category = 3,
+        UnexploredName = 4,
+        UndiscoveredVisibility = 5,
     }
     #endregion
 
@@ -868,9 +832,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 7;
+        public const ushort AdditionalFieldCount = 6;
 
-        public const ushort FieldCount = 7;
+        public const ushort FieldCount = 6;
 
         public static readonly Type MaskType = typeof(PlacedObjectMapMarker.Mask<>);
 
@@ -954,11 +918,10 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.Flags = default(PlacedObjectMapMarker.Flag);
             item.Name.Clear();
-            item.Type = default(SByte);
-            item.Unknown = default(Byte);
-            item.VNAM = default;
-            item.UNAM = default;
-            item.VISI = default;
+            item.Type = default(PlacedObjectMapMarker.MarkerType);
+            item.Category = default;
+            item.UnexploredName = default;
+            item.UndiscoveredVisibility = default;
         }
         
         #region Mutagen
@@ -1011,10 +974,9 @@ namespace Mutagen.Bethesda.Starfield
             ret.Flags = item.Flags == rhs.Flags;
             ret.Name = object.Equals(item.Name, rhs.Name);
             ret.Type = item.Type == rhs.Type;
-            ret.Unknown = item.Unknown == rhs.Unknown;
-            ret.VNAM = item.VNAM == rhs.VNAM;
-            ret.UNAM = object.Equals(item.UNAM, rhs.UNAM);
-            ret.VISI = item.VISI == rhs.VISI;
+            ret.Category = item.Category == rhs.Category;
+            ret.UnexploredName = object.Equals(item.UnexploredName, rhs.UnexploredName);
+            ret.UndiscoveredVisibility = item.UndiscoveredVisibility == rhs.UndiscoveredVisibility;
         }
         
         public string Print(
@@ -1071,24 +1033,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Type, "Type");
             }
-            if (printMask?.Unknown ?? true)
+            if ((printMask?.Category ?? true)
+                && item.Category is {} CategoryItem)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(CategoryItem, "Category");
             }
-            if ((printMask?.VNAM ?? true)
-                && item.VNAM is {} VNAMItem)
+            if ((printMask?.UnexploredName ?? true)
+                && item.UnexploredName is {} UnexploredNameItem)
             {
-                sb.AppendItem(VNAMItem, "VNAM");
+                sb.AppendItem(UnexploredNameItem, "UnexploredName");
             }
-            if ((printMask?.UNAM ?? true)
-                && item.UNAM is {} UNAMItem)
+            if ((printMask?.UndiscoveredVisibility ?? true)
+                && item.UndiscoveredVisibility is {} UndiscoveredVisibilityItem)
             {
-                sb.AppendItem(UNAMItem, "UNAM");
-            }
-            if ((printMask?.VISI ?? true)
-                && item.VISI is {} VISIItem)
-            {
-                sb.AppendItem(VISIItem, "VISI");
+                sb.AppendItem(UndiscoveredVisibilityItem, "UndiscoveredVisibility");
             }
         }
         
@@ -1111,21 +1069,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Type != rhs.Type) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.Category) ?? true))
             {
-                if (lhs.Unknown != rhs.Unknown) return false;
+                if (lhs.Category != rhs.Category) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.VNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.UnexploredName) ?? true))
             {
-                if (lhs.VNAM != rhs.VNAM) return false;
+                if (!object.Equals(lhs.UnexploredName, rhs.UnexploredName)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.UNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.UndiscoveredVisibility) ?? true))
             {
-                if (!object.Equals(lhs.UNAM, rhs.UNAM)) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.VISI) ?? true))
-            {
-                if (lhs.VISI != rhs.VISI) return false;
+                if (lhs.UndiscoveredVisibility != rhs.UndiscoveredVisibility) return false;
             }
             return true;
         }
@@ -1136,18 +1090,17 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Flags);
             hash.Add(item.Name);
             hash.Add(item.Type);
-            hash.Add(item.Unknown);
-            if (item.VNAM is {} VNAMitem)
+            if (item.Category is {} Categoryitem)
             {
-                hash.Add(VNAMitem);
+                hash.Add(Categoryitem);
             }
-            if (item.UNAM is {} UNAMitem)
+            if (item.UnexploredName is {} UnexploredNameitem)
             {
-                hash.Add(UNAMitem);
+                hash.Add(UnexploredNameitem);
             }
-            if (item.VISI is {} VISIitem)
+            if (item.UndiscoveredVisibility is {} UndiscoveredVisibilityitem)
             {
-                hash.Add(VISIitem);
+                hash.Add(UndiscoveredVisibilityitem);
             }
             return hash.ToHashCode();
         }
@@ -1193,21 +1146,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Type = rhs.Type;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.Category) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.Category = rhs.Category;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.VNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.UnexploredName) ?? true))
             {
-                item.VNAM = rhs.VNAM;
+                item.UnexploredName = rhs.UnexploredName?.DeepCopy();
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.UNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.UndiscoveredVisibility) ?? true))
             {
-                item.UNAM = rhs.UNAM?.DeepCopy();
-            }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectMapMarker_FieldIndex.VISI) ?? true))
-            {
-                item.VISI = rhs.VISI;
+                item.UndiscoveredVisibility = rhs.UndiscoveredVisibility;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1329,24 +1278,26 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.FULL),
                 binaryType: StringBinaryType.NullTerminate,
                 source: StringsSource.Normal);
-            using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.TNAM)))
-            {
-                writer.Write(item.Type);
-                writer.Write(item.Unknown);
-            }
-            UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.VNAM,
+            EnumBinaryTranslation<PlacedObjectMapMarker.MarkerType, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.Type,
+                length: 2,
+                header: translationParams.ConvertToCustom(RecordTypes.TNAM));
+            EnumBinaryTranslation<PlacedObjectMapMarker.MarkerCategory, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Category,
+                length: 2,
                 header: translationParams.ConvertToCustom(RecordTypes.VNAM));
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.UNAM,
+                item: item.UnexploredName,
                 header: translationParams.ConvertToCustom(RecordTypes.UNAM),
                 binaryType: StringBinaryType.NullTerminate,
                 source: StringsSource.Normal);
-            ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.VISI,
+            EnumBinaryTranslation<PlacedObjectMapMarker.Visibility, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.UndiscoveredVisibility,
+                length: 1,
                 header: translationParams.ConvertToCustom(RecordTypes.VISI));
         }
 
@@ -1413,35 +1364,37 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.TNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    var dataFrame = frame.SpawnWithLength(contentLength);
-                    if (dataFrame.Remaining < 1) return null;
-                    item.Type = dataFrame.ReadInt8();
-                    if (dataFrame.Remaining < 1) return null;
-                    item.Unknown = dataFrame.ReadUInt8();
-                    return (int)PlacedObjectMapMarker_FieldIndex.Unknown;
+                    item.Type = EnumBinaryTranslation<PlacedObjectMapMarker.MarkerType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)PlacedObjectMapMarker_FieldIndex.Type;
                 }
                 case RecordTypeInts.VNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.VNAM = frame.ReadUInt16();
-                    return (int)PlacedObjectMapMarker_FieldIndex.VNAM;
+                    item.Category = EnumBinaryTranslation<PlacedObjectMapMarker.MarkerCategory, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)PlacedObjectMapMarker_FieldIndex.Category;
                 }
                 case RecordTypeInts.UNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.UNAM = StringBinaryTranslation.Instance.Parse(
+                    item.UnexploredName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         eager: true,
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)PlacedObjectMapMarker_FieldIndex.UNAM;
+                    return (int)PlacedObjectMapMarker_FieldIndex.UnexploredName;
                 }
                 case RecordTypeInts.VISI:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.VISI = frame.ReadUInt8();
-                    return (int)PlacedObjectMapMarker_FieldIndex.VISI;
+                    item.UndiscoveredVisibility = EnumBinaryTranslation<PlacedObjectMapMarker.Visibility, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)PlacedObjectMapMarker_FieldIndex.UndiscoveredVisibility;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1523,28 +1476,21 @@ namespace Mutagen.Bethesda.Starfield
         string INamedRequiredGetter.Name => this.Name?.String ?? string.Empty;
         #endregion
         #endregion
-        private RangeInt32? _TNAMLocation;
         #region Type
-        private int _TypeLocation => _TNAMLocation!.Value.Min;
-        private bool _Type_IsSet => _TNAMLocation.HasValue && _TNAMLocation!.Value.Max - _TypeLocation + 1 >= 1;
-        public SByte Type => _Type_IsSet ? (sbyte)_recordData.Slice(_TypeLocation, 1)[0] : default(SByte);
+        private int? _TypeLocation;
+        public PlacedObjectMapMarker.MarkerType Type => EnumBinaryTranslation<PlacedObjectMapMarker.MarkerType, MutagenFrame, MutagenWriter>.Instance.ParseRecord(_TypeLocation, _recordData, _package, 2);
         #endregion
-        #region Unknown
-        private int _UnknownLocation => _TNAMLocation!.Value.Min + 0x1;
-        private bool _Unknown_IsSet => _TNAMLocation.HasValue && _TNAMLocation!.Value.Max - _UnknownLocation + 1 >= 1;
-        public Byte Unknown => _Unknown_IsSet ? _recordData.Span[_UnknownLocation] : default(Byte);
+        #region Category
+        private int? _CategoryLocation;
+        public PlacedObjectMapMarker.MarkerCategory? Category => EnumBinaryTranslation<PlacedObjectMapMarker.MarkerCategory, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_CategoryLocation, _recordData, _package, 2);
         #endregion
-        #region VNAM
-        private int? _VNAMLocation;
-        public UInt16? VNAM => _VNAMLocation.HasValue ? BinaryPrimitives.ReadUInt16LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _VNAMLocation.Value, _package.MetaData.Constants)) : default(UInt16?);
+        #region UnexploredName
+        private int? _UnexploredNameLocation;
+        public ITranslatedStringGetter? UnexploredName => _UnexploredNameLocation.HasValue ? StringBinaryTranslation.Instance.Parse(HeaderTranslation.ExtractSubrecordMemory(_recordData, _UnexploredNameLocation.Value, _package.MetaData.Constants), StringsSource.Normal, parsingBundle: _package.MetaData, eager: false) : default(TranslatedString?);
         #endregion
-        #region UNAM
-        private int? _UNAMLocation;
-        public ITranslatedStringGetter? UNAM => _UNAMLocation.HasValue ? StringBinaryTranslation.Instance.Parse(HeaderTranslation.ExtractSubrecordMemory(_recordData, _UNAMLocation.Value, _package.MetaData.Constants), StringsSource.Normal, parsingBundle: _package.MetaData, eager: false) : default(TranslatedString?);
-        #endregion
-        #region VISI
-        private int? _VISILocation;
-        public Byte? VISI => _VISILocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _VISILocation.Value, _package.MetaData.Constants)[0] : default(Byte?);
+        #region UndiscoveredVisibility
+        private int? _UndiscoveredVisibilityLocation;
+        public PlacedObjectMapMarker.Visibility? UndiscoveredVisibility => EnumBinaryTranslation<PlacedObjectMapMarker.Visibility, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_UndiscoveredVisibilityLocation, _recordData, _package, 1);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1622,23 +1568,23 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.TNAM:
                 {
-                    _TNAMLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)PlacedObjectMapMarker_FieldIndex.Unknown;
+                    _TypeLocation = (stream.Position - offset);
+                    return (int)PlacedObjectMapMarker_FieldIndex.Type;
                 }
                 case RecordTypeInts.VNAM:
                 {
-                    _VNAMLocation = (stream.Position - offset);
-                    return (int)PlacedObjectMapMarker_FieldIndex.VNAM;
+                    _CategoryLocation = (stream.Position - offset);
+                    return (int)PlacedObjectMapMarker_FieldIndex.Category;
                 }
                 case RecordTypeInts.UNAM:
                 {
-                    _UNAMLocation = (stream.Position - offset);
-                    return (int)PlacedObjectMapMarker_FieldIndex.UNAM;
+                    _UnexploredNameLocation = (stream.Position - offset);
+                    return (int)PlacedObjectMapMarker_FieldIndex.UnexploredName;
                 }
                 case RecordTypeInts.VISI:
                 {
-                    _VISILocation = (stream.Position - offset);
-                    return (int)PlacedObjectMapMarker_FieldIndex.VISI;
+                    _UndiscoveredVisibilityLocation = (stream.Position - offset);
+                    return (int)PlacedObjectMapMarker_FieldIndex.UndiscoveredVisibility;
                 }
                 default:
                     return ParseResult.Stop;
