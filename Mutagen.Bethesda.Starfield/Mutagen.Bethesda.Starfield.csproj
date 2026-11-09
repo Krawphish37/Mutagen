@@ -2557,6 +2557,9 @@
     <Compile Include="Records\Major Records\Subgraph.cs">
       <DependentUpon>Race.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\SurfaceBlock.cs">
+      <DependentUpon>SurfaceBlock.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\TeleportDestination.cs">
       <DependentUpon>PlacedObject.xml</DependentUpon>
     </Compile>
