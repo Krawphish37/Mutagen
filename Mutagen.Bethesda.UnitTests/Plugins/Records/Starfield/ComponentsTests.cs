@@ -253,8 +253,8 @@ public class ComponentsTests
             overlay.PNAM.ShouldNotBeNull();
             overlay.PNAM.Value.ToArray().ShouldBe(new byte[] { 0xFF, 0xFF, 0xFF, 0xFF });
             var props = location.Components[1].ShouldBeAssignableTo<IPlanetContentManagerContentPropertiesComponentGetter>()!;
-            props.YNAM.ShouldBe((byte)7);
-            props.XNAM.ShouldBe(0u);
+            props.DoAllBeforeRepeating.ShouldBe((byte)7);
+            props.NumberOfTimesAllowedGlobal.ShouldBe(0u);
 
             location.ParentLocation.FormKey.ShouldBe(new FormKey(TestModKey, 0x802));
             location.PlanetID.ShouldBeNull();
