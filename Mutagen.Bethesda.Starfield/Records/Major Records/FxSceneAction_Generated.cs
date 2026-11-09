@@ -55,38 +55,38 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region REPL
-        private readonly IFormLink<IImageSpaceAdapterGetter> _REPL = new FormLink<IImageSpaceAdapterGetter>();
-        public IFormLink<IImageSpaceAdapterGetter> REPL
+        #region ImageSpaceModifier
+        private readonly IFormLink<IImageSpaceAdapterGetter> _ImageSpaceModifier = new FormLink<IImageSpaceAdapterGetter>();
+        public IFormLink<IImageSpaceAdapterGetter> ImageSpaceModifier
         {
-            get => _REPL;
-            set => _REPL.SetTo(value);
+            get => _ImageSpaceModifier;
+            set => _ImageSpaceModifier.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IImageSpaceAdapterGetter> IFxSceneActionGetter.REPL => this.REPL;
+        IFormLinkGetter<IImageSpaceAdapterGetter> IFxSceneActionGetter.ImageSpaceModifier => this.ImageSpaceModifier;
         #endregion
-        #region HNAM
-        public Single HNAM { get; set; } = default(Single);
+        #region FadeOutTime
+        public Single FadeOutTime { get; set; } = default(Single);
         #endregion
-        #region VCLR
-        public Single VCLR { get; set; } = default(Single);
+        #region ImageSpaceStrengthOrSoundVolume
+        public Single ImageSpaceStrengthOrSoundVolume { get; set; } = default(Single);
         #endregion
         #region StartTime
         public Single StartTime { get; set; } = default(Single);
         #endregion
-        #region FLMV
-        public Int32 FLMV { get; set; } = default(Int32);
+        #region FxFlags
+        public FxSceneAction.Flag FxFlags { get; set; } = default(FxSceneAction.Flag);
         #endregion
-        #region WED0
+        #region Sound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _WED0;
-        public SoundReference? WED0
+        private SoundReference? _Sound;
+        public SoundReference? Sound
         {
-            get => _WED0;
-            set => _WED0 = value;
+            get => _Sound;
+            set => _Sound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? IFxSceneActionGetter.WED0 => this.WED0;
+        ISoundReferenceGetter? IFxSceneActionGetter.Sound => this.Sound;
         #endregion
         #region Conditions
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -102,20 +102,20 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region BIPL
-        private readonly IFormLink<IPlacedObjectGetter> _BIPL = new FormLink<IPlacedObjectGetter>();
-        public IFormLink<IPlacedObjectGetter> BIPL
+        #region Reference
+        private readonly IFormLink<IPlacedObjectGetter> _Reference = new FormLink<IPlacedObjectGetter>();
+        public IFormLink<IPlacedObjectGetter> Reference
         {
-            get => _BIPL;
-            set => _BIPL.SetTo(value);
+            get => _Reference;
+            set => _Reference.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IPlacedObjectGetter> IFxSceneActionGetter.BIPL => this.BIPL;
+        IFormLinkGetter<IPlacedObjectGetter> IFxSceneActionGetter.Reference => this.Reference;
         #endregion
-        #region LVLO
-        public Int32? LVLO { get; set; }
+        #region Alias
+        public Int32? Alias { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Int32? IFxSceneActionGetter.LVLO => this.LVLO;
+        Int32? IFxSceneActionGetter.Alias => this.Alias;
         #endregion
 
         #region To String
@@ -158,15 +158,15 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.REPL = initialValue;
-                this.HNAM = initialValue;
-                this.VCLR = initialValue;
+                this.ImageSpaceModifier = initialValue;
+                this.FadeOutTime = initialValue;
+                this.ImageSpaceStrengthOrSoundVolume = initialValue;
                 this.StartTime = initialValue;
-                this.FLMV = initialValue;
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.FxFlags = initialValue;
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
-                this.BIPL = initialValue;
-                this.LVLO = initialValue;
+                this.Reference = initialValue;
+                this.Alias = initialValue;
             }
 
             public Mask(
@@ -177,15 +177,15 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Flags,
                 TItem StartPhase,
                 TItem EndPhase,
-                TItem REPL,
-                TItem HNAM,
-                TItem VCLR,
+                TItem ImageSpaceModifier,
+                TItem FadeOutTime,
+                TItem ImageSpaceStrengthOrSoundVolume,
                 TItem StartTime,
-                TItem FLMV,
-                TItem WED0,
+                TItem FxFlags,
+                TItem Sound,
                 TItem Conditions,
-                TItem BIPL,
-                TItem LVLO)
+                TItem Reference,
+                TItem Alias)
             : base(
                 Name: Name,
                 SceneNotes: SceneNotes,
@@ -195,15 +195,15 @@ namespace Mutagen.Bethesda.Starfield
                 StartPhase: StartPhase,
                 EndPhase: EndPhase)
             {
-                this.REPL = REPL;
-                this.HNAM = HNAM;
-                this.VCLR = VCLR;
+                this.ImageSpaceModifier = ImageSpaceModifier;
+                this.FadeOutTime = FadeOutTime;
+                this.ImageSpaceStrengthOrSoundVolume = ImageSpaceStrengthOrSoundVolume;
                 this.StartTime = StartTime;
-                this.FLMV = FLMV;
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WED0, new SoundReference.Mask<TItem>(WED0));
+                this.FxFlags = FxFlags;
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Sound, new SoundReference.Mask<TItem>(Sound));
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
-                this.BIPL = BIPL;
-                this.LVLO = LVLO;
+                this.Reference = Reference;
+                this.Alias = Alias;
             }
 
             #pragma warning disable CS8618
@@ -215,15 +215,15 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem REPL;
-            public TItem HNAM;
-            public TItem VCLR;
+            public TItem ImageSpaceModifier;
+            public TItem FadeOutTime;
+            public TItem ImageSpaceStrengthOrSoundVolume;
             public TItem StartTime;
-            public TItem FLMV;
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? WED0 { get; set; }
+            public TItem FxFlags;
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? Sound { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
-            public TItem BIPL;
-            public TItem LVLO;
+            public TItem Reference;
+            public TItem Alias;
             #endregion
 
             #region Equals
@@ -237,29 +237,29 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.REPL, rhs.REPL)) return false;
-                if (!object.Equals(this.HNAM, rhs.HNAM)) return false;
-                if (!object.Equals(this.VCLR, rhs.VCLR)) return false;
+                if (!object.Equals(this.ImageSpaceModifier, rhs.ImageSpaceModifier)) return false;
+                if (!object.Equals(this.FadeOutTime, rhs.FadeOutTime)) return false;
+                if (!object.Equals(this.ImageSpaceStrengthOrSoundVolume, rhs.ImageSpaceStrengthOrSoundVolume)) return false;
                 if (!object.Equals(this.StartTime, rhs.StartTime)) return false;
-                if (!object.Equals(this.FLMV, rhs.FLMV)) return false;
-                if (!object.Equals(this.WED0, rhs.WED0)) return false;
+                if (!object.Equals(this.FxFlags, rhs.FxFlags)) return false;
+                if (!object.Equals(this.Sound, rhs.Sound)) return false;
                 if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
-                if (!object.Equals(this.BIPL, rhs.BIPL)) return false;
-                if (!object.Equals(this.LVLO, rhs.LVLO)) return false;
+                if (!object.Equals(this.Reference, rhs.Reference)) return false;
+                if (!object.Equals(this.Alias, rhs.Alias)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.REPL);
-                hash.Add(this.HNAM);
-                hash.Add(this.VCLR);
+                hash.Add(this.ImageSpaceModifier);
+                hash.Add(this.FadeOutTime);
+                hash.Add(this.ImageSpaceStrengthOrSoundVolume);
                 hash.Add(this.StartTime);
-                hash.Add(this.FLMV);
-                hash.Add(this.WED0);
+                hash.Add(this.FxFlags);
+                hash.Add(this.Sound);
                 hash.Add(this.Conditions);
-                hash.Add(this.BIPL);
-                hash.Add(this.LVLO);
+                hash.Add(this.Reference);
+                hash.Add(this.Alias);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -270,15 +270,15 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.REPL)) return false;
-                if (!eval(this.HNAM)) return false;
-                if (!eval(this.VCLR)) return false;
+                if (!eval(this.ImageSpaceModifier)) return false;
+                if (!eval(this.FadeOutTime)) return false;
+                if (!eval(this.ImageSpaceStrengthOrSoundVolume)) return false;
                 if (!eval(this.StartTime)) return false;
-                if (!eval(this.FLMV)) return false;
-                if (WED0 != null)
+                if (!eval(this.FxFlags)) return false;
+                if (Sound != null)
                 {
-                    if (!eval(this.WED0.Overall)) return false;
-                    if (this.WED0.Specific != null && !this.WED0.Specific.All(eval)) return false;
+                    if (!eval(this.Sound.Overall)) return false;
+                    if (this.Sound.Specific != null && !this.Sound.Specific.All(eval)) return false;
                 }
                 if (this.Conditions != null)
                 {
@@ -292,8 +292,8 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.BIPL)) return false;
-                if (!eval(this.LVLO)) return false;
+                if (!eval(this.Reference)) return false;
+                if (!eval(this.Alias)) return false;
                 return true;
             }
             #endregion
@@ -302,15 +302,15 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.REPL)) return true;
-                if (eval(this.HNAM)) return true;
-                if (eval(this.VCLR)) return true;
+                if (eval(this.ImageSpaceModifier)) return true;
+                if (eval(this.FadeOutTime)) return true;
+                if (eval(this.ImageSpaceStrengthOrSoundVolume)) return true;
                 if (eval(this.StartTime)) return true;
-                if (eval(this.FLMV)) return true;
-                if (WED0 != null)
+                if (eval(this.FxFlags)) return true;
+                if (Sound != null)
                 {
-                    if (eval(this.WED0.Overall)) return true;
-                    if (this.WED0.Specific != null && this.WED0.Specific.Any(eval)) return true;
+                    if (eval(this.Sound.Overall)) return true;
+                    if (this.Sound.Specific != null && this.Sound.Specific.Any(eval)) return true;
                 }
                 if (this.Conditions != null)
                 {
@@ -324,8 +324,8 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.BIPL)) return true;
-                if (eval(this.LVLO)) return true;
+                if (eval(this.Reference)) return true;
+                if (eval(this.Alias)) return true;
                 return false;
             }
             #endregion
@@ -341,12 +341,12 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.REPL = eval(this.REPL);
-                obj.HNAM = eval(this.HNAM);
-                obj.VCLR = eval(this.VCLR);
+                obj.ImageSpaceModifier = eval(this.ImageSpaceModifier);
+                obj.FadeOutTime = eval(this.FadeOutTime);
+                obj.ImageSpaceStrengthOrSoundVolume = eval(this.ImageSpaceStrengthOrSoundVolume);
                 obj.StartTime = eval(this.StartTime);
-                obj.FLMV = eval(this.FLMV);
-                obj.WED0 = this.WED0 == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WED0.Overall), this.WED0.Specific?.Translate(eval));
+                obj.FxFlags = eval(this.FxFlags);
+                obj.Sound = this.Sound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
                 if (Conditions != null)
                 {
                     obj.Conditions = new MaskItem<R, IEnumerable<MaskItemIndexed<R, Condition.Mask<R>?>>?>(eval(this.Conditions.Overall), []);
@@ -362,8 +362,8 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.BIPL = eval(this.BIPL);
-                obj.LVLO = eval(this.LVLO);
+                obj.Reference = eval(this.Reference);
+                obj.Alias = eval(this.Alias);
             }
             #endregion
 
@@ -382,29 +382,29 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(FxSceneAction.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.REPL ?? true)
+                    if (printMask?.ImageSpaceModifier ?? true)
                     {
-                        sb.AppendItem(REPL, "REPL");
+                        sb.AppendItem(ImageSpaceModifier, "ImageSpaceModifier");
                     }
-                    if (printMask?.HNAM ?? true)
+                    if (printMask?.FadeOutTime ?? true)
                     {
-                        sb.AppendItem(HNAM, "HNAM");
+                        sb.AppendItem(FadeOutTime, "FadeOutTime");
                     }
-                    if (printMask?.VCLR ?? true)
+                    if (printMask?.ImageSpaceStrengthOrSoundVolume ?? true)
                     {
-                        sb.AppendItem(VCLR, "VCLR");
+                        sb.AppendItem(ImageSpaceStrengthOrSoundVolume, "ImageSpaceStrengthOrSoundVolume");
                     }
                     if (printMask?.StartTime ?? true)
                     {
                         sb.AppendItem(StartTime, "StartTime");
                     }
-                    if (printMask?.FLMV ?? true)
+                    if (printMask?.FxFlags ?? true)
                     {
-                        sb.AppendItem(FLMV, "FLMV");
+                        sb.AppendItem(FxFlags, "FxFlags");
                     }
-                    if (printMask?.WED0?.Overall ?? true)
+                    if (printMask?.Sound?.Overall ?? true)
                     {
-                        WED0?.Print(sb);
+                        Sound?.Print(sb);
                     }
                     if ((printMask?.Conditions?.Overall ?? true)
                         && Conditions is {} ConditionsItem)
@@ -425,13 +425,13 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.BIPL ?? true)
+                    if (printMask?.Reference ?? true)
                     {
-                        sb.AppendItem(BIPL, "BIPL");
+                        sb.AppendItem(Reference, "Reference");
                     }
-                    if (printMask?.LVLO ?? true)
+                    if (printMask?.Alias ?? true)
                     {
-                        sb.AppendItem(LVLO, "LVLO");
+                        sb.AppendItem(Alias, "Alias");
                     }
                 }
             }
@@ -444,15 +444,15 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? REPL;
-            public Exception? HNAM;
-            public Exception? VCLR;
+            public Exception? ImageSpaceModifier;
+            public Exception? FadeOutTime;
+            public Exception? ImageSpaceStrengthOrSoundVolume;
             public Exception? StartTime;
-            public Exception? FLMV;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? WED0;
+            public Exception? FxFlags;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? Sound;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
-            public Exception? BIPL;
-            public Exception? LVLO;
+            public Exception? Reference;
+            public Exception? Alias;
             #endregion
 
             #region IErrorMask
@@ -461,24 +461,24 @@ namespace Mutagen.Bethesda.Starfield
                 FxSceneAction_FieldIndex enu = (FxSceneAction_FieldIndex)index;
                 switch (enu)
                 {
-                    case FxSceneAction_FieldIndex.REPL:
-                        return REPL;
-                    case FxSceneAction_FieldIndex.HNAM:
-                        return HNAM;
-                    case FxSceneAction_FieldIndex.VCLR:
-                        return VCLR;
+                    case FxSceneAction_FieldIndex.ImageSpaceModifier:
+                        return ImageSpaceModifier;
+                    case FxSceneAction_FieldIndex.FadeOutTime:
+                        return FadeOutTime;
+                    case FxSceneAction_FieldIndex.ImageSpaceStrengthOrSoundVolume:
+                        return ImageSpaceStrengthOrSoundVolume;
                     case FxSceneAction_FieldIndex.StartTime:
                         return StartTime;
-                    case FxSceneAction_FieldIndex.FLMV:
-                        return FLMV;
-                    case FxSceneAction_FieldIndex.WED0:
-                        return WED0;
+                    case FxSceneAction_FieldIndex.FxFlags:
+                        return FxFlags;
+                    case FxSceneAction_FieldIndex.Sound:
+                        return Sound;
                     case FxSceneAction_FieldIndex.Conditions:
                         return Conditions;
-                    case FxSceneAction_FieldIndex.BIPL:
-                        return BIPL;
-                    case FxSceneAction_FieldIndex.LVLO:
-                        return LVLO;
+                    case FxSceneAction_FieldIndex.Reference:
+                        return Reference;
+                    case FxSceneAction_FieldIndex.Alias:
+                        return Alias;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -489,32 +489,32 @@ namespace Mutagen.Bethesda.Starfield
                 FxSceneAction_FieldIndex enu = (FxSceneAction_FieldIndex)index;
                 switch (enu)
                 {
-                    case FxSceneAction_FieldIndex.REPL:
-                        this.REPL = ex;
+                    case FxSceneAction_FieldIndex.ImageSpaceModifier:
+                        this.ImageSpaceModifier = ex;
                         break;
-                    case FxSceneAction_FieldIndex.HNAM:
-                        this.HNAM = ex;
+                    case FxSceneAction_FieldIndex.FadeOutTime:
+                        this.FadeOutTime = ex;
                         break;
-                    case FxSceneAction_FieldIndex.VCLR:
-                        this.VCLR = ex;
+                    case FxSceneAction_FieldIndex.ImageSpaceStrengthOrSoundVolume:
+                        this.ImageSpaceStrengthOrSoundVolume = ex;
                         break;
                     case FxSceneAction_FieldIndex.StartTime:
                         this.StartTime = ex;
                         break;
-                    case FxSceneAction_FieldIndex.FLMV:
-                        this.FLMV = ex;
+                    case FxSceneAction_FieldIndex.FxFlags:
+                        this.FxFlags = ex;
                         break;
-                    case FxSceneAction_FieldIndex.WED0:
-                        this.WED0 = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case FxSceneAction_FieldIndex.Sound:
+                        this.Sound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
                     case FxSceneAction_FieldIndex.Conditions:
                         this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
                         break;
-                    case FxSceneAction_FieldIndex.BIPL:
-                        this.BIPL = ex;
+                    case FxSceneAction_FieldIndex.Reference:
+                        this.Reference = ex;
                         break;
-                    case FxSceneAction_FieldIndex.LVLO:
-                        this.LVLO = ex;
+                    case FxSceneAction_FieldIndex.Alias:
+                        this.Alias = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -527,32 +527,32 @@ namespace Mutagen.Bethesda.Starfield
                 FxSceneAction_FieldIndex enu = (FxSceneAction_FieldIndex)index;
                 switch (enu)
                 {
-                    case FxSceneAction_FieldIndex.REPL:
-                        this.REPL = (Exception?)obj;
+                    case FxSceneAction_FieldIndex.ImageSpaceModifier:
+                        this.ImageSpaceModifier = (Exception?)obj;
                         break;
-                    case FxSceneAction_FieldIndex.HNAM:
-                        this.HNAM = (Exception?)obj;
+                    case FxSceneAction_FieldIndex.FadeOutTime:
+                        this.FadeOutTime = (Exception?)obj;
                         break;
-                    case FxSceneAction_FieldIndex.VCLR:
-                        this.VCLR = (Exception?)obj;
+                    case FxSceneAction_FieldIndex.ImageSpaceStrengthOrSoundVolume:
+                        this.ImageSpaceStrengthOrSoundVolume = (Exception?)obj;
                         break;
                     case FxSceneAction_FieldIndex.StartTime:
                         this.StartTime = (Exception?)obj;
                         break;
-                    case FxSceneAction_FieldIndex.FLMV:
-                        this.FLMV = (Exception?)obj;
+                    case FxSceneAction_FieldIndex.FxFlags:
+                        this.FxFlags = (Exception?)obj;
                         break;
-                    case FxSceneAction_FieldIndex.WED0:
-                        this.WED0 = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case FxSceneAction_FieldIndex.Sound:
+                        this.Sound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
                     case FxSceneAction_FieldIndex.Conditions:
                         this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
                         break;
-                    case FxSceneAction_FieldIndex.BIPL:
-                        this.BIPL = (Exception?)obj;
+                    case FxSceneAction_FieldIndex.Reference:
+                        this.Reference = (Exception?)obj;
                         break;
-                    case FxSceneAction_FieldIndex.LVLO:
-                        this.LVLO = (Exception?)obj;
+                    case FxSceneAction_FieldIndex.Alias:
+                        this.Alias = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -563,15 +563,15 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (REPL != null) return true;
-                if (HNAM != null) return true;
-                if (VCLR != null) return true;
+                if (ImageSpaceModifier != null) return true;
+                if (FadeOutTime != null) return true;
+                if (ImageSpaceStrengthOrSoundVolume != null) return true;
                 if (StartTime != null) return true;
-                if (FLMV != null) return true;
-                if (WED0 != null) return true;
+                if (FxFlags != null) return true;
+                if (Sound != null) return true;
                 if (Conditions != null) return true;
-                if (BIPL != null) return true;
-                if (LVLO != null) return true;
+                if (Reference != null) return true;
+                if (Alias != null) return true;
                 return false;
             }
             #endregion
@@ -599,21 +599,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(REPL, "REPL");
+                    sb.AppendItem(ImageSpaceModifier, "ImageSpaceModifier");
                 }
                 {
-                    sb.AppendItem(HNAM, "HNAM");
+                    sb.AppendItem(FadeOutTime, "FadeOutTime");
                 }
                 {
-                    sb.AppendItem(VCLR, "VCLR");
+                    sb.AppendItem(ImageSpaceStrengthOrSoundVolume, "ImageSpaceStrengthOrSoundVolume");
                 }
                 {
                     sb.AppendItem(StartTime, "StartTime");
                 }
                 {
-                    sb.AppendItem(FLMV, "FLMV");
+                    sb.AppendItem(FxFlags, "FxFlags");
                 }
-                WED0?.Print(sb);
+                Sound?.Print(sb);
                 if (Conditions is {} ConditionsItem)
                 {
                     sb.AppendLine("Conditions =>");
@@ -633,10 +633,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(BIPL, "BIPL");
+                    sb.AppendItem(Reference, "Reference");
                 }
                 {
-                    sb.AppendItem(LVLO, "LVLO");
+                    sb.AppendItem(Alias, "Alias");
                 }
             }
             #endregion
@@ -646,15 +646,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.REPL = this.REPL.Combine(rhs.REPL);
-                ret.HNAM = this.HNAM.Combine(rhs.HNAM);
-                ret.VCLR = this.VCLR.Combine(rhs.VCLR);
+                ret.ImageSpaceModifier = this.ImageSpaceModifier.Combine(rhs.ImageSpaceModifier);
+                ret.FadeOutTime = this.FadeOutTime.Combine(rhs.FadeOutTime);
+                ret.ImageSpaceStrengthOrSoundVolume = this.ImageSpaceStrengthOrSoundVolume.Combine(rhs.ImageSpaceStrengthOrSoundVolume);
                 ret.StartTime = this.StartTime.Combine(rhs.StartTime);
-                ret.FLMV = this.FLMV.Combine(rhs.FLMV);
-                ret.WED0 = this.WED0.Combine(rhs.WED0, (l, r) => l.Combine(r));
+                ret.FxFlags = this.FxFlags.Combine(rhs.FxFlags);
+                ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
-                ret.BIPL = this.BIPL.Combine(rhs.BIPL);
-                ret.LVLO = this.LVLO.Combine(rhs.LVLO);
+                ret.Reference = this.Reference.Combine(rhs.Reference);
+                ret.Alias = this.Alias.Combine(rhs.Alias);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -677,15 +677,15 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool REPL;
-            public bool HNAM;
-            public bool VCLR;
+            public bool ImageSpaceModifier;
+            public bool FadeOutTime;
+            public bool ImageSpaceStrengthOrSoundVolume;
             public bool StartTime;
-            public bool FLMV;
-            public SoundReference.TranslationMask? WED0;
+            public bool FxFlags;
+            public SoundReference.TranslationMask? Sound;
             public Condition.TranslationMask? Conditions;
-            public bool BIPL;
-            public bool LVLO;
+            public bool Reference;
+            public bool Alias;
             #endregion
 
             #region Ctors
@@ -694,13 +694,13 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.REPL = defaultOn;
-                this.HNAM = defaultOn;
-                this.VCLR = defaultOn;
+                this.ImageSpaceModifier = defaultOn;
+                this.FadeOutTime = defaultOn;
+                this.ImageSpaceStrengthOrSoundVolume = defaultOn;
                 this.StartTime = defaultOn;
-                this.FLMV = defaultOn;
-                this.BIPL = defaultOn;
-                this.LVLO = defaultOn;
+                this.FxFlags = defaultOn;
+                this.Reference = defaultOn;
+                this.Alias = defaultOn;
             }
 
             #endregion
@@ -708,15 +708,15 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((REPL, null));
-                ret.Add((HNAM, null));
-                ret.Add((VCLR, null));
+                ret.Add((ImageSpaceModifier, null));
+                ret.Add((FadeOutTime, null));
+                ret.Add((ImageSpaceStrengthOrSoundVolume, null));
                 ret.Add((StartTime, null));
-                ret.Add((FLMV, null));
-                ret.Add((WED0 != null ? WED0.OnOverall : DefaultOn, WED0?.GetCrystal()));
+                ret.Add((FxFlags, null));
+                ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
                 ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
-                ret.Add((BIPL, null));
-                ret.Add((LVLO, null));
+                ret.Add((Reference, null));
+                ret.Add((Alias, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -795,15 +795,15 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IFxSceneAction>,
         INamedRequired
     {
-        new IFormLink<IImageSpaceAdapterGetter> REPL { get; set; }
-        new Single HNAM { get; set; }
-        new Single VCLR { get; set; }
+        new IFormLink<IImageSpaceAdapterGetter> ImageSpaceModifier { get; set; }
+        new Single FadeOutTime { get; set; }
+        new Single ImageSpaceStrengthOrSoundVolume { get; set; }
         new Single StartTime { get; set; }
-        new Int32 FLMV { get; set; }
-        new SoundReference? WED0 { get; set; }
+        new FxSceneAction.Flag FxFlags { get; set; }
+        new SoundReference? Sound { get; set; }
         new ExtendedList<Condition> Conditions { get; }
-        new IFormLink<IPlacedObjectGetter> BIPL { get; set; }
-        new Int32? LVLO { get; set; }
+        new IFormLink<IPlacedObjectGetter> Reference { get; set; }
+        new Int32? Alias { get; set; }
     }
 
     public partial interface IFxSceneActionGetter :
@@ -814,15 +814,15 @@ namespace Mutagen.Bethesda.Starfield
         INamedRequiredGetter
     {
         static new ILoquiRegistration StaticRegistration => FxSceneAction_Registration.Instance;
-        IFormLinkGetter<IImageSpaceAdapterGetter> REPL { get; }
-        Single HNAM { get; }
-        Single VCLR { get; }
+        IFormLinkGetter<IImageSpaceAdapterGetter> ImageSpaceModifier { get; }
+        Single FadeOutTime { get; }
+        Single ImageSpaceStrengthOrSoundVolume { get; }
         Single StartTime { get; }
-        Int32 FLMV { get; }
-        ISoundReferenceGetter? WED0 { get; }
+        FxSceneAction.Flag FxFlags { get; }
+        ISoundReferenceGetter? Sound { get; }
         IReadOnlyList<IConditionGetter> Conditions { get; }
-        IFormLinkGetter<IPlacedObjectGetter> BIPL { get; }
-        Int32? LVLO { get; }
+        IFormLinkGetter<IPlacedObjectGetter> Reference { get; }
+        Int32? Alias { get; }
 
     }
 
@@ -974,15 +974,15 @@ namespace Mutagen.Bethesda.Starfield
         Flags = 4,
         StartPhase = 5,
         EndPhase = 6,
-        REPL = 7,
-        HNAM = 8,
-        VCLR = 9,
+        ImageSpaceModifier = 7,
+        FadeOutTime = 8,
+        ImageSpaceStrengthOrSoundVolume = 9,
         StartTime = 10,
-        FLMV = 11,
-        WED0 = 12,
+        FxFlags = 11,
+        Sound = 12,
         Conditions = 13,
-        BIPL = 14,
-        LVLO = 15,
+        Reference = 14,
+        Alias = 15,
     }
     #endregion
 
@@ -1084,15 +1084,15 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IFxSceneAction item)
         {
             ClearPartial();
-            item.REPL.Clear();
-            item.HNAM = default(Single);
-            item.VCLR = default(Single);
+            item.ImageSpaceModifier.Clear();
+            item.FadeOutTime = default(Single);
+            item.ImageSpaceStrengthOrSoundVolume = default(Single);
             item.StartTime = default(Single);
-            item.FLMV = default(Int32);
-            item.WED0 = null;
+            item.FxFlags = default(FxSceneAction.Flag);
+            item.Sound = null;
             item.Conditions.Clear();
-            item.BIPL.Clear();
-            item.LVLO = default;
+            item.Reference.Clear();
+            item.Alias = default;
             base.Clear(item);
         }
         
@@ -1105,10 +1105,10 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IFxSceneAction obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             base.RemapLinks(obj, mapping);
-            obj.REPL.Relink(mapping);
-            obj.WED0?.RemapLinks(mapping);
+            obj.ImageSpaceModifier.Relink(mapping);
+            obj.Sound?.RemapLinks(mapping);
             obj.Conditions.RemapLinks(mapping);
-            obj.BIPL.Relink(mapping);
+            obj.Reference.Relink(mapping);
         }
         
         #endregion
@@ -1164,22 +1164,22 @@ namespace Mutagen.Bethesda.Starfield
             FxSceneAction.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.REPL = item.REPL.Equals(rhs.REPL);
-            ret.HNAM = item.HNAM.EqualsWithin(rhs.HNAM);
-            ret.VCLR = item.VCLR.EqualsWithin(rhs.VCLR);
+            ret.ImageSpaceModifier = item.ImageSpaceModifier.Equals(rhs.ImageSpaceModifier);
+            ret.FadeOutTime = item.FadeOutTime.EqualsWithin(rhs.FadeOutTime);
+            ret.ImageSpaceStrengthOrSoundVolume = item.ImageSpaceStrengthOrSoundVolume.EqualsWithin(rhs.ImageSpaceStrengthOrSoundVolume);
             ret.StartTime = item.StartTime.EqualsWithin(rhs.StartTime);
-            ret.FLMV = item.FLMV == rhs.FLMV;
-            ret.WED0 = EqualsMaskHelper.EqualsHelper(
-                item.WED0,
-                rhs.WED0,
+            ret.FxFlags = item.FxFlags == rhs.FxFlags;
+            ret.Sound = EqualsMaskHelper.EqualsHelper(
+                item.Sound,
+                rhs.Sound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.Conditions = item.Conditions.CollectionEqualsHelper(
                 rhs.Conditions,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.BIPL = item.BIPL.Equals(rhs.BIPL);
-            ret.LVLO = item.LVLO == rhs.LVLO;
+            ret.Reference = item.Reference.Equals(rhs.Reference);
+            ret.Alias = item.Alias == rhs.Alias;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1229,30 +1229,30 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if (printMask?.REPL ?? true)
+            if (printMask?.ImageSpaceModifier ?? true)
             {
-                sb.AppendItem(item.REPL.FormKey, "REPL");
+                sb.AppendItem(item.ImageSpaceModifier.FormKey, "ImageSpaceModifier");
             }
-            if (printMask?.HNAM ?? true)
+            if (printMask?.FadeOutTime ?? true)
             {
-                sb.AppendItem(item.HNAM, "HNAM");
+                sb.AppendItem(item.FadeOutTime, "FadeOutTime");
             }
-            if (printMask?.VCLR ?? true)
+            if (printMask?.ImageSpaceStrengthOrSoundVolume ?? true)
             {
-                sb.AppendItem(item.VCLR, "VCLR");
+                sb.AppendItem(item.ImageSpaceStrengthOrSoundVolume, "ImageSpaceStrengthOrSoundVolume");
             }
             if (printMask?.StartTime ?? true)
             {
                 sb.AppendItem(item.StartTime, "StartTime");
             }
-            if (printMask?.FLMV ?? true)
+            if (printMask?.FxFlags ?? true)
             {
-                sb.AppendItem(item.FLMV, "FLMV");
+                sb.AppendItem(item.FxFlags, "FxFlags");
             }
-            if ((printMask?.WED0?.Overall ?? true)
-                && item.WED0 is {} WED0Item)
+            if ((printMask?.Sound?.Overall ?? true)
+                && item.Sound is {} SoundItem)
             {
-                WED0Item?.Print(sb, "WED0");
+                SoundItem?.Print(sb, "Sound");
             }
             if (printMask?.Conditions?.Overall ?? true)
             {
@@ -1268,14 +1268,14 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if (printMask?.BIPL ?? true)
+            if (printMask?.Reference ?? true)
             {
-                sb.AppendItem(item.BIPL.FormKey, "BIPL");
+                sb.AppendItem(item.Reference.FormKey, "Reference");
             }
-            if ((printMask?.LVLO ?? true)
-                && item.LVLO is {} LVLOItem)
+            if ((printMask?.Alias ?? true)
+                && item.Alias is {} AliasItem)
             {
-                sb.AppendItem(LVLOItem, "LVLO");
+                sb.AppendItem(AliasItem, "Alias");
             }
         }
         
@@ -1310,45 +1310,45 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IASceneActionGetter)lhs, (IASceneActionGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.REPL) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.ImageSpaceModifier) ?? true))
             {
-                if (!lhs.REPL.Equals(rhs.REPL)) return false;
+                if (!lhs.ImageSpaceModifier.Equals(rhs.ImageSpaceModifier)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.HNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.FadeOutTime) ?? true))
             {
-                if (!lhs.HNAM.EqualsWithin(rhs.HNAM)) return false;
+                if (!lhs.FadeOutTime.EqualsWithin(rhs.FadeOutTime)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.VCLR) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.ImageSpaceStrengthOrSoundVolume) ?? true))
             {
-                if (!lhs.VCLR.EqualsWithin(rhs.VCLR)) return false;
+                if (!lhs.ImageSpaceStrengthOrSoundVolume.EqualsWithin(rhs.ImageSpaceStrengthOrSoundVolume)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.StartTime) ?? true))
             {
                 if (!lhs.StartTime.EqualsWithin(rhs.StartTime)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.FLMV) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.FxFlags) ?? true))
             {
-                if (lhs.FLMV != rhs.FLMV) return false;
+                if (lhs.FxFlags != rhs.FxFlags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.WED0) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.Sound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.WED0, rhs.WED0, out var lhsWED0, out var rhsWED0, out var isWED0Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.Sound, rhs.Sound, out var lhsSound, out var rhsSound, out var isSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsWED0).CommonInstance()!).Equals(lhsWED0, rhsWED0, equalsMask?.GetSubCrystal((int)FxSceneAction_FieldIndex.WED0))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsSound).CommonInstance()!).Equals(lhsSound, rhsSound, equalsMask?.GetSubCrystal((int)FxSceneAction_FieldIndex.Sound))) return false;
                 }
-                else if (!isWED0Equal) return false;
+                else if (!isSoundEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.Conditions) ?? true))
             {
                 if (!lhs.Conditions.SequenceEqual(rhs.Conditions, (l, r) => ((ConditionCommon)((IConditionGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)FxSceneAction_FieldIndex.Conditions)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.BIPL) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.Reference) ?? true))
             {
-                if (!lhs.BIPL.Equals(rhs.BIPL)) return false;
+                if (!lhs.Reference.Equals(rhs.Reference)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.LVLO) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.Alias) ?? true))
             {
-                if (lhs.LVLO != rhs.LVLO) return false;
+                if (lhs.Alias != rhs.Alias) return false;
             }
             return true;
         }
@@ -1367,20 +1367,20 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IFxSceneActionGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.REPL);
-            hash.Add(item.HNAM);
-            hash.Add(item.VCLR);
+            hash.Add(item.ImageSpaceModifier);
+            hash.Add(item.FadeOutTime);
+            hash.Add(item.ImageSpaceStrengthOrSoundVolume);
             hash.Add(item.StartTime);
-            hash.Add(item.FLMV);
-            if (item.WED0 is {} WED0item)
+            hash.Add(item.FxFlags);
+            if (item.Sound is {} Sounditem)
             {
-                hash.Add(WED0item);
+                hash.Add(Sounditem);
             }
             hash.Add(item.Conditions);
-            hash.Add(item.BIPL);
-            if (item.LVLO is {} LVLOitem)
+            hash.Add(item.Reference);
+            if (item.Alias is {} Aliasitem)
             {
-                hash.Add(LVLOitem);
+                hash.Add(Aliasitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1406,10 +1406,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
-            yield return FormLinkInformation.Factory(obj.REPL);
-            if (obj.WED0 is {} WED0Items)
+            yield return FormLinkInformation.Factory(obj.ImageSpaceModifier);
+            if (obj.Sound is {} SoundItems)
             {
-                foreach (var item in WED0Items.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in SoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -1418,7 +1418,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return FormLinkInformation.Factory(item);
             }
-            yield return FormLinkInformation.Factory(obj.BIPL);
+            yield return FormLinkInformation.Factory(obj.Reference);
             yield break;
         }
         
@@ -1443,40 +1443,40 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.REPL) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.ImageSpaceModifier) ?? true))
             {
-                item.REPL.SetTo(rhs.REPL.FormKey);
+                item.ImageSpaceModifier.SetTo(rhs.ImageSpaceModifier.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.HNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.FadeOutTime) ?? true))
             {
-                item.HNAM = rhs.HNAM;
+                item.FadeOutTime = rhs.FadeOutTime;
             }
-            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.VCLR) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.ImageSpaceStrengthOrSoundVolume) ?? true))
             {
-                item.VCLR = rhs.VCLR;
+                item.ImageSpaceStrengthOrSoundVolume = rhs.ImageSpaceStrengthOrSoundVolume;
             }
             if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.StartTime) ?? true))
             {
                 item.StartTime = rhs.StartTime;
             }
-            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.FLMV) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.FxFlags) ?? true))
             {
-                item.FLMV = rhs.FLMV;
+                item.FxFlags = rhs.FxFlags;
             }
-            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.WED0) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.Sound) ?? true))
             {
-                errorMask?.PushIndex((int)FxSceneAction_FieldIndex.WED0);
+                errorMask?.PushIndex((int)FxSceneAction_FieldIndex.Sound);
                 try
                 {
-                    if(rhs.WED0 is {} rhsWED0)
+                    if(rhs.Sound is {} rhsSound)
                     {
-                        item.WED0 = rhsWED0.DeepCopy(
+                        item.Sound = rhsSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)FxSceneAction_FieldIndex.WED0));
+                            copyMask?.GetSubCrystal((int)FxSceneAction_FieldIndex.Sound));
                     }
                     else
                     {
-                        item.WED0 = default;
+                        item.Sound = default;
                     }
                 }
                 catch (Exception ex)
@@ -1513,13 +1513,13 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.BIPL) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.Reference) ?? true))
             {
-                item.BIPL.SetTo(rhs.BIPL.FormKey);
+                item.Reference.SetTo(rhs.Reference.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.LVLO) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)FxSceneAction_FieldIndex.Alias) ?? true))
             {
-                item.LVLO = rhs.LVLO;
+                item.Alias = rhs.Alias;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1648,30 +1648,31 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.REPL,
+                item: item.ImageSpaceModifier,
                 header: translationParams.ConvertToCustom(RecordTypes.REPL));
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.HNAM,
+                item: item.FadeOutTime,
                 header: translationParams.ConvertToCustom(RecordTypes.HNAM));
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.VCLR,
+                item: item.ImageSpaceStrengthOrSoundVolume,
                 header: translationParams.ConvertToCustom(RecordTypes.VCLR));
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.StartTime,
                 header: translationParams.ConvertToCustom(RecordTypes.BTXT));
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.FLMV,
+            EnumBinaryTranslation<FxSceneAction.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.FxFlags,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.FLMV));
-            if (item.WED0 is {} WED0Item)
+            if (item.Sound is {} SoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.WED0))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)WED0Item).BinaryWriteTranslator).Write(
-                        item: WED0Item,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)SoundItem).BinaryWriteTranslator).Write(
+                        item: SoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -1689,11 +1690,11 @@ namespace Mutagen.Bethesda.Starfield
                 });
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.BIPL,
+                item: item.Reference,
                 header: translationParams.ConvertToCustom(RecordTypes.BIPL));
             Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.LVLO,
+                item: item.Alias,
                 header: translationParams.ConvertToCustom(RecordTypes.LVLO));
         }
 
@@ -1751,20 +1752,20 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.REPL:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.REPL.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-                    return (int)FxSceneAction_FieldIndex.REPL;
+                    item.ImageSpaceModifier.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)FxSceneAction_FieldIndex.ImageSpaceModifier;
                 }
                 case RecordTypeInts.HNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.HNAM = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)FxSceneAction_FieldIndex.HNAM;
+                    item.FadeOutTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)FxSceneAction_FieldIndex.FadeOutTime;
                 }
                 case RecordTypeInts.VCLR:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.VCLR = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)FxSceneAction_FieldIndex.VCLR;
+                    item.ImageSpaceStrengthOrSoundVolume = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)FxSceneAction_FieldIndex.ImageSpaceStrengthOrSoundVolume;
                 }
                 case RecordTypeInts.BTXT:
                 {
@@ -1775,14 +1776,16 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FLMV:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FLMV = frame.ReadInt32();
-                    return (int)FxSceneAction_FieldIndex.FLMV;
+                    item.FxFlags = EnumBinaryTranslation<FxSceneAction.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)FxSceneAction_FieldIndex.FxFlags;
                 }
                 case RecordTypeInts.WED0:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.WED0 = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)FxSceneAction_FieldIndex.WED0;
+                    item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)FxSceneAction_FieldIndex.Sound;
                 }
                 case RecordTypeInts.CTDA:
                 {
@@ -1797,14 +1800,14 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.BIPL:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BIPL.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-                    return (int)FxSceneAction_FieldIndex.BIPL;
+                    item.Reference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)FxSceneAction_FieldIndex.Reference;
                 }
                 case RecordTypeInts.LVLO:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.LVLO = frame.ReadInt32();
-                    return (int)FxSceneAction_FieldIndex.LVLO;
+                    item.Alias = frame.ReadInt32();
+                    return (int)FxSceneAction_FieldIndex.Alias;
                 }
                 default:
                     return ASceneActionBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1863,35 +1866,35 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region REPL
-        private int? _REPLLocation;
-        public IFormLinkGetter<IImageSpaceAdapterGetter> REPL => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IImageSpaceAdapterGetter>(_package, _recordData, _REPLLocation);
+        #region ImageSpaceModifier
+        private int? _ImageSpaceModifierLocation;
+        public IFormLinkGetter<IImageSpaceAdapterGetter> ImageSpaceModifier => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IImageSpaceAdapterGetter>(_package, _recordData, _ImageSpaceModifierLocation);
         #endregion
-        #region HNAM
-        private int? _HNAMLocation;
-        public Single HNAM => _HNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _HNAMLocation.Value, _package.MetaData.Constants).Float() : default(Single);
+        #region FadeOutTime
+        private int? _FadeOutTimeLocation;
+        public Single FadeOutTime => _FadeOutTimeLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FadeOutTimeLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
-        #region VCLR
-        private int? _VCLRLocation;
-        public Single VCLR => _VCLRLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _VCLRLocation.Value, _package.MetaData.Constants).Float() : default(Single);
+        #region ImageSpaceStrengthOrSoundVolume
+        private int? _ImageSpaceStrengthOrSoundVolumeLocation;
+        public Single ImageSpaceStrengthOrSoundVolume => _ImageSpaceStrengthOrSoundVolumeLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ImageSpaceStrengthOrSoundVolumeLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
         #region StartTime
         private int? _StartTimeLocation;
         public Single StartTime => _StartTimeLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _StartTimeLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
-        #region FLMV
-        private int? _FLMVLocation;
-        public Int32 FLMV => _FLMVLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _FLMVLocation.Value, _package.MetaData.Constants)) : default(Int32);
+        #region FxFlags
+        private int? _FxFlagsLocation;
+        public FxSceneAction.Flag FxFlags => EnumBinaryTranslation<FxSceneAction.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecord(_FxFlagsLocation, _recordData, _package, 4);
         #endregion
-        public ISoundReferenceGetter? WED0 { get; private set; }
+        public ISoundReferenceGetter? Sound { get; private set; }
         public IReadOnlyList<IConditionGetter> Conditions { get; private set; } = [];
-        #region BIPL
-        private int? _BIPLLocation;
-        public IFormLinkGetter<IPlacedObjectGetter> BIPL => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IPlacedObjectGetter>(_package, _recordData, _BIPLLocation);
+        #region Reference
+        private int? _ReferenceLocation;
+        public IFormLinkGetter<IPlacedObjectGetter> Reference => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IPlacedObjectGetter>(_package, _recordData, _ReferenceLocation);
         #endregion
-        #region LVLO
-        private int? _LVLOLocation;
-        public Int32? LVLO => _LVLOLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _LVLOLocation.Value, _package.MetaData.Constants)) : default(Int32?);
+        #region Alias
+        private int? _AliasLocation;
+        public Int32? Alias => _AliasLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _AliasLocation.Value, _package.MetaData.Constants)) : default(Int32?);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1958,18 +1961,18 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.REPL:
                 {
-                    _REPLLocation = (stream.Position - offset);
-                    return (int)FxSceneAction_FieldIndex.REPL;
+                    _ImageSpaceModifierLocation = (stream.Position - offset);
+                    return (int)FxSceneAction_FieldIndex.ImageSpaceModifier;
                 }
                 case RecordTypeInts.HNAM:
                 {
-                    _HNAMLocation = (stream.Position - offset);
-                    return (int)FxSceneAction_FieldIndex.HNAM;
+                    _FadeOutTimeLocation = (stream.Position - offset);
+                    return (int)FxSceneAction_FieldIndex.FadeOutTime;
                 }
                 case RecordTypeInts.VCLR:
                 {
-                    _VCLRLocation = (stream.Position - offset);
-                    return (int)FxSceneAction_FieldIndex.VCLR;
+                    _ImageSpaceStrengthOrSoundVolumeLocation = (stream.Position - offset);
+                    return (int)FxSceneAction_FieldIndex.ImageSpaceStrengthOrSoundVolume;
                 }
                 case RecordTypeInts.BTXT:
                 {
@@ -1978,17 +1981,17 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FLMV:
                 {
-                    _FLMVLocation = (stream.Position - offset);
-                    return (int)FxSceneAction_FieldIndex.FLMV;
+                    _FxFlagsLocation = (stream.Position - offset);
+                    return (int)FxSceneAction_FieldIndex.FxFlags;
                 }
                 case RecordTypeInts.WED0:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.WED0 = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.Sound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)FxSceneAction_FieldIndex.WED0;
+                    return (int)FxSceneAction_FieldIndex.Sound;
                 }
                 case RecordTypeInts.CTDA:
                 {
@@ -2007,13 +2010,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BIPL:
                 {
-                    _BIPLLocation = (stream.Position - offset);
-                    return (int)FxSceneAction_FieldIndex.BIPL;
+                    _ReferenceLocation = (stream.Position - offset);
+                    return (int)FxSceneAction_FieldIndex.Reference;
                 }
                 case RecordTypeInts.LVLO:
                 {
-                    _LVLOLocation = (stream.Position - offset);
-                    return (int)FxSceneAction_FieldIndex.LVLO;
+                    _AliasLocation = (stream.Position - offset);
+                    return (int)FxSceneAction_FieldIndex.Alias;
                 }
                 default:
                     return base.FillRecordType(

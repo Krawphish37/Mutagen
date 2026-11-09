@@ -65,27 +65,27 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<IDialogTopicGetter> IRadioSceneActionGetter.Topic => this.Topic;
         #endregion
-        #region WED0
+        #region VoiceOverride
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _WED0;
-        public SoundReference? WED0
+        private SoundReference? _VoiceOverride;
+        public SoundReference? VoiceOverride
         {
-            get => _WED0;
-            set => _WED0 = value;
+            get => _VoiceOverride;
+            set => _VoiceOverride = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? IRadioSceneActionGetter.WED0 => this.WED0;
+        ISoundReferenceGetter? IRadioSceneActionGetter.VoiceOverride => this.VoiceOverride;
         #endregion
-        #region WED1
+        #region SoundEffect
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _WED1;
-        public SoundReference? WED1
+        private SoundReference? _SoundEffect;
+        public SoundReference? SoundEffect
         {
-            get => _WED1;
-            set => _WED1 = value;
+            get => _SoundEffect;
+            set => _SoundEffect = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? IRadioSceneActionGetter.WED1 => this.WED1;
+        ISoundReferenceGetter? IRadioSceneActionGetter.SoundEffect => this.SoundEffect;
         #endregion
         #region DialogueSubtype
         private readonly IFormLinkNullable<IKeywordGetter> _DialogueSubtype = new FormLinkNullable<IKeywordGetter>();
@@ -139,8 +139,8 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.Topic = initialValue;
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
-                this.WED1 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.VoiceOverride = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.SoundEffect = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.DialogueSubtype = initialValue;
             }
 
@@ -153,8 +153,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem StartPhase,
                 TItem EndPhase,
                 TItem Topic,
-                TItem WED0,
-                TItem WED1,
+                TItem VoiceOverride,
+                TItem SoundEffect,
                 TItem DialogueSubtype)
             : base(
                 Name: Name,
@@ -166,8 +166,8 @@ namespace Mutagen.Bethesda.Starfield
                 EndPhase: EndPhase)
             {
                 this.Topic = Topic;
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WED0, new SoundReference.Mask<TItem>(WED0));
-                this.WED1 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WED1, new SoundReference.Mask<TItem>(WED1));
+                this.VoiceOverride = new MaskItem<TItem, SoundReference.Mask<TItem>?>(VoiceOverride, new SoundReference.Mask<TItem>(VoiceOverride));
+                this.SoundEffect = new MaskItem<TItem, SoundReference.Mask<TItem>?>(SoundEffect, new SoundReference.Mask<TItem>(SoundEffect));
                 this.DialogueSubtype = DialogueSubtype;
             }
 
@@ -181,8 +181,8 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem Topic;
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? WED0 { get; set; }
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? WED1 { get; set; }
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? VoiceOverride { get; set; }
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? SoundEffect { get; set; }
             public TItem DialogueSubtype;
             #endregion
 
@@ -198,8 +198,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.Topic, rhs.Topic)) return false;
-                if (!object.Equals(this.WED0, rhs.WED0)) return false;
-                if (!object.Equals(this.WED1, rhs.WED1)) return false;
+                if (!object.Equals(this.VoiceOverride, rhs.VoiceOverride)) return false;
+                if (!object.Equals(this.SoundEffect, rhs.SoundEffect)) return false;
                 if (!object.Equals(this.DialogueSubtype, rhs.DialogueSubtype)) return false;
                 return true;
             }
@@ -207,8 +207,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.Topic);
-                hash.Add(this.WED0);
-                hash.Add(this.WED1);
+                hash.Add(this.VoiceOverride);
+                hash.Add(this.SoundEffect);
                 hash.Add(this.DialogueSubtype);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -221,15 +221,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!base.All(eval)) return false;
                 if (!eval(this.Topic)) return false;
-                if (WED0 != null)
+                if (VoiceOverride != null)
                 {
-                    if (!eval(this.WED0.Overall)) return false;
-                    if (this.WED0.Specific != null && !this.WED0.Specific.All(eval)) return false;
+                    if (!eval(this.VoiceOverride.Overall)) return false;
+                    if (this.VoiceOverride.Specific != null && !this.VoiceOverride.Specific.All(eval)) return false;
                 }
-                if (WED1 != null)
+                if (SoundEffect != null)
                 {
-                    if (!eval(this.WED1.Overall)) return false;
-                    if (this.WED1.Specific != null && !this.WED1.Specific.All(eval)) return false;
+                    if (!eval(this.SoundEffect.Overall)) return false;
+                    if (this.SoundEffect.Specific != null && !this.SoundEffect.Specific.All(eval)) return false;
                 }
                 if (!eval(this.DialogueSubtype)) return false;
                 return true;
@@ -241,15 +241,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (base.Any(eval)) return true;
                 if (eval(this.Topic)) return true;
-                if (WED0 != null)
+                if (VoiceOverride != null)
                 {
-                    if (eval(this.WED0.Overall)) return true;
-                    if (this.WED0.Specific != null && this.WED0.Specific.Any(eval)) return true;
+                    if (eval(this.VoiceOverride.Overall)) return true;
+                    if (this.VoiceOverride.Specific != null && this.VoiceOverride.Specific.Any(eval)) return true;
                 }
-                if (WED1 != null)
+                if (SoundEffect != null)
                 {
-                    if (eval(this.WED1.Overall)) return true;
-                    if (this.WED1.Specific != null && this.WED1.Specific.Any(eval)) return true;
+                    if (eval(this.SoundEffect.Overall)) return true;
+                    if (this.SoundEffect.Specific != null && this.SoundEffect.Specific.Any(eval)) return true;
                 }
                 if (eval(this.DialogueSubtype)) return true;
                 return false;
@@ -268,8 +268,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.Translate_InternalFill(obj, eval);
                 obj.Topic = eval(this.Topic);
-                obj.WED0 = this.WED0 == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WED0.Overall), this.WED0.Specific?.Translate(eval));
-                obj.WED1 = this.WED1 == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WED1.Overall), this.WED1.Specific?.Translate(eval));
+                obj.VoiceOverride = this.VoiceOverride == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.VoiceOverride.Overall), this.VoiceOverride.Specific?.Translate(eval));
+                obj.SoundEffect = this.SoundEffect == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.SoundEffect.Overall), this.SoundEffect.Specific?.Translate(eval));
                 obj.DialogueSubtype = eval(this.DialogueSubtype);
             }
             #endregion
@@ -293,13 +293,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Topic, "Topic");
                     }
-                    if (printMask?.WED0?.Overall ?? true)
+                    if (printMask?.VoiceOverride?.Overall ?? true)
                     {
-                        WED0?.Print(sb);
+                        VoiceOverride?.Print(sb);
                     }
-                    if (printMask?.WED1?.Overall ?? true)
+                    if (printMask?.SoundEffect?.Overall ?? true)
                     {
-                        WED1?.Print(sb);
+                        SoundEffect?.Print(sb);
                     }
                     if (printMask?.DialogueSubtype ?? true)
                     {
@@ -317,8 +317,8 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public Exception? Topic;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? WED0;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? WED1;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? VoiceOverride;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? SoundEffect;
             public Exception? DialogueSubtype;
             #endregion
 
@@ -330,10 +330,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case RadioSceneAction_FieldIndex.Topic:
                         return Topic;
-                    case RadioSceneAction_FieldIndex.WED0:
-                        return WED0;
-                    case RadioSceneAction_FieldIndex.WED1:
-                        return WED1;
+                    case RadioSceneAction_FieldIndex.VoiceOverride:
+                        return VoiceOverride;
+                    case RadioSceneAction_FieldIndex.SoundEffect:
+                        return SoundEffect;
                     case RadioSceneAction_FieldIndex.DialogueSubtype:
                         return DialogueSubtype;
                     default:
@@ -349,11 +349,11 @@ namespace Mutagen.Bethesda.Starfield
                     case RadioSceneAction_FieldIndex.Topic:
                         this.Topic = ex;
                         break;
-                    case RadioSceneAction_FieldIndex.WED0:
-                        this.WED0 = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case RadioSceneAction_FieldIndex.VoiceOverride:
+                        this.VoiceOverride = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
-                    case RadioSceneAction_FieldIndex.WED1:
-                        this.WED1 = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case RadioSceneAction_FieldIndex.SoundEffect:
+                        this.SoundEffect = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
                     case RadioSceneAction_FieldIndex.DialogueSubtype:
                         this.DialogueSubtype = ex;
@@ -372,11 +372,11 @@ namespace Mutagen.Bethesda.Starfield
                     case RadioSceneAction_FieldIndex.Topic:
                         this.Topic = (Exception?)obj;
                         break;
-                    case RadioSceneAction_FieldIndex.WED0:
-                        this.WED0 = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case RadioSceneAction_FieldIndex.VoiceOverride:
+                        this.VoiceOverride = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
-                    case RadioSceneAction_FieldIndex.WED1:
-                        this.WED1 = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case RadioSceneAction_FieldIndex.SoundEffect:
+                        this.SoundEffect = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
                     case RadioSceneAction_FieldIndex.DialogueSubtype:
                         this.DialogueSubtype = (Exception?)obj;
@@ -391,8 +391,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Topic != null) return true;
-                if (WED0 != null) return true;
-                if (WED1 != null) return true;
+                if (VoiceOverride != null) return true;
+                if (SoundEffect != null) return true;
                 if (DialogueSubtype != null) return true;
                 return false;
             }
@@ -423,8 +423,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(Topic, "Topic");
                 }
-                WED0?.Print(sb);
-                WED1?.Print(sb);
+                VoiceOverride?.Print(sb);
+                SoundEffect?.Print(sb);
                 {
                     sb.AppendItem(DialogueSubtype, "DialogueSubtype");
                 }
@@ -437,8 +437,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Topic = this.Topic.Combine(rhs.Topic);
-                ret.WED0 = this.WED0.Combine(rhs.WED0, (l, r) => l.Combine(r));
-                ret.WED1 = this.WED1.Combine(rhs.WED1, (l, r) => l.Combine(r));
+                ret.VoiceOverride = this.VoiceOverride.Combine(rhs.VoiceOverride, (l, r) => l.Combine(r));
+                ret.SoundEffect = this.SoundEffect.Combine(rhs.SoundEffect, (l, r) => l.Combine(r));
                 ret.DialogueSubtype = this.DialogueSubtype.Combine(rhs.DialogueSubtype);
                 return ret;
             }
@@ -463,8 +463,8 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public bool Topic;
-            public SoundReference.TranslationMask? WED0;
-            public SoundReference.TranslationMask? WED1;
+            public SoundReference.TranslationMask? VoiceOverride;
+            public SoundReference.TranslationMask? SoundEffect;
             public bool DialogueSubtype;
             #endregion
 
@@ -484,8 +484,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((Topic, null));
-                ret.Add((WED0 != null ? WED0.OnOverall : DefaultOn, WED0?.GetCrystal()));
-                ret.Add((WED1 != null ? WED1.OnOverall : DefaultOn, WED1?.GetCrystal()));
+                ret.Add((VoiceOverride != null ? VoiceOverride.OnOverall : DefaultOn, VoiceOverride?.GetCrystal()));
+                ret.Add((SoundEffect != null ? SoundEffect.OnOverall : DefaultOn, SoundEffect?.GetCrystal()));
                 ret.Add((DialogueSubtype, null));
             }
 
@@ -566,8 +566,8 @@ namespace Mutagen.Bethesda.Starfield
         IRadioSceneActionGetter
     {
         new IFormLink<IDialogTopicGetter> Topic { get; set; }
-        new SoundReference? WED0 { get; set; }
-        new SoundReference? WED1 { get; set; }
+        new SoundReference? VoiceOverride { get; set; }
+        new SoundReference? SoundEffect { get; set; }
         new IFormLinkNullable<IKeywordGetter> DialogueSubtype { get; set; }
     }
 
@@ -580,8 +580,8 @@ namespace Mutagen.Bethesda.Starfield
     {
         static new ILoquiRegistration StaticRegistration => RadioSceneAction_Registration.Instance;
         IFormLinkGetter<IDialogTopicGetter> Topic { get; }
-        ISoundReferenceGetter? WED0 { get; }
-        ISoundReferenceGetter? WED1 { get; }
+        ISoundReferenceGetter? VoiceOverride { get; }
+        ISoundReferenceGetter? SoundEffect { get; }
         IFormLinkNullableGetter<IKeywordGetter> DialogueSubtype { get; }
 
     }
@@ -735,8 +735,8 @@ namespace Mutagen.Bethesda.Starfield
         StartPhase = 5,
         EndPhase = 6,
         Topic = 7,
-        WED0 = 8,
-        WED1 = 9,
+        VoiceOverride = 8,
+        SoundEffect = 9,
         DialogueSubtype = 10,
     }
     #endregion
@@ -832,8 +832,8 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Topic.Clear();
-            item.WED0 = null;
-            item.WED1 = null;
+            item.VoiceOverride = null;
+            item.SoundEffect = null;
             item.DialogueSubtype.Clear();
             base.Clear(item);
         }
@@ -848,8 +848,8 @@ namespace Mutagen.Bethesda.Starfield
         {
             base.RemapLinks(obj, mapping);
             obj.Topic.Relink(mapping);
-            obj.WED0?.RemapLinks(mapping);
-            obj.WED1?.RemapLinks(mapping);
+            obj.VoiceOverride?.RemapLinks(mapping);
+            obj.SoundEffect?.RemapLinks(mapping);
             obj.DialogueSubtype.Relink(mapping);
         }
         
@@ -907,14 +907,14 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Topic = item.Topic.Equals(rhs.Topic);
-            ret.WED0 = EqualsMaskHelper.EqualsHelper(
-                item.WED0,
-                rhs.WED0,
+            ret.VoiceOverride = EqualsMaskHelper.EqualsHelper(
+                item.VoiceOverride,
+                rhs.VoiceOverride,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.WED1 = EqualsMaskHelper.EqualsHelper(
-                item.WED1,
-                rhs.WED1,
+            ret.SoundEffect = EqualsMaskHelper.EqualsHelper(
+                item.SoundEffect,
+                rhs.SoundEffect,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.DialogueSubtype = item.DialogueSubtype.Equals(rhs.DialogueSubtype);
@@ -971,15 +971,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Topic.FormKey, "Topic");
             }
-            if ((printMask?.WED0?.Overall ?? true)
-                && item.WED0 is {} WED0Item)
+            if ((printMask?.VoiceOverride?.Overall ?? true)
+                && item.VoiceOverride is {} VoiceOverrideItem)
             {
-                WED0Item?.Print(sb, "WED0");
+                VoiceOverrideItem?.Print(sb, "VoiceOverride");
             }
-            if ((printMask?.WED1?.Overall ?? true)
-                && item.WED1 is {} WED1Item)
+            if ((printMask?.SoundEffect?.Overall ?? true)
+                && item.SoundEffect is {} SoundEffectItem)
             {
-                WED1Item?.Print(sb, "WED1");
+                SoundEffectItem?.Print(sb, "SoundEffect");
             }
             if (printMask?.DialogueSubtype ?? true)
             {
@@ -1022,21 +1022,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Topic.Equals(rhs.Topic)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)RadioSceneAction_FieldIndex.WED0) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)RadioSceneAction_FieldIndex.VoiceOverride) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.WED0, rhs.WED0, out var lhsWED0, out var rhsWED0, out var isWED0Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.VoiceOverride, rhs.VoiceOverride, out var lhsVoiceOverride, out var rhsVoiceOverride, out var isVoiceOverrideEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsWED0).CommonInstance()!).Equals(lhsWED0, rhsWED0, equalsMask?.GetSubCrystal((int)RadioSceneAction_FieldIndex.WED0))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsVoiceOverride).CommonInstance()!).Equals(lhsVoiceOverride, rhsVoiceOverride, equalsMask?.GetSubCrystal((int)RadioSceneAction_FieldIndex.VoiceOverride))) return false;
                 }
-                else if (!isWED0Equal) return false;
+                else if (!isVoiceOverrideEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)RadioSceneAction_FieldIndex.WED1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)RadioSceneAction_FieldIndex.SoundEffect) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.WED1, rhs.WED1, out var lhsWED1, out var rhsWED1, out var isWED1Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.SoundEffect, rhs.SoundEffect, out var lhsSoundEffect, out var rhsSoundEffect, out var isSoundEffectEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsWED1).CommonInstance()!).Equals(lhsWED1, rhsWED1, equalsMask?.GetSubCrystal((int)RadioSceneAction_FieldIndex.WED1))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsSoundEffect).CommonInstance()!).Equals(lhsSoundEffect, rhsSoundEffect, equalsMask?.GetSubCrystal((int)RadioSceneAction_FieldIndex.SoundEffect))) return false;
                 }
-                else if (!isWED1Equal) return false;
+                else if (!isSoundEffectEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)RadioSceneAction_FieldIndex.DialogueSubtype) ?? true))
             {
@@ -1060,13 +1060,13 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Topic);
-            if (item.WED0 is {} WED0item)
+            if (item.VoiceOverride is {} VoiceOverrideitem)
             {
-                hash.Add(WED0item);
+                hash.Add(VoiceOverrideitem);
             }
-            if (item.WED1 is {} WED1item)
+            if (item.SoundEffect is {} SoundEffectitem)
             {
-                hash.Add(WED1item);
+                hash.Add(SoundEffectitem);
             }
             hash.Add(item.DialogueSubtype);
             hash.Add(base.GetHashCode());
@@ -1094,16 +1094,16 @@ namespace Mutagen.Bethesda.Starfield
                 yield return item;
             }
             yield return FormLinkInformation.Factory(obj.Topic);
-            if (obj.WED0 is {} WED0Items)
+            if (obj.VoiceOverride is {} VoiceOverrideItems)
             {
-                foreach (var item in WED0Items.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in VoiceOverrideItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
             }
-            if (obj.WED1 is {} WED1Items)
+            if (obj.SoundEffect is {} SoundEffectItems)
             {
-                foreach (var item in WED1Items.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in SoundEffectItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -1140,20 +1140,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Topic.SetTo(rhs.Topic.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)RadioSceneAction_FieldIndex.WED0) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)RadioSceneAction_FieldIndex.VoiceOverride) ?? true))
             {
-                errorMask?.PushIndex((int)RadioSceneAction_FieldIndex.WED0);
+                errorMask?.PushIndex((int)RadioSceneAction_FieldIndex.VoiceOverride);
                 try
                 {
-                    if(rhs.WED0 is {} rhsWED0)
+                    if(rhs.VoiceOverride is {} rhsVoiceOverride)
                     {
-                        item.WED0 = rhsWED0.DeepCopy(
+                        item.VoiceOverride = rhsVoiceOverride.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)RadioSceneAction_FieldIndex.WED0));
+                            copyMask?.GetSubCrystal((int)RadioSceneAction_FieldIndex.VoiceOverride));
                     }
                     else
                     {
-                        item.WED0 = default;
+                        item.VoiceOverride = default;
                     }
                 }
                 catch (Exception ex)
@@ -1166,20 +1166,20 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)RadioSceneAction_FieldIndex.WED1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)RadioSceneAction_FieldIndex.SoundEffect) ?? true))
             {
-                errorMask?.PushIndex((int)RadioSceneAction_FieldIndex.WED1);
+                errorMask?.PushIndex((int)RadioSceneAction_FieldIndex.SoundEffect);
                 try
                 {
-                    if(rhs.WED1 is {} rhsWED1)
+                    if(rhs.SoundEffect is {} rhsSoundEffect)
                     {
-                        item.WED1 = rhsWED1.DeepCopy(
+                        item.SoundEffect = rhsSoundEffect.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)RadioSceneAction_FieldIndex.WED1));
+                            copyMask?.GetSubCrystal((int)RadioSceneAction_FieldIndex.SoundEffect));
                     }
                     else
                     {
-                        item.WED1 = default;
+                        item.SoundEffect = default;
                     }
                 }
                 catch (Exception ex)
@@ -1325,22 +1325,22 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.Topic,
                 header: translationParams.ConvertToCustom(RecordTypes.DATA));
-            if (item.WED0 is {} WED0Item)
+            if (item.VoiceOverride is {} VoiceOverrideItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.WED0))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)WED0Item).BinaryWriteTranslator).Write(
-                        item: WED0Item,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)VoiceOverrideItem).BinaryWriteTranslator).Write(
+                        item: VoiceOverrideItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
             }
-            if (item.WED1 is {} WED1Item)
+            if (item.SoundEffect is {} SoundEffectItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.WED1))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)WED1Item).BinaryWriteTranslator).Write(
-                        item: WED1Item,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)SoundEffectItem).BinaryWriteTranslator).Write(
+                        item: SoundEffectItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -1411,14 +1411,14 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WED0:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.WED0 = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)RadioSceneAction_FieldIndex.WED0;
+                    item.VoiceOverride = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)RadioSceneAction_FieldIndex.VoiceOverride;
                 }
                 case RecordTypeInts.WED1:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.WED1 = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)RadioSceneAction_FieldIndex.WED1;
+                    item.SoundEffect = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)RadioSceneAction_FieldIndex.SoundEffect;
                 }
                 case RecordTypeInts.VENC:
                 {
@@ -1487,8 +1487,8 @@ namespace Mutagen.Bethesda.Starfield
         private int? _TopicLocation;
         public IFormLinkGetter<IDialogTopicGetter> Topic => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IDialogTopicGetter>(_package, _recordData, _TopicLocation);
         #endregion
-        public ISoundReferenceGetter? WED0 { get; private set; }
-        public ISoundReferenceGetter? WED1 { get; private set; }
+        public ISoundReferenceGetter? VoiceOverride { get; private set; }
+        public ISoundReferenceGetter? SoundEffect { get; private set; }
         #region DialogueSubtype
         private int? _DialogueSubtypeLocation;
         public IFormLinkNullableGetter<IKeywordGetter> DialogueSubtype => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IKeywordGetter>(_package, _recordData, _DialogueSubtypeLocation);
@@ -1564,20 +1564,20 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WED0:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.WED0 = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.VoiceOverride = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)RadioSceneAction_FieldIndex.WED0;
+                    return (int)RadioSceneAction_FieldIndex.VoiceOverride;
                 }
                 case RecordTypeInts.WED1:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.WED1 = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.SoundEffect = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)RadioSceneAction_FieldIndex.WED1;
+                    return (int)RadioSceneAction_FieldIndex.SoundEffect;
                 }
                 case RecordTypeInts.VENC:
                 {

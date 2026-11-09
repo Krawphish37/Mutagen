@@ -69,8 +69,8 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region HTID
-        public Boolean HTID { get; set; } = default(Boolean);
+        #region EndScene
+        public Boolean EndScene { get; set; } = default(Boolean);
         #endregion
 
         #region To String
@@ -114,7 +114,7 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.StartScenes = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, StartScene.Mask<TItem>?>>?>(initialValue, []);
-                this.HTID = initialValue;
+                this.EndScene = initialValue;
             }
 
             public Mask(
@@ -126,7 +126,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem StartPhase,
                 TItem EndPhase,
                 TItem StartScenes,
-                TItem HTID)
+                TItem EndScene)
             : base(
                 Name: Name,
                 SceneNotes: SceneNotes,
@@ -137,7 +137,7 @@ namespace Mutagen.Bethesda.Starfield
                 EndPhase: EndPhase)
             {
                 this.StartScenes = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, StartScene.Mask<TItem>?>>?>(StartScenes, []);
-                this.HTID = HTID;
+                this.EndScene = EndScene;
             }
 
             #pragma warning disable CS8618
@@ -150,7 +150,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, StartScene.Mask<TItem>?>>?>? StartScenes;
-            public TItem HTID;
+            public TItem EndScene;
             #endregion
 
             #region Equals
@@ -165,14 +165,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.StartScenes, rhs.StartScenes)) return false;
-                if (!object.Equals(this.HTID, rhs.HTID)) return false;
+                if (!object.Equals(this.EndScene, rhs.EndScene)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.StartScenes);
-                hash.Add(this.HTID);
+                hash.Add(this.EndScene);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -195,7 +195,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.HTID)) return false;
+                if (!eval(this.EndScene)) return false;
                 return true;
             }
             #endregion
@@ -216,7 +216,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.HTID)) return true;
+                if (eval(this.EndScene)) return true;
                 return false;
             }
             #endregion
@@ -247,7 +247,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.HTID = eval(this.HTID);
+                obj.EndScene = eval(this.EndScene);
             }
             #endregion
 
@@ -285,9 +285,9 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.HTID ?? true)
+                    if (printMask?.EndScene ?? true)
                     {
-                        sb.AppendItem(HTID, "HTID");
+                        sb.AppendItem(EndScene, "EndScene");
                     }
                 }
             }
@@ -301,7 +301,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, StartScene.ErrorMask?>>?>? StartScenes;
-            public Exception? HTID;
+            public Exception? EndScene;
             #endregion
 
             #region IErrorMask
@@ -312,8 +312,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case StartSceneAction_FieldIndex.StartScenes:
                         return StartScenes;
-                    case StartSceneAction_FieldIndex.HTID:
-                        return HTID;
+                    case StartSceneAction_FieldIndex.EndScene:
+                        return EndScene;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -327,8 +327,8 @@ namespace Mutagen.Bethesda.Starfield
                     case StartSceneAction_FieldIndex.StartScenes:
                         this.StartScenes = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, StartScene.ErrorMask?>>?>(ex, null);
                         break;
-                    case StartSceneAction_FieldIndex.HTID:
-                        this.HTID = ex;
+                    case StartSceneAction_FieldIndex.EndScene:
+                        this.EndScene = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -344,8 +344,8 @@ namespace Mutagen.Bethesda.Starfield
                     case StartSceneAction_FieldIndex.StartScenes:
                         this.StartScenes = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, StartScene.ErrorMask?>>?>)obj;
                         break;
-                    case StartSceneAction_FieldIndex.HTID:
-                        this.HTID = (Exception?)obj;
+                    case StartSceneAction_FieldIndex.EndScene:
+                        this.EndScene = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -357,7 +357,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (StartScenes != null) return true;
-                if (HTID != null) return true;
+                if (EndScene != null) return true;
                 return false;
             }
             #endregion
@@ -403,7 +403,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(HTID, "HTID");
+                    sb.AppendItem(EndScene, "EndScene");
                 }
             }
             #endregion
@@ -414,7 +414,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.StartScenes = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, StartScene.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.StartScenes?.Overall, rhs.StartScenes?.Overall), Noggog.ExceptionExt.Combine(this.StartScenes?.Specific, rhs.StartScenes?.Specific));
-                ret.HTID = this.HTID.Combine(rhs.HTID);
+                ret.EndScene = this.EndScene.Combine(rhs.EndScene);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -438,7 +438,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public StartScene.TranslationMask? StartScenes;
-            public bool HTID;
+            public bool EndScene;
             #endregion
 
             #region Ctors
@@ -447,7 +447,7 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.HTID = defaultOn;
+                this.EndScene = defaultOn;
             }
 
             #endregion
@@ -456,7 +456,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((StartScenes == null ? DefaultOn : !StartScenes.GetCrystal().CopyNothing, StartScenes?.GetCrystal()));
-                ret.Add((HTID, null));
+                ret.Add((EndScene, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -536,7 +536,7 @@ namespace Mutagen.Bethesda.Starfield
         IStartSceneActionGetter
     {
         new ExtendedList<StartScene> StartScenes { get; }
-        new Boolean HTID { get; set; }
+        new Boolean EndScene { get; set; }
     }
 
     public partial interface IStartSceneActionGetter :
@@ -548,7 +548,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         static new ILoquiRegistration StaticRegistration => StartSceneAction_Registration.Instance;
         IReadOnlyList<IStartSceneGetter> StartScenes { get; }
-        Boolean HTID { get; }
+        Boolean EndScene { get; }
 
     }
 
@@ -701,7 +701,7 @@ namespace Mutagen.Bethesda.Starfield
         StartPhase = 5,
         EndPhase = 6,
         StartScenes = 7,
-        HTID = 8,
+        EndScene = 8,
     }
     #endregion
 
@@ -802,7 +802,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.StartScenes.Clear();
-            item.HTID = default(Boolean);
+            item.EndScene = default(Boolean);
             base.Clear(item);
         }
         
@@ -875,7 +875,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.StartScenes,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.HTID = item.HTID == rhs.HTID;
+            ret.EndScene = item.EndScene == rhs.EndScene;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -939,9 +939,9 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if (printMask?.HTID ?? true)
+            if (printMask?.EndScene ?? true)
             {
-                sb.AppendItem(item.HTID, "HTID");
+                sb.AppendItem(item.EndScene, "EndScene");
             }
         }
         
@@ -980,9 +980,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.StartScenes.SequenceEqual(rhs.StartScenes, (l, r) => ((StartSceneCommon)((IStartSceneGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)StartSceneAction_FieldIndex.StartScenes)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)StartSceneAction_FieldIndex.HTID) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)StartSceneAction_FieldIndex.EndScene) ?? true))
             {
-                if (lhs.HTID != rhs.HTID) return false;
+                if (lhs.EndScene != rhs.EndScene) return false;
             }
             return true;
         }
@@ -1002,7 +1002,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.StartScenes);
-            hash.Add(item.HTID);
+            hash.Add(item.EndScene);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1079,9 +1079,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)StartSceneAction_FieldIndex.HTID) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)StartSceneAction_FieldIndex.EndScene) ?? true))
             {
-                item.HTID = rhs.HTID;
+                item.EndScene = rhs.EndScene;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1221,7 +1221,7 @@ namespace Mutagen.Bethesda.Starfield
                 });
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.HTID,
+                item: item.EndScene,
                 header: translationParams.ConvertToCustom(RecordTypes.HTID));
         }
 
@@ -1290,8 +1290,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.HTID:
                 {
-                    item.HTID = true;
-                    return (int)StartSceneAction_FieldIndex.HTID;
+                    item.EndScene = true;
+                    return (int)StartSceneAction_FieldIndex.EndScene;
                 }
                 default:
                     return ASceneActionBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1351,9 +1351,9 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public IReadOnlyList<IStartSceneGetter> StartScenes { get; private set; } = [];
-        #region HTID
-        private int? _HTIDLocation;
-        public Boolean HTID => _HTIDLocation.HasValue ? true : default(Boolean);
+        #region EndScene
+        private int? _EndSceneLocation;
+        public Boolean EndScene => _EndSceneLocation.HasValue ? true : default(Boolean);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1431,8 +1431,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.HTID:
                 {
-                    _HTIDLocation = (stream.Position - offset);
-                    return (int)StartSceneAction_FieldIndex.HTID;
+                    _EndSceneLocation = (stream.Position - offset);
+                    return (int)StartSceneAction_FieldIndex.EndScene;
                 }
                 default:
                     return base.FillRecordType(

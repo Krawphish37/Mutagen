@@ -66,10 +66,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ISoundReferenceGetter? IPlayerDialogueSceneActionGetter.WED0 => this.WED0;
         #endregion
-        #region HNAM
-        public HeadTracking HNAM { get; set; } = new HeadTracking();
+        #region Headtracking
+        public HeadTracking Headtracking { get; set; } = new HeadTracking();
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IHeadTrackingGetter IPlayerDialogueSceneActionGetter.HNAM => HNAM;
+        IHeadTrackingGetter IPlayerDialogueSceneActionGetter.Headtracking => Headtracking;
         #endregion
         #region DialogueTargetActor
         public Int32? DialogueTargetActor { get; set; }
@@ -90,19 +90,13 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region ATTR
+        #region ReactToAction
+        public UInt32? ReactToAction { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _ATTR;
-        public MemorySlice<Byte>? ATTR
-        {
-            get => this._ATTR;
-            set => this._ATTR = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IPlayerDialogueSceneActionGetter.ATTR => this.ATTR;
+        UInt32? IPlayerDialogueSceneActionGetter.ReactToAction => this.ReactToAction;
         #endregion
-        #region ACBS
-        public Boolean ACBS { get; set; } = default(Boolean);
+        #region NpcReaction
+        public Boolean NpcReaction { get; set; } = default(Boolean);
         #endregion
         #region JAIL
         public Boolean JAIL { get; set; } = default(Boolean);
@@ -149,11 +143,11 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
-                this.HNAM = new MaskItem<TItem, HeadTracking.Mask<TItem>?>(initialValue, new HeadTracking.Mask<TItem>(initialValue));
+                this.Headtracking = new MaskItem<TItem, HeadTracking.Mask<TItem>?>(initialValue, new HeadTracking.Mask<TItem>(initialValue));
                 this.DialogueTargetActor = initialValue;
                 this.DialogueList = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PlayerDialogueSceneActionItem.Mask<TItem>?>>?>(initialValue, []);
-                this.ATTR = initialValue;
-                this.ACBS = initialValue;
+                this.ReactToAction = initialValue;
+                this.NpcReaction = initialValue;
                 this.JAIL = initialValue;
             }
 
@@ -166,11 +160,11 @@ namespace Mutagen.Bethesda.Starfield
                 TItem StartPhase,
                 TItem EndPhase,
                 TItem WED0,
-                TItem HNAM,
+                TItem Headtracking,
                 TItem DialogueTargetActor,
                 TItem DialogueList,
-                TItem ATTR,
-                TItem ACBS,
+                TItem ReactToAction,
+                TItem NpcReaction,
                 TItem JAIL)
             : base(
                 Name: Name,
@@ -182,11 +176,11 @@ namespace Mutagen.Bethesda.Starfield
                 EndPhase: EndPhase)
             {
                 this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WED0, new SoundReference.Mask<TItem>(WED0));
-                this.HNAM = new MaskItem<TItem, HeadTracking.Mask<TItem>?>(HNAM, new HeadTracking.Mask<TItem>(HNAM));
+                this.Headtracking = new MaskItem<TItem, HeadTracking.Mask<TItem>?>(Headtracking, new HeadTracking.Mask<TItem>(Headtracking));
                 this.DialogueTargetActor = DialogueTargetActor;
                 this.DialogueList = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PlayerDialogueSceneActionItem.Mask<TItem>?>>?>(DialogueList, []);
-                this.ATTR = ATTR;
-                this.ACBS = ACBS;
+                this.ReactToAction = ReactToAction;
+                this.NpcReaction = NpcReaction;
                 this.JAIL = JAIL;
             }
 
@@ -200,11 +194,11 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? WED0 { get; set; }
-            public MaskItem<TItem, HeadTracking.Mask<TItem>?>? HNAM { get; set; }
+            public MaskItem<TItem, HeadTracking.Mask<TItem>?>? Headtracking { get; set; }
             public TItem DialogueTargetActor;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PlayerDialogueSceneActionItem.Mask<TItem>?>>?>? DialogueList;
-            public TItem ATTR;
-            public TItem ACBS;
+            public TItem ReactToAction;
+            public TItem NpcReaction;
             public TItem JAIL;
             #endregion
 
@@ -220,11 +214,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.WED0, rhs.WED0)) return false;
-                if (!object.Equals(this.HNAM, rhs.HNAM)) return false;
+                if (!object.Equals(this.Headtracking, rhs.Headtracking)) return false;
                 if (!object.Equals(this.DialogueTargetActor, rhs.DialogueTargetActor)) return false;
                 if (!object.Equals(this.DialogueList, rhs.DialogueList)) return false;
-                if (!object.Equals(this.ATTR, rhs.ATTR)) return false;
-                if (!object.Equals(this.ACBS, rhs.ACBS)) return false;
+                if (!object.Equals(this.ReactToAction, rhs.ReactToAction)) return false;
+                if (!object.Equals(this.NpcReaction, rhs.NpcReaction)) return false;
                 if (!object.Equals(this.JAIL, rhs.JAIL)) return false;
                 return true;
             }
@@ -232,11 +226,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.WED0);
-                hash.Add(this.HNAM);
+                hash.Add(this.Headtracking);
                 hash.Add(this.DialogueTargetActor);
                 hash.Add(this.DialogueList);
-                hash.Add(this.ATTR);
-                hash.Add(this.ACBS);
+                hash.Add(this.ReactToAction);
+                hash.Add(this.NpcReaction);
                 hash.Add(this.JAIL);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -253,10 +247,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.WED0.Overall)) return false;
                     if (this.WED0.Specific != null && !this.WED0.Specific.All(eval)) return false;
                 }
-                if (HNAM != null)
+                if (Headtracking != null)
                 {
-                    if (!eval(this.HNAM.Overall)) return false;
-                    if (this.HNAM.Specific != null && !this.HNAM.Specific.All(eval)) return false;
+                    if (!eval(this.Headtracking.Overall)) return false;
+                    if (this.Headtracking.Specific != null && !this.Headtracking.Specific.All(eval)) return false;
                 }
                 if (!eval(this.DialogueTargetActor)) return false;
                 if (this.DialogueList != null)
@@ -271,8 +265,8 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.ATTR)) return false;
-                if (!eval(this.ACBS)) return false;
+                if (!eval(this.ReactToAction)) return false;
+                if (!eval(this.NpcReaction)) return false;
                 if (!eval(this.JAIL)) return false;
                 return true;
             }
@@ -287,10 +281,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.WED0.Overall)) return true;
                     if (this.WED0.Specific != null && this.WED0.Specific.Any(eval)) return true;
                 }
-                if (HNAM != null)
+                if (Headtracking != null)
                 {
-                    if (eval(this.HNAM.Overall)) return true;
-                    if (this.HNAM.Specific != null && this.HNAM.Specific.Any(eval)) return true;
+                    if (eval(this.Headtracking.Overall)) return true;
+                    if (this.Headtracking.Specific != null && this.Headtracking.Specific.Any(eval)) return true;
                 }
                 if (eval(this.DialogueTargetActor)) return true;
                 if (this.DialogueList != null)
@@ -305,8 +299,8 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.ATTR)) return true;
-                if (eval(this.ACBS)) return true;
+                if (eval(this.ReactToAction)) return true;
+                if (eval(this.NpcReaction)) return true;
                 if (eval(this.JAIL)) return true;
                 return false;
             }
@@ -324,7 +318,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.Translate_InternalFill(obj, eval);
                 obj.WED0 = this.WED0 == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WED0.Overall), this.WED0.Specific?.Translate(eval));
-                obj.HNAM = this.HNAM == null ? null : new MaskItem<R, HeadTracking.Mask<R>?>(eval(this.HNAM.Overall), this.HNAM.Specific?.Translate(eval));
+                obj.Headtracking = this.Headtracking == null ? null : new MaskItem<R, HeadTracking.Mask<R>?>(eval(this.Headtracking.Overall), this.Headtracking.Specific?.Translate(eval));
                 obj.DialogueTargetActor = eval(this.DialogueTargetActor);
                 if (DialogueList != null)
                 {
@@ -341,8 +335,8 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.ATTR = eval(this.ATTR);
-                obj.ACBS = eval(this.ACBS);
+                obj.ReactToAction = eval(this.ReactToAction);
+                obj.NpcReaction = eval(this.NpcReaction);
                 obj.JAIL = eval(this.JAIL);
             }
             #endregion
@@ -366,9 +360,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         WED0?.Print(sb);
                     }
-                    if (printMask?.HNAM?.Overall ?? true)
+                    if (printMask?.Headtracking?.Overall ?? true)
                     {
-                        HNAM?.Print(sb);
+                        Headtracking?.Print(sb);
                     }
                     if (printMask?.DialogueTargetActor ?? true)
                     {
@@ -393,13 +387,13 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.ATTR ?? true)
+                    if (printMask?.ReactToAction ?? true)
                     {
-                        sb.AppendItem(ATTR, "ATTR");
+                        sb.AppendItem(ReactToAction, "ReactToAction");
                     }
-                    if (printMask?.ACBS ?? true)
+                    if (printMask?.NpcReaction ?? true)
                     {
-                        sb.AppendItem(ACBS, "ACBS");
+                        sb.AppendItem(NpcReaction, "NpcReaction");
                     }
                     if (printMask?.JAIL ?? true)
                     {
@@ -417,11 +411,11 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public MaskItem<Exception?, SoundReference.ErrorMask?>? WED0;
-            public MaskItem<Exception?, HeadTracking.ErrorMask?>? HNAM;
+            public MaskItem<Exception?, HeadTracking.ErrorMask?>? Headtracking;
             public Exception? DialogueTargetActor;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PlayerDialogueSceneActionItem.ErrorMask?>>?>? DialogueList;
-            public Exception? ATTR;
-            public Exception? ACBS;
+            public Exception? ReactToAction;
+            public Exception? NpcReaction;
             public Exception? JAIL;
             #endregion
 
@@ -433,16 +427,16 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case PlayerDialogueSceneAction_FieldIndex.WED0:
                         return WED0;
-                    case PlayerDialogueSceneAction_FieldIndex.HNAM:
-                        return HNAM;
+                    case PlayerDialogueSceneAction_FieldIndex.Headtracking:
+                        return Headtracking;
                     case PlayerDialogueSceneAction_FieldIndex.DialogueTargetActor:
                         return DialogueTargetActor;
                     case PlayerDialogueSceneAction_FieldIndex.DialogueList:
                         return DialogueList;
-                    case PlayerDialogueSceneAction_FieldIndex.ATTR:
-                        return ATTR;
-                    case PlayerDialogueSceneAction_FieldIndex.ACBS:
-                        return ACBS;
+                    case PlayerDialogueSceneAction_FieldIndex.ReactToAction:
+                        return ReactToAction;
+                    case PlayerDialogueSceneAction_FieldIndex.NpcReaction:
+                        return NpcReaction;
                     case PlayerDialogueSceneAction_FieldIndex.JAIL:
                         return JAIL;
                     default:
@@ -458,8 +452,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlayerDialogueSceneAction_FieldIndex.WED0:
                         this.WED0 = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
-                    case PlayerDialogueSceneAction_FieldIndex.HNAM:
-                        this.HNAM = new MaskItem<Exception?, HeadTracking.ErrorMask?>(ex, null);
+                    case PlayerDialogueSceneAction_FieldIndex.Headtracking:
+                        this.Headtracking = new MaskItem<Exception?, HeadTracking.ErrorMask?>(ex, null);
                         break;
                     case PlayerDialogueSceneAction_FieldIndex.DialogueTargetActor:
                         this.DialogueTargetActor = ex;
@@ -467,11 +461,11 @@ namespace Mutagen.Bethesda.Starfield
                     case PlayerDialogueSceneAction_FieldIndex.DialogueList:
                         this.DialogueList = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PlayerDialogueSceneActionItem.ErrorMask?>>?>(ex, null);
                         break;
-                    case PlayerDialogueSceneAction_FieldIndex.ATTR:
-                        this.ATTR = ex;
+                    case PlayerDialogueSceneAction_FieldIndex.ReactToAction:
+                        this.ReactToAction = ex;
                         break;
-                    case PlayerDialogueSceneAction_FieldIndex.ACBS:
-                        this.ACBS = ex;
+                    case PlayerDialogueSceneAction_FieldIndex.NpcReaction:
+                        this.NpcReaction = ex;
                         break;
                     case PlayerDialogueSceneAction_FieldIndex.JAIL:
                         this.JAIL = ex;
@@ -490,8 +484,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlayerDialogueSceneAction_FieldIndex.WED0:
                         this.WED0 = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
-                    case PlayerDialogueSceneAction_FieldIndex.HNAM:
-                        this.HNAM = (MaskItem<Exception?, HeadTracking.ErrorMask?>?)obj;
+                    case PlayerDialogueSceneAction_FieldIndex.Headtracking:
+                        this.Headtracking = (MaskItem<Exception?, HeadTracking.ErrorMask?>?)obj;
                         break;
                     case PlayerDialogueSceneAction_FieldIndex.DialogueTargetActor:
                         this.DialogueTargetActor = (Exception?)obj;
@@ -499,11 +493,11 @@ namespace Mutagen.Bethesda.Starfield
                     case PlayerDialogueSceneAction_FieldIndex.DialogueList:
                         this.DialogueList = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PlayerDialogueSceneActionItem.ErrorMask?>>?>)obj;
                         break;
-                    case PlayerDialogueSceneAction_FieldIndex.ATTR:
-                        this.ATTR = (Exception?)obj;
+                    case PlayerDialogueSceneAction_FieldIndex.ReactToAction:
+                        this.ReactToAction = (Exception?)obj;
                         break;
-                    case PlayerDialogueSceneAction_FieldIndex.ACBS:
-                        this.ACBS = (Exception?)obj;
+                    case PlayerDialogueSceneAction_FieldIndex.NpcReaction:
+                        this.NpcReaction = (Exception?)obj;
                         break;
                     case PlayerDialogueSceneAction_FieldIndex.JAIL:
                         this.JAIL = (Exception?)obj;
@@ -518,11 +512,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (WED0 != null) return true;
-                if (HNAM != null) return true;
+                if (Headtracking != null) return true;
                 if (DialogueTargetActor != null) return true;
                 if (DialogueList != null) return true;
-                if (ATTR != null) return true;
-                if (ACBS != null) return true;
+                if (ReactToAction != null) return true;
+                if (NpcReaction != null) return true;
                 if (JAIL != null) return true;
                 return false;
             }
@@ -551,7 +545,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 WED0?.Print(sb);
-                HNAM?.Print(sb);
+                Headtracking?.Print(sb);
                 {
                     sb.AppendItem(DialogueTargetActor, "DialogueTargetActor");
                 }
@@ -574,10 +568,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(ATTR, "ATTR");
+                    sb.AppendItem(ReactToAction, "ReactToAction");
                 }
                 {
-                    sb.AppendItem(ACBS, "ACBS");
+                    sb.AppendItem(NpcReaction, "NpcReaction");
                 }
                 {
                     sb.AppendItem(JAIL, "JAIL");
@@ -591,11 +585,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.WED0 = this.WED0.Combine(rhs.WED0, (l, r) => l.Combine(r));
-                ret.HNAM = this.HNAM.Combine(rhs.HNAM, (l, r) => l.Combine(r));
+                ret.Headtracking = this.Headtracking.Combine(rhs.Headtracking, (l, r) => l.Combine(r));
                 ret.DialogueTargetActor = this.DialogueTargetActor.Combine(rhs.DialogueTargetActor);
                 ret.DialogueList = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PlayerDialogueSceneActionItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.DialogueList?.Overall, rhs.DialogueList?.Overall), Noggog.ExceptionExt.Combine(this.DialogueList?.Specific, rhs.DialogueList?.Specific));
-                ret.ATTR = this.ATTR.Combine(rhs.ATTR);
-                ret.ACBS = this.ACBS.Combine(rhs.ACBS);
+                ret.ReactToAction = this.ReactToAction.Combine(rhs.ReactToAction);
+                ret.NpcReaction = this.NpcReaction.Combine(rhs.NpcReaction);
                 ret.JAIL = this.JAIL.Combine(rhs.JAIL);
                 return ret;
             }
@@ -620,11 +614,11 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public SoundReference.TranslationMask? WED0;
-            public HeadTracking.TranslationMask? HNAM;
+            public HeadTracking.TranslationMask? Headtracking;
             public bool DialogueTargetActor;
             public PlayerDialogueSceneActionItem.TranslationMask? DialogueList;
-            public bool ATTR;
-            public bool ACBS;
+            public bool ReactToAction;
+            public bool NpcReaction;
             public bool JAIL;
             #endregion
 
@@ -635,8 +629,8 @@ namespace Mutagen.Bethesda.Starfield
                 : base(defaultOn, onOverall)
             {
                 this.DialogueTargetActor = defaultOn;
-                this.ATTR = defaultOn;
-                this.ACBS = defaultOn;
+                this.ReactToAction = defaultOn;
+                this.NpcReaction = defaultOn;
                 this.JAIL = defaultOn;
             }
 
@@ -646,11 +640,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((WED0 != null ? WED0.OnOverall : DefaultOn, WED0?.GetCrystal()));
-                ret.Add((HNAM != null ? HNAM.OnOverall : DefaultOn, HNAM?.GetCrystal()));
+                ret.Add((Headtracking != null ? Headtracking.OnOverall : DefaultOn, Headtracking?.GetCrystal()));
                 ret.Add((DialogueTargetActor, null));
                 ret.Add((DialogueList == null ? DefaultOn : !DialogueList.GetCrystal().CopyNothing, DialogueList?.GetCrystal()));
-                ret.Add((ATTR, null));
-                ret.Add((ACBS, null));
+                ret.Add((ReactToAction, null));
+                ret.Add((NpcReaction, null));
                 ret.Add((JAIL, null));
             }
 
@@ -731,11 +725,11 @@ namespace Mutagen.Bethesda.Starfield
         IPlayerDialogueSceneActionGetter
     {
         new SoundReference? WED0 { get; set; }
-        new HeadTracking HNAM { get; set; }
+        new HeadTracking Headtracking { get; set; }
         new Int32? DialogueTargetActor { get; set; }
         new ExtendedList<PlayerDialogueSceneActionItem> DialogueList { get; }
-        new MemorySlice<Byte>? ATTR { get; set; }
-        new Boolean ACBS { get; set; }
+        new UInt32? ReactToAction { get; set; }
+        new Boolean NpcReaction { get; set; }
         new Boolean JAIL { get; set; }
     }
 
@@ -748,11 +742,11 @@ namespace Mutagen.Bethesda.Starfield
     {
         static new ILoquiRegistration StaticRegistration => PlayerDialogueSceneAction_Registration.Instance;
         ISoundReferenceGetter? WED0 { get; }
-        IHeadTrackingGetter HNAM { get; }
+        IHeadTrackingGetter Headtracking { get; }
         Int32? DialogueTargetActor { get; }
         IReadOnlyList<IPlayerDialogueSceneActionItemGetter> DialogueList { get; }
-        ReadOnlyMemorySlice<Byte>? ATTR { get; }
-        Boolean ACBS { get; }
+        UInt32? ReactToAction { get; }
+        Boolean NpcReaction { get; }
         Boolean JAIL { get; }
 
     }
@@ -906,11 +900,11 @@ namespace Mutagen.Bethesda.Starfield
         StartPhase = 5,
         EndPhase = 6,
         WED0 = 7,
-        HNAM = 8,
+        Headtracking = 8,
         DialogueTargetActor = 9,
         DialogueList = 10,
-        ATTR = 11,
-        ACBS = 12,
+        ReactToAction = 11,
+        NpcReaction = 12,
         JAIL = 13,
     }
     #endregion
@@ -1015,11 +1009,11 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.WED0 = null;
-            item.HNAM.Clear();
+            item.Headtracking.Clear();
             item.DialogueTargetActor = default;
             item.DialogueList.Clear();
-            item.ATTR = default;
-            item.ACBS = default(Boolean);
+            item.ReactToAction = default;
+            item.NpcReaction = default(Boolean);
             item.JAIL = default(Boolean);
             base.Clear(item);
         }
@@ -1095,14 +1089,14 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.WED0,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.HNAM = MaskItemExt.Factory(item.HNAM.GetEqualsMask(rhs.HNAM, include), include);
+            ret.Headtracking = MaskItemExt.Factory(item.Headtracking.GetEqualsMask(rhs.Headtracking, include), include);
             ret.DialogueTargetActor = item.DialogueTargetActor == rhs.DialogueTargetActor;
             ret.DialogueList = item.DialogueList.CollectionEqualsHelper(
                 rhs.DialogueList,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.ATTR = MemorySliceExt.SequenceEqual(item.ATTR, rhs.ATTR);
-            ret.ACBS = item.ACBS == rhs.ACBS;
+            ret.ReactToAction = item.ReactToAction == rhs.ReactToAction;
+            ret.NpcReaction = item.NpcReaction == rhs.NpcReaction;
             ret.JAIL = item.JAIL == rhs.JAIL;
             base.FillEqualsMask(item, rhs, ret, include);
         }
@@ -1158,9 +1152,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 WED0Item?.Print(sb, "WED0");
             }
-            if (printMask?.HNAM?.Overall ?? true)
+            if (printMask?.Headtracking?.Overall ?? true)
             {
-                item.HNAM?.Print(sb, "HNAM");
+                item.Headtracking?.Print(sb, "Headtracking");
             }
             if ((printMask?.DialogueTargetActor ?? true)
                 && item.DialogueTargetActor is {} DialogueTargetActorItem)
@@ -1181,14 +1175,14 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.ATTR ?? true)
-                && item.ATTR is {} ATTRItem)
+            if ((printMask?.ReactToAction ?? true)
+                && item.ReactToAction is {} ReactToActionItem)
             {
-                sb.AppendLine($"ATTR => {SpanExt.ToHexString(ATTRItem)}");
+                sb.AppendItem(ReactToActionItem, "ReactToAction");
             }
-            if (printMask?.ACBS ?? true)
+            if (printMask?.NpcReaction ?? true)
             {
-                sb.AppendItem(item.ACBS, "ACBS");
+                sb.AppendItem(item.NpcReaction, "NpcReaction");
             }
             if (printMask?.JAIL ?? true)
             {
@@ -1235,13 +1229,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isWED0Equal) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.HNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.Headtracking) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.HNAM, rhs.HNAM, out var lhsHNAM, out var rhsHNAM, out var isHNAMEqual))
+                if (EqualsMaskHelper.RefEquality(lhs.Headtracking, rhs.Headtracking, out var lhsHeadtracking, out var rhsHeadtracking, out var isHeadtrackingEqual))
                 {
-                    if (!((HeadTrackingCommon)((IHeadTrackingGetter)lhsHNAM).CommonInstance()!).Equals(lhsHNAM, rhsHNAM, equalsMask?.GetSubCrystal((int)PlayerDialogueSceneAction_FieldIndex.HNAM))) return false;
+                    if (!((HeadTrackingCommon)((IHeadTrackingGetter)lhsHeadtracking).CommonInstance()!).Equals(lhsHeadtracking, rhsHeadtracking, equalsMask?.GetSubCrystal((int)PlayerDialogueSceneAction_FieldIndex.Headtracking))) return false;
                 }
-                else if (!isHNAMEqual) return false;
+                else if (!isHeadtrackingEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.DialogueTargetActor) ?? true))
             {
@@ -1251,13 +1245,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.DialogueList.SequenceEqual(rhs.DialogueList, (l, r) => ((PlayerDialogueSceneActionItemCommon)((IPlayerDialogueSceneActionItemGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)PlayerDialogueSceneAction_FieldIndex.DialogueList)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.ATTR) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.ReactToAction) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.ATTR, rhs.ATTR)) return false;
+                if (lhs.ReactToAction != rhs.ReactToAction) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.ACBS) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.NpcReaction) ?? true))
             {
-                if (lhs.ACBS != rhs.ACBS) return false;
+                if (lhs.NpcReaction != rhs.NpcReaction) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.JAIL) ?? true))
             {
@@ -1284,17 +1278,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(WED0item);
             }
-            hash.Add(item.HNAM);
+            hash.Add(item.Headtracking);
             if (item.DialogueTargetActor is {} DialogueTargetActoritem)
             {
                 hash.Add(DialogueTargetActoritem);
             }
             hash.Add(item.DialogueList);
-            if (item.ATTR is {} ATTRItem)
+            if (item.ReactToAction is {} ReactToActionitem)
             {
-                hash.Add(ATTRItem);
+                hash.Add(ReactToActionitem);
             }
-            hash.Add(item.ACBS);
+            hash.Add(item.NpcReaction);
             hash.Add(item.JAIL);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1381,15 +1375,15 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.HNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.Headtracking) ?? true))
             {
-                errorMask?.PushIndex((int)PlayerDialogueSceneAction_FieldIndex.HNAM);
+                errorMask?.PushIndex((int)PlayerDialogueSceneAction_FieldIndex.Headtracking);
                 try
                 {
-                    if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.HNAM) ?? true))
+                    if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.Headtracking) ?? true))
                     {
-                        item.HNAM = rhs.HNAM.DeepCopy(
-                            copyMask: copyMask?.GetSubCrystal((int)PlayerDialogueSceneAction_FieldIndex.HNAM),
+                        item.Headtracking = rhs.Headtracking.DeepCopy(
+                            copyMask: copyMask?.GetSubCrystal((int)PlayerDialogueSceneAction_FieldIndex.Headtracking),
                             errorMask: errorMask);
                     }
                 }
@@ -1431,20 +1425,13 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.ATTR) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.ReactToAction) ?? true))
             {
-                if(rhs.ATTR is {} ATTRrhs)
-                {
-                    item.ATTR = ATTRrhs.ToArray();
-                }
-                else
-                {
-                    item.ATTR = default;
-                }
+                item.ReactToAction = rhs.ReactToAction;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.ACBS) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.NpcReaction) ?? true))
             {
-                item.ACBS = rhs.ACBS;
+                item.NpcReaction = rhs.NpcReaction;
             }
             if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.JAIL) ?? true))
             {
@@ -1585,9 +1572,9 @@ namespace Mutagen.Bethesda.Starfield
                         translationParams: translationParams);
                 }
             }
-            var HNAMItem = item.HNAM;
-            ((HeadTrackingBinaryWriteTranslation)((IBinaryItem)HNAMItem).BinaryWriteTranslator).Write(
-                item: HNAMItem,
+            var HeadtrackingItem = item.Headtracking;
+            ((HeadTrackingBinaryWriteTranslation)((IBinaryItem)HeadtrackingItem).BinaryWriteTranslator).Write(
+                item: HeadtrackingItem,
                 writer: writer,
                 translationParams: translationParams);
             Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
@@ -1605,13 +1592,13 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.ATTR,
+                item: item.ReactToAction,
                 header: translationParams.ConvertToCustom(RecordTypes.ATTR));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.ACBS,
+                item: item.NpcReaction,
                 header: translationParams.ConvertToCustom(RecordTypes.ACBS));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
@@ -1678,10 +1665,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.HNAM:
                 {
-                    item.HNAM = Mutagen.Bethesda.Starfield.HeadTracking.CreateFromBinary(
+                    item.Headtracking = Mutagen.Bethesda.Starfield.HeadTracking.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)PlayerDialogueSceneAction_FieldIndex.HNAM;
+                    return (int)PlayerDialogueSceneAction_FieldIndex.Headtracking;
                 }
                 case RecordTypeInts.DTGT:
                 {
@@ -1708,13 +1695,13 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ATTR:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ATTR = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)PlayerDialogueSceneAction_FieldIndex.ATTR;
+                    item.ReactToAction = frame.ReadUInt32();
+                    return (int)PlayerDialogueSceneAction_FieldIndex.ReactToAction;
                 }
                 case RecordTypeInts.ACBS:
                 {
-                    item.ACBS = true;
-                    return (int)PlayerDialogueSceneAction_FieldIndex.ACBS;
+                    item.NpcReaction = true;
+                    return (int)PlayerDialogueSceneAction_FieldIndex.NpcReaction;
                 }
                 case RecordTypeInts.JAIL:
                 {
@@ -1779,22 +1766,22 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public ISoundReferenceGetter? WED0 { get; private set; }
-        #region HNAM
-        private IHeadTrackingGetter? _HNAM;
-        public IHeadTrackingGetter HNAM => _HNAM ?? new HeadTracking();
+        #region Headtracking
+        private IHeadTrackingGetter? _Headtracking;
+        public IHeadTrackingGetter Headtracking => _Headtracking ?? new HeadTracking();
         #endregion
         #region DialogueTargetActor
         private int? _DialogueTargetActorLocation;
         public Int32? DialogueTargetActor => _DialogueTargetActorLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DialogueTargetActorLocation.Value, _package.MetaData.Constants)) : default(Int32?);
         #endregion
         public IReadOnlyList<IPlayerDialogueSceneActionItemGetter> DialogueList { get; private set; } = [];
-        #region ATTR
-        private int? _ATTRLocation;
-        public ReadOnlyMemorySlice<Byte>? ATTR => _ATTRLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ATTRLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region ReactToAction
+        private int? _ReactToActionLocation;
+        public UInt32? ReactToAction => _ReactToActionLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ReactToActionLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region ACBS
-        private int? _ACBSLocation;
-        public Boolean ACBS => _ACBSLocation.HasValue ? true : default(Boolean);
+        #region NpcReaction
+        private int? _NpcReactionLocation;
+        public Boolean NpcReaction => _NpcReactionLocation.HasValue ? true : default(Boolean);
         #endregion
         #region JAIL
         private int? _JAILLocation;
@@ -1874,11 +1861,11 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.HNAM:
                 {
-                    this._HNAM = HeadTrackingBinaryOverlay.HeadTrackingFactory(
+                    this._Headtracking = HeadTrackingBinaryOverlay.HeadTrackingFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)PlayerDialogueSceneAction_FieldIndex.HNAM;
+                    return (int)PlayerDialogueSceneAction_FieldIndex.Headtracking;
                 }
                 case RecordTypeInts.DTGT:
                 {
@@ -1902,13 +1889,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ATTR:
                 {
-                    _ATTRLocation = (stream.Position - offset);
-                    return (int)PlayerDialogueSceneAction_FieldIndex.ATTR;
+                    _ReactToActionLocation = (stream.Position - offset);
+                    return (int)PlayerDialogueSceneAction_FieldIndex.ReactToAction;
                 }
                 case RecordTypeInts.ACBS:
                 {
-                    _ACBSLocation = (stream.Position - offset);
-                    return (int)PlayerDialogueSceneAction_FieldIndex.ACBS;
+                    _NpcReactionLocation = (stream.Position - offset);
+                    return (int)PlayerDialogueSceneAction_FieldIndex.NpcReaction;
                 }
                 case RecordTypeInts.JAIL:
                 {
