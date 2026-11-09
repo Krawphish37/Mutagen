@@ -176,6 +176,9 @@
     <Compile Include="Records\Common Subrecords\AComponent.cs">
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Common Subrecords\BlockEditorMetaDataComponent.cs">
+      <DependentUpon>Component.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Common Subrecords\AObjectModProperty_Generated.cs">
       <DependentUpon>ObjectTemplate.xml</DependentUpon>
     </Compile>
@@ -6906,6 +6909,9 @@
     </Compile>
     <Compile Include="Records\Major Records\LegendaryItemLnamEntry_Generated.cs">
       <DependentUpon>LegendaryItem.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Common Subrecords\BlockEditorMetaDataItem_Generated.cs">
+      <DependentUpon>Component.xml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
