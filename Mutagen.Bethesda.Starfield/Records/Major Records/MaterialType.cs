@@ -8,5 +8,6 @@ partial class MaterialType
         StairMaterial = 0x01,
         ArrowsStick = 0x02,
         CanTunnel = 0x04,
+        IsSlippery = 0x08,
     }
 }

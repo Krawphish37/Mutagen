@@ -26,7 +26,7 @@
           <Float name="Weight" />
         </Fields>
       </Data>
-      <ByteArray name="FLAG" recordType="FLAG" />
+      <Enum name="Flags" recordType="FLAG" enumName="MiscItem.Flag" byteLength="4" />
       <String name="ShortName" recordType="NNAM" translated="Normal" />
     </Fields>
     <LinkInterface>IStaticTarget</LinkInterface>

@@ -7,5 +7,6 @@ partial class Message
     {
         MessageBox = 0x01,
         DelayInitialDisplay = 0x02,
+        AllowBackOut = 0x04,
     }
 }
