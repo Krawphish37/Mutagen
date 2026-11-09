@@ -102,17 +102,20 @@ namespace Mutagen.Bethesda.Starfield
         #region YOffset
         public Single YOffset { get; set; } = default(Single);
         #endregion
-        #region UnknownFNAM1
-        public Int64 UnknownFNAM1 { get; set; } = default(Int64);
+        #region TextureWidth
+        public UInt32 TextureWidth { get; set; } = default(UInt32);
         #endregion
-        #region Width
-        public UInt32 Width { get; set; } = default(UInt32);
+        #region TextureHeight
+        public UInt32 TextureHeight { get; set; } = default(UInt32);
         #endregion
-        #region Height
-        public UInt32 Height { get; set; } = default(UInt32);
+        #region ContentWidth
+        public UInt32 ContentWidth { get; set; } = default(UInt32);
         #endregion
-        #region UnknownFNAM2
-        public UInt32 UnknownFNAM2 { get; set; } = default(UInt32);
+        #region ContentHeight
+        public UInt32 ContentHeight { get; set; } = default(UInt32);
+        #endregion
+        #region Flags
+        public PhotoModeFeature.Flag Flags { get; set; } = default(PhotoModeFeature.Flag);
         #endregion
         #region Texture
         public String? Texture { get; set; }
@@ -158,10 +161,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.FeatureType = initialValue;
                 this.XOffset = initialValue;
                 this.YOffset = initialValue;
-                this.UnknownFNAM1 = initialValue;
-                this.Width = initialValue;
-                this.Height = initialValue;
-                this.UnknownFNAM2 = initialValue;
+                this.TextureWidth = initialValue;
+                this.TextureHeight = initialValue;
+                this.ContentWidth = initialValue;
+                this.ContentHeight = initialValue;
+                this.Flags = initialValue;
                 this.Texture = initialValue;
                 this.ImageSpace = initialValue;
             }
@@ -178,10 +182,11 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FeatureType,
                 TItem XOffset,
                 TItem YOffset,
-                TItem UnknownFNAM1,
-                TItem Width,
-                TItem Height,
-                TItem UnknownFNAM2,
+                TItem TextureWidth,
+                TItem TextureHeight,
+                TItem ContentWidth,
+                TItem ContentHeight,
+                TItem Flags,
                 TItem Texture,
                 TItem ImageSpace)
             : base(
@@ -197,10 +202,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.FeatureType = FeatureType;
                 this.XOffset = XOffset;
                 this.YOffset = YOffset;
-                this.UnknownFNAM1 = UnknownFNAM1;
-                this.Width = Width;
-                this.Height = Height;
-                this.UnknownFNAM2 = UnknownFNAM2;
+                this.TextureWidth = TextureWidth;
+                this.TextureHeight = TextureHeight;
+                this.ContentWidth = ContentWidth;
+                this.ContentHeight = ContentHeight;
+                this.Flags = Flags;
                 this.Texture = Texture;
                 this.ImageSpace = ImageSpace;
             }
@@ -218,10 +224,11 @@ namespace Mutagen.Bethesda.Starfield
             public TItem FeatureType;
             public TItem XOffset;
             public TItem YOffset;
-            public TItem UnknownFNAM1;
-            public TItem Width;
-            public TItem Height;
-            public TItem UnknownFNAM2;
+            public TItem TextureWidth;
+            public TItem TextureHeight;
+            public TItem ContentWidth;
+            public TItem ContentHeight;
+            public TItem Flags;
             public TItem Texture;
             public TItem ImageSpace;
             #endregion
@@ -241,10 +248,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.FeatureType, rhs.FeatureType)) return false;
                 if (!object.Equals(this.XOffset, rhs.XOffset)) return false;
                 if (!object.Equals(this.YOffset, rhs.YOffset)) return false;
-                if (!object.Equals(this.UnknownFNAM1, rhs.UnknownFNAM1)) return false;
-                if (!object.Equals(this.Width, rhs.Width)) return false;
-                if (!object.Equals(this.Height, rhs.Height)) return false;
-                if (!object.Equals(this.UnknownFNAM2, rhs.UnknownFNAM2)) return false;
+                if (!object.Equals(this.TextureWidth, rhs.TextureWidth)) return false;
+                if (!object.Equals(this.TextureHeight, rhs.TextureHeight)) return false;
+                if (!object.Equals(this.ContentWidth, rhs.ContentWidth)) return false;
+                if (!object.Equals(this.ContentHeight, rhs.ContentHeight)) return false;
+                if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.Texture, rhs.Texture)) return false;
                 if (!object.Equals(this.ImageSpace, rhs.ImageSpace)) return false;
                 return true;
@@ -256,10 +264,11 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.FeatureType);
                 hash.Add(this.XOffset);
                 hash.Add(this.YOffset);
-                hash.Add(this.UnknownFNAM1);
-                hash.Add(this.Width);
-                hash.Add(this.Height);
-                hash.Add(this.UnknownFNAM2);
+                hash.Add(this.TextureWidth);
+                hash.Add(this.TextureHeight);
+                hash.Add(this.ContentWidth);
+                hash.Add(this.ContentHeight);
+                hash.Add(this.Flags);
                 hash.Add(this.Texture);
                 hash.Add(this.ImageSpace);
                 hash.Add(base.GetHashCode());
@@ -276,10 +285,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.FeatureType)) return false;
                 if (!eval(this.XOffset)) return false;
                 if (!eval(this.YOffset)) return false;
-                if (!eval(this.UnknownFNAM1)) return false;
-                if (!eval(this.Width)) return false;
-                if (!eval(this.Height)) return false;
-                if (!eval(this.UnknownFNAM2)) return false;
+                if (!eval(this.TextureWidth)) return false;
+                if (!eval(this.TextureHeight)) return false;
+                if (!eval(this.ContentWidth)) return false;
+                if (!eval(this.ContentHeight)) return false;
+                if (!eval(this.Flags)) return false;
                 if (!eval(this.Texture)) return false;
                 if (!eval(this.ImageSpace)) return false;
                 return true;
@@ -294,10 +304,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.FeatureType)) return true;
                 if (eval(this.XOffset)) return true;
                 if (eval(this.YOffset)) return true;
-                if (eval(this.UnknownFNAM1)) return true;
-                if (eval(this.Width)) return true;
-                if (eval(this.Height)) return true;
-                if (eval(this.UnknownFNAM2)) return true;
+                if (eval(this.TextureWidth)) return true;
+                if (eval(this.TextureHeight)) return true;
+                if (eval(this.ContentWidth)) return true;
+                if (eval(this.ContentHeight)) return true;
+                if (eval(this.Flags)) return true;
                 if (eval(this.Texture)) return true;
                 if (eval(this.ImageSpace)) return true;
                 return false;
@@ -319,10 +330,11 @@ namespace Mutagen.Bethesda.Starfield
                 obj.FeatureType = eval(this.FeatureType);
                 obj.XOffset = eval(this.XOffset);
                 obj.YOffset = eval(this.YOffset);
-                obj.UnknownFNAM1 = eval(this.UnknownFNAM1);
-                obj.Width = eval(this.Width);
-                obj.Height = eval(this.Height);
-                obj.UnknownFNAM2 = eval(this.UnknownFNAM2);
+                obj.TextureWidth = eval(this.TextureWidth);
+                obj.TextureHeight = eval(this.TextureHeight);
+                obj.ContentWidth = eval(this.ContentWidth);
+                obj.ContentHeight = eval(this.ContentHeight);
+                obj.Flags = eval(this.Flags);
                 obj.Texture = eval(this.Texture);
                 obj.ImageSpace = eval(this.ImageSpace);
             }
@@ -359,21 +371,25 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(YOffset, "YOffset");
                     }
-                    if (printMask?.UnknownFNAM1 ?? true)
+                    if (printMask?.TextureWidth ?? true)
                     {
-                        sb.AppendItem(UnknownFNAM1, "UnknownFNAM1");
+                        sb.AppendItem(TextureWidth, "TextureWidth");
                     }
-                    if (printMask?.Width ?? true)
+                    if (printMask?.TextureHeight ?? true)
                     {
-                        sb.AppendItem(Width, "Width");
+                        sb.AppendItem(TextureHeight, "TextureHeight");
                     }
-                    if (printMask?.Height ?? true)
+                    if (printMask?.ContentWidth ?? true)
                     {
-                        sb.AppendItem(Height, "Height");
+                        sb.AppendItem(ContentWidth, "ContentWidth");
                     }
-                    if (printMask?.UnknownFNAM2 ?? true)
+                    if (printMask?.ContentHeight ?? true)
                     {
-                        sb.AppendItem(UnknownFNAM2, "UnknownFNAM2");
+                        sb.AppendItem(ContentHeight, "ContentHeight");
+                    }
+                    if (printMask?.Flags ?? true)
+                    {
+                        sb.AppendItem(Flags, "Flags");
                     }
                     if (printMask?.Texture ?? true)
                     {
@@ -398,10 +414,11 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? FeatureType;
             public Exception? XOffset;
             public Exception? YOffset;
-            public Exception? UnknownFNAM1;
-            public Exception? Width;
-            public Exception? Height;
-            public Exception? UnknownFNAM2;
+            public Exception? TextureWidth;
+            public Exception? TextureHeight;
+            public Exception? ContentWidth;
+            public Exception? ContentHeight;
+            public Exception? Flags;
             public Exception? Texture;
             public Exception? ImageSpace;
             #endregion
@@ -420,14 +437,16 @@ namespace Mutagen.Bethesda.Starfield
                         return XOffset;
                     case PhotoModeFeature_FieldIndex.YOffset:
                         return YOffset;
-                    case PhotoModeFeature_FieldIndex.UnknownFNAM1:
-                        return UnknownFNAM1;
-                    case PhotoModeFeature_FieldIndex.Width:
-                        return Width;
-                    case PhotoModeFeature_FieldIndex.Height:
-                        return Height;
-                    case PhotoModeFeature_FieldIndex.UnknownFNAM2:
-                        return UnknownFNAM2;
+                    case PhotoModeFeature_FieldIndex.TextureWidth:
+                        return TextureWidth;
+                    case PhotoModeFeature_FieldIndex.TextureHeight:
+                        return TextureHeight;
+                    case PhotoModeFeature_FieldIndex.ContentWidth:
+                        return ContentWidth;
+                    case PhotoModeFeature_FieldIndex.ContentHeight:
+                        return ContentHeight;
+                    case PhotoModeFeature_FieldIndex.Flags:
+                        return Flags;
                     case PhotoModeFeature_FieldIndex.Texture:
                         return Texture;
                     case PhotoModeFeature_FieldIndex.ImageSpace:
@@ -454,17 +473,20 @@ namespace Mutagen.Bethesda.Starfield
                     case PhotoModeFeature_FieldIndex.YOffset:
                         this.YOffset = ex;
                         break;
-                    case PhotoModeFeature_FieldIndex.UnknownFNAM1:
-                        this.UnknownFNAM1 = ex;
+                    case PhotoModeFeature_FieldIndex.TextureWidth:
+                        this.TextureWidth = ex;
                         break;
-                    case PhotoModeFeature_FieldIndex.Width:
-                        this.Width = ex;
+                    case PhotoModeFeature_FieldIndex.TextureHeight:
+                        this.TextureHeight = ex;
                         break;
-                    case PhotoModeFeature_FieldIndex.Height:
-                        this.Height = ex;
+                    case PhotoModeFeature_FieldIndex.ContentWidth:
+                        this.ContentWidth = ex;
                         break;
-                    case PhotoModeFeature_FieldIndex.UnknownFNAM2:
-                        this.UnknownFNAM2 = ex;
+                    case PhotoModeFeature_FieldIndex.ContentHeight:
+                        this.ContentHeight = ex;
+                        break;
+                    case PhotoModeFeature_FieldIndex.Flags:
+                        this.Flags = ex;
                         break;
                     case PhotoModeFeature_FieldIndex.Texture:
                         this.Texture = ex;
@@ -495,17 +517,20 @@ namespace Mutagen.Bethesda.Starfield
                     case PhotoModeFeature_FieldIndex.YOffset:
                         this.YOffset = (Exception?)obj;
                         break;
-                    case PhotoModeFeature_FieldIndex.UnknownFNAM1:
-                        this.UnknownFNAM1 = (Exception?)obj;
+                    case PhotoModeFeature_FieldIndex.TextureWidth:
+                        this.TextureWidth = (Exception?)obj;
                         break;
-                    case PhotoModeFeature_FieldIndex.Width:
-                        this.Width = (Exception?)obj;
+                    case PhotoModeFeature_FieldIndex.TextureHeight:
+                        this.TextureHeight = (Exception?)obj;
                         break;
-                    case PhotoModeFeature_FieldIndex.Height:
-                        this.Height = (Exception?)obj;
+                    case PhotoModeFeature_FieldIndex.ContentWidth:
+                        this.ContentWidth = (Exception?)obj;
                         break;
-                    case PhotoModeFeature_FieldIndex.UnknownFNAM2:
-                        this.UnknownFNAM2 = (Exception?)obj;
+                    case PhotoModeFeature_FieldIndex.ContentHeight:
+                        this.ContentHeight = (Exception?)obj;
+                        break;
+                    case PhotoModeFeature_FieldIndex.Flags:
+                        this.Flags = (Exception?)obj;
                         break;
                     case PhotoModeFeature_FieldIndex.Texture:
                         this.Texture = (Exception?)obj;
@@ -526,10 +551,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (FeatureType != null) return true;
                 if (XOffset != null) return true;
                 if (YOffset != null) return true;
-                if (UnknownFNAM1 != null) return true;
-                if (Width != null) return true;
-                if (Height != null) return true;
-                if (UnknownFNAM2 != null) return true;
+                if (TextureWidth != null) return true;
+                if (TextureHeight != null) return true;
+                if (ContentWidth != null) return true;
+                if (ContentHeight != null) return true;
+                if (Flags != null) return true;
                 if (Texture != null) return true;
                 if (ImageSpace != null) return true;
                 return false;
@@ -571,16 +597,19 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(YOffset, "YOffset");
                 }
                 {
-                    sb.AppendItem(UnknownFNAM1, "UnknownFNAM1");
+                    sb.AppendItem(TextureWidth, "TextureWidth");
                 }
                 {
-                    sb.AppendItem(Width, "Width");
+                    sb.AppendItem(TextureHeight, "TextureHeight");
                 }
                 {
-                    sb.AppendItem(Height, "Height");
+                    sb.AppendItem(ContentWidth, "ContentWidth");
                 }
                 {
-                    sb.AppendItem(UnknownFNAM2, "UnknownFNAM2");
+                    sb.AppendItem(ContentHeight, "ContentHeight");
+                }
+                {
+                    sb.AppendItem(Flags, "Flags");
                 }
                 {
                     sb.AppendItem(Texture, "Texture");
@@ -600,10 +629,11 @@ namespace Mutagen.Bethesda.Starfield
                 ret.FeatureType = this.FeatureType.Combine(rhs.FeatureType);
                 ret.XOffset = this.XOffset.Combine(rhs.XOffset);
                 ret.YOffset = this.YOffset.Combine(rhs.YOffset);
-                ret.UnknownFNAM1 = this.UnknownFNAM1.Combine(rhs.UnknownFNAM1);
-                ret.Width = this.Width.Combine(rhs.Width);
-                ret.Height = this.Height.Combine(rhs.Height);
-                ret.UnknownFNAM2 = this.UnknownFNAM2.Combine(rhs.UnknownFNAM2);
+                ret.TextureWidth = this.TextureWidth.Combine(rhs.TextureWidth);
+                ret.TextureHeight = this.TextureHeight.Combine(rhs.TextureHeight);
+                ret.ContentWidth = this.ContentWidth.Combine(rhs.ContentWidth);
+                ret.ContentHeight = this.ContentHeight.Combine(rhs.ContentHeight);
+                ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.Texture = this.Texture.Combine(rhs.Texture);
                 ret.ImageSpace = this.ImageSpace.Combine(rhs.ImageSpace);
                 return ret;
@@ -632,10 +662,11 @@ namespace Mutagen.Bethesda.Starfield
             public bool FeatureType;
             public bool XOffset;
             public bool YOffset;
-            public bool UnknownFNAM1;
-            public bool Width;
-            public bool Height;
-            public bool UnknownFNAM2;
+            public bool TextureWidth;
+            public bool TextureHeight;
+            public bool ContentWidth;
+            public bool ContentHeight;
+            public bool Flags;
             public bool Texture;
             public bool ImageSpace;
             #endregion
@@ -650,10 +681,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.FeatureType = defaultOn;
                 this.XOffset = defaultOn;
                 this.YOffset = defaultOn;
-                this.UnknownFNAM1 = defaultOn;
-                this.Width = defaultOn;
-                this.Height = defaultOn;
-                this.UnknownFNAM2 = defaultOn;
+                this.TextureWidth = defaultOn;
+                this.TextureHeight = defaultOn;
+                this.ContentWidth = defaultOn;
+                this.ContentHeight = defaultOn;
+                this.Flags = defaultOn;
                 this.Texture = defaultOn;
                 this.ImageSpace = defaultOn;
             }
@@ -667,10 +699,11 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((FeatureType, null));
                 ret.Add((XOffset, null));
                 ret.Add((YOffset, null));
-                ret.Add((UnknownFNAM1, null));
-                ret.Add((Width, null));
-                ret.Add((Height, null));
-                ret.Add((UnknownFNAM2, null));
+                ret.Add((TextureWidth, null));
+                ret.Add((TextureHeight, null));
+                ret.Add((ContentWidth, null));
+                ret.Add((ContentHeight, null));
+                ret.Add((Flags, null));
                 ret.Add((Texture, null));
                 ret.Add((ImageSpace, null));
             }
@@ -831,10 +864,11 @@ namespace Mutagen.Bethesda.Starfield
         new PhotoModeFeature.Mode FeatureType { get; set; }
         new Single XOffset { get; set; }
         new Single YOffset { get; set; }
-        new Int64 UnknownFNAM1 { get; set; }
-        new UInt32 Width { get; set; }
-        new UInt32 Height { get; set; }
-        new UInt32 UnknownFNAM2 { get; set; }
+        new UInt32 TextureWidth { get; set; }
+        new UInt32 TextureHeight { get; set; }
+        new UInt32 ContentWidth { get; set; }
+        new UInt32 ContentHeight { get; set; }
+        new PhotoModeFeature.Flag Flags { get; set; }
         new String? Texture { get; set; }
         new IFormLinkNullable<IImageSpaceGetter> ImageSpace { get; set; }
     }
@@ -868,10 +902,11 @@ namespace Mutagen.Bethesda.Starfield
         PhotoModeFeature.Mode FeatureType { get; }
         Single XOffset { get; }
         Single YOffset { get; }
-        Int64 UnknownFNAM1 { get; }
-        UInt32 Width { get; }
-        UInt32 Height { get; }
-        UInt32 UnknownFNAM2 { get; }
+        UInt32 TextureWidth { get; }
+        UInt32 TextureHeight { get; }
+        UInt32 ContentWidth { get; }
+        UInt32 ContentHeight { get; }
+        PhotoModeFeature.Flag Flags { get; }
         String? Texture { get; }
         IFormLinkNullableGetter<IImageSpaceGetter> ImageSpace { get; }
 
@@ -1054,12 +1089,13 @@ namespace Mutagen.Bethesda.Starfield
         FeatureType = 8,
         XOffset = 9,
         YOffset = 10,
-        UnknownFNAM1 = 11,
-        Width = 12,
-        Height = 13,
-        UnknownFNAM2 = 14,
-        Texture = 15,
-        ImageSpace = 16,
+        TextureWidth = 11,
+        TextureHeight = 12,
+        ContentWidth = 13,
+        ContentHeight = 14,
+        Flags = 15,
+        Texture = 16,
+        ImageSpace = 17,
     }
     #endregion
 
@@ -1070,9 +1106,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 10;
+        public const ushort AdditionalFieldCount = 11;
 
-        public const ushort FieldCount = 17;
+        public const ushort FieldCount = 18;
 
         public static readonly Type MaskType = typeof(PhotoModeFeature.Mask<>);
 
@@ -1157,10 +1193,11 @@ namespace Mutagen.Bethesda.Starfield
             item.FeatureType = default(PhotoModeFeature.Mode);
             item.XOffset = default(Single);
             item.YOffset = default(Single);
-            item.UnknownFNAM1 = default(Int64);
-            item.Width = default(UInt32);
-            item.Height = default(UInt32);
-            item.UnknownFNAM2 = default(UInt32);
+            item.TextureWidth = default(UInt32);
+            item.TextureHeight = default(UInt32);
+            item.ContentWidth = default(UInt32);
+            item.ContentHeight = default(UInt32);
+            item.Flags = default(PhotoModeFeature.Flag);
             item.Texture = default;
             item.ImageSpace.Clear();
             base.Clear(item);
@@ -1252,10 +1289,11 @@ namespace Mutagen.Bethesda.Starfield
             ret.FeatureType = item.FeatureType == rhs.FeatureType;
             ret.XOffset = item.XOffset.EqualsWithin(rhs.XOffset);
             ret.YOffset = item.YOffset.EqualsWithin(rhs.YOffset);
-            ret.UnknownFNAM1 = item.UnknownFNAM1 == rhs.UnknownFNAM1;
-            ret.Width = item.Width == rhs.Width;
-            ret.Height = item.Height == rhs.Height;
-            ret.UnknownFNAM2 = item.UnknownFNAM2 == rhs.UnknownFNAM2;
+            ret.TextureWidth = item.TextureWidth == rhs.TextureWidth;
+            ret.TextureHeight = item.TextureHeight == rhs.TextureHeight;
+            ret.ContentWidth = item.ContentWidth == rhs.ContentWidth;
+            ret.ContentHeight = item.ContentHeight == rhs.ContentHeight;
+            ret.Flags = item.Flags == rhs.Flags;
             ret.Texture = string.Equals(item.Texture, rhs.Texture);
             ret.ImageSpace = item.ImageSpace.Equals(rhs.ImageSpace);
             base.FillEqualsMask(item, rhs, ret, include);
@@ -1324,21 +1362,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.YOffset, "YOffset");
             }
-            if (printMask?.UnknownFNAM1 ?? true)
+            if (printMask?.TextureWidth ?? true)
             {
-                sb.AppendItem(item.UnknownFNAM1, "UnknownFNAM1");
+                sb.AppendItem(item.TextureWidth, "TextureWidth");
             }
-            if (printMask?.Width ?? true)
+            if (printMask?.TextureHeight ?? true)
             {
-                sb.AppendItem(item.Width, "Width");
+                sb.AppendItem(item.TextureHeight, "TextureHeight");
             }
-            if (printMask?.Height ?? true)
+            if (printMask?.ContentWidth ?? true)
             {
-                sb.AppendItem(item.Height, "Height");
+                sb.AppendItem(item.ContentWidth, "ContentWidth");
             }
-            if (printMask?.UnknownFNAM2 ?? true)
+            if (printMask?.ContentHeight ?? true)
             {
-                sb.AppendItem(item.UnknownFNAM2, "UnknownFNAM2");
+                sb.AppendItem(item.ContentHeight, "ContentHeight");
+            }
+            if (printMask?.Flags ?? true)
+            {
+                sb.AppendItem(item.Flags, "Flags");
             }
             if ((printMask?.Texture ?? true)
                 && item.Texture is {} TextureItem)
@@ -1415,21 +1457,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.YOffset.EqualsWithin(rhs.YOffset)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.UnknownFNAM1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.TextureWidth) ?? true))
             {
-                if (lhs.UnknownFNAM1 != rhs.UnknownFNAM1) return false;
+                if (lhs.TextureWidth != rhs.TextureWidth) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.Width) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.TextureHeight) ?? true))
             {
-                if (lhs.Width != rhs.Width) return false;
+                if (lhs.TextureHeight != rhs.TextureHeight) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.Height) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.ContentWidth) ?? true))
             {
-                if (lhs.Height != rhs.Height) return false;
+                if (lhs.ContentWidth != rhs.ContentWidth) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.UnknownFNAM2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.ContentHeight) ?? true))
             {
-                if (lhs.UnknownFNAM2 != rhs.UnknownFNAM2) return false;
+                if (lhs.ContentHeight != rhs.ContentHeight) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.Flags) ?? true))
+            {
+                if (lhs.Flags != rhs.Flags) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.Texture) ?? true))
             {
@@ -1474,10 +1520,11 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.FeatureType);
             hash.Add(item.XOffset);
             hash.Add(item.YOffset);
-            hash.Add(item.UnknownFNAM1);
-            hash.Add(item.Width);
-            hash.Add(item.Height);
-            hash.Add(item.UnknownFNAM2);
+            hash.Add(item.TextureWidth);
+            hash.Add(item.TextureHeight);
+            hash.Add(item.ContentWidth);
+            hash.Add(item.ContentHeight);
+            hash.Add(item.Flags);
             if (item.Texture is {} Textureitem)
             {
                 hash.Add(Textureitem);
@@ -1628,21 +1675,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.YOffset = rhs.YOffset;
             }
-            if ((copyMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.UnknownFNAM1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.TextureWidth) ?? true))
             {
-                item.UnknownFNAM1 = rhs.UnknownFNAM1;
+                item.TextureWidth = rhs.TextureWidth;
             }
-            if ((copyMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.Width) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.TextureHeight) ?? true))
             {
-                item.Width = rhs.Width;
+                item.TextureHeight = rhs.TextureHeight;
             }
-            if ((copyMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.Height) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.ContentWidth) ?? true))
             {
-                item.Height = rhs.Height;
+                item.ContentWidth = rhs.ContentWidth;
             }
-            if ((copyMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.UnknownFNAM2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.ContentHeight) ?? true))
             {
-                item.UnknownFNAM2 = rhs.UnknownFNAM2;
+                item.ContentHeight = rhs.ContentHeight;
+            }
+            if ((copyMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.Flags) ?? true))
+            {
+                item.Flags = rhs.Flags;
             }
             if ((copyMask?.GetShouldTranslate((int)PhotoModeFeature_FieldIndex.Texture) ?? true))
             {
@@ -1839,10 +1890,14 @@ namespace Mutagen.Bethesda.Starfield
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.YOffset);
-                writer.Write(item.UnknownFNAM1);
-                writer.Write(item.Width);
-                writer.Write(item.Height);
-                writer.Write(item.UnknownFNAM2);
+                writer.Write(item.TextureWidth);
+                writer.Write(item.TextureHeight);
+                writer.Write(item.ContentWidth);
+                writer.Write(item.ContentHeight);
+                EnumBinaryTranslation<PhotoModeFeature.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.Flags,
+                    length: 4);
             }
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -1944,15 +1999,19 @@ namespace Mutagen.Bethesda.Starfield
                     item.XOffset = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.YOffset = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    if (dataFrame.Remaining < 8) return null;
-                    item.UnknownFNAM1 = dataFrame.ReadInt64();
                     if (dataFrame.Remaining < 4) return null;
-                    item.Width = dataFrame.ReadUInt32();
+                    item.TextureWidth = dataFrame.ReadUInt32();
                     if (dataFrame.Remaining < 4) return null;
-                    item.Height = dataFrame.ReadUInt32();
+                    item.TextureHeight = dataFrame.ReadUInt32();
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownFNAM2 = dataFrame.ReadUInt32();
-                    return (int)PhotoModeFeature_FieldIndex.UnknownFNAM2;
+                    item.ContentWidth = dataFrame.ReadUInt32();
+                    if (dataFrame.Remaining < 4) return null;
+                    item.ContentHeight = dataFrame.ReadUInt32();
+                    if (dataFrame.Remaining < 4) return null;
+                    item.Flags = EnumBinaryTranslation<PhotoModeFeature.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    return (int)PhotoModeFeature_FieldIndex.Flags;
                 }
                 case RecordTypeInts.HNAM:
                 {
@@ -2056,25 +2115,30 @@ namespace Mutagen.Bethesda.Starfield
         private bool _YOffset_IsSet => _FNAMLocation.HasValue;
         public Single YOffset => _YOffset_IsSet ? _recordData.Slice(_YOffsetLocation, 4).Float() : default(Single);
         #endregion
-        #region UnknownFNAM1
-        private int _UnknownFNAM1Location => _FNAMLocation!.Value.Min + 0x9;
-        private bool _UnknownFNAM1_IsSet => _FNAMLocation.HasValue;
-        public Int64 UnknownFNAM1 => _UnknownFNAM1_IsSet ? BinaryPrimitives.ReadInt64LittleEndian(_recordData.Slice(_UnknownFNAM1Location, 8)) : default(Int64);
+        #region TextureWidth
+        private int _TextureWidthLocation => _FNAMLocation!.Value.Min + 0x9;
+        private bool _TextureWidth_IsSet => _FNAMLocation.HasValue;
+        public UInt32 TextureWidth => _TextureWidth_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_TextureWidthLocation, 4)) : default(UInt32);
         #endregion
-        #region Width
-        private int _WidthLocation => _FNAMLocation!.Value.Min + 0x11;
-        private bool _Width_IsSet => _FNAMLocation.HasValue;
-        public UInt32 Width => _Width_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WidthLocation, 4)) : default(UInt32);
+        #region TextureHeight
+        private int _TextureHeightLocation => _FNAMLocation!.Value.Min + 0xD;
+        private bool _TextureHeight_IsSet => _FNAMLocation.HasValue;
+        public UInt32 TextureHeight => _TextureHeight_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_TextureHeightLocation, 4)) : default(UInt32);
         #endregion
-        #region Height
-        private int _HeightLocation => _FNAMLocation!.Value.Min + 0x15;
-        private bool _Height_IsSet => _FNAMLocation.HasValue;
-        public UInt32 Height => _Height_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_HeightLocation, 4)) : default(UInt32);
+        #region ContentWidth
+        private int _ContentWidthLocation => _FNAMLocation!.Value.Min + 0x11;
+        private bool _ContentWidth_IsSet => _FNAMLocation.HasValue;
+        public UInt32 ContentWidth => _ContentWidth_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ContentWidthLocation, 4)) : default(UInt32);
         #endregion
-        #region UnknownFNAM2
-        private int _UnknownFNAM2Location => _FNAMLocation!.Value.Min + 0x19;
-        private bool _UnknownFNAM2_IsSet => _FNAMLocation.HasValue;
-        public UInt32 UnknownFNAM2 => _UnknownFNAM2_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_UnknownFNAM2Location, 4)) : default(UInt32);
+        #region ContentHeight
+        private int _ContentHeightLocation => _FNAMLocation!.Value.Min + 0x15;
+        private bool _ContentHeight_IsSet => _FNAMLocation.HasValue;
+        public UInt32 ContentHeight => _ContentHeight_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ContentHeightLocation, 4)) : default(UInt32);
+        #endregion
+        #region Flags
+        private int _FlagsLocation => _FNAMLocation!.Value.Min + 0x19;
+        private bool _Flags_IsSet => _FNAMLocation.HasValue;
+        public PhotoModeFeature.Flag Flags => _Flags_IsSet ? (PhotoModeFeature.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region Texture
         private int? _TextureLocation;
@@ -2161,7 +2225,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FNAM:
                 {
                     _FNAMLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)PhotoModeFeature_FieldIndex.UnknownFNAM2;
+                    return (int)PhotoModeFeature_FieldIndex.Flags;
                 }
                 case RecordTypeInts.HNAM:
                 {
