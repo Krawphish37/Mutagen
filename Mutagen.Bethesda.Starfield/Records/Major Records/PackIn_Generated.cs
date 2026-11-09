@@ -100,7 +100,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #endregion
         #region DirtinessScale
-        public Single DirtinessScale { get; set; } = default(Single);
+        public Percent DirtinessScale { get; set; } = default(Percent);
         #endregion
         #region ObjectPaletteDefaults
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -135,14 +135,14 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<ISnapTemplateGetter> IPackInGetter.SnapTemplate => this.SnapTemplate;
         #endregion
         #region SnapBehavior
-        private readonly IFormLinkNullable<ISnapTemplateBehaviorGetter> _SnapBehavior = new FormLinkNullable<ISnapTemplateBehaviorGetter>();
-        public IFormLinkNullable<ISnapTemplateBehaviorGetter> SnapBehavior
+        private readonly IFormLinkNullable<ISnapTemplateGetter> _SnapBehavior = new FormLinkNullable<ISnapTemplateGetter>();
+        public IFormLinkNullable<ISnapTemplateGetter> SnapBehavior
         {
             get => _SnapBehavior;
             set => _SnapBehavior.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkNullableGetter<ISnapTemplateBehaviorGetter> IPackInGetter.SnapBehavior => this.SnapBehavior;
+        IFormLinkNullableGetter<ISnapTemplateGetter> IPackInGetter.SnapBehavior => this.SnapBehavior;
         #endregion
         #region XALG
         public UInt64? XALG { get; set; }
@@ -194,16 +194,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         UInt32? IPackInGetter.Version => this.Version;
         #endregion
-        #region FNAM
+        #region Flags
+        public PackIn.Flag? Flags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _FNAM;
-        public MemorySlice<Byte>? FNAM
-        {
-            get => this._FNAM;
-            set => this._FNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IPackInGetter.FNAM => this.FNAM;
+        PackIn.Flag? IPackInGetter.Flags => this.Flags;
         #endregion
         #region Keywords
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -352,7 +346,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ObjectPlacementDefaults2 = new MaskItem<TItem, ObjectPaletteDefaults.Mask<TItem>?>(initialValue, new ObjectPaletteDefaults.Mask<TItem>(initialValue));
                 this.Cell = initialValue;
                 this.Version = initialValue;
-                this.FNAM = initialValue;
+                this.Flags = initialValue;
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.NativeTerminal = initialValue;
                 this.ForcedLocations = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
@@ -382,7 +376,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ObjectPlacementDefaults2,
                 TItem Cell,
                 TItem Version,
-                TItem FNAM,
+                TItem Flags,
                 TItem Keywords,
                 TItem NativeTerminal,
                 TItem ForcedLocations,
@@ -411,7 +405,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ObjectPlacementDefaults2 = new MaskItem<TItem, ObjectPaletteDefaults.Mask<TItem>?>(ObjectPlacementDefaults2, new ObjectPaletteDefaults.Mask<TItem>(ObjectPlacementDefaults2));
                 this.Cell = Cell;
                 this.Version = Version;
-                this.FNAM = FNAM;
+                this.Flags = Flags;
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
                 this.NativeTerminal = NativeTerminal;
                 this.ForcedLocations = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ForcedLocations, []);
@@ -442,7 +436,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, ObjectPaletteDefaults.Mask<TItem>?>? ObjectPlacementDefaults2 { get; set; }
             public TItem Cell;
             public TItem Version;
-            public TItem FNAM;
+            public TItem Flags;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
             public TItem NativeTerminal;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ForcedLocations;
@@ -475,7 +469,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ObjectPlacementDefaults2, rhs.ObjectPlacementDefaults2)) return false;
                 if (!object.Equals(this.Cell, rhs.Cell)) return false;
                 if (!object.Equals(this.Version, rhs.Version)) return false;
-                if (!object.Equals(this.FNAM, rhs.FNAM)) return false;
+                if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
                 if (!object.Equals(this.NativeTerminal, rhs.NativeTerminal)) return false;
                 if (!object.Equals(this.ForcedLocations, rhs.ForcedLocations)) return false;
@@ -500,7 +494,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ObjectPlacementDefaults2);
                 hash.Add(this.Cell);
                 hash.Add(this.Version);
-                hash.Add(this.FNAM);
+                hash.Add(this.Flags);
                 hash.Add(this.Keywords);
                 hash.Add(this.NativeTerminal);
                 hash.Add(this.ForcedLocations);
@@ -561,7 +555,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.Cell)) return false;
                 if (!eval(this.Version)) return false;
-                if (!eval(this.FNAM)) return false;
+                if (!eval(this.Flags)) return false;
                 if (this.Keywords != null)
                 {
                     if (!eval(this.Keywords.Overall)) return false;
@@ -661,7 +655,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.Cell)) return true;
                 if (eval(this.Version)) return true;
-                if (eval(this.FNAM)) return true;
+                if (eval(this.Flags)) return true;
                 if (this.Keywords != null)
                 {
                     if (eval(this.Keywords.Overall)) return true;
@@ -751,7 +745,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.ObjectPlacementDefaults2 = this.ObjectPlacementDefaults2 == null ? null : new MaskItem<R, ObjectPaletteDefaults.Mask<R>?>(eval(this.ObjectPlacementDefaults2.Overall), this.ObjectPlacementDefaults2.Specific?.Translate(eval));
                 obj.Cell = eval(this.Cell);
                 obj.Version = eval(this.Version);
-                obj.FNAM = eval(this.FNAM);
+                obj.Flags = eval(this.Flags);
                 if (Keywords != null)
                 {
                     obj.Keywords = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.Keywords.Overall), []);
@@ -896,9 +890,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Version, "Version");
                     }
-                    if (printMask?.FNAM ?? true)
+                    if (printMask?.Flags ?? true)
                     {
-                        sb.AppendItem(FNAM, "FNAM");
+                        sb.AppendItem(Flags, "Flags");
                     }
                     if ((printMask?.Keywords?.Overall ?? true)
                         && Keywords is {} KeywordsItem)
@@ -1014,7 +1008,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, ObjectPaletteDefaults.ErrorMask?>? ObjectPlacementDefaults2;
             public Exception? Cell;
             public Exception? Version;
-            public Exception? FNAM;
+            public Exception? Flags;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
             public Exception? NativeTerminal;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ForcedLocations;
@@ -1055,8 +1049,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Cell;
                     case PackIn_FieldIndex.Version:
                         return Version;
-                    case PackIn_FieldIndex.FNAM:
-                        return FNAM;
+                    case PackIn_FieldIndex.Flags:
+                        return Flags;
                     case PackIn_FieldIndex.Keywords:
                         return Keywords;
                     case PackIn_FieldIndex.NativeTerminal:
@@ -1118,8 +1112,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PackIn_FieldIndex.Version:
                         this.Version = ex;
                         break;
-                    case PackIn_FieldIndex.FNAM:
-                        this.FNAM = ex;
+                    case PackIn_FieldIndex.Flags:
+                        this.Flags = ex;
                         break;
                     case PackIn_FieldIndex.Keywords:
                         this.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
@@ -1189,8 +1183,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PackIn_FieldIndex.Version:
                         this.Version = (Exception?)obj;
                         break;
-                    case PackIn_FieldIndex.FNAM:
-                        this.FNAM = (Exception?)obj;
+                    case PackIn_FieldIndex.Flags:
+                        this.Flags = (Exception?)obj;
                         break;
                     case PackIn_FieldIndex.Keywords:
                         this.Keywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
@@ -1232,7 +1226,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ObjectPlacementDefaults2 != null) return true;
                 if (Cell != null) return true;
                 if (Version != null) return true;
-                if (FNAM != null) return true;
+                if (Flags != null) return true;
                 if (Keywords != null) return true;
                 if (NativeTerminal != null) return true;
                 if (ForcedLocations != null) return true;
@@ -1310,7 +1304,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Version, "Version");
                 }
                 {
-                    sb.AppendItem(FNAM, "FNAM");
+                    sb.AppendItem(Flags, "Flags");
                 }
                 if (Keywords is {} KeywordsItem)
                 {
@@ -1417,7 +1411,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ObjectPlacementDefaults2 = this.ObjectPlacementDefaults2.Combine(rhs.ObjectPlacementDefaults2, (l, r) => l.Combine(r));
                 ret.Cell = this.Cell.Combine(rhs.Cell);
                 ret.Version = this.Version.Combine(rhs.Version);
-                ret.FNAM = this.FNAM.Combine(rhs.FNAM);
+                ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
                 ret.NativeTerminal = this.NativeTerminal.Combine(rhs.NativeTerminal);
                 ret.ForcedLocations = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ForcedLocations?.Overall, rhs.ForcedLocations?.Overall), Noggog.ExceptionExt.Combine(this.ForcedLocations?.Specific, rhs.ForcedLocations?.Specific));
@@ -1459,7 +1453,7 @@ namespace Mutagen.Bethesda.Starfield
             public ObjectPaletteDefaults.TranslationMask? ObjectPlacementDefaults2;
             public bool Cell;
             public bool Version;
-            public bool FNAM;
+            public bool Flags;
             public bool Keywords;
             public bool NativeTerminal;
             public bool ForcedLocations;
@@ -1481,7 +1475,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Filter = defaultOn;
                 this.Cell = defaultOn;
                 this.Version = defaultOn;
-                this.FNAM = defaultOn;
+                this.Flags = defaultOn;
                 this.Keywords = defaultOn;
                 this.NativeTerminal = defaultOn;
                 this.ForcedLocations = defaultOn;
@@ -1507,7 +1501,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ObjectPlacementDefaults2 != null ? ObjectPlacementDefaults2.OnOverall : DefaultOn, ObjectPlacementDefaults2?.GetCrystal()));
                 ret.Add((Cell, null));
                 ret.Add((Version, null));
-                ret.Add((FNAM, null));
+                ret.Add((Flags, null));
                 ret.Add((Keywords, null));
                 ret.Add((NativeTerminal, null));
                 ret.Add((ForcedLocations, null));
@@ -1669,7 +1663,6 @@ namespace Mutagen.Bethesda.Starfield
         IBaseObject,
         IBiomeObjectPackInTarget,
         IConstructibleObjectTarget,
-        IExplodeSpawn,
         IFormLinkContainer,
         IHaveVirtualMachineAdapter,
         IKeyworded<IKeywordGetter>,
@@ -1679,7 +1672,6 @@ namespace Mutagen.Bethesda.Starfield
         INamedRequired,
         IObjectBounded,
         IPackInGetter,
-        IPlaceableObject,
         IPlanetContentTarget,
         IScripted,
         IStarfieldMajorRecordInternal,
@@ -1694,18 +1686,18 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IObjectBounded
         /// </summary>
         new ObjectBounds ObjectBounds { get; set; }
-        new Single DirtinessScale { get; set; }
+        new Percent DirtinessScale { get; set; }
         new ObjectPaletteDefaults? ObjectPaletteDefaults { get; set; }
         new Transforms? Transforms { get; set; }
         new IFormLinkNullable<ISnapTemplateGetter> SnapTemplate { get; set; }
-        new IFormLinkNullable<ISnapTemplateBehaviorGetter> SnapBehavior { get; set; }
+        new IFormLinkNullable<ISnapTemplateGetter> SnapBehavior { get; set; }
         new UInt64? XALG { get; set; }
         new ExtendedList<AComponent> Components { get; }
         new String? Filter { get; set; }
         new ObjectPaletteDefaults? ObjectPlacementDefaults2 { get; set; }
         new IFormLinkNullable<ICellGetter> Cell { get; set; }
         new UInt32? Version { get; set; }
-        new MemorySlice<Byte>? FNAM { get; set; }
+        new PackIn.Flag? Flags { get; set; }
         /// <summary>
         /// Aspects: IKeyworded&lt;IKeywordGetter&gt;
         /// </summary>
@@ -1739,7 +1731,6 @@ namespace Mutagen.Bethesda.Starfield
         IBinaryItem,
         IBiomeObjectPackInTargetGetter,
         IConstructibleObjectTargetGetter,
-        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHaveVirtualMachineAdapterGetter,
         IKeywordedGetter<IKeywordGetter>,
@@ -1749,7 +1740,6 @@ namespace Mutagen.Bethesda.Starfield
         INamedGetter,
         INamedRequiredGetter,
         IObjectBoundedGetter,
-        IPlaceableObjectGetter,
         IPlanetContentTargetGetter,
         IScriptedGetter,
         ITranslatedNamedGetter,
@@ -1768,18 +1758,18 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IObjectBoundsGetter ObjectBounds { get; }
         #endregion
-        Single DirtinessScale { get; }
+        Percent DirtinessScale { get; }
         IObjectPaletteDefaultsGetter? ObjectPaletteDefaults { get; }
         ITransformsGetter? Transforms { get; }
         IFormLinkNullableGetter<ISnapTemplateGetter> SnapTemplate { get; }
-        IFormLinkNullableGetter<ISnapTemplateBehaviorGetter> SnapBehavior { get; }
+        IFormLinkNullableGetter<ISnapTemplateGetter> SnapBehavior { get; }
         UInt64? XALG { get; }
         IReadOnlyList<IAComponentGetter> Components { get; }
         String? Filter { get; }
         IObjectPaletteDefaultsGetter? ObjectPlacementDefaults2 { get; }
         IFormLinkNullableGetter<ICellGetter> Cell { get; }
         UInt32? Version { get; }
-        ReadOnlyMemorySlice<Byte>? FNAM { get; }
+        PackIn.Flag? Flags { get; }
         #region Keywords
         /// <summary>
         /// Aspects: IKeywordedGetter&lt;IKeywordGetter&gt;
@@ -1989,7 +1979,7 @@ namespace Mutagen.Bethesda.Starfield
         ObjectPlacementDefaults2 = 17,
         Cell = 18,
         Version = 19,
-        FNAM = 20,
+        Flags = 20,
         Keywords = 21,
         NativeTerminal = 22,
         ForcedLocations = 23,
@@ -2109,7 +2099,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.VirtualMachineAdapter = null;
             item.ObjectBounds.Clear();
-            item.DirtinessScale = default(Single);
+            item.DirtinessScale = default(Percent);
             item.ObjectPaletteDefaults = null;
             item.Transforms = null;
             item.SnapTemplate.Clear();
@@ -2120,7 +2110,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ObjectPlacementDefaults2 = null;
             item.Cell.Clear();
             item.Version = default;
-            item.FNAM = default;
+            item.Flags = default;
             item.Keywords = null;
             item.NativeTerminal.Clear();
             item.ForcedLocations = null;
@@ -2252,7 +2242,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.ObjectBounds = MaskItemExt.Factory(item.ObjectBounds.GetEqualsMask(rhs.ObjectBounds, include), include);
-            ret.DirtinessScale = item.DirtinessScale.EqualsWithin(rhs.DirtinessScale);
+            ret.DirtinessScale = item.DirtinessScale.Equals(rhs.DirtinessScale);
             ret.ObjectPaletteDefaults = EqualsMaskHelper.EqualsHelper(
                 item.ObjectPaletteDefaults,
                 rhs.ObjectPaletteDefaults,
@@ -2278,7 +2268,7 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.Cell = item.Cell.Equals(rhs.Cell);
             ret.Version = item.Version == rhs.Version;
-            ret.FNAM = MemorySliceExt.SequenceEqual(item.FNAM, rhs.FNAM);
+            ret.Flags = item.Flags == rhs.Flags;
             ret.Keywords = item.Keywords.CollectionEqualsHelper(
                 rhs.Keywords,
                 (l, r) => object.Equals(l, r),
@@ -2415,10 +2405,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(VersionItem, "Version");
             }
-            if ((printMask?.FNAM ?? true)
-                && item.FNAM is {} FNAMItem)
+            if ((printMask?.Flags ?? true)
+                && item.Flags is {} FlagsItem)
             {
-                sb.AppendLine($"FNAM => {SpanExt.ToHexString(FNAMItem)}");
+                sb.AppendItem(FlagsItem, "Flags");
             }
             if ((printMask?.Keywords?.Overall ?? true)
                 && item.Keywords is {} KeywordsItem)
@@ -2557,7 +2547,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)PackIn_FieldIndex.DirtinessScale) ?? true))
             {
-                if (!lhs.DirtinessScale.EqualsWithin(rhs.DirtinessScale)) return false;
+                if (!lhs.DirtinessScale.Equals(rhs.DirtinessScale)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PackIn_FieldIndex.ObjectPaletteDefaults) ?? true))
             {
@@ -2611,9 +2601,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Version != rhs.Version) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PackIn_FieldIndex.FNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PackIn_FieldIndex.Flags) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.FNAM, rhs.FNAM)) return false;
+                if (lhs.Flags != rhs.Flags) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PackIn_FieldIndex.Keywords) ?? true))
             {
@@ -2687,10 +2677,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XALGitem);
             }
-            foreach (var subItem in item.Components)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.Components);
             if (item.Filter is {} Filteritem)
             {
                 hash.Add(Filteritem);
@@ -2704,39 +2691,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Versionitem);
             }
-            if (item.FNAM is {} FNAMItem)
+            if (item.Flags is {} Flagsitem)
             {
-                hash.AddBytes(FNAMItem);
+                hash.Add(Flagsitem);
             }
-            if (item.Keywords is {} Keywordsitem)
-            {
-                foreach (var subItem in Keywordsitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
+            hash.Add(item.Keywords);
             hash.Add(item.NativeTerminal);
-            if (item.ForcedLocations is {} ForcedLocationsitem)
-            {
-                foreach (var subItem in ForcedLocationsitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
-            if (item.Properties is {} Propertiesitem)
-            {
-                foreach (var subItem in Propertiesitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
-            if (item.MaterialSwaps is {} MaterialSwapsitem)
-            {
-                foreach (var subItem in MaterialSwapsitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
+            hash.Add(item.ForcedLocations);
+            hash.Add(item.Properties);
+            hash.Add(item.MaterialSwaps);
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -3121,16 +3084,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Version = rhs.Version;
             }
-            if ((copyMask?.GetShouldTranslate((int)PackIn_FieldIndex.FNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PackIn_FieldIndex.Flags) ?? true))
             {
-                if(rhs.FNAM is {} FNAMrhs)
-                {
-                    item.FNAM = FNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.FNAM = default;
-                }
+                item.Flags = rhs.Flags;
             }
             if ((copyMask?.GetShouldTranslate((int)PackIn_FieldIndex.Keywords) ?? true))
             {
@@ -3434,9 +3390,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: ObjectBoundsItem,
                 writer: writer,
                 translationParams: translationParams);
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            PercentBinaryTranslation.Write(
                 writer: writer,
                 item: item.DirtinessScale,
+                integerType: FloatIntegerType.UInt,
                 header: translationParams.ConvertToCustom(RecordTypes.ODTY));
             if (item.ObjectPaletteDefaults is {} ObjectPaletteDefaultsItem)
             {
@@ -3495,9 +3452,10 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.Version,
                 header: translationParams.ConvertToCustom(RecordTypes.VNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.FNAM,
+            EnumBinaryTranslation<PackIn.Flag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Flags,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.FNAM));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.WriteWithCounter(
                 writer: writer,
@@ -3637,7 +3595,9 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ODTY:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DirtinessScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    item.DirtinessScale = PercentBinaryTranslation.Parse(
+                        reader: frame,
+                        integerType: FloatIntegerType.UInt);
                     return (int)PackIn_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.OPDS:
@@ -3725,8 +3685,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)PackIn_FieldIndex.FNAM;
+                    item.Flags = EnumBinaryTranslation<PackIn.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)PackIn_FieldIndex.Flags;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:
@@ -3868,7 +3830,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region DirtinessScale
         private int? _DirtinessScaleLocation;
-        public Single DirtinessScale => _DirtinessScaleLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants).Float() : default(Single);
+        public Percent DirtinessScale => _DirtinessScaleLocation.HasValue ? PercentBinaryTranslation.GetPercent(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region ObjectPaletteDefaults
         private RangeInt32? _ObjectPaletteDefaultsLocation;
@@ -3884,7 +3846,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region SnapBehavior
         private int? _SnapBehaviorLocation;
-        public IFormLinkNullableGetter<ISnapTemplateBehaviorGetter> SnapBehavior => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ISnapTemplateBehaviorGetter>(_package, _recordData, _SnapBehaviorLocation);
+        public IFormLinkNullableGetter<ISnapTemplateGetter> SnapBehavior => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ISnapTemplateGetter>(_package, _recordData, _SnapBehaviorLocation);
         #endregion
         #region XALG
         private int? _XALGLocation;
@@ -3907,9 +3869,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _VersionLocation;
         public UInt32? Version => _VersionLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _VersionLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region FNAM
-        private int? _FNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? FNAM => _FNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Flags
+        private int? _FlagsLocation;
+        public PackIn.Flag? Flags => EnumBinaryTranslation<PackIn.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_FlagsLocation, _recordData, _package, 4);
         #endregion
         #region Keywords
         public IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; private set; }
@@ -4101,8 +4063,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FNAM:
                 {
-                    _FNAMLocation = (stream.Position - offset);
-                    return (int)PackIn_FieldIndex.FNAM;
+                    _FlagsLocation = (stream.Position - offset);
+                    return (int)PackIn_FieldIndex.Flags;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:

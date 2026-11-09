@@ -15,7 +15,7 @@
       <RefDirect name="ObjectPlacementDefaults2" refName="ObjectPaletteDefaults" />
       <FormLink name="Cell" refName="Cell" recordType="CNAM" />
       <UInt32 name="Version" recordType="VNAM" />
-      <ByteArray name="FNAM" recordType="FNAM" unknown="true" />
+      <Enum name="Flags" recordType="FNAM" enumName="PackIn.Flag" byteLength="4" />
       <List name="Keywords" counterRecType="KSIZ" recordType="KWDA">
         <FormLink refName="Keyword" />
       </List>
