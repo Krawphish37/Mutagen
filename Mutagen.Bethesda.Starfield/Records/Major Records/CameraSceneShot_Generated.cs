@@ -1513,7 +1513,10 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.IgnoreCollision);
             hash.Add(item.UseLookTargetAlias);
             hash.Add(item.ForceLookAtFirstPersonCamera);
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             return hash.ToHashCode();
         }
         

@@ -1283,7 +1283,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(DialogueTargetActoritem);
             }
-            hash.Add(item.DialogueList);
+            foreach (var subItem in item.DialogueList)
+            {
+                hash.Add(subItem);
+            }
             if (item.ReactToAction is {} ReactToActionitem)
             {
                 hash.Add(ReactToActionitem);

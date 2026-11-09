@@ -14,9 +14,9 @@ public class Fixes3Tests
             .ShouldBe(typeof(IFormLinkGetter<IStarfieldMajorRecordGetter>));
     }
 
+    // MaxRank and LevelTierScaledOffset are real DATA fields since C68 (read after the target name);
+    // ObjectModificationMaxRankTests covers them.
     [Theory]
-    [InlineData("MaxRank")]
-    [InlineData("LevelTierScaledOffset")]
     [InlineData("DataName")]
     public void ObjectModificationOverlaysHaveNoMisreadDataFields(string name)
     {

@@ -1001,7 +1001,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IStartSceneActionGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.StartScenes);
+            foreach (var subItem in item.StartScenes)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.EndScene);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
