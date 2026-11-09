@@ -16,13 +16,13 @@
       <FormLink name="Spell" refName="Spell" />
       <Enum name="Flags" enumName="AttackData.Flag" byteLength="4" />
       <Float name="AttackAngle" />
-      <Float name="StrikeAngle" />
+      <Float name="HitCone" />
       <Float name="Stagger" />
       <Float name="Knockdown" />
       <Float name="RecoveryTime" />
       <Float name="ActionPointsMult" />
       <Int32 name="StaggerOffset" />
-      <Int32 name="Unknown" />
+      <Float name="StrikeAngle" />
     </Fields>
   </Object>
 </Loqui>
