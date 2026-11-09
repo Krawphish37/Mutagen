@@ -35,17 +35,45 @@
           <Float name="AccelerationRate" />
           <Float name="DecelerationRate" />
           <Enum name="Size" enumName="Size" byteLength="4" />
-          <ByteArray name="DAT2Unknown1" byteLength="12" nullable="false" unknown="true" />
+          <Enum name="HeadBipedObject" enumName="BipedObject" byteLength="4" default="BipedObject.None" />
+          <Enum name="HairBipedObject" enumName="BipedObject" byteLength="4" default="BipedObject.None" />
+          <Float name="InjuredHealthPercent" />
           <Enum name="ShieldBipedObject" enumName="BipedObject" byteLength="4" default="BipedObject.None" />
           <Enum name="BeardBipedObject" enumName="BipedObject" byteLength="4" default="BipedObject.None" />
           <Enum name="BodyBipedObject" enumName="BipedObject" byteLength="4" default="BipedObject.None" />
-          <ByteArray name="DAT2Unknown2" byteLength="64" nullable="false" unknown="true" />
+          <Float name="AimAngleTolerance" />
+          <Float name="FlightRadius" />
+          <Float name="AngularAccelerationRate" />
+          <Float name="AngularTolerance" />
+          <ByteArray name="Unknown1" byteLength="28" nullable="false" unknown="true" />
+          <Float name="Unknown2" unknown="true" />
+          <ByteArray name="Unknown3" byteLength="4" nullable="false" unknown="true" />
+          <Enum name="PipboyBipedObject" enumName="BipedObject" byteLength="4" default="BipedObject.None" />
+          <Int16 name="XpValue" />
+          <Float name="OnCrippleDebrisScale" />
+          <UInt8 name="OnCrippleDebrisCount" />
+          <UInt8 name="OnCrippleDecalCount" />
           <FormLink name="Explosion" refName="Explosion" />
           <FormLink name="Debris" refName="Debris" />
           <FormLink name="ImpactDataSet" refName="ImpactDataSet" />
           <Float name="OrientationLimitsPitch" />
           <Float name="OrientationLimitsRoll" />
-          <ByteArray name="DAT2Unknown3" byteLength="61" nullable="false" unknown="true" />
+          <Float name="BleedoutHealthPercent" />
+          <Float name="BleedoutChance" />
+          <Float name="BleedoutRecoverChance" />
+          <Float name="BleedoutTimeMin" />
+          <Float name="BleedoutTimeMax" />
+          <Float name="BleedoutHealthDrainRate" />
+          <Enum name="MaxSize" enumName="Size" byteLength="4" />
+          <Enum name="IntelligenceLevel" enumName="Race.IntelligenceLevelType" byteLength="4" />
+          <Bool name="SupportsElectromagneticShock" byteLength="1" />
+          <Float name="ElectromagneticShockRecoverChance" />
+          <Float name="ElectromagneticShockTimeMin" />
+          <Float name="ElectromagneticShockTimeMax" />
+          <Float name="ElectromagneticShockRecoverChanceOnDamageReceived" />
+          <Float name="ElectromagneticShockHealthDrainRate" />
+          <Float name="ElectromagneticShockHealthAfterRecovery" />
+          <Float name="ElectromagneticShockImmunityDurationAfterRecovery" />
         </Fields>
       </Data>
       <CustomLogic name="MNAMLogic" recordType="MNAM" />
