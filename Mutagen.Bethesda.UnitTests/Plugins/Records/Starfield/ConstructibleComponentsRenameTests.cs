@@ -7,7 +7,9 @@ using Xunit;
 
 namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield;
 
-#pragma warning disable CS0618 // Type or member is obsolete
+// The recipe components are only ConstructibleComponents. The old spelling ConstructableComponents was kept for a while
+// as an [Obsolete] alias over the same list, but serializers that walk public properties (Spriggit) saw it as a second
+// field and wrote every recipe's components twice (coverage bug C60), so the alias is gone.
 public class ConstructibleComponentsRenameTests
 {
     private static ConstructibleObjectComponent Component(uint count, ModKey? owner = null) => new()
@@ -17,30 +19,17 @@ public class ConstructibleComponentsRenameTests
     };
 
     [Fact]
-    public void ObsoleteClassMemberForwardsToNewMember()
+    public void OnlyOneComponentsProperty()
     {
-        var cobj = new ConstructibleObject(FormKey.Factory("000800:Test.esp"), StarfieldRelease.Starfield);
-        cobj.ConstructableComponents.ShouldBeNull();
-
-        cobj.ConstructableComponents = new ExtendedList<ConstructibleObjectComponent> { Component(1) };
-        cobj.ConstructibleComponents.ShouldBeSameAs(cobj.ConstructableComponents);
-
-        cobj.ConstructibleComponents = new ExtendedList<ConstructibleObjectComponent> { Component(2) };
-        cobj.ConstructableComponents.ShouldBeSameAs(cobj.ConstructibleComponents);
-
-        IConstructibleObject setter = cobj;
-        setter.ConstructableComponents.ShouldBeSameAs(cobj.ConstructibleComponents);
-        setter.ConstructableComponents = null;
-        cobj.ConstructibleComponents.ShouldBeNull();
-
-        IConstructibleObjectGetter getter = cobj;
-        getter.ConstructableComponents.ShouldBeNull();
-        cobj.ConstructibleComponents = new ExtendedList<ConstructibleObjectComponent> { Component(3) };
-        getter.ConstructableComponents.ShouldBeSameAs(getter.ConstructibleComponents);
+        foreach (var type in new[] { typeof(ConstructibleObject), typeof(IConstructibleObject), typeof(IConstructibleObjectGetter) })
+        {
+            type.GetProperty("ConstructableComponents").ShouldBeNull();
+        }
+        typeof(IConstructibleObjectGetter).GetProperty(nameof(IConstructibleObjectGetter.ConstructibleComponents)).ShouldNotBeNull();
     }
 
     [Theory, MutagenModAutoData(GameRelease.Starfield)]
-    public void ObsoleteGetterMemberForwardsOnOverlay(StarfieldMod mod)
+    public void ComponentsRoundTripOnce(StarfieldMod mod)
     {
         var cobj = mod.ConstructibleObjects.AddNew();
         cobj.ConstructibleComponents = new ExtendedList<ConstructibleObjectComponent> { Component(4, mod.ModKey), Component(5, mod.ModKey) };
@@ -53,7 +42,5 @@ public class ConstructibleComponentsRenameTests
         var read = overlay.ConstructibleObjects.ShouldHaveSingleItem();
         read.ConstructibleComponents.ShouldNotBeNull();
         read.ConstructibleComponents.Select(c => c.RequiredCount).ShouldBe(new uint[] { 4, 5 });
-        read.ConstructableComponents.ShouldBeSameAs(read.ConstructibleComponents);
     }
 }
-#pragma warning restore CS0618

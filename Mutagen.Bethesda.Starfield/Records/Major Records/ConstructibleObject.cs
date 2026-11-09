@@ -25,27 +25,4 @@ public partial class ConstructibleObject
         FilterNotRequiredToLearn = 0x00000001,
         ExcludeFromWorkshopLod = 0x00000004,
     }
-
-    [Obsolete("Use ConstructibleComponents")]
-    public ExtendedList<ConstructibleObjectComponent>? ConstructableComponents
-    {
-        get => ConstructibleComponents;
-        set => ConstructibleComponents = value;
-    }
-}
-
-public partial interface IConstructibleObject
-{
-    [Obsolete("Use ConstructibleComponents")]
-    new ExtendedList<ConstructibleObjectComponent>? ConstructableComponents
-    {
-        get => ConstructibleComponents;
-        set => ConstructibleComponents = value;
-    }
-}
-
-public partial interface IConstructibleObjectGetter
-{
-    [Obsolete("Use ConstructibleComponents")]
-    IReadOnlyList<IConstructibleObjectComponentGetter>? ConstructableComponents => ConstructibleComponents;
 }
