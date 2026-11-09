@@ -67,13 +67,13 @@ namespace Mutagen.Bethesda.Starfield
         public SByte FactionRank { get; set; } = FactionRankDefault;
         #endregion
         #region EncounterMinLevel
-        public SByte EncounterMinLevel { get; set; } = default(SByte);
+        public Byte EncounterMinLevel { get; set; } = default(Byte);
         #endregion
         #region EncounterFlags
         public LocationOwnerData.EncounterFlag EncounterFlags { get; set; } = default(LocationOwnerData.EncounterFlag);
         #endregion
         #region EncounterMaxLevel
-        public SByte EncounterMaxLevel { get; set; } = default(SByte);
+        public Byte EncounterMaxLevel { get; set; } = default(Byte);
         #endregion
 
         #region To String
@@ -563,9 +563,9 @@ namespace Mutagen.Bethesda.Starfield
     {
         new IFormLink<ILocationOwnerGetter> Owner { get; set; }
         new SByte FactionRank { get; set; }
-        new SByte EncounterMinLevel { get; set; }
+        new Byte EncounterMinLevel { get; set; }
         new LocationOwnerData.EncounterFlag EncounterFlags { get; set; }
-        new SByte EncounterMaxLevel { get; set; }
+        new Byte EncounterMaxLevel { get; set; }
     }
 
     public partial interface ILocationOwnerDataGetter :
@@ -583,9 +583,9 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => LocationOwnerData_Registration.Instance;
         IFormLinkGetter<ILocationOwnerGetter> Owner { get; }
         SByte FactionRank { get; }
-        SByte EncounterMinLevel { get; }
+        Byte EncounterMinLevel { get; }
         LocationOwnerData.EncounterFlag EncounterFlags { get; }
-        SByte EncounterMaxLevel { get; }
+        Byte EncounterMaxLevel { get; }
 
     }
 
@@ -847,9 +847,9 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.Owner.Clear();
             item.FactionRank = LocationOwnerData.FactionRankDefault;
-            item.EncounterMinLevel = default(SByte);
+            item.EncounterMinLevel = default(Byte);
             item.EncounterFlags = default(LocationOwnerData.EncounterFlag);
-            item.EncounterMaxLevel = default(SByte);
+            item.EncounterMaxLevel = default(Byte);
         }
         
         #region Mutagen
@@ -1226,11 +1226,11 @@ namespace Mutagen.Bethesda.Starfield
         {
             item.Owner.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.FactionRank = frame.ReadInt8();
-            item.EncounterMinLevel = frame.ReadInt8();
+            item.EncounterMinLevel = frame.ReadUInt8();
             item.EncounterFlags = EnumBinaryTranslation<LocationOwnerData.EncounterFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
-            item.EncounterMaxLevel = frame.ReadInt8();
+            item.EncounterMaxLevel = frame.ReadUInt8();
         }
 
     }
@@ -1299,9 +1299,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public IFormLinkGetter<ILocationOwnerGetter> Owner => FormLinkBinaryTranslation.Instance.OverlayFactory<ILocationOwnerGetter>(_package, _structData.Span.Slice(0x0, 0x4));
         public SByte FactionRank => (sbyte)_structData.Slice(0x4, 0x1)[0];
-        public SByte EncounterMinLevel => (sbyte)_structData.Slice(0x5, 0x1)[0];
+        public Byte EncounterMinLevel => _structData.Span[0x5];
         public LocationOwnerData.EncounterFlag EncounterFlags => (LocationOwnerData.EncounterFlag)_structData.Span.Slice(0x6, 0x1)[0];
-        public SByte EncounterMaxLevel => (sbyte)_structData.Slice(0x7, 0x1)[0];
+        public Byte EncounterMaxLevel => _structData.Span[0x7];
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
