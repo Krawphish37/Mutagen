@@ -188,42 +188,22 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<ISceneGetter> ISceneGetter.Template => this.Template;
         #endregion
         #region BOLV
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _BOLV;
-        public MemorySlice<Byte>? BOLV
-        {
-            get => this._BOLV;
-            set => this._BOLV = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ISceneGetter.BOLV => this.BOLV;
+        public Boolean BOLV { get; set; } = default(Boolean);
         #endregion
         #region Index
         public UInt32? Index { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         UInt32? ISceneGetter.Index => this.Index;
         #endregion
-        #region SCPI
+        #region Priority
+        public UInt16? Priority { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _SCPI;
-        public MemorySlice<Byte>? SCPI
-        {
-            get => this._SCPI;
-            set => this._SCPI = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ISceneGetter.SCPI => this.SCPI;
+        UInt16? ISceneGetter.Priority => this.Priority;
         #endregion
-        #region JNAM
+        #region OverrideSubtitlePriority
+        public DialogResponses.SubtitlePriorityLevel? OverrideSubtitlePriority { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _JNAM;
-        public MemorySlice<Byte>? JNAM
-        {
-            get => this._JNAM;
-            set => this._JNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ISceneGetter.JNAM => this.JNAM;
+        DialogResponses.SubtitlePriorityLevel? ISceneGetter.OverrideSubtitlePriority => this.OverrideSubtitlePriority;
         #endregion
         #region SCPP
         private readonly IFormLinkNullable<ISceneGetter> _SCPP = new FormLinkNullable<ISceneGetter>();
@@ -235,112 +215,100 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<ISceneGetter> ISceneGetter.SCPP => this.SCPP;
         #endregion
-        #region SCSP
-        public Boolean SCSP { get; set; } = default(Boolean);
+        #region IsSpeechChallenge
+        public Boolean IsSpeechChallenge { get; set; } = default(Boolean);
         #endregion
-        #region SPMA
+        #region MandatoryNextChallenges
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<IFormLinkGetter<ISceneGetter>>? _SPMA;
-        public ExtendedList<IFormLinkGetter<ISceneGetter>>? SPMA
+        private ExtendedList<IFormLinkGetter<ISceneGetter>>? _MandatoryNextChallenges;
+        public ExtendedList<IFormLinkGetter<ISceneGetter>>? MandatoryNextChallenges
         {
-            get => this._SPMA;
-            set => this._SPMA = value;
+            get => this._MandatoryNextChallenges;
+            set => this._MandatoryNextChallenges = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<IFormLinkGetter<ISceneGetter>>? ISceneGetter.SPMA => _SPMA;
+        IReadOnlyList<IFormLinkGetter<ISceneGetter>>? ISceneGetter.MandatoryNextChallenges => _MandatoryNextChallenges;
         #endregion
 
         #endregion
-        #region SPEX
+        #region ExcludedChallenges
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<IFormLinkGetter<ISceneGetter>>? _SPEX;
-        public ExtendedList<IFormLinkGetter<ISceneGetter>>? SPEX
+        private ExtendedList<IFormLinkGetter<ISceneGetter>>? _ExcludedChallenges;
+        public ExtendedList<IFormLinkGetter<ISceneGetter>>? ExcludedChallenges
         {
-            get => this._SPEX;
-            set => this._SPEX = value;
+            get => this._ExcludedChallenges;
+            set => this._ExcludedChallenges = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<IFormLinkGetter<ISceneGetter>>? ISceneGetter.SPEX => _SPEX;
+        IReadOnlyList<IFormLinkGetter<ISceneGetter>>? ISceneGetter.ExcludedChallenges => _ExcludedChallenges;
         #endregion
 
         #endregion
-        #region SPRK
+        #region ChallengeRisk
+        public Scene.SpeechChallengeRisk? ChallengeRisk { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _SPRK;
-        public MemorySlice<Byte>? SPRK
-        {
-            get => this._SPRK;
-            set => this._SPRK = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ISceneGetter.SPRK => this.SPRK;
+        Scene.SpeechChallengeRisk? ISceneGetter.ChallengeRisk => this.ChallengeRisk;
         #endregion
-        #region SPRW
+        #region ChallengeReward
+        public UInt32? ChallengeReward { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _SPRW;
-        public MemorySlice<Byte>? SPRW
-        {
-            get => this._SPRW;
-            set => this._SPRW = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ISceneGetter.SPRW => this.SPRW;
+        UInt32? ISceneGetter.ChallengeReward => this.ChallengeReward;
         #endregion
-        #region SPRP
-        public Boolean SPRP { get; set; } = default(Boolean);
+        #region ChallengeRepeatable
+        public Boolean ChallengeRepeatable { get; set; } = default(Boolean);
         #endregion
-        #region SPDF
-        public Boolean SPDF { get; set; } = default(Boolean);
+        #region ChallengeDefault
+        public Boolean ChallengeDefault { get; set; } = default(Boolean);
         #endregion
         #region SPPQ
         public Boolean SPPQ { get; set; } = default(Boolean);
         #endregion
-        #region SPKW
+        #region ChallengeAndKeywords
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<IFormLinkGetter<IKeywordGetter>>? _SPKW;
-        public ExtendedList<IFormLinkGetter<IKeywordGetter>>? SPKW
+        private ExtendedList<IFormLinkGetter<IKeywordGetter>>? _ChallengeAndKeywords;
+        public ExtendedList<IFormLinkGetter<IKeywordGetter>>? ChallengeAndKeywords
         {
-            get => this._SPKW;
-            set => this._SPKW = value;
+            get => this._ChallengeAndKeywords;
+            set => this._ChallengeAndKeywords = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? ISceneGetter.SPKW => _SPKW;
+        IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? ISceneGetter.ChallengeAndKeywords => _ChallengeAndKeywords;
         #endregion
 
         #endregion
-        #region SPPK
+        #region ChallengePerks
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<IFormLinkGetter<IPerkGetter>>? _SPPK;
-        public ExtendedList<IFormLinkGetter<IPerkGetter>>? SPPK
+        private ExtendedList<IFormLinkGetter<IPerkGetter>>? _ChallengePerks;
+        public ExtendedList<IFormLinkGetter<IPerkGetter>>? ChallengePerks
         {
-            get => this._SPPK;
-            set => this._SPPK = value;
+            get => this._ChallengePerks;
+            set => this._ChallengePerks = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<IFormLinkGetter<IPerkGetter>>? ISceneGetter.SPPK => _SPPK;
+        IReadOnlyList<IFormLinkGetter<IPerkGetter>>? ISceneGetter.ChallengePerks => _ChallengePerks;
         #endregion
 
         #endregion
-        #region SPKY
+        #region ChallengeOrKeywords
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<IFormLinkGetter<IKeywordGetter>>? _SPKY;
-        public ExtendedList<IFormLinkGetter<IKeywordGetter>>? SPKY
+        private ExtendedList<IFormLinkGetter<IKeywordGetter>>? _ChallengeOrKeywords;
+        public ExtendedList<IFormLinkGetter<IKeywordGetter>>? ChallengeOrKeywords
         {
-            get => this._SPKY;
-            set => this._SPKY = value;
+            get => this._ChallengeOrKeywords;
+            set => this._ChallengeOrKeywords = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? ISceneGetter.SPKY => _SPKY;
+        IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? ISceneGetter.ChallengeOrKeywords => _ChallengeOrKeywords;
         #endregion
 
         #endregion
-        #region DEVT
-        public Boolean DEVT { get; set; } = default(Boolean);
+        #region ShowOneDialogueTrack
+        public Boolean ShowOneDialogueTrack { get; set; } = default(Boolean);
         #endregion
 
         #region To String
@@ -381,21 +349,21 @@ namespace Mutagen.Bethesda.Starfield
                 this.Template = initialValue;
                 this.BOLV = initialValue;
                 this.Index = initialValue;
-                this.SCPI = initialValue;
-                this.JNAM = initialValue;
+                this.Priority = initialValue;
+                this.OverrideSubtitlePriority = initialValue;
                 this.SCPP = initialValue;
-                this.SCSP = initialValue;
-                this.SPMA = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.SPEX = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.SPRK = initialValue;
-                this.SPRW = initialValue;
-                this.SPRP = initialValue;
-                this.SPDF = initialValue;
+                this.IsSpeechChallenge = initialValue;
+                this.MandatoryNextChallenges = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
+                this.ExcludedChallenges = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
+                this.ChallengeRisk = initialValue;
+                this.ChallengeReward = initialValue;
+                this.ChallengeRepeatable = initialValue;
+                this.ChallengeDefault = initialValue;
                 this.SPPQ = initialValue;
-                this.SPKW = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.SPPK = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.SPKY = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.DEVT = initialValue;
+                this.ChallengeAndKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
+                this.ChallengePerks = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
+                this.ChallengeOrKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
+                this.ShowOneDialogueTrack = initialValue;
             }
 
             public Mask(
@@ -420,21 +388,21 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Template,
                 TItem BOLV,
                 TItem Index,
-                TItem SCPI,
-                TItem JNAM,
+                TItem Priority,
+                TItem OverrideSubtitlePriority,
                 TItem SCPP,
-                TItem SCSP,
-                TItem SPMA,
-                TItem SPEX,
-                TItem SPRK,
-                TItem SPRW,
-                TItem SPRP,
-                TItem SPDF,
+                TItem IsSpeechChallenge,
+                TItem MandatoryNextChallenges,
+                TItem ExcludedChallenges,
+                TItem ChallengeRisk,
+                TItem ChallengeReward,
+                TItem ChallengeRepeatable,
+                TItem ChallengeDefault,
                 TItem SPPQ,
-                TItem SPKW,
-                TItem SPPK,
-                TItem SPKY,
-                TItem DEVT)
+                TItem ChallengeAndKeywords,
+                TItem ChallengePerks,
+                TItem ChallengeOrKeywords,
+                TItem ShowOneDialogueTrack)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -458,21 +426,21 @@ namespace Mutagen.Bethesda.Starfield
                 this.Template = Template;
                 this.BOLV = BOLV;
                 this.Index = Index;
-                this.SCPI = SCPI;
-                this.JNAM = JNAM;
+                this.Priority = Priority;
+                this.OverrideSubtitlePriority = OverrideSubtitlePriority;
                 this.SCPP = SCPP;
-                this.SCSP = SCSP;
-                this.SPMA = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(SPMA, []);
-                this.SPEX = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(SPEX, []);
-                this.SPRK = SPRK;
-                this.SPRW = SPRW;
-                this.SPRP = SPRP;
-                this.SPDF = SPDF;
+                this.IsSpeechChallenge = IsSpeechChallenge;
+                this.MandatoryNextChallenges = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(MandatoryNextChallenges, []);
+                this.ExcludedChallenges = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ExcludedChallenges, []);
+                this.ChallengeRisk = ChallengeRisk;
+                this.ChallengeReward = ChallengeReward;
+                this.ChallengeRepeatable = ChallengeRepeatable;
+                this.ChallengeDefault = ChallengeDefault;
                 this.SPPQ = SPPQ;
-                this.SPKW = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(SPKW, []);
-                this.SPPK = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(SPPK, []);
-                this.SPKY = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(SPKY, []);
-                this.DEVT = DEVT;
+                this.ChallengeAndKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ChallengeAndKeywords, []);
+                this.ChallengePerks = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ChallengePerks, []);
+                this.ChallengeOrKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ChallengeOrKeywords, []);
+                this.ShowOneDialogueTrack = ShowOneDialogueTrack;
             }
 
             #pragma warning disable CS8618
@@ -498,21 +466,21 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Template;
             public TItem BOLV;
             public TItem Index;
-            public TItem SCPI;
-            public TItem JNAM;
+            public TItem Priority;
+            public TItem OverrideSubtitlePriority;
             public TItem SCPP;
-            public TItem SCSP;
-            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? SPMA;
-            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? SPEX;
-            public TItem SPRK;
-            public TItem SPRW;
-            public TItem SPRP;
-            public TItem SPDF;
+            public TItem IsSpeechChallenge;
+            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? MandatoryNextChallenges;
+            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ExcludedChallenges;
+            public TItem ChallengeRisk;
+            public TItem ChallengeReward;
+            public TItem ChallengeRepeatable;
+            public TItem ChallengeDefault;
             public TItem SPPQ;
-            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? SPKW;
-            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? SPPK;
-            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? SPKY;
-            public TItem DEVT;
+            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ChallengeAndKeywords;
+            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ChallengePerks;
+            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ChallengeOrKeywords;
+            public TItem ShowOneDialogueTrack;
             #endregion
 
             #region Equals
@@ -540,21 +508,21 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Template, rhs.Template)) return false;
                 if (!object.Equals(this.BOLV, rhs.BOLV)) return false;
                 if (!object.Equals(this.Index, rhs.Index)) return false;
-                if (!object.Equals(this.SCPI, rhs.SCPI)) return false;
-                if (!object.Equals(this.JNAM, rhs.JNAM)) return false;
+                if (!object.Equals(this.Priority, rhs.Priority)) return false;
+                if (!object.Equals(this.OverrideSubtitlePriority, rhs.OverrideSubtitlePriority)) return false;
                 if (!object.Equals(this.SCPP, rhs.SCPP)) return false;
-                if (!object.Equals(this.SCSP, rhs.SCSP)) return false;
-                if (!object.Equals(this.SPMA, rhs.SPMA)) return false;
-                if (!object.Equals(this.SPEX, rhs.SPEX)) return false;
-                if (!object.Equals(this.SPRK, rhs.SPRK)) return false;
-                if (!object.Equals(this.SPRW, rhs.SPRW)) return false;
-                if (!object.Equals(this.SPRP, rhs.SPRP)) return false;
-                if (!object.Equals(this.SPDF, rhs.SPDF)) return false;
+                if (!object.Equals(this.IsSpeechChallenge, rhs.IsSpeechChallenge)) return false;
+                if (!object.Equals(this.MandatoryNextChallenges, rhs.MandatoryNextChallenges)) return false;
+                if (!object.Equals(this.ExcludedChallenges, rhs.ExcludedChallenges)) return false;
+                if (!object.Equals(this.ChallengeRisk, rhs.ChallengeRisk)) return false;
+                if (!object.Equals(this.ChallengeReward, rhs.ChallengeReward)) return false;
+                if (!object.Equals(this.ChallengeRepeatable, rhs.ChallengeRepeatable)) return false;
+                if (!object.Equals(this.ChallengeDefault, rhs.ChallengeDefault)) return false;
                 if (!object.Equals(this.SPPQ, rhs.SPPQ)) return false;
-                if (!object.Equals(this.SPKW, rhs.SPKW)) return false;
-                if (!object.Equals(this.SPPK, rhs.SPPK)) return false;
-                if (!object.Equals(this.SPKY, rhs.SPKY)) return false;
-                if (!object.Equals(this.DEVT, rhs.DEVT)) return false;
+                if (!object.Equals(this.ChallengeAndKeywords, rhs.ChallengeAndKeywords)) return false;
+                if (!object.Equals(this.ChallengePerks, rhs.ChallengePerks)) return false;
+                if (!object.Equals(this.ChallengeOrKeywords, rhs.ChallengeOrKeywords)) return false;
+                if (!object.Equals(this.ShowOneDialogueTrack, rhs.ShowOneDialogueTrack)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -574,21 +542,21 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Template);
                 hash.Add(this.BOLV);
                 hash.Add(this.Index);
-                hash.Add(this.SCPI);
-                hash.Add(this.JNAM);
+                hash.Add(this.Priority);
+                hash.Add(this.OverrideSubtitlePriority);
                 hash.Add(this.SCPP);
-                hash.Add(this.SCSP);
-                hash.Add(this.SPMA);
-                hash.Add(this.SPEX);
-                hash.Add(this.SPRK);
-                hash.Add(this.SPRW);
-                hash.Add(this.SPRP);
-                hash.Add(this.SPDF);
+                hash.Add(this.IsSpeechChallenge);
+                hash.Add(this.MandatoryNextChallenges);
+                hash.Add(this.ExcludedChallenges);
+                hash.Add(this.ChallengeRisk);
+                hash.Add(this.ChallengeReward);
+                hash.Add(this.ChallengeRepeatable);
+                hash.Add(this.ChallengeDefault);
                 hash.Add(this.SPPQ);
-                hash.Add(this.SPKW);
-                hash.Add(this.SPPK);
-                hash.Add(this.SPKY);
-                hash.Add(this.DEVT);
+                hash.Add(this.ChallengeAndKeywords);
+                hash.Add(this.ChallengePerks);
+                hash.Add(this.ChallengeOrKeywords);
+                hash.Add(this.ShowOneDialogueTrack);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -665,71 +633,71 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Template)) return false;
                 if (!eval(this.BOLV)) return false;
                 if (!eval(this.Index)) return false;
-                if (!eval(this.SCPI)) return false;
-                if (!eval(this.JNAM)) return false;
+                if (!eval(this.Priority)) return false;
+                if (!eval(this.OverrideSubtitlePriority)) return false;
                 if (!eval(this.SCPP)) return false;
-                if (!eval(this.SCSP)) return false;
-                if (this.SPMA != null)
+                if (!eval(this.IsSpeechChallenge)) return false;
+                if (this.MandatoryNextChallenges != null)
                 {
-                    if (!eval(this.SPMA.Overall)) return false;
-                    if (this.SPMA.Specific != null)
+                    if (!eval(this.MandatoryNextChallenges.Overall)) return false;
+                    if (this.MandatoryNextChallenges.Specific != null)
                     {
-                        foreach (var item in this.SPMA.Specific)
+                        foreach (var item in this.MandatoryNextChallenges.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
                     }
                 }
-                if (this.SPEX != null)
+                if (this.ExcludedChallenges != null)
                 {
-                    if (!eval(this.SPEX.Overall)) return false;
-                    if (this.SPEX.Specific != null)
+                    if (!eval(this.ExcludedChallenges.Overall)) return false;
+                    if (this.ExcludedChallenges.Specific != null)
                     {
-                        foreach (var item in this.SPEX.Specific)
+                        foreach (var item in this.ExcludedChallenges.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
                     }
                 }
-                if (!eval(this.SPRK)) return false;
-                if (!eval(this.SPRW)) return false;
-                if (!eval(this.SPRP)) return false;
-                if (!eval(this.SPDF)) return false;
+                if (!eval(this.ChallengeRisk)) return false;
+                if (!eval(this.ChallengeReward)) return false;
+                if (!eval(this.ChallengeRepeatable)) return false;
+                if (!eval(this.ChallengeDefault)) return false;
                 if (!eval(this.SPPQ)) return false;
-                if (this.SPKW != null)
+                if (this.ChallengeAndKeywords != null)
                 {
-                    if (!eval(this.SPKW.Overall)) return false;
-                    if (this.SPKW.Specific != null)
+                    if (!eval(this.ChallengeAndKeywords.Overall)) return false;
+                    if (this.ChallengeAndKeywords.Specific != null)
                     {
-                        foreach (var item in this.SPKW.Specific)
+                        foreach (var item in this.ChallengeAndKeywords.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
                     }
                 }
-                if (this.SPPK != null)
+                if (this.ChallengePerks != null)
                 {
-                    if (!eval(this.SPPK.Overall)) return false;
-                    if (this.SPPK.Specific != null)
+                    if (!eval(this.ChallengePerks.Overall)) return false;
+                    if (this.ChallengePerks.Specific != null)
                     {
-                        foreach (var item in this.SPPK.Specific)
+                        foreach (var item in this.ChallengePerks.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
                     }
                 }
-                if (this.SPKY != null)
+                if (this.ChallengeOrKeywords != null)
                 {
-                    if (!eval(this.SPKY.Overall)) return false;
-                    if (this.SPKY.Specific != null)
+                    if (!eval(this.ChallengeOrKeywords.Overall)) return false;
+                    if (this.ChallengeOrKeywords.Specific != null)
                     {
-                        foreach (var item in this.SPKY.Specific)
+                        foreach (var item in this.ChallengeOrKeywords.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
                     }
                 }
-                if (!eval(this.DEVT)) return false;
+                if (!eval(this.ShowOneDialogueTrack)) return false;
                 return true;
             }
             #endregion
@@ -804,71 +772,71 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Template)) return true;
                 if (eval(this.BOLV)) return true;
                 if (eval(this.Index)) return true;
-                if (eval(this.SCPI)) return true;
-                if (eval(this.JNAM)) return true;
+                if (eval(this.Priority)) return true;
+                if (eval(this.OverrideSubtitlePriority)) return true;
                 if (eval(this.SCPP)) return true;
-                if (eval(this.SCSP)) return true;
-                if (this.SPMA != null)
+                if (eval(this.IsSpeechChallenge)) return true;
+                if (this.MandatoryNextChallenges != null)
                 {
-                    if (eval(this.SPMA.Overall)) return true;
-                    if (this.SPMA.Specific != null)
+                    if (eval(this.MandatoryNextChallenges.Overall)) return true;
+                    if (this.MandatoryNextChallenges.Specific != null)
                     {
-                        foreach (var item in this.SPMA.Specific)
+                        foreach (var item in this.MandatoryNextChallenges.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
                     }
                 }
-                if (this.SPEX != null)
+                if (this.ExcludedChallenges != null)
                 {
-                    if (eval(this.SPEX.Overall)) return true;
-                    if (this.SPEX.Specific != null)
+                    if (eval(this.ExcludedChallenges.Overall)) return true;
+                    if (this.ExcludedChallenges.Specific != null)
                     {
-                        foreach (var item in this.SPEX.Specific)
+                        foreach (var item in this.ExcludedChallenges.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
                     }
                 }
-                if (eval(this.SPRK)) return true;
-                if (eval(this.SPRW)) return true;
-                if (eval(this.SPRP)) return true;
-                if (eval(this.SPDF)) return true;
+                if (eval(this.ChallengeRisk)) return true;
+                if (eval(this.ChallengeReward)) return true;
+                if (eval(this.ChallengeRepeatable)) return true;
+                if (eval(this.ChallengeDefault)) return true;
                 if (eval(this.SPPQ)) return true;
-                if (this.SPKW != null)
+                if (this.ChallengeAndKeywords != null)
                 {
-                    if (eval(this.SPKW.Overall)) return true;
-                    if (this.SPKW.Specific != null)
+                    if (eval(this.ChallengeAndKeywords.Overall)) return true;
+                    if (this.ChallengeAndKeywords.Specific != null)
                     {
-                        foreach (var item in this.SPKW.Specific)
+                        foreach (var item in this.ChallengeAndKeywords.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
                     }
                 }
-                if (this.SPPK != null)
+                if (this.ChallengePerks != null)
                 {
-                    if (eval(this.SPPK.Overall)) return true;
-                    if (this.SPPK.Specific != null)
+                    if (eval(this.ChallengePerks.Overall)) return true;
+                    if (this.ChallengePerks.Specific != null)
                     {
-                        foreach (var item in this.SPPK.Specific)
+                        foreach (var item in this.ChallengePerks.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
                     }
                 }
-                if (this.SPKY != null)
+                if (this.ChallengeOrKeywords != null)
                 {
-                    if (eval(this.SPKY.Overall)) return true;
-                    if (this.SPKY.Specific != null)
+                    if (eval(this.ChallengeOrKeywords.Overall)) return true;
+                    if (this.ChallengeOrKeywords.Specific != null)
                     {
-                        foreach (var item in this.SPKY.Specific)
+                        foreach (var item in this.ChallengeOrKeywords.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
                     }
                 }
-                if (eval(this.DEVT)) return true;
+                if (eval(this.ShowOneDialogueTrack)) return true;
                 return false;
             }
             #endregion
@@ -954,86 +922,86 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Template = eval(this.Template);
                 obj.BOLV = eval(this.BOLV);
                 obj.Index = eval(this.Index);
-                obj.SCPI = eval(this.SCPI);
-                obj.JNAM = eval(this.JNAM);
+                obj.Priority = eval(this.Priority);
+                obj.OverrideSubtitlePriority = eval(this.OverrideSubtitlePriority);
                 obj.SCPP = eval(this.SCPP);
-                obj.SCSP = eval(this.SCSP);
-                if (SPMA != null)
+                obj.IsSpeechChallenge = eval(this.IsSpeechChallenge);
+                if (MandatoryNextChallenges != null)
                 {
-                    obj.SPMA = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.SPMA.Overall), []);
-                    if (SPMA.Specific != null)
+                    obj.MandatoryNextChallenges = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.MandatoryNextChallenges.Overall), []);
+                    if (MandatoryNextChallenges.Specific != null)
                     {
                         var l = new List<(int Index, R Item)>();
-                        obj.SPMA.Specific = l;
-                        foreach (var item in SPMA.Specific)
+                        obj.MandatoryNextChallenges.Specific = l;
+                        foreach (var item in MandatoryNextChallenges.Specific)
                         {
                             R mask = eval(item.Value);
                             l.Add((item.Index, mask));
                         }
                     }
                 }
-                if (SPEX != null)
+                if (ExcludedChallenges != null)
                 {
-                    obj.SPEX = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.SPEX.Overall), []);
-                    if (SPEX.Specific != null)
+                    obj.ExcludedChallenges = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.ExcludedChallenges.Overall), []);
+                    if (ExcludedChallenges.Specific != null)
                     {
                         var l = new List<(int Index, R Item)>();
-                        obj.SPEX.Specific = l;
-                        foreach (var item in SPEX.Specific)
+                        obj.ExcludedChallenges.Specific = l;
+                        foreach (var item in ExcludedChallenges.Specific)
                         {
                             R mask = eval(item.Value);
                             l.Add((item.Index, mask));
                         }
                     }
                 }
-                obj.SPRK = eval(this.SPRK);
-                obj.SPRW = eval(this.SPRW);
-                obj.SPRP = eval(this.SPRP);
-                obj.SPDF = eval(this.SPDF);
+                obj.ChallengeRisk = eval(this.ChallengeRisk);
+                obj.ChallengeReward = eval(this.ChallengeReward);
+                obj.ChallengeRepeatable = eval(this.ChallengeRepeatable);
+                obj.ChallengeDefault = eval(this.ChallengeDefault);
                 obj.SPPQ = eval(this.SPPQ);
-                if (SPKW != null)
+                if (ChallengeAndKeywords != null)
                 {
-                    obj.SPKW = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.SPKW.Overall), []);
-                    if (SPKW.Specific != null)
+                    obj.ChallengeAndKeywords = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.ChallengeAndKeywords.Overall), []);
+                    if (ChallengeAndKeywords.Specific != null)
                     {
                         var l = new List<(int Index, R Item)>();
-                        obj.SPKW.Specific = l;
-                        foreach (var item in SPKW.Specific)
+                        obj.ChallengeAndKeywords.Specific = l;
+                        foreach (var item in ChallengeAndKeywords.Specific)
                         {
                             R mask = eval(item.Value);
                             l.Add((item.Index, mask));
                         }
                     }
                 }
-                if (SPPK != null)
+                if (ChallengePerks != null)
                 {
-                    obj.SPPK = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.SPPK.Overall), []);
-                    if (SPPK.Specific != null)
+                    obj.ChallengePerks = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.ChallengePerks.Overall), []);
+                    if (ChallengePerks.Specific != null)
                     {
                         var l = new List<(int Index, R Item)>();
-                        obj.SPPK.Specific = l;
-                        foreach (var item in SPPK.Specific)
+                        obj.ChallengePerks.Specific = l;
+                        foreach (var item in ChallengePerks.Specific)
                         {
                             R mask = eval(item.Value);
                             l.Add((item.Index, mask));
                         }
                     }
                 }
-                if (SPKY != null)
+                if (ChallengeOrKeywords != null)
                 {
-                    obj.SPKY = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.SPKY.Overall), []);
-                    if (SPKY.Specific != null)
+                    obj.ChallengeOrKeywords = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.ChallengeOrKeywords.Overall), []);
+                    if (ChallengeOrKeywords.Specific != null)
                     {
                         var l = new List<(int Index, R Item)>();
-                        obj.SPKY.Specific = l;
-                        foreach (var item in SPKY.Specific)
+                        obj.ChallengeOrKeywords.Specific = l;
+                        foreach (var item in ChallengeOrKeywords.Specific)
                         {
                             R mask = eval(item.Value);
                             l.Add((item.Index, mask));
                         }
                     }
                 }
-                obj.DEVT = eval(this.DEVT);
+                obj.ShowOneDialogueTrack = eval(this.ShowOneDialogueTrack);
             }
             #endregion
 
@@ -1168,32 +1136,32 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Index, "Index");
                     }
-                    if (printMask?.SCPI ?? true)
+                    if (printMask?.Priority ?? true)
                     {
-                        sb.AppendItem(SCPI, "SCPI");
+                        sb.AppendItem(Priority, "Priority");
                     }
-                    if (printMask?.JNAM ?? true)
+                    if (printMask?.OverrideSubtitlePriority ?? true)
                     {
-                        sb.AppendItem(JNAM, "JNAM");
+                        sb.AppendItem(OverrideSubtitlePriority, "OverrideSubtitlePriority");
                     }
                     if (printMask?.SCPP ?? true)
                     {
                         sb.AppendItem(SCPP, "SCPP");
                     }
-                    if (printMask?.SCSP ?? true)
+                    if (printMask?.IsSpeechChallenge ?? true)
                     {
-                        sb.AppendItem(SCSP, "SCSP");
+                        sb.AppendItem(IsSpeechChallenge, "IsSpeechChallenge");
                     }
-                    if ((printMask?.SPMA?.Overall ?? true)
-                        && SPMA is {} SPMAItem)
+                    if ((printMask?.MandatoryNextChallenges?.Overall ?? true)
+                        && MandatoryNextChallenges is {} MandatoryNextChallengesItem)
                     {
-                        sb.AppendLine("SPMA =>");
+                        sb.AppendLine("MandatoryNextChallenges =>");
                         using (sb.Brace())
                         {
-                            sb.AppendItem(SPMAItem.Overall);
-                            if (SPMAItem.Specific != null)
+                            sb.AppendItem(MandatoryNextChallengesItem.Overall);
+                            if (MandatoryNextChallengesItem.Specific != null)
                             {
-                                foreach (var subItem in SPMAItem.Specific)
+                                foreach (var subItem in MandatoryNextChallengesItem.Specific)
                                 {
                                     using (sb.Brace())
                                     {
@@ -1205,16 +1173,16 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if ((printMask?.SPEX?.Overall ?? true)
-                        && SPEX is {} SPEXItem)
+                    if ((printMask?.ExcludedChallenges?.Overall ?? true)
+                        && ExcludedChallenges is {} ExcludedChallengesItem)
                     {
-                        sb.AppendLine("SPEX =>");
+                        sb.AppendLine("ExcludedChallenges =>");
                         using (sb.Brace())
                         {
-                            sb.AppendItem(SPEXItem.Overall);
-                            if (SPEXItem.Specific != null)
+                            sb.AppendItem(ExcludedChallengesItem.Overall);
+                            if (ExcludedChallengesItem.Specific != null)
                             {
-                                foreach (var subItem in SPEXItem.Specific)
+                                foreach (var subItem in ExcludedChallengesItem.Specific)
                                 {
                                     using (sb.Brace())
                                     {
@@ -1226,36 +1194,36 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.SPRK ?? true)
+                    if (printMask?.ChallengeRisk ?? true)
                     {
-                        sb.AppendItem(SPRK, "SPRK");
+                        sb.AppendItem(ChallengeRisk, "ChallengeRisk");
                     }
-                    if (printMask?.SPRW ?? true)
+                    if (printMask?.ChallengeReward ?? true)
                     {
-                        sb.AppendItem(SPRW, "SPRW");
+                        sb.AppendItem(ChallengeReward, "ChallengeReward");
                     }
-                    if (printMask?.SPRP ?? true)
+                    if (printMask?.ChallengeRepeatable ?? true)
                     {
-                        sb.AppendItem(SPRP, "SPRP");
+                        sb.AppendItem(ChallengeRepeatable, "ChallengeRepeatable");
                     }
-                    if (printMask?.SPDF ?? true)
+                    if (printMask?.ChallengeDefault ?? true)
                     {
-                        sb.AppendItem(SPDF, "SPDF");
+                        sb.AppendItem(ChallengeDefault, "ChallengeDefault");
                     }
                     if (printMask?.SPPQ ?? true)
                     {
                         sb.AppendItem(SPPQ, "SPPQ");
                     }
-                    if ((printMask?.SPKW?.Overall ?? true)
-                        && SPKW is {} SPKWItem)
+                    if ((printMask?.ChallengeAndKeywords?.Overall ?? true)
+                        && ChallengeAndKeywords is {} ChallengeAndKeywordsItem)
                     {
-                        sb.AppendLine("SPKW =>");
+                        sb.AppendLine("ChallengeAndKeywords =>");
                         using (sb.Brace())
                         {
-                            sb.AppendItem(SPKWItem.Overall);
-                            if (SPKWItem.Specific != null)
+                            sb.AppendItem(ChallengeAndKeywordsItem.Overall);
+                            if (ChallengeAndKeywordsItem.Specific != null)
                             {
-                                foreach (var subItem in SPKWItem.Specific)
+                                foreach (var subItem in ChallengeAndKeywordsItem.Specific)
                                 {
                                     using (sb.Brace())
                                     {
@@ -1267,16 +1235,16 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if ((printMask?.SPPK?.Overall ?? true)
-                        && SPPK is {} SPPKItem)
+                    if ((printMask?.ChallengePerks?.Overall ?? true)
+                        && ChallengePerks is {} ChallengePerksItem)
                     {
-                        sb.AppendLine("SPPK =>");
+                        sb.AppendLine("ChallengePerks =>");
                         using (sb.Brace())
                         {
-                            sb.AppendItem(SPPKItem.Overall);
-                            if (SPPKItem.Specific != null)
+                            sb.AppendItem(ChallengePerksItem.Overall);
+                            if (ChallengePerksItem.Specific != null)
                             {
-                                foreach (var subItem in SPPKItem.Specific)
+                                foreach (var subItem in ChallengePerksItem.Specific)
                                 {
                                     using (sb.Brace())
                                     {
@@ -1288,16 +1256,16 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if ((printMask?.SPKY?.Overall ?? true)
-                        && SPKY is {} SPKYItem)
+                    if ((printMask?.ChallengeOrKeywords?.Overall ?? true)
+                        && ChallengeOrKeywords is {} ChallengeOrKeywordsItem)
                     {
-                        sb.AppendLine("SPKY =>");
+                        sb.AppendLine("ChallengeOrKeywords =>");
                         using (sb.Brace())
                         {
-                            sb.AppendItem(SPKYItem.Overall);
-                            if (SPKYItem.Specific != null)
+                            sb.AppendItem(ChallengeOrKeywordsItem.Overall);
+                            if (ChallengeOrKeywordsItem.Specific != null)
                             {
-                                foreach (var subItem in SPKYItem.Specific)
+                                foreach (var subItem in ChallengeOrKeywordsItem.Specific)
                                 {
                                     using (sb.Brace())
                                     {
@@ -1309,9 +1277,9 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.DEVT ?? true)
+                    if (printMask?.ShowOneDialogueTrack ?? true)
                     {
-                        sb.AppendItem(DEVT, "DEVT");
+                        sb.AppendItem(ShowOneDialogueTrack, "ShowOneDialogueTrack");
                     }
                 }
             }
@@ -1338,21 +1306,21 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Template;
             public Exception? BOLV;
             public Exception? Index;
-            public Exception? SCPI;
-            public Exception? JNAM;
+            public Exception? Priority;
+            public Exception? OverrideSubtitlePriority;
             public Exception? SCPP;
-            public Exception? SCSP;
-            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? SPMA;
-            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? SPEX;
-            public Exception? SPRK;
-            public Exception? SPRW;
-            public Exception? SPRP;
-            public Exception? SPDF;
+            public Exception? IsSpeechChallenge;
+            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? MandatoryNextChallenges;
+            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ExcludedChallenges;
+            public Exception? ChallengeRisk;
+            public Exception? ChallengeReward;
+            public Exception? ChallengeRepeatable;
+            public Exception? ChallengeDefault;
             public Exception? SPPQ;
-            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? SPKW;
-            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? SPPK;
-            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? SPKY;
-            public Exception? DEVT;
+            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ChallengeAndKeywords;
+            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ChallengePerks;
+            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ChallengeOrKeywords;
+            public Exception? ShowOneDialogueTrack;
             #endregion
 
             #region IErrorMask
@@ -1389,36 +1357,36 @@ namespace Mutagen.Bethesda.Starfield
                         return BOLV;
                     case Scene_FieldIndex.Index:
                         return Index;
-                    case Scene_FieldIndex.SCPI:
-                        return SCPI;
-                    case Scene_FieldIndex.JNAM:
-                        return JNAM;
+                    case Scene_FieldIndex.Priority:
+                        return Priority;
+                    case Scene_FieldIndex.OverrideSubtitlePriority:
+                        return OverrideSubtitlePriority;
                     case Scene_FieldIndex.SCPP:
                         return SCPP;
-                    case Scene_FieldIndex.SCSP:
-                        return SCSP;
-                    case Scene_FieldIndex.SPMA:
-                        return SPMA;
-                    case Scene_FieldIndex.SPEX:
-                        return SPEX;
-                    case Scene_FieldIndex.SPRK:
-                        return SPRK;
-                    case Scene_FieldIndex.SPRW:
-                        return SPRW;
-                    case Scene_FieldIndex.SPRP:
-                        return SPRP;
-                    case Scene_FieldIndex.SPDF:
-                        return SPDF;
+                    case Scene_FieldIndex.IsSpeechChallenge:
+                        return IsSpeechChallenge;
+                    case Scene_FieldIndex.MandatoryNextChallenges:
+                        return MandatoryNextChallenges;
+                    case Scene_FieldIndex.ExcludedChallenges:
+                        return ExcludedChallenges;
+                    case Scene_FieldIndex.ChallengeRisk:
+                        return ChallengeRisk;
+                    case Scene_FieldIndex.ChallengeReward:
+                        return ChallengeReward;
+                    case Scene_FieldIndex.ChallengeRepeatable:
+                        return ChallengeRepeatable;
+                    case Scene_FieldIndex.ChallengeDefault:
+                        return ChallengeDefault;
                     case Scene_FieldIndex.SPPQ:
                         return SPPQ;
-                    case Scene_FieldIndex.SPKW:
-                        return SPKW;
-                    case Scene_FieldIndex.SPPK:
-                        return SPPK;
-                    case Scene_FieldIndex.SPKY:
-                        return SPKY;
-                    case Scene_FieldIndex.DEVT:
-                        return DEVT;
+                    case Scene_FieldIndex.ChallengeAndKeywords:
+                        return ChallengeAndKeywords;
+                    case Scene_FieldIndex.ChallengePerks:
+                        return ChallengePerks;
+                    case Scene_FieldIndex.ChallengeOrKeywords:
+                        return ChallengeOrKeywords;
+                    case Scene_FieldIndex.ShowOneDialogueTrack:
+                        return ShowOneDialogueTrack;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -1471,50 +1439,50 @@ namespace Mutagen.Bethesda.Starfield
                     case Scene_FieldIndex.Index:
                         this.Index = ex;
                         break;
-                    case Scene_FieldIndex.SCPI:
-                        this.SCPI = ex;
+                    case Scene_FieldIndex.Priority:
+                        this.Priority = ex;
                         break;
-                    case Scene_FieldIndex.JNAM:
-                        this.JNAM = ex;
+                    case Scene_FieldIndex.OverrideSubtitlePriority:
+                        this.OverrideSubtitlePriority = ex;
                         break;
                     case Scene_FieldIndex.SCPP:
                         this.SCPP = ex;
                         break;
-                    case Scene_FieldIndex.SCSP:
-                        this.SCSP = ex;
+                    case Scene_FieldIndex.IsSpeechChallenge:
+                        this.IsSpeechChallenge = ex;
                         break;
-                    case Scene_FieldIndex.SPMA:
-                        this.SPMA = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
+                    case Scene_FieldIndex.MandatoryNextChallenges:
+                        this.MandatoryNextChallenges = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case Scene_FieldIndex.SPEX:
-                        this.SPEX = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
+                    case Scene_FieldIndex.ExcludedChallenges:
+                        this.ExcludedChallenges = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case Scene_FieldIndex.SPRK:
-                        this.SPRK = ex;
+                    case Scene_FieldIndex.ChallengeRisk:
+                        this.ChallengeRisk = ex;
                         break;
-                    case Scene_FieldIndex.SPRW:
-                        this.SPRW = ex;
+                    case Scene_FieldIndex.ChallengeReward:
+                        this.ChallengeReward = ex;
                         break;
-                    case Scene_FieldIndex.SPRP:
-                        this.SPRP = ex;
+                    case Scene_FieldIndex.ChallengeRepeatable:
+                        this.ChallengeRepeatable = ex;
                         break;
-                    case Scene_FieldIndex.SPDF:
-                        this.SPDF = ex;
+                    case Scene_FieldIndex.ChallengeDefault:
+                        this.ChallengeDefault = ex;
                         break;
                     case Scene_FieldIndex.SPPQ:
                         this.SPPQ = ex;
                         break;
-                    case Scene_FieldIndex.SPKW:
-                        this.SPKW = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
+                    case Scene_FieldIndex.ChallengeAndKeywords:
+                        this.ChallengeAndKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case Scene_FieldIndex.SPPK:
-                        this.SPPK = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
+                    case Scene_FieldIndex.ChallengePerks:
+                        this.ChallengePerks = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case Scene_FieldIndex.SPKY:
-                        this.SPKY = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
+                    case Scene_FieldIndex.ChallengeOrKeywords:
+                        this.ChallengeOrKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case Scene_FieldIndex.DEVT:
-                        this.DEVT = ex;
+                    case Scene_FieldIndex.ShowOneDialogueTrack:
+                        this.ShowOneDialogueTrack = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -1569,50 +1537,50 @@ namespace Mutagen.Bethesda.Starfield
                     case Scene_FieldIndex.Index:
                         this.Index = (Exception?)obj;
                         break;
-                    case Scene_FieldIndex.SCPI:
-                        this.SCPI = (Exception?)obj;
+                    case Scene_FieldIndex.Priority:
+                        this.Priority = (Exception?)obj;
                         break;
-                    case Scene_FieldIndex.JNAM:
-                        this.JNAM = (Exception?)obj;
+                    case Scene_FieldIndex.OverrideSubtitlePriority:
+                        this.OverrideSubtitlePriority = (Exception?)obj;
                         break;
                     case Scene_FieldIndex.SCPP:
                         this.SCPP = (Exception?)obj;
                         break;
-                    case Scene_FieldIndex.SCSP:
-                        this.SCSP = (Exception?)obj;
+                    case Scene_FieldIndex.IsSpeechChallenge:
+                        this.IsSpeechChallenge = (Exception?)obj;
                         break;
-                    case Scene_FieldIndex.SPMA:
-                        this.SPMA = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
+                    case Scene_FieldIndex.MandatoryNextChallenges:
+                        this.MandatoryNextChallenges = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case Scene_FieldIndex.SPEX:
-                        this.SPEX = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
+                    case Scene_FieldIndex.ExcludedChallenges:
+                        this.ExcludedChallenges = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case Scene_FieldIndex.SPRK:
-                        this.SPRK = (Exception?)obj;
+                    case Scene_FieldIndex.ChallengeRisk:
+                        this.ChallengeRisk = (Exception?)obj;
                         break;
-                    case Scene_FieldIndex.SPRW:
-                        this.SPRW = (Exception?)obj;
+                    case Scene_FieldIndex.ChallengeReward:
+                        this.ChallengeReward = (Exception?)obj;
                         break;
-                    case Scene_FieldIndex.SPRP:
-                        this.SPRP = (Exception?)obj;
+                    case Scene_FieldIndex.ChallengeRepeatable:
+                        this.ChallengeRepeatable = (Exception?)obj;
                         break;
-                    case Scene_FieldIndex.SPDF:
-                        this.SPDF = (Exception?)obj;
+                    case Scene_FieldIndex.ChallengeDefault:
+                        this.ChallengeDefault = (Exception?)obj;
                         break;
                     case Scene_FieldIndex.SPPQ:
                         this.SPPQ = (Exception?)obj;
                         break;
-                    case Scene_FieldIndex.SPKW:
-                        this.SPKW = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
+                    case Scene_FieldIndex.ChallengeAndKeywords:
+                        this.ChallengeAndKeywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case Scene_FieldIndex.SPPK:
-                        this.SPPK = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
+                    case Scene_FieldIndex.ChallengePerks:
+                        this.ChallengePerks = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case Scene_FieldIndex.SPKY:
-                        this.SPKY = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
+                    case Scene_FieldIndex.ChallengeOrKeywords:
+                        this.ChallengeOrKeywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case Scene_FieldIndex.DEVT:
-                        this.DEVT = (Exception?)obj;
+                    case Scene_FieldIndex.ShowOneDialogueTrack:
+                        this.ShowOneDialogueTrack = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -1637,21 +1605,21 @@ namespace Mutagen.Bethesda.Starfield
                 if (Template != null) return true;
                 if (BOLV != null) return true;
                 if (Index != null) return true;
-                if (SCPI != null) return true;
-                if (JNAM != null) return true;
+                if (Priority != null) return true;
+                if (OverrideSubtitlePriority != null) return true;
                 if (SCPP != null) return true;
-                if (SCSP != null) return true;
-                if (SPMA != null) return true;
-                if (SPEX != null) return true;
-                if (SPRK != null) return true;
-                if (SPRW != null) return true;
-                if (SPRP != null) return true;
-                if (SPDF != null) return true;
+                if (IsSpeechChallenge != null) return true;
+                if (MandatoryNextChallenges != null) return true;
+                if (ExcludedChallenges != null) return true;
+                if (ChallengeRisk != null) return true;
+                if (ChallengeReward != null) return true;
+                if (ChallengeRepeatable != null) return true;
+                if (ChallengeDefault != null) return true;
                 if (SPPQ != null) return true;
-                if (SPKW != null) return true;
-                if (SPPK != null) return true;
-                if (SPKY != null) return true;
-                if (DEVT != null) return true;
+                if (ChallengeAndKeywords != null) return true;
+                if (ChallengePerks != null) return true;
+                if (ChallengeOrKeywords != null) return true;
+                if (ShowOneDialogueTrack != null) return true;
                 return false;
             }
             #endregion
@@ -1777,26 +1745,26 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Index, "Index");
                 }
                 {
-                    sb.AppendItem(SCPI, "SCPI");
+                    sb.AppendItem(Priority, "Priority");
                 }
                 {
-                    sb.AppendItem(JNAM, "JNAM");
+                    sb.AppendItem(OverrideSubtitlePriority, "OverrideSubtitlePriority");
                 }
                 {
                     sb.AppendItem(SCPP, "SCPP");
                 }
                 {
-                    sb.AppendItem(SCSP, "SCSP");
+                    sb.AppendItem(IsSpeechChallenge, "IsSpeechChallenge");
                 }
-                if (SPMA is {} SPMAItem)
+                if (MandatoryNextChallenges is {} MandatoryNextChallengesItem)
                 {
-                    sb.AppendLine("SPMA =>");
+                    sb.AppendLine("MandatoryNextChallenges =>");
                     using (sb.Brace())
                     {
-                        sb.AppendItem(SPMAItem.Overall);
-                        if (SPMAItem.Specific != null)
+                        sb.AppendItem(MandatoryNextChallengesItem.Overall);
+                        if (MandatoryNextChallengesItem.Specific != null)
                         {
-                            foreach (var subItem in SPMAItem.Specific)
+                            foreach (var subItem in MandatoryNextChallengesItem.Specific)
                             {
                                 using (sb.Brace())
                                 {
@@ -1808,15 +1776,15 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (SPEX is {} SPEXItem)
+                if (ExcludedChallenges is {} ExcludedChallengesItem)
                 {
-                    sb.AppendLine("SPEX =>");
+                    sb.AppendLine("ExcludedChallenges =>");
                     using (sb.Brace())
                     {
-                        sb.AppendItem(SPEXItem.Overall);
-                        if (SPEXItem.Specific != null)
+                        sb.AppendItem(ExcludedChallengesItem.Overall);
+                        if (ExcludedChallengesItem.Specific != null)
                         {
-                            foreach (var subItem in SPEXItem.Specific)
+                            foreach (var subItem in ExcludedChallengesItem.Specific)
                             {
                                 using (sb.Brace())
                                 {
@@ -1829,29 +1797,29 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(SPRK, "SPRK");
+                    sb.AppendItem(ChallengeRisk, "ChallengeRisk");
                 }
                 {
-                    sb.AppendItem(SPRW, "SPRW");
+                    sb.AppendItem(ChallengeReward, "ChallengeReward");
                 }
                 {
-                    sb.AppendItem(SPRP, "SPRP");
+                    sb.AppendItem(ChallengeRepeatable, "ChallengeRepeatable");
                 }
                 {
-                    sb.AppendItem(SPDF, "SPDF");
+                    sb.AppendItem(ChallengeDefault, "ChallengeDefault");
                 }
                 {
                     sb.AppendItem(SPPQ, "SPPQ");
                 }
-                if (SPKW is {} SPKWItem)
+                if (ChallengeAndKeywords is {} ChallengeAndKeywordsItem)
                 {
-                    sb.AppendLine("SPKW =>");
+                    sb.AppendLine("ChallengeAndKeywords =>");
                     using (sb.Brace())
                     {
-                        sb.AppendItem(SPKWItem.Overall);
-                        if (SPKWItem.Specific != null)
+                        sb.AppendItem(ChallengeAndKeywordsItem.Overall);
+                        if (ChallengeAndKeywordsItem.Specific != null)
                         {
-                            foreach (var subItem in SPKWItem.Specific)
+                            foreach (var subItem in ChallengeAndKeywordsItem.Specific)
                             {
                                 using (sb.Brace())
                                 {
@@ -1863,15 +1831,15 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (SPPK is {} SPPKItem)
+                if (ChallengePerks is {} ChallengePerksItem)
                 {
-                    sb.AppendLine("SPPK =>");
+                    sb.AppendLine("ChallengePerks =>");
                     using (sb.Brace())
                     {
-                        sb.AppendItem(SPPKItem.Overall);
-                        if (SPPKItem.Specific != null)
+                        sb.AppendItem(ChallengePerksItem.Overall);
+                        if (ChallengePerksItem.Specific != null)
                         {
-                            foreach (var subItem in SPPKItem.Specific)
+                            foreach (var subItem in ChallengePerksItem.Specific)
                             {
                                 using (sb.Brace())
                                 {
@@ -1883,15 +1851,15 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (SPKY is {} SPKYItem)
+                if (ChallengeOrKeywords is {} ChallengeOrKeywordsItem)
                 {
-                    sb.AppendLine("SPKY =>");
+                    sb.AppendLine("ChallengeOrKeywords =>");
                     using (sb.Brace())
                     {
-                        sb.AppendItem(SPKYItem.Overall);
-                        if (SPKYItem.Specific != null)
+                        sb.AppendItem(ChallengeOrKeywordsItem.Overall);
+                        if (ChallengeOrKeywordsItem.Specific != null)
                         {
-                            foreach (var subItem in SPKYItem.Specific)
+                            foreach (var subItem in ChallengeOrKeywordsItem.Specific)
                             {
                                 using (sb.Brace())
                                 {
@@ -1904,7 +1872,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(DEVT, "DEVT");
+                    sb.AppendItem(ShowOneDialogueTrack, "ShowOneDialogueTrack");
                 }
             }
             #endregion
@@ -1928,21 +1896,21 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Template = this.Template.Combine(rhs.Template);
                 ret.BOLV = this.BOLV.Combine(rhs.BOLV);
                 ret.Index = this.Index.Combine(rhs.Index);
-                ret.SCPI = this.SCPI.Combine(rhs.SCPI);
-                ret.JNAM = this.JNAM.Combine(rhs.JNAM);
+                ret.Priority = this.Priority.Combine(rhs.Priority);
+                ret.OverrideSubtitlePriority = this.OverrideSubtitlePriority.Combine(rhs.OverrideSubtitlePriority);
                 ret.SCPP = this.SCPP.Combine(rhs.SCPP);
-                ret.SCSP = this.SCSP.Combine(rhs.SCSP);
-                ret.SPMA = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.SPMA?.Overall, rhs.SPMA?.Overall), Noggog.ExceptionExt.Combine(this.SPMA?.Specific, rhs.SPMA?.Specific));
-                ret.SPEX = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.SPEX?.Overall, rhs.SPEX?.Overall), Noggog.ExceptionExt.Combine(this.SPEX?.Specific, rhs.SPEX?.Specific));
-                ret.SPRK = this.SPRK.Combine(rhs.SPRK);
-                ret.SPRW = this.SPRW.Combine(rhs.SPRW);
-                ret.SPRP = this.SPRP.Combine(rhs.SPRP);
-                ret.SPDF = this.SPDF.Combine(rhs.SPDF);
+                ret.IsSpeechChallenge = this.IsSpeechChallenge.Combine(rhs.IsSpeechChallenge);
+                ret.MandatoryNextChallenges = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.MandatoryNextChallenges?.Overall, rhs.MandatoryNextChallenges?.Overall), Noggog.ExceptionExt.Combine(this.MandatoryNextChallenges?.Specific, rhs.MandatoryNextChallenges?.Specific));
+                ret.ExcludedChallenges = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ExcludedChallenges?.Overall, rhs.ExcludedChallenges?.Overall), Noggog.ExceptionExt.Combine(this.ExcludedChallenges?.Specific, rhs.ExcludedChallenges?.Specific));
+                ret.ChallengeRisk = this.ChallengeRisk.Combine(rhs.ChallengeRisk);
+                ret.ChallengeReward = this.ChallengeReward.Combine(rhs.ChallengeReward);
+                ret.ChallengeRepeatable = this.ChallengeRepeatable.Combine(rhs.ChallengeRepeatable);
+                ret.ChallengeDefault = this.ChallengeDefault.Combine(rhs.ChallengeDefault);
                 ret.SPPQ = this.SPPQ.Combine(rhs.SPPQ);
-                ret.SPKW = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.SPKW?.Overall, rhs.SPKW?.Overall), Noggog.ExceptionExt.Combine(this.SPKW?.Specific, rhs.SPKW?.Specific));
-                ret.SPPK = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.SPPK?.Overall, rhs.SPPK?.Overall), Noggog.ExceptionExt.Combine(this.SPPK?.Specific, rhs.SPPK?.Specific));
-                ret.SPKY = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.SPKY?.Overall, rhs.SPKY?.Overall), Noggog.ExceptionExt.Combine(this.SPKY?.Specific, rhs.SPKY?.Specific));
-                ret.DEVT = this.DEVT.Combine(rhs.DEVT);
+                ret.ChallengeAndKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ChallengeAndKeywords?.Overall, rhs.ChallengeAndKeywords?.Overall), Noggog.ExceptionExt.Combine(this.ChallengeAndKeywords?.Specific, rhs.ChallengeAndKeywords?.Specific));
+                ret.ChallengePerks = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ChallengePerks?.Overall, rhs.ChallengePerks?.Overall), Noggog.ExceptionExt.Combine(this.ChallengePerks?.Specific, rhs.ChallengePerks?.Specific));
+                ret.ChallengeOrKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ChallengeOrKeywords?.Overall, rhs.ChallengeOrKeywords?.Overall), Noggog.ExceptionExt.Combine(this.ChallengeOrKeywords?.Specific, rhs.ChallengeOrKeywords?.Specific));
+                ret.ShowOneDialogueTrack = this.ShowOneDialogueTrack.Combine(rhs.ShowOneDialogueTrack);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -1979,21 +1947,21 @@ namespace Mutagen.Bethesda.Starfield
             public bool Template;
             public bool BOLV;
             public bool Index;
-            public bool SCPI;
-            public bool JNAM;
+            public bool Priority;
+            public bool OverrideSubtitlePriority;
             public bool SCPP;
-            public bool SCSP;
-            public bool SPMA;
-            public bool SPEX;
-            public bool SPRK;
-            public bool SPRW;
-            public bool SPRP;
-            public bool SPDF;
+            public bool IsSpeechChallenge;
+            public bool MandatoryNextChallenges;
+            public bool ExcludedChallenges;
+            public bool ChallengeRisk;
+            public bool ChallengeReward;
+            public bool ChallengeRepeatable;
+            public bool ChallengeDefault;
             public bool SPPQ;
-            public bool SPKW;
-            public bool SPPK;
-            public bool SPKY;
-            public bool DEVT;
+            public bool ChallengeAndKeywords;
+            public bool ChallengePerks;
+            public bool ChallengeOrKeywords;
+            public bool ShowOneDialogueTrack;
             #endregion
 
             #region Ctors
@@ -2010,21 +1978,21 @@ namespace Mutagen.Bethesda.Starfield
                 this.Template = defaultOn;
                 this.BOLV = defaultOn;
                 this.Index = defaultOn;
-                this.SCPI = defaultOn;
-                this.JNAM = defaultOn;
+                this.Priority = defaultOn;
+                this.OverrideSubtitlePriority = defaultOn;
                 this.SCPP = defaultOn;
-                this.SCSP = defaultOn;
-                this.SPMA = defaultOn;
-                this.SPEX = defaultOn;
-                this.SPRK = defaultOn;
-                this.SPRW = defaultOn;
-                this.SPRP = defaultOn;
-                this.SPDF = defaultOn;
+                this.IsSpeechChallenge = defaultOn;
+                this.MandatoryNextChallenges = defaultOn;
+                this.ExcludedChallenges = defaultOn;
+                this.ChallengeRisk = defaultOn;
+                this.ChallengeReward = defaultOn;
+                this.ChallengeRepeatable = defaultOn;
+                this.ChallengeDefault = defaultOn;
                 this.SPPQ = defaultOn;
-                this.SPKW = defaultOn;
-                this.SPPK = defaultOn;
-                this.SPKY = defaultOn;
-                this.DEVT = defaultOn;
+                this.ChallengeAndKeywords = defaultOn;
+                this.ChallengePerks = defaultOn;
+                this.ChallengeOrKeywords = defaultOn;
+                this.ShowOneDialogueTrack = defaultOn;
             }
 
             #endregion
@@ -2046,21 +2014,21 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Template, null));
                 ret.Add((BOLV, null));
                 ret.Add((Index, null));
-                ret.Add((SCPI, null));
-                ret.Add((JNAM, null));
+                ret.Add((Priority, null));
+                ret.Add((OverrideSubtitlePriority, null));
                 ret.Add((SCPP, null));
-                ret.Add((SCSP, null));
-                ret.Add((SPMA, null));
-                ret.Add((SPEX, null));
-                ret.Add((SPRK, null));
-                ret.Add((SPRW, null));
-                ret.Add((SPRP, null));
-                ret.Add((SPDF, null));
+                ret.Add((IsSpeechChallenge, null));
+                ret.Add((MandatoryNextChallenges, null));
+                ret.Add((ExcludedChallenges, null));
+                ret.Add((ChallengeRisk, null));
+                ret.Add((ChallengeReward, null));
+                ret.Add((ChallengeRepeatable, null));
+                ret.Add((ChallengeDefault, null));
                 ret.Add((SPPQ, null));
-                ret.Add((SPKW, null));
-                ret.Add((SPPK, null));
-                ret.Add((SPKY, null));
-                ret.Add((DEVT, null));
+                ret.Add((ChallengeAndKeywords, null));
+                ret.Add((ChallengePerks, null));
+                ret.Add((ChallengeOrKeywords, null));
+                ret.Add((ShowOneDialogueTrack, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -2224,23 +2192,23 @@ namespace Mutagen.Bethesda.Starfield
         new SceneSetParentQuestStage? SetParentQuestStage { get; set; }
         new String? Notes { get; set; }
         new IFormLinkNullable<ISceneGetter> Template { get; set; }
-        new MemorySlice<Byte>? BOLV { get; set; }
+        new Boolean BOLV { get; set; }
         new UInt32? Index { get; set; }
-        new MemorySlice<Byte>? SCPI { get; set; }
-        new MemorySlice<Byte>? JNAM { get; set; }
+        new UInt16? Priority { get; set; }
+        new DialogResponses.SubtitlePriorityLevel? OverrideSubtitlePriority { get; set; }
         new IFormLinkNullable<ISceneGetter> SCPP { get; set; }
-        new Boolean SCSP { get; set; }
-        new ExtendedList<IFormLinkGetter<ISceneGetter>>? SPMA { get; set; }
-        new ExtendedList<IFormLinkGetter<ISceneGetter>>? SPEX { get; set; }
-        new MemorySlice<Byte>? SPRK { get; set; }
-        new MemorySlice<Byte>? SPRW { get; set; }
-        new Boolean SPRP { get; set; }
-        new Boolean SPDF { get; set; }
+        new Boolean IsSpeechChallenge { get; set; }
+        new ExtendedList<IFormLinkGetter<ISceneGetter>>? MandatoryNextChallenges { get; set; }
+        new ExtendedList<IFormLinkGetter<ISceneGetter>>? ExcludedChallenges { get; set; }
+        new Scene.SpeechChallengeRisk? ChallengeRisk { get; set; }
+        new UInt32? ChallengeReward { get; set; }
+        new Boolean ChallengeRepeatable { get; set; }
+        new Boolean ChallengeDefault { get; set; }
         new Boolean SPPQ { get; set; }
-        new ExtendedList<IFormLinkGetter<IKeywordGetter>>? SPKW { get; set; }
-        new ExtendedList<IFormLinkGetter<IPerkGetter>>? SPPK { get; set; }
-        new ExtendedList<IFormLinkGetter<IKeywordGetter>>? SPKY { get; set; }
-        new Boolean DEVT { get; set; }
+        new ExtendedList<IFormLinkGetter<IKeywordGetter>>? ChallengeAndKeywords { get; set; }
+        new ExtendedList<IFormLinkGetter<IPerkGetter>>? ChallengePerks { get; set; }
+        new ExtendedList<IFormLinkGetter<IKeywordGetter>>? ChallengeOrKeywords { get; set; }
+        new Boolean ShowOneDialogueTrack { get; set; }
     }
 
     public partial interface ISceneInternal :
@@ -2277,23 +2245,23 @@ namespace Mutagen.Bethesda.Starfield
         ISceneSetParentQuestStageGetter? SetParentQuestStage { get; }
         String? Notes { get; }
         IFormLinkNullableGetter<ISceneGetter> Template { get; }
-        ReadOnlyMemorySlice<Byte>? BOLV { get; }
+        Boolean BOLV { get; }
         UInt32? Index { get; }
-        ReadOnlyMemorySlice<Byte>? SCPI { get; }
-        ReadOnlyMemorySlice<Byte>? JNAM { get; }
+        UInt16? Priority { get; }
+        DialogResponses.SubtitlePriorityLevel? OverrideSubtitlePriority { get; }
         IFormLinkNullableGetter<ISceneGetter> SCPP { get; }
-        Boolean SCSP { get; }
-        IReadOnlyList<IFormLinkGetter<ISceneGetter>>? SPMA { get; }
-        IReadOnlyList<IFormLinkGetter<ISceneGetter>>? SPEX { get; }
-        ReadOnlyMemorySlice<Byte>? SPRK { get; }
-        ReadOnlyMemorySlice<Byte>? SPRW { get; }
-        Boolean SPRP { get; }
-        Boolean SPDF { get; }
+        Boolean IsSpeechChallenge { get; }
+        IReadOnlyList<IFormLinkGetter<ISceneGetter>>? MandatoryNextChallenges { get; }
+        IReadOnlyList<IFormLinkGetter<ISceneGetter>>? ExcludedChallenges { get; }
+        Scene.SpeechChallengeRisk? ChallengeRisk { get; }
+        UInt32? ChallengeReward { get; }
+        Boolean ChallengeRepeatable { get; }
+        Boolean ChallengeDefault { get; }
         Boolean SPPQ { get; }
-        IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? SPKW { get; }
-        IReadOnlyList<IFormLinkGetter<IPerkGetter>>? SPPK { get; }
-        IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? SPKY { get; }
-        Boolean DEVT { get; }
+        IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? ChallengeAndKeywords { get; }
+        IReadOnlyList<IFormLinkGetter<IPerkGetter>>? ChallengePerks { get; }
+        IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? ChallengeOrKeywords { get; }
+        Boolean ShowOneDialogueTrack { get; }
 
     }
 
@@ -2484,21 +2452,21 @@ namespace Mutagen.Bethesda.Starfield
         Template = 18,
         BOLV = 19,
         Index = 20,
-        SCPI = 21,
-        JNAM = 22,
+        Priority = 21,
+        OverrideSubtitlePriority = 22,
         SCPP = 23,
-        SCSP = 24,
-        SPMA = 25,
-        SPEX = 26,
-        SPRK = 27,
-        SPRW = 28,
-        SPRP = 29,
-        SPDF = 30,
+        IsSpeechChallenge = 24,
+        MandatoryNextChallenges = 25,
+        ExcludedChallenges = 26,
+        ChallengeRisk = 27,
+        ChallengeReward = 28,
+        ChallengeRepeatable = 29,
+        ChallengeDefault = 30,
         SPPQ = 31,
-        SPKW = 32,
-        SPPK = 33,
-        SPKY = 34,
-        DEVT = 35,
+        ChallengeAndKeywords = 32,
+        ChallengePerks = 33,
+        ChallengeOrKeywords = 34,
+        ShowOneDialogueTrack = 35,
     }
     #endregion
 
@@ -2642,23 +2610,23 @@ namespace Mutagen.Bethesda.Starfield
             item.SetParentQuestStage = null;
             item.Notes = default;
             item.Template.Clear();
-            item.BOLV = default;
+            item.BOLV = default(Boolean);
             item.Index = default;
-            item.SCPI = default;
-            item.JNAM = default;
+            item.Priority = default;
+            item.OverrideSubtitlePriority = default;
             item.SCPP.Clear();
-            item.SCSP = default(Boolean);
-            item.SPMA = null;
-            item.SPEX = null;
-            item.SPRK = default;
-            item.SPRW = default;
-            item.SPRP = default(Boolean);
-            item.SPDF = default(Boolean);
+            item.IsSpeechChallenge = default(Boolean);
+            item.MandatoryNextChallenges = null;
+            item.ExcludedChallenges = null;
+            item.ChallengeRisk = default;
+            item.ChallengeReward = default;
+            item.ChallengeRepeatable = default(Boolean);
+            item.ChallengeDefault = default(Boolean);
             item.SPPQ = default(Boolean);
-            item.SPKW = null;
-            item.SPPK = null;
-            item.SPKY = null;
-            item.DEVT = default(Boolean);
+            item.ChallengeAndKeywords = null;
+            item.ChallengePerks = null;
+            item.ChallengeOrKeywords = null;
+            item.ShowOneDialogueTrack = default(Boolean);
             base.Clear(item);
         }
         
@@ -2683,11 +2651,11 @@ namespace Mutagen.Bethesda.Starfield
             obj.Conditions.RemapLinks(mapping);
             obj.Template.Relink(mapping);
             obj.SCPP.Relink(mapping);
-            obj.SPMA?.RemapLinks(mapping);
-            obj.SPEX?.RemapLinks(mapping);
-            obj.SPKW?.RemapLinks(mapping);
-            obj.SPPK?.RemapLinks(mapping);
-            obj.SPKY?.RemapLinks(mapping);
+            obj.MandatoryNextChallenges?.RemapLinks(mapping);
+            obj.ExcludedChallenges?.RemapLinks(mapping);
+            obj.ChallengeAndKeywords?.RemapLinks(mapping);
+            obj.ChallengePerks?.RemapLinks(mapping);
+            obj.ChallengeOrKeywords?.RemapLinks(mapping);
         }
         
         #endregion
@@ -2787,38 +2755,38 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.Notes = string.Equals(item.Notes, rhs.Notes);
             ret.Template = item.Template.Equals(rhs.Template);
-            ret.BOLV = MemorySliceExt.SequenceEqual(item.BOLV, rhs.BOLV);
+            ret.BOLV = item.BOLV == rhs.BOLV;
             ret.Index = item.Index == rhs.Index;
-            ret.SCPI = MemorySliceExt.SequenceEqual(item.SCPI, rhs.SCPI);
-            ret.JNAM = MemorySliceExt.SequenceEqual(item.JNAM, rhs.JNAM);
+            ret.Priority = item.Priority == rhs.Priority;
+            ret.OverrideSubtitlePriority = item.OverrideSubtitlePriority == rhs.OverrideSubtitlePriority;
             ret.SCPP = item.SCPP.Equals(rhs.SCPP);
-            ret.SCSP = item.SCSP == rhs.SCSP;
-            ret.SPMA = item.SPMA.CollectionEqualsHelper(
-                rhs.SPMA,
+            ret.IsSpeechChallenge = item.IsSpeechChallenge == rhs.IsSpeechChallenge;
+            ret.MandatoryNextChallenges = item.MandatoryNextChallenges.CollectionEqualsHelper(
+                rhs.MandatoryNextChallenges,
                 (l, r) => object.Equals(l, r),
                 include);
-            ret.SPEX = item.SPEX.CollectionEqualsHelper(
-                rhs.SPEX,
+            ret.ExcludedChallenges = item.ExcludedChallenges.CollectionEqualsHelper(
+                rhs.ExcludedChallenges,
                 (l, r) => object.Equals(l, r),
                 include);
-            ret.SPRK = MemorySliceExt.SequenceEqual(item.SPRK, rhs.SPRK);
-            ret.SPRW = MemorySliceExt.SequenceEqual(item.SPRW, rhs.SPRW);
-            ret.SPRP = item.SPRP == rhs.SPRP;
-            ret.SPDF = item.SPDF == rhs.SPDF;
+            ret.ChallengeRisk = item.ChallengeRisk == rhs.ChallengeRisk;
+            ret.ChallengeReward = item.ChallengeReward == rhs.ChallengeReward;
+            ret.ChallengeRepeatable = item.ChallengeRepeatable == rhs.ChallengeRepeatable;
+            ret.ChallengeDefault = item.ChallengeDefault == rhs.ChallengeDefault;
             ret.SPPQ = item.SPPQ == rhs.SPPQ;
-            ret.SPKW = item.SPKW.CollectionEqualsHelper(
-                rhs.SPKW,
+            ret.ChallengeAndKeywords = item.ChallengeAndKeywords.CollectionEqualsHelper(
+                rhs.ChallengeAndKeywords,
                 (l, r) => object.Equals(l, r),
                 include);
-            ret.SPPK = item.SPPK.CollectionEqualsHelper(
-                rhs.SPPK,
+            ret.ChallengePerks = item.ChallengePerks.CollectionEqualsHelper(
+                rhs.ChallengePerks,
                 (l, r) => object.Equals(l, r),
                 include);
-            ret.SPKY = item.SPKY.CollectionEqualsHelper(
-                rhs.SPKY,
+            ret.ChallengeOrKeywords = item.ChallengeOrKeywords.CollectionEqualsHelper(
+                rhs.ChallengeOrKeywords,
                 (l, r) => object.Equals(l, r),
                 include);
-            ret.DEVT = item.DEVT == rhs.DEVT;
+            ret.ShowOneDialogueTrack = item.ShowOneDialogueTrack == rhs.ShowOneDialogueTrack;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -2963,41 +2931,40 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Template.FormKeyNullable, "Template");
             }
-            if ((printMask?.BOLV ?? true)
-                && item.BOLV is {} BOLVItem)
+            if (printMask?.BOLV ?? true)
             {
-                sb.AppendLine($"BOLV => {SpanExt.ToHexString(BOLVItem)}");
+                sb.AppendItem(item.BOLV, "BOLV");
             }
             if ((printMask?.Index ?? true)
                 && item.Index is {} IndexItem)
             {
                 sb.AppendItem(IndexItem, "Index");
             }
-            if ((printMask?.SCPI ?? true)
-                && item.SCPI is {} SCPIItem)
+            if ((printMask?.Priority ?? true)
+                && item.Priority is {} PriorityItem)
             {
-                sb.AppendLine($"SCPI => {SpanExt.ToHexString(SCPIItem)}");
+                sb.AppendItem(PriorityItem, "Priority");
             }
-            if ((printMask?.JNAM ?? true)
-                && item.JNAM is {} JNAMItem)
+            if ((printMask?.OverrideSubtitlePriority ?? true)
+                && item.OverrideSubtitlePriority is {} OverrideSubtitlePriorityItem)
             {
-                sb.AppendLine($"JNAM => {SpanExt.ToHexString(JNAMItem)}");
+                sb.AppendItem(OverrideSubtitlePriorityItem, "OverrideSubtitlePriority");
             }
             if (printMask?.SCPP ?? true)
             {
                 sb.AppendItem(item.SCPP.FormKeyNullable, "SCPP");
             }
-            if (printMask?.SCSP ?? true)
+            if (printMask?.IsSpeechChallenge ?? true)
             {
-                sb.AppendItem(item.SCSP, "SCSP");
+                sb.AppendItem(item.IsSpeechChallenge, "IsSpeechChallenge");
             }
-            if ((printMask?.SPMA?.Overall ?? true)
-                && item.SPMA is {} SPMAItem)
+            if ((printMask?.MandatoryNextChallenges?.Overall ?? true)
+                && item.MandatoryNextChallenges is {} MandatoryNextChallengesItem)
             {
-                sb.AppendLine("SPMA =>");
+                sb.AppendLine("MandatoryNextChallenges =>");
                 using (sb.Brace())
                 {
-                    foreach (var subItem in SPMAItem)
+                    foreach (var subItem in MandatoryNextChallengesItem)
                     {
                         using (sb.Brace())
                         {
@@ -3006,13 +2973,13 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.SPEX?.Overall ?? true)
-                && item.SPEX is {} SPEXItem)
+            if ((printMask?.ExcludedChallenges?.Overall ?? true)
+                && item.ExcludedChallenges is {} ExcludedChallengesItem)
             {
-                sb.AppendLine("SPEX =>");
+                sb.AppendLine("ExcludedChallenges =>");
                 using (sb.Brace())
                 {
-                    foreach (var subItem in SPEXItem)
+                    foreach (var subItem in ExcludedChallengesItem)
                     {
                         using (sb.Brace())
                         {
@@ -3021,35 +2988,35 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.SPRK ?? true)
-                && item.SPRK is {} SPRKItem)
+            if ((printMask?.ChallengeRisk ?? true)
+                && item.ChallengeRisk is {} ChallengeRiskItem)
             {
-                sb.AppendLine($"SPRK => {SpanExt.ToHexString(SPRKItem)}");
+                sb.AppendItem(ChallengeRiskItem, "ChallengeRisk");
             }
-            if ((printMask?.SPRW ?? true)
-                && item.SPRW is {} SPRWItem)
+            if ((printMask?.ChallengeReward ?? true)
+                && item.ChallengeReward is {} ChallengeRewardItem)
             {
-                sb.AppendLine($"SPRW => {SpanExt.ToHexString(SPRWItem)}");
+                sb.AppendItem(ChallengeRewardItem, "ChallengeReward");
             }
-            if (printMask?.SPRP ?? true)
+            if (printMask?.ChallengeRepeatable ?? true)
             {
-                sb.AppendItem(item.SPRP, "SPRP");
+                sb.AppendItem(item.ChallengeRepeatable, "ChallengeRepeatable");
             }
-            if (printMask?.SPDF ?? true)
+            if (printMask?.ChallengeDefault ?? true)
             {
-                sb.AppendItem(item.SPDF, "SPDF");
+                sb.AppendItem(item.ChallengeDefault, "ChallengeDefault");
             }
             if (printMask?.SPPQ ?? true)
             {
                 sb.AppendItem(item.SPPQ, "SPPQ");
             }
-            if ((printMask?.SPKW?.Overall ?? true)
-                && item.SPKW is {} SPKWItem)
+            if ((printMask?.ChallengeAndKeywords?.Overall ?? true)
+                && item.ChallengeAndKeywords is {} ChallengeAndKeywordsItem)
             {
-                sb.AppendLine("SPKW =>");
+                sb.AppendLine("ChallengeAndKeywords =>");
                 using (sb.Brace())
                 {
-                    foreach (var subItem in SPKWItem)
+                    foreach (var subItem in ChallengeAndKeywordsItem)
                     {
                         using (sb.Brace())
                         {
@@ -3058,13 +3025,13 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.SPPK?.Overall ?? true)
-                && item.SPPK is {} SPPKItem)
+            if ((printMask?.ChallengePerks?.Overall ?? true)
+                && item.ChallengePerks is {} ChallengePerksItem)
             {
-                sb.AppendLine("SPPK =>");
+                sb.AppendLine("ChallengePerks =>");
                 using (sb.Brace())
                 {
-                    foreach (var subItem in SPPKItem)
+                    foreach (var subItem in ChallengePerksItem)
                     {
                         using (sb.Brace())
                         {
@@ -3073,13 +3040,13 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.SPKY?.Overall ?? true)
-                && item.SPKY is {} SPKYItem)
+            if ((printMask?.ChallengeOrKeywords?.Overall ?? true)
+                && item.ChallengeOrKeywords is {} ChallengeOrKeywordsItem)
             {
-                sb.AppendLine("SPKY =>");
+                sb.AppendLine("ChallengeOrKeywords =>");
                 using (sb.Brace())
                 {
-                    foreach (var subItem in SPKYItem)
+                    foreach (var subItem in ChallengeOrKeywordsItem)
                     {
                         using (sb.Brace())
                         {
@@ -3088,9 +3055,9 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if (printMask?.DEVT ?? true)
+            if (printMask?.ShowOneDialogueTrack ?? true)
             {
-                sb.AppendItem(item.DEVT, "DEVT");
+                sb.AppendItem(item.ShowOneDialogueTrack, "ShowOneDialogueTrack");
             }
         }
         
@@ -3200,71 +3167,71 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.BOLV) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.BOLV, rhs.BOLV)) return false;
+                if (lhs.BOLV != rhs.BOLV) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.Index) ?? true))
             {
                 if (lhs.Index != rhs.Index) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SCPI) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.Priority) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.SCPI, rhs.SCPI)) return false;
+                if (lhs.Priority != rhs.Priority) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.JNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.OverrideSubtitlePriority) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.JNAM, rhs.JNAM)) return false;
+                if (lhs.OverrideSubtitlePriority != rhs.OverrideSubtitlePriority) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SCPP) ?? true))
             {
                 if (!lhs.SCPP.Equals(rhs.SCPP)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SCSP) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.IsSpeechChallenge) ?? true))
             {
-                if (lhs.SCSP != rhs.SCSP) return false;
+                if (lhs.IsSpeechChallenge != rhs.IsSpeechChallenge) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SPMA) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.MandatoryNextChallenges) ?? true))
             {
-                if (!lhs.SPMA.SequenceEqualNullable(rhs.SPMA)) return false;
+                if (!lhs.MandatoryNextChallenges.SequenceEqualNullable(rhs.MandatoryNextChallenges)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SPEX) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ExcludedChallenges) ?? true))
             {
-                if (!lhs.SPEX.SequenceEqualNullable(rhs.SPEX)) return false;
+                if (!lhs.ExcludedChallenges.SequenceEqualNullable(rhs.ExcludedChallenges)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SPRK) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeRisk) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.SPRK, rhs.SPRK)) return false;
+                if (lhs.ChallengeRisk != rhs.ChallengeRisk) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SPRW) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeReward) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.SPRW, rhs.SPRW)) return false;
+                if (lhs.ChallengeReward != rhs.ChallengeReward) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SPRP) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeRepeatable) ?? true))
             {
-                if (lhs.SPRP != rhs.SPRP) return false;
+                if (lhs.ChallengeRepeatable != rhs.ChallengeRepeatable) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SPDF) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeDefault) ?? true))
             {
-                if (lhs.SPDF != rhs.SPDF) return false;
+                if (lhs.ChallengeDefault != rhs.ChallengeDefault) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SPPQ) ?? true))
             {
                 if (lhs.SPPQ != rhs.SPPQ) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SPKW) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeAndKeywords) ?? true))
             {
-                if (!lhs.SPKW.SequenceEqualNullable(rhs.SPKW)) return false;
+                if (!lhs.ChallengeAndKeywords.SequenceEqualNullable(rhs.ChallengeAndKeywords)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SPPK) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengePerks) ?? true))
             {
-                if (!lhs.SPPK.SequenceEqualNullable(rhs.SPPK)) return false;
+                if (!lhs.ChallengePerks.SequenceEqualNullable(rhs.ChallengePerks)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SPKY) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeOrKeywords) ?? true))
             {
-                if (!lhs.SPKY.SequenceEqualNullable(rhs.SPKY)) return false;
+                if (!lhs.ChallengeOrKeywords.SequenceEqualNullable(rhs.ChallengeOrKeywords)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.DEVT) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ShowOneDialogueTrack) ?? true))
             {
-                if (lhs.DEVT != rhs.DEVT) return false;
+                if (lhs.ShowOneDialogueTrack != rhs.ShowOneDialogueTrack) return false;
             }
             return true;
         }
@@ -3324,41 +3291,38 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(Notesitem);
             }
             hash.Add(item.Template);
-            if (item.BOLV is {} BOLVItem)
-            {
-                hash.Add(BOLVItem);
-            }
+            hash.Add(item.BOLV);
             if (item.Index is {} Indexitem)
             {
                 hash.Add(Indexitem);
             }
-            if (item.SCPI is {} SCPIItem)
+            if (item.Priority is {} Priorityitem)
             {
-                hash.Add(SCPIItem);
+                hash.Add(Priorityitem);
             }
-            if (item.JNAM is {} JNAMItem)
+            if (item.OverrideSubtitlePriority is {} OverrideSubtitlePriorityitem)
             {
-                hash.Add(JNAMItem);
+                hash.Add(OverrideSubtitlePriorityitem);
             }
             hash.Add(item.SCPP);
-            hash.Add(item.SCSP);
-            hash.Add(item.SPMA);
-            hash.Add(item.SPEX);
-            if (item.SPRK is {} SPRKItem)
+            hash.Add(item.IsSpeechChallenge);
+            hash.Add(item.MandatoryNextChallenges);
+            hash.Add(item.ExcludedChallenges);
+            if (item.ChallengeRisk is {} ChallengeRiskitem)
             {
-                hash.Add(SPRKItem);
+                hash.Add(ChallengeRiskitem);
             }
-            if (item.SPRW is {} SPRWItem)
+            if (item.ChallengeReward is {} ChallengeRewarditem)
             {
-                hash.Add(SPRWItem);
+                hash.Add(ChallengeRewarditem);
             }
-            hash.Add(item.SPRP);
-            hash.Add(item.SPDF);
+            hash.Add(item.ChallengeRepeatable);
+            hash.Add(item.ChallengeDefault);
             hash.Add(item.SPPQ);
-            hash.Add(item.SPKW);
-            hash.Add(item.SPPK);
-            hash.Add(item.SPKY);
-            hash.Add(item.DEVT);
+            hash.Add(item.ChallengeAndKeywords);
+            hash.Add(item.ChallengePerks);
+            hash.Add(item.ChallengeOrKeywords);
+            hash.Add(item.ShowOneDialogueTrack);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -3423,37 +3387,37 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return SCPPInfo;
             }
-            if (obj.SPMA is {} SPMAItem)
+            if (obj.MandatoryNextChallenges is {} MandatoryNextChallengesItem)
             {
-                foreach (var item in SPMAItem)
+                foreach (var item in MandatoryNextChallengesItem)
                 {
                     yield return FormLinkInformation.Factory(item);
                 }
             }
-            if (obj.SPEX is {} SPEXItem)
+            if (obj.ExcludedChallenges is {} ExcludedChallengesItem)
             {
-                foreach (var item in SPEXItem)
+                foreach (var item in ExcludedChallengesItem)
                 {
                     yield return FormLinkInformation.Factory(item);
                 }
             }
-            if (obj.SPKW is {} SPKWItem)
+            if (obj.ChallengeAndKeywords is {} ChallengeAndKeywordsItem)
             {
-                foreach (var item in SPKWItem)
+                foreach (var item in ChallengeAndKeywordsItem)
                 {
                     yield return FormLinkInformation.Factory(item);
                 }
             }
-            if (obj.SPPK is {} SPPKItem)
+            if (obj.ChallengePerks is {} ChallengePerksItem)
             {
-                foreach (var item in SPPKItem)
+                foreach (var item in ChallengePerksItem)
                 {
                     yield return FormLinkInformation.Factory(item);
                 }
             }
-            if (obj.SPKY is {} SPKYItem)
+            if (obj.ChallengeOrKeywords is {} ChallengeOrKeywordsItem)
             {
-                foreach (var item in SPKYItem)
+                foreach (var item in ChallengeOrKeywordsItem)
                 {
                     yield return FormLinkInformation.Factory(item);
                 }
@@ -3743,64 +3707,43 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.BOLV) ?? true))
             {
-                if(rhs.BOLV is {} BOLVrhs)
-                {
-                    item.BOLV = BOLVrhs.ToArray();
-                }
-                else
-                {
-                    item.BOLV = default;
-                }
+                item.BOLV = rhs.BOLV;
             }
             if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.Index) ?? true))
             {
                 item.Index = rhs.Index;
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SCPI) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.Priority) ?? true))
             {
-                if(rhs.SCPI is {} SCPIrhs)
-                {
-                    item.SCPI = SCPIrhs.ToArray();
-                }
-                else
-                {
-                    item.SCPI = default;
-                }
+                item.Priority = rhs.Priority;
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.JNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.OverrideSubtitlePriority) ?? true))
             {
-                if(rhs.JNAM is {} JNAMrhs)
-                {
-                    item.JNAM = JNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.JNAM = default;
-                }
+                item.OverrideSubtitlePriority = rhs.OverrideSubtitlePriority;
             }
             if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SCPP) ?? true))
             {
                 item.SCPP.SetTo(rhs.SCPP.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SCSP) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.IsSpeechChallenge) ?? true))
             {
-                item.SCSP = rhs.SCSP;
+                item.IsSpeechChallenge = rhs.IsSpeechChallenge;
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SPMA) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.MandatoryNextChallenges) ?? true))
             {
-                errorMask?.PushIndex((int)Scene_FieldIndex.SPMA);
+                errorMask?.PushIndex((int)Scene_FieldIndex.MandatoryNextChallenges);
                 try
                 {
-                    if ((rhs.SPMA != null))
+                    if ((rhs.MandatoryNextChallenges != null))
                     {
-                        item.SPMA = 
-                            rhs.SPMA
+                        item.MandatoryNextChallenges = 
+                            rhs.MandatoryNextChallenges
                                 .Select(b => (IFormLinkGetter<ISceneGetter>)new FormLink<ISceneGetter>(b.FormKey))
                             .ToExtendedList<IFormLinkGetter<ISceneGetter>>();
                     }
                     else
                     {
-                        item.SPMA = null;
+                        item.MandatoryNextChallenges = null;
                     }
                 }
                 catch (Exception ex)
@@ -3813,21 +3756,21 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SPEX) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ExcludedChallenges) ?? true))
             {
-                errorMask?.PushIndex((int)Scene_FieldIndex.SPEX);
+                errorMask?.PushIndex((int)Scene_FieldIndex.ExcludedChallenges);
                 try
                 {
-                    if ((rhs.SPEX != null))
+                    if ((rhs.ExcludedChallenges != null))
                     {
-                        item.SPEX = 
-                            rhs.SPEX
+                        item.ExcludedChallenges = 
+                            rhs.ExcludedChallenges
                                 .Select(b => (IFormLinkGetter<ISceneGetter>)new FormLink<ISceneGetter>(b.FormKey))
                             .ToExtendedList<IFormLinkGetter<ISceneGetter>>();
                     }
                     else
                     {
-                        item.SPEX = null;
+                        item.ExcludedChallenges = null;
                     }
                 }
                 catch (Exception ex)
@@ -3840,55 +3783,41 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SPRK) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeRisk) ?? true))
             {
-                if(rhs.SPRK is {} SPRKrhs)
-                {
-                    item.SPRK = SPRKrhs.ToArray();
-                }
-                else
-                {
-                    item.SPRK = default;
-                }
+                item.ChallengeRisk = rhs.ChallengeRisk;
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SPRW) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeReward) ?? true))
             {
-                if(rhs.SPRW is {} SPRWrhs)
-                {
-                    item.SPRW = SPRWrhs.ToArray();
-                }
-                else
-                {
-                    item.SPRW = default;
-                }
+                item.ChallengeReward = rhs.ChallengeReward;
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SPRP) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeRepeatable) ?? true))
             {
-                item.SPRP = rhs.SPRP;
+                item.ChallengeRepeatable = rhs.ChallengeRepeatable;
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SPDF) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeDefault) ?? true))
             {
-                item.SPDF = rhs.SPDF;
+                item.ChallengeDefault = rhs.ChallengeDefault;
             }
             if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SPPQ) ?? true))
             {
                 item.SPPQ = rhs.SPPQ;
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SPKW) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeAndKeywords) ?? true))
             {
-                errorMask?.PushIndex((int)Scene_FieldIndex.SPKW);
+                errorMask?.PushIndex((int)Scene_FieldIndex.ChallengeAndKeywords);
                 try
                 {
-                    if ((rhs.SPKW != null))
+                    if ((rhs.ChallengeAndKeywords != null))
                     {
-                        item.SPKW = 
-                            rhs.SPKW
+                        item.ChallengeAndKeywords = 
+                            rhs.ChallengeAndKeywords
                                 .Select(b => (IFormLinkGetter<IKeywordGetter>)new FormLink<IKeywordGetter>(b.FormKey))
                             .ToExtendedList<IFormLinkGetter<IKeywordGetter>>();
                     }
                     else
                     {
-                        item.SPKW = null;
+                        item.ChallengeAndKeywords = null;
                     }
                 }
                 catch (Exception ex)
@@ -3901,21 +3830,21 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SPPK) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengePerks) ?? true))
             {
-                errorMask?.PushIndex((int)Scene_FieldIndex.SPPK);
+                errorMask?.PushIndex((int)Scene_FieldIndex.ChallengePerks);
                 try
                 {
-                    if ((rhs.SPPK != null))
+                    if ((rhs.ChallengePerks != null))
                     {
-                        item.SPPK = 
-                            rhs.SPPK
+                        item.ChallengePerks = 
+                            rhs.ChallengePerks
                                 .Select(b => (IFormLinkGetter<IPerkGetter>)new FormLink<IPerkGetter>(b.FormKey))
                             .ToExtendedList<IFormLinkGetter<IPerkGetter>>();
                     }
                     else
                     {
-                        item.SPPK = null;
+                        item.ChallengePerks = null;
                     }
                 }
                 catch (Exception ex)
@@ -3928,21 +3857,21 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SPKY) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeOrKeywords) ?? true))
             {
-                errorMask?.PushIndex((int)Scene_FieldIndex.SPKY);
+                errorMask?.PushIndex((int)Scene_FieldIndex.ChallengeOrKeywords);
                 try
                 {
-                    if ((rhs.SPKY != null))
+                    if ((rhs.ChallengeOrKeywords != null))
                     {
-                        item.SPKY = 
-                            rhs.SPKY
+                        item.ChallengeOrKeywords = 
+                            rhs.ChallengeOrKeywords
                                 .Select(b => (IFormLinkGetter<IKeywordGetter>)new FormLink<IKeywordGetter>(b.FormKey))
                             .ToExtendedList<IFormLinkGetter<IKeywordGetter>>();
                     }
                     else
                     {
-                        item.SPKY = null;
+                        item.ChallengeOrKeywords = null;
                     }
                 }
                 catch (Exception ex)
@@ -3955,9 +3884,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.DEVT) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ShowOneDialogueTrack) ?? true))
             {
-                item.DEVT = rhs.DEVT;
+                item.ShowOneDialogueTrack = rhs.ShowOneDialogueTrack;
             }
             DeepCopyInCustom(
                 item: item,
@@ -4204,7 +4133,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.Template,
                 header: translationParams.ConvertToCustom(RecordTypes.TNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
                 item: item.BOLV,
                 header: translationParams.ConvertToCustom(RecordTypes.BOLV));
@@ -4212,13 +4141,14 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.Index,
                 header: translationParams.ConvertToCustom(RecordTypes.XNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.SCPI,
+                item: item.Priority,
                 header: translationParams.ConvertToCustom(RecordTypes.SCPI));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.JNAM,
+            EnumBinaryTranslation<DialogResponses.SubtitlePriorityLevel, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.OverrideSubtitlePriority,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.JNAM));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -4226,11 +4156,11 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.SCPP));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.SCSP,
+                item: item.IsSpeechChallenge,
                 header: translationParams.ConvertToCustom(RecordTypes.SCSP));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISceneGetter>>.Instance.Write(
                 writer: writer,
-                items: item.SPMA,
+                items: item.MandatoryNextChallenges,
                 recordType: translationParams.ConvertToCustom(RecordTypes.SPMA),
                 transl: (MutagenWriter subWriter, IFormLinkGetter<ISceneGetter> subItem, TypedWriteParams conv) =>
                 {
@@ -4240,7 +4170,7 @@ namespace Mutagen.Bethesda.Starfield
                 });
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISceneGetter>>.Instance.Write(
                 writer: writer,
-                items: item.SPEX,
+                items: item.ExcludedChallenges,
                 recordType: translationParams.ConvertToCustom(RecordTypes.SPEX),
                 transl: (MutagenWriter subWriter, IFormLinkGetter<ISceneGetter> subItem, TypedWriteParams conv) =>
                 {
@@ -4248,21 +4178,22 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         item: subItem);
                 });
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.SPRK,
+            EnumBinaryTranslation<Scene.SpeechChallengeRisk, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.ChallengeRisk,
+                length: 2,
                 header: translationParams.ConvertToCustom(RecordTypes.SPRK));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.SPRW,
+                item: item.ChallengeReward,
                 header: translationParams.ConvertToCustom(RecordTypes.SPRW));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.SPRP,
+                item: item.ChallengeRepeatable,
                 header: translationParams.ConvertToCustom(RecordTypes.SPRP));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.SPDF,
+                item: item.ChallengeDefault,
                 header: translationParams.ConvertToCustom(RecordTypes.SPDF));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
@@ -4270,7 +4201,7 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.SPPQ));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Write(
                 writer: writer,
-                items: item.SPKW,
+                items: item.ChallengeAndKeywords,
                 recordType: translationParams.ConvertToCustom(RecordTypes.SPKW),
                 transl: (MutagenWriter subWriter, IFormLinkGetter<IKeywordGetter> subItem, TypedWriteParams conv) =>
                 {
@@ -4280,7 +4211,7 @@ namespace Mutagen.Bethesda.Starfield
                 });
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IPerkGetter>>.Instance.Write(
                 writer: writer,
-                items: item.SPPK,
+                items: item.ChallengePerks,
                 recordType: translationParams.ConvertToCustom(RecordTypes.SPPK),
                 transl: (MutagenWriter subWriter, IFormLinkGetter<IPerkGetter> subItem, TypedWriteParams conv) =>
                 {
@@ -4290,7 +4221,7 @@ namespace Mutagen.Bethesda.Starfield
                 });
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Write(
                 writer: writer,
-                items: item.SPKY,
+                items: item.ChallengeOrKeywords,
                 recordType: translationParams.ConvertToCustom(RecordTypes.SPKY),
                 transl: (MutagenWriter subWriter, IFormLinkGetter<IKeywordGetter> subItem, TypedWriteParams conv) =>
                 {
@@ -4300,7 +4231,7 @@ namespace Mutagen.Bethesda.Starfield
                 });
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.DEVT,
+                item: item.ShowOneDialogueTrack,
                 header: translationParams.ConvertToCustom(RecordTypes.DEVT));
         }
 
@@ -4476,8 +4407,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BOLV:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BOLV = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    item.BOLV = true;
                     return (int)Scene_FieldIndex.BOLV;
                 }
                 case RecordTypeInts.XNAM:
@@ -4489,14 +4419,16 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.SCPI:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.SCPI = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Scene_FieldIndex.SCPI;
+                    item.Priority = frame.ReadUInt16();
+                    return (int)Scene_FieldIndex.Priority;
                 }
                 case RecordTypeInts.JNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.JNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Scene_FieldIndex.JNAM;
+                    item.OverrideSubtitlePriority = EnumBinaryTranslation<DialogResponses.SubtitlePriorityLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)Scene_FieldIndex.OverrideSubtitlePriority;
                 }
                 case RecordTypeInts.SCPP:
                 {
@@ -4506,50 +4438,52 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SCSP:
                 {
-                    item.SCSP = true;
-                    return (int)Scene_FieldIndex.SCSP;
+                    item.IsSpeechChallenge = true;
+                    return (int)Scene_FieldIndex.IsSpeechChallenge;
                 }
                 case RecordTypeInts.SPMA:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.SPMA = 
+                    item.MandatoryNextChallenges = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISceneGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<ISceneGetter>>();
-                    return (int)Scene_FieldIndex.SPMA;
+                    return (int)Scene_FieldIndex.MandatoryNextChallenges;
                 }
                 case RecordTypeInts.SPEX:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.SPEX = 
+                    item.ExcludedChallenges = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISceneGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<ISceneGetter>>();
-                    return (int)Scene_FieldIndex.SPEX;
+                    return (int)Scene_FieldIndex.ExcludedChallenges;
                 }
                 case RecordTypeInts.SPRK:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.SPRK = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Scene_FieldIndex.SPRK;
+                    item.ChallengeRisk = EnumBinaryTranslation<Scene.SpeechChallengeRisk, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)Scene_FieldIndex.ChallengeRisk;
                 }
                 case RecordTypeInts.SPRW:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.SPRW = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Scene_FieldIndex.SPRW;
+                    item.ChallengeReward = frame.ReadUInt32();
+                    return (int)Scene_FieldIndex.ChallengeReward;
                 }
                 case RecordTypeInts.SPRP:
                 {
-                    item.SPRP = true;
-                    return (int)Scene_FieldIndex.SPRP;
+                    item.ChallengeRepeatable = true;
+                    return (int)Scene_FieldIndex.ChallengeRepeatable;
                 }
                 case RecordTypeInts.SPDF:
                 {
-                    item.SPDF = true;
-                    return (int)Scene_FieldIndex.SPDF;
+                    item.ChallengeDefault = true;
+                    return (int)Scene_FieldIndex.ChallengeDefault;
                 }
                 case RecordTypeInts.SPPQ:
                 {
@@ -4559,37 +4493,37 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.SPKW:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.SPKW = 
+                    item.ChallengeAndKeywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
-                    return (int)Scene_FieldIndex.SPKW;
+                    return (int)Scene_FieldIndex.ChallengeAndKeywords;
                 }
                 case RecordTypeInts.SPPK:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.SPPK = 
+                    item.ChallengePerks = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IPerkGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IPerkGetter>>();
-                    return (int)Scene_FieldIndex.SPPK;
+                    return (int)Scene_FieldIndex.ChallengePerks;
                 }
                 case RecordTypeInts.SPKY:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.SPKY = 
+                    item.ChallengeOrKeywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
-                    return (int)Scene_FieldIndex.SPKY;
+                    return (int)Scene_FieldIndex.ChallengeOrKeywords;
                 }
                 case RecordTypeInts.DEVT:
                 {
-                    item.DEVT = true;
-                    return (int)Scene_FieldIndex.DEVT;
+                    item.ShowOneDialogueTrack = true;
+                    return (int)Scene_FieldIndex.ShowOneDialogueTrack;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -4707,56 +4641,56 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region BOLV
         private int? _BOLVLocation;
-        public ReadOnlyMemorySlice<Byte>? BOLV => _BOLVLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _BOLVLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        public Boolean BOLV => _BOLVLocation.HasValue ? true : default(Boolean);
         #endregion
         #region Index
         private int? _IndexLocation;
         public UInt32? Index => _IndexLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _IndexLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region SCPI
-        private int? _SCPILocation;
-        public ReadOnlyMemorySlice<Byte>? SCPI => _SCPILocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _SCPILocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Priority
+        private int? _PriorityLocation;
+        public UInt16? Priority => _PriorityLocation.HasValue ? BinaryPrimitives.ReadUInt16LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _PriorityLocation.Value, _package.MetaData.Constants)) : default(UInt16?);
         #endregion
-        #region JNAM
-        private int? _JNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? JNAM => _JNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _JNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region OverrideSubtitlePriority
+        private int? _OverrideSubtitlePriorityLocation;
+        public DialogResponses.SubtitlePriorityLevel? OverrideSubtitlePriority => EnumBinaryTranslation<DialogResponses.SubtitlePriorityLevel, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_OverrideSubtitlePriorityLocation, _recordData, _package, 4);
         #endregion
         #region SCPP
         private int? _SCPPLocation;
         public IFormLinkNullableGetter<ISceneGetter> SCPP => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ISceneGetter>(_package, _recordData, _SCPPLocation);
         #endregion
-        #region SCSP
-        private int? _SCSPLocation;
-        public Boolean SCSP => _SCSPLocation.HasValue ? true : default(Boolean);
+        #region IsSpeechChallenge
+        private int? _IsSpeechChallengeLocation;
+        public Boolean IsSpeechChallenge => _IsSpeechChallengeLocation.HasValue ? true : default(Boolean);
         #endregion
-        public IReadOnlyList<IFormLinkGetter<ISceneGetter>>? SPMA { get; private set; }
-        public IReadOnlyList<IFormLinkGetter<ISceneGetter>>? SPEX { get; private set; }
-        #region SPRK
-        private int? _SPRKLocation;
-        public ReadOnlyMemorySlice<Byte>? SPRK => _SPRKLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _SPRKLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        public IReadOnlyList<IFormLinkGetter<ISceneGetter>>? MandatoryNextChallenges { get; private set; }
+        public IReadOnlyList<IFormLinkGetter<ISceneGetter>>? ExcludedChallenges { get; private set; }
+        #region ChallengeRisk
+        private int? _ChallengeRiskLocation;
+        public Scene.SpeechChallengeRisk? ChallengeRisk => EnumBinaryTranslation<Scene.SpeechChallengeRisk, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_ChallengeRiskLocation, _recordData, _package, 2);
         #endregion
-        #region SPRW
-        private int? _SPRWLocation;
-        public ReadOnlyMemorySlice<Byte>? SPRW => _SPRWLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _SPRWLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region ChallengeReward
+        private int? _ChallengeRewardLocation;
+        public UInt32? ChallengeReward => _ChallengeRewardLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ChallengeRewardLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region SPRP
-        private int? _SPRPLocation;
-        public Boolean SPRP => _SPRPLocation.HasValue ? true : default(Boolean);
+        #region ChallengeRepeatable
+        private int? _ChallengeRepeatableLocation;
+        public Boolean ChallengeRepeatable => _ChallengeRepeatableLocation.HasValue ? true : default(Boolean);
         #endregion
-        #region SPDF
-        private int? _SPDFLocation;
-        public Boolean SPDF => _SPDFLocation.HasValue ? true : default(Boolean);
+        #region ChallengeDefault
+        private int? _ChallengeDefaultLocation;
+        public Boolean ChallengeDefault => _ChallengeDefaultLocation.HasValue ? true : default(Boolean);
         #endregion
         #region SPPQ
         private int? _SPPQLocation;
         public Boolean SPPQ => _SPPQLocation.HasValue ? true : default(Boolean);
         #endregion
-        public IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? SPKW { get; private set; }
-        public IReadOnlyList<IFormLinkGetter<IPerkGetter>>? SPPK { get; private set; }
-        public IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? SPKY { get; private set; }
-        #region DEVT
-        private int? _DEVTLocation;
-        public Boolean DEVT => _DEVTLocation.HasValue ? true : default(Boolean);
+        public IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? ChallengeAndKeywords { get; private set; }
+        public IReadOnlyList<IFormLinkGetter<IPerkGetter>>? ChallengePerks { get; private set; }
+        public IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? ChallengeOrKeywords { get; private set; }
+        #region ShowOneDialogueTrack
+        private int? _ShowOneDialogueTrackLocation;
+        public Boolean ShowOneDialogueTrack => _ShowOneDialogueTrackLocation.HasValue ? true : default(Boolean);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -4927,13 +4861,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SCPI:
                 {
-                    _SCPILocation = (stream.Position - offset);
-                    return (int)Scene_FieldIndex.SCPI;
+                    _PriorityLocation = (stream.Position - offset);
+                    return (int)Scene_FieldIndex.Priority;
                 }
                 case RecordTypeInts.JNAM:
                 {
-                    _JNAMLocation = (stream.Position - offset);
-                    return (int)Scene_FieldIndex.JNAM;
+                    _OverrideSubtitlePriorityLocation = (stream.Position - offset);
+                    return (int)Scene_FieldIndex.OverrideSubtitlePriority;
                 }
                 case RecordTypeInts.SCPP:
                 {
@@ -4942,48 +4876,48 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SCSP:
                 {
-                    _SCSPLocation = (stream.Position - offset);
-                    return (int)Scene_FieldIndex.SCSP;
+                    _IsSpeechChallengeLocation = (stream.Position - offset);
+                    return (int)Scene_FieldIndex.IsSpeechChallenge;
                 }
                 case RecordTypeInts.SPMA:
                 {
-                    this.SPMA = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<ISceneGetter>>(
+                    this.MandatoryNextChallenges = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<ISceneGetter>>(
                         stream: stream,
                         package: _package,
                         finalPos: finalPos,
                         itemLength: 4,
                         getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<ISceneGetter>(p, s));
-                    return (int)Scene_FieldIndex.SPMA;
+                    return (int)Scene_FieldIndex.MandatoryNextChallenges;
                 }
                 case RecordTypeInts.SPEX:
                 {
-                    this.SPEX = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<ISceneGetter>>(
+                    this.ExcludedChallenges = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<ISceneGetter>>(
                         stream: stream,
                         package: _package,
                         finalPos: finalPos,
                         itemLength: 4,
                         getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<ISceneGetter>(p, s));
-                    return (int)Scene_FieldIndex.SPEX;
+                    return (int)Scene_FieldIndex.ExcludedChallenges;
                 }
                 case RecordTypeInts.SPRK:
                 {
-                    _SPRKLocation = (stream.Position - offset);
-                    return (int)Scene_FieldIndex.SPRK;
+                    _ChallengeRiskLocation = (stream.Position - offset);
+                    return (int)Scene_FieldIndex.ChallengeRisk;
                 }
                 case RecordTypeInts.SPRW:
                 {
-                    _SPRWLocation = (stream.Position - offset);
-                    return (int)Scene_FieldIndex.SPRW;
+                    _ChallengeRewardLocation = (stream.Position - offset);
+                    return (int)Scene_FieldIndex.ChallengeReward;
                 }
                 case RecordTypeInts.SPRP:
                 {
-                    _SPRPLocation = (stream.Position - offset);
-                    return (int)Scene_FieldIndex.SPRP;
+                    _ChallengeRepeatableLocation = (stream.Position - offset);
+                    return (int)Scene_FieldIndex.ChallengeRepeatable;
                 }
                 case RecordTypeInts.SPDF:
                 {
-                    _SPDFLocation = (stream.Position - offset);
-                    return (int)Scene_FieldIndex.SPDF;
+                    _ChallengeDefaultLocation = (stream.Position - offset);
+                    return (int)Scene_FieldIndex.ChallengeDefault;
                 }
                 case RecordTypeInts.SPPQ:
                 {
@@ -4992,38 +4926,38 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SPKW:
                 {
-                    this.SPKW = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<IKeywordGetter>>(
+                    this.ChallengeAndKeywords = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<IKeywordGetter>>(
                         stream: stream,
                         package: _package,
                         finalPos: finalPos,
                         itemLength: 4,
                         getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(p, s));
-                    return (int)Scene_FieldIndex.SPKW;
+                    return (int)Scene_FieldIndex.ChallengeAndKeywords;
                 }
                 case RecordTypeInts.SPPK:
                 {
-                    this.SPPK = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<IPerkGetter>>(
+                    this.ChallengePerks = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<IPerkGetter>>(
                         stream: stream,
                         package: _package,
                         finalPos: finalPos,
                         itemLength: 4,
                         getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<IPerkGetter>(p, s));
-                    return (int)Scene_FieldIndex.SPPK;
+                    return (int)Scene_FieldIndex.ChallengePerks;
                 }
                 case RecordTypeInts.SPKY:
                 {
-                    this.SPKY = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<IKeywordGetter>>(
+                    this.ChallengeOrKeywords = BinaryOverlayList.FactoryByStartIndexWithTrigger<IFormLinkGetter<IKeywordGetter>>(
                         stream: stream,
                         package: _package,
                         finalPos: finalPos,
                         itemLength: 4,
                         getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(p, s));
-                    return (int)Scene_FieldIndex.SPKY;
+                    return (int)Scene_FieldIndex.ChallengeOrKeywords;
                 }
                 case RecordTypeInts.DEVT:
                 {
-                    _DEVTLocation = (stream.Position - offset);
-                    return (int)Scene_FieldIndex.DEVT;
+                    _ShowOneDialogueTrackLocation = (stream.Position - offset);
+                    return (int)Scene_FieldIndex.ShowOneDialogueTrack;
                 }
                 case RecordTypeInts.XXXX:
                 {

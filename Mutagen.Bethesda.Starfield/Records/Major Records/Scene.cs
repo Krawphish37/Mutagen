@@ -262,3 +262,15 @@ public partial class TimelineSceneAction
         HeadtrackEnable = 7,
     }
 }
+
+public partial class Scene
+{
+    // SPRK, Speech Challenge Data (xEdit's Starfield definitions; Starfield.esm stores 0-3)
+    public enum SpeechChallengeRisk
+    {
+        Easy = 0,
+        Medium = 1,
+        Hard = 2,
+        Always = 3,
+    }
+}

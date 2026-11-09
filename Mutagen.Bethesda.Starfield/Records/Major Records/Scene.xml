@@ -14,33 +14,35 @@
       <RefDirect name="SetParentQuestStage" refName="SceneSetParentQuestStage" />
       <String name="Notes" recordType="NNAM" />
       <FormLink name="Template" refName="Scene" recordType="TNAM" />
-      <ByteArray name="BOLV" recordType="BOLV" unknown="true" />
+      <!-- BOLV: empty marker, unnamed in xEdit; in Starfield.esm on exactly the scenes without DEVT -->
+      <Bool name="BOLV" recordType="BOLV" boolAsMarker="True" unknown="true" />
       <UInt32 name="Index" recordType="XNAM" />
-      <ByteArray name="SCPI" recordType="SCPI" unknown="true" />
-      <ByteArray name="JNAM" recordType="JNAM" unknown="true" />
+      <UInt16 name="Priority" recordType="SCPI" />
+      <Enum name="OverrideSubtitlePriority" enumName="DialogResponses.SubtitlePriorityLevel" recordType="JNAM" byteLength="4" />
       <FormLink name="SCPP" refName="Scene" recordType="SCPP" unknown="true" />
-      <Bool name="SCSP" recordType="SCSP" boolAsMarker="True" unknown="true" />
-      <List name="SPMA" recordType="SPMA" unknown="true" >
+      <!-- Speech Challenge Data (xEdit): SCSP marker, then SPMA ... SPKY -->
+      <Bool name="IsSpeechChallenge" recordType="SCSP" boolAsMarker="True" />
+      <List name="MandatoryNextChallenges" recordType="SPMA" >
         <FormLink refName="Scene" />
       </List>
-      <List name="SPEX" recordType="SPEX" unknown="true" >
+      <List name="ExcludedChallenges" recordType="SPEX" >
         <FormLink refName="Scene" />
       </List>
-      <ByteArray name="SPRK" recordType="SPRK" unknown="true" />
-      <ByteArray name="SPRW" recordType="SPRW" unknown="true" />
-      <Bool name="SPRP" recordType="SPRP" boolAsMarker="True" unknown="true" />
-      <Bool name="SPDF" recordType="SPDF" boolAsMarker="True" unknown="true" />
+      <Enum name="ChallengeRisk" enumName="Scene.SpeechChallengeRisk" recordType="SPRK" byteLength="2" />
+      <UInt32 name="ChallengeReward" recordType="SPRW" />
+      <Bool name="ChallengeRepeatable" recordType="SPRP" boolAsMarker="True" />
+      <Bool name="ChallengeDefault" recordType="SPDF" boolAsMarker="True" />
       <Bool name="SPPQ" recordType="SPPQ" boolAsMarker="True" unknown="true" />
-      <List name="SPKW" recordType="SPKW" unknown="true" >
+      <List name="ChallengeAndKeywords" recordType="SPKW" >
         <FormLink refName="Keyword" />
       </List>
-      <List name="SPPK" recordType="SPPK" unknown="true" >
+      <List name="ChallengePerks" recordType="SPPK" >
         <FormLink refName="Perk" />
       </List>
-      <List name="SPKY" recordType="SPKY" unknown="true" >
+      <List name="ChallengeOrKeywords" recordType="SPKY" >
         <FormLink refName="Keyword" />
       </List>
-      <Bool name="DEVT" recordType="DEVT" boolAsMarker="True" unknown="true" />
+      <Bool name="ShowOneDialogueTrack" recordType="DEVT" boolAsMarker="True" />
     </Fields>
   </Object>
   <Object name="SceneAdapter" baseClass="AVirtualMachineAdapter" recordType="VMAD" objType="Subrecord">
