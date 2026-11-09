@@ -89,16 +89,16 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Single? IMusicTrackGetter.FadeOut => this.FadeOut;
         #endregion
-        #region MTSH
+        #region SingleTrackSound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _MTSH;
-        public SoundReference? MTSH
+        private SoundReference? _SingleTrackSound;
+        public SoundReference? SingleTrackSound
         {
-            get => _MTSH;
-            set => _MTSH = value;
+            get => _SingleTrackSound;
+            set => _SingleTrackSound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? IMusicTrackGetter.MTSH => this.MTSH;
+        ISoundReferenceGetter? IMusicTrackGetter.SingleTrackSound => this.SingleTrackSound;
         #endregion
         #region CuePoints
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -114,16 +114,10 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region MSTF
+        #region ConditionsCantFailAfterSuccess
+        public Boolean? ConditionsCantFailAfterSuccess { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _MSTF;
-        public MemorySlice<Byte>? MSTF
-        {
-            get => this._MSTF;
-            set => this._MSTF = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IMusicTrackGetter.MSTF => this.MSTF;
+        Boolean? IMusicTrackGetter.ConditionsCantFailAfterSuccess => this.ConditionsCantFailAfterSuccess;
         #endregion
         #region Conditions
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -182,9 +176,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.Type = initialValue;
                 this.Duration = initialValue;
                 this.FadeOut = initialValue;
-                this.MTSH = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.SingleTrackSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.CuePoints = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.MSTF = initialValue;
+                this.ConditionsCantFailAfterSuccess = initialValue;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
                 this.Tracks = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
             }
@@ -201,9 +195,9 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Type,
                 TItem Duration,
                 TItem FadeOut,
-                TItem MTSH,
+                TItem SingleTrackSound,
                 TItem CuePoints,
-                TItem MSTF,
+                TItem ConditionsCantFailAfterSuccess,
                 TItem Conditions,
                 TItem Tracks)
             : base(
@@ -219,9 +213,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.Type = Type;
                 this.Duration = Duration;
                 this.FadeOut = FadeOut;
-                this.MTSH = new MaskItem<TItem, SoundReference.Mask<TItem>?>(MTSH, new SoundReference.Mask<TItem>(MTSH));
+                this.SingleTrackSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(SingleTrackSound, new SoundReference.Mask<TItem>(SingleTrackSound));
                 this.CuePoints = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(CuePoints, []);
-                this.MSTF = MSTF;
+                this.ConditionsCantFailAfterSuccess = ConditionsCantFailAfterSuccess;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
                 this.Tracks = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Tracks, []);
             }
@@ -239,9 +233,9 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Type;
             public TItem Duration;
             public TItem FadeOut;
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? MTSH { get; set; }
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? SingleTrackSound { get; set; }
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? CuePoints;
-            public TItem MSTF;
+            public TItem ConditionsCantFailAfterSuccess;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Tracks;
             #endregion
@@ -261,9 +255,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Type, rhs.Type)) return false;
                 if (!object.Equals(this.Duration, rhs.Duration)) return false;
                 if (!object.Equals(this.FadeOut, rhs.FadeOut)) return false;
-                if (!object.Equals(this.MTSH, rhs.MTSH)) return false;
+                if (!object.Equals(this.SingleTrackSound, rhs.SingleTrackSound)) return false;
                 if (!object.Equals(this.CuePoints, rhs.CuePoints)) return false;
-                if (!object.Equals(this.MSTF, rhs.MSTF)) return false;
+                if (!object.Equals(this.ConditionsCantFailAfterSuccess, rhs.ConditionsCantFailAfterSuccess)) return false;
                 if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
                 if (!object.Equals(this.Tracks, rhs.Tracks)) return false;
                 return true;
@@ -275,9 +269,9 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Type);
                 hash.Add(this.Duration);
                 hash.Add(this.FadeOut);
-                hash.Add(this.MTSH);
+                hash.Add(this.SingleTrackSound);
                 hash.Add(this.CuePoints);
-                hash.Add(this.MSTF);
+                hash.Add(this.ConditionsCantFailAfterSuccess);
                 hash.Add(this.Conditions);
                 hash.Add(this.Tracks);
                 hash.Add(base.GetHashCode());
@@ -298,10 +292,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Type)) return false;
                 if (!eval(this.Duration)) return false;
                 if (!eval(this.FadeOut)) return false;
-                if (MTSH != null)
+                if (SingleTrackSound != null)
                 {
-                    if (!eval(this.MTSH.Overall)) return false;
-                    if (this.MTSH.Specific != null && !this.MTSH.Specific.All(eval)) return false;
+                    if (!eval(this.SingleTrackSound.Overall)) return false;
+                    if (this.SingleTrackSound.Specific != null && !this.SingleTrackSound.Specific.All(eval)) return false;
                 }
                 if (this.CuePoints != null)
                 {
@@ -314,7 +308,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.MSTF)) return false;
+                if (!eval(this.ConditionsCantFailAfterSuccess)) return false;
                 if (this.Conditions != null)
                 {
                     if (!eval(this.Conditions.Overall)) return false;
@@ -354,10 +348,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Type)) return true;
                 if (eval(this.Duration)) return true;
                 if (eval(this.FadeOut)) return true;
-                if (MTSH != null)
+                if (SingleTrackSound != null)
                 {
-                    if (eval(this.MTSH.Overall)) return true;
-                    if (this.MTSH.Specific != null && this.MTSH.Specific.Any(eval)) return true;
+                    if (eval(this.SingleTrackSound.Overall)) return true;
+                    if (this.SingleTrackSound.Specific != null && this.SingleTrackSound.Specific.Any(eval)) return true;
                 }
                 if (this.CuePoints != null)
                 {
@@ -370,7 +364,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.MSTF)) return true;
+                if (eval(this.ConditionsCantFailAfterSuccess)) return true;
                 if (this.Conditions != null)
                 {
                     if (eval(this.Conditions.Overall)) return true;
@@ -413,7 +407,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Type = eval(this.Type);
                 obj.Duration = eval(this.Duration);
                 obj.FadeOut = eval(this.FadeOut);
-                obj.MTSH = this.MTSH == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.MTSH.Overall), this.MTSH.Specific?.Translate(eval));
+                obj.SingleTrackSound = this.SingleTrackSound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.SingleTrackSound.Overall), this.SingleTrackSound.Specific?.Translate(eval));
                 if (CuePoints != null)
                 {
                     obj.CuePoints = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.CuePoints.Overall), []);
@@ -428,7 +422,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.MSTF = eval(this.MSTF);
+                obj.ConditionsCantFailAfterSuccess = eval(this.ConditionsCantFailAfterSuccess);
                 if (Conditions != null)
                 {
                     obj.Conditions = new MaskItem<R, IEnumerable<MaskItemIndexed<R, Condition.Mask<R>?>>?>(eval(this.Conditions.Overall), []);
@@ -492,9 +486,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(FadeOut, "FadeOut");
                     }
-                    if (printMask?.MTSH?.Overall ?? true)
+                    if (printMask?.SingleTrackSound?.Overall ?? true)
                     {
-                        MTSH?.Print(sb);
+                        SingleTrackSound?.Print(sb);
                     }
                     if ((printMask?.CuePoints?.Overall ?? true)
                         && CuePoints is {} CuePointsItem)
@@ -517,9 +511,9 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.MSTF ?? true)
+                    if (printMask?.ConditionsCantFailAfterSuccess ?? true)
                     {
-                        sb.AppendItem(MSTF, "MSTF");
+                        sb.AppendItem(ConditionsCantFailAfterSuccess, "ConditionsCantFailAfterSuccess");
                     }
                     if ((printMask?.Conditions?.Overall ?? true)
                         && Conditions is {} ConditionsItem)
@@ -576,9 +570,9 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Type;
             public Exception? Duration;
             public Exception? FadeOut;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? MTSH;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? SingleTrackSound;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? CuePoints;
-            public Exception? MSTF;
+            public Exception? ConditionsCantFailAfterSuccess;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Tracks;
             #endregion
@@ -597,12 +591,12 @@ namespace Mutagen.Bethesda.Starfield
                         return Duration;
                     case MusicTrack_FieldIndex.FadeOut:
                         return FadeOut;
-                    case MusicTrack_FieldIndex.MTSH:
-                        return MTSH;
+                    case MusicTrack_FieldIndex.SingleTrackSound:
+                        return SingleTrackSound;
                     case MusicTrack_FieldIndex.CuePoints:
                         return CuePoints;
-                    case MusicTrack_FieldIndex.MSTF:
-                        return MSTF;
+                    case MusicTrack_FieldIndex.ConditionsCantFailAfterSuccess:
+                        return ConditionsCantFailAfterSuccess;
                     case MusicTrack_FieldIndex.Conditions:
                         return Conditions;
                     case MusicTrack_FieldIndex.Tracks:
@@ -629,14 +623,14 @@ namespace Mutagen.Bethesda.Starfield
                     case MusicTrack_FieldIndex.FadeOut:
                         this.FadeOut = ex;
                         break;
-                    case MusicTrack_FieldIndex.MTSH:
-                        this.MTSH = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case MusicTrack_FieldIndex.SingleTrackSound:
+                        this.SingleTrackSound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
                     case MusicTrack_FieldIndex.CuePoints:
                         this.CuePoints = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case MusicTrack_FieldIndex.MSTF:
-                        this.MSTF = ex;
+                    case MusicTrack_FieldIndex.ConditionsCantFailAfterSuccess:
+                        this.ConditionsCantFailAfterSuccess = ex;
                         break;
                     case MusicTrack_FieldIndex.Conditions:
                         this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
@@ -667,14 +661,14 @@ namespace Mutagen.Bethesda.Starfield
                     case MusicTrack_FieldIndex.FadeOut:
                         this.FadeOut = (Exception?)obj;
                         break;
-                    case MusicTrack_FieldIndex.MTSH:
-                        this.MTSH = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case MusicTrack_FieldIndex.SingleTrackSound:
+                        this.SingleTrackSound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
                     case MusicTrack_FieldIndex.CuePoints:
                         this.CuePoints = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case MusicTrack_FieldIndex.MSTF:
-                        this.MSTF = (Exception?)obj;
+                    case MusicTrack_FieldIndex.ConditionsCantFailAfterSuccess:
+                        this.ConditionsCantFailAfterSuccess = (Exception?)obj;
                         break;
                     case MusicTrack_FieldIndex.Conditions:
                         this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
@@ -695,9 +689,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (Type != null) return true;
                 if (Duration != null) return true;
                 if (FadeOut != null) return true;
-                if (MTSH != null) return true;
+                if (SingleTrackSound != null) return true;
                 if (CuePoints != null) return true;
-                if (MSTF != null) return true;
+                if (ConditionsCantFailAfterSuccess != null) return true;
                 if (Conditions != null) return true;
                 if (Tracks != null) return true;
                 return false;
@@ -736,7 +730,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(FadeOut, "FadeOut");
                 }
-                MTSH?.Print(sb);
+                SingleTrackSound?.Print(sb);
                 if (CuePoints is {} CuePointsItem)
                 {
                     sb.AppendLine("CuePoints =>");
@@ -758,7 +752,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(MSTF, "MSTF");
+                    sb.AppendItem(ConditionsCantFailAfterSuccess, "ConditionsCantFailAfterSuccess");
                 }
                 if (Conditions is {} ConditionsItem)
                 {
@@ -810,9 +804,9 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Type = this.Type.Combine(rhs.Type);
                 ret.Duration = this.Duration.Combine(rhs.Duration);
                 ret.FadeOut = this.FadeOut.Combine(rhs.FadeOut);
-                ret.MTSH = this.MTSH.Combine(rhs.MTSH, (l, r) => l.Combine(r));
+                ret.SingleTrackSound = this.SingleTrackSound.Combine(rhs.SingleTrackSound, (l, r) => l.Combine(r));
                 ret.CuePoints = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.CuePoints?.Overall, rhs.CuePoints?.Overall), Noggog.ExceptionExt.Combine(this.CuePoints?.Specific, rhs.CuePoints?.Specific));
-                ret.MSTF = this.MSTF.Combine(rhs.MSTF);
+                ret.ConditionsCantFailAfterSuccess = this.ConditionsCantFailAfterSuccess.Combine(rhs.ConditionsCantFailAfterSuccess);
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
                 ret.Tracks = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Tracks?.Overall, rhs.Tracks?.Overall), Noggog.ExceptionExt.Combine(this.Tracks?.Specific, rhs.Tracks?.Specific));
                 return ret;
@@ -841,9 +835,9 @@ namespace Mutagen.Bethesda.Starfield
             public bool Type;
             public bool Duration;
             public bool FadeOut;
-            public SoundReference.TranslationMask? MTSH;
+            public SoundReference.TranslationMask? SingleTrackSound;
             public bool CuePoints;
-            public bool MSTF;
+            public bool ConditionsCantFailAfterSuccess;
             public Condition.TranslationMask? Conditions;
             public bool Tracks;
             #endregion
@@ -858,7 +852,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Duration = defaultOn;
                 this.FadeOut = defaultOn;
                 this.CuePoints = defaultOn;
-                this.MSTF = defaultOn;
+                this.ConditionsCantFailAfterSuccess = defaultOn;
                 this.Tracks = defaultOn;
             }
 
@@ -871,9 +865,9 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Type, null));
                 ret.Add((Duration, null));
                 ret.Add((FadeOut, null));
-                ret.Add((MTSH != null ? MTSH.OnOverall : DefaultOn, MTSH?.GetCrystal()));
+                ret.Add((SingleTrackSound != null ? SingleTrackSound.OnOverall : DefaultOn, SingleTrackSound?.GetCrystal()));
                 ret.Add((CuePoints, null));
-                ret.Add((MSTF, null));
+                ret.Add((ConditionsCantFailAfterSuccess, null));
                 ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
                 ret.Add((Tracks, null));
             }
@@ -1032,9 +1026,9 @@ namespace Mutagen.Bethesda.Starfield
         new MusicTrack.TypeEnum Type { get; set; }
         new Single? Duration { get; set; }
         new Single? FadeOut { get; set; }
-        new SoundReference? MTSH { get; set; }
+        new SoundReference? SingleTrackSound { get; set; }
         new ExtendedList<Single>? CuePoints { get; set; }
-        new MemorySlice<Byte>? MSTF { get; set; }
+        new Boolean? ConditionsCantFailAfterSuccess { get; set; }
         new ExtendedList<Condition>? Conditions { get; set; }
         new ExtendedList<IFormLinkGetter<IMusicTrackGetter>>? Tracks { get; set; }
     }
@@ -1066,9 +1060,9 @@ namespace Mutagen.Bethesda.Starfield
         MusicTrack.TypeEnum Type { get; }
         Single? Duration { get; }
         Single? FadeOut { get; }
-        ISoundReferenceGetter? MTSH { get; }
+        ISoundReferenceGetter? SingleTrackSound { get; }
         IReadOnlyList<Single>? CuePoints { get; }
-        ReadOnlyMemorySlice<Byte>? MSTF { get; }
+        Boolean? ConditionsCantFailAfterSuccess { get; }
         IReadOnlyList<IConditionGetter>? Conditions { get; }
         IReadOnlyList<IFormLinkGetter<IMusicTrackGetter>>? Tracks { get; }
 
@@ -1251,9 +1245,9 @@ namespace Mutagen.Bethesda.Starfield
         Type = 8,
         Duration = 9,
         FadeOut = 10,
-        MTSH = 11,
+        SingleTrackSound = 11,
         CuePoints = 12,
-        MSTF = 13,
+        ConditionsCantFailAfterSuccess = 13,
         Conditions = 14,
         Tracks = 15,
     }
@@ -1362,9 +1356,9 @@ namespace Mutagen.Bethesda.Starfield
             item.Type = default(MusicTrack.TypeEnum);
             item.Duration = default;
             item.FadeOut = default;
-            item.MTSH = null;
+            item.SingleTrackSound = null;
             item.CuePoints = null;
-            item.MSTF = default;
+            item.ConditionsCantFailAfterSuccess = default;
             item.Conditions = null;
             item.Tracks = null;
             base.Clear(item);
@@ -1385,7 +1379,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             base.RemapLinks(obj, mapping);
             obj.VirtualMachineAdapter?.RemapLinks(mapping);
-            obj.MTSH?.RemapLinks(mapping);
+            obj.SingleTrackSound?.RemapLinks(mapping);
             obj.Conditions?.RemapLinks(mapping);
             obj.Tracks?.RemapLinks(mapping);
         }
@@ -1463,16 +1457,16 @@ namespace Mutagen.Bethesda.Starfield
             ret.Type = item.Type == rhs.Type;
             ret.Duration = item.Duration.EqualsWithin(rhs.Duration);
             ret.FadeOut = item.FadeOut.EqualsWithin(rhs.FadeOut);
-            ret.MTSH = EqualsMaskHelper.EqualsHelper(
-                item.MTSH,
-                rhs.MTSH,
+            ret.SingleTrackSound = EqualsMaskHelper.EqualsHelper(
+                item.SingleTrackSound,
+                rhs.SingleTrackSound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.CuePoints = item.CuePoints.CollectionEqualsHelper(
                 rhs.CuePoints,
                 (l, r) => l.EqualsWithin(r),
                 include);
-            ret.MSTF = MemorySliceExt.SequenceEqual(item.MSTF, rhs.MSTF);
+            ret.ConditionsCantFailAfterSuccess = item.ConditionsCantFailAfterSuccess == rhs.ConditionsCantFailAfterSuccess;
             ret.Conditions = item.Conditions.CollectionEqualsHelper(
                 rhs.Conditions,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -1549,10 +1543,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(FadeOutItem, "FadeOut");
             }
-            if ((printMask?.MTSH?.Overall ?? true)
-                && item.MTSH is {} MTSHItem)
+            if ((printMask?.SingleTrackSound?.Overall ?? true)
+                && item.SingleTrackSound is {} SingleTrackSoundItem)
             {
-                MTSHItem?.Print(sb, "MTSH");
+                SingleTrackSoundItem?.Print(sb, "SingleTrackSound");
             }
             if ((printMask?.CuePoints?.Overall ?? true)
                 && item.CuePoints is {} CuePointsItem)
@@ -1569,10 +1563,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.MSTF ?? true)
-                && item.MSTF is {} MSTFItem)
+            if ((printMask?.ConditionsCantFailAfterSuccess ?? true)
+                && item.ConditionsCantFailAfterSuccess is {} ConditionsCantFailAfterSuccessItem)
             {
-                sb.AppendLine($"MSTF => {SpanExt.ToHexString(MSTFItem)}");
+                sb.AppendItem(ConditionsCantFailAfterSuccessItem, "ConditionsCantFailAfterSuccess");
             }
             if ((printMask?.Conditions?.Overall ?? true)
                 && item.Conditions is {} ConditionsItem)
@@ -1674,21 +1668,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.FadeOut.EqualsWithin(rhs.FadeOut)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MusicTrack_FieldIndex.MTSH) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MusicTrack_FieldIndex.SingleTrackSound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.MTSH, rhs.MTSH, out var lhsMTSH, out var rhsMTSH, out var isMTSHEqual))
+                if (EqualsMaskHelper.RefEquality(lhs.SingleTrackSound, rhs.SingleTrackSound, out var lhsSingleTrackSound, out var rhsSingleTrackSound, out var isSingleTrackSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsMTSH).CommonInstance()!).Equals(lhsMTSH, rhsMTSH, equalsMask?.GetSubCrystal((int)MusicTrack_FieldIndex.MTSH))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsSingleTrackSound).CommonInstance()!).Equals(lhsSingleTrackSound, rhsSingleTrackSound, equalsMask?.GetSubCrystal((int)MusicTrack_FieldIndex.SingleTrackSound))) return false;
                 }
-                else if (!isMTSHEqual) return false;
+                else if (!isSingleTrackSoundEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)MusicTrack_FieldIndex.CuePoints) ?? true))
             {
                 if (!lhs.CuePoints.SequenceEqualNullable(rhs.CuePoints)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MusicTrack_FieldIndex.MSTF) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MusicTrack_FieldIndex.ConditionsCantFailAfterSuccess) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.MSTF, rhs.MSTF)) return false;
+                if (lhs.ConditionsCantFailAfterSuccess != rhs.ConditionsCantFailAfterSuccess) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)MusicTrack_FieldIndex.Conditions) ?? true))
             {
@@ -1739,14 +1733,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(FadeOutitem);
             }
-            if (item.MTSH is {} MTSHitem)
+            if (item.SingleTrackSound is {} SingleTrackSounditem)
             {
-                hash.Add(MTSHitem);
+                hash.Add(SingleTrackSounditem);
             }
             hash.Add(item.CuePoints);
-            if (item.MSTF is {} MSTFItem)
+            if (item.ConditionsCantFailAfterSuccess is {} ConditionsCantFailAfterSuccessitem)
             {
-                hash.Add(MSTFItem);
+                hash.Add(ConditionsCantFailAfterSuccessitem);
             }
             hash.Add(item.Conditions);
             hash.Add(item.Tracks);
@@ -1786,9 +1780,9 @@ namespace Mutagen.Bethesda.Starfield
                     yield return item;
                 }
             }
-            if (obj.MTSH is {} MTSHItems)
+            if (obj.SingleTrackSound is {} SingleTrackSoundItems)
             {
-                foreach (var item in MTSHItems.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in SingleTrackSoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -1941,20 +1935,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.FadeOut = rhs.FadeOut;
             }
-            if ((copyMask?.GetShouldTranslate((int)MusicTrack_FieldIndex.MTSH) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MusicTrack_FieldIndex.SingleTrackSound) ?? true))
             {
-                errorMask?.PushIndex((int)MusicTrack_FieldIndex.MTSH);
+                errorMask?.PushIndex((int)MusicTrack_FieldIndex.SingleTrackSound);
                 try
                 {
-                    if(rhs.MTSH is {} rhsMTSH)
+                    if(rhs.SingleTrackSound is {} rhsSingleTrackSound)
                     {
-                        item.MTSH = rhsMTSH.DeepCopy(
+                        item.SingleTrackSound = rhsSingleTrackSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)MusicTrack_FieldIndex.MTSH));
+                            copyMask?.GetSubCrystal((int)MusicTrack_FieldIndex.SingleTrackSound));
                     }
                     else
                     {
-                        item.MTSH = default;
+                        item.SingleTrackSound = default;
                     }
                 }
                 catch (Exception ex)
@@ -1993,16 +1987,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)MusicTrack_FieldIndex.MSTF) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MusicTrack_FieldIndex.ConditionsCantFailAfterSuccess) ?? true))
             {
-                if(rhs.MSTF is {} MSTFrhs)
-                {
-                    item.MSTF = MSTFrhs.ToArray();
-                }
-                else
-                {
-                    item.MSTF = default;
-                }
+                item.ConditionsCantFailAfterSuccess = rhs.ConditionsCantFailAfterSuccess;
             }
             if ((copyMask?.GetShouldTranslate((int)MusicTrack_FieldIndex.Conditions) ?? true))
             {
@@ -2252,12 +2239,12 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.FadeOut,
                 header: translationParams.ConvertToCustom(RecordTypes.DNAM));
-            if (item.MTSH is {} MTSHItem)
+            if (item.SingleTrackSound is {} SingleTrackSoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.MTSH))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)MTSHItem).BinaryWriteTranslator).Write(
-                        item: MTSHItem,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)SingleTrackSoundItem).BinaryWriteTranslator).Write(
+                        item: SingleTrackSoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -2267,9 +2254,9 @@ namespace Mutagen.Bethesda.Starfield
                 items: item.CuePoints,
                 recordType: translationParams.ConvertToCustom(RecordTypes.FNAM),
                 transl: FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            BooleanBinaryTranslation<MutagenFrame>.Instance.WriteNullable(
                 writer: writer,
-                item: item.MSTF,
+                item: item.ConditionsCantFailAfterSuccess,
                 header: translationParams.ConvertToCustom(RecordTypes.MSTF));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IConditionGetter>.Instance.WriteWithCounter(
                 writer: writer,
@@ -2392,8 +2379,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MTSH:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.MTSH = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)MusicTrack_FieldIndex.MTSH;
+                    item.SingleTrackSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)MusicTrack_FieldIndex.SingleTrackSound;
                 }
                 case RecordTypeInts.FNAM:
                 {
@@ -2408,8 +2395,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MSTF:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.MSTF = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)MusicTrack_FieldIndex.MSTF;
+                    item.ConditionsCantFailAfterSuccess = frame.ReadBoolean();
+                    return (int)MusicTrack_FieldIndex.ConditionsCantFailAfterSuccess;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
@@ -2517,11 +2504,11 @@ namespace Mutagen.Bethesda.Starfield
         private int? _FadeOutLocation;
         public Single? FadeOut => _FadeOutLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FadeOutLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
-        public ISoundReferenceGetter? MTSH { get; private set; }
+        public ISoundReferenceGetter? SingleTrackSound { get; private set; }
         public IReadOnlyList<Single>? CuePoints { get; private set; }
-        #region MSTF
-        private int? _MSTFLocation;
-        public ReadOnlyMemorySlice<Byte>? MSTF => _MSTFLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _MSTFLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region ConditionsCantFailAfterSuccess
+        private int? _ConditionsCantFailAfterSuccessLocation;
+        public Boolean? ConditionsCantFailAfterSuccess => _ConditionsCantFailAfterSuccessLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ConditionsCantFailAfterSuccessLocation.Value, _package.MetaData.Constants)[0] >= 1 : default(Boolean?);
         #endregion
         public IReadOnlyList<IConditionGetter>? Conditions { get; private set; }
         public IReadOnlyList<IFormLinkGetter<IMusicTrackGetter>>? Tracks { get; private set; }
@@ -2622,11 +2609,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MTSH:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.MTSH = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.SingleTrackSound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)MusicTrack_FieldIndex.MTSH;
+                    return (int)MusicTrack_FieldIndex.SingleTrackSound;
                 }
                 case RecordTypeInts.FNAM:
                 {
@@ -2640,8 +2627,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.MSTF:
                 {
-                    _MSTFLocation = (stream.Position - offset);
-                    return (int)MusicTrack_FieldIndex.MSTF;
+                    _ConditionsCantFailAfterSuccessLocation = (stream.Position - offset);
+                    return (int)MusicTrack_FieldIndex.ConditionsCantFailAfterSuccess;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
