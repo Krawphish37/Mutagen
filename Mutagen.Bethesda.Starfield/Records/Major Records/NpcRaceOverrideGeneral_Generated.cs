@@ -63,51 +63,54 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<IMaterialTypeGetter> INpcRaceOverrideGeneralGetter.ImpactMaterialType => this.ImpactMaterialType;
         #endregion
-        #region WED0
-        public SoundReference WED0 { get; set; } = new SoundReference();
+        #region CorpseOpenSound
+        public SoundReference CorpseOpenSound { get; set; } = new SoundReference();
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter INpcRaceOverrideGeneralGetter.WED0 => WED0;
+        ISoundReferenceGetter INpcRaceOverrideGeneralGetter.CorpseOpenSound => CorpseOpenSound;
         #endregion
-        #region WED1
-        public SoundReference WED1 { get; set; } = new SoundReference();
+        #region CorpseCloseSound
+        public SoundReference CorpseCloseSound { get; set; } = new SoundReference();
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter INpcRaceOverrideGeneralGetter.WED1 => WED1;
+        ISoundReferenceGetter INpcRaceOverrideGeneralGetter.CorpseCloseSound => CorpseCloseSound;
         #endregion
-        #region UnknownForm1
-        private readonly IFormLink<IExplosionGetter> _UnknownForm1 = new FormLink<IExplosionGetter>();
-        public IFormLink<IExplosionGetter> UnknownForm1
+        #region OnCrippleExplosion
+        private readonly IFormLink<IExplosionGetter> _OnCrippleExplosion = new FormLink<IExplosionGetter>();
+        public IFormLink<IExplosionGetter> OnCrippleExplosion
         {
-            get => _UnknownForm1;
-            set => _UnknownForm1.SetTo(value);
+            get => _OnCrippleExplosion;
+            set => _OnCrippleExplosion.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IExplosionGetter> INpcRaceOverrideGeneralGetter.UnknownForm1 => this.UnknownForm1;
+        IFormLinkGetter<IExplosionGetter> INpcRaceOverrideGeneralGetter.OnCrippleExplosion => this.OnCrippleExplosion;
         #endregion
-        #region UnknownForm2
-        private readonly IFormLink<IDebrisGetter> _UnknownForm2 = new FormLink<IDebrisGetter>();
-        public IFormLink<IDebrisGetter> UnknownForm2
+        #region OnCrippleDebris
+        private readonly IFormLink<IDebrisGetter> _OnCrippleDebris = new FormLink<IDebrisGetter>();
+        public IFormLink<IDebrisGetter> OnCrippleDebris
         {
-            get => _UnknownForm2;
-            set => _UnknownForm2.SetTo(value);
+            get => _OnCrippleDebris;
+            set => _OnCrippleDebris.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IDebrisGetter> INpcRaceOverrideGeneralGetter.UnknownForm2 => this.UnknownForm2;
+        IFormLinkGetter<IDebrisGetter> INpcRaceOverrideGeneralGetter.OnCrippleDebris => this.OnCrippleDebris;
         #endregion
-        #region UnknownForm3
-        private readonly IFormLink<IImpactDataSetGetter> _UnknownForm3 = new FormLink<IImpactDataSetGetter>();
-        public IFormLink<IImpactDataSetGetter> UnknownForm3
+        #region OnCrippleImpactDataSet
+        private readonly IFormLink<IImpactDataSetGetter> _OnCrippleImpactDataSet = new FormLink<IImpactDataSetGetter>();
+        public IFormLink<IImpactDataSetGetter> OnCrippleImpactDataSet
         {
-            get => _UnknownForm3;
-            set => _UnknownForm3.SetTo(value);
+            get => _OnCrippleImpactDataSet;
+            set => _OnCrippleImpactDataSet.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IImpactDataSetGetter> INpcRaceOverrideGeneralGetter.UnknownForm3 => this.UnknownForm3;
+        IFormLinkGetter<IImpactDataSetGetter> INpcRaceOverrideGeneralGetter.OnCrippleImpactDataSet => this.OnCrippleImpactDataSet;
         #endregion
-        #region UnknownFloat
-        public Single UnknownFloat { get; set; } = default(Single);
+        #region OnCrippleDebrisScale
+        public Single OnCrippleDebrisScale { get; set; } = default(Single);
         #endregion
-        #region UnknownInt16
-        public UInt16 UnknownInt16 { get; set; } = default(UInt16);
+        #region OnCrippleDebrisCount
+        public Byte OnCrippleDebrisCount { get; set; } = default(Byte);
+        #endregion
+        #region OnCrippleDecalCount
+        public Byte OnCrippleDecalCount { get; set; } = default(Byte);
         #endregion
         #region ActiveOverrides
         public NpcRaceOverrideGeneral.ActiveOverride ActiveOverrides { get; set; } = default(NpcRaceOverrideGeneral.ActiveOverride);
@@ -152,35 +155,38 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.ImpactMaterialType = initialValue;
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
-                this.WED1 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
-                this.UnknownForm1 = initialValue;
-                this.UnknownForm2 = initialValue;
-                this.UnknownForm3 = initialValue;
-                this.UnknownFloat = initialValue;
-                this.UnknownInt16 = initialValue;
+                this.CorpseOpenSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.CorpseCloseSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.OnCrippleExplosion = initialValue;
+                this.OnCrippleDebris = initialValue;
+                this.OnCrippleImpactDataSet = initialValue;
+                this.OnCrippleDebrisScale = initialValue;
+                this.OnCrippleDebrisCount = initialValue;
+                this.OnCrippleDecalCount = initialValue;
                 this.ActiveOverrides = initialValue;
             }
 
             public Mask(
                 TItem ImpactMaterialType,
-                TItem WED0,
-                TItem WED1,
-                TItem UnknownForm1,
-                TItem UnknownForm2,
-                TItem UnknownForm3,
-                TItem UnknownFloat,
-                TItem UnknownInt16,
+                TItem CorpseOpenSound,
+                TItem CorpseCloseSound,
+                TItem OnCrippleExplosion,
+                TItem OnCrippleDebris,
+                TItem OnCrippleImpactDataSet,
+                TItem OnCrippleDebrisScale,
+                TItem OnCrippleDebrisCount,
+                TItem OnCrippleDecalCount,
                 TItem ActiveOverrides)
             {
                 this.ImpactMaterialType = ImpactMaterialType;
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WED0, new SoundReference.Mask<TItem>(WED0));
-                this.WED1 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WED1, new SoundReference.Mask<TItem>(WED1));
-                this.UnknownForm1 = UnknownForm1;
-                this.UnknownForm2 = UnknownForm2;
-                this.UnknownForm3 = UnknownForm3;
-                this.UnknownFloat = UnknownFloat;
-                this.UnknownInt16 = UnknownInt16;
+                this.CorpseOpenSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(CorpseOpenSound, new SoundReference.Mask<TItem>(CorpseOpenSound));
+                this.CorpseCloseSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(CorpseCloseSound, new SoundReference.Mask<TItem>(CorpseCloseSound));
+                this.OnCrippleExplosion = OnCrippleExplosion;
+                this.OnCrippleDebris = OnCrippleDebris;
+                this.OnCrippleImpactDataSet = OnCrippleImpactDataSet;
+                this.OnCrippleDebrisScale = OnCrippleDebrisScale;
+                this.OnCrippleDebrisCount = OnCrippleDebrisCount;
+                this.OnCrippleDecalCount = OnCrippleDecalCount;
                 this.ActiveOverrides = ActiveOverrides;
             }
 
@@ -194,13 +200,14 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem ImpactMaterialType;
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? WED0 { get; set; }
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? WED1 { get; set; }
-            public TItem UnknownForm1;
-            public TItem UnknownForm2;
-            public TItem UnknownForm3;
-            public TItem UnknownFloat;
-            public TItem UnknownInt16;
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? CorpseOpenSound { get; set; }
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? CorpseCloseSound { get; set; }
+            public TItem OnCrippleExplosion;
+            public TItem OnCrippleDebris;
+            public TItem OnCrippleImpactDataSet;
+            public TItem OnCrippleDebrisScale;
+            public TItem OnCrippleDebrisCount;
+            public TItem OnCrippleDecalCount;
             public TItem ActiveOverrides;
             #endregion
 
@@ -215,13 +222,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.ImpactMaterialType, rhs.ImpactMaterialType)) return false;
-                if (!object.Equals(this.WED0, rhs.WED0)) return false;
-                if (!object.Equals(this.WED1, rhs.WED1)) return false;
-                if (!object.Equals(this.UnknownForm1, rhs.UnknownForm1)) return false;
-                if (!object.Equals(this.UnknownForm2, rhs.UnknownForm2)) return false;
-                if (!object.Equals(this.UnknownForm3, rhs.UnknownForm3)) return false;
-                if (!object.Equals(this.UnknownFloat, rhs.UnknownFloat)) return false;
-                if (!object.Equals(this.UnknownInt16, rhs.UnknownInt16)) return false;
+                if (!object.Equals(this.CorpseOpenSound, rhs.CorpseOpenSound)) return false;
+                if (!object.Equals(this.CorpseCloseSound, rhs.CorpseCloseSound)) return false;
+                if (!object.Equals(this.OnCrippleExplosion, rhs.OnCrippleExplosion)) return false;
+                if (!object.Equals(this.OnCrippleDebris, rhs.OnCrippleDebris)) return false;
+                if (!object.Equals(this.OnCrippleImpactDataSet, rhs.OnCrippleImpactDataSet)) return false;
+                if (!object.Equals(this.OnCrippleDebrisScale, rhs.OnCrippleDebrisScale)) return false;
+                if (!object.Equals(this.OnCrippleDebrisCount, rhs.OnCrippleDebrisCount)) return false;
+                if (!object.Equals(this.OnCrippleDecalCount, rhs.OnCrippleDecalCount)) return false;
                 if (!object.Equals(this.ActiveOverrides, rhs.ActiveOverrides)) return false;
                 return true;
             }
@@ -229,13 +237,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.ImpactMaterialType);
-                hash.Add(this.WED0);
-                hash.Add(this.WED1);
-                hash.Add(this.UnknownForm1);
-                hash.Add(this.UnknownForm2);
-                hash.Add(this.UnknownForm3);
-                hash.Add(this.UnknownFloat);
-                hash.Add(this.UnknownInt16);
+                hash.Add(this.CorpseOpenSound);
+                hash.Add(this.CorpseCloseSound);
+                hash.Add(this.OnCrippleExplosion);
+                hash.Add(this.OnCrippleDebris);
+                hash.Add(this.OnCrippleImpactDataSet);
+                hash.Add(this.OnCrippleDebrisScale);
+                hash.Add(this.OnCrippleDebrisCount);
+                hash.Add(this.OnCrippleDecalCount);
                 hash.Add(this.ActiveOverrides);
                 return hash.ToHashCode();
             }
@@ -246,21 +255,22 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.ImpactMaterialType)) return false;
-                if (WED0 != null)
+                if (CorpseOpenSound != null)
                 {
-                    if (!eval(this.WED0.Overall)) return false;
-                    if (this.WED0.Specific != null && !this.WED0.Specific.All(eval)) return false;
+                    if (!eval(this.CorpseOpenSound.Overall)) return false;
+                    if (this.CorpseOpenSound.Specific != null && !this.CorpseOpenSound.Specific.All(eval)) return false;
                 }
-                if (WED1 != null)
+                if (CorpseCloseSound != null)
                 {
-                    if (!eval(this.WED1.Overall)) return false;
-                    if (this.WED1.Specific != null && !this.WED1.Specific.All(eval)) return false;
+                    if (!eval(this.CorpseCloseSound.Overall)) return false;
+                    if (this.CorpseCloseSound.Specific != null && !this.CorpseCloseSound.Specific.All(eval)) return false;
                 }
-                if (!eval(this.UnknownForm1)) return false;
-                if (!eval(this.UnknownForm2)) return false;
-                if (!eval(this.UnknownForm3)) return false;
-                if (!eval(this.UnknownFloat)) return false;
-                if (!eval(this.UnknownInt16)) return false;
+                if (!eval(this.OnCrippleExplosion)) return false;
+                if (!eval(this.OnCrippleDebris)) return false;
+                if (!eval(this.OnCrippleImpactDataSet)) return false;
+                if (!eval(this.OnCrippleDebrisScale)) return false;
+                if (!eval(this.OnCrippleDebrisCount)) return false;
+                if (!eval(this.OnCrippleDecalCount)) return false;
                 if (!eval(this.ActiveOverrides)) return false;
                 return true;
             }
@@ -270,21 +280,22 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.ImpactMaterialType)) return true;
-                if (WED0 != null)
+                if (CorpseOpenSound != null)
                 {
-                    if (eval(this.WED0.Overall)) return true;
-                    if (this.WED0.Specific != null && this.WED0.Specific.Any(eval)) return true;
+                    if (eval(this.CorpseOpenSound.Overall)) return true;
+                    if (this.CorpseOpenSound.Specific != null && this.CorpseOpenSound.Specific.Any(eval)) return true;
                 }
-                if (WED1 != null)
+                if (CorpseCloseSound != null)
                 {
-                    if (eval(this.WED1.Overall)) return true;
-                    if (this.WED1.Specific != null && this.WED1.Specific.Any(eval)) return true;
+                    if (eval(this.CorpseCloseSound.Overall)) return true;
+                    if (this.CorpseCloseSound.Specific != null && this.CorpseCloseSound.Specific.Any(eval)) return true;
                 }
-                if (eval(this.UnknownForm1)) return true;
-                if (eval(this.UnknownForm2)) return true;
-                if (eval(this.UnknownForm3)) return true;
-                if (eval(this.UnknownFloat)) return true;
-                if (eval(this.UnknownInt16)) return true;
+                if (eval(this.OnCrippleExplosion)) return true;
+                if (eval(this.OnCrippleDebris)) return true;
+                if (eval(this.OnCrippleImpactDataSet)) return true;
+                if (eval(this.OnCrippleDebrisScale)) return true;
+                if (eval(this.OnCrippleDebrisCount)) return true;
+                if (eval(this.OnCrippleDecalCount)) return true;
                 if (eval(this.ActiveOverrides)) return true;
                 return false;
             }
@@ -301,13 +312,14 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.ImpactMaterialType = eval(this.ImpactMaterialType);
-                obj.WED0 = this.WED0 == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WED0.Overall), this.WED0.Specific?.Translate(eval));
-                obj.WED1 = this.WED1 == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WED1.Overall), this.WED1.Specific?.Translate(eval));
-                obj.UnknownForm1 = eval(this.UnknownForm1);
-                obj.UnknownForm2 = eval(this.UnknownForm2);
-                obj.UnknownForm3 = eval(this.UnknownForm3);
-                obj.UnknownFloat = eval(this.UnknownFloat);
-                obj.UnknownInt16 = eval(this.UnknownInt16);
+                obj.CorpseOpenSound = this.CorpseOpenSound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.CorpseOpenSound.Overall), this.CorpseOpenSound.Specific?.Translate(eval));
+                obj.CorpseCloseSound = this.CorpseCloseSound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.CorpseCloseSound.Overall), this.CorpseCloseSound.Specific?.Translate(eval));
+                obj.OnCrippleExplosion = eval(this.OnCrippleExplosion);
+                obj.OnCrippleDebris = eval(this.OnCrippleDebris);
+                obj.OnCrippleImpactDataSet = eval(this.OnCrippleImpactDataSet);
+                obj.OnCrippleDebrisScale = eval(this.OnCrippleDebrisScale);
+                obj.OnCrippleDebrisCount = eval(this.OnCrippleDebrisCount);
+                obj.OnCrippleDecalCount = eval(this.OnCrippleDecalCount);
                 obj.ActiveOverrides = eval(this.ActiveOverrides);
             }
             #endregion
@@ -331,33 +343,37 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ImpactMaterialType, "ImpactMaterialType");
                     }
-                    if (printMask?.WED0?.Overall ?? true)
+                    if (printMask?.CorpseOpenSound?.Overall ?? true)
                     {
-                        WED0?.Print(sb);
+                        CorpseOpenSound?.Print(sb);
                     }
-                    if (printMask?.WED1?.Overall ?? true)
+                    if (printMask?.CorpseCloseSound?.Overall ?? true)
                     {
-                        WED1?.Print(sb);
+                        CorpseCloseSound?.Print(sb);
                     }
-                    if (printMask?.UnknownForm1 ?? true)
+                    if (printMask?.OnCrippleExplosion ?? true)
                     {
-                        sb.AppendItem(UnknownForm1, "UnknownForm1");
+                        sb.AppendItem(OnCrippleExplosion, "OnCrippleExplosion");
                     }
-                    if (printMask?.UnknownForm2 ?? true)
+                    if (printMask?.OnCrippleDebris ?? true)
                     {
-                        sb.AppendItem(UnknownForm2, "UnknownForm2");
+                        sb.AppendItem(OnCrippleDebris, "OnCrippleDebris");
                     }
-                    if (printMask?.UnknownForm3 ?? true)
+                    if (printMask?.OnCrippleImpactDataSet ?? true)
                     {
-                        sb.AppendItem(UnknownForm3, "UnknownForm3");
+                        sb.AppendItem(OnCrippleImpactDataSet, "OnCrippleImpactDataSet");
                     }
-                    if (printMask?.UnknownFloat ?? true)
+                    if (printMask?.OnCrippleDebrisScale ?? true)
                     {
-                        sb.AppendItem(UnknownFloat, "UnknownFloat");
+                        sb.AppendItem(OnCrippleDebrisScale, "OnCrippleDebrisScale");
                     }
-                    if (printMask?.UnknownInt16 ?? true)
+                    if (printMask?.OnCrippleDebrisCount ?? true)
                     {
-                        sb.AppendItem(UnknownInt16, "UnknownInt16");
+                        sb.AppendItem(OnCrippleDebrisCount, "OnCrippleDebrisCount");
+                    }
+                    if (printMask?.OnCrippleDecalCount ?? true)
+                    {
+                        sb.AppendItem(OnCrippleDecalCount, "OnCrippleDecalCount");
                     }
                     if (printMask?.ActiveOverrides ?? true)
                     {
@@ -388,13 +404,14 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? ImpactMaterialType;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? WED0;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? WED1;
-            public Exception? UnknownForm1;
-            public Exception? UnknownForm2;
-            public Exception? UnknownForm3;
-            public Exception? UnknownFloat;
-            public Exception? UnknownInt16;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? CorpseOpenSound;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? CorpseCloseSound;
+            public Exception? OnCrippleExplosion;
+            public Exception? OnCrippleDebris;
+            public Exception? OnCrippleImpactDataSet;
+            public Exception? OnCrippleDebrisScale;
+            public Exception? OnCrippleDebrisCount;
+            public Exception? OnCrippleDecalCount;
             public Exception? ActiveOverrides;
             #endregion
 
@@ -406,20 +423,22 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case NpcRaceOverrideGeneral_FieldIndex.ImpactMaterialType:
                         return ImpactMaterialType;
-                    case NpcRaceOverrideGeneral_FieldIndex.WED0:
-                        return WED0;
-                    case NpcRaceOverrideGeneral_FieldIndex.WED1:
-                        return WED1;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownForm1:
-                        return UnknownForm1;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownForm2:
-                        return UnknownForm2;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownForm3:
-                        return UnknownForm3;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownFloat:
-                        return UnknownFloat;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownInt16:
-                        return UnknownInt16;
+                    case NpcRaceOverrideGeneral_FieldIndex.CorpseOpenSound:
+                        return CorpseOpenSound;
+                    case NpcRaceOverrideGeneral_FieldIndex.CorpseCloseSound:
+                        return CorpseCloseSound;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleExplosion:
+                        return OnCrippleExplosion;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebris:
+                        return OnCrippleDebris;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleImpactDataSet:
+                        return OnCrippleImpactDataSet;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebrisScale:
+                        return OnCrippleDebrisScale;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebrisCount:
+                        return OnCrippleDebrisCount;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleDecalCount:
+                        return OnCrippleDecalCount;
                     case NpcRaceOverrideGeneral_FieldIndex.ActiveOverrides:
                         return ActiveOverrides;
                     default:
@@ -435,26 +454,29 @@ namespace Mutagen.Bethesda.Starfield
                     case NpcRaceOverrideGeneral_FieldIndex.ImpactMaterialType:
                         this.ImpactMaterialType = ex;
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.WED0:
-                        this.WED0 = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case NpcRaceOverrideGeneral_FieldIndex.CorpseOpenSound:
+                        this.CorpseOpenSound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.WED1:
-                        this.WED1 = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case NpcRaceOverrideGeneral_FieldIndex.CorpseCloseSound:
+                        this.CorpseCloseSound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownForm1:
-                        this.UnknownForm1 = ex;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleExplosion:
+                        this.OnCrippleExplosion = ex;
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownForm2:
-                        this.UnknownForm2 = ex;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebris:
+                        this.OnCrippleDebris = ex;
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownForm3:
-                        this.UnknownForm3 = ex;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleImpactDataSet:
+                        this.OnCrippleImpactDataSet = ex;
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownFloat:
-                        this.UnknownFloat = ex;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebrisScale:
+                        this.OnCrippleDebrisScale = ex;
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownInt16:
-                        this.UnknownInt16 = ex;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebrisCount:
+                        this.OnCrippleDebrisCount = ex;
+                        break;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleDecalCount:
+                        this.OnCrippleDecalCount = ex;
                         break;
                     case NpcRaceOverrideGeneral_FieldIndex.ActiveOverrides:
                         this.ActiveOverrides = ex;
@@ -472,26 +494,29 @@ namespace Mutagen.Bethesda.Starfield
                     case NpcRaceOverrideGeneral_FieldIndex.ImpactMaterialType:
                         this.ImpactMaterialType = (Exception?)obj;
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.WED0:
-                        this.WED0 = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case NpcRaceOverrideGeneral_FieldIndex.CorpseOpenSound:
+                        this.CorpseOpenSound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.WED1:
-                        this.WED1 = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case NpcRaceOverrideGeneral_FieldIndex.CorpseCloseSound:
+                        this.CorpseCloseSound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownForm1:
-                        this.UnknownForm1 = (Exception?)obj;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleExplosion:
+                        this.OnCrippleExplosion = (Exception?)obj;
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownForm2:
-                        this.UnknownForm2 = (Exception?)obj;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebris:
+                        this.OnCrippleDebris = (Exception?)obj;
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownForm3:
-                        this.UnknownForm3 = (Exception?)obj;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleImpactDataSet:
+                        this.OnCrippleImpactDataSet = (Exception?)obj;
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownFloat:
-                        this.UnknownFloat = (Exception?)obj;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebrisScale:
+                        this.OnCrippleDebrisScale = (Exception?)obj;
                         break;
-                    case NpcRaceOverrideGeneral_FieldIndex.UnknownInt16:
-                        this.UnknownInt16 = (Exception?)obj;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebrisCount:
+                        this.OnCrippleDebrisCount = (Exception?)obj;
+                        break;
+                    case NpcRaceOverrideGeneral_FieldIndex.OnCrippleDecalCount:
+                        this.OnCrippleDecalCount = (Exception?)obj;
                         break;
                     case NpcRaceOverrideGeneral_FieldIndex.ActiveOverrides:
                         this.ActiveOverrides = (Exception?)obj;
@@ -505,13 +530,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (ImpactMaterialType != null) return true;
-                if (WED0 != null) return true;
-                if (WED1 != null) return true;
-                if (UnknownForm1 != null) return true;
-                if (UnknownForm2 != null) return true;
-                if (UnknownForm3 != null) return true;
-                if (UnknownFloat != null) return true;
-                if (UnknownInt16 != null) return true;
+                if (CorpseOpenSound != null) return true;
+                if (CorpseCloseSound != null) return true;
+                if (OnCrippleExplosion != null) return true;
+                if (OnCrippleDebris != null) return true;
+                if (OnCrippleImpactDataSet != null) return true;
+                if (OnCrippleDebrisScale != null) return true;
+                if (OnCrippleDebrisCount != null) return true;
+                if (OnCrippleDecalCount != null) return true;
                 if (ActiveOverrides != null) return true;
                 return false;
             }
@@ -541,22 +567,25 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(ImpactMaterialType, "ImpactMaterialType");
                 }
-                WED0?.Print(sb);
-                WED1?.Print(sb);
+                CorpseOpenSound?.Print(sb);
+                CorpseCloseSound?.Print(sb);
                 {
-                    sb.AppendItem(UnknownForm1, "UnknownForm1");
+                    sb.AppendItem(OnCrippleExplosion, "OnCrippleExplosion");
                 }
                 {
-                    sb.AppendItem(UnknownForm2, "UnknownForm2");
+                    sb.AppendItem(OnCrippleDebris, "OnCrippleDebris");
                 }
                 {
-                    sb.AppendItem(UnknownForm3, "UnknownForm3");
+                    sb.AppendItem(OnCrippleImpactDataSet, "OnCrippleImpactDataSet");
                 }
                 {
-                    sb.AppendItem(UnknownFloat, "UnknownFloat");
+                    sb.AppendItem(OnCrippleDebrisScale, "OnCrippleDebrisScale");
                 }
                 {
-                    sb.AppendItem(UnknownInt16, "UnknownInt16");
+                    sb.AppendItem(OnCrippleDebrisCount, "OnCrippleDebrisCount");
+                }
+                {
+                    sb.AppendItem(OnCrippleDecalCount, "OnCrippleDecalCount");
                 }
                 {
                     sb.AppendItem(ActiveOverrides, "ActiveOverrides");
@@ -570,13 +599,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.ImpactMaterialType = this.ImpactMaterialType.Combine(rhs.ImpactMaterialType);
-                ret.WED0 = this.WED0.Combine(rhs.WED0, (l, r) => l.Combine(r));
-                ret.WED1 = this.WED1.Combine(rhs.WED1, (l, r) => l.Combine(r));
-                ret.UnknownForm1 = this.UnknownForm1.Combine(rhs.UnknownForm1);
-                ret.UnknownForm2 = this.UnknownForm2.Combine(rhs.UnknownForm2);
-                ret.UnknownForm3 = this.UnknownForm3.Combine(rhs.UnknownForm3);
-                ret.UnknownFloat = this.UnknownFloat.Combine(rhs.UnknownFloat);
-                ret.UnknownInt16 = this.UnknownInt16.Combine(rhs.UnknownInt16);
+                ret.CorpseOpenSound = this.CorpseOpenSound.Combine(rhs.CorpseOpenSound, (l, r) => l.Combine(r));
+                ret.CorpseCloseSound = this.CorpseCloseSound.Combine(rhs.CorpseCloseSound, (l, r) => l.Combine(r));
+                ret.OnCrippleExplosion = this.OnCrippleExplosion.Combine(rhs.OnCrippleExplosion);
+                ret.OnCrippleDebris = this.OnCrippleDebris.Combine(rhs.OnCrippleDebris);
+                ret.OnCrippleImpactDataSet = this.OnCrippleImpactDataSet.Combine(rhs.OnCrippleImpactDataSet);
+                ret.OnCrippleDebrisScale = this.OnCrippleDebrisScale.Combine(rhs.OnCrippleDebrisScale);
+                ret.OnCrippleDebrisCount = this.OnCrippleDebrisCount.Combine(rhs.OnCrippleDebrisCount);
+                ret.OnCrippleDecalCount = this.OnCrippleDecalCount.Combine(rhs.OnCrippleDecalCount);
                 ret.ActiveOverrides = this.ActiveOverrides.Combine(rhs.ActiveOverrides);
                 return ret;
             }
@@ -602,13 +632,14 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool ImpactMaterialType;
-            public SoundReference.TranslationMask? WED0;
-            public SoundReference.TranslationMask? WED1;
-            public bool UnknownForm1;
-            public bool UnknownForm2;
-            public bool UnknownForm3;
-            public bool UnknownFloat;
-            public bool UnknownInt16;
+            public SoundReference.TranslationMask? CorpseOpenSound;
+            public SoundReference.TranslationMask? CorpseCloseSound;
+            public bool OnCrippleExplosion;
+            public bool OnCrippleDebris;
+            public bool OnCrippleImpactDataSet;
+            public bool OnCrippleDebrisScale;
+            public bool OnCrippleDebrisCount;
+            public bool OnCrippleDecalCount;
             public bool ActiveOverrides;
             #endregion
 
@@ -620,11 +651,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.ImpactMaterialType = defaultOn;
-                this.UnknownForm1 = defaultOn;
-                this.UnknownForm2 = defaultOn;
-                this.UnknownForm3 = defaultOn;
-                this.UnknownFloat = defaultOn;
-                this.UnknownInt16 = defaultOn;
+                this.OnCrippleExplosion = defaultOn;
+                this.OnCrippleDebris = defaultOn;
+                this.OnCrippleImpactDataSet = defaultOn;
+                this.OnCrippleDebrisScale = defaultOn;
+                this.OnCrippleDebrisCount = defaultOn;
+                this.OnCrippleDecalCount = defaultOn;
                 this.ActiveOverrides = defaultOn;
             }
 
@@ -642,13 +674,14 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((ImpactMaterialType, null));
-                ret.Add((WED0 != null ? WED0.OnOverall : DefaultOn, WED0?.GetCrystal()));
-                ret.Add((WED1 != null ? WED1.OnOverall : DefaultOn, WED1?.GetCrystal()));
-                ret.Add((UnknownForm1, null));
-                ret.Add((UnknownForm2, null));
-                ret.Add((UnknownForm3, null));
-                ret.Add((UnknownFloat, null));
-                ret.Add((UnknownInt16, null));
+                ret.Add((CorpseOpenSound != null ? CorpseOpenSound.OnOverall : DefaultOn, CorpseOpenSound?.GetCrystal()));
+                ret.Add((CorpseCloseSound != null ? CorpseCloseSound.OnOverall : DefaultOn, CorpseCloseSound?.GetCrystal()));
+                ret.Add((OnCrippleExplosion, null));
+                ret.Add((OnCrippleDebris, null));
+                ret.Add((OnCrippleImpactDataSet, null));
+                ret.Add((OnCrippleDebrisScale, null));
+                ret.Add((OnCrippleDebrisCount, null));
+                ret.Add((OnCrippleDecalCount, null));
                 ret.Add((ActiveOverrides, null));
             }
 
@@ -729,13 +762,14 @@ namespace Mutagen.Bethesda.Starfield
         INpcRaceOverrideGeneralGetter
     {
         new IFormLink<IMaterialTypeGetter> ImpactMaterialType { get; set; }
-        new SoundReference WED0 { get; set; }
-        new SoundReference WED1 { get; set; }
-        new IFormLink<IExplosionGetter> UnknownForm1 { get; set; }
-        new IFormLink<IDebrisGetter> UnknownForm2 { get; set; }
-        new IFormLink<IImpactDataSetGetter> UnknownForm3 { get; set; }
-        new Single UnknownFloat { get; set; }
-        new UInt16 UnknownInt16 { get; set; }
+        new SoundReference CorpseOpenSound { get; set; }
+        new SoundReference CorpseCloseSound { get; set; }
+        new IFormLink<IExplosionGetter> OnCrippleExplosion { get; set; }
+        new IFormLink<IDebrisGetter> OnCrippleDebris { get; set; }
+        new IFormLink<IImpactDataSetGetter> OnCrippleImpactDataSet { get; set; }
+        new Single OnCrippleDebrisScale { get; set; }
+        new Byte OnCrippleDebrisCount { get; set; }
+        new Byte OnCrippleDecalCount { get; set; }
         new NpcRaceOverrideGeneral.ActiveOverride ActiveOverrides { get; set; }
     }
 
@@ -753,13 +787,14 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => NpcRaceOverrideGeneral_Registration.Instance;
         IFormLinkGetter<IMaterialTypeGetter> ImpactMaterialType { get; }
-        ISoundReferenceGetter WED0 { get; }
-        ISoundReferenceGetter WED1 { get; }
-        IFormLinkGetter<IExplosionGetter> UnknownForm1 { get; }
-        IFormLinkGetter<IDebrisGetter> UnknownForm2 { get; }
-        IFormLinkGetter<IImpactDataSetGetter> UnknownForm3 { get; }
-        Single UnknownFloat { get; }
-        UInt16 UnknownInt16 { get; }
+        ISoundReferenceGetter CorpseOpenSound { get; }
+        ISoundReferenceGetter CorpseCloseSound { get; }
+        IFormLinkGetter<IExplosionGetter> OnCrippleExplosion { get; }
+        IFormLinkGetter<IDebrisGetter> OnCrippleDebris { get; }
+        IFormLinkGetter<IImpactDataSetGetter> OnCrippleImpactDataSet { get; }
+        Single OnCrippleDebrisScale { get; }
+        Byte OnCrippleDebrisCount { get; }
+        Byte OnCrippleDecalCount { get; }
         NpcRaceOverrideGeneral.ActiveOverride ActiveOverrides { get; }
 
     }
@@ -931,14 +966,15 @@ namespace Mutagen.Bethesda.Starfield
     internal enum NpcRaceOverrideGeneral_FieldIndex
     {
         ImpactMaterialType = 0,
-        WED0 = 1,
-        WED1 = 2,
-        UnknownForm1 = 3,
-        UnknownForm2 = 4,
-        UnknownForm3 = 5,
-        UnknownFloat = 6,
-        UnknownInt16 = 7,
-        ActiveOverrides = 8,
+        CorpseOpenSound = 1,
+        CorpseCloseSound = 2,
+        OnCrippleExplosion = 3,
+        OnCrippleDebris = 4,
+        OnCrippleImpactDataSet = 5,
+        OnCrippleDebrisScale = 6,
+        OnCrippleDebrisCount = 7,
+        OnCrippleDecalCount = 8,
+        ActiveOverrides = 9,
     }
     #endregion
 
@@ -949,9 +985,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 9;
+        public const ushort AdditionalFieldCount = 10;
 
-        public const ushort FieldCount = 9;
+        public const ushort FieldCount = 10;
 
         public static readonly Type MaskType = typeof(NpcRaceOverrideGeneral.Mask<>);
 
@@ -1018,13 +1054,14 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.ImpactMaterialType.Clear();
-            item.WED0.Clear();
-            item.WED1.Clear();
-            item.UnknownForm1.Clear();
-            item.UnknownForm2.Clear();
-            item.UnknownForm3.Clear();
-            item.UnknownFloat = default(Single);
-            item.UnknownInt16 = default(UInt16);
+            item.CorpseOpenSound.Clear();
+            item.CorpseCloseSound.Clear();
+            item.OnCrippleExplosion.Clear();
+            item.OnCrippleDebris.Clear();
+            item.OnCrippleImpactDataSet.Clear();
+            item.OnCrippleDebrisScale = default(Single);
+            item.OnCrippleDebrisCount = default(Byte);
+            item.OnCrippleDecalCount = default(Byte);
             item.ActiveOverrides = default(NpcRaceOverrideGeneral.ActiveOverride);
         }
         
@@ -1032,11 +1069,11 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(INpcRaceOverrideGeneral obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             obj.ImpactMaterialType.Relink(mapping);
-            obj.WED0.RemapLinks(mapping);
-            obj.WED1.RemapLinks(mapping);
-            obj.UnknownForm1.Relink(mapping);
-            obj.UnknownForm2.Relink(mapping);
-            obj.UnknownForm3.Relink(mapping);
+            obj.CorpseOpenSound.RemapLinks(mapping);
+            obj.CorpseCloseSound.RemapLinks(mapping);
+            obj.OnCrippleExplosion.Relink(mapping);
+            obj.OnCrippleDebris.Relink(mapping);
+            obj.OnCrippleImpactDataSet.Relink(mapping);
         }
         
         #endregion
@@ -1082,13 +1119,14 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.ImpactMaterialType = item.ImpactMaterialType.Equals(rhs.ImpactMaterialType);
-            ret.WED0 = MaskItemExt.Factory(item.WED0.GetEqualsMask(rhs.WED0, include), include);
-            ret.WED1 = MaskItemExt.Factory(item.WED1.GetEqualsMask(rhs.WED1, include), include);
-            ret.UnknownForm1 = item.UnknownForm1.Equals(rhs.UnknownForm1);
-            ret.UnknownForm2 = item.UnknownForm2.Equals(rhs.UnknownForm2);
-            ret.UnknownForm3 = item.UnknownForm3.Equals(rhs.UnknownForm3);
-            ret.UnknownFloat = item.UnknownFloat.EqualsWithin(rhs.UnknownFloat);
-            ret.UnknownInt16 = item.UnknownInt16 == rhs.UnknownInt16;
+            ret.CorpseOpenSound = MaskItemExt.Factory(item.CorpseOpenSound.GetEqualsMask(rhs.CorpseOpenSound, include), include);
+            ret.CorpseCloseSound = MaskItemExt.Factory(item.CorpseCloseSound.GetEqualsMask(rhs.CorpseCloseSound, include), include);
+            ret.OnCrippleExplosion = item.OnCrippleExplosion.Equals(rhs.OnCrippleExplosion);
+            ret.OnCrippleDebris = item.OnCrippleDebris.Equals(rhs.OnCrippleDebris);
+            ret.OnCrippleImpactDataSet = item.OnCrippleImpactDataSet.Equals(rhs.OnCrippleImpactDataSet);
+            ret.OnCrippleDebrisScale = item.OnCrippleDebrisScale.EqualsWithin(rhs.OnCrippleDebrisScale);
+            ret.OnCrippleDebrisCount = item.OnCrippleDebrisCount == rhs.OnCrippleDebrisCount;
+            ret.OnCrippleDecalCount = item.OnCrippleDecalCount == rhs.OnCrippleDecalCount;
             ret.ActiveOverrides = item.ActiveOverrides == rhs.ActiveOverrides;
         }
         
@@ -1138,33 +1176,37 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ImpactMaterialType.FormKey, "ImpactMaterialType");
             }
-            if (printMask?.WED0?.Overall ?? true)
+            if (printMask?.CorpseOpenSound?.Overall ?? true)
             {
-                item.WED0?.Print(sb, "WED0");
+                item.CorpseOpenSound?.Print(sb, "CorpseOpenSound");
             }
-            if (printMask?.WED1?.Overall ?? true)
+            if (printMask?.CorpseCloseSound?.Overall ?? true)
             {
-                item.WED1?.Print(sb, "WED1");
+                item.CorpseCloseSound?.Print(sb, "CorpseCloseSound");
             }
-            if (printMask?.UnknownForm1 ?? true)
+            if (printMask?.OnCrippleExplosion ?? true)
             {
-                sb.AppendItem(item.UnknownForm1.FormKey, "UnknownForm1");
+                sb.AppendItem(item.OnCrippleExplosion.FormKey, "OnCrippleExplosion");
             }
-            if (printMask?.UnknownForm2 ?? true)
+            if (printMask?.OnCrippleDebris ?? true)
             {
-                sb.AppendItem(item.UnknownForm2.FormKey, "UnknownForm2");
+                sb.AppendItem(item.OnCrippleDebris.FormKey, "OnCrippleDebris");
             }
-            if (printMask?.UnknownForm3 ?? true)
+            if (printMask?.OnCrippleImpactDataSet ?? true)
             {
-                sb.AppendItem(item.UnknownForm3.FormKey, "UnknownForm3");
+                sb.AppendItem(item.OnCrippleImpactDataSet.FormKey, "OnCrippleImpactDataSet");
             }
-            if (printMask?.UnknownFloat ?? true)
+            if (printMask?.OnCrippleDebrisScale ?? true)
             {
-                sb.AppendItem(item.UnknownFloat, "UnknownFloat");
+                sb.AppendItem(item.OnCrippleDebrisScale, "OnCrippleDebrisScale");
             }
-            if (printMask?.UnknownInt16 ?? true)
+            if (printMask?.OnCrippleDebrisCount ?? true)
             {
-                sb.AppendItem(item.UnknownInt16, "UnknownInt16");
+                sb.AppendItem(item.OnCrippleDebrisCount, "OnCrippleDebrisCount");
+            }
+            if (printMask?.OnCrippleDecalCount ?? true)
+            {
+                sb.AppendItem(item.OnCrippleDecalCount, "OnCrippleDecalCount");
             }
             if (printMask?.ActiveOverrides ?? true)
             {
@@ -1183,41 +1225,45 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ImpactMaterialType.Equals(rhs.ImpactMaterialType)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.WED0) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.CorpseOpenSound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.WED0, rhs.WED0, out var lhsWED0, out var rhsWED0, out var isWED0Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.CorpseOpenSound, rhs.CorpseOpenSound, out var lhsCorpseOpenSound, out var rhsCorpseOpenSound, out var isCorpseOpenSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsWED0).CommonInstance()!).Equals(lhsWED0, rhsWED0, equalsMask?.GetSubCrystal((int)NpcRaceOverrideGeneral_FieldIndex.WED0))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsCorpseOpenSound).CommonInstance()!).Equals(lhsCorpseOpenSound, rhsCorpseOpenSound, equalsMask?.GetSubCrystal((int)NpcRaceOverrideGeneral_FieldIndex.CorpseOpenSound))) return false;
                 }
-                else if (!isWED0Equal) return false;
+                else if (!isCorpseOpenSoundEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.WED1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.CorpseCloseSound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.WED1, rhs.WED1, out var lhsWED1, out var rhsWED1, out var isWED1Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.CorpseCloseSound, rhs.CorpseCloseSound, out var lhsCorpseCloseSound, out var rhsCorpseCloseSound, out var isCorpseCloseSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsWED1).CommonInstance()!).Equals(lhsWED1, rhsWED1, equalsMask?.GetSubCrystal((int)NpcRaceOverrideGeneral_FieldIndex.WED1))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsCorpseCloseSound).CommonInstance()!).Equals(lhsCorpseCloseSound, rhsCorpseCloseSound, equalsMask?.GetSubCrystal((int)NpcRaceOverrideGeneral_FieldIndex.CorpseCloseSound))) return false;
                 }
-                else if (!isWED1Equal) return false;
+                else if (!isCorpseCloseSoundEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.UnknownForm1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.OnCrippleExplosion) ?? true))
             {
-                if (!lhs.UnknownForm1.Equals(rhs.UnknownForm1)) return false;
+                if (!lhs.OnCrippleExplosion.Equals(rhs.OnCrippleExplosion)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.UnknownForm2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebris) ?? true))
             {
-                if (!lhs.UnknownForm2.Equals(rhs.UnknownForm2)) return false;
+                if (!lhs.OnCrippleDebris.Equals(rhs.OnCrippleDebris)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.UnknownForm3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.OnCrippleImpactDataSet) ?? true))
             {
-                if (!lhs.UnknownForm3.Equals(rhs.UnknownForm3)) return false;
+                if (!lhs.OnCrippleImpactDataSet.Equals(rhs.OnCrippleImpactDataSet)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.UnknownFloat) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebrisScale) ?? true))
             {
-                if (!lhs.UnknownFloat.EqualsWithin(rhs.UnknownFloat)) return false;
+                if (!lhs.OnCrippleDebrisScale.EqualsWithin(rhs.OnCrippleDebrisScale)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.UnknownInt16) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebrisCount) ?? true))
             {
-                if (lhs.UnknownInt16 != rhs.UnknownInt16) return false;
+                if (lhs.OnCrippleDebrisCount != rhs.OnCrippleDebrisCount) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.OnCrippleDecalCount) ?? true))
+            {
+                if (lhs.OnCrippleDecalCount != rhs.OnCrippleDecalCount) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.ActiveOverrides) ?? true))
             {
@@ -1230,13 +1276,14 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.ImpactMaterialType);
-            hash.Add(item.WED0);
-            hash.Add(item.WED1);
-            hash.Add(item.UnknownForm1);
-            hash.Add(item.UnknownForm2);
-            hash.Add(item.UnknownForm3);
-            hash.Add(item.UnknownFloat);
-            hash.Add(item.UnknownInt16);
+            hash.Add(item.CorpseOpenSound);
+            hash.Add(item.CorpseCloseSound);
+            hash.Add(item.OnCrippleExplosion);
+            hash.Add(item.OnCrippleDebris);
+            hash.Add(item.OnCrippleImpactDataSet);
+            hash.Add(item.OnCrippleDebrisScale);
+            hash.Add(item.OnCrippleDebrisCount);
+            hash.Add(item.OnCrippleDecalCount);
             hash.Add(item.ActiveOverrides);
             return hash.ToHashCode();
         }
@@ -1253,17 +1300,17 @@ namespace Mutagen.Bethesda.Starfield
         public IEnumerable<IFormLinkGetter> EnumerateFormLinks(INpcRaceOverrideGeneralGetter obj, bool iterateNestedRecords = true)
         {
             yield return FormLinkInformation.Factory(obj.ImpactMaterialType);
-            foreach (var item in obj.WED0.EnumerateFormLinks(iterateNestedRecords))
+            foreach (var item in obj.CorpseOpenSound.EnumerateFormLinks(iterateNestedRecords))
             {
                 yield return item;
             }
-            foreach (var item in obj.WED1.EnumerateFormLinks(iterateNestedRecords))
+            foreach (var item in obj.CorpseCloseSound.EnumerateFormLinks(iterateNestedRecords))
             {
                 yield return item;
             }
-            yield return FormLinkInformation.Factory(obj.UnknownForm1);
-            yield return FormLinkInformation.Factory(obj.UnknownForm2);
-            yield return FormLinkInformation.Factory(obj.UnknownForm3);
+            yield return FormLinkInformation.Factory(obj.OnCrippleExplosion);
+            yield return FormLinkInformation.Factory(obj.OnCrippleDebris);
+            yield return FormLinkInformation.Factory(obj.OnCrippleImpactDataSet);
             yield break;
         }
         
@@ -1286,15 +1333,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ImpactMaterialType.SetTo(rhs.ImpactMaterialType.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.WED0) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.CorpseOpenSound) ?? true))
             {
-                errorMask?.PushIndex((int)NpcRaceOverrideGeneral_FieldIndex.WED0);
+                errorMask?.PushIndex((int)NpcRaceOverrideGeneral_FieldIndex.CorpseOpenSound);
                 try
                 {
-                    if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.WED0) ?? true))
+                    if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.CorpseOpenSound) ?? true))
                     {
-                        item.WED0 = rhs.WED0.DeepCopy(
-                            copyMask: copyMask?.GetSubCrystal((int)NpcRaceOverrideGeneral_FieldIndex.WED0),
+                        item.CorpseOpenSound = rhs.CorpseOpenSound.DeepCopy(
+                            copyMask: copyMask?.GetSubCrystal((int)NpcRaceOverrideGeneral_FieldIndex.CorpseOpenSound),
                             errorMask: errorMask);
                     }
                 }
@@ -1308,15 +1355,15 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.WED1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.CorpseCloseSound) ?? true))
             {
-                errorMask?.PushIndex((int)NpcRaceOverrideGeneral_FieldIndex.WED1);
+                errorMask?.PushIndex((int)NpcRaceOverrideGeneral_FieldIndex.CorpseCloseSound);
                 try
                 {
-                    if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.WED1) ?? true))
+                    if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.CorpseCloseSound) ?? true))
                     {
-                        item.WED1 = rhs.WED1.DeepCopy(
-                            copyMask: copyMask?.GetSubCrystal((int)NpcRaceOverrideGeneral_FieldIndex.WED1),
+                        item.CorpseCloseSound = rhs.CorpseCloseSound.DeepCopy(
+                            copyMask: copyMask?.GetSubCrystal((int)NpcRaceOverrideGeneral_FieldIndex.CorpseCloseSound),
                             errorMask: errorMask);
                     }
                 }
@@ -1330,25 +1377,29 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.UnknownForm1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.OnCrippleExplosion) ?? true))
             {
-                item.UnknownForm1.SetTo(rhs.UnknownForm1.FormKey);
+                item.OnCrippleExplosion.SetTo(rhs.OnCrippleExplosion.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.UnknownForm2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebris) ?? true))
             {
-                item.UnknownForm2.SetTo(rhs.UnknownForm2.FormKey);
+                item.OnCrippleDebris.SetTo(rhs.OnCrippleDebris.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.UnknownForm3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.OnCrippleImpactDataSet) ?? true))
             {
-                item.UnknownForm3.SetTo(rhs.UnknownForm3.FormKey);
+                item.OnCrippleImpactDataSet.SetTo(rhs.OnCrippleImpactDataSet.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.UnknownFloat) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebrisScale) ?? true))
             {
-                item.UnknownFloat = rhs.UnknownFloat;
+                item.OnCrippleDebrisScale = rhs.OnCrippleDebrisScale;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.UnknownInt16) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.OnCrippleDebrisCount) ?? true))
             {
-                item.UnknownInt16 = rhs.UnknownInt16;
+                item.OnCrippleDebrisCount = rhs.OnCrippleDebrisCount;
+            }
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.OnCrippleDecalCount) ?? true))
+            {
+                item.OnCrippleDecalCount = rhs.OnCrippleDecalCount;
             }
             if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideGeneral_FieldIndex.ActiveOverrides) ?? true))
             {
@@ -1465,27 +1516,28 @@ namespace Mutagen.Bethesda.Starfield
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.ImpactMaterialType);
-            var WED0Item = item.WED0;
-            ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)WED0Item).BinaryWriteTranslator).Write(
-                item: WED0Item,
+            var CorpseOpenSoundItem = item.CorpseOpenSound;
+            ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)CorpseOpenSoundItem).BinaryWriteTranslator).Write(
+                item: CorpseOpenSoundItem,
                 writer: writer);
-            var WED1Item = item.WED1;
-            ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)WED1Item).BinaryWriteTranslator).Write(
-                item: WED1Item,
+            var CorpseCloseSoundItem = item.CorpseCloseSound;
+            ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)CorpseCloseSoundItem).BinaryWriteTranslator).Write(
+                item: CorpseCloseSoundItem,
                 writer: writer);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownForm1);
+                item: item.OnCrippleExplosion);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownForm2);
+                item: item.OnCrippleDebris);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownForm3);
+                item: item.OnCrippleImpactDataSet);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.UnknownFloat);
-            writer.Write(item.UnknownInt16);
+                item: item.OnCrippleDebrisScale);
+            writer.Write(item.OnCrippleDebrisCount);
+            writer.Write(item.OnCrippleDecalCount);
             EnumBinaryTranslation<NpcRaceOverrideGeneral.ActiveOverride, MutagenFrame, MutagenWriter>.Instance.Write(
                 writer,
                 item.ActiveOverrides,
@@ -1524,13 +1576,14 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.ImpactMaterialType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.WED0 = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
-            item.WED1 = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
-            item.UnknownForm1.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownForm2.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownForm3.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownFloat = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.UnknownInt16 = frame.ReadUInt16();
+            item.CorpseOpenSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            item.CorpseCloseSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            item.OnCrippleExplosion.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.OnCrippleDebris.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.OnCrippleImpactDataSet.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.OnCrippleDebrisScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.OnCrippleDebrisCount = frame.ReadUInt8();
+            item.OnCrippleDecalCount = frame.ReadUInt8();
             item.ActiveOverrides = EnumBinaryTranslation<NpcRaceOverrideGeneral.ActiveOverride, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
@@ -1601,13 +1654,14 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public IFormLinkGetter<IMaterialTypeGetter> ImpactMaterialType => FormLinkBinaryTranslation.Instance.OverlayFactory<IMaterialTypeGetter>(_package, _structData.Span.Slice(0x0, 0x4));
-        public ISoundReferenceGetter WED0 => SoundReferenceBinaryOverlay.SoundReferenceFactory(_structData.Slice(0x4), _package, default(TypedParseParams));
-        public ISoundReferenceGetter WED1 => SoundReferenceBinaryOverlay.SoundReferenceFactory(_structData.Slice(0x2C), _package, default(TypedParseParams));
-        public IFormLinkGetter<IExplosionGetter> UnknownForm1 => FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _structData.Span.Slice(0x54, 0x4));
-        public IFormLinkGetter<IDebrisGetter> UnknownForm2 => FormLinkBinaryTranslation.Instance.OverlayFactory<IDebrisGetter>(_package, _structData.Span.Slice(0x58, 0x4));
-        public IFormLinkGetter<IImpactDataSetGetter> UnknownForm3 => FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _structData.Span.Slice(0x5C, 0x4));
-        public Single UnknownFloat => _structData.Slice(0x60, 0x4).Float();
-        public UInt16 UnknownInt16 => BinaryPrimitives.ReadUInt16LittleEndian(_structData.Slice(0x64, 0x2));
+        public ISoundReferenceGetter CorpseOpenSound => SoundReferenceBinaryOverlay.SoundReferenceFactory(_structData.Slice(0x4), _package, default(TypedParseParams));
+        public ISoundReferenceGetter CorpseCloseSound => SoundReferenceBinaryOverlay.SoundReferenceFactory(_structData.Slice(0x2C), _package, default(TypedParseParams));
+        public IFormLinkGetter<IExplosionGetter> OnCrippleExplosion => FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _structData.Span.Slice(0x54, 0x4));
+        public IFormLinkGetter<IDebrisGetter> OnCrippleDebris => FormLinkBinaryTranslation.Instance.OverlayFactory<IDebrisGetter>(_package, _structData.Span.Slice(0x58, 0x4));
+        public IFormLinkGetter<IImpactDataSetGetter> OnCrippleImpactDataSet => FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _structData.Span.Slice(0x5C, 0x4));
+        public Single OnCrippleDebrisScale => _structData.Slice(0x60, 0x4).Float();
+        public Byte OnCrippleDebrisCount => _structData.Span[0x64];
+        public Byte OnCrippleDecalCount => _structData.Span[0x65];
         public NpcRaceOverrideGeneral.ActiveOverride ActiveOverrides => (NpcRaceOverrideGeneral.ActiveOverride)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x66, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,

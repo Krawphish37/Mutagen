@@ -38,21 +38,24 @@ using System.Reactive.Linq;
 namespace Mutagen.Bethesda.Starfield
 {
     #region Class
-    public partial class NpcRaceOverrideSize :
-        IEquatable<INpcRaceOverrideSizeGetter>,
-        ILoquiObjectSetter<NpcRaceOverrideSize>,
-        INpcRaceOverrideSize
+    public partial class NpcRaceOverrideFlags :
+        IEquatable<INpcRaceOverrideFlagsGetter>,
+        ILoquiObjectSetter<NpcRaceOverrideFlags>,
+        INpcRaceOverrideFlags
     {
         #region Ctor
-        public NpcRaceOverrideSize()
+        public NpcRaceOverrideFlags()
         {
             CustomCtor();
         }
         partial void CustomCtor();
         #endregion
 
-        #region Size
-        public Size Size { get; set; } = default(Size);
+        #region RaceDataFlags
+        public Race.Flag RaceDataFlags { get; set; } = default(Race.Flag);
+        #endregion
+        #region OverrideActive
+        public Race.Flag OverrideActive { get; set; } = default(Race.Flag);
         #endregion
 
         #region To String
@@ -61,7 +64,7 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             string? name = null)
         {
-            NpcRaceOverrideSizeMixIn.Print(
+            NpcRaceOverrideFlagsMixIn.Print(
                 item: this,
                 sb: sb,
                 name: name);
@@ -72,16 +75,16 @@ namespace Mutagen.Bethesda.Starfield
         #region Equals and Hash
         public override bool Equals(object? obj)
         {
-            if (obj is not INpcRaceOverrideSizeGetter rhs) return false;
-            return ((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
+            if (obj is not INpcRaceOverrideFlagsGetter rhs) return false;
+            return ((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
         }
 
-        public bool Equals(INpcRaceOverrideSizeGetter? obj)
+        public bool Equals(INpcRaceOverrideFlagsGetter? obj)
         {
-            return ((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
+            return ((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
         }
 
-        public override int GetHashCode() => ((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)this).CommonInstance()!).GetHashCode(this);
+        public override int GetHashCode() => ((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)this).CommonInstance()!).GetHashCode(this);
 
         #endregion
 
@@ -91,9 +94,18 @@ namespace Mutagen.Bethesda.Starfield
             IMask<TItem>
         {
             #region Ctors
-            public Mask(TItem Size)
+            public Mask(TItem initialValue)
             {
-                this.Size = Size;
+                this.RaceDataFlags = initialValue;
+                this.OverrideActive = initialValue;
+            }
+
+            public Mask(
+                TItem RaceDataFlags,
+                TItem OverrideActive)
+            {
+                this.RaceDataFlags = RaceDataFlags;
+                this.OverrideActive = OverrideActive;
             }
 
             #pragma warning disable CS8618
@@ -105,7 +117,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Size;
+            public TItem RaceDataFlags;
+            public TItem OverrideActive;
             #endregion
 
             #region Equals
@@ -118,13 +131,15 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Size, rhs.Size)) return false;
+                if (!object.Equals(this.RaceDataFlags, rhs.RaceDataFlags)) return false;
+                if (!object.Equals(this.OverrideActive, rhs.OverrideActive)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Size);
+                hash.Add(this.RaceDataFlags);
+                hash.Add(this.OverrideActive);
                 return hash.ToHashCode();
             }
 
@@ -133,7 +148,8 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Size)) return false;
+                if (!eval(this.RaceDataFlags)) return false;
+                if (!eval(this.OverrideActive)) return false;
                 return true;
             }
             #endregion
@@ -141,7 +157,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Size)) return true;
+                if (eval(this.RaceDataFlags)) return true;
+                if (eval(this.OverrideActive)) return true;
                 return false;
             }
             #endregion
@@ -149,35 +166,40 @@ namespace Mutagen.Bethesda.Starfield
             #region Translate
             public Mask<R> Translate<R>(Func<TItem, R> eval)
             {
-                var ret = new NpcRaceOverrideSize.Mask<R>();
+                var ret = new NpcRaceOverrideFlags.Mask<R>();
                 this.Translate_InternalFill(ret, eval);
                 return ret;
             }
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Size = eval(this.Size);
+                obj.RaceDataFlags = eval(this.RaceDataFlags);
+                obj.OverrideActive = eval(this.OverrideActive);
             }
             #endregion
 
             #region To String
             public override string ToString() => this.Print();
 
-            public string Print(NpcRaceOverrideSize.Mask<bool>? printMask = null)
+            public string Print(NpcRaceOverrideFlags.Mask<bool>? printMask = null)
             {
                 var sb = new StructuredStringBuilder();
                 Print(sb, printMask);
                 return sb.ToString();
             }
 
-            public void Print(StructuredStringBuilder sb, NpcRaceOverrideSize.Mask<bool>? printMask = null)
+            public void Print(StructuredStringBuilder sb, NpcRaceOverrideFlags.Mask<bool>? printMask = null)
             {
-                sb.AppendLine($"{nameof(NpcRaceOverrideSize.Mask<TItem>)} =>");
+                sb.AppendLine($"{nameof(NpcRaceOverrideFlags.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Size ?? true)
+                    if (printMask?.RaceDataFlags ?? true)
                     {
-                        sb.AppendItem(Size, "Size");
+                        sb.AppendItem(RaceDataFlags, "RaceDataFlags");
+                    }
+                    if (printMask?.OverrideActive ?? true)
+                    {
+                        sb.AppendItem(OverrideActive, "OverrideActive");
                     }
                 }
             }
@@ -203,17 +225,20 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Size;
+            public Exception? RaceDataFlags;
+            public Exception? OverrideActive;
             #endregion
 
             #region IErrorMask
             public object? GetNthMask(int index)
             {
-                NpcRaceOverrideSize_FieldIndex enu = (NpcRaceOverrideSize_FieldIndex)index;
+                NpcRaceOverrideFlags_FieldIndex enu = (NpcRaceOverrideFlags_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcRaceOverrideSize_FieldIndex.Size:
-                        return Size;
+                    case NpcRaceOverrideFlags_FieldIndex.RaceDataFlags:
+                        return RaceDataFlags;
+                    case NpcRaceOverrideFlags_FieldIndex.OverrideActive:
+                        return OverrideActive;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -221,11 +246,14 @@ namespace Mutagen.Bethesda.Starfield
 
             public void SetNthException(int index, Exception ex)
             {
-                NpcRaceOverrideSize_FieldIndex enu = (NpcRaceOverrideSize_FieldIndex)index;
+                NpcRaceOverrideFlags_FieldIndex enu = (NpcRaceOverrideFlags_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcRaceOverrideSize_FieldIndex.Size:
-                        this.Size = ex;
+                    case NpcRaceOverrideFlags_FieldIndex.RaceDataFlags:
+                        this.RaceDataFlags = ex;
+                        break;
+                    case NpcRaceOverrideFlags_FieldIndex.OverrideActive:
+                        this.OverrideActive = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -234,11 +262,14 @@ namespace Mutagen.Bethesda.Starfield
 
             public void SetNthMask(int index, object obj)
             {
-                NpcRaceOverrideSize_FieldIndex enu = (NpcRaceOverrideSize_FieldIndex)index;
+                NpcRaceOverrideFlags_FieldIndex enu = (NpcRaceOverrideFlags_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcRaceOverrideSize_FieldIndex.Size:
-                        this.Size = (Exception?)obj;
+                    case NpcRaceOverrideFlags_FieldIndex.RaceDataFlags:
+                        this.RaceDataFlags = (Exception?)obj;
+                        break;
+                    case NpcRaceOverrideFlags_FieldIndex.OverrideActive:
+                        this.OverrideActive = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -248,7 +279,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Size != null) return true;
+                if (RaceDataFlags != null) return true;
+                if (OverrideActive != null) return true;
                 return false;
             }
             #endregion
@@ -275,7 +307,10 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Size, "Size");
+                    sb.AppendItem(RaceDataFlags, "RaceDataFlags");
+                }
+                {
+                    sb.AppendItem(OverrideActive, "OverrideActive");
                 }
             }
             #endregion
@@ -285,7 +320,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Size = this.Size.Combine(rhs.Size);
+                ret.RaceDataFlags = this.RaceDataFlags.Combine(rhs.RaceDataFlags);
+                ret.OverrideActive = this.OverrideActive.Combine(rhs.OverrideActive);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -309,7 +345,8 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Size;
+            public bool RaceDataFlags;
+            public bool OverrideActive;
             #endregion
 
             #region Ctors
@@ -319,7 +356,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Size = defaultOn;
+                this.RaceDataFlags = defaultOn;
+                this.OverrideActive = defaultOn;
             }
 
             #endregion
@@ -335,7 +373,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Size, null));
+                ret.Add((RaceDataFlags, null));
+                ret.Add((OverrideActive, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -348,25 +387,25 @@ namespace Mutagen.Bethesda.Starfield
 
         #region Binary Translation
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected object BinaryWriteTranslator => NpcRaceOverrideSizeBinaryWriteTranslation.Instance;
+        protected object BinaryWriteTranslator => NpcRaceOverrideFlagsBinaryWriteTranslation.Instance;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         object IBinaryItem.BinaryWriteTranslator => this.BinaryWriteTranslator;
         void IBinaryItem.WriteToBinary(
             MutagenWriter writer,
             TypedWriteParams translationParams = default)
         {
-            ((NpcRaceOverrideSizeBinaryWriteTranslation)this.BinaryWriteTranslator).Write(
+            ((NpcRaceOverrideFlagsBinaryWriteTranslation)this.BinaryWriteTranslator).Write(
                 item: this,
                 writer: writer,
                 translationParams: translationParams);
         }
         #region Binary Create
-        public static NpcRaceOverrideSize CreateFromBinary(
+        public static NpcRaceOverrideFlags CreateFromBinary(
             MutagenFrame frame,
             TypedParseParams translationParams = default)
         {
-            var ret = new NpcRaceOverrideSize();
-            ((NpcRaceOverrideSizeSetterCommon)((INpcRaceOverrideSizeGetter)ret).CommonSetterInstance()!).CopyInFromBinary(
+            var ret = new NpcRaceOverrideFlags();
+            ((NpcRaceOverrideFlagsSetterCommon)((INpcRaceOverrideFlagsGetter)ret).CommonSetterInstance()!).CopyInFromBinary(
                 item: ret,
                 frame: frame,
                 translationParams: translationParams);
@@ -377,7 +416,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public static bool TryCreateFromBinary(
             MutagenFrame frame,
-            out NpcRaceOverrideSize item,
+            out NpcRaceOverrideFlags item,
             TypedParseParams translationParams = default)
         {
             var startPos = frame.Position;
@@ -392,29 +431,30 @@ namespace Mutagen.Bethesda.Starfield
 
         void IClearable.Clear()
         {
-            ((NpcRaceOverrideSizeSetterCommon)((INpcRaceOverrideSizeGetter)this).CommonSetterInstance()!).Clear(this);
+            ((NpcRaceOverrideFlagsSetterCommon)((INpcRaceOverrideFlagsGetter)this).CommonSetterInstance()!).Clear(this);
         }
 
-        internal static NpcRaceOverrideSize GetNew()
+        internal static NpcRaceOverrideFlags GetNew()
         {
-            return new NpcRaceOverrideSize();
+            return new NpcRaceOverrideFlags();
         }
 
     }
     #endregion
 
     #region Interface
-    public partial interface INpcRaceOverrideSize :
-        ILoquiObjectSetter<INpcRaceOverrideSize>,
-        INpcRaceOverrideSizeGetter
+    public partial interface INpcRaceOverrideFlags :
+        ILoquiObjectSetter<INpcRaceOverrideFlags>,
+        INpcRaceOverrideFlagsGetter
     {
-        new Size Size { get; set; }
+        new Race.Flag RaceDataFlags { get; set; }
+        new Race.Flag OverrideActive { get; set; }
     }
 
-    public partial interface INpcRaceOverrideSizeGetter :
+    public partial interface INpcRaceOverrideFlagsGetter :
         ILoquiObject,
         IBinaryItem,
-        ILoquiObject<INpcRaceOverrideSizeGetter>
+        ILoquiObject<INpcRaceOverrideFlagsGetter>
     {
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonInstance();
@@ -422,50 +462,51 @@ namespace Mutagen.Bethesda.Starfield
         object? CommonSetterInstance();
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
-        static ILoquiRegistration StaticRegistration => NpcRaceOverrideSize_Registration.Instance;
-        Size Size { get; }
+        static ILoquiRegistration StaticRegistration => NpcRaceOverrideFlags_Registration.Instance;
+        Race.Flag RaceDataFlags { get; }
+        Race.Flag OverrideActive { get; }
 
     }
 
     #endregion
 
     #region Common MixIn
-    public static partial class NpcRaceOverrideSizeMixIn
+    public static partial class NpcRaceOverrideFlagsMixIn
     {
-        public static void Clear(this INpcRaceOverrideSize item)
+        public static void Clear(this INpcRaceOverrideFlags item)
         {
-            ((NpcRaceOverrideSizeSetterCommon)((INpcRaceOverrideSizeGetter)item).CommonSetterInstance()!).Clear(item: item);
+            ((NpcRaceOverrideFlagsSetterCommon)((INpcRaceOverrideFlagsGetter)item).CommonSetterInstance()!).Clear(item: item);
         }
 
-        public static NpcRaceOverrideSize.Mask<bool> GetEqualsMask(
-            this INpcRaceOverrideSizeGetter item,
-            INpcRaceOverrideSizeGetter rhs,
+        public static NpcRaceOverrideFlags.Mask<bool> GetEqualsMask(
+            this INpcRaceOverrideFlagsGetter item,
+            INpcRaceOverrideFlagsGetter rhs,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            return ((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)item).CommonInstance()!).GetEqualsMask(
+            return ((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)item).CommonInstance()!).GetEqualsMask(
                 item: item,
                 rhs: rhs,
                 include: include);
         }
 
         public static string Print(
-            this INpcRaceOverrideSizeGetter item,
+            this INpcRaceOverrideFlagsGetter item,
             string? name = null,
-            NpcRaceOverrideSize.Mask<bool>? printMask = null)
+            NpcRaceOverrideFlags.Mask<bool>? printMask = null)
         {
-            return ((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)item).CommonInstance()!).Print(
+            return ((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)item).CommonInstance()!).Print(
                 item: item,
                 name: name,
                 printMask: printMask);
         }
 
         public static void Print(
-            this INpcRaceOverrideSizeGetter item,
+            this INpcRaceOverrideFlagsGetter item,
             StructuredStringBuilder sb,
             string? name = null,
-            NpcRaceOverrideSize.Mask<bool>? printMask = null)
+            NpcRaceOverrideFlags.Mask<bool>? printMask = null)
         {
-            ((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)item).CommonInstance()!).Print(
+            ((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)item).CommonInstance()!).Print(
                 item: item,
                 sb: sb,
                 name: name,
@@ -473,21 +514,21 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public static bool Equals(
-            this INpcRaceOverrideSizeGetter item,
-            INpcRaceOverrideSizeGetter rhs,
-            NpcRaceOverrideSize.TranslationMask? equalsMask = null)
+            this INpcRaceOverrideFlagsGetter item,
+            INpcRaceOverrideFlagsGetter rhs,
+            NpcRaceOverrideFlags.TranslationMask? equalsMask = null)
         {
-            return ((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)item).CommonInstance()!).Equals(
+            return ((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)item).CommonInstance()!).Equals(
                 lhs: item,
                 rhs: rhs,
                 equalsMask: equalsMask?.GetCrystal());
         }
 
         public static void DeepCopyIn(
-            this INpcRaceOverrideSize lhs,
-            INpcRaceOverrideSizeGetter rhs)
+            this INpcRaceOverrideFlags lhs,
+            INpcRaceOverrideFlagsGetter rhs)
         {
-            ((NpcRaceOverrideSizeSetterTranslationCommon)((INpcRaceOverrideSizeGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((NpcRaceOverrideFlagsSetterTranslationCommon)((INpcRaceOverrideFlagsGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: default,
@@ -496,11 +537,11 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public static void DeepCopyIn(
-            this INpcRaceOverrideSize lhs,
-            INpcRaceOverrideSizeGetter rhs,
-            NpcRaceOverrideSize.TranslationMask? copyMask = null)
+            this INpcRaceOverrideFlags lhs,
+            INpcRaceOverrideFlagsGetter rhs,
+            NpcRaceOverrideFlags.TranslationMask? copyMask = null)
         {
-            ((NpcRaceOverrideSizeSetterTranslationCommon)((INpcRaceOverrideSizeGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((NpcRaceOverrideFlagsSetterTranslationCommon)((INpcRaceOverrideFlagsGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: default,
@@ -509,28 +550,28 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public static void DeepCopyIn(
-            this INpcRaceOverrideSize lhs,
-            INpcRaceOverrideSizeGetter rhs,
-            out NpcRaceOverrideSize.ErrorMask errorMask,
-            NpcRaceOverrideSize.TranslationMask? copyMask = null)
+            this INpcRaceOverrideFlags lhs,
+            INpcRaceOverrideFlagsGetter rhs,
+            out NpcRaceOverrideFlags.ErrorMask errorMask,
+            NpcRaceOverrideFlags.TranslationMask? copyMask = null)
         {
             var errorMaskBuilder = new ErrorMaskBuilder();
-            ((NpcRaceOverrideSizeSetterTranslationCommon)((INpcRaceOverrideSizeGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((NpcRaceOverrideFlagsSetterTranslationCommon)((INpcRaceOverrideFlagsGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: errorMaskBuilder,
                 copyMask: copyMask?.GetCrystal(),
                 deepCopy: false);
-            errorMask = NpcRaceOverrideSize.ErrorMask.Factory(errorMaskBuilder);
+            errorMask = NpcRaceOverrideFlags.ErrorMask.Factory(errorMaskBuilder);
         }
 
         public static void DeepCopyIn(
-            this INpcRaceOverrideSize lhs,
-            INpcRaceOverrideSizeGetter rhs,
+            this INpcRaceOverrideFlags lhs,
+            INpcRaceOverrideFlagsGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask)
         {
-            ((NpcRaceOverrideSizeSetterTranslationCommon)((INpcRaceOverrideSizeGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((NpcRaceOverrideFlagsSetterTranslationCommon)((INpcRaceOverrideFlagsGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: errorMask,
@@ -538,32 +579,32 @@ namespace Mutagen.Bethesda.Starfield
                 deepCopy: false);
         }
 
-        public static NpcRaceOverrideSize DeepCopy(
-            this INpcRaceOverrideSizeGetter item,
-            NpcRaceOverrideSize.TranslationMask? copyMask = null)
+        public static NpcRaceOverrideFlags DeepCopy(
+            this INpcRaceOverrideFlagsGetter item,
+            NpcRaceOverrideFlags.TranslationMask? copyMask = null)
         {
-            return ((NpcRaceOverrideSizeSetterTranslationCommon)((INpcRaceOverrideSizeGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
+            return ((NpcRaceOverrideFlagsSetterTranslationCommon)((INpcRaceOverrideFlagsGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
                 item: item,
                 copyMask: copyMask);
         }
 
-        public static NpcRaceOverrideSize DeepCopy(
-            this INpcRaceOverrideSizeGetter item,
-            out NpcRaceOverrideSize.ErrorMask errorMask,
-            NpcRaceOverrideSize.TranslationMask? copyMask = null)
+        public static NpcRaceOverrideFlags DeepCopy(
+            this INpcRaceOverrideFlagsGetter item,
+            out NpcRaceOverrideFlags.ErrorMask errorMask,
+            NpcRaceOverrideFlags.TranslationMask? copyMask = null)
         {
-            return ((NpcRaceOverrideSizeSetterTranslationCommon)((INpcRaceOverrideSizeGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
+            return ((NpcRaceOverrideFlagsSetterTranslationCommon)((INpcRaceOverrideFlagsGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
                 item: item,
                 copyMask: copyMask,
                 errorMask: out errorMask);
         }
 
-        public static NpcRaceOverrideSize DeepCopy(
-            this INpcRaceOverrideSizeGetter item,
+        public static NpcRaceOverrideFlags DeepCopy(
+            this INpcRaceOverrideFlagsGetter item,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask = null)
         {
-            return ((NpcRaceOverrideSizeSetterTranslationCommon)((INpcRaceOverrideSizeGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
+            return ((NpcRaceOverrideFlagsSetterTranslationCommon)((INpcRaceOverrideFlagsGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
                 item: item,
                 copyMask: copyMask,
                 errorMask: errorMask);
@@ -571,11 +612,11 @@ namespace Mutagen.Bethesda.Starfield
 
         #region Binary Translation
         public static void CopyInFromBinary(
-            this INpcRaceOverrideSize item,
+            this INpcRaceOverrideFlags item,
             MutagenFrame frame,
             TypedParseParams translationParams = default)
         {
-            ((NpcRaceOverrideSizeSetterCommon)((INpcRaceOverrideSizeGetter)item).CommonSetterInstance()!).CopyInFromBinary(
+            ((NpcRaceOverrideFlagsSetterCommon)((INpcRaceOverrideFlagsGetter)item).CommonSetterInstance()!).CopyInFromBinary(
                 item: item,
                 frame: frame,
                 translationParams: translationParams);
@@ -591,40 +632,41 @@ namespace Mutagen.Bethesda.Starfield
 namespace Mutagen.Bethesda.Starfield
 {
     #region Field Index
-    internal enum NpcRaceOverrideSize_FieldIndex
+    internal enum NpcRaceOverrideFlags_FieldIndex
     {
-        Size = 0,
+        RaceDataFlags = 0,
+        OverrideActive = 1,
     }
     #endregion
 
     #region Registration
-    internal partial class NpcRaceOverrideSize_Registration : ILoquiRegistration
+    internal partial class NpcRaceOverrideFlags_Registration : ILoquiRegistration
     {
-        public static readonly NpcRaceOverrideSize_Registration Instance = new NpcRaceOverrideSize_Registration();
+        public static readonly NpcRaceOverrideFlags_Registration Instance = new NpcRaceOverrideFlags_Registration();
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 1;
+        public const ushort AdditionalFieldCount = 2;
 
-        public const ushort FieldCount = 1;
+        public const ushort FieldCount = 2;
 
-        public static readonly Type MaskType = typeof(NpcRaceOverrideSize.Mask<>);
+        public static readonly Type MaskType = typeof(NpcRaceOverrideFlags.Mask<>);
 
-        public static readonly Type ErrorMaskType = typeof(NpcRaceOverrideSize.ErrorMask);
+        public static readonly Type ErrorMaskType = typeof(NpcRaceOverrideFlags.ErrorMask);
 
-        public static readonly Type ClassType = typeof(NpcRaceOverrideSize);
+        public static readonly Type ClassType = typeof(NpcRaceOverrideFlags);
 
-        public static readonly Type GetterType = typeof(INpcRaceOverrideSizeGetter);
+        public static readonly Type GetterType = typeof(INpcRaceOverrideFlagsGetter);
 
         public static readonly Type? InternalGetterType = null;
 
-        public static readonly Type SetterType = typeof(INpcRaceOverrideSize);
+        public static readonly Type SetterType = typeof(INpcRaceOverrideFlags);
 
         public static readonly Type? InternalSetterType = null;
 
-        public const string FullName = "Mutagen.Bethesda.Starfield.NpcRaceOverrideSize";
+        public const string FullName = "Mutagen.Bethesda.Starfield.NpcRaceOverrideFlags";
 
-        public const string Name = "NpcRaceOverrideSize";
+        public const string Name = "NpcRaceOverrideFlags";
 
         public const string Namespace = "Mutagen.Bethesda.Starfield";
 
@@ -632,7 +674,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public static readonly Type? GenericRegistrationType = null;
 
-        public static readonly Type BinaryWriteTranslation = typeof(NpcRaceOverrideSizeBinaryWriteTranslation);
+        public static readonly Type BinaryWriteTranslation = typeof(NpcRaceOverrideFlagsBinaryWriteTranslation);
         #region Interface
         ProtocolKey ILoquiRegistration.ProtocolKey => ProtocolKey;
         ushort ILoquiRegistration.FieldCount => FieldCount;
@@ -663,20 +705,21 @@ namespace Mutagen.Bethesda.Starfield
     #endregion
 
     #region Common
-    internal partial class NpcRaceOverrideSizeSetterCommon
+    internal partial class NpcRaceOverrideFlagsSetterCommon
     {
-        public static readonly NpcRaceOverrideSizeSetterCommon Instance = new NpcRaceOverrideSizeSetterCommon();
+        public static readonly NpcRaceOverrideFlagsSetterCommon Instance = new NpcRaceOverrideFlagsSetterCommon();
 
         partial void ClearPartial();
         
-        public void Clear(INpcRaceOverrideSize item)
+        public void Clear(INpcRaceOverrideFlags item)
         {
             ClearPartial();
-            item.Size = default(Size);
+            item.RaceDataFlags = default(Race.Flag);
+            item.OverrideActive = default(Race.Flag);
         }
         
         #region Mutagen
-        public void RemapLinks(INpcRaceOverrideSize obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
+        public void RemapLinks(INpcRaceOverrideFlags obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
         }
         
@@ -684,7 +727,7 @@ namespace Mutagen.Bethesda.Starfield
         
         #region Binary Translation
         public virtual void CopyInFromBinary(
-            INpcRaceOverrideSize item,
+            INpcRaceOverrideFlags item,
             MutagenFrame frame,
             TypedParseParams translationParams)
         {
@@ -692,23 +735,23 @@ namespace Mutagen.Bethesda.Starfield
                 record: item,
                 frame: frame,
                 translationParams: translationParams,
-                fillStructs: NpcRaceOverrideSizeBinaryCreateTranslation.FillBinaryStructs);
+                fillStructs: NpcRaceOverrideFlagsBinaryCreateTranslation.FillBinaryStructs);
         }
         
         #endregion
         
     }
-    internal partial class NpcRaceOverrideSizeCommon
+    internal partial class NpcRaceOverrideFlagsCommon
     {
-        public static readonly NpcRaceOverrideSizeCommon Instance = new NpcRaceOverrideSizeCommon();
+        public static readonly NpcRaceOverrideFlagsCommon Instance = new NpcRaceOverrideFlagsCommon();
 
-        public NpcRaceOverrideSize.Mask<bool> GetEqualsMask(
-            INpcRaceOverrideSizeGetter item,
-            INpcRaceOverrideSizeGetter rhs,
+        public NpcRaceOverrideFlags.Mask<bool> GetEqualsMask(
+            INpcRaceOverrideFlagsGetter item,
+            INpcRaceOverrideFlagsGetter rhs,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            var ret = new NpcRaceOverrideSize.Mask<bool>(false);
-            ((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)item).CommonInstance()!).FillEqualsMask(
+            var ret = new NpcRaceOverrideFlags.Mask<bool>(false);
+            ((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)item).CommonInstance()!).FillEqualsMask(
                 item: item,
                 rhs: rhs,
                 ret: ret,
@@ -717,18 +760,19 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         public void FillEqualsMask(
-            INpcRaceOverrideSizeGetter item,
-            INpcRaceOverrideSizeGetter rhs,
-            NpcRaceOverrideSize.Mask<bool> ret,
+            INpcRaceOverrideFlagsGetter item,
+            INpcRaceOverrideFlagsGetter rhs,
+            NpcRaceOverrideFlags.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Size = item.Size == rhs.Size;
+            ret.RaceDataFlags = item.RaceDataFlags == rhs.RaceDataFlags;
+            ret.OverrideActive = item.OverrideActive == rhs.OverrideActive;
         }
         
         public string Print(
-            INpcRaceOverrideSizeGetter item,
+            INpcRaceOverrideFlagsGetter item,
             string? name = null,
-            NpcRaceOverrideSize.Mask<bool>? printMask = null)
+            NpcRaceOverrideFlags.Mask<bool>? printMask = null)
         {
             var sb = new StructuredStringBuilder();
             Print(
@@ -740,18 +784,18 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         public void Print(
-            INpcRaceOverrideSizeGetter item,
+            INpcRaceOverrideFlagsGetter item,
             StructuredStringBuilder sb,
             string? name = null,
-            NpcRaceOverrideSize.Mask<bool>? printMask = null)
+            NpcRaceOverrideFlags.Mask<bool>? printMask = null)
         {
             if (name == null)
             {
-                sb.AppendLine($"NpcRaceOverrideSize =>");
+                sb.AppendLine($"NpcRaceOverrideFlags =>");
             }
             else
             {
-                sb.AppendLine($"{name} (NpcRaceOverrideSize) =>");
+                sb.AppendLine($"{name} (NpcRaceOverrideFlags) =>");
             }
             using (sb.Brace())
             {
@@ -763,34 +807,43 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         protected static void ToStringFields(
-            INpcRaceOverrideSizeGetter item,
+            INpcRaceOverrideFlagsGetter item,
             StructuredStringBuilder sb,
-            NpcRaceOverrideSize.Mask<bool>? printMask = null)
+            NpcRaceOverrideFlags.Mask<bool>? printMask = null)
         {
-            if (printMask?.Size ?? true)
+            if (printMask?.RaceDataFlags ?? true)
             {
-                sb.AppendItem(item.Size, "Size");
+                sb.AppendItem(item.RaceDataFlags, "RaceDataFlags");
+            }
+            if (printMask?.OverrideActive ?? true)
+            {
+                sb.AppendItem(item.OverrideActive, "OverrideActive");
             }
         }
         
         #region Equals and Hash
         public virtual bool Equals(
-            INpcRaceOverrideSizeGetter? lhs,
-            INpcRaceOverrideSizeGetter? rhs,
+            INpcRaceOverrideFlagsGetter? lhs,
+            INpcRaceOverrideFlagsGetter? rhs,
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideSize_FieldIndex.Size) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideFlags_FieldIndex.RaceDataFlags) ?? true))
             {
-                if (lhs.Size != rhs.Size) return false;
+                if (lhs.RaceDataFlags != rhs.RaceDataFlags) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideFlags_FieldIndex.OverrideActive) ?? true))
+            {
+                if (lhs.OverrideActive != rhs.OverrideActive) return false;
             }
             return true;
         }
         
-        public virtual int GetHashCode(INpcRaceOverrideSizeGetter item)
+        public virtual int GetHashCode(INpcRaceOverrideFlagsGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Size);
+            hash.Add(item.RaceDataFlags);
+            hash.Add(item.OverrideActive);
             return hash.ToHashCode();
         }
         
@@ -799,11 +852,11 @@ namespace Mutagen.Bethesda.Starfield
         
         public object GetNew()
         {
-            return NpcRaceOverrideSize.GetNew();
+            return NpcRaceOverrideFlags.GetNew();
         }
         
         #region Mutagen
-        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(INpcRaceOverrideSizeGetter obj, bool iterateNestedRecords = true)
+        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(INpcRaceOverrideFlagsGetter obj, bool iterateNestedRecords = true)
         {
             yield break;
         }
@@ -811,21 +864,25 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         
     }
-    internal partial class NpcRaceOverrideSizeSetterTranslationCommon
+    internal partial class NpcRaceOverrideFlagsSetterTranslationCommon
     {
-        public static readonly NpcRaceOverrideSizeSetterTranslationCommon Instance = new NpcRaceOverrideSizeSetterTranslationCommon();
+        public static readonly NpcRaceOverrideFlagsSetterTranslationCommon Instance = new NpcRaceOverrideFlagsSetterTranslationCommon();
 
         #region DeepCopyIn
         public void DeepCopyIn(
-            INpcRaceOverrideSize item,
-            INpcRaceOverrideSizeGetter rhs,
+            INpcRaceOverrideFlags item,
+            INpcRaceOverrideFlagsGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideSize_FieldIndex.Size) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideFlags_FieldIndex.RaceDataFlags) ?? true))
             {
-                item.Size = rhs.Size;
+                item.RaceDataFlags = rhs.RaceDataFlags;
+            }
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideFlags_FieldIndex.OverrideActive) ?? true))
+            {
+                item.OverrideActive = rhs.OverrideActive;
             }
             DeepCopyInCustom(
                 item: item,
@@ -836,19 +893,19 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         partial void DeepCopyInCustom(
-            INpcRaceOverrideSize item,
-            INpcRaceOverrideSizeGetter rhs,
+            INpcRaceOverrideFlags item,
+            INpcRaceOverrideFlagsGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask,
             bool deepCopy);
         #endregion
         
-        public NpcRaceOverrideSize DeepCopy(
-            INpcRaceOverrideSizeGetter item,
-            NpcRaceOverrideSize.TranslationMask? copyMask = null)
+        public NpcRaceOverrideFlags DeepCopy(
+            INpcRaceOverrideFlagsGetter item,
+            NpcRaceOverrideFlags.TranslationMask? copyMask = null)
         {
-            NpcRaceOverrideSize ret = (NpcRaceOverrideSize)((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)item).CommonInstance()!).GetNew();
-            ((NpcRaceOverrideSizeSetterTranslationCommon)((INpcRaceOverrideSizeGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
+            NpcRaceOverrideFlags ret = (NpcRaceOverrideFlags)((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)item).CommonInstance()!).GetNew();
+            ((NpcRaceOverrideFlagsSetterTranslationCommon)((INpcRaceOverrideFlagsGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: ret,
                 rhs: item,
                 errorMask: null,
@@ -857,30 +914,30 @@ namespace Mutagen.Bethesda.Starfield
             return ret;
         }
         
-        public NpcRaceOverrideSize DeepCopy(
-            INpcRaceOverrideSizeGetter item,
-            out NpcRaceOverrideSize.ErrorMask errorMask,
-            NpcRaceOverrideSize.TranslationMask? copyMask = null)
+        public NpcRaceOverrideFlags DeepCopy(
+            INpcRaceOverrideFlagsGetter item,
+            out NpcRaceOverrideFlags.ErrorMask errorMask,
+            NpcRaceOverrideFlags.TranslationMask? copyMask = null)
         {
             var errorMaskBuilder = new ErrorMaskBuilder();
-            NpcRaceOverrideSize ret = (NpcRaceOverrideSize)((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)item).CommonInstance()!).GetNew();
-            ((NpcRaceOverrideSizeSetterTranslationCommon)((INpcRaceOverrideSizeGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
+            NpcRaceOverrideFlags ret = (NpcRaceOverrideFlags)((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)item).CommonInstance()!).GetNew();
+            ((NpcRaceOverrideFlagsSetterTranslationCommon)((INpcRaceOverrideFlagsGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
                 ret,
                 item,
                 errorMask: errorMaskBuilder,
                 copyMask: copyMask?.GetCrystal(),
                 deepCopy: true);
-            errorMask = NpcRaceOverrideSize.ErrorMask.Factory(errorMaskBuilder);
+            errorMask = NpcRaceOverrideFlags.ErrorMask.Factory(errorMaskBuilder);
             return ret;
         }
         
-        public NpcRaceOverrideSize DeepCopy(
-            INpcRaceOverrideSizeGetter item,
+        public NpcRaceOverrideFlags DeepCopy(
+            INpcRaceOverrideFlagsGetter item,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask = null)
         {
-            NpcRaceOverrideSize ret = (NpcRaceOverrideSize)((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)item).CommonInstance()!).GetNew();
-            ((NpcRaceOverrideSizeSetterTranslationCommon)((INpcRaceOverrideSizeGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
+            NpcRaceOverrideFlags ret = (NpcRaceOverrideFlags)((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)item).CommonInstance()!).GetNew();
+            ((NpcRaceOverrideFlagsSetterTranslationCommon)((INpcRaceOverrideFlagsGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: ret,
                 rhs: item,
                 errorMask: errorMask,
@@ -896,27 +953,27 @@ namespace Mutagen.Bethesda.Starfield
 
 namespace Mutagen.Bethesda.Starfield
 {
-    public partial class NpcRaceOverrideSize
+    public partial class NpcRaceOverrideFlags
     {
         #region Common Routing
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ILoquiRegistration ILoquiObject.Registration => NpcRaceOverrideSize_Registration.Instance;
-        public static ILoquiRegistration StaticRegistration => NpcRaceOverrideSize_Registration.Instance;
+        ILoquiRegistration ILoquiObject.Registration => NpcRaceOverrideFlags_Registration.Instance;
+        public static ILoquiRegistration StaticRegistration => NpcRaceOverrideFlags_Registration.Instance;
         [DebuggerStepThrough]
-        protected object CommonInstance() => NpcRaceOverrideSizeCommon.Instance;
+        protected object CommonInstance() => NpcRaceOverrideFlagsCommon.Instance;
         [DebuggerStepThrough]
         protected object CommonSetterInstance()
         {
-            return NpcRaceOverrideSizeSetterCommon.Instance;
+            return NpcRaceOverrideFlagsSetterCommon.Instance;
         }
         [DebuggerStepThrough]
-        protected object CommonSetterTranslationInstance() => NpcRaceOverrideSizeSetterTranslationCommon.Instance;
+        protected object CommonSetterTranslationInstance() => NpcRaceOverrideFlagsSetterTranslationCommon.Instance;
         [DebuggerStepThrough]
-        object INpcRaceOverrideSizeGetter.CommonInstance() => this.CommonInstance();
+        object INpcRaceOverrideFlagsGetter.CommonInstance() => this.CommonInstance();
         [DebuggerStepThrough]
-        object INpcRaceOverrideSizeGetter.CommonSetterInstance() => this.CommonSetterInstance();
+        object INpcRaceOverrideFlagsGetter.CommonSetterInstance() => this.CommonSetterInstance();
         [DebuggerStepThrough]
-        object INpcRaceOverrideSizeGetter.CommonSetterTranslationInstance() => this.CommonSetterTranslationInstance();
+        object INpcRaceOverrideFlagsGetter.CommonSetterTranslationInstance() => this.CommonSetterTranslationInstance();
 
         #endregion
 
@@ -927,23 +984,27 @@ namespace Mutagen.Bethesda.Starfield
 #region Binary Translation
 namespace Mutagen.Bethesda.Starfield
 {
-    public partial class NpcRaceOverrideSizeBinaryWriteTranslation : IBinaryWriteTranslator
+    public partial class NpcRaceOverrideFlagsBinaryWriteTranslation : IBinaryWriteTranslator
     {
-        public static readonly NpcRaceOverrideSizeBinaryWriteTranslation Instance = new();
+        public static readonly NpcRaceOverrideFlagsBinaryWriteTranslation Instance = new();
 
         public static void WriteEmbedded(
-            INpcRaceOverrideSizeGetter item,
+            INpcRaceOverrideFlagsGetter item,
             MutagenWriter writer)
         {
-            EnumBinaryTranslation<Size, MutagenFrame, MutagenWriter>.Instance.Write(
+            EnumBinaryTranslation<Race.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
                 writer,
-                item.Size,
-                length: 4);
+                item.RaceDataFlags,
+                length: 8);
+            EnumBinaryTranslation<Race.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.OverrideActive,
+                length: 8);
         }
 
         public void Write(
             MutagenWriter writer,
-            INpcRaceOverrideSizeGetter item,
+            INpcRaceOverrideFlagsGetter item,
             TypedWriteParams translationParams)
         {
             WriteEmbedded(
@@ -957,24 +1018,27 @@ namespace Mutagen.Bethesda.Starfield
             TypedWriteParams translationParams = default)
         {
             Write(
-                item: (INpcRaceOverrideSizeGetter)item,
+                item: (INpcRaceOverrideFlagsGetter)item,
                 writer: writer,
                 translationParams: translationParams);
         }
 
     }
 
-    internal partial class NpcRaceOverrideSizeBinaryCreateTranslation
+    internal partial class NpcRaceOverrideFlagsBinaryCreateTranslation
     {
-        public static readonly NpcRaceOverrideSizeBinaryCreateTranslation Instance = new NpcRaceOverrideSizeBinaryCreateTranslation();
+        public static readonly NpcRaceOverrideFlagsBinaryCreateTranslation Instance = new NpcRaceOverrideFlagsBinaryCreateTranslation();
 
         public static void FillBinaryStructs(
-            INpcRaceOverrideSize item,
+            INpcRaceOverrideFlags item,
             MutagenFrame frame)
         {
-            item.Size = EnumBinaryTranslation<Size, MutagenFrame, MutagenWriter>.Instance.Parse(
+            item.RaceDataFlags = EnumBinaryTranslation<Race.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
-                length: 4);
+                length: 8);
+            item.OverrideActive = EnumBinaryTranslation<Race.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                length: 8);
         }
 
     }
@@ -983,14 +1047,14 @@ namespace Mutagen.Bethesda.Starfield
 namespace Mutagen.Bethesda.Starfield
 {
     #region Binary Write Mixins
-    public static class NpcRaceOverrideSizeBinaryTranslationMixIn
+    public static class NpcRaceOverrideFlagsBinaryTranslationMixIn
     {
         public static void WriteToBinary(
-            this INpcRaceOverrideSizeGetter item,
+            this INpcRaceOverrideFlagsGetter item,
             MutagenWriter writer,
             TypedWriteParams translationParams = default)
         {
-            ((NpcRaceOverrideSizeBinaryWriteTranslation)item.BinaryWriteTranslator).Write(
+            ((NpcRaceOverrideFlagsBinaryWriteTranslation)item.BinaryWriteTranslator).Write(
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
@@ -1003,51 +1067,52 @@ namespace Mutagen.Bethesda.Starfield
 }
 namespace Mutagen.Bethesda.Starfield
 {
-    internal partial class NpcRaceOverrideSizeBinaryOverlay :
+    internal partial class NpcRaceOverrideFlagsBinaryOverlay :
         PluginBinaryOverlay,
-        INpcRaceOverrideSizeGetter
+        INpcRaceOverrideFlagsGetter
     {
         #region Common Routing
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ILoquiRegistration ILoquiObject.Registration => NpcRaceOverrideSize_Registration.Instance;
-        public static ILoquiRegistration StaticRegistration => NpcRaceOverrideSize_Registration.Instance;
+        ILoquiRegistration ILoquiObject.Registration => NpcRaceOverrideFlags_Registration.Instance;
+        public static ILoquiRegistration StaticRegistration => NpcRaceOverrideFlags_Registration.Instance;
         [DebuggerStepThrough]
-        protected object CommonInstance() => NpcRaceOverrideSizeCommon.Instance;
+        protected object CommonInstance() => NpcRaceOverrideFlagsCommon.Instance;
         [DebuggerStepThrough]
-        protected object CommonSetterTranslationInstance() => NpcRaceOverrideSizeSetterTranslationCommon.Instance;
+        protected object CommonSetterTranslationInstance() => NpcRaceOverrideFlagsSetterTranslationCommon.Instance;
         [DebuggerStepThrough]
-        object INpcRaceOverrideSizeGetter.CommonInstance() => this.CommonInstance();
+        object INpcRaceOverrideFlagsGetter.CommonInstance() => this.CommonInstance();
         [DebuggerStepThrough]
-        object? INpcRaceOverrideSizeGetter.CommonSetterInstance() => null;
+        object? INpcRaceOverrideFlagsGetter.CommonSetterInstance() => null;
         [DebuggerStepThrough]
-        object INpcRaceOverrideSizeGetter.CommonSetterTranslationInstance() => this.CommonSetterTranslationInstance();
+        object INpcRaceOverrideFlagsGetter.CommonSetterTranslationInstance() => this.CommonSetterTranslationInstance();
 
         #endregion
 
         void IPrintable.Print(StructuredStringBuilder sb, string? name) => this.Print(sb, name);
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected object BinaryWriteTranslator => NpcRaceOverrideSizeBinaryWriteTranslation.Instance;
+        protected object BinaryWriteTranslator => NpcRaceOverrideFlagsBinaryWriteTranslation.Instance;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         object IBinaryItem.BinaryWriteTranslator => this.BinaryWriteTranslator;
         void IBinaryItem.WriteToBinary(
             MutagenWriter writer,
             TypedWriteParams translationParams = default)
         {
-            ((NpcRaceOverrideSizeBinaryWriteTranslation)this.BinaryWriteTranslator).Write(
+            ((NpcRaceOverrideFlagsBinaryWriteTranslation)this.BinaryWriteTranslator).Write(
                 item: this,
                 writer: writer,
                 translationParams: translationParams);
         }
 
-        public Size Size => (Size)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x0, 0x4));
+        public Race.Flag RaceDataFlags => (Race.Flag)BinaryPrimitives.ReadInt64LittleEndian(_structData.Span.Slice(0x0, 0x8));
+        public Race.Flag OverrideActive => (Race.Flag)BinaryPrimitives.ReadInt64LittleEndian(_structData.Span.Slice(0x8, 0x8));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
             int offset);
 
         partial void CustomCtor();
-        protected NpcRaceOverrideSizeBinaryOverlay(
+        protected NpcRaceOverrideFlagsBinaryOverlay(
             MemoryPair memoryPair,
             BinaryOverlayFactoryPackage package)
             : base(
@@ -1057,7 +1122,7 @@ namespace Mutagen.Bethesda.Starfield
             this.CustomCtor();
         }
 
-        public static INpcRaceOverrideSizeGetter NpcRaceOverrideSizeFactory(
+        public static INpcRaceOverrideFlagsGetter NpcRaceOverrideFlagsFactory(
             OverlayStream stream,
             BinaryOverlayFactoryPackage package,
             TypedParseParams translationParams = default)
@@ -1066,13 +1131,13 @@ namespace Mutagen.Bethesda.Starfield
                 stream: stream,
                 meta: package.MetaData.Constants,
                 translationParams: translationParams,
-                length: 0x4,
+                length: 0x10,
                 memoryPair: out var memoryPair,
                 offset: out var offset);
-            var ret = new NpcRaceOverrideSizeBinaryOverlay(
+            var ret = new NpcRaceOverrideFlagsBinaryOverlay(
                 memoryPair: memoryPair,
                 package: package);
-            stream.Position += 0x4;
+            stream.Position += 0x10;
             ret.CustomFactoryEnd(
                 stream: stream,
                 finalPos: stream.Length,
@@ -1080,12 +1145,12 @@ namespace Mutagen.Bethesda.Starfield
             return ret;
         }
 
-        public static INpcRaceOverrideSizeGetter NpcRaceOverrideSizeFactory(
+        public static INpcRaceOverrideFlagsGetter NpcRaceOverrideFlagsFactory(
             ReadOnlyMemorySlice<byte> slice,
             BinaryOverlayFactoryPackage package,
             TypedParseParams translationParams = default)
         {
-            return NpcRaceOverrideSizeFactory(
+            return NpcRaceOverrideFlagsFactory(
                 stream: new OverlayStream(slice, package),
                 package: package,
                 translationParams: translationParams);
@@ -1097,7 +1162,7 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             string? name = null)
         {
-            NpcRaceOverrideSizeMixIn.Print(
+            NpcRaceOverrideFlagsMixIn.Print(
                 item: this,
                 sb: sb,
                 name: name);
@@ -1108,16 +1173,16 @@ namespace Mutagen.Bethesda.Starfield
         #region Equals and Hash
         public override bool Equals(object? obj)
         {
-            if (obj is not INpcRaceOverrideSizeGetter rhs) return false;
-            return ((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
+            if (obj is not INpcRaceOverrideFlagsGetter rhs) return false;
+            return ((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
         }
 
-        public bool Equals(INpcRaceOverrideSizeGetter? obj)
+        public bool Equals(INpcRaceOverrideFlagsGetter? obj)
         {
-            return ((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
+            return ((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
         }
 
-        public override int GetHashCode() => ((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)this).CommonInstance()!).GetHashCode(this);
+        public override int GetHashCode() => ((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)this).CommonInstance()!).GetHashCode(this);
 
         #endregion
 

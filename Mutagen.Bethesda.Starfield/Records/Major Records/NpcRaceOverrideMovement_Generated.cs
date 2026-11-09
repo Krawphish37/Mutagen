@@ -38,13 +38,13 @@ using System.Reactive.Linq;
 namespace Mutagen.Bethesda.Starfield
 {
     #region Class
-    public partial class NpcRaceOverrideUnknown1 :
-        IEquatable<INpcRaceOverrideUnknown1Getter>,
-        ILoquiObjectSetter<NpcRaceOverrideUnknown1>,
-        INpcRaceOverrideUnknown1
+    public partial class NpcRaceOverrideMovement :
+        IEquatable<INpcRaceOverrideMovementGetter>,
+        ILoquiObjectSetter<NpcRaceOverrideMovement>,
+        INpcRaceOverrideMovement
     {
         #region Ctor
-        public NpcRaceOverrideUnknown1()
+        public NpcRaceOverrideMovement()
         {
             CustomCtor();
         }
@@ -57,11 +57,11 @@ namespace Mutagen.Bethesda.Starfield
         #region DecelerationRate
         public Single DecelerationRate { get; set; } = default(Single);
         #endregion
-        #region Unknown1
-        public Single Unknown1 { get; set; } = default(Single);
+        #region AngularAccelerationRate
+        public Single AngularAccelerationRate { get; set; } = default(Single);
         #endregion
-        #region Unknown2
-        public Single Unknown2 { get; set; } = default(Single);
+        #region AngularTolerance
+        public Single AngularTolerance { get; set; } = default(Single);
         #endregion
 
         #region To String
@@ -70,7 +70,7 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             string? name = null)
         {
-            NpcRaceOverrideUnknown1MixIn.Print(
+            NpcRaceOverrideMovementMixIn.Print(
                 item: this,
                 sb: sb,
                 name: name);
@@ -81,16 +81,16 @@ namespace Mutagen.Bethesda.Starfield
         #region Equals and Hash
         public override bool Equals(object? obj)
         {
-            if (obj is not INpcRaceOverrideUnknown1Getter rhs) return false;
-            return ((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
+            if (obj is not INpcRaceOverrideMovementGetter rhs) return false;
+            return ((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
         }
 
-        public bool Equals(INpcRaceOverrideUnknown1Getter? obj)
+        public bool Equals(INpcRaceOverrideMovementGetter? obj)
         {
-            return ((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
+            return ((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
         }
 
-        public override int GetHashCode() => ((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)this).CommonInstance()!).GetHashCode(this);
+        public override int GetHashCode() => ((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)this).CommonInstance()!).GetHashCode(this);
 
         #endregion
 
@@ -104,20 +104,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.AccelerationRate = initialValue;
                 this.DecelerationRate = initialValue;
-                this.Unknown1 = initialValue;
-                this.Unknown2 = initialValue;
+                this.AngularAccelerationRate = initialValue;
+                this.AngularTolerance = initialValue;
             }
 
             public Mask(
                 TItem AccelerationRate,
                 TItem DecelerationRate,
-                TItem Unknown1,
-                TItem Unknown2)
+                TItem AngularAccelerationRate,
+                TItem AngularTolerance)
             {
                 this.AccelerationRate = AccelerationRate;
                 this.DecelerationRate = DecelerationRate;
-                this.Unknown1 = Unknown1;
-                this.Unknown2 = Unknown2;
+                this.AngularAccelerationRate = AngularAccelerationRate;
+                this.AngularTolerance = AngularTolerance;
             }
 
             #pragma warning disable CS8618
@@ -131,8 +131,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem AccelerationRate;
             public TItem DecelerationRate;
-            public TItem Unknown1;
-            public TItem Unknown2;
+            public TItem AngularAccelerationRate;
+            public TItem AngularTolerance;
             #endregion
 
             #region Equals
@@ -147,8 +147,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.AccelerationRate, rhs.AccelerationRate)) return false;
                 if (!object.Equals(this.DecelerationRate, rhs.DecelerationRate)) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.AngularAccelerationRate, rhs.AngularAccelerationRate)) return false;
+                if (!object.Equals(this.AngularTolerance, rhs.AngularTolerance)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -156,8 +156,8 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.AccelerationRate);
                 hash.Add(this.DecelerationRate);
-                hash.Add(this.Unknown1);
-                hash.Add(this.Unknown2);
+                hash.Add(this.AngularAccelerationRate);
+                hash.Add(this.AngularTolerance);
                 return hash.ToHashCode();
             }
 
@@ -168,8 +168,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.AccelerationRate)) return false;
                 if (!eval(this.DecelerationRate)) return false;
-                if (!eval(this.Unknown1)) return false;
-                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.AngularAccelerationRate)) return false;
+                if (!eval(this.AngularTolerance)) return false;
                 return true;
             }
             #endregion
@@ -179,8 +179,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.AccelerationRate)) return true;
                 if (eval(this.DecelerationRate)) return true;
-                if (eval(this.Unknown1)) return true;
-                if (eval(this.Unknown2)) return true;
+                if (eval(this.AngularAccelerationRate)) return true;
+                if (eval(this.AngularTolerance)) return true;
                 return false;
             }
             #endregion
@@ -188,7 +188,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Translate
             public Mask<R> Translate<R>(Func<TItem, R> eval)
             {
-                var ret = new NpcRaceOverrideUnknown1.Mask<R>();
+                var ret = new NpcRaceOverrideMovement.Mask<R>();
                 this.Translate_InternalFill(ret, eval);
                 return ret;
             }
@@ -197,24 +197,24 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.AccelerationRate = eval(this.AccelerationRate);
                 obj.DecelerationRate = eval(this.DecelerationRate);
-                obj.Unknown1 = eval(this.Unknown1);
-                obj.Unknown2 = eval(this.Unknown2);
+                obj.AngularAccelerationRate = eval(this.AngularAccelerationRate);
+                obj.AngularTolerance = eval(this.AngularTolerance);
             }
             #endregion
 
             #region To String
             public override string ToString() => this.Print();
 
-            public string Print(NpcRaceOverrideUnknown1.Mask<bool>? printMask = null)
+            public string Print(NpcRaceOverrideMovement.Mask<bool>? printMask = null)
             {
                 var sb = new StructuredStringBuilder();
                 Print(sb, printMask);
                 return sb.ToString();
             }
 
-            public void Print(StructuredStringBuilder sb, NpcRaceOverrideUnknown1.Mask<bool>? printMask = null)
+            public void Print(StructuredStringBuilder sb, NpcRaceOverrideMovement.Mask<bool>? printMask = null)
             {
-                sb.AppendLine($"{nameof(NpcRaceOverrideUnknown1.Mask<TItem>)} =>");
+                sb.AppendLine($"{nameof(NpcRaceOverrideMovement.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
                     if (printMask?.AccelerationRate ?? true)
@@ -225,13 +225,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(DecelerationRate, "DecelerationRate");
                     }
-                    if (printMask?.Unknown1 ?? true)
+                    if (printMask?.AngularAccelerationRate ?? true)
                     {
-                        sb.AppendItem(Unknown1, "Unknown1");
+                        sb.AppendItem(AngularAccelerationRate, "AngularAccelerationRate");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.AngularTolerance ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(AngularTolerance, "AngularTolerance");
                     }
                 }
             }
@@ -259,24 +259,24 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? AccelerationRate;
             public Exception? DecelerationRate;
-            public Exception? Unknown1;
-            public Exception? Unknown2;
+            public Exception? AngularAccelerationRate;
+            public Exception? AngularTolerance;
             #endregion
 
             #region IErrorMask
             public object? GetNthMask(int index)
             {
-                NpcRaceOverrideUnknown1_FieldIndex enu = (NpcRaceOverrideUnknown1_FieldIndex)index;
+                NpcRaceOverrideMovement_FieldIndex enu = (NpcRaceOverrideMovement_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcRaceOverrideUnknown1_FieldIndex.AccelerationRate:
+                    case NpcRaceOverrideMovement_FieldIndex.AccelerationRate:
                         return AccelerationRate;
-                    case NpcRaceOverrideUnknown1_FieldIndex.DecelerationRate:
+                    case NpcRaceOverrideMovement_FieldIndex.DecelerationRate:
                         return DecelerationRate;
-                    case NpcRaceOverrideUnknown1_FieldIndex.Unknown1:
-                        return Unknown1;
-                    case NpcRaceOverrideUnknown1_FieldIndex.Unknown2:
-                        return Unknown2;
+                    case NpcRaceOverrideMovement_FieldIndex.AngularAccelerationRate:
+                        return AngularAccelerationRate;
+                    case NpcRaceOverrideMovement_FieldIndex.AngularTolerance:
+                        return AngularTolerance;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -284,20 +284,20 @@ namespace Mutagen.Bethesda.Starfield
 
             public void SetNthException(int index, Exception ex)
             {
-                NpcRaceOverrideUnknown1_FieldIndex enu = (NpcRaceOverrideUnknown1_FieldIndex)index;
+                NpcRaceOverrideMovement_FieldIndex enu = (NpcRaceOverrideMovement_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcRaceOverrideUnknown1_FieldIndex.AccelerationRate:
+                    case NpcRaceOverrideMovement_FieldIndex.AccelerationRate:
                         this.AccelerationRate = ex;
                         break;
-                    case NpcRaceOverrideUnknown1_FieldIndex.DecelerationRate:
+                    case NpcRaceOverrideMovement_FieldIndex.DecelerationRate:
                         this.DecelerationRate = ex;
                         break;
-                    case NpcRaceOverrideUnknown1_FieldIndex.Unknown1:
-                        this.Unknown1 = ex;
+                    case NpcRaceOverrideMovement_FieldIndex.AngularAccelerationRate:
+                        this.AngularAccelerationRate = ex;
                         break;
-                    case NpcRaceOverrideUnknown1_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case NpcRaceOverrideMovement_FieldIndex.AngularTolerance:
+                        this.AngularTolerance = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -306,20 +306,20 @@ namespace Mutagen.Bethesda.Starfield
 
             public void SetNthMask(int index, object obj)
             {
-                NpcRaceOverrideUnknown1_FieldIndex enu = (NpcRaceOverrideUnknown1_FieldIndex)index;
+                NpcRaceOverrideMovement_FieldIndex enu = (NpcRaceOverrideMovement_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcRaceOverrideUnknown1_FieldIndex.AccelerationRate:
+                    case NpcRaceOverrideMovement_FieldIndex.AccelerationRate:
                         this.AccelerationRate = (Exception?)obj;
                         break;
-                    case NpcRaceOverrideUnknown1_FieldIndex.DecelerationRate:
+                    case NpcRaceOverrideMovement_FieldIndex.DecelerationRate:
                         this.DecelerationRate = (Exception?)obj;
                         break;
-                    case NpcRaceOverrideUnknown1_FieldIndex.Unknown1:
-                        this.Unknown1 = (Exception?)obj;
+                    case NpcRaceOverrideMovement_FieldIndex.AngularAccelerationRate:
+                        this.AngularAccelerationRate = (Exception?)obj;
                         break;
-                    case NpcRaceOverrideUnknown1_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case NpcRaceOverrideMovement_FieldIndex.AngularTolerance:
+                        this.AngularTolerance = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -331,8 +331,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (AccelerationRate != null) return true;
                 if (DecelerationRate != null) return true;
-                if (Unknown1 != null) return true;
-                if (Unknown2 != null) return true;
+                if (AngularAccelerationRate != null) return true;
+                if (AngularTolerance != null) return true;
                 return false;
             }
             #endregion
@@ -365,10 +365,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(DecelerationRate, "DecelerationRate");
                 }
                 {
-                    sb.AppendItem(Unknown1, "Unknown1");
+                    sb.AppendItem(AngularAccelerationRate, "AngularAccelerationRate");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(AngularTolerance, "AngularTolerance");
                 }
             }
             #endregion
@@ -380,8 +380,8 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.AccelerationRate = this.AccelerationRate.Combine(rhs.AccelerationRate);
                 ret.DecelerationRate = this.DecelerationRate.Combine(rhs.DecelerationRate);
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.AngularAccelerationRate = this.AngularAccelerationRate.Combine(rhs.AngularAccelerationRate);
+                ret.AngularTolerance = this.AngularTolerance.Combine(rhs.AngularTolerance);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -407,8 +407,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool AccelerationRate;
             public bool DecelerationRate;
-            public bool Unknown1;
-            public bool Unknown2;
+            public bool AngularAccelerationRate;
+            public bool AngularTolerance;
             #endregion
 
             #region Ctors
@@ -420,8 +420,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.AccelerationRate = defaultOn;
                 this.DecelerationRate = defaultOn;
-                this.Unknown1 = defaultOn;
-                this.Unknown2 = defaultOn;
+                this.AngularAccelerationRate = defaultOn;
+                this.AngularTolerance = defaultOn;
             }
 
             #endregion
@@ -439,8 +439,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((AccelerationRate, null));
                 ret.Add((DecelerationRate, null));
-                ret.Add((Unknown1, null));
-                ret.Add((Unknown2, null));
+                ret.Add((AngularAccelerationRate, null));
+                ret.Add((AngularTolerance, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -453,25 +453,25 @@ namespace Mutagen.Bethesda.Starfield
 
         #region Binary Translation
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected object BinaryWriteTranslator => NpcRaceOverrideUnknown1BinaryWriteTranslation.Instance;
+        protected object BinaryWriteTranslator => NpcRaceOverrideMovementBinaryWriteTranslation.Instance;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         object IBinaryItem.BinaryWriteTranslator => this.BinaryWriteTranslator;
         void IBinaryItem.WriteToBinary(
             MutagenWriter writer,
             TypedWriteParams translationParams = default)
         {
-            ((NpcRaceOverrideUnknown1BinaryWriteTranslation)this.BinaryWriteTranslator).Write(
+            ((NpcRaceOverrideMovementBinaryWriteTranslation)this.BinaryWriteTranslator).Write(
                 item: this,
                 writer: writer,
                 translationParams: translationParams);
         }
         #region Binary Create
-        public static NpcRaceOverrideUnknown1 CreateFromBinary(
+        public static NpcRaceOverrideMovement CreateFromBinary(
             MutagenFrame frame,
             TypedParseParams translationParams = default)
         {
-            var ret = new NpcRaceOverrideUnknown1();
-            ((NpcRaceOverrideUnknown1SetterCommon)((INpcRaceOverrideUnknown1Getter)ret).CommonSetterInstance()!).CopyInFromBinary(
+            var ret = new NpcRaceOverrideMovement();
+            ((NpcRaceOverrideMovementSetterCommon)((INpcRaceOverrideMovementGetter)ret).CommonSetterInstance()!).CopyInFromBinary(
                 item: ret,
                 frame: frame,
                 translationParams: translationParams);
@@ -482,7 +482,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public static bool TryCreateFromBinary(
             MutagenFrame frame,
-            out NpcRaceOverrideUnknown1 item,
+            out NpcRaceOverrideMovement item,
             TypedParseParams translationParams = default)
         {
             var startPos = frame.Position;
@@ -497,32 +497,32 @@ namespace Mutagen.Bethesda.Starfield
 
         void IClearable.Clear()
         {
-            ((NpcRaceOverrideUnknown1SetterCommon)((INpcRaceOverrideUnknown1Getter)this).CommonSetterInstance()!).Clear(this);
+            ((NpcRaceOverrideMovementSetterCommon)((INpcRaceOverrideMovementGetter)this).CommonSetterInstance()!).Clear(this);
         }
 
-        internal static NpcRaceOverrideUnknown1 GetNew()
+        internal static NpcRaceOverrideMovement GetNew()
         {
-            return new NpcRaceOverrideUnknown1();
+            return new NpcRaceOverrideMovement();
         }
 
     }
     #endregion
 
     #region Interface
-    public partial interface INpcRaceOverrideUnknown1 :
-        ILoquiObjectSetter<INpcRaceOverrideUnknown1>,
-        INpcRaceOverrideUnknown1Getter
+    public partial interface INpcRaceOverrideMovement :
+        ILoquiObjectSetter<INpcRaceOverrideMovement>,
+        INpcRaceOverrideMovementGetter
     {
         new Single AccelerationRate { get; set; }
         new Single DecelerationRate { get; set; }
-        new Single Unknown1 { get; set; }
-        new Single Unknown2 { get; set; }
+        new Single AngularAccelerationRate { get; set; }
+        new Single AngularTolerance { get; set; }
     }
 
-    public partial interface INpcRaceOverrideUnknown1Getter :
+    public partial interface INpcRaceOverrideMovementGetter :
         ILoquiObject,
         IBinaryItem,
-        ILoquiObject<INpcRaceOverrideUnknown1Getter>
+        ILoquiObject<INpcRaceOverrideMovementGetter>
     {
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonInstance();
@@ -530,53 +530,53 @@ namespace Mutagen.Bethesda.Starfield
         object? CommonSetterInstance();
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
-        static ILoquiRegistration StaticRegistration => NpcRaceOverrideUnknown1_Registration.Instance;
+        static ILoquiRegistration StaticRegistration => NpcRaceOverrideMovement_Registration.Instance;
         Single AccelerationRate { get; }
         Single DecelerationRate { get; }
-        Single Unknown1 { get; }
-        Single Unknown2 { get; }
+        Single AngularAccelerationRate { get; }
+        Single AngularTolerance { get; }
 
     }
 
     #endregion
 
     #region Common MixIn
-    public static partial class NpcRaceOverrideUnknown1MixIn
+    public static partial class NpcRaceOverrideMovementMixIn
     {
-        public static void Clear(this INpcRaceOverrideUnknown1 item)
+        public static void Clear(this INpcRaceOverrideMovement item)
         {
-            ((NpcRaceOverrideUnknown1SetterCommon)((INpcRaceOverrideUnknown1Getter)item).CommonSetterInstance()!).Clear(item: item);
+            ((NpcRaceOverrideMovementSetterCommon)((INpcRaceOverrideMovementGetter)item).CommonSetterInstance()!).Clear(item: item);
         }
 
-        public static NpcRaceOverrideUnknown1.Mask<bool> GetEqualsMask(
-            this INpcRaceOverrideUnknown1Getter item,
-            INpcRaceOverrideUnknown1Getter rhs,
+        public static NpcRaceOverrideMovement.Mask<bool> GetEqualsMask(
+            this INpcRaceOverrideMovementGetter item,
+            INpcRaceOverrideMovementGetter rhs,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            return ((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)item).CommonInstance()!).GetEqualsMask(
+            return ((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)item).CommonInstance()!).GetEqualsMask(
                 item: item,
                 rhs: rhs,
                 include: include);
         }
 
         public static string Print(
-            this INpcRaceOverrideUnknown1Getter item,
+            this INpcRaceOverrideMovementGetter item,
             string? name = null,
-            NpcRaceOverrideUnknown1.Mask<bool>? printMask = null)
+            NpcRaceOverrideMovement.Mask<bool>? printMask = null)
         {
-            return ((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)item).CommonInstance()!).Print(
+            return ((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)item).CommonInstance()!).Print(
                 item: item,
                 name: name,
                 printMask: printMask);
         }
 
         public static void Print(
-            this INpcRaceOverrideUnknown1Getter item,
+            this INpcRaceOverrideMovementGetter item,
             StructuredStringBuilder sb,
             string? name = null,
-            NpcRaceOverrideUnknown1.Mask<bool>? printMask = null)
+            NpcRaceOverrideMovement.Mask<bool>? printMask = null)
         {
-            ((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)item).CommonInstance()!).Print(
+            ((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)item).CommonInstance()!).Print(
                 item: item,
                 sb: sb,
                 name: name,
@@ -584,21 +584,21 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public static bool Equals(
-            this INpcRaceOverrideUnknown1Getter item,
-            INpcRaceOverrideUnknown1Getter rhs,
-            NpcRaceOverrideUnknown1.TranslationMask? equalsMask = null)
+            this INpcRaceOverrideMovementGetter item,
+            INpcRaceOverrideMovementGetter rhs,
+            NpcRaceOverrideMovement.TranslationMask? equalsMask = null)
         {
-            return ((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)item).CommonInstance()!).Equals(
+            return ((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)item).CommonInstance()!).Equals(
                 lhs: item,
                 rhs: rhs,
                 equalsMask: equalsMask?.GetCrystal());
         }
 
         public static void DeepCopyIn(
-            this INpcRaceOverrideUnknown1 lhs,
-            INpcRaceOverrideUnknown1Getter rhs)
+            this INpcRaceOverrideMovement lhs,
+            INpcRaceOverrideMovementGetter rhs)
         {
-            ((NpcRaceOverrideUnknown1SetterTranslationCommon)((INpcRaceOverrideUnknown1Getter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((NpcRaceOverrideMovementSetterTranslationCommon)((INpcRaceOverrideMovementGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: default,
@@ -607,11 +607,11 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public static void DeepCopyIn(
-            this INpcRaceOverrideUnknown1 lhs,
-            INpcRaceOverrideUnknown1Getter rhs,
-            NpcRaceOverrideUnknown1.TranslationMask? copyMask = null)
+            this INpcRaceOverrideMovement lhs,
+            INpcRaceOverrideMovementGetter rhs,
+            NpcRaceOverrideMovement.TranslationMask? copyMask = null)
         {
-            ((NpcRaceOverrideUnknown1SetterTranslationCommon)((INpcRaceOverrideUnknown1Getter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((NpcRaceOverrideMovementSetterTranslationCommon)((INpcRaceOverrideMovementGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: default,
@@ -620,28 +620,28 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public static void DeepCopyIn(
-            this INpcRaceOverrideUnknown1 lhs,
-            INpcRaceOverrideUnknown1Getter rhs,
-            out NpcRaceOverrideUnknown1.ErrorMask errorMask,
-            NpcRaceOverrideUnknown1.TranslationMask? copyMask = null)
+            this INpcRaceOverrideMovement lhs,
+            INpcRaceOverrideMovementGetter rhs,
+            out NpcRaceOverrideMovement.ErrorMask errorMask,
+            NpcRaceOverrideMovement.TranslationMask? copyMask = null)
         {
             var errorMaskBuilder = new ErrorMaskBuilder();
-            ((NpcRaceOverrideUnknown1SetterTranslationCommon)((INpcRaceOverrideUnknown1Getter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((NpcRaceOverrideMovementSetterTranslationCommon)((INpcRaceOverrideMovementGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: errorMaskBuilder,
                 copyMask: copyMask?.GetCrystal(),
                 deepCopy: false);
-            errorMask = NpcRaceOverrideUnknown1.ErrorMask.Factory(errorMaskBuilder);
+            errorMask = NpcRaceOverrideMovement.ErrorMask.Factory(errorMaskBuilder);
         }
 
         public static void DeepCopyIn(
-            this INpcRaceOverrideUnknown1 lhs,
-            INpcRaceOverrideUnknown1Getter rhs,
+            this INpcRaceOverrideMovement lhs,
+            INpcRaceOverrideMovementGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask)
         {
-            ((NpcRaceOverrideUnknown1SetterTranslationCommon)((INpcRaceOverrideUnknown1Getter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((NpcRaceOverrideMovementSetterTranslationCommon)((INpcRaceOverrideMovementGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: errorMask,
@@ -649,32 +649,32 @@ namespace Mutagen.Bethesda.Starfield
                 deepCopy: false);
         }
 
-        public static NpcRaceOverrideUnknown1 DeepCopy(
-            this INpcRaceOverrideUnknown1Getter item,
-            NpcRaceOverrideUnknown1.TranslationMask? copyMask = null)
+        public static NpcRaceOverrideMovement DeepCopy(
+            this INpcRaceOverrideMovementGetter item,
+            NpcRaceOverrideMovement.TranslationMask? copyMask = null)
         {
-            return ((NpcRaceOverrideUnknown1SetterTranslationCommon)((INpcRaceOverrideUnknown1Getter)item).CommonSetterTranslationInstance()!).DeepCopy(
+            return ((NpcRaceOverrideMovementSetterTranslationCommon)((INpcRaceOverrideMovementGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
                 item: item,
                 copyMask: copyMask);
         }
 
-        public static NpcRaceOverrideUnknown1 DeepCopy(
-            this INpcRaceOverrideUnknown1Getter item,
-            out NpcRaceOverrideUnknown1.ErrorMask errorMask,
-            NpcRaceOverrideUnknown1.TranslationMask? copyMask = null)
+        public static NpcRaceOverrideMovement DeepCopy(
+            this INpcRaceOverrideMovementGetter item,
+            out NpcRaceOverrideMovement.ErrorMask errorMask,
+            NpcRaceOverrideMovement.TranslationMask? copyMask = null)
         {
-            return ((NpcRaceOverrideUnknown1SetterTranslationCommon)((INpcRaceOverrideUnknown1Getter)item).CommonSetterTranslationInstance()!).DeepCopy(
+            return ((NpcRaceOverrideMovementSetterTranslationCommon)((INpcRaceOverrideMovementGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
                 item: item,
                 copyMask: copyMask,
                 errorMask: out errorMask);
         }
 
-        public static NpcRaceOverrideUnknown1 DeepCopy(
-            this INpcRaceOverrideUnknown1Getter item,
+        public static NpcRaceOverrideMovement DeepCopy(
+            this INpcRaceOverrideMovementGetter item,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask = null)
         {
-            return ((NpcRaceOverrideUnknown1SetterTranslationCommon)((INpcRaceOverrideUnknown1Getter)item).CommonSetterTranslationInstance()!).DeepCopy(
+            return ((NpcRaceOverrideMovementSetterTranslationCommon)((INpcRaceOverrideMovementGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
                 item: item,
                 copyMask: copyMask,
                 errorMask: errorMask);
@@ -682,11 +682,11 @@ namespace Mutagen.Bethesda.Starfield
 
         #region Binary Translation
         public static void CopyInFromBinary(
-            this INpcRaceOverrideUnknown1 item,
+            this INpcRaceOverrideMovement item,
             MutagenFrame frame,
             TypedParseParams translationParams = default)
         {
-            ((NpcRaceOverrideUnknown1SetterCommon)((INpcRaceOverrideUnknown1Getter)item).CommonSetterInstance()!).CopyInFromBinary(
+            ((NpcRaceOverrideMovementSetterCommon)((INpcRaceOverrideMovementGetter)item).CommonSetterInstance()!).CopyInFromBinary(
                 item: item,
                 frame: frame,
                 translationParams: translationParams);
@@ -702,19 +702,19 @@ namespace Mutagen.Bethesda.Starfield
 namespace Mutagen.Bethesda.Starfield
 {
     #region Field Index
-    internal enum NpcRaceOverrideUnknown1_FieldIndex
+    internal enum NpcRaceOverrideMovement_FieldIndex
     {
         AccelerationRate = 0,
         DecelerationRate = 1,
-        Unknown1 = 2,
-        Unknown2 = 3,
+        AngularAccelerationRate = 2,
+        AngularTolerance = 3,
     }
     #endregion
 
     #region Registration
-    internal partial class NpcRaceOverrideUnknown1_Registration : ILoquiRegistration
+    internal partial class NpcRaceOverrideMovement_Registration : ILoquiRegistration
     {
-        public static readonly NpcRaceOverrideUnknown1_Registration Instance = new NpcRaceOverrideUnknown1_Registration();
+        public static readonly NpcRaceOverrideMovement_Registration Instance = new NpcRaceOverrideMovement_Registration();
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
@@ -722,23 +722,23 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort FieldCount = 4;
 
-        public static readonly Type MaskType = typeof(NpcRaceOverrideUnknown1.Mask<>);
+        public static readonly Type MaskType = typeof(NpcRaceOverrideMovement.Mask<>);
 
-        public static readonly Type ErrorMaskType = typeof(NpcRaceOverrideUnknown1.ErrorMask);
+        public static readonly Type ErrorMaskType = typeof(NpcRaceOverrideMovement.ErrorMask);
 
-        public static readonly Type ClassType = typeof(NpcRaceOverrideUnknown1);
+        public static readonly Type ClassType = typeof(NpcRaceOverrideMovement);
 
-        public static readonly Type GetterType = typeof(INpcRaceOverrideUnknown1Getter);
+        public static readonly Type GetterType = typeof(INpcRaceOverrideMovementGetter);
 
         public static readonly Type? InternalGetterType = null;
 
-        public static readonly Type SetterType = typeof(INpcRaceOverrideUnknown1);
+        public static readonly Type SetterType = typeof(INpcRaceOverrideMovement);
 
         public static readonly Type? InternalSetterType = null;
 
-        public const string FullName = "Mutagen.Bethesda.Starfield.NpcRaceOverrideUnknown1";
+        public const string FullName = "Mutagen.Bethesda.Starfield.NpcRaceOverrideMovement";
 
-        public const string Name = "NpcRaceOverrideUnknown1";
+        public const string Name = "NpcRaceOverrideMovement";
 
         public const string Namespace = "Mutagen.Bethesda.Starfield";
 
@@ -746,7 +746,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public static readonly Type? GenericRegistrationType = null;
 
-        public static readonly Type BinaryWriteTranslation = typeof(NpcRaceOverrideUnknown1BinaryWriteTranslation);
+        public static readonly Type BinaryWriteTranslation = typeof(NpcRaceOverrideMovementBinaryWriteTranslation);
         #region Interface
         ProtocolKey ILoquiRegistration.ProtocolKey => ProtocolKey;
         ushort ILoquiRegistration.FieldCount => FieldCount;
@@ -777,23 +777,23 @@ namespace Mutagen.Bethesda.Starfield
     #endregion
 
     #region Common
-    internal partial class NpcRaceOverrideUnknown1SetterCommon
+    internal partial class NpcRaceOverrideMovementSetterCommon
     {
-        public static readonly NpcRaceOverrideUnknown1SetterCommon Instance = new NpcRaceOverrideUnknown1SetterCommon();
+        public static readonly NpcRaceOverrideMovementSetterCommon Instance = new NpcRaceOverrideMovementSetterCommon();
 
         partial void ClearPartial();
         
-        public void Clear(INpcRaceOverrideUnknown1 item)
+        public void Clear(INpcRaceOverrideMovement item)
         {
             ClearPartial();
             item.AccelerationRate = default(Single);
             item.DecelerationRate = default(Single);
-            item.Unknown1 = default(Single);
-            item.Unknown2 = default(Single);
+            item.AngularAccelerationRate = default(Single);
+            item.AngularTolerance = default(Single);
         }
         
         #region Mutagen
-        public void RemapLinks(INpcRaceOverrideUnknown1 obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
+        public void RemapLinks(INpcRaceOverrideMovement obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
         }
         
@@ -801,7 +801,7 @@ namespace Mutagen.Bethesda.Starfield
         
         #region Binary Translation
         public virtual void CopyInFromBinary(
-            INpcRaceOverrideUnknown1 item,
+            INpcRaceOverrideMovement item,
             MutagenFrame frame,
             TypedParseParams translationParams)
         {
@@ -809,23 +809,23 @@ namespace Mutagen.Bethesda.Starfield
                 record: item,
                 frame: frame,
                 translationParams: translationParams,
-                fillStructs: NpcRaceOverrideUnknown1BinaryCreateTranslation.FillBinaryStructs);
+                fillStructs: NpcRaceOverrideMovementBinaryCreateTranslation.FillBinaryStructs);
         }
         
         #endregion
         
     }
-    internal partial class NpcRaceOverrideUnknown1Common
+    internal partial class NpcRaceOverrideMovementCommon
     {
-        public static readonly NpcRaceOverrideUnknown1Common Instance = new NpcRaceOverrideUnknown1Common();
+        public static readonly NpcRaceOverrideMovementCommon Instance = new NpcRaceOverrideMovementCommon();
 
-        public NpcRaceOverrideUnknown1.Mask<bool> GetEqualsMask(
-            INpcRaceOverrideUnknown1Getter item,
-            INpcRaceOverrideUnknown1Getter rhs,
+        public NpcRaceOverrideMovement.Mask<bool> GetEqualsMask(
+            INpcRaceOverrideMovementGetter item,
+            INpcRaceOverrideMovementGetter rhs,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            var ret = new NpcRaceOverrideUnknown1.Mask<bool>(false);
-            ((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)item).CommonInstance()!).FillEqualsMask(
+            var ret = new NpcRaceOverrideMovement.Mask<bool>(false);
+            ((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)item).CommonInstance()!).FillEqualsMask(
                 item: item,
                 rhs: rhs,
                 ret: ret,
@@ -834,21 +834,21 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         public void FillEqualsMask(
-            INpcRaceOverrideUnknown1Getter item,
-            INpcRaceOverrideUnknown1Getter rhs,
-            NpcRaceOverrideUnknown1.Mask<bool> ret,
+            INpcRaceOverrideMovementGetter item,
+            INpcRaceOverrideMovementGetter rhs,
+            NpcRaceOverrideMovement.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.AccelerationRate = item.AccelerationRate.EqualsWithin(rhs.AccelerationRate);
             ret.DecelerationRate = item.DecelerationRate.EqualsWithin(rhs.DecelerationRate);
-            ret.Unknown1 = item.Unknown1.EqualsWithin(rhs.Unknown1);
-            ret.Unknown2 = item.Unknown2.EqualsWithin(rhs.Unknown2);
+            ret.AngularAccelerationRate = item.AngularAccelerationRate.EqualsWithin(rhs.AngularAccelerationRate);
+            ret.AngularTolerance = item.AngularTolerance.EqualsWithin(rhs.AngularTolerance);
         }
         
         public string Print(
-            INpcRaceOverrideUnknown1Getter item,
+            INpcRaceOverrideMovementGetter item,
             string? name = null,
-            NpcRaceOverrideUnknown1.Mask<bool>? printMask = null)
+            NpcRaceOverrideMovement.Mask<bool>? printMask = null)
         {
             var sb = new StructuredStringBuilder();
             Print(
@@ -860,18 +860,18 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         public void Print(
-            INpcRaceOverrideUnknown1Getter item,
+            INpcRaceOverrideMovementGetter item,
             StructuredStringBuilder sb,
             string? name = null,
-            NpcRaceOverrideUnknown1.Mask<bool>? printMask = null)
+            NpcRaceOverrideMovement.Mask<bool>? printMask = null)
         {
             if (name == null)
             {
-                sb.AppendLine($"NpcRaceOverrideUnknown1 =>");
+                sb.AppendLine($"NpcRaceOverrideMovement =>");
             }
             else
             {
-                sb.AppendLine($"{name} (NpcRaceOverrideUnknown1) =>");
+                sb.AppendLine($"{name} (NpcRaceOverrideMovement) =>");
             }
             using (sb.Brace())
             {
@@ -883,9 +883,9 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         protected static void ToStringFields(
-            INpcRaceOverrideUnknown1Getter item,
+            INpcRaceOverrideMovementGetter item,
             StructuredStringBuilder sb,
-            NpcRaceOverrideUnknown1.Mask<bool>? printMask = null)
+            NpcRaceOverrideMovement.Mask<bool>? printMask = null)
         {
             if (printMask?.AccelerationRate ?? true)
             {
@@ -895,49 +895,49 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.DecelerationRate, "DecelerationRate");
             }
-            if (printMask?.Unknown1 ?? true)
+            if (printMask?.AngularAccelerationRate ?? true)
             {
-                sb.AppendItem(item.Unknown1, "Unknown1");
+                sb.AppendItem(item.AngularAccelerationRate, "AngularAccelerationRate");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.AngularTolerance ?? true)
             {
-                sb.AppendItem(item.Unknown2, "Unknown2");
+                sb.AppendItem(item.AngularTolerance, "AngularTolerance");
             }
         }
         
         #region Equals and Hash
         public virtual bool Equals(
-            INpcRaceOverrideUnknown1Getter? lhs,
-            INpcRaceOverrideUnknown1Getter? rhs,
+            INpcRaceOverrideMovementGetter? lhs,
+            INpcRaceOverrideMovementGetter? rhs,
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideUnknown1_FieldIndex.AccelerationRate) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideMovement_FieldIndex.AccelerationRate) ?? true))
             {
                 if (!lhs.AccelerationRate.EqualsWithin(rhs.AccelerationRate)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideUnknown1_FieldIndex.DecelerationRate) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideMovement_FieldIndex.DecelerationRate) ?? true))
             {
                 if (!lhs.DecelerationRate.EqualsWithin(rhs.DecelerationRate)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideUnknown1_FieldIndex.Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideMovement_FieldIndex.AngularAccelerationRate) ?? true))
             {
-                if (!lhs.Unknown1.EqualsWithin(rhs.Unknown1)) return false;
+                if (!lhs.AngularAccelerationRate.EqualsWithin(rhs.AngularAccelerationRate)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideUnknown1_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideMovement_FieldIndex.AngularTolerance) ?? true))
             {
-                if (!lhs.Unknown2.EqualsWithin(rhs.Unknown2)) return false;
+                if (!lhs.AngularTolerance.EqualsWithin(rhs.AngularTolerance)) return false;
             }
             return true;
         }
         
-        public virtual int GetHashCode(INpcRaceOverrideUnknown1Getter item)
+        public virtual int GetHashCode(INpcRaceOverrideMovementGetter item)
         {
             var hash = new HashCode();
             hash.Add(item.AccelerationRate);
             hash.Add(item.DecelerationRate);
-            hash.Add(item.Unknown1);
-            hash.Add(item.Unknown2);
+            hash.Add(item.AngularAccelerationRate);
+            hash.Add(item.AngularTolerance);
             return hash.ToHashCode();
         }
         
@@ -946,11 +946,11 @@ namespace Mutagen.Bethesda.Starfield
         
         public object GetNew()
         {
-            return NpcRaceOverrideUnknown1.GetNew();
+            return NpcRaceOverrideMovement.GetNew();
         }
         
         #region Mutagen
-        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(INpcRaceOverrideUnknown1Getter obj, bool iterateNestedRecords = true)
+        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(INpcRaceOverrideMovementGetter obj, bool iterateNestedRecords = true)
         {
             yield break;
         }
@@ -958,33 +958,33 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         
     }
-    internal partial class NpcRaceOverrideUnknown1SetterTranslationCommon
+    internal partial class NpcRaceOverrideMovementSetterTranslationCommon
     {
-        public static readonly NpcRaceOverrideUnknown1SetterTranslationCommon Instance = new NpcRaceOverrideUnknown1SetterTranslationCommon();
+        public static readonly NpcRaceOverrideMovementSetterTranslationCommon Instance = new NpcRaceOverrideMovementSetterTranslationCommon();
 
         #region DeepCopyIn
         public void DeepCopyIn(
-            INpcRaceOverrideUnknown1 item,
-            INpcRaceOverrideUnknown1Getter rhs,
+            INpcRaceOverrideMovement item,
+            INpcRaceOverrideMovementGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideUnknown1_FieldIndex.AccelerationRate) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideMovement_FieldIndex.AccelerationRate) ?? true))
             {
                 item.AccelerationRate = rhs.AccelerationRate;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideUnknown1_FieldIndex.DecelerationRate) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideMovement_FieldIndex.DecelerationRate) ?? true))
             {
                 item.DecelerationRate = rhs.DecelerationRate;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideUnknown1_FieldIndex.Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideMovement_FieldIndex.AngularAccelerationRate) ?? true))
             {
-                item.Unknown1 = rhs.Unknown1;
+                item.AngularAccelerationRate = rhs.AngularAccelerationRate;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideUnknown1_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideMovement_FieldIndex.AngularTolerance) ?? true))
             {
-                item.Unknown2 = rhs.Unknown2;
+                item.AngularTolerance = rhs.AngularTolerance;
             }
             DeepCopyInCustom(
                 item: item,
@@ -995,19 +995,19 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         partial void DeepCopyInCustom(
-            INpcRaceOverrideUnknown1 item,
-            INpcRaceOverrideUnknown1Getter rhs,
+            INpcRaceOverrideMovement item,
+            INpcRaceOverrideMovementGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask,
             bool deepCopy);
         #endregion
         
-        public NpcRaceOverrideUnknown1 DeepCopy(
-            INpcRaceOverrideUnknown1Getter item,
-            NpcRaceOverrideUnknown1.TranslationMask? copyMask = null)
+        public NpcRaceOverrideMovement DeepCopy(
+            INpcRaceOverrideMovementGetter item,
+            NpcRaceOverrideMovement.TranslationMask? copyMask = null)
         {
-            NpcRaceOverrideUnknown1 ret = (NpcRaceOverrideUnknown1)((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)item).CommonInstance()!).GetNew();
-            ((NpcRaceOverrideUnknown1SetterTranslationCommon)((INpcRaceOverrideUnknown1Getter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
+            NpcRaceOverrideMovement ret = (NpcRaceOverrideMovement)((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)item).CommonInstance()!).GetNew();
+            ((NpcRaceOverrideMovementSetterTranslationCommon)((INpcRaceOverrideMovementGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: ret,
                 rhs: item,
                 errorMask: null,
@@ -1016,30 +1016,30 @@ namespace Mutagen.Bethesda.Starfield
             return ret;
         }
         
-        public NpcRaceOverrideUnknown1 DeepCopy(
-            INpcRaceOverrideUnknown1Getter item,
-            out NpcRaceOverrideUnknown1.ErrorMask errorMask,
-            NpcRaceOverrideUnknown1.TranslationMask? copyMask = null)
+        public NpcRaceOverrideMovement DeepCopy(
+            INpcRaceOverrideMovementGetter item,
+            out NpcRaceOverrideMovement.ErrorMask errorMask,
+            NpcRaceOverrideMovement.TranslationMask? copyMask = null)
         {
             var errorMaskBuilder = new ErrorMaskBuilder();
-            NpcRaceOverrideUnknown1 ret = (NpcRaceOverrideUnknown1)((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)item).CommonInstance()!).GetNew();
-            ((NpcRaceOverrideUnknown1SetterTranslationCommon)((INpcRaceOverrideUnknown1Getter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
+            NpcRaceOverrideMovement ret = (NpcRaceOverrideMovement)((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)item).CommonInstance()!).GetNew();
+            ((NpcRaceOverrideMovementSetterTranslationCommon)((INpcRaceOverrideMovementGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
                 ret,
                 item,
                 errorMask: errorMaskBuilder,
                 copyMask: copyMask?.GetCrystal(),
                 deepCopy: true);
-            errorMask = NpcRaceOverrideUnknown1.ErrorMask.Factory(errorMaskBuilder);
+            errorMask = NpcRaceOverrideMovement.ErrorMask.Factory(errorMaskBuilder);
             return ret;
         }
         
-        public NpcRaceOverrideUnknown1 DeepCopy(
-            INpcRaceOverrideUnknown1Getter item,
+        public NpcRaceOverrideMovement DeepCopy(
+            INpcRaceOverrideMovementGetter item,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask = null)
         {
-            NpcRaceOverrideUnknown1 ret = (NpcRaceOverrideUnknown1)((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)item).CommonInstance()!).GetNew();
-            ((NpcRaceOverrideUnknown1SetterTranslationCommon)((INpcRaceOverrideUnknown1Getter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
+            NpcRaceOverrideMovement ret = (NpcRaceOverrideMovement)((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)item).CommonInstance()!).GetNew();
+            ((NpcRaceOverrideMovementSetterTranslationCommon)((INpcRaceOverrideMovementGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: ret,
                 rhs: item,
                 errorMask: errorMask,
@@ -1055,27 +1055,27 @@ namespace Mutagen.Bethesda.Starfield
 
 namespace Mutagen.Bethesda.Starfield
 {
-    public partial class NpcRaceOverrideUnknown1
+    public partial class NpcRaceOverrideMovement
     {
         #region Common Routing
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ILoquiRegistration ILoquiObject.Registration => NpcRaceOverrideUnknown1_Registration.Instance;
-        public static ILoquiRegistration StaticRegistration => NpcRaceOverrideUnknown1_Registration.Instance;
+        ILoquiRegistration ILoquiObject.Registration => NpcRaceOverrideMovement_Registration.Instance;
+        public static ILoquiRegistration StaticRegistration => NpcRaceOverrideMovement_Registration.Instance;
         [DebuggerStepThrough]
-        protected object CommonInstance() => NpcRaceOverrideUnknown1Common.Instance;
+        protected object CommonInstance() => NpcRaceOverrideMovementCommon.Instance;
         [DebuggerStepThrough]
         protected object CommonSetterInstance()
         {
-            return NpcRaceOverrideUnknown1SetterCommon.Instance;
+            return NpcRaceOverrideMovementSetterCommon.Instance;
         }
         [DebuggerStepThrough]
-        protected object CommonSetterTranslationInstance() => NpcRaceOverrideUnknown1SetterTranslationCommon.Instance;
+        protected object CommonSetterTranslationInstance() => NpcRaceOverrideMovementSetterTranslationCommon.Instance;
         [DebuggerStepThrough]
-        object INpcRaceOverrideUnknown1Getter.CommonInstance() => this.CommonInstance();
+        object INpcRaceOverrideMovementGetter.CommonInstance() => this.CommonInstance();
         [DebuggerStepThrough]
-        object INpcRaceOverrideUnknown1Getter.CommonSetterInstance() => this.CommonSetterInstance();
+        object INpcRaceOverrideMovementGetter.CommonSetterInstance() => this.CommonSetterInstance();
         [DebuggerStepThrough]
-        object INpcRaceOverrideUnknown1Getter.CommonSetterTranslationInstance() => this.CommonSetterTranslationInstance();
+        object INpcRaceOverrideMovementGetter.CommonSetterTranslationInstance() => this.CommonSetterTranslationInstance();
 
         #endregion
 
@@ -1086,12 +1086,12 @@ namespace Mutagen.Bethesda.Starfield
 #region Binary Translation
 namespace Mutagen.Bethesda.Starfield
 {
-    public partial class NpcRaceOverrideUnknown1BinaryWriteTranslation : IBinaryWriteTranslator
+    public partial class NpcRaceOverrideMovementBinaryWriteTranslation : IBinaryWriteTranslator
     {
-        public static readonly NpcRaceOverrideUnknown1BinaryWriteTranslation Instance = new();
+        public static readonly NpcRaceOverrideMovementBinaryWriteTranslation Instance = new();
 
         public static void WriteEmbedded(
-            INpcRaceOverrideUnknown1Getter item,
+            INpcRaceOverrideMovementGetter item,
             MutagenWriter writer)
         {
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
@@ -1102,15 +1102,15 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.DecelerationRate);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown1);
+                item: item.AngularAccelerationRate);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown2);
+                item: item.AngularTolerance);
         }
 
         public void Write(
             MutagenWriter writer,
-            INpcRaceOverrideUnknown1Getter item,
+            INpcRaceOverrideMovementGetter item,
             TypedWriteParams translationParams)
         {
             WriteEmbedded(
@@ -1124,25 +1124,25 @@ namespace Mutagen.Bethesda.Starfield
             TypedWriteParams translationParams = default)
         {
             Write(
-                item: (INpcRaceOverrideUnknown1Getter)item,
+                item: (INpcRaceOverrideMovementGetter)item,
                 writer: writer,
                 translationParams: translationParams);
         }
 
     }
 
-    internal partial class NpcRaceOverrideUnknown1BinaryCreateTranslation
+    internal partial class NpcRaceOverrideMovementBinaryCreateTranslation
     {
-        public static readonly NpcRaceOverrideUnknown1BinaryCreateTranslation Instance = new NpcRaceOverrideUnknown1BinaryCreateTranslation();
+        public static readonly NpcRaceOverrideMovementBinaryCreateTranslation Instance = new NpcRaceOverrideMovementBinaryCreateTranslation();
 
         public static void FillBinaryStructs(
-            INpcRaceOverrideUnknown1 item,
+            INpcRaceOverrideMovement item,
             MutagenFrame frame)
         {
             item.AccelerationRate = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.DecelerationRate = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.AngularAccelerationRate = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.AngularTolerance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
         }
 
     }
@@ -1151,14 +1151,14 @@ namespace Mutagen.Bethesda.Starfield
 namespace Mutagen.Bethesda.Starfield
 {
     #region Binary Write Mixins
-    public static class NpcRaceOverrideUnknown1BinaryTranslationMixIn
+    public static class NpcRaceOverrideMovementBinaryTranslationMixIn
     {
         public static void WriteToBinary(
-            this INpcRaceOverrideUnknown1Getter item,
+            this INpcRaceOverrideMovementGetter item,
             MutagenWriter writer,
             TypedWriteParams translationParams = default)
         {
-            ((NpcRaceOverrideUnknown1BinaryWriteTranslation)item.BinaryWriteTranslator).Write(
+            ((NpcRaceOverrideMovementBinaryWriteTranslation)item.BinaryWriteTranslator).Write(
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
@@ -1171,38 +1171,38 @@ namespace Mutagen.Bethesda.Starfield
 }
 namespace Mutagen.Bethesda.Starfield
 {
-    internal partial class NpcRaceOverrideUnknown1BinaryOverlay :
+    internal partial class NpcRaceOverrideMovementBinaryOverlay :
         PluginBinaryOverlay,
-        INpcRaceOverrideUnknown1Getter
+        INpcRaceOverrideMovementGetter
     {
         #region Common Routing
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ILoquiRegistration ILoquiObject.Registration => NpcRaceOverrideUnknown1_Registration.Instance;
-        public static ILoquiRegistration StaticRegistration => NpcRaceOverrideUnknown1_Registration.Instance;
+        ILoquiRegistration ILoquiObject.Registration => NpcRaceOverrideMovement_Registration.Instance;
+        public static ILoquiRegistration StaticRegistration => NpcRaceOverrideMovement_Registration.Instance;
         [DebuggerStepThrough]
-        protected object CommonInstance() => NpcRaceOverrideUnknown1Common.Instance;
+        protected object CommonInstance() => NpcRaceOverrideMovementCommon.Instance;
         [DebuggerStepThrough]
-        protected object CommonSetterTranslationInstance() => NpcRaceOverrideUnknown1SetterTranslationCommon.Instance;
+        protected object CommonSetterTranslationInstance() => NpcRaceOverrideMovementSetterTranslationCommon.Instance;
         [DebuggerStepThrough]
-        object INpcRaceOverrideUnknown1Getter.CommonInstance() => this.CommonInstance();
+        object INpcRaceOverrideMovementGetter.CommonInstance() => this.CommonInstance();
         [DebuggerStepThrough]
-        object? INpcRaceOverrideUnknown1Getter.CommonSetterInstance() => null;
+        object? INpcRaceOverrideMovementGetter.CommonSetterInstance() => null;
         [DebuggerStepThrough]
-        object INpcRaceOverrideUnknown1Getter.CommonSetterTranslationInstance() => this.CommonSetterTranslationInstance();
+        object INpcRaceOverrideMovementGetter.CommonSetterTranslationInstance() => this.CommonSetterTranslationInstance();
 
         #endregion
 
         void IPrintable.Print(StructuredStringBuilder sb, string? name) => this.Print(sb, name);
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected object BinaryWriteTranslator => NpcRaceOverrideUnknown1BinaryWriteTranslation.Instance;
+        protected object BinaryWriteTranslator => NpcRaceOverrideMovementBinaryWriteTranslation.Instance;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         object IBinaryItem.BinaryWriteTranslator => this.BinaryWriteTranslator;
         void IBinaryItem.WriteToBinary(
             MutagenWriter writer,
             TypedWriteParams translationParams = default)
         {
-            ((NpcRaceOverrideUnknown1BinaryWriteTranslation)this.BinaryWriteTranslator).Write(
+            ((NpcRaceOverrideMovementBinaryWriteTranslation)this.BinaryWriteTranslator).Write(
                 item: this,
                 writer: writer,
                 translationParams: translationParams);
@@ -1210,15 +1210,15 @@ namespace Mutagen.Bethesda.Starfield
 
         public Single AccelerationRate => _structData.Slice(0x0, 0x4).Float();
         public Single DecelerationRate => _structData.Slice(0x4, 0x4).Float();
-        public Single Unknown1 => _structData.Slice(0x8, 0x4).Float();
-        public Single Unknown2 => _structData.Slice(0xC, 0x4).Float();
+        public Single AngularAccelerationRate => _structData.Slice(0x8, 0x4).Float();
+        public Single AngularTolerance => _structData.Slice(0xC, 0x4).Float();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
             int offset);
 
         partial void CustomCtor();
-        protected NpcRaceOverrideUnknown1BinaryOverlay(
+        protected NpcRaceOverrideMovementBinaryOverlay(
             MemoryPair memoryPair,
             BinaryOverlayFactoryPackage package)
             : base(
@@ -1228,7 +1228,7 @@ namespace Mutagen.Bethesda.Starfield
             this.CustomCtor();
         }
 
-        public static INpcRaceOverrideUnknown1Getter NpcRaceOverrideUnknown1Factory(
+        public static INpcRaceOverrideMovementGetter NpcRaceOverrideMovementFactory(
             OverlayStream stream,
             BinaryOverlayFactoryPackage package,
             TypedParseParams translationParams = default)
@@ -1240,7 +1240,7 @@ namespace Mutagen.Bethesda.Starfield
                 length: 0x10,
                 memoryPair: out var memoryPair,
                 offset: out var offset);
-            var ret = new NpcRaceOverrideUnknown1BinaryOverlay(
+            var ret = new NpcRaceOverrideMovementBinaryOverlay(
                 memoryPair: memoryPair,
                 package: package);
             stream.Position += 0x10;
@@ -1251,12 +1251,12 @@ namespace Mutagen.Bethesda.Starfield
             return ret;
         }
 
-        public static INpcRaceOverrideUnknown1Getter NpcRaceOverrideUnknown1Factory(
+        public static INpcRaceOverrideMovementGetter NpcRaceOverrideMovementFactory(
             ReadOnlyMemorySlice<byte> slice,
             BinaryOverlayFactoryPackage package,
             TypedParseParams translationParams = default)
         {
-            return NpcRaceOverrideUnknown1Factory(
+            return NpcRaceOverrideMovementFactory(
                 stream: new OverlayStream(slice, package),
                 package: package,
                 translationParams: translationParams);
@@ -1268,7 +1268,7 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             string? name = null)
         {
-            NpcRaceOverrideUnknown1MixIn.Print(
+            NpcRaceOverrideMovementMixIn.Print(
                 item: this,
                 sb: sb,
                 name: name);
@@ -1279,16 +1279,16 @@ namespace Mutagen.Bethesda.Starfield
         #region Equals and Hash
         public override bool Equals(object? obj)
         {
-            if (obj is not INpcRaceOverrideUnknown1Getter rhs) return false;
-            return ((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
+            if (obj is not INpcRaceOverrideMovementGetter rhs) return false;
+            return ((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
         }
 
-        public bool Equals(INpcRaceOverrideUnknown1Getter? obj)
+        public bool Equals(INpcRaceOverrideMovementGetter? obj)
         {
-            return ((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
+            return ((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
         }
 
-        public override int GetHashCode() => ((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)this).CommonInstance()!).GetHashCode(this);
+        public override int GetHashCode() => ((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)this).CommonInstance()!).GetHashCode(this);
 
         #endregion
 

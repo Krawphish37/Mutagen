@@ -64,16 +64,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ISoundReferenceGetter? INpcSoundGetter.Sound => this.Sound;
         #endregion
-        #region CS3F
+        #region StopConsciousLoopWhenUnconscious
+        public Boolean? StopConsciousLoopWhenUnconscious { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _CS3F;
-        public MemorySlice<Byte>? CS3F
-        {
-            get => this._CS3F;
-            set => this._CS3F = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? INpcSoundGetter.CS3F => this.CS3F;
+        Boolean? INpcSoundGetter.StopConsciousLoopWhenUnconscious => this.StopConsciousLoopWhenUnconscious;
         #endregion
 
         #region To String
@@ -115,15 +109,15 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
-                this.CS3F = initialValue;
+                this.StopConsciousLoopWhenUnconscious = initialValue;
             }
 
             public Mask(
                 TItem Sound,
-                TItem CS3F)
+                TItem StopConsciousLoopWhenUnconscious)
             {
                 this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Sound, new SoundReference.Mask<TItem>(Sound));
-                this.CS3F = CS3F;
+                this.StopConsciousLoopWhenUnconscious = StopConsciousLoopWhenUnconscious;
             }
 
             #pragma warning disable CS8618
@@ -136,7 +130,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? Sound { get; set; }
-            public TItem CS3F;
+            public TItem StopConsciousLoopWhenUnconscious;
             #endregion
 
             #region Equals
@@ -150,14 +144,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.Sound, rhs.Sound)) return false;
-                if (!object.Equals(this.CS3F, rhs.CS3F)) return false;
+                if (!object.Equals(this.StopConsciousLoopWhenUnconscious, rhs.StopConsciousLoopWhenUnconscious)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.Sound);
-                hash.Add(this.CS3F);
+                hash.Add(this.StopConsciousLoopWhenUnconscious);
                 return hash.ToHashCode();
             }
 
@@ -171,7 +165,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.Sound.Overall)) return false;
                     if (this.Sound.Specific != null && !this.Sound.Specific.All(eval)) return false;
                 }
-                if (!eval(this.CS3F)) return false;
+                if (!eval(this.StopConsciousLoopWhenUnconscious)) return false;
                 return true;
             }
             #endregion
@@ -184,7 +178,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.Sound.Overall)) return true;
                     if (this.Sound.Specific != null && this.Sound.Specific.Any(eval)) return true;
                 }
-                if (eval(this.CS3F)) return true;
+                if (eval(this.StopConsciousLoopWhenUnconscious)) return true;
                 return false;
             }
             #endregion
@@ -200,7 +194,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.Sound = this.Sound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
-                obj.CS3F = eval(this.CS3F);
+                obj.StopConsciousLoopWhenUnconscious = eval(this.StopConsciousLoopWhenUnconscious);
             }
             #endregion
 
@@ -223,9 +217,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         Sound?.Print(sb);
                     }
-                    if (printMask?.CS3F ?? true)
+                    if (printMask?.StopConsciousLoopWhenUnconscious ?? true)
                     {
-                        sb.AppendItem(CS3F, "CS3F");
+                        sb.AppendItem(StopConsciousLoopWhenUnconscious, "StopConsciousLoopWhenUnconscious");
                     }
                 }
             }
@@ -252,7 +246,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public MaskItem<Exception?, SoundReference.ErrorMask?>? Sound;
-            public Exception? CS3F;
+            public Exception? StopConsciousLoopWhenUnconscious;
             #endregion
 
             #region IErrorMask
@@ -263,8 +257,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case NpcSound_FieldIndex.Sound:
                         return Sound;
-                    case NpcSound_FieldIndex.CS3F:
-                        return CS3F;
+                    case NpcSound_FieldIndex.StopConsciousLoopWhenUnconscious:
+                        return StopConsciousLoopWhenUnconscious;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -278,8 +272,8 @@ namespace Mutagen.Bethesda.Starfield
                     case NpcSound_FieldIndex.Sound:
                         this.Sound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
-                    case NpcSound_FieldIndex.CS3F:
-                        this.CS3F = ex;
+                    case NpcSound_FieldIndex.StopConsciousLoopWhenUnconscious:
+                        this.StopConsciousLoopWhenUnconscious = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -294,8 +288,8 @@ namespace Mutagen.Bethesda.Starfield
                     case NpcSound_FieldIndex.Sound:
                         this.Sound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
-                    case NpcSound_FieldIndex.CS3F:
-                        this.CS3F = (Exception?)obj;
+                    case NpcSound_FieldIndex.StopConsciousLoopWhenUnconscious:
+                        this.StopConsciousLoopWhenUnconscious = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -306,7 +300,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Sound != null) return true;
-                if (CS3F != null) return true;
+                if (StopConsciousLoopWhenUnconscious != null) return true;
                 return false;
             }
             #endregion
@@ -334,7 +328,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 Sound?.Print(sb);
                 {
-                    sb.AppendItem(CS3F, "CS3F");
+                    sb.AppendItem(StopConsciousLoopWhenUnconscious, "StopConsciousLoopWhenUnconscious");
                 }
             }
             #endregion
@@ -345,7 +339,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
-                ret.CS3F = this.CS3F.Combine(rhs.CS3F);
+                ret.StopConsciousLoopWhenUnconscious = this.StopConsciousLoopWhenUnconscious.Combine(rhs.StopConsciousLoopWhenUnconscious);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -370,7 +364,7 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public SoundReference.TranslationMask? Sound;
-            public bool CS3F;
+            public bool StopConsciousLoopWhenUnconscious;
             #endregion
 
             #region Ctors
@@ -380,7 +374,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.CS3F = defaultOn;
+                this.StopConsciousLoopWhenUnconscious = defaultOn;
             }
 
             #endregion
@@ -397,7 +391,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
-                ret.Add((CS3F, null));
+                ret.Add((StopConsciousLoopWhenUnconscious, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -477,7 +471,7 @@ namespace Mutagen.Bethesda.Starfield
         INpcSoundGetter
     {
         new SoundReference? Sound { get; set; }
-        new MemorySlice<Byte>? CS3F { get; set; }
+        new Boolean? StopConsciousLoopWhenUnconscious { get; set; }
     }
 
     public partial interface INpcSoundGetter :
@@ -494,7 +488,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => NpcSound_Registration.Instance;
         ISoundReferenceGetter? Sound { get; }
-        ReadOnlyMemorySlice<Byte>? CS3F { get; }
+        Boolean? StopConsciousLoopWhenUnconscious { get; }
 
     }
 
@@ -665,7 +659,7 @@ namespace Mutagen.Bethesda.Starfield
     internal enum NpcSound_FieldIndex
     {
         Sound = 0,
-        CS3F = 1,
+        StopConsciousLoopWhenUnconscious = 1,
     }
     #endregion
 
@@ -753,7 +747,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Sound = null;
-            item.CS3F = default;
+            item.StopConsciousLoopWhenUnconscious = default;
         }
         
         #region Mutagen
@@ -809,7 +803,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Sound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.CS3F = MemorySliceExt.SequenceEqual(item.CS3F, rhs.CS3F);
+            ret.StopConsciousLoopWhenUnconscious = item.StopConsciousLoopWhenUnconscious == rhs.StopConsciousLoopWhenUnconscious;
         }
         
         public string Print(
@@ -859,10 +853,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 SoundItem?.Print(sb, "Sound");
             }
-            if ((printMask?.CS3F ?? true)
-                && item.CS3F is {} CS3FItem)
+            if ((printMask?.StopConsciousLoopWhenUnconscious ?? true)
+                && item.StopConsciousLoopWhenUnconscious is {} StopConsciousLoopWhenUnconsciousItem)
             {
-                sb.AppendLine($"CS3F => {SpanExt.ToHexString(CS3FItem)}");
+                sb.AppendItem(StopConsciousLoopWhenUnconsciousItem, "StopConsciousLoopWhenUnconscious");
             }
         }
         
@@ -881,9 +875,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isSoundEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcSound_FieldIndex.CS3F) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcSound_FieldIndex.StopConsciousLoopWhenUnconscious) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.CS3F, rhs.CS3F)) return false;
+                if (lhs.StopConsciousLoopWhenUnconscious != rhs.StopConsciousLoopWhenUnconscious) return false;
             }
             return true;
         }
@@ -895,9 +889,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Sounditem);
             }
-            if (item.CS3F is {} CS3FItem)
+            if (item.StopConsciousLoopWhenUnconscious is {} StopConsciousLoopWhenUnconsciousitem)
             {
-                hash.AddBytes(CS3FItem);
+                hash.Add(StopConsciousLoopWhenUnconsciousitem);
             }
             return hash.ToHashCode();
         }
@@ -964,16 +958,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcSound_FieldIndex.CS3F) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcSound_FieldIndex.StopConsciousLoopWhenUnconscious) ?? true))
             {
-                if(rhs.CS3F is {} CS3Frhs)
-                {
-                    item.CS3F = CS3Frhs.ToArray();
-                }
-                else
-                {
-                    item.CS3F = default;
-                }
+                item.StopConsciousLoopWhenUnconscious = rhs.StopConsciousLoopWhenUnconscious;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1094,9 +1081,9 @@ namespace Mutagen.Bethesda.Starfield
                         translationParams: translationParams);
                 }
             }
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            BooleanBinaryTranslation<MutagenFrame>.Instance.WriteNullable(
                 writer: writer,
-                item: item.CS3F,
+                item: item.StopConsciousLoopWhenUnconscious,
                 header: translationParams.ConvertToCustom(RecordTypes.CS3F));
         }
 
@@ -1149,10 +1136,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.CS3F:
                 {
-                    if (lastParsed.ShortCircuit((int)NpcSound_FieldIndex.CS3F, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)NpcSound_FieldIndex.StopConsciousLoopWhenUnconscious, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.CS3F = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)NpcSound_FieldIndex.CS3F;
+                    item.StopConsciousLoopWhenUnconscious = frame.ReadBoolean();
+                    return (int)NpcSound_FieldIndex.StopConsciousLoopWhenUnconscious;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1224,9 +1211,9 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public ISoundReferenceGetter? Sound { get; private set; }
-        #region CS3F
-        private int? _CS3FLocation;
-        public ReadOnlyMemorySlice<Byte>? CS3F => _CS3FLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _CS3FLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region StopConsciousLoopWhenUnconscious
+        private int? _StopConsciousLoopWhenUnconsciousLocation;
+        public Boolean? StopConsciousLoopWhenUnconscious => _StopConsciousLoopWhenUnconsciousLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _StopConsciousLoopWhenUnconsciousLocation.Value, _package.MetaData.Constants)[0] >= 1 : default(Boolean?);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1303,9 +1290,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.CS3F:
                 {
-                    if (lastParsed.ShortCircuit((int)NpcSound_FieldIndex.CS3F, translationParams)) return ParseResult.Stop;
-                    _CS3FLocation = (stream.Position - offset);
-                    return (int)NpcSound_FieldIndex.CS3F;
+                    if (lastParsed.ShortCircuit((int)NpcSound_FieldIndex.StopConsciousLoopWhenUnconscious, translationParams)) return ParseResult.Stop;
+                    _StopConsciousLoopWhenUnconsciousLocation = (stream.Position - offset);
+                    return (int)NpcSound_FieldIndex.StopConsciousLoopWhenUnconscious;
                 }
                 default:
                     return ParseResult.Stop;
