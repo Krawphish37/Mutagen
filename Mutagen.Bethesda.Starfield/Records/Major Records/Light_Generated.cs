@@ -101,7 +101,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #endregion
         #region DirtinessScale
-        public Single DirtinessScale { get; set; } = default(Single);
+        public Percent DirtinessScale { get; set; } = default(Percent);
         #endregion
         #region ObjectPaletteDefaults
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -2361,7 +2361,6 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainer,
         IBaseObject,
         IEmittance,
-        IExplodeSpawn,
         IFormLinkContainer,
         IHasDestructible,
         IHaveVirtualMachineAdapter,
@@ -2372,7 +2371,6 @@ namespace Mutagen.Bethesda.Starfield
         INamed,
         INamedRequired,
         IObjectBounded,
-        IPlaceableObject,
         IResearchResourceTarget,
         IScripted,
         IStarfieldMajorRecordInternal,
@@ -2387,7 +2385,7 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IObjectBounded
         /// </summary>
         new ObjectBounds ObjectBounds { get; set; }
-        new Single DirtinessScale { get; set; }
+        new Percent DirtinessScale { get; set; }
         new ObjectPaletteDefaults? ObjectPaletteDefaults { get; set; }
         new Transforms? Transforms { get; set; }
         new IFormLinkNullable<ILayerGetter> DefaultLayer { get; set; }
@@ -2461,7 +2459,6 @@ namespace Mutagen.Bethesda.Starfield
         IBaseObjectGetter,
         IBinaryItem,
         IEmittanceGetter,
-        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHasDestructibleGetter,
         IHaveVirtualMachineAdapterGetter,
@@ -2472,7 +2469,6 @@ namespace Mutagen.Bethesda.Starfield
         INamedGetter,
         INamedRequiredGetter,
         IObjectBoundedGetter,
-        IPlaceableObjectGetter,
         IResearchResourceTargetGetter,
         IScriptedGetter,
         ITranslatedNamedGetter,
@@ -2491,7 +2487,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IObjectBoundsGetter ObjectBounds { get; }
         #endregion
-        Single DirtinessScale { get; }
+        Percent DirtinessScale { get; }
         IObjectPaletteDefaultsGetter? ObjectPaletteDefaults { get; }
         ITransformsGetter? Transforms { get; }
         IFormLinkNullableGetter<ILayerGetter> DefaultLayer { get; }
@@ -2903,7 +2899,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.VirtualMachineAdapter = null;
             item.ObjectBounds.Clear();
-            item.DirtinessScale = default(Single);
+            item.DirtinessScale = default(Percent);
             item.ObjectPaletteDefaults = null;
             item.Transforms = null;
             item.DefaultLayer.Clear();
@@ -3085,7 +3081,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.ObjectBounds = MaskItemExt.Factory(item.ObjectBounds.GetEqualsMask(rhs.ObjectBounds, include), include);
-            ret.DirtinessScale = item.DirtinessScale.EqualsWithin(rhs.DirtinessScale);
+            ret.DirtinessScale = item.DirtinessScale.Equals(rhs.DirtinessScale);
             ret.ObjectPaletteDefaults = EqualsMaskHelper.EqualsHelper(
                 item.ObjectPaletteDefaults,
                 rhs.ObjectPaletteDefaults,
@@ -3491,7 +3487,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)Light_FieldIndex.DirtinessScale) ?? true))
             {
-                if (!lhs.DirtinessScale.EqualsWithin(rhs.DirtinessScale)) return false;
+                if (!lhs.DirtinessScale.Equals(rhs.DirtinessScale)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Light_FieldIndex.ObjectPaletteDefaults) ?? true))
             {
@@ -3740,10 +3736,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XALGitem);
             }
-            foreach (var subItem in item.Components)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.Components);
             if (item.Model is {} Modelitem)
             {
                 hash.Add(Modelitem);
@@ -3752,27 +3745,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Destructibleitem);
             }
-            if (item.Keywords is {} Keywordsitem)
-            {
-                foreach (var subItem in Keywordsitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
-            if (item.Properties is {} Propertiesitem)
-            {
-                foreach (var subItem in Propertiesitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
+            hash.Add(item.Keywords);
+            hash.Add(item.Properties);
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
             }
             hash.Add(item.Time);
             hash.Add(item.Radius);
-            hash.Add(item.Color.ToArgb());
+            hash.Add(item.Color);
             hash.Add(item.Flags);
             hash.Add(item.FalloffExponent);
             hash.Add(item.FOV);
@@ -3787,7 +3768,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Type);
             hash.Add(item.FlickerEffect);
             hash.Add(item.UseAdaptiveLighting);
-            hash.AddBytes(item.UseAdaptiveLightingUnused);
+            hash.Add(item.UseAdaptiveLightingUnused);
             hash.Add(item.AdaptiveLightEc);
             hash.Add(item.AdaptiveLightEv100Min);
             hash.Add(item.AdaptiveLightEv100Max);
@@ -4675,9 +4656,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: ObjectBoundsItem,
                 writer: writer,
                 translationParams: translationParams);
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            PercentBinaryTranslation.Write(
                 writer: writer,
                 item: item.DirtinessScale,
+                integerType: FloatIntegerType.UInt,
                 header: translationParams.ConvertToCustom(RecordTypes.ODTY));
             if (item.ObjectPaletteDefaults is {} ObjectPaletteDefaultsItem)
             {
@@ -4960,7 +4942,9 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ODTY:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DirtinessScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    item.DirtinessScale = PercentBinaryTranslation.Parse(
+                        reader: frame,
+                        integerType: FloatIntegerType.UInt);
                     return (int)Light_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.OPDS:
@@ -5244,7 +5228,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region DirtinessScale
         private int? _DirtinessScaleLocation;
-        public Single DirtinessScale => _DirtinessScaleLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants).Float() : default(Single);
+        public Percent DirtinessScale => _DirtinessScaleLocation.HasValue ? PercentBinaryTranslation.GetPercent(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region ObjectPaletteDefaults
         private RangeInt32? _ObjectPaletteDefaultsLocation;
@@ -5285,112 +5269,112 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DAT2Location;
         #region Time
         private int _TimeLocation => _DAT2Location!.Value.Min;
-        private bool _Time_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _TimeLocation + 1 >= 4;
+        private bool _Time_IsSet => _DAT2Location.HasValue;
         public Int32 Time => _Time_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_TimeLocation, 4)) : default(Int32);
         #endregion
         #region Radius
         private int _RadiusLocation => _DAT2Location!.Value.Min + 0x4;
-        private bool _Radius_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _RadiusLocation + 1 >= 4;
+        private bool _Radius_IsSet => _DAT2Location.HasValue;
         public Single Radius => _Radius_IsSet ? _recordData.Slice(_RadiusLocation, 4).Float() : default(Single);
         #endregion
         #region Color
         private int _ColorLocation => _DAT2Location!.Value.Min + 0x8;
-        private bool _Color_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ColorLocation + 1 >= 4;
+        private bool _Color_IsSet => _DAT2Location.HasValue;
         public Color Color => _Color_IsSet ? _recordData.Slice(_ColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
         #endregion
         #region Flags
         private int _FlagsLocation => _DAT2Location!.Value.Min + 0xC;
-        private bool _Flags_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _FlagsLocation + 1 >= 4;
-        public Light.Flag Flags => _Flags_IsSet ? (Light.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default(Light.Flag);
+        private bool _Flags_IsSet => _DAT2Location.HasValue;
+        public Light.Flag Flags => _Flags_IsSet ? (Light.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
         #endregion
         #region FalloffExponent
         private int _FalloffExponentLocation => _DAT2Location!.Value.Min + 0x10;
-        private bool _FalloffExponent_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _FalloffExponentLocation + 1 >= 4;
-        public Single FalloffExponent => _FalloffExponent_IsSet ? _recordData.Slice(_FalloffExponentLocation, 4).Float() : Light.FalloffExponentDefault;
+        private bool _FalloffExponent_IsSet => _DAT2Location.HasValue;
+        public Single FalloffExponent => _FalloffExponent_IsSet ? _recordData.Slice(_FalloffExponentLocation, 4).Float() : default(Single);
         #endregion
         #region FOV
         private int _FOVLocation => _DAT2Location!.Value.Min + 0x14;
-        private bool _FOV_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _FOVLocation + 1 >= 4;
-        public Single FOV => _FOV_IsSet ? _recordData.Slice(_FOVLocation, 4).Float() : Light.FOVDefault;
+        private bool _FOV_IsSet => _DAT2Location.HasValue;
+        public Single FOV => _FOV_IsSet ? _recordData.Slice(_FOVLocation, 4).Float() : default(Single);
         #endregion
         #region NearClip
         private int _NearClipLocation => _DAT2Location!.Value.Min + 0x18;
-        private bool _NearClip_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _NearClipLocation + 1 >= 4;
+        private bool _NearClip_IsSet => _DAT2Location.HasValue;
         public Single NearClip => _NearClip_IsSet ? _recordData.Slice(_NearClipLocation, 4).Float() : default(Single);
         #endregion
         #region FlickerPeriod
         private int _FlickerPeriodLocation => _DAT2Location!.Value.Min + 0x1C;
-        private bool _FlickerPeriod_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _FlickerPeriodLocation + 1 >= 4;
+        private bool _FlickerPeriod_IsSet => _DAT2Location.HasValue;
         public Single FlickerPeriod => _FlickerPeriod_IsSet ? _recordData.Slice(_FlickerPeriodLocation, 4).Float() : default(Single);
         #endregion
         #region FlickerIntensityAmplitude
         private int _FlickerIntensityAmplitudeLocation => _DAT2Location!.Value.Min + 0x20;
-        private bool _FlickerIntensityAmplitude_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _FlickerIntensityAmplitudeLocation + 1 >= 4;
+        private bool _FlickerIntensityAmplitude_IsSet => _DAT2Location.HasValue;
         public Single FlickerIntensityAmplitude => _FlickerIntensityAmplitude_IsSet ? _recordData.Slice(_FlickerIntensityAmplitudeLocation, 4).Float() : default(Single);
         #endregion
         #region FlickerMovementAmplitude
         private int _FlickerMovementAmplitudeLocation => _DAT2Location!.Value.Min + 0x24;
-        private bool _FlickerMovementAmplitude_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _FlickerMovementAmplitudeLocation + 1 >= 4;
+        private bool _FlickerMovementAmplitude_IsSet => _DAT2Location.HasValue;
         public Single FlickerMovementAmplitude => _FlickerMovementAmplitude_IsSet ? _recordData.Slice(_FlickerMovementAmplitudeLocation, 4).Float() : default(Single);
         #endregion
         #region ShadowOffset
         private int _ShadowOffsetLocation => _DAT2Location!.Value.Min + 0x28;
-        private bool _ShadowOffset_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ShadowOffsetLocation + 1 >= 4;
+        private bool _ShadowOffset_IsSet => _DAT2Location.HasValue;
         public Single ShadowOffset => _ShadowOffset_IsSet ? _recordData.Slice(_ShadowOffsetLocation, 4).Float() : default(Single);
         #endregion
         #region InnerFOV
         private int _InnerFOVLocation => _DAT2Location!.Value.Min + 0x2C;
-        private bool _InnerFOV_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _InnerFOVLocation + 1 >= 4;
+        private bool _InnerFOV_IsSet => _DAT2Location.HasValue;
         public Single InnerFOV => _InnerFOV_IsSet ? _recordData.Slice(_InnerFOVLocation, 4).Float() : default(Single);
         #endregion
         #region PbrLightTemperatureK
         private int _PbrLightTemperatureKLocation => _DAT2Location!.Value.Min + 0x30;
-        private bool _PbrLightTemperatureK_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _PbrLightTemperatureKLocation + 1 >= 4;
+        private bool _PbrLightTemperatureK_IsSet => _DAT2Location.HasValue;
         public UInt32 PbrLightTemperatureK => _PbrLightTemperatureK_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_PbrLightTemperatureKLocation, 4)) : default(UInt32);
         #endregion
         #region PbrLuminousPowerLm
         private int _PbrLuminousPowerLmLocation => _DAT2Location!.Value.Min + 0x34;
-        private bool _PbrLuminousPowerLm_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _PbrLuminousPowerLmLocation + 1 >= 4;
+        private bool _PbrLuminousPowerLm_IsSet => _DAT2Location.HasValue;
         public UInt32 PbrLuminousPowerLm => _PbrLuminousPowerLm_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_PbrLuminousPowerLmLocation, 4)) : default(UInt32);
         #endregion
         #region Type
         private int _TypeLocation => _DAT2Location!.Value.Min + 0x38;
-        private bool _Type_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _TypeLocation + 1 >= 1;
-        public Light.LightType Type => _Type_IsSet ? (Light.LightType)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default(Light.LightType);
+        private bool _Type_IsSet => _DAT2Location.HasValue;
+        public Light.LightType Type => _Type_IsSet ? (Light.LightType)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default;
         #endregion
         #region FlickerEffect
         private int _FlickerEffectLocation => _DAT2Location!.Value.Min + 0x39;
-        private bool _FlickerEffect_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _FlickerEffectLocation + 1 >= 1;
-        public Light.FlickerEffectOption FlickerEffect => _FlickerEffect_IsSet ? (Light.FlickerEffectOption)_recordData.Span.Slice(_FlickerEffectLocation, 0x1)[0] : default(Light.FlickerEffectOption);
+        private bool _FlickerEffect_IsSet => _DAT2Location.HasValue;
+        public Light.FlickerEffectOption FlickerEffect => _FlickerEffect_IsSet ? (Light.FlickerEffectOption)_recordData.Span.Slice(_FlickerEffectLocation, 0x1)[0] : default;
         #endregion
         #region UseAdaptiveLighting
         private int _UseAdaptiveLightingLocation => _DAT2Location!.Value.Min + 0x3A;
-        private bool _UseAdaptiveLighting_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UseAdaptiveLightingLocation + 1 >= 1;
+        private bool _UseAdaptiveLighting_IsSet => _DAT2Location.HasValue;
         public Boolean UseAdaptiveLighting => _UseAdaptiveLighting_IsSet ? _recordData.Slice(_UseAdaptiveLightingLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region UseAdaptiveLightingUnused
         private int _UseAdaptiveLightingUnusedLocation => _DAT2Location!.Value.Min + 0x3B;
         private bool _UseAdaptiveLightingUnused_IsSet => _DAT2Location.HasValue;
-        public ReadOnlyMemorySlice<Byte> UseAdaptiveLightingUnused => _UseAdaptiveLightingUnused_IsSet ? _recordData.Span.Slice(_UseAdaptiveLightingUnusedLocation, 1).ToArray() : UtilityTranslation.Zeros.Slice(0, 1);
+        public ReadOnlyMemorySlice<Byte> UseAdaptiveLightingUnused => _UseAdaptiveLightingUnused_IsSet ? _recordData.Span.Slice(_UseAdaptiveLightingUnusedLocation, 1).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
         #endregion
         #region AdaptiveLightEc
         private int _AdaptiveLightEcLocation => _DAT2Location!.Value.Min + 0x3C;
-        private bool _AdaptiveLightEc_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _AdaptiveLightEcLocation + 1 >= 4;
+        private bool _AdaptiveLightEc_IsSet => _DAT2Location.HasValue;
         public Single AdaptiveLightEc => _AdaptiveLightEc_IsSet ? _recordData.Slice(_AdaptiveLightEcLocation, 4).Float() : default(Single);
         #endregion
         #region AdaptiveLightEv100Min
         private int _AdaptiveLightEv100MinLocation => _DAT2Location!.Value.Min + 0x40;
-        private bool _AdaptiveLightEv100Min_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _AdaptiveLightEv100MinLocation + 1 >= 4;
+        private bool _AdaptiveLightEv100Min_IsSet => _DAT2Location.HasValue;
         public Single AdaptiveLightEv100Min => _AdaptiveLightEv100Min_IsSet ? _recordData.Slice(_AdaptiveLightEv100MinLocation, 4).Float() : default(Single);
         #endregion
         #region AdaptiveLightEv100Max
         private int _AdaptiveLightEv100MaxLocation => _DAT2Location!.Value.Min + 0x44;
-        private bool _AdaptiveLightEv100Max_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _AdaptiveLightEv100MaxLocation + 1 >= 4;
+        private bool _AdaptiveLightEv100Max_IsSet => _DAT2Location.HasValue;
         public Single AdaptiveLightEv100Max => _AdaptiveLightEv100Max_IsSet ? _recordData.Slice(_AdaptiveLightEv100MaxLocation, 4).Float() : default(Single);
         #endregion
         #region RadiusFalloutExponent
         private int _RadiusFalloutExponentLocation => _DAT2Location!.Value.Min + 0x48;
-        private bool _RadiusFalloutExponent_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _RadiusFalloutExponentLocation + 1 >= 4;
+        private bool _RadiusFalloutExponent_IsSet => _DAT2Location.HasValue;
         public Single RadiusFalloutExponent => _RadiusFalloutExponent_IsSet ? _recordData.Slice(_RadiusFalloutExponentLocation, 4).Float() : default(Single);
         #endregion
         #region Gobo

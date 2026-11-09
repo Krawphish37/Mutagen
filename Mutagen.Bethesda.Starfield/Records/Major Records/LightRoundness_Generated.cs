@@ -1039,7 +1039,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Roundness);
             hash.Add(item.Falloff);
             hash.Add(item.UsesRoundness);
-            hash.AddBytes(item.UsesRoundnessUnused);
+            hash.Add(item.UsesRoundnessUnused);
             return hash.ToHashCode();
         }
         
