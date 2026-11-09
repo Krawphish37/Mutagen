@@ -429,9 +429,18 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
         int amount, 
         RecordType triggeringRecord, 
         BinaryMasterParseDelegate<T> transl, 
-        TypedParseParams translationParams = default) 
+        TypedParseParams translationParams = default, 
+        bool skipHeader = false) 
     { 
-        if (amount == 0) return new ExtendedList<T>(); 
+        if (amount == 0) 
+        { 
+            // Items stored in one subrecord: an empty list may still have its (empty) subrecord 
+            if (skipHeader && reader.Reader.TryGetSubrecordHeader(triggeringRecord, out var emptyHeader)) 
+            { 
+                reader.Position += emptyHeader.TotalLength; 
+            } 
+            return new ExtendedList<T>(); 
+        } 
         translationParams = translationParams.ShortCircuit(); 
         var subHeader = reader.GetSubrecordHeader(); 
         if (subHeader.RecordType != triggeringRecord) 
@@ -440,7 +449,7 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
                 new MalformedDataException($"Unexpected record encountered: {subHeader.RecordType}"), 
                 triggeringRecord); 
         } 
-        if (!IsLoqui) 
+        if (!IsLoqui || skipHeader) 
         { 
             reader.Position += reader.MetaData.Constants.SubConstants.HeaderLength; 
         } 
@@ -468,7 +477,8 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
         RecordType countRecord, 
         int countLengthLength, 
         BinaryMasterParseDelegate<T> transl, 
-        TypedParseParams translationParams = default) 
+        TypedParseParams translationParams = default, 
+        bool skipHeader = false) 
     { 
         translationParams = translationParams.ShortCircuit(); 
         var subHeader = reader.GetSubrecord(); 
@@ -488,7 +498,8 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
                 count, 
                 triggeringRecord, 
                 transl, 
-                translationParams); 
+                translationParams, 
+                skipHeader: skipHeader); 
         } 
         else 
         { 
