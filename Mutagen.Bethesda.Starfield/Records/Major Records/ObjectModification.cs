@@ -87,7 +87,8 @@ partial class AObjectModificationBinaryCreateTranslation
         var propertyCount = frame.ReadInt32();
         item.Unknown = frame.ReadUInt16();
         var dataName = StringBinaryTranslation.Instance.Parse(frame, StringBinaryType.PrependLengthWithNullIfContent, parseWhole: true);
-        item.Unknown2 = frame.ReadUInt16();
+        item.MaxRank = frame.ReadUInt8();
+        item.LevelTierScaledOffset = frame.ReadUInt8();
         item.AttachPoint.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
         item.AttachParentSlots.SetTo(
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
@@ -220,7 +221,8 @@ partial class AObjectModificationBinaryWriteTranslation
             throw new NotImplementedException();
         }
         StringBinaryTranslation.Instance.Write(writer, dataName, StringBinaryType.PrependLengthWithNullIfContent);
-        writer.Write(item.Unknown2);
+        writer.Write(item.MaxRank);
+        writer.Write(item.LevelTierScaledOffset);
         FormLinkBinaryTranslation.Instance.Write(
             writer: writer,
             item: item.AttachPoint);
@@ -260,7 +262,9 @@ partial class AObjectModificationBinaryOverlay
     private int AttachSlotsStart => StringEnd + 6;
     private int AttachSlotsEnd => 4 + AttachSlotsStart + AttachParentSlots.Count * 4;
     public ushort Unknown => HasData ? BinaryPrimitives.ReadUInt16LittleEndian(_dataBytes.Slice(0x8, 2)) : default;
-    public ushort Unknown2 => HasData ? BinaryPrimitives.ReadUInt16LittleEndian(_dataBytes.Slice(StringEnd)) : default;
+    // The two bytes right after the target name (xEdit: Max Rank, Level Tier Scaled Offset).
+    public byte MaxRank => HasData ? _dataBytes[StringEnd] : default;
+    public byte LevelTierScaledOffset => HasData ? _dataBytes[StringEnd + 1] : default;
     public IFormLinkGetter<IKeywordGetter> AttachPoint => HasData
         ? FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _dataBytes.Slice(StringEnd + 2, 0x4))
         : FormLink<IKeywordGetter>.Null;
