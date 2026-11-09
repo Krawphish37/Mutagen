@@ -530,16 +530,29 @@ namespace Mutagen.Bethesda.Starfield
         #region MeleeDetectionSoundLevel
         public SoundLevel MeleeDetectionSoundLevel { get; set; } = default(SoundLevel);
         #endregion
-        #region WTUR
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _WTUR;
-        public MemorySlice<Byte>? WTUR
-        {
-            get => this._WTUR;
-            set => this._WTUR = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWeaponGetter.WTUR => this.WTUR;
+        #region TurretEnabled
+        public Boolean TurretEnabled { get; set; } = default(Boolean);
+        #endregion
+        #region TurretHeadingMin
+        public Single TurretHeadingMin { get; set; } = default(Single);
+        #endregion
+        #region TurretHeadingMax
+        public Single TurretHeadingMax { get; set; } = default(Single);
+        #endregion
+        #region TurretPitchMin
+        public Single TurretPitchMin { get; set; } = default(Single);
+        #endregion
+        #region TurretPitchMax
+        public Single TurretPitchMax { get; set; } = default(Single);
+        #endregion
+        #region TurretHeadingSpeed
+        public Single TurretHeadingSpeed { get; set; } = default(Single);
+        #endregion
+        #region TurretPitchSpeed
+        public Single TurretPitchSpeed { get; set; } = default(Single);
+        #endregion
+        #region TurretAccuracy
+        public Single TurretAccuracy { get; set; } = default(Single);
         #endregion
         #region ChargeFullPowerSeconds
         public Single ChargeFullPowerSeconds { get; set; } = default(Single);
@@ -1038,7 +1051,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.FastEquip = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.SoundLevel = initialValue;
                 this.MeleeDetectionSoundLevel = initialValue;
-                this.WTUR = initialValue;
+                this.TurretEnabled = initialValue;
+                this.TurretHeadingMin = initialValue;
+                this.TurretHeadingMax = initialValue;
+                this.TurretPitchMin = initialValue;
+                this.TurretPitchMax = initialValue;
+                this.TurretHeadingSpeed = initialValue;
+                this.TurretPitchSpeed = initialValue;
+                this.TurretAccuracy = initialValue;
                 this.ChargeFullPowerSeconds = initialValue;
                 this.ChargeMinPowerPerShot = initialValue;
                 this.ChargeCritBonus = initialValue;
@@ -1210,7 +1230,14 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FastEquip,
                 TItem SoundLevel,
                 TItem MeleeDetectionSoundLevel,
-                TItem WTUR,
+                TItem TurretEnabled,
+                TItem TurretHeadingMin,
+                TItem TurretHeadingMax,
+                TItem TurretPitchMin,
+                TItem TurretPitchMax,
+                TItem TurretHeadingSpeed,
+                TItem TurretPitchSpeed,
+                TItem TurretAccuracy,
                 TItem ChargeFullPowerSeconds,
                 TItem ChargeMinPowerPerShot,
                 TItem ChargeCritBonus,
@@ -1381,7 +1408,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.FastEquip = new MaskItem<TItem, SoundReference.Mask<TItem>?>(FastEquip, new SoundReference.Mask<TItem>(FastEquip));
                 this.SoundLevel = SoundLevel;
                 this.MeleeDetectionSoundLevel = MeleeDetectionSoundLevel;
-                this.WTUR = WTUR;
+                this.TurretEnabled = TurretEnabled;
+                this.TurretHeadingMin = TurretHeadingMin;
+                this.TurretHeadingMax = TurretHeadingMax;
+                this.TurretPitchMin = TurretPitchMin;
+                this.TurretPitchMax = TurretPitchMax;
+                this.TurretHeadingSpeed = TurretHeadingSpeed;
+                this.TurretPitchSpeed = TurretPitchSpeed;
+                this.TurretAccuracy = TurretAccuracy;
                 this.ChargeFullPowerSeconds = ChargeFullPowerSeconds;
                 this.ChargeMinPowerPerShot = ChargeMinPowerPerShot;
                 this.ChargeCritBonus = ChargeCritBonus;
@@ -1554,7 +1588,14 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? FastEquip { get; set; }
             public TItem SoundLevel;
             public TItem MeleeDetectionSoundLevel;
-            public TItem WTUR;
+            public TItem TurretEnabled;
+            public TItem TurretHeadingMin;
+            public TItem TurretHeadingMax;
+            public TItem TurretPitchMin;
+            public TItem TurretPitchMax;
+            public TItem TurretHeadingSpeed;
+            public TItem TurretPitchSpeed;
+            public TItem TurretAccuracy;
             public TItem ChargeFullPowerSeconds;
             public TItem ChargeMinPowerPerShot;
             public TItem ChargeCritBonus;
@@ -1729,7 +1770,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.FastEquip, rhs.FastEquip)) return false;
                 if (!object.Equals(this.SoundLevel, rhs.SoundLevel)) return false;
                 if (!object.Equals(this.MeleeDetectionSoundLevel, rhs.MeleeDetectionSoundLevel)) return false;
-                if (!object.Equals(this.WTUR, rhs.WTUR)) return false;
+                if (!object.Equals(this.TurretEnabled, rhs.TurretEnabled)) return false;
+                if (!object.Equals(this.TurretHeadingMin, rhs.TurretHeadingMin)) return false;
+                if (!object.Equals(this.TurretHeadingMax, rhs.TurretHeadingMax)) return false;
+                if (!object.Equals(this.TurretPitchMin, rhs.TurretPitchMin)) return false;
+                if (!object.Equals(this.TurretPitchMax, rhs.TurretPitchMax)) return false;
+                if (!object.Equals(this.TurretHeadingSpeed, rhs.TurretHeadingSpeed)) return false;
+                if (!object.Equals(this.TurretPitchSpeed, rhs.TurretPitchSpeed)) return false;
+                if (!object.Equals(this.TurretAccuracy, rhs.TurretAccuracy)) return false;
                 if (!object.Equals(this.ChargeFullPowerSeconds, rhs.ChargeFullPowerSeconds)) return false;
                 if (!object.Equals(this.ChargeMinPowerPerShot, rhs.ChargeMinPowerPerShot)) return false;
                 if (!object.Equals(this.ChargeCritBonus, rhs.ChargeCritBonus)) return false;
@@ -1896,7 +1944,14 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.FastEquip);
                 hash.Add(this.SoundLevel);
                 hash.Add(this.MeleeDetectionSoundLevel);
-                hash.Add(this.WTUR);
+                hash.Add(this.TurretEnabled);
+                hash.Add(this.TurretHeadingMin);
+                hash.Add(this.TurretHeadingMax);
+                hash.Add(this.TurretPitchMin);
+                hash.Add(this.TurretPitchMax);
+                hash.Add(this.TurretHeadingSpeed);
+                hash.Add(this.TurretPitchSpeed);
+                hash.Add(this.TurretAccuracy);
                 hash.Add(this.ChargeFullPowerSeconds);
                 hash.Add(this.ChargeMinPowerPerShot);
                 hash.Add(this.ChargeCritBonus);
@@ -2166,7 +2221,14 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.SoundLevel)) return false;
                 if (!eval(this.MeleeDetectionSoundLevel)) return false;
-                if (!eval(this.WTUR)) return false;
+                if (!eval(this.TurretEnabled)) return false;
+                if (!eval(this.TurretHeadingMin)) return false;
+                if (!eval(this.TurretHeadingMax)) return false;
+                if (!eval(this.TurretPitchMin)) return false;
+                if (!eval(this.TurretPitchMax)) return false;
+                if (!eval(this.TurretHeadingSpeed)) return false;
+                if (!eval(this.TurretPitchSpeed)) return false;
+                if (!eval(this.TurretAccuracy)) return false;
                 if (!eval(this.ChargeFullPowerSeconds)) return false;
                 if (!eval(this.ChargeMinPowerPerShot)) return false;
                 if (!eval(this.ChargeCritBonus)) return false;
@@ -2449,7 +2511,14 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.SoundLevel)) return true;
                 if (eval(this.MeleeDetectionSoundLevel)) return true;
-                if (eval(this.WTUR)) return true;
+                if (eval(this.TurretEnabled)) return true;
+                if (eval(this.TurretHeadingMin)) return true;
+                if (eval(this.TurretHeadingMax)) return true;
+                if (eval(this.TurretPitchMin)) return true;
+                if (eval(this.TurretPitchMax)) return true;
+                if (eval(this.TurretHeadingSpeed)) return true;
+                if (eval(this.TurretPitchSpeed)) return true;
+                if (eval(this.TurretAccuracy)) return true;
                 if (eval(this.ChargeFullPowerSeconds)) return true;
                 if (eval(this.ChargeMinPowerPerShot)) return true;
                 if (eval(this.ChargeCritBonus)) return true;
@@ -2695,7 +2764,14 @@ namespace Mutagen.Bethesda.Starfield
                 obj.FastEquip = this.FastEquip == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.FastEquip.Overall), this.FastEquip.Specific?.Translate(eval));
                 obj.SoundLevel = eval(this.SoundLevel);
                 obj.MeleeDetectionSoundLevel = eval(this.MeleeDetectionSoundLevel);
-                obj.WTUR = eval(this.WTUR);
+                obj.TurretEnabled = eval(this.TurretEnabled);
+                obj.TurretHeadingMin = eval(this.TurretHeadingMin);
+                obj.TurretHeadingMax = eval(this.TurretHeadingMax);
+                obj.TurretPitchMin = eval(this.TurretPitchMin);
+                obj.TurretPitchMax = eval(this.TurretPitchMax);
+                obj.TurretHeadingSpeed = eval(this.TurretHeadingSpeed);
+                obj.TurretPitchSpeed = eval(this.TurretPitchSpeed);
+                obj.TurretAccuracy = eval(this.TurretAccuracy);
                 obj.ChargeFullPowerSeconds = eval(this.ChargeFullPowerSeconds);
                 obj.ChargeMinPowerPerShot = eval(this.ChargeMinPowerPerShot);
                 obj.ChargeCritBonus = eval(this.ChargeCritBonus);
@@ -3118,9 +3194,37 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(MeleeDetectionSoundLevel, "MeleeDetectionSoundLevel");
                     }
-                    if (printMask?.WTUR ?? true)
+                    if (printMask?.TurretEnabled ?? true)
                     {
-                        sb.AppendItem(WTUR, "WTUR");
+                        sb.AppendItem(TurretEnabled, "TurretEnabled");
+                    }
+                    if (printMask?.TurretHeadingMin ?? true)
+                    {
+                        sb.AppendItem(TurretHeadingMin, "TurretHeadingMin");
+                    }
+                    if (printMask?.TurretHeadingMax ?? true)
+                    {
+                        sb.AppendItem(TurretHeadingMax, "TurretHeadingMax");
+                    }
+                    if (printMask?.TurretPitchMin ?? true)
+                    {
+                        sb.AppendItem(TurretPitchMin, "TurretPitchMin");
+                    }
+                    if (printMask?.TurretPitchMax ?? true)
+                    {
+                        sb.AppendItem(TurretPitchMax, "TurretPitchMax");
+                    }
+                    if (printMask?.TurretHeadingSpeed ?? true)
+                    {
+                        sb.AppendItem(TurretHeadingSpeed, "TurretHeadingSpeed");
+                    }
+                    if (printMask?.TurretPitchSpeed ?? true)
+                    {
+                        sb.AppendItem(TurretPitchSpeed, "TurretPitchSpeed");
+                    }
+                    if (printMask?.TurretAccuracy ?? true)
+                    {
+                        sb.AppendItem(TurretAccuracy, "TurretAccuracy");
                     }
                     if (printMask?.ChargeFullPowerSeconds ?? true)
                     {
@@ -3627,7 +3731,14 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, SoundReference.ErrorMask?>? FastEquip;
             public Exception? SoundLevel;
             public Exception? MeleeDetectionSoundLevel;
-            public Exception? WTUR;
+            public Exception? TurretEnabled;
+            public Exception? TurretHeadingMin;
+            public Exception? TurretHeadingMax;
+            public Exception? TurretPitchMin;
+            public Exception? TurretPitchMax;
+            public Exception? TurretHeadingSpeed;
+            public Exception? TurretPitchSpeed;
+            public Exception? TurretAccuracy;
             public Exception? ChargeFullPowerSeconds;
             public Exception? ChargeMinPowerPerShot;
             public Exception? ChargeCritBonus;
@@ -3852,8 +3963,22 @@ namespace Mutagen.Bethesda.Starfield
                         return SoundLevel;
                     case Weapon_FieldIndex.MeleeDetectionSoundLevel:
                         return MeleeDetectionSoundLevel;
-                    case Weapon_FieldIndex.WTUR:
-                        return WTUR;
+                    case Weapon_FieldIndex.TurretEnabled:
+                        return TurretEnabled;
+                    case Weapon_FieldIndex.TurretHeadingMin:
+                        return TurretHeadingMin;
+                    case Weapon_FieldIndex.TurretHeadingMax:
+                        return TurretHeadingMax;
+                    case Weapon_FieldIndex.TurretPitchMin:
+                        return TurretPitchMin;
+                    case Weapon_FieldIndex.TurretPitchMax:
+                        return TurretPitchMax;
+                    case Weapon_FieldIndex.TurretHeadingSpeed:
+                        return TurretHeadingSpeed;
+                    case Weapon_FieldIndex.TurretPitchSpeed:
+                        return TurretPitchSpeed;
+                    case Weapon_FieldIndex.TurretAccuracy:
+                        return TurretAccuracy;
                     case Weapon_FieldIndex.ChargeFullPowerSeconds:
                         return ChargeFullPowerSeconds;
                     case Weapon_FieldIndex.ChargeMinPowerPerShot:
@@ -4241,8 +4366,29 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.MeleeDetectionSoundLevel:
                         this.MeleeDetectionSoundLevel = ex;
                         break;
-                    case Weapon_FieldIndex.WTUR:
-                        this.WTUR = ex;
+                    case Weapon_FieldIndex.TurretEnabled:
+                        this.TurretEnabled = ex;
+                        break;
+                    case Weapon_FieldIndex.TurretHeadingMin:
+                        this.TurretHeadingMin = ex;
+                        break;
+                    case Weapon_FieldIndex.TurretHeadingMax:
+                        this.TurretHeadingMax = ex;
+                        break;
+                    case Weapon_FieldIndex.TurretPitchMin:
+                        this.TurretPitchMin = ex;
+                        break;
+                    case Weapon_FieldIndex.TurretPitchMax:
+                        this.TurretPitchMax = ex;
+                        break;
+                    case Weapon_FieldIndex.TurretHeadingSpeed:
+                        this.TurretHeadingSpeed = ex;
+                        break;
+                    case Weapon_FieldIndex.TurretPitchSpeed:
+                        this.TurretPitchSpeed = ex;
+                        break;
+                    case Weapon_FieldIndex.TurretAccuracy:
+                        this.TurretAccuracy = ex;
                         break;
                     case Weapon_FieldIndex.ChargeFullPowerSeconds:
                         this.ChargeFullPowerSeconds = ex;
@@ -4738,8 +4884,29 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.MeleeDetectionSoundLevel:
                         this.MeleeDetectionSoundLevel = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WTUR:
-                        this.WTUR = (Exception?)obj;
+                    case Weapon_FieldIndex.TurretEnabled:
+                        this.TurretEnabled = (Exception?)obj;
+                        break;
+                    case Weapon_FieldIndex.TurretHeadingMin:
+                        this.TurretHeadingMin = (Exception?)obj;
+                        break;
+                    case Weapon_FieldIndex.TurretHeadingMax:
+                        this.TurretHeadingMax = (Exception?)obj;
+                        break;
+                    case Weapon_FieldIndex.TurretPitchMin:
+                        this.TurretPitchMin = (Exception?)obj;
+                        break;
+                    case Weapon_FieldIndex.TurretPitchMax:
+                        this.TurretPitchMax = (Exception?)obj;
+                        break;
+                    case Weapon_FieldIndex.TurretHeadingSpeed:
+                        this.TurretHeadingSpeed = (Exception?)obj;
+                        break;
+                    case Weapon_FieldIndex.TurretPitchSpeed:
+                        this.TurretPitchSpeed = (Exception?)obj;
+                        break;
+                    case Weapon_FieldIndex.TurretAccuracy:
+                        this.TurretAccuracy = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.ChargeFullPowerSeconds:
                         this.ChargeFullPowerSeconds = (Exception?)obj;
@@ -5123,7 +5290,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (FastEquip != null) return true;
                 if (SoundLevel != null) return true;
                 if (MeleeDetectionSoundLevel != null) return true;
-                if (WTUR != null) return true;
+                if (TurretEnabled != null) return true;
+                if (TurretHeadingMin != null) return true;
+                if (TurretHeadingMax != null) return true;
+                if (TurretPitchMin != null) return true;
+                if (TurretPitchMax != null) return true;
+                if (TurretHeadingSpeed != null) return true;
+                if (TurretPitchSpeed != null) return true;
+                if (TurretAccuracy != null) return true;
                 if (ChargeFullPowerSeconds != null) return true;
                 if (ChargeMinPowerPerShot != null) return true;
                 if (ChargeCritBonus != null) return true;
@@ -5458,7 +5632,28 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(MeleeDetectionSoundLevel, "MeleeDetectionSoundLevel");
                 }
                 {
-                    sb.AppendItem(WTUR, "WTUR");
+                    sb.AppendItem(TurretEnabled, "TurretEnabled");
+                }
+                {
+                    sb.AppendItem(TurretHeadingMin, "TurretHeadingMin");
+                }
+                {
+                    sb.AppendItem(TurretHeadingMax, "TurretHeadingMax");
+                }
+                {
+                    sb.AppendItem(TurretPitchMin, "TurretPitchMin");
+                }
+                {
+                    sb.AppendItem(TurretPitchMax, "TurretPitchMax");
+                }
+                {
+                    sb.AppendItem(TurretHeadingSpeed, "TurretHeadingSpeed");
+                }
+                {
+                    sb.AppendItem(TurretPitchSpeed, "TurretPitchSpeed");
+                }
+                {
+                    sb.AppendItem(TurretAccuracy, "TurretAccuracy");
                 }
                 {
                     sb.AppendItem(ChargeFullPowerSeconds, "ChargeFullPowerSeconds");
@@ -5854,7 +6049,14 @@ namespace Mutagen.Bethesda.Starfield
                 ret.FastEquip = this.FastEquip.Combine(rhs.FastEquip, (l, r) => l.Combine(r));
                 ret.SoundLevel = this.SoundLevel.Combine(rhs.SoundLevel);
                 ret.MeleeDetectionSoundLevel = this.MeleeDetectionSoundLevel.Combine(rhs.MeleeDetectionSoundLevel);
-                ret.WTUR = this.WTUR.Combine(rhs.WTUR);
+                ret.TurretEnabled = this.TurretEnabled.Combine(rhs.TurretEnabled);
+                ret.TurretHeadingMin = this.TurretHeadingMin.Combine(rhs.TurretHeadingMin);
+                ret.TurretHeadingMax = this.TurretHeadingMax.Combine(rhs.TurretHeadingMax);
+                ret.TurretPitchMin = this.TurretPitchMin.Combine(rhs.TurretPitchMin);
+                ret.TurretPitchMax = this.TurretPitchMax.Combine(rhs.TurretPitchMax);
+                ret.TurretHeadingSpeed = this.TurretHeadingSpeed.Combine(rhs.TurretHeadingSpeed);
+                ret.TurretPitchSpeed = this.TurretPitchSpeed.Combine(rhs.TurretPitchSpeed);
+                ret.TurretAccuracy = this.TurretAccuracy.Combine(rhs.TurretAccuracy);
                 ret.ChargeFullPowerSeconds = this.ChargeFullPowerSeconds.Combine(rhs.ChargeFullPowerSeconds);
                 ret.ChargeMinPowerPerShot = this.ChargeMinPowerPerShot.Combine(rhs.ChargeMinPowerPerShot);
                 ret.ChargeCritBonus = this.ChargeCritBonus.Combine(rhs.ChargeCritBonus);
@@ -6038,7 +6240,14 @@ namespace Mutagen.Bethesda.Starfield
             public SoundReference.TranslationMask? FastEquip;
             public bool SoundLevel;
             public bool MeleeDetectionSoundLevel;
-            public bool WTUR;
+            public bool TurretEnabled;
+            public bool TurretHeadingMin;
+            public bool TurretHeadingMax;
+            public bool TurretPitchMin;
+            public bool TurretPitchMax;
+            public bool TurretHeadingSpeed;
+            public bool TurretPitchSpeed;
+            public bool TurretAccuracy;
             public bool ChargeFullPowerSeconds;
             public bool ChargeMinPowerPerShot;
             public bool ChargeCritBonus;
@@ -6192,7 +6401,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.WAMM = defaultOn;
                 this.SoundLevel = defaultOn;
                 this.MeleeDetectionSoundLevel = defaultOn;
-                this.WTUR = defaultOn;
+                this.TurretEnabled = defaultOn;
+                this.TurretHeadingMin = defaultOn;
+                this.TurretHeadingMax = defaultOn;
+                this.TurretPitchMin = defaultOn;
+                this.TurretPitchMax = defaultOn;
+                this.TurretHeadingSpeed = defaultOn;
+                this.TurretPitchSpeed = defaultOn;
+                this.TurretAccuracy = defaultOn;
                 this.ChargeFullPowerSeconds = defaultOn;
                 this.ChargeMinPowerPerShot = defaultOn;
                 this.ChargeCritBonus = defaultOn;
@@ -6359,7 +6575,14 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((FastEquip != null ? FastEquip.OnOverall : DefaultOn, FastEquip?.GetCrystal()));
                 ret.Add((SoundLevel, null));
                 ret.Add((MeleeDetectionSoundLevel, null));
-                ret.Add((WTUR, null));
+                ret.Add((TurretEnabled, null));
+                ret.Add((TurretHeadingMin, null));
+                ret.Add((TurretHeadingMax, null));
+                ret.Add((TurretPitchMin, null));
+                ret.Add((TurretPitchMax, null));
+                ret.Add((TurretHeadingSpeed, null));
+                ret.Add((TurretPitchSpeed, null));
+                ret.Add((TurretAccuracy, null));
                 ret.Add((ChargeFullPowerSeconds, null));
                 ret.Add((ChargeMinPowerPerShot, null));
                 ret.Add((ChargeCritBonus, null));
@@ -6709,7 +6932,14 @@ namespace Mutagen.Bethesda.Starfield
         new SoundReference FastEquip { get; set; }
         new SoundLevel SoundLevel { get; set; }
         new SoundLevel MeleeDetectionSoundLevel { get; set; }
-        new MemorySlice<Byte>? WTUR { get; set; }
+        new Boolean TurretEnabled { get; set; }
+        new Single TurretHeadingMin { get; set; }
+        new Single TurretHeadingMax { get; set; }
+        new Single TurretPitchMin { get; set; }
+        new Single TurretPitchMax { get; set; }
+        new Single TurretHeadingSpeed { get; set; }
+        new Single TurretPitchSpeed { get; set; }
+        new Single TurretAccuracy { get; set; }
         new Single ChargeFullPowerSeconds { get; set; }
         new Single ChargeMinPowerPerShot { get; set; }
         new Single ChargeCritBonus { get; set; }
@@ -6935,7 +7165,14 @@ namespace Mutagen.Bethesda.Starfield
         ISoundReferenceGetter FastEquip { get; }
         SoundLevel SoundLevel { get; }
         SoundLevel MeleeDetectionSoundLevel { get; }
-        ReadOnlyMemorySlice<Byte>? WTUR { get; }
+        Boolean TurretEnabled { get; }
+        Single TurretHeadingMin { get; }
+        Single TurretHeadingMax { get; }
+        Single TurretPitchMin { get; }
+        Single TurretPitchMax { get; }
+        Single TurretHeadingSpeed { get; }
+        Single TurretPitchSpeed { get; }
+        Single TurretAccuracy { get; }
         Single ChargeFullPowerSeconds { get; }
         Single ChargeMinPowerPerShot { get; }
         Single ChargeCritBonus { get; }
@@ -7277,113 +7514,120 @@ namespace Mutagen.Bethesda.Starfield
         FastEquip = 59,
         SoundLevel = 60,
         MeleeDetectionSoundLevel = 61,
-        WTUR = 62,
-        ChargeFullPowerSeconds = 63,
-        ChargeMinPowerPerShot = 64,
-        ChargeCritBonus = 65,
-        ChargeHoldInput = 66,
-        ChargingAttack = 67,
-        AttackDamage = 68,
-        MinRange = 69,
-        MaxRange = 70,
-        OutOfRangeDamageMult = 71,
-        CritDamageMult = 72,
-        CriticalHitSpell = 73,
-        CritEffectOnDeathOnly = 74,
-        HitBehavior = 75,
-        Resistance = 76,
-        Skill = 77,
-        LowGravityScaleControlPoint = 78,
-        LowGravityRangeMultMin = 79,
-        LowGravityRangeMultMax = 80,
-        HighGravityScaleControlPoint = 81,
-        HighGravityRangeMultMin = 82,
-        HighGravityRangeMultMax = 83,
-        CritChanceIncMult = 84,
-        DamageTypes = 85,
-        FiringType = 86,
-        BurstCount = 87,
-        RepeatableFire = 88,
-        AttackSeconds = 89,
-        FireSeconds = 90,
-        AttackDelaySeconds = 91,
-        BoltChargeSeconds = 92,
-        BoltAction = 93,
-        DisableShellCaseEject = 94,
-        ShotsPerSecond = 95,
-        WeaponAttackAnimationDuration = 96,
-        OverrideRateOfFire = 97,
-        TriggerThresholdPrimaryTrigger = 98,
-        OverrideTriggerThreshold = 99,
-        TriggerThresholdSecondStage = 100,
-        HasStagedTrigger = 101,
-        HasDualTrigger = 102,
-        BurstDelaySeconds = 103,
-        NonPlayable = 104,
-        PlayerOnly = 105,
-        PreventUseInNormalCombat = 106,
-        IsSecondary = 107,
-        CannotDrop = 108,
-        MinorCrime = 109,
-        NonHostile = 110,
-        Bound = 111,
-        NpcPrefersLongBursts = 112,
-        NpcsOnlyFireWhenMagazineFull = 113,
-        UseSequentialFireNodes = 114,
-        UseRandomFireNodes = 115,
-        AnimationType = 116,
-        BaseWeight = 117,
-        BaseValue = 118,
-        BaseSpeed = 119,
-        AttackOxygenCost = 120,
-        WeaponBarrel = 121,
-        General = 122,
-        AttackSpeed = 123,
-        MeleeBashDamage = 124,
-        MeleeReach = 125,
-        MeleeStagger = 126,
-        Power = 127,
-        PowerRechargeTime = 128,
-        PowerRechargeDelay = 129,
-        ConsumeAmmo = 130,
-        PowerBonus = 131,
-        UsePower = 132,
-        VariablePowerEnabled = 133,
-        VariablePowerTransitionDuration = 134,
-        UseChargeOnlyInFocusMode = 135,
-        PowerIntensityCurve = 136,
-        PowerDamageMultiplier = 137,
-        PowerConsumption = 138,
-        ReloadSeconds = 139,
-        ReloadSpeed = 140,
-        ReloadCharging = 141,
-        ReloadSingle = 142,
-        WRUM = 143,
-        ApertureValueMin = 144,
-        ApertureValueMax = 145,
-        ApertureInputMin = 146,
-        ApertureInputMax = 147,
-        ApertureAcceleration = 148,
-        ApertureDeceleration = 149,
-        DistanceValueMin = 150,
-        DistanceValueMax = 151,
-        DistanceInputMin = 152,
-        DistanceInputMax = 153,
-        DistanceAcceleration = 154,
-        DistanceDeceleration = 155,
-        UseVariableRange = 156,
-        FirstPersonModel = 157,
-        WVISUnknown1 = 158,
-        WVISUnknown2 = 159,
-        WVISUnknown3 = 160,
-        ImpactDataSet = 161,
-        ColorRemappingIndex = 162,
-        ImageSpaceAdapter = 163,
-        AttackActionPointCost = 164,
-        OverrideDefaultCameraShake = 165,
-        FiringCameraShakeIntensity = 166,
-        FiringCameraShakeDuration = 167,
-        AiFiringArc = 168,
+        TurretEnabled = 62,
+        TurretHeadingMin = 63,
+        TurretHeadingMax = 64,
+        TurretPitchMin = 65,
+        TurretPitchMax = 66,
+        TurretHeadingSpeed = 67,
+        TurretPitchSpeed = 68,
+        TurretAccuracy = 69,
+        ChargeFullPowerSeconds = 70,
+        ChargeMinPowerPerShot = 71,
+        ChargeCritBonus = 72,
+        ChargeHoldInput = 73,
+        ChargingAttack = 74,
+        AttackDamage = 75,
+        MinRange = 76,
+        MaxRange = 77,
+        OutOfRangeDamageMult = 78,
+        CritDamageMult = 79,
+        CriticalHitSpell = 80,
+        CritEffectOnDeathOnly = 81,
+        HitBehavior = 82,
+        Resistance = 83,
+        Skill = 84,
+        LowGravityScaleControlPoint = 85,
+        LowGravityRangeMultMin = 86,
+        LowGravityRangeMultMax = 87,
+        HighGravityScaleControlPoint = 88,
+        HighGravityRangeMultMin = 89,
+        HighGravityRangeMultMax = 90,
+        CritChanceIncMult = 91,
+        DamageTypes = 92,
+        FiringType = 93,
+        BurstCount = 94,
+        RepeatableFire = 95,
+        AttackSeconds = 96,
+        FireSeconds = 97,
+        AttackDelaySeconds = 98,
+        BoltChargeSeconds = 99,
+        BoltAction = 100,
+        DisableShellCaseEject = 101,
+        ShotsPerSecond = 102,
+        WeaponAttackAnimationDuration = 103,
+        OverrideRateOfFire = 104,
+        TriggerThresholdPrimaryTrigger = 105,
+        OverrideTriggerThreshold = 106,
+        TriggerThresholdSecondStage = 107,
+        HasStagedTrigger = 108,
+        HasDualTrigger = 109,
+        BurstDelaySeconds = 110,
+        NonPlayable = 111,
+        PlayerOnly = 112,
+        PreventUseInNormalCombat = 113,
+        IsSecondary = 114,
+        CannotDrop = 115,
+        MinorCrime = 116,
+        NonHostile = 117,
+        Bound = 118,
+        NpcPrefersLongBursts = 119,
+        NpcsOnlyFireWhenMagazineFull = 120,
+        UseSequentialFireNodes = 121,
+        UseRandomFireNodes = 122,
+        AnimationType = 123,
+        BaseWeight = 124,
+        BaseValue = 125,
+        BaseSpeed = 126,
+        AttackOxygenCost = 127,
+        WeaponBarrel = 128,
+        General = 129,
+        AttackSpeed = 130,
+        MeleeBashDamage = 131,
+        MeleeReach = 132,
+        MeleeStagger = 133,
+        Power = 134,
+        PowerRechargeTime = 135,
+        PowerRechargeDelay = 136,
+        ConsumeAmmo = 137,
+        PowerBonus = 138,
+        UsePower = 139,
+        VariablePowerEnabled = 140,
+        VariablePowerTransitionDuration = 141,
+        UseChargeOnlyInFocusMode = 142,
+        PowerIntensityCurve = 143,
+        PowerDamageMultiplier = 144,
+        PowerConsumption = 145,
+        ReloadSeconds = 146,
+        ReloadSpeed = 147,
+        ReloadCharging = 148,
+        ReloadSingle = 149,
+        WRUM = 150,
+        ApertureValueMin = 151,
+        ApertureValueMax = 152,
+        ApertureInputMin = 153,
+        ApertureInputMax = 154,
+        ApertureAcceleration = 155,
+        ApertureDeceleration = 156,
+        DistanceValueMin = 157,
+        DistanceValueMax = 158,
+        DistanceInputMin = 159,
+        DistanceInputMax = 160,
+        DistanceAcceleration = 161,
+        DistanceDeceleration = 162,
+        UseVariableRange = 163,
+        FirstPersonModel = 164,
+        WVISUnknown1 = 165,
+        WVISUnknown2 = 166,
+        WVISUnknown3 = 167,
+        ImpactDataSet = 168,
+        ColorRemappingIndex = 169,
+        ImageSpaceAdapter = 170,
+        AttackActionPointCost = 171,
+        OverrideDefaultCameraShake = 172,
+        FiringCameraShakeIntensity = 173,
+        FiringCameraShakeDuration = 174,
+        AiFiringArc = 175,
     }
     #endregion
 
@@ -7394,9 +7638,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 162;
+        public const ushort AdditionalFieldCount = 169;
 
-        public const ushort FieldCount = 169;
+        public const ushort FieldCount = 176;
 
         public static readonly Type MaskType = typeof(Weapon.Mask<>);
 
@@ -7585,7 +7829,14 @@ namespace Mutagen.Bethesda.Starfield
             item.FastEquip.Clear();
             item.SoundLevel = default(SoundLevel);
             item.MeleeDetectionSoundLevel = default(SoundLevel);
-            item.WTUR = default;
+            item.TurretEnabled = default(Boolean);
+            item.TurretHeadingMin = default(Single);
+            item.TurretHeadingMax = default(Single);
+            item.TurretPitchMin = default(Single);
+            item.TurretPitchMax = default(Single);
+            item.TurretHeadingSpeed = default(Single);
+            item.TurretPitchSpeed = default(Single);
+            item.TurretAccuracy = default(Single);
             item.ChargeFullPowerSeconds = default(Single);
             item.ChargeMinPowerPerShot = default(Single);
             item.ChargeCritBonus = default(Single);
@@ -7950,7 +8201,14 @@ namespace Mutagen.Bethesda.Starfield
             ret.FastEquip = MaskItemExt.Factory(item.FastEquip.GetEqualsMask(rhs.FastEquip, include), include);
             ret.SoundLevel = item.SoundLevel == rhs.SoundLevel;
             ret.MeleeDetectionSoundLevel = item.MeleeDetectionSoundLevel == rhs.MeleeDetectionSoundLevel;
-            ret.WTUR = MemorySliceExt.SequenceEqual(item.WTUR, rhs.WTUR);
+            ret.TurretEnabled = item.TurretEnabled == rhs.TurretEnabled;
+            ret.TurretHeadingMin = item.TurretHeadingMin.EqualsWithin(rhs.TurretHeadingMin);
+            ret.TurretHeadingMax = item.TurretHeadingMax.EqualsWithin(rhs.TurretHeadingMax);
+            ret.TurretPitchMin = item.TurretPitchMin.EqualsWithin(rhs.TurretPitchMin);
+            ret.TurretPitchMax = item.TurretPitchMax.EqualsWithin(rhs.TurretPitchMax);
+            ret.TurretHeadingSpeed = item.TurretHeadingSpeed.EqualsWithin(rhs.TurretHeadingSpeed);
+            ret.TurretPitchSpeed = item.TurretPitchSpeed.EqualsWithin(rhs.TurretPitchSpeed);
+            ret.TurretAccuracy = item.TurretAccuracy.EqualsWithin(rhs.TurretAccuracy);
             ret.ChargeFullPowerSeconds = item.ChargeFullPowerSeconds.EqualsWithin(rhs.ChargeFullPowerSeconds);
             ret.ChargeMinPowerPerShot = item.ChargeMinPowerPerShot.EqualsWithin(rhs.ChargeMinPowerPerShot);
             ret.ChargeCritBonus = item.ChargeCritBonus.EqualsWithin(rhs.ChargeCritBonus);
@@ -8388,10 +8646,37 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.MeleeDetectionSoundLevel, "MeleeDetectionSoundLevel");
             }
-            if ((printMask?.WTUR ?? true)
-                && item.WTUR is {} WTURItem)
+            if (printMask?.TurretEnabled ?? true)
             {
-                sb.AppendLine($"WTUR => {SpanExt.ToHexString(WTURItem)}");
+                sb.AppendItem(item.TurretEnabled, "TurretEnabled");
+            }
+            if (printMask?.TurretHeadingMin ?? true)
+            {
+                sb.AppendItem(item.TurretHeadingMin, "TurretHeadingMin");
+            }
+            if (printMask?.TurretHeadingMax ?? true)
+            {
+                sb.AppendItem(item.TurretHeadingMax, "TurretHeadingMax");
+            }
+            if (printMask?.TurretPitchMin ?? true)
+            {
+                sb.AppendItem(item.TurretPitchMin, "TurretPitchMin");
+            }
+            if (printMask?.TurretPitchMax ?? true)
+            {
+                sb.AppendItem(item.TurretPitchMax, "TurretPitchMax");
+            }
+            if (printMask?.TurretHeadingSpeed ?? true)
+            {
+                sb.AppendItem(item.TurretHeadingSpeed, "TurretHeadingSpeed");
+            }
+            if (printMask?.TurretPitchSpeed ?? true)
+            {
+                sb.AppendItem(item.TurretPitchSpeed, "TurretPitchSpeed");
+            }
+            if (printMask?.TurretAccuracy ?? true)
+            {
+                sb.AppendItem(item.TurretAccuracy, "TurretAccuracy");
             }
             if (printMask?.ChargeFullPowerSeconds ?? true)
             {
@@ -9157,9 +9442,37 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.MeleeDetectionSoundLevel != rhs.MeleeDetectionSoundLevel) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTUR) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretEnabled) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.WTUR, rhs.WTUR)) return false;
+                if (lhs.TurretEnabled != rhs.TurretEnabled) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretHeadingMin) ?? true))
+            {
+                if (!lhs.TurretHeadingMin.EqualsWithin(rhs.TurretHeadingMin)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretHeadingMax) ?? true))
+            {
+                if (!lhs.TurretHeadingMax.EqualsWithin(rhs.TurretHeadingMax)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretPitchMin) ?? true))
+            {
+                if (!lhs.TurretPitchMin.EqualsWithin(rhs.TurretPitchMin)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretPitchMax) ?? true))
+            {
+                if (!lhs.TurretPitchMax.EqualsWithin(rhs.TurretPitchMax)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretHeadingSpeed) ?? true))
+            {
+                if (!lhs.TurretHeadingSpeed.EqualsWithin(rhs.TurretHeadingSpeed)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretPitchSpeed) ?? true))
+            {
+                if (!lhs.TurretPitchSpeed.EqualsWithin(rhs.TurretPitchSpeed)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretAccuracy) ?? true))
+            {
+                if (!lhs.TurretAccuracy.EqualsWithin(rhs.TurretAccuracy)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.ChargeFullPowerSeconds) ?? true))
             {
@@ -9708,10 +10021,14 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.FastEquip);
             hash.Add(item.SoundLevel);
             hash.Add(item.MeleeDetectionSoundLevel);
-            if (item.WTUR is {} WTURItem)
-            {
-                hash.Add(WTURItem);
-            }
+            hash.Add(item.TurretEnabled);
+            hash.Add(item.TurretHeadingMin);
+            hash.Add(item.TurretHeadingMax);
+            hash.Add(item.TurretPitchMin);
+            hash.Add(item.TurretPitchMax);
+            hash.Add(item.TurretHeadingSpeed);
+            hash.Add(item.TurretPitchSpeed);
+            hash.Add(item.TurretAccuracy);
             hash.Add(item.ChargeFullPowerSeconds);
             hash.Add(item.ChargeMinPowerPerShot);
             hash.Add(item.ChargeCritBonus);
@@ -10730,16 +11047,37 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.MeleeDetectionSoundLevel = rhs.MeleeDetectionSoundLevel;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTUR) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretEnabled) ?? true))
             {
-                if(rhs.WTUR is {} WTURrhs)
-                {
-                    item.WTUR = WTURrhs.ToArray();
-                }
-                else
-                {
-                    item.WTUR = default;
-                }
+                item.TurretEnabled = rhs.TurretEnabled;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretHeadingMin) ?? true))
+            {
+                item.TurretHeadingMin = rhs.TurretHeadingMin;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretHeadingMax) ?? true))
+            {
+                item.TurretHeadingMax = rhs.TurretHeadingMax;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretPitchMin) ?? true))
+            {
+                item.TurretPitchMin = rhs.TurretPitchMin;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretPitchMax) ?? true))
+            {
+                item.TurretPitchMax = rhs.TurretPitchMax;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretHeadingSpeed) ?? true))
+            {
+                item.TurretHeadingSpeed = rhs.TurretHeadingSpeed;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretPitchSpeed) ?? true))
+            {
+                item.TurretPitchSpeed = rhs.TurretPitchSpeed;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.TurretAccuracy) ?? true))
+            {
+                item.TurretAccuracy = rhs.TurretAccuracy;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.ChargeFullPowerSeconds) ?? true))
             {
@@ -11645,10 +11983,31 @@ namespace Mutagen.Bethesda.Starfield
                     item.MeleeDetectionSoundLevel,
                     length: 4);
             }
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.WTUR,
-                header: translationParams.ConvertToCustom(RecordTypes.WTUR));
+            using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.WTUR)))
+            {
+                writer.Write(item.TurretEnabled);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.TurretHeadingMin);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.TurretHeadingMax);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.TurretPitchMin);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.TurretPitchMax);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.TurretHeadingSpeed);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.TurretPitchSpeed);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.TurretAccuracy);
+            }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.WCHG)))
             {
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
@@ -12326,8 +12685,24 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WTUR:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.WTUR = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Weapon_FieldIndex.WTUR;
+                    var dataFrame = frame.SpawnWithLength(contentLength);
+                    if (dataFrame.Remaining < 1) return null;
+                    item.TurretEnabled = dataFrame.ReadBoolean();
+                    if (dataFrame.Remaining < 4) return null;
+                    item.TurretHeadingMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.TurretHeadingMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.TurretPitchMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.TurretPitchMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.TurretHeadingSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.TurretPitchSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.TurretAccuracy = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    return (int)Weapon_FieldIndex.TurretAccuracy;
                 }
                 case RecordTypeInts.WCHG:
                 {
@@ -12965,9 +13340,46 @@ namespace Mutagen.Bethesda.Starfield
         private bool _MeleeDetectionSoundLevel_IsSet => _WAUDLocation.HasValue;
         public SoundLevel MeleeDetectionSoundLevel => _MeleeDetectionSoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MeleeDetectionSoundLevelLocation, 0x4)) : default;
         #endregion
-        #region WTUR
-        private int? _WTURLocation;
-        public ReadOnlyMemorySlice<Byte>? WTUR => _WTURLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _WTURLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        private RangeInt32? _WTURLocation;
+        #region TurretEnabled
+        private int _TurretEnabledLocation => _WTURLocation!.Value.Min;
+        private bool _TurretEnabled_IsSet => _WTURLocation.HasValue;
+        public Boolean TurretEnabled => _TurretEnabled_IsSet ? _recordData.Slice(_TurretEnabledLocation, 1)[0] >= 1 : default(Boolean);
+        #endregion
+        #region TurretHeadingMin
+        private int _TurretHeadingMinLocation => _WTURLocation!.Value.Min + 0x1;
+        private bool _TurretHeadingMin_IsSet => _WTURLocation.HasValue;
+        public Single TurretHeadingMin => _TurretHeadingMin_IsSet ? _recordData.Slice(_TurretHeadingMinLocation, 4).Float() : default(Single);
+        #endregion
+        #region TurretHeadingMax
+        private int _TurretHeadingMaxLocation => _WTURLocation!.Value.Min + 0x5;
+        private bool _TurretHeadingMax_IsSet => _WTURLocation.HasValue;
+        public Single TurretHeadingMax => _TurretHeadingMax_IsSet ? _recordData.Slice(_TurretHeadingMaxLocation, 4).Float() : default(Single);
+        #endregion
+        #region TurretPitchMin
+        private int _TurretPitchMinLocation => _WTURLocation!.Value.Min + 0x9;
+        private bool _TurretPitchMin_IsSet => _WTURLocation.HasValue;
+        public Single TurretPitchMin => _TurretPitchMin_IsSet ? _recordData.Slice(_TurretPitchMinLocation, 4).Float() : default(Single);
+        #endregion
+        #region TurretPitchMax
+        private int _TurretPitchMaxLocation => _WTURLocation!.Value.Min + 0xD;
+        private bool _TurretPitchMax_IsSet => _WTURLocation.HasValue;
+        public Single TurretPitchMax => _TurretPitchMax_IsSet ? _recordData.Slice(_TurretPitchMaxLocation, 4).Float() : default(Single);
+        #endregion
+        #region TurretHeadingSpeed
+        private int _TurretHeadingSpeedLocation => _WTURLocation!.Value.Min + 0x11;
+        private bool _TurretHeadingSpeed_IsSet => _WTURLocation.HasValue;
+        public Single TurretHeadingSpeed => _TurretHeadingSpeed_IsSet ? _recordData.Slice(_TurretHeadingSpeedLocation, 4).Float() : default(Single);
+        #endregion
+        #region TurretPitchSpeed
+        private int _TurretPitchSpeedLocation => _WTURLocation!.Value.Min + 0x15;
+        private bool _TurretPitchSpeed_IsSet => _WTURLocation.HasValue;
+        public Single TurretPitchSpeed => _TurretPitchSpeed_IsSet ? _recordData.Slice(_TurretPitchSpeedLocation, 4).Float() : default(Single);
+        #endregion
+        #region TurretAccuracy
+        private int _TurretAccuracyLocation => _WTURLocation!.Value.Min + 0x19;
+        private bool _TurretAccuracy_IsSet => _WTURLocation.HasValue;
+        public Single TurretAccuracy => _TurretAccuracy_IsSet ? _recordData.Slice(_TurretAccuracyLocation, 4).Float() : default(Single);
         #endregion
         private RangeInt32? _WCHGLocation;
         #region ChargeFullPowerSeconds
@@ -13794,8 +14206,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.WTUR:
                 {
-                    _WTURLocation = (stream.Position - offset);
-                    return (int)Weapon_FieldIndex.WTUR;
+                    _WTURLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
+                    return (int)Weapon_FieldIndex.TurretAccuracy;
                 }
                 case RecordTypeInts.WCHG:
                 {
