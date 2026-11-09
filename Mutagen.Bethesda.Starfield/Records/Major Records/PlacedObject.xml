@@ -149,7 +149,13 @@
   </Object>
   <Object name="PlacedObjectShipArrival" objType="Subrecord" recordType="XSAD" >
     <Fields>
-      <ByteArray name="Data" byteLength="17" nullable="false" />
+      <FormLink name="Target">
+        <Interface>IPlaced</Interface>
+      </FormLink>
+      <Enum name="Location" enumName="PlacedObjectShipArrival.LocationType" byteLength="4" />
+      <Float name="Distance" />
+      <Float name="Delay" />
+      <Bool name="GravJumpFx" byteLength="1" />
     </Fields>
   </Object>
   <Object name="ExternalEmittance" objType="Subrecord" recordType="XEED" >
