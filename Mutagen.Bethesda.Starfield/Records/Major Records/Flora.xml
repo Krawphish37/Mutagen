@@ -17,8 +17,8 @@
       <RefList name="Properties" refName="ObjectProperty" recordType="PRPS" />
       <Color name="MarkerColor" recordType="PNAM" binaryType="Alpha" />
       <String name="ActivateTextOverride" recordType="ATTX" translated="Normal" />
-      <ByteArray name="FNAM" recordType="FNAM" unknown="true" />
-      <ByteArray name="JNAM" recordType="JNAM" unknown="true" />
+      <UInt16 name="Flags" recordType="FNAM" />
+      <UInt16 name="ActivationAngleForPlayer" recordType="JNAM" />
       <FormLink name="Ingredient" recordType="PFIG">
         <Interface>IHarvestTarget</Interface>
       </FormLink>

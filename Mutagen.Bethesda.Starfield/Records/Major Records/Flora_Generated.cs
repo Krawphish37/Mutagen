@@ -256,27 +256,15 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ITranslatedStringGetter? IFloraGetter.ActivateTextOverride => this.ActivateTextOverride;
         #endregion
-        #region FNAM
+        #region Flags
+        public UInt16? Flags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _FNAM;
-        public MemorySlice<Byte>? FNAM
-        {
-            get => this._FNAM;
-            set => this._FNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IFloraGetter.FNAM => this.FNAM;
+        UInt16? IFloraGetter.Flags => this.Flags;
         #endregion
-        #region JNAM
+        #region ActivationAngleForPlayer
+        public UInt16? ActivationAngleForPlayer { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _JNAM;
-        public MemorySlice<Byte>? JNAM
-        {
-            get => this._JNAM;
-            set => this._JNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IFloraGetter.JNAM => this.JNAM;
+        UInt16? IFloraGetter.ActivationAngleForPlayer => this.ActivationAngleForPlayer;
         #endregion
         #region Ingredient
         private readonly IFormLinkNullable<IHarvestTargetGetter> _Ingredient = new FormLinkNullable<IHarvestTargetGetter>();
@@ -436,8 +424,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>(initialValue, []);
                 this.MarkerColor = initialValue;
                 this.ActivateTextOverride = initialValue;
-                this.FNAM = initialValue;
-                this.JNAM = initialValue;
+                this.Flags = initialValue;
+                this.ActivationAngleForPlayer = initialValue;
                 this.Ingredient = initialValue;
                 this.HarvestSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.Production = new MaskItem<TItem, SeasonalIngredientProduction.Mask<TItem>?>(initialValue, new SeasonalIngredientProduction.Mask<TItem>(initialValue));
@@ -474,8 +462,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Properties,
                 TItem MarkerColor,
                 TItem ActivateTextOverride,
-                TItem FNAM,
-                TItem JNAM,
+                TItem Flags,
+                TItem ActivationAngleForPlayer,
                 TItem Ingredient,
                 TItem HarvestSound,
                 TItem Production,
@@ -511,8 +499,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>(Properties, []);
                 this.MarkerColor = MarkerColor;
                 this.ActivateTextOverride = ActivateTextOverride;
-                this.FNAM = FNAM;
-                this.JNAM = JNAM;
+                this.Flags = Flags;
+                this.ActivationAngleForPlayer = ActivationAngleForPlayer;
                 this.Ingredient = Ingredient;
                 this.HarvestSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(HarvestSound, new SoundReference.Mask<TItem>(HarvestSound));
                 this.Production = new MaskItem<TItem, SeasonalIngredientProduction.Mask<TItem>?>(Production, new SeasonalIngredientProduction.Mask<TItem>(Production));
@@ -550,8 +538,8 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>? Properties;
             public TItem MarkerColor;
             public TItem ActivateTextOverride;
-            public TItem FNAM;
-            public TItem JNAM;
+            public TItem Flags;
+            public TItem ActivationAngleForPlayer;
             public TItem Ingredient;
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? HarvestSound { get; set; }
             public MaskItem<TItem, SeasonalIngredientProduction.Mask<TItem>?>? Production { get; set; }
@@ -591,8 +579,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Properties, rhs.Properties)) return false;
                 if (!object.Equals(this.MarkerColor, rhs.MarkerColor)) return false;
                 if (!object.Equals(this.ActivateTextOverride, rhs.ActivateTextOverride)) return false;
-                if (!object.Equals(this.FNAM, rhs.FNAM)) return false;
-                if (!object.Equals(this.JNAM, rhs.JNAM)) return false;
+                if (!object.Equals(this.Flags, rhs.Flags)) return false;
+                if (!object.Equals(this.ActivationAngleForPlayer, rhs.ActivationAngleForPlayer)) return false;
                 if (!object.Equals(this.Ingredient, rhs.Ingredient)) return false;
                 if (!object.Equals(this.HarvestSound, rhs.HarvestSound)) return false;
                 if (!object.Equals(this.Production, rhs.Production)) return false;
@@ -624,8 +612,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Properties);
                 hash.Add(this.MarkerColor);
                 hash.Add(this.ActivateTextOverride);
-                hash.Add(this.FNAM);
-                hash.Add(this.JNAM);
+                hash.Add(this.Flags);
+                hash.Add(this.ActivationAngleForPlayer);
                 hash.Add(this.Ingredient);
                 hash.Add(this.HarvestSound);
                 hash.Add(this.Production);
@@ -718,8 +706,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.MarkerColor)) return false;
                 if (!eval(this.ActivateTextOverride)) return false;
-                if (!eval(this.FNAM)) return false;
-                if (!eval(this.JNAM)) return false;
+                if (!eval(this.Flags)) return false;
+                if (!eval(this.ActivationAngleForPlayer)) return false;
                 if (!eval(this.Ingredient)) return false;
                 if (HarvestSound != null)
                 {
@@ -843,8 +831,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.MarkerColor)) return true;
                 if (eval(this.ActivateTextOverride)) return true;
-                if (eval(this.FNAM)) return true;
-                if (eval(this.JNAM)) return true;
+                if (eval(this.Flags)) return true;
+                if (eval(this.ActivationAngleForPlayer)) return true;
                 if (eval(this.Ingredient)) return true;
                 if (HarvestSound != null)
                 {
@@ -960,8 +948,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 obj.MarkerColor = eval(this.MarkerColor);
                 obj.ActivateTextOverride = eval(this.ActivateTextOverride);
-                obj.FNAM = eval(this.FNAM);
-                obj.JNAM = eval(this.JNAM);
+                obj.Flags = eval(this.Flags);
+                obj.ActivationAngleForPlayer = eval(this.ActivationAngleForPlayer);
                 obj.Ingredient = eval(this.Ingredient);
                 obj.HarvestSound = this.HarvestSound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.HarvestSound.Overall), this.HarvestSound.Specific?.Translate(eval));
                 obj.Production = this.Production == null ? null : new MaskItem<R, SeasonalIngredientProduction.Mask<R>?>(eval(this.Production.Overall), this.Production.Specific?.Translate(eval));
@@ -1119,13 +1107,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ActivateTextOverride, "ActivateTextOverride");
                     }
-                    if (printMask?.FNAM ?? true)
+                    if (printMask?.Flags ?? true)
                     {
-                        sb.AppendItem(FNAM, "FNAM");
+                        sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.JNAM ?? true)
+                    if (printMask?.ActivationAngleForPlayer ?? true)
                     {
-                        sb.AppendItem(JNAM, "JNAM");
+                        sb.AppendItem(ActivationAngleForPlayer, "ActivationAngleForPlayer");
                     }
                     if (printMask?.Ingredient ?? true)
                     {
@@ -1235,8 +1223,8 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>? Properties;
             public Exception? MarkerColor;
             public Exception? ActivateTextOverride;
-            public Exception? FNAM;
-            public Exception? JNAM;
+            public Exception? Flags;
+            public Exception? ActivationAngleForPlayer;
             public Exception? Ingredient;
             public MaskItem<Exception?, SoundReference.ErrorMask?>? HarvestSound;
             public MaskItem<Exception?, SeasonalIngredientProduction.ErrorMask?>? Production;
@@ -1284,10 +1272,10 @@ namespace Mutagen.Bethesda.Starfield
                         return MarkerColor;
                     case Flora_FieldIndex.ActivateTextOverride:
                         return ActivateTextOverride;
-                    case Flora_FieldIndex.FNAM:
-                        return FNAM;
-                    case Flora_FieldIndex.JNAM:
-                        return JNAM;
+                    case Flora_FieldIndex.Flags:
+                        return Flags;
+                    case Flora_FieldIndex.ActivationAngleForPlayer:
+                        return ActivationAngleForPlayer;
                     case Flora_FieldIndex.Ingredient:
                         return Ingredient;
                     case Flora_FieldIndex.HarvestSound:
@@ -1363,11 +1351,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Flora_FieldIndex.ActivateTextOverride:
                         this.ActivateTextOverride = ex;
                         break;
-                    case Flora_FieldIndex.FNAM:
-                        this.FNAM = ex;
+                    case Flora_FieldIndex.Flags:
+                        this.Flags = ex;
                         break;
-                    case Flora_FieldIndex.JNAM:
-                        this.JNAM = ex;
+                    case Flora_FieldIndex.ActivationAngleForPlayer:
+                        this.ActivationAngleForPlayer = ex;
                         break;
                     case Flora_FieldIndex.Ingredient:
                         this.Ingredient = ex;
@@ -1458,11 +1446,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Flora_FieldIndex.ActivateTextOverride:
                         this.ActivateTextOverride = (Exception?)obj;
                         break;
-                    case Flora_FieldIndex.FNAM:
-                        this.FNAM = (Exception?)obj;
+                    case Flora_FieldIndex.Flags:
+                        this.Flags = (Exception?)obj;
                         break;
-                    case Flora_FieldIndex.JNAM:
-                        this.JNAM = (Exception?)obj;
+                    case Flora_FieldIndex.ActivationAngleForPlayer:
+                        this.ActivationAngleForPlayer = (Exception?)obj;
                         break;
                     case Flora_FieldIndex.Ingredient:
                         this.Ingredient = (Exception?)obj;
@@ -1525,8 +1513,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (Properties != null) return true;
                 if (MarkerColor != null) return true;
                 if (ActivateTextOverride != null) return true;
-                if (FNAM != null) return true;
-                if (JNAM != null) return true;
+                if (Flags != null) return true;
+                if (ActivationAngleForPlayer != null) return true;
                 if (Ingredient != null) return true;
                 if (HarvestSound != null) return true;
                 if (Production != null) return true;
@@ -1641,10 +1629,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ActivateTextOverride, "ActivateTextOverride");
                 }
                 {
-                    sb.AppendItem(FNAM, "FNAM");
+                    sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(JNAM, "JNAM");
+                    sb.AppendItem(ActivationAngleForPlayer, "ActivationAngleForPlayer");
                 }
                 {
                     sb.AppendItem(Ingredient, "Ingredient");
@@ -1732,8 +1720,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Properties = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Properties?.Overall, rhs.Properties?.Overall), Noggog.ExceptionExt.Combine(this.Properties?.Specific, rhs.Properties?.Specific));
                 ret.MarkerColor = this.MarkerColor.Combine(rhs.MarkerColor);
                 ret.ActivateTextOverride = this.ActivateTextOverride.Combine(rhs.ActivateTextOverride);
-                ret.FNAM = this.FNAM.Combine(rhs.FNAM);
-                ret.JNAM = this.JNAM.Combine(rhs.JNAM);
+                ret.Flags = this.Flags.Combine(rhs.Flags);
+                ret.ActivationAngleForPlayer = this.ActivationAngleForPlayer.Combine(rhs.ActivationAngleForPlayer);
                 ret.Ingredient = this.Ingredient.Combine(rhs.Ingredient);
                 ret.HarvestSound = this.HarvestSound.Combine(rhs.HarvestSound, (l, r) => l.Combine(r));
                 ret.Production = this.Production.Combine(rhs.Production, (l, r) => l.Combine(r));
@@ -1782,8 +1770,8 @@ namespace Mutagen.Bethesda.Starfield
             public ObjectProperty.TranslationMask? Properties;
             public bool MarkerColor;
             public bool ActivateTextOverride;
-            public bool FNAM;
-            public bool JNAM;
+            public bool Flags;
+            public bool ActivationAngleForPlayer;
             public bool Ingredient;
             public SoundReference.TranslationMask? HarvestSound;
             public SeasonalIngredientProduction.TranslationMask? Production;
@@ -1810,8 +1798,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Keywords = defaultOn;
                 this.MarkerColor = defaultOn;
                 this.ActivateTextOverride = defaultOn;
-                this.FNAM = defaultOn;
-                this.JNAM = defaultOn;
+                this.Flags = defaultOn;
+                this.ActivationAngleForPlayer = defaultOn;
                 this.Ingredient = defaultOn;
                 this.AttachParentSlots = defaultOn;
                 this.ActionKeyword = defaultOn;
@@ -1841,8 +1829,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Properties == null ? DefaultOn : !Properties.GetCrystal().CopyNothing, Properties?.GetCrystal()));
                 ret.Add((MarkerColor, null));
                 ret.Add((ActivateTextOverride, null));
-                ret.Add((FNAM, null));
-                ret.Add((JNAM, null));
+                ret.Add((Flags, null));
+                ret.Add((ActivationAngleForPlayer, null));
                 ret.Add((Ingredient, null));
                 ret.Add((HarvestSound != null ? HarvestSound.OnOverall : DefaultOn, HarvestSound?.GetCrystal()));
                 ret.Add((Production != null ? Production.OnOverall : DefaultOn, Production?.GetCrystal()));
@@ -2052,8 +2040,8 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<ObjectProperty>? Properties { get; set; }
         new Color? MarkerColor { get; set; }
         new TranslatedString? ActivateTextOverride { get; set; }
-        new MemorySlice<Byte>? FNAM { get; set; }
-        new MemorySlice<Byte>? JNAM { get; set; }
+        new UInt16? Flags { get; set; }
+        new UInt16? ActivationAngleForPlayer { get; set; }
         new IFormLinkNullable<IHarvestTargetGetter> Ingredient { get; set; }
         new SoundReference? HarvestSound { get; set; }
         new SeasonalIngredientProduction? Production { get; set; }
@@ -2142,8 +2130,8 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IObjectPropertyGetter>? Properties { get; }
         Color? MarkerColor { get; }
         ITranslatedStringGetter? ActivateTextOverride { get; }
-        ReadOnlyMemorySlice<Byte>? FNAM { get; }
-        ReadOnlyMemorySlice<Byte>? JNAM { get; }
+        UInt16? Flags { get; }
+        UInt16? ActivationAngleForPlayer { get; }
         IFormLinkNullableGetter<IHarvestTargetGetter> Ingredient { get; }
         ISoundReferenceGetter? HarvestSound { get; }
         ISeasonalIngredientProductionGetter? Production { get; }
@@ -2346,8 +2334,8 @@ namespace Mutagen.Bethesda.Starfield
         Properties = 17,
         MarkerColor = 18,
         ActivateTextOverride = 19,
-        FNAM = 20,
-        JNAM = 21,
+        Flags = 20,
+        ActivationAngleForPlayer = 21,
         Ingredient = 22,
         HarvestSound = 23,
         Production = 24,
@@ -2506,8 +2494,8 @@ namespace Mutagen.Bethesda.Starfield
             item.Properties = null;
             item.MarkerColor = default;
             item.ActivateTextOverride = default;
-            item.FNAM = default;
-            item.JNAM = default;
+            item.Flags = default;
+            item.ActivationAngleForPlayer = default;
             item.Ingredient.Clear();
             item.HarvestSound = null;
             item.Production = null;
@@ -2703,8 +2691,8 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.MarkerColor = item.MarkerColor.ColorOnlyEquals(rhs.MarkerColor);
             ret.ActivateTextOverride = object.Equals(item.ActivateTextOverride, rhs.ActivateTextOverride);
-            ret.FNAM = MemorySliceExt.SequenceEqual(item.FNAM, rhs.FNAM);
-            ret.JNAM = MemorySliceExt.SequenceEqual(item.JNAM, rhs.JNAM);
+            ret.Flags = item.Flags == rhs.Flags;
+            ret.ActivationAngleForPlayer = item.ActivationAngleForPlayer == rhs.ActivationAngleForPlayer;
             ret.Ingredient = item.Ingredient.Equals(rhs.Ingredient);
             ret.HarvestSound = EqualsMaskHelper.EqualsHelper(
                 item.HarvestSound,
@@ -2877,15 +2865,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(ActivateTextOverrideItem, "ActivateTextOverride");
             }
-            if ((printMask?.FNAM ?? true)
-                && item.FNAM is {} FNAMItem)
+            if ((printMask?.Flags ?? true)
+                && item.Flags is {} FlagsItem)
             {
-                sb.AppendLine($"FNAM => {SpanExt.ToHexString(FNAMItem)}");
+                sb.AppendItem(FlagsItem, "Flags");
             }
-            if ((printMask?.JNAM ?? true)
-                && item.JNAM is {} JNAMItem)
+            if ((printMask?.ActivationAngleForPlayer ?? true)
+                && item.ActivationAngleForPlayer is {} ActivationAngleForPlayerItem)
             {
-                sb.AppendLine($"JNAM => {SpanExt.ToHexString(JNAMItem)}");
+                sb.AppendItem(ActivationAngleForPlayerItem, "ActivationAngleForPlayer");
             }
             if (printMask?.Ingredient ?? true)
             {
@@ -3090,13 +3078,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!object.Equals(lhs.ActivateTextOverride, rhs.ActivateTextOverride)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Flora_FieldIndex.FNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Flora_FieldIndex.Flags) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.FNAM, rhs.FNAM)) return false;
+                if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Flora_FieldIndex.JNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Flora_FieldIndex.ActivationAngleForPlayer) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.JNAM, rhs.JNAM)) return false;
+                if (lhs.ActivationAngleForPlayer != rhs.ActivationAngleForPlayer) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Flora_FieldIndex.Ingredient) ?? true))
             {
@@ -3227,13 +3215,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(ActivateTextOverrideitem);
             }
-            if (item.FNAM is {} FNAMItem)
+            if (item.Flags is {} Flagsitem)
             {
-                hash.Add(FNAMItem);
+                hash.Add(Flagsitem);
             }
-            if (item.JNAM is {} JNAMItem)
+            if (item.ActivationAngleForPlayer is {} ActivationAngleForPlayeritem)
             {
-                hash.Add(JNAMItem);
+                hash.Add(ActivationAngleForPlayeritem);
             }
             hash.Add(item.Ingredient);
             if (item.HarvestSound is {} HarvestSounditem)
@@ -3756,27 +3744,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ActivateTextOverride = rhs.ActivateTextOverride?.DeepCopy();
             }
-            if ((copyMask?.GetShouldTranslate((int)Flora_FieldIndex.FNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Flora_FieldIndex.Flags) ?? true))
             {
-                if(rhs.FNAM is {} FNAMrhs)
-                {
-                    item.FNAM = FNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.FNAM = default;
-                }
+                item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)Flora_FieldIndex.JNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Flora_FieldIndex.ActivationAngleForPlayer) ?? true))
             {
-                if(rhs.JNAM is {} JNAMrhs)
-                {
-                    item.JNAM = JNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.JNAM = default;
-                }
+                item.ActivationAngleForPlayer = rhs.ActivationAngleForPlayer;
             }
             if ((copyMask?.GetShouldTranslate((int)Flora_FieldIndex.Ingredient) ?? true))
             {
@@ -4212,13 +4186,13 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.ATTX),
                 binaryType: StringBinaryType.NullTerminate,
                 source: StringsSource.Normal);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.FNAM,
+                item: item.Flags,
                 header: translationParams.ConvertToCustom(RecordTypes.FNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.JNAM,
+                item: item.ActivationAngleForPlayer,
                 header: translationParams.ConvertToCustom(RecordTypes.JNAM));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -4488,14 +4462,14 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Flora_FieldIndex.FNAM;
+                    item.Flags = frame.ReadUInt16();
+                    return (int)Flora_FieldIndex.Flags;
                 }
                 case RecordTypeInts.JNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.JNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Flora_FieldIndex.JNAM;
+                    item.ActivationAngleForPlayer = frame.ReadUInt16();
+                    return (int)Flora_FieldIndex.ActivationAngleForPlayer;
                 }
                 case RecordTypeInts.PFIG:
                 {
@@ -4706,13 +4680,13 @@ namespace Mutagen.Bethesda.Starfield
         private int? _ActivateTextOverrideLocation;
         public ITranslatedStringGetter? ActivateTextOverride => _ActivateTextOverrideLocation.HasValue ? StringBinaryTranslation.Instance.Parse(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ActivateTextOverrideLocation.Value, _package.MetaData.Constants), StringsSource.Normal, parsingBundle: _package.MetaData, eager: false) : default(TranslatedString?);
         #endregion
-        #region FNAM
-        private int? _FNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? FNAM => _FNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Flags
+        private int? _FlagsLocation;
+        public UInt16? Flags => _FlagsLocation.HasValue ? BinaryPrimitives.ReadUInt16LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _FlagsLocation.Value, _package.MetaData.Constants)) : default(UInt16?);
         #endregion
-        #region JNAM
-        private int? _JNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? JNAM => _JNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _JNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region ActivationAngleForPlayer
+        private int? _ActivationAngleForPlayerLocation;
+        public UInt16? ActivationAngleForPlayer => _ActivationAngleForPlayerLocation.HasValue ? BinaryPrimitives.ReadUInt16LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ActivationAngleForPlayerLocation.Value, _package.MetaData.Constants)) : default(UInt16?);
         #endregion
         #region Ingredient
         private int? _IngredientLocation;
@@ -4927,13 +4901,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FNAM:
                 {
-                    _FNAMLocation = (stream.Position - offset);
-                    return (int)Flora_FieldIndex.FNAM;
+                    _FlagsLocation = (stream.Position - offset);
+                    return (int)Flora_FieldIndex.Flags;
                 }
                 case RecordTypeInts.JNAM:
                 {
-                    _JNAMLocation = (stream.Position - offset);
-                    return (int)Flora_FieldIndex.JNAM;
+                    _ActivationAngleForPlayerLocation = (stream.Position - offset);
+                    return (int)Flora_FieldIndex.ActivationAngleForPlayer;
                 }
                 case RecordTypeInts.PFIG:
                 {
