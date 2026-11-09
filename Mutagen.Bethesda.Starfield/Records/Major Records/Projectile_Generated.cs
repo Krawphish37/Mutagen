@@ -365,9 +365,9 @@ namespace Mutagen.Bethesda.Starfield
         ReadOnlyMemorySlice<Byte>? IProjectileGetter.TextureFilesHashes => this.TextureFilesHashes;
         #endregion
         #region MuzzleFlashLightLayer
-        public LightLayer? MuzzleFlashLightLayer { get; set; }
+        public Light.LightLayer? MuzzleFlashLightLayer { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        LightLayer? IProjectileGetter.MuzzleFlashLightLayer => this.MuzzleFlashLightLayer;
+        Light.LightLayer? IProjectileGetter.MuzzleFlashLightLayer => this.MuzzleFlashLightLayer;
         #endregion
         #region ActiveSound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -2456,7 +2456,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single UnknownPROD8 { get; set; }
         new String MuzzleFlashModel { get; set; }
         new MemorySlice<Byte>? TextureFilesHashes { get; set; }
-        new LightLayer? MuzzleFlashLightLayer { get; set; }
+        new Light.LightLayer? MuzzleFlashLightLayer { get; set; }
         new SoundReference? ActiveSound { get; set; }
         new SoundReference? CountdownEndSound { get; set; }
         new SoundReference? DisableSound { get; set; }
@@ -2559,7 +2559,7 @@ namespace Mutagen.Bethesda.Starfield
         Single UnknownPROD8 { get; }
         String MuzzleFlashModel { get; }
         ReadOnlyMemorySlice<Byte>? TextureFilesHashes { get; }
-        LightLayer? MuzzleFlashLightLayer { get; }
+        Light.LightLayer? MuzzleFlashLightLayer { get; }
         ISoundReferenceGetter? ActiveSound { get; }
         ISoundReferenceGetter? CountdownEndSound { get; }
         ISoundReferenceGetter? DisableSound { get; }
@@ -4782,7 +4782,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.TextureFilesHashes,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM2));
-            EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer,
                 item.MuzzleFlashLightLayer,
                 length: 4,
@@ -4965,7 +4965,7 @@ namespace Mutagen.Bethesda.Starfield
                     else if (lastParsed.ParsedIndex.Value <= (int)Projectile_FieldIndex.TextureFilesHashes)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                        item.MuzzleFlashLightLayer = EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        item.MuzzleFlashLightLayer = EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                             reader: frame,
                             length: contentLength);
                         return new ParseResult((int)Projectile_FieldIndex.MuzzleFlashLightLayer, nextRecordType);
@@ -4981,7 +4981,7 @@ namespace Mutagen.Bethesda.Starfield
                                 return new ParseResult((int)Projectile_FieldIndex.Model, nextRecordType);
                             case 1:
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                                item.MuzzleFlashLightLayer = EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
+                                item.MuzzleFlashLightLayer = EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                                     reader: frame,
                                     length: contentLength);
                                 return new ParseResult((int)Projectile_FieldIndex.MuzzleFlashLightLayer, nextRecordType);
@@ -5404,7 +5404,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region MuzzleFlashLightLayer
         private int? _MuzzleFlashLightLayerLocation;
-        public LightLayer? MuzzleFlashLightLayer => EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_MuzzleFlashLightLayerLocation, _recordData, _package, 4);
+        public Light.LightLayer? MuzzleFlashLightLayer => EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_MuzzleFlashLightLayerLocation, _recordData, _package, 4);
         #endregion
         public ISoundReferenceGetter? ActiveSound { get; private set; }
         public ISoundReferenceGetter? CountdownEndSound { get; private set; }

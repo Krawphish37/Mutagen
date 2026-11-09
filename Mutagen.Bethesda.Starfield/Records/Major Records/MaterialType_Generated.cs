@@ -136,9 +136,9 @@ namespace Mutagen.Bethesda.Starfield
         String? IMaterialTypeGetter.BreakableFX => this.BreakableFX;
         #endregion
         #region LightLayer
-        public LightLayer? LightLayer { get; set; }
+        public Light.LightLayer? LightLayer { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        LightLayer? IMaterialTypeGetter.LightLayer => this.LightLayer;
+        Light.LightLayer? IMaterialTypeGetter.LightLayer => this.LightLayer;
         #endregion
 
         #region To String
@@ -828,7 +828,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         new Model? Model { get; set; }
         new String? BreakableFX { get; set; }
-        new LightLayer? LightLayer { get; set; }
+        new Light.LightLayer? LightLayer { get; set; }
     }
 
     public partial interface IMaterialTypeInternal :
@@ -869,7 +869,7 @@ namespace Mutagen.Bethesda.Starfield
         IModelGetter? Model { get; }
         #endregion
         String? BreakableFX { get; }
-        LightLayer? LightLayer { get; }
+        Light.LightLayer? LightLayer { get; }
 
     }
 
@@ -1955,7 +1955,7 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.BreakableFX,
                 header: translationParams.ConvertToCustom(RecordTypes.ANAM),
                 binaryType: StringBinaryType.NullTerminate);
-            EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer,
                 item.LightLayer,
                 length: 4,
@@ -2088,7 +2088,7 @@ namespace Mutagen.Bethesda.Starfield
                     else if (lastParsed.ParsedIndex.Value <= (int)MaterialType_FieldIndex.BreakableFX)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                        item.LightLayer = EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        item.LightLayer = EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                             reader: frame,
                             length: contentLength);
                         return new ParseResult((int)MaterialType_FieldIndex.LightLayer, nextRecordType);
@@ -2104,7 +2104,7 @@ namespace Mutagen.Bethesda.Starfield
                                 return new ParseResult((int)MaterialType_FieldIndex.Model, nextRecordType);
                             case 1:
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                                item.LightLayer = EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
+                                item.LightLayer = EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                                     reader: frame,
                                     length: contentLength);
                                 return new ParseResult((int)MaterialType_FieldIndex.LightLayer, nextRecordType);
@@ -2217,7 +2217,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region LightLayer
         private int? _LightLayerLocation;
-        public LightLayer? LightLayer => EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_LightLayerLocation, _recordData, _package, 4);
+        public Light.LightLayer? LightLayer => EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_LightLayerLocation, _recordData, _package, 4);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,

@@ -61,9 +61,9 @@ namespace Mutagen.Bethesda.Starfield
         AssetLinkGetter<StarfieldModelAssetType>? IFirstPersonModelGetter.File => this.File;
         #endregion
         #region LightLayer
-        public LightLayer? LightLayer { get; set; }
+        public Light.LightLayer? LightLayer { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        LightLayer? IFirstPersonModelGetter.LightLayer => this.LightLayer;
+        Light.LightLayer? IFirstPersonModelGetter.LightLayer => this.LightLayer;
         #endregion
         #region MaterialSwap
         private readonly IFormLinkNullable<ILayeredMaterialSwapGetter> _MaterialSwap = new FormLinkNullable<ILayeredMaterialSwapGetter>();
@@ -542,7 +542,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IFirstPersonModel>
     {
         new AssetLink<StarfieldModelAssetType>? File { get; set; }
-        new LightLayer? LightLayer { get; set; }
+        new Light.LightLayer? LightLayer { get; set; }
         new IFormLinkNullable<ILayeredMaterialSwapGetter> MaterialSwap { get; set; }
         new Single? ColorRemappingIndex { get; set; }
     }
@@ -562,7 +562,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => FirstPersonModel_Registration.Instance;
         AssetLinkGetter<StarfieldModelAssetType>? File { get; }
-        LightLayer? LightLayer { get; }
+        Light.LightLayer? LightLayer { get; }
         IFormLinkNullableGetter<ILayeredMaterialSwapGetter> MaterialSwap { get; }
         Single? ColorRemappingIndex { get; }
 
@@ -1187,7 +1187,7 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.File?.GivenPath,
                 header: translationParams.ConvertToCustom(RecordTypes.MOD4),
                 binaryType: StringBinaryType.NullTerminate);
-            EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer,
                 item.LightLayer,
                 length: 4,
@@ -1253,7 +1253,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     if (lastParsed.ShortCircuit((int)FirstPersonModel_FieldIndex.LightLayer, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.LightLayer = EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
+                    item.LightLayer = EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
                     return (int)FirstPersonModel_FieldIndex.LightLayer;
@@ -1348,7 +1348,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region LightLayer
         private int? _LightLayerLocation;
-        public LightLayer? LightLayer => EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_LightLayerLocation, _recordData, _package, 4);
+        public Light.LightLayer? LightLayer => EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_LightLayerLocation, _recordData, _package, 4);
         #endregion
         #region MaterialSwap
         private int? _MaterialSwapLocation;

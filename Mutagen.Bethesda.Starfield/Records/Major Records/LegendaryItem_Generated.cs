@@ -101,9 +101,9 @@ namespace Mutagen.Bethesda.Starfield
         public Percent DirtinessScale { get; set; } = default(Percent);
         #endregion
         #region LightLayer
-        public LightLayer? LightLayer { get; set; }
+        public Light.LightLayer? LightLayer { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        LightLayer? ILegendaryItemGetter.LightLayer => this.LightLayer;
+        Light.LightLayer? ILegendaryItemGetter.LightLayer => this.LightLayer;
         #endregion
         #region Name
         /// <summary>
@@ -1902,7 +1902,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         new ObjectBounds? ObjectBounds { get; set; }
         new Percent DirtinessScale { get; set; }
-        new LightLayer? LightLayer { get; set; }
+        new Light.LightLayer? LightLayer { get; set; }
         /// <summary>
         /// Aspects: INamed, INamedRequired, ITranslatedNamed, ITranslatedNamedRequired
         /// </summary>
@@ -1969,7 +1969,7 @@ namespace Mutagen.Bethesda.Starfield
         IObjectBoundsGetter? ObjectBounds { get; }
         #endregion
         Percent DirtinessScale { get; }
-        LightLayer? LightLayer { get; }
+        Light.LightLayer? LightLayer { get; }
         #region Name
         /// <summary>
         /// Aspects: INamedGetter, INamedRequiredGetter, ITranslatedNamedGetter, ITranslatedNamedRequiredGetter
@@ -3819,7 +3819,7 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.DirtinessScale,
                 integerType: FloatIntegerType.UInt,
                 header: translationParams.ConvertToCustom(RecordTypes.ODTY));
-            EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer,
                 item.LightLayer,
                 length: 4,
@@ -4061,7 +4061,7 @@ namespace Mutagen.Bethesda.Starfield
                         || lastParsed.ParsedIndex.Value <= (int)LegendaryItem_FieldIndex.DirtinessScale)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                        item.LightLayer = EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        item.LightLayer = EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                             reader: frame,
                             length: contentLength);
                         return new ParseResult((int)LegendaryItem_FieldIndex.LightLayer, nextRecordType);
@@ -4079,7 +4079,7 @@ namespace Mutagen.Bethesda.Starfield
                         {
                             case 0:
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                                item.LightLayer = EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
+                                item.LightLayer = EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                                     reader: frame,
                                     length: contentLength);
                                 return new ParseResult((int)LegendaryItem_FieldIndex.LightLayer, nextRecordType);
@@ -4327,7 +4327,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region LightLayer
         private int? _LightLayerLocation;
-        public LightLayer? LightLayer => EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_LightLayerLocation, _recordData, _package, 4);
+        public Light.LightLayer? LightLayer => EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_LightLayerLocation, _recordData, _package, 4);
         #endregion
         #region Name
         private int? _NameLocation;

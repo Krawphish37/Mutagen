@@ -127,7 +127,6 @@
     <Compile Include="Enums\Axis.cs" />
     <Compile Include="Enums\BipedObject.cs" />
     <Compile Include="Enums\CastType.cs" />
-    <Compile Include="Enums\LightLayer.cs" />
     <Compile Include="Enums\CombatReaction.cs" />
     <Compile Include="Enums\CompareOperator.cs" />
     <Compile Include="Enums\EquipType.cs" />

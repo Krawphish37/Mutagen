@@ -139,15 +139,15 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region ExtraLightLayers
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<LightLayer> _ExtraLightLayers = new ExtendedList<LightLayer>();
-        public ExtendedList<LightLayer> ExtraLightLayers
+        private ExtendedList<Light.LightLayer> _ExtraLightLayers = new ExtendedList<Light.LightLayer>();
+        public ExtendedList<Light.LightLayer> ExtraLightLayers
         {
             get => this._ExtraLightLayers;
             init => this._ExtraLightLayers = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<LightLayer> IArmorAddonGetter.ExtraLightLayers => _ExtraLightLayers;
+        IReadOnlyList<Light.LightLayer> IArmorAddonGetter.ExtraLightLayers => _ExtraLightLayers;
         #endregion
 
         #endregion
@@ -1638,7 +1638,7 @@ namespace Mutagen.Bethesda.Starfield
         new IGenderedItem<Model?>? WorldModel { get; set; }
         new IGenderedItem<Model?>? FirstPersonModel { get; set; }
         new IGenderedItem<String?>? AltSkeleton { get; set; }
-        new ExtendedList<LightLayer> ExtraLightLayers { get; }
+        new ExtendedList<Light.LightLayer> ExtraLightLayers { get; }
         new IGenderedItem<ArmorAddonSkinTexture?>? SkinTexture { get; set; }
         new IGenderedItem<ArmorAddonMorph?>? Morphs { get; set; }
         new ExtendedList<IFormLinkGetter<IRaceGetter>> AdditionalRaces { get; }
@@ -1699,7 +1699,7 @@ namespace Mutagen.Bethesda.Starfield
         IGenderedItemGetter<IModelGetter?>? WorldModel { get; }
         IGenderedItemGetter<IModelGetter?>? FirstPersonModel { get; }
         IGenderedItemGetter<String?>? AltSkeleton { get; }
-        IReadOnlyList<LightLayer> ExtraLightLayers { get; }
+        IReadOnlyList<Light.LightLayer> ExtraLightLayers { get; }
         IGenderedItemGetter<IArmorAddonSkinTextureGetter?>? SkinTexture { get; }
         IGenderedItemGetter<IArmorAddonMorphGetter?>? Morphs { get; }
         IReadOnlyList<IFormLinkGetter<IRaceGetter>> AdditionalRaces { get; }
@@ -3452,12 +3452,12 @@ namespace Mutagen.Bethesda.Starfield
                 maleMarker: RecordTypes.MOD6,
                 femaleMarker: RecordTypes.MOD7,
                 transl: StringBinaryTranslation.Instance.WriteNullable);
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LightLayer>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Light.LightLayer>.Instance.Write(
                 writer: writer,
                 items: item.ExtraLightLayers,
-                transl: (MutagenWriter subWriter, LightLayer subItem) =>
+                transl: (MutagenWriter subWriter, Light.LightLayer subItem) =>
                 {
-                    EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.Write(
+                    EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Write(
                         subWriter,
                         subItem,
                         length: 4,
@@ -3702,12 +3702,12 @@ namespace Mutagen.Bethesda.Starfield
                     else if (lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.AltSkeleton)
                     {
                         item.ExtraLightLayers.SetTo(
-                            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LightLayer>.Instance.Parse(
+                            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Light.LightLayer>.Instance.Parse(
                                 reader: frame,
                                 triggeringRecord: translationParams.ConvertToCustom(RecordTypes.FLLD),
-                                transl: (MutagenFrame r, [MaybeNullWhen(false)] out LightLayer listSubItem) =>
+                                transl: (MutagenFrame r, [MaybeNullWhen(false)] out Light.LightLayer listSubItem) =>
                                 {
-                                    return EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
+                                    return EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                                         reader: r.SpawnWithLength(4),
                                         item: out listSubItem);
                                 }));
@@ -3733,12 +3733,12 @@ namespace Mutagen.Bethesda.Starfield
                                 return new ParseResult((int)ArmorAddon_FieldIndex.FirstPersonModel, nextRecordType);
                             case 2:
                                 item.ExtraLightLayers.SetTo(
-                                    Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LightLayer>.Instance.Parse(
+                                    Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Light.LightLayer>.Instance.Parse(
                                         reader: frame,
                                         triggeringRecord: translationParams.ConvertToCustom(RecordTypes.FLLD),
-                                        transl: (MutagenFrame r, [MaybeNullWhen(false)] out LightLayer listSubItem) =>
+                                        transl: (MutagenFrame r, [MaybeNullWhen(false)] out Light.LightLayer listSubItem) =>
                                         {
-                                            return EnumBinaryTranslation<LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
+                                            return EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                                                 reader: r.SpawnWithLength(4),
                                                 item: out listSubItem);
                                         }));
@@ -4005,7 +4005,7 @@ namespace Mutagen.Bethesda.Starfield
         private IGenderedItemGetter<String?>? _AltSkeletonOverlay;
         public IGenderedItemGetter<String?>? AltSkeleton => _AltSkeletonOverlay;
         #endregion
-        public IReadOnlyList<LightLayer> ExtraLightLayers { get; private set; } = [];
+        public IReadOnlyList<Light.LightLayer> ExtraLightLayers { get; private set; } = [];
         #region SkinTexture
         private IGenderedItemGetter<IArmorAddonSkinTextureGetter?>? _SkinTextureOverlay;
         public IGenderedItemGetter<IArmorAddonSkinTextureGetter?>? SkinTexture => _SkinTextureOverlay;
@@ -4189,10 +4189,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.AltSkeleton)
                     {
-                        this.ExtraLightLayers = BinaryOverlayList.FactoryByArray<LightLayer>(
+                        this.ExtraLightLayers = BinaryOverlayList.FactoryByArray<Light.LightLayer>(
                             mem: stream.RemainingMemory,
                             package: _package,
-                            getter: (s, p) => (LightLayer)BinaryPrimitives.ReadInt32LittleEndian(s),
+                            getter: (s, p) => (Light.LightLayer)BinaryPrimitives.ReadInt32LittleEndian(s),
                             locs: ParseRecordLocations(
                                 stream: stream,
                                 constants: _package.MetaData.Constants.SubConstants,
@@ -4229,10 +4229,10 @@ namespace Mutagen.Bethesda.Starfield
                             }
                             case 2:
                             {
-                                this.ExtraLightLayers = BinaryOverlayList.FactoryByArray<LightLayer>(
+                                this.ExtraLightLayers = BinaryOverlayList.FactoryByArray<Light.LightLayer>(
                                     mem: stream.RemainingMemory,
                                     package: _package,
-                                    getter: (s, p) => (LightLayer)BinaryPrimitives.ReadInt32LittleEndian(s),
+                                    getter: (s, p) => (Light.LightLayer)BinaryPrimitives.ReadInt32LittleEndian(s),
                                     locs: ParseRecordLocations(
                                         stream: stream,
                                         constants: _package.MetaData.Constants.SubConstants,
