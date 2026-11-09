@@ -272,7 +272,8 @@
       <Float name="Slack" />
       <Float name="Thickness" />
       <P3Float name="HalfExtents" />
-      <Bool name="IsWindDetachedEnd" importantByteLength="1" byteLength="4" />
+      <Bool name="IsWindDetachedEnd" byteLength="1" />
+      <ByteArray name="IsWindDetachedEndUnused" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="NavigationDoorLink" objType="Subrecord" recordType="XNDP">
@@ -311,7 +312,8 @@
       <Float name="WaveScrollAmountU" />
       <Float name="WaveScrollAmountV" />
       <Float name="RandomTimeOffsetRange" />
-      <Bool name="IsAnimated" byteLength="4" importantByteLength="1" />
+      <Bool name="IsAnimated" byteLength="1" />
+      <ByteArray name="IsAnimatedUnused" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="PlacedObjectXCZRXCZA" objType="Subrecord" >
