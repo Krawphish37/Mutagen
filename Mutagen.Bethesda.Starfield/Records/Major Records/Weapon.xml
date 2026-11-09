@@ -77,7 +77,7 @@
           <RefDirect name="Unequip" refName="SoundReference" />
           <RefDirect name="FastEquip" refName="SoundReference" />
           <Enum name="SoundLevel" enumName="SoundLevel" byteLength="4" />
-          <Int32 name="WAUDUnknown2" unknown="true" />
+          <Enum name="MeleeDetectionSoundLevel" enumName="SoundLevel" byteLength="4" />
         </Fields>
       </Data>
       <ByteArray name="WTUR" recordType="WTUR" unknown="true" />
@@ -152,7 +152,7 @@
       </Data>
       <Data recordType="WGEN" >
         <Fields>
-          <UInt32 name="WGENUnknown1" unknown="true" />
+          <Enum name="AnimationType" enumName="Weapon.AnimationTypes" byteLength="4" />
           <Float name="BaseWeight" />
           <UInt32 name="BaseValue" />
           <Float name="BaseSpeed" />
@@ -163,7 +163,7 @@
       <String name="General" recordType="WABB" translated="Normal" />
       <Data recordType="WMEL">
         <Fields>
-          <UInt8 name="WMELUnknown1" unknown="true" />
+          <Enum name="AttackSpeed" enumName="Weapon.AttackSpeedEnum" byteLength="1" />
           <Float name="MeleeBashDamage" />
           <Float name="MeleeReach" />
           <Enum name="MeleeStagger" enumName="Stagger" byteLength="4" />

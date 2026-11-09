@@ -527,8 +527,8 @@ namespace Mutagen.Bethesda.Starfield
         #region SoundLevel
         public SoundLevel SoundLevel { get; set; } = default(SoundLevel);
         #endregion
-        #region WAUDUnknown2
-        public Int32 WAUDUnknown2 { get; set; } = default(Int32);
+        #region MeleeDetectionSoundLevel
+        public SoundLevel MeleeDetectionSoundLevel { get; set; } = default(SoundLevel);
         #endregion
         #region WTUR
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -732,8 +732,8 @@ namespace Mutagen.Bethesda.Starfield
         #region WFLGUnknown7
         public Boolean WFLGUnknown7 { get; set; } = default(Boolean);
         #endregion
-        #region WGENUnknown1
-        public UInt32 WGENUnknown1 { get; set; } = default(UInt32);
+        #region AnimationType
+        public Weapon.AnimationTypes AnimationType { get; set; } = default(Weapon.AnimationTypes);
         #endregion
         #region BaseWeight
         public Single BaseWeight { get; set; } = default(Single);
@@ -762,8 +762,8 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ITranslatedStringGetter? IWeaponGetter.General => this.General;
         #endregion
-        #region WMELUnknown1
-        public Byte WMELUnknown1 { get; set; } = default(Byte);
+        #region AttackSpeed
+        public Weapon.AttackSpeedEnum AttackSpeed { get; set; } = default(Weapon.AttackSpeedEnum);
         #endregion
         #region MeleeBashDamage
         public Single MeleeBashDamage { get; set; } = default(Single);
@@ -1037,7 +1037,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Unequip = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.FastEquip = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.SoundLevel = initialValue;
-                this.WAUDUnknown2 = initialValue;
+                this.MeleeDetectionSoundLevel = initialValue;
                 this.WTUR = initialValue;
                 this.ChargeFullPowerSeconds = initialValue;
                 this.ChargeMinPowerPerShot = initialValue;
@@ -1092,14 +1092,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.WFLGUnknown5 = initialValue;
                 this.WFLGUnknown6 = initialValue;
                 this.WFLGUnknown7 = initialValue;
-                this.WGENUnknown1 = initialValue;
+                this.AnimationType = initialValue;
                 this.BaseWeight = initialValue;
                 this.BaseValue = initialValue;
                 this.BaseSpeed = initialValue;
                 this.AttackOxygenCost = initialValue;
                 this.WeaponBarrel = initialValue;
                 this.General = initialValue;
-                this.WMELUnknown1 = initialValue;
+                this.AttackSpeed = initialValue;
                 this.MeleeBashDamage = initialValue;
                 this.MeleeReach = initialValue;
                 this.MeleeStagger = initialValue;
@@ -1209,7 +1209,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Unequip,
                 TItem FastEquip,
                 TItem SoundLevel,
-                TItem WAUDUnknown2,
+                TItem MeleeDetectionSoundLevel,
                 TItem WTUR,
                 TItem ChargeFullPowerSeconds,
                 TItem ChargeMinPowerPerShot,
@@ -1264,14 +1264,14 @@ namespace Mutagen.Bethesda.Starfield
                 TItem WFLGUnknown5,
                 TItem WFLGUnknown6,
                 TItem WFLGUnknown7,
-                TItem WGENUnknown1,
+                TItem AnimationType,
                 TItem BaseWeight,
                 TItem BaseValue,
                 TItem BaseSpeed,
                 TItem AttackOxygenCost,
                 TItem WeaponBarrel,
                 TItem General,
-                TItem WMELUnknown1,
+                TItem AttackSpeed,
                 TItem MeleeBashDamage,
                 TItem MeleeReach,
                 TItem MeleeStagger,
@@ -1380,7 +1380,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Unequip = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Unequip, new SoundReference.Mask<TItem>(Unequip));
                 this.FastEquip = new MaskItem<TItem, SoundReference.Mask<TItem>?>(FastEquip, new SoundReference.Mask<TItem>(FastEquip));
                 this.SoundLevel = SoundLevel;
-                this.WAUDUnknown2 = WAUDUnknown2;
+                this.MeleeDetectionSoundLevel = MeleeDetectionSoundLevel;
                 this.WTUR = WTUR;
                 this.ChargeFullPowerSeconds = ChargeFullPowerSeconds;
                 this.ChargeMinPowerPerShot = ChargeMinPowerPerShot;
@@ -1435,14 +1435,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.WFLGUnknown5 = WFLGUnknown5;
                 this.WFLGUnknown6 = WFLGUnknown6;
                 this.WFLGUnknown7 = WFLGUnknown7;
-                this.WGENUnknown1 = WGENUnknown1;
+                this.AnimationType = AnimationType;
                 this.BaseWeight = BaseWeight;
                 this.BaseValue = BaseValue;
                 this.BaseSpeed = BaseSpeed;
                 this.AttackOxygenCost = AttackOxygenCost;
                 this.WeaponBarrel = WeaponBarrel;
                 this.General = General;
-                this.WMELUnknown1 = WMELUnknown1;
+                this.AttackSpeed = AttackSpeed;
                 this.MeleeBashDamage = MeleeBashDamage;
                 this.MeleeReach = MeleeReach;
                 this.MeleeStagger = MeleeStagger;
@@ -1553,7 +1553,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? Unequip { get; set; }
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? FastEquip { get; set; }
             public TItem SoundLevel;
-            public TItem WAUDUnknown2;
+            public TItem MeleeDetectionSoundLevel;
             public TItem WTUR;
             public TItem ChargeFullPowerSeconds;
             public TItem ChargeMinPowerPerShot;
@@ -1608,14 +1608,14 @@ namespace Mutagen.Bethesda.Starfield
             public TItem WFLGUnknown5;
             public TItem WFLGUnknown6;
             public TItem WFLGUnknown7;
-            public TItem WGENUnknown1;
+            public TItem AnimationType;
             public TItem BaseWeight;
             public TItem BaseValue;
             public TItem BaseSpeed;
             public TItem AttackOxygenCost;
             public TItem WeaponBarrel;
             public TItem General;
-            public TItem WMELUnknown1;
+            public TItem AttackSpeed;
             public TItem MeleeBashDamage;
             public TItem MeleeReach;
             public TItem MeleeStagger;
@@ -1728,7 +1728,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Unequip, rhs.Unequip)) return false;
                 if (!object.Equals(this.FastEquip, rhs.FastEquip)) return false;
                 if (!object.Equals(this.SoundLevel, rhs.SoundLevel)) return false;
-                if (!object.Equals(this.WAUDUnknown2, rhs.WAUDUnknown2)) return false;
+                if (!object.Equals(this.MeleeDetectionSoundLevel, rhs.MeleeDetectionSoundLevel)) return false;
                 if (!object.Equals(this.WTUR, rhs.WTUR)) return false;
                 if (!object.Equals(this.ChargeFullPowerSeconds, rhs.ChargeFullPowerSeconds)) return false;
                 if (!object.Equals(this.ChargeMinPowerPerShot, rhs.ChargeMinPowerPerShot)) return false;
@@ -1783,14 +1783,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.WFLGUnknown5, rhs.WFLGUnknown5)) return false;
                 if (!object.Equals(this.WFLGUnknown6, rhs.WFLGUnknown6)) return false;
                 if (!object.Equals(this.WFLGUnknown7, rhs.WFLGUnknown7)) return false;
-                if (!object.Equals(this.WGENUnknown1, rhs.WGENUnknown1)) return false;
+                if (!object.Equals(this.AnimationType, rhs.AnimationType)) return false;
                 if (!object.Equals(this.BaseWeight, rhs.BaseWeight)) return false;
                 if (!object.Equals(this.BaseValue, rhs.BaseValue)) return false;
                 if (!object.Equals(this.BaseSpeed, rhs.BaseSpeed)) return false;
                 if (!object.Equals(this.AttackOxygenCost, rhs.AttackOxygenCost)) return false;
                 if (!object.Equals(this.WeaponBarrel, rhs.WeaponBarrel)) return false;
                 if (!object.Equals(this.General, rhs.General)) return false;
-                if (!object.Equals(this.WMELUnknown1, rhs.WMELUnknown1)) return false;
+                if (!object.Equals(this.AttackSpeed, rhs.AttackSpeed)) return false;
                 if (!object.Equals(this.MeleeBashDamage, rhs.MeleeBashDamage)) return false;
                 if (!object.Equals(this.MeleeReach, rhs.MeleeReach)) return false;
                 if (!object.Equals(this.MeleeStagger, rhs.MeleeStagger)) return false;
@@ -1895,7 +1895,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Unequip);
                 hash.Add(this.FastEquip);
                 hash.Add(this.SoundLevel);
-                hash.Add(this.WAUDUnknown2);
+                hash.Add(this.MeleeDetectionSoundLevel);
                 hash.Add(this.WTUR);
                 hash.Add(this.ChargeFullPowerSeconds);
                 hash.Add(this.ChargeMinPowerPerShot);
@@ -1950,14 +1950,14 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.WFLGUnknown5);
                 hash.Add(this.WFLGUnknown6);
                 hash.Add(this.WFLGUnknown7);
-                hash.Add(this.WGENUnknown1);
+                hash.Add(this.AnimationType);
                 hash.Add(this.BaseWeight);
                 hash.Add(this.BaseValue);
                 hash.Add(this.BaseSpeed);
                 hash.Add(this.AttackOxygenCost);
                 hash.Add(this.WeaponBarrel);
                 hash.Add(this.General);
-                hash.Add(this.WMELUnknown1);
+                hash.Add(this.AttackSpeed);
                 hash.Add(this.MeleeBashDamage);
                 hash.Add(this.MeleeReach);
                 hash.Add(this.MeleeStagger);
@@ -2165,7 +2165,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.FastEquip.Specific != null && !this.FastEquip.Specific.All(eval)) return false;
                 }
                 if (!eval(this.SoundLevel)) return false;
-                if (!eval(this.WAUDUnknown2)) return false;
+                if (!eval(this.MeleeDetectionSoundLevel)) return false;
                 if (!eval(this.WTUR)) return false;
                 if (!eval(this.ChargeFullPowerSeconds)) return false;
                 if (!eval(this.ChargeMinPowerPerShot)) return false;
@@ -2231,14 +2231,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.WFLGUnknown5)) return false;
                 if (!eval(this.WFLGUnknown6)) return false;
                 if (!eval(this.WFLGUnknown7)) return false;
-                if (!eval(this.WGENUnknown1)) return false;
+                if (!eval(this.AnimationType)) return false;
                 if (!eval(this.BaseWeight)) return false;
                 if (!eval(this.BaseValue)) return false;
                 if (!eval(this.BaseSpeed)) return false;
                 if (!eval(this.AttackOxygenCost)) return false;
                 if (!eval(this.WeaponBarrel)) return false;
                 if (!eval(this.General)) return false;
-                if (!eval(this.WMELUnknown1)) return false;
+                if (!eval(this.AttackSpeed)) return false;
                 if (!eval(this.MeleeBashDamage)) return false;
                 if (!eval(this.MeleeReach)) return false;
                 if (!eval(this.MeleeStagger)) return false;
@@ -2448,7 +2448,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.FastEquip.Specific != null && this.FastEquip.Specific.Any(eval)) return true;
                 }
                 if (eval(this.SoundLevel)) return true;
-                if (eval(this.WAUDUnknown2)) return true;
+                if (eval(this.MeleeDetectionSoundLevel)) return true;
                 if (eval(this.WTUR)) return true;
                 if (eval(this.ChargeFullPowerSeconds)) return true;
                 if (eval(this.ChargeMinPowerPerShot)) return true;
@@ -2514,14 +2514,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.WFLGUnknown5)) return true;
                 if (eval(this.WFLGUnknown6)) return true;
                 if (eval(this.WFLGUnknown7)) return true;
-                if (eval(this.WGENUnknown1)) return true;
+                if (eval(this.AnimationType)) return true;
                 if (eval(this.BaseWeight)) return true;
                 if (eval(this.BaseValue)) return true;
                 if (eval(this.BaseSpeed)) return true;
                 if (eval(this.AttackOxygenCost)) return true;
                 if (eval(this.WeaponBarrel)) return true;
                 if (eval(this.General)) return true;
-                if (eval(this.WMELUnknown1)) return true;
+                if (eval(this.AttackSpeed)) return true;
                 if (eval(this.MeleeBashDamage)) return true;
                 if (eval(this.MeleeReach)) return true;
                 if (eval(this.MeleeStagger)) return true;
@@ -2694,7 +2694,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Unequip = this.Unequip == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Unequip.Overall), this.Unequip.Specific?.Translate(eval));
                 obj.FastEquip = this.FastEquip == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.FastEquip.Overall), this.FastEquip.Specific?.Translate(eval));
                 obj.SoundLevel = eval(this.SoundLevel);
-                obj.WAUDUnknown2 = eval(this.WAUDUnknown2);
+                obj.MeleeDetectionSoundLevel = eval(this.MeleeDetectionSoundLevel);
                 obj.WTUR = eval(this.WTUR);
                 obj.ChargeFullPowerSeconds = eval(this.ChargeFullPowerSeconds);
                 obj.ChargeMinPowerPerShot = eval(this.ChargeMinPowerPerShot);
@@ -2763,14 +2763,14 @@ namespace Mutagen.Bethesda.Starfield
                 obj.WFLGUnknown5 = eval(this.WFLGUnknown5);
                 obj.WFLGUnknown6 = eval(this.WFLGUnknown6);
                 obj.WFLGUnknown7 = eval(this.WFLGUnknown7);
-                obj.WGENUnknown1 = eval(this.WGENUnknown1);
+                obj.AnimationType = eval(this.AnimationType);
                 obj.BaseWeight = eval(this.BaseWeight);
                 obj.BaseValue = eval(this.BaseValue);
                 obj.BaseSpeed = eval(this.BaseSpeed);
                 obj.AttackOxygenCost = eval(this.AttackOxygenCost);
                 obj.WeaponBarrel = eval(this.WeaponBarrel);
                 obj.General = eval(this.General);
-                obj.WMELUnknown1 = eval(this.WMELUnknown1);
+                obj.AttackSpeed = eval(this.AttackSpeed);
                 obj.MeleeBashDamage = eval(this.MeleeBashDamage);
                 obj.MeleeReach = eval(this.MeleeReach);
                 obj.MeleeStagger = eval(this.MeleeStagger);
@@ -3114,9 +3114,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(SoundLevel, "SoundLevel");
                     }
-                    if (printMask?.WAUDUnknown2 ?? true)
+                    if (printMask?.MeleeDetectionSoundLevel ?? true)
                     {
-                        sb.AppendItem(WAUDUnknown2, "WAUDUnknown2");
+                        sb.AppendItem(MeleeDetectionSoundLevel, "MeleeDetectionSoundLevel");
                     }
                     if (printMask?.WTUR ?? true)
                     {
@@ -3349,9 +3349,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(WFLGUnknown7, "WFLGUnknown7");
                     }
-                    if (printMask?.WGENUnknown1 ?? true)
+                    if (printMask?.AnimationType ?? true)
                     {
-                        sb.AppendItem(WGENUnknown1, "WGENUnknown1");
+                        sb.AppendItem(AnimationType, "AnimationType");
                     }
                     if (printMask?.BaseWeight ?? true)
                     {
@@ -3377,9 +3377,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(General, "General");
                     }
-                    if (printMask?.WMELUnknown1 ?? true)
+                    if (printMask?.AttackSpeed ?? true)
                     {
-                        sb.AppendItem(WMELUnknown1, "WMELUnknown1");
+                        sb.AppendItem(AttackSpeed, "AttackSpeed");
                     }
                     if (printMask?.MeleeBashDamage ?? true)
                     {
@@ -3626,7 +3626,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, SoundReference.ErrorMask?>? Unequip;
             public MaskItem<Exception?, SoundReference.ErrorMask?>? FastEquip;
             public Exception? SoundLevel;
-            public Exception? WAUDUnknown2;
+            public Exception? MeleeDetectionSoundLevel;
             public Exception? WTUR;
             public Exception? ChargeFullPowerSeconds;
             public Exception? ChargeMinPowerPerShot;
@@ -3681,14 +3681,14 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? WFLGUnknown5;
             public Exception? WFLGUnknown6;
             public Exception? WFLGUnknown7;
-            public Exception? WGENUnknown1;
+            public Exception? AnimationType;
             public Exception? BaseWeight;
             public Exception? BaseValue;
             public Exception? BaseSpeed;
             public Exception? AttackOxygenCost;
             public Exception? WeaponBarrel;
             public Exception? General;
-            public Exception? WMELUnknown1;
+            public Exception? AttackSpeed;
             public Exception? MeleeBashDamage;
             public Exception? MeleeReach;
             public Exception? MeleeStagger;
@@ -3850,8 +3850,8 @@ namespace Mutagen.Bethesda.Starfield
                         return FastEquip;
                     case Weapon_FieldIndex.SoundLevel:
                         return SoundLevel;
-                    case Weapon_FieldIndex.WAUDUnknown2:
-                        return WAUDUnknown2;
+                    case Weapon_FieldIndex.MeleeDetectionSoundLevel:
+                        return MeleeDetectionSoundLevel;
                     case Weapon_FieldIndex.WTUR:
                         return WTUR;
                     case Weapon_FieldIndex.ChargeFullPowerSeconds:
@@ -3960,8 +3960,8 @@ namespace Mutagen.Bethesda.Starfield
                         return WFLGUnknown6;
                     case Weapon_FieldIndex.WFLGUnknown7:
                         return WFLGUnknown7;
-                    case Weapon_FieldIndex.WGENUnknown1:
-                        return WGENUnknown1;
+                    case Weapon_FieldIndex.AnimationType:
+                        return AnimationType;
                     case Weapon_FieldIndex.BaseWeight:
                         return BaseWeight;
                     case Weapon_FieldIndex.BaseValue:
@@ -3974,8 +3974,8 @@ namespace Mutagen.Bethesda.Starfield
                         return WeaponBarrel;
                     case Weapon_FieldIndex.General:
                         return General;
-                    case Weapon_FieldIndex.WMELUnknown1:
-                        return WMELUnknown1;
+                    case Weapon_FieldIndex.AttackSpeed:
+                        return AttackSpeed;
                     case Weapon_FieldIndex.MeleeBashDamage:
                         return MeleeBashDamage;
                     case Weapon_FieldIndex.MeleeReach:
@@ -4238,8 +4238,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.SoundLevel:
                         this.SoundLevel = ex;
                         break;
-                    case Weapon_FieldIndex.WAUDUnknown2:
-                        this.WAUDUnknown2 = ex;
+                    case Weapon_FieldIndex.MeleeDetectionSoundLevel:
+                        this.MeleeDetectionSoundLevel = ex;
                         break;
                     case Weapon_FieldIndex.WTUR:
                         this.WTUR = ex;
@@ -4403,8 +4403,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.WFLGUnknown7:
                         this.WFLGUnknown7 = ex;
                         break;
-                    case Weapon_FieldIndex.WGENUnknown1:
-                        this.WGENUnknown1 = ex;
+                    case Weapon_FieldIndex.AnimationType:
+                        this.AnimationType = ex;
                         break;
                     case Weapon_FieldIndex.BaseWeight:
                         this.BaseWeight = ex;
@@ -4424,8 +4424,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.General:
                         this.General = ex;
                         break;
-                    case Weapon_FieldIndex.WMELUnknown1:
-                        this.WMELUnknown1 = ex;
+                    case Weapon_FieldIndex.AttackSpeed:
+                        this.AttackSpeed = ex;
                         break;
                     case Weapon_FieldIndex.MeleeBashDamage:
                         this.MeleeBashDamage = ex;
@@ -4735,8 +4735,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.SoundLevel:
                         this.SoundLevel = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WAUDUnknown2:
-                        this.WAUDUnknown2 = (Exception?)obj;
+                    case Weapon_FieldIndex.MeleeDetectionSoundLevel:
+                        this.MeleeDetectionSoundLevel = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.WTUR:
                         this.WTUR = (Exception?)obj;
@@ -4900,8 +4900,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.WFLGUnknown7:
                         this.WFLGUnknown7 = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WGENUnknown1:
-                        this.WGENUnknown1 = (Exception?)obj;
+                    case Weapon_FieldIndex.AnimationType:
+                        this.AnimationType = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.BaseWeight:
                         this.BaseWeight = (Exception?)obj;
@@ -4921,8 +4921,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.General:
                         this.General = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.WMELUnknown1:
-                        this.WMELUnknown1 = (Exception?)obj;
+                    case Weapon_FieldIndex.AttackSpeed:
+                        this.AttackSpeed = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.MeleeBashDamage:
                         this.MeleeBashDamage = (Exception?)obj;
@@ -5122,7 +5122,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Unequip != null) return true;
                 if (FastEquip != null) return true;
                 if (SoundLevel != null) return true;
-                if (WAUDUnknown2 != null) return true;
+                if (MeleeDetectionSoundLevel != null) return true;
                 if (WTUR != null) return true;
                 if (ChargeFullPowerSeconds != null) return true;
                 if (ChargeMinPowerPerShot != null) return true;
@@ -5177,14 +5177,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (WFLGUnknown5 != null) return true;
                 if (WFLGUnknown6 != null) return true;
                 if (WFLGUnknown7 != null) return true;
-                if (WGENUnknown1 != null) return true;
+                if (AnimationType != null) return true;
                 if (BaseWeight != null) return true;
                 if (BaseValue != null) return true;
                 if (BaseSpeed != null) return true;
                 if (AttackOxygenCost != null) return true;
                 if (WeaponBarrel != null) return true;
                 if (General != null) return true;
-                if (WMELUnknown1 != null) return true;
+                if (AttackSpeed != null) return true;
                 if (MeleeBashDamage != null) return true;
                 if (MeleeReach != null) return true;
                 if (MeleeStagger != null) return true;
@@ -5455,7 +5455,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(SoundLevel, "SoundLevel");
                 }
                 {
-                    sb.AppendItem(WAUDUnknown2, "WAUDUnknown2");
+                    sb.AppendItem(MeleeDetectionSoundLevel, "MeleeDetectionSoundLevel");
                 }
                 {
                     sb.AppendItem(WTUR, "WTUR");
@@ -5635,7 +5635,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(WFLGUnknown7, "WFLGUnknown7");
                 }
                 {
-                    sb.AppendItem(WGENUnknown1, "WGENUnknown1");
+                    sb.AppendItem(AnimationType, "AnimationType");
                 }
                 {
                     sb.AppendItem(BaseWeight, "BaseWeight");
@@ -5656,7 +5656,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(General, "General");
                 }
                 {
-                    sb.AppendItem(WMELUnknown1, "WMELUnknown1");
+                    sb.AppendItem(AttackSpeed, "AttackSpeed");
                 }
                 {
                     sb.AppendItem(MeleeBashDamage, "MeleeBashDamage");
@@ -5853,7 +5853,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Unequip = this.Unequip.Combine(rhs.Unequip, (l, r) => l.Combine(r));
                 ret.FastEquip = this.FastEquip.Combine(rhs.FastEquip, (l, r) => l.Combine(r));
                 ret.SoundLevel = this.SoundLevel.Combine(rhs.SoundLevel);
-                ret.WAUDUnknown2 = this.WAUDUnknown2.Combine(rhs.WAUDUnknown2);
+                ret.MeleeDetectionSoundLevel = this.MeleeDetectionSoundLevel.Combine(rhs.MeleeDetectionSoundLevel);
                 ret.WTUR = this.WTUR.Combine(rhs.WTUR);
                 ret.ChargeFullPowerSeconds = this.ChargeFullPowerSeconds.Combine(rhs.ChargeFullPowerSeconds);
                 ret.ChargeMinPowerPerShot = this.ChargeMinPowerPerShot.Combine(rhs.ChargeMinPowerPerShot);
@@ -5908,14 +5908,14 @@ namespace Mutagen.Bethesda.Starfield
                 ret.WFLGUnknown5 = this.WFLGUnknown5.Combine(rhs.WFLGUnknown5);
                 ret.WFLGUnknown6 = this.WFLGUnknown6.Combine(rhs.WFLGUnknown6);
                 ret.WFLGUnknown7 = this.WFLGUnknown7.Combine(rhs.WFLGUnknown7);
-                ret.WGENUnknown1 = this.WGENUnknown1.Combine(rhs.WGENUnknown1);
+                ret.AnimationType = this.AnimationType.Combine(rhs.AnimationType);
                 ret.BaseWeight = this.BaseWeight.Combine(rhs.BaseWeight);
                 ret.BaseValue = this.BaseValue.Combine(rhs.BaseValue);
                 ret.BaseSpeed = this.BaseSpeed.Combine(rhs.BaseSpeed);
                 ret.AttackOxygenCost = this.AttackOxygenCost.Combine(rhs.AttackOxygenCost);
                 ret.WeaponBarrel = this.WeaponBarrel.Combine(rhs.WeaponBarrel);
                 ret.General = this.General.Combine(rhs.General);
-                ret.WMELUnknown1 = this.WMELUnknown1.Combine(rhs.WMELUnknown1);
+                ret.AttackSpeed = this.AttackSpeed.Combine(rhs.AttackSpeed);
                 ret.MeleeBashDamage = this.MeleeBashDamage.Combine(rhs.MeleeBashDamage);
                 ret.MeleeReach = this.MeleeReach.Combine(rhs.MeleeReach);
                 ret.MeleeStagger = this.MeleeStagger.Combine(rhs.MeleeStagger);
@@ -6037,7 +6037,7 @@ namespace Mutagen.Bethesda.Starfield
             public SoundReference.TranslationMask? Unequip;
             public SoundReference.TranslationMask? FastEquip;
             public bool SoundLevel;
-            public bool WAUDUnknown2;
+            public bool MeleeDetectionSoundLevel;
             public bool WTUR;
             public bool ChargeFullPowerSeconds;
             public bool ChargeMinPowerPerShot;
@@ -6092,14 +6092,14 @@ namespace Mutagen.Bethesda.Starfield
             public bool WFLGUnknown5;
             public bool WFLGUnknown6;
             public bool WFLGUnknown7;
-            public bool WGENUnknown1;
+            public bool AnimationType;
             public bool BaseWeight;
             public bool BaseValue;
             public bool BaseSpeed;
             public bool AttackOxygenCost;
             public bool WeaponBarrel;
             public bool General;
-            public bool WMELUnknown1;
+            public bool AttackSpeed;
             public bool MeleeBashDamage;
             public bool MeleeReach;
             public bool MeleeStagger;
@@ -6191,7 +6191,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.WAM2Unknown1 = defaultOn;
                 this.WAMM = defaultOn;
                 this.SoundLevel = defaultOn;
-                this.WAUDUnknown2 = defaultOn;
+                this.MeleeDetectionSoundLevel = defaultOn;
                 this.WTUR = defaultOn;
                 this.ChargeFullPowerSeconds = defaultOn;
                 this.ChargeMinPowerPerShot = defaultOn;
@@ -6245,14 +6245,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.WFLGUnknown5 = defaultOn;
                 this.WFLGUnknown6 = defaultOn;
                 this.WFLGUnknown7 = defaultOn;
-                this.WGENUnknown1 = defaultOn;
+                this.AnimationType = defaultOn;
                 this.BaseWeight = defaultOn;
                 this.BaseValue = defaultOn;
                 this.BaseSpeed = defaultOn;
                 this.AttackOxygenCost = defaultOn;
                 this.WeaponBarrel = defaultOn;
                 this.General = defaultOn;
-                this.WMELUnknown1 = defaultOn;
+                this.AttackSpeed = defaultOn;
                 this.MeleeBashDamage = defaultOn;
                 this.MeleeReach = defaultOn;
                 this.MeleeStagger = defaultOn;
@@ -6358,7 +6358,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Unequip != null ? Unequip.OnOverall : DefaultOn, Unequip?.GetCrystal()));
                 ret.Add((FastEquip != null ? FastEquip.OnOverall : DefaultOn, FastEquip?.GetCrystal()));
                 ret.Add((SoundLevel, null));
-                ret.Add((WAUDUnknown2, null));
+                ret.Add((MeleeDetectionSoundLevel, null));
                 ret.Add((WTUR, null));
                 ret.Add((ChargeFullPowerSeconds, null));
                 ret.Add((ChargeMinPowerPerShot, null));
@@ -6413,14 +6413,14 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((WFLGUnknown5, null));
                 ret.Add((WFLGUnknown6, null));
                 ret.Add((WFLGUnknown7, null));
-                ret.Add((WGENUnknown1, null));
+                ret.Add((AnimationType, null));
                 ret.Add((BaseWeight, null));
                 ret.Add((BaseValue, null));
                 ret.Add((BaseSpeed, null));
                 ret.Add((AttackOxygenCost, null));
                 ret.Add((WeaponBarrel, null));
                 ret.Add((General, null));
-                ret.Add((WMELUnknown1, null));
+                ret.Add((AttackSpeed, null));
                 ret.Add((MeleeBashDamage, null));
                 ret.Add((MeleeReach, null));
                 ret.Add((MeleeStagger, null));
@@ -6708,7 +6708,7 @@ namespace Mutagen.Bethesda.Starfield
         new SoundReference Unequip { get; set; }
         new SoundReference FastEquip { get; set; }
         new SoundLevel SoundLevel { get; set; }
-        new Int32 WAUDUnknown2 { get; set; }
+        new SoundLevel MeleeDetectionSoundLevel { get; set; }
         new MemorySlice<Byte>? WTUR { get; set; }
         new Single ChargeFullPowerSeconds { get; set; }
         new Single ChargeMinPowerPerShot { get; set; }
@@ -6763,14 +6763,14 @@ namespace Mutagen.Bethesda.Starfield
         new Boolean WFLGUnknown5 { get; set; }
         new Boolean WFLGUnknown6 { get; set; }
         new Boolean WFLGUnknown7 { get; set; }
-        new UInt32 WGENUnknown1 { get; set; }
+        new Weapon.AnimationTypes AnimationType { get; set; }
         new Single BaseWeight { get; set; }
         new UInt32 BaseValue { get; set; }
         new Single BaseSpeed { get; set; }
         new Single AttackOxygenCost { get; set; }
         new IFormLink<IWeaponBarrelModelGetter> WeaponBarrel { get; set; }
         new TranslatedString? General { get; set; }
-        new Byte WMELUnknown1 { get; set; }
+        new Weapon.AttackSpeedEnum AttackSpeed { get; set; }
         new Single MeleeBashDamage { get; set; }
         new Single MeleeReach { get; set; }
         new Stagger MeleeStagger { get; set; }
@@ -6934,7 +6934,7 @@ namespace Mutagen.Bethesda.Starfield
         ISoundReferenceGetter Unequip { get; }
         ISoundReferenceGetter FastEquip { get; }
         SoundLevel SoundLevel { get; }
-        Int32 WAUDUnknown2 { get; }
+        SoundLevel MeleeDetectionSoundLevel { get; }
         ReadOnlyMemorySlice<Byte>? WTUR { get; }
         Single ChargeFullPowerSeconds { get; }
         Single ChargeMinPowerPerShot { get; }
@@ -6989,14 +6989,14 @@ namespace Mutagen.Bethesda.Starfield
         Boolean WFLGUnknown5 { get; }
         Boolean WFLGUnknown6 { get; }
         Boolean WFLGUnknown7 { get; }
-        UInt32 WGENUnknown1 { get; }
+        Weapon.AnimationTypes AnimationType { get; }
         Single BaseWeight { get; }
         UInt32 BaseValue { get; }
         Single BaseSpeed { get; }
         Single AttackOxygenCost { get; }
         IFormLinkGetter<IWeaponBarrelModelGetter> WeaponBarrel { get; }
         ITranslatedStringGetter? General { get; }
-        Byte WMELUnknown1 { get; }
+        Weapon.AttackSpeedEnum AttackSpeed { get; }
         Single MeleeBashDamage { get; }
         Single MeleeReach { get; }
         Stagger MeleeStagger { get; }
@@ -7276,7 +7276,7 @@ namespace Mutagen.Bethesda.Starfield
         Unequip = 58,
         FastEquip = 59,
         SoundLevel = 60,
-        WAUDUnknown2 = 61,
+        MeleeDetectionSoundLevel = 61,
         WTUR = 62,
         ChargeFullPowerSeconds = 63,
         ChargeMinPowerPerShot = 64,
@@ -7331,14 +7331,14 @@ namespace Mutagen.Bethesda.Starfield
         WFLGUnknown5 = 113,
         WFLGUnknown6 = 114,
         WFLGUnknown7 = 115,
-        WGENUnknown1 = 116,
+        AnimationType = 116,
         BaseWeight = 117,
         BaseValue = 118,
         BaseSpeed = 119,
         AttackOxygenCost = 120,
         WeaponBarrel = 121,
         General = 122,
-        WMELUnknown1 = 123,
+        AttackSpeed = 123,
         MeleeBashDamage = 124,
         MeleeReach = 125,
         MeleeStagger = 126,
@@ -7584,7 +7584,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Unequip.Clear();
             item.FastEquip.Clear();
             item.SoundLevel = default(SoundLevel);
-            item.WAUDUnknown2 = default(Int32);
+            item.MeleeDetectionSoundLevel = default(SoundLevel);
             item.WTUR = default;
             item.ChargeFullPowerSeconds = default(Single);
             item.ChargeMinPowerPerShot = default(Single);
@@ -7639,14 +7639,14 @@ namespace Mutagen.Bethesda.Starfield
             item.WFLGUnknown5 = default(Boolean);
             item.WFLGUnknown6 = default(Boolean);
             item.WFLGUnknown7 = default(Boolean);
-            item.WGENUnknown1 = default(UInt32);
+            item.AnimationType = default(Weapon.AnimationTypes);
             item.BaseWeight = default(Single);
             item.BaseValue = default(UInt32);
             item.BaseSpeed = default(Single);
             item.AttackOxygenCost = default(Single);
             item.WeaponBarrel.Clear();
             item.General = default;
-            item.WMELUnknown1 = default(Byte);
+            item.AttackSpeed = default(Weapon.AttackSpeedEnum);
             item.MeleeBashDamage = default(Single);
             item.MeleeReach = default(Single);
             item.MeleeStagger = default(Stagger);
@@ -7949,7 +7949,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Unequip = MaskItemExt.Factory(item.Unequip.GetEqualsMask(rhs.Unequip, include), include);
             ret.FastEquip = MaskItemExt.Factory(item.FastEquip.GetEqualsMask(rhs.FastEquip, include), include);
             ret.SoundLevel = item.SoundLevel == rhs.SoundLevel;
-            ret.WAUDUnknown2 = item.WAUDUnknown2 == rhs.WAUDUnknown2;
+            ret.MeleeDetectionSoundLevel = item.MeleeDetectionSoundLevel == rhs.MeleeDetectionSoundLevel;
             ret.WTUR = MemorySliceExt.SequenceEqual(item.WTUR, rhs.WTUR);
             ret.ChargeFullPowerSeconds = item.ChargeFullPowerSeconds.EqualsWithin(rhs.ChargeFullPowerSeconds);
             ret.ChargeMinPowerPerShot = item.ChargeMinPowerPerShot.EqualsWithin(rhs.ChargeMinPowerPerShot);
@@ -8007,14 +8007,14 @@ namespace Mutagen.Bethesda.Starfield
             ret.WFLGUnknown5 = item.WFLGUnknown5 == rhs.WFLGUnknown5;
             ret.WFLGUnknown6 = item.WFLGUnknown6 == rhs.WFLGUnknown6;
             ret.WFLGUnknown7 = item.WFLGUnknown7 == rhs.WFLGUnknown7;
-            ret.WGENUnknown1 = item.WGENUnknown1 == rhs.WGENUnknown1;
+            ret.AnimationType = item.AnimationType == rhs.AnimationType;
             ret.BaseWeight = item.BaseWeight.EqualsWithin(rhs.BaseWeight);
             ret.BaseValue = item.BaseValue == rhs.BaseValue;
             ret.BaseSpeed = item.BaseSpeed.EqualsWithin(rhs.BaseSpeed);
             ret.AttackOxygenCost = item.AttackOxygenCost.EqualsWithin(rhs.AttackOxygenCost);
             ret.WeaponBarrel = item.WeaponBarrel.Equals(rhs.WeaponBarrel);
             ret.General = object.Equals(item.General, rhs.General);
-            ret.WMELUnknown1 = item.WMELUnknown1 == rhs.WMELUnknown1;
+            ret.AttackSpeed = item.AttackSpeed == rhs.AttackSpeed;
             ret.MeleeBashDamage = item.MeleeBashDamage.EqualsWithin(rhs.MeleeBashDamage);
             ret.MeleeReach = item.MeleeReach.EqualsWithin(rhs.MeleeReach);
             ret.MeleeStagger = item.MeleeStagger == rhs.MeleeStagger;
@@ -8384,9 +8384,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.SoundLevel, "SoundLevel");
             }
-            if (printMask?.WAUDUnknown2 ?? true)
+            if (printMask?.MeleeDetectionSoundLevel ?? true)
             {
-                sb.AppendItem(item.WAUDUnknown2, "WAUDUnknown2");
+                sb.AppendItem(item.MeleeDetectionSoundLevel, "MeleeDetectionSoundLevel");
             }
             if ((printMask?.WTUR ?? true)
                 && item.WTUR is {} WTURItem)
@@ -8616,9 +8616,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.WFLGUnknown7, "WFLGUnknown7");
             }
-            if (printMask?.WGENUnknown1 ?? true)
+            if (printMask?.AnimationType ?? true)
             {
-                sb.AppendItem(item.WGENUnknown1, "WGENUnknown1");
+                sb.AppendItem(item.AnimationType, "AnimationType");
             }
             if (printMask?.BaseWeight ?? true)
             {
@@ -8645,9 +8645,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(GeneralItem, "General");
             }
-            if (printMask?.WMELUnknown1 ?? true)
+            if (printMask?.AttackSpeed ?? true)
             {
-                sb.AppendItem(item.WMELUnknown1, "WMELUnknown1");
+                sb.AppendItem(item.AttackSpeed, "AttackSpeed");
             }
             if (printMask?.MeleeBashDamage ?? true)
             {
@@ -9153,9 +9153,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.SoundLevel != rhs.SoundLevel) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAUDUnknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.MeleeDetectionSoundLevel) ?? true))
             {
-                if (lhs.WAUDUnknown2 != rhs.WAUDUnknown2) return false;
+                if (lhs.MeleeDetectionSoundLevel != rhs.MeleeDetectionSoundLevel) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTUR) ?? true))
             {
@@ -9373,9 +9373,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.WFLGUnknown7 != rhs.WFLGUnknown7) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WGENUnknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.AnimationType) ?? true))
             {
-                if (lhs.WGENUnknown1 != rhs.WGENUnknown1) return false;
+                if (lhs.AnimationType != rhs.AnimationType) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.BaseWeight) ?? true))
             {
@@ -9401,9 +9401,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!object.Equals(lhs.General, rhs.General)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WMELUnknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.AttackSpeed) ?? true))
             {
-                if (lhs.WMELUnknown1 != rhs.WMELUnknown1) return false;
+                if (lhs.AttackSpeed != rhs.AttackSpeed) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.MeleeBashDamage) ?? true))
             {
@@ -9707,7 +9707,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Unequip);
             hash.Add(item.FastEquip);
             hash.Add(item.SoundLevel);
-            hash.Add(item.WAUDUnknown2);
+            hash.Add(item.MeleeDetectionSoundLevel);
             if (item.WTUR is {} WTURItem)
             {
                 hash.Add(WTURItem);
@@ -9765,7 +9765,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.WFLGUnknown5);
             hash.Add(item.WFLGUnknown6);
             hash.Add(item.WFLGUnknown7);
-            hash.Add(item.WGENUnknown1);
+            hash.Add(item.AnimationType);
             hash.Add(item.BaseWeight);
             hash.Add(item.BaseValue);
             hash.Add(item.BaseSpeed);
@@ -9775,7 +9775,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Generalitem);
             }
-            hash.Add(item.WMELUnknown1);
+            hash.Add(item.AttackSpeed);
             hash.Add(item.MeleeBashDamage);
             hash.Add(item.MeleeReach);
             hash.Add(item.MeleeStagger);
@@ -10726,9 +10726,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.SoundLevel = rhs.SoundLevel;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WAUDUnknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.MeleeDetectionSoundLevel) ?? true))
             {
-                item.WAUDUnknown2 = rhs.WAUDUnknown2;
+                item.MeleeDetectionSoundLevel = rhs.MeleeDetectionSoundLevel;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WTUR) ?? true))
             {
@@ -10981,9 +10981,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.WFLGUnknown7 = rhs.WFLGUnknown7;
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WGENUnknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.AnimationType) ?? true))
             {
-                item.WGENUnknown1 = rhs.WGENUnknown1;
+                item.AnimationType = rhs.AnimationType;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.BaseWeight) ?? true))
             {
@@ -11009,9 +11009,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.General = rhs.General?.DeepCopy();
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WMELUnknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.AttackSpeed) ?? true))
             {
-                item.WMELUnknown1 = rhs.WMELUnknown1;
+                item.AttackSpeed = rhs.AttackSpeed;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.MeleeBashDamage) ?? true))
             {
@@ -11637,7 +11637,10 @@ namespace Mutagen.Bethesda.Starfield
                     writer,
                     item.SoundLevel,
                     length: 4);
-                writer.Write(item.WAUDUnknown2);
+                EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.MeleeDetectionSoundLevel,
+                    length: 4);
             }
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
@@ -11781,7 +11784,10 @@ namespace Mutagen.Bethesda.Starfield
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.WGEN)))
             {
-                writer.Write(item.WGENUnknown1);
+                EnumBinaryTranslation<Weapon.AnimationTypes, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.AnimationType,
+                    length: 4);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.BaseWeight);
@@ -11804,7 +11810,10 @@ namespace Mutagen.Bethesda.Starfield
                 source: StringsSource.Normal);
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.WMEL)))
             {
-                writer.Write(item.WMELUnknown1);
+                EnumBinaryTranslation<Weapon.AttackSpeedEnum, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.AttackSpeed,
+                    length: 1);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.MeleeBashDamage);
@@ -12304,8 +12313,10 @@ namespace Mutagen.Bethesda.Starfield
                         reader: dataFrame,
                         length: 4);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WAUDUnknown2 = dataFrame.ReadInt32();
-                    return (int)Weapon_FieldIndex.WAUDUnknown2;
+                    item.MeleeDetectionSoundLevel = EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    return (int)Weapon_FieldIndex.MeleeDetectionSoundLevel;
                 }
                 case RecordTypeInts.WTUR:
                 {
@@ -12460,7 +12471,9 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.WGENUnknown1 = dataFrame.ReadUInt32();
+                    item.AnimationType = EnumBinaryTranslation<Weapon.AnimationTypes, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
                     if (dataFrame.Remaining < 4) return null;
                     item.BaseWeight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -12489,7 +12502,9 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
-                    item.WMELUnknown1 = dataFrame.ReadUInt8();
+                    item.AttackSpeed = EnumBinaryTranslation<Weapon.AttackSpeedEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 1);
                     if (dataFrame.Remaining < 4) return null;
                     item.MeleeBashDamage = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -12940,10 +12955,10 @@ namespace Mutagen.Bethesda.Starfield
         private bool _SoundLevel_IsSet => _WAUDLocation.HasValue;
         public SoundLevel SoundLevel => _SoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SoundLevelLocation, 0x4)) : default;
         #endregion
-        #region WAUDUnknown2
-        private int _WAUDUnknown2Location => _WAUDLocation!.Value.Min + 0x11C;
-        private bool _WAUDUnknown2_IsSet => _WAUDLocation.HasValue;
-        public Int32 WAUDUnknown2 => _WAUDUnknown2_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_WAUDUnknown2Location, 4)) : default(Int32);
+        #region MeleeDetectionSoundLevel
+        private int _MeleeDetectionSoundLevelLocation => _WAUDLocation!.Value.Min + 0x11C;
+        private bool _MeleeDetectionSoundLevel_IsSet => _WAUDLocation.HasValue;
+        public SoundLevel MeleeDetectionSoundLevel => _MeleeDetectionSoundLevel_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MeleeDetectionSoundLevelLocation, 0x4)) : default;
         #endregion
         #region WTUR
         private int? _WTURLocation;
@@ -13215,10 +13230,10 @@ namespace Mutagen.Bethesda.Starfield
         public Boolean WFLGUnknown7 => _WFLGUnknown7_IsSet ? _recordData.Slice(_WFLGUnknown7Location, 1)[0] >= 1 : default(Boolean);
         #endregion
         private RangeInt32? _WGENLocation;
-        #region WGENUnknown1
-        private int _WGENUnknown1Location => _WGENLocation!.Value.Min;
-        private bool _WGENUnknown1_IsSet => _WGENLocation.HasValue;
-        public UInt32 WGENUnknown1 => _WGENUnknown1_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WGENUnknown1Location, 4)) : default(UInt32);
+        #region AnimationType
+        private int _AnimationTypeLocation => _WGENLocation!.Value.Min;
+        private bool _AnimationType_IsSet => _WGENLocation.HasValue;
+        public Weapon.AnimationTypes AnimationType => _AnimationType_IsSet ? (Weapon.AnimationTypes)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_AnimationTypeLocation, 0x4)) : default;
         #endregion
         #region BaseWeight
         private int _BaseWeightLocation => _WGENLocation!.Value.Min + 0x4;
@@ -13250,10 +13265,10 @@ namespace Mutagen.Bethesda.Starfield
         public ITranslatedStringGetter? General => _GeneralLocation.HasValue ? StringBinaryTranslation.Instance.Parse(HeaderTranslation.ExtractSubrecordMemory(_recordData, _GeneralLocation.Value, _package.MetaData.Constants), StringsSource.Normal, parsingBundle: _package.MetaData, eager: false) : default(TranslatedString?);
         #endregion
         private RangeInt32? _WMELLocation;
-        #region WMELUnknown1
-        private int _WMELUnknown1Location => _WMELLocation!.Value.Min;
-        private bool _WMELUnknown1_IsSet => _WMELLocation.HasValue;
-        public Byte WMELUnknown1 => _WMELUnknown1_IsSet ? _recordData.Span[_WMELUnknown1Location] : default;
+        #region AttackSpeed
+        private int _AttackSpeedLocation => _WMELLocation!.Value.Min;
+        private bool _AttackSpeed_IsSet => _WMELLocation.HasValue;
+        public Weapon.AttackSpeedEnum AttackSpeed => _AttackSpeed_IsSet ? (Weapon.AttackSpeedEnum)_recordData.Span.Slice(_AttackSpeedLocation, 0x1)[0] : default;
         #endregion
         #region MeleeBashDamage
         private int _MeleeBashDamageLocation => _WMELLocation!.Value.Min + 0x1;
@@ -13770,7 +13785,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WAUD:
                 {
                     _WAUDLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)Weapon_FieldIndex.WAUDUnknown2;
+                    return (int)Weapon_FieldIndex.MeleeDetectionSoundLevel;
                 }
                 case RecordTypeInts.WTUR:
                 {
