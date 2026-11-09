@@ -597,7 +597,7 @@
     <Fields>
       <FormLinkOrIndex refName="PlacedNpc" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
-      <Int32 name="SecondParameter" />
+      <Enum enumName="CrimeType" name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
     </Fields>
   </Object>
@@ -1631,7 +1631,7 @@
   </Object>
   <Object name="GetCauseofDeathConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Int32 name="FirstParameter" />
+      <Enum enumName="DamageCauseType" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
@@ -1943,7 +1943,7 @@
   </Object>
   <Object name="GetIsAlignmentConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Int32 name="FirstParameter" />
+      <Enum enumName="Alignment" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
@@ -2227,7 +2227,7 @@
   </Object>
   <Object name="IsInCriticalStageConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Int32 name="FirstParameter" />
+      <Enum enumName="CriticalStage" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
@@ -2395,7 +2395,7 @@
   </Object>
   <Object name="HasEquippedSpellConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Int32 name="FirstParameter" />
+      <Enum enumName="CastSource" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
@@ -2403,7 +2403,7 @@
   </Object>
   <Object name="GetCurrentCastingTypeConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Int32 name="FirstParameter" />
+      <Enum enumName="CastSource" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
@@ -2411,7 +2411,7 @@
   </Object>
   <Object name="GetCurrentDeliveryTypeConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Int32 name="FirstParameter" />
+      <Enum enumName="CastSource" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
@@ -2507,13 +2507,13 @@
     <Fields>
       <FormLinkOrIndex refName="Spell" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
-      <Int32 name="SecondParameter" />
+      <Enum enumName="CastSource" name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
     </Fields>
   </Object>
   <Object name="SpellHasKeywordConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Int32 name="FirstParameter" />
+      <Enum enumName="CastSource" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
       <FormLinkOrIndex refName="Keyword" name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
@@ -2521,7 +2521,7 @@
   </Object>
   <Object name="GetEquippedItemTypeConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Int32 name="FirstParameter" />
+      <Enum enumName="CastSource" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
@@ -2553,7 +2553,7 @@
   </Object>
   <Object name="IsWardStateConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Int32 name="FirstParameter" />
+      <Enum enumName="WardState" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />
@@ -3173,7 +3173,7 @@
   </Object>
   <Object name="HasBoundWeaponEquippedConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Int32 name="FirstParameter" />
+      <Enum enumName="CastSource" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" nullable="true" binary="NoGeneration" />

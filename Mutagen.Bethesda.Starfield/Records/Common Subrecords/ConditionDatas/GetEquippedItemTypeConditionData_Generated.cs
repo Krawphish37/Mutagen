@@ -54,7 +54,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region FirstParameter
-        public Int32 FirstParameter { get; set; } = default(Int32);
+        public CastSource FirstParameter { get; set; } = default(CastSource);
         #endregion
         #region FirstUnusedStringParameter
         public String? FirstUnusedStringParameter { get; set; }
@@ -459,7 +459,7 @@ namespace Mutagen.Bethesda.Starfield
         object? IConditionParameters.Parameter1
         {
             get => FirstParameter;
-            set => FirstParameter = (value is Int32 v ? v : throw new ArgumentException());
+            set => FirstParameter = (value is CastSource v ? v : throw new ArgumentException());
         }
         object? IConditionParametersGetter.Parameter1
         {
@@ -467,7 +467,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         Type? IConditionParametersGetter.Parameter1Type
         {
-            get => typeof(Int32);
+            get => typeof(CastSource);
         }
         object? IConditionParameters.Parameter2
         {
@@ -545,7 +545,7 @@ namespace Mutagen.Bethesda.Starfield
         IGetEquippedItemTypeConditionDataGetter,
         ILoquiObjectSetter<IGetEquippedItemTypeConditionData>
     {
-        new Int32 FirstParameter { get; set; }
+        new CastSource FirstParameter { get; set; }
         new String? FirstUnusedStringParameter { get; set; }
         new Int32 SecondParameter { get; set; }
         new String? SecondUnusedStringParameter { get; set; }
@@ -557,7 +557,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IGetEquippedItemTypeConditionDataGetter>
     {
         static new ILoquiRegistration StaticRegistration => GetEquippedItemTypeConditionData_Registration.Instance;
-        Int32 FirstParameter { get; }
+        CastSource FirstParameter { get; }
         String? FirstUnusedStringParameter { get; }
         Int32 SecondParameter { get; }
         String? SecondUnusedStringParameter { get; }
@@ -792,7 +792,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IGetEquippedItemTypeConditionData item)
         {
             ClearPartial();
-            item.FirstParameter = default(Int32);
+            item.FirstParameter = default(CastSource);
             item.FirstUnusedStringParameter = default;
             item.SecondParameter = default(Int32);
             item.SecondUnusedStringParameter = default;
@@ -1193,7 +1193,10 @@ namespace Mutagen.Bethesda.Starfield
             ConditionDataBinaryWriteTranslation.WriteEmbedded(
                 item: item,
                 writer: writer);
-            writer.Write(item.FirstParameter);
+            EnumBinaryTranslation<CastSource, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.FirstParameter,
+                length: 4);
             writer.Write(item.SecondParameter);
         }
 
@@ -1242,7 +1245,9 @@ namespace Mutagen.Bethesda.Starfield
             ConditionDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
-            item.FirstParameter = frame.ReadInt32();
+            item.FirstParameter = EnumBinaryTranslation<CastSource, MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                length: 4);
             item.SecondParameter = frame.ReadInt32();
         }
 

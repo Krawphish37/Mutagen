@@ -71,7 +71,7 @@ namespace Mutagen.Bethesda.Starfield
         String? IIsCurrentSpellConditionDataGetter.FirstUnusedStringParameter => this.FirstUnusedStringParameter;
         #endregion
         #region SecondParameter
-        public Int32 SecondParameter { get; set; } = default(Int32);
+        public CastSource SecondParameter { get; set; } = default(CastSource);
         #endregion
         #region SecondUnusedStringParameter
         public String? SecondUnusedStringParameter { get; set; }
@@ -483,7 +483,7 @@ namespace Mutagen.Bethesda.Starfield
         object? IConditionParameters.Parameter2
         {
             get => SecondParameter;
-            set => SecondParameter = (value is Int32 v ? v : throw new ArgumentException());
+            set => SecondParameter = (value is CastSource v ? v : throw new ArgumentException());
         }
         object? IConditionParametersGetter.Parameter2
         {
@@ -491,7 +491,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         Type? IConditionParametersGetter.Parameter2Type
         {
-            get => typeof(Int32);
+            get => typeof(CastSource);
         }
         #endregion
 
@@ -559,7 +559,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new IFormLinkOrIndex<ISpellGetter> FirstParameter { get; set; }
         new String? FirstUnusedStringParameter { get; set; }
-        new Int32 SecondParameter { get; set; }
+        new CastSource SecondParameter { get; set; }
         new String? SecondUnusedStringParameter { get; set; }
     }
 
@@ -572,7 +572,7 @@ namespace Mutagen.Bethesda.Starfield
         static new ILoquiRegistration StaticRegistration => IsCurrentSpellConditionData_Registration.Instance;
         IFormLinkOrIndexGetter<ISpellGetter> FirstParameter { get; }
         String? FirstUnusedStringParameter { get; }
-        Int32 SecondParameter { get; }
+        CastSource SecondParameter { get; }
         String? SecondUnusedStringParameter { get; }
 
     }
@@ -807,7 +807,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.FirstParameter.Clear();
             item.FirstUnusedStringParameter = default;
-            item.SecondParameter = default(Int32);
+            item.SecondParameter = default(CastSource);
             item.SecondUnusedStringParameter = default;
             base.Clear(item);
         }
@@ -1214,7 +1214,10 @@ namespace Mutagen.Bethesda.Starfield
             FormLinkOrIndexBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.FirstParameter);
-            writer.Write(item.SecondParameter);
+            EnumBinaryTranslation<CastSource, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.SecondParameter,
+                length: 4);
         }
 
         public void Write(
@@ -1265,7 +1268,9 @@ namespace Mutagen.Bethesda.Starfield
             FormLinkOrIndexBinaryTranslation.Instance.ParseInto(
                 reader: frame,
                 item: item.FirstParameter);
-            item.SecondParameter = frame.ReadInt32();
+            item.SecondParameter = EnumBinaryTranslation<CastSource, MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                length: 4);
         }
 
     }
