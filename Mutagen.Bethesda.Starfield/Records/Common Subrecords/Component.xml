@@ -462,9 +462,12 @@
           <Int32 name="LocationY" />
           <Int32 name="PlanetSystemId" />
           <Int32 name="SatelliteId" />
-          <!-- xEdit: Longitude and Latitude, 2 doubles (one old record in Starfield.esm has only 8 bytes). Kept raw: a Break after the
-               variable-length list above is not handled by the overlay generator (coverage bug C59). -->
-          <ByteArray name="LongitudeLatitude" />
+          <!-- xEdit: Longitude and Latitude. One old record in Starfield.esm (SFBK 2990F9) has only 8 bytes here. -->
+          <Break />
+          <Double name="Longitude" />
+          <Break />
+          <Double name="Latitude" />
+          <ByteArray name="UnknownEnding" />
         </Fields>
         <RecordTypeVersioning formVersion="558" recordType="DATA" />
       </Data>
