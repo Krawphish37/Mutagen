@@ -100,7 +100,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #endregion
         #region DirtinessScale
-        public Percent DirtinessScale { get; set; } = default(Percent);
+        public Single DirtinessScale { get; set; } = default(Single);
         #endregion
         #region ObjectPaletteDefaults
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -218,9 +218,6 @@ namespace Mutagen.Bethesda.Starfield
         #region Flags
         public Projectile.Flag Flags { get; set; } = default(Projectile.Flag);
         #endregion
-        #region Type
-        public Projectile.TypeEnum Type { get; set; } = default(Projectile.TypeEnum);
-        #endregion
         #region Gravity
         public Single Gravity { get; set; } = default(Single);
         #endregion
@@ -320,35 +317,42 @@ namespace Mutagen.Bethesda.Starfield
         #region TracerFrequency
         public Byte TracerFrequency { get; set; } = default(Byte);
         #endregion
-        #region UnknownPROD1
-        public UInt32 UnknownPROD1 { get; set; } = default(UInt32);
+        #region VatsProjectile
+        private readonly IFormLink<IProjectileGetter> _VatsProjectile = new FormLink<IProjectileGetter>();
+        public IFormLink<IProjectileGetter> VatsProjectile
+        {
+            get => _VatsProjectile;
+            set => _VatsProjectile.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkGetter<IProjectileGetter> IProjectileGetter.VatsProjectile => this.VatsProjectile;
         #endregion
-        #region UnknownPRODString1
-        public String UnknownPRODString1 { get; set; } = string.Empty;
+        #region MuzzleFlashParticleDefine
+        public String MuzzleFlashParticleDefine { get; set; } = string.Empty;
         #endregion
-        #region UnknownPROD2
-        public Single UnknownPROD2 { get; set; } = default(Single);
+        #region SeekStrength
+        public Single SeekStrength { get; set; } = default(Single);
         #endregion
-        #region UnknownPROD3
-        public UInt32 UnknownPROD3 { get; set; } = default(UInt32);
+        #region SoundActivationCondition
+        public Projectile.SoundActivationConditionOption SoundActivationCondition { get; set; } = default(Projectile.SoundActivationConditionOption);
         #endregion
-        #region UnknownPROD4
-        public Byte UnknownPROD4 { get; set; } = default(Byte);
+        #region Type
+        public Projectile.TypeEnum Type { get; set; } = default(Projectile.TypeEnum);
         #endregion
-        #region UnknownPRODString2
-        public String UnknownPRODString2 { get; set; } = string.Empty;
+        #region ParticleDefine
+        public String ParticleDefine { get; set; } = string.Empty;
         #endregion
-        #region UnknownPROD5
-        public Single UnknownPROD5 { get; set; } = default(Single);
+        #region TracerSpeed
+        public Single TracerSpeed { get; set; } = default(Single);
         #endregion
-        #region UnknownPROD6
-        public Single UnknownPROD6 { get; set; } = default(Single);
+        #region ZeroGRecoilStrength
+        public Single ZeroGRecoilStrength { get; set; } = default(Single);
         #endregion
-        #region UnknownPROD7
-        public Single UnknownPROD7 { get; set; } = default(Single);
+        #region ZeroGRecoilLength
+        public Single ZeroGRecoilLength { get; set; } = default(Single);
         #endregion
-        #region UnknownPROD8
-        public Single UnknownPROD8 { get; set; } = default(Single);
+        #region ExplosionDelayBeforeRemoval
+        public Single ExplosionDelayBeforeRemoval { get; set; } = default(Single);
         #endregion
         #region MuzzleFlashModel
         public String MuzzleFlashModel { get; set; } = string.Empty;
@@ -453,7 +457,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.Destructible = new MaskItem<TItem, Destructible.Mask<TItem>?>(initialValue, new Destructible.Mask<TItem>(initialValue));
                 this.Unused = initialValue;
                 this.Flags = initialValue;
-                this.Type = initialValue;
                 this.Gravity = initialValue;
                 this.Speed = initialValue;
                 this.Range = initialValue;
@@ -473,16 +476,16 @@ namespace Mutagen.Bethesda.Starfield
                 this.DecalData = initialValue;
                 this.CollisionLayer = initialValue;
                 this.TracerFrequency = initialValue;
-                this.UnknownPROD1 = initialValue;
-                this.UnknownPRODString1 = initialValue;
-                this.UnknownPROD2 = initialValue;
-                this.UnknownPROD3 = initialValue;
-                this.UnknownPROD4 = initialValue;
-                this.UnknownPRODString2 = initialValue;
-                this.UnknownPROD5 = initialValue;
-                this.UnknownPROD6 = initialValue;
-                this.UnknownPROD7 = initialValue;
-                this.UnknownPROD8 = initialValue;
+                this.VatsProjectile = initialValue;
+                this.MuzzleFlashParticleDefine = initialValue;
+                this.SeekStrength = initialValue;
+                this.SoundActivationCondition = initialValue;
+                this.Type = initialValue;
+                this.ParticleDefine = initialValue;
+                this.TracerSpeed = initialValue;
+                this.ZeroGRecoilStrength = initialValue;
+                this.ZeroGRecoilLength = initialValue;
+                this.ExplosionDelayBeforeRemoval = initialValue;
                 this.MuzzleFlashModel = initialValue;
                 this.TextureFilesHashes = initialValue;
                 this.MuzzleFlashLightLayer = initialValue;
@@ -512,7 +515,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Destructible,
                 TItem Unused,
                 TItem Flags,
-                TItem Type,
                 TItem Gravity,
                 TItem Speed,
                 TItem Range,
@@ -532,16 +534,16 @@ namespace Mutagen.Bethesda.Starfield
                 TItem DecalData,
                 TItem CollisionLayer,
                 TItem TracerFrequency,
-                TItem UnknownPROD1,
-                TItem UnknownPRODString1,
-                TItem UnknownPROD2,
-                TItem UnknownPROD3,
-                TItem UnknownPROD4,
-                TItem UnknownPRODString2,
-                TItem UnknownPROD5,
-                TItem UnknownPROD6,
-                TItem UnknownPROD7,
-                TItem UnknownPROD8,
+                TItem VatsProjectile,
+                TItem MuzzleFlashParticleDefine,
+                TItem SeekStrength,
+                TItem SoundActivationCondition,
+                TItem Type,
+                TItem ParticleDefine,
+                TItem TracerSpeed,
+                TItem ZeroGRecoilStrength,
+                TItem ZeroGRecoilLength,
+                TItem ExplosionDelayBeforeRemoval,
                 TItem MuzzleFlashModel,
                 TItem TextureFilesHashes,
                 TItem MuzzleFlashLightLayer,
@@ -570,7 +572,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.Destructible = new MaskItem<TItem, Destructible.Mask<TItem>?>(Destructible, new Destructible.Mask<TItem>(Destructible));
                 this.Unused = Unused;
                 this.Flags = Flags;
-                this.Type = Type;
                 this.Gravity = Gravity;
                 this.Speed = Speed;
                 this.Range = Range;
@@ -590,16 +591,16 @@ namespace Mutagen.Bethesda.Starfield
                 this.DecalData = DecalData;
                 this.CollisionLayer = CollisionLayer;
                 this.TracerFrequency = TracerFrequency;
-                this.UnknownPROD1 = UnknownPROD1;
-                this.UnknownPRODString1 = UnknownPRODString1;
-                this.UnknownPROD2 = UnknownPROD2;
-                this.UnknownPROD3 = UnknownPROD3;
-                this.UnknownPROD4 = UnknownPROD4;
-                this.UnknownPRODString2 = UnknownPRODString2;
-                this.UnknownPROD5 = UnknownPROD5;
-                this.UnknownPROD6 = UnknownPROD6;
-                this.UnknownPROD7 = UnknownPROD7;
-                this.UnknownPROD8 = UnknownPROD8;
+                this.VatsProjectile = VatsProjectile;
+                this.MuzzleFlashParticleDefine = MuzzleFlashParticleDefine;
+                this.SeekStrength = SeekStrength;
+                this.SoundActivationCondition = SoundActivationCondition;
+                this.Type = Type;
+                this.ParticleDefine = ParticleDefine;
+                this.TracerSpeed = TracerSpeed;
+                this.ZeroGRecoilStrength = ZeroGRecoilStrength;
+                this.ZeroGRecoilLength = ZeroGRecoilLength;
+                this.ExplosionDelayBeforeRemoval = ExplosionDelayBeforeRemoval;
                 this.MuzzleFlashModel = MuzzleFlashModel;
                 this.TextureFilesHashes = TextureFilesHashes;
                 this.MuzzleFlashLightLayer = MuzzleFlashLightLayer;
@@ -630,7 +631,6 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, Destructible.Mask<TItem>?>? Destructible { get; set; }
             public TItem Unused;
             public TItem Flags;
-            public TItem Type;
             public TItem Gravity;
             public TItem Speed;
             public TItem Range;
@@ -650,16 +650,16 @@ namespace Mutagen.Bethesda.Starfield
             public TItem DecalData;
             public TItem CollisionLayer;
             public TItem TracerFrequency;
-            public TItem UnknownPROD1;
-            public TItem UnknownPRODString1;
-            public TItem UnknownPROD2;
-            public TItem UnknownPROD3;
-            public TItem UnknownPROD4;
-            public TItem UnknownPRODString2;
-            public TItem UnknownPROD5;
-            public TItem UnknownPROD6;
-            public TItem UnknownPROD7;
-            public TItem UnknownPROD8;
+            public TItem VatsProjectile;
+            public TItem MuzzleFlashParticleDefine;
+            public TItem SeekStrength;
+            public TItem SoundActivationCondition;
+            public TItem Type;
+            public TItem ParticleDefine;
+            public TItem TracerSpeed;
+            public TItem ZeroGRecoilStrength;
+            public TItem ZeroGRecoilLength;
+            public TItem ExplosionDelayBeforeRemoval;
             public TItem MuzzleFlashModel;
             public TItem TextureFilesHashes;
             public TItem MuzzleFlashLightLayer;
@@ -692,7 +692,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Destructible, rhs.Destructible)) return false;
                 if (!object.Equals(this.Unused, rhs.Unused)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
-                if (!object.Equals(this.Type, rhs.Type)) return false;
                 if (!object.Equals(this.Gravity, rhs.Gravity)) return false;
                 if (!object.Equals(this.Speed, rhs.Speed)) return false;
                 if (!object.Equals(this.Range, rhs.Range)) return false;
@@ -712,16 +711,16 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.DecalData, rhs.DecalData)) return false;
                 if (!object.Equals(this.CollisionLayer, rhs.CollisionLayer)) return false;
                 if (!object.Equals(this.TracerFrequency, rhs.TracerFrequency)) return false;
-                if (!object.Equals(this.UnknownPROD1, rhs.UnknownPROD1)) return false;
-                if (!object.Equals(this.UnknownPRODString1, rhs.UnknownPRODString1)) return false;
-                if (!object.Equals(this.UnknownPROD2, rhs.UnknownPROD2)) return false;
-                if (!object.Equals(this.UnknownPROD3, rhs.UnknownPROD3)) return false;
-                if (!object.Equals(this.UnknownPROD4, rhs.UnknownPROD4)) return false;
-                if (!object.Equals(this.UnknownPRODString2, rhs.UnknownPRODString2)) return false;
-                if (!object.Equals(this.UnknownPROD5, rhs.UnknownPROD5)) return false;
-                if (!object.Equals(this.UnknownPROD6, rhs.UnknownPROD6)) return false;
-                if (!object.Equals(this.UnknownPROD7, rhs.UnknownPROD7)) return false;
-                if (!object.Equals(this.UnknownPROD8, rhs.UnknownPROD8)) return false;
+                if (!object.Equals(this.VatsProjectile, rhs.VatsProjectile)) return false;
+                if (!object.Equals(this.MuzzleFlashParticleDefine, rhs.MuzzleFlashParticleDefine)) return false;
+                if (!object.Equals(this.SeekStrength, rhs.SeekStrength)) return false;
+                if (!object.Equals(this.SoundActivationCondition, rhs.SoundActivationCondition)) return false;
+                if (!object.Equals(this.Type, rhs.Type)) return false;
+                if (!object.Equals(this.ParticleDefine, rhs.ParticleDefine)) return false;
+                if (!object.Equals(this.TracerSpeed, rhs.TracerSpeed)) return false;
+                if (!object.Equals(this.ZeroGRecoilStrength, rhs.ZeroGRecoilStrength)) return false;
+                if (!object.Equals(this.ZeroGRecoilLength, rhs.ZeroGRecoilLength)) return false;
+                if (!object.Equals(this.ExplosionDelayBeforeRemoval, rhs.ExplosionDelayBeforeRemoval)) return false;
                 if (!object.Equals(this.MuzzleFlashModel, rhs.MuzzleFlashModel)) return false;
                 if (!object.Equals(this.TextureFilesHashes, rhs.TextureFilesHashes)) return false;
                 if (!object.Equals(this.MuzzleFlashLightLayer, rhs.MuzzleFlashLightLayer)) return false;
@@ -746,7 +745,6 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Destructible);
                 hash.Add(this.Unused);
                 hash.Add(this.Flags);
-                hash.Add(this.Type);
                 hash.Add(this.Gravity);
                 hash.Add(this.Speed);
                 hash.Add(this.Range);
@@ -766,16 +764,16 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.DecalData);
                 hash.Add(this.CollisionLayer);
                 hash.Add(this.TracerFrequency);
-                hash.Add(this.UnknownPROD1);
-                hash.Add(this.UnknownPRODString1);
-                hash.Add(this.UnknownPROD2);
-                hash.Add(this.UnknownPROD3);
-                hash.Add(this.UnknownPROD4);
-                hash.Add(this.UnknownPRODString2);
-                hash.Add(this.UnknownPROD5);
-                hash.Add(this.UnknownPROD6);
-                hash.Add(this.UnknownPROD7);
-                hash.Add(this.UnknownPROD8);
+                hash.Add(this.VatsProjectile);
+                hash.Add(this.MuzzleFlashParticleDefine);
+                hash.Add(this.SeekStrength);
+                hash.Add(this.SoundActivationCondition);
+                hash.Add(this.Type);
+                hash.Add(this.ParticleDefine);
+                hash.Add(this.TracerSpeed);
+                hash.Add(this.ZeroGRecoilStrength);
+                hash.Add(this.ZeroGRecoilLength);
+                hash.Add(this.ExplosionDelayBeforeRemoval);
                 hash.Add(this.MuzzleFlashModel);
                 hash.Add(this.TextureFilesHashes);
                 hash.Add(this.MuzzleFlashLightLayer);
@@ -836,7 +834,6 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.Unused)) return false;
                 if (!eval(this.Flags)) return false;
-                if (!eval(this.Type)) return false;
                 if (!eval(this.Gravity)) return false;
                 if (!eval(this.Speed)) return false;
                 if (!eval(this.Range)) return false;
@@ -856,16 +853,16 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.DecalData)) return false;
                 if (!eval(this.CollisionLayer)) return false;
                 if (!eval(this.TracerFrequency)) return false;
-                if (!eval(this.UnknownPROD1)) return false;
-                if (!eval(this.UnknownPRODString1)) return false;
-                if (!eval(this.UnknownPROD2)) return false;
-                if (!eval(this.UnknownPROD3)) return false;
-                if (!eval(this.UnknownPROD4)) return false;
-                if (!eval(this.UnknownPRODString2)) return false;
-                if (!eval(this.UnknownPROD5)) return false;
-                if (!eval(this.UnknownPROD6)) return false;
-                if (!eval(this.UnknownPROD7)) return false;
-                if (!eval(this.UnknownPROD8)) return false;
+                if (!eval(this.VatsProjectile)) return false;
+                if (!eval(this.MuzzleFlashParticleDefine)) return false;
+                if (!eval(this.SeekStrength)) return false;
+                if (!eval(this.SoundActivationCondition)) return false;
+                if (!eval(this.Type)) return false;
+                if (!eval(this.ParticleDefine)) return false;
+                if (!eval(this.TracerSpeed)) return false;
+                if (!eval(this.ZeroGRecoilStrength)) return false;
+                if (!eval(this.ZeroGRecoilLength)) return false;
+                if (!eval(this.ExplosionDelayBeforeRemoval)) return false;
                 if (!eval(this.MuzzleFlashModel)) return false;
                 if (!eval(this.TextureFilesHashes)) return false;
                 if (!eval(this.MuzzleFlashLightLayer)) return false;
@@ -936,7 +933,6 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.Unused)) return true;
                 if (eval(this.Flags)) return true;
-                if (eval(this.Type)) return true;
                 if (eval(this.Gravity)) return true;
                 if (eval(this.Speed)) return true;
                 if (eval(this.Range)) return true;
@@ -956,16 +952,16 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.DecalData)) return true;
                 if (eval(this.CollisionLayer)) return true;
                 if (eval(this.TracerFrequency)) return true;
-                if (eval(this.UnknownPROD1)) return true;
-                if (eval(this.UnknownPRODString1)) return true;
-                if (eval(this.UnknownPROD2)) return true;
-                if (eval(this.UnknownPROD3)) return true;
-                if (eval(this.UnknownPROD4)) return true;
-                if (eval(this.UnknownPRODString2)) return true;
-                if (eval(this.UnknownPROD5)) return true;
-                if (eval(this.UnknownPROD6)) return true;
-                if (eval(this.UnknownPROD7)) return true;
-                if (eval(this.UnknownPROD8)) return true;
+                if (eval(this.VatsProjectile)) return true;
+                if (eval(this.MuzzleFlashParticleDefine)) return true;
+                if (eval(this.SeekStrength)) return true;
+                if (eval(this.SoundActivationCondition)) return true;
+                if (eval(this.Type)) return true;
+                if (eval(this.ParticleDefine)) return true;
+                if (eval(this.TracerSpeed)) return true;
+                if (eval(this.ZeroGRecoilStrength)) return true;
+                if (eval(this.ZeroGRecoilLength)) return true;
+                if (eval(this.ExplosionDelayBeforeRemoval)) return true;
                 if (eval(this.MuzzleFlashModel)) return true;
                 if (eval(this.TextureFilesHashes)) return true;
                 if (eval(this.MuzzleFlashLightLayer)) return true;
@@ -1026,7 +1022,6 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Destructible = this.Destructible == null ? null : new MaskItem<R, Destructible.Mask<R>?>(eval(this.Destructible.Overall), this.Destructible.Specific?.Translate(eval));
                 obj.Unused = eval(this.Unused);
                 obj.Flags = eval(this.Flags);
-                obj.Type = eval(this.Type);
                 obj.Gravity = eval(this.Gravity);
                 obj.Speed = eval(this.Speed);
                 obj.Range = eval(this.Range);
@@ -1046,16 +1041,16 @@ namespace Mutagen.Bethesda.Starfield
                 obj.DecalData = eval(this.DecalData);
                 obj.CollisionLayer = eval(this.CollisionLayer);
                 obj.TracerFrequency = eval(this.TracerFrequency);
-                obj.UnknownPROD1 = eval(this.UnknownPROD1);
-                obj.UnknownPRODString1 = eval(this.UnknownPRODString1);
-                obj.UnknownPROD2 = eval(this.UnknownPROD2);
-                obj.UnknownPROD3 = eval(this.UnknownPROD3);
-                obj.UnknownPROD4 = eval(this.UnknownPROD4);
-                obj.UnknownPRODString2 = eval(this.UnknownPRODString2);
-                obj.UnknownPROD5 = eval(this.UnknownPROD5);
-                obj.UnknownPROD6 = eval(this.UnknownPROD6);
-                obj.UnknownPROD7 = eval(this.UnknownPROD7);
-                obj.UnknownPROD8 = eval(this.UnknownPROD8);
+                obj.VatsProjectile = eval(this.VatsProjectile);
+                obj.MuzzleFlashParticleDefine = eval(this.MuzzleFlashParticleDefine);
+                obj.SeekStrength = eval(this.SeekStrength);
+                obj.SoundActivationCondition = eval(this.SoundActivationCondition);
+                obj.Type = eval(this.Type);
+                obj.ParticleDefine = eval(this.ParticleDefine);
+                obj.TracerSpeed = eval(this.TracerSpeed);
+                obj.ZeroGRecoilStrength = eval(this.ZeroGRecoilStrength);
+                obj.ZeroGRecoilLength = eval(this.ZeroGRecoilLength);
+                obj.ExplosionDelayBeforeRemoval = eval(this.ExplosionDelayBeforeRemoval);
                 obj.MuzzleFlashModel = eval(this.MuzzleFlashModel);
                 obj.TextureFilesHashes = eval(this.TextureFilesHashes);
                 obj.MuzzleFlashLightLayer = eval(this.MuzzleFlashLightLayer);
@@ -1141,10 +1136,6 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.Type ?? true)
-                    {
-                        sb.AppendItem(Type, "Type");
-                    }
                     if (printMask?.Gravity ?? true)
                     {
                         sb.AppendItem(Gravity, "Gravity");
@@ -1221,45 +1212,45 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(TracerFrequency, "TracerFrequency");
                     }
-                    if (printMask?.UnknownPROD1 ?? true)
+                    if (printMask?.VatsProjectile ?? true)
                     {
-                        sb.AppendItem(UnknownPROD1, "UnknownPROD1");
+                        sb.AppendItem(VatsProjectile, "VatsProjectile");
                     }
-                    if (printMask?.UnknownPRODString1 ?? true)
+                    if (printMask?.MuzzleFlashParticleDefine ?? true)
                     {
-                        sb.AppendItem(UnknownPRODString1, "UnknownPRODString1");
+                        sb.AppendItem(MuzzleFlashParticleDefine, "MuzzleFlashParticleDefine");
                     }
-                    if (printMask?.UnknownPROD2 ?? true)
+                    if (printMask?.SeekStrength ?? true)
                     {
-                        sb.AppendItem(UnknownPROD2, "UnknownPROD2");
+                        sb.AppendItem(SeekStrength, "SeekStrength");
                     }
-                    if (printMask?.UnknownPROD3 ?? true)
+                    if (printMask?.SoundActivationCondition ?? true)
                     {
-                        sb.AppendItem(UnknownPROD3, "UnknownPROD3");
+                        sb.AppendItem(SoundActivationCondition, "SoundActivationCondition");
                     }
-                    if (printMask?.UnknownPROD4 ?? true)
+                    if (printMask?.Type ?? true)
                     {
-                        sb.AppendItem(UnknownPROD4, "UnknownPROD4");
+                        sb.AppendItem(Type, "Type");
                     }
-                    if (printMask?.UnknownPRODString2 ?? true)
+                    if (printMask?.ParticleDefine ?? true)
                     {
-                        sb.AppendItem(UnknownPRODString2, "UnknownPRODString2");
+                        sb.AppendItem(ParticleDefine, "ParticleDefine");
                     }
-                    if (printMask?.UnknownPROD5 ?? true)
+                    if (printMask?.TracerSpeed ?? true)
                     {
-                        sb.AppendItem(UnknownPROD5, "UnknownPROD5");
+                        sb.AppendItem(TracerSpeed, "TracerSpeed");
                     }
-                    if (printMask?.UnknownPROD6 ?? true)
+                    if (printMask?.ZeroGRecoilStrength ?? true)
                     {
-                        sb.AppendItem(UnknownPROD6, "UnknownPROD6");
+                        sb.AppendItem(ZeroGRecoilStrength, "ZeroGRecoilStrength");
                     }
-                    if (printMask?.UnknownPROD7 ?? true)
+                    if (printMask?.ZeroGRecoilLength ?? true)
                     {
-                        sb.AppendItem(UnknownPROD7, "UnknownPROD7");
+                        sb.AppendItem(ZeroGRecoilLength, "ZeroGRecoilLength");
                     }
-                    if (printMask?.UnknownPROD8 ?? true)
+                    if (printMask?.ExplosionDelayBeforeRemoval ?? true)
                     {
-                        sb.AppendItem(UnknownPROD8, "UnknownPROD8");
+                        sb.AppendItem(ExplosionDelayBeforeRemoval, "ExplosionDelayBeforeRemoval");
                     }
                     if (printMask?.MuzzleFlashModel ?? true)
                     {
@@ -1315,7 +1306,6 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, Destructible.ErrorMask?>? Destructible;
             public Exception? Unused;
             public Exception? Flags;
-            public Exception? Type;
             public Exception? Gravity;
             public Exception? Speed;
             public Exception? Range;
@@ -1335,16 +1325,16 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? DecalData;
             public Exception? CollisionLayer;
             public Exception? TracerFrequency;
-            public Exception? UnknownPROD1;
-            public Exception? UnknownPRODString1;
-            public Exception? UnknownPROD2;
-            public Exception? UnknownPROD3;
-            public Exception? UnknownPROD4;
-            public Exception? UnknownPRODString2;
-            public Exception? UnknownPROD5;
-            public Exception? UnknownPROD6;
-            public Exception? UnknownPROD7;
-            public Exception? UnknownPROD8;
+            public Exception? VatsProjectile;
+            public Exception? MuzzleFlashParticleDefine;
+            public Exception? SeekStrength;
+            public Exception? SoundActivationCondition;
+            public Exception? Type;
+            public Exception? ParticleDefine;
+            public Exception? TracerSpeed;
+            public Exception? ZeroGRecoilStrength;
+            public Exception? ZeroGRecoilLength;
+            public Exception? ExplosionDelayBeforeRemoval;
             public Exception? MuzzleFlashModel;
             public Exception? TextureFilesHashes;
             public Exception? MuzzleFlashLightLayer;
@@ -1383,8 +1373,6 @@ namespace Mutagen.Bethesda.Starfield
                         return Unused;
                     case Projectile_FieldIndex.Flags:
                         return Flags;
-                    case Projectile_FieldIndex.Type:
-                        return Type;
                     case Projectile_FieldIndex.Gravity:
                         return Gravity;
                     case Projectile_FieldIndex.Speed:
@@ -1423,26 +1411,26 @@ namespace Mutagen.Bethesda.Starfield
                         return CollisionLayer;
                     case Projectile_FieldIndex.TracerFrequency:
                         return TracerFrequency;
-                    case Projectile_FieldIndex.UnknownPROD1:
-                        return UnknownPROD1;
-                    case Projectile_FieldIndex.UnknownPRODString1:
-                        return UnknownPRODString1;
-                    case Projectile_FieldIndex.UnknownPROD2:
-                        return UnknownPROD2;
-                    case Projectile_FieldIndex.UnknownPROD3:
-                        return UnknownPROD3;
-                    case Projectile_FieldIndex.UnknownPROD4:
-                        return UnknownPROD4;
-                    case Projectile_FieldIndex.UnknownPRODString2:
-                        return UnknownPRODString2;
-                    case Projectile_FieldIndex.UnknownPROD5:
-                        return UnknownPROD5;
-                    case Projectile_FieldIndex.UnknownPROD6:
-                        return UnknownPROD6;
-                    case Projectile_FieldIndex.UnknownPROD7:
-                        return UnknownPROD7;
-                    case Projectile_FieldIndex.UnknownPROD8:
-                        return UnknownPROD8;
+                    case Projectile_FieldIndex.VatsProjectile:
+                        return VatsProjectile;
+                    case Projectile_FieldIndex.MuzzleFlashParticleDefine:
+                        return MuzzleFlashParticleDefine;
+                    case Projectile_FieldIndex.SeekStrength:
+                        return SeekStrength;
+                    case Projectile_FieldIndex.SoundActivationCondition:
+                        return SoundActivationCondition;
+                    case Projectile_FieldIndex.Type:
+                        return Type;
+                    case Projectile_FieldIndex.ParticleDefine:
+                        return ParticleDefine;
+                    case Projectile_FieldIndex.TracerSpeed:
+                        return TracerSpeed;
+                    case Projectile_FieldIndex.ZeroGRecoilStrength:
+                        return ZeroGRecoilStrength;
+                    case Projectile_FieldIndex.ZeroGRecoilLength:
+                        return ZeroGRecoilLength;
+                    case Projectile_FieldIndex.ExplosionDelayBeforeRemoval:
+                        return ExplosionDelayBeforeRemoval;
                     case Projectile_FieldIndex.MuzzleFlashModel:
                         return MuzzleFlashModel;
                     case Projectile_FieldIndex.TextureFilesHashes:
@@ -1502,9 +1490,6 @@ namespace Mutagen.Bethesda.Starfield
                     case Projectile_FieldIndex.Flags:
                         this.Flags = ex;
                         break;
-                    case Projectile_FieldIndex.Type:
-                        this.Type = ex;
-                        break;
                     case Projectile_FieldIndex.Gravity:
                         this.Gravity = ex;
                         break;
@@ -1562,35 +1547,35 @@ namespace Mutagen.Bethesda.Starfield
                     case Projectile_FieldIndex.TracerFrequency:
                         this.TracerFrequency = ex;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD1:
-                        this.UnknownPROD1 = ex;
+                    case Projectile_FieldIndex.VatsProjectile:
+                        this.VatsProjectile = ex;
                         break;
-                    case Projectile_FieldIndex.UnknownPRODString1:
-                        this.UnknownPRODString1 = ex;
+                    case Projectile_FieldIndex.MuzzleFlashParticleDefine:
+                        this.MuzzleFlashParticleDefine = ex;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD2:
-                        this.UnknownPROD2 = ex;
+                    case Projectile_FieldIndex.SeekStrength:
+                        this.SeekStrength = ex;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD3:
-                        this.UnknownPROD3 = ex;
+                    case Projectile_FieldIndex.SoundActivationCondition:
+                        this.SoundActivationCondition = ex;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD4:
-                        this.UnknownPROD4 = ex;
+                    case Projectile_FieldIndex.Type:
+                        this.Type = ex;
                         break;
-                    case Projectile_FieldIndex.UnknownPRODString2:
-                        this.UnknownPRODString2 = ex;
+                    case Projectile_FieldIndex.ParticleDefine:
+                        this.ParticleDefine = ex;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD5:
-                        this.UnknownPROD5 = ex;
+                    case Projectile_FieldIndex.TracerSpeed:
+                        this.TracerSpeed = ex;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD6:
-                        this.UnknownPROD6 = ex;
+                    case Projectile_FieldIndex.ZeroGRecoilStrength:
+                        this.ZeroGRecoilStrength = ex;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD7:
-                        this.UnknownPROD7 = ex;
+                    case Projectile_FieldIndex.ZeroGRecoilLength:
+                        this.ZeroGRecoilLength = ex;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD8:
-                        this.UnknownPROD8 = ex;
+                    case Projectile_FieldIndex.ExplosionDelayBeforeRemoval:
+                        this.ExplosionDelayBeforeRemoval = ex;
                         break;
                     case Projectile_FieldIndex.MuzzleFlashModel:
                         this.MuzzleFlashModel = ex;
@@ -1660,9 +1645,6 @@ namespace Mutagen.Bethesda.Starfield
                     case Projectile_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
                         break;
-                    case Projectile_FieldIndex.Type:
-                        this.Type = (Exception?)obj;
-                        break;
                     case Projectile_FieldIndex.Gravity:
                         this.Gravity = (Exception?)obj;
                         break;
@@ -1720,35 +1702,35 @@ namespace Mutagen.Bethesda.Starfield
                     case Projectile_FieldIndex.TracerFrequency:
                         this.TracerFrequency = (Exception?)obj;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD1:
-                        this.UnknownPROD1 = (Exception?)obj;
+                    case Projectile_FieldIndex.VatsProjectile:
+                        this.VatsProjectile = (Exception?)obj;
                         break;
-                    case Projectile_FieldIndex.UnknownPRODString1:
-                        this.UnknownPRODString1 = (Exception?)obj;
+                    case Projectile_FieldIndex.MuzzleFlashParticleDefine:
+                        this.MuzzleFlashParticleDefine = (Exception?)obj;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD2:
-                        this.UnknownPROD2 = (Exception?)obj;
+                    case Projectile_FieldIndex.SeekStrength:
+                        this.SeekStrength = (Exception?)obj;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD3:
-                        this.UnknownPROD3 = (Exception?)obj;
+                    case Projectile_FieldIndex.SoundActivationCondition:
+                        this.SoundActivationCondition = (Exception?)obj;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD4:
-                        this.UnknownPROD4 = (Exception?)obj;
+                    case Projectile_FieldIndex.Type:
+                        this.Type = (Exception?)obj;
                         break;
-                    case Projectile_FieldIndex.UnknownPRODString2:
-                        this.UnknownPRODString2 = (Exception?)obj;
+                    case Projectile_FieldIndex.ParticleDefine:
+                        this.ParticleDefine = (Exception?)obj;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD5:
-                        this.UnknownPROD5 = (Exception?)obj;
+                    case Projectile_FieldIndex.TracerSpeed:
+                        this.TracerSpeed = (Exception?)obj;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD6:
-                        this.UnknownPROD6 = (Exception?)obj;
+                    case Projectile_FieldIndex.ZeroGRecoilStrength:
+                        this.ZeroGRecoilStrength = (Exception?)obj;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD7:
-                        this.UnknownPROD7 = (Exception?)obj;
+                    case Projectile_FieldIndex.ZeroGRecoilLength:
+                        this.ZeroGRecoilLength = (Exception?)obj;
                         break;
-                    case Projectile_FieldIndex.UnknownPROD8:
-                        this.UnknownPROD8 = (Exception?)obj;
+                    case Projectile_FieldIndex.ExplosionDelayBeforeRemoval:
+                        this.ExplosionDelayBeforeRemoval = (Exception?)obj;
                         break;
                     case Projectile_FieldIndex.MuzzleFlashModel:
                         this.MuzzleFlashModel = (Exception?)obj;
@@ -1794,7 +1776,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (Destructible != null) return true;
                 if (Unused != null) return true;
                 if (Flags != null) return true;
-                if (Type != null) return true;
                 if (Gravity != null) return true;
                 if (Speed != null) return true;
                 if (Range != null) return true;
@@ -1814,16 +1795,16 @@ namespace Mutagen.Bethesda.Starfield
                 if (DecalData != null) return true;
                 if (CollisionLayer != null) return true;
                 if (TracerFrequency != null) return true;
-                if (UnknownPROD1 != null) return true;
-                if (UnknownPRODString1 != null) return true;
-                if (UnknownPROD2 != null) return true;
-                if (UnknownPROD3 != null) return true;
-                if (UnknownPROD4 != null) return true;
-                if (UnknownPRODString2 != null) return true;
-                if (UnknownPROD5 != null) return true;
-                if (UnknownPROD6 != null) return true;
-                if (UnknownPROD7 != null) return true;
-                if (UnknownPROD8 != null) return true;
+                if (VatsProjectile != null) return true;
+                if (MuzzleFlashParticleDefine != null) return true;
+                if (SeekStrength != null) return true;
+                if (SoundActivationCondition != null) return true;
+                if (Type != null) return true;
+                if (ParticleDefine != null) return true;
+                if (TracerSpeed != null) return true;
+                if (ZeroGRecoilStrength != null) return true;
+                if (ZeroGRecoilLength != null) return true;
+                if (ExplosionDelayBeforeRemoval != null) return true;
                 if (MuzzleFlashModel != null) return true;
                 if (TextureFilesHashes != null) return true;
                 if (MuzzleFlashLightLayer != null) return true;
@@ -1897,9 +1878,6 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(Type, "Type");
-                }
-                {
                     sb.AppendItem(Gravity, "Gravity");
                 }
                 {
@@ -1957,34 +1935,34 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(TracerFrequency, "TracerFrequency");
                 }
                 {
-                    sb.AppendItem(UnknownPROD1, "UnknownPROD1");
+                    sb.AppendItem(VatsProjectile, "VatsProjectile");
                 }
                 {
-                    sb.AppendItem(UnknownPRODString1, "UnknownPRODString1");
+                    sb.AppendItem(MuzzleFlashParticleDefine, "MuzzleFlashParticleDefine");
                 }
                 {
-                    sb.AppendItem(UnknownPROD2, "UnknownPROD2");
+                    sb.AppendItem(SeekStrength, "SeekStrength");
                 }
                 {
-                    sb.AppendItem(UnknownPROD3, "UnknownPROD3");
+                    sb.AppendItem(SoundActivationCondition, "SoundActivationCondition");
                 }
                 {
-                    sb.AppendItem(UnknownPROD4, "UnknownPROD4");
+                    sb.AppendItem(Type, "Type");
                 }
                 {
-                    sb.AppendItem(UnknownPRODString2, "UnknownPRODString2");
+                    sb.AppendItem(ParticleDefine, "ParticleDefine");
                 }
                 {
-                    sb.AppendItem(UnknownPROD5, "UnknownPROD5");
+                    sb.AppendItem(TracerSpeed, "TracerSpeed");
                 }
                 {
-                    sb.AppendItem(UnknownPROD6, "UnknownPROD6");
+                    sb.AppendItem(ZeroGRecoilStrength, "ZeroGRecoilStrength");
                 }
                 {
-                    sb.AppendItem(UnknownPROD7, "UnknownPROD7");
+                    sb.AppendItem(ZeroGRecoilLength, "ZeroGRecoilLength");
                 }
                 {
-                    sb.AppendItem(UnknownPROD8, "UnknownPROD8");
+                    sb.AppendItem(ExplosionDelayBeforeRemoval, "ExplosionDelayBeforeRemoval");
                 }
                 {
                     sb.AppendItem(MuzzleFlashModel, "MuzzleFlashModel");
@@ -2023,7 +2001,6 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Destructible = this.Destructible.Combine(rhs.Destructible, (l, r) => l.Combine(r));
                 ret.Unused = this.Unused.Combine(rhs.Unused);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
-                ret.Type = this.Type.Combine(rhs.Type);
                 ret.Gravity = this.Gravity.Combine(rhs.Gravity);
                 ret.Speed = this.Speed.Combine(rhs.Speed);
                 ret.Range = this.Range.Combine(rhs.Range);
@@ -2043,16 +2020,16 @@ namespace Mutagen.Bethesda.Starfield
                 ret.DecalData = this.DecalData.Combine(rhs.DecalData);
                 ret.CollisionLayer = this.CollisionLayer.Combine(rhs.CollisionLayer);
                 ret.TracerFrequency = this.TracerFrequency.Combine(rhs.TracerFrequency);
-                ret.UnknownPROD1 = this.UnknownPROD1.Combine(rhs.UnknownPROD1);
-                ret.UnknownPRODString1 = this.UnknownPRODString1.Combine(rhs.UnknownPRODString1);
-                ret.UnknownPROD2 = this.UnknownPROD2.Combine(rhs.UnknownPROD2);
-                ret.UnknownPROD3 = this.UnknownPROD3.Combine(rhs.UnknownPROD3);
-                ret.UnknownPROD4 = this.UnknownPROD4.Combine(rhs.UnknownPROD4);
-                ret.UnknownPRODString2 = this.UnknownPRODString2.Combine(rhs.UnknownPRODString2);
-                ret.UnknownPROD5 = this.UnknownPROD5.Combine(rhs.UnknownPROD5);
-                ret.UnknownPROD6 = this.UnknownPROD6.Combine(rhs.UnknownPROD6);
-                ret.UnknownPROD7 = this.UnknownPROD7.Combine(rhs.UnknownPROD7);
-                ret.UnknownPROD8 = this.UnknownPROD8.Combine(rhs.UnknownPROD8);
+                ret.VatsProjectile = this.VatsProjectile.Combine(rhs.VatsProjectile);
+                ret.MuzzleFlashParticleDefine = this.MuzzleFlashParticleDefine.Combine(rhs.MuzzleFlashParticleDefine);
+                ret.SeekStrength = this.SeekStrength.Combine(rhs.SeekStrength);
+                ret.SoundActivationCondition = this.SoundActivationCondition.Combine(rhs.SoundActivationCondition);
+                ret.Type = this.Type.Combine(rhs.Type);
+                ret.ParticleDefine = this.ParticleDefine.Combine(rhs.ParticleDefine);
+                ret.TracerSpeed = this.TracerSpeed.Combine(rhs.TracerSpeed);
+                ret.ZeroGRecoilStrength = this.ZeroGRecoilStrength.Combine(rhs.ZeroGRecoilStrength);
+                ret.ZeroGRecoilLength = this.ZeroGRecoilLength.Combine(rhs.ZeroGRecoilLength);
+                ret.ExplosionDelayBeforeRemoval = this.ExplosionDelayBeforeRemoval.Combine(rhs.ExplosionDelayBeforeRemoval);
                 ret.MuzzleFlashModel = this.MuzzleFlashModel.Combine(rhs.MuzzleFlashModel);
                 ret.TextureFilesHashes = this.TextureFilesHashes.Combine(rhs.TextureFilesHashes);
                 ret.MuzzleFlashLightLayer = this.MuzzleFlashLightLayer.Combine(rhs.MuzzleFlashLightLayer);
@@ -2094,7 +2071,6 @@ namespace Mutagen.Bethesda.Starfield
             public Destructible.TranslationMask? Destructible;
             public bool Unused;
             public bool Flags;
-            public bool Type;
             public bool Gravity;
             public bool Speed;
             public bool Range;
@@ -2114,16 +2090,16 @@ namespace Mutagen.Bethesda.Starfield
             public bool DecalData;
             public bool CollisionLayer;
             public bool TracerFrequency;
-            public bool UnknownPROD1;
-            public bool UnknownPRODString1;
-            public bool UnknownPROD2;
-            public bool UnknownPROD3;
-            public bool UnknownPROD4;
-            public bool UnknownPRODString2;
-            public bool UnknownPROD5;
-            public bool UnknownPROD6;
-            public bool UnknownPROD7;
-            public bool UnknownPROD8;
+            public bool VatsProjectile;
+            public bool MuzzleFlashParticleDefine;
+            public bool SeekStrength;
+            public bool SoundActivationCondition;
+            public bool Type;
+            public bool ParticleDefine;
+            public bool TracerSpeed;
+            public bool ZeroGRecoilStrength;
+            public bool ZeroGRecoilLength;
+            public bool ExplosionDelayBeforeRemoval;
             public bool MuzzleFlashModel;
             public bool TextureFilesHashes;
             public bool MuzzleFlashLightLayer;
@@ -2145,7 +2121,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.Name = defaultOn;
                 this.Unused = defaultOn;
                 this.Flags = defaultOn;
-                this.Type = defaultOn;
                 this.Gravity = defaultOn;
                 this.Speed = defaultOn;
                 this.Range = defaultOn;
@@ -2165,16 +2140,16 @@ namespace Mutagen.Bethesda.Starfield
                 this.DecalData = defaultOn;
                 this.CollisionLayer = defaultOn;
                 this.TracerFrequency = defaultOn;
-                this.UnknownPROD1 = defaultOn;
-                this.UnknownPRODString1 = defaultOn;
-                this.UnknownPROD2 = defaultOn;
-                this.UnknownPROD3 = defaultOn;
-                this.UnknownPROD4 = defaultOn;
-                this.UnknownPRODString2 = defaultOn;
-                this.UnknownPROD5 = defaultOn;
-                this.UnknownPROD6 = defaultOn;
-                this.UnknownPROD7 = defaultOn;
-                this.UnknownPROD8 = defaultOn;
+                this.VatsProjectile = defaultOn;
+                this.MuzzleFlashParticleDefine = defaultOn;
+                this.SeekStrength = defaultOn;
+                this.SoundActivationCondition = defaultOn;
+                this.Type = defaultOn;
+                this.ParticleDefine = defaultOn;
+                this.TracerSpeed = defaultOn;
+                this.ZeroGRecoilStrength = defaultOn;
+                this.ZeroGRecoilLength = defaultOn;
+                this.ExplosionDelayBeforeRemoval = defaultOn;
                 this.MuzzleFlashModel = defaultOn;
                 this.TextureFilesHashes = defaultOn;
                 this.MuzzleFlashLightLayer = defaultOn;
@@ -2198,7 +2173,6 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Destructible != null ? Destructible.OnOverall : DefaultOn, Destructible?.GetCrystal()));
                 ret.Add((Unused, null));
                 ret.Add((Flags, null));
-                ret.Add((Type, null));
                 ret.Add((Gravity, null));
                 ret.Add((Speed, null));
                 ret.Add((Range, null));
@@ -2218,16 +2192,16 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((DecalData, null));
                 ret.Add((CollisionLayer, null));
                 ret.Add((TracerFrequency, null));
-                ret.Add((UnknownPROD1, null));
-                ret.Add((UnknownPRODString1, null));
-                ret.Add((UnknownPROD2, null));
-                ret.Add((UnknownPROD3, null));
-                ret.Add((UnknownPROD4, null));
-                ret.Add((UnknownPRODString2, null));
-                ret.Add((UnknownPROD5, null));
-                ret.Add((UnknownPROD6, null));
-                ret.Add((UnknownPROD7, null));
-                ret.Add((UnknownPROD8, null));
+                ret.Add((VatsProjectile, null));
+                ret.Add((MuzzleFlashParticleDefine, null));
+                ret.Add((SeekStrength, null));
+                ret.Add((SoundActivationCondition, null));
+                ret.Add((Type, null));
+                ret.Add((ParticleDefine, null));
+                ret.Add((TracerSpeed, null));
+                ret.Add((ZeroGRecoilStrength, null));
+                ret.Add((ZeroGRecoilLength, null));
+                ret.Add((ExplosionDelayBeforeRemoval, null));
                 ret.Add((MuzzleFlashModel, null));
                 ret.Add((TextureFilesHashes, null));
                 ret.Add((MuzzleFlashLightLayer, null));
@@ -2384,6 +2358,7 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IProjectile :
         IAssetLinkContainer,
         IBaseObject,
+        IExplodeSpawn,
         IFormLinkContainer,
         IHasDestructible,
         IHaveVirtualMachineAdapter,
@@ -2392,6 +2367,7 @@ namespace Mutagen.Bethesda.Starfield
         INamed,
         INamedRequired,
         IObjectBounded,
+        IPlaceableObject,
         IProjectileGetter,
         IScripted,
         IStarfieldMajorRecordInternal,
@@ -2406,7 +2382,7 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IObjectBounded
         /// </summary>
         new ObjectBounds ObjectBounds { get; set; }
-        new Percent DirtinessScale { get; set; }
+        new Single DirtinessScale { get; set; }
         new ObjectPaletteDefaults? ObjectPaletteDefaults { get; set; }
         new UInt64? XALG { get; set; }
         new ExtendedList<AComponent> Components { get; }
@@ -2424,7 +2400,6 @@ namespace Mutagen.Bethesda.Starfield
         new Destructible? Destructible { get; set; }
         new MemorySlice<Byte>? Unused { get; set; }
         new Projectile.Flag Flags { get; set; }
-        new Projectile.TypeEnum Type { get; set; }
         new Single Gravity { get; set; }
         new Single Speed { get; set; }
         new Single Range { get; set; }
@@ -2444,16 +2419,16 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<ITextureSetGetter> DecalData { get; set; }
         new IFormLink<ICollisionLayerGetter> CollisionLayer { get; set; }
         new Byte TracerFrequency { get; set; }
-        new UInt32 UnknownPROD1 { get; set; }
-        new String UnknownPRODString1 { get; set; }
-        new Single UnknownPROD2 { get; set; }
-        new UInt32 UnknownPROD3 { get; set; }
-        new Byte UnknownPROD4 { get; set; }
-        new String UnknownPRODString2 { get; set; }
-        new Single UnknownPROD5 { get; set; }
-        new Single UnknownPROD6 { get; set; }
-        new Single UnknownPROD7 { get; set; }
-        new Single UnknownPROD8 { get; set; }
+        new IFormLink<IProjectileGetter> VatsProjectile { get; set; }
+        new String MuzzleFlashParticleDefine { get; set; }
+        new Single SeekStrength { get; set; }
+        new Projectile.SoundActivationConditionOption SoundActivationCondition { get; set; }
+        new Projectile.TypeEnum Type { get; set; }
+        new String ParticleDefine { get; set; }
+        new Single TracerSpeed { get; set; }
+        new Single ZeroGRecoilStrength { get; set; }
+        new Single ZeroGRecoilLength { get; set; }
+        new Single ExplosionDelayBeforeRemoval { get; set; }
         new String MuzzleFlashModel { get; set; }
         new MemorySlice<Byte>? TextureFilesHashes { get; set; }
         new Light.LightLayer? MuzzleFlashLightLayer { get; set; }
@@ -2477,6 +2452,7 @@ namespace Mutagen.Bethesda.Starfield
         IAssetLinkContainerGetter,
         IBaseObjectGetter,
         IBinaryItem,
+        IExplodeSpawnGetter,
         IFormLinkContainerGetter,
         IHasDestructibleGetter,
         IHaveVirtualMachineAdapterGetter,
@@ -2486,6 +2462,7 @@ namespace Mutagen.Bethesda.Starfield
         INamedGetter,
         INamedRequiredGetter,
         IObjectBoundedGetter,
+        IPlaceableObjectGetter,
         IScriptedGetter,
         ITranslatedNamedGetter,
         ITranslatedNamedRequiredGetter
@@ -2503,7 +2480,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IObjectBoundsGetter ObjectBounds { get; }
         #endregion
-        Percent DirtinessScale { get; }
+        Single DirtinessScale { get; }
         IObjectPaletteDefaultsGetter? ObjectPaletteDefaults { get; }
         UInt64? XALG { get; }
         IReadOnlyList<IAComponentGetter> Components { get; }
@@ -2527,7 +2504,6 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         ReadOnlyMemorySlice<Byte>? Unused { get; }
         Projectile.Flag Flags { get; }
-        Projectile.TypeEnum Type { get; }
         Single Gravity { get; }
         Single Speed { get; }
         Single Range { get; }
@@ -2547,16 +2523,16 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<ITextureSetGetter> DecalData { get; }
         IFormLinkGetter<ICollisionLayerGetter> CollisionLayer { get; }
         Byte TracerFrequency { get; }
-        UInt32 UnknownPROD1 { get; }
-        String UnknownPRODString1 { get; }
-        Single UnknownPROD2 { get; }
-        UInt32 UnknownPROD3 { get; }
-        Byte UnknownPROD4 { get; }
-        String UnknownPRODString2 { get; }
-        Single UnknownPROD5 { get; }
-        Single UnknownPROD6 { get; }
-        Single UnknownPROD7 { get; }
-        Single UnknownPROD8 { get; }
+        IFormLinkGetter<IProjectileGetter> VatsProjectile { get; }
+        String MuzzleFlashParticleDefine { get; }
+        Single SeekStrength { get; }
+        Projectile.SoundActivationConditionOption SoundActivationCondition { get; }
+        Projectile.TypeEnum Type { get; }
+        String ParticleDefine { get; }
+        Single TracerSpeed { get; }
+        Single ZeroGRecoilStrength { get; }
+        Single ZeroGRecoilLength { get; }
+        Single ExplosionDelayBeforeRemoval { get; }
         String MuzzleFlashModel { get; }
         ReadOnlyMemorySlice<Byte>? TextureFilesHashes { get; }
         Light.LightLayer? MuzzleFlashLightLayer { get; }
@@ -2752,44 +2728,43 @@ namespace Mutagen.Bethesda.Starfield
         Destructible = 15,
         Unused = 16,
         Flags = 17,
-        Type = 18,
-        Gravity = 19,
-        Speed = 20,
-        Range = 21,
-        Light = 22,
-        MuzzleFlash = 23,
-        ExplosionAltTriggerProximity = 24,
-        ExplosionAltTriggerTimer = 25,
-        Explosion = 26,
-        MuzzleFlashDuration = 27,
-        FadeDuration = 28,
-        ImpactForce = 29,
-        DefaultWeaponSource = 30,
-        ConeSpread = 31,
-        CollisionRadius = 32,
-        Lifetime = 33,
-        RelaunchInterval = 34,
-        DecalData = 35,
-        CollisionLayer = 36,
-        TracerFrequency = 37,
-        UnknownPROD1 = 38,
-        UnknownPRODString1 = 39,
-        UnknownPROD2 = 40,
-        UnknownPROD3 = 41,
-        UnknownPROD4 = 42,
-        UnknownPRODString2 = 43,
-        UnknownPROD5 = 44,
-        UnknownPROD6 = 45,
-        UnknownPROD7 = 46,
-        UnknownPROD8 = 47,
-        MuzzleFlashModel = 48,
-        TextureFilesHashes = 49,
-        MuzzleFlashLightLayer = 50,
-        ActiveSound = 51,
-        CountdownEndSound = 52,
-        DisableSound = 53,
-        SoundLevel = 54,
-        CurveTable = 55,
+        Gravity = 18,
+        Speed = 19,
+        Range = 20,
+        Light = 21,
+        MuzzleFlash = 22,
+        ExplosionAltTriggerProximity = 23,
+        ExplosionAltTriggerTimer = 24,
+        Explosion = 25,
+        MuzzleFlashDuration = 26,
+        FadeDuration = 27,
+        ImpactForce = 28,
+        DefaultWeaponSource = 29,
+        ConeSpread = 30,
+        CollisionRadius = 31,
+        Lifetime = 32,
+        RelaunchInterval = 33,
+        DecalData = 34,
+        CollisionLayer = 35,
+        TracerFrequency = 36,
+        VatsProjectile = 37,
+        MuzzleFlashParticleDefine = 38,
+        SeekStrength = 39,
+        SoundActivationCondition = 40,
+        Type = 41,
+        ParticleDefine = 42,
+        TracerSpeed = 43,
+        ZeroGRecoilStrength = 44,
+        ZeroGRecoilLength = 45,
+        ExplosionDelayBeforeRemoval = 46,
+        MuzzleFlashModel = 47,
+        TextureFilesHashes = 48,
+        MuzzleFlashLightLayer = 49,
+        ActiveSound = 50,
+        CountdownEndSound = 51,
+        DisableSound = 52,
+        SoundLevel = 53,
+        CurveTable = 54,
     }
     #endregion
 
@@ -2800,9 +2775,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 49;
+        public const ushort AdditionalFieldCount = 48;
 
-        public const ushort FieldCount = 56;
+        public const ushort FieldCount = 55;
 
         public static readonly Type MaskType = typeof(Projectile.Mask<>);
 
@@ -2910,7 +2885,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.VirtualMachineAdapter = null;
             item.ObjectBounds.Clear();
-            item.DirtinessScale = default(Percent);
+            item.DirtinessScale = default(Single);
             item.ObjectPaletteDefaults = null;
             item.XALG = default;
             item.Components.Clear();
@@ -2919,7 +2894,6 @@ namespace Mutagen.Bethesda.Starfield
             item.Destructible = null;
             item.Unused = default;
             item.Flags = default(Projectile.Flag);
-            item.Type = default(Projectile.TypeEnum);
             item.Gravity = default(Single);
             item.Speed = default(Single);
             item.Range = default(Single);
@@ -2939,16 +2913,16 @@ namespace Mutagen.Bethesda.Starfield
             item.DecalData.Clear();
             item.CollisionLayer.Clear();
             item.TracerFrequency = default(Byte);
-            item.UnknownPROD1 = default(UInt32);
-            item.UnknownPRODString1 = string.Empty;
-            item.UnknownPROD2 = default(Single);
-            item.UnknownPROD3 = default(UInt32);
-            item.UnknownPROD4 = default(Byte);
-            item.UnknownPRODString2 = string.Empty;
-            item.UnknownPROD5 = default(Single);
-            item.UnknownPROD6 = default(Single);
-            item.UnknownPROD7 = default(Single);
-            item.UnknownPROD8 = default(Single);
+            item.VatsProjectile.Clear();
+            item.MuzzleFlashParticleDefine = string.Empty;
+            item.SeekStrength = default(Single);
+            item.SoundActivationCondition = default(Projectile.SoundActivationConditionOption);
+            item.Type = default(Projectile.TypeEnum);
+            item.ParticleDefine = string.Empty;
+            item.TracerSpeed = default(Single);
+            item.ZeroGRecoilStrength = default(Single);
+            item.ZeroGRecoilLength = default(Single);
+            item.ExplosionDelayBeforeRemoval = default(Single);
             item.MuzzleFlashModel = string.Empty;
             item.TextureFilesHashes = default;
             item.MuzzleFlashLightLayer = default;
@@ -2984,6 +2958,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.DefaultWeaponSource.Relink(mapping);
             obj.DecalData.Relink(mapping);
             obj.CollisionLayer.Relink(mapping);
+            obj.VatsProjectile.Relink(mapping);
             obj.ActiveSound?.RemapLinks(mapping);
             obj.CountdownEndSound?.RemapLinks(mapping);
             obj.DisableSound?.RemapLinks(mapping);
@@ -3101,7 +3076,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.ObjectBounds = MaskItemExt.Factory(item.ObjectBounds.GetEqualsMask(rhs.ObjectBounds, include), include);
-            ret.DirtinessScale = item.DirtinessScale.Equals(rhs.DirtinessScale);
+            ret.DirtinessScale = item.DirtinessScale.EqualsWithin(rhs.DirtinessScale);
             ret.ObjectPaletteDefaults = EqualsMaskHelper.EqualsHelper(
                 item.ObjectPaletteDefaults,
                 rhs.ObjectPaletteDefaults,
@@ -3125,7 +3100,6 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.Unused = MemorySliceExt.SequenceEqual(item.Unused, rhs.Unused);
             ret.Flags = item.Flags == rhs.Flags;
-            ret.Type = item.Type == rhs.Type;
             ret.Gravity = item.Gravity.EqualsWithin(rhs.Gravity);
             ret.Speed = item.Speed.EqualsWithin(rhs.Speed);
             ret.Range = item.Range.EqualsWithin(rhs.Range);
@@ -3145,16 +3119,16 @@ namespace Mutagen.Bethesda.Starfield
             ret.DecalData = item.DecalData.Equals(rhs.DecalData);
             ret.CollisionLayer = item.CollisionLayer.Equals(rhs.CollisionLayer);
             ret.TracerFrequency = item.TracerFrequency == rhs.TracerFrequency;
-            ret.UnknownPROD1 = item.UnknownPROD1 == rhs.UnknownPROD1;
-            ret.UnknownPRODString1 = string.Equals(item.UnknownPRODString1, rhs.UnknownPRODString1);
-            ret.UnknownPROD2 = item.UnknownPROD2.EqualsWithin(rhs.UnknownPROD2);
-            ret.UnknownPROD3 = item.UnknownPROD3 == rhs.UnknownPROD3;
-            ret.UnknownPROD4 = item.UnknownPROD4 == rhs.UnknownPROD4;
-            ret.UnknownPRODString2 = string.Equals(item.UnknownPRODString2, rhs.UnknownPRODString2);
-            ret.UnknownPROD5 = item.UnknownPROD5.EqualsWithin(rhs.UnknownPROD5);
-            ret.UnknownPROD6 = item.UnknownPROD6.EqualsWithin(rhs.UnknownPROD6);
-            ret.UnknownPROD7 = item.UnknownPROD7.EqualsWithin(rhs.UnknownPROD7);
-            ret.UnknownPROD8 = item.UnknownPROD8.EqualsWithin(rhs.UnknownPROD8);
+            ret.VatsProjectile = item.VatsProjectile.Equals(rhs.VatsProjectile);
+            ret.MuzzleFlashParticleDefine = string.Equals(item.MuzzleFlashParticleDefine, rhs.MuzzleFlashParticleDefine);
+            ret.SeekStrength = item.SeekStrength.EqualsWithin(rhs.SeekStrength);
+            ret.SoundActivationCondition = item.SoundActivationCondition == rhs.SoundActivationCondition;
+            ret.Type = item.Type == rhs.Type;
+            ret.ParticleDefine = string.Equals(item.ParticleDefine, rhs.ParticleDefine);
+            ret.TracerSpeed = item.TracerSpeed.EqualsWithin(rhs.TracerSpeed);
+            ret.ZeroGRecoilStrength = item.ZeroGRecoilStrength.EqualsWithin(rhs.ZeroGRecoilStrength);
+            ret.ZeroGRecoilLength = item.ZeroGRecoilLength.EqualsWithin(rhs.ZeroGRecoilLength);
+            ret.ExplosionDelayBeforeRemoval = item.ExplosionDelayBeforeRemoval.EqualsWithin(rhs.ExplosionDelayBeforeRemoval);
             ret.MuzzleFlashModel = string.Equals(item.MuzzleFlashModel, rhs.MuzzleFlashModel);
             ret.TextureFilesHashes = MemorySliceExt.SequenceEqual(item.TextureFilesHashes, rhs.TextureFilesHashes);
             ret.MuzzleFlashLightLayer = item.MuzzleFlashLightLayer == rhs.MuzzleFlashLightLayer;
@@ -3285,10 +3259,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Flags, "Flags");
             }
-            if (printMask?.Type ?? true)
-            {
-                sb.AppendItem(item.Type, "Type");
-            }
             if (printMask?.Gravity ?? true)
             {
                 sb.AppendItem(item.Gravity, "Gravity");
@@ -3365,45 +3335,45 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.TracerFrequency, "TracerFrequency");
             }
-            if (printMask?.UnknownPROD1 ?? true)
+            if (printMask?.VatsProjectile ?? true)
             {
-                sb.AppendItem(item.UnknownPROD1, "UnknownPROD1");
+                sb.AppendItem(item.VatsProjectile.FormKey, "VatsProjectile");
             }
-            if (printMask?.UnknownPRODString1 ?? true)
+            if (printMask?.MuzzleFlashParticleDefine ?? true)
             {
-                sb.AppendItem(item.UnknownPRODString1, "UnknownPRODString1");
+                sb.AppendItem(item.MuzzleFlashParticleDefine, "MuzzleFlashParticleDefine");
             }
-            if (printMask?.UnknownPROD2 ?? true)
+            if (printMask?.SeekStrength ?? true)
             {
-                sb.AppendItem(item.UnknownPROD2, "UnknownPROD2");
+                sb.AppendItem(item.SeekStrength, "SeekStrength");
             }
-            if (printMask?.UnknownPROD3 ?? true)
+            if (printMask?.SoundActivationCondition ?? true)
             {
-                sb.AppendItem(item.UnknownPROD3, "UnknownPROD3");
+                sb.AppendItem(item.SoundActivationCondition, "SoundActivationCondition");
             }
-            if (printMask?.UnknownPROD4 ?? true)
+            if (printMask?.Type ?? true)
             {
-                sb.AppendItem(item.UnknownPROD4, "UnknownPROD4");
+                sb.AppendItem(item.Type, "Type");
             }
-            if (printMask?.UnknownPRODString2 ?? true)
+            if (printMask?.ParticleDefine ?? true)
             {
-                sb.AppendItem(item.UnknownPRODString2, "UnknownPRODString2");
+                sb.AppendItem(item.ParticleDefine, "ParticleDefine");
             }
-            if (printMask?.UnknownPROD5 ?? true)
+            if (printMask?.TracerSpeed ?? true)
             {
-                sb.AppendItem(item.UnknownPROD5, "UnknownPROD5");
+                sb.AppendItem(item.TracerSpeed, "TracerSpeed");
             }
-            if (printMask?.UnknownPROD6 ?? true)
+            if (printMask?.ZeroGRecoilStrength ?? true)
             {
-                sb.AppendItem(item.UnknownPROD6, "UnknownPROD6");
+                sb.AppendItem(item.ZeroGRecoilStrength, "ZeroGRecoilStrength");
             }
-            if (printMask?.UnknownPROD7 ?? true)
+            if (printMask?.ZeroGRecoilLength ?? true)
             {
-                sb.AppendItem(item.UnknownPROD7, "UnknownPROD7");
+                sb.AppendItem(item.ZeroGRecoilLength, "ZeroGRecoilLength");
             }
-            if (printMask?.UnknownPROD8 ?? true)
+            if (printMask?.ExplosionDelayBeforeRemoval ?? true)
             {
-                sb.AppendItem(item.UnknownPROD8, "UnknownPROD8");
+                sb.AppendItem(item.ExplosionDelayBeforeRemoval, "ExplosionDelayBeforeRemoval");
             }
             if (printMask?.MuzzleFlashModel ?? true)
             {
@@ -3511,7 +3481,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.DirtinessScale) ?? true))
             {
-                if (!lhs.DirtinessScale.Equals(rhs.DirtinessScale)) return false;
+                if (!lhs.DirtinessScale.EqualsWithin(rhs.DirtinessScale)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.ObjectPaletteDefaults) ?? true))
             {
@@ -3556,10 +3526,6 @@ namespace Mutagen.Bethesda.Starfield
             if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.Flags) ?? true))
             {
                 if (lhs.Flags != rhs.Flags) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.Type) ?? true))
-            {
-                if (lhs.Type != rhs.Type) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.Gravity) ?? true))
             {
@@ -3637,45 +3603,45 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.TracerFrequency != rhs.TracerFrequency) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.VatsProjectile) ?? true))
             {
-                if (lhs.UnknownPROD1 != rhs.UnknownPROD1) return false;
+                if (!lhs.VatsProjectile.Equals(rhs.VatsProjectile)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPRODString1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.MuzzleFlashParticleDefine) ?? true))
             {
-                if (!string.Equals(lhs.UnknownPRODString1, rhs.UnknownPRODString1)) return false;
+                if (!string.Equals(lhs.MuzzleFlashParticleDefine, rhs.MuzzleFlashParticleDefine)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.SeekStrength) ?? true))
             {
-                if (!lhs.UnknownPROD2.EqualsWithin(rhs.UnknownPROD2)) return false;
+                if (!lhs.SeekStrength.EqualsWithin(rhs.SeekStrength)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.SoundActivationCondition) ?? true))
             {
-                if (lhs.UnknownPROD3 != rhs.UnknownPROD3) return false;
+                if (lhs.SoundActivationCondition != rhs.SoundActivationCondition) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.Type) ?? true))
             {
-                if (lhs.UnknownPROD4 != rhs.UnknownPROD4) return false;
+                if (lhs.Type != rhs.Type) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPRODString2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.ParticleDefine) ?? true))
             {
-                if (!string.Equals(lhs.UnknownPRODString2, rhs.UnknownPRODString2)) return false;
+                if (!string.Equals(lhs.ParticleDefine, rhs.ParticleDefine)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD5) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.TracerSpeed) ?? true))
             {
-                if (!lhs.UnknownPROD5.EqualsWithin(rhs.UnknownPROD5)) return false;
+                if (!lhs.TracerSpeed.EqualsWithin(rhs.TracerSpeed)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD6) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.ZeroGRecoilStrength) ?? true))
             {
-                if (!lhs.UnknownPROD6.EqualsWithin(rhs.UnknownPROD6)) return false;
+                if (!lhs.ZeroGRecoilStrength.EqualsWithin(rhs.ZeroGRecoilStrength)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD7) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.ZeroGRecoilLength) ?? true))
             {
-                if (!lhs.UnknownPROD7.EqualsWithin(rhs.UnknownPROD7)) return false;
+                if (!lhs.ZeroGRecoilLength.EqualsWithin(rhs.ZeroGRecoilLength)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD8) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.ExplosionDelayBeforeRemoval) ?? true))
             {
-                if (!lhs.UnknownPROD8.EqualsWithin(rhs.UnknownPROD8)) return false;
+                if (!lhs.ExplosionDelayBeforeRemoval.EqualsWithin(rhs.ExplosionDelayBeforeRemoval)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Projectile_FieldIndex.MuzzleFlashModel) ?? true))
             {
@@ -3763,7 +3729,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XALGitem);
             }
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -3778,10 +3747,9 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.Unused is {} UnusedItem)
             {
-                hash.Add(UnusedItem);
+                hash.AddBytes(UnusedItem);
             }
             hash.Add(item.Flags);
-            hash.Add(item.Type);
             hash.Add(item.Gravity);
             hash.Add(item.Speed);
             hash.Add(item.Range);
@@ -3801,20 +3769,20 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.DecalData);
             hash.Add(item.CollisionLayer);
             hash.Add(item.TracerFrequency);
-            hash.Add(item.UnknownPROD1);
-            hash.Add(item.UnknownPRODString1);
-            hash.Add(item.UnknownPROD2);
-            hash.Add(item.UnknownPROD3);
-            hash.Add(item.UnknownPROD4);
-            hash.Add(item.UnknownPRODString2);
-            hash.Add(item.UnknownPROD5);
-            hash.Add(item.UnknownPROD6);
-            hash.Add(item.UnknownPROD7);
-            hash.Add(item.UnknownPROD8);
+            hash.Add(item.VatsProjectile);
+            hash.Add(item.MuzzleFlashParticleDefine);
+            hash.Add(item.SeekStrength);
+            hash.Add(item.SoundActivationCondition);
+            hash.Add(item.Type);
+            hash.Add(item.ParticleDefine);
+            hash.Add(item.TracerSpeed);
+            hash.Add(item.ZeroGRecoilStrength);
+            hash.Add(item.ZeroGRecoilLength);
+            hash.Add(item.ExplosionDelayBeforeRemoval);
             hash.Add(item.MuzzleFlashModel);
             if (item.TextureFilesHashes is {} TextureFilesHashesItem)
             {
-                hash.Add(TextureFilesHashesItem);
+                hash.AddBytes(TextureFilesHashesItem);
             }
             if (item.MuzzleFlashLightLayer is {} MuzzleFlashLightLayeritem)
             {
@@ -3898,6 +3866,7 @@ namespace Mutagen.Bethesda.Starfield
             yield return FormLinkInformation.Factory(obj.DefaultWeaponSource);
             yield return FormLinkInformation.Factory(obj.DecalData);
             yield return FormLinkInformation.Factory(obj.CollisionLayer);
+            yield return FormLinkInformation.Factory(obj.VatsProjectile);
             if (obj.ActiveSound is {} ActiveSoundItems)
             {
                 foreach (var item in ActiveSoundItems.EnumerateFormLinks(iterateNestedRecords))
@@ -4224,10 +4193,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.Type) ?? true))
-            {
-                item.Type = rhs.Type;
-            }
             if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.Gravity) ?? true))
             {
                 item.Gravity = rhs.Gravity;
@@ -4304,45 +4269,45 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.TracerFrequency = rhs.TracerFrequency;
             }
-            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.VatsProjectile) ?? true))
             {
-                item.UnknownPROD1 = rhs.UnknownPROD1;
+                item.VatsProjectile.SetTo(rhs.VatsProjectile.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPRODString1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.MuzzleFlashParticleDefine) ?? true))
             {
-                item.UnknownPRODString1 = rhs.UnknownPRODString1;
+                item.MuzzleFlashParticleDefine = rhs.MuzzleFlashParticleDefine;
             }
-            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.SeekStrength) ?? true))
             {
-                item.UnknownPROD2 = rhs.UnknownPROD2;
+                item.SeekStrength = rhs.SeekStrength;
             }
-            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.SoundActivationCondition) ?? true))
             {
-                item.UnknownPROD3 = rhs.UnknownPROD3;
+                item.SoundActivationCondition = rhs.SoundActivationCondition;
             }
-            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.Type) ?? true))
             {
-                item.UnknownPROD4 = rhs.UnknownPROD4;
+                item.Type = rhs.Type;
             }
-            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPRODString2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.ParticleDefine) ?? true))
             {
-                item.UnknownPRODString2 = rhs.UnknownPRODString2;
+                item.ParticleDefine = rhs.ParticleDefine;
             }
-            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD5) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.TracerSpeed) ?? true))
             {
-                item.UnknownPROD5 = rhs.UnknownPROD5;
+                item.TracerSpeed = rhs.TracerSpeed;
             }
-            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD6) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.ZeroGRecoilStrength) ?? true))
             {
-                item.UnknownPROD6 = rhs.UnknownPROD6;
+                item.ZeroGRecoilStrength = rhs.ZeroGRecoilStrength;
             }
-            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD7) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.ZeroGRecoilLength) ?? true))
             {
-                item.UnknownPROD7 = rhs.UnknownPROD7;
+                item.ZeroGRecoilLength = rhs.ZeroGRecoilLength;
             }
-            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.UnknownPROD8) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.ExplosionDelayBeforeRemoval) ?? true))
             {
-                item.UnknownPROD8 = rhs.UnknownPROD8;
+                item.ExplosionDelayBeforeRemoval = rhs.ExplosionDelayBeforeRemoval;
             }
             if ((copyMask?.GetShouldTranslate((int)Projectile_FieldIndex.MuzzleFlashModel) ?? true))
             {
@@ -4630,10 +4595,9 @@ namespace Mutagen.Bethesda.Starfield
                 item: ObjectBoundsItem,
                 writer: writer,
                 translationParams: translationParams);
-            PercentBinaryTranslation.Write(
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.DirtinessScale,
-                integerType: FloatIntegerType.UInt,
                 header: translationParams.ConvertToCustom(RecordTypes.ODTY));
             if (item.ObjectPaletteDefaults is {} ObjectPaletteDefaultsItem)
             {
@@ -4686,11 +4650,7 @@ namespace Mutagen.Bethesda.Starfield
                 EnumBinaryTranslation<Projectile.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
                     writer,
                     item.Flags,
-                    length: 2);
-                EnumBinaryTranslation<Projectile.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Write(
-                    writer,
-                    item.Type,
-                    length: 2);
+                    length: 4);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.Gravity);
@@ -4746,32 +4706,40 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     item: item.CollisionLayer);
                 writer.Write(item.TracerFrequency);
-                writer.Write(item.UnknownPROD1);
+                FormLinkBinaryTranslation.Instance.Write(
+                    writer: writer,
+                    item: item.VatsProjectile);
                 StringBinaryTranslation.Instance.Write(
                     writer: writer,
-                    item: item.UnknownPRODString1,
+                    item: item.MuzzleFlashParticleDefine,
                     binaryType: StringBinaryType.PrependLengthWithNullIfContent);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UnknownPROD2);
-                writer.Write(item.UnknownPROD3);
-                writer.Write(item.UnknownPROD4);
+                    item: item.SeekStrength);
+                EnumBinaryTranslation<Projectile.SoundActivationConditionOption, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.SoundActivationCondition,
+                    length: 4);
+                EnumBinaryTranslation<Projectile.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.Type,
+                    length: 1);
                 StringBinaryTranslation.Instance.Write(
                     writer: writer,
-                    item: item.UnknownPRODString2,
+                    item: item.ParticleDefine,
                     binaryType: StringBinaryType.PrependLengthWithNullIfContent);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UnknownPROD5);
+                    item: item.TracerSpeed);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UnknownPROD6);
+                    item: item.ZeroGRecoilStrength);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UnknownPROD7);
+                    item: item.ZeroGRecoilLength);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UnknownPROD8);
+                    item: item.ExplosionDelayBeforeRemoval);
             }
             StringBinaryTranslation.Instance.Write(
                 writer: writer,
@@ -4909,9 +4877,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ODTY:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DirtinessScale = PercentBinaryTranslation.Parse(
-                        reader: frame,
-                        integerType: FloatIntegerType.UInt);
+                    item.DirtinessScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
                     return (int)Projectile_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.OPDS:
@@ -5010,14 +4976,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
-                    if (dataFrame.Remaining < 2) return null;
+                    if (dataFrame.Remaining < 4) return null;
                     item.Flags = EnumBinaryTranslation<Projectile.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
-                        length: 2);
-                    if (dataFrame.Remaining < 2) return null;
-                    item.Type = EnumBinaryTranslation<Projectile.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
-                        reader: dataFrame,
-                        length: 2);
+                        length: 4);
                     if (dataFrame.Remaining < 4) return null;
                     item.Gravity = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -5057,30 +5019,34 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 1) return null;
                     item.TracerFrequency = dataFrame.ReadUInt8();
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownPROD1 = dataFrame.ReadUInt32();
-                    item.UnknownPRODString1 = StringBinaryTranslation.Instance.Parse(
+                    item.VatsProjectile.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    item.MuzzleFlashParticleDefine = StringBinaryTranslation.Instance.Parse(
                         reader: dataFrame,
                         stringBinaryType: StringBinaryType.PrependLengthWithNullIfContent,
                         parseWhole: true);
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownPROD2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.SeekStrength = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownPROD3 = dataFrame.ReadUInt32();
+                    item.SoundActivationCondition = EnumBinaryTranslation<Projectile.SoundActivationConditionOption, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
                     if (dataFrame.Remaining < 1) return null;
-                    item.UnknownPROD4 = dataFrame.ReadUInt8();
-                    item.UnknownPRODString2 = StringBinaryTranslation.Instance.Parse(
+                    item.Type = EnumBinaryTranslation<Projectile.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 1);
+                    item.ParticleDefine = StringBinaryTranslation.Instance.Parse(
                         reader: dataFrame,
                         stringBinaryType: StringBinaryType.PrependLengthWithNullIfContent,
                         parseWhole: true);
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownPROD5 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.TracerSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownPROD6 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.ZeroGRecoilStrength = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownPROD7 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.ZeroGRecoilLength = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownPROD8 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    return (int)Projectile_FieldIndex.UnknownPROD8;
+                    item.ExplosionDelayBeforeRemoval = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    return (int)Projectile_FieldIndex.ExplosionDelayBeforeRemoval;
                 }
                 case RecordTypeInts.NAM1:
                 {
@@ -5207,7 +5173,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region DirtinessScale
         private int? _DirtinessScaleLocation;
-        public Percent DirtinessScale => _DirtinessScaleLocation.HasValue ? PercentBinaryTranslation.GetPercent(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants), FloatIntegerType.UInt) : default(Percent);
+        public Single DirtinessScale => _DirtinessScaleLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
         #region ObjectPaletteDefaults
         private RangeInt32? _ObjectPaletteDefaultsLocation;
@@ -5239,160 +5205,155 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _PRODLocation;
         #region Flags
         private int _FlagsLocation => _PRODLocation!.Value.Min;
-        private bool _Flags_IsSet => _PRODLocation.HasValue;
-        public Projectile.Flag Flags => _Flags_IsSet ? (Projectile.Flag)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x2)) : default;
-        #endregion
-        #region Type
-        private int _TypeLocation => _PRODLocation!.Value.Min + 0x2;
-        private bool _Type_IsSet => _PRODLocation.HasValue;
-        public Projectile.TypeEnum Type => _Type_IsSet ? (Projectile.TypeEnum)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x2)) : default;
+        private bool _Flags_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _FlagsLocation + 1 >= 4;
+        public Projectile.Flag Flags => _Flags_IsSet ? (Projectile.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default(Projectile.Flag);
         #endregion
         #region Gravity
         private int _GravityLocation => _PRODLocation!.Value.Min + 0x4;
-        private bool _Gravity_IsSet => _PRODLocation.HasValue;
+        private bool _Gravity_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _GravityLocation + 1 >= 4;
         public Single Gravity => _Gravity_IsSet ? _recordData.Slice(_GravityLocation, 4).Float() : default(Single);
         #endregion
         #region Speed
         private int _SpeedLocation => _PRODLocation!.Value.Min + 0x8;
-        private bool _Speed_IsSet => _PRODLocation.HasValue;
+        private bool _Speed_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _SpeedLocation + 1 >= 4;
         public Single Speed => _Speed_IsSet ? _recordData.Slice(_SpeedLocation, 4).Float() : default(Single);
         #endregion
         #region Range
         private int _RangeLocation => _PRODLocation!.Value.Min + 0xC;
-        private bool _Range_IsSet => _PRODLocation.HasValue;
+        private bool _Range_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _RangeLocation + 1 >= 4;
         public Single Range => _Range_IsSet ? _recordData.Slice(_RangeLocation, 4).Float() : default(Single);
         #endregion
         #region Light
         private int _LightLocation => _PRODLocation!.Value.Min + 0x10;
-        private bool _Light_IsSet => _PRODLocation.HasValue;
+        private bool _Light_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _LightLocation + 1 >= 4;
         public IFormLinkGetter<ILightGetter> Light => _Light_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILightGetter>(_package, _recordData.Span.Slice(_LightLocation, 0x4), isSet: _Light_IsSet) : FormLink<ILightGetter>.Null;
         #endregion
         #region MuzzleFlash
         private int _MuzzleFlashLocation => _PRODLocation!.Value.Min + 0x14;
-        private bool _MuzzleFlash_IsSet => _PRODLocation.HasValue;
+        private bool _MuzzleFlash_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _MuzzleFlashLocation + 1 >= 4;
         public IFormLinkGetter<ILightGetter> MuzzleFlash => _MuzzleFlash_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ILightGetter>(_package, _recordData.Span.Slice(_MuzzleFlashLocation, 0x4), isSet: _MuzzleFlash_IsSet) : FormLink<ILightGetter>.Null;
         #endregion
         #region ExplosionAltTriggerProximity
         private int _ExplosionAltTriggerProximityLocation => _PRODLocation!.Value.Min + 0x18;
-        private bool _ExplosionAltTriggerProximity_IsSet => _PRODLocation.HasValue;
+        private bool _ExplosionAltTriggerProximity_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ExplosionAltTriggerProximityLocation + 1 >= 4;
         public Single ExplosionAltTriggerProximity => _ExplosionAltTriggerProximity_IsSet ? _recordData.Slice(_ExplosionAltTriggerProximityLocation, 4).Float() : default(Single);
         #endregion
         #region ExplosionAltTriggerTimer
         private int _ExplosionAltTriggerTimerLocation => _PRODLocation!.Value.Min + 0x1C;
-        private bool _ExplosionAltTriggerTimer_IsSet => _PRODLocation.HasValue;
+        private bool _ExplosionAltTriggerTimer_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ExplosionAltTriggerTimerLocation + 1 >= 4;
         public Single ExplosionAltTriggerTimer => _ExplosionAltTriggerTimer_IsSet ? _recordData.Slice(_ExplosionAltTriggerTimerLocation, 4).Float() : default(Single);
         #endregion
         #region Explosion
         private int _ExplosionLocation => _PRODLocation!.Value.Min + 0x20;
-        private bool _Explosion_IsSet => _PRODLocation.HasValue;
+        private bool _Explosion_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> Explosion => _Explosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_ExplosionLocation, 0x4), isSet: _Explosion_IsSet) : FormLink<IExplosionGetter>.Null;
         #endregion
         #region MuzzleFlashDuration
         private int _MuzzleFlashDurationLocation => _PRODLocation!.Value.Min + 0x24;
-        private bool _MuzzleFlashDuration_IsSet => _PRODLocation.HasValue;
+        private bool _MuzzleFlashDuration_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _MuzzleFlashDurationLocation + 1 >= 4;
         public Single MuzzleFlashDuration => _MuzzleFlashDuration_IsSet ? _recordData.Slice(_MuzzleFlashDurationLocation, 4).Float() : default(Single);
         #endregion
         #region FadeDuration
         private int _FadeDurationLocation => _PRODLocation!.Value.Min + 0x28;
-        private bool _FadeDuration_IsSet => _PRODLocation.HasValue;
+        private bool _FadeDuration_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _FadeDurationLocation + 1 >= 4;
         public Single FadeDuration => _FadeDuration_IsSet ? _recordData.Slice(_FadeDurationLocation, 4).Float() : default(Single);
         #endregion
         #region ImpactForce
         private int _ImpactForceLocation => _PRODLocation!.Value.Min + 0x2C;
-        private bool _ImpactForce_IsSet => _PRODLocation.HasValue;
+        private bool _ImpactForce_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ImpactForceLocation + 1 >= 4;
         public Single ImpactForce => _ImpactForce_IsSet ? _recordData.Slice(_ImpactForceLocation, 4).Float() : default(Single);
         #endregion
         #region DefaultWeaponSource
         private int _DefaultWeaponSourceLocation => _PRODLocation!.Value.Min + 0x30;
-        private bool _DefaultWeaponSource_IsSet => _PRODLocation.HasValue;
+        private bool _DefaultWeaponSource_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _DefaultWeaponSourceLocation + 1 >= 4;
         public IFormLinkGetter<IWeaponGetter> DefaultWeaponSource => _DefaultWeaponSource_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IWeaponGetter>(_package, _recordData.Span.Slice(_DefaultWeaponSourceLocation, 0x4), isSet: _DefaultWeaponSource_IsSet) : FormLink<IWeaponGetter>.Null;
         #endregion
         #region ConeSpread
         private int _ConeSpreadLocation => _PRODLocation!.Value.Min + 0x34;
-        private bool _ConeSpread_IsSet => _PRODLocation.HasValue;
+        private bool _ConeSpread_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ConeSpreadLocation + 1 >= 4;
         public Single ConeSpread => _ConeSpread_IsSet ? _recordData.Slice(_ConeSpreadLocation, 4).Float() : default(Single);
         #endregion
         #region CollisionRadius
         private int _CollisionRadiusLocation => _PRODLocation!.Value.Min + 0x38;
-        private bool _CollisionRadius_IsSet => _PRODLocation.HasValue;
+        private bool _CollisionRadius_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _CollisionRadiusLocation + 1 >= 4;
         public Single CollisionRadius => _CollisionRadius_IsSet ? _recordData.Slice(_CollisionRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region Lifetime
         private int _LifetimeLocation => _PRODLocation!.Value.Min + 0x3C;
-        private bool _Lifetime_IsSet => _PRODLocation.HasValue;
+        private bool _Lifetime_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _LifetimeLocation + 1 >= 4;
         public Single Lifetime => _Lifetime_IsSet ? _recordData.Slice(_LifetimeLocation, 4).Float() : default(Single);
         #endregion
         #region RelaunchInterval
         private int _RelaunchIntervalLocation => _PRODLocation!.Value.Min + 0x40;
-        private bool _RelaunchInterval_IsSet => _PRODLocation.HasValue;
+        private bool _RelaunchInterval_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _RelaunchIntervalLocation + 1 >= 4;
         public Single RelaunchInterval => _RelaunchInterval_IsSet ? _recordData.Slice(_RelaunchIntervalLocation, 4).Float() : default(Single);
         #endregion
         #region DecalData
         private int _DecalDataLocation => _PRODLocation!.Value.Min + 0x44;
-        private bool _DecalData_IsSet => _PRODLocation.HasValue;
+        private bool _DecalData_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _DecalDataLocation + 1 >= 4;
         public IFormLinkGetter<ITextureSetGetter> DecalData => _DecalData_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ITextureSetGetter>(_package, _recordData.Span.Slice(_DecalDataLocation, 0x4), isSet: _DecalData_IsSet) : FormLink<ITextureSetGetter>.Null;
         #endregion
         #region CollisionLayer
         private int _CollisionLayerLocation => _PRODLocation!.Value.Min + 0x48;
-        private bool _CollisionLayer_IsSet => _PRODLocation.HasValue;
+        private bool _CollisionLayer_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _CollisionLayerLocation + 1 >= 4;
         public IFormLinkGetter<ICollisionLayerGetter> CollisionLayer => _CollisionLayer_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<ICollisionLayerGetter>(_package, _recordData.Span.Slice(_CollisionLayerLocation, 0x4), isSet: _CollisionLayer_IsSet) : FormLink<ICollisionLayerGetter>.Null;
         #endregion
         #region TracerFrequency
         private int _TracerFrequencyLocation => _PRODLocation!.Value.Min + 0x4C;
-        private bool _TracerFrequency_IsSet => _PRODLocation.HasValue;
-        public Byte TracerFrequency => _TracerFrequency_IsSet ? _recordData.Span[_TracerFrequencyLocation] : default;
+        private bool _TracerFrequency_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _TracerFrequencyLocation + 1 >= 1;
+        public Byte TracerFrequency => _TracerFrequency_IsSet ? _recordData.Span[_TracerFrequencyLocation] : default(Byte);
         #endregion
-        #region UnknownPROD1
-        private int _UnknownPROD1Location => _PRODLocation!.Value.Min + 0x4D;
-        private bool _UnknownPROD1_IsSet => _PRODLocation.HasValue;
-        public UInt32 UnknownPROD1 => _UnknownPROD1_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_UnknownPROD1Location, 4)) : default(UInt32);
+        #region VatsProjectile
+        private int _VatsProjectileLocation => _PRODLocation!.Value.Min + 0x4D;
+        private bool _VatsProjectile_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _VatsProjectileLocation + 1 >= 4;
+        public IFormLinkGetter<IProjectileGetter> VatsProjectile => _VatsProjectile_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IProjectileGetter>(_package, _recordData.Span.Slice(_VatsProjectileLocation, 0x4), isSet: _VatsProjectile_IsSet) : FormLink<IProjectileGetter>.Null;
         #endregion
-        #region UnknownPRODString1
-        private int _UnknownPRODString1Location => _PRODLocation!.Value.Min + 0x51;
-        private bool _UnknownPRODString1_IsSet => _PRODLocation.HasValue;
-        public String UnknownPRODString1 => _UnknownPRODString1_IsSet ? BinaryStringUtility.ParsePrependedString(_recordData.Slice(_UnknownPRODString1Location), lengthLength: 4, encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
-        protected int UnknownPRODString1EndingPos;
+        #region MuzzleFlashParticleDefine
+        private int _MuzzleFlashParticleDefineLocation => _PRODLocation!.Value.Min + 0x51;
+        private bool _MuzzleFlashParticleDefine_IsSet => _PRODLocation.HasValue;
+        public String MuzzleFlashParticleDefine => _MuzzleFlashParticleDefine_IsSet ? BinaryStringUtility.ParsePrependedString(_recordData.Slice(_MuzzleFlashParticleDefineLocation), lengthLength: 4, encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
+        protected int MuzzleFlashParticleDefineEndingPos;
         #endregion
-        #region UnknownPROD2
-        private int _UnknownPROD2Location => UnknownPRODString1EndingPos;
-        private bool _UnknownPROD2_IsSet => _PRODLocation.HasValue;
-        public Single UnknownPROD2 => _UnknownPROD2_IsSet ? _recordData.Slice(_UnknownPROD2Location, 4).Float() : default(Single);
+        #region SeekStrength
+        private int _SeekStrengthLocation => MuzzleFlashParticleDefineEndingPos;
+        private bool _SeekStrength_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _SeekStrengthLocation + 1 >= 4;
+        public Single SeekStrength => _SeekStrength_IsSet ? _recordData.Slice(_SeekStrengthLocation, 4).Float() : default(Single);
         #endregion
-        #region UnknownPROD3
-        private int _UnknownPROD3Location => UnknownPRODString1EndingPos + 0x4;
-        private bool _UnknownPROD3_IsSet => _PRODLocation.HasValue;
-        public UInt32 UnknownPROD3 => _UnknownPROD3_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_UnknownPROD3Location, 4)) : default(UInt32);
+        #region SoundActivationCondition
+        private int _SoundActivationConditionLocation => MuzzleFlashParticleDefineEndingPos + 0x4;
+        private bool _SoundActivationCondition_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _SoundActivationConditionLocation + 1 >= 4;
+        public Projectile.SoundActivationConditionOption SoundActivationCondition => _SoundActivationCondition_IsSet ? (Projectile.SoundActivationConditionOption)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SoundActivationConditionLocation, 0x4)) : default(Projectile.SoundActivationConditionOption);
         #endregion
-        #region UnknownPROD4
-        private int _UnknownPROD4Location => UnknownPRODString1EndingPos + 0x8;
-        private bool _UnknownPROD4_IsSet => _PRODLocation.HasValue;
-        public Byte UnknownPROD4 => _UnknownPROD4_IsSet ? _recordData.Span[_UnknownPROD4Location] : default;
+        #region Type
+        private int _TypeLocation => MuzzleFlashParticleDefineEndingPos + 0x8;
+        private bool _Type_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _TypeLocation + 1 >= 1;
+        public Projectile.TypeEnum Type => _Type_IsSet ? (Projectile.TypeEnum)_recordData.Span.Slice(_TypeLocation, 0x1)[0] : default(Projectile.TypeEnum);
         #endregion
-        #region UnknownPRODString2
-        private int _UnknownPRODString2Location => UnknownPRODString1EndingPos + 0x9;
-        private bool _UnknownPRODString2_IsSet => _PRODLocation.HasValue;
-        public String UnknownPRODString2 => _UnknownPRODString2_IsSet ? BinaryStringUtility.ParsePrependedString(_recordData.Slice(_UnknownPRODString2Location), lengthLength: 4, encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
-        protected int UnknownPRODString2EndingPos;
+        #region ParticleDefine
+        private int _ParticleDefineLocation => MuzzleFlashParticleDefineEndingPos + 0x9;
+        private bool _ParticleDefine_IsSet => _PRODLocation.HasValue;
+        public String ParticleDefine => _ParticleDefine_IsSet ? BinaryStringUtility.ParsePrependedString(_recordData.Slice(_ParticleDefineLocation), lengthLength: 4, encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
+        protected int ParticleDefineEndingPos;
         #endregion
-        #region UnknownPROD5
-        private int _UnknownPROD5Location => UnknownPRODString2EndingPos;
-        private bool _UnknownPROD5_IsSet => _PRODLocation.HasValue;
-        public Single UnknownPROD5 => _UnknownPROD5_IsSet ? _recordData.Slice(_UnknownPROD5Location, 4).Float() : default(Single);
+        #region TracerSpeed
+        private int _TracerSpeedLocation => ParticleDefineEndingPos;
+        private bool _TracerSpeed_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _TracerSpeedLocation + 1 >= 4;
+        public Single TracerSpeed => _TracerSpeed_IsSet ? _recordData.Slice(_TracerSpeedLocation, 4).Float() : default(Single);
         #endregion
-        #region UnknownPROD6
-        private int _UnknownPROD6Location => UnknownPRODString2EndingPos + 0x4;
-        private bool _UnknownPROD6_IsSet => _PRODLocation.HasValue;
-        public Single UnknownPROD6 => _UnknownPROD6_IsSet ? _recordData.Slice(_UnknownPROD6Location, 4).Float() : default(Single);
+        #region ZeroGRecoilStrength
+        private int _ZeroGRecoilStrengthLocation => ParticleDefineEndingPos + 0x4;
+        private bool _ZeroGRecoilStrength_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ZeroGRecoilStrengthLocation + 1 >= 4;
+        public Single ZeroGRecoilStrength => _ZeroGRecoilStrength_IsSet ? _recordData.Slice(_ZeroGRecoilStrengthLocation, 4).Float() : default(Single);
         #endregion
-        #region UnknownPROD7
-        private int _UnknownPROD7Location => UnknownPRODString2EndingPos + 0x8;
-        private bool _UnknownPROD7_IsSet => _PRODLocation.HasValue;
-        public Single UnknownPROD7 => _UnknownPROD7_IsSet ? _recordData.Slice(_UnknownPROD7Location, 4).Float() : default(Single);
+        #region ZeroGRecoilLength
+        private int _ZeroGRecoilLengthLocation => ParticleDefineEndingPos + 0x8;
+        private bool _ZeroGRecoilLength_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ZeroGRecoilLengthLocation + 1 >= 4;
+        public Single ZeroGRecoilLength => _ZeroGRecoilLength_IsSet ? _recordData.Slice(_ZeroGRecoilLengthLocation, 4).Float() : default(Single);
         #endregion
-        #region UnknownPROD8
-        private int _UnknownPROD8Location => UnknownPRODString2EndingPos + 0xC;
-        private bool _UnknownPROD8_IsSet => _PRODLocation.HasValue;
-        public Single UnknownPROD8 => _UnknownPROD8_IsSet ? _recordData.Slice(_UnknownPROD8Location, 4).Float() : default(Single);
+        #region ExplosionDelayBeforeRemoval
+        private int _ExplosionDelayBeforeRemovalLocation => ParticleDefineEndingPos + 0xC;
+        private bool _ExplosionDelayBeforeRemoval_IsSet => _PRODLocation.HasValue && _PRODLocation!.Value.Max - _ExplosionDelayBeforeRemovalLocation + 1 >= 4;
+        public Single ExplosionDelayBeforeRemoval => _ExplosionDelayBeforeRemoval_IsSet ? _recordData.Slice(_ExplosionDelayBeforeRemovalLocation, 4).Float() : default(Single);
         #endregion
         #region MuzzleFlashModel
         private int? _MuzzleFlashModelLocation;
@@ -5460,8 +5421,11 @@ namespace Mutagen.Bethesda.Starfield
                 offset: offset,
                 translationParams: translationParams,
                 fill: ret.FillRecordType);
-            ret.UnknownPRODString1EndingPos = ret._PRODLocation!.Value.Min + 0x51 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret._PRODLocation!.Value.Min + 0x51)) + 4;
-            ret.UnknownPRODString2EndingPos = ret.UnknownPRODString1EndingPos + 0x9 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.UnknownPRODString1EndingPos + 0x9)) + 4;
+            if (ret._PRODLocation.HasValue)
+            {
+                ret.MuzzleFlashParticleDefineEndingPos = ret._PRODLocation!.Value.Min + 0x51 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret._PRODLocation!.Value.Min + 0x51)) + 4;
+                ret.ParticleDefineEndingPos = ret.MuzzleFlashParticleDefineEndingPos + 0x9 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.MuzzleFlashParticleDefineEndingPos + 0x9)) + 4;
+            }
             return ret;
         }
 
@@ -5595,7 +5559,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.PROD:
                 {
                     _PRODLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)Projectile_FieldIndex.UnknownPROD8;
+                    return (int)Projectile_FieldIndex.ExplosionDelayBeforeRemoval;
                 }
                 case RecordTypeInts.NAM1:
                 {

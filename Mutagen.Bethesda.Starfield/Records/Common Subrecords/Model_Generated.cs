@@ -85,6 +85,20 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
+        #region MaterialSwaps2
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private ExtendedList<IFormLinkGetter<ILayeredMaterialSwapGetter>>? _MaterialSwaps2;
+        public ExtendedList<IFormLinkGetter<ILayeredMaterialSwapGetter>>? MaterialSwaps2
+        {
+            get => this._MaterialSwaps2;
+            set => this._MaterialSwaps2 = value;
+        }
+        #region Interface Members
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IReadOnlyList<IFormLinkGetter<ILayeredMaterialSwapGetter>>? IModelGetter.MaterialSwaps2 => _MaterialSwaps2;
+        #endregion
+
+        #endregion
         #region LightLayer
         public Light.LightLayer? LightLayer { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -147,6 +161,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.File = initialValue;
                 this.TextureFileHashes = initialValue;
                 this.MaterialSwaps = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
+                this.MaterialSwaps2 = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.LightLayer = initialValue;
                 this.Flags = initialValue;
                 this.ColorRemappingIndex = initialValue;
@@ -157,6 +172,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem File,
                 TItem TextureFileHashes,
                 TItem MaterialSwaps,
+                TItem MaterialSwaps2,
                 TItem LightLayer,
                 TItem Flags,
                 TItem ColorRemappingIndex,
@@ -165,6 +181,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.File = File;
                 this.TextureFileHashes = TextureFileHashes;
                 this.MaterialSwaps = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(MaterialSwaps, []);
+                this.MaterialSwaps2 = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(MaterialSwaps2, []);
                 this.LightLayer = LightLayer;
                 this.Flags = Flags;
                 this.ColorRemappingIndex = ColorRemappingIndex;
@@ -183,6 +200,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem File;
             public TItem TextureFileHashes;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? MaterialSwaps;
+            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? MaterialSwaps2;
             public TItem LightLayer;
             public TItem Flags;
             public TItem ColorRemappingIndex;
@@ -202,6 +220,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.File, rhs.File)) return false;
                 if (!object.Equals(this.TextureFileHashes, rhs.TextureFileHashes)) return false;
                 if (!object.Equals(this.MaterialSwaps, rhs.MaterialSwaps)) return false;
+                if (!object.Equals(this.MaterialSwaps2, rhs.MaterialSwaps2)) return false;
                 if (!object.Equals(this.LightLayer, rhs.LightLayer)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.ColorRemappingIndex, rhs.ColorRemappingIndex)) return false;
@@ -214,6 +233,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.File);
                 hash.Add(this.TextureFileHashes);
                 hash.Add(this.MaterialSwaps);
+                hash.Add(this.MaterialSwaps2);
                 hash.Add(this.LightLayer);
                 hash.Add(this.Flags);
                 hash.Add(this.ColorRemappingIndex);
@@ -239,6 +259,17 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (this.MaterialSwaps2 != null)
+                {
+                    if (!eval(this.MaterialSwaps2.Overall)) return false;
+                    if (this.MaterialSwaps2.Specific != null)
+                    {
+                        foreach (var item in this.MaterialSwaps2.Specific)
+                        {
+                            if (!eval(item.Value)) return false;
+                        }
+                    }
+                }
                 if (!eval(this.LightLayer)) return false;
                 if (!eval(this.Flags)) return false;
                 if (!eval(this.ColorRemappingIndex)) return false;
@@ -258,6 +289,17 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.MaterialSwaps.Specific != null)
                     {
                         foreach (var item in this.MaterialSwaps.Specific)
+                        {
+                            if (!eval(item.Value)) return false;
+                        }
+                    }
+                }
+                if (this.MaterialSwaps2 != null)
+                {
+                    if (eval(this.MaterialSwaps2.Overall)) return true;
+                    if (this.MaterialSwaps2.Specific != null)
+                    {
+                        foreach (var item in this.MaterialSwaps2.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
@@ -291,6 +333,20 @@ namespace Mutagen.Bethesda.Starfield
                         var l = new List<(int Index, R Item)>();
                         obj.MaterialSwaps.Specific = l;
                         foreach (var item in MaterialSwaps.Specific)
+                        {
+                            R mask = eval(item.Value);
+                            l.Add((item.Index, mask));
+                        }
+                    }
+                }
+                if (MaterialSwaps2 != null)
+                {
+                    obj.MaterialSwaps2 = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.MaterialSwaps2.Overall), []);
+                    if (MaterialSwaps2.Specific != null)
+                    {
+                        var l = new List<(int Index, R Item)>();
+                        obj.MaterialSwaps2.Specific = l;
+                        foreach (var item in MaterialSwaps2.Specific)
                         {
                             R mask = eval(item.Value);
                             l.Add((item.Index, mask));
@@ -348,6 +404,27 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
+                    if ((printMask?.MaterialSwaps2?.Overall ?? true)
+                        && MaterialSwaps2 is {} MaterialSwaps2Item)
+                    {
+                        sb.AppendLine("MaterialSwaps2 =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(MaterialSwaps2Item.Overall);
+                            if (MaterialSwaps2Item.Specific != null)
+                            {
+                                foreach (var subItem in MaterialSwaps2Item.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        {
+                                            sb.AppendItem(subItem);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     if (printMask?.LightLayer ?? true)
                     {
                         sb.AppendItem(LightLayer, "LightLayer");
@@ -391,6 +468,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? File;
             public Exception? TextureFileHashes;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? MaterialSwaps;
+            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? MaterialSwaps2;
             public Exception? LightLayer;
             public Exception? Flags;
             public Exception? ColorRemappingIndex;
@@ -409,6 +487,8 @@ namespace Mutagen.Bethesda.Starfield
                         return TextureFileHashes;
                     case Model_FieldIndex.MaterialSwaps:
                         return MaterialSwaps;
+                    case Model_FieldIndex.MaterialSwaps2:
+                        return MaterialSwaps2;
                     case Model_FieldIndex.LightLayer:
                         return LightLayer;
                     case Model_FieldIndex.Flags:
@@ -435,6 +515,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case Model_FieldIndex.MaterialSwaps:
                         this.MaterialSwaps = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
+                        break;
+                    case Model_FieldIndex.MaterialSwaps2:
+                        this.MaterialSwaps2 = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
                     case Model_FieldIndex.LightLayer:
                         this.LightLayer = ex;
@@ -467,6 +550,9 @@ namespace Mutagen.Bethesda.Starfield
                     case Model_FieldIndex.MaterialSwaps:
                         this.MaterialSwaps = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
+                    case Model_FieldIndex.MaterialSwaps2:
+                        this.MaterialSwaps2 = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
+                        break;
                     case Model_FieldIndex.LightLayer:
                         this.LightLayer = (Exception?)obj;
                         break;
@@ -490,6 +576,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (File != null) return true;
                 if (TextureFileHashes != null) return true;
                 if (MaterialSwaps != null) return true;
+                if (MaterialSwaps2 != null) return true;
                 if (LightLayer != null) return true;
                 if (Flags != null) return true;
                 if (ColorRemappingIndex != null) return true;
@@ -545,6 +632,26 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (MaterialSwaps2 is {} MaterialSwaps2Item)
+                {
+                    sb.AppendLine("MaterialSwaps2 =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(MaterialSwaps2Item.Overall);
+                        if (MaterialSwaps2Item.Specific != null)
+                        {
+                            foreach (var subItem in MaterialSwaps2Item.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    {
+                                        sb.AppendItem(subItem);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 {
                     sb.AppendItem(LightLayer, "LightLayer");
                 }
@@ -568,6 +675,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.File = this.File.Combine(rhs.File);
                 ret.TextureFileHashes = this.TextureFileHashes.Combine(rhs.TextureFileHashes);
                 ret.MaterialSwaps = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.MaterialSwaps?.Overall, rhs.MaterialSwaps?.Overall), Noggog.ExceptionExt.Combine(this.MaterialSwaps?.Specific, rhs.MaterialSwaps?.Specific));
+                ret.MaterialSwaps2 = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.MaterialSwaps2?.Overall, rhs.MaterialSwaps2?.Overall), Noggog.ExceptionExt.Combine(this.MaterialSwaps2?.Specific, rhs.MaterialSwaps2?.Specific));
                 ret.LightLayer = this.LightLayer.Combine(rhs.LightLayer);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.ColorRemappingIndex = this.ColorRemappingIndex.Combine(rhs.ColorRemappingIndex);
@@ -598,6 +706,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool File;
             public bool TextureFileHashes;
             public bool MaterialSwaps;
+            public bool MaterialSwaps2;
             public bool LightLayer;
             public bool Flags;
             public bool ColorRemappingIndex;
@@ -614,6 +723,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.File = defaultOn;
                 this.TextureFileHashes = defaultOn;
                 this.MaterialSwaps = defaultOn;
+                this.MaterialSwaps2 = defaultOn;
                 this.LightLayer = defaultOn;
                 this.Flags = defaultOn;
                 this.ColorRemappingIndex = defaultOn;
@@ -636,6 +746,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((File, null));
                 ret.Add((TextureFileHashes, null));
                 ret.Add((MaterialSwaps, null));
+                ret.Add((MaterialSwaps2, null));
                 ret.Add((LightLayer, null));
                 ret.Add((Flags, null));
                 ret.Add((ColorRemappingIndex, null));
@@ -726,6 +837,7 @@ namespace Mutagen.Bethesda.Starfield
         new AssetLink<StarfieldModelAssetType>? File { get; set; }
         new MemorySlice<Byte>? TextureFileHashes { get; set; }
         new ExtendedList<IFormLinkGetter<ILayeredMaterialSwapGetter>>? MaterialSwaps { get; set; }
+        new ExtendedList<IFormLinkGetter<ILayeredMaterialSwapGetter>>? MaterialSwaps2 { get; set; }
         new Light.LightLayer? LightLayer { get; set; }
         new Model.Flag? Flags { get; set; }
         new Single? ColorRemappingIndex { get; set; }
@@ -749,6 +861,7 @@ namespace Mutagen.Bethesda.Starfield
         AssetLinkGetter<StarfieldModelAssetType>? File { get; }
         ReadOnlyMemorySlice<Byte>? TextureFileHashes { get; }
         IReadOnlyList<IFormLinkGetter<ILayeredMaterialSwapGetter>>? MaterialSwaps { get; }
+        IReadOnlyList<IFormLinkGetter<ILayeredMaterialSwapGetter>>? MaterialSwaps2 { get; }
         Light.LightLayer? LightLayer { get; }
         Model.Flag? Flags { get; }
         Single? ColorRemappingIndex { get; }
@@ -925,10 +1038,11 @@ namespace Mutagen.Bethesda.Starfield
         File = 0,
         TextureFileHashes = 1,
         MaterialSwaps = 2,
-        LightLayer = 3,
-        Flags = 4,
-        ColorRemappingIndex = 5,
-        FlagsVestigial = 6,
+        MaterialSwaps2 = 3,
+        LightLayer = 4,
+        Flags = 5,
+        ColorRemappingIndex = 6,
+        FlagsVestigial = 7,
     }
     #endregion
 
@@ -939,9 +1053,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 7;
+        public const ushort AdditionalFieldCount = 8;
 
-        public const ushort FieldCount = 7;
+        public const ushort FieldCount = 8;
 
         public static readonly Type MaskType = typeof(Model.Mask<>);
 
@@ -1023,6 +1137,7 @@ namespace Mutagen.Bethesda.Starfield
             item.File = default;
             item.TextureFileHashes = default;
             item.MaterialSwaps = null;
+            item.MaterialSwaps2 = null;
             item.LightLayer = default;
             item.Flags = default;
             item.ColorRemappingIndex = default;
@@ -1033,6 +1148,7 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IModel obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             obj.MaterialSwaps?.RemapLinks(mapping);
+            obj.MaterialSwaps2?.RemapLinks(mapping);
         }
         
         public IEnumerable<IAssetLink> EnumerateListedAssetLinks(IModel obj, bool iterateNestedRecords = true)
@@ -1052,7 +1168,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.File?.Relink(mapping);
+                obj.File = obj.File?.RelinkToNew(mapping);
             }
         }
         
@@ -1102,6 +1218,10 @@ namespace Mutagen.Bethesda.Starfield
             ret.TextureFileHashes = MemorySliceExt.SequenceEqual(item.TextureFileHashes, rhs.TextureFileHashes);
             ret.MaterialSwaps = item.MaterialSwaps.CollectionEqualsHelper(
                 rhs.MaterialSwaps,
+                (l, r) => object.Equals(l, r),
+                include);
+            ret.MaterialSwaps2 = item.MaterialSwaps2.CollectionEqualsHelper(
+                rhs.MaterialSwaps2,
                 (l, r) => object.Equals(l, r),
                 include);
             ret.LightLayer = item.LightLayer == rhs.LightLayer;
@@ -1177,6 +1297,21 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
+            if ((printMask?.MaterialSwaps2?.Overall ?? true)
+                && item.MaterialSwaps2 is {} MaterialSwaps2Item)
+            {
+                sb.AppendLine("MaterialSwaps2 =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in MaterialSwaps2Item)
+                    {
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(subItem.FormKey);
+                        }
+                    }
+                }
+            }
             if ((printMask?.LightLayer ?? true)
                 && item.LightLayer is {} LightLayerItem)
             {
@@ -1218,6 +1353,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.MaterialSwaps.SequenceEqualNullable(rhs.MaterialSwaps)) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)Model_FieldIndex.MaterialSwaps2) ?? true))
+            {
+                if (!lhs.MaterialSwaps2.SequenceEqualNullable(rhs.MaterialSwaps2)) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)Model_FieldIndex.LightLayer) ?? true))
             {
                 if (lhs.LightLayer != rhs.LightLayer) return false;
@@ -1246,9 +1385,22 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.TextureFileHashes is {} TextureFileHashesItem)
             {
-                hash.Add(TextureFileHashesItem);
+                hash.AddBytes(TextureFileHashesItem);
             }
-            hash.Add(item.MaterialSwaps);
+            if (item.MaterialSwaps is {} MaterialSwapsitem)
+            {
+                foreach (var subItem in MaterialSwapsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.MaterialSwaps2 is {} MaterialSwaps2item)
+            {
+                foreach (var subItem in MaterialSwaps2item)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.LightLayer is {} LightLayeritem)
             {
                 hash.Add(LightLayeritem);
@@ -1282,6 +1434,13 @@ namespace Mutagen.Bethesda.Starfield
             if (obj.MaterialSwaps is {} MaterialSwapsItem)
             {
                 foreach (var item in MaterialSwapsItem)
+                {
+                    yield return FormLinkInformation.Factory(item);
+                }
+            }
+            if (obj.MaterialSwaps2 is {} MaterialSwaps2Item)
+            {
+                foreach (var item in MaterialSwaps2Item)
                 {
                     yield return FormLinkInformation.Factory(item);
                 }
@@ -1343,6 +1502,33 @@ namespace Mutagen.Bethesda.Starfield
                     else
                     {
                         item.MaterialSwaps = null;
+                    }
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
+            }
+            if ((copyMask?.GetShouldTranslate((int)Model_FieldIndex.MaterialSwaps2) ?? true))
+            {
+                errorMask?.PushIndex((int)Model_FieldIndex.MaterialSwaps2);
+                try
+                {
+                    if ((rhs.MaterialSwaps2 != null))
+                    {
+                        item.MaterialSwaps2 = 
+                            rhs.MaterialSwaps2
+                                .Select(b => (IFormLinkGetter<ILayeredMaterialSwapGetter>)new FormLink<ILayeredMaterialSwapGetter>(b.FormKey))
+                            .ToExtendedList<IFormLinkGetter<ILayeredMaterialSwapGetter>>();
+                    }
+                    else
+                    {
+                        item.MaterialSwaps2 = null;
                     }
                 }
                 catch (Exception ex)
@@ -1500,6 +1686,17 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         item: subItem);
                 });
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ILayeredMaterialSwapGetter>>.Instance.Write(
+                writer: writer,
+                items: item.MaterialSwaps2,
+                recordType: translationParams.ConvertToCustom(RecordTypes.MOLM),
+                countLengthLength: 2,
+                transl: (MutagenWriter subWriter, IFormLinkGetter<ILayeredMaterialSwapGetter> subItem, TypedWriteParams conv) =>
+                {
+                    FormLinkBinaryTranslation.Instance.Write(
+                        writer: subWriter,
+                        item: subItem);
+                });
             EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer,
                 item.LightLayer,
@@ -1577,15 +1774,59 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.MOLM:
                 {
-                    if (lastParsed.ShortCircuit((int)Model_FieldIndex.MaterialSwaps, translationParams)) return ParseResult.Stop;
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.MaterialSwaps = 
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ILayeredMaterialSwapGetter>>.Instance.Parse(
-                            amount: frame.ReadUInt16(),
-                            reader: frame,
-                            transl: FormLinkBinaryTranslation.Instance.Parse)
-                        .CastExtendedList<IFormLinkGetter<ILayeredMaterialSwapGetter>>();
-                    return (int)Model_FieldIndex.MaterialSwaps;
+                    if (!lastParsed.ParsedIndex.HasValue
+                        || lastParsed.ParsedIndex.Value <= (int)Model_FieldIndex.TextureFileHashes)
+                    {
+                        if (lastParsed.ShortCircuit((int)Model_FieldIndex.MaterialSwaps, translationParams)) return ParseResult.Stop;
+                        frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                        item.MaterialSwaps = 
+                            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ILayeredMaterialSwapGetter>>.Instance.Parse(
+                                amount: frame.ReadUInt16(),
+                                reader: frame,
+                                transl: FormLinkBinaryTranslation.Instance.Parse)
+                            .CastExtendedList<IFormLinkGetter<ILayeredMaterialSwapGetter>>();
+                        return new ParseResult((int)Model_FieldIndex.MaterialSwaps, nextRecordType);
+                    }
+                    else if (lastParsed.ParsedIndex.Value <= (int)Model_FieldIndex.MaterialSwaps)
+                    {
+                        if (lastParsed.ShortCircuit((int)Model_FieldIndex.MaterialSwaps2, translationParams)) return ParseResult.Stop;
+                        frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                        item.MaterialSwaps2 = 
+                            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ILayeredMaterialSwapGetter>>.Instance.Parse(
+                                amount: frame.ReadUInt16(),
+                                reader: frame,
+                                transl: FormLinkBinaryTranslation.Instance.Parse)
+                            .CastExtendedList<IFormLinkGetter<ILayeredMaterialSwapGetter>>();
+                        return new ParseResult((int)Model_FieldIndex.MaterialSwaps2, nextRecordType);
+                    }
+                    else
+                    {
+                        switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
+                        {
+                            case 0:
+                                if (lastParsed.ShortCircuit((int)Model_FieldIndex.MaterialSwaps, translationParams)) return ParseResult.Stop;
+                                frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                                item.MaterialSwaps = 
+                                    Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ILayeredMaterialSwapGetter>>.Instance.Parse(
+                                        amount: frame.ReadUInt16(),
+                                        reader: frame,
+                                        transl: FormLinkBinaryTranslation.Instance.Parse)
+                                    .CastExtendedList<IFormLinkGetter<ILayeredMaterialSwapGetter>>();
+                                return new ParseResult((int)Model_FieldIndex.MaterialSwaps, nextRecordType);
+                            case 1:
+                                if (lastParsed.ShortCircuit((int)Model_FieldIndex.MaterialSwaps2, translationParams)) return ParseResult.Stop;
+                                frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                                item.MaterialSwaps2 = 
+                                    Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ILayeredMaterialSwapGetter>>.Instance.Parse(
+                                        amount: frame.ReadUInt16(),
+                                        reader: frame,
+                                        transl: FormLinkBinaryTranslation.Instance.Parse)
+                                    .CastExtendedList<IFormLinkGetter<ILayeredMaterialSwapGetter>>();
+                                return new ParseResult((int)Model_FieldIndex.MaterialSwaps2, nextRecordType);
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
                 }
                 case RecordTypeInts.FLLD:
                 {
@@ -1700,6 +1941,7 @@ namespace Mutagen.Bethesda.Starfield
         public ReadOnlyMemorySlice<Byte>? TextureFileHashes => _TextureFileHashesLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _TextureFileHashesLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
         #endregion
         public IReadOnlyList<IFormLinkGetter<ILayeredMaterialSwapGetter>>? MaterialSwaps { get; private set; }
+        public IReadOnlyList<IFormLinkGetter<ILayeredMaterialSwapGetter>>? MaterialSwaps2 { get; private set; }
         #region LightLayer
         private int? _LightLayerLocation;
         public Light.LightLayer? LightLayer => EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_LightLayerLocation, _recordData, _package, 4);
@@ -1793,16 +2035,67 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.MOLM:
                 {
-                    if (lastParsed.ShortCircuit((int)Model_FieldIndex.MaterialSwaps, translationParams)) return ParseResult.Stop;
-                    stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    var count = stream.ReadUInt16();
-                    this.MaterialSwaps = BinaryOverlayList.FactoryByCountLength<IFormLinkGetter<ILayeredMaterialSwapGetter>>(
-                        stream: stream,
-                        package: _package,
-                        itemLength: 4,
-                        count: count,
-                        getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<ILayeredMaterialSwapGetter>(p, s));
-                    return (int)Model_FieldIndex.MaterialSwaps;
+                    if (!lastParsed.ParsedIndex.HasValue
+                        || lastParsed.ParsedIndex.Value <= (int)Model_FieldIndex.TextureFileHashes)
+                    {
+                        if (lastParsed.ShortCircuit((int)Model_FieldIndex.MaterialSwaps, translationParams)) return ParseResult.Stop;
+                        stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
+                        var count = stream.ReadUInt16();
+                        this.MaterialSwaps = BinaryOverlayList.FactoryByCountLength<IFormLinkGetter<ILayeredMaterialSwapGetter>>(
+                            stream: stream,
+                            package: _package,
+                            itemLength: 4,
+                            count: count,
+                            getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<ILayeredMaterialSwapGetter>(p, s));
+                        return new ParseResult((int)Model_FieldIndex.MaterialSwaps, type);
+                    }
+                    else if (lastParsed.ParsedIndex.Value <= (int)Model_FieldIndex.MaterialSwaps)
+                    {
+                        if (lastParsed.ShortCircuit((int)Model_FieldIndex.MaterialSwaps2, translationParams)) return ParseResult.Stop;
+                        stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
+                        var count = stream.ReadUInt16();
+                        this.MaterialSwaps2 = BinaryOverlayList.FactoryByCountLength<IFormLinkGetter<ILayeredMaterialSwapGetter>>(
+                            stream: stream,
+                            package: _package,
+                            itemLength: 4,
+                            count: count,
+                            getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<ILayeredMaterialSwapGetter>(p, s));
+                        return new ParseResult((int)Model_FieldIndex.MaterialSwaps2, type);
+                    }
+                    else
+                    {
+                        switch (recordParseCount?.GetOrAdd(type) ?? 0)
+                        {
+                            case 0:
+                            {
+                                if (lastParsed.ShortCircuit((int)Model_FieldIndex.MaterialSwaps, translationParams)) return ParseResult.Stop;
+                                stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
+                                var count = stream.ReadUInt16();
+                                this.MaterialSwaps = BinaryOverlayList.FactoryByCountLength<IFormLinkGetter<ILayeredMaterialSwapGetter>>(
+                                    stream: stream,
+                                    package: _package,
+                                    itemLength: 4,
+                                    count: count,
+                                    getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<ILayeredMaterialSwapGetter>(p, s));
+                                return new ParseResult((int)Model_FieldIndex.MaterialSwaps, type);
+                            }
+                            case 1:
+                            {
+                                if (lastParsed.ShortCircuit((int)Model_FieldIndex.MaterialSwaps2, translationParams)) return ParseResult.Stop;
+                                stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
+                                var count = stream.ReadUInt16();
+                                this.MaterialSwaps2 = BinaryOverlayList.FactoryByCountLength<IFormLinkGetter<ILayeredMaterialSwapGetter>>(
+                                    stream: stream,
+                                    package: _package,
+                                    itemLength: 4,
+                                    count: count,
+                                    getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<ILayeredMaterialSwapGetter>(p, s));
+                                return new ParseResult((int)Model_FieldIndex.MaterialSwaps2, type);
+                            }
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
                 }
                 case RecordTypeInts.FLLD:
                 {

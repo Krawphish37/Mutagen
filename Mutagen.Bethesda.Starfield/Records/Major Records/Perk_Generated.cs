@@ -1522,7 +1522,7 @@ namespace Mutagen.Bethesda.Starfield
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.PerkIcon?.Relink(mapping);
+                obj.PerkIcon = obj.PerkIcon?.RelinkToNew(mapping);
             }
         }
         
@@ -1882,8 +1882,14 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(PerkIconitem);
             }
             hash.Add(item.Training);
-            hash.Add(item.Ranks);
-            hash.Add(item.BackgroundSkills);
+            foreach (var subItem in item.Ranks)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.BackgroundSkills)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -2642,23 +2648,23 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DATALocation;
         #region Category
         private int _CategoryLocation => _DATALocation!.Value.Min;
-        private bool _Category_IsSet => _DATALocation.HasValue;
-        public PerkCategory Category => _Category_IsSet ? (PerkCategory)_recordData.Span.Slice(_CategoryLocation, 0x1)[0] : default;
+        private bool _Category_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CategoryLocation + 1 >= 1;
+        public PerkCategory Category => _Category_IsSet ? (PerkCategory)_recordData.Span.Slice(_CategoryLocation, 0x1)[0] : default(PerkCategory);
         #endregion
         #region SkillGroup
         private int _SkillGroupLocation => _DATALocation!.Value.Min + 0x1;
-        private bool _SkillGroup_IsSet => _DATALocation.HasValue;
-        public PerkSkillGroup SkillGroup => _SkillGroup_IsSet ? (PerkSkillGroup)_recordData.Span.Slice(_SkillGroupLocation, 0x1)[0] : default;
+        private bool _SkillGroup_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SkillGroupLocation + 1 >= 1;
+        public PerkSkillGroup SkillGroup => _SkillGroup_IsSet ? (PerkSkillGroup)_recordData.Span.Slice(_SkillGroupLocation, 0x1)[0] : default(PerkSkillGroup);
         #endregion
         #region CrewAssignment
         private int _CrewAssignmentLocation => _DATALocation!.Value.Min + 0x2;
-        private bool _CrewAssignment_IsSet => _DATALocation.HasValue;
-        public Perk.PerkCrewAssignment CrewAssignment => _CrewAssignment_IsSet ? (Perk.PerkCrewAssignment)_recordData.Span.Slice(_CrewAssignmentLocation, 0x1)[0] : default;
+        private bool _CrewAssignment_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CrewAssignmentLocation + 1 >= 1;
+        public Perk.PerkCrewAssignment CrewAssignment => _CrewAssignment_IsSet ? (Perk.PerkCrewAssignment)_recordData.Span.Slice(_CrewAssignmentLocation, 0x1)[0] : default(Perk.PerkCrewAssignment);
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x3;
-        private bool _Flags_IsSet => _DATALocation.HasValue;
-        public Perk.Flag Flags => _Flags_IsSet ? (Perk.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
+        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 1;
+        public Perk.Flag Flags => _Flags_IsSet ? (Perk.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default(Perk.Flag);
         #endregion
         #region Restriction
         private int? _RestrictionLocation;

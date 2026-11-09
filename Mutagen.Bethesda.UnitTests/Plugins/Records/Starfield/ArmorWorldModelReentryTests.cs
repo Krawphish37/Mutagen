@@ -99,10 +99,10 @@ public class ArmorWorldModelReentryTests
         female.ShouldNotBeNull();
         male.File.ShouldNotBeNull();
         male.File.GivenPath.ShouldBe(MalePath);
-        male.LightLayer.ShouldBe(maleLightLayer);
+        ((uint?)male.LightLayer).ShouldBe(maleLightLayer);
         female.File.ShouldNotBeNull();
         female.File.GivenPath.ShouldBe(FemalePath);
-        female.LightLayer.ShouldBe(femaleLightLayer);
+        ((uint?)female.LightLayer).ShouldBe(femaleLightLayer);
     }
 
     [Fact]

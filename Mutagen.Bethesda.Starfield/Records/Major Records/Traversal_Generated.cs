@@ -1756,22 +1756,22 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DNAMLocation;
         #region Type
         private int _TypeLocation => _DNAMLocation!.Value.Min;
-        private bool _Type_IsSet => _DNAMLocation.HasValue;
-        public Traversal.TraversalType Type => _Type_IsSet ? (Traversal.TraversalType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default;
+        private bool _Type_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _TypeLocation + 1 >= 4;
+        public Traversal.TraversalType Type => _Type_IsSet ? (Traversal.TraversalType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default(Traversal.TraversalType);
         #endregion
         #region MinHeight
         private int _MinHeightLocation => _DNAMLocation!.Value.Min + 0x4;
-        private bool _MinHeight_IsSet => _DNAMLocation.HasValue;
+        private bool _MinHeight_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MinHeightLocation + 1 >= 4;
         public Single MinHeight => _MinHeight_IsSet ? _recordData.Slice(_MinHeightLocation, 4).Float() : default(Single);
         #endregion
         #region MaxHeight
         private int _MaxHeightLocation => _DNAMLocation!.Value.Min + 0x8;
-        private bool _MaxHeight_IsSet => _DNAMLocation.HasValue;
+        private bool _MaxHeight_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _MaxHeightLocation + 1 >= 4;
         public Single MaxHeight => _MaxHeight_IsSet ? _recordData.Slice(_MaxHeightLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown
         private int _UnknownLocation => _DNAMLocation!.Value.Min + 0xC;
-        private bool _Unknown_IsSet => _DNAMLocation.HasValue;
+        private bool _Unknown_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public UInt32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(UInt32);
         #endregion
         partial void CustomFactoryEnd(
