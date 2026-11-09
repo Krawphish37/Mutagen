@@ -17974,12 +17974,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
-            if (obj.ObjectEffects is IFormLinkContainerGetter ObjectEffectslinkCont)
+            foreach (var item in obj.ObjectEffects.EnumerateFormLinks(iterateNestedRecords))
             {
-                foreach (var item in ObjectEffectslinkCont.EnumerateFormLinks(iterateNestedRecords))
-                {
-                    yield return item;
-                }
+                yield return item;
             }
             foreach (var item in obj.Spells.EnumerateFormLinks(iterateNestedRecords))
             {
