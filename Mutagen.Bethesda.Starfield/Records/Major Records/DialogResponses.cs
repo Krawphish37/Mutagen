@@ -33,6 +33,8 @@ partial class DialogResponses
         HasCapture = 0x4000,
     }
     
+    // ENAM flags of an INFO group (MajorFlag.InfoGroup). DialogResponseFlags.Flags is typed with the response flags (Flag);
+    // on a group record, read the same value as InfoFlag: (DialogResponses.InfoFlag)(int)flags.Flags
     [Flags]
     public enum InfoFlag
     {
