@@ -7,10 +7,10 @@
   </Object>
   <Object name="AnimationGraphComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <String name="ANAM" recordType="ANAM" nullable="true" />
-      <String name="BNAM" recordType="BNAM" nullable="true" />
-      <String name="CNAM" recordType="CNAM" nullable="true" />
-      <String name="DNAM" recordType="DNAM" nullable="true" />
+      <String name="RootAnimationGraph" recordType="ANAM" nullable="true" />
+      <String name="RigFile" recordType="BNAM" nullable="true" />
+      <String name="AnimationsPath" recordType="CNAM" nullable="true" />
+      <String name="ResponseFile" recordType="DNAM" nullable="true" />
       <String name="ENAM" recordType="ENAM" nullable="true" binaryType="NullTerminateIfNotEmpty" />
     </Fields>
   </Object>
@@ -45,16 +45,16 @@
   </Object>
   <Object name="ContactShadowComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <RefList name="Items" refName="ContactShadowComponentItem" unknown="true" />
+      <RefList name="Items" refName="ContactShadowComponentItem" />
     </Fields>
   </Object>
   <Object name="ContactShadowComponentItem" objType="Subrecord" recordType="FLCS">
     <Fields>
-      <Float name="Unknown1" unknown="true" />
-      <Float name="Unknown2" unknown="true" />
-      <Float name="Unknown3" unknown="true" />
-      <Float name="Unknown4" unknown="true" />
-      <Float name="Unknown5" unknown="true" />
+      <Float name="Thickness" />
+      <Float name="FadeLength" />
+      <Float name="FadeStart" />
+      <Float name="MaxDistance" />
+      <Float name="ProximityLimit" />
     </Fields>
   </Object>
   <Object name="FullNameComponent" objType="Subrecord" baseClass="AComponent">

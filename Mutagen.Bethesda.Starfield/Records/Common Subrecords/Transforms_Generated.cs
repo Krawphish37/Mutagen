@@ -125,15 +125,15 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<ITransformGetter> ITransformsGetter.MainGameUI => this.MainGameUI;
         #endregion
-        #region Unknown
-        private readonly IFormLink<ITransformGetter> _Unknown = new FormLink<ITransformGetter>();
-        public IFormLink<ITransformGetter> Unknown
+        #region ResearchMenu
+        private readonly IFormLink<ITransformGetter> _ResearchMenu = new FormLink<ITransformGetter>();
+        public IFormLink<ITransformGetter> ResearchMenu
         {
-            get => _Unknown;
-            set => _Unknown.SetTo(value);
+            get => _ResearchMenu;
+            set => _ResearchMenu.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<ITransformGetter> ITransformsGetter.Unknown => this.Unknown;
+        IFormLinkGetter<ITransformGetter> ITransformsGetter.ResearchMenu => this.ResearchMenu;
         #endregion
 
         #region To String
@@ -182,7 +182,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Inventory = initialValue;
                 this.Workbench = initialValue;
                 this.MainGameUI = initialValue;
-                this.Unknown = initialValue;
+                this.ResearchMenu = initialValue;
             }
 
             public Mask(
@@ -194,7 +194,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Inventory,
                 TItem Workbench,
                 TItem MainGameUI,
-                TItem Unknown)
+                TItem ResearchMenu)
             {
                 this.Versioning = Versioning;
                 this.InventoryIcon = InventoryIcon;
@@ -204,7 +204,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Inventory = Inventory;
                 this.Workbench = Workbench;
                 this.MainGameUI = MainGameUI;
-                this.Unknown = Unknown;
+                this.ResearchMenu = ResearchMenu;
             }
 
             #pragma warning disable CS8618
@@ -224,7 +224,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Inventory;
             public TItem Workbench;
             public TItem MainGameUI;
-            public TItem Unknown;
+            public TItem ResearchMenu;
             #endregion
 
             #region Equals
@@ -245,7 +245,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Inventory, rhs.Inventory)) return false;
                 if (!object.Equals(this.Workbench, rhs.Workbench)) return false;
                 if (!object.Equals(this.MainGameUI, rhs.MainGameUI)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.ResearchMenu, rhs.ResearchMenu)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -259,7 +259,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Inventory);
                 hash.Add(this.Workbench);
                 hash.Add(this.MainGameUI);
-                hash.Add(this.Unknown);
+                hash.Add(this.ResearchMenu);
                 return hash.ToHashCode();
             }
 
@@ -276,7 +276,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Inventory)) return false;
                 if (!eval(this.Workbench)) return false;
                 if (!eval(this.MainGameUI)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.ResearchMenu)) return false;
                 return true;
             }
             #endregion
@@ -292,7 +292,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Inventory)) return true;
                 if (eval(this.Workbench)) return true;
                 if (eval(this.MainGameUI)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.ResearchMenu)) return true;
                 return false;
             }
             #endregion
@@ -315,7 +315,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Inventory = eval(this.Inventory);
                 obj.Workbench = eval(this.Workbench);
                 obj.MainGameUI = eval(this.MainGameUI);
-                obj.Unknown = eval(this.Unknown);
+                obj.ResearchMenu = eval(this.ResearchMenu);
             }
             #endregion
 
@@ -366,9 +366,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(MainGameUI, "MainGameUI");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.ResearchMenu ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(ResearchMenu, "ResearchMenu");
                     }
                 }
             }
@@ -402,7 +402,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Inventory;
             public Exception? Workbench;
             public Exception? MainGameUI;
-            public Exception? Unknown;
+            public Exception? ResearchMenu;
             #endregion
 
             #region IErrorMask
@@ -427,8 +427,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Workbench;
                     case Transforms_FieldIndex.MainGameUI:
                         return MainGameUI;
-                    case Transforms_FieldIndex.Unknown:
-                        return Unknown;
+                    case Transforms_FieldIndex.ResearchMenu:
+                        return ResearchMenu;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -463,8 +463,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Transforms_FieldIndex.MainGameUI:
                         this.MainGameUI = ex;
                         break;
-                    case Transforms_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case Transforms_FieldIndex.ResearchMenu:
+                        this.ResearchMenu = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -500,8 +500,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Transforms_FieldIndex.MainGameUI:
                         this.MainGameUI = (Exception?)obj;
                         break;
-                    case Transforms_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case Transforms_FieldIndex.ResearchMenu:
+                        this.ResearchMenu = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -519,7 +519,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Inventory != null) return true;
                 if (Workbench != null) return true;
                 if (MainGameUI != null) return true;
-                if (Unknown != null) return true;
+                if (ResearchMenu != null) return true;
                 return false;
             }
             #endregion
@@ -570,7 +570,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(MainGameUI, "MainGameUI");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(ResearchMenu, "ResearchMenu");
                 }
             }
             #endregion
@@ -588,7 +588,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Inventory = this.Inventory.Combine(rhs.Inventory);
                 ret.Workbench = this.Workbench.Combine(rhs.Workbench);
                 ret.MainGameUI = this.MainGameUI.Combine(rhs.MainGameUI);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.ResearchMenu = this.ResearchMenu.Combine(rhs.ResearchMenu);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -620,7 +620,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Inventory;
             public bool Workbench;
             public bool MainGameUI;
-            public bool Unknown;
+            public bool ResearchMenu;
             #endregion
 
             #region Ctors
@@ -638,7 +638,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Inventory = defaultOn;
                 this.Workbench = defaultOn;
                 this.MainGameUI = defaultOn;
-                this.Unknown = defaultOn;
+                this.ResearchMenu = defaultOn;
             }
 
             #endregion
@@ -662,7 +662,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Inventory, null));
                 ret.Add((Workbench, null));
                 ret.Add((MainGameUI, null));
-                ret.Add((Unknown, null));
+                ret.Add((ResearchMenu, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -754,7 +754,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<ITransformGetter> Inventory { get; set; }
         new IFormLink<ITransformGetter> Workbench { get; set; }
         new IFormLink<ITransformGetter> MainGameUI { get; set; }
-        new IFormLink<ITransformGetter> Unknown { get; set; }
+        new IFormLink<ITransformGetter> ResearchMenu { get; set; }
     }
 
     public partial interface ITransformsGetter :
@@ -778,7 +778,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<ITransformGetter> Inventory { get; }
         IFormLinkGetter<ITransformGetter> Workbench { get; }
         IFormLinkGetter<ITransformGetter> MainGameUI { get; }
-        IFormLinkGetter<ITransformGetter> Unknown { get; }
+        IFormLinkGetter<ITransformGetter> ResearchMenu { get; }
 
     }
 
@@ -956,7 +956,7 @@ namespace Mutagen.Bethesda.Starfield
         Inventory = 5,
         Workbench = 6,
         MainGameUI = 7,
-        Unknown = 8,
+        ResearchMenu = 8,
     }
     #endregion
 
@@ -1050,7 +1050,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Inventory.Clear();
             item.Workbench.Clear();
             item.MainGameUI.Clear();
-            item.Unknown.Clear();
+            item.ResearchMenu.Clear();
         }
         
         #region Mutagen
@@ -1064,7 +1064,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.Workbench.Relink(mapping);
             obj.MainGameUI.Relink(mapping);
             if (obj.Versioning.HasFlag(Transforms.VersioningBreaks.Break0)) return;
-            obj.Unknown.Relink(mapping);
+            obj.ResearchMenu.Relink(mapping);
         }
         
         #endregion
@@ -1121,7 +1121,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Inventory = item.Inventory.Equals(rhs.Inventory);
             ret.Workbench = item.Workbench.Equals(rhs.Workbench);
             ret.MainGameUI = item.MainGameUI.Equals(rhs.MainGameUI);
-            ret.Unknown = item.Unknown.Equals(rhs.Unknown);
+            ret.ResearchMenu = item.ResearchMenu.Equals(rhs.ResearchMenu);
         }
         
         public string Print(
@@ -1198,9 +1198,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.MainGameUI.FormKey, "MainGameUI");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.ResearchMenu ?? true)
             {
-                sb.AppendItem(item.Unknown.FormKey, "Unknown");
+                sb.AppendItem(item.ResearchMenu.FormKey, "ResearchMenu");
             }
         }
         
@@ -1243,9 +1243,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.MainGameUI.Equals(rhs.MainGameUI)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Transforms_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Transforms_FieldIndex.ResearchMenu) ?? true))
             {
-                if (!lhs.Unknown.Equals(rhs.Unknown)) return false;
+                if (!lhs.ResearchMenu.Equals(rhs.ResearchMenu)) return false;
             }
             return true;
         }
@@ -1261,7 +1261,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Inventory);
             hash.Add(item.Workbench);
             hash.Add(item.MainGameUI);
-            hash.Add(item.Unknown);
+            hash.Add(item.ResearchMenu);
             return hash.ToHashCode();
         }
         
@@ -1284,7 +1284,7 @@ namespace Mutagen.Bethesda.Starfield
             yield return FormLinkInformation.Factory(obj.Workbench);
             yield return FormLinkInformation.Factory(obj.MainGameUI);
             if (obj.Versioning.HasFlag(Transforms.VersioningBreaks.Break0)) yield break;
-            yield return FormLinkInformation.Factory(obj.Unknown);
+            yield return FormLinkInformation.Factory(obj.ResearchMenu);
             yield break;
         }
         
@@ -1336,9 +1336,9 @@ namespace Mutagen.Bethesda.Starfield
                 item.MainGameUI.SetTo(rhs.MainGameUI.FormKey);
             }
             if (rhs.Versioning.HasFlag(Transforms.VersioningBreaks.Break0)) return;
-            if ((copyMask?.GetShouldTranslate((int)Transforms_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Transforms_FieldIndex.ResearchMenu) ?? true))
             {
-                item.Unknown.SetTo(rhs.Unknown.FormKey);
+                item.ResearchMenu.SetTo(rhs.ResearchMenu.FormKey);
             }
             DeepCopyInCustom(
                 item: item,
@@ -1473,7 +1473,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 FormLinkBinaryTranslation.Instance.Write(
                     writer: writer,
-                    item: item.Unknown);
+                    item: item.ResearchMenu);
             }
         }
 
@@ -1527,7 +1527,7 @@ namespace Mutagen.Bethesda.Starfield
                 item.Versioning |= Transforms.VersioningBreaks.Break0;
                 return;
             }
-            item.Unknown.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.ResearchMenu.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
         }
 
     }
@@ -1602,7 +1602,7 @@ namespace Mutagen.Bethesda.Starfield
         public IFormLinkGetter<ITransformGetter> Inventory => FormLinkBinaryTranslation.Instance.OverlayFactory<ITransformGetter>(_package, _structData.Span.Slice(0x10, 0x4));
         public IFormLinkGetter<ITransformGetter> Workbench => FormLinkBinaryTranslation.Instance.OverlayFactory<ITransformGetter>(_package, _structData.Span.Slice(0x14, 0x4));
         public IFormLinkGetter<ITransformGetter> MainGameUI => FormLinkBinaryTranslation.Instance.OverlayFactory<ITransformGetter>(_package, _structData.Span.Slice(0x18, 0x4));
-        public IFormLinkGetter<ITransformGetter> Unknown => _structData.Length <= 0x1C ? FormLink<ITransformGetter>.Null : FormLinkBinaryTranslation.Instance.OverlayFactory<ITransformGetter>(_package, _structData.Span.Slice(0x1C, 0x4));
+        public IFormLinkGetter<ITransformGetter> ResearchMenu => _structData.Length <= 0x1C ? FormLink<ITransformGetter>.Null : FormLinkBinaryTranslation.Instance.OverlayFactory<ITransformGetter>(_package, _structData.Span.Slice(0x1C, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
