@@ -14,6 +14,7 @@ using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Exceptions;
 using Mutagen.Bethesda.Plugins.Internals;
 using Mutagen.Bethesda.Plugins.Meta;
@@ -51,16 +52,27 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Data
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _Data = new byte[17];
-        public MemorySlice<Byte> Data
+        #region Target
+        private readonly IFormLink<IPlacedGetter> _Target = new FormLink<IPlacedGetter>();
+        public IFormLink<IPlacedGetter> Target
         {
-            get => _Data;
-            set => this._Data = value;
+            get => _Target;
+            set => _Target.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IPlacedObjectShipArrivalGetter.Data => this.Data;
+        IFormLinkGetter<IPlacedGetter> IPlacedObjectShipArrivalGetter.Target => this.Target;
+        #endregion
+        #region Location
+        public PlacedObjectShipArrival.LocationType Location { get; set; } = default(PlacedObjectShipArrival.LocationType);
+        #endregion
+        #region Distance
+        public Single Distance { get; set; } = default(Single);
+        #endregion
+        #region Delay
+        public Single Delay { get; set; } = default(Single);
+        #endregion
+        #region GravJumpFx
+        public Boolean GravJumpFx { get; set; } = default(Boolean);
         #endregion
 
         #region To String
@@ -99,9 +111,27 @@ namespace Mutagen.Bethesda.Starfield
             IMask<TItem>
         {
             #region Ctors
-            public Mask(TItem Data)
+            public Mask(TItem initialValue)
             {
-                this.Data = Data;
+                this.Target = initialValue;
+                this.Location = initialValue;
+                this.Distance = initialValue;
+                this.Delay = initialValue;
+                this.GravJumpFx = initialValue;
+            }
+
+            public Mask(
+                TItem Target,
+                TItem Location,
+                TItem Distance,
+                TItem Delay,
+                TItem GravJumpFx)
+            {
+                this.Target = Target;
+                this.Location = Location;
+                this.Distance = Distance;
+                this.Delay = Delay;
+                this.GravJumpFx = GravJumpFx;
             }
 
             #pragma warning disable CS8618
@@ -113,7 +143,11 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Data;
+            public TItem Target;
+            public TItem Location;
+            public TItem Distance;
+            public TItem Delay;
+            public TItem GravJumpFx;
             #endregion
 
             #region Equals
@@ -126,13 +160,21 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Data, rhs.Data)) return false;
+                if (!object.Equals(this.Target, rhs.Target)) return false;
+                if (!object.Equals(this.Location, rhs.Location)) return false;
+                if (!object.Equals(this.Distance, rhs.Distance)) return false;
+                if (!object.Equals(this.Delay, rhs.Delay)) return false;
+                if (!object.Equals(this.GravJumpFx, rhs.GravJumpFx)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Data);
+                hash.Add(this.Target);
+                hash.Add(this.Location);
+                hash.Add(this.Distance);
+                hash.Add(this.Delay);
+                hash.Add(this.GravJumpFx);
                 return hash.ToHashCode();
             }
 
@@ -141,7 +183,11 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Data)) return false;
+                if (!eval(this.Target)) return false;
+                if (!eval(this.Location)) return false;
+                if (!eval(this.Distance)) return false;
+                if (!eval(this.Delay)) return false;
+                if (!eval(this.GravJumpFx)) return false;
                 return true;
             }
             #endregion
@@ -149,7 +195,11 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Data)) return true;
+                if (eval(this.Target)) return true;
+                if (eval(this.Location)) return true;
+                if (eval(this.Distance)) return true;
+                if (eval(this.Delay)) return true;
+                if (eval(this.GravJumpFx)) return true;
                 return false;
             }
             #endregion
@@ -164,7 +214,11 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Data = eval(this.Data);
+                obj.Target = eval(this.Target);
+                obj.Location = eval(this.Location);
+                obj.Distance = eval(this.Distance);
+                obj.Delay = eval(this.Delay);
+                obj.GravJumpFx = eval(this.GravJumpFx);
             }
             #endregion
 
@@ -183,9 +237,25 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(PlacedObjectShipArrival.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Data ?? true)
+                    if (printMask?.Target ?? true)
                     {
-                        sb.AppendItem(Data, "Data");
+                        sb.AppendItem(Target, "Target");
+                    }
+                    if (printMask?.Location ?? true)
+                    {
+                        sb.AppendItem(Location, "Location");
+                    }
+                    if (printMask?.Distance ?? true)
+                    {
+                        sb.AppendItem(Distance, "Distance");
+                    }
+                    if (printMask?.Delay ?? true)
+                    {
+                        sb.AppendItem(Delay, "Delay");
+                    }
+                    if (printMask?.GravJumpFx ?? true)
+                    {
+                        sb.AppendItem(GravJumpFx, "GravJumpFx");
                     }
                 }
             }
@@ -211,7 +281,11 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Data;
+            public Exception? Target;
+            public Exception? Location;
+            public Exception? Distance;
+            public Exception? Delay;
+            public Exception? GravJumpFx;
             #endregion
 
             #region IErrorMask
@@ -220,8 +294,16 @@ namespace Mutagen.Bethesda.Starfield
                 PlacedObjectShipArrival_FieldIndex enu = (PlacedObjectShipArrival_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlacedObjectShipArrival_FieldIndex.Data:
-                        return Data;
+                    case PlacedObjectShipArrival_FieldIndex.Target:
+                        return Target;
+                    case PlacedObjectShipArrival_FieldIndex.Location:
+                        return Location;
+                    case PlacedObjectShipArrival_FieldIndex.Distance:
+                        return Distance;
+                    case PlacedObjectShipArrival_FieldIndex.Delay:
+                        return Delay;
+                    case PlacedObjectShipArrival_FieldIndex.GravJumpFx:
+                        return GravJumpFx;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -232,8 +314,20 @@ namespace Mutagen.Bethesda.Starfield
                 PlacedObjectShipArrival_FieldIndex enu = (PlacedObjectShipArrival_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlacedObjectShipArrival_FieldIndex.Data:
-                        this.Data = ex;
+                    case PlacedObjectShipArrival_FieldIndex.Target:
+                        this.Target = ex;
+                        break;
+                    case PlacedObjectShipArrival_FieldIndex.Location:
+                        this.Location = ex;
+                        break;
+                    case PlacedObjectShipArrival_FieldIndex.Distance:
+                        this.Distance = ex;
+                        break;
+                    case PlacedObjectShipArrival_FieldIndex.Delay:
+                        this.Delay = ex;
+                        break;
+                    case PlacedObjectShipArrival_FieldIndex.GravJumpFx:
+                        this.GravJumpFx = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -245,8 +339,20 @@ namespace Mutagen.Bethesda.Starfield
                 PlacedObjectShipArrival_FieldIndex enu = (PlacedObjectShipArrival_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlacedObjectShipArrival_FieldIndex.Data:
-                        this.Data = (Exception?)obj;
+                    case PlacedObjectShipArrival_FieldIndex.Target:
+                        this.Target = (Exception?)obj;
+                        break;
+                    case PlacedObjectShipArrival_FieldIndex.Location:
+                        this.Location = (Exception?)obj;
+                        break;
+                    case PlacedObjectShipArrival_FieldIndex.Distance:
+                        this.Distance = (Exception?)obj;
+                        break;
+                    case PlacedObjectShipArrival_FieldIndex.Delay:
+                        this.Delay = (Exception?)obj;
+                        break;
+                    case PlacedObjectShipArrival_FieldIndex.GravJumpFx:
+                        this.GravJumpFx = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -256,7 +362,11 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Data != null) return true;
+                if (Target != null) return true;
+                if (Location != null) return true;
+                if (Distance != null) return true;
+                if (Delay != null) return true;
+                if (GravJumpFx != null) return true;
                 return false;
             }
             #endregion
@@ -283,7 +393,19 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Data, "Data");
+                    sb.AppendItem(Target, "Target");
+                }
+                {
+                    sb.AppendItem(Location, "Location");
+                }
+                {
+                    sb.AppendItem(Distance, "Distance");
+                }
+                {
+                    sb.AppendItem(Delay, "Delay");
+                }
+                {
+                    sb.AppendItem(GravJumpFx, "GravJumpFx");
                 }
             }
             #endregion
@@ -293,7 +415,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Data = this.Data.Combine(rhs.Data);
+                ret.Target = this.Target.Combine(rhs.Target);
+                ret.Location = this.Location.Combine(rhs.Location);
+                ret.Distance = this.Distance.Combine(rhs.Distance);
+                ret.Delay = this.Delay.Combine(rhs.Delay);
+                ret.GravJumpFx = this.GravJumpFx.Combine(rhs.GravJumpFx);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -317,7 +443,11 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Data;
+            public bool Target;
+            public bool Location;
+            public bool Distance;
+            public bool Delay;
+            public bool GravJumpFx;
             #endregion
 
             #region Ctors
@@ -327,7 +457,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Data = defaultOn;
+                this.Target = defaultOn;
+                this.Location = defaultOn;
+                this.Distance = defaultOn;
+                this.Delay = defaultOn;
+                this.GravJumpFx = defaultOn;
             }
 
             #endregion
@@ -343,7 +477,11 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Data, null));
+                ret.Add((Target, null));
+                ret.Add((Location, null));
+                ret.Add((Distance, null));
+                ret.Add((Delay, null));
+                ret.Add((GravJumpFx, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -352,6 +490,11 @@ namespace Mutagen.Bethesda.Starfield
             }
 
         }
+        #endregion
+
+        #region Mutagen
+        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => PlacedObjectShipArrivalCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
+        public void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => PlacedObjectShipArrivalSetterCommon.Instance.RemapLinks(this, mapping);
         #endregion
 
         #region Binary Translation
@@ -413,15 +556,21 @@ namespace Mutagen.Bethesda.Starfield
 
     #region Interface
     public partial interface IPlacedObjectShipArrival :
+        IFormLinkContainer,
         ILoquiObjectSetter<IPlacedObjectShipArrival>,
         IPlacedObjectShipArrivalGetter
     {
-        new MemorySlice<Byte> Data { get; set; }
+        new IFormLink<IPlacedGetter> Target { get; set; }
+        new PlacedObjectShipArrival.LocationType Location { get; set; }
+        new Single Distance { get; set; }
+        new Single Delay { get; set; }
+        new Boolean GravJumpFx { get; set; }
     }
 
     public partial interface IPlacedObjectShipArrivalGetter :
         ILoquiObject,
         IBinaryItem,
+        IFormLinkContainerGetter,
         ILoquiObject<IPlacedObjectShipArrivalGetter>
     {
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
@@ -431,7 +580,11 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => PlacedObjectShipArrival_Registration.Instance;
-        ReadOnlyMemorySlice<Byte> Data { get; }
+        IFormLinkGetter<IPlacedGetter> Target { get; }
+        PlacedObjectShipArrival.LocationType Location { get; }
+        Single Distance { get; }
+        Single Delay { get; }
+        Boolean GravJumpFx { get; }
 
     }
 
@@ -601,7 +754,11 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum PlacedObjectShipArrival_FieldIndex
     {
-        Data = 0,
+        Target = 0,
+        Location = 1,
+        Distance = 2,
+        Delay = 3,
+        GravJumpFx = 4,
     }
     #endregion
 
@@ -612,9 +769,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 1;
+        public const ushort AdditionalFieldCount = 5;
 
-        public const ushort FieldCount = 1;
+        public const ushort FieldCount = 5;
 
         public static readonly Type MaskType = typeof(PlacedObjectShipArrival.Mask<>);
 
@@ -687,12 +844,17 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IPlacedObjectShipArrival item)
         {
             ClearPartial();
-            item.Data = new byte[17];
+            item.Target.Clear();
+            item.Location = default(PlacedObjectShipArrival.LocationType);
+            item.Distance = default(Single);
+            item.Delay = default(Single);
+            item.GravJumpFx = default(Boolean);
         }
         
         #region Mutagen
         public void RemapLinks(IPlacedObjectShipArrival obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
+            obj.Target.Relink(mapping);
         }
         
         #endregion
@@ -741,7 +903,11 @@ namespace Mutagen.Bethesda.Starfield
             PlacedObjectShipArrival.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Data = MemoryExtensions.SequenceEqual(item.Data.Span, rhs.Data.Span);
+            ret.Target = item.Target.Equals(rhs.Target);
+            ret.Location = item.Location == rhs.Location;
+            ret.Distance = item.Distance.EqualsWithin(rhs.Distance);
+            ret.Delay = item.Delay.EqualsWithin(rhs.Delay);
+            ret.GravJumpFx = item.GravJumpFx == rhs.GravJumpFx;
         }
         
         public string Print(
@@ -786,9 +952,25 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             PlacedObjectShipArrival.Mask<bool>? printMask = null)
         {
-            if (printMask?.Data ?? true)
+            if (printMask?.Target ?? true)
             {
-                sb.AppendLine($"Data => {SpanExt.ToHexString(item.Data)}");
+                sb.AppendItem(item.Target.FormKey, "Target");
+            }
+            if (printMask?.Location ?? true)
+            {
+                sb.AppendItem(item.Location, "Location");
+            }
+            if (printMask?.Distance ?? true)
+            {
+                sb.AppendItem(item.Distance, "Distance");
+            }
+            if (printMask?.Delay ?? true)
+            {
+                sb.AppendItem(item.Delay, "Delay");
+            }
+            if (printMask?.GravJumpFx ?? true)
+            {
+                sb.AppendItem(item.GravJumpFx, "GravJumpFx");
             }
         }
         
@@ -799,9 +981,25 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectShipArrival_FieldIndex.Data) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectShipArrival_FieldIndex.Target) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.Data.Span, rhs.Data.Span)) return false;
+                if (!lhs.Target.Equals(rhs.Target)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectShipArrival_FieldIndex.Location) ?? true))
+            {
+                if (lhs.Location != rhs.Location) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectShipArrival_FieldIndex.Distance) ?? true))
+            {
+                if (!lhs.Distance.EqualsWithin(rhs.Distance)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectShipArrival_FieldIndex.Delay) ?? true))
+            {
+                if (!lhs.Delay.EqualsWithin(rhs.Delay)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectShipArrival_FieldIndex.GravJumpFx) ?? true))
+            {
+                if (lhs.GravJumpFx != rhs.GravJumpFx) return false;
             }
             return true;
         }
@@ -809,7 +1007,11 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IPlacedObjectShipArrivalGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Data);
+            hash.Add(item.Target);
+            hash.Add(item.Location);
+            hash.Add(item.Distance);
+            hash.Add(item.Delay);
+            hash.Add(item.GravJumpFx);
             return hash.ToHashCode();
         }
         
@@ -824,6 +1026,7 @@ namespace Mutagen.Bethesda.Starfield
         #region Mutagen
         public IEnumerable<IFormLinkGetter> EnumerateFormLinks(IPlacedObjectShipArrivalGetter obj, bool iterateNestedRecords = true)
         {
+            yield return FormLinkInformation.Factory(obj.Target);
             yield break;
         }
         
@@ -842,9 +1045,25 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectShipArrival_FieldIndex.Data) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectShipArrival_FieldIndex.Target) ?? true))
             {
-                item.Data = rhs.Data.ToArray();
+                item.Target.SetTo(rhs.Target.FormKey);
+            }
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectShipArrival_FieldIndex.Location) ?? true))
+            {
+                item.Location = rhs.Location;
+            }
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectShipArrival_FieldIndex.Distance) ?? true))
+            {
+                item.Distance = rhs.Distance;
+            }
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectShipArrival_FieldIndex.Delay) ?? true))
+            {
+                item.Delay = rhs.Delay;
+            }
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectShipArrival_FieldIndex.GravJumpFx) ?? true))
+            {
+                item.GravJumpFx = rhs.GravJumpFx;
             }
             DeepCopyInCustom(
                 item: item,
@@ -954,9 +1173,20 @@ namespace Mutagen.Bethesda.Starfield
             IPlacedObjectShipArrivalGetter item,
             MutagenWriter writer)
         {
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.Data);
+                item: item.Target);
+            EnumBinaryTranslation<PlacedObjectShipArrival.LocationType, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.Location,
+                length: 4);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.Distance);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.Delay);
+            writer.Write(item.GravJumpFx);
         }
 
         public void Write(
@@ -997,7 +1227,13 @@ namespace Mutagen.Bethesda.Starfield
             IPlacedObjectShipArrival item,
             MutagenFrame frame)
         {
-            item.Data = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(17));
+            item.Target.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.Location = EnumBinaryTranslation<PlacedObjectShipArrival.LocationType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                length: 4);
+            item.Distance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Delay = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.GravJumpFx = frame.ReadBoolean();
         }
 
     }
@@ -1049,6 +1285,7 @@ namespace Mutagen.Bethesda.Starfield
 
         void IPrintable.Print(StructuredStringBuilder sb, string? name) => this.Print(sb, name);
 
+        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => PlacedObjectShipArrivalCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected object BinaryWriteTranslator => PlacedObjectShipArrivalBinaryWriteTranslation.Instance;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -1063,7 +1300,11 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public ReadOnlyMemorySlice<Byte> Data => _structData.Span.Slice(0x0, 0x11).ToArray();
+        public IFormLinkGetter<IPlacedGetter> Target => FormLinkBinaryTranslation.Instance.OverlayFactory<IPlacedGetter>(_package, _structData.Span.Slice(0x0, 0x4));
+        public PlacedObjectShipArrival.LocationType Location => (PlacedObjectShipArrival.LocationType)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x4, 0x4));
+        public Single Distance => _structData.Slice(0x8, 0x4).Float();
+        public Single Delay => _structData.Slice(0xC, 0x4).Float();
+        public Boolean GravJumpFx => _structData.Slice(0x10, 0x1)[0] >= 1;
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

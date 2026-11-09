@@ -211,3 +211,17 @@ partial class PlacedObjectBinaryOverlay
         NumTraversalFluffBytes = fluffBytes;
     }
 }
+
+public partial class PlacedObjectShipArrival
+{
+    public enum LocationType
+    {
+        EditorLocation = 0,
+        TargetAbove = 1,
+        TargetBelow = 2,
+        TargetBehind = 3,
+        TargetFront = 4,
+        TargetLeft = 5,
+        TargetRight = 6,
+    }
+}

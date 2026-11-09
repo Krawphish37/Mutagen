@@ -5471,6 +5471,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.XLTW.Relink(mapping);
             obj.XTRV?.RemapLinks(mapping);
             obj.VolumeData?.RemapLinks(mapping);
+            obj.ShipArrival?.RemapLinks(mapping);
             obj.PlacedObjectXCZRXCZA.RemapLinks(mapping);
             obj.Emittance.Relink(mapping);
             obj.CurrentZoneCell?.RemapLinks(mapping);
@@ -7202,6 +7203,13 @@ namespace Mutagen.Bethesda.Starfield
             if (obj.VolumeData is {} VolumeDataItems)
             {
                 foreach (var item in VolumeDataItems.EnumerateFormLinks(iterateNestedRecords))
+                {
+                    yield return item;
+                }
+            }
+            if (obj.ShipArrival is {} ShipArrivalItems)
+            {
+                foreach (var item in ShipArrivalItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
