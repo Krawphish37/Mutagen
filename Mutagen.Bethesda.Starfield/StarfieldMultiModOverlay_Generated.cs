@@ -1842,7 +1842,6 @@ internal class MergedWorldspaceCell : ICellGetter
     public IFormLinkNullableGetter<IWaterGetter> Water => _primary.Water;
     public String? WaterType => _primary.WaterType;
     public IReadOnlyList<ICellShipBlueprintSnapLinkGetter>? ShipBlueprintSnapLinks => _primary.ShipBlueprintSnapLinks;
-    public UInt32? WaterCurrentVelocityCount => _primary.WaterCurrentVelocityCount;
     public IReadOnlyList<IWaterCurrentVelocityGetter>? WaterCurrentVelocities => _primary.WaterCurrentVelocities;
     public IFormLinkNullableGetter<IAcousticSpaceGetter> AcousticSpace => _primary.AcousticSpace;
     public IFormLinkNullableGetter<IImageSpaceGetter> ImageSpace => _primary.ImageSpace;

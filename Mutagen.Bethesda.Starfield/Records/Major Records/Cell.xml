@@ -36,8 +36,7 @@
       <FormLink name="Water" refName="Water" recordType="XCWT" />
       <String name="WaterType" recordType="XCWM" />
       <RefList name="ShipBlueprintSnapLinks" refName="CellShipBlueprintSnapLink" recordType="XBPS" />
-      <UInt32 name="WaterCurrentVelocityCount" recordType="XWCN" />
-      <RefList name="WaterCurrentVelocities" refName="WaterCurrentVelocity" recordType="XWCU" />
+      <RefList name="WaterCurrentVelocities" refName="WaterCurrentVelocity" recordType="XWCU" counterRecType="XWCN" />
       <FormLink name="AcousticSpace" refName="AcousticSpace" recordType="XCAS" />
       <FormLink name="ImageSpace" refName="ImageSpace" recordType="XCIM" />
       <String name="WaterEnvironmentMap" recordType="XWEM" />

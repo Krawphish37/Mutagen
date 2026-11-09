@@ -241,11 +241,6 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region WaterCurrentVelocityCount
-        public UInt32? WaterCurrentVelocityCount { get; set; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? ICellGetter.WaterCurrentVelocityCount => this.WaterCurrentVelocityCount;
-        #endregion
         #region WaterCurrentVelocities
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ExtendedList<WaterCurrentVelocity>? _WaterCurrentVelocities;
@@ -465,7 +460,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.Water = initialValue;
                 this.WaterType = initialValue;
                 this.ShipBlueprintSnapLinks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CellShipBlueprintSnapLink.Mask<TItem>?>>?>(initialValue, []);
-                this.WaterCurrentVelocityCount = initialValue;
                 this.WaterCurrentVelocities = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WaterCurrentVelocity.Mask<TItem>?>>?>(initialValue, []);
                 this.AcousticSpace = initialValue;
                 this.ImageSpace = initialValue;
@@ -515,7 +509,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Water,
                 TItem WaterType,
                 TItem ShipBlueprintSnapLinks,
-                TItem WaterCurrentVelocityCount,
                 TItem WaterCurrentVelocities,
                 TItem AcousticSpace,
                 TItem ImageSpace,
@@ -564,7 +557,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.Water = Water;
                 this.WaterType = WaterType;
                 this.ShipBlueprintSnapLinks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CellShipBlueprintSnapLink.Mask<TItem>?>>?>(ShipBlueprintSnapLinks, []);
-                this.WaterCurrentVelocityCount = WaterCurrentVelocityCount;
                 this.WaterCurrentVelocities = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WaterCurrentVelocity.Mask<TItem>?>>?>(WaterCurrentVelocities, []);
                 this.AcousticSpace = AcousticSpace;
                 this.ImageSpace = ImageSpace;
@@ -615,7 +607,6 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Water;
             public TItem WaterType;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CellShipBlueprintSnapLink.Mask<TItem>?>>?>? ShipBlueprintSnapLinks;
-            public TItem WaterCurrentVelocityCount;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WaterCurrentVelocity.Mask<TItem>?>>?>? WaterCurrentVelocities;
             public TItem AcousticSpace;
             public TItem ImageSpace;
@@ -668,7 +659,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Water, rhs.Water)) return false;
                 if (!object.Equals(this.WaterType, rhs.WaterType)) return false;
                 if (!object.Equals(this.ShipBlueprintSnapLinks, rhs.ShipBlueprintSnapLinks)) return false;
-                if (!object.Equals(this.WaterCurrentVelocityCount, rhs.WaterCurrentVelocityCount)) return false;
                 if (!object.Equals(this.WaterCurrentVelocities, rhs.WaterCurrentVelocities)) return false;
                 if (!object.Equals(this.AcousticSpace, rhs.AcousticSpace)) return false;
                 if (!object.Equals(this.ImageSpace, rhs.ImageSpace)) return false;
@@ -713,7 +703,6 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Water);
                 hash.Add(this.WaterType);
                 hash.Add(this.ShipBlueprintSnapLinks);
-                hash.Add(this.WaterCurrentVelocityCount);
                 hash.Add(this.WaterCurrentVelocities);
                 hash.Add(this.AcousticSpace);
                 hash.Add(this.ImageSpace);
@@ -812,7 +801,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.WaterCurrentVelocityCount)) return false;
                 if (this.WaterCurrentVelocities != null)
                 {
                     if (!eval(this.WaterCurrentVelocities.Overall)) return false;
@@ -975,7 +963,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.WaterCurrentVelocityCount)) return true;
                 if (this.WaterCurrentVelocities != null)
                 {
                     if (eval(this.WaterCurrentVelocities.Overall)) return true;
@@ -1138,7 +1125,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.WaterCurrentVelocityCount = eval(this.WaterCurrentVelocityCount);
                 if (WaterCurrentVelocities != null)
                 {
                     obj.WaterCurrentVelocities = new MaskItem<R, IEnumerable<MaskItemIndexed<R, WaterCurrentVelocity.Mask<R>?>>?>(eval(this.WaterCurrentVelocities.Overall), []);
@@ -1375,10 +1361,6 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.WaterCurrentVelocityCount ?? true)
-                    {
-                        sb.AppendItem(WaterCurrentVelocityCount, "WaterCurrentVelocityCount");
-                    }
                     if ((printMask?.WaterCurrentVelocities?.Overall ?? true)
                         && WaterCurrentVelocities is {} WaterCurrentVelocitiesItem)
                     {
@@ -1588,7 +1570,6 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Water;
             public Exception? WaterType;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellShipBlueprintSnapLink.ErrorMask?>>?>? ShipBlueprintSnapLinks;
-            public Exception? WaterCurrentVelocityCount;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WaterCurrentVelocity.ErrorMask?>>?>? WaterCurrentVelocities;
             public Exception? AcousticSpace;
             public Exception? ImageSpace;
@@ -1652,8 +1633,6 @@ namespace Mutagen.Bethesda.Starfield
                         return WaterType;
                     case Cell_FieldIndex.ShipBlueprintSnapLinks:
                         return ShipBlueprintSnapLinks;
-                    case Cell_FieldIndex.WaterCurrentVelocityCount:
-                        return WaterCurrentVelocityCount;
                     case Cell_FieldIndex.WaterCurrentVelocities:
                         return WaterCurrentVelocities;
                     case Cell_FieldIndex.AcousticSpace:
@@ -1757,9 +1736,6 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case Cell_FieldIndex.ShipBlueprintSnapLinks:
                         this.ShipBlueprintSnapLinks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellShipBlueprintSnapLink.ErrorMask?>>?>(ex, null);
-                        break;
-                    case Cell_FieldIndex.WaterCurrentVelocityCount:
-                        this.WaterCurrentVelocityCount = ex;
                         break;
                     case Cell_FieldIndex.WaterCurrentVelocities:
                         this.WaterCurrentVelocities = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WaterCurrentVelocity.ErrorMask?>>?>(ex, null);
@@ -1889,9 +1865,6 @@ namespace Mutagen.Bethesda.Starfield
                     case Cell_FieldIndex.ShipBlueprintSnapLinks:
                         this.ShipBlueprintSnapLinks = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellShipBlueprintSnapLink.ErrorMask?>>?>)obj;
                         break;
-                    case Cell_FieldIndex.WaterCurrentVelocityCount:
-                        this.WaterCurrentVelocityCount = (Exception?)obj;
-                        break;
                     case Cell_FieldIndex.WaterCurrentVelocities:
                         this.WaterCurrentVelocities = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WaterCurrentVelocity.ErrorMask?>>?>)obj;
                         break;
@@ -1986,7 +1959,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (Water != null) return true;
                 if (WaterType != null) return true;
                 if (ShipBlueprintSnapLinks != null) return true;
-                if (WaterCurrentVelocityCount != null) return true;
                 if (WaterCurrentVelocities != null) return true;
                 if (AcousticSpace != null) return true;
                 if (ImageSpace != null) return true;
@@ -2120,9 +2092,6 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                }
-                {
-                    sb.AppendItem(WaterCurrentVelocityCount, "WaterCurrentVelocityCount");
                 }
                 if (WaterCurrentVelocities is {} WaterCurrentVelocitiesItem)
                 {
@@ -2307,7 +2276,6 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Water = this.Water.Combine(rhs.Water);
                 ret.WaterType = this.WaterType.Combine(rhs.WaterType);
                 ret.ShipBlueprintSnapLinks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CellShipBlueprintSnapLink.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.ShipBlueprintSnapLinks?.Overall, rhs.ShipBlueprintSnapLinks?.Overall), Noggog.ExceptionExt.Combine(this.ShipBlueprintSnapLinks?.Specific, rhs.ShipBlueprintSnapLinks?.Specific));
-                ret.WaterCurrentVelocityCount = this.WaterCurrentVelocityCount.Combine(rhs.WaterCurrentVelocityCount);
                 ret.WaterCurrentVelocities = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WaterCurrentVelocity.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.WaterCurrentVelocities?.Overall, rhs.WaterCurrentVelocities?.Overall), Noggog.ExceptionExt.Combine(this.WaterCurrentVelocities?.Specific, rhs.WaterCurrentVelocities?.Specific));
                 ret.AcousticSpace = this.AcousticSpace.Combine(rhs.AcousticSpace);
                 ret.ImageSpace = this.ImageSpace.Combine(rhs.ImageSpace);
@@ -2369,7 +2337,6 @@ namespace Mutagen.Bethesda.Starfield
             public bool Water;
             public bool WaterType;
             public CellShipBlueprintSnapLink.TranslationMask? ShipBlueprintSnapLinks;
-            public bool WaterCurrentVelocityCount;
             public WaterCurrentVelocity.TranslationMask? WaterCurrentVelocities;
             public bool AcousticSpace;
             public bool ImageSpace;
@@ -2410,7 +2377,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.Location = defaultOn;
                 this.Water = defaultOn;
                 this.WaterType = defaultOn;
-                this.WaterCurrentVelocityCount = defaultOn;
                 this.AcousticSpace = defaultOn;
                 this.ImageSpace = defaultOn;
                 this.WaterEnvironmentMap = defaultOn;
@@ -2453,7 +2419,6 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Water, null));
                 ret.Add((WaterType, null));
                 ret.Add((ShipBlueprintSnapLinks == null ? DefaultOn : !ShipBlueprintSnapLinks.GetCrystal().CopyNothing, ShipBlueprintSnapLinks?.GetCrystal()));
-                ret.Add((WaterCurrentVelocityCount, null));
                 ret.Add((WaterCurrentVelocities == null ? DefaultOn : !WaterCurrentVelocities.GetCrystal().CopyNothing, WaterCurrentVelocities?.GetCrystal()));
                 ret.Add((AcousticSpace, null));
                 ret.Add((ImageSpace, null));
@@ -2699,7 +2664,6 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<IWaterGetter> Water { get; set; }
         new String? WaterType { get; set; }
         new ExtendedList<CellShipBlueprintSnapLink>? ShipBlueprintSnapLinks { get; set; }
-        new UInt32? WaterCurrentVelocityCount { get; set; }
         new ExtendedList<WaterCurrentVelocity>? WaterCurrentVelocities { get; set; }
         new IFormLinkNullable<IAcousticSpaceGetter> AcousticSpace { get; set; }
         new IFormLinkNullable<IImageSpaceGetter> ImageSpace { get; set; }
@@ -2775,7 +2739,6 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IWaterGetter> Water { get; }
         String? WaterType { get; }
         IReadOnlyList<ICellShipBlueprintSnapLinkGetter>? ShipBlueprintSnapLinks { get; }
-        UInt32? WaterCurrentVelocityCount { get; }
         IReadOnlyList<IWaterCurrentVelocityGetter>? WaterCurrentVelocities { get; }
         IFormLinkNullableGetter<IAcousticSpaceGetter> AcousticSpace { get; }
         IFormLinkNullableGetter<IImageSpaceGetter> ImageSpace { get; }
@@ -3221,30 +3184,29 @@ namespace Mutagen.Bethesda.Starfield
         Water = 20,
         WaterType = 21,
         ShipBlueprintSnapLinks = 22,
-        WaterCurrentVelocityCount = 23,
-        WaterCurrentVelocities = 24,
-        AcousticSpace = 25,
-        ImageSpace = 26,
-        WaterEnvironmentMap = 27,
-        LockList = 28,
-        Music = 29,
-        GlobalDirtLayerMaterial = 30,
-        GlobalDirtLayerInheritBiomeLayer = 31,
-        TimeOfDay = 32,
-        LinkedReferences = 33,
-        IsLinkedRefTransient = 34,
-        EnvironmentMap = 35,
-        Traversals = 36,
-        NumTraversalFluffBytes = 37,
-        NavigationMeshes = 38,
-        Timestamp = 39,
-        UnknownGroupData = 40,
-        PersistentTimestamp = 41,
-        PersistentUnknownGroupData = 42,
-        Persistent = 43,
-        TemporaryTimestamp = 44,
-        TemporaryUnknownGroupData = 45,
-        Temporary = 46,
+        WaterCurrentVelocities = 23,
+        AcousticSpace = 24,
+        ImageSpace = 25,
+        WaterEnvironmentMap = 26,
+        LockList = 27,
+        Music = 28,
+        GlobalDirtLayerMaterial = 29,
+        GlobalDirtLayerInheritBiomeLayer = 30,
+        TimeOfDay = 31,
+        LinkedReferences = 32,
+        IsLinkedRefTransient = 33,
+        EnvironmentMap = 34,
+        Traversals = 35,
+        NumTraversalFluffBytes = 36,
+        NavigationMeshes = 37,
+        Timestamp = 38,
+        UnknownGroupData = 39,
+        PersistentTimestamp = 40,
+        PersistentUnknownGroupData = 41,
+        Persistent = 42,
+        TemporaryTimestamp = 43,
+        TemporaryUnknownGroupData = 44,
+        Temporary = 45,
     }
     #endregion
 
@@ -3255,9 +3217,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 40;
+        public const ushort AdditionalFieldCount = 39;
 
-        public const ushort FieldCount = 47;
+        public const ushort FieldCount = 46;
 
         public static readonly Type MaskType = typeof(Cell.Mask<>);
 
@@ -3308,8 +3270,8 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.XCWT,
                 RecordTypes.XCWM,
                 RecordTypes.XBPS,
-                RecordTypes.XWCN,
                 RecordTypes.XWCU,
+                RecordTypes.XWCN,
                 RecordTypes.XCAS,
                 RecordTypes.XCIM,
                 RecordTypes.XWEM,
@@ -3405,7 +3367,6 @@ namespace Mutagen.Bethesda.Starfield
             item.Water.Clear();
             item.WaterType = default;
             item.ShipBlueprintSnapLinks = null;
-            item.WaterCurrentVelocityCount = default;
             item.WaterCurrentVelocities = null;
             item.AcousticSpace.Clear();
             item.ImageSpace.Clear();
@@ -3995,7 +3956,6 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.ShipBlueprintSnapLinks,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.WaterCurrentVelocityCount = item.WaterCurrentVelocityCount == rhs.WaterCurrentVelocityCount;
             ret.WaterCurrentVelocities = item.WaterCurrentVelocities.CollectionEqualsHelper(
                 rhs.WaterCurrentVelocities,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -4189,11 +4149,6 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-            }
-            if ((printMask?.WaterCurrentVelocityCount ?? true)
-                && item.WaterCurrentVelocityCount is {} WaterCurrentVelocityCountItem)
-            {
-                sb.AppendItem(WaterCurrentVelocityCountItem, "WaterCurrentVelocityCount");
             }
             if ((printMask?.WaterCurrentVelocities?.Overall ?? true)
                 && item.WaterCurrentVelocities is {} WaterCurrentVelocitiesItem)
@@ -4483,10 +4438,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ShipBlueprintSnapLinks.SequenceEqualNullable(rhs.ShipBlueprintSnapLinks, (l, r) => ((CellShipBlueprintSnapLinkCommon)((ICellShipBlueprintSnapLinkGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Cell_FieldIndex.ShipBlueprintSnapLinks)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Cell_FieldIndex.WaterCurrentVelocityCount) ?? true))
-            {
-                if (lhs.WaterCurrentVelocityCount != rhs.WaterCurrentVelocityCount) return false;
-            }
             if ((equalsMask?.GetShouldTranslate((int)Cell_FieldIndex.WaterCurrentVelocities) ?? true))
             {
                 if (!lhs.WaterCurrentVelocities.SequenceEqualNullable(rhs.WaterCurrentVelocities, (l, r) => ((WaterCurrentVelocityCommon)((IWaterCurrentVelocityGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Cell_FieldIndex.WaterCurrentVelocities)))) return false;
@@ -4650,10 +4601,6 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(WaterTypeitem);
             }
             hash.Add(item.ShipBlueprintSnapLinks);
-            if (item.WaterCurrentVelocityCount is {} WaterCurrentVelocityCountitem)
-            {
-                hash.Add(WaterCurrentVelocityCountitem);
-            }
             hash.Add(item.WaterCurrentVelocities);
             hash.Add(item.AcousticSpace);
             hash.Add(item.ImageSpace);
@@ -5792,10 +5739,6 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Cell_FieldIndex.WaterCurrentVelocityCount) ?? true))
-            {
-                item.WaterCurrentVelocityCount = rhs.WaterCurrentVelocityCount;
-            }
             if ((copyMask?.GetShouldTranslate((int)Cell_FieldIndex.WaterCurrentVelocities) ?? true))
             {
                 errorMask?.PushIndex((int)Cell_FieldIndex.WaterCurrentVelocities);
@@ -6300,13 +6243,11 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.WaterCurrentVelocityCount,
-                header: translationParams.ConvertToCustom(RecordTypes.XWCN));
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IWaterCurrentVelocityGetter>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IWaterCurrentVelocityGetter>.Instance.WriteWithCounter(
                 writer: writer,
                 items: item.WaterCurrentVelocities,
+                counterType: RecordTypes.XWCN,
+                counterLength: 4,
                 recordType: translationParams.ConvertToCustom(RecordTypes.XWCU),
                 transl: (MutagenWriter subWriter, IWaterCurrentVelocityGetter subItem, TypedWriteParams conv) =>
                 {
@@ -6593,17 +6534,15 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)Cell_FieldIndex.ShipBlueprintSnapLinks;
                 }
                 case RecordTypeInts.XWCN:
-                {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.WaterCurrentVelocityCount = frame.ReadUInt32();
-                    return (int)Cell_FieldIndex.WaterCurrentVelocityCount;
-                }
                 case RecordTypeInts.XWCU:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WaterCurrentVelocities = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<WaterCurrentVelocity>.Instance.Parse(
-                            reader: frame.SpawnWithLength(contentLength),
+                            reader: frame,
+                            countLengthLength: 4,
+                            countRecord: translationParams.ConvertToCustom(RecordTypes.XWCN),
+                            triggeringRecord: translationParams.ConvertToCustom(RecordTypes.XWCU),
+                            skipHeader: true,
                             transl: WaterCurrentVelocity.TryCreateFromBinary)
                         .CastExtendedList<WaterCurrentVelocity>();
                     return (int)Cell_FieldIndex.WaterCurrentVelocities;
@@ -6842,10 +6781,6 @@ namespace Mutagen.Bethesda.Starfield
         public String? WaterType => _WaterTypeLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _WaterTypeLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         public IReadOnlyList<ICellShipBlueprintSnapLinkGetter>? ShipBlueprintSnapLinks { get; private set; }
-        #region WaterCurrentVelocityCount
-        private int? _WaterCurrentVelocityCountLocation;
-        public UInt32? WaterCurrentVelocityCount => _WaterCurrentVelocityCountLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _WaterCurrentVelocityCountLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
-        #endregion
         public IReadOnlyList<IWaterCurrentVelocityGetter>? WaterCurrentVelocities { get; private set; }
         #region AcousticSpace
         private int? _AcousticSpaceLocation;
@@ -7072,17 +7007,15 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)Cell_FieldIndex.ShipBlueprintSnapLinks;
                 }
                 case RecordTypeInts.XWCN:
-                {
-                    _WaterCurrentVelocityCountLocation = (stream.Position - offset);
-                    return (int)Cell_FieldIndex.WaterCurrentVelocityCount;
-                }
                 case RecordTypeInts.XWCU:
                 {
-                    this.WaterCurrentVelocities = BinaryOverlayList.FactoryByStartIndexWithTrigger<IWaterCurrentVelocityGetter>(
+                    this.WaterCurrentVelocities = BinaryOverlayList.FactoryByCount<IWaterCurrentVelocityGetter>(
                         stream: stream,
                         package: _package,
-                        finalPos: finalPos,
-                        itemLength: 16,
+                        itemLength: 0x10,
+                        countLength: 4,
+                        countType: RecordTypes.XWCN,
+                        trigger: RecordTypes.XWCU,
                         getter: (s, p) => WaterCurrentVelocityBinaryOverlay.WaterCurrentVelocityFactory(s, p));
                     return (int)Cell_FieldIndex.WaterCurrentVelocities;
                 }

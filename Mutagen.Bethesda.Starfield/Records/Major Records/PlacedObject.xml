@@ -68,8 +68,7 @@
       <UInt32 name="BlueprintPartOrigin" recordType="XBPO" />
       <FormLink name="Layer" refName="Layer" recordType="XLYR" />
       <UInt16 name="BOLV" recordType="BOLV" unknown="true" />
-      <UInt32 name="WaterCurrentVelocityCount" recordType="XWCN" />
-      <RefList name="WaterCurrentVelocities" refName="WaterCurrentVelocity" recordType="XWCU" />
+      <RefList name="WaterCurrentVelocities" refName="WaterCurrentVelocity" recordType="XWCU" counterRecType="XWCN" />
       <FormLink name="Location" refName="Location" recordType="XLRL" />
       <UInt32 name="XTRI" recordType="XTRI" unknown="true" />
       <RefDirect name="LightRoundedness" refName="LightRoundness" recordType="XLRD" />

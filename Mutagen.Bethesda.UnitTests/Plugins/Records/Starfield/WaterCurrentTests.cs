@@ -11,8 +11,8 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield;
 // Water current velocities (CELL and REFR): XWCN is the velocity count (u32) and XWCU the velocities, 16 bytes each
 // (xEdit: Velocity vec3 + an unnamed 4 bytes). Mutagen had, on REFR, XWCN as a FormLink to a Static (the count 3 was a
 // fake link that FormID remapping would rewrite) and XWCU as raw bytes; on CELL, XWCN as raw bytes and XWCU as
-// Fallout 4's layout (Offset, Unknown, Angle, UnknownBytes). Now both have WaterCurrentVelocityCount (XWCN) and
-// WaterCurrentVelocities (XWCU).
+// Fallout 4's layout (Offset, Unknown, Angle, UnknownBytes). Now both have WaterCurrentVelocities (XWCU), a list
+// counted by XWCN: the count is written from the list and is no longer a field of its own.
 // The water current data on REFR (XCZR/XCZC + XCZA) names XCZR Reference.
 // Starfield.esm: XWCN 3 or 4 on all 4 records that have it (2 CELL, 2 REFR), XWCU 48 or 64 bytes.
 public class WaterCurrentTests
@@ -36,7 +36,6 @@ public class WaterCurrentTests
         var bytes = Record("CELL", Subrecord("XWCN", CellCount), Subrecord("XWCU", CellVelocities));
         foreach (var cell in ReadBoth<ICellGetter>(bytes, f => Cell.CreateFromBinary(f), (s, p) => CellBinaryOverlay.CellFactory(s, p)))
         {
-            cell.WaterCurrentVelocityCount.ShouldBe(4u);
             var v = cell.WaterCurrentVelocities!;
             v.Count.ShouldBe(4);
             v[2].Velocity.X.ShouldBe(125.86445f, 0.0001f);
@@ -60,7 +59,6 @@ public class WaterCurrentTests
             v[0].Velocity.X.ShouldBe(0f);
             v[2].Velocity.X.ShouldBe(-24.702406f, 0.0001f);
             v[2].Velocity.Y.ShouldBe(-47.907726f, 0.0001f);
-            refr.WaterCurrentVelocityCount.ShouldBe(3u);
             v[2].Velocity.Z.ShouldBe(1f);
             var written = GameConstants.Starfield.MajorRecord(Write(w => refr.WriteToBinary(w)));
             written.FindSubrecord(new RecordType("XWCN")).Content.ToArray().ShouldBe(Hex("03-00-00-00"));
@@ -81,12 +79,11 @@ public class WaterCurrentTests
     }
 
     [Fact]
-    public void Count_IsWritten()
+    public void Count_IsWrittenFromTheList()
     {
-        // The count is stored as its own field (XWCN) and must match the list.
+        // XWCN is written from the list size.
         var refr = new PlacedObject(new FormKey(TestModKey, 0x800), StarfieldRelease.Starfield);
         refr.WaterCurrentVelocities = new() { new WaterCurrentVelocity(), new WaterCurrentVelocity() };
-        refr.WaterCurrentVelocityCount = 2;
         var written = GameConstants.Starfield.MajorRecord(Write(w => ((IPlacedObjectGetter)refr).WriteToBinary(w)));
         written.FindSubrecord(new RecordType("XWCN")).Content.ToArray().ShouldBe(Hex("02-00-00-00"));
         written.FindSubrecord(new RecordType("XWCU")).ContentLength.ShouldBe(32);

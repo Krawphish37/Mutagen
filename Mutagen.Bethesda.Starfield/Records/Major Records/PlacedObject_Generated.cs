@@ -588,11 +588,6 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         UInt16? IPlacedObjectGetter.BOLV => this.BOLV;
         #endregion
-        #region WaterCurrentVelocityCount
-        public UInt32? WaterCurrentVelocityCount { get; set; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? IPlacedObjectGetter.WaterCurrentVelocityCount => this.WaterCurrentVelocityCount;
-        #endregion
         #region WaterCurrentVelocities
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ExtendedList<WaterCurrentVelocity>? _WaterCurrentVelocities;
@@ -922,7 +917,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.BlueprintPartOrigin = initialValue;
                 this.Layer = initialValue;
                 this.BOLV = initialValue;
-                this.WaterCurrentVelocityCount = initialValue;
                 this.WaterCurrentVelocities = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WaterCurrentVelocity.Mask<TItem>?>>?>(initialValue, []);
                 this.Location = initialValue;
                 this.XTRI = initialValue;
@@ -1017,7 +1011,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem BlueprintPartOrigin,
                 TItem Layer,
                 TItem BOLV,
-                TItem WaterCurrentVelocityCount,
                 TItem WaterCurrentVelocities,
                 TItem Location,
                 TItem XTRI,
@@ -1111,7 +1104,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.BlueprintPartOrigin = BlueprintPartOrigin;
                 this.Layer = Layer;
                 this.BOLV = BOLV;
-                this.WaterCurrentVelocityCount = WaterCurrentVelocityCount;
                 this.WaterCurrentVelocities = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WaterCurrentVelocity.Mask<TItem>?>>?>(WaterCurrentVelocities, []);
                 this.Location = Location;
                 this.XTRI = XTRI;
@@ -1207,7 +1199,6 @@ namespace Mutagen.Bethesda.Starfield
             public TItem BlueprintPartOrigin;
             public TItem Layer;
             public TItem BOLV;
-            public TItem WaterCurrentVelocityCount;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WaterCurrentVelocity.Mask<TItem>?>>?>? WaterCurrentVelocities;
             public TItem Location;
             public TItem XTRI;
@@ -1305,7 +1296,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.BlueprintPartOrigin, rhs.BlueprintPartOrigin)) return false;
                 if (!object.Equals(this.Layer, rhs.Layer)) return false;
                 if (!object.Equals(this.BOLV, rhs.BOLV)) return false;
-                if (!object.Equals(this.WaterCurrentVelocityCount, rhs.WaterCurrentVelocityCount)) return false;
                 if (!object.Equals(this.WaterCurrentVelocities, rhs.WaterCurrentVelocities)) return false;
                 if (!object.Equals(this.Location, rhs.Location)) return false;
                 if (!object.Equals(this.XTRI, rhs.XTRI)) return false;
@@ -1395,7 +1385,6 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.BlueprintPartOrigin);
                 hash.Add(this.Layer);
                 hash.Add(this.BOLV);
-                hash.Add(this.WaterCurrentVelocityCount);
                 hash.Add(this.WaterCurrentVelocities);
                 hash.Add(this.Location);
                 hash.Add(this.XTRI);
@@ -1655,7 +1644,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.BlueprintPartOrigin)) return false;
                 if (!eval(this.Layer)) return false;
                 if (!eval(this.BOLV)) return false;
-                if (!eval(this.WaterCurrentVelocityCount)) return false;
                 if (this.WaterCurrentVelocities != null)
                 {
                     if (!eval(this.WaterCurrentVelocities.Overall)) return false;
@@ -1992,7 +1980,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.BlueprintPartOrigin)) return true;
                 if (eval(this.Layer)) return true;
                 if (eval(this.BOLV)) return true;
-                if (eval(this.WaterCurrentVelocityCount)) return true;
                 if (this.WaterCurrentVelocities != null)
                 {
                     if (eval(this.WaterCurrentVelocities.Overall)) return true;
@@ -2280,7 +2267,6 @@ namespace Mutagen.Bethesda.Starfield
                 obj.BlueprintPartOrigin = eval(this.BlueprintPartOrigin);
                 obj.Layer = eval(this.Layer);
                 obj.BOLV = eval(this.BOLV);
-                obj.WaterCurrentVelocityCount = eval(this.WaterCurrentVelocityCount);
                 if (WaterCurrentVelocities != null)
                 {
                     obj.WaterCurrentVelocities = new MaskItem<R, IEnumerable<MaskItemIndexed<R, WaterCurrentVelocity.Mask<R>?>>?>(eval(this.WaterCurrentVelocities.Overall), []);
@@ -2741,10 +2727,6 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(BOLV, "BOLV");
                     }
-                    if (printMask?.WaterCurrentVelocityCount ?? true)
-                    {
-                        sb.AppendItem(WaterCurrentVelocityCount, "WaterCurrentVelocityCount");
-                    }
                     if ((printMask?.WaterCurrentVelocities?.Overall ?? true)
                         && WaterCurrentVelocities is {} WaterCurrentVelocitiesItem)
                     {
@@ -3005,7 +2987,6 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? BlueprintPartOrigin;
             public Exception? Layer;
             public Exception? BOLV;
-            public Exception? WaterCurrentVelocityCount;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WaterCurrentVelocity.ErrorMask?>>?>? WaterCurrentVelocities;
             public Exception? Location;
             public Exception? XTRI;
@@ -3152,8 +3133,6 @@ namespace Mutagen.Bethesda.Starfield
                         return Layer;
                     case PlacedObject_FieldIndex.BOLV:
                         return BOLV;
-                    case PlacedObject_FieldIndex.WaterCurrentVelocityCount:
-                        return WaterCurrentVelocityCount;
                     case PlacedObject_FieldIndex.WaterCurrentVelocities:
                         return WaterCurrentVelocities;
                     case PlacedObject_FieldIndex.Location:
@@ -3385,9 +3364,6 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case PlacedObject_FieldIndex.BOLV:
                         this.BOLV = ex;
-                        break;
-                    case PlacedObject_FieldIndex.WaterCurrentVelocityCount:
-                        this.WaterCurrentVelocityCount = ex;
                         break;
                     case PlacedObject_FieldIndex.WaterCurrentVelocities:
                         this.WaterCurrentVelocities = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WaterCurrentVelocity.ErrorMask?>>?>(ex, null);
@@ -3652,9 +3628,6 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.BOLV:
                         this.BOLV = (Exception?)obj;
                         break;
-                    case PlacedObject_FieldIndex.WaterCurrentVelocityCount:
-                        this.WaterCurrentVelocityCount = (Exception?)obj;
-                        break;
                     case PlacedObject_FieldIndex.WaterCurrentVelocities:
                         this.WaterCurrentVelocities = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WaterCurrentVelocity.ErrorMask?>>?>)obj;
                         break;
@@ -3808,7 +3781,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (BlueprintPartOrigin != null) return true;
                 if (Layer != null) return true;
                 if (BOLV != null) return true;
-                if (WaterCurrentVelocityCount != null) return true;
                 if (WaterCurrentVelocities != null) return true;
                 if (Location != null) return true;
                 if (XTRI != null) return true;
@@ -4113,9 +4085,6 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(BOLV, "BOLV");
                 }
-                {
-                    sb.AppendItem(WaterCurrentVelocityCount, "WaterCurrentVelocityCount");
-                }
                 if (WaterCurrentVelocities is {} WaterCurrentVelocitiesItem)
                 {
                     sb.AppendLine("WaterCurrentVelocities =>");
@@ -4331,7 +4300,6 @@ namespace Mutagen.Bethesda.Starfield
                 ret.BlueprintPartOrigin = this.BlueprintPartOrigin.Combine(rhs.BlueprintPartOrigin);
                 ret.Layer = this.Layer.Combine(rhs.Layer);
                 ret.BOLV = this.BOLV.Combine(rhs.BOLV);
-                ret.WaterCurrentVelocityCount = this.WaterCurrentVelocityCount.Combine(rhs.WaterCurrentVelocityCount);
                 ret.WaterCurrentVelocities = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WaterCurrentVelocity.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.WaterCurrentVelocities?.Overall, rhs.WaterCurrentVelocities?.Overall), Noggog.ExceptionExt.Combine(this.WaterCurrentVelocities?.Specific, rhs.WaterCurrentVelocities?.Specific));
                 ret.Location = this.Location.Combine(rhs.Location);
                 ret.XTRI = this.XTRI.Combine(rhs.XTRI);
@@ -4438,7 +4406,6 @@ namespace Mutagen.Bethesda.Starfield
             public bool BlueprintPartOrigin;
             public bool Layer;
             public bool BOLV;
-            public bool WaterCurrentVelocityCount;
             public WaterCurrentVelocity.TranslationMask? WaterCurrentVelocities;
             public bool Location;
             public bool XTRI;
@@ -4506,7 +4473,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.BlueprintPartOrigin = defaultOn;
                 this.Layer = defaultOn;
                 this.BOLV = defaultOn;
-                this.WaterCurrentVelocityCount = defaultOn;
                 this.Location = defaultOn;
                 this.XTRI = defaultOn;
                 this.IsLinkedRefTransient = defaultOn;
@@ -4587,7 +4553,6 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((BlueprintPartOrigin, null));
                 ret.Add((Layer, null));
                 ret.Add((BOLV, null));
-                ret.Add((WaterCurrentVelocityCount, null));
                 ret.Add((WaterCurrentVelocities == null ? DefaultOn : !WaterCurrentVelocities.GetCrystal().CopyNothing, WaterCurrentVelocities?.GetCrystal()));
                 ret.Add((Location, null));
                 ret.Add((XTRI, null));
@@ -4837,7 +4802,6 @@ namespace Mutagen.Bethesda.Starfield
         new UInt32? BlueprintPartOrigin { get; set; }
         new IFormLinkNullable<ILayerGetter> Layer { get; set; }
         new UInt16? BOLV { get; set; }
-        new UInt32? WaterCurrentVelocityCount { get; set; }
         new ExtendedList<WaterCurrentVelocity>? WaterCurrentVelocities { get; set; }
         new IFormLinkNullable<ILocationGetter> Location { get; set; }
         new UInt32? XTRI { get; set; }
@@ -4956,7 +4920,6 @@ namespace Mutagen.Bethesda.Starfield
         UInt32? BlueprintPartOrigin { get; }
         IFormLinkNullableGetter<ILayerGetter> Layer { get; }
         UInt16? BOLV { get; }
-        UInt32? WaterCurrentVelocityCount { get; }
         IReadOnlyList<IWaterCurrentVelocityGetter>? WaterCurrentVelocities { get; }
         IFormLinkNullableGetter<ILocationGetter> Location { get; }
         UInt32? XTRI { get; }
@@ -5217,37 +5180,36 @@ namespace Mutagen.Bethesda.Starfield
         BlueprintPartOrigin = 58,
         Layer = 59,
         BOLV = 60,
-        WaterCurrentVelocityCount = 61,
-        WaterCurrentVelocities = 62,
-        Location = 63,
-        XTRI = 64,
-        LightRoundedness = 65,
-        LinkedReferences = 66,
-        IsLinkedRefTransient = 67,
-        XLIB = 68,
-        SnapLinks = 69,
-        EncounterZone = 70,
-        GeometryDirtinessScale = 71,
-        Lock = 72,
-        Properties = 73,
-        ExternalEmittance = 74,
-        HeadTrackingWeight = 75,
-        Spline = 76,
-        XNSE = 77,
-        AttachRef = 78,
-        RagdollBipedRotation = 79,
-        HealthPercent = 80,
-        TimeOfDay = 81,
-        EnableParent = 82,
-        Traversals = 83,
-        NumTraversalFluffBytes = 84,
-        NavigationDoorLink = 85,
-        IsActivationPoint = 86,
-        Scale = 87,
-        OpenByDefault = 88,
-        Position = 89,
-        Rotation = 90,
-        Comments = 91,
+        WaterCurrentVelocities = 61,
+        Location = 62,
+        XTRI = 63,
+        LightRoundedness = 64,
+        LinkedReferences = 65,
+        IsLinkedRefTransient = 66,
+        XLIB = 67,
+        SnapLinks = 68,
+        EncounterZone = 69,
+        GeometryDirtinessScale = 70,
+        Lock = 71,
+        Properties = 72,
+        ExternalEmittance = 73,
+        HeadTrackingWeight = 74,
+        Spline = 75,
+        XNSE = 76,
+        AttachRef = 77,
+        RagdollBipedRotation = 78,
+        HealthPercent = 79,
+        TimeOfDay = 80,
+        EnableParent = 81,
+        Traversals = 82,
+        NumTraversalFluffBytes = 83,
+        NavigationDoorLink = 84,
+        IsActivationPoint = 85,
+        Scale = 86,
+        OpenByDefault = 87,
+        Position = 88,
+        Rotation = 89,
+        Comments = 90,
     }
     #endregion
 
@@ -5258,9 +5220,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 85;
+        public const ushort AdditionalFieldCount = 84;
 
-        public const ushort FieldCount = 92;
+        public const ushort FieldCount = 91;
 
         public static readonly Type MaskType = typeof(PlacedObject.Mask<>);
 
@@ -5351,8 +5313,8 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.XBPO,
                 RecordTypes.XLYR,
                 RecordTypes.BOLV,
-                RecordTypes.XWCN,
                 RecordTypes.XWCU,
+                RecordTypes.XWCN,
                 RecordTypes.XLRL,
                 RecordTypes.XTRI,
                 RecordTypes.XLRD,
@@ -5478,7 +5440,6 @@ namespace Mutagen.Bethesda.Starfield
             item.BlueprintPartOrigin = default;
             item.Layer.Clear();
             item.BOLV = default;
-            item.WaterCurrentVelocityCount = default;
             item.WaterCurrentVelocities = null;
             item.Location.Clear();
             item.XTRI = default;
@@ -5814,7 +5775,6 @@ namespace Mutagen.Bethesda.Starfield
             ret.BlueprintPartOrigin = item.BlueprintPartOrigin == rhs.BlueprintPartOrigin;
             ret.Layer = item.Layer.Equals(rhs.Layer);
             ret.BOLV = item.BOLV == rhs.BOLV;
-            ret.WaterCurrentVelocityCount = item.WaterCurrentVelocityCount == rhs.WaterCurrentVelocityCount;
             ret.WaterCurrentVelocities = item.WaterCurrentVelocities.CollectionEqualsHelper(
                 rhs.WaterCurrentVelocities,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -6266,11 +6226,6 @@ namespace Mutagen.Bethesda.Starfield
                 && item.BOLV is {} BOLVItem)
             {
                 sb.AppendItem(BOLVItem, "BOLV");
-            }
-            if ((printMask?.WaterCurrentVelocityCount ?? true)
-                && item.WaterCurrentVelocityCount is {} WaterCurrentVelocityCountItem)
-            {
-                sb.AppendItem(WaterCurrentVelocityCountItem, "WaterCurrentVelocityCount");
             }
             if ((printMask?.WaterCurrentVelocities?.Overall ?? true)
                 && item.WaterCurrentVelocities is {} WaterCurrentVelocitiesItem)
@@ -6806,10 +6761,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.BOLV != rhs.BOLV) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.WaterCurrentVelocityCount) ?? true))
-            {
-                if (lhs.WaterCurrentVelocityCount != rhs.WaterCurrentVelocityCount) return false;
-            }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.WaterCurrentVelocities) ?? true))
             {
                 if (!lhs.WaterCurrentVelocities.SequenceEqualNullable(rhs.WaterCurrentVelocities, (l, r) => ((WaterCurrentVelocityCommon)((IWaterCurrentVelocityGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)PlacedObject_FieldIndex.WaterCurrentVelocities)))) return false;
@@ -7137,10 +7088,6 @@ namespace Mutagen.Bethesda.Starfield
             if (item.BOLV is {} BOLVitem)
             {
                 hash.Add(BOLVitem);
-            }
-            if (item.WaterCurrentVelocityCount is {} WaterCurrentVelocityCountitem)
-            {
-                hash.Add(WaterCurrentVelocityCountitem);
             }
             hash.Add(item.WaterCurrentVelocities);
             hash.Add(item.Location);
@@ -8397,10 +8344,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.BOLV = rhs.BOLV;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.WaterCurrentVelocityCount) ?? true))
-            {
-                item.WaterCurrentVelocityCount = rhs.WaterCurrentVelocityCount;
-            }
             if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.WaterCurrentVelocities) ?? true))
             {
                 errorMask?.PushIndex((int)PlacedObject_FieldIndex.WaterCurrentVelocities);
@@ -9308,13 +9251,11 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.BOLV,
                 header: translationParams.ConvertToCustom(RecordTypes.BOLV));
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.WaterCurrentVelocityCount,
-                header: translationParams.ConvertToCustom(RecordTypes.XWCN));
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IWaterCurrentVelocityGetter>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IWaterCurrentVelocityGetter>.Instance.WriteWithCounter(
                 writer: writer,
                 items: item.WaterCurrentVelocities,
+                counterType: RecordTypes.XWCN,
+                counterLength: 4,
                 recordType: translationParams.ConvertToCustom(RecordTypes.XWCU),
                 transl: (MutagenWriter subWriter, IWaterCurrentVelocityGetter subItem, TypedWriteParams conv) =>
                 {
@@ -9932,17 +9873,15 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)PlacedObject_FieldIndex.BOLV;
                 }
                 case RecordTypeInts.XWCN:
-                {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.WaterCurrentVelocityCount = frame.ReadUInt32();
-                    return (int)PlacedObject_FieldIndex.WaterCurrentVelocityCount;
-                }
                 case RecordTypeInts.XWCU:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WaterCurrentVelocities = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<WaterCurrentVelocity>.Instance.Parse(
-                            reader: frame.SpawnWithLength(contentLength),
+                            reader: frame,
+                            countLengthLength: 4,
+                            countRecord: translationParams.ConvertToCustom(RecordTypes.XWCN),
+                            triggeringRecord: translationParams.ConvertToCustom(RecordTypes.XWCU),
+                            skipHeader: true,
                             transl: WaterCurrentVelocity.TryCreateFromBinary)
                         .CastExtendedList<WaterCurrentVelocity>();
                     return (int)PlacedObject_FieldIndex.WaterCurrentVelocities;
@@ -10369,10 +10308,6 @@ namespace Mutagen.Bethesda.Starfield
         #region BOLV
         private int? _BOLVLocation;
         public UInt16? BOLV => _BOLVLocation.HasValue ? BinaryPrimitives.ReadUInt16LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _BOLVLocation.Value, _package.MetaData.Constants)) : default(UInt16?);
-        #endregion
-        #region WaterCurrentVelocityCount
-        private int? _WaterCurrentVelocityCountLocation;
-        public UInt32? WaterCurrentVelocityCount => _WaterCurrentVelocityCountLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _WaterCurrentVelocityCountLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
         public IReadOnlyList<IWaterCurrentVelocityGetter>? WaterCurrentVelocities { get; private set; }
         #region Location
@@ -10902,17 +10837,15 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)PlacedObject_FieldIndex.BOLV;
                 }
                 case RecordTypeInts.XWCN:
-                {
-                    _WaterCurrentVelocityCountLocation = (stream.Position - offset);
-                    return (int)PlacedObject_FieldIndex.WaterCurrentVelocityCount;
-                }
                 case RecordTypeInts.XWCU:
                 {
-                    this.WaterCurrentVelocities = BinaryOverlayList.FactoryByStartIndexWithTrigger<IWaterCurrentVelocityGetter>(
+                    this.WaterCurrentVelocities = BinaryOverlayList.FactoryByCount<IWaterCurrentVelocityGetter>(
                         stream: stream,
                         package: _package,
-                        finalPos: finalPos,
-                        itemLength: 16,
+                        itemLength: 0x10,
+                        countLength: 4,
+                        countType: RecordTypes.XWCN,
+                        trigger: RecordTypes.XWCU,
                         getter: (s, p) => WaterCurrentVelocityBinaryOverlay.WaterCurrentVelocityFactory(s, p));
                     return (int)PlacedObject_FieldIndex.WaterCurrentVelocities;
                 }
