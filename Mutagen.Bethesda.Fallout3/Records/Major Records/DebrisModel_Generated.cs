@@ -1420,11 +1420,6 @@ namespace Mutagen.Bethesda.Fallout3
                 offset: offset,
                 translationParams: translationParams,
                 fill: ret.FillRecordType);
-            if (ret._DATALocation.HasValue)
-            {
-                ret.ModelFileName = BinaryStringUtility.ParseUnknownLengthString(ret._recordData.Slice(ret._DATALocation!.Value.Min + 0x1), package.MetaData.Encodings.NonTranslated);
-                ret.ModelFileNameEndingPos = ret._DATALocation!.Value.Min + 0x1 + ret.ModelFileName.Length + 1;
-            }
             return ret;
         }
 
@@ -1456,7 +1451,11 @@ namespace Mutagen.Bethesda.Fallout3
                     if (lastParsed.ShortCircuit((int)DebrisModel_FieldIndex.HasCollision, translationParams)) return ParseResult.Stop;
                     _DATALocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
                     var subLen = _package.MetaData.Constants.SubrecordHeader(_recordData.Slice((stream.Position - offset))).ContentLength;
-                    if (subLen <= ModelFileNameEndingPos)
+                    var ret = this;
+                    var package = _package;
+                    ret.ModelFileName = BinaryStringUtility.ParseUnknownLengthString(ret._recordData.Slice(ret._DATALocation!.Value.Min + 0x1), package.MetaData.Encodings.NonTranslated);
+                    ret.ModelFileNameEndingPos = ret._DATALocation!.Value.Min + 0x1 + ret.ModelFileName.Length + 1;
+                    if (subLen <= ret.ModelFileNameEndingPos - _DATALocation!.Value.Min)
                     {
                         this.DATADataTypeState |= DebrisModel.DATADataType.Break0;
                     }

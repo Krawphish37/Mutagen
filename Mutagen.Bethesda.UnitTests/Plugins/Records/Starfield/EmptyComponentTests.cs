@@ -94,6 +94,8 @@ public class EmptyComponentTests
         component.UnknownItems.ShouldBeEmpty();
         component.LocationX.ShouldBe(0);
         component.SatelliteId.ShouldBe(0);
-        component.LongitudeLatitude.Length.ShouldBe(0);
+        component.Longitude.ShouldBe(0d);
+        component.Latitude.ShouldBe(0d);
+        component.UnknownEnding.Length.ShouldBe(0);
     }
 }

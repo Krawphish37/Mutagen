@@ -91,16 +91,46 @@ namespace Mutagen.Bethesda.Starfield
         #region SatelliteId
         public Int32 SatelliteId { get; set; } = default(Int32);
         #endregion
-        #region LongitudeLatitude
+        #region Longitude
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _LongitudeLatitude = new byte[0];
-        public MemorySlice<Byte> LongitudeLatitude
+        private Double _Longitude;
+        public Double Longitude
         {
-            get => _LongitudeLatitude;
-            set => this._LongitudeLatitude = value;
+            get => this._Longitude;
+            set
+            {
+                this.DAT2DataTypeState &= ~DAT2DataType.Break0;
+                this._Longitude = value;
+            }
+        }
+        #endregion
+        #region Latitude
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Double _Latitude;
+        public Double Latitude
+        {
+            get => this._Latitude;
+            set
+            {
+                this.DAT2DataTypeState &= ~DAT2DataType.Break0;
+                this.DAT2DataTypeState &= ~DAT2DataType.Break1;
+                this._Latitude = value;
+            }
+        }
+        #endregion
+        #region UnknownEnding
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private MemorySlice<Byte> _UnknownEnding = new byte[0];
+        public MemorySlice<Byte> UnknownEnding
+        {
+            get => _UnknownEnding;
+            set => this._UnknownEnding = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IBlockEditorMetaDataComponentGetter.LongitudeLatitude => this.LongitudeLatitude;
+        ReadOnlyMemorySlice<Byte> IBlockEditorMetaDataComponentGetter.UnknownEnding => this.UnknownEnding;
+        #endregion
+        #region DAT2DataTypeState
+        public BlockEditorMetaDataComponent.DAT2DataType DAT2DataTypeState { get; set; } = default(BlockEditorMetaDataComponent.DAT2DataType);
         #endregion
 
         #region To String
@@ -152,7 +182,10 @@ namespace Mutagen.Bethesda.Starfield
                 this.LocationY = initialValue;
                 this.PlanetSystemId = initialValue;
                 this.SatelliteId = initialValue;
-                this.LongitudeLatitude = initialValue;
+                this.Longitude = initialValue;
+                this.Latitude = initialValue;
+                this.UnknownEnding = initialValue;
+                this.DAT2DataTypeState = initialValue;
             }
 
             public Mask(
@@ -165,7 +198,10 @@ namespace Mutagen.Bethesda.Starfield
                 TItem LocationY,
                 TItem PlanetSystemId,
                 TItem SatelliteId,
-                TItem LongitudeLatitude)
+                TItem Longitude,
+                TItem Latitude,
+                TItem UnknownEnding,
+                TItem DAT2DataTypeState)
             : base()
             {
                 this.CreatedTime = CreatedTime;
@@ -177,7 +213,10 @@ namespace Mutagen.Bethesda.Starfield
                 this.LocationY = LocationY;
                 this.PlanetSystemId = PlanetSystemId;
                 this.SatelliteId = SatelliteId;
-                this.LongitudeLatitude = LongitudeLatitude;
+                this.Longitude = Longitude;
+                this.Latitude = Latitude;
+                this.UnknownEnding = UnknownEnding;
+                this.DAT2DataTypeState = DAT2DataTypeState;
             }
 
             #pragma warning disable CS8618
@@ -198,7 +237,10 @@ namespace Mutagen.Bethesda.Starfield
             public TItem LocationY;
             public TItem PlanetSystemId;
             public TItem SatelliteId;
-            public TItem LongitudeLatitude;
+            public TItem Longitude;
+            public TItem Latitude;
+            public TItem UnknownEnding;
+            public TItem DAT2DataTypeState;
             #endregion
 
             #region Equals
@@ -221,7 +263,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.LocationY, rhs.LocationY)) return false;
                 if (!object.Equals(this.PlanetSystemId, rhs.PlanetSystemId)) return false;
                 if (!object.Equals(this.SatelliteId, rhs.SatelliteId)) return false;
-                if (!object.Equals(this.LongitudeLatitude, rhs.LongitudeLatitude)) return false;
+                if (!object.Equals(this.Longitude, rhs.Longitude)) return false;
+                if (!object.Equals(this.Latitude, rhs.Latitude)) return false;
+                if (!object.Equals(this.UnknownEnding, rhs.UnknownEnding)) return false;
+                if (!object.Equals(this.DAT2DataTypeState, rhs.DAT2DataTypeState)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -236,7 +281,10 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.LocationY);
                 hash.Add(this.PlanetSystemId);
                 hash.Add(this.SatelliteId);
-                hash.Add(this.LongitudeLatitude);
+                hash.Add(this.Longitude);
+                hash.Add(this.Latitude);
+                hash.Add(this.UnknownEnding);
+                hash.Add(this.DAT2DataTypeState);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -267,7 +315,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.LocationY)) return false;
                 if (!eval(this.PlanetSystemId)) return false;
                 if (!eval(this.SatelliteId)) return false;
-                if (!eval(this.LongitudeLatitude)) return false;
+                if (!eval(this.Longitude)) return false;
+                if (!eval(this.Latitude)) return false;
+                if (!eval(this.UnknownEnding)) return false;
+                if (!eval(this.DAT2DataTypeState)) return false;
                 return true;
             }
             #endregion
@@ -296,7 +347,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.LocationY)) return true;
                 if (eval(this.PlanetSystemId)) return true;
                 if (eval(this.SatelliteId)) return true;
-                if (eval(this.LongitudeLatitude)) return true;
+                if (eval(this.Longitude)) return true;
+                if (eval(this.Latitude)) return true;
+                if (eval(this.UnknownEnding)) return true;
+                if (eval(this.DAT2DataTypeState)) return true;
                 return false;
             }
             #endregion
@@ -335,7 +389,10 @@ namespace Mutagen.Bethesda.Starfield
                 obj.LocationY = eval(this.LocationY);
                 obj.PlanetSystemId = eval(this.PlanetSystemId);
                 obj.SatelliteId = eval(this.SatelliteId);
-                obj.LongitudeLatitude = eval(this.LongitudeLatitude);
+                obj.Longitude = eval(this.Longitude);
+                obj.Latitude = eval(this.Latitude);
+                obj.UnknownEnding = eval(this.UnknownEnding);
+                obj.DAT2DataTypeState = eval(this.DAT2DataTypeState);
             }
             #endregion
 
@@ -405,9 +462,21 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(SatelliteId, "SatelliteId");
                     }
-                    if (printMask?.LongitudeLatitude ?? true)
+                    if (printMask?.Longitude ?? true)
                     {
-                        sb.AppendItem(LongitudeLatitude, "LongitudeLatitude");
+                        sb.AppendItem(Longitude, "Longitude");
+                    }
+                    if (printMask?.Latitude ?? true)
+                    {
+                        sb.AppendItem(Latitude, "Latitude");
+                    }
+                    if (printMask?.UnknownEnding ?? true)
+                    {
+                        sb.AppendItem(UnknownEnding, "UnknownEnding");
+                    }
+                    if (printMask?.DAT2DataTypeState ?? true)
+                    {
+                        sb.AppendItem(DAT2DataTypeState, "DAT2DataTypeState");
                     }
                 }
             }
@@ -429,7 +498,10 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? LocationY;
             public Exception? PlanetSystemId;
             public Exception? SatelliteId;
-            public Exception? LongitudeLatitude;
+            public Exception? Longitude;
+            public Exception? Latitude;
+            public Exception? UnknownEnding;
+            public Exception? DAT2DataTypeState;
             #endregion
 
             #region IErrorMask
@@ -456,8 +528,14 @@ namespace Mutagen.Bethesda.Starfield
                         return PlanetSystemId;
                     case BlockEditorMetaDataComponent_FieldIndex.SatelliteId:
                         return SatelliteId;
-                    case BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude:
-                        return LongitudeLatitude;
+                    case BlockEditorMetaDataComponent_FieldIndex.Longitude:
+                        return Longitude;
+                    case BlockEditorMetaDataComponent_FieldIndex.Latitude:
+                        return Latitude;
+                    case BlockEditorMetaDataComponent_FieldIndex.UnknownEnding:
+                        return UnknownEnding;
+                    case BlockEditorMetaDataComponent_FieldIndex.DAT2DataTypeState:
+                        return DAT2DataTypeState;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -495,8 +573,17 @@ namespace Mutagen.Bethesda.Starfield
                     case BlockEditorMetaDataComponent_FieldIndex.SatelliteId:
                         this.SatelliteId = ex;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude:
-                        this.LongitudeLatitude = ex;
+                    case BlockEditorMetaDataComponent_FieldIndex.Longitude:
+                        this.Longitude = ex;
+                        break;
+                    case BlockEditorMetaDataComponent_FieldIndex.Latitude:
+                        this.Latitude = ex;
+                        break;
+                    case BlockEditorMetaDataComponent_FieldIndex.UnknownEnding:
+                        this.UnknownEnding = ex;
+                        break;
+                    case BlockEditorMetaDataComponent_FieldIndex.DAT2DataTypeState:
+                        this.DAT2DataTypeState = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -536,8 +623,17 @@ namespace Mutagen.Bethesda.Starfield
                     case BlockEditorMetaDataComponent_FieldIndex.SatelliteId:
                         this.SatelliteId = (Exception?)obj;
                         break;
-                    case BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude:
-                        this.LongitudeLatitude = (Exception?)obj;
+                    case BlockEditorMetaDataComponent_FieldIndex.Longitude:
+                        this.Longitude = (Exception?)obj;
+                        break;
+                    case BlockEditorMetaDataComponent_FieldIndex.Latitude:
+                        this.Latitude = (Exception?)obj;
+                        break;
+                    case BlockEditorMetaDataComponent_FieldIndex.UnknownEnding:
+                        this.UnknownEnding = (Exception?)obj;
+                        break;
+                    case BlockEditorMetaDataComponent_FieldIndex.DAT2DataTypeState:
+                        this.DAT2DataTypeState = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -557,7 +653,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (LocationY != null) return true;
                 if (PlanetSystemId != null) return true;
                 if (SatelliteId != null) return true;
-                if (LongitudeLatitude != null) return true;
+                if (Longitude != null) return true;
+                if (Latitude != null) return true;
+                if (UnknownEnding != null) return true;
+                if (DAT2DataTypeState != null) return true;
                 return false;
             }
             #endregion
@@ -627,7 +726,16 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(SatelliteId, "SatelliteId");
                 }
                 {
-                    sb.AppendItem(LongitudeLatitude, "LongitudeLatitude");
+                    sb.AppendItem(Longitude, "Longitude");
+                }
+                {
+                    sb.AppendItem(Latitude, "Latitude");
+                }
+                {
+                    sb.AppendItem(UnknownEnding, "UnknownEnding");
+                }
+                {
+                    sb.AppendItem(DAT2DataTypeState, "DAT2DataTypeState");
                 }
             }
             #endregion
@@ -646,7 +754,10 @@ namespace Mutagen.Bethesda.Starfield
                 ret.LocationY = this.LocationY.Combine(rhs.LocationY);
                 ret.PlanetSystemId = this.PlanetSystemId.Combine(rhs.PlanetSystemId);
                 ret.SatelliteId = this.SatelliteId.Combine(rhs.SatelliteId);
-                ret.LongitudeLatitude = this.LongitudeLatitude.Combine(rhs.LongitudeLatitude);
+                ret.Longitude = this.Longitude.Combine(rhs.Longitude);
+                ret.Latitude = this.Latitude.Combine(rhs.Latitude);
+                ret.UnknownEnding = this.UnknownEnding.Combine(rhs.UnknownEnding);
+                ret.DAT2DataTypeState = this.DAT2DataTypeState.Combine(rhs.DAT2DataTypeState);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -678,7 +789,10 @@ namespace Mutagen.Bethesda.Starfield
             public bool LocationY;
             public bool PlanetSystemId;
             public bool SatelliteId;
-            public bool LongitudeLatitude;
+            public bool Longitude;
+            public bool Latitude;
+            public bool UnknownEnding;
+            public bool DAT2DataTypeState;
             #endregion
 
             #region Ctors
@@ -695,7 +809,10 @@ namespace Mutagen.Bethesda.Starfield
                 this.LocationY = defaultOn;
                 this.PlanetSystemId = defaultOn;
                 this.SatelliteId = defaultOn;
-                this.LongitudeLatitude = defaultOn;
+                this.Longitude = defaultOn;
+                this.Latitude = defaultOn;
+                this.UnknownEnding = defaultOn;
+                this.DAT2DataTypeState = defaultOn;
             }
 
             #endregion
@@ -712,7 +829,10 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((LocationY, null));
                 ret.Add((PlanetSystemId, null));
                 ret.Add((SatelliteId, null));
-                ret.Add((LongitudeLatitude, null));
+                ret.Add((Longitude, null));
+                ret.Add((Latitude, null));
+                ret.Add((UnknownEnding, null));
+                ret.Add((DAT2DataTypeState, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -720,6 +840,15 @@ namespace Mutagen.Bethesda.Starfield
                 return new TranslationMask(defaultOn: defaultOn, onOverall: defaultOn);
             }
 
+        }
+        #endregion
+
+        #region Mutagen
+        [Flags]
+        public enum DAT2DataType
+        {
+            Break0 = 1,
+            Break1 = 2
         }
         #endregion
 
@@ -793,7 +922,10 @@ namespace Mutagen.Bethesda.Starfield
         new Int32 LocationY { get; set; }
         new Int32 PlanetSystemId { get; set; }
         new Int32 SatelliteId { get; set; }
-        new MemorySlice<Byte> LongitudeLatitude { get; set; }
+        new Double Longitude { get; set; }
+        new Double Latitude { get; set; }
+        new MemorySlice<Byte> UnknownEnding { get; set; }
+        new BlockEditorMetaDataComponent.DAT2DataType DAT2DataTypeState { get; set; }
     }
 
     public partial interface IBlockEditorMetaDataComponentGetter :
@@ -811,7 +943,10 @@ namespace Mutagen.Bethesda.Starfield
         Int32 LocationY { get; }
         Int32 PlanetSystemId { get; }
         Int32 SatelliteId { get; }
-        ReadOnlyMemorySlice<Byte> LongitudeLatitude { get; }
+        Double Longitude { get; }
+        Double Latitude { get; }
+        ReadOnlyMemorySlice<Byte> UnknownEnding { get; }
+        BlockEditorMetaDataComponent.DAT2DataType DAT2DataTypeState { get; }
 
     }
 
@@ -965,7 +1100,10 @@ namespace Mutagen.Bethesda.Starfield
         LocationY = 6,
         PlanetSystemId = 7,
         SatelliteId = 8,
-        LongitudeLatitude = 9,
+        Longitude = 9,
+        Latitude = 10,
+        UnknownEnding = 11,
+        DAT2DataTypeState = 12,
     }
     #endregion
 
@@ -976,9 +1114,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 10;
+        public const ushort AdditionalFieldCount = 13;
 
-        public const ushort FieldCount = 10;
+        public const ushort FieldCount = 13;
 
         public static readonly Type MaskType = typeof(BlockEditorMetaDataComponent.Mask<>);
 
@@ -1065,7 +1203,10 @@ namespace Mutagen.Bethesda.Starfield
             item.LocationY = default(Int32);
             item.PlanetSystemId = default(Int32);
             item.SatelliteId = default(Int32);
-            item.LongitudeLatitude = [];
+            item.Longitude = default(Double);
+            item.Latitude = default(Double);
+            item.UnknownEnding = [];
+            item.DAT2DataTypeState = default(BlockEditorMetaDataComponent.DAT2DataType);
             base.Clear(item);
         }
         
@@ -1092,6 +1233,7 @@ namespace Mutagen.Bethesda.Starfield
                 record: item,
                 frame: frame,
                 translationParams: translationParams,
+                fillStructs: BlockEditorMetaDataComponentBinaryCreateTranslation.FillBinaryStructs,
                 fillTyped: BlockEditorMetaDataComponentBinaryCreateTranslation.FillBinaryRecordTypes);
         }
         
@@ -1145,7 +1287,10 @@ namespace Mutagen.Bethesda.Starfield
             ret.LocationY = item.LocationY == rhs.LocationY;
             ret.PlanetSystemId = item.PlanetSystemId == rhs.PlanetSystemId;
             ret.SatelliteId = item.SatelliteId == rhs.SatelliteId;
-            ret.LongitudeLatitude = MemoryExtensions.SequenceEqual(item.LongitudeLatitude.Span, rhs.LongitudeLatitude.Span);
+            ret.Longitude = item.Longitude.EqualsWithin(rhs.Longitude);
+            ret.Latitude = item.Latitude.EqualsWithin(rhs.Latitude);
+            ret.UnknownEnding = MemoryExtensions.SequenceEqual(item.UnknownEnding.Span, rhs.UnknownEnding.Span);
+            ret.DAT2DataTypeState = item.DAT2DataTypeState == rhs.DAT2DataTypeState;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1241,9 +1386,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.SatelliteId, "SatelliteId");
             }
-            if (printMask?.LongitudeLatitude ?? true)
+            if (printMask?.Longitude ?? true)
             {
-                sb.AppendLine($"LongitudeLatitude => {SpanExt.ToHexString(item.LongitudeLatitude)}");
+                sb.AppendItem(item.Longitude, "Longitude");
+            }
+            if (printMask?.Latitude ?? true)
+            {
+                sb.AppendItem(item.Latitude, "Latitude");
+            }
+            if (printMask?.UnknownEnding ?? true)
+            {
+                sb.AppendLine($"UnknownEnding => {SpanExt.ToHexString(item.UnknownEnding)}");
+            }
+            if (printMask?.DAT2DataTypeState ?? true)
+            {
+                sb.AppendItem(item.DAT2DataTypeState, "DAT2DataTypeState");
             }
         }
         
@@ -1300,9 +1457,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.SatelliteId != rhs.SatelliteId) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.Longitude) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.LongitudeLatitude.Span, rhs.LongitudeLatitude.Span)) return false;
+                if (!lhs.Longitude.EqualsWithin(rhs.Longitude)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.Latitude) ?? true))
+            {
+                if (!lhs.Latitude.EqualsWithin(rhs.Latitude)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownEnding) ?? true))
+            {
+                if (!MemoryExtensions.SequenceEqual(lhs.UnknownEnding.Span, rhs.UnknownEnding.Span)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.DAT2DataTypeState) ?? true))
+            {
+                if (lhs.DAT2DataTypeState != rhs.DAT2DataTypeState) return false;
             }
             return true;
         }
@@ -1333,7 +1502,10 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.LocationY);
             hash.Add(item.PlanetSystemId);
             hash.Add(item.SatelliteId);
-            hash.AddBytes(item.LongitudeLatitude);
+            hash.Add(item.Longitude);
+            hash.Add(item.Latitude);
+            hash.AddBytes(item.UnknownEnding);
+            hash.Add(item.DAT2DataTypeState);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1438,9 +1610,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.SatelliteId = rhs.SatelliteId;
             }
-            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.Longitude) ?? true))
             {
-                item.LongitudeLatitude = rhs.LongitudeLatitude.ToArray();
+                item.Longitude = rhs.Longitude;
+            }
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.Latitude) ?? true))
+            {
+                item.Latitude = rhs.Latitude;
+            }
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.UnknownEnding) ?? true))
+            {
+                item.UnknownEnding = rhs.UnknownEnding.ToArray();
+            }
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataComponent_FieldIndex.DAT2DataTypeState) ?? true))
+            {
+                item.DAT2DataTypeState = rhs.DAT2DataTypeState;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1558,6 +1742,12 @@ namespace Mutagen.Bethesda.Starfield
     {
         public new static readonly BlockEditorMetaDataComponentBinaryWriteTranslation Instance = new();
 
+        public static void WriteEmbedded(
+            IBlockEditorMetaDataComponentGetter item,
+            MutagenWriter writer)
+        {
+        }
+
         public static void WriteRecordTypes(
             IBlockEditorMetaDataComponentGetter item,
             MutagenWriter writer,
@@ -1606,9 +1796,17 @@ namespace Mutagen.Bethesda.Starfield
                 writer.Write(item.LocationY);
                 writer.Write(item.PlanetSystemId);
                 writer.Write(item.SatelliteId);
-                ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                    writer: writer,
-                    item: item.LongitudeLatitude);
+                if (!item.DAT2DataTypeState.HasFlag(BlockEditorMetaDataComponent.DAT2DataType.Break0))
+                {
+                    writer.Write(item.Longitude);
+                    if (!item.DAT2DataTypeState.HasFlag(BlockEditorMetaDataComponent.DAT2DataType.Break1))
+                    {
+                        writer.Write(item.Latitude);
+                        ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                            writer: writer,
+                            item: item.UnknownEnding);
+                    }
+                }
             }
         }
 
@@ -1617,6 +1815,9 @@ namespace Mutagen.Bethesda.Starfield
             IBlockEditorMetaDataComponentGetter item,
             TypedWriteParams translationParams)
         {
+            WriteEmbedded(
+                item: item,
+                writer: writer);
             WriteRecordTypes(
                 item: item,
                 writer: writer,
@@ -1651,6 +1852,12 @@ namespace Mutagen.Bethesda.Starfield
     internal partial class BlockEditorMetaDataComponentBinaryCreateTranslation : AComponentBinaryCreateTranslation
     {
         public new static readonly BlockEditorMetaDataComponentBinaryCreateTranslation Instance = new BlockEditorMetaDataComponentBinaryCreateTranslation();
+
+        public static void FillBinaryStructs(
+            IBlockEditorMetaDataComponent item,
+            MutagenFrame frame)
+        {
+        }
 
         public static ParseResult FillBinaryRecordTypes(
             IBlockEditorMetaDataComponent item,
@@ -1699,8 +1906,22 @@ namespace Mutagen.Bethesda.Starfield
                     item.PlanetSystemId = dataFrame.ReadInt32();
                     if (dataFrame.Remaining < 4) return null;
                     item.SatelliteId = dataFrame.ReadInt32();
-                    item.LongitudeLatitude = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    return (int)BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude;
+                    if (dataFrame.Complete)
+                    {
+                        item.DAT2DataTypeState |= BlockEditorMetaDataComponent.DAT2DataType.Break0;
+                        return (int)BlockEditorMetaDataComponent_FieldIndex.SatelliteId;
+                    }
+                    if (dataFrame.Remaining < 8) return null;
+                    item.Longitude = dataFrame.ReadDouble();
+                    if (dataFrame.Complete)
+                    {
+                        item.DAT2DataTypeState |= BlockEditorMetaDataComponent.DAT2DataType.Break1;
+                        return (int)BlockEditorMetaDataComponent_FieldIndex.Longitude;
+                    }
+                    if (dataFrame.Remaining < 8) return null;
+                    item.Latitude = dataFrame.ReadDouble();
+                    item.UnknownEnding = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    return (int)BlockEditorMetaDataComponent_FieldIndex.UnknownEnding;
                 }
                 default:
                     return AComponentBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1759,6 +1980,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         private RangeInt32? _DAT2Location;
+        public BlockEditorMetaDataComponent.DAT2DataType DAT2DataTypeState { get; private set; }
         #region CreatedTime
         private int _CreatedTimeLocation => _DAT2Location!.Value.Min;
         private bool _CreatedTime_IsSet => _DAT2Location.HasValue;
@@ -1806,11 +2028,21 @@ namespace Mutagen.Bethesda.Starfield
         private bool _SatelliteId_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _SatelliteIdLocation + 1 >= 4;
         public Int32 SatelliteId => _SatelliteId_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_SatelliteIdLocation, 4)) : default(Int32);
         #endregion
-        #region LongitudeLatitude
-        private int _LongitudeLatitudeLocation => UnknownItemsEndingPos + 0x10;
-        private bool _LongitudeLatitude_IsSet => _DAT2Location.HasValue;
-        public ReadOnlyMemorySlice<Byte> LongitudeLatitude => _LongitudeLatitude_IsSet ? _recordData.Span.Slice(_LongitudeLatitudeLocation, _DAT2Location!.Value.Max - _LongitudeLatitudeLocation + 1).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
-        protected int LongitudeLatitudeEndingPos;
+        #region Longitude
+        private int _LongitudeLocation => UnknownItemsEndingPos + 0x10;
+        private bool _Longitude_IsSet => _DAT2Location.HasValue && !DAT2DataTypeState.HasFlag(BlockEditorMetaDataComponent.DAT2DataType.Break0) && _DAT2Location!.Value.Max - _LongitudeLocation + 1 >= 8;
+        public Double Longitude => _Longitude_IsSet ? BinaryPrimitives.ReadDoubleLittleEndian(_recordData.Slice(_LongitudeLocation, 8)) : default(Double);
+        #endregion
+        #region Latitude
+        private int _LatitudeLocation => UnknownItemsEndingPos + 0x18;
+        private bool _Latitude_IsSet => _DAT2Location.HasValue && !DAT2DataTypeState.HasFlag(BlockEditorMetaDataComponent.DAT2DataType.Break1) && _DAT2Location!.Value.Max - _LatitudeLocation + 1 >= 8;
+        public Double Latitude => _Latitude_IsSet ? BinaryPrimitives.ReadDoubleLittleEndian(_recordData.Slice(_LatitudeLocation, 8)) : default(Double);
+        #endregion
+        #region UnknownEnding
+        private int _UnknownEndingLocation => UnknownItemsEndingPos + 0x20;
+        private bool _UnknownEnding_IsSet => _DAT2Location.HasValue && !DAT2DataTypeState.HasFlag(BlockEditorMetaDataComponent.DAT2DataType.Break1);
+        public ReadOnlyMemorySlice<Byte> UnknownEnding => _UnknownEnding_IsSet ? _recordData.Span.Slice(_UnknownEndingLocation, _DAT2Location!.Value.Max - _UnknownEndingLocation + 1).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        protected int UnknownEndingEndingPos;
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1849,13 +2081,6 @@ namespace Mutagen.Bethesda.Starfield
                 offset: offset,
                 translationParams: translationParams,
                 fill: ret.FillRecordType);
-            if (ret._DAT2Location.HasValue)
-            {
-                ret.CreatedTimeEndingPos = ret._DAT2Location!.Value.Min + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret._DAT2Location!.Value.Min)) + 4;
-                ret.AlsoCreatedTimeEndingPos = ret.CreatedTimeEndingPos + 0x1 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.CreatedTimeEndingPos + 0x1)) + 4;
-                ret.SourceEditorIDEndingPos = ret.AlsoCreatedTimeEndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.AlsoCreatedTimeEndingPos)) + 4;
-                ret.UnknownItemsEndingPos = ret.SourceEditorIDEndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.SourceEditorIDEndingPos)) * 5 + 4;
-            }
             return ret;
         }
 
@@ -1887,7 +2112,22 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DAT2:
                 {
                     _DAT2Location = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)BlockEditorMetaDataComponent_FieldIndex.LongitudeLatitude;
+                    var subLen = _package.MetaData.Constants.SubrecordHeader(_recordData.Slice((stream.Position - offset))).ContentLength;
+                    var ret = this;
+                    var package = _package;
+                    ret.CreatedTimeEndingPos = ret._DAT2Location!.Value.Min + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret._DAT2Location!.Value.Min)) + 4;
+                    ret.AlsoCreatedTimeEndingPos = ret.CreatedTimeEndingPos + 0x1 + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.CreatedTimeEndingPos + 0x1)) + 4;
+                    ret.SourceEditorIDEndingPos = ret.AlsoCreatedTimeEndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.AlsoCreatedTimeEndingPos)) + 4;
+                    ret.UnknownItemsEndingPos = ret.SourceEditorIDEndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._recordData.Slice(ret.SourceEditorIDEndingPos)) * 5 + 4;
+                    if (subLen <= ret.UnknownItemsEndingPos + 0x10 - _DAT2Location!.Value.Min)
+                    {
+                        this.DAT2DataTypeState |= BlockEditorMetaDataComponent.DAT2DataType.Break0;
+                    }
+                    if (subLen <= ret.UnknownItemsEndingPos + 0x18 - _DAT2Location!.Value.Min)
+                    {
+                        this.DAT2DataTypeState |= BlockEditorMetaDataComponent.DAT2DataType.Break1;
+                    }
+                    return (int)BlockEditorMetaDataComponent_FieldIndex.UnknownEnding;
                 }
                 default:
                     return base.FillRecordType(
