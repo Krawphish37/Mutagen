@@ -138,10 +138,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         UInt32? IMessageGetter.DisplayTime => this.DisplayTime;
         #endregion
-        #region BNAM
-        public UInt32? BNAM { get; set; }
+        #region IndexChosenOnBackOut
+        public Int32? IndexChosenOnBackOut { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? IMessageGetter.BNAM => this.BNAM;
+        Int32? IMessageGetter.IndexChosenOnBackOut => this.IndexChosenOnBackOut;
         #endregion
         #region ShortTitle
         public TranslatedString? ShortTitle { get; set; }
@@ -194,7 +194,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OwnerQuest = initialValue;
                 this.Flags = initialValue;
                 this.DisplayTime = initialValue;
-                this.BNAM = initialValue;
+                this.IndexChosenOnBackOut = initialValue;
                 this.ShortTitle = initialValue;
                 this.MenuButtons = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, MessageButton.Mask<TItem>?>>?>(initialValue, []);
             }
@@ -214,7 +214,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem OwnerQuest,
                 TItem Flags,
                 TItem DisplayTime,
-                TItem BNAM,
+                TItem IndexChosenOnBackOut,
                 TItem ShortTitle,
                 TItem MenuButtons)
             : base(
@@ -233,7 +233,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OwnerQuest = OwnerQuest;
                 this.Flags = Flags;
                 this.DisplayTime = DisplayTime;
-                this.BNAM = BNAM;
+                this.IndexChosenOnBackOut = IndexChosenOnBackOut;
                 this.ShortTitle = ShortTitle;
                 this.MenuButtons = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, MessageButton.Mask<TItem>?>>?>(MenuButtons, []);
             }
@@ -254,7 +254,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem OwnerQuest;
             public TItem Flags;
             public TItem DisplayTime;
-            public TItem BNAM;
+            public TItem IndexChosenOnBackOut;
             public TItem ShortTitle;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, MessageButton.Mask<TItem>?>>?>? MenuButtons;
             #endregion
@@ -277,7 +277,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.OwnerQuest, rhs.OwnerQuest)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.DisplayTime, rhs.DisplayTime)) return false;
-                if (!object.Equals(this.BNAM, rhs.BNAM)) return false;
+                if (!object.Equals(this.IndexChosenOnBackOut, rhs.IndexChosenOnBackOut)) return false;
                 if (!object.Equals(this.ShortTitle, rhs.ShortTitle)) return false;
                 if (!object.Equals(this.MenuButtons, rhs.MenuButtons)) return false;
                 return true;
@@ -292,7 +292,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.OwnerQuest);
                 hash.Add(this.Flags);
                 hash.Add(this.DisplayTime);
-                hash.Add(this.BNAM);
+                hash.Add(this.IndexChosenOnBackOut);
                 hash.Add(this.ShortTitle);
                 hash.Add(this.MenuButtons);
                 hash.Add(base.GetHashCode());
@@ -316,7 +316,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.OwnerQuest)) return false;
                 if (!eval(this.Flags)) return false;
                 if (!eval(this.DisplayTime)) return false;
-                if (!eval(this.BNAM)) return false;
+                if (!eval(this.IndexChosenOnBackOut)) return false;
                 if (!eval(this.ShortTitle)) return false;
                 if (this.MenuButtons != null)
                 {
@@ -349,7 +349,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.OwnerQuest)) return true;
                 if (eval(this.Flags)) return true;
                 if (eval(this.DisplayTime)) return true;
-                if (eval(this.BNAM)) return true;
+                if (eval(this.IndexChosenOnBackOut)) return true;
                 if (eval(this.ShortTitle)) return true;
                 if (this.MenuButtons != null)
                 {
@@ -385,7 +385,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.OwnerQuest = eval(this.OwnerQuest);
                 obj.Flags = eval(this.Flags);
                 obj.DisplayTime = eval(this.DisplayTime);
-                obj.BNAM = eval(this.BNAM);
+                obj.IndexChosenOnBackOut = eval(this.IndexChosenOnBackOut);
                 obj.ShortTitle = eval(this.ShortTitle);
                 if (MenuButtons != null)
                 {
@@ -448,9 +448,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(DisplayTime, "DisplayTime");
                     }
-                    if (printMask?.BNAM ?? true)
+                    if (printMask?.IndexChosenOnBackOut ?? true)
                     {
-                        sb.AppendItem(BNAM, "BNAM");
+                        sb.AppendItem(IndexChosenOnBackOut, "IndexChosenOnBackOut");
                     }
                     if (printMask?.ShortTitle ?? true)
                     {
@@ -493,7 +493,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? OwnerQuest;
             public Exception? Flags;
             public Exception? DisplayTime;
-            public Exception? BNAM;
+            public Exception? IndexChosenOnBackOut;
             public Exception? ShortTitle;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, MessageButton.ErrorMask?>>?>? MenuButtons;
             #endregion
@@ -518,8 +518,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Flags;
                     case Message_FieldIndex.DisplayTime:
                         return DisplayTime;
-                    case Message_FieldIndex.BNAM:
-                        return BNAM;
+                    case Message_FieldIndex.IndexChosenOnBackOut:
+                        return IndexChosenOnBackOut;
                     case Message_FieldIndex.ShortTitle:
                         return ShortTitle;
                     case Message_FieldIndex.MenuButtons:
@@ -555,8 +555,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Message_FieldIndex.DisplayTime:
                         this.DisplayTime = ex;
                         break;
-                    case Message_FieldIndex.BNAM:
-                        this.BNAM = ex;
+                    case Message_FieldIndex.IndexChosenOnBackOut:
+                        this.IndexChosenOnBackOut = ex;
                         break;
                     case Message_FieldIndex.ShortTitle:
                         this.ShortTitle = ex;
@@ -596,8 +596,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Message_FieldIndex.DisplayTime:
                         this.DisplayTime = (Exception?)obj;
                         break;
-                    case Message_FieldIndex.BNAM:
-                        this.BNAM = (Exception?)obj;
+                    case Message_FieldIndex.IndexChosenOnBackOut:
+                        this.IndexChosenOnBackOut = (Exception?)obj;
                         break;
                     case Message_FieldIndex.ShortTitle:
                         this.ShortTitle = (Exception?)obj;
@@ -621,7 +621,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (OwnerQuest != null) return true;
                 if (Flags != null) return true;
                 if (DisplayTime != null) return true;
-                if (BNAM != null) return true;
+                if (IndexChosenOnBackOut != null) return true;
                 if (ShortTitle != null) return true;
                 if (MenuButtons != null) return true;
                 return false;
@@ -670,7 +670,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(DisplayTime, "DisplayTime");
                 }
                 {
-                    sb.AppendItem(BNAM, "BNAM");
+                    sb.AppendItem(IndexChosenOnBackOut, "IndexChosenOnBackOut");
                 }
                 {
                     sb.AppendItem(ShortTitle, "ShortTitle");
@@ -708,7 +708,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.OwnerQuest = this.OwnerQuest.Combine(rhs.OwnerQuest);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.DisplayTime = this.DisplayTime.Combine(rhs.DisplayTime);
-                ret.BNAM = this.BNAM.Combine(rhs.BNAM);
+                ret.IndexChosenOnBackOut = this.IndexChosenOnBackOut.Combine(rhs.IndexChosenOnBackOut);
                 ret.ShortTitle = this.ShortTitle.Combine(rhs.ShortTitle);
                 ret.MenuButtons = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, MessageButton.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.MenuButtons?.Overall, rhs.MenuButtons?.Overall), Noggog.ExceptionExt.Combine(this.MenuButtons?.Specific, rhs.MenuButtons?.Specific));
                 return ret;
@@ -740,7 +740,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OwnerQuest;
             public bool Flags;
             public bool DisplayTime;
-            public bool BNAM;
+            public bool IndexChosenOnBackOut;
             public bool ShortTitle;
             public MessageButton.TranslationMask? MenuButtons;
             #endregion
@@ -757,7 +757,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OwnerQuest = defaultOn;
                 this.Flags = defaultOn;
                 this.DisplayTime = defaultOn;
-                this.BNAM = defaultOn;
+                this.IndexChosenOnBackOut = defaultOn;
                 this.ShortTitle = defaultOn;
             }
 
@@ -773,7 +773,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((OwnerQuest, null));
                 ret.Add((Flags, null));
                 ret.Add((DisplayTime, null));
-                ret.Add((BNAM, null));
+                ret.Add((IndexChosenOnBackOut, null));
                 ret.Add((ShortTitle, null));
                 ret.Add((MenuButtons == null ? DefaultOn : !MenuButtons.GetCrystal().CopyNothing, MenuButtons?.GetCrystal()));
             }
@@ -942,7 +942,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<IQuestGetter> OwnerQuest { get; set; }
         new Message.Flag Flags { get; set; }
         new UInt32? DisplayTime { get; set; }
-        new UInt32? BNAM { get; set; }
+        new Int32? IndexChosenOnBackOut { get; set; }
         new TranslatedString? ShortTitle { get; set; }
         new ExtendedList<MessageButton> MenuButtons { get; }
     }
@@ -986,7 +986,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IQuestGetter> OwnerQuest { get; }
         Message.Flag Flags { get; }
         UInt32? DisplayTime { get; }
-        UInt32? BNAM { get; }
+        Int32? IndexChosenOnBackOut { get; }
         ITranslatedStringGetter? ShortTitle { get; }
         IReadOnlyList<IMessageButtonGetter> MenuButtons { get; }
 
@@ -1172,7 +1172,7 @@ namespace Mutagen.Bethesda.Starfield
         OwnerQuest = 11,
         Flags = 12,
         DisplayTime = 13,
-        BNAM = 14,
+        IndexChosenOnBackOut = 14,
         ShortTitle = 15,
         MenuButtons = 16,
     }
@@ -1288,7 +1288,7 @@ namespace Mutagen.Bethesda.Starfield
             item.OwnerQuest.Clear();
             item.Flags = default(Message.Flag);
             item.DisplayTime = default;
-            item.BNAM = default;
+            item.IndexChosenOnBackOut = default;
             item.ShortTitle = default;
             item.MenuButtons.Clear();
             base.Clear(item);
@@ -1389,7 +1389,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.OwnerQuest = item.OwnerQuest.Equals(rhs.OwnerQuest);
             ret.Flags = item.Flags == rhs.Flags;
             ret.DisplayTime = item.DisplayTime == rhs.DisplayTime;
-            ret.BNAM = item.BNAM == rhs.BNAM;
+            ret.IndexChosenOnBackOut = item.IndexChosenOnBackOut == rhs.IndexChosenOnBackOut;
             ret.ShortTitle = object.Equals(item.ShortTitle, rhs.ShortTitle);
             ret.MenuButtons = item.MenuButtons.CollectionEqualsHelper(
                 rhs.MenuButtons,
@@ -1475,10 +1475,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(DisplayTimeItem, "DisplayTime");
             }
-            if ((printMask?.BNAM ?? true)
-                && item.BNAM is {} BNAMItem)
+            if ((printMask?.IndexChosenOnBackOut ?? true)
+                && item.IndexChosenOnBackOut is {} IndexChosenOnBackOutItem)
             {
-                sb.AppendItem(BNAMItem, "BNAM");
+                sb.AppendItem(IndexChosenOnBackOutItem, "IndexChosenOnBackOut");
             }
             if ((printMask?.ShortTitle ?? true)
                 && item.ShortTitle is {} ShortTitleItem)
@@ -1581,9 +1581,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.DisplayTime != rhs.DisplayTime) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Message_FieldIndex.BNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Message_FieldIndex.IndexChosenOnBackOut) ?? true))
             {
-                if (lhs.BNAM != rhs.BNAM) return false;
+                if (lhs.IndexChosenOnBackOut != rhs.IndexChosenOnBackOut) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Message_FieldIndex.ShortTitle) ?? true))
             {
@@ -1637,9 +1637,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(DisplayTimeitem);
             }
-            if (item.BNAM is {} BNAMitem)
+            if (item.IndexChosenOnBackOut is {} IndexChosenOnBackOutitem)
             {
-                hash.Add(BNAMitem);
+                hash.Add(IndexChosenOnBackOutitem);
             }
             if (item.ShortTitle is {} ShortTitleitem)
             {
@@ -1836,9 +1836,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.DisplayTime = rhs.DisplayTime;
             }
-            if ((copyMask?.GetShouldTranslate((int)Message_FieldIndex.BNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Message_FieldIndex.IndexChosenOnBackOut) ?? true))
             {
-                item.BNAM = rhs.BNAM;
+                item.IndexChosenOnBackOut = rhs.IndexChosenOnBackOut;
             }
             if ((copyMask?.GetShouldTranslate((int)Message_FieldIndex.ShortTitle) ?? true))
             {
@@ -2073,9 +2073,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.DisplayTime,
                 header: translationParams.ConvertToCustom(RecordTypes.TNAM));
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.BNAM,
+                item: item.IndexChosenOnBackOut,
                 header: translationParams.ConvertToCustom(RecordTypes.BNAM));
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -2220,8 +2220,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.BNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BNAM = frame.ReadUInt32();
-                    return (int)Message_FieldIndex.BNAM;
+                    item.IndexChosenOnBackOut = frame.ReadInt32();
+                    return (int)Message_FieldIndex.IndexChosenOnBackOut;
                 }
                 case RecordTypeInts.NNAM:
                 {
@@ -2349,9 +2349,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _DisplayTimeLocation;
         public UInt32? DisplayTime => _DisplayTimeLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DisplayTimeLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region BNAM
-        private int? _BNAMLocation;
-        public UInt32? BNAM => _BNAMLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _BNAMLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region IndexChosenOnBackOut
+        private int? _IndexChosenOnBackOutLocation;
+        public Int32? IndexChosenOnBackOut => _IndexChosenOnBackOutLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _IndexChosenOnBackOutLocation.Value, _package.MetaData.Constants)) : default(Int32?);
         #endregion
         #region ShortTitle
         private int? _ShortTitleLocation;
@@ -2469,8 +2469,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BNAM:
                 {
-                    _BNAMLocation = (stream.Position - offset);
-                    return (int)Message_FieldIndex.BNAM;
+                    _IndexChosenOnBackOutLocation = (stream.Position - offset);
+                    return (int)Message_FieldIndex.IndexChosenOnBackOut;
                 }
                 case RecordTypeInts.NNAM:
                 {
