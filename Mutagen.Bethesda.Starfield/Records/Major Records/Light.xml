@@ -35,7 +35,8 @@
           <UInt32 name="PbrLuminousPowerLm" />
           <Enum name="Type" enumName="Light.LightType" byteLength="1" />
           <Enum name="FlickerEffect" enumName="Light.FlickerEffectOption" byteLength="1" />
-          <Bool name="UseAdaptiveLighting" byteLength="2" importantByteLength="1" />
+          <Bool name="UseAdaptiveLighting" byteLength="1" />
+          <ByteArray name="UseAdaptiveLightingUnused" byteLength="1" nullable="false" />
           <Float name="AdaptiveLightEc" />
           <Float name="AdaptiveLightEv100Min" />
           <Float name="AdaptiveLightEv100Max" />
@@ -74,7 +75,8 @@
       <Float name="Height" />
       <Float name="Roundness" />
       <Float name="Falloff" />
-      <Bool name="UsesRoundness" byteLength="4" importantByteLength="1" />
+      <Bool name="UsesRoundness" byteLength="1" />
+      <ByteArray name="UsesRoundnessUnused" byteLength="3" nullable="false" />
     </Fields>
   </Object>
   <Object name="LightGobo" objType="Subrecord"  >
@@ -100,7 +102,8 @@
       <Float name="WaveScrollAmountU" />
       <Float name="WaveScrollAmountV" />
       <Float name="RandomTimeOffsetRange" />
-      <Bool name="IsAnimated" byteLength="4" importantByteLength="1" />
+      <Bool name="IsAnimated" byteLength="1" />
+      <ByteArray name="IsAnimatedUnused" byteLength="3" nullable="false" />
     </Fields>
   </Object>
   <Object name="AreaLight" objType="Subrecord"  >

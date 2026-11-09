@@ -131,7 +131,8 @@
       <FormLink name="Ref">
         <Interface>IPlaced</Interface>
       </FormLink>
-      <Bool name="SetEnableStateToOppositeOfParent" byteLength="4" importantByteLength="1" />
+      <Bool name="SetEnableStateToOppositeOfParent" byteLength="1" />
+      <ByteArray name="SetEnableStateToOppositeOfParentUnused" byteLength="3" nullable="false" />
     </Fields>
   </Object>
 </Loqui>

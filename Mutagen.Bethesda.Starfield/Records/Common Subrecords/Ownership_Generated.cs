@@ -68,6 +68,17 @@ namespace Mutagen.Bethesda.Starfield
         #region NoCrime
         public Boolean NoCrime { get; set; } = default(Boolean);
         #endregion
+        #region NoCrimeUnused
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private MemorySlice<Byte> _NoCrimeUnused = new byte[3];
+        public MemorySlice<Byte> NoCrimeUnused
+        {
+            get => _NoCrimeUnused;
+            set => this._NoCrimeUnused = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte> IOwnershipGetter.NoCrimeUnused => this.NoCrimeUnused;
+        #endregion
 
         #region To String
 
@@ -110,16 +121,19 @@ namespace Mutagen.Bethesda.Starfield
                 this.Owner = initialValue;
                 this.Unknown = initialValue;
                 this.NoCrime = initialValue;
+                this.NoCrimeUnused = initialValue;
             }
 
             public Mask(
                 TItem Owner,
                 TItem Unknown,
-                TItem NoCrime)
+                TItem NoCrime,
+                TItem NoCrimeUnused)
             {
                 this.Owner = Owner;
                 this.Unknown = Unknown;
                 this.NoCrime = NoCrime;
+                this.NoCrimeUnused = NoCrimeUnused;
             }
 
             #pragma warning disable CS8618
@@ -134,6 +148,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Owner;
             public TItem Unknown;
             public TItem NoCrime;
+            public TItem NoCrimeUnused;
             #endregion
 
             #region Equals
@@ -149,6 +164,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Owner, rhs.Owner)) return false;
                 if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 if (!object.Equals(this.NoCrime, rhs.NoCrime)) return false;
+                if (!object.Equals(this.NoCrimeUnused, rhs.NoCrimeUnused)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -157,6 +173,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Owner);
                 hash.Add(this.Unknown);
                 hash.Add(this.NoCrime);
+                hash.Add(this.NoCrimeUnused);
                 return hash.ToHashCode();
             }
 
@@ -168,6 +185,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Owner)) return false;
                 if (!eval(this.Unknown)) return false;
                 if (!eval(this.NoCrime)) return false;
+                if (!eval(this.NoCrimeUnused)) return false;
                 return true;
             }
             #endregion
@@ -178,6 +196,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Owner)) return true;
                 if (eval(this.Unknown)) return true;
                 if (eval(this.NoCrime)) return true;
+                if (eval(this.NoCrimeUnused)) return true;
                 return false;
             }
             #endregion
@@ -195,6 +214,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Owner = eval(this.Owner);
                 obj.Unknown = eval(this.Unknown);
                 obj.NoCrime = eval(this.NoCrime);
+                obj.NoCrimeUnused = eval(this.NoCrimeUnused);
             }
             #endregion
 
@@ -225,6 +245,10 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(NoCrime, "NoCrime");
                     }
+                    if (printMask?.NoCrimeUnused ?? true)
+                    {
+                        sb.AppendItem(NoCrimeUnused, "NoCrimeUnused");
+                    }
                 }
             }
             #endregion
@@ -252,6 +276,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Owner;
             public Exception? Unknown;
             public Exception? NoCrime;
+            public Exception? NoCrimeUnused;
             #endregion
 
             #region IErrorMask
@@ -266,6 +291,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Unknown;
                     case Ownership_FieldIndex.NoCrime:
                         return NoCrime;
+                    case Ownership_FieldIndex.NoCrimeUnused:
+                        return NoCrimeUnused;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -284,6 +311,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case Ownership_FieldIndex.NoCrime:
                         this.NoCrime = ex;
+                        break;
+                    case Ownership_FieldIndex.NoCrimeUnused:
+                        this.NoCrimeUnused = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -304,6 +334,9 @@ namespace Mutagen.Bethesda.Starfield
                     case Ownership_FieldIndex.NoCrime:
                         this.NoCrime = (Exception?)obj;
                         break;
+                    case Ownership_FieldIndex.NoCrimeUnused:
+                        this.NoCrimeUnused = (Exception?)obj;
+                        break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -315,6 +348,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Owner != null) return true;
                 if (Unknown != null) return true;
                 if (NoCrime != null) return true;
+                if (NoCrimeUnused != null) return true;
                 return false;
             }
             #endregion
@@ -349,6 +383,9 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(NoCrime, "NoCrime");
                 }
+                {
+                    sb.AppendItem(NoCrimeUnused, "NoCrimeUnused");
+                }
             }
             #endregion
 
@@ -360,6 +397,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Owner = this.Owner.Combine(rhs.Owner);
                 ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 ret.NoCrime = this.NoCrime.Combine(rhs.NoCrime);
+                ret.NoCrimeUnused = this.NoCrimeUnused.Combine(rhs.NoCrimeUnused);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -386,6 +424,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Owner;
             public bool Unknown;
             public bool NoCrime;
+            public bool NoCrimeUnused;
             #endregion
 
             #region Ctors
@@ -398,6 +437,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Owner = defaultOn;
                 this.Unknown = defaultOn;
                 this.NoCrime = defaultOn;
+                this.NoCrimeUnused = defaultOn;
             }
 
             #endregion
@@ -416,6 +456,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Owner, null));
                 ret.Add((Unknown, null));
                 ret.Add((NoCrime, null));
+                ret.Add((NoCrimeUnused, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -497,6 +538,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<IOwnerGetter> Owner { get; set; }
         new Int32 Unknown { get; set; }
         new Boolean NoCrime { get; set; }
+        new MemorySlice<Byte> NoCrimeUnused { get; set; }
     }
 
     public partial interface IOwnershipGetter :
@@ -515,6 +557,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IOwnerGetter> Owner { get; }
         Int32 Unknown { get; }
         Boolean NoCrime { get; }
+        ReadOnlyMemorySlice<Byte> NoCrimeUnused { get; }
 
     }
 
@@ -687,6 +730,7 @@ namespace Mutagen.Bethesda.Starfield
         Owner = 0,
         Unknown = 1,
         NoCrime = 2,
+        NoCrimeUnused = 3,
     }
     #endregion
 
@@ -697,9 +741,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 3;
+        public const ushort AdditionalFieldCount = 4;
 
-        public const ushort FieldCount = 3;
+        public const ushort FieldCount = 4;
 
         public static readonly Type MaskType = typeof(Ownership.Mask<>);
 
@@ -775,6 +819,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Owner.Clear();
             item.Unknown = default(Int32);
             item.NoCrime = default(Boolean);
+            item.NoCrimeUnused = new byte[3];
         }
         
         #region Mutagen
@@ -828,6 +873,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Owner = item.Owner.Equals(rhs.Owner);
             ret.Unknown = item.Unknown == rhs.Unknown;
             ret.NoCrime = item.NoCrime == rhs.NoCrime;
+            ret.NoCrimeUnused = MemoryExtensions.SequenceEqual(item.NoCrimeUnused.Span, rhs.NoCrimeUnused.Span);
         }
         
         public string Print(
@@ -884,6 +930,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.NoCrime, "NoCrime");
             }
+            if (printMask?.NoCrimeUnused ?? true)
+            {
+                sb.AppendLine($"NoCrimeUnused => {SpanExt.ToHexString(item.NoCrimeUnused)}");
+            }
         }
         
         #region Equals and Hash
@@ -905,6 +955,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.NoCrime != rhs.NoCrime) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)Ownership_FieldIndex.NoCrimeUnused) ?? true))
+            {
+                if (!MemoryExtensions.SequenceEqual(lhs.NoCrimeUnused.Span, rhs.NoCrimeUnused.Span)) return false;
+            }
             return true;
         }
         
@@ -914,6 +968,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Owner);
             hash.Add(item.Unknown);
             hash.Add(item.NoCrime);
+            hash.Add(item.NoCrimeUnused);
             return hash.ToHashCode();
         }
         
@@ -958,6 +1013,10 @@ namespace Mutagen.Bethesda.Starfield
             if ((copyMask?.GetShouldTranslate((int)Ownership_FieldIndex.NoCrime) ?? true))
             {
                 item.NoCrime = rhs.NoCrime;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Ownership_FieldIndex.NoCrimeUnused) ?? true))
+            {
+                item.NoCrimeUnused = rhs.NoCrimeUnused.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1074,7 +1133,10 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     item: item.Owner);
                 writer.Write(item.Unknown);
-                writer.Write(item.NoCrime, length: 4);
+                writer.Write(item.NoCrime);
+                ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoCrimeUnused);
             }
         }
 
@@ -1120,19 +1182,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.XOWN:
                 {
-                    if (lastParsed.ShortCircuit((int)Ownership_FieldIndex.NoCrime, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)Ownership_FieldIndex.NoCrimeUnused, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
                     item.Owner.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     if (dataFrame.Remaining < 4) return null;
                     item.Unknown = dataFrame.ReadInt32();
-                    if (dataFrame.Remaining < 4) return null;
-                    item.NoCrime = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
-                        reader: dataFrame,
-                        byteLength: 4,
-                        importantByteLength: 1);
-                    return (int)Ownership_FieldIndex.NoCrime;
+                    if (dataFrame.Remaining < 1) return null;
+                    item.NoCrime = dataFrame.ReadBoolean();
+                    item.NoCrimeUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(3));
+                    return (int)Ownership_FieldIndex.NoCrimeUnused;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1217,7 +1277,12 @@ namespace Mutagen.Bethesda.Starfield
         #region NoCrime
         private int _NoCrimeLocation => _XOWNLocation!.Value.Min + 0x8;
         private bool _NoCrime_IsSet => _XOWNLocation.HasValue;
-        public Boolean NoCrime => _NoCrime_IsSet ? _recordData.Slice(_NoCrimeLocation, 4)[0] >= 1 : default(Boolean);
+        public Boolean NoCrime => _NoCrime_IsSet ? _recordData.Slice(_NoCrimeLocation, 1)[0] >= 1 : default(Boolean);
+        #endregion
+        #region NoCrimeUnused
+        private int _NoCrimeUnusedLocation => _XOWNLocation!.Value.Min + 0x9;
+        private bool _NoCrimeUnused_IsSet => _XOWNLocation.HasValue;
+        public ReadOnlyMemorySlice<Byte> NoCrimeUnused => _NoCrimeUnused_IsSet ? _recordData.Span.Slice(_NoCrimeUnusedLocation, 3).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1284,9 +1349,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.XOWN:
                 {
-                    if (lastParsed.ShortCircuit((int)Ownership_FieldIndex.NoCrime, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)Ownership_FieldIndex.NoCrimeUnused, translationParams)) return ParseResult.Stop;
                     _XOWNLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)Ownership_FieldIndex.NoCrime;
+                    return (int)Ownership_FieldIndex.NoCrimeUnused;
                 }
                 default:
                     return ParseResult.Stop;
