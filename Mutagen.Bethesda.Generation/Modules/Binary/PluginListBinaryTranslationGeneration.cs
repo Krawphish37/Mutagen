@@ -455,6 +455,15 @@ public class PluginListBinaryTranslationGeneration : BinaryTranslationGeneration
                                     args.Add($"triggeringRecord: translationParams.ConvertToCustom({subData.TriggeringRecordSetAccessor})");
                                 }
                             }
+                            if (data.RecordType != null
+                                && !recordPerItem
+                                && loqui != null
+                                && !loqui.TargetObjectGeneration.Abstract
+                                && loqui.TargetObjectGeneration.GetObjectData().TriggeringSource == null)
+                            {
+                                // Objects without their own record type, stored together in the list's one subrecord
+                                args.Add("skipHeader: true");
+                            }
                             if (list.CustomData.TryGetValue(NullIfCounterZero, out var nullIf)
                                 && (bool)nullIf)
                             {
