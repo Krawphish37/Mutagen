@@ -51,20 +51,20 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Unknown1
-        public Single Unknown1 { get; set; } = default(Single);
+        #region Thickness
+        public Single Thickness { get; set; } = default(Single);
         #endregion
-        #region Unknown2
-        public Single Unknown2 { get; set; } = default(Single);
+        #region FadeLength
+        public Single FadeLength { get; set; } = default(Single);
         #endregion
-        #region Unknown3
-        public Single Unknown3 { get; set; } = default(Single);
+        #region FadeStart
+        public Single FadeStart { get; set; } = default(Single);
         #endregion
-        #region Unknown4
-        public Single Unknown4 { get; set; } = default(Single);
+        #region MaxDistance
+        public Single MaxDistance { get; set; } = default(Single);
         #endregion
-        #region Unknown5
-        public Single Unknown5 { get; set; } = default(Single);
+        #region ProximityLimit
+        public Single ProximityLimit { get; set; } = default(Single);
         #endregion
 
         #region To String
@@ -105,25 +105,25 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Unknown1 = initialValue;
-                this.Unknown2 = initialValue;
-                this.Unknown3 = initialValue;
-                this.Unknown4 = initialValue;
-                this.Unknown5 = initialValue;
+                this.Thickness = initialValue;
+                this.FadeLength = initialValue;
+                this.FadeStart = initialValue;
+                this.MaxDistance = initialValue;
+                this.ProximityLimit = initialValue;
             }
 
             public Mask(
-                TItem Unknown1,
-                TItem Unknown2,
-                TItem Unknown3,
-                TItem Unknown4,
-                TItem Unknown5)
+                TItem Thickness,
+                TItem FadeLength,
+                TItem FadeStart,
+                TItem MaxDistance,
+                TItem ProximityLimit)
             {
-                this.Unknown1 = Unknown1;
-                this.Unknown2 = Unknown2;
-                this.Unknown3 = Unknown3;
-                this.Unknown4 = Unknown4;
-                this.Unknown5 = Unknown5;
+                this.Thickness = Thickness;
+                this.FadeLength = FadeLength;
+                this.FadeStart = FadeStart;
+                this.MaxDistance = MaxDistance;
+                this.ProximityLimit = ProximityLimit;
             }
 
             #pragma warning disable CS8618
@@ -135,11 +135,11 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Unknown1;
-            public TItem Unknown2;
-            public TItem Unknown3;
-            public TItem Unknown4;
-            public TItem Unknown5;
+            public TItem Thickness;
+            public TItem FadeLength;
+            public TItem FadeStart;
+            public TItem MaxDistance;
+            public TItem ProximityLimit;
             #endregion
 
             #region Equals
@@ -152,21 +152,21 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
-                if (!object.Equals(this.Unknown3, rhs.Unknown3)) return false;
-                if (!object.Equals(this.Unknown4, rhs.Unknown4)) return false;
-                if (!object.Equals(this.Unknown5, rhs.Unknown5)) return false;
+                if (!object.Equals(this.Thickness, rhs.Thickness)) return false;
+                if (!object.Equals(this.FadeLength, rhs.FadeLength)) return false;
+                if (!object.Equals(this.FadeStart, rhs.FadeStart)) return false;
+                if (!object.Equals(this.MaxDistance, rhs.MaxDistance)) return false;
+                if (!object.Equals(this.ProximityLimit, rhs.ProximityLimit)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Unknown1);
-                hash.Add(this.Unknown2);
-                hash.Add(this.Unknown3);
-                hash.Add(this.Unknown4);
-                hash.Add(this.Unknown5);
+                hash.Add(this.Thickness);
+                hash.Add(this.FadeLength);
+                hash.Add(this.FadeStart);
+                hash.Add(this.MaxDistance);
+                hash.Add(this.ProximityLimit);
                 return hash.ToHashCode();
             }
 
@@ -175,11 +175,11 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Unknown1)) return false;
-                if (!eval(this.Unknown2)) return false;
-                if (!eval(this.Unknown3)) return false;
-                if (!eval(this.Unknown4)) return false;
-                if (!eval(this.Unknown5)) return false;
+                if (!eval(this.Thickness)) return false;
+                if (!eval(this.FadeLength)) return false;
+                if (!eval(this.FadeStart)) return false;
+                if (!eval(this.MaxDistance)) return false;
+                if (!eval(this.ProximityLimit)) return false;
                 return true;
             }
             #endregion
@@ -187,11 +187,11 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Unknown1)) return true;
-                if (eval(this.Unknown2)) return true;
-                if (eval(this.Unknown3)) return true;
-                if (eval(this.Unknown4)) return true;
-                if (eval(this.Unknown5)) return true;
+                if (eval(this.Thickness)) return true;
+                if (eval(this.FadeLength)) return true;
+                if (eval(this.FadeStart)) return true;
+                if (eval(this.MaxDistance)) return true;
+                if (eval(this.ProximityLimit)) return true;
                 return false;
             }
             #endregion
@@ -206,11 +206,11 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Unknown1 = eval(this.Unknown1);
-                obj.Unknown2 = eval(this.Unknown2);
-                obj.Unknown3 = eval(this.Unknown3);
-                obj.Unknown4 = eval(this.Unknown4);
-                obj.Unknown5 = eval(this.Unknown5);
+                obj.Thickness = eval(this.Thickness);
+                obj.FadeLength = eval(this.FadeLength);
+                obj.FadeStart = eval(this.FadeStart);
+                obj.MaxDistance = eval(this.MaxDistance);
+                obj.ProximityLimit = eval(this.ProximityLimit);
             }
             #endregion
 
@@ -229,25 +229,25 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(ContactShadowComponentItem.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Unknown1 ?? true)
+                    if (printMask?.Thickness ?? true)
                     {
-                        sb.AppendItem(Unknown1, "Unknown1");
+                        sb.AppendItem(Thickness, "Thickness");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.FadeLength ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(FadeLength, "FadeLength");
                     }
-                    if (printMask?.Unknown3 ?? true)
+                    if (printMask?.FadeStart ?? true)
                     {
-                        sb.AppendItem(Unknown3, "Unknown3");
+                        sb.AppendItem(FadeStart, "FadeStart");
                     }
-                    if (printMask?.Unknown4 ?? true)
+                    if (printMask?.MaxDistance ?? true)
                     {
-                        sb.AppendItem(Unknown4, "Unknown4");
+                        sb.AppendItem(MaxDistance, "MaxDistance");
                     }
-                    if (printMask?.Unknown5 ?? true)
+                    if (printMask?.ProximityLimit ?? true)
                     {
-                        sb.AppendItem(Unknown5, "Unknown5");
+                        sb.AppendItem(ProximityLimit, "ProximityLimit");
                     }
                 }
             }
@@ -273,11 +273,11 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Unknown1;
-            public Exception? Unknown2;
-            public Exception? Unknown3;
-            public Exception? Unknown4;
-            public Exception? Unknown5;
+            public Exception? Thickness;
+            public Exception? FadeLength;
+            public Exception? FadeStart;
+            public Exception? MaxDistance;
+            public Exception? ProximityLimit;
             #endregion
 
             #region IErrorMask
@@ -286,16 +286,16 @@ namespace Mutagen.Bethesda.Starfield
                 ContactShadowComponentItem_FieldIndex enu = (ContactShadowComponentItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case ContactShadowComponentItem_FieldIndex.Unknown1:
-                        return Unknown1;
-                    case ContactShadowComponentItem_FieldIndex.Unknown2:
-                        return Unknown2;
-                    case ContactShadowComponentItem_FieldIndex.Unknown3:
-                        return Unknown3;
-                    case ContactShadowComponentItem_FieldIndex.Unknown4:
-                        return Unknown4;
-                    case ContactShadowComponentItem_FieldIndex.Unknown5:
-                        return Unknown5;
+                    case ContactShadowComponentItem_FieldIndex.Thickness:
+                        return Thickness;
+                    case ContactShadowComponentItem_FieldIndex.FadeLength:
+                        return FadeLength;
+                    case ContactShadowComponentItem_FieldIndex.FadeStart:
+                        return FadeStart;
+                    case ContactShadowComponentItem_FieldIndex.MaxDistance:
+                        return MaxDistance;
+                    case ContactShadowComponentItem_FieldIndex.ProximityLimit:
+                        return ProximityLimit;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -306,20 +306,20 @@ namespace Mutagen.Bethesda.Starfield
                 ContactShadowComponentItem_FieldIndex enu = (ContactShadowComponentItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case ContactShadowComponentItem_FieldIndex.Unknown1:
-                        this.Unknown1 = ex;
+                    case ContactShadowComponentItem_FieldIndex.Thickness:
+                        this.Thickness = ex;
                         break;
-                    case ContactShadowComponentItem_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case ContactShadowComponentItem_FieldIndex.FadeLength:
+                        this.FadeLength = ex;
                         break;
-                    case ContactShadowComponentItem_FieldIndex.Unknown3:
-                        this.Unknown3 = ex;
+                    case ContactShadowComponentItem_FieldIndex.FadeStart:
+                        this.FadeStart = ex;
                         break;
-                    case ContactShadowComponentItem_FieldIndex.Unknown4:
-                        this.Unknown4 = ex;
+                    case ContactShadowComponentItem_FieldIndex.MaxDistance:
+                        this.MaxDistance = ex;
                         break;
-                    case ContactShadowComponentItem_FieldIndex.Unknown5:
-                        this.Unknown5 = ex;
+                    case ContactShadowComponentItem_FieldIndex.ProximityLimit:
+                        this.ProximityLimit = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -331,20 +331,20 @@ namespace Mutagen.Bethesda.Starfield
                 ContactShadowComponentItem_FieldIndex enu = (ContactShadowComponentItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case ContactShadowComponentItem_FieldIndex.Unknown1:
-                        this.Unknown1 = (Exception?)obj;
+                    case ContactShadowComponentItem_FieldIndex.Thickness:
+                        this.Thickness = (Exception?)obj;
                         break;
-                    case ContactShadowComponentItem_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case ContactShadowComponentItem_FieldIndex.FadeLength:
+                        this.FadeLength = (Exception?)obj;
                         break;
-                    case ContactShadowComponentItem_FieldIndex.Unknown3:
-                        this.Unknown3 = (Exception?)obj;
+                    case ContactShadowComponentItem_FieldIndex.FadeStart:
+                        this.FadeStart = (Exception?)obj;
                         break;
-                    case ContactShadowComponentItem_FieldIndex.Unknown4:
-                        this.Unknown4 = (Exception?)obj;
+                    case ContactShadowComponentItem_FieldIndex.MaxDistance:
+                        this.MaxDistance = (Exception?)obj;
                         break;
-                    case ContactShadowComponentItem_FieldIndex.Unknown5:
-                        this.Unknown5 = (Exception?)obj;
+                    case ContactShadowComponentItem_FieldIndex.ProximityLimit:
+                        this.ProximityLimit = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -354,11 +354,11 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Unknown1 != null) return true;
-                if (Unknown2 != null) return true;
-                if (Unknown3 != null) return true;
-                if (Unknown4 != null) return true;
-                if (Unknown5 != null) return true;
+                if (Thickness != null) return true;
+                if (FadeLength != null) return true;
+                if (FadeStart != null) return true;
+                if (MaxDistance != null) return true;
+                if (ProximityLimit != null) return true;
                 return false;
             }
             #endregion
@@ -385,19 +385,19 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Unknown1, "Unknown1");
+                    sb.AppendItem(Thickness, "Thickness");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(FadeLength, "FadeLength");
                 }
                 {
-                    sb.AppendItem(Unknown3, "Unknown3");
+                    sb.AppendItem(FadeStart, "FadeStart");
                 }
                 {
-                    sb.AppendItem(Unknown4, "Unknown4");
+                    sb.AppendItem(MaxDistance, "MaxDistance");
                 }
                 {
-                    sb.AppendItem(Unknown5, "Unknown5");
+                    sb.AppendItem(ProximityLimit, "ProximityLimit");
                 }
             }
             #endregion
@@ -407,11 +407,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
-                ret.Unknown3 = this.Unknown3.Combine(rhs.Unknown3);
-                ret.Unknown4 = this.Unknown4.Combine(rhs.Unknown4);
-                ret.Unknown5 = this.Unknown5.Combine(rhs.Unknown5);
+                ret.Thickness = this.Thickness.Combine(rhs.Thickness);
+                ret.FadeLength = this.FadeLength.Combine(rhs.FadeLength);
+                ret.FadeStart = this.FadeStart.Combine(rhs.FadeStart);
+                ret.MaxDistance = this.MaxDistance.Combine(rhs.MaxDistance);
+                ret.ProximityLimit = this.ProximityLimit.Combine(rhs.ProximityLimit);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -435,11 +435,11 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Unknown1;
-            public bool Unknown2;
-            public bool Unknown3;
-            public bool Unknown4;
-            public bool Unknown5;
+            public bool Thickness;
+            public bool FadeLength;
+            public bool FadeStart;
+            public bool MaxDistance;
+            public bool ProximityLimit;
             #endregion
 
             #region Ctors
@@ -449,11 +449,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Unknown1 = defaultOn;
-                this.Unknown2 = defaultOn;
-                this.Unknown3 = defaultOn;
-                this.Unknown4 = defaultOn;
-                this.Unknown5 = defaultOn;
+                this.Thickness = defaultOn;
+                this.FadeLength = defaultOn;
+                this.FadeStart = defaultOn;
+                this.MaxDistance = defaultOn;
+                this.ProximityLimit = defaultOn;
             }
 
             #endregion
@@ -469,11 +469,11 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Unknown1, null));
-                ret.Add((Unknown2, null));
-                ret.Add((Unknown3, null));
-                ret.Add((Unknown4, null));
-                ret.Add((Unknown5, null));
+                ret.Add((Thickness, null));
+                ret.Add((FadeLength, null));
+                ret.Add((FadeStart, null));
+                ret.Add((MaxDistance, null));
+                ret.Add((ProximityLimit, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -546,11 +546,11 @@ namespace Mutagen.Bethesda.Starfield
         IContactShadowComponentItemGetter,
         ILoquiObjectSetter<IContactShadowComponentItem>
     {
-        new Single Unknown1 { get; set; }
-        new Single Unknown2 { get; set; }
-        new Single Unknown3 { get; set; }
-        new Single Unknown4 { get; set; }
-        new Single Unknown5 { get; set; }
+        new Single Thickness { get; set; }
+        new Single FadeLength { get; set; }
+        new Single FadeStart { get; set; }
+        new Single MaxDistance { get; set; }
+        new Single ProximityLimit { get; set; }
     }
 
     public partial interface IContactShadowComponentItemGetter :
@@ -565,11 +565,11 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => ContactShadowComponentItem_Registration.Instance;
-        Single Unknown1 { get; }
-        Single Unknown2 { get; }
-        Single Unknown3 { get; }
-        Single Unknown4 { get; }
-        Single Unknown5 { get; }
+        Single Thickness { get; }
+        Single FadeLength { get; }
+        Single FadeStart { get; }
+        Single MaxDistance { get; }
+        Single ProximityLimit { get; }
 
     }
 
@@ -739,11 +739,11 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum ContactShadowComponentItem_FieldIndex
     {
-        Unknown1 = 0,
-        Unknown2 = 1,
-        Unknown3 = 2,
-        Unknown4 = 3,
-        Unknown5 = 4,
+        Thickness = 0,
+        FadeLength = 1,
+        FadeStart = 2,
+        MaxDistance = 3,
+        ProximityLimit = 4,
     }
     #endregion
 
@@ -829,11 +829,11 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IContactShadowComponentItem item)
         {
             ClearPartial();
-            item.Unknown1 = default(Single);
-            item.Unknown2 = default(Single);
-            item.Unknown3 = default(Single);
-            item.Unknown4 = default(Single);
-            item.Unknown5 = default(Single);
+            item.Thickness = default(Single);
+            item.FadeLength = default(Single);
+            item.FadeStart = default(Single);
+            item.MaxDistance = default(Single);
+            item.ProximityLimit = default(Single);
         }
         
         #region Mutagen
@@ -887,11 +887,11 @@ namespace Mutagen.Bethesda.Starfield
             ContactShadowComponentItem.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Unknown1 = item.Unknown1.EqualsWithin(rhs.Unknown1);
-            ret.Unknown2 = item.Unknown2.EqualsWithin(rhs.Unknown2);
-            ret.Unknown3 = item.Unknown3.EqualsWithin(rhs.Unknown3);
-            ret.Unknown4 = item.Unknown4.EqualsWithin(rhs.Unknown4);
-            ret.Unknown5 = item.Unknown5.EqualsWithin(rhs.Unknown5);
+            ret.Thickness = item.Thickness.EqualsWithin(rhs.Thickness);
+            ret.FadeLength = item.FadeLength.EqualsWithin(rhs.FadeLength);
+            ret.FadeStart = item.FadeStart.EqualsWithin(rhs.FadeStart);
+            ret.MaxDistance = item.MaxDistance.EqualsWithin(rhs.MaxDistance);
+            ret.ProximityLimit = item.ProximityLimit.EqualsWithin(rhs.ProximityLimit);
         }
         
         public string Print(
@@ -936,25 +936,25 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             ContactShadowComponentItem.Mask<bool>? printMask = null)
         {
-            if (printMask?.Unknown1 ?? true)
+            if (printMask?.Thickness ?? true)
             {
-                sb.AppendItem(item.Unknown1, "Unknown1");
+                sb.AppendItem(item.Thickness, "Thickness");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.FadeLength ?? true)
             {
-                sb.AppendItem(item.Unknown2, "Unknown2");
+                sb.AppendItem(item.FadeLength, "FadeLength");
             }
-            if (printMask?.Unknown3 ?? true)
+            if (printMask?.FadeStart ?? true)
             {
-                sb.AppendItem(item.Unknown3, "Unknown3");
+                sb.AppendItem(item.FadeStart, "FadeStart");
             }
-            if (printMask?.Unknown4 ?? true)
+            if (printMask?.MaxDistance ?? true)
             {
-                sb.AppendItem(item.Unknown4, "Unknown4");
+                sb.AppendItem(item.MaxDistance, "MaxDistance");
             }
-            if (printMask?.Unknown5 ?? true)
+            if (printMask?.ProximityLimit ?? true)
             {
-                sb.AppendItem(item.Unknown5, "Unknown5");
+                sb.AppendItem(item.ProximityLimit, "ProximityLimit");
             }
         }
         
@@ -965,25 +965,25 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.Thickness) ?? true))
             {
-                if (!lhs.Unknown1.EqualsWithin(rhs.Unknown1)) return false;
+                if (!lhs.Thickness.EqualsWithin(rhs.Thickness)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.FadeLength) ?? true))
             {
-                if (!lhs.Unknown2.EqualsWithin(rhs.Unknown2)) return false;
+                if (!lhs.FadeLength.EqualsWithin(rhs.FadeLength)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.Unknown3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.FadeStart) ?? true))
             {
-                if (!lhs.Unknown3.EqualsWithin(rhs.Unknown3)) return false;
+                if (!lhs.FadeStart.EqualsWithin(rhs.FadeStart)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.Unknown4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.MaxDistance) ?? true))
             {
-                if (!lhs.Unknown4.EqualsWithin(rhs.Unknown4)) return false;
+                if (!lhs.MaxDistance.EqualsWithin(rhs.MaxDistance)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.Unknown5) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.ProximityLimit) ?? true))
             {
-                if (!lhs.Unknown5.EqualsWithin(rhs.Unknown5)) return false;
+                if (!lhs.ProximityLimit.EqualsWithin(rhs.ProximityLimit)) return false;
             }
             return true;
         }
@@ -991,11 +991,11 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IContactShadowComponentItemGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Unknown1);
-            hash.Add(item.Unknown2);
-            hash.Add(item.Unknown3);
-            hash.Add(item.Unknown4);
-            hash.Add(item.Unknown5);
+            hash.Add(item.Thickness);
+            hash.Add(item.FadeLength);
+            hash.Add(item.FadeStart);
+            hash.Add(item.MaxDistance);
+            hash.Add(item.ProximityLimit);
             return hash.ToHashCode();
         }
         
@@ -1028,25 +1028,25 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.Thickness) ?? true))
             {
-                item.Unknown1 = rhs.Unknown1;
+                item.Thickness = rhs.Thickness;
             }
-            if ((copyMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.FadeLength) ?? true))
             {
-                item.Unknown2 = rhs.Unknown2;
+                item.FadeLength = rhs.FadeLength;
             }
-            if ((copyMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.Unknown3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.FadeStart) ?? true))
             {
-                item.Unknown3 = rhs.Unknown3;
+                item.FadeStart = rhs.FadeStart;
             }
-            if ((copyMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.Unknown4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.MaxDistance) ?? true))
             {
-                item.Unknown4 = rhs.Unknown4;
+                item.MaxDistance = rhs.MaxDistance;
             }
-            if ((copyMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.Unknown5) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ContactShadowComponentItem_FieldIndex.ProximityLimit) ?? true))
             {
-                item.Unknown5 = rhs.Unknown5;
+                item.ProximityLimit = rhs.ProximityLimit;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1158,19 +1158,19 @@ namespace Mutagen.Bethesda.Starfield
         {
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown1);
+                item: item.Thickness);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown2);
+                item: item.FadeLength);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown3);
+                item: item.FadeStart);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown4);
+                item: item.MaxDistance);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown5);
+                item: item.ProximityLimit);
         }
 
         public void Write(
@@ -1211,11 +1211,11 @@ namespace Mutagen.Bethesda.Starfield
             IContactShadowComponentItem item,
             MutagenFrame frame)
         {
-            item.Unknown1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown3 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown4 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown5 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Thickness = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.FadeLength = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.FadeStart = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.MaxDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.ProximityLimit = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
         }
 
     }
@@ -1281,11 +1281,11 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Single Unknown1 => _structData.Slice(0x0, 0x4).Float();
-        public Single Unknown2 => _structData.Slice(0x4, 0x4).Float();
-        public Single Unknown3 => _structData.Slice(0x8, 0x4).Float();
-        public Single Unknown4 => _structData.Slice(0xC, 0x4).Float();
-        public Single Unknown5 => _structData.Slice(0x10, 0x4).Float();
+        public Single Thickness => _structData.Slice(0x0, 0x4).Float();
+        public Single FadeLength => _structData.Slice(0x4, 0x4).Float();
+        public Single FadeStart => _structData.Slice(0x8, 0x4).Float();
+        public Single MaxDistance => _structData.Slice(0xC, 0x4).Float();
+        public Single ProximityLimit => _structData.Slice(0x10, 0x4).Float();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

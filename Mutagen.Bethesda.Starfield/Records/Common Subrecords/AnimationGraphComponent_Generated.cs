@@ -53,25 +53,25 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region ANAM
-        public String? ANAM { get; set; }
+        #region RootAnimationGraph
+        public String? RootAnimationGraph { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IAnimationGraphComponentGetter.ANAM => this.ANAM;
+        String? IAnimationGraphComponentGetter.RootAnimationGraph => this.RootAnimationGraph;
         #endregion
-        #region BNAM
-        public String? BNAM { get; set; }
+        #region RigFile
+        public String? RigFile { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IAnimationGraphComponentGetter.BNAM => this.BNAM;
+        String? IAnimationGraphComponentGetter.RigFile => this.RigFile;
         #endregion
-        #region CNAM
-        public String? CNAM { get; set; }
+        #region AnimationsPath
+        public String? AnimationsPath { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IAnimationGraphComponentGetter.CNAM => this.CNAM;
+        String? IAnimationGraphComponentGetter.AnimationsPath => this.AnimationsPath;
         #endregion
-        #region DNAM
-        public String? DNAM { get; set; }
+        #region ResponseFile
+        public String? ResponseFile { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IAnimationGraphComponentGetter.DNAM => this.DNAM;
+        String? IAnimationGraphComponentGetter.ResponseFile => this.ResponseFile;
         #endregion
         #region ENAM
         public String? ENAM { get; set; }
@@ -119,25 +119,25 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.ANAM = initialValue;
-                this.BNAM = initialValue;
-                this.CNAM = initialValue;
-                this.DNAM = initialValue;
+                this.RootAnimationGraph = initialValue;
+                this.RigFile = initialValue;
+                this.AnimationsPath = initialValue;
+                this.ResponseFile = initialValue;
                 this.ENAM = initialValue;
             }
 
             public Mask(
-                TItem ANAM,
-                TItem BNAM,
-                TItem CNAM,
-                TItem DNAM,
+                TItem RootAnimationGraph,
+                TItem RigFile,
+                TItem AnimationsPath,
+                TItem ResponseFile,
                 TItem ENAM)
             : base()
             {
-                this.ANAM = ANAM;
-                this.BNAM = BNAM;
-                this.CNAM = CNAM;
-                this.DNAM = DNAM;
+                this.RootAnimationGraph = RootAnimationGraph;
+                this.RigFile = RigFile;
+                this.AnimationsPath = AnimationsPath;
+                this.ResponseFile = ResponseFile;
                 this.ENAM = ENAM;
             }
 
@@ -150,10 +150,10 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem ANAM;
-            public TItem BNAM;
-            public TItem CNAM;
-            public TItem DNAM;
+            public TItem RootAnimationGraph;
+            public TItem RigFile;
+            public TItem AnimationsPath;
+            public TItem ResponseFile;
             public TItem ENAM;
             #endregion
 
@@ -168,20 +168,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.ANAM, rhs.ANAM)) return false;
-                if (!object.Equals(this.BNAM, rhs.BNAM)) return false;
-                if (!object.Equals(this.CNAM, rhs.CNAM)) return false;
-                if (!object.Equals(this.DNAM, rhs.DNAM)) return false;
+                if (!object.Equals(this.RootAnimationGraph, rhs.RootAnimationGraph)) return false;
+                if (!object.Equals(this.RigFile, rhs.RigFile)) return false;
+                if (!object.Equals(this.AnimationsPath, rhs.AnimationsPath)) return false;
+                if (!object.Equals(this.ResponseFile, rhs.ResponseFile)) return false;
                 if (!object.Equals(this.ENAM, rhs.ENAM)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.ANAM);
-                hash.Add(this.BNAM);
-                hash.Add(this.CNAM);
-                hash.Add(this.DNAM);
+                hash.Add(this.RootAnimationGraph);
+                hash.Add(this.RigFile);
+                hash.Add(this.AnimationsPath);
+                hash.Add(this.ResponseFile);
                 hash.Add(this.ENAM);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -193,10 +193,10 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.ANAM)) return false;
-                if (!eval(this.BNAM)) return false;
-                if (!eval(this.CNAM)) return false;
-                if (!eval(this.DNAM)) return false;
+                if (!eval(this.RootAnimationGraph)) return false;
+                if (!eval(this.RigFile)) return false;
+                if (!eval(this.AnimationsPath)) return false;
+                if (!eval(this.ResponseFile)) return false;
                 if (!eval(this.ENAM)) return false;
                 return true;
             }
@@ -206,10 +206,10 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.ANAM)) return true;
-                if (eval(this.BNAM)) return true;
-                if (eval(this.CNAM)) return true;
-                if (eval(this.DNAM)) return true;
+                if (eval(this.RootAnimationGraph)) return true;
+                if (eval(this.RigFile)) return true;
+                if (eval(this.AnimationsPath)) return true;
+                if (eval(this.ResponseFile)) return true;
                 if (eval(this.ENAM)) return true;
                 return false;
             }
@@ -226,10 +226,10 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.ANAM = eval(this.ANAM);
-                obj.BNAM = eval(this.BNAM);
-                obj.CNAM = eval(this.CNAM);
-                obj.DNAM = eval(this.DNAM);
+                obj.RootAnimationGraph = eval(this.RootAnimationGraph);
+                obj.RigFile = eval(this.RigFile);
+                obj.AnimationsPath = eval(this.AnimationsPath);
+                obj.ResponseFile = eval(this.ResponseFile);
                 obj.ENAM = eval(this.ENAM);
             }
             #endregion
@@ -249,21 +249,21 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(AnimationGraphComponent.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.ANAM ?? true)
+                    if (printMask?.RootAnimationGraph ?? true)
                     {
-                        sb.AppendItem(ANAM, "ANAM");
+                        sb.AppendItem(RootAnimationGraph, "RootAnimationGraph");
                     }
-                    if (printMask?.BNAM ?? true)
+                    if (printMask?.RigFile ?? true)
                     {
-                        sb.AppendItem(BNAM, "BNAM");
+                        sb.AppendItem(RigFile, "RigFile");
                     }
-                    if (printMask?.CNAM ?? true)
+                    if (printMask?.AnimationsPath ?? true)
                     {
-                        sb.AppendItem(CNAM, "CNAM");
+                        sb.AppendItem(AnimationsPath, "AnimationsPath");
                     }
-                    if (printMask?.DNAM ?? true)
+                    if (printMask?.ResponseFile ?? true)
                     {
-                        sb.AppendItem(DNAM, "DNAM");
+                        sb.AppendItem(ResponseFile, "ResponseFile");
                     }
                     if (printMask?.ENAM ?? true)
                     {
@@ -280,10 +280,10 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? ANAM;
-            public Exception? BNAM;
-            public Exception? CNAM;
-            public Exception? DNAM;
+            public Exception? RootAnimationGraph;
+            public Exception? RigFile;
+            public Exception? AnimationsPath;
+            public Exception? ResponseFile;
             public Exception? ENAM;
             #endregion
 
@@ -293,14 +293,14 @@ namespace Mutagen.Bethesda.Starfield
                 AnimationGraphComponent_FieldIndex enu = (AnimationGraphComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case AnimationGraphComponent_FieldIndex.ANAM:
-                        return ANAM;
-                    case AnimationGraphComponent_FieldIndex.BNAM:
-                        return BNAM;
-                    case AnimationGraphComponent_FieldIndex.CNAM:
-                        return CNAM;
-                    case AnimationGraphComponent_FieldIndex.DNAM:
-                        return DNAM;
+                    case AnimationGraphComponent_FieldIndex.RootAnimationGraph:
+                        return RootAnimationGraph;
+                    case AnimationGraphComponent_FieldIndex.RigFile:
+                        return RigFile;
+                    case AnimationGraphComponent_FieldIndex.AnimationsPath:
+                        return AnimationsPath;
+                    case AnimationGraphComponent_FieldIndex.ResponseFile:
+                        return ResponseFile;
                     case AnimationGraphComponent_FieldIndex.ENAM:
                         return ENAM;
                     default:
@@ -313,17 +313,17 @@ namespace Mutagen.Bethesda.Starfield
                 AnimationGraphComponent_FieldIndex enu = (AnimationGraphComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case AnimationGraphComponent_FieldIndex.ANAM:
-                        this.ANAM = ex;
+                    case AnimationGraphComponent_FieldIndex.RootAnimationGraph:
+                        this.RootAnimationGraph = ex;
                         break;
-                    case AnimationGraphComponent_FieldIndex.BNAM:
-                        this.BNAM = ex;
+                    case AnimationGraphComponent_FieldIndex.RigFile:
+                        this.RigFile = ex;
                         break;
-                    case AnimationGraphComponent_FieldIndex.CNAM:
-                        this.CNAM = ex;
+                    case AnimationGraphComponent_FieldIndex.AnimationsPath:
+                        this.AnimationsPath = ex;
                         break;
-                    case AnimationGraphComponent_FieldIndex.DNAM:
-                        this.DNAM = ex;
+                    case AnimationGraphComponent_FieldIndex.ResponseFile:
+                        this.ResponseFile = ex;
                         break;
                     case AnimationGraphComponent_FieldIndex.ENAM:
                         this.ENAM = ex;
@@ -339,17 +339,17 @@ namespace Mutagen.Bethesda.Starfield
                 AnimationGraphComponent_FieldIndex enu = (AnimationGraphComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case AnimationGraphComponent_FieldIndex.ANAM:
-                        this.ANAM = (Exception?)obj;
+                    case AnimationGraphComponent_FieldIndex.RootAnimationGraph:
+                        this.RootAnimationGraph = (Exception?)obj;
                         break;
-                    case AnimationGraphComponent_FieldIndex.BNAM:
-                        this.BNAM = (Exception?)obj;
+                    case AnimationGraphComponent_FieldIndex.RigFile:
+                        this.RigFile = (Exception?)obj;
                         break;
-                    case AnimationGraphComponent_FieldIndex.CNAM:
-                        this.CNAM = (Exception?)obj;
+                    case AnimationGraphComponent_FieldIndex.AnimationsPath:
+                        this.AnimationsPath = (Exception?)obj;
                         break;
-                    case AnimationGraphComponent_FieldIndex.DNAM:
-                        this.DNAM = (Exception?)obj;
+                    case AnimationGraphComponent_FieldIndex.ResponseFile:
+                        this.ResponseFile = (Exception?)obj;
                         break;
                     case AnimationGraphComponent_FieldIndex.ENAM:
                         this.ENAM = (Exception?)obj;
@@ -363,10 +363,10 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (ANAM != null) return true;
-                if (BNAM != null) return true;
-                if (CNAM != null) return true;
-                if (DNAM != null) return true;
+                if (RootAnimationGraph != null) return true;
+                if (RigFile != null) return true;
+                if (AnimationsPath != null) return true;
+                if (ResponseFile != null) return true;
                 if (ENAM != null) return true;
                 return false;
             }
@@ -395,16 +395,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(ANAM, "ANAM");
+                    sb.AppendItem(RootAnimationGraph, "RootAnimationGraph");
                 }
                 {
-                    sb.AppendItem(BNAM, "BNAM");
+                    sb.AppendItem(RigFile, "RigFile");
                 }
                 {
-                    sb.AppendItem(CNAM, "CNAM");
+                    sb.AppendItem(AnimationsPath, "AnimationsPath");
                 }
                 {
-                    sb.AppendItem(DNAM, "DNAM");
+                    sb.AppendItem(ResponseFile, "ResponseFile");
                 }
                 {
                     sb.AppendItem(ENAM, "ENAM");
@@ -417,10 +417,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.ANAM = this.ANAM.Combine(rhs.ANAM);
-                ret.BNAM = this.BNAM.Combine(rhs.BNAM);
-                ret.CNAM = this.CNAM.Combine(rhs.CNAM);
-                ret.DNAM = this.DNAM.Combine(rhs.DNAM);
+                ret.RootAnimationGraph = this.RootAnimationGraph.Combine(rhs.RootAnimationGraph);
+                ret.RigFile = this.RigFile.Combine(rhs.RigFile);
+                ret.AnimationsPath = this.AnimationsPath.Combine(rhs.AnimationsPath);
+                ret.ResponseFile = this.ResponseFile.Combine(rhs.ResponseFile);
                 ret.ENAM = this.ENAM.Combine(rhs.ENAM);
                 return ret;
             }
@@ -444,10 +444,10 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool ANAM;
-            public bool BNAM;
-            public bool CNAM;
-            public bool DNAM;
+            public bool RootAnimationGraph;
+            public bool RigFile;
+            public bool AnimationsPath;
+            public bool ResponseFile;
             public bool ENAM;
             #endregion
 
@@ -457,10 +457,10 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.ANAM = defaultOn;
-                this.BNAM = defaultOn;
-                this.CNAM = defaultOn;
-                this.DNAM = defaultOn;
+                this.RootAnimationGraph = defaultOn;
+                this.RigFile = defaultOn;
+                this.AnimationsPath = defaultOn;
+                this.ResponseFile = defaultOn;
                 this.ENAM = defaultOn;
             }
 
@@ -469,10 +469,10 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((ANAM, null));
-                ret.Add((BNAM, null));
-                ret.Add((CNAM, null));
-                ret.Add((DNAM, null));
+                ret.Add((RootAnimationGraph, null));
+                ret.Add((RigFile, null));
+                ret.Add((AnimationsPath, null));
+                ret.Add((ResponseFile, null));
                 ret.Add((ENAM, null));
             }
 
@@ -545,10 +545,10 @@ namespace Mutagen.Bethesda.Starfield
         IAnimationGraphComponentGetter,
         ILoquiObjectSetter<IAnimationGraphComponent>
     {
-        new String? ANAM { get; set; }
-        new String? BNAM { get; set; }
-        new String? CNAM { get; set; }
-        new String? DNAM { get; set; }
+        new String? RootAnimationGraph { get; set; }
+        new String? RigFile { get; set; }
+        new String? AnimationsPath { get; set; }
+        new String? ResponseFile { get; set; }
         new String? ENAM { get; set; }
     }
 
@@ -558,10 +558,10 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IAnimationGraphComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => AnimationGraphComponent_Registration.Instance;
-        String? ANAM { get; }
-        String? BNAM { get; }
-        String? CNAM { get; }
-        String? DNAM { get; }
+        String? RootAnimationGraph { get; }
+        String? RigFile { get; }
+        String? AnimationsPath { get; }
+        String? ResponseFile { get; }
         String? ENAM { get; }
 
     }
@@ -707,10 +707,10 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum AnimationGraphComponent_FieldIndex
     {
-        ANAM = 0,
-        BNAM = 1,
-        CNAM = 2,
-        DNAM = 3,
+        RootAnimationGraph = 0,
+        RigFile = 1,
+        AnimationsPath = 2,
+        ResponseFile = 3,
         ENAM = 4,
     }
     #endregion
@@ -806,10 +806,10 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IAnimationGraphComponent item)
         {
             ClearPartial();
-            item.ANAM = default;
-            item.BNAM = default;
-            item.CNAM = default;
-            item.DNAM = default;
+            item.RootAnimationGraph = default;
+            item.RigFile = default;
+            item.AnimationsPath = default;
+            item.ResponseFile = default;
             item.ENAM = default;
             base.Clear(item);
         }
@@ -878,10 +878,10 @@ namespace Mutagen.Bethesda.Starfield
             AnimationGraphComponent.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.ANAM = string.Equals(item.ANAM, rhs.ANAM);
-            ret.BNAM = string.Equals(item.BNAM, rhs.BNAM);
-            ret.CNAM = string.Equals(item.CNAM, rhs.CNAM);
-            ret.DNAM = string.Equals(item.DNAM, rhs.DNAM);
+            ret.RootAnimationGraph = string.Equals(item.RootAnimationGraph, rhs.RootAnimationGraph);
+            ret.RigFile = string.Equals(item.RigFile, rhs.RigFile);
+            ret.AnimationsPath = string.Equals(item.AnimationsPath, rhs.AnimationsPath);
+            ret.ResponseFile = string.Equals(item.ResponseFile, rhs.ResponseFile);
             ret.ENAM = string.Equals(item.ENAM, rhs.ENAM);
             base.FillEqualsMask(item, rhs, ret, include);
         }
@@ -932,25 +932,25 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.ANAM ?? true)
-                && item.ANAM is {} ANAMItem)
+            if ((printMask?.RootAnimationGraph ?? true)
+                && item.RootAnimationGraph is {} RootAnimationGraphItem)
             {
-                sb.AppendItem(ANAMItem, "ANAM");
+                sb.AppendItem(RootAnimationGraphItem, "RootAnimationGraph");
             }
-            if ((printMask?.BNAM ?? true)
-                && item.BNAM is {} BNAMItem)
+            if ((printMask?.RigFile ?? true)
+                && item.RigFile is {} RigFileItem)
             {
-                sb.AppendItem(BNAMItem, "BNAM");
+                sb.AppendItem(RigFileItem, "RigFile");
             }
-            if ((printMask?.CNAM ?? true)
-                && item.CNAM is {} CNAMItem)
+            if ((printMask?.AnimationsPath ?? true)
+                && item.AnimationsPath is {} AnimationsPathItem)
             {
-                sb.AppendItem(CNAMItem, "CNAM");
+                sb.AppendItem(AnimationsPathItem, "AnimationsPath");
             }
-            if ((printMask?.DNAM ?? true)
-                && item.DNAM is {} DNAMItem)
+            if ((printMask?.ResponseFile ?? true)
+                && item.ResponseFile is {} ResponseFileItem)
             {
-                sb.AppendItem(DNAMItem, "DNAM");
+                sb.AppendItem(ResponseFileItem, "ResponseFile");
             }
             if ((printMask?.ENAM ?? true)
                 && item.ENAM is {} ENAMItem)
@@ -976,21 +976,21 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IAComponentGetter)lhs, (IAComponentGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.ANAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.RootAnimationGraph) ?? true))
             {
-                if (!string.Equals(lhs.ANAM, rhs.ANAM)) return false;
+                if (!string.Equals(lhs.RootAnimationGraph, rhs.RootAnimationGraph)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.BNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.RigFile) ?? true))
             {
-                if (!string.Equals(lhs.BNAM, rhs.BNAM)) return false;
+                if (!string.Equals(lhs.RigFile, rhs.RigFile)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.CNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.AnimationsPath) ?? true))
             {
-                if (!string.Equals(lhs.CNAM, rhs.CNAM)) return false;
+                if (!string.Equals(lhs.AnimationsPath, rhs.AnimationsPath)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.DNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.ResponseFile) ?? true))
             {
-                if (!string.Equals(lhs.DNAM, rhs.DNAM)) return false;
+                if (!string.Equals(lhs.ResponseFile, rhs.ResponseFile)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.ENAM) ?? true))
             {
@@ -1013,21 +1013,21 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IAnimationGraphComponentGetter item)
         {
             var hash = new HashCode();
-            if (item.ANAM is {} ANAMitem)
+            if (item.RootAnimationGraph is {} RootAnimationGraphitem)
             {
-                hash.Add(ANAMitem);
+                hash.Add(RootAnimationGraphitem);
             }
-            if (item.BNAM is {} BNAMitem)
+            if (item.RigFile is {} RigFileitem)
             {
-                hash.Add(BNAMitem);
+                hash.Add(RigFileitem);
             }
-            if (item.CNAM is {} CNAMitem)
+            if (item.AnimationsPath is {} AnimationsPathitem)
             {
-                hash.Add(CNAMitem);
+                hash.Add(AnimationsPathitem);
             }
-            if (item.DNAM is {} DNAMitem)
+            if (item.ResponseFile is {} ResponseFileitem)
             {
-                hash.Add(DNAMitem);
+                hash.Add(ResponseFileitem);
             }
             if (item.ENAM is {} ENAMitem)
             {
@@ -1081,21 +1081,21 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.ANAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.RootAnimationGraph) ?? true))
             {
-                item.ANAM = rhs.ANAM;
+                item.RootAnimationGraph = rhs.RootAnimationGraph;
             }
-            if ((copyMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.BNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.RigFile) ?? true))
             {
-                item.BNAM = rhs.BNAM;
+                item.RigFile = rhs.RigFile;
             }
-            if ((copyMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.CNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.AnimationsPath) ?? true))
             {
-                item.CNAM = rhs.CNAM;
+                item.AnimationsPath = rhs.AnimationsPath;
             }
-            if ((copyMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.DNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.ResponseFile) ?? true))
             {
-                item.DNAM = rhs.DNAM;
+                item.ResponseFile = rhs.ResponseFile;
             }
             if ((copyMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.ENAM) ?? true))
             {
@@ -1228,22 +1228,22 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.ANAM,
+                item: item.RootAnimationGraph,
                 header: translationParams.ConvertToCustom(RecordTypes.ANAM),
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.BNAM,
+                item: item.RigFile,
                 header: translationParams.ConvertToCustom(RecordTypes.BNAM),
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.CNAM,
+                item: item.AnimationsPath,
                 header: translationParams.ConvertToCustom(RecordTypes.CNAM),
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.DNAM,
+                item: item.ResponseFile,
                 header: translationParams.ConvertToCustom(RecordTypes.DNAM),
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
@@ -1308,38 +1308,38 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ANAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ANAM = StringBinaryTranslation.Instance.Parse(
+                    item.RootAnimationGraph = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)AnimationGraphComponent_FieldIndex.ANAM;
+                    return (int)AnimationGraphComponent_FieldIndex.RootAnimationGraph;
                 }
                 case RecordTypeInts.BNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BNAM = StringBinaryTranslation.Instance.Parse(
+                    item.RigFile = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)AnimationGraphComponent_FieldIndex.BNAM;
+                    return (int)AnimationGraphComponent_FieldIndex.RigFile;
                 }
                 case RecordTypeInts.CNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.CNAM = StringBinaryTranslation.Instance.Parse(
+                    item.AnimationsPath = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)AnimationGraphComponent_FieldIndex.CNAM;
+                    return (int)AnimationGraphComponent_FieldIndex.AnimationsPath;
                 }
                 case RecordTypeInts.DNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DNAM = StringBinaryTranslation.Instance.Parse(
+                    item.ResponseFile = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)AnimationGraphComponent_FieldIndex.DNAM;
+                    return (int)AnimationGraphComponent_FieldIndex.ResponseFile;
                 }
                 case RecordTypeInts.ENAM:
                 {
@@ -1406,21 +1406,21 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region ANAM
-        private int? _ANAMLocation;
-        public String? ANAM => _ANAMLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ANAMLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region RootAnimationGraph
+        private int? _RootAnimationGraphLocation;
+        public String? RootAnimationGraph => _RootAnimationGraphLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _RootAnimationGraphLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region BNAM
-        private int? _BNAMLocation;
-        public String? BNAM => _BNAMLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _BNAMLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region RigFile
+        private int? _RigFileLocation;
+        public String? RigFile => _RigFileLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _RigFileLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region CNAM
-        private int? _CNAMLocation;
-        public String? CNAM => _CNAMLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _CNAMLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region AnimationsPath
+        private int? _AnimationsPathLocation;
+        public String? AnimationsPath => _AnimationsPathLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _AnimationsPathLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region DNAM
-        private int? _DNAMLocation;
-        public String? DNAM => _DNAMLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DNAMLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region ResponseFile
+        private int? _ResponseFileLocation;
+        public String? ResponseFile => _ResponseFileLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ResponseFileLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         #region ENAM
         private int? _ENAMLocation;
@@ -1491,23 +1491,23 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.ANAM:
                 {
-                    _ANAMLocation = (stream.Position - offset);
-                    return (int)AnimationGraphComponent_FieldIndex.ANAM;
+                    _RootAnimationGraphLocation = (stream.Position - offset);
+                    return (int)AnimationGraphComponent_FieldIndex.RootAnimationGraph;
                 }
                 case RecordTypeInts.BNAM:
                 {
-                    _BNAMLocation = (stream.Position - offset);
-                    return (int)AnimationGraphComponent_FieldIndex.BNAM;
+                    _RigFileLocation = (stream.Position - offset);
+                    return (int)AnimationGraphComponent_FieldIndex.RigFile;
                 }
                 case RecordTypeInts.CNAM:
                 {
-                    _CNAMLocation = (stream.Position - offset);
-                    return (int)AnimationGraphComponent_FieldIndex.CNAM;
+                    _AnimationsPathLocation = (stream.Position - offset);
+                    return (int)AnimationGraphComponent_FieldIndex.AnimationsPath;
                 }
                 case RecordTypeInts.DNAM:
                 {
-                    _DNAMLocation = (stream.Position - offset);
-                    return (int)AnimationGraphComponent_FieldIndex.DNAM;
+                    _ResponseFileLocation = (stream.Position - offset);
+                    return (int)AnimationGraphComponent_FieldIndex.ResponseFile;
                 }
                 case RecordTypeInts.ENAM:
                 {

@@ -10,7 +10,7 @@
       <FormLink name="Workbench" refName="Transform" />
       <FormLink name="MainGameUI" refName="Transform" />
       <Break />
-      <FormLink name="Unknown" refName="Transform" />
+      <FormLink name="ResearchMenu" refName="Transform" />
     </Fields>
   </Object>
 </Loqui>
