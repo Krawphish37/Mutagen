@@ -53,10 +53,8 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region WMSI
-        public UInt16? WMSI { get; set; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt16? IWWiseKeywordMappingItemGetter.WMSI => this.WMSI;
+        #region SoundId
+        public WWiseKeywordMappingItem.SoundIdType SoundId { get; set; } = default(WWiseKeywordMappingItem.SoundIdType);
         #endregion
         #region Sound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -108,15 +106,15 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.WMSI = initialValue;
+                this.SoundId = initialValue;
                 this.Sound = new MaskItem<TItem, WWiseKeywordMappingSoundItem.Mask<TItem>?>(initialValue, new WWiseKeywordMappingSoundItem.Mask<TItem>(initialValue));
             }
 
             public Mask(
-                TItem WMSI,
+                TItem SoundId,
                 TItem Sound)
             {
-                this.WMSI = WMSI;
+                this.SoundId = SoundId;
                 this.Sound = new MaskItem<TItem, WWiseKeywordMappingSoundItem.Mask<TItem>?>(Sound, new WWiseKeywordMappingSoundItem.Mask<TItem>(Sound));
             }
 
@@ -129,7 +127,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem WMSI;
+            public TItem SoundId;
             public MaskItem<TItem, WWiseKeywordMappingSoundItem.Mask<TItem>?>? Sound { get; set; }
             #endregion
 
@@ -143,14 +141,14 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.WMSI, rhs.WMSI)) return false;
+                if (!object.Equals(this.SoundId, rhs.SoundId)) return false;
                 if (!object.Equals(this.Sound, rhs.Sound)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.WMSI);
+                hash.Add(this.SoundId);
                 hash.Add(this.Sound);
                 return hash.ToHashCode();
             }
@@ -160,7 +158,7 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.WMSI)) return false;
+                if (!eval(this.SoundId)) return false;
                 if (Sound != null)
                 {
                     if (!eval(this.Sound.Overall)) return false;
@@ -173,7 +171,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.WMSI)) return true;
+                if (eval(this.SoundId)) return true;
                 if (Sound != null)
                 {
                     if (eval(this.Sound.Overall)) return true;
@@ -193,7 +191,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.WMSI = eval(this.WMSI);
+                obj.SoundId = eval(this.SoundId);
                 obj.Sound = this.Sound == null ? null : new MaskItem<R, WWiseKeywordMappingSoundItem.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
             }
             #endregion
@@ -213,9 +211,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(WWiseKeywordMappingItem.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.WMSI ?? true)
+                    if (printMask?.SoundId ?? true)
                     {
-                        sb.AppendItem(WMSI, "WMSI");
+                        sb.AppendItem(SoundId, "SoundId");
                     }
                     if (printMask?.Sound?.Overall ?? true)
                     {
@@ -245,7 +243,7 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? WMSI;
+            public Exception? SoundId;
             public MaskItem<Exception?, WWiseKeywordMappingSoundItem.ErrorMask?>? Sound;
             #endregion
 
@@ -255,8 +253,8 @@ namespace Mutagen.Bethesda.Starfield
                 WWiseKeywordMappingItem_FieldIndex enu = (WWiseKeywordMappingItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case WWiseKeywordMappingItem_FieldIndex.WMSI:
-                        return WMSI;
+                    case WWiseKeywordMappingItem_FieldIndex.SoundId:
+                        return SoundId;
                     case WWiseKeywordMappingItem_FieldIndex.Sound:
                         return Sound;
                     default:
@@ -269,8 +267,8 @@ namespace Mutagen.Bethesda.Starfield
                 WWiseKeywordMappingItem_FieldIndex enu = (WWiseKeywordMappingItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case WWiseKeywordMappingItem_FieldIndex.WMSI:
-                        this.WMSI = ex;
+                    case WWiseKeywordMappingItem_FieldIndex.SoundId:
+                        this.SoundId = ex;
                         break;
                     case WWiseKeywordMappingItem_FieldIndex.Sound:
                         this.Sound = new MaskItem<Exception?, WWiseKeywordMappingSoundItem.ErrorMask?>(ex, null);
@@ -285,8 +283,8 @@ namespace Mutagen.Bethesda.Starfield
                 WWiseKeywordMappingItem_FieldIndex enu = (WWiseKeywordMappingItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case WWiseKeywordMappingItem_FieldIndex.WMSI:
-                        this.WMSI = (Exception?)obj;
+                    case WWiseKeywordMappingItem_FieldIndex.SoundId:
+                        this.SoundId = (Exception?)obj;
                         break;
                     case WWiseKeywordMappingItem_FieldIndex.Sound:
                         this.Sound = (MaskItem<Exception?, WWiseKeywordMappingSoundItem.ErrorMask?>?)obj;
@@ -299,7 +297,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (WMSI != null) return true;
+                if (SoundId != null) return true;
                 if (Sound != null) return true;
                 return false;
             }
@@ -327,7 +325,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(WMSI, "WMSI");
+                    sb.AppendItem(SoundId, "SoundId");
                 }
                 Sound?.Print(sb);
             }
@@ -338,7 +336,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.WMSI = this.WMSI.Combine(rhs.WMSI);
+                ret.SoundId = this.SoundId.Combine(rhs.SoundId);
                 ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
                 return ret;
             }
@@ -363,7 +361,7 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool WMSI;
+            public bool SoundId;
             public WWiseKeywordMappingSoundItem.TranslationMask? Sound;
             #endregion
 
@@ -374,7 +372,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.WMSI = defaultOn;
+                this.SoundId = defaultOn;
             }
 
             #endregion
@@ -390,7 +388,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((WMSI, null));
+                ret.Add((SoundId, null));
                 ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
             }
 
@@ -470,7 +468,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IWWiseKeywordMappingItem>,
         IWWiseKeywordMappingItemGetter
     {
-        new UInt16? WMSI { get; set; }
+        new WWiseKeywordMappingItem.SoundIdType SoundId { get; set; }
         new WWiseKeywordMappingSoundItem? Sound { get; set; }
     }
 
@@ -487,7 +485,7 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => WWiseKeywordMappingItem_Registration.Instance;
-        UInt16? WMSI { get; }
+        WWiseKeywordMappingItem.SoundIdType SoundId { get; }
         IWWiseKeywordMappingSoundItemGetter? Sound { get; }
 
     }
@@ -658,7 +656,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum WWiseKeywordMappingItem_FieldIndex
     {
-        WMSI = 0,
+        SoundId = 0,
         Sound = 1,
     }
     #endregion
@@ -698,13 +696,17 @@ namespace Mutagen.Bethesda.Starfield
 
         public static readonly Type? GenericRegistrationType = null;
 
+        public static readonly RecordType TriggeringRecordType = RecordTypes.WMSI;
         public static RecordTriggerSpecs TriggerSpecs => _recordSpecs.Value;
         private static readonly Lazy<RecordTriggerSpecs> _recordSpecs = new Lazy<RecordTriggerSpecs>(() =>
         {
+            var triggers = RecordCollection.Factory(RecordTypes.WMSI);
             var all = RecordCollection.Factory(
                 RecordTypes.WMSI,
                 RecordTypes.WMSD);
-            return new RecordTriggerSpecs(allRecordTypes: all);
+            return new RecordTriggerSpecs(
+                allRecordTypes: all,
+                triggeringRecordTypes: triggers);
         });
         public static readonly Type BinaryWriteTranslation = typeof(WWiseKeywordMappingItemBinaryWriteTranslation);
         #region Interface
@@ -746,7 +748,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IWWiseKeywordMappingItem item)
         {
             ClearPartial();
-            item.WMSI = default;
+            item.SoundId = default(WWiseKeywordMappingItem.SoundIdType);
             item.Sound = null;
         }
         
@@ -798,7 +800,7 @@ namespace Mutagen.Bethesda.Starfield
             WWiseKeywordMappingItem.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.WMSI = item.WMSI == rhs.WMSI;
+            ret.SoundId = item.SoundId == rhs.SoundId;
             ret.Sound = EqualsMaskHelper.EqualsHelper(
                 item.Sound,
                 rhs.Sound,
@@ -848,10 +850,9 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             WWiseKeywordMappingItem.Mask<bool>? printMask = null)
         {
-            if ((printMask?.WMSI ?? true)
-                && item.WMSI is {} WMSIItem)
+            if (printMask?.SoundId ?? true)
             {
-                sb.AppendItem(WMSIItem, "WMSI");
+                sb.AppendItem(item.SoundId, "SoundId");
             }
             if ((printMask?.Sound?.Overall ?? true)
                 && item.Sound is {} SoundItem)
@@ -867,9 +868,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)WWiseKeywordMappingItem_FieldIndex.WMSI) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)WWiseKeywordMappingItem_FieldIndex.SoundId) ?? true))
             {
-                if (lhs.WMSI != rhs.WMSI) return false;
+                if (lhs.SoundId != rhs.SoundId) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)WWiseKeywordMappingItem_FieldIndex.Sound) ?? true))
             {
@@ -885,10 +886,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IWWiseKeywordMappingItemGetter item)
         {
             var hash = new HashCode();
-            if (item.WMSI is {} WMSIitem)
-            {
-                hash.Add(WMSIitem);
-            }
+            hash.Add(item.SoundId);
             if (item.Sound is {} Sounditem)
             {
                 hash.Add(Sounditem);
@@ -932,9 +930,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)WWiseKeywordMappingItem_FieldIndex.WMSI) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)WWiseKeywordMappingItem_FieldIndex.SoundId) ?? true))
             {
-                item.WMSI = rhs.WMSI;
+                item.SoundId = rhs.SoundId;
             }
             if ((copyMask?.GetShouldTranslate((int)WWiseKeywordMappingItem_FieldIndex.Sound) ?? true))
             {
@@ -1071,9 +1069,10 @@ namespace Mutagen.Bethesda.Starfield
             MutagenWriter writer,
             TypedWriteParams translationParams)
         {
-            UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.WMSI,
+            EnumBinaryTranslation<WWiseKeywordMappingItem.SoundIdType, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.SoundId,
+                length: 2,
                 header: translationParams.ConvertToCustom(RecordTypes.WMSI));
             if (item.Sound is {} SoundItem)
             {
@@ -1126,14 +1125,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.WMSI:
                 {
-                    if (lastParsed.ShortCircuit((int)WWiseKeywordMappingItem_FieldIndex.WMSI, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)WWiseKeywordMappingItem_FieldIndex.SoundId, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.WMSI = frame.ReadUInt16();
-                    return (int)WWiseKeywordMappingItem_FieldIndex.WMSI;
+                    item.SoundId = EnumBinaryTranslation<WWiseKeywordMappingItem.SoundIdType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)WWiseKeywordMappingItem_FieldIndex.SoundId;
                 }
                 case RecordTypeInts.WMSD:
                 {
-                    if (lastParsed.ShortCircuit((int)WWiseKeywordMappingItem_FieldIndex.Sound, translationParams)) return ParseResult.Stop;
                     item.Sound = Mutagen.Bethesda.Starfield.WWiseKeywordMappingSoundItem.CreateFromBinary(frame: frame);
                     return (int)WWiseKeywordMappingItem_FieldIndex.Sound;
                 }
@@ -1206,9 +1206,9 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region WMSI
-        private int? _WMSILocation;
-        public UInt16? WMSI => _WMSILocation.HasValue ? BinaryPrimitives.ReadUInt16LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _WMSILocation.Value, _package.MetaData.Constants)) : default(UInt16?);
+        #region SoundId
+        private int? _SoundIdLocation;
+        public WWiseKeywordMappingItem.SoundIdType SoundId => EnumBinaryTranslation<WWiseKeywordMappingItem.SoundIdType, MutagenFrame, MutagenWriter>.Instance.ParseRecord(_SoundIdLocation, _recordData, _package, 2);
         #endregion
         #region Sound
         private RangeInt32? _SoundLocation;
@@ -1279,13 +1279,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.WMSI:
                 {
-                    if (lastParsed.ShortCircuit((int)WWiseKeywordMappingItem_FieldIndex.WMSI, translationParams)) return ParseResult.Stop;
-                    _WMSILocation = (stream.Position - offset);
-                    return (int)WWiseKeywordMappingItem_FieldIndex.WMSI;
+                    if (lastParsed.ShortCircuit((int)WWiseKeywordMappingItem_FieldIndex.SoundId, translationParams)) return ParseResult.Stop;
+                    _SoundIdLocation = (stream.Position - offset);
+                    return (int)WWiseKeywordMappingItem_FieldIndex.SoundId;
                 }
                 case RecordTypeInts.WMSD:
                 {
-                    if (lastParsed.ShortCircuit((int)WWiseKeywordMappingItem_FieldIndex.Sound, translationParams)) return ParseResult.Stop;
                     _SoundLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
                     return (int)WWiseKeywordMappingItem_FieldIndex.Sound;
                 }

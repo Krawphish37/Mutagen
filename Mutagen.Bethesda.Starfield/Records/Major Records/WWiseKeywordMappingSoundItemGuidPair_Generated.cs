@@ -51,11 +51,11 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Unknown1
-        public Guid Unknown1 { get; set; } = default(Guid);
+        #region SwitchGroup
+        public Guid SwitchGroup { get; set; } = default(Guid);
         #endregion
-        #region Unknown2
-        public Guid Unknown2 { get; set; } = default(Guid);
+        #region SwitchState
+        public Guid SwitchState { get; set; } = default(Guid);
         #endregion
 
         #region To String
@@ -96,16 +96,16 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Unknown1 = initialValue;
-                this.Unknown2 = initialValue;
+                this.SwitchGroup = initialValue;
+                this.SwitchState = initialValue;
             }
 
             public Mask(
-                TItem Unknown1,
-                TItem Unknown2)
+                TItem SwitchGroup,
+                TItem SwitchState)
             {
-                this.Unknown1 = Unknown1;
-                this.Unknown2 = Unknown2;
+                this.SwitchGroup = SwitchGroup;
+                this.SwitchState = SwitchState;
             }
 
             #pragma warning disable CS8618
@@ -117,8 +117,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Unknown1;
-            public TItem Unknown2;
+            public TItem SwitchGroup;
+            public TItem SwitchState;
             #endregion
 
             #region Equals
@@ -131,15 +131,15 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.SwitchGroup, rhs.SwitchGroup)) return false;
+                if (!object.Equals(this.SwitchState, rhs.SwitchState)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Unknown1);
-                hash.Add(this.Unknown2);
+                hash.Add(this.SwitchGroup);
+                hash.Add(this.SwitchState);
                 return hash.ToHashCode();
             }
 
@@ -148,8 +148,8 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Unknown1)) return false;
-                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.SwitchGroup)) return false;
+                if (!eval(this.SwitchState)) return false;
                 return true;
             }
             #endregion
@@ -157,8 +157,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Unknown1)) return true;
-                if (eval(this.Unknown2)) return true;
+                if (eval(this.SwitchGroup)) return true;
+                if (eval(this.SwitchState)) return true;
                 return false;
             }
             #endregion
@@ -173,8 +173,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Unknown1 = eval(this.Unknown1);
-                obj.Unknown2 = eval(this.Unknown2);
+                obj.SwitchGroup = eval(this.SwitchGroup);
+                obj.SwitchState = eval(this.SwitchState);
             }
             #endregion
 
@@ -193,13 +193,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(WWiseKeywordMappingSoundItemGuidPair.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Unknown1 ?? true)
+                    if (printMask?.SwitchGroup ?? true)
                     {
-                        sb.AppendItem(Unknown1, "Unknown1");
+                        sb.AppendItem(SwitchGroup, "SwitchGroup");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.SwitchState ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(SwitchState, "SwitchState");
                     }
                 }
             }
@@ -225,8 +225,8 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Unknown1;
-            public Exception? Unknown2;
+            public Exception? SwitchGroup;
+            public Exception? SwitchState;
             #endregion
 
             #region IErrorMask
@@ -235,10 +235,10 @@ namespace Mutagen.Bethesda.Starfield
                 WWiseKeywordMappingSoundItemGuidPair_FieldIndex enu = (WWiseKeywordMappingSoundItemGuidPair_FieldIndex)index;
                 switch (enu)
                 {
-                    case WWiseKeywordMappingSoundItemGuidPair_FieldIndex.Unknown1:
-                        return Unknown1;
-                    case WWiseKeywordMappingSoundItemGuidPair_FieldIndex.Unknown2:
-                        return Unknown2;
+                    case WWiseKeywordMappingSoundItemGuidPair_FieldIndex.SwitchGroup:
+                        return SwitchGroup;
+                    case WWiseKeywordMappingSoundItemGuidPair_FieldIndex.SwitchState:
+                        return SwitchState;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -249,11 +249,11 @@ namespace Mutagen.Bethesda.Starfield
                 WWiseKeywordMappingSoundItemGuidPair_FieldIndex enu = (WWiseKeywordMappingSoundItemGuidPair_FieldIndex)index;
                 switch (enu)
                 {
-                    case WWiseKeywordMappingSoundItemGuidPair_FieldIndex.Unknown1:
-                        this.Unknown1 = ex;
+                    case WWiseKeywordMappingSoundItemGuidPair_FieldIndex.SwitchGroup:
+                        this.SwitchGroup = ex;
                         break;
-                    case WWiseKeywordMappingSoundItemGuidPair_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case WWiseKeywordMappingSoundItemGuidPair_FieldIndex.SwitchState:
+                        this.SwitchState = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -265,11 +265,11 @@ namespace Mutagen.Bethesda.Starfield
                 WWiseKeywordMappingSoundItemGuidPair_FieldIndex enu = (WWiseKeywordMappingSoundItemGuidPair_FieldIndex)index;
                 switch (enu)
                 {
-                    case WWiseKeywordMappingSoundItemGuidPair_FieldIndex.Unknown1:
-                        this.Unknown1 = (Exception?)obj;
+                    case WWiseKeywordMappingSoundItemGuidPair_FieldIndex.SwitchGroup:
+                        this.SwitchGroup = (Exception?)obj;
                         break;
-                    case WWiseKeywordMappingSoundItemGuidPair_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case WWiseKeywordMappingSoundItemGuidPair_FieldIndex.SwitchState:
+                        this.SwitchState = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -279,8 +279,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Unknown1 != null) return true;
-                if (Unknown2 != null) return true;
+                if (SwitchGroup != null) return true;
+                if (SwitchState != null) return true;
                 return false;
             }
             #endregion
@@ -307,10 +307,10 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Unknown1, "Unknown1");
+                    sb.AppendItem(SwitchGroup, "SwitchGroup");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(SwitchState, "SwitchState");
                 }
             }
             #endregion
@@ -320,8 +320,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.SwitchGroup = this.SwitchGroup.Combine(rhs.SwitchGroup);
+                ret.SwitchState = this.SwitchState.Combine(rhs.SwitchState);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -345,8 +345,8 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Unknown1;
-            public bool Unknown2;
+            public bool SwitchGroup;
+            public bool SwitchState;
             #endregion
 
             #region Ctors
@@ -356,8 +356,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Unknown1 = defaultOn;
-                this.Unknown2 = defaultOn;
+                this.SwitchGroup = defaultOn;
+                this.SwitchState = defaultOn;
             }
 
             #endregion
@@ -373,8 +373,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Unknown1, null));
-                ret.Add((Unknown2, null));
+                ret.Add((SwitchGroup, null));
+                ret.Add((SwitchState, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -447,8 +447,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IWWiseKeywordMappingSoundItemGuidPair>,
         IWWiseKeywordMappingSoundItemGuidPairGetter
     {
-        new Guid Unknown1 { get; set; }
-        new Guid Unknown2 { get; set; }
+        new Guid SwitchGroup { get; set; }
+        new Guid SwitchState { get; set; }
     }
 
     public partial interface IWWiseKeywordMappingSoundItemGuidPairGetter :
@@ -463,8 +463,8 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => WWiseKeywordMappingSoundItemGuidPair_Registration.Instance;
-        Guid Unknown1 { get; }
-        Guid Unknown2 { get; }
+        Guid SwitchGroup { get; }
+        Guid SwitchState { get; }
 
     }
 
@@ -634,8 +634,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum WWiseKeywordMappingSoundItemGuidPair_FieldIndex
     {
-        Unknown1 = 0,
-        Unknown2 = 1,
+        SwitchGroup = 0,
+        SwitchState = 1,
     }
     #endregion
 
@@ -714,8 +714,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IWWiseKeywordMappingSoundItemGuidPair item)
         {
             ClearPartial();
-            item.Unknown1 = default(Guid);
-            item.Unknown2 = default(Guid);
+            item.SwitchGroup = default(Guid);
+            item.SwitchState = default(Guid);
         }
         
         #region Mutagen
@@ -765,8 +765,8 @@ namespace Mutagen.Bethesda.Starfield
             WWiseKeywordMappingSoundItemGuidPair.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Unknown1 = item.Unknown1 == rhs.Unknown1;
-            ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
+            ret.SwitchGroup = item.SwitchGroup == rhs.SwitchGroup;
+            ret.SwitchState = item.SwitchState == rhs.SwitchState;
         }
         
         public string Print(
@@ -811,13 +811,13 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             WWiseKeywordMappingSoundItemGuidPair.Mask<bool>? printMask = null)
         {
-            if (printMask?.Unknown1 ?? true)
+            if (printMask?.SwitchGroup ?? true)
             {
-                sb.AppendItem(item.Unknown1, "Unknown1");
+                sb.AppendItem(item.SwitchGroup, "SwitchGroup");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.SwitchState ?? true)
             {
-                sb.AppendItem(item.Unknown2, "Unknown2");
+                sb.AppendItem(item.SwitchState, "SwitchState");
             }
         }
         
@@ -828,13 +828,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)WWiseKeywordMappingSoundItemGuidPair_FieldIndex.Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)WWiseKeywordMappingSoundItemGuidPair_FieldIndex.SwitchGroup) ?? true))
             {
-                if (lhs.Unknown1 != rhs.Unknown1) return false;
+                if (lhs.SwitchGroup != rhs.SwitchGroup) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)WWiseKeywordMappingSoundItemGuidPair_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)WWiseKeywordMappingSoundItemGuidPair_FieldIndex.SwitchState) ?? true))
             {
-                if (lhs.Unknown2 != rhs.Unknown2) return false;
+                if (lhs.SwitchState != rhs.SwitchState) return false;
             }
             return true;
         }
@@ -842,8 +842,8 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IWWiseKeywordMappingSoundItemGuidPairGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Unknown1);
-            hash.Add(item.Unknown2);
+            hash.Add(item.SwitchGroup);
+            hash.Add(item.SwitchState);
             return hash.ToHashCode();
         }
         
@@ -876,13 +876,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)WWiseKeywordMappingSoundItemGuidPair_FieldIndex.Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)WWiseKeywordMappingSoundItemGuidPair_FieldIndex.SwitchGroup) ?? true))
             {
-                item.Unknown1 = rhs.Unknown1;
+                item.SwitchGroup = rhs.SwitchGroup;
             }
-            if ((copyMask?.GetShouldTranslate((int)WWiseKeywordMappingSoundItemGuidPair_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)WWiseKeywordMappingSoundItemGuidPair_FieldIndex.SwitchState) ?? true))
             {
-                item.Unknown2 = rhs.Unknown2;
+                item.SwitchState = rhs.SwitchState;
             }
             DeepCopyInCustom(
                 item: item,
@@ -994,10 +994,10 @@ namespace Mutagen.Bethesda.Starfield
         {
             GuidBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.Unknown1);
+                item: item.SwitchGroup);
             GuidBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.Unknown2);
+                item: item.SwitchState);
         }
 
         public void Write(
@@ -1031,8 +1031,8 @@ namespace Mutagen.Bethesda.Starfield
             IWWiseKeywordMappingSoundItemGuidPair item,
             MutagenFrame frame)
         {
-            item.Unknown1 = GuidBinaryTranslation.Instance.Parse(reader: frame);
-            item.Unknown2 = GuidBinaryTranslation.Instance.Parse(reader: frame);
+            item.SwitchGroup = GuidBinaryTranslation.Instance.Parse(reader: frame);
+            item.SwitchState = GuidBinaryTranslation.Instance.Parse(reader: frame);
         }
 
     }
@@ -1098,8 +1098,8 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Guid Unknown1 => new Guid(_structData.Slice(0x0, 0x10).Slice(0, 16));
-        public Guid Unknown2 => new Guid(_structData.Slice(0x10, 0x10).Slice(0, 16));
+        public Guid SwitchGroup => new Guid(_structData.Slice(0x0, 0x10).Slice(0, 16));
+        public Guid SwitchState => new Guid(_structData.Slice(0x10, 0x10).Slice(0, 16));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
