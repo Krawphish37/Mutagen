@@ -11,6 +11,12 @@ namespace Mutagen.Bethesda.Starfield;
 
 public partial class Race
 {
+    public enum MannequinSkinSwapType
+    {
+        Body = 0,
+        Hands = 1,
+    }
+
     [Flags]
     public enum Flag : ulong
     {
