@@ -225,13 +225,13 @@
   </Object>
   <Object name="MannequinSkinSwap" objType="Subrecord">
     <Fields>
-      <ByteArray name="MSSS" recordType="MSSS" unknown="true" />
+      <Enum name="Gender" enumName="MaleFemaleGender" byteLength="4" recordType="MSSS" />
       <RefList name="Items" refName="MannequinSkinSwapItem" />
     </Fields>
   </Object>
   <Object name="MannequinSkinSwapItem" objType="Subrecord">
     <Fields>
-      <ByteArray name="MSSI" recordType="MSSI" unknown="true" />
+      <Enum name="SkinSwap" enumName="Race.MannequinSkinSwapType" byteLength="4" recordType="MSSI" />
       <FormLink name="MaterialSwap" recordType="MSSA" refName="LayeredMaterialSwap" />
     </Fields>
   </Object>
