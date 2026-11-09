@@ -71,7 +71,7 @@ namespace Mutagen.Bethesda.Starfield
         String? IGetCrimeConditionDataGetter.FirstUnusedStringParameter => this.FirstUnusedStringParameter;
         #endregion
         #region SecondParameter
-        public Int32 SecondParameter { get; set; } = default(Int32);
+        public CrimeType SecondParameter { get; set; } = default(CrimeType);
         #endregion
         #region SecondUnusedStringParameter
         public String? SecondUnusedStringParameter { get; set; }
@@ -485,7 +485,7 @@ namespace Mutagen.Bethesda.Starfield
         object? IConditionParameters.Parameter2
         {
             get => SecondParameter;
-            set => SecondParameter = (value is Int32 v ? v : throw new ArgumentException());
+            set => SecondParameter = (value is CrimeType v ? v : throw new ArgumentException());
         }
         object? IConditionParametersGetter.Parameter2
         {
@@ -493,7 +493,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         Type? IConditionParametersGetter.Parameter2Type
         {
-            get => typeof(Int32);
+            get => typeof(CrimeType);
         }
         #endregion
 
@@ -561,7 +561,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new IFormLinkOrIndex<IPlacedNpcGetter> FirstParameter { get; set; }
         new String? FirstUnusedStringParameter { get; set; }
-        new Int32 SecondParameter { get; set; }
+        new CrimeType SecondParameter { get; set; }
         new String? SecondUnusedStringParameter { get; set; }
     }
 
@@ -574,7 +574,7 @@ namespace Mutagen.Bethesda.Starfield
         static new ILoquiRegistration StaticRegistration => GetCrimeConditionData_Registration.Instance;
         IFormLinkOrIndexGetter<IPlacedNpcGetter> FirstParameter { get; }
         String? FirstUnusedStringParameter { get; }
-        Int32 SecondParameter { get; }
+        CrimeType SecondParameter { get; }
         String? SecondUnusedStringParameter { get; }
 
     }
@@ -810,7 +810,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.FirstParameter.Clear();
             item.FirstUnusedStringParameter = default;
-            item.SecondParameter = default(Int32);
+            item.SecondParameter = default(CrimeType);
             item.SecondUnusedStringParameter = default;
             base.Clear(item);
         }
@@ -1219,7 +1219,10 @@ namespace Mutagen.Bethesda.Starfield
             FormLinkOrIndexBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.FirstParameter);
-            writer.Write(item.SecondParameter);
+            EnumBinaryTranslation<CrimeType, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.SecondParameter,
+                length: 4);
         }
 
         public void Write(
@@ -1270,7 +1273,9 @@ namespace Mutagen.Bethesda.Starfield
             FormLinkOrIndexBinaryTranslation.Instance.ParseInto(
                 reader: frame,
                 item: item.FirstParameter);
-            item.SecondParameter = frame.ReadInt32();
+            item.SecondParameter = EnumBinaryTranslation<CrimeType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                length: 4);
         }
 
     }

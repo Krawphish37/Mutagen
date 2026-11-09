@@ -124,8 +124,14 @@
     <Compile Include="Assets\StarfieldRigAssetType.cs" />
     <Compile Include="Assets\StarfieldTextureAssetType.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Enums\Alignment.cs" />
     <Compile Include="Enums\Axis.cs" />
     <Compile Include="Enums\BipedObject.cs" />
+    <Compile Include="Enums\CastSource.cs" />
+    <Compile Include="Enums\CrimeType.cs" />
+    <Compile Include="Enums\CriticalStage.cs" />
+    <Compile Include="Enums\DamageCauseType.cs" />
+    <Compile Include="Enums\WardState.cs" />
     <Compile Include="Enums\CastType.cs" />
     <Compile Include="Enums\CombatReaction.cs" />
     <Compile Include="Enums\CompareOperator.cs" />

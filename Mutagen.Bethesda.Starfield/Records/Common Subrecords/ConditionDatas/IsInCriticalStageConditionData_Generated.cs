@@ -54,7 +54,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region FirstParameter
-        public Int32 FirstParameter { get; set; } = default(Int32);
+        public CriticalStage FirstParameter { get; set; } = default(CriticalStage);
         #endregion
         #region FirstUnusedStringParameter
         public String? FirstUnusedStringParameter { get; set; }
@@ -461,7 +461,7 @@ namespace Mutagen.Bethesda.Starfield
         object? IConditionParameters.Parameter1
         {
             get => FirstParameter;
-            set => FirstParameter = (value is Int32 v ? v : throw new ArgumentException());
+            set => FirstParameter = (value is CriticalStage v ? v : throw new ArgumentException());
         }
         object? IConditionParametersGetter.Parameter1
         {
@@ -469,7 +469,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         Type? IConditionParametersGetter.Parameter1Type
         {
-            get => typeof(Int32);
+            get => typeof(CriticalStage);
         }
         object? IConditionParameters.Parameter2
         {
@@ -547,7 +547,7 @@ namespace Mutagen.Bethesda.Starfield
         IIsInCriticalStageConditionDataGetter,
         ILoquiObjectSetter<IIsInCriticalStageConditionData>
     {
-        new Int32 FirstParameter { get; set; }
+        new CriticalStage FirstParameter { get; set; }
         new String? FirstUnusedStringParameter { get; set; }
         new Int32 SecondParameter { get; set; }
         new String? SecondUnusedStringParameter { get; set; }
@@ -559,7 +559,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IIsInCriticalStageConditionDataGetter>
     {
         static new ILoquiRegistration StaticRegistration => IsInCriticalStageConditionData_Registration.Instance;
-        Int32 FirstParameter { get; }
+        CriticalStage FirstParameter { get; }
         String? FirstUnusedStringParameter { get; }
         Int32 SecondParameter { get; }
         String? SecondUnusedStringParameter { get; }
@@ -795,7 +795,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IIsInCriticalStageConditionData item)
         {
             ClearPartial();
-            item.FirstParameter = default(Int32);
+            item.FirstParameter = default(CriticalStage);
             item.FirstUnusedStringParameter = default;
             item.SecondParameter = default(Int32);
             item.SecondUnusedStringParameter = default;
@@ -1198,7 +1198,10 @@ namespace Mutagen.Bethesda.Starfield
             ConditionDataBinaryWriteTranslation.WriteEmbedded(
                 item: item,
                 writer: writer);
-            writer.Write(item.FirstParameter);
+            EnumBinaryTranslation<CriticalStage, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.FirstParameter,
+                length: 4);
             writer.Write(item.SecondParameter);
         }
 
@@ -1247,7 +1250,9 @@ namespace Mutagen.Bethesda.Starfield
             ConditionDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
-            item.FirstParameter = frame.ReadInt32();
+            item.FirstParameter = EnumBinaryTranslation<CriticalStage, MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                length: 4);
             item.SecondParameter = frame.ReadInt32();
         }
 
