@@ -227,16 +227,16 @@ namespace Mutagen.Bethesda.Starfield
         #region Size
         public Size Size { get; set; } = default(Size);
         #endregion
-        #region DAT2Unknown1
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _DAT2Unknown1 = new byte[12];
-        public MemorySlice<Byte> DAT2Unknown1
-        {
-            get => _DAT2Unknown1;
-            set => this._DAT2Unknown1 = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IRaceGetter.DAT2Unknown1 => this.DAT2Unknown1;
+        #region HeadBipedObject
+        public static readonly BipedObject HeadBipedObjectDefault = BipedObject.None;
+        public BipedObject HeadBipedObject { get; set; } = HeadBipedObjectDefault;
+        #endregion
+        #region HairBipedObject
+        public static readonly BipedObject HairBipedObjectDefault = BipedObject.None;
+        public BipedObject HairBipedObject { get; set; } = HairBipedObjectDefault;
+        #endregion
+        #region InjuredHealthPercent
+        public Single InjuredHealthPercent { get; set; } = default(Single);
         #endregion
         #region ShieldBipedObject
         public static readonly BipedObject ShieldBipedObjectDefault = BipedObject.None;
@@ -250,16 +250,58 @@ namespace Mutagen.Bethesda.Starfield
         public static readonly BipedObject BodyBipedObjectDefault = BipedObject.None;
         public BipedObject BodyBipedObject { get; set; } = BodyBipedObjectDefault;
         #endregion
-        #region DAT2Unknown2
+        #region AimAngleTolerance
+        public Single AimAngleTolerance { get; set; } = default(Single);
+        #endregion
+        #region FlightRadius
+        public Single FlightRadius { get; set; } = default(Single);
+        #endregion
+        #region AngularAccelerationRate
+        public Single AngularAccelerationRate { get; set; } = default(Single);
+        #endregion
+        #region AngularTolerance
+        public Single AngularTolerance { get; set; } = default(Single);
+        #endregion
+        #region Unknown1
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _DAT2Unknown2 = new byte[64];
-        public MemorySlice<Byte> DAT2Unknown2
+        private MemorySlice<Byte> _Unknown1 = new byte[28];
+        public MemorySlice<Byte> Unknown1
         {
-            get => _DAT2Unknown2;
-            set => this._DAT2Unknown2 = value;
+            get => _Unknown1;
+            set => this._Unknown1 = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IRaceGetter.DAT2Unknown2 => this.DAT2Unknown2;
+        ReadOnlyMemorySlice<Byte> IRaceGetter.Unknown1 => this.Unknown1;
+        #endregion
+        #region Unknown2
+        public Single Unknown2 { get; set; } = default(Single);
+        #endregion
+        #region Unknown3
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private MemorySlice<Byte> _Unknown3 = new byte[4];
+        public MemorySlice<Byte> Unknown3
+        {
+            get => _Unknown3;
+            set => this._Unknown3 = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte> IRaceGetter.Unknown3 => this.Unknown3;
+        #endregion
+        #region PipboyBipedObject
+        public static readonly BipedObject PipboyBipedObjectDefault = BipedObject.None;
+        public BipedObject PipboyBipedObject { get; set; } = PipboyBipedObjectDefault;
+        #endregion
+        #region XpValue
+        public Int16 XpValue { get; set; } = default(Int16);
+        #endregion
+        #region OnCrippleDebrisScale
+        public Single OnCrippleDebrisScale { get; set; } = default(Single);
+        #endregion
+        #region OnCrippleDebrisCount
+        public Byte OnCrippleDebrisCount { get; set; } = default(Byte);
+        #endregion
+        #region OnCrippleDecalCount
+        public Byte OnCrippleDecalCount { get; set; } = default(Byte);
         #endregion
         #region Explosion
         private readonly IFormLink<IExplosionGetter> _Explosion = new FormLink<IExplosionGetter>();
@@ -297,16 +339,53 @@ namespace Mutagen.Bethesda.Starfield
         #region OrientationLimitsRoll
         public Single OrientationLimitsRoll { get; set; } = default(Single);
         #endregion
-        #region DAT2Unknown3
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _DAT2Unknown3 = new byte[61];
-        public MemorySlice<Byte> DAT2Unknown3
-        {
-            get => _DAT2Unknown3;
-            set => this._DAT2Unknown3 = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IRaceGetter.DAT2Unknown3 => this.DAT2Unknown3;
+        #region BleedoutHealthPercent
+        public Single BleedoutHealthPercent { get; set; } = default(Single);
+        #endregion
+        #region BleedoutChance
+        public Single BleedoutChance { get; set; } = default(Single);
+        #endregion
+        #region BleedoutRecoverChance
+        public Single BleedoutRecoverChance { get; set; } = default(Single);
+        #endregion
+        #region BleedoutTimeMin
+        public Single BleedoutTimeMin { get; set; } = default(Single);
+        #endregion
+        #region BleedoutTimeMax
+        public Single BleedoutTimeMax { get; set; } = default(Single);
+        #endregion
+        #region BleedoutHealthDrainRate
+        public Single BleedoutHealthDrainRate { get; set; } = default(Single);
+        #endregion
+        #region MaxSize
+        public Size MaxSize { get; set; } = default(Size);
+        #endregion
+        #region IntelligenceLevel
+        public Race.IntelligenceLevelType IntelligenceLevel { get; set; } = default(Race.IntelligenceLevelType);
+        #endregion
+        #region SupportsElectromagneticShock
+        public Boolean SupportsElectromagneticShock { get; set; } = default(Boolean);
+        #endregion
+        #region ElectromagneticShockRecoverChance
+        public Single ElectromagneticShockRecoverChance { get; set; } = default(Single);
+        #endregion
+        #region ElectromagneticShockTimeMin
+        public Single ElectromagneticShockTimeMin { get; set; } = default(Single);
+        #endregion
+        #region ElectromagneticShockTimeMax
+        public Single ElectromagneticShockTimeMax { get; set; } = default(Single);
+        #endregion
+        #region ElectromagneticShockRecoverChanceOnDamageReceived
+        public Single ElectromagneticShockRecoverChanceOnDamageReceived { get; set; } = default(Single);
+        #endregion
+        #region ElectromagneticShockHealthDrainRate
+        public Single ElectromagneticShockHealthDrainRate { get; set; } = default(Single);
+        #endregion
+        #region ElectromagneticShockHealthAfterRecovery
+        public Single ElectromagneticShockHealthAfterRecovery { get; set; } = default(Single);
+        #endregion
+        #region ElectromagneticShockImmunityDurationAfterRecovery
+        public Single ElectromagneticShockImmunityDurationAfterRecovery { get; set; } = default(Single);
         #endregion
         #region SkeletalModel
         public IGenderedItem<SkeletalModel?>? SkeletalModel { get; set; }
@@ -600,17 +679,45 @@ namespace Mutagen.Bethesda.Starfield
                 this.AccelerationRate = initialValue;
                 this.DecelerationRate = initialValue;
                 this.Size = initialValue;
-                this.DAT2Unknown1 = initialValue;
+                this.HeadBipedObject = initialValue;
+                this.HairBipedObject = initialValue;
+                this.InjuredHealthPercent = initialValue;
                 this.ShieldBipedObject = initialValue;
                 this.BeardBipedObject = initialValue;
                 this.BodyBipedObject = initialValue;
-                this.DAT2Unknown2 = initialValue;
+                this.AimAngleTolerance = initialValue;
+                this.FlightRadius = initialValue;
+                this.AngularAccelerationRate = initialValue;
+                this.AngularTolerance = initialValue;
+                this.Unknown1 = initialValue;
+                this.Unknown2 = initialValue;
+                this.Unknown3 = initialValue;
+                this.PipboyBipedObject = initialValue;
+                this.XpValue = initialValue;
+                this.OnCrippleDebrisScale = initialValue;
+                this.OnCrippleDebrisCount = initialValue;
+                this.OnCrippleDecalCount = initialValue;
                 this.Explosion = initialValue;
                 this.Debris = initialValue;
                 this.ImpactDataSet = initialValue;
                 this.OrientationLimitsPitch = initialValue;
                 this.OrientationLimitsRoll = initialValue;
-                this.DAT2Unknown3 = initialValue;
+                this.BleedoutHealthPercent = initialValue;
+                this.BleedoutChance = initialValue;
+                this.BleedoutRecoverChance = initialValue;
+                this.BleedoutTimeMin = initialValue;
+                this.BleedoutTimeMax = initialValue;
+                this.BleedoutHealthDrainRate = initialValue;
+                this.MaxSize = initialValue;
+                this.IntelligenceLevel = initialValue;
+                this.SupportsElectromagneticShock = initialValue;
+                this.ElectromagneticShockRecoverChance = initialValue;
+                this.ElectromagneticShockTimeMin = initialValue;
+                this.ElectromagneticShockTimeMax = initialValue;
+                this.ElectromagneticShockRecoverChanceOnDamageReceived = initialValue;
+                this.ElectromagneticShockHealthDrainRate = initialValue;
+                this.ElectromagneticShockHealthAfterRecovery = initialValue;
+                this.ElectromagneticShockImmunityDurationAfterRecovery = initialValue;
                 this.SkeletalModel = new MaskItem<TItem, GenderedItem<MaskItem<TItem, SkeletalModel.Mask<TItem>?>?>?>(initialValue, default);
                 this.MovementTypeNames = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.Voices = new GenderedItem<TItem>(initialValue, initialValue);
@@ -666,17 +773,45 @@ namespace Mutagen.Bethesda.Starfield
                 TItem AccelerationRate,
                 TItem DecelerationRate,
                 TItem Size,
-                TItem DAT2Unknown1,
+                TItem HeadBipedObject,
+                TItem HairBipedObject,
+                TItem InjuredHealthPercent,
                 TItem ShieldBipedObject,
                 TItem BeardBipedObject,
                 TItem BodyBipedObject,
-                TItem DAT2Unknown2,
+                TItem AimAngleTolerance,
+                TItem FlightRadius,
+                TItem AngularAccelerationRate,
+                TItem AngularTolerance,
+                TItem Unknown1,
+                TItem Unknown2,
+                TItem Unknown3,
+                TItem PipboyBipedObject,
+                TItem XpValue,
+                TItem OnCrippleDebrisScale,
+                TItem OnCrippleDebrisCount,
+                TItem OnCrippleDecalCount,
                 TItem Explosion,
                 TItem Debris,
                 TItem ImpactDataSet,
                 TItem OrientationLimitsPitch,
                 TItem OrientationLimitsRoll,
-                TItem DAT2Unknown3,
+                TItem BleedoutHealthPercent,
+                TItem BleedoutChance,
+                TItem BleedoutRecoverChance,
+                TItem BleedoutTimeMin,
+                TItem BleedoutTimeMax,
+                TItem BleedoutHealthDrainRate,
+                TItem MaxSize,
+                TItem IntelligenceLevel,
+                TItem SupportsElectromagneticShock,
+                TItem ElectromagneticShockRecoverChance,
+                TItem ElectromagneticShockTimeMin,
+                TItem ElectromagneticShockTimeMax,
+                TItem ElectromagneticShockRecoverChanceOnDamageReceived,
+                TItem ElectromagneticShockHealthDrainRate,
+                TItem ElectromagneticShockHealthAfterRecovery,
+                TItem ElectromagneticShockImmunityDurationAfterRecovery,
                 TItem SkeletalModel,
                 TItem MovementTypeNames,
                 TItem Voices,
@@ -731,17 +866,45 @@ namespace Mutagen.Bethesda.Starfield
                 this.AccelerationRate = AccelerationRate;
                 this.DecelerationRate = DecelerationRate;
                 this.Size = Size;
-                this.DAT2Unknown1 = DAT2Unknown1;
+                this.HeadBipedObject = HeadBipedObject;
+                this.HairBipedObject = HairBipedObject;
+                this.InjuredHealthPercent = InjuredHealthPercent;
                 this.ShieldBipedObject = ShieldBipedObject;
                 this.BeardBipedObject = BeardBipedObject;
                 this.BodyBipedObject = BodyBipedObject;
-                this.DAT2Unknown2 = DAT2Unknown2;
+                this.AimAngleTolerance = AimAngleTolerance;
+                this.FlightRadius = FlightRadius;
+                this.AngularAccelerationRate = AngularAccelerationRate;
+                this.AngularTolerance = AngularTolerance;
+                this.Unknown1 = Unknown1;
+                this.Unknown2 = Unknown2;
+                this.Unknown3 = Unknown3;
+                this.PipboyBipedObject = PipboyBipedObject;
+                this.XpValue = XpValue;
+                this.OnCrippleDebrisScale = OnCrippleDebrisScale;
+                this.OnCrippleDebrisCount = OnCrippleDebrisCount;
+                this.OnCrippleDecalCount = OnCrippleDecalCount;
                 this.Explosion = Explosion;
                 this.Debris = Debris;
                 this.ImpactDataSet = ImpactDataSet;
                 this.OrientationLimitsPitch = OrientationLimitsPitch;
                 this.OrientationLimitsRoll = OrientationLimitsRoll;
-                this.DAT2Unknown3 = DAT2Unknown3;
+                this.BleedoutHealthPercent = BleedoutHealthPercent;
+                this.BleedoutChance = BleedoutChance;
+                this.BleedoutRecoverChance = BleedoutRecoverChance;
+                this.BleedoutTimeMin = BleedoutTimeMin;
+                this.BleedoutTimeMax = BleedoutTimeMax;
+                this.BleedoutHealthDrainRate = BleedoutHealthDrainRate;
+                this.MaxSize = MaxSize;
+                this.IntelligenceLevel = IntelligenceLevel;
+                this.SupportsElectromagneticShock = SupportsElectromagneticShock;
+                this.ElectromagneticShockRecoverChance = ElectromagneticShockRecoverChance;
+                this.ElectromagneticShockTimeMin = ElectromagneticShockTimeMin;
+                this.ElectromagneticShockTimeMax = ElectromagneticShockTimeMax;
+                this.ElectromagneticShockRecoverChanceOnDamageReceived = ElectromagneticShockRecoverChanceOnDamageReceived;
+                this.ElectromagneticShockHealthDrainRate = ElectromagneticShockHealthDrainRate;
+                this.ElectromagneticShockHealthAfterRecovery = ElectromagneticShockHealthAfterRecovery;
+                this.ElectromagneticShockImmunityDurationAfterRecovery = ElectromagneticShockImmunityDurationAfterRecovery;
                 this.SkeletalModel = new MaskItem<TItem, GenderedItem<MaskItem<TItem, SkeletalModel.Mask<TItem>?>?>?>(SkeletalModel, default);
                 this.MovementTypeNames = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(MovementTypeNames, []);
                 this.Voices = new GenderedItem<TItem>(Voices, Voices);
@@ -798,17 +961,45 @@ namespace Mutagen.Bethesda.Starfield
             public TItem AccelerationRate;
             public TItem DecelerationRate;
             public TItem Size;
-            public TItem DAT2Unknown1;
+            public TItem HeadBipedObject;
+            public TItem HairBipedObject;
+            public TItem InjuredHealthPercent;
             public TItem ShieldBipedObject;
             public TItem BeardBipedObject;
             public TItem BodyBipedObject;
-            public TItem DAT2Unknown2;
+            public TItem AimAngleTolerance;
+            public TItem FlightRadius;
+            public TItem AngularAccelerationRate;
+            public TItem AngularTolerance;
+            public TItem Unknown1;
+            public TItem Unknown2;
+            public TItem Unknown3;
+            public TItem PipboyBipedObject;
+            public TItem XpValue;
+            public TItem OnCrippleDebrisScale;
+            public TItem OnCrippleDebrisCount;
+            public TItem OnCrippleDecalCount;
             public TItem Explosion;
             public TItem Debris;
             public TItem ImpactDataSet;
             public TItem OrientationLimitsPitch;
             public TItem OrientationLimitsRoll;
-            public TItem DAT2Unknown3;
+            public TItem BleedoutHealthPercent;
+            public TItem BleedoutChance;
+            public TItem BleedoutRecoverChance;
+            public TItem BleedoutTimeMin;
+            public TItem BleedoutTimeMax;
+            public TItem BleedoutHealthDrainRate;
+            public TItem MaxSize;
+            public TItem IntelligenceLevel;
+            public TItem SupportsElectromagneticShock;
+            public TItem ElectromagneticShockRecoverChance;
+            public TItem ElectromagneticShockTimeMin;
+            public TItem ElectromagneticShockTimeMax;
+            public TItem ElectromagneticShockRecoverChanceOnDamageReceived;
+            public TItem ElectromagneticShockHealthDrainRate;
+            public TItem ElectromagneticShockHealthAfterRecovery;
+            public TItem ElectromagneticShockImmunityDurationAfterRecovery;
             public MaskItem<TItem, GenderedItem<MaskItem<TItem, SkeletalModel.Mask<TItem>?>?>?>? SkeletalModel;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? MovementTypeNames;
             public GenderedItem<TItem> Voices;
@@ -867,17 +1058,45 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.AccelerationRate, rhs.AccelerationRate)) return false;
                 if (!object.Equals(this.DecelerationRate, rhs.DecelerationRate)) return false;
                 if (!object.Equals(this.Size, rhs.Size)) return false;
-                if (!object.Equals(this.DAT2Unknown1, rhs.DAT2Unknown1)) return false;
+                if (!object.Equals(this.HeadBipedObject, rhs.HeadBipedObject)) return false;
+                if (!object.Equals(this.HairBipedObject, rhs.HairBipedObject)) return false;
+                if (!object.Equals(this.InjuredHealthPercent, rhs.InjuredHealthPercent)) return false;
                 if (!object.Equals(this.ShieldBipedObject, rhs.ShieldBipedObject)) return false;
                 if (!object.Equals(this.BeardBipedObject, rhs.BeardBipedObject)) return false;
                 if (!object.Equals(this.BodyBipedObject, rhs.BodyBipedObject)) return false;
-                if (!object.Equals(this.DAT2Unknown2, rhs.DAT2Unknown2)) return false;
+                if (!object.Equals(this.AimAngleTolerance, rhs.AimAngleTolerance)) return false;
+                if (!object.Equals(this.FlightRadius, rhs.FlightRadius)) return false;
+                if (!object.Equals(this.AngularAccelerationRate, rhs.AngularAccelerationRate)) return false;
+                if (!object.Equals(this.AngularTolerance, rhs.AngularTolerance)) return false;
+                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
+                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.Unknown3, rhs.Unknown3)) return false;
+                if (!object.Equals(this.PipboyBipedObject, rhs.PipboyBipedObject)) return false;
+                if (!object.Equals(this.XpValue, rhs.XpValue)) return false;
+                if (!object.Equals(this.OnCrippleDebrisScale, rhs.OnCrippleDebrisScale)) return false;
+                if (!object.Equals(this.OnCrippleDebrisCount, rhs.OnCrippleDebrisCount)) return false;
+                if (!object.Equals(this.OnCrippleDecalCount, rhs.OnCrippleDecalCount)) return false;
                 if (!object.Equals(this.Explosion, rhs.Explosion)) return false;
                 if (!object.Equals(this.Debris, rhs.Debris)) return false;
                 if (!object.Equals(this.ImpactDataSet, rhs.ImpactDataSet)) return false;
                 if (!object.Equals(this.OrientationLimitsPitch, rhs.OrientationLimitsPitch)) return false;
                 if (!object.Equals(this.OrientationLimitsRoll, rhs.OrientationLimitsRoll)) return false;
-                if (!object.Equals(this.DAT2Unknown3, rhs.DAT2Unknown3)) return false;
+                if (!object.Equals(this.BleedoutHealthPercent, rhs.BleedoutHealthPercent)) return false;
+                if (!object.Equals(this.BleedoutChance, rhs.BleedoutChance)) return false;
+                if (!object.Equals(this.BleedoutRecoverChance, rhs.BleedoutRecoverChance)) return false;
+                if (!object.Equals(this.BleedoutTimeMin, rhs.BleedoutTimeMin)) return false;
+                if (!object.Equals(this.BleedoutTimeMax, rhs.BleedoutTimeMax)) return false;
+                if (!object.Equals(this.BleedoutHealthDrainRate, rhs.BleedoutHealthDrainRate)) return false;
+                if (!object.Equals(this.MaxSize, rhs.MaxSize)) return false;
+                if (!object.Equals(this.IntelligenceLevel, rhs.IntelligenceLevel)) return false;
+                if (!object.Equals(this.SupportsElectromagneticShock, rhs.SupportsElectromagneticShock)) return false;
+                if (!object.Equals(this.ElectromagneticShockRecoverChance, rhs.ElectromagneticShockRecoverChance)) return false;
+                if (!object.Equals(this.ElectromagneticShockTimeMin, rhs.ElectromagneticShockTimeMin)) return false;
+                if (!object.Equals(this.ElectromagneticShockTimeMax, rhs.ElectromagneticShockTimeMax)) return false;
+                if (!object.Equals(this.ElectromagneticShockRecoverChanceOnDamageReceived, rhs.ElectromagneticShockRecoverChanceOnDamageReceived)) return false;
+                if (!object.Equals(this.ElectromagneticShockHealthDrainRate, rhs.ElectromagneticShockHealthDrainRate)) return false;
+                if (!object.Equals(this.ElectromagneticShockHealthAfterRecovery, rhs.ElectromagneticShockHealthAfterRecovery)) return false;
+                if (!object.Equals(this.ElectromagneticShockImmunityDurationAfterRecovery, rhs.ElectromagneticShockImmunityDurationAfterRecovery)) return false;
                 if (!object.Equals(this.SkeletalModel, rhs.SkeletalModel)) return false;
                 if (!object.Equals(this.MovementTypeNames, rhs.MovementTypeNames)) return false;
                 if (!object.Equals(this.Voices, rhs.Voices)) return false;
@@ -928,17 +1147,45 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.AccelerationRate);
                 hash.Add(this.DecelerationRate);
                 hash.Add(this.Size);
-                hash.Add(this.DAT2Unknown1);
+                hash.Add(this.HeadBipedObject);
+                hash.Add(this.HairBipedObject);
+                hash.Add(this.InjuredHealthPercent);
                 hash.Add(this.ShieldBipedObject);
                 hash.Add(this.BeardBipedObject);
                 hash.Add(this.BodyBipedObject);
-                hash.Add(this.DAT2Unknown2);
+                hash.Add(this.AimAngleTolerance);
+                hash.Add(this.FlightRadius);
+                hash.Add(this.AngularAccelerationRate);
+                hash.Add(this.AngularTolerance);
+                hash.Add(this.Unknown1);
+                hash.Add(this.Unknown2);
+                hash.Add(this.Unknown3);
+                hash.Add(this.PipboyBipedObject);
+                hash.Add(this.XpValue);
+                hash.Add(this.OnCrippleDebrisScale);
+                hash.Add(this.OnCrippleDebrisCount);
+                hash.Add(this.OnCrippleDecalCount);
                 hash.Add(this.Explosion);
                 hash.Add(this.Debris);
                 hash.Add(this.ImpactDataSet);
                 hash.Add(this.OrientationLimitsPitch);
                 hash.Add(this.OrientationLimitsRoll);
-                hash.Add(this.DAT2Unknown3);
+                hash.Add(this.BleedoutHealthPercent);
+                hash.Add(this.BleedoutChance);
+                hash.Add(this.BleedoutRecoverChance);
+                hash.Add(this.BleedoutTimeMin);
+                hash.Add(this.BleedoutTimeMax);
+                hash.Add(this.BleedoutHealthDrainRate);
+                hash.Add(this.MaxSize);
+                hash.Add(this.IntelligenceLevel);
+                hash.Add(this.SupportsElectromagneticShock);
+                hash.Add(this.ElectromagneticShockRecoverChance);
+                hash.Add(this.ElectromagneticShockTimeMin);
+                hash.Add(this.ElectromagneticShockTimeMax);
+                hash.Add(this.ElectromagneticShockRecoverChanceOnDamageReceived);
+                hash.Add(this.ElectromagneticShockHealthDrainRate);
+                hash.Add(this.ElectromagneticShockHealthAfterRecovery);
+                hash.Add(this.ElectromagneticShockImmunityDurationAfterRecovery);
                 hash.Add(this.SkeletalModel);
                 hash.Add(this.MovementTypeNames);
                 hash.Add(this.Voices);
@@ -1042,17 +1289,45 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.AccelerationRate)) return false;
                 if (!eval(this.DecelerationRate)) return false;
                 if (!eval(this.Size)) return false;
-                if (!eval(this.DAT2Unknown1)) return false;
+                if (!eval(this.HeadBipedObject)) return false;
+                if (!eval(this.HairBipedObject)) return false;
+                if (!eval(this.InjuredHealthPercent)) return false;
                 if (!eval(this.ShieldBipedObject)) return false;
                 if (!eval(this.BeardBipedObject)) return false;
                 if (!eval(this.BodyBipedObject)) return false;
-                if (!eval(this.DAT2Unknown2)) return false;
+                if (!eval(this.AimAngleTolerance)) return false;
+                if (!eval(this.FlightRadius)) return false;
+                if (!eval(this.AngularAccelerationRate)) return false;
+                if (!eval(this.AngularTolerance)) return false;
+                if (!eval(this.Unknown1)) return false;
+                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.Unknown3)) return false;
+                if (!eval(this.PipboyBipedObject)) return false;
+                if (!eval(this.XpValue)) return false;
+                if (!eval(this.OnCrippleDebrisScale)) return false;
+                if (!eval(this.OnCrippleDebrisCount)) return false;
+                if (!eval(this.OnCrippleDecalCount)) return false;
                 if (!eval(this.Explosion)) return false;
                 if (!eval(this.Debris)) return false;
                 if (!eval(this.ImpactDataSet)) return false;
                 if (!eval(this.OrientationLimitsPitch)) return false;
                 if (!eval(this.OrientationLimitsRoll)) return false;
-                if (!eval(this.DAT2Unknown3)) return false;
+                if (!eval(this.BleedoutHealthPercent)) return false;
+                if (!eval(this.BleedoutChance)) return false;
+                if (!eval(this.BleedoutRecoverChance)) return false;
+                if (!eval(this.BleedoutTimeMin)) return false;
+                if (!eval(this.BleedoutTimeMax)) return false;
+                if (!eval(this.BleedoutHealthDrainRate)) return false;
+                if (!eval(this.MaxSize)) return false;
+                if (!eval(this.IntelligenceLevel)) return false;
+                if (!eval(this.SupportsElectromagneticShock)) return false;
+                if (!eval(this.ElectromagneticShockRecoverChance)) return false;
+                if (!eval(this.ElectromagneticShockTimeMin)) return false;
+                if (!eval(this.ElectromagneticShockTimeMax)) return false;
+                if (!eval(this.ElectromagneticShockRecoverChanceOnDamageReceived)) return false;
+                if (!eval(this.ElectromagneticShockHealthDrainRate)) return false;
+                if (!eval(this.ElectromagneticShockHealthAfterRecovery)) return false;
+                if (!eval(this.ElectromagneticShockImmunityDurationAfterRecovery)) return false;
                 if (!GenderedItem.AllMask(
                     this.SkeletalModel,
                     eval: eval)) return false;
@@ -1249,17 +1524,45 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.AccelerationRate)) return true;
                 if (eval(this.DecelerationRate)) return true;
                 if (eval(this.Size)) return true;
-                if (eval(this.DAT2Unknown1)) return true;
+                if (eval(this.HeadBipedObject)) return true;
+                if (eval(this.HairBipedObject)) return true;
+                if (eval(this.InjuredHealthPercent)) return true;
                 if (eval(this.ShieldBipedObject)) return true;
                 if (eval(this.BeardBipedObject)) return true;
                 if (eval(this.BodyBipedObject)) return true;
-                if (eval(this.DAT2Unknown2)) return true;
+                if (eval(this.AimAngleTolerance)) return true;
+                if (eval(this.FlightRadius)) return true;
+                if (eval(this.AngularAccelerationRate)) return true;
+                if (eval(this.AngularTolerance)) return true;
+                if (eval(this.Unknown1)) return true;
+                if (eval(this.Unknown2)) return true;
+                if (eval(this.Unknown3)) return true;
+                if (eval(this.PipboyBipedObject)) return true;
+                if (eval(this.XpValue)) return true;
+                if (eval(this.OnCrippleDebrisScale)) return true;
+                if (eval(this.OnCrippleDebrisCount)) return true;
+                if (eval(this.OnCrippleDecalCount)) return true;
                 if (eval(this.Explosion)) return true;
                 if (eval(this.Debris)) return true;
                 if (eval(this.ImpactDataSet)) return true;
                 if (eval(this.OrientationLimitsPitch)) return true;
                 if (eval(this.OrientationLimitsRoll)) return true;
-                if (eval(this.DAT2Unknown3)) return true;
+                if (eval(this.BleedoutHealthPercent)) return true;
+                if (eval(this.BleedoutChance)) return true;
+                if (eval(this.BleedoutRecoverChance)) return true;
+                if (eval(this.BleedoutTimeMin)) return true;
+                if (eval(this.BleedoutTimeMax)) return true;
+                if (eval(this.BleedoutHealthDrainRate)) return true;
+                if (eval(this.MaxSize)) return true;
+                if (eval(this.IntelligenceLevel)) return true;
+                if (eval(this.SupportsElectromagneticShock)) return true;
+                if (eval(this.ElectromagneticShockRecoverChance)) return true;
+                if (eval(this.ElectromagneticShockTimeMin)) return true;
+                if (eval(this.ElectromagneticShockTimeMax)) return true;
+                if (eval(this.ElectromagneticShockRecoverChanceOnDamageReceived)) return true;
+                if (eval(this.ElectromagneticShockHealthDrainRate)) return true;
+                if (eval(this.ElectromagneticShockHealthAfterRecovery)) return true;
+                if (eval(this.ElectromagneticShockImmunityDurationAfterRecovery)) return true;
                 if (GenderedItem.AnyMask(
                     this.SkeletalModel,
                     eval: eval)) return true;
@@ -1474,17 +1777,45 @@ namespace Mutagen.Bethesda.Starfield
                 obj.AccelerationRate = eval(this.AccelerationRate);
                 obj.DecelerationRate = eval(this.DecelerationRate);
                 obj.Size = eval(this.Size);
-                obj.DAT2Unknown1 = eval(this.DAT2Unknown1);
+                obj.HeadBipedObject = eval(this.HeadBipedObject);
+                obj.HairBipedObject = eval(this.HairBipedObject);
+                obj.InjuredHealthPercent = eval(this.InjuredHealthPercent);
                 obj.ShieldBipedObject = eval(this.ShieldBipedObject);
                 obj.BeardBipedObject = eval(this.BeardBipedObject);
                 obj.BodyBipedObject = eval(this.BodyBipedObject);
-                obj.DAT2Unknown2 = eval(this.DAT2Unknown2);
+                obj.AimAngleTolerance = eval(this.AimAngleTolerance);
+                obj.FlightRadius = eval(this.FlightRadius);
+                obj.AngularAccelerationRate = eval(this.AngularAccelerationRate);
+                obj.AngularTolerance = eval(this.AngularTolerance);
+                obj.Unknown1 = eval(this.Unknown1);
+                obj.Unknown2 = eval(this.Unknown2);
+                obj.Unknown3 = eval(this.Unknown3);
+                obj.PipboyBipedObject = eval(this.PipboyBipedObject);
+                obj.XpValue = eval(this.XpValue);
+                obj.OnCrippleDebrisScale = eval(this.OnCrippleDebrisScale);
+                obj.OnCrippleDebrisCount = eval(this.OnCrippleDebrisCount);
+                obj.OnCrippleDecalCount = eval(this.OnCrippleDecalCount);
                 obj.Explosion = eval(this.Explosion);
                 obj.Debris = eval(this.Debris);
                 obj.ImpactDataSet = eval(this.ImpactDataSet);
                 obj.OrientationLimitsPitch = eval(this.OrientationLimitsPitch);
                 obj.OrientationLimitsRoll = eval(this.OrientationLimitsRoll);
-                obj.DAT2Unknown3 = eval(this.DAT2Unknown3);
+                obj.BleedoutHealthPercent = eval(this.BleedoutHealthPercent);
+                obj.BleedoutChance = eval(this.BleedoutChance);
+                obj.BleedoutRecoverChance = eval(this.BleedoutRecoverChance);
+                obj.BleedoutTimeMin = eval(this.BleedoutTimeMin);
+                obj.BleedoutTimeMax = eval(this.BleedoutTimeMax);
+                obj.BleedoutHealthDrainRate = eval(this.BleedoutHealthDrainRate);
+                obj.MaxSize = eval(this.MaxSize);
+                obj.IntelligenceLevel = eval(this.IntelligenceLevel);
+                obj.SupportsElectromagneticShock = eval(this.SupportsElectromagneticShock);
+                obj.ElectromagneticShockRecoverChance = eval(this.ElectromagneticShockRecoverChance);
+                obj.ElectromagneticShockTimeMin = eval(this.ElectromagneticShockTimeMin);
+                obj.ElectromagneticShockTimeMax = eval(this.ElectromagneticShockTimeMax);
+                obj.ElectromagneticShockRecoverChanceOnDamageReceived = eval(this.ElectromagneticShockRecoverChanceOnDamageReceived);
+                obj.ElectromagneticShockHealthDrainRate = eval(this.ElectromagneticShockHealthDrainRate);
+                obj.ElectromagneticShockHealthAfterRecovery = eval(this.ElectromagneticShockHealthAfterRecovery);
+                obj.ElectromagneticShockImmunityDurationAfterRecovery = eval(this.ElectromagneticShockImmunityDurationAfterRecovery);
                 obj.SkeletalModel = GenderedItem.TranslateHelper(
                     this.SkeletalModel,
                     eval,
@@ -1769,9 +2100,17 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Size, "Size");
                     }
-                    if (printMask?.DAT2Unknown1 ?? true)
+                    if (printMask?.HeadBipedObject ?? true)
                     {
-                        sb.AppendItem(DAT2Unknown1, "DAT2Unknown1");
+                        sb.AppendItem(HeadBipedObject, "HeadBipedObject");
+                    }
+                    if (printMask?.HairBipedObject ?? true)
+                    {
+                        sb.AppendItem(HairBipedObject, "HairBipedObject");
+                    }
+                    if (printMask?.InjuredHealthPercent ?? true)
+                    {
+                        sb.AppendItem(InjuredHealthPercent, "InjuredHealthPercent");
                     }
                     if (printMask?.ShieldBipedObject ?? true)
                     {
@@ -1785,9 +2124,53 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(BodyBipedObject, "BodyBipedObject");
                     }
-                    if (printMask?.DAT2Unknown2 ?? true)
+                    if (printMask?.AimAngleTolerance ?? true)
                     {
-                        sb.AppendItem(DAT2Unknown2, "DAT2Unknown2");
+                        sb.AppendItem(AimAngleTolerance, "AimAngleTolerance");
+                    }
+                    if (printMask?.FlightRadius ?? true)
+                    {
+                        sb.AppendItem(FlightRadius, "FlightRadius");
+                    }
+                    if (printMask?.AngularAccelerationRate ?? true)
+                    {
+                        sb.AppendItem(AngularAccelerationRate, "AngularAccelerationRate");
+                    }
+                    if (printMask?.AngularTolerance ?? true)
+                    {
+                        sb.AppendItem(AngularTolerance, "AngularTolerance");
+                    }
+                    if (printMask?.Unknown1 ?? true)
+                    {
+                        sb.AppendItem(Unknown1, "Unknown1");
+                    }
+                    if (printMask?.Unknown2 ?? true)
+                    {
+                        sb.AppendItem(Unknown2, "Unknown2");
+                    }
+                    if (printMask?.Unknown3 ?? true)
+                    {
+                        sb.AppendItem(Unknown3, "Unknown3");
+                    }
+                    if (printMask?.PipboyBipedObject ?? true)
+                    {
+                        sb.AppendItem(PipboyBipedObject, "PipboyBipedObject");
+                    }
+                    if (printMask?.XpValue ?? true)
+                    {
+                        sb.AppendItem(XpValue, "XpValue");
+                    }
+                    if (printMask?.OnCrippleDebrisScale ?? true)
+                    {
+                        sb.AppendItem(OnCrippleDebrisScale, "OnCrippleDebrisScale");
+                    }
+                    if (printMask?.OnCrippleDebrisCount ?? true)
+                    {
+                        sb.AppendItem(OnCrippleDebrisCount, "OnCrippleDebrisCount");
+                    }
+                    if (printMask?.OnCrippleDecalCount ?? true)
+                    {
+                        sb.AppendItem(OnCrippleDecalCount, "OnCrippleDecalCount");
                     }
                     if (printMask?.Explosion ?? true)
                     {
@@ -1809,9 +2192,69 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(OrientationLimitsRoll, "OrientationLimitsRoll");
                     }
-                    if (printMask?.DAT2Unknown3 ?? true)
+                    if (printMask?.BleedoutHealthPercent ?? true)
                     {
-                        sb.AppendItem(DAT2Unknown3, "DAT2Unknown3");
+                        sb.AppendItem(BleedoutHealthPercent, "BleedoutHealthPercent");
+                    }
+                    if (printMask?.BleedoutChance ?? true)
+                    {
+                        sb.AppendItem(BleedoutChance, "BleedoutChance");
+                    }
+                    if (printMask?.BleedoutRecoverChance ?? true)
+                    {
+                        sb.AppendItem(BleedoutRecoverChance, "BleedoutRecoverChance");
+                    }
+                    if (printMask?.BleedoutTimeMin ?? true)
+                    {
+                        sb.AppendItem(BleedoutTimeMin, "BleedoutTimeMin");
+                    }
+                    if (printMask?.BleedoutTimeMax ?? true)
+                    {
+                        sb.AppendItem(BleedoutTimeMax, "BleedoutTimeMax");
+                    }
+                    if (printMask?.BleedoutHealthDrainRate ?? true)
+                    {
+                        sb.AppendItem(BleedoutHealthDrainRate, "BleedoutHealthDrainRate");
+                    }
+                    if (printMask?.MaxSize ?? true)
+                    {
+                        sb.AppendItem(MaxSize, "MaxSize");
+                    }
+                    if (printMask?.IntelligenceLevel ?? true)
+                    {
+                        sb.AppendItem(IntelligenceLevel, "IntelligenceLevel");
+                    }
+                    if (printMask?.SupportsElectromagneticShock ?? true)
+                    {
+                        sb.AppendItem(SupportsElectromagneticShock, "SupportsElectromagneticShock");
+                    }
+                    if (printMask?.ElectromagneticShockRecoverChance ?? true)
+                    {
+                        sb.AppendItem(ElectromagneticShockRecoverChance, "ElectromagneticShockRecoverChance");
+                    }
+                    if (printMask?.ElectromagneticShockTimeMin ?? true)
+                    {
+                        sb.AppendItem(ElectromagneticShockTimeMin, "ElectromagneticShockTimeMin");
+                    }
+                    if (printMask?.ElectromagneticShockTimeMax ?? true)
+                    {
+                        sb.AppendItem(ElectromagneticShockTimeMax, "ElectromagneticShockTimeMax");
+                    }
+                    if (printMask?.ElectromagneticShockRecoverChanceOnDamageReceived ?? true)
+                    {
+                        sb.AppendItem(ElectromagneticShockRecoverChanceOnDamageReceived, "ElectromagneticShockRecoverChanceOnDamageReceived");
+                    }
+                    if (printMask?.ElectromagneticShockHealthDrainRate ?? true)
+                    {
+                        sb.AppendItem(ElectromagneticShockHealthDrainRate, "ElectromagneticShockHealthDrainRate");
+                    }
+                    if (printMask?.ElectromagneticShockHealthAfterRecovery ?? true)
+                    {
+                        sb.AppendItem(ElectromagneticShockHealthAfterRecovery, "ElectromagneticShockHealthAfterRecovery");
+                    }
+                    if (printMask?.ElectromagneticShockImmunityDurationAfterRecovery ?? true)
+                    {
+                        sb.AppendItem(ElectromagneticShockImmunityDurationAfterRecovery, "ElectromagneticShockImmunityDurationAfterRecovery");
                     }
                     if (SkeletalModel != null
                         && (printMask?.SkeletalModel?.Overall ?? true))
@@ -2084,17 +2527,45 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? AccelerationRate;
             public Exception? DecelerationRate;
             public Exception? Size;
-            public Exception? DAT2Unknown1;
+            public Exception? HeadBipedObject;
+            public Exception? HairBipedObject;
+            public Exception? InjuredHealthPercent;
             public Exception? ShieldBipedObject;
             public Exception? BeardBipedObject;
             public Exception? BodyBipedObject;
-            public Exception? DAT2Unknown2;
+            public Exception? AimAngleTolerance;
+            public Exception? FlightRadius;
+            public Exception? AngularAccelerationRate;
+            public Exception? AngularTolerance;
+            public Exception? Unknown1;
+            public Exception? Unknown2;
+            public Exception? Unknown3;
+            public Exception? PipboyBipedObject;
+            public Exception? XpValue;
+            public Exception? OnCrippleDebrisScale;
+            public Exception? OnCrippleDebrisCount;
+            public Exception? OnCrippleDecalCount;
             public Exception? Explosion;
             public Exception? Debris;
             public Exception? ImpactDataSet;
             public Exception? OrientationLimitsPitch;
             public Exception? OrientationLimitsRoll;
-            public Exception? DAT2Unknown3;
+            public Exception? BleedoutHealthPercent;
+            public Exception? BleedoutChance;
+            public Exception? BleedoutRecoverChance;
+            public Exception? BleedoutTimeMin;
+            public Exception? BleedoutTimeMax;
+            public Exception? BleedoutHealthDrainRate;
+            public Exception? MaxSize;
+            public Exception? IntelligenceLevel;
+            public Exception? SupportsElectromagneticShock;
+            public Exception? ElectromagneticShockRecoverChance;
+            public Exception? ElectromagneticShockTimeMin;
+            public Exception? ElectromagneticShockTimeMax;
+            public Exception? ElectromagneticShockRecoverChanceOnDamageReceived;
+            public Exception? ElectromagneticShockHealthDrainRate;
+            public Exception? ElectromagneticShockHealthAfterRecovery;
+            public Exception? ElectromagneticShockImmunityDurationAfterRecovery;
             public MaskItem<Exception?, GenderedItem<Exception?>?>? SkeletalModel;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? MovementTypeNames;
             public MaskItem<Exception?, GenderedItem<Exception?>?>? Voices;
@@ -2164,16 +2635,42 @@ namespace Mutagen.Bethesda.Starfield
                         return DecelerationRate;
                     case Race_FieldIndex.Size:
                         return Size;
-                    case Race_FieldIndex.DAT2Unknown1:
-                        return DAT2Unknown1;
+                    case Race_FieldIndex.HeadBipedObject:
+                        return HeadBipedObject;
+                    case Race_FieldIndex.HairBipedObject:
+                        return HairBipedObject;
+                    case Race_FieldIndex.InjuredHealthPercent:
+                        return InjuredHealthPercent;
                     case Race_FieldIndex.ShieldBipedObject:
                         return ShieldBipedObject;
                     case Race_FieldIndex.BeardBipedObject:
                         return BeardBipedObject;
                     case Race_FieldIndex.BodyBipedObject:
                         return BodyBipedObject;
-                    case Race_FieldIndex.DAT2Unknown2:
-                        return DAT2Unknown2;
+                    case Race_FieldIndex.AimAngleTolerance:
+                        return AimAngleTolerance;
+                    case Race_FieldIndex.FlightRadius:
+                        return FlightRadius;
+                    case Race_FieldIndex.AngularAccelerationRate:
+                        return AngularAccelerationRate;
+                    case Race_FieldIndex.AngularTolerance:
+                        return AngularTolerance;
+                    case Race_FieldIndex.Unknown1:
+                        return Unknown1;
+                    case Race_FieldIndex.Unknown2:
+                        return Unknown2;
+                    case Race_FieldIndex.Unknown3:
+                        return Unknown3;
+                    case Race_FieldIndex.PipboyBipedObject:
+                        return PipboyBipedObject;
+                    case Race_FieldIndex.XpValue:
+                        return XpValue;
+                    case Race_FieldIndex.OnCrippleDebrisScale:
+                        return OnCrippleDebrisScale;
+                    case Race_FieldIndex.OnCrippleDebrisCount:
+                        return OnCrippleDebrisCount;
+                    case Race_FieldIndex.OnCrippleDecalCount:
+                        return OnCrippleDecalCount;
                     case Race_FieldIndex.Explosion:
                         return Explosion;
                     case Race_FieldIndex.Debris:
@@ -2184,8 +2681,38 @@ namespace Mutagen.Bethesda.Starfield
                         return OrientationLimitsPitch;
                     case Race_FieldIndex.OrientationLimitsRoll:
                         return OrientationLimitsRoll;
-                    case Race_FieldIndex.DAT2Unknown3:
-                        return DAT2Unknown3;
+                    case Race_FieldIndex.BleedoutHealthPercent:
+                        return BleedoutHealthPercent;
+                    case Race_FieldIndex.BleedoutChance:
+                        return BleedoutChance;
+                    case Race_FieldIndex.BleedoutRecoverChance:
+                        return BleedoutRecoverChance;
+                    case Race_FieldIndex.BleedoutTimeMin:
+                        return BleedoutTimeMin;
+                    case Race_FieldIndex.BleedoutTimeMax:
+                        return BleedoutTimeMax;
+                    case Race_FieldIndex.BleedoutHealthDrainRate:
+                        return BleedoutHealthDrainRate;
+                    case Race_FieldIndex.MaxSize:
+                        return MaxSize;
+                    case Race_FieldIndex.IntelligenceLevel:
+                        return IntelligenceLevel;
+                    case Race_FieldIndex.SupportsElectromagneticShock:
+                        return SupportsElectromagneticShock;
+                    case Race_FieldIndex.ElectromagneticShockRecoverChance:
+                        return ElectromagneticShockRecoverChance;
+                    case Race_FieldIndex.ElectromagneticShockTimeMin:
+                        return ElectromagneticShockTimeMin;
+                    case Race_FieldIndex.ElectromagneticShockTimeMax:
+                        return ElectromagneticShockTimeMax;
+                    case Race_FieldIndex.ElectromagneticShockRecoverChanceOnDamageReceived:
+                        return ElectromagneticShockRecoverChanceOnDamageReceived;
+                    case Race_FieldIndex.ElectromagneticShockHealthDrainRate:
+                        return ElectromagneticShockHealthDrainRate;
+                    case Race_FieldIndex.ElectromagneticShockHealthAfterRecovery:
+                        return ElectromagneticShockHealthAfterRecovery;
+                    case Race_FieldIndex.ElectromagneticShockImmunityDurationAfterRecovery:
+                        return ElectromagneticShockImmunityDurationAfterRecovery;
                     case Race_FieldIndex.SkeletalModel:
                         return SkeletalModel;
                     case Race_FieldIndex.MovementTypeNames:
@@ -2302,8 +2829,14 @@ namespace Mutagen.Bethesda.Starfield
                     case Race_FieldIndex.Size:
                         this.Size = ex;
                         break;
-                    case Race_FieldIndex.DAT2Unknown1:
-                        this.DAT2Unknown1 = ex;
+                    case Race_FieldIndex.HeadBipedObject:
+                        this.HeadBipedObject = ex;
+                        break;
+                    case Race_FieldIndex.HairBipedObject:
+                        this.HairBipedObject = ex;
+                        break;
+                    case Race_FieldIndex.InjuredHealthPercent:
+                        this.InjuredHealthPercent = ex;
                         break;
                     case Race_FieldIndex.ShieldBipedObject:
                         this.ShieldBipedObject = ex;
@@ -2314,8 +2847,41 @@ namespace Mutagen.Bethesda.Starfield
                     case Race_FieldIndex.BodyBipedObject:
                         this.BodyBipedObject = ex;
                         break;
-                    case Race_FieldIndex.DAT2Unknown2:
-                        this.DAT2Unknown2 = ex;
+                    case Race_FieldIndex.AimAngleTolerance:
+                        this.AimAngleTolerance = ex;
+                        break;
+                    case Race_FieldIndex.FlightRadius:
+                        this.FlightRadius = ex;
+                        break;
+                    case Race_FieldIndex.AngularAccelerationRate:
+                        this.AngularAccelerationRate = ex;
+                        break;
+                    case Race_FieldIndex.AngularTolerance:
+                        this.AngularTolerance = ex;
+                        break;
+                    case Race_FieldIndex.Unknown1:
+                        this.Unknown1 = ex;
+                        break;
+                    case Race_FieldIndex.Unknown2:
+                        this.Unknown2 = ex;
+                        break;
+                    case Race_FieldIndex.Unknown3:
+                        this.Unknown3 = ex;
+                        break;
+                    case Race_FieldIndex.PipboyBipedObject:
+                        this.PipboyBipedObject = ex;
+                        break;
+                    case Race_FieldIndex.XpValue:
+                        this.XpValue = ex;
+                        break;
+                    case Race_FieldIndex.OnCrippleDebrisScale:
+                        this.OnCrippleDebrisScale = ex;
+                        break;
+                    case Race_FieldIndex.OnCrippleDebrisCount:
+                        this.OnCrippleDebrisCount = ex;
+                        break;
+                    case Race_FieldIndex.OnCrippleDecalCount:
+                        this.OnCrippleDecalCount = ex;
                         break;
                     case Race_FieldIndex.Explosion:
                         this.Explosion = ex;
@@ -2332,8 +2898,53 @@ namespace Mutagen.Bethesda.Starfield
                     case Race_FieldIndex.OrientationLimitsRoll:
                         this.OrientationLimitsRoll = ex;
                         break;
-                    case Race_FieldIndex.DAT2Unknown3:
-                        this.DAT2Unknown3 = ex;
+                    case Race_FieldIndex.BleedoutHealthPercent:
+                        this.BleedoutHealthPercent = ex;
+                        break;
+                    case Race_FieldIndex.BleedoutChance:
+                        this.BleedoutChance = ex;
+                        break;
+                    case Race_FieldIndex.BleedoutRecoverChance:
+                        this.BleedoutRecoverChance = ex;
+                        break;
+                    case Race_FieldIndex.BleedoutTimeMin:
+                        this.BleedoutTimeMin = ex;
+                        break;
+                    case Race_FieldIndex.BleedoutTimeMax:
+                        this.BleedoutTimeMax = ex;
+                        break;
+                    case Race_FieldIndex.BleedoutHealthDrainRate:
+                        this.BleedoutHealthDrainRate = ex;
+                        break;
+                    case Race_FieldIndex.MaxSize:
+                        this.MaxSize = ex;
+                        break;
+                    case Race_FieldIndex.IntelligenceLevel:
+                        this.IntelligenceLevel = ex;
+                        break;
+                    case Race_FieldIndex.SupportsElectromagneticShock:
+                        this.SupportsElectromagneticShock = ex;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockRecoverChance:
+                        this.ElectromagneticShockRecoverChance = ex;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockTimeMin:
+                        this.ElectromagneticShockTimeMin = ex;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockTimeMax:
+                        this.ElectromagneticShockTimeMax = ex;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockRecoverChanceOnDamageReceived:
+                        this.ElectromagneticShockRecoverChanceOnDamageReceived = ex;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockHealthDrainRate:
+                        this.ElectromagneticShockHealthDrainRate = ex;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockHealthAfterRecovery:
+                        this.ElectromagneticShockHealthAfterRecovery = ex;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockImmunityDurationAfterRecovery:
+                        this.ElectromagneticShockImmunityDurationAfterRecovery = ex;
                         break;
                     case Race_FieldIndex.SkeletalModel:
                         this.SkeletalModel = new MaskItem<Exception?, GenderedItem<Exception?>?>(ex, null);
@@ -2481,8 +3092,14 @@ namespace Mutagen.Bethesda.Starfield
                     case Race_FieldIndex.Size:
                         this.Size = (Exception?)obj;
                         break;
-                    case Race_FieldIndex.DAT2Unknown1:
-                        this.DAT2Unknown1 = (Exception?)obj;
+                    case Race_FieldIndex.HeadBipedObject:
+                        this.HeadBipedObject = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.HairBipedObject:
+                        this.HairBipedObject = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.InjuredHealthPercent:
+                        this.InjuredHealthPercent = (Exception?)obj;
                         break;
                     case Race_FieldIndex.ShieldBipedObject:
                         this.ShieldBipedObject = (Exception?)obj;
@@ -2493,8 +3110,41 @@ namespace Mutagen.Bethesda.Starfield
                     case Race_FieldIndex.BodyBipedObject:
                         this.BodyBipedObject = (Exception?)obj;
                         break;
-                    case Race_FieldIndex.DAT2Unknown2:
-                        this.DAT2Unknown2 = (Exception?)obj;
+                    case Race_FieldIndex.AimAngleTolerance:
+                        this.AimAngleTolerance = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.FlightRadius:
+                        this.FlightRadius = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.AngularAccelerationRate:
+                        this.AngularAccelerationRate = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.AngularTolerance:
+                        this.AngularTolerance = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.Unknown1:
+                        this.Unknown1 = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.Unknown2:
+                        this.Unknown2 = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.Unknown3:
+                        this.Unknown3 = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.PipboyBipedObject:
+                        this.PipboyBipedObject = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.XpValue:
+                        this.XpValue = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.OnCrippleDebrisScale:
+                        this.OnCrippleDebrisScale = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.OnCrippleDebrisCount:
+                        this.OnCrippleDebrisCount = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.OnCrippleDecalCount:
+                        this.OnCrippleDecalCount = (Exception?)obj;
                         break;
                     case Race_FieldIndex.Explosion:
                         this.Explosion = (Exception?)obj;
@@ -2511,8 +3161,53 @@ namespace Mutagen.Bethesda.Starfield
                     case Race_FieldIndex.OrientationLimitsRoll:
                         this.OrientationLimitsRoll = (Exception?)obj;
                         break;
-                    case Race_FieldIndex.DAT2Unknown3:
-                        this.DAT2Unknown3 = (Exception?)obj;
+                    case Race_FieldIndex.BleedoutHealthPercent:
+                        this.BleedoutHealthPercent = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.BleedoutChance:
+                        this.BleedoutChance = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.BleedoutRecoverChance:
+                        this.BleedoutRecoverChance = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.BleedoutTimeMin:
+                        this.BleedoutTimeMin = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.BleedoutTimeMax:
+                        this.BleedoutTimeMax = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.BleedoutHealthDrainRate:
+                        this.BleedoutHealthDrainRate = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.MaxSize:
+                        this.MaxSize = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.IntelligenceLevel:
+                        this.IntelligenceLevel = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.SupportsElectromagneticShock:
+                        this.SupportsElectromagneticShock = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockRecoverChance:
+                        this.ElectromagneticShockRecoverChance = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockTimeMin:
+                        this.ElectromagneticShockTimeMin = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockTimeMax:
+                        this.ElectromagneticShockTimeMax = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockRecoverChanceOnDamageReceived:
+                        this.ElectromagneticShockRecoverChanceOnDamageReceived = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockHealthDrainRate:
+                        this.ElectromagneticShockHealthDrainRate = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockHealthAfterRecovery:
+                        this.ElectromagneticShockHealthAfterRecovery = (Exception?)obj;
+                        break;
+                    case Race_FieldIndex.ElectromagneticShockImmunityDurationAfterRecovery:
+                        this.ElectromagneticShockImmunityDurationAfterRecovery = (Exception?)obj;
                         break;
                     case Race_FieldIndex.SkeletalModel:
                         this.SkeletalModel = (MaskItem<Exception?, GenderedItem<Exception?>?>?)obj;
@@ -2626,17 +3321,45 @@ namespace Mutagen.Bethesda.Starfield
                 if (AccelerationRate != null) return true;
                 if (DecelerationRate != null) return true;
                 if (Size != null) return true;
-                if (DAT2Unknown1 != null) return true;
+                if (HeadBipedObject != null) return true;
+                if (HairBipedObject != null) return true;
+                if (InjuredHealthPercent != null) return true;
                 if (ShieldBipedObject != null) return true;
                 if (BeardBipedObject != null) return true;
                 if (BodyBipedObject != null) return true;
-                if (DAT2Unknown2 != null) return true;
+                if (AimAngleTolerance != null) return true;
+                if (FlightRadius != null) return true;
+                if (AngularAccelerationRate != null) return true;
+                if (AngularTolerance != null) return true;
+                if (Unknown1 != null) return true;
+                if (Unknown2 != null) return true;
+                if (Unknown3 != null) return true;
+                if (PipboyBipedObject != null) return true;
+                if (XpValue != null) return true;
+                if (OnCrippleDebrisScale != null) return true;
+                if (OnCrippleDebrisCount != null) return true;
+                if (OnCrippleDecalCount != null) return true;
                 if (Explosion != null) return true;
                 if (Debris != null) return true;
                 if (ImpactDataSet != null) return true;
                 if (OrientationLimitsPitch != null) return true;
                 if (OrientationLimitsRoll != null) return true;
-                if (DAT2Unknown3 != null) return true;
+                if (BleedoutHealthPercent != null) return true;
+                if (BleedoutChance != null) return true;
+                if (BleedoutRecoverChance != null) return true;
+                if (BleedoutTimeMin != null) return true;
+                if (BleedoutTimeMax != null) return true;
+                if (BleedoutHealthDrainRate != null) return true;
+                if (MaxSize != null) return true;
+                if (IntelligenceLevel != null) return true;
+                if (SupportsElectromagneticShock != null) return true;
+                if (ElectromagneticShockRecoverChance != null) return true;
+                if (ElectromagneticShockTimeMin != null) return true;
+                if (ElectromagneticShockTimeMax != null) return true;
+                if (ElectromagneticShockRecoverChanceOnDamageReceived != null) return true;
+                if (ElectromagneticShockHealthDrainRate != null) return true;
+                if (ElectromagneticShockHealthAfterRecovery != null) return true;
+                if (ElectromagneticShockImmunityDurationAfterRecovery != null) return true;
                 if (SkeletalModel != null) return true;
                 if (MovementTypeNames != null) return true;
                 if (Voices != null) return true;
@@ -2803,7 +3526,13 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Size, "Size");
                 }
                 {
-                    sb.AppendItem(DAT2Unknown1, "DAT2Unknown1");
+                    sb.AppendItem(HeadBipedObject, "HeadBipedObject");
+                }
+                {
+                    sb.AppendItem(HairBipedObject, "HairBipedObject");
+                }
+                {
+                    sb.AppendItem(InjuredHealthPercent, "InjuredHealthPercent");
                 }
                 {
                     sb.AppendItem(ShieldBipedObject, "ShieldBipedObject");
@@ -2815,7 +3544,40 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(BodyBipedObject, "BodyBipedObject");
                 }
                 {
-                    sb.AppendItem(DAT2Unknown2, "DAT2Unknown2");
+                    sb.AppendItem(AimAngleTolerance, "AimAngleTolerance");
+                }
+                {
+                    sb.AppendItem(FlightRadius, "FlightRadius");
+                }
+                {
+                    sb.AppendItem(AngularAccelerationRate, "AngularAccelerationRate");
+                }
+                {
+                    sb.AppendItem(AngularTolerance, "AngularTolerance");
+                }
+                {
+                    sb.AppendItem(Unknown1, "Unknown1");
+                }
+                {
+                    sb.AppendItem(Unknown2, "Unknown2");
+                }
+                {
+                    sb.AppendItem(Unknown3, "Unknown3");
+                }
+                {
+                    sb.AppendItem(PipboyBipedObject, "PipboyBipedObject");
+                }
+                {
+                    sb.AppendItem(XpValue, "XpValue");
+                }
+                {
+                    sb.AppendItem(OnCrippleDebrisScale, "OnCrippleDebrisScale");
+                }
+                {
+                    sb.AppendItem(OnCrippleDebrisCount, "OnCrippleDebrisCount");
+                }
+                {
+                    sb.AppendItem(OnCrippleDecalCount, "OnCrippleDecalCount");
                 }
                 {
                     sb.AppendItem(Explosion, "Explosion");
@@ -2833,7 +3595,52 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(OrientationLimitsRoll, "OrientationLimitsRoll");
                 }
                 {
-                    sb.AppendItem(DAT2Unknown3, "DAT2Unknown3");
+                    sb.AppendItem(BleedoutHealthPercent, "BleedoutHealthPercent");
+                }
+                {
+                    sb.AppendItem(BleedoutChance, "BleedoutChance");
+                }
+                {
+                    sb.AppendItem(BleedoutRecoverChance, "BleedoutRecoverChance");
+                }
+                {
+                    sb.AppendItem(BleedoutTimeMin, "BleedoutTimeMin");
+                }
+                {
+                    sb.AppendItem(BleedoutTimeMax, "BleedoutTimeMax");
+                }
+                {
+                    sb.AppendItem(BleedoutHealthDrainRate, "BleedoutHealthDrainRate");
+                }
+                {
+                    sb.AppendItem(MaxSize, "MaxSize");
+                }
+                {
+                    sb.AppendItem(IntelligenceLevel, "IntelligenceLevel");
+                }
+                {
+                    sb.AppendItem(SupportsElectromagneticShock, "SupportsElectromagneticShock");
+                }
+                {
+                    sb.AppendItem(ElectromagneticShockRecoverChance, "ElectromagneticShockRecoverChance");
+                }
+                {
+                    sb.AppendItem(ElectromagneticShockTimeMin, "ElectromagneticShockTimeMin");
+                }
+                {
+                    sb.AppendItem(ElectromagneticShockTimeMax, "ElectromagneticShockTimeMax");
+                }
+                {
+                    sb.AppendItem(ElectromagneticShockRecoverChanceOnDamageReceived, "ElectromagneticShockRecoverChanceOnDamageReceived");
+                }
+                {
+                    sb.AppendItem(ElectromagneticShockHealthDrainRate, "ElectromagneticShockHealthDrainRate");
+                }
+                {
+                    sb.AppendItem(ElectromagneticShockHealthAfterRecovery, "ElectromagneticShockHealthAfterRecovery");
+                }
+                {
+                    sb.AppendItem(ElectromagneticShockImmunityDurationAfterRecovery, "ElectromagneticShockImmunityDurationAfterRecovery");
                 }
                 if (SkeletalModel != null)
                 {
@@ -3070,17 +3877,45 @@ namespace Mutagen.Bethesda.Starfield
                 ret.AccelerationRate = this.AccelerationRate.Combine(rhs.AccelerationRate);
                 ret.DecelerationRate = this.DecelerationRate.Combine(rhs.DecelerationRate);
                 ret.Size = this.Size.Combine(rhs.Size);
-                ret.DAT2Unknown1 = this.DAT2Unknown1.Combine(rhs.DAT2Unknown1);
+                ret.HeadBipedObject = this.HeadBipedObject.Combine(rhs.HeadBipedObject);
+                ret.HairBipedObject = this.HairBipedObject.Combine(rhs.HairBipedObject);
+                ret.InjuredHealthPercent = this.InjuredHealthPercent.Combine(rhs.InjuredHealthPercent);
                 ret.ShieldBipedObject = this.ShieldBipedObject.Combine(rhs.ShieldBipedObject);
                 ret.BeardBipedObject = this.BeardBipedObject.Combine(rhs.BeardBipedObject);
                 ret.BodyBipedObject = this.BodyBipedObject.Combine(rhs.BodyBipedObject);
-                ret.DAT2Unknown2 = this.DAT2Unknown2.Combine(rhs.DAT2Unknown2);
+                ret.AimAngleTolerance = this.AimAngleTolerance.Combine(rhs.AimAngleTolerance);
+                ret.FlightRadius = this.FlightRadius.Combine(rhs.FlightRadius);
+                ret.AngularAccelerationRate = this.AngularAccelerationRate.Combine(rhs.AngularAccelerationRate);
+                ret.AngularTolerance = this.AngularTolerance.Combine(rhs.AngularTolerance);
+                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
+                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.Unknown3 = this.Unknown3.Combine(rhs.Unknown3);
+                ret.PipboyBipedObject = this.PipboyBipedObject.Combine(rhs.PipboyBipedObject);
+                ret.XpValue = this.XpValue.Combine(rhs.XpValue);
+                ret.OnCrippleDebrisScale = this.OnCrippleDebrisScale.Combine(rhs.OnCrippleDebrisScale);
+                ret.OnCrippleDebrisCount = this.OnCrippleDebrisCount.Combine(rhs.OnCrippleDebrisCount);
+                ret.OnCrippleDecalCount = this.OnCrippleDecalCount.Combine(rhs.OnCrippleDecalCount);
                 ret.Explosion = this.Explosion.Combine(rhs.Explosion);
                 ret.Debris = this.Debris.Combine(rhs.Debris);
                 ret.ImpactDataSet = this.ImpactDataSet.Combine(rhs.ImpactDataSet);
                 ret.OrientationLimitsPitch = this.OrientationLimitsPitch.Combine(rhs.OrientationLimitsPitch);
                 ret.OrientationLimitsRoll = this.OrientationLimitsRoll.Combine(rhs.OrientationLimitsRoll);
-                ret.DAT2Unknown3 = this.DAT2Unknown3.Combine(rhs.DAT2Unknown3);
+                ret.BleedoutHealthPercent = this.BleedoutHealthPercent.Combine(rhs.BleedoutHealthPercent);
+                ret.BleedoutChance = this.BleedoutChance.Combine(rhs.BleedoutChance);
+                ret.BleedoutRecoverChance = this.BleedoutRecoverChance.Combine(rhs.BleedoutRecoverChance);
+                ret.BleedoutTimeMin = this.BleedoutTimeMin.Combine(rhs.BleedoutTimeMin);
+                ret.BleedoutTimeMax = this.BleedoutTimeMax.Combine(rhs.BleedoutTimeMax);
+                ret.BleedoutHealthDrainRate = this.BleedoutHealthDrainRate.Combine(rhs.BleedoutHealthDrainRate);
+                ret.MaxSize = this.MaxSize.Combine(rhs.MaxSize);
+                ret.IntelligenceLevel = this.IntelligenceLevel.Combine(rhs.IntelligenceLevel);
+                ret.SupportsElectromagneticShock = this.SupportsElectromagneticShock.Combine(rhs.SupportsElectromagneticShock);
+                ret.ElectromagneticShockRecoverChance = this.ElectromagneticShockRecoverChance.Combine(rhs.ElectromagneticShockRecoverChance);
+                ret.ElectromagneticShockTimeMin = this.ElectromagneticShockTimeMin.Combine(rhs.ElectromagneticShockTimeMin);
+                ret.ElectromagneticShockTimeMax = this.ElectromagneticShockTimeMax.Combine(rhs.ElectromagneticShockTimeMax);
+                ret.ElectromagneticShockRecoverChanceOnDamageReceived = this.ElectromagneticShockRecoverChanceOnDamageReceived.Combine(rhs.ElectromagneticShockRecoverChanceOnDamageReceived);
+                ret.ElectromagneticShockHealthDrainRate = this.ElectromagneticShockHealthDrainRate.Combine(rhs.ElectromagneticShockHealthDrainRate);
+                ret.ElectromagneticShockHealthAfterRecovery = this.ElectromagneticShockHealthAfterRecovery.Combine(rhs.ElectromagneticShockHealthAfterRecovery);
+                ret.ElectromagneticShockImmunityDurationAfterRecovery = this.ElectromagneticShockImmunityDurationAfterRecovery.Combine(rhs.ElectromagneticShockImmunityDurationAfterRecovery);
                 ret.SkeletalModel = new MaskItem<Exception?, GenderedItem<Exception?>?>(Noggog.ExceptionExt.Combine(this.SkeletalModel?.Overall, rhs.SkeletalModel?.Overall), GenderedItem.Combine(this.SkeletalModel?.Specific, rhs.SkeletalModel?.Specific));
                 ret.MovementTypeNames = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.MovementTypeNames?.Overall, rhs.MovementTypeNames?.Overall), Noggog.ExceptionExt.Combine(this.MovementTypeNames?.Specific, rhs.MovementTypeNames?.Specific));
                 ret.Voices = new MaskItem<Exception?, GenderedItem<Exception?>?>(Noggog.ExceptionExt.Combine(this.Voices?.Overall, rhs.Voices?.Overall), GenderedItem.Combine(this.Voices?.Specific, rhs.Voices?.Specific));
@@ -3148,17 +3983,45 @@ namespace Mutagen.Bethesda.Starfield
             public bool AccelerationRate;
             public bool DecelerationRate;
             public bool Size;
-            public bool DAT2Unknown1;
+            public bool HeadBipedObject;
+            public bool HairBipedObject;
+            public bool InjuredHealthPercent;
             public bool ShieldBipedObject;
             public bool BeardBipedObject;
             public bool BodyBipedObject;
-            public bool DAT2Unknown2;
+            public bool AimAngleTolerance;
+            public bool FlightRadius;
+            public bool AngularAccelerationRate;
+            public bool AngularTolerance;
+            public bool Unknown1;
+            public bool Unknown2;
+            public bool Unknown3;
+            public bool PipboyBipedObject;
+            public bool XpValue;
+            public bool OnCrippleDebrisScale;
+            public bool OnCrippleDebrisCount;
+            public bool OnCrippleDecalCount;
             public bool Explosion;
             public bool Debris;
             public bool ImpactDataSet;
             public bool OrientationLimitsPitch;
             public bool OrientationLimitsRoll;
-            public bool DAT2Unknown3;
+            public bool BleedoutHealthPercent;
+            public bool BleedoutChance;
+            public bool BleedoutRecoverChance;
+            public bool BleedoutTimeMin;
+            public bool BleedoutTimeMax;
+            public bool BleedoutHealthDrainRate;
+            public bool MaxSize;
+            public bool IntelligenceLevel;
+            public bool SupportsElectromagneticShock;
+            public bool ElectromagneticShockRecoverChance;
+            public bool ElectromagneticShockTimeMin;
+            public bool ElectromagneticShockTimeMax;
+            public bool ElectromagneticShockRecoverChanceOnDamageReceived;
+            public bool ElectromagneticShockHealthDrainRate;
+            public bool ElectromagneticShockHealthAfterRecovery;
+            public bool ElectromagneticShockImmunityDurationAfterRecovery;
             public GenderedItem<SkeletalModel.TranslationMask>? SkeletalModel;
             public bool MovementTypeNames;
             public GenderedItem<bool>? Voices;
@@ -3207,17 +4070,45 @@ namespace Mutagen.Bethesda.Starfield
                 this.AccelerationRate = defaultOn;
                 this.DecelerationRate = defaultOn;
                 this.Size = defaultOn;
-                this.DAT2Unknown1 = defaultOn;
+                this.HeadBipedObject = defaultOn;
+                this.HairBipedObject = defaultOn;
+                this.InjuredHealthPercent = defaultOn;
                 this.ShieldBipedObject = defaultOn;
                 this.BeardBipedObject = defaultOn;
                 this.BodyBipedObject = defaultOn;
-                this.DAT2Unknown2 = defaultOn;
+                this.AimAngleTolerance = defaultOn;
+                this.FlightRadius = defaultOn;
+                this.AngularAccelerationRate = defaultOn;
+                this.AngularTolerance = defaultOn;
+                this.Unknown1 = defaultOn;
+                this.Unknown2 = defaultOn;
+                this.Unknown3 = defaultOn;
+                this.PipboyBipedObject = defaultOn;
+                this.XpValue = defaultOn;
+                this.OnCrippleDebrisScale = defaultOn;
+                this.OnCrippleDebrisCount = defaultOn;
+                this.OnCrippleDecalCount = defaultOn;
                 this.Explosion = defaultOn;
                 this.Debris = defaultOn;
                 this.ImpactDataSet = defaultOn;
                 this.OrientationLimitsPitch = defaultOn;
                 this.OrientationLimitsRoll = defaultOn;
-                this.DAT2Unknown3 = defaultOn;
+                this.BleedoutHealthPercent = defaultOn;
+                this.BleedoutChance = defaultOn;
+                this.BleedoutRecoverChance = defaultOn;
+                this.BleedoutTimeMin = defaultOn;
+                this.BleedoutTimeMax = defaultOn;
+                this.BleedoutHealthDrainRate = defaultOn;
+                this.MaxSize = defaultOn;
+                this.IntelligenceLevel = defaultOn;
+                this.SupportsElectromagneticShock = defaultOn;
+                this.ElectromagneticShockRecoverChance = defaultOn;
+                this.ElectromagneticShockTimeMin = defaultOn;
+                this.ElectromagneticShockTimeMax = defaultOn;
+                this.ElectromagneticShockRecoverChanceOnDamageReceived = defaultOn;
+                this.ElectromagneticShockHealthDrainRate = defaultOn;
+                this.ElectromagneticShockHealthAfterRecovery = defaultOn;
+                this.ElectromagneticShockImmunityDurationAfterRecovery = defaultOn;
                 this.MovementTypeNames = defaultOn;
                 this.FacegenMainClamp = defaultOn;
                 this.FacegenFaceClamp = defaultOn;
@@ -3257,17 +4148,45 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((AccelerationRate, null));
                 ret.Add((DecelerationRate, null));
                 ret.Add((Size, null));
-                ret.Add((DAT2Unknown1, null));
+                ret.Add((HeadBipedObject, null));
+                ret.Add((HairBipedObject, null));
+                ret.Add((InjuredHealthPercent, null));
                 ret.Add((ShieldBipedObject, null));
                 ret.Add((BeardBipedObject, null));
                 ret.Add((BodyBipedObject, null));
-                ret.Add((DAT2Unknown2, null));
+                ret.Add((AimAngleTolerance, null));
+                ret.Add((FlightRadius, null));
+                ret.Add((AngularAccelerationRate, null));
+                ret.Add((AngularTolerance, null));
+                ret.Add((Unknown1, null));
+                ret.Add((Unknown2, null));
+                ret.Add((Unknown3, null));
+                ret.Add((PipboyBipedObject, null));
+                ret.Add((XpValue, null));
+                ret.Add((OnCrippleDebrisScale, null));
+                ret.Add((OnCrippleDebrisCount, null));
+                ret.Add((OnCrippleDecalCount, null));
                 ret.Add((Explosion, null));
                 ret.Add((Debris, null));
                 ret.Add((ImpactDataSet, null));
                 ret.Add((OrientationLimitsPitch, null));
                 ret.Add((OrientationLimitsRoll, null));
-                ret.Add((DAT2Unknown3, null));
+                ret.Add((BleedoutHealthPercent, null));
+                ret.Add((BleedoutChance, null));
+                ret.Add((BleedoutRecoverChance, null));
+                ret.Add((BleedoutTimeMin, null));
+                ret.Add((BleedoutTimeMax, null));
+                ret.Add((BleedoutHealthDrainRate, null));
+                ret.Add((MaxSize, null));
+                ret.Add((IntelligenceLevel, null));
+                ret.Add((SupportsElectromagneticShock, null));
+                ret.Add((ElectromagneticShockRecoverChance, null));
+                ret.Add((ElectromagneticShockTimeMin, null));
+                ret.Add((ElectromagneticShockTimeMax, null));
+                ret.Add((ElectromagneticShockRecoverChanceOnDamageReceived, null));
+                ret.Add((ElectromagneticShockHealthDrainRate, null));
+                ret.Add((ElectromagneticShockHealthAfterRecovery, null));
+                ret.Add((ElectromagneticShockImmunityDurationAfterRecovery, null));
                 ret.Add((SkeletalModel != null || DefaultOn, null));
                 ret.Add((MovementTypeNames, null));
                 ret.Add((Voices != null || DefaultOn, null));
@@ -3482,17 +4401,45 @@ namespace Mutagen.Bethesda.Starfield
         new Single AccelerationRate { get; set; }
         new Single DecelerationRate { get; set; }
         new Size Size { get; set; }
-        new MemorySlice<Byte> DAT2Unknown1 { get; set; }
+        new BipedObject HeadBipedObject { get; set; }
+        new BipedObject HairBipedObject { get; set; }
+        new Single InjuredHealthPercent { get; set; }
         new BipedObject ShieldBipedObject { get; set; }
         new BipedObject BeardBipedObject { get; set; }
         new BipedObject BodyBipedObject { get; set; }
-        new MemorySlice<Byte> DAT2Unknown2 { get; set; }
+        new Single AimAngleTolerance { get; set; }
+        new Single FlightRadius { get; set; }
+        new Single AngularAccelerationRate { get; set; }
+        new Single AngularTolerance { get; set; }
+        new MemorySlice<Byte> Unknown1 { get; set; }
+        new Single Unknown2 { get; set; }
+        new MemorySlice<Byte> Unknown3 { get; set; }
+        new BipedObject PipboyBipedObject { get; set; }
+        new Int16 XpValue { get; set; }
+        new Single OnCrippleDebrisScale { get; set; }
+        new Byte OnCrippleDebrisCount { get; set; }
+        new Byte OnCrippleDecalCount { get; set; }
         new IFormLink<IExplosionGetter> Explosion { get; set; }
         new IFormLink<IDebrisGetter> Debris { get; set; }
         new IFormLink<IImpactDataSetGetter> ImpactDataSet { get; set; }
         new Single OrientationLimitsPitch { get; set; }
         new Single OrientationLimitsRoll { get; set; }
-        new MemorySlice<Byte> DAT2Unknown3 { get; set; }
+        new Single BleedoutHealthPercent { get; set; }
+        new Single BleedoutChance { get; set; }
+        new Single BleedoutRecoverChance { get; set; }
+        new Single BleedoutTimeMin { get; set; }
+        new Single BleedoutTimeMax { get; set; }
+        new Single BleedoutHealthDrainRate { get; set; }
+        new Size MaxSize { get; set; }
+        new Race.IntelligenceLevelType IntelligenceLevel { get; set; }
+        new Boolean SupportsElectromagneticShock { get; set; }
+        new Single ElectromagneticShockRecoverChance { get; set; }
+        new Single ElectromagneticShockTimeMin { get; set; }
+        new Single ElectromagneticShockTimeMax { get; set; }
+        new Single ElectromagneticShockRecoverChanceOnDamageReceived { get; set; }
+        new Single ElectromagneticShockHealthDrainRate { get; set; }
+        new Single ElectromagneticShockHealthAfterRecovery { get; set; }
+        new Single ElectromagneticShockImmunityDurationAfterRecovery { get; set; }
         new IGenderedItem<SkeletalModel?>? SkeletalModel { get; set; }
         new ExtendedList<String> MovementTypeNames { get; }
         new IGenderedItem<IFormLinkGetter<IVoiceTypeGetter>> Voices { get; set; }
@@ -3588,17 +4535,45 @@ namespace Mutagen.Bethesda.Starfield
         Single AccelerationRate { get; }
         Single DecelerationRate { get; }
         Size Size { get; }
-        ReadOnlyMemorySlice<Byte> DAT2Unknown1 { get; }
+        BipedObject HeadBipedObject { get; }
+        BipedObject HairBipedObject { get; }
+        Single InjuredHealthPercent { get; }
         BipedObject ShieldBipedObject { get; }
         BipedObject BeardBipedObject { get; }
         BipedObject BodyBipedObject { get; }
-        ReadOnlyMemorySlice<Byte> DAT2Unknown2 { get; }
+        Single AimAngleTolerance { get; }
+        Single FlightRadius { get; }
+        Single AngularAccelerationRate { get; }
+        Single AngularTolerance { get; }
+        ReadOnlyMemorySlice<Byte> Unknown1 { get; }
+        Single Unknown2 { get; }
+        ReadOnlyMemorySlice<Byte> Unknown3 { get; }
+        BipedObject PipboyBipedObject { get; }
+        Int16 XpValue { get; }
+        Single OnCrippleDebrisScale { get; }
+        Byte OnCrippleDebrisCount { get; }
+        Byte OnCrippleDecalCount { get; }
         IFormLinkGetter<IExplosionGetter> Explosion { get; }
         IFormLinkGetter<IDebrisGetter> Debris { get; }
         IFormLinkGetter<IImpactDataSetGetter> ImpactDataSet { get; }
         Single OrientationLimitsPitch { get; }
         Single OrientationLimitsRoll { get; }
-        ReadOnlyMemorySlice<Byte> DAT2Unknown3 { get; }
+        Single BleedoutHealthPercent { get; }
+        Single BleedoutChance { get; }
+        Single BleedoutRecoverChance { get; }
+        Single BleedoutTimeMin { get; }
+        Single BleedoutTimeMax { get; }
+        Single BleedoutHealthDrainRate { get; }
+        Size MaxSize { get; }
+        Race.IntelligenceLevelType IntelligenceLevel { get; }
+        Boolean SupportsElectromagneticShock { get; }
+        Single ElectromagneticShockRecoverChance { get; }
+        Single ElectromagneticShockTimeMin { get; }
+        Single ElectromagneticShockTimeMax { get; }
+        Single ElectromagneticShockRecoverChanceOnDamageReceived { get; }
+        Single ElectromagneticShockHealthDrainRate { get; }
+        Single ElectromagneticShockHealthAfterRecovery { get; }
+        Single ElectromagneticShockImmunityDurationAfterRecovery { get; }
         IGenderedItemGetter<ISkeletalModelGetter?>? SkeletalModel { get; }
         IReadOnlyList<String> MovementTypeNames { get; }
         IGenderedItemGetter<IFormLinkGetter<IVoiceTypeGetter>> Voices { get; }
@@ -3820,46 +4795,74 @@ namespace Mutagen.Bethesda.Starfield
         AccelerationRate = 20,
         DecelerationRate = 21,
         Size = 22,
-        DAT2Unknown1 = 23,
-        ShieldBipedObject = 24,
-        BeardBipedObject = 25,
-        BodyBipedObject = 26,
-        DAT2Unknown2 = 27,
-        Explosion = 28,
-        Debris = 29,
-        ImpactDataSet = 30,
-        OrientationLimitsPitch = 31,
-        OrientationLimitsRoll = 32,
-        DAT2Unknown3 = 33,
-        SkeletalModel = 34,
-        MovementTypeNames = 35,
-        Voices = 36,
-        FacegenMainClamp = 37,
-        FacegenFaceClamp = 38,
-        Attacks = 39,
-        BodyData = 40,
-        AimAssistPose = 41,
-        ImpactMaterialType = 42,
-        WED0 = 43,
-        WED1 = 44,
-        BipedObjects = 45,
-        MovementDataOverrides = 46,
-        EquipmentFlags = 47,
-        EquipmentSlots = 48,
-        UnarmedWeapon = 49,
-        BaseMovementDefault = 50,
-        BaseMovementSwimDefault = 51,
-        BaseMovementFlyDefault = 52,
-        ChargenAndSkintones = 53,
-        ArmorRace = 54,
-        SubgraphTemplateRace = 55,
-        Subgraphs = 56,
-        IdleChatterTimeMin = 57,
-        IdleChatterTimeMax = 58,
-        DialogueQuest = 59,
-        HeadPartsAndBoneModifiers = 60,
-        MannequinSkinSwaps = 61,
-        PluralName = 62,
+        HeadBipedObject = 23,
+        HairBipedObject = 24,
+        InjuredHealthPercent = 25,
+        ShieldBipedObject = 26,
+        BeardBipedObject = 27,
+        BodyBipedObject = 28,
+        AimAngleTolerance = 29,
+        FlightRadius = 30,
+        AngularAccelerationRate = 31,
+        AngularTolerance = 32,
+        Unknown1 = 33,
+        Unknown2 = 34,
+        Unknown3 = 35,
+        PipboyBipedObject = 36,
+        XpValue = 37,
+        OnCrippleDebrisScale = 38,
+        OnCrippleDebrisCount = 39,
+        OnCrippleDecalCount = 40,
+        Explosion = 41,
+        Debris = 42,
+        ImpactDataSet = 43,
+        OrientationLimitsPitch = 44,
+        OrientationLimitsRoll = 45,
+        BleedoutHealthPercent = 46,
+        BleedoutChance = 47,
+        BleedoutRecoverChance = 48,
+        BleedoutTimeMin = 49,
+        BleedoutTimeMax = 50,
+        BleedoutHealthDrainRate = 51,
+        MaxSize = 52,
+        IntelligenceLevel = 53,
+        SupportsElectromagneticShock = 54,
+        ElectromagneticShockRecoverChance = 55,
+        ElectromagneticShockTimeMin = 56,
+        ElectromagneticShockTimeMax = 57,
+        ElectromagneticShockRecoverChanceOnDamageReceived = 58,
+        ElectromagneticShockHealthDrainRate = 59,
+        ElectromagneticShockHealthAfterRecovery = 60,
+        ElectromagneticShockImmunityDurationAfterRecovery = 61,
+        SkeletalModel = 62,
+        MovementTypeNames = 63,
+        Voices = 64,
+        FacegenMainClamp = 65,
+        FacegenFaceClamp = 66,
+        Attacks = 67,
+        BodyData = 68,
+        AimAssistPose = 69,
+        ImpactMaterialType = 70,
+        WED0 = 71,
+        WED1 = 72,
+        BipedObjects = 73,
+        MovementDataOverrides = 74,
+        EquipmentFlags = 75,
+        EquipmentSlots = 76,
+        UnarmedWeapon = 77,
+        BaseMovementDefault = 78,
+        BaseMovementSwimDefault = 79,
+        BaseMovementFlyDefault = 80,
+        ChargenAndSkintones = 81,
+        ArmorRace = 82,
+        SubgraphTemplateRace = 83,
+        Subgraphs = 84,
+        IdleChatterTimeMin = 85,
+        IdleChatterTimeMax = 86,
+        DialogueQuest = 87,
+        HeadPartsAndBoneModifiers = 88,
+        MannequinSkinSwaps = 89,
+        PluralName = 90,
     }
     #endregion
 
@@ -3870,9 +4873,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 56;
+        public const ushort AdditionalFieldCount = 84;
 
-        public const ushort FieldCount = 63;
+        public const ushort FieldCount = 91;
 
         public static readonly Type MaskType = typeof(Race.Mask<>);
 
@@ -4042,17 +5045,45 @@ namespace Mutagen.Bethesda.Starfield
             item.AccelerationRate = default(Single);
             item.DecelerationRate = default(Single);
             item.Size = default(Size);
-            item.DAT2Unknown1 = new byte[12];
+            item.HeadBipedObject = Race.HeadBipedObjectDefault;
+            item.HairBipedObject = Race.HairBipedObjectDefault;
+            item.InjuredHealthPercent = default(Single);
             item.ShieldBipedObject = Race.ShieldBipedObjectDefault;
             item.BeardBipedObject = Race.BeardBipedObjectDefault;
             item.BodyBipedObject = Race.BodyBipedObjectDefault;
-            item.DAT2Unknown2 = new byte[64];
+            item.AimAngleTolerance = default(Single);
+            item.FlightRadius = default(Single);
+            item.AngularAccelerationRate = default(Single);
+            item.AngularTolerance = default(Single);
+            item.Unknown1 = new byte[28];
+            item.Unknown2 = default(Single);
+            item.Unknown3 = new byte[4];
+            item.PipboyBipedObject = Race.PipboyBipedObjectDefault;
+            item.XpValue = default(Int16);
+            item.OnCrippleDebrisScale = default(Single);
+            item.OnCrippleDebrisCount = default(Byte);
+            item.OnCrippleDecalCount = default(Byte);
             item.Explosion.Clear();
             item.Debris.Clear();
             item.ImpactDataSet.Clear();
             item.OrientationLimitsPitch = default(Single);
             item.OrientationLimitsRoll = default(Single);
-            item.DAT2Unknown3 = new byte[61];
+            item.BleedoutHealthPercent = default(Single);
+            item.BleedoutChance = default(Single);
+            item.BleedoutRecoverChance = default(Single);
+            item.BleedoutTimeMin = default(Single);
+            item.BleedoutTimeMax = default(Single);
+            item.BleedoutHealthDrainRate = default(Single);
+            item.MaxSize = default(Size);
+            item.IntelligenceLevel = default(Race.IntelligenceLevelType);
+            item.SupportsElectromagneticShock = default(Boolean);
+            item.ElectromagneticShockRecoverChance = default(Single);
+            item.ElectromagneticShockTimeMin = default(Single);
+            item.ElectromagneticShockTimeMax = default(Single);
+            item.ElectromagneticShockRecoverChanceOnDamageReceived = default(Single);
+            item.ElectromagneticShockHealthDrainRate = default(Single);
+            item.ElectromagneticShockHealthAfterRecovery = default(Single);
+            item.ElectromagneticShockImmunityDurationAfterRecovery = default(Single);
             item.SkeletalModel = null;
             item.MovementTypeNames.Clear();
             item.Voices.Male = FormLink<IVoiceTypeGetter>.Null;
@@ -4275,17 +5306,45 @@ namespace Mutagen.Bethesda.Starfield
             ret.AccelerationRate = item.AccelerationRate.EqualsWithin(rhs.AccelerationRate);
             ret.DecelerationRate = item.DecelerationRate.EqualsWithin(rhs.DecelerationRate);
             ret.Size = item.Size == rhs.Size;
-            ret.DAT2Unknown1 = MemoryExtensions.SequenceEqual(item.DAT2Unknown1.Span, rhs.DAT2Unknown1.Span);
+            ret.HeadBipedObject = item.HeadBipedObject == rhs.HeadBipedObject;
+            ret.HairBipedObject = item.HairBipedObject == rhs.HairBipedObject;
+            ret.InjuredHealthPercent = item.InjuredHealthPercent.EqualsWithin(rhs.InjuredHealthPercent);
             ret.ShieldBipedObject = item.ShieldBipedObject == rhs.ShieldBipedObject;
             ret.BeardBipedObject = item.BeardBipedObject == rhs.BeardBipedObject;
             ret.BodyBipedObject = item.BodyBipedObject == rhs.BodyBipedObject;
-            ret.DAT2Unknown2 = MemoryExtensions.SequenceEqual(item.DAT2Unknown2.Span, rhs.DAT2Unknown2.Span);
+            ret.AimAngleTolerance = item.AimAngleTolerance.EqualsWithin(rhs.AimAngleTolerance);
+            ret.FlightRadius = item.FlightRadius.EqualsWithin(rhs.FlightRadius);
+            ret.AngularAccelerationRate = item.AngularAccelerationRate.EqualsWithin(rhs.AngularAccelerationRate);
+            ret.AngularTolerance = item.AngularTolerance.EqualsWithin(rhs.AngularTolerance);
+            ret.Unknown1 = MemoryExtensions.SequenceEqual(item.Unknown1.Span, rhs.Unknown1.Span);
+            ret.Unknown2 = item.Unknown2.EqualsWithin(rhs.Unknown2);
+            ret.Unknown3 = MemoryExtensions.SequenceEqual(item.Unknown3.Span, rhs.Unknown3.Span);
+            ret.PipboyBipedObject = item.PipboyBipedObject == rhs.PipboyBipedObject;
+            ret.XpValue = item.XpValue == rhs.XpValue;
+            ret.OnCrippleDebrisScale = item.OnCrippleDebrisScale.EqualsWithin(rhs.OnCrippleDebrisScale);
+            ret.OnCrippleDebrisCount = item.OnCrippleDebrisCount == rhs.OnCrippleDebrisCount;
+            ret.OnCrippleDecalCount = item.OnCrippleDecalCount == rhs.OnCrippleDecalCount;
             ret.Explosion = item.Explosion.Equals(rhs.Explosion);
             ret.Debris = item.Debris.Equals(rhs.Debris);
             ret.ImpactDataSet = item.ImpactDataSet.Equals(rhs.ImpactDataSet);
             ret.OrientationLimitsPitch = item.OrientationLimitsPitch.EqualsWithin(rhs.OrientationLimitsPitch);
             ret.OrientationLimitsRoll = item.OrientationLimitsRoll.EqualsWithin(rhs.OrientationLimitsRoll);
-            ret.DAT2Unknown3 = MemoryExtensions.SequenceEqual(item.DAT2Unknown3.Span, rhs.DAT2Unknown3.Span);
+            ret.BleedoutHealthPercent = item.BleedoutHealthPercent.EqualsWithin(rhs.BleedoutHealthPercent);
+            ret.BleedoutChance = item.BleedoutChance.EqualsWithin(rhs.BleedoutChance);
+            ret.BleedoutRecoverChance = item.BleedoutRecoverChance.EqualsWithin(rhs.BleedoutRecoverChance);
+            ret.BleedoutTimeMin = item.BleedoutTimeMin.EqualsWithin(rhs.BleedoutTimeMin);
+            ret.BleedoutTimeMax = item.BleedoutTimeMax.EqualsWithin(rhs.BleedoutTimeMax);
+            ret.BleedoutHealthDrainRate = item.BleedoutHealthDrainRate.EqualsWithin(rhs.BleedoutHealthDrainRate);
+            ret.MaxSize = item.MaxSize == rhs.MaxSize;
+            ret.IntelligenceLevel = item.IntelligenceLevel == rhs.IntelligenceLevel;
+            ret.SupportsElectromagneticShock = item.SupportsElectromagneticShock == rhs.SupportsElectromagneticShock;
+            ret.ElectromagneticShockRecoverChance = item.ElectromagneticShockRecoverChance.EqualsWithin(rhs.ElectromagneticShockRecoverChance);
+            ret.ElectromagneticShockTimeMin = item.ElectromagneticShockTimeMin.EqualsWithin(rhs.ElectromagneticShockTimeMin);
+            ret.ElectromagneticShockTimeMax = item.ElectromagneticShockTimeMax.EqualsWithin(rhs.ElectromagneticShockTimeMax);
+            ret.ElectromagneticShockRecoverChanceOnDamageReceived = item.ElectromagneticShockRecoverChanceOnDamageReceived.EqualsWithin(rhs.ElectromagneticShockRecoverChanceOnDamageReceived);
+            ret.ElectromagneticShockHealthDrainRate = item.ElectromagneticShockHealthDrainRate.EqualsWithin(rhs.ElectromagneticShockHealthDrainRate);
+            ret.ElectromagneticShockHealthAfterRecovery = item.ElectromagneticShockHealthAfterRecovery.EqualsWithin(rhs.ElectromagneticShockHealthAfterRecovery);
+            ret.ElectromagneticShockImmunityDurationAfterRecovery = item.ElectromagneticShockImmunityDurationAfterRecovery.EqualsWithin(rhs.ElectromagneticShockImmunityDurationAfterRecovery);
             ret.SkeletalModel = GenderedItem.EqualityMaskHelper(
                 lhs: item.SkeletalModel,
                 rhs: rhs.SkeletalModel,
@@ -4521,9 +5580,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Size, "Size");
             }
-            if (printMask?.DAT2Unknown1 ?? true)
+            if (printMask?.HeadBipedObject ?? true)
             {
-                sb.AppendLine($"DAT2Unknown1 => {SpanExt.ToHexString(item.DAT2Unknown1)}");
+                sb.AppendItem(item.HeadBipedObject, "HeadBipedObject");
+            }
+            if (printMask?.HairBipedObject ?? true)
+            {
+                sb.AppendItem(item.HairBipedObject, "HairBipedObject");
+            }
+            if (printMask?.InjuredHealthPercent ?? true)
+            {
+                sb.AppendItem(item.InjuredHealthPercent, "InjuredHealthPercent");
             }
             if (printMask?.ShieldBipedObject ?? true)
             {
@@ -4537,9 +5604,53 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.BodyBipedObject, "BodyBipedObject");
             }
-            if (printMask?.DAT2Unknown2 ?? true)
+            if (printMask?.AimAngleTolerance ?? true)
             {
-                sb.AppendLine($"DAT2Unknown2 => {SpanExt.ToHexString(item.DAT2Unknown2)}");
+                sb.AppendItem(item.AimAngleTolerance, "AimAngleTolerance");
+            }
+            if (printMask?.FlightRadius ?? true)
+            {
+                sb.AppendItem(item.FlightRadius, "FlightRadius");
+            }
+            if (printMask?.AngularAccelerationRate ?? true)
+            {
+                sb.AppendItem(item.AngularAccelerationRate, "AngularAccelerationRate");
+            }
+            if (printMask?.AngularTolerance ?? true)
+            {
+                sb.AppendItem(item.AngularTolerance, "AngularTolerance");
+            }
+            if (printMask?.Unknown1 ?? true)
+            {
+                sb.AppendLine($"Unknown1 => {SpanExt.ToHexString(item.Unknown1)}");
+            }
+            if (printMask?.Unknown2 ?? true)
+            {
+                sb.AppendItem(item.Unknown2, "Unknown2");
+            }
+            if (printMask?.Unknown3 ?? true)
+            {
+                sb.AppendLine($"Unknown3 => {SpanExt.ToHexString(item.Unknown3)}");
+            }
+            if (printMask?.PipboyBipedObject ?? true)
+            {
+                sb.AppendItem(item.PipboyBipedObject, "PipboyBipedObject");
+            }
+            if (printMask?.XpValue ?? true)
+            {
+                sb.AppendItem(item.XpValue, "XpValue");
+            }
+            if (printMask?.OnCrippleDebrisScale ?? true)
+            {
+                sb.AppendItem(item.OnCrippleDebrisScale, "OnCrippleDebrisScale");
+            }
+            if (printMask?.OnCrippleDebrisCount ?? true)
+            {
+                sb.AppendItem(item.OnCrippleDebrisCount, "OnCrippleDebrisCount");
+            }
+            if (printMask?.OnCrippleDecalCount ?? true)
+            {
+                sb.AppendItem(item.OnCrippleDecalCount, "OnCrippleDecalCount");
             }
             if (printMask?.Explosion ?? true)
             {
@@ -4561,9 +5672,69 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.OrientationLimitsRoll, "OrientationLimitsRoll");
             }
-            if (printMask?.DAT2Unknown3 ?? true)
+            if (printMask?.BleedoutHealthPercent ?? true)
             {
-                sb.AppendLine($"DAT2Unknown3 => {SpanExt.ToHexString(item.DAT2Unknown3)}");
+                sb.AppendItem(item.BleedoutHealthPercent, "BleedoutHealthPercent");
+            }
+            if (printMask?.BleedoutChance ?? true)
+            {
+                sb.AppendItem(item.BleedoutChance, "BleedoutChance");
+            }
+            if (printMask?.BleedoutRecoverChance ?? true)
+            {
+                sb.AppendItem(item.BleedoutRecoverChance, "BleedoutRecoverChance");
+            }
+            if (printMask?.BleedoutTimeMin ?? true)
+            {
+                sb.AppendItem(item.BleedoutTimeMin, "BleedoutTimeMin");
+            }
+            if (printMask?.BleedoutTimeMax ?? true)
+            {
+                sb.AppendItem(item.BleedoutTimeMax, "BleedoutTimeMax");
+            }
+            if (printMask?.BleedoutHealthDrainRate ?? true)
+            {
+                sb.AppendItem(item.BleedoutHealthDrainRate, "BleedoutHealthDrainRate");
+            }
+            if (printMask?.MaxSize ?? true)
+            {
+                sb.AppendItem(item.MaxSize, "MaxSize");
+            }
+            if (printMask?.IntelligenceLevel ?? true)
+            {
+                sb.AppendItem(item.IntelligenceLevel, "IntelligenceLevel");
+            }
+            if (printMask?.SupportsElectromagneticShock ?? true)
+            {
+                sb.AppendItem(item.SupportsElectromagneticShock, "SupportsElectromagneticShock");
+            }
+            if (printMask?.ElectromagneticShockRecoverChance ?? true)
+            {
+                sb.AppendItem(item.ElectromagneticShockRecoverChance, "ElectromagneticShockRecoverChance");
+            }
+            if (printMask?.ElectromagneticShockTimeMin ?? true)
+            {
+                sb.AppendItem(item.ElectromagneticShockTimeMin, "ElectromagneticShockTimeMin");
+            }
+            if (printMask?.ElectromagneticShockTimeMax ?? true)
+            {
+                sb.AppendItem(item.ElectromagneticShockTimeMax, "ElectromagneticShockTimeMax");
+            }
+            if (printMask?.ElectromagneticShockRecoverChanceOnDamageReceived ?? true)
+            {
+                sb.AppendItem(item.ElectromagneticShockRecoverChanceOnDamageReceived, "ElectromagneticShockRecoverChanceOnDamageReceived");
+            }
+            if (printMask?.ElectromagneticShockHealthDrainRate ?? true)
+            {
+                sb.AppendItem(item.ElectromagneticShockHealthDrainRate, "ElectromagneticShockHealthDrainRate");
+            }
+            if (printMask?.ElectromagneticShockHealthAfterRecovery ?? true)
+            {
+                sb.AppendItem(item.ElectromagneticShockHealthAfterRecovery, "ElectromagneticShockHealthAfterRecovery");
+            }
+            if (printMask?.ElectromagneticShockImmunityDurationAfterRecovery ?? true)
+            {
+                sb.AppendItem(item.ElectromagneticShockImmunityDurationAfterRecovery, "ElectromagneticShockImmunityDurationAfterRecovery");
             }
             if ((printMask?.SkeletalModel?.Overall ?? true)
                 && item.SkeletalModel is {} SkeletalModelItem)
@@ -4880,9 +6051,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Size != rhs.Size) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.DAT2Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.HeadBipedObject) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.DAT2Unknown1.Span, rhs.DAT2Unknown1.Span)) return false;
+                if (lhs.HeadBipedObject != rhs.HeadBipedObject) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.HairBipedObject) ?? true))
+            {
+                if (lhs.HairBipedObject != rhs.HairBipedObject) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.InjuredHealthPercent) ?? true))
+            {
+                if (!lhs.InjuredHealthPercent.EqualsWithin(rhs.InjuredHealthPercent)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.ShieldBipedObject) ?? true))
             {
@@ -4896,9 +6075,53 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.BodyBipedObject != rhs.BodyBipedObject) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.DAT2Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.AimAngleTolerance) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.DAT2Unknown2.Span, rhs.DAT2Unknown2.Span)) return false;
+                if (!lhs.AimAngleTolerance.EqualsWithin(rhs.AimAngleTolerance)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.FlightRadius) ?? true))
+            {
+                if (!lhs.FlightRadius.EqualsWithin(rhs.FlightRadius)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.AngularAccelerationRate) ?? true))
+            {
+                if (!lhs.AngularAccelerationRate.EqualsWithin(rhs.AngularAccelerationRate)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.AngularTolerance) ?? true))
+            {
+                if (!lhs.AngularTolerance.EqualsWithin(rhs.AngularTolerance)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.Unknown1) ?? true))
+            {
+                if (!MemoryExtensions.SequenceEqual(lhs.Unknown1.Span, rhs.Unknown1.Span)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.Unknown2) ?? true))
+            {
+                if (!lhs.Unknown2.EqualsWithin(rhs.Unknown2)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.Unknown3) ?? true))
+            {
+                if (!MemoryExtensions.SequenceEqual(lhs.Unknown3.Span, rhs.Unknown3.Span)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.PipboyBipedObject) ?? true))
+            {
+                if (lhs.PipboyBipedObject != rhs.PipboyBipedObject) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.XpValue) ?? true))
+            {
+                if (lhs.XpValue != rhs.XpValue) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.OnCrippleDebrisScale) ?? true))
+            {
+                if (!lhs.OnCrippleDebrisScale.EqualsWithin(rhs.OnCrippleDebrisScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.OnCrippleDebrisCount) ?? true))
+            {
+                if (lhs.OnCrippleDebrisCount != rhs.OnCrippleDebrisCount) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.OnCrippleDecalCount) ?? true))
+            {
+                if (lhs.OnCrippleDecalCount != rhs.OnCrippleDecalCount) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.Explosion) ?? true))
             {
@@ -4920,9 +6143,69 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.OrientationLimitsRoll.EqualsWithin(rhs.OrientationLimitsRoll)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.DAT2Unknown3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.BleedoutHealthPercent) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.DAT2Unknown3.Span, rhs.DAT2Unknown3.Span)) return false;
+                if (!lhs.BleedoutHealthPercent.EqualsWithin(rhs.BleedoutHealthPercent)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.BleedoutChance) ?? true))
+            {
+                if (!lhs.BleedoutChance.EqualsWithin(rhs.BleedoutChance)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.BleedoutRecoverChance) ?? true))
+            {
+                if (!lhs.BleedoutRecoverChance.EqualsWithin(rhs.BleedoutRecoverChance)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.BleedoutTimeMin) ?? true))
+            {
+                if (!lhs.BleedoutTimeMin.EqualsWithin(rhs.BleedoutTimeMin)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.BleedoutTimeMax) ?? true))
+            {
+                if (!lhs.BleedoutTimeMax.EqualsWithin(rhs.BleedoutTimeMax)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.BleedoutHealthDrainRate) ?? true))
+            {
+                if (!lhs.BleedoutHealthDrainRate.EqualsWithin(rhs.BleedoutHealthDrainRate)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.MaxSize) ?? true))
+            {
+                if (lhs.MaxSize != rhs.MaxSize) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.IntelligenceLevel) ?? true))
+            {
+                if (lhs.IntelligenceLevel != rhs.IntelligenceLevel) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.SupportsElectromagneticShock) ?? true))
+            {
+                if (lhs.SupportsElectromagneticShock != rhs.SupportsElectromagneticShock) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockRecoverChance) ?? true))
+            {
+                if (!lhs.ElectromagneticShockRecoverChance.EqualsWithin(rhs.ElectromagneticShockRecoverChance)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockTimeMin) ?? true))
+            {
+                if (!lhs.ElectromagneticShockTimeMin.EqualsWithin(rhs.ElectromagneticShockTimeMin)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockTimeMax) ?? true))
+            {
+                if (!lhs.ElectromagneticShockTimeMax.EqualsWithin(rhs.ElectromagneticShockTimeMax)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockRecoverChanceOnDamageReceived) ?? true))
+            {
+                if (!lhs.ElectromagneticShockRecoverChanceOnDamageReceived.EqualsWithin(rhs.ElectromagneticShockRecoverChanceOnDamageReceived)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockHealthDrainRate) ?? true))
+            {
+                if (!lhs.ElectromagneticShockHealthDrainRate.EqualsWithin(rhs.ElectromagneticShockHealthDrainRate)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockHealthAfterRecovery) ?? true))
+            {
+                if (!lhs.ElectromagneticShockHealthAfterRecovery.EqualsWithin(rhs.ElectromagneticShockHealthAfterRecovery)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockImmunityDurationAfterRecovery) ?? true))
+            {
+                if (!lhs.ElectromagneticShockImmunityDurationAfterRecovery.EqualsWithin(rhs.ElectromagneticShockImmunityDurationAfterRecovery)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.SkeletalModel) ?? true))
             {
@@ -5101,17 +6384,45 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.AccelerationRate);
             hash.Add(item.DecelerationRate);
             hash.Add(item.Size);
-            hash.Add(item.DAT2Unknown1);
+            hash.Add(item.HeadBipedObject);
+            hash.Add(item.HairBipedObject);
+            hash.Add(item.InjuredHealthPercent);
             hash.Add(item.ShieldBipedObject);
             hash.Add(item.BeardBipedObject);
             hash.Add(item.BodyBipedObject);
-            hash.Add(item.DAT2Unknown2);
+            hash.Add(item.AimAngleTolerance);
+            hash.Add(item.FlightRadius);
+            hash.Add(item.AngularAccelerationRate);
+            hash.Add(item.AngularTolerance);
+            hash.Add(item.Unknown1);
+            hash.Add(item.Unknown2);
+            hash.Add(item.Unknown3);
+            hash.Add(item.PipboyBipedObject);
+            hash.Add(item.XpValue);
+            hash.Add(item.OnCrippleDebrisScale);
+            hash.Add(item.OnCrippleDebrisCount);
+            hash.Add(item.OnCrippleDecalCount);
             hash.Add(item.Explosion);
             hash.Add(item.Debris);
             hash.Add(item.ImpactDataSet);
             hash.Add(item.OrientationLimitsPitch);
             hash.Add(item.OrientationLimitsRoll);
-            hash.Add(item.DAT2Unknown3);
+            hash.Add(item.BleedoutHealthPercent);
+            hash.Add(item.BleedoutChance);
+            hash.Add(item.BleedoutRecoverChance);
+            hash.Add(item.BleedoutTimeMin);
+            hash.Add(item.BleedoutTimeMax);
+            hash.Add(item.BleedoutHealthDrainRate);
+            hash.Add(item.MaxSize);
+            hash.Add(item.IntelligenceLevel);
+            hash.Add(item.SupportsElectromagneticShock);
+            hash.Add(item.ElectromagneticShockRecoverChance);
+            hash.Add(item.ElectromagneticShockTimeMin);
+            hash.Add(item.ElectromagneticShockTimeMax);
+            hash.Add(item.ElectromagneticShockRecoverChanceOnDamageReceived);
+            hash.Add(item.ElectromagneticShockHealthDrainRate);
+            hash.Add(item.ElectromagneticShockHealthAfterRecovery);
+            hash.Add(item.ElectromagneticShockImmunityDurationAfterRecovery);
             if (item.SkeletalModel is {} SkeletalModelitem)
             {
                 hash.Add(HashCode.Combine(SkeletalModelitem.Male, SkeletalModelitem.Female));
@@ -5636,9 +6947,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Size = rhs.Size;
             }
-            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.DAT2Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.HeadBipedObject) ?? true))
             {
-                item.DAT2Unknown1 = rhs.DAT2Unknown1.ToArray();
+                item.HeadBipedObject = rhs.HeadBipedObject;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.HairBipedObject) ?? true))
+            {
+                item.HairBipedObject = rhs.HairBipedObject;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.InjuredHealthPercent) ?? true))
+            {
+                item.InjuredHealthPercent = rhs.InjuredHealthPercent;
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.ShieldBipedObject) ?? true))
             {
@@ -5652,9 +6971,53 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.BodyBipedObject = rhs.BodyBipedObject;
             }
-            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.DAT2Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.AimAngleTolerance) ?? true))
             {
-                item.DAT2Unknown2 = rhs.DAT2Unknown2.ToArray();
+                item.AimAngleTolerance = rhs.AimAngleTolerance;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.FlightRadius) ?? true))
+            {
+                item.FlightRadius = rhs.FlightRadius;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.AngularAccelerationRate) ?? true))
+            {
+                item.AngularAccelerationRate = rhs.AngularAccelerationRate;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.AngularTolerance) ?? true))
+            {
+                item.AngularTolerance = rhs.AngularTolerance;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Unknown1) ?? true))
+            {
+                item.Unknown1 = rhs.Unknown1.ToArray();
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Unknown2) ?? true))
+            {
+                item.Unknown2 = rhs.Unknown2;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Unknown3) ?? true))
+            {
+                item.Unknown3 = rhs.Unknown3.ToArray();
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.PipboyBipedObject) ?? true))
+            {
+                item.PipboyBipedObject = rhs.PipboyBipedObject;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.XpValue) ?? true))
+            {
+                item.XpValue = rhs.XpValue;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.OnCrippleDebrisScale) ?? true))
+            {
+                item.OnCrippleDebrisScale = rhs.OnCrippleDebrisScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.OnCrippleDebrisCount) ?? true))
+            {
+                item.OnCrippleDebrisCount = rhs.OnCrippleDebrisCount;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.OnCrippleDecalCount) ?? true))
+            {
+                item.OnCrippleDecalCount = rhs.OnCrippleDecalCount;
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Explosion) ?? true))
             {
@@ -5676,9 +7039,69 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.OrientationLimitsRoll = rhs.OrientationLimitsRoll;
             }
-            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.DAT2Unknown3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.BleedoutHealthPercent) ?? true))
             {
-                item.DAT2Unknown3 = rhs.DAT2Unknown3.ToArray();
+                item.BleedoutHealthPercent = rhs.BleedoutHealthPercent;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.BleedoutChance) ?? true))
+            {
+                item.BleedoutChance = rhs.BleedoutChance;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.BleedoutRecoverChance) ?? true))
+            {
+                item.BleedoutRecoverChance = rhs.BleedoutRecoverChance;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.BleedoutTimeMin) ?? true))
+            {
+                item.BleedoutTimeMin = rhs.BleedoutTimeMin;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.BleedoutTimeMax) ?? true))
+            {
+                item.BleedoutTimeMax = rhs.BleedoutTimeMax;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.BleedoutHealthDrainRate) ?? true))
+            {
+                item.BleedoutHealthDrainRate = rhs.BleedoutHealthDrainRate;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.MaxSize) ?? true))
+            {
+                item.MaxSize = rhs.MaxSize;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.IntelligenceLevel) ?? true))
+            {
+                item.IntelligenceLevel = rhs.IntelligenceLevel;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.SupportsElectromagneticShock) ?? true))
+            {
+                item.SupportsElectromagneticShock = rhs.SupportsElectromagneticShock;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockRecoverChance) ?? true))
+            {
+                item.ElectromagneticShockRecoverChance = rhs.ElectromagneticShockRecoverChance;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockTimeMin) ?? true))
+            {
+                item.ElectromagneticShockTimeMin = rhs.ElectromagneticShockTimeMin;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockTimeMax) ?? true))
+            {
+                item.ElectromagneticShockTimeMax = rhs.ElectromagneticShockTimeMax;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockRecoverChanceOnDamageReceived) ?? true))
+            {
+                item.ElectromagneticShockRecoverChanceOnDamageReceived = rhs.ElectromagneticShockRecoverChanceOnDamageReceived;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockHealthDrainRate) ?? true))
+            {
+                item.ElectromagneticShockHealthDrainRate = rhs.ElectromagneticShockHealthDrainRate;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockHealthAfterRecovery) ?? true))
+            {
+                item.ElectromagneticShockHealthAfterRecovery = rhs.ElectromagneticShockHealthAfterRecovery;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.ElectromagneticShockImmunityDurationAfterRecovery) ?? true))
+            {
+                item.ElectromagneticShockImmunityDurationAfterRecovery = rhs.ElectromagneticShockImmunityDurationAfterRecovery;
             }
             if (rhs.SkeletalModel is not {} rhsSkeletalModelitem)
             {
@@ -6269,9 +7692,17 @@ namespace Mutagen.Bethesda.Starfield
                     writer,
                     item.Size,
                     length: 4);
-                ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                EnumBinaryTranslation<BipedObject, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.HeadBipedObject,
+                    length: 4);
+                EnumBinaryTranslation<BipedObject, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.HairBipedObject,
+                    length: 4);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.DAT2Unknown1);
+                    item: item.InjuredHealthPercent);
                 EnumBinaryTranslation<BipedObject, MutagenFrame, MutagenWriter>.Instance.Write(
                     writer,
                     item.ShieldBipedObject,
@@ -6284,9 +7715,37 @@ namespace Mutagen.Bethesda.Starfield
                     writer,
                     item.BodyBipedObject,
                     length: 4);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.AimAngleTolerance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.FlightRadius);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.AngularAccelerationRate);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.AngularTolerance);
                 ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.DAT2Unknown2);
+                    item: item.Unknown1);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.Unknown2);
+                ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.Unknown3);
+                EnumBinaryTranslation<BipedObject, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.PipboyBipedObject,
+                    length: 4);
+                writer.Write(item.XpValue);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.OnCrippleDebrisScale);
+                writer.Write(item.OnCrippleDebrisCount);
+                writer.Write(item.OnCrippleDecalCount);
                 FormLinkBinaryTranslation.Instance.Write(
                     writer: writer,
                     item: item.Explosion);
@@ -6302,9 +7761,54 @@ namespace Mutagen.Bethesda.Starfield
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.OrientationLimitsRoll);
-                ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.DAT2Unknown3);
+                    item: item.BleedoutHealthPercent);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.BleedoutChance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.BleedoutRecoverChance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.BleedoutTimeMin);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.BleedoutTimeMax);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.BleedoutHealthDrainRate);
+                EnumBinaryTranslation<Size, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.MaxSize,
+                    length: 4);
+                EnumBinaryTranslation<Race.IntelligenceLevelType, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.IntelligenceLevel,
+                    length: 4);
+                writer.Write(item.SupportsElectromagneticShock);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.ElectromagneticShockRecoverChance);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.ElectromagneticShockTimeMin);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.ElectromagneticShockTimeMax);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.ElectromagneticShockRecoverChanceOnDamageReceived);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.ElectromagneticShockHealthDrainRate);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.ElectromagneticShockHealthAfterRecovery);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.ElectromagneticShockImmunityDurationAfterRecovery);
             }
             RaceBinaryWriteTranslation.WriteBinaryMNAMLogic(
                 writer: writer,
@@ -6778,7 +8282,16 @@ namespace Mutagen.Bethesda.Starfield
                     item.Size = EnumBinaryTranslation<Size, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 4);
-                    item.DAT2Unknown1 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(12));
+                    if (dataFrame.Remaining < 4) return null;
+                    item.HeadBipedObject = EnumBinaryTranslation<BipedObject, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.HairBipedObject = EnumBinaryTranslation<BipedObject, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.InjuredHealthPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.ShieldBipedObject = EnumBinaryTranslation<BipedObject, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
@@ -6791,7 +8304,30 @@ namespace Mutagen.Bethesda.Starfield
                     item.BodyBipedObject = EnumBinaryTranslation<BipedObject, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 4);
-                    item.DAT2Unknown2 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(64));
+                    if (dataFrame.Remaining < 4) return null;
+                    item.AimAngleTolerance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.FlightRadius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.AngularAccelerationRate = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.AngularTolerance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.Unknown1 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(28));
+                    if (dataFrame.Remaining < 4) return null;
+                    item.Unknown2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.Unknown3 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(4));
+                    if (dataFrame.Remaining < 4) return null;
+                    item.PipboyBipedObject = EnumBinaryTranslation<BipedObject, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    if (dataFrame.Remaining < 2) return null;
+                    item.XpValue = dataFrame.ReadInt16();
+                    if (dataFrame.Remaining < 4) return null;
+                    item.OnCrippleDebrisScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 1) return null;
+                    item.OnCrippleDebrisCount = dataFrame.ReadUInt8();
+                    if (dataFrame.Remaining < 1) return null;
+                    item.OnCrippleDecalCount = dataFrame.ReadUInt8();
                     if (dataFrame.Remaining < 4) return null;
                     item.Explosion.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     if (dataFrame.Remaining < 4) return null;
@@ -6802,13 +8338,48 @@ namespace Mutagen.Bethesda.Starfield
                     item.OrientationLimitsPitch = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.OrientationLimitsRoll = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    item.DAT2Unknown3 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(61));
-                    return (int)Race_FieldIndex.DAT2Unknown3;
+                    if (dataFrame.Remaining < 4) return null;
+                    item.BleedoutHealthPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.BleedoutChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.BleedoutRecoverChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.BleedoutTimeMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.BleedoutTimeMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.BleedoutHealthDrainRate = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.MaxSize = EnumBinaryTranslation<Size, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.IntelligenceLevel = EnumBinaryTranslation<Race.IntelligenceLevelType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    if (dataFrame.Remaining < 1) return null;
+                    item.SupportsElectromagneticShock = dataFrame.ReadBoolean();
+                    if (dataFrame.Remaining < 4) return null;
+                    item.ElectromagneticShockRecoverChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.ElectromagneticShockTimeMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.ElectromagneticShockTimeMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.ElectromagneticShockRecoverChanceOnDamageReceived = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.ElectromagneticShockHealthDrainRate = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.ElectromagneticShockHealthAfterRecovery = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.ElectromagneticShockImmunityDurationAfterRecovery = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    return (int)Race_FieldIndex.ElectromagneticShockImmunityDurationAfterRecovery;
                 }
                 case RecordTypeInts.MNAM:
                 {
                     if (!lastParsed.ParsedIndex.HasValue
-                        || lastParsed.ParsedIndex.Value <= (int)Race_FieldIndex.DAT2Unknown3)
+                        || lastParsed.ParsedIndex.Value <= (int)Race_FieldIndex.ElectromagneticShockImmunityDurationAfterRecovery)
                     {
                         return RaceBinaryCreateTranslation.FillBinaryMNAMLogicCustom(
                             frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
@@ -6866,7 +8437,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FNAM:
                 {
                     if (!lastParsed.ParsedIndex.HasValue
-                        || lastParsed.ParsedIndex.Value <= (int)Race_FieldIndex.DAT2Unknown3)
+                        || lastParsed.ParsedIndex.Value <= (int)Race_FieldIndex.ElectromagneticShockImmunityDurationAfterRecovery)
                     {
                         return RaceBinaryCreateTranslation.FillBinaryFNAMLogicCustom(
                             frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
@@ -7319,10 +8890,20 @@ namespace Mutagen.Bethesda.Starfield
         private bool _Size_IsSet => _DAT2Location.HasValue;
         public Size Size => _Size_IsSet ? (Size)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SizeLocation, 0x4)) : default;
         #endregion
-        #region DAT2Unknown1
-        private int _DAT2Unknown1Location => _DAT2Location!.Value.Min + 0x34;
-        private bool _DAT2Unknown1_IsSet => _DAT2Location.HasValue;
-        public ReadOnlyMemorySlice<Byte> DAT2Unknown1 => _DAT2Unknown1_IsSet ? _recordData.Span.Slice(_DAT2Unknown1Location, 12).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        #region HeadBipedObject
+        private int _HeadBipedObjectLocation => _DAT2Location!.Value.Min + 0x34;
+        private bool _HeadBipedObject_IsSet => _DAT2Location.HasValue;
+        public BipedObject HeadBipedObject => _HeadBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_HeadBipedObjectLocation, 0x4)) : default;
+        #endregion
+        #region HairBipedObject
+        private int _HairBipedObjectLocation => _DAT2Location!.Value.Min + 0x38;
+        private bool _HairBipedObject_IsSet => _DAT2Location.HasValue;
+        public BipedObject HairBipedObject => _HairBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_HairBipedObjectLocation, 0x4)) : default;
+        #endregion
+        #region InjuredHealthPercent
+        private int _InjuredHealthPercentLocation => _DAT2Location!.Value.Min + 0x3C;
+        private bool _InjuredHealthPercent_IsSet => _DAT2Location.HasValue;
+        public Single InjuredHealthPercent => _InjuredHealthPercent_IsSet ? _recordData.Slice(_InjuredHealthPercentLocation, 4).Float() : default(Single);
         #endregion
         #region ShieldBipedObject
         private int _ShieldBipedObjectLocation => _DAT2Location!.Value.Min + 0x40;
@@ -7339,10 +8920,65 @@ namespace Mutagen.Bethesda.Starfield
         private bool _BodyBipedObject_IsSet => _DAT2Location.HasValue;
         public BipedObject BodyBipedObject => _BodyBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_BodyBipedObjectLocation, 0x4)) : default;
         #endregion
-        #region DAT2Unknown2
-        private int _DAT2Unknown2Location => _DAT2Location!.Value.Min + 0x4C;
-        private bool _DAT2Unknown2_IsSet => _DAT2Location.HasValue;
-        public ReadOnlyMemorySlice<Byte> DAT2Unknown2 => _DAT2Unknown2_IsSet ? _recordData.Span.Slice(_DAT2Unknown2Location, 64).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        #region AimAngleTolerance
+        private int _AimAngleToleranceLocation => _DAT2Location!.Value.Min + 0x4C;
+        private bool _AimAngleTolerance_IsSet => _DAT2Location.HasValue;
+        public Single AimAngleTolerance => _AimAngleTolerance_IsSet ? _recordData.Slice(_AimAngleToleranceLocation, 4).Float() : default(Single);
+        #endregion
+        #region FlightRadius
+        private int _FlightRadiusLocation => _DAT2Location!.Value.Min + 0x50;
+        private bool _FlightRadius_IsSet => _DAT2Location.HasValue;
+        public Single FlightRadius => _FlightRadius_IsSet ? _recordData.Slice(_FlightRadiusLocation, 4).Float() : default(Single);
+        #endregion
+        #region AngularAccelerationRate
+        private int _AngularAccelerationRateLocation => _DAT2Location!.Value.Min + 0x54;
+        private bool _AngularAccelerationRate_IsSet => _DAT2Location.HasValue;
+        public Single AngularAccelerationRate => _AngularAccelerationRate_IsSet ? _recordData.Slice(_AngularAccelerationRateLocation, 4).Float() : default(Single);
+        #endregion
+        #region AngularTolerance
+        private int _AngularToleranceLocation => _DAT2Location!.Value.Min + 0x58;
+        private bool _AngularTolerance_IsSet => _DAT2Location.HasValue;
+        public Single AngularTolerance => _AngularTolerance_IsSet ? _recordData.Slice(_AngularToleranceLocation, 4).Float() : default(Single);
+        #endregion
+        #region Unknown1
+        private int _Unknown1Location => _DAT2Location!.Value.Min + 0x5C;
+        private bool _Unknown1_IsSet => _DAT2Location.HasValue;
+        public ReadOnlyMemorySlice<Byte> Unknown1 => _Unknown1_IsSet ? _recordData.Span.Slice(_Unknown1Location, 28).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        #endregion
+        #region Unknown2
+        private int _Unknown2Location => _DAT2Location!.Value.Min + 0x78;
+        private bool _Unknown2_IsSet => _DAT2Location.HasValue;
+        public Single Unknown2 => _Unknown2_IsSet ? _recordData.Slice(_Unknown2Location, 4).Float() : default(Single);
+        #endregion
+        #region Unknown3
+        private int _Unknown3Location => _DAT2Location!.Value.Min + 0x7C;
+        private bool _Unknown3_IsSet => _DAT2Location.HasValue;
+        public ReadOnlyMemorySlice<Byte> Unknown3 => _Unknown3_IsSet ? _recordData.Span.Slice(_Unknown3Location, 4).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        #endregion
+        #region PipboyBipedObject
+        private int _PipboyBipedObjectLocation => _DAT2Location!.Value.Min + 0x80;
+        private bool _PipboyBipedObject_IsSet => _DAT2Location.HasValue;
+        public BipedObject PipboyBipedObject => _PipboyBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_PipboyBipedObjectLocation, 0x4)) : default;
+        #endregion
+        #region XpValue
+        private int _XpValueLocation => _DAT2Location!.Value.Min + 0x84;
+        private bool _XpValue_IsSet => _DAT2Location.HasValue;
+        public Int16 XpValue => _XpValue_IsSet ? BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_XpValueLocation, 2)) : default(Int16);
+        #endregion
+        #region OnCrippleDebrisScale
+        private int _OnCrippleDebrisScaleLocation => _DAT2Location!.Value.Min + 0x86;
+        private bool _OnCrippleDebrisScale_IsSet => _DAT2Location.HasValue;
+        public Single OnCrippleDebrisScale => _OnCrippleDebrisScale_IsSet ? _recordData.Slice(_OnCrippleDebrisScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region OnCrippleDebrisCount
+        private int _OnCrippleDebrisCountLocation => _DAT2Location!.Value.Min + 0x8A;
+        private bool _OnCrippleDebrisCount_IsSet => _DAT2Location.HasValue;
+        public Byte OnCrippleDebrisCount => _OnCrippleDebrisCount_IsSet ? _recordData.Span[_OnCrippleDebrisCountLocation] : default;
+        #endregion
+        #region OnCrippleDecalCount
+        private int _OnCrippleDecalCountLocation => _DAT2Location!.Value.Min + 0x8B;
+        private bool _OnCrippleDecalCount_IsSet => _DAT2Location.HasValue;
+        public Byte OnCrippleDecalCount => _OnCrippleDecalCount_IsSet ? _recordData.Span[_OnCrippleDecalCountLocation] : default;
         #endregion
         #region Explosion
         private int _ExplosionLocation => _DAT2Location!.Value.Min + 0x8C;
@@ -7369,10 +9005,85 @@ namespace Mutagen.Bethesda.Starfield
         private bool _OrientationLimitsRoll_IsSet => _DAT2Location.HasValue;
         public Single OrientationLimitsRoll => _OrientationLimitsRoll_IsSet ? _recordData.Slice(_OrientationLimitsRollLocation, 4).Float() : default(Single);
         #endregion
-        #region DAT2Unknown3
-        private int _DAT2Unknown3Location => _DAT2Location!.Value.Min + 0xA0;
-        private bool _DAT2Unknown3_IsSet => _DAT2Location.HasValue;
-        public ReadOnlyMemorySlice<Byte> DAT2Unknown3 => _DAT2Unknown3_IsSet ? _recordData.Span.Slice(_DAT2Unknown3Location, 61).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        #region BleedoutHealthPercent
+        private int _BleedoutHealthPercentLocation => _DAT2Location!.Value.Min + 0xA0;
+        private bool _BleedoutHealthPercent_IsSet => _DAT2Location.HasValue;
+        public Single BleedoutHealthPercent => _BleedoutHealthPercent_IsSet ? _recordData.Slice(_BleedoutHealthPercentLocation, 4).Float() : default(Single);
+        #endregion
+        #region BleedoutChance
+        private int _BleedoutChanceLocation => _DAT2Location!.Value.Min + 0xA4;
+        private bool _BleedoutChance_IsSet => _DAT2Location.HasValue;
+        public Single BleedoutChance => _BleedoutChance_IsSet ? _recordData.Slice(_BleedoutChanceLocation, 4).Float() : default(Single);
+        #endregion
+        #region BleedoutRecoverChance
+        private int _BleedoutRecoverChanceLocation => _DAT2Location!.Value.Min + 0xA8;
+        private bool _BleedoutRecoverChance_IsSet => _DAT2Location.HasValue;
+        public Single BleedoutRecoverChance => _BleedoutRecoverChance_IsSet ? _recordData.Slice(_BleedoutRecoverChanceLocation, 4).Float() : default(Single);
+        #endregion
+        #region BleedoutTimeMin
+        private int _BleedoutTimeMinLocation => _DAT2Location!.Value.Min + 0xAC;
+        private bool _BleedoutTimeMin_IsSet => _DAT2Location.HasValue;
+        public Single BleedoutTimeMin => _BleedoutTimeMin_IsSet ? _recordData.Slice(_BleedoutTimeMinLocation, 4).Float() : default(Single);
+        #endregion
+        #region BleedoutTimeMax
+        private int _BleedoutTimeMaxLocation => _DAT2Location!.Value.Min + 0xB0;
+        private bool _BleedoutTimeMax_IsSet => _DAT2Location.HasValue;
+        public Single BleedoutTimeMax => _BleedoutTimeMax_IsSet ? _recordData.Slice(_BleedoutTimeMaxLocation, 4).Float() : default(Single);
+        #endregion
+        #region BleedoutHealthDrainRate
+        private int _BleedoutHealthDrainRateLocation => _DAT2Location!.Value.Min + 0xB4;
+        private bool _BleedoutHealthDrainRate_IsSet => _DAT2Location.HasValue;
+        public Single BleedoutHealthDrainRate => _BleedoutHealthDrainRate_IsSet ? _recordData.Slice(_BleedoutHealthDrainRateLocation, 4).Float() : default(Single);
+        #endregion
+        #region MaxSize
+        private int _MaxSizeLocation => _DAT2Location!.Value.Min + 0xB8;
+        private bool _MaxSize_IsSet => _DAT2Location.HasValue;
+        public Size MaxSize => _MaxSize_IsSet ? (Size)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MaxSizeLocation, 0x4)) : default;
+        #endregion
+        #region IntelligenceLevel
+        private int _IntelligenceLevelLocation => _DAT2Location!.Value.Min + 0xBC;
+        private bool _IntelligenceLevel_IsSet => _DAT2Location.HasValue;
+        public Race.IntelligenceLevelType IntelligenceLevel => _IntelligenceLevel_IsSet ? (Race.IntelligenceLevelType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_IntelligenceLevelLocation, 0x4)) : default;
+        #endregion
+        #region SupportsElectromagneticShock
+        private int _SupportsElectromagneticShockLocation => _DAT2Location!.Value.Min + 0xC0;
+        private bool _SupportsElectromagneticShock_IsSet => _DAT2Location.HasValue;
+        public Boolean SupportsElectromagneticShock => _SupportsElectromagneticShock_IsSet ? _recordData.Slice(_SupportsElectromagneticShockLocation, 1)[0] >= 1 : default(Boolean);
+        #endregion
+        #region ElectromagneticShockRecoverChance
+        private int _ElectromagneticShockRecoverChanceLocation => _DAT2Location!.Value.Min + 0xC1;
+        private bool _ElectromagneticShockRecoverChance_IsSet => _DAT2Location.HasValue;
+        public Single ElectromagneticShockRecoverChance => _ElectromagneticShockRecoverChance_IsSet ? _recordData.Slice(_ElectromagneticShockRecoverChanceLocation, 4).Float() : default(Single);
+        #endregion
+        #region ElectromagneticShockTimeMin
+        private int _ElectromagneticShockTimeMinLocation => _DAT2Location!.Value.Min + 0xC5;
+        private bool _ElectromagneticShockTimeMin_IsSet => _DAT2Location.HasValue;
+        public Single ElectromagneticShockTimeMin => _ElectromagneticShockTimeMin_IsSet ? _recordData.Slice(_ElectromagneticShockTimeMinLocation, 4).Float() : default(Single);
+        #endregion
+        #region ElectromagneticShockTimeMax
+        private int _ElectromagneticShockTimeMaxLocation => _DAT2Location!.Value.Min + 0xC9;
+        private bool _ElectromagneticShockTimeMax_IsSet => _DAT2Location.HasValue;
+        public Single ElectromagneticShockTimeMax => _ElectromagneticShockTimeMax_IsSet ? _recordData.Slice(_ElectromagneticShockTimeMaxLocation, 4).Float() : default(Single);
+        #endregion
+        #region ElectromagneticShockRecoverChanceOnDamageReceived
+        private int _ElectromagneticShockRecoverChanceOnDamageReceivedLocation => _DAT2Location!.Value.Min + 0xCD;
+        private bool _ElectromagneticShockRecoverChanceOnDamageReceived_IsSet => _DAT2Location.HasValue;
+        public Single ElectromagneticShockRecoverChanceOnDamageReceived => _ElectromagneticShockRecoverChanceOnDamageReceived_IsSet ? _recordData.Slice(_ElectromagneticShockRecoverChanceOnDamageReceivedLocation, 4).Float() : default(Single);
+        #endregion
+        #region ElectromagneticShockHealthDrainRate
+        private int _ElectromagneticShockHealthDrainRateLocation => _DAT2Location!.Value.Min + 0xD1;
+        private bool _ElectromagneticShockHealthDrainRate_IsSet => _DAT2Location.HasValue;
+        public Single ElectromagneticShockHealthDrainRate => _ElectromagneticShockHealthDrainRate_IsSet ? _recordData.Slice(_ElectromagneticShockHealthDrainRateLocation, 4).Float() : default(Single);
+        #endregion
+        #region ElectromagneticShockHealthAfterRecovery
+        private int _ElectromagneticShockHealthAfterRecoveryLocation => _DAT2Location!.Value.Min + 0xD5;
+        private bool _ElectromagneticShockHealthAfterRecovery_IsSet => _DAT2Location.HasValue;
+        public Single ElectromagneticShockHealthAfterRecovery => _ElectromagneticShockHealthAfterRecovery_IsSet ? _recordData.Slice(_ElectromagneticShockHealthAfterRecoveryLocation, 4).Float() : default(Single);
+        #endregion
+        #region ElectromagneticShockImmunityDurationAfterRecovery
+        private int _ElectromagneticShockImmunityDurationAfterRecoveryLocation => _DAT2Location!.Value.Min + 0xD9;
+        private bool _ElectromagneticShockImmunityDurationAfterRecovery_IsSet => _DAT2Location.HasValue;
+        public Single ElectromagneticShockImmunityDurationAfterRecovery => _ElectromagneticShockImmunityDurationAfterRecovery_IsSet ? _recordData.Slice(_ElectromagneticShockImmunityDurationAfterRecoveryLocation, 4).Float() : default(Single);
         #endregion
         #region MNAMLogic
         public partial ParseResult MNAMLogicCustomParse(
@@ -7639,12 +9350,12 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DAT2:
                 {
                     _DAT2Location = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)Race_FieldIndex.DAT2Unknown3;
+                    return (int)Race_FieldIndex.ElectromagneticShockImmunityDurationAfterRecovery;
                 }
                 case RecordTypeInts.MNAM:
                 {
                     if (!lastParsed.ParsedIndex.HasValue
-                        || lastParsed.ParsedIndex.Value <= (int)Race_FieldIndex.DAT2Unknown3)
+                        || lastParsed.ParsedIndex.Value <= (int)Race_FieldIndex.ElectromagneticShockImmunityDurationAfterRecovery)
                     {
                         return MNAMLogicCustomParse(
                             stream,
@@ -7714,7 +9425,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FNAM:
                 {
                     if (!lastParsed.ParsedIndex.HasValue
-                        || lastParsed.ParsedIndex.Value <= (int)Race_FieldIndex.DAT2Unknown3)
+                        || lastParsed.ParsedIndex.Value <= (int)Race_FieldIndex.ElectromagneticShockImmunityDurationAfterRecovery)
                     {
                         return FNAMLogicCustomParse(
                             stream,

@@ -19,12 +19,12 @@ public partial class Race
         Child = 0x0000_0004,
         TiltFrontBack = 0x0000_0008,
         TiltLeftRight = 0x0000_0010,
-        NoShadow = 0x0000_0020,
+        Jumps = 0x0000_0020,
         Swims = 0x0000_0040,
         Flies = 0x0000_0080,
         Walks = 0x0000_0100,
         Immobile = 0x0000_0200,
-        NotPunishable = 0x0000_0400,
+        NotPushable = 0x0000_0400,
         NoCombatInWater = 0x0000_0800,
         NoRotatingToHeadTrack = 0x0000_1000,
         DontShowBloodSpray = 0x0000_2000,
@@ -58,14 +58,26 @@ public partial class Race
         UseLargeActorPathing = 0x0000_0800_0000_0000,
         UseSubsegmentedDamage = 0x0000_1000_0000_0000,
         FlightDeferKill = 0x0000_2000_0000_0000,
+        CalcCharacterControllerRotationCenterOff = 0x0000_4000_0000_0000,
         FlightAllowProceduralCrashLand = 0x0000_8000_0000_0000,
         DisableWeaponCulling = 0x0001_0000_0000_0000,
-        UseOptimalSpeeds = 0x0002_0000_0000_0000,
+        SimulateClothOnDown = 0x0002_0000_0000_0000,
         HasFacialRig = 0x0004_0000_0000_0000,
         CanUseCrippledLimbs = 0x0008_0000_0000_0000,
         UseQuadrupedController = 0x0010_0000_0000_0000,
         LowPriorityPushable = 0x0020_0000_0000_0000,
-        CannotUsePlayableItems = 0x0040_0000_0000_0000
+        CannotUsePlayableItems = 0x0040_0000_0000_0000,
+        Tunnels = 0x0200_0000_0000_0000,
+        Hops = 0x0400_0000_0000_0000,
+        Teleport = 0x0800_0000_0000_0000,
+    }
+
+    public enum IntelligenceLevelType
+    {
+        None = 0,
+        Moderate = 1,
+        Normal = 2,
+        High = 3,
     }
 
     partial void CustomCtor()
