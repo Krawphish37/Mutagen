@@ -1961,6 +1961,9 @@
     <Compile Include="Records\Common Subrecords\Destructible.cs">
       <DependentUpon>Destructible.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Common Subrecords\Effect.cs">
+      <DependentUpon>Effect.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Common Subrecords\EnableParent.cs">
       <DependentUpon>EnableParent.xml</DependentUpon>
     </Compile>

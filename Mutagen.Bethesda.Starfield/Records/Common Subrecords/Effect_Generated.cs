@@ -123,15 +123,15 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Int32? IEffectGetter.MAGF => this.MAGF;
         #endregion
-        #region EFIF
-        public Int32? EFIF { get; set; }
+        #region Flags
+        public Effect.Flag? Flags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Int32? IEffectGetter.EFIF => this.EFIF;
+        Effect.Flag? IEffectGetter.Flags => this.Flags;
         #endregion
-        #region MUID
-        public Int32? MUID { get; set; }
+        #region IndexUid
+        public UInt32? IndexUid { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Int32? IEffectGetter.MUID => this.MUID;
+        UInt32? IEffectGetter.IndexUid => this.IndexUid;
         #endregion
 
         #region To String
@@ -179,8 +179,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Area = initialValue;
                 this.Duration = initialValue;
                 this.MAGF = initialValue;
-                this.EFIF = initialValue;
-                this.MUID = initialValue;
+                this.Flags = initialValue;
+                this.IndexUid = initialValue;
             }
 
             public Mask(
@@ -191,8 +191,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Area,
                 TItem Duration,
                 TItem MAGF,
-                TItem EFIF,
-                TItem MUID)
+                TItem Flags,
+                TItem IndexUid)
             {
                 this.BaseEffect = BaseEffect;
                 this.Data = new MaskItem<TItem, EffectData.Mask<TItem>?>(Data, new EffectData.Mask<TItem>(Data));
@@ -201,8 +201,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Area = Area;
                 this.Duration = Duration;
                 this.MAGF = MAGF;
-                this.EFIF = EFIF;
-                this.MUID = MUID;
+                this.Flags = Flags;
+                this.IndexUid = IndexUid;
             }
 
             #pragma warning disable CS8618
@@ -221,8 +221,8 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Area;
             public TItem Duration;
             public TItem MAGF;
-            public TItem EFIF;
-            public TItem MUID;
+            public TItem Flags;
+            public TItem IndexUid;
             #endregion
 
             #region Equals
@@ -242,8 +242,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Area, rhs.Area)) return false;
                 if (!object.Equals(this.Duration, rhs.Duration)) return false;
                 if (!object.Equals(this.MAGF, rhs.MAGF)) return false;
-                if (!object.Equals(this.EFIF, rhs.EFIF)) return false;
-                if (!object.Equals(this.MUID, rhs.MUID)) return false;
+                if (!object.Equals(this.Flags, rhs.Flags)) return false;
+                if (!object.Equals(this.IndexUid, rhs.IndexUid)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -256,8 +256,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Area);
                 hash.Add(this.Duration);
                 hash.Add(this.MAGF);
-                hash.Add(this.EFIF);
-                hash.Add(this.MUID);
+                hash.Add(this.Flags);
+                hash.Add(this.IndexUid);
                 return hash.ToHashCode();
             }
 
@@ -288,8 +288,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Area)) return false;
                 if (!eval(this.Duration)) return false;
                 if (!eval(this.MAGF)) return false;
-                if (!eval(this.EFIF)) return false;
-                if (!eval(this.MUID)) return false;
+                if (!eval(this.Flags)) return false;
+                if (!eval(this.IndexUid)) return false;
                 return true;
             }
             #endregion
@@ -319,8 +319,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Area)) return true;
                 if (eval(this.Duration)) return true;
                 if (eval(this.MAGF)) return true;
-                if (eval(this.EFIF)) return true;
-                if (eval(this.MUID)) return true;
+                if (eval(this.Flags)) return true;
+                if (eval(this.IndexUid)) return true;
                 return false;
             }
             #endregion
@@ -356,8 +356,8 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Area = eval(this.Area);
                 obj.Duration = eval(this.Duration);
                 obj.MAGF = eval(this.MAGF);
-                obj.EFIF = eval(this.EFIF);
-                obj.MUID = eval(this.MUID);
+                obj.Flags = eval(this.Flags);
+                obj.IndexUid = eval(this.IndexUid);
             }
             #endregion
 
@@ -419,13 +419,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(MAGF, "MAGF");
                     }
-                    if (printMask?.EFIF ?? true)
+                    if (printMask?.Flags ?? true)
                     {
-                        sb.AppendItem(EFIF, "EFIF");
+                        sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.MUID ?? true)
+                    if (printMask?.IndexUid ?? true)
                     {
-                        sb.AppendItem(MUID, "MUID");
+                        sb.AppendItem(IndexUid, "IndexUid");
                     }
                 }
             }
@@ -458,8 +458,8 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Area;
             public Exception? Duration;
             public Exception? MAGF;
-            public Exception? EFIF;
-            public Exception? MUID;
+            public Exception? Flags;
+            public Exception? IndexUid;
             #endregion
 
             #region IErrorMask
@@ -482,10 +482,10 @@ namespace Mutagen.Bethesda.Starfield
                         return Duration;
                     case Effect_FieldIndex.MAGF:
                         return MAGF;
-                    case Effect_FieldIndex.EFIF:
-                        return EFIF;
-                    case Effect_FieldIndex.MUID:
-                        return MUID;
+                    case Effect_FieldIndex.Flags:
+                        return Flags;
+                    case Effect_FieldIndex.IndexUid:
+                        return IndexUid;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -517,11 +517,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Effect_FieldIndex.MAGF:
                         this.MAGF = ex;
                         break;
-                    case Effect_FieldIndex.EFIF:
-                        this.EFIF = ex;
+                    case Effect_FieldIndex.Flags:
+                        this.Flags = ex;
                         break;
-                    case Effect_FieldIndex.MUID:
-                        this.MUID = ex;
+                    case Effect_FieldIndex.IndexUid:
+                        this.IndexUid = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -554,11 +554,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Effect_FieldIndex.MAGF:
                         this.MAGF = (Exception?)obj;
                         break;
-                    case Effect_FieldIndex.EFIF:
-                        this.EFIF = (Exception?)obj;
+                    case Effect_FieldIndex.Flags:
+                        this.Flags = (Exception?)obj;
                         break;
-                    case Effect_FieldIndex.MUID:
-                        this.MUID = (Exception?)obj;
+                    case Effect_FieldIndex.IndexUid:
+                        this.IndexUid = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -575,8 +575,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (Area != null) return true;
                 if (Duration != null) return true;
                 if (MAGF != null) return true;
-                if (EFIF != null) return true;
-                if (MUID != null) return true;
+                if (Flags != null) return true;
+                if (IndexUid != null) return true;
                 return false;
             }
             #endregion
@@ -637,10 +637,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(MAGF, "MAGF");
                 }
                 {
-                    sb.AppendItem(EFIF, "EFIF");
+                    sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(MUID, "MUID");
+                    sb.AppendItem(IndexUid, "IndexUid");
                 }
             }
             #endregion
@@ -657,8 +657,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Area = this.Area.Combine(rhs.Area);
                 ret.Duration = this.Duration.Combine(rhs.Duration);
                 ret.MAGF = this.MAGF.Combine(rhs.MAGF);
-                ret.EFIF = this.EFIF.Combine(rhs.EFIF);
-                ret.MUID = this.MUID.Combine(rhs.MUID);
+                ret.Flags = this.Flags.Combine(rhs.Flags);
+                ret.IndexUid = this.IndexUid.Combine(rhs.IndexUid);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -689,8 +689,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool Area;
             public bool Duration;
             public bool MAGF;
-            public bool EFIF;
-            public bool MUID;
+            public bool Flags;
+            public bool IndexUid;
             #endregion
 
             #region Ctors
@@ -705,8 +705,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Area = defaultOn;
                 this.Duration = defaultOn;
                 this.MAGF = defaultOn;
-                this.EFIF = defaultOn;
-                this.MUID = defaultOn;
+                this.Flags = defaultOn;
+                this.IndexUid = defaultOn;
             }
 
             #endregion
@@ -729,8 +729,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Area, null));
                 ret.Add((Duration, null));
                 ret.Add((MAGF, null));
-                ret.Add((EFIF, null));
-                ret.Add((MUID, null));
+                ret.Add((Flags, null));
+                ret.Add((IndexUid, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -816,8 +816,8 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<IGlobalGetter> Area { get; set; }
         new IFormLinkNullable<IGlobalGetter> Duration { get; set; }
         new Int32? MAGF { get; set; }
-        new Int32? EFIF { get; set; }
-        new Int32? MUID { get; set; }
+        new Effect.Flag? Flags { get; set; }
+        new UInt32? IndexUid { get; set; }
     }
 
     public partial interface IEffectGetter :
@@ -840,8 +840,8 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IGlobalGetter> Area { get; }
         IFormLinkNullableGetter<IGlobalGetter> Duration { get; }
         Int32? MAGF { get; }
-        Int32? EFIF { get; }
-        Int32? MUID { get; }
+        Effect.Flag? Flags { get; }
+        UInt32? IndexUid { get; }
 
     }
 
@@ -1018,8 +1018,8 @@ namespace Mutagen.Bethesda.Starfield
         Area = 4,
         Duration = 5,
         MAGF = 6,
-        EFIF = 7,
-        MUID = 8,
+        Flags = 7,
+        IndexUid = 8,
     }
     #endregion
 
@@ -1135,8 +1135,8 @@ namespace Mutagen.Bethesda.Starfield
             item.Area.Clear();
             item.Duration.Clear();
             item.MAGF = default;
-            item.EFIF = default;
-            item.MUID = default;
+            item.Flags = default;
+            item.IndexUid = default;
         }
         
         #region Mutagen
@@ -1205,8 +1205,8 @@ namespace Mutagen.Bethesda.Starfield
             ret.Area = item.Area.Equals(rhs.Area);
             ret.Duration = item.Duration.Equals(rhs.Duration);
             ret.MAGF = item.MAGF == rhs.MAGF;
-            ret.EFIF = item.EFIF == rhs.EFIF;
-            ret.MUID = item.MUID == rhs.MUID;
+            ret.Flags = item.Flags == rhs.Flags;
+            ret.IndexUid = item.IndexUid == rhs.IndexUid;
         }
         
         public string Print(
@@ -1291,15 +1291,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(MAGFItem, "MAGF");
             }
-            if ((printMask?.EFIF ?? true)
-                && item.EFIF is {} EFIFItem)
+            if ((printMask?.Flags ?? true)
+                && item.Flags is {} FlagsItem)
             {
-                sb.AppendItem(EFIFItem, "EFIF");
+                sb.AppendItem(FlagsItem, "Flags");
             }
-            if ((printMask?.MUID ?? true)
-                && item.MUID is {} MUIDItem)
+            if ((printMask?.IndexUid ?? true)
+                && item.IndexUid is {} IndexUidItem)
             {
-                sb.AppendItem(MUIDItem, "MUID");
+                sb.AppendItem(IndexUidItem, "IndexUid");
             }
         }
         
@@ -1342,13 +1342,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.MAGF != rhs.MAGF) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Effect_FieldIndex.EFIF) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Effect_FieldIndex.Flags) ?? true))
             {
-                if (lhs.EFIF != rhs.EFIF) return false;
+                if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Effect_FieldIndex.MUID) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Effect_FieldIndex.IndexUid) ?? true))
             {
-                if (lhs.MUID != rhs.MUID) return false;
+                if (lhs.IndexUid != rhs.IndexUid) return false;
             }
             return true;
         }
@@ -1372,13 +1372,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(MAGFitem);
             }
-            if (item.EFIF is {} EFIFitem)
+            if (item.Flags is {} Flagsitem)
             {
-                hash.Add(EFIFitem);
+                hash.Add(Flagsitem);
             }
-            if (item.MUID is {} MUIDitem)
+            if (item.IndexUid is {} IndexUiditem)
             {
-                hash.Add(MUIDitem);
+                hash.Add(IndexUiditem);
             }
             return hash.ToHashCode();
         }
@@ -1502,13 +1502,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.MAGF = rhs.MAGF;
             }
-            if ((copyMask?.GetShouldTranslate((int)Effect_FieldIndex.EFIF) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Effect_FieldIndex.Flags) ?? true))
             {
-                item.EFIF = rhs.EFIF;
+                item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)Effect_FieldIndex.MUID) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Effect_FieldIndex.IndexUid) ?? true))
             {
-                item.MUID = rhs.MUID;
+                item.IndexUid = rhs.IndexUid;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1657,13 +1657,14 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.MAGF,
                 header: translationParams.ConvertToCustom(RecordTypes.MAGF));
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.EFIF,
+            EnumBinaryTranslation<Effect.Flag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Flags,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.EFIF));
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.MUID,
+                item: item.IndexUid,
                 header: translationParams.ConvertToCustom(RecordTypes.MUID));
         }
 
@@ -1761,17 +1762,19 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.EFIF:
                 {
-                    if (lastParsed.ShortCircuit((int)Effect_FieldIndex.EFIF, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)Effect_FieldIndex.Flags, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.EFIF = frame.ReadInt32();
-                    return (int)Effect_FieldIndex.EFIF;
+                    item.Flags = EnumBinaryTranslation<Effect.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)Effect_FieldIndex.Flags;
                 }
                 case RecordTypeInts.MUID:
                 {
-                    if (lastParsed.ShortCircuit((int)Effect_FieldIndex.MUID, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)Effect_FieldIndex.IndexUid, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.MUID = frame.ReadInt32();
-                    return (int)Effect_FieldIndex.MUID;
+                    item.IndexUid = frame.ReadUInt32();
+                    return (int)Effect_FieldIndex.IndexUid;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1867,13 +1870,13 @@ namespace Mutagen.Bethesda.Starfield
         private int? _MAGFLocation;
         public Int32? MAGF => _MAGFLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _MAGFLocation.Value, _package.MetaData.Constants)) : default(Int32?);
         #endregion
-        #region EFIF
-        private int? _EFIFLocation;
-        public Int32? EFIF => _EFIFLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _EFIFLocation.Value, _package.MetaData.Constants)) : default(Int32?);
+        #region Flags
+        private int? _FlagsLocation;
+        public Effect.Flag? Flags => EnumBinaryTranslation<Effect.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_FlagsLocation, _recordData, _package, 4);
         #endregion
-        #region MUID
-        private int? _MUIDLocation;
-        public Int32? MUID => _MUIDLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _MUIDLocation.Value, _package.MetaData.Constants)) : default(Int32?);
+        #region IndexUid
+        private int? _IndexUidLocation;
+        public UInt32? IndexUid => _IndexUidLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _IndexUidLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1992,15 +1995,15 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.EFIF:
                 {
-                    if (lastParsed.ShortCircuit((int)Effect_FieldIndex.EFIF, translationParams)) return ParseResult.Stop;
-                    _EFIFLocation = (stream.Position - offset);
-                    return (int)Effect_FieldIndex.EFIF;
+                    if (lastParsed.ShortCircuit((int)Effect_FieldIndex.Flags, translationParams)) return ParseResult.Stop;
+                    _FlagsLocation = (stream.Position - offset);
+                    return (int)Effect_FieldIndex.Flags;
                 }
                 case RecordTypeInts.MUID:
                 {
-                    if (lastParsed.ShortCircuit((int)Effect_FieldIndex.MUID, translationParams)) return ParseResult.Stop;
-                    _MUIDLocation = (stream.Position - offset);
-                    return (int)Effect_FieldIndex.MUID;
+                    if (lastParsed.ShortCircuit((int)Effect_FieldIndex.IndexUid, translationParams)) return ParseResult.Stop;
+                    _IndexUidLocation = (stream.Position - offset);
+                    return (int)Effect_FieldIndex.IndexUid;
                 }
                 default:
                     return ParseResult.Stop;
