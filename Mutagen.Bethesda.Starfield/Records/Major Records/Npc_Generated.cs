@@ -829,16 +829,16 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Pronoun? INpcGetter.Pronoun => this.Pronoun;
         #endregion
-        #region ONA2
+        #region RaceOverrides
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _ONA2;
-        public MemorySlice<Byte>? ONA2
+        private NpcRaceOverride? _RaceOverrides;
+        public NpcRaceOverride? RaceOverrides
         {
-            get => this._ONA2;
-            set => this._ONA2 = value;
+            get => _RaceOverrides;
+            set => _RaceOverrides = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? INpcGetter.ONA2 => this.ONA2;
+        INpcRaceOverrideGetter? INpcGetter.RaceOverrides => this.RaceOverrides;
         #endregion
 
         #region To String
@@ -952,7 +952,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.JewelryColor = initialValue;
                 this.TeethColor = initialValue;
                 this.Pronoun = initialValue;
-                this.ONA2 = initialValue;
+                this.RaceOverrides = new MaskItem<TItem, NpcRaceOverride.Mask<TItem>?>(initialValue, new NpcRaceOverride.Mask<TItem>(initialValue));
             }
 
             public Mask(
@@ -1050,7 +1050,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem JewelryColor,
                 TItem TeethColor,
                 TItem Pronoun,
-                TItem ONA2)
+                TItem RaceOverrides)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -1147,7 +1147,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.JewelryColor = JewelryColor;
                 this.TeethColor = TeethColor;
                 this.Pronoun = Pronoun;
-                this.ONA2 = ONA2;
+                this.RaceOverrides = new MaskItem<TItem, NpcRaceOverride.Mask<TItem>?>(RaceOverrides, new NpcRaceOverride.Mask<TItem>(RaceOverrides));
             }
 
             #pragma warning disable CS8618
@@ -1246,7 +1246,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem JewelryColor;
             public TItem TeethColor;
             public TItem Pronoun;
-            public TItem ONA2;
+            public MaskItem<TItem, NpcRaceOverride.Mask<TItem>?>? RaceOverrides { get; set; }
             #endregion
 
             #region Equals
@@ -1347,7 +1347,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.JewelryColor, rhs.JewelryColor)) return false;
                 if (!object.Equals(this.TeethColor, rhs.TeethColor)) return false;
                 if (!object.Equals(this.Pronoun, rhs.Pronoun)) return false;
-                if (!object.Equals(this.ONA2, rhs.ONA2)) return false;
+                if (!object.Equals(this.RaceOverrides, rhs.RaceOverrides)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -1440,7 +1440,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.JewelryColor);
                 hash.Add(this.TeethColor);
                 hash.Add(this.Pronoun);
-                hash.Add(this.ONA2);
+                hash.Add(this.RaceOverrides);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -1766,7 +1766,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.JewelryColor)) return false;
                 if (!eval(this.TeethColor)) return false;
                 if (!eval(this.Pronoun)) return false;
-                if (!eval(this.ONA2)) return false;
+                if (RaceOverrides != null)
+                {
+                    if (!eval(this.RaceOverrides.Overall)) return false;
+                    if (this.RaceOverrides.Specific != null && !this.RaceOverrides.Specific.All(eval)) return false;
+                }
                 return true;
             }
             #endregion
@@ -2090,7 +2094,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.JewelryColor)) return true;
                 if (eval(this.TeethColor)) return true;
                 if (eval(this.Pronoun)) return true;
-                if (eval(this.ONA2)) return true;
+                if (RaceOverrides != null)
+                {
+                    if (eval(this.RaceOverrides.Overall)) return true;
+                    if (this.RaceOverrides.Specific != null && this.RaceOverrides.Specific.Any(eval)) return true;
+                }
                 return false;
             }
             #endregion
@@ -2439,7 +2447,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.JewelryColor = eval(this.JewelryColor);
                 obj.TeethColor = eval(this.TeethColor);
                 obj.Pronoun = eval(this.Pronoun);
-                obj.ONA2 = eval(this.ONA2);
+                obj.RaceOverrides = this.RaceOverrides == null ? null : new MaskItem<R, NpcRaceOverride.Mask<R>?>(eval(this.RaceOverrides.Overall), this.RaceOverrides.Specific?.Translate(eval));
             }
             #endregion
 
@@ -3088,9 +3096,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Pronoun, "Pronoun");
                     }
-                    if (printMask?.ONA2 ?? true)
+                    if (printMask?.RaceOverrides?.Overall ?? true)
                     {
-                        sb.AppendItem(ONA2, "ONA2");
+                        RaceOverrides?.Print(sb);
                     }
                 }
             }
@@ -3190,7 +3198,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? JewelryColor;
             public Exception? TeethColor;
             public Exception? Pronoun;
-            public Exception? ONA2;
+            public MaskItem<Exception?, NpcRaceOverride.ErrorMask?>? RaceOverrides;
             #endregion
 
             #region IErrorMask
@@ -3373,8 +3381,8 @@ namespace Mutagen.Bethesda.Starfield
                         return TeethColor;
                     case Npc_FieldIndex.Pronoun:
                         return Pronoun;
-                    case Npc_FieldIndex.ONA2:
-                        return ONA2;
+                    case Npc_FieldIndex.RaceOverrides:
+                        return RaceOverrides;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -3646,8 +3654,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Npc_FieldIndex.Pronoun:
                         this.Pronoun = ex;
                         break;
-                    case Npc_FieldIndex.ONA2:
-                        this.ONA2 = ex;
+                    case Npc_FieldIndex.RaceOverrides:
+                        this.RaceOverrides = new MaskItem<Exception?, NpcRaceOverride.ErrorMask?>(ex, null);
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -3921,8 +3929,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Npc_FieldIndex.Pronoun:
                         this.Pronoun = (Exception?)obj;
                         break;
-                    case Npc_FieldIndex.ONA2:
-                        this.ONA2 = (Exception?)obj;
+                    case Npc_FieldIndex.RaceOverrides:
+                        this.RaceOverrides = (MaskItem<Exception?, NpcRaceOverride.ErrorMask?>?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -4020,7 +4028,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (JewelryColor != null) return true;
                 if (TeethColor != null) return true;
                 if (Pronoun != null) return true;
-                if (ONA2 != null) return true;
+                if (RaceOverrides != null) return true;
                 return false;
             }
             #endregion
@@ -4572,9 +4580,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(Pronoun, "Pronoun");
                 }
-                {
-                    sb.AppendItem(ONA2, "ONA2");
-                }
+                RaceOverrides?.Print(sb);
             }
             #endregion
 
@@ -4670,7 +4676,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.JewelryColor = this.JewelryColor.Combine(rhs.JewelryColor);
                 ret.TeethColor = this.TeethColor.Combine(rhs.TeethColor);
                 ret.Pronoun = this.Pronoun.Combine(rhs.Pronoun);
-                ret.ONA2 = this.ONA2.Combine(rhs.ONA2);
+                ret.RaceOverrides = this.RaceOverrides.Combine(rhs.RaceOverrides, (l, r) => l.Combine(r));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -4780,7 +4786,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool JewelryColor;
             public bool TeethColor;
             public bool Pronoun;
-            public bool ONA2;
+            public NpcRaceOverride.TranslationMask? RaceOverrides;
             #endregion
 
             #region Ctors
@@ -4855,7 +4861,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.JewelryColor = defaultOn;
                 this.TeethColor = defaultOn;
                 this.Pronoun = defaultOn;
-                this.ONA2 = defaultOn;
             }
 
             #endregion
@@ -4950,7 +4955,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((JewelryColor, null));
                 ret.Add((TeethColor, null));
                 ret.Add((Pronoun, null));
-                ret.Add((ONA2, null));
+                ret.Add((RaceOverrides != null ? RaceOverrides.OnOverall : DefaultOn, RaceOverrides?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -5222,7 +5227,7 @@ namespace Mutagen.Bethesda.Starfield
         new String? JewelryColor { get; set; }
         new String? TeethColor { get; set; }
         new Pronoun? Pronoun { get; set; }
-        new MemorySlice<Byte>? ONA2 { get; set; }
+        new NpcRaceOverride? RaceOverrides { get; set; }
         #region Mutagen
         new Npc.MajorFlag MajorFlags { get; set; }
         #endregion
@@ -5368,7 +5373,7 @@ namespace Mutagen.Bethesda.Starfield
         String? JewelryColor { get; }
         String? TeethColor { get; }
         Pronoun? Pronoun { get; }
-        ReadOnlyMemorySlice<Byte>? ONA2 { get; }
+        INpcRaceOverrideGetter? RaceOverrides { get; }
 
         #region Mutagen
         Npc.MajorFlag MajorFlags { get; }
@@ -5636,7 +5641,7 @@ namespace Mutagen.Bethesda.Starfield
         JewelryColor = 91,
         TeethColor = 92,
         Pronoun = 93,
-        ONA2 = 94,
+        RaceOverrides = 94,
     }
     #endregion
 
@@ -5907,7 +5912,7 @@ namespace Mutagen.Bethesda.Starfield
             item.JewelryColor = default;
             item.TeethColor = default;
             item.Pronoun = default;
-            item.ONA2 = default;
+            item.RaceOverrides = null;
             base.Clear(item);
         }
         
@@ -5965,6 +5970,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.DefaultPackageList.Relink(mapping);
             obj.CrimeFaction.Relink(mapping);
             obj.FormationFaction.Relink(mapping);
+            obj.RaceOverrides?.RemapLinks(mapping);
         }
         
         public IEnumerable<IAssetLink> EnumerateListedAssetLinks(INpc obj, bool iterateNestedRecords = true)
@@ -6225,7 +6231,11 @@ namespace Mutagen.Bethesda.Starfield
             ret.JewelryColor = string.Equals(item.JewelryColor, rhs.JewelryColor);
             ret.TeethColor = string.Equals(item.TeethColor, rhs.TeethColor);
             ret.Pronoun = item.Pronoun == rhs.Pronoun;
-            ret.ONA2 = MemorySliceExt.SequenceEqual(item.ONA2, rhs.ONA2);
+            ret.RaceOverrides = EqualsMaskHelper.EqualsHelper(
+                item.RaceOverrides,
+                rhs.RaceOverrides,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -6837,10 +6847,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(PronounItem, "Pronoun");
             }
-            if ((printMask?.ONA2 ?? true)
-                && item.ONA2 is {} ONA2Item)
+            if ((printMask?.RaceOverrides?.Overall ?? true)
+                && item.RaceOverrides is {} RaceOverridesItem)
             {
-                sb.AppendLine($"ONA2 => {SpanExt.ToHexString(ONA2Item)}");
+                RaceOverridesItem?.Print(sb, "RaceOverrides");
             }
         }
         
@@ -7276,9 +7286,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Pronoun != rhs.Pronoun) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.ONA2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.RaceOverrides) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.ONA2, rhs.ONA2)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.RaceOverrides, rhs.RaceOverrides, out var lhsRaceOverrides, out var rhsRaceOverrides, out var isRaceOverridesEqual))
+                {
+                    if (!((NpcRaceOverrideCommon)((INpcRaceOverrideGetter)lhsRaceOverrides).CommonInstance()!).Equals(lhsRaceOverrides, rhsRaceOverrides, equalsMask?.GetSubCrystal((int)Npc_FieldIndex.RaceOverrides))) return false;
+                }
+                else if (!isRaceOverridesEqual) return false;
             }
             return true;
         }
@@ -7467,9 +7481,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Pronounitem);
             }
-            if (item.ONA2 is {} ONA2Item)
+            if (item.RaceOverrides is {} RaceOverridesitem)
             {
-                hash.Add(ONA2Item);
+                hash.Add(RaceOverridesitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -7697,6 +7711,13 @@ namespace Mutagen.Bethesda.Starfield
             if (FormLinkInformation.TryFactory(obj.FormationFaction, out var FormationFactionInfo))
             {
                 yield return FormationFactionInfo;
+            }
+            if (obj.RaceOverrides is {} RaceOverridesItems)
+            {
+                foreach (var item in RaceOverridesItems.EnumerateFormLinks(iterateNestedRecords))
+                {
+                    yield return item;
+                }
             }
             yield break;
         }
@@ -8763,15 +8784,30 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Pronoun = rhs.Pronoun;
             }
-            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.ONA2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.RaceOverrides) ?? true))
             {
-                if(rhs.ONA2 is {} ONA2rhs)
+                errorMask?.PushIndex((int)Npc_FieldIndex.RaceOverrides);
+                try
                 {
-                    item.ONA2 = ONA2rhs.ToArray();
+                    if(rhs.RaceOverrides is {} rhsRaceOverrides)
+                    {
+                        item.RaceOverrides = rhsRaceOverrides.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)Npc_FieldIndex.RaceOverrides));
+                    }
+                    else
+                    {
+                        item.RaceOverrides = default;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.ONA2 = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             DeepCopyInCustom(
@@ -9443,10 +9479,13 @@ namespace Mutagen.Bethesda.Starfield
                 item.Pronoun,
                 length: 1,
                 header: translationParams.ConvertToCustom(RecordTypes.PRON));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.ONA2,
-                header: translationParams.ConvertToCustom(RecordTypes.ONA2));
+            if (item.RaceOverrides is {} RaceOverridesItem)
+            {
+                ((NpcRaceOverrideBinaryWriteTranslation)((IBinaryItem)RaceOverridesItem).BinaryWriteTranslator).Write(
+                    item: RaceOverridesItem,
+                    writer: writer,
+                    translationParams: translationParams);
+            }
         }
 
         public static partial void WriteBinaryFlagsCustom(
@@ -10162,9 +10201,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ONA2:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ONA2 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Npc_FieldIndex.ONA2;
+                    item.RaceOverrides = Mutagen.Bethesda.Starfield.NpcRaceOverride.CreateFromBinary(frame: frame);
+                    return (int)Npc_FieldIndex.RaceOverrides;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -10562,9 +10600,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _PronounLocation;
         public Pronoun? Pronoun => EnumBinaryTranslation<Pronoun, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_PronounLocation, _recordData, _package, 1);
         #endregion
-        #region ONA2
-        private int? _ONA2Location;
-        public ReadOnlyMemorySlice<Byte>? ONA2 => _ONA2Location.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ONA2Location.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region RaceOverrides
+        private RangeInt32? _RaceOverridesLocation;
+        public INpcRaceOverrideGetter? RaceOverrides => _RaceOverridesLocation.HasValue ? NpcRaceOverrideBinaryOverlay.NpcRaceOverrideFactory(_recordData.Slice(_RaceOverridesLocation!.Value.Min), _package) : default;
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -11139,8 +11177,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ONA2:
                 {
-                    _ONA2Location = (stream.Position - offset);
-                    return (int)Npc_FieldIndex.ONA2;
+                    _RaceOverridesLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
+                    return (int)Npc_FieldIndex.RaceOverrides;
                 }
                 case RecordTypeInts.XXXX:
                 {

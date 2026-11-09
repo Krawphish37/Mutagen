@@ -6080,28 +6080,10 @@
     <Compile Include="Records\Major Records\NpcMorphBlend_Generated.cs">
       <DependentUpon>Npc.xml</DependentUpon>
     </Compile>
-    <Compile Include="Records\Major Records\NpcRaceOverrideSize_Generated.cs">
-      <DependentUpon>Npc.xml</DependentUpon>
-    </Compile>
-    <Compile Include="Records\Major Records\NpcRaceOverrideUnknown1_Generated.cs">
-      <DependentUpon>Npc.xml</DependentUpon>
-    </Compile>
-    <Compile Include="Records\Major Records\NpcRaceOverrideUnknown2_Generated.cs">
-      <DependentUpon>Npc.xml</DependentUpon>
-    </Compile>
     <Compile Include="Records\Major Records\NpcRaceOverrideUnarmedWeapon_Generated.cs">
       <DependentUpon>Npc.xml</DependentUpon>
     </Compile>
-    <Compile Include="Records\Major Records\NpcRaceOverrideFlag_Generated.cs">
-      <DependentUpon>Npc.xml</DependentUpon>
-    </Compile>
-    <Compile Include="Records\Major Records\NpcRaceOverrideUnknown5_Generated.cs">
-      <DependentUpon>Npc.xml</DependentUpon>
-    </Compile>
     <Compile Include="Records\Major Records\NpcRaceOverrideGeneral_Generated.cs">
-      <DependentUpon>Npc.xml</DependentUpon>
-    </Compile>
-    <Compile Include="Records\Major Records\NpcRaceOverrideUnknown7_Generated.cs">
       <DependentUpon>Npc.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\Major Records\LocationReference_Generated.cs">
@@ -6906,6 +6888,21 @@
     </Compile>
     <Compile Include="Records\Major Records\LegendaryItemLnamEntry_Generated.cs">
       <DependentUpon>LegendaryItem.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\NpcRaceOverrideMovement_Generated.cs">
+      <DependentUpon>Npc.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\NpcRaceOverrideFlight_Generated.cs">
+      <DependentUpon>Npc.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\NpcRaceOverrideFlags_Generated.cs">
+      <DependentUpon>Npc.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\NpcRaceOverrideBleedout_Generated.cs">
+      <DependentUpon>Npc.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\NpcRaceOverrideElectromagneticShock_Generated.cs">
+      <DependentUpon>Npc.xml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

@@ -52,8 +52,8 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Unknown
-        public Single Unknown { get; set; } = default(Single);
+        #region InjuredHealthPercent
+        public Single InjuredHealthPercent { get; set; } = default(Single);
         #endregion
         #region UnarmedWeapon
         private readonly IFormLink<IWeaponGetter> _UnarmedWeapon = new FormLink<IWeaponGetter>();
@@ -104,15 +104,15 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Unknown = initialValue;
+                this.InjuredHealthPercent = initialValue;
                 this.UnarmedWeapon = initialValue;
             }
 
             public Mask(
-                TItem Unknown,
+                TItem InjuredHealthPercent,
                 TItem UnarmedWeapon)
             {
-                this.Unknown = Unknown;
+                this.InjuredHealthPercent = InjuredHealthPercent;
                 this.UnarmedWeapon = UnarmedWeapon;
             }
 
@@ -125,7 +125,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Unknown;
+            public TItem InjuredHealthPercent;
             public TItem UnarmedWeapon;
             #endregion
 
@@ -139,14 +139,14 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.InjuredHealthPercent, rhs.InjuredHealthPercent)) return false;
                 if (!object.Equals(this.UnarmedWeapon, rhs.UnarmedWeapon)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Unknown);
+                hash.Add(this.InjuredHealthPercent);
                 hash.Add(this.UnarmedWeapon);
                 return hash.ToHashCode();
             }
@@ -156,7 +156,7 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.InjuredHealthPercent)) return false;
                 if (!eval(this.UnarmedWeapon)) return false;
                 return true;
             }
@@ -165,7 +165,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Unknown)) return true;
+                if (eval(this.InjuredHealthPercent)) return true;
                 if (eval(this.UnarmedWeapon)) return true;
                 return false;
             }
@@ -181,7 +181,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Unknown = eval(this.Unknown);
+                obj.InjuredHealthPercent = eval(this.InjuredHealthPercent);
                 obj.UnarmedWeapon = eval(this.UnarmedWeapon);
             }
             #endregion
@@ -201,9 +201,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(NpcRaceOverrideUnarmedWeapon.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.InjuredHealthPercent ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(InjuredHealthPercent, "InjuredHealthPercent");
                     }
                     if (printMask?.UnarmedWeapon ?? true)
                     {
@@ -233,7 +233,7 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Unknown;
+            public Exception? InjuredHealthPercent;
             public Exception? UnarmedWeapon;
             #endregion
 
@@ -243,8 +243,8 @@ namespace Mutagen.Bethesda.Starfield
                 NpcRaceOverrideUnarmedWeapon_FieldIndex enu = (NpcRaceOverrideUnarmedWeapon_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcRaceOverrideUnarmedWeapon_FieldIndex.Unknown:
-                        return Unknown;
+                    case NpcRaceOverrideUnarmedWeapon_FieldIndex.InjuredHealthPercent:
+                        return InjuredHealthPercent;
                     case NpcRaceOverrideUnarmedWeapon_FieldIndex.UnarmedWeapon:
                         return UnarmedWeapon;
                     default:
@@ -257,8 +257,8 @@ namespace Mutagen.Bethesda.Starfield
                 NpcRaceOverrideUnarmedWeapon_FieldIndex enu = (NpcRaceOverrideUnarmedWeapon_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcRaceOverrideUnarmedWeapon_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case NpcRaceOverrideUnarmedWeapon_FieldIndex.InjuredHealthPercent:
+                        this.InjuredHealthPercent = ex;
                         break;
                     case NpcRaceOverrideUnarmedWeapon_FieldIndex.UnarmedWeapon:
                         this.UnarmedWeapon = ex;
@@ -273,8 +273,8 @@ namespace Mutagen.Bethesda.Starfield
                 NpcRaceOverrideUnarmedWeapon_FieldIndex enu = (NpcRaceOverrideUnarmedWeapon_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcRaceOverrideUnarmedWeapon_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case NpcRaceOverrideUnarmedWeapon_FieldIndex.InjuredHealthPercent:
+                        this.InjuredHealthPercent = (Exception?)obj;
                         break;
                     case NpcRaceOverrideUnarmedWeapon_FieldIndex.UnarmedWeapon:
                         this.UnarmedWeapon = (Exception?)obj;
@@ -287,7 +287,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Unknown != null) return true;
+                if (InjuredHealthPercent != null) return true;
                 if (UnarmedWeapon != null) return true;
                 return false;
             }
@@ -315,7 +315,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(InjuredHealthPercent, "InjuredHealthPercent");
                 }
                 {
                     sb.AppendItem(UnarmedWeapon, "UnarmedWeapon");
@@ -328,7 +328,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.InjuredHealthPercent = this.InjuredHealthPercent.Combine(rhs.InjuredHealthPercent);
                 ret.UnarmedWeapon = this.UnarmedWeapon.Combine(rhs.UnarmedWeapon);
                 return ret;
             }
@@ -353,7 +353,7 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Unknown;
+            public bool InjuredHealthPercent;
             public bool UnarmedWeapon;
             #endregion
 
@@ -364,7 +364,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Unknown = defaultOn;
+                this.InjuredHealthPercent = defaultOn;
                 this.UnarmedWeapon = defaultOn;
             }
 
@@ -381,7 +381,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Unknown, null));
+                ret.Add((InjuredHealthPercent, null));
                 ret.Add((UnarmedWeapon, null));
             }
 
@@ -461,7 +461,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<INpcRaceOverrideUnarmedWeapon>,
         INpcRaceOverrideUnarmedWeaponGetter
     {
-        new Single Unknown { get; set; }
+        new Single InjuredHealthPercent { get; set; }
         new IFormLink<IWeaponGetter> UnarmedWeapon { get; set; }
     }
 
@@ -478,7 +478,7 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => NpcRaceOverrideUnarmedWeapon_Registration.Instance;
-        Single Unknown { get; }
+        Single InjuredHealthPercent { get; }
         IFormLinkGetter<IWeaponGetter> UnarmedWeapon { get; }
 
     }
@@ -649,7 +649,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum NpcRaceOverrideUnarmedWeapon_FieldIndex
     {
-        Unknown = 0,
+        InjuredHealthPercent = 0,
         UnarmedWeapon = 1,
     }
     #endregion
@@ -729,7 +729,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(INpcRaceOverrideUnarmedWeapon item)
         {
             ClearPartial();
-            item.Unknown = default(Single);
+            item.InjuredHealthPercent = default(Single);
             item.UnarmedWeapon.Clear();
         }
         
@@ -781,7 +781,7 @@ namespace Mutagen.Bethesda.Starfield
             NpcRaceOverrideUnarmedWeapon.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Unknown = item.Unknown.EqualsWithin(rhs.Unknown);
+            ret.InjuredHealthPercent = item.InjuredHealthPercent.EqualsWithin(rhs.InjuredHealthPercent);
             ret.UnarmedWeapon = item.UnarmedWeapon.Equals(rhs.UnarmedWeapon);
         }
         
@@ -827,9 +827,9 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             NpcRaceOverrideUnarmedWeapon.Mask<bool>? printMask = null)
         {
-            if (printMask?.Unknown ?? true)
+            if (printMask?.InjuredHealthPercent ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.InjuredHealthPercent, "InjuredHealthPercent");
             }
             if (printMask?.UnarmedWeapon ?? true)
             {
@@ -844,9 +844,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideUnarmedWeapon_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideUnarmedWeapon_FieldIndex.InjuredHealthPercent) ?? true))
             {
-                if (!lhs.Unknown.EqualsWithin(rhs.Unknown)) return false;
+                if (!lhs.InjuredHealthPercent.EqualsWithin(rhs.InjuredHealthPercent)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverrideUnarmedWeapon_FieldIndex.UnarmedWeapon) ?? true))
             {
@@ -858,7 +858,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(INpcRaceOverrideUnarmedWeaponGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Unknown);
+            hash.Add(item.InjuredHealthPercent);
             hash.Add(item.UnarmedWeapon);
             return hash.ToHashCode();
         }
@@ -893,9 +893,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideUnarmedWeapon_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideUnarmedWeapon_FieldIndex.InjuredHealthPercent) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.InjuredHealthPercent = rhs.InjuredHealthPercent;
             }
             if ((copyMask?.GetShouldTranslate((int)NpcRaceOverrideUnarmedWeapon_FieldIndex.UnarmedWeapon) ?? true))
             {
@@ -1011,7 +1011,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown);
+                item: item.InjuredHealthPercent);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.UnarmedWeapon);
@@ -1048,7 +1048,7 @@ namespace Mutagen.Bethesda.Starfield
             INpcRaceOverrideUnarmedWeapon item,
             MutagenFrame frame)
         {
-            item.Unknown = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.InjuredHealthPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.UnarmedWeapon.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
         }
 
@@ -1116,7 +1116,7 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Single Unknown => _structData.Slice(0x0, 0x4).Float();
+        public Single InjuredHealthPercent => _structData.Slice(0x0, 0x4).Float();
         public IFormLinkGetter<IWeaponGetter> UnarmedWeapon => FormLinkBinaryTranslation.Instance.OverlayFactory<IWeaponGetter>(_package, _structData.Span.Slice(0x4, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,

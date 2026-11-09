@@ -129,9 +129,7 @@
       <String name="JewelryColor" recordType="JCOL" />
       <String name="TeethColor" recordType="TETC" />
       <Enum name="Pronoun" enumName="Pronoun" byteLength="1" recordType="PRON" />
-      <ByteArray name="ONA2" recordType="ONA2" unknown="true" />
-      <!-- Finish parsing ONA2 -->
-<!--      <RefDirect name="RaceOverrides" refName="NpcRaceOverride" />-->
+      <RefDirect name="RaceOverrides" refName="NpcRaceOverride" />
     </Fields>
     <LinkInterface>INpcSpawn</LinkInterface>
     <LinkInterface>IConstructibleObjectTarget</LinkInterface>
@@ -256,7 +254,7 @@
   <Object name="NpcSound" objType="Subrecord">
     <Fields>
       <RefDirect name="Sound" recordType="CS3S" refName="SoundReference" />
-      <ByteArray name="CS3F" recordType="CS3F" />
+      <Bool name="StopConsciousLoopWhenUnconscious" recordType="CS3F" byteLength="1" />
     </Fields>
   </Object>
   <Object name="NpcTint" objType="Subrecord">
@@ -304,80 +302,76 @@
   </Object>
   <Object name="NpcRaceOverride" objType="Subrecord" recordType="ONA2" >
     <Fields>
-      <CustomLogic name="FlagParse" byteLength="4" />
-      <RefDirect name="Size" refName="NpcRaceOverrideSize" nullable="true" />
-      <RefDirect name="Unknown1" refName="NpcRaceOverrideUnknown1" nullable="true" />
-      <RefDirect name="Unknown2" refName="NpcRaceOverrideUnknown2" nullable="true" />
-      <RefDirect name="UnarmedWeapon" refName="NpcRaceOverrideUnarmedWeapon" nullable="true" />
-      <RefDirect name="Flag" refName="NpcRaceOverrideFlag" nullable="true" />
-      <RefDirect name="Unknown5" refName="NpcRaceOverrideUnknown5" nullable="true" />
-      <RefDirect name="General" refName="NpcRaceOverrideGeneral" nullable="true" />
-      <RefDirect name="Unknown7" refName="NpcRaceOverrideUnknown7" nullable="true" />
+      <CustomLogic name="FlagParse" />
+      <Enum name="Size" enumName="Size" nullable="True" binary="NoGeneration" />
+      <RefDirect name="Movement" refName="NpcRaceOverrideMovement" nullable="True" binary="NoGeneration" />
+      <RefDirect name="Flight" refName="NpcRaceOverrideFlight" nullable="True" binary="NoGeneration" />
+      <RefDirect name="UnarmedWeapon" refName="NpcRaceOverrideUnarmedWeapon" nullable="True" binary="NoGeneration" />
+      <RefDirect name="FlagOverrides" refName="NpcRaceOverrideFlags" nullable="True" binary="NoGeneration" />
+      <RefDirect name="Bleedout" refName="NpcRaceOverrideBleedout" nullable="True" binary="NoGeneration" />
+      <RefDirect name="General" refName="NpcRaceOverrideGeneral" nullable="True" binary="NoGeneration" />
+      <RefDirect name="ElectromagneticShock" refName="NpcRaceOverrideElectromagneticShock" nullable="True" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="NpcRaceOverrideSize" objType="Subrecord" >
-    <Fields>
-      <Enum name="Size" enumName="Size" />
-    </Fields>
-  </Object>
-  <Object name="NpcRaceOverrideUnknown1" objType="Subrecord" >
+  <Object name="NpcRaceOverrideMovement" objType="Subrecord" >
     <Fields>
       <Float name="AccelerationRate" />
       <Float name="DecelerationRate" />
-      <Float name="Unknown1" />
-      <Float name="Unknown2" />
+      <Float name="AngularAccelerationRate" />
+      <Float name="AngularTolerance" />
     </Fields>
   </Object>
-  <Object name="NpcRaceOverrideUnknown2" objType="Subrecord" >
+  <Object name="NpcRaceOverrideFlight" objType="Subrecord" >
     <Fields>
-      <Float name="Unknown" />
+      <Float name="FlightRadius" />
     </Fields>
   </Object>
   <Object name="NpcRaceOverrideUnarmedWeapon" objType="Subrecord" >
     <Fields>
-      <Float name="Unknown" />
+      <Float name="InjuredHealthPercent" />
       <FormLink name="UnarmedWeapon" refName="Weapon" />
     </Fields>
   </Object>
-  <Object name="NpcRaceOverrideFlag" objType="Subrecord" >
+  <Object name="NpcRaceOverrideFlags" objType="Subrecord" >
     <Fields>
       <Enum name="RaceDataFlags" enumName="Race.Flag" byteLength="8"/>
       <Enum name="OverrideActive" enumName="Race.Flag" byteLength="8"/>
     </Fields>
   </Object>
-  <Object name="NpcRaceOverrideUnknown5" objType="Subrecord" >
+  <Object name="NpcRaceOverrideBleedout" objType="Subrecord" >
     <Fields>
-      <Float name="Unknown1" />
-      <Float name="Unknown2" />
-      <Float name="Unknown3" />
-      <Float name="Unknown4" />
-      <Float name="Unknown5" />
-      <Float name="Unknown6" />
+      <Float name="HealthPercent" />
+      <Float name="Chance" />
+      <Float name="RecoverChance" />
+      <Float name="TimeMin" />
+      <Float name="TimeMax" />
+      <Float name="HealthDrainRate" />
     </Fields>
   </Object>
   <Object name="NpcRaceOverrideGeneral" objType="Subrecord" >
     <Fields>
       <FormLink name="ImpactMaterialType" refName="MaterialType" />
-      <RefDirect name="WED0" unknown="true" refName="SoundReference" />
-      <RefDirect name="WED1" unknown="true" refName="SoundReference" />
-      <FormLink name="UnknownForm1" refName="Explosion" />
-      <FormLink name="UnknownForm2" refName="Debris" />
-      <FormLink name="UnknownForm3" refName="ImpactDataSet" />
-      <Float name="UnknownFloat" />
-      <UInt16 name="UnknownInt16" />
+      <RefDirect name="CorpseOpenSound" refName="SoundReference" nullable="False" />
+      <RefDirect name="CorpseCloseSound" refName="SoundReference" nullable="False" />
+      <FormLink name="OnCrippleExplosion" refName="Explosion" />
+      <FormLink name="OnCrippleDebris" refName="Debris" />
+      <FormLink name="OnCrippleImpactDataSet" refName="ImpactDataSet" />
+      <Float name="OnCrippleDebrisScale" />
+      <UInt8 name="OnCrippleDebrisCount" />
+      <UInt8 name="OnCrippleDecalCount" />
       <Enum name="ActiveOverrides" enumName="NpcRaceOverrideGeneral.ActiveOverride" byteLength="4" />
     </Fields>
   </Object>
-  <Object name="NpcRaceOverrideUnknown7" objType="Subrecord" >
+  <Object name="NpcRaceOverrideElectromagneticShock" objType="Subrecord" >
     <Fields>
-      <UInt8 name="UnknownUInt8" />
-      <Float name="UnknownFloat1" />
-      <Float name="UnknownFloat2" />
-      <Float name="UnknownFloat3" />
-      <Float name="UnknownFloat4" />
-      <Float name="UnknownFloat5" />
-      <Float name="UnknownFloat6" />
-      <Float name="UnknownFloat7" />
+      <Bool name="Supported" byteLength="1" />
+      <Float name="RecoverChance" />
+      <Float name="TimeMin" />
+      <Float name="TimeMax" />
+      <Float name="RecoverChanceOnDamageReceived" />
+      <Float name="HealthDrainRate" />
+      <Float name="HealthAfterRecovery" />
+      <Float name="ImmunityDurationAfterRecovery" />
     </Fields>
   </Object>
 </Loqui>

@@ -54,37 +54,31 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region Size
+        public Size? Size { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private NpcRaceOverrideSize? _Size;
-        public NpcRaceOverrideSize? Size
-        {
-            get => _Size;
-            set => _Size = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        INpcRaceOverrideSizeGetter? INpcRaceOverrideGetter.Size => this.Size;
+        Size? INpcRaceOverrideGetter.Size => this.Size;
         #endregion
-        #region Unknown1
+        #region Movement
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private NpcRaceOverrideUnknown1? _Unknown1;
-        public NpcRaceOverrideUnknown1? Unknown1
+        private NpcRaceOverrideMovement? _Movement;
+        public NpcRaceOverrideMovement? Movement
         {
-            get => _Unknown1;
-            set => _Unknown1 = value;
+            get => _Movement;
+            set => _Movement = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        INpcRaceOverrideUnknown1Getter? INpcRaceOverrideGetter.Unknown1 => this.Unknown1;
+        INpcRaceOverrideMovementGetter? INpcRaceOverrideGetter.Movement => this.Movement;
         #endregion
-        #region Unknown2
+        #region Flight
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private NpcRaceOverrideUnknown2? _Unknown2;
-        public NpcRaceOverrideUnknown2? Unknown2
+        private NpcRaceOverrideFlight? _Flight;
+        public NpcRaceOverrideFlight? Flight
         {
-            get => _Unknown2;
-            set => _Unknown2 = value;
+            get => _Flight;
+            set => _Flight = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        INpcRaceOverrideUnknown2Getter? INpcRaceOverrideGetter.Unknown2 => this.Unknown2;
+        INpcRaceOverrideFlightGetter? INpcRaceOverrideGetter.Flight => this.Flight;
         #endregion
         #region UnarmedWeapon
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -97,27 +91,27 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         INpcRaceOverrideUnarmedWeaponGetter? INpcRaceOverrideGetter.UnarmedWeapon => this.UnarmedWeapon;
         #endregion
-        #region Flag
+        #region FlagOverrides
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private NpcRaceOverrideFlag? _Flag;
-        public NpcRaceOverrideFlag? Flag
+        private NpcRaceOverrideFlags? _FlagOverrides;
+        public NpcRaceOverrideFlags? FlagOverrides
         {
-            get => _Flag;
-            set => _Flag = value;
+            get => _FlagOverrides;
+            set => _FlagOverrides = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        INpcRaceOverrideFlagGetter? INpcRaceOverrideGetter.Flag => this.Flag;
+        INpcRaceOverrideFlagsGetter? INpcRaceOverrideGetter.FlagOverrides => this.FlagOverrides;
         #endregion
-        #region Unknown5
+        #region Bleedout
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private NpcRaceOverrideUnknown5? _Unknown5;
-        public NpcRaceOverrideUnknown5? Unknown5
+        private NpcRaceOverrideBleedout? _Bleedout;
+        public NpcRaceOverrideBleedout? Bleedout
         {
-            get => _Unknown5;
-            set => _Unknown5 = value;
+            get => _Bleedout;
+            set => _Bleedout = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        INpcRaceOverrideUnknown5Getter? INpcRaceOverrideGetter.Unknown5 => this.Unknown5;
+        INpcRaceOverrideBleedoutGetter? INpcRaceOverrideGetter.Bleedout => this.Bleedout;
         #endregion
         #region General
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -130,16 +124,16 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         INpcRaceOverrideGeneralGetter? INpcRaceOverrideGetter.General => this.General;
         #endregion
-        #region Unknown7
+        #region ElectromagneticShock
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private NpcRaceOverrideUnknown7? _Unknown7;
-        public NpcRaceOverrideUnknown7? Unknown7
+        private NpcRaceOverrideElectromagneticShock? _ElectromagneticShock;
+        public NpcRaceOverrideElectromagneticShock? ElectromagneticShock
         {
-            get => _Unknown7;
-            set => _Unknown7 = value;
+            get => _ElectromagneticShock;
+            set => _ElectromagneticShock = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        INpcRaceOverrideUnknown7Getter? INpcRaceOverrideGetter.Unknown7 => this.Unknown7;
+        INpcRaceOverrideElectromagneticShockGetter? INpcRaceOverrideGetter.ElectromagneticShock => this.ElectromagneticShock;
         #endregion
 
         #region To String
@@ -180,34 +174,34 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Size = new MaskItem<TItem, NpcRaceOverrideSize.Mask<TItem>?>(initialValue, new NpcRaceOverrideSize.Mask<TItem>(initialValue));
-                this.Unknown1 = new MaskItem<TItem, NpcRaceOverrideUnknown1.Mask<TItem>?>(initialValue, new NpcRaceOverrideUnknown1.Mask<TItem>(initialValue));
-                this.Unknown2 = new MaskItem<TItem, NpcRaceOverrideUnknown2.Mask<TItem>?>(initialValue, new NpcRaceOverrideUnknown2.Mask<TItem>(initialValue));
+                this.Size = initialValue;
+                this.Movement = new MaskItem<TItem, NpcRaceOverrideMovement.Mask<TItem>?>(initialValue, new NpcRaceOverrideMovement.Mask<TItem>(initialValue));
+                this.Flight = new MaskItem<TItem, NpcRaceOverrideFlight.Mask<TItem>?>(initialValue, new NpcRaceOverrideFlight.Mask<TItem>(initialValue));
                 this.UnarmedWeapon = new MaskItem<TItem, NpcRaceOverrideUnarmedWeapon.Mask<TItem>?>(initialValue, new NpcRaceOverrideUnarmedWeapon.Mask<TItem>(initialValue));
-                this.Flag = new MaskItem<TItem, NpcRaceOverrideFlag.Mask<TItem>?>(initialValue, new NpcRaceOverrideFlag.Mask<TItem>(initialValue));
-                this.Unknown5 = new MaskItem<TItem, NpcRaceOverrideUnknown5.Mask<TItem>?>(initialValue, new NpcRaceOverrideUnknown5.Mask<TItem>(initialValue));
+                this.FlagOverrides = new MaskItem<TItem, NpcRaceOverrideFlags.Mask<TItem>?>(initialValue, new NpcRaceOverrideFlags.Mask<TItem>(initialValue));
+                this.Bleedout = new MaskItem<TItem, NpcRaceOverrideBleedout.Mask<TItem>?>(initialValue, new NpcRaceOverrideBleedout.Mask<TItem>(initialValue));
                 this.General = new MaskItem<TItem, NpcRaceOverrideGeneral.Mask<TItem>?>(initialValue, new NpcRaceOverrideGeneral.Mask<TItem>(initialValue));
-                this.Unknown7 = new MaskItem<TItem, NpcRaceOverrideUnknown7.Mask<TItem>?>(initialValue, new NpcRaceOverrideUnknown7.Mask<TItem>(initialValue));
+                this.ElectromagneticShock = new MaskItem<TItem, NpcRaceOverrideElectromagneticShock.Mask<TItem>?>(initialValue, new NpcRaceOverrideElectromagneticShock.Mask<TItem>(initialValue));
             }
 
             public Mask(
                 TItem Size,
-                TItem Unknown1,
-                TItem Unknown2,
+                TItem Movement,
+                TItem Flight,
                 TItem UnarmedWeapon,
-                TItem Flag,
-                TItem Unknown5,
+                TItem FlagOverrides,
+                TItem Bleedout,
                 TItem General,
-                TItem Unknown7)
+                TItem ElectromagneticShock)
             {
-                this.Size = new MaskItem<TItem, NpcRaceOverrideSize.Mask<TItem>?>(Size, new NpcRaceOverrideSize.Mask<TItem>(Size));
-                this.Unknown1 = new MaskItem<TItem, NpcRaceOverrideUnknown1.Mask<TItem>?>(Unknown1, new NpcRaceOverrideUnknown1.Mask<TItem>(Unknown1));
-                this.Unknown2 = new MaskItem<TItem, NpcRaceOverrideUnknown2.Mask<TItem>?>(Unknown2, new NpcRaceOverrideUnknown2.Mask<TItem>(Unknown2));
+                this.Size = Size;
+                this.Movement = new MaskItem<TItem, NpcRaceOverrideMovement.Mask<TItem>?>(Movement, new NpcRaceOverrideMovement.Mask<TItem>(Movement));
+                this.Flight = new MaskItem<TItem, NpcRaceOverrideFlight.Mask<TItem>?>(Flight, new NpcRaceOverrideFlight.Mask<TItem>(Flight));
                 this.UnarmedWeapon = new MaskItem<TItem, NpcRaceOverrideUnarmedWeapon.Mask<TItem>?>(UnarmedWeapon, new NpcRaceOverrideUnarmedWeapon.Mask<TItem>(UnarmedWeapon));
-                this.Flag = new MaskItem<TItem, NpcRaceOverrideFlag.Mask<TItem>?>(Flag, new NpcRaceOverrideFlag.Mask<TItem>(Flag));
-                this.Unknown5 = new MaskItem<TItem, NpcRaceOverrideUnknown5.Mask<TItem>?>(Unknown5, new NpcRaceOverrideUnknown5.Mask<TItem>(Unknown5));
+                this.FlagOverrides = new MaskItem<TItem, NpcRaceOverrideFlags.Mask<TItem>?>(FlagOverrides, new NpcRaceOverrideFlags.Mask<TItem>(FlagOverrides));
+                this.Bleedout = new MaskItem<TItem, NpcRaceOverrideBleedout.Mask<TItem>?>(Bleedout, new NpcRaceOverrideBleedout.Mask<TItem>(Bleedout));
                 this.General = new MaskItem<TItem, NpcRaceOverrideGeneral.Mask<TItem>?>(General, new NpcRaceOverrideGeneral.Mask<TItem>(General));
-                this.Unknown7 = new MaskItem<TItem, NpcRaceOverrideUnknown7.Mask<TItem>?>(Unknown7, new NpcRaceOverrideUnknown7.Mask<TItem>(Unknown7));
+                this.ElectromagneticShock = new MaskItem<TItem, NpcRaceOverrideElectromagneticShock.Mask<TItem>?>(ElectromagneticShock, new NpcRaceOverrideElectromagneticShock.Mask<TItem>(ElectromagneticShock));
             }
 
             #pragma warning disable CS8618
@@ -219,14 +213,14 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public MaskItem<TItem, NpcRaceOverrideSize.Mask<TItem>?>? Size { get; set; }
-            public MaskItem<TItem, NpcRaceOverrideUnknown1.Mask<TItem>?>? Unknown1 { get; set; }
-            public MaskItem<TItem, NpcRaceOverrideUnknown2.Mask<TItem>?>? Unknown2 { get; set; }
+            public TItem Size;
+            public MaskItem<TItem, NpcRaceOverrideMovement.Mask<TItem>?>? Movement { get; set; }
+            public MaskItem<TItem, NpcRaceOverrideFlight.Mask<TItem>?>? Flight { get; set; }
             public MaskItem<TItem, NpcRaceOverrideUnarmedWeapon.Mask<TItem>?>? UnarmedWeapon { get; set; }
-            public MaskItem<TItem, NpcRaceOverrideFlag.Mask<TItem>?>? Flag { get; set; }
-            public MaskItem<TItem, NpcRaceOverrideUnknown5.Mask<TItem>?>? Unknown5 { get; set; }
+            public MaskItem<TItem, NpcRaceOverrideFlags.Mask<TItem>?>? FlagOverrides { get; set; }
+            public MaskItem<TItem, NpcRaceOverrideBleedout.Mask<TItem>?>? Bleedout { get; set; }
             public MaskItem<TItem, NpcRaceOverrideGeneral.Mask<TItem>?>? General { get; set; }
-            public MaskItem<TItem, NpcRaceOverrideUnknown7.Mask<TItem>?>? Unknown7 { get; set; }
+            public MaskItem<TItem, NpcRaceOverrideElectromagneticShock.Mask<TItem>?>? ElectromagneticShock { get; set; }
             #endregion
 
             #region Equals
@@ -240,26 +234,26 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.Size, rhs.Size)) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.Movement, rhs.Movement)) return false;
+                if (!object.Equals(this.Flight, rhs.Flight)) return false;
                 if (!object.Equals(this.UnarmedWeapon, rhs.UnarmedWeapon)) return false;
-                if (!object.Equals(this.Flag, rhs.Flag)) return false;
-                if (!object.Equals(this.Unknown5, rhs.Unknown5)) return false;
+                if (!object.Equals(this.FlagOverrides, rhs.FlagOverrides)) return false;
+                if (!object.Equals(this.Bleedout, rhs.Bleedout)) return false;
                 if (!object.Equals(this.General, rhs.General)) return false;
-                if (!object.Equals(this.Unknown7, rhs.Unknown7)) return false;
+                if (!object.Equals(this.ElectromagneticShock, rhs.ElectromagneticShock)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.Size);
-                hash.Add(this.Unknown1);
-                hash.Add(this.Unknown2);
+                hash.Add(this.Movement);
+                hash.Add(this.Flight);
                 hash.Add(this.UnarmedWeapon);
-                hash.Add(this.Flag);
-                hash.Add(this.Unknown5);
+                hash.Add(this.FlagOverrides);
+                hash.Add(this.Bleedout);
                 hash.Add(this.General);
-                hash.Add(this.Unknown7);
+                hash.Add(this.ElectromagneticShock);
                 return hash.ToHashCode();
             }
 
@@ -268,45 +262,41 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (Size != null)
+                if (!eval(this.Size)) return false;
+                if (Movement != null)
                 {
-                    if (!eval(this.Size.Overall)) return false;
-                    if (this.Size.Specific != null && !this.Size.Specific.All(eval)) return false;
+                    if (!eval(this.Movement.Overall)) return false;
+                    if (this.Movement.Specific != null && !this.Movement.Specific.All(eval)) return false;
                 }
-                if (Unknown1 != null)
+                if (Flight != null)
                 {
-                    if (!eval(this.Unknown1.Overall)) return false;
-                    if (this.Unknown1.Specific != null && !this.Unknown1.Specific.All(eval)) return false;
-                }
-                if (Unknown2 != null)
-                {
-                    if (!eval(this.Unknown2.Overall)) return false;
-                    if (this.Unknown2.Specific != null && !this.Unknown2.Specific.All(eval)) return false;
+                    if (!eval(this.Flight.Overall)) return false;
+                    if (this.Flight.Specific != null && !this.Flight.Specific.All(eval)) return false;
                 }
                 if (UnarmedWeapon != null)
                 {
                     if (!eval(this.UnarmedWeapon.Overall)) return false;
                     if (this.UnarmedWeapon.Specific != null && !this.UnarmedWeapon.Specific.All(eval)) return false;
                 }
-                if (Flag != null)
+                if (FlagOverrides != null)
                 {
-                    if (!eval(this.Flag.Overall)) return false;
-                    if (this.Flag.Specific != null && !this.Flag.Specific.All(eval)) return false;
+                    if (!eval(this.FlagOverrides.Overall)) return false;
+                    if (this.FlagOverrides.Specific != null && !this.FlagOverrides.Specific.All(eval)) return false;
                 }
-                if (Unknown5 != null)
+                if (Bleedout != null)
                 {
-                    if (!eval(this.Unknown5.Overall)) return false;
-                    if (this.Unknown5.Specific != null && !this.Unknown5.Specific.All(eval)) return false;
+                    if (!eval(this.Bleedout.Overall)) return false;
+                    if (this.Bleedout.Specific != null && !this.Bleedout.Specific.All(eval)) return false;
                 }
                 if (General != null)
                 {
                     if (!eval(this.General.Overall)) return false;
                     if (this.General.Specific != null && !this.General.Specific.All(eval)) return false;
                 }
-                if (Unknown7 != null)
+                if (ElectromagneticShock != null)
                 {
-                    if (!eval(this.Unknown7.Overall)) return false;
-                    if (this.Unknown7.Specific != null && !this.Unknown7.Specific.All(eval)) return false;
+                    if (!eval(this.ElectromagneticShock.Overall)) return false;
+                    if (this.ElectromagneticShock.Specific != null && !this.ElectromagneticShock.Specific.All(eval)) return false;
                 }
                 return true;
             }
@@ -315,45 +305,41 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (Size != null)
+                if (eval(this.Size)) return true;
+                if (Movement != null)
                 {
-                    if (eval(this.Size.Overall)) return true;
-                    if (this.Size.Specific != null && this.Size.Specific.Any(eval)) return true;
+                    if (eval(this.Movement.Overall)) return true;
+                    if (this.Movement.Specific != null && this.Movement.Specific.Any(eval)) return true;
                 }
-                if (Unknown1 != null)
+                if (Flight != null)
                 {
-                    if (eval(this.Unknown1.Overall)) return true;
-                    if (this.Unknown1.Specific != null && this.Unknown1.Specific.Any(eval)) return true;
-                }
-                if (Unknown2 != null)
-                {
-                    if (eval(this.Unknown2.Overall)) return true;
-                    if (this.Unknown2.Specific != null && this.Unknown2.Specific.Any(eval)) return true;
+                    if (eval(this.Flight.Overall)) return true;
+                    if (this.Flight.Specific != null && this.Flight.Specific.Any(eval)) return true;
                 }
                 if (UnarmedWeapon != null)
                 {
                     if (eval(this.UnarmedWeapon.Overall)) return true;
                     if (this.UnarmedWeapon.Specific != null && this.UnarmedWeapon.Specific.Any(eval)) return true;
                 }
-                if (Flag != null)
+                if (FlagOverrides != null)
                 {
-                    if (eval(this.Flag.Overall)) return true;
-                    if (this.Flag.Specific != null && this.Flag.Specific.Any(eval)) return true;
+                    if (eval(this.FlagOverrides.Overall)) return true;
+                    if (this.FlagOverrides.Specific != null && this.FlagOverrides.Specific.Any(eval)) return true;
                 }
-                if (Unknown5 != null)
+                if (Bleedout != null)
                 {
-                    if (eval(this.Unknown5.Overall)) return true;
-                    if (this.Unknown5.Specific != null && this.Unknown5.Specific.Any(eval)) return true;
+                    if (eval(this.Bleedout.Overall)) return true;
+                    if (this.Bleedout.Specific != null && this.Bleedout.Specific.Any(eval)) return true;
                 }
                 if (General != null)
                 {
                     if (eval(this.General.Overall)) return true;
                     if (this.General.Specific != null && this.General.Specific.Any(eval)) return true;
                 }
-                if (Unknown7 != null)
+                if (ElectromagneticShock != null)
                 {
-                    if (eval(this.Unknown7.Overall)) return true;
-                    if (this.Unknown7.Specific != null && this.Unknown7.Specific.Any(eval)) return true;
+                    if (eval(this.ElectromagneticShock.Overall)) return true;
+                    if (this.ElectromagneticShock.Specific != null && this.ElectromagneticShock.Specific.Any(eval)) return true;
                 }
                 return false;
             }
@@ -369,14 +355,14 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Size = this.Size == null ? null : new MaskItem<R, NpcRaceOverrideSize.Mask<R>?>(eval(this.Size.Overall), this.Size.Specific?.Translate(eval));
-                obj.Unknown1 = this.Unknown1 == null ? null : new MaskItem<R, NpcRaceOverrideUnknown1.Mask<R>?>(eval(this.Unknown1.Overall), this.Unknown1.Specific?.Translate(eval));
-                obj.Unknown2 = this.Unknown2 == null ? null : new MaskItem<R, NpcRaceOverrideUnknown2.Mask<R>?>(eval(this.Unknown2.Overall), this.Unknown2.Specific?.Translate(eval));
+                obj.Size = eval(this.Size);
+                obj.Movement = this.Movement == null ? null : new MaskItem<R, NpcRaceOverrideMovement.Mask<R>?>(eval(this.Movement.Overall), this.Movement.Specific?.Translate(eval));
+                obj.Flight = this.Flight == null ? null : new MaskItem<R, NpcRaceOverrideFlight.Mask<R>?>(eval(this.Flight.Overall), this.Flight.Specific?.Translate(eval));
                 obj.UnarmedWeapon = this.UnarmedWeapon == null ? null : new MaskItem<R, NpcRaceOverrideUnarmedWeapon.Mask<R>?>(eval(this.UnarmedWeapon.Overall), this.UnarmedWeapon.Specific?.Translate(eval));
-                obj.Flag = this.Flag == null ? null : new MaskItem<R, NpcRaceOverrideFlag.Mask<R>?>(eval(this.Flag.Overall), this.Flag.Specific?.Translate(eval));
-                obj.Unknown5 = this.Unknown5 == null ? null : new MaskItem<R, NpcRaceOverrideUnknown5.Mask<R>?>(eval(this.Unknown5.Overall), this.Unknown5.Specific?.Translate(eval));
+                obj.FlagOverrides = this.FlagOverrides == null ? null : new MaskItem<R, NpcRaceOverrideFlags.Mask<R>?>(eval(this.FlagOverrides.Overall), this.FlagOverrides.Specific?.Translate(eval));
+                obj.Bleedout = this.Bleedout == null ? null : new MaskItem<R, NpcRaceOverrideBleedout.Mask<R>?>(eval(this.Bleedout.Overall), this.Bleedout.Specific?.Translate(eval));
                 obj.General = this.General == null ? null : new MaskItem<R, NpcRaceOverrideGeneral.Mask<R>?>(eval(this.General.Overall), this.General.Specific?.Translate(eval));
-                obj.Unknown7 = this.Unknown7 == null ? null : new MaskItem<R, NpcRaceOverrideUnknown7.Mask<R>?>(eval(this.Unknown7.Overall), this.Unknown7.Specific?.Translate(eval));
+                obj.ElectromagneticShock = this.ElectromagneticShock == null ? null : new MaskItem<R, NpcRaceOverrideElectromagneticShock.Mask<R>?>(eval(this.ElectromagneticShock.Overall), this.ElectromagneticShock.Specific?.Translate(eval));
             }
             #endregion
 
@@ -395,37 +381,37 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(NpcRaceOverride.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Size?.Overall ?? true)
+                    if (printMask?.Size ?? true)
                     {
-                        Size?.Print(sb);
+                        sb.AppendItem(Size, "Size");
                     }
-                    if (printMask?.Unknown1?.Overall ?? true)
+                    if (printMask?.Movement?.Overall ?? true)
                     {
-                        Unknown1?.Print(sb);
+                        Movement?.Print(sb);
                     }
-                    if (printMask?.Unknown2?.Overall ?? true)
+                    if (printMask?.Flight?.Overall ?? true)
                     {
-                        Unknown2?.Print(sb);
+                        Flight?.Print(sb);
                     }
                     if (printMask?.UnarmedWeapon?.Overall ?? true)
                     {
                         UnarmedWeapon?.Print(sb);
                     }
-                    if (printMask?.Flag?.Overall ?? true)
+                    if (printMask?.FlagOverrides?.Overall ?? true)
                     {
-                        Flag?.Print(sb);
+                        FlagOverrides?.Print(sb);
                     }
-                    if (printMask?.Unknown5?.Overall ?? true)
+                    if (printMask?.Bleedout?.Overall ?? true)
                     {
-                        Unknown5?.Print(sb);
+                        Bleedout?.Print(sb);
                     }
                     if (printMask?.General?.Overall ?? true)
                     {
                         General?.Print(sb);
                     }
-                    if (printMask?.Unknown7?.Overall ?? true)
+                    if (printMask?.ElectromagneticShock?.Overall ?? true)
                     {
-                        Unknown7?.Print(sb);
+                        ElectromagneticShock?.Print(sb);
                     }
                 }
             }
@@ -451,14 +437,14 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public MaskItem<Exception?, NpcRaceOverrideSize.ErrorMask?>? Size;
-            public MaskItem<Exception?, NpcRaceOverrideUnknown1.ErrorMask?>? Unknown1;
-            public MaskItem<Exception?, NpcRaceOverrideUnknown2.ErrorMask?>? Unknown2;
+            public Exception? Size;
+            public MaskItem<Exception?, NpcRaceOverrideMovement.ErrorMask?>? Movement;
+            public MaskItem<Exception?, NpcRaceOverrideFlight.ErrorMask?>? Flight;
             public MaskItem<Exception?, NpcRaceOverrideUnarmedWeapon.ErrorMask?>? UnarmedWeapon;
-            public MaskItem<Exception?, NpcRaceOverrideFlag.ErrorMask?>? Flag;
-            public MaskItem<Exception?, NpcRaceOverrideUnknown5.ErrorMask?>? Unknown5;
+            public MaskItem<Exception?, NpcRaceOverrideFlags.ErrorMask?>? FlagOverrides;
+            public MaskItem<Exception?, NpcRaceOverrideBleedout.ErrorMask?>? Bleedout;
             public MaskItem<Exception?, NpcRaceOverrideGeneral.ErrorMask?>? General;
-            public MaskItem<Exception?, NpcRaceOverrideUnknown7.ErrorMask?>? Unknown7;
+            public MaskItem<Exception?, NpcRaceOverrideElectromagneticShock.ErrorMask?>? ElectromagneticShock;
             #endregion
 
             #region IErrorMask
@@ -469,20 +455,20 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case NpcRaceOverride_FieldIndex.Size:
                         return Size;
-                    case NpcRaceOverride_FieldIndex.Unknown1:
-                        return Unknown1;
-                    case NpcRaceOverride_FieldIndex.Unknown2:
-                        return Unknown2;
+                    case NpcRaceOverride_FieldIndex.Movement:
+                        return Movement;
+                    case NpcRaceOverride_FieldIndex.Flight:
+                        return Flight;
                     case NpcRaceOverride_FieldIndex.UnarmedWeapon:
                         return UnarmedWeapon;
-                    case NpcRaceOverride_FieldIndex.Flag:
-                        return Flag;
-                    case NpcRaceOverride_FieldIndex.Unknown5:
-                        return Unknown5;
+                    case NpcRaceOverride_FieldIndex.FlagOverrides:
+                        return FlagOverrides;
+                    case NpcRaceOverride_FieldIndex.Bleedout:
+                        return Bleedout;
                     case NpcRaceOverride_FieldIndex.General:
                         return General;
-                    case NpcRaceOverride_FieldIndex.Unknown7:
-                        return Unknown7;
+                    case NpcRaceOverride_FieldIndex.ElectromagneticShock:
+                        return ElectromagneticShock;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -494,28 +480,28 @@ namespace Mutagen.Bethesda.Starfield
                 switch (enu)
                 {
                     case NpcRaceOverride_FieldIndex.Size:
-                        this.Size = new MaskItem<Exception?, NpcRaceOverrideSize.ErrorMask?>(ex, null);
+                        this.Size = ex;
                         break;
-                    case NpcRaceOverride_FieldIndex.Unknown1:
-                        this.Unknown1 = new MaskItem<Exception?, NpcRaceOverrideUnknown1.ErrorMask?>(ex, null);
+                    case NpcRaceOverride_FieldIndex.Movement:
+                        this.Movement = new MaskItem<Exception?, NpcRaceOverrideMovement.ErrorMask?>(ex, null);
                         break;
-                    case NpcRaceOverride_FieldIndex.Unknown2:
-                        this.Unknown2 = new MaskItem<Exception?, NpcRaceOverrideUnknown2.ErrorMask?>(ex, null);
+                    case NpcRaceOverride_FieldIndex.Flight:
+                        this.Flight = new MaskItem<Exception?, NpcRaceOverrideFlight.ErrorMask?>(ex, null);
                         break;
                     case NpcRaceOverride_FieldIndex.UnarmedWeapon:
                         this.UnarmedWeapon = new MaskItem<Exception?, NpcRaceOverrideUnarmedWeapon.ErrorMask?>(ex, null);
                         break;
-                    case NpcRaceOverride_FieldIndex.Flag:
-                        this.Flag = new MaskItem<Exception?, NpcRaceOverrideFlag.ErrorMask?>(ex, null);
+                    case NpcRaceOverride_FieldIndex.FlagOverrides:
+                        this.FlagOverrides = new MaskItem<Exception?, NpcRaceOverrideFlags.ErrorMask?>(ex, null);
                         break;
-                    case NpcRaceOverride_FieldIndex.Unknown5:
-                        this.Unknown5 = new MaskItem<Exception?, NpcRaceOverrideUnknown5.ErrorMask?>(ex, null);
+                    case NpcRaceOverride_FieldIndex.Bleedout:
+                        this.Bleedout = new MaskItem<Exception?, NpcRaceOverrideBleedout.ErrorMask?>(ex, null);
                         break;
                     case NpcRaceOverride_FieldIndex.General:
                         this.General = new MaskItem<Exception?, NpcRaceOverrideGeneral.ErrorMask?>(ex, null);
                         break;
-                    case NpcRaceOverride_FieldIndex.Unknown7:
-                        this.Unknown7 = new MaskItem<Exception?, NpcRaceOverrideUnknown7.ErrorMask?>(ex, null);
+                    case NpcRaceOverride_FieldIndex.ElectromagneticShock:
+                        this.ElectromagneticShock = new MaskItem<Exception?, NpcRaceOverrideElectromagneticShock.ErrorMask?>(ex, null);
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -528,28 +514,28 @@ namespace Mutagen.Bethesda.Starfield
                 switch (enu)
                 {
                     case NpcRaceOverride_FieldIndex.Size:
-                        this.Size = (MaskItem<Exception?, NpcRaceOverrideSize.ErrorMask?>?)obj;
+                        this.Size = (Exception?)obj;
                         break;
-                    case NpcRaceOverride_FieldIndex.Unknown1:
-                        this.Unknown1 = (MaskItem<Exception?, NpcRaceOverrideUnknown1.ErrorMask?>?)obj;
+                    case NpcRaceOverride_FieldIndex.Movement:
+                        this.Movement = (MaskItem<Exception?, NpcRaceOverrideMovement.ErrorMask?>?)obj;
                         break;
-                    case NpcRaceOverride_FieldIndex.Unknown2:
-                        this.Unknown2 = (MaskItem<Exception?, NpcRaceOverrideUnknown2.ErrorMask?>?)obj;
+                    case NpcRaceOverride_FieldIndex.Flight:
+                        this.Flight = (MaskItem<Exception?, NpcRaceOverrideFlight.ErrorMask?>?)obj;
                         break;
                     case NpcRaceOverride_FieldIndex.UnarmedWeapon:
                         this.UnarmedWeapon = (MaskItem<Exception?, NpcRaceOverrideUnarmedWeapon.ErrorMask?>?)obj;
                         break;
-                    case NpcRaceOverride_FieldIndex.Flag:
-                        this.Flag = (MaskItem<Exception?, NpcRaceOverrideFlag.ErrorMask?>?)obj;
+                    case NpcRaceOverride_FieldIndex.FlagOverrides:
+                        this.FlagOverrides = (MaskItem<Exception?, NpcRaceOverrideFlags.ErrorMask?>?)obj;
                         break;
-                    case NpcRaceOverride_FieldIndex.Unknown5:
-                        this.Unknown5 = (MaskItem<Exception?, NpcRaceOverrideUnknown5.ErrorMask?>?)obj;
+                    case NpcRaceOverride_FieldIndex.Bleedout:
+                        this.Bleedout = (MaskItem<Exception?, NpcRaceOverrideBleedout.ErrorMask?>?)obj;
                         break;
                     case NpcRaceOverride_FieldIndex.General:
                         this.General = (MaskItem<Exception?, NpcRaceOverrideGeneral.ErrorMask?>?)obj;
                         break;
-                    case NpcRaceOverride_FieldIndex.Unknown7:
-                        this.Unknown7 = (MaskItem<Exception?, NpcRaceOverrideUnknown7.ErrorMask?>?)obj;
+                    case NpcRaceOverride_FieldIndex.ElectromagneticShock:
+                        this.ElectromagneticShock = (MaskItem<Exception?, NpcRaceOverrideElectromagneticShock.ErrorMask?>?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -560,13 +546,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Size != null) return true;
-                if (Unknown1 != null) return true;
-                if (Unknown2 != null) return true;
+                if (Movement != null) return true;
+                if (Flight != null) return true;
                 if (UnarmedWeapon != null) return true;
-                if (Flag != null) return true;
-                if (Unknown5 != null) return true;
+                if (FlagOverrides != null) return true;
+                if (Bleedout != null) return true;
                 if (General != null) return true;
-                if (Unknown7 != null) return true;
+                if (ElectromagneticShock != null) return true;
                 return false;
             }
             #endregion
@@ -592,14 +578,16 @@ namespace Mutagen.Bethesda.Starfield
             }
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
-                Size?.Print(sb);
-                Unknown1?.Print(sb);
-                Unknown2?.Print(sb);
+                {
+                    sb.AppendItem(Size, "Size");
+                }
+                Movement?.Print(sb);
+                Flight?.Print(sb);
                 UnarmedWeapon?.Print(sb);
-                Flag?.Print(sb);
-                Unknown5?.Print(sb);
+                FlagOverrides?.Print(sb);
+                Bleedout?.Print(sb);
                 General?.Print(sb);
-                Unknown7?.Print(sb);
+                ElectromagneticShock?.Print(sb);
             }
             #endregion
 
@@ -608,14 +596,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Size = this.Size.Combine(rhs.Size, (l, r) => l.Combine(r));
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1, (l, r) => l.Combine(r));
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2, (l, r) => l.Combine(r));
+                ret.Size = this.Size.Combine(rhs.Size);
+                ret.Movement = this.Movement.Combine(rhs.Movement, (l, r) => l.Combine(r));
+                ret.Flight = this.Flight.Combine(rhs.Flight, (l, r) => l.Combine(r));
                 ret.UnarmedWeapon = this.UnarmedWeapon.Combine(rhs.UnarmedWeapon, (l, r) => l.Combine(r));
-                ret.Flag = this.Flag.Combine(rhs.Flag, (l, r) => l.Combine(r));
-                ret.Unknown5 = this.Unknown5.Combine(rhs.Unknown5, (l, r) => l.Combine(r));
+                ret.FlagOverrides = this.FlagOverrides.Combine(rhs.FlagOverrides, (l, r) => l.Combine(r));
+                ret.Bleedout = this.Bleedout.Combine(rhs.Bleedout, (l, r) => l.Combine(r));
                 ret.General = this.General.Combine(rhs.General, (l, r) => l.Combine(r));
-                ret.Unknown7 = this.Unknown7.Combine(rhs.Unknown7, (l, r) => l.Combine(r));
+                ret.ElectromagneticShock = this.ElectromagneticShock.Combine(rhs.ElectromagneticShock, (l, r) => l.Combine(r));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -639,14 +627,14 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public NpcRaceOverrideSize.TranslationMask? Size;
-            public NpcRaceOverrideUnknown1.TranslationMask? Unknown1;
-            public NpcRaceOverrideUnknown2.TranslationMask? Unknown2;
+            public bool Size;
+            public NpcRaceOverrideMovement.TranslationMask? Movement;
+            public NpcRaceOverrideFlight.TranslationMask? Flight;
             public NpcRaceOverrideUnarmedWeapon.TranslationMask? UnarmedWeapon;
-            public NpcRaceOverrideFlag.TranslationMask? Flag;
-            public NpcRaceOverrideUnknown5.TranslationMask? Unknown5;
+            public NpcRaceOverrideFlags.TranslationMask? FlagOverrides;
+            public NpcRaceOverrideBleedout.TranslationMask? Bleedout;
             public NpcRaceOverrideGeneral.TranslationMask? General;
-            public NpcRaceOverrideUnknown7.TranslationMask? Unknown7;
+            public NpcRaceOverrideElectromagneticShock.TranslationMask? ElectromagneticShock;
             #endregion
 
             #region Ctors
@@ -656,6 +644,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
+                this.Size = defaultOn;
             }
 
             #endregion
@@ -671,14 +660,14 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Size != null ? Size.OnOverall : DefaultOn, Size?.GetCrystal()));
-                ret.Add((Unknown1 != null ? Unknown1.OnOverall : DefaultOn, Unknown1?.GetCrystal()));
-                ret.Add((Unknown2 != null ? Unknown2.OnOverall : DefaultOn, Unknown2?.GetCrystal()));
+                ret.Add((Size, null));
+                ret.Add((Movement != null ? Movement.OnOverall : DefaultOn, Movement?.GetCrystal()));
+                ret.Add((Flight != null ? Flight.OnOverall : DefaultOn, Flight?.GetCrystal()));
                 ret.Add((UnarmedWeapon != null ? UnarmedWeapon.OnOverall : DefaultOn, UnarmedWeapon?.GetCrystal()));
-                ret.Add((Flag != null ? Flag.OnOverall : DefaultOn, Flag?.GetCrystal()));
-                ret.Add((Unknown5 != null ? Unknown5.OnOverall : DefaultOn, Unknown5?.GetCrystal()));
+                ret.Add((FlagOverrides != null ? FlagOverrides.OnOverall : DefaultOn, FlagOverrides?.GetCrystal()));
+                ret.Add((Bleedout != null ? Bleedout.OnOverall : DefaultOn, Bleedout?.GetCrystal()));
                 ret.Add((General != null ? General.OnOverall : DefaultOn, General?.GetCrystal()));
-                ret.Add((Unknown7 != null ? Unknown7.OnOverall : DefaultOn, Unknown7?.GetCrystal()));
+                ret.Add((ElectromagneticShock != null ? ElectromagneticShock.OnOverall : DefaultOn, ElectromagneticShock?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -757,14 +746,14 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<INpcRaceOverride>,
         INpcRaceOverrideGetter
     {
-        new NpcRaceOverrideSize? Size { get; set; }
-        new NpcRaceOverrideUnknown1? Unknown1 { get; set; }
-        new NpcRaceOverrideUnknown2? Unknown2 { get; set; }
+        new Size? Size { get; set; }
+        new NpcRaceOverrideMovement? Movement { get; set; }
+        new NpcRaceOverrideFlight? Flight { get; set; }
         new NpcRaceOverrideUnarmedWeapon? UnarmedWeapon { get; set; }
-        new NpcRaceOverrideFlag? Flag { get; set; }
-        new NpcRaceOverrideUnknown5? Unknown5 { get; set; }
+        new NpcRaceOverrideFlags? FlagOverrides { get; set; }
+        new NpcRaceOverrideBleedout? Bleedout { get; set; }
         new NpcRaceOverrideGeneral? General { get; set; }
-        new NpcRaceOverrideUnknown7? Unknown7 { get; set; }
+        new NpcRaceOverrideElectromagneticShock? ElectromagneticShock { get; set; }
     }
 
     public partial interface INpcRaceOverrideGetter :
@@ -780,14 +769,14 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => NpcRaceOverride_Registration.Instance;
-        INpcRaceOverrideSizeGetter? Size { get; }
-        INpcRaceOverrideUnknown1Getter? Unknown1 { get; }
-        INpcRaceOverrideUnknown2Getter? Unknown2 { get; }
+        Size? Size { get; }
+        INpcRaceOverrideMovementGetter? Movement { get; }
+        INpcRaceOverrideFlightGetter? Flight { get; }
         INpcRaceOverrideUnarmedWeaponGetter? UnarmedWeapon { get; }
-        INpcRaceOverrideFlagGetter? Flag { get; }
-        INpcRaceOverrideUnknown5Getter? Unknown5 { get; }
+        INpcRaceOverrideFlagsGetter? FlagOverrides { get; }
+        INpcRaceOverrideBleedoutGetter? Bleedout { get; }
         INpcRaceOverrideGeneralGetter? General { get; }
-        INpcRaceOverrideUnknown7Getter? Unknown7 { get; }
+        INpcRaceOverrideElectromagneticShockGetter? ElectromagneticShock { get; }
 
     }
 
@@ -958,13 +947,13 @@ namespace Mutagen.Bethesda.Starfield
     internal enum NpcRaceOverride_FieldIndex
     {
         Size = 0,
-        Unknown1 = 1,
-        Unknown2 = 2,
+        Movement = 1,
+        Flight = 2,
         UnarmedWeapon = 3,
-        Flag = 4,
-        Unknown5 = 5,
+        FlagOverrides = 4,
+        Bleedout = 5,
         General = 6,
-        Unknown7 = 7,
+        ElectromagneticShock = 7,
     }
     #endregion
 
@@ -1050,14 +1039,14 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(INpcRaceOverride item)
         {
             ClearPartial();
-            item.Size = null;
-            item.Unknown1 = null;
-            item.Unknown2 = null;
+            item.Size = default;
+            item.Movement = null;
+            item.Flight = null;
             item.UnarmedWeapon = null;
-            item.Flag = null;
-            item.Unknown5 = null;
+            item.FlagOverrides = null;
+            item.Bleedout = null;
             item.General = null;
-            item.Unknown7 = null;
+            item.ElectromagneticShock = null;
         }
         
         #region Mutagen
@@ -1113,19 +1102,15 @@ namespace Mutagen.Bethesda.Starfield
             NpcRaceOverride.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Size = EqualsMaskHelper.EqualsHelper(
-                item.Size,
-                rhs.Size,
+            ret.Size = item.Size == rhs.Size;
+            ret.Movement = EqualsMaskHelper.EqualsHelper(
+                item.Movement,
+                rhs.Movement,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.Unknown1 = EqualsMaskHelper.EqualsHelper(
-                item.Unknown1,
-                rhs.Unknown1,
-                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
-                include);
-            ret.Unknown2 = EqualsMaskHelper.EqualsHelper(
-                item.Unknown2,
-                rhs.Unknown2,
+            ret.Flight = EqualsMaskHelper.EqualsHelper(
+                item.Flight,
+                rhs.Flight,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.UnarmedWeapon = EqualsMaskHelper.EqualsHelper(
@@ -1133,14 +1118,14 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.UnarmedWeapon,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.Flag = EqualsMaskHelper.EqualsHelper(
-                item.Flag,
-                rhs.Flag,
+            ret.FlagOverrides = EqualsMaskHelper.EqualsHelper(
+                item.FlagOverrides,
+                rhs.FlagOverrides,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.Unknown5 = EqualsMaskHelper.EqualsHelper(
-                item.Unknown5,
-                rhs.Unknown5,
+            ret.Bleedout = EqualsMaskHelper.EqualsHelper(
+                item.Bleedout,
+                rhs.Bleedout,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.General = EqualsMaskHelper.EqualsHelper(
@@ -1148,9 +1133,9 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.General,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.Unknown7 = EqualsMaskHelper.EqualsHelper(
-                item.Unknown7,
-                rhs.Unknown7,
+            ret.ElectromagneticShock = EqualsMaskHelper.EqualsHelper(
+                item.ElectromagneticShock,
+                rhs.ElectromagneticShock,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
         }
@@ -1197,45 +1182,45 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             NpcRaceOverride.Mask<bool>? printMask = null)
         {
-            if ((printMask?.Size?.Overall ?? true)
+            if ((printMask?.Size ?? true)
                 && item.Size is {} SizeItem)
             {
-                SizeItem?.Print(sb, "Size");
+                sb.AppendItem(SizeItem, "Size");
             }
-            if ((printMask?.Unknown1?.Overall ?? true)
-                && item.Unknown1 is {} Unknown1Item)
+            if ((printMask?.Movement?.Overall ?? true)
+                && item.Movement is {} MovementItem)
             {
-                Unknown1Item?.Print(sb, "Unknown1");
+                MovementItem?.Print(sb, "Movement");
             }
-            if ((printMask?.Unknown2?.Overall ?? true)
-                && item.Unknown2 is {} Unknown2Item)
+            if ((printMask?.Flight?.Overall ?? true)
+                && item.Flight is {} FlightItem)
             {
-                Unknown2Item?.Print(sb, "Unknown2");
+                FlightItem?.Print(sb, "Flight");
             }
             if ((printMask?.UnarmedWeapon?.Overall ?? true)
                 && item.UnarmedWeapon is {} UnarmedWeaponItem)
             {
                 UnarmedWeaponItem?.Print(sb, "UnarmedWeapon");
             }
-            if ((printMask?.Flag?.Overall ?? true)
-                && item.Flag is {} FlagItem)
+            if ((printMask?.FlagOverrides?.Overall ?? true)
+                && item.FlagOverrides is {} FlagOverridesItem)
             {
-                FlagItem?.Print(sb, "Flag");
+                FlagOverridesItem?.Print(sb, "FlagOverrides");
             }
-            if ((printMask?.Unknown5?.Overall ?? true)
-                && item.Unknown5 is {} Unknown5Item)
+            if ((printMask?.Bleedout?.Overall ?? true)
+                && item.Bleedout is {} BleedoutItem)
             {
-                Unknown5Item?.Print(sb, "Unknown5");
+                BleedoutItem?.Print(sb, "Bleedout");
             }
             if ((printMask?.General?.Overall ?? true)
                 && item.General is {} GeneralItem)
             {
                 GeneralItem?.Print(sb, "General");
             }
-            if ((printMask?.Unknown7?.Overall ?? true)
-                && item.Unknown7 is {} Unknown7Item)
+            if ((printMask?.ElectromagneticShock?.Overall ?? true)
+                && item.ElectromagneticShock is {} ElectromagneticShockItem)
             {
-                Unknown7Item?.Print(sb, "Unknown7");
+                ElectromagneticShockItem?.Print(sb, "ElectromagneticShock");
             }
         }
         
@@ -1248,27 +1233,23 @@ namespace Mutagen.Bethesda.Starfield
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Size) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.Size, rhs.Size, out var lhsSize, out var rhsSize, out var isSizeEqual))
-                {
-                    if (!((NpcRaceOverrideSizeCommon)((INpcRaceOverrideSizeGetter)lhsSize).CommonInstance()!).Equals(lhsSize, rhsSize, equalsMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Size))) return false;
-                }
-                else if (!isSizeEqual) return false;
+                if (lhs.Size != rhs.Size) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Movement) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.Unknown1, rhs.Unknown1, out var lhsUnknown1, out var rhsUnknown1, out var isUnknown1Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.Movement, rhs.Movement, out var lhsMovement, out var rhsMovement, out var isMovementEqual))
                 {
-                    if (!((NpcRaceOverrideUnknown1Common)((INpcRaceOverrideUnknown1Getter)lhsUnknown1).CommonInstance()!).Equals(lhsUnknown1, rhsUnknown1, equalsMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Unknown1))) return false;
+                    if (!((NpcRaceOverrideMovementCommon)((INpcRaceOverrideMovementGetter)lhsMovement).CommonInstance()!).Equals(lhsMovement, rhsMovement, equalsMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Movement))) return false;
                 }
-                else if (!isUnknown1Equal) return false;
+                else if (!isMovementEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Flight) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.Unknown2, rhs.Unknown2, out var lhsUnknown2, out var rhsUnknown2, out var isUnknown2Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.Flight, rhs.Flight, out var lhsFlight, out var rhsFlight, out var isFlightEqual))
                 {
-                    if (!((NpcRaceOverrideUnknown2Common)((INpcRaceOverrideUnknown2Getter)lhsUnknown2).CommonInstance()!).Equals(lhsUnknown2, rhsUnknown2, equalsMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Unknown2))) return false;
+                    if (!((NpcRaceOverrideFlightCommon)((INpcRaceOverrideFlightGetter)lhsFlight).CommonInstance()!).Equals(lhsFlight, rhsFlight, equalsMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Flight))) return false;
                 }
-                else if (!isUnknown2Equal) return false;
+                else if (!isFlightEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.UnarmedWeapon) ?? true))
             {
@@ -1278,21 +1259,21 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isUnarmedWeaponEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Flag) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.FlagOverrides) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.Flag, rhs.Flag, out var lhsFlag, out var rhsFlag, out var isFlagEqual))
+                if (EqualsMaskHelper.RefEquality(lhs.FlagOverrides, rhs.FlagOverrides, out var lhsFlagOverrides, out var rhsFlagOverrides, out var isFlagOverridesEqual))
                 {
-                    if (!((NpcRaceOverrideFlagCommon)((INpcRaceOverrideFlagGetter)lhsFlag).CommonInstance()!).Equals(lhsFlag, rhsFlag, equalsMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Flag))) return false;
+                    if (!((NpcRaceOverrideFlagsCommon)((INpcRaceOverrideFlagsGetter)lhsFlagOverrides).CommonInstance()!).Equals(lhsFlagOverrides, rhsFlagOverrides, equalsMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.FlagOverrides))) return false;
                 }
-                else if (!isFlagEqual) return false;
+                else if (!isFlagOverridesEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Unknown5) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Bleedout) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.Unknown5, rhs.Unknown5, out var lhsUnknown5, out var rhsUnknown5, out var isUnknown5Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.Bleedout, rhs.Bleedout, out var lhsBleedout, out var rhsBleedout, out var isBleedoutEqual))
                 {
-                    if (!((NpcRaceOverrideUnknown5Common)((INpcRaceOverrideUnknown5Getter)lhsUnknown5).CommonInstance()!).Equals(lhsUnknown5, rhsUnknown5, equalsMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Unknown5))) return false;
+                    if (!((NpcRaceOverrideBleedoutCommon)((INpcRaceOverrideBleedoutGetter)lhsBleedout).CommonInstance()!).Equals(lhsBleedout, rhsBleedout, equalsMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Bleedout))) return false;
                 }
-                else if (!isUnknown5Equal) return false;
+                else if (!isBleedoutEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.General) ?? true))
             {
@@ -1302,13 +1283,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isGeneralEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Unknown7) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.ElectromagneticShock) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.Unknown7, rhs.Unknown7, out var lhsUnknown7, out var rhsUnknown7, out var isUnknown7Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.ElectromagneticShock, rhs.ElectromagneticShock, out var lhsElectromagneticShock, out var rhsElectromagneticShock, out var isElectromagneticShockEqual))
                 {
-                    if (!((NpcRaceOverrideUnknown7Common)((INpcRaceOverrideUnknown7Getter)lhsUnknown7).CommonInstance()!).Equals(lhsUnknown7, rhsUnknown7, equalsMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Unknown7))) return false;
+                    if (!((NpcRaceOverrideElectromagneticShockCommon)((INpcRaceOverrideElectromagneticShockGetter)lhsElectromagneticShock).CommonInstance()!).Equals(lhsElectromagneticShock, rhsElectromagneticShock, equalsMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.ElectromagneticShock))) return false;
                 }
-                else if (!isUnknown7Equal) return false;
+                else if (!isElectromagneticShockEqual) return false;
             }
             return true;
         }
@@ -1320,33 +1301,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Sizeitem);
             }
-            if (item.Unknown1 is {} Unknown1item)
+            if (item.Movement is {} Movementitem)
             {
-                hash.Add(Unknown1item);
+                hash.Add(Movementitem);
             }
-            if (item.Unknown2 is {} Unknown2item)
+            if (item.Flight is {} Flightitem)
             {
-                hash.Add(Unknown2item);
+                hash.Add(Flightitem);
             }
             if (item.UnarmedWeapon is {} UnarmedWeaponitem)
             {
                 hash.Add(UnarmedWeaponitem);
             }
-            if (item.Flag is {} Flagitem)
+            if (item.FlagOverrides is {} FlagOverridesitem)
             {
-                hash.Add(Flagitem);
+                hash.Add(FlagOverridesitem);
             }
-            if (item.Unknown5 is {} Unknown5item)
+            if (item.Bleedout is {} Bleedoutitem)
             {
-                hash.Add(Unknown5item);
+                hash.Add(Bleedoutitem);
             }
             if (item.General is {} Generalitem)
             {
                 hash.Add(Generalitem);
             }
-            if (item.Unknown7 is {} Unknown7item)
+            if (item.ElectromagneticShock is {} ElectromagneticShockitem)
             {
-                hash.Add(Unknown7item);
+                hash.Add(ElectromagneticShockitem);
             }
             return hash.ToHashCode();
         }
@@ -1396,18 +1377,22 @@ namespace Mutagen.Bethesda.Starfield
         {
             if ((copyMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Size) ?? true))
             {
-                errorMask?.PushIndex((int)NpcRaceOverride_FieldIndex.Size);
+                item.Size = rhs.Size;
+            }
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Movement) ?? true))
+            {
+                errorMask?.PushIndex((int)NpcRaceOverride_FieldIndex.Movement);
                 try
                 {
-                    if(rhs.Size is {} rhsSize)
+                    if(rhs.Movement is {} rhsMovement)
                     {
-                        item.Size = rhsSize.DeepCopy(
+                        item.Movement = rhsMovement.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Size));
+                            copyMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Movement));
                     }
                     else
                     {
-                        item.Size = default;
+                        item.Movement = default;
                     }
                 }
                 catch (Exception ex)
@@ -1420,46 +1405,20 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Flight) ?? true))
             {
-                errorMask?.PushIndex((int)NpcRaceOverride_FieldIndex.Unknown1);
+                errorMask?.PushIndex((int)NpcRaceOverride_FieldIndex.Flight);
                 try
                 {
-                    if(rhs.Unknown1 is {} rhsUnknown1)
+                    if(rhs.Flight is {} rhsFlight)
                     {
-                        item.Unknown1 = rhsUnknown1.DeepCopy(
+                        item.Flight = rhsFlight.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Unknown1));
+                            copyMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Flight));
                     }
                     else
                     {
-                        item.Unknown1 = default;
-                    }
-                }
-                catch (Exception ex)
-                when (errorMask != null)
-                {
-                    errorMask.ReportException(ex);
-                }
-                finally
-                {
-                    errorMask?.PopIndex();
-                }
-            }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Unknown2) ?? true))
-            {
-                errorMask?.PushIndex((int)NpcRaceOverride_FieldIndex.Unknown2);
-                try
-                {
-                    if(rhs.Unknown2 is {} rhsUnknown2)
-                    {
-                        item.Unknown2 = rhsUnknown2.DeepCopy(
-                            errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Unknown2));
-                    }
-                    else
-                    {
-                        item.Unknown2 = default;
+                        item.Flight = default;
                     }
                 }
                 catch (Exception ex)
@@ -1498,20 +1457,20 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Flag) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.FlagOverrides) ?? true))
             {
-                errorMask?.PushIndex((int)NpcRaceOverride_FieldIndex.Flag);
+                errorMask?.PushIndex((int)NpcRaceOverride_FieldIndex.FlagOverrides);
                 try
                 {
-                    if(rhs.Flag is {} rhsFlag)
+                    if(rhs.FlagOverrides is {} rhsFlagOverrides)
                     {
-                        item.Flag = rhsFlag.DeepCopy(
+                        item.FlagOverrides = rhsFlagOverrides.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Flag));
+                            copyMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.FlagOverrides));
                     }
                     else
                     {
-                        item.Flag = default;
+                        item.FlagOverrides = default;
                     }
                 }
                 catch (Exception ex)
@@ -1524,20 +1483,20 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Unknown5) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Bleedout) ?? true))
             {
-                errorMask?.PushIndex((int)NpcRaceOverride_FieldIndex.Unknown5);
+                errorMask?.PushIndex((int)NpcRaceOverride_FieldIndex.Bleedout);
                 try
                 {
-                    if(rhs.Unknown5 is {} rhsUnknown5)
+                    if(rhs.Bleedout is {} rhsBleedout)
                     {
-                        item.Unknown5 = rhsUnknown5.DeepCopy(
+                        item.Bleedout = rhsBleedout.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Unknown5));
+                            copyMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Bleedout));
                     }
                     else
                     {
-                        item.Unknown5 = default;
+                        item.Bleedout = default;
                     }
                 }
                 catch (Exception ex)
@@ -1576,20 +1535,20 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.Unknown7) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRaceOverride_FieldIndex.ElectromagneticShock) ?? true))
             {
-                errorMask?.PushIndex((int)NpcRaceOverride_FieldIndex.Unknown7);
+                errorMask?.PushIndex((int)NpcRaceOverride_FieldIndex.ElectromagneticShock);
                 try
                 {
-                    if(rhs.Unknown7 is {} rhsUnknown7)
+                    if(rhs.ElectromagneticShock is {} rhsElectromagneticShock)
                     {
-                        item.Unknown7 = rhsUnknown7.DeepCopy(
+                        item.ElectromagneticShock = rhsElectromagneticShock.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.Unknown7));
+                            copyMask?.GetSubCrystal((int)NpcRaceOverride_FieldIndex.ElectromagneticShock));
                     }
                     else
                     {
-                        item.Unknown7 = default;
+                        item.ElectromagneticShock = default;
                     }
                 }
                 catch (Exception ex)
@@ -1713,54 +1672,6 @@ namespace Mutagen.Bethesda.Starfield
             NpcRaceOverrideBinaryWriteTranslation.WriteBinaryFlagParse(
                 writer: writer,
                 item: item);
-            if (item.Size is {} SizeItem)
-            {
-                ((NpcRaceOverrideSizeBinaryWriteTranslation)((IBinaryItem)SizeItem).BinaryWriteTranslator).Write(
-                    item: SizeItem,
-                    writer: writer);
-            }
-            if (item.Unknown1 is {} Unknown1Item)
-            {
-                ((NpcRaceOverrideUnknown1BinaryWriteTranslation)((IBinaryItem)Unknown1Item).BinaryWriteTranslator).Write(
-                    item: Unknown1Item,
-                    writer: writer);
-            }
-            if (item.Unknown2 is {} Unknown2Item)
-            {
-                ((NpcRaceOverrideUnknown2BinaryWriteTranslation)((IBinaryItem)Unknown2Item).BinaryWriteTranslator).Write(
-                    item: Unknown2Item,
-                    writer: writer);
-            }
-            if (item.UnarmedWeapon is {} UnarmedWeaponItem)
-            {
-                ((NpcRaceOverrideUnarmedWeaponBinaryWriteTranslation)((IBinaryItem)UnarmedWeaponItem).BinaryWriteTranslator).Write(
-                    item: UnarmedWeaponItem,
-                    writer: writer);
-            }
-            if (item.Flag is {} FlagItem)
-            {
-                ((NpcRaceOverrideFlagBinaryWriteTranslation)((IBinaryItem)FlagItem).BinaryWriteTranslator).Write(
-                    item: FlagItem,
-                    writer: writer);
-            }
-            if (item.Unknown5 is {} Unknown5Item)
-            {
-                ((NpcRaceOverrideUnknown5BinaryWriteTranslation)((IBinaryItem)Unknown5Item).BinaryWriteTranslator).Write(
-                    item: Unknown5Item,
-                    writer: writer);
-            }
-            if (item.General is {} GeneralItem)
-            {
-                ((NpcRaceOverrideGeneralBinaryWriteTranslation)((IBinaryItem)GeneralItem).BinaryWriteTranslator).Write(
-                    item: GeneralItem,
-                    writer: writer);
-            }
-            if (item.Unknown7 is {} Unknown7Item)
-            {
-                ((NpcRaceOverrideUnknown7BinaryWriteTranslation)((IBinaryItem)Unknown7Item).BinaryWriteTranslator).Write(
-                    item: Unknown7Item,
-                    writer: writer);
-            }
         }
 
         public static partial void WriteBinaryFlagParseCustom(
@@ -1817,22 +1728,6 @@ namespace Mutagen.Bethesda.Starfield
             NpcRaceOverrideBinaryCreateTranslation.FillBinaryFlagParseCustom(
                 frame: frame,
                 item: item);
-            if (frame.Complete) return;
-            item.Size = Mutagen.Bethesda.Starfield.NpcRaceOverrideSize.CreateFromBinary(frame: frame);
-            if (frame.Complete) return;
-            item.Unknown1 = Mutagen.Bethesda.Starfield.NpcRaceOverrideUnknown1.CreateFromBinary(frame: frame);
-            if (frame.Complete) return;
-            item.Unknown2 = Mutagen.Bethesda.Starfield.NpcRaceOverrideUnknown2.CreateFromBinary(frame: frame);
-            if (frame.Complete) return;
-            item.UnarmedWeapon = Mutagen.Bethesda.Starfield.NpcRaceOverrideUnarmedWeapon.CreateFromBinary(frame: frame);
-            if (frame.Complete) return;
-            item.Flag = Mutagen.Bethesda.Starfield.NpcRaceOverrideFlag.CreateFromBinary(frame: frame);
-            if (frame.Complete) return;
-            item.Unknown5 = Mutagen.Bethesda.Starfield.NpcRaceOverrideUnknown5.CreateFromBinary(frame: frame);
-            if (frame.Complete) return;
-            item.General = Mutagen.Bethesda.Starfield.NpcRaceOverrideGeneral.CreateFromBinary(frame: frame);
-            if (frame.Complete) return;
-            item.Unknown7 = Mutagen.Bethesda.Starfield.NpcRaceOverrideUnknown7.CreateFromBinary(frame: frame);
         }
 
         public static partial void FillBinaryFlagParseCustom(
@@ -1907,15 +1802,8 @@ namespace Mutagen.Bethesda.Starfield
         partial void FlagParseCustomParse(
             OverlayStream stream,
             int offset);
+        protected int FlagParseEndingPos;
         #endregion
-        public INpcRaceOverrideSizeGetter Size => NpcRaceOverrideSizeBinaryOverlay.NpcRaceOverrideSizeFactory(_structData.Slice(0x4), _package, default(TypedParseParams));
-        public INpcRaceOverrideUnknown1Getter Unknown1 => NpcRaceOverrideUnknown1BinaryOverlay.NpcRaceOverrideUnknown1Factory(_structData.Slice(0x8), _package, default(TypedParseParams));
-        public INpcRaceOverrideUnknown2Getter Unknown2 => NpcRaceOverrideUnknown2BinaryOverlay.NpcRaceOverrideUnknown2Factory(_structData.Slice(0x18), _package, default(TypedParseParams));
-        public INpcRaceOverrideUnarmedWeaponGetter UnarmedWeapon => NpcRaceOverrideUnarmedWeaponBinaryOverlay.NpcRaceOverrideUnarmedWeaponFactory(_structData.Slice(0x1C), _package, default(TypedParseParams));
-        public INpcRaceOverrideFlagGetter Flag => NpcRaceOverrideFlagBinaryOverlay.NpcRaceOverrideFlagFactory(_structData.Slice(0x24), _package, default(TypedParseParams));
-        public INpcRaceOverrideUnknown5Getter Unknown5 => NpcRaceOverrideUnknown5BinaryOverlay.NpcRaceOverrideUnknown5Factory(_structData.Slice(0x34), _package, default(TypedParseParams));
-        public INpcRaceOverrideGeneralGetter General => NpcRaceOverrideGeneralBinaryOverlay.NpcRaceOverrideGeneralFactory(_structData.Slice(0x4C), _package, default(TypedParseParams));
-        public INpcRaceOverrideUnknown7Getter Unknown7 => NpcRaceOverrideUnknown7BinaryOverlay.NpcRaceOverrideUnknown7Factory(_structData.Slice(0xB6), _package, default(TypedParseParams));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1941,13 +1829,12 @@ namespace Mutagen.Bethesda.Starfield
                 stream: stream,
                 meta: package.MetaData.Constants,
                 translationParams: translationParams,
-                length: 0xD3,
                 memoryPair: out var memoryPair,
-                offset: out var offset);
+                offset: out var offset,
+                finalPos: out var finalPos);
             var ret = new NpcRaceOverrideBinaryOverlay(
                 memoryPair: memoryPair,
                 package: package);
-            stream.Position += 0xD3 + package.MetaData.Constants.SubConstants.HeaderLength;
             ret.CustomFactoryEnd(
                 stream: stream,
                 finalPos: stream.Length,
