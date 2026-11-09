@@ -1003,7 +1003,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Thickness);
             hash.Add(item.HalfExtents);
             hash.Add(item.IsWindDetachedEnd);
-            hash.AddBytes(item.IsWindDetachedEndUnused);
+            hash.Add(item.IsWindDetachedEndUnused);
             return hash.ToHashCode();
         }
         

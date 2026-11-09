@@ -1849,7 +1849,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.WaveScrollAmountV);
             hash.Add(item.RandomTimeOffsetRange);
             hash.Add(item.IsAnimated);
-            hash.AddBytes(item.IsAnimatedUnused);
+            hash.Add(item.IsAnimatedUnused);
             return hash.ToHashCode();
         }
         
