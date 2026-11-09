@@ -117,7 +117,7 @@
   <Object name="PlacedPrimitive" objType="Subrecord" recordType="XPRM">
     <Fields>
       <P3Float name="Bounds" binary="Custom" byteLength="12" />
-      <Color name="Color" binaryType="NoAlphaFloat" />
+      <P3Float name="Color" />
       <Float name="Unknown" />
       <Enum name="Type" enumName="PlacedPrimitive.TypeEnum" byteLength="4" />
     </Fields>
