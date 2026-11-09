@@ -14,7 +14,7 @@
           <Float name="EquipmentScoreMultUnarmed" min="0" max="10" />
           <Float name="EquipmentScoreMultStaff" min="0" max="10" />
           <Float name="AvoidThreatChance" />
-          <Float name="DodgeThreadChance" />
+          <Float name="DodgeThreatChance" />
           <Float name="EvadeThreatChance" />
           <Float name="HealAllyDistance" min="0" max="100" />
           <Float name="JumpCostMult" min="0" max="10" />

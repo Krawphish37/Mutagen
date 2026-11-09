@@ -7,7 +7,7 @@
       <String name="Description" recordType="DESC" translated="DL" nullable="False" />
       <Data>
         <Fields>
-          <Enum name="Categroy" enumName="PerkCategory" byteLength="1" />
+          <Enum name="Category" enumName="PerkCategory" byteLength="1" />
           <Enum name="SkillGroup" enumName="PerkSkillGroup" byteLength="1" />
           <Enum name="CrewAssignment" enumName="Perk.PerkCrewAssignment" byteLength="1" />
           <Enum name="Flags" enumName="Perk.Flag" byteLength="1" />

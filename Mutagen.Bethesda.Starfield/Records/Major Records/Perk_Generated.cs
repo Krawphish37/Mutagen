@@ -118,8 +118,8 @@ namespace Mutagen.Bethesda.Starfield
         public TranslatedString Description { get; set; } = string.Empty;
         ITranslatedStringGetter IPerkGetter.Description => this.Description;
         #endregion
-        #region Categroy
-        public PerkCategory Categroy { get; set; } = default(PerkCategory);
+        #region Category
+        public PerkCategory Category { get; set; } = default(PerkCategory);
         #endregion
         #region SkillGroup
         public PerkSkillGroup SkillGroup { get; set; } = default(PerkSkillGroup);
@@ -211,7 +211,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.VirtualMachineAdapter = new MaskItem<TItem, PerkAdapter.Mask<TItem>?>(initialValue, new PerkAdapter.Mask<TItem>(initialValue));
                 this.Name = initialValue;
                 this.Description = initialValue;
-                this.Categroy = initialValue;
+                this.Category = initialValue;
                 this.SkillGroup = initialValue;
                 this.CrewAssignment = initialValue;
                 this.Flags = initialValue;
@@ -233,7 +233,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem VirtualMachineAdapter,
                 TItem Name,
                 TItem Description,
-                TItem Categroy,
+                TItem Category,
                 TItem SkillGroup,
                 TItem CrewAssignment,
                 TItem Flags,
@@ -254,7 +254,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.VirtualMachineAdapter = new MaskItem<TItem, PerkAdapter.Mask<TItem>?>(VirtualMachineAdapter, new PerkAdapter.Mask<TItem>(VirtualMachineAdapter));
                 this.Name = Name;
                 this.Description = Description;
-                this.Categroy = Categroy;
+                this.Category = Category;
                 this.SkillGroup = SkillGroup;
                 this.CrewAssignment = CrewAssignment;
                 this.Flags = Flags;
@@ -277,7 +277,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, PerkAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
             public TItem Name;
             public TItem Description;
-            public TItem Categroy;
+            public TItem Category;
             public TItem SkillGroup;
             public TItem CrewAssignment;
             public TItem Flags;
@@ -302,7 +302,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
                 if (!object.Equals(this.Name, rhs.Name)) return false;
                 if (!object.Equals(this.Description, rhs.Description)) return false;
-                if (!object.Equals(this.Categroy, rhs.Categroy)) return false;
+                if (!object.Equals(this.Category, rhs.Category)) return false;
                 if (!object.Equals(this.SkillGroup, rhs.SkillGroup)) return false;
                 if (!object.Equals(this.CrewAssignment, rhs.CrewAssignment)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
@@ -319,7 +319,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.VirtualMachineAdapter);
                 hash.Add(this.Name);
                 hash.Add(this.Description);
-                hash.Add(this.Categroy);
+                hash.Add(this.Category);
                 hash.Add(this.SkillGroup);
                 hash.Add(this.CrewAssignment);
                 hash.Add(this.Flags);
@@ -345,7 +345,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.Name)) return false;
                 if (!eval(this.Description)) return false;
-                if (!eval(this.Categroy)) return false;
+                if (!eval(this.Category)) return false;
                 if (!eval(this.SkillGroup)) return false;
                 if (!eval(this.CrewAssignment)) return false;
                 if (!eval(this.Flags)) return false;
@@ -390,7 +390,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.Name)) return true;
                 if (eval(this.Description)) return true;
-                if (eval(this.Categroy)) return true;
+                if (eval(this.Category)) return true;
                 if (eval(this.SkillGroup)) return true;
                 if (eval(this.CrewAssignment)) return true;
                 if (eval(this.Flags)) return true;
@@ -438,7 +438,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.VirtualMachineAdapter = this.VirtualMachineAdapter == null ? null : new MaskItem<R, PerkAdapter.Mask<R>?>(eval(this.VirtualMachineAdapter.Overall), this.VirtualMachineAdapter.Specific?.Translate(eval));
                 obj.Name = eval(this.Name);
                 obj.Description = eval(this.Description);
-                obj.Categroy = eval(this.Categroy);
+                obj.Category = eval(this.Category);
                 obj.SkillGroup = eval(this.SkillGroup);
                 obj.CrewAssignment = eval(this.CrewAssignment);
                 obj.Flags = eval(this.Flags);
@@ -504,9 +504,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Description, "Description");
                     }
-                    if (printMask?.Categroy ?? true)
+                    if (printMask?.Category ?? true)
                     {
-                        sb.AppendItem(Categroy, "Categroy");
+                        sb.AppendItem(Category, "Category");
                     }
                     if (printMask?.SkillGroup ?? true)
                     {
@@ -586,7 +586,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, PerkAdapter.ErrorMask?>? VirtualMachineAdapter;
             public Exception? Name;
             public Exception? Description;
-            public Exception? Categroy;
+            public Exception? Category;
             public Exception? SkillGroup;
             public Exception? CrewAssignment;
             public Exception? Flags;
@@ -609,8 +609,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Name;
                     case Perk_FieldIndex.Description:
                         return Description;
-                    case Perk_FieldIndex.Categroy:
-                        return Categroy;
+                    case Perk_FieldIndex.Category:
+                        return Category;
                     case Perk_FieldIndex.SkillGroup:
                         return SkillGroup;
                     case Perk_FieldIndex.CrewAssignment:
@@ -646,8 +646,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Perk_FieldIndex.Description:
                         this.Description = ex;
                         break;
-                    case Perk_FieldIndex.Categroy:
-                        this.Categroy = ex;
+                    case Perk_FieldIndex.Category:
+                        this.Category = ex;
                         break;
                     case Perk_FieldIndex.SkillGroup:
                         this.SkillGroup = ex;
@@ -693,8 +693,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Perk_FieldIndex.Description:
                         this.Description = (Exception?)obj;
                         break;
-                    case Perk_FieldIndex.Categroy:
-                        this.Categroy = (Exception?)obj;
+                    case Perk_FieldIndex.Category:
+                        this.Category = (Exception?)obj;
                         break;
                     case Perk_FieldIndex.SkillGroup:
                         this.SkillGroup = (Exception?)obj;
@@ -732,7 +732,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (VirtualMachineAdapter != null) return true;
                 if (Name != null) return true;
                 if (Description != null) return true;
-                if (Categroy != null) return true;
+                if (Category != null) return true;
                 if (SkillGroup != null) return true;
                 if (CrewAssignment != null) return true;
                 if (Flags != null) return true;
@@ -775,7 +775,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Description, "Description");
                 }
                 {
-                    sb.AppendItem(Categroy, "Categroy");
+                    sb.AppendItem(Category, "Category");
                 }
                 {
                     sb.AppendItem(SkillGroup, "SkillGroup");
@@ -844,7 +844,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
                 ret.Name = this.Name.Combine(rhs.Name);
                 ret.Description = this.Description.Combine(rhs.Description);
-                ret.Categroy = this.Categroy.Combine(rhs.Categroy);
+                ret.Category = this.Category.Combine(rhs.Category);
                 ret.SkillGroup = this.SkillGroup.Combine(rhs.SkillGroup);
                 ret.CrewAssignment = this.CrewAssignment.Combine(rhs.CrewAssignment);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
@@ -878,7 +878,7 @@ namespace Mutagen.Bethesda.Starfield
             public PerkAdapter.TranslationMask? VirtualMachineAdapter;
             public bool Name;
             public bool Description;
-            public bool Categroy;
+            public bool Category;
             public bool SkillGroup;
             public bool CrewAssignment;
             public bool Flags;
@@ -897,7 +897,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Name = defaultOn;
                 this.Description = defaultOn;
-                this.Categroy = defaultOn;
+                this.Category = defaultOn;
                 this.SkillGroup = defaultOn;
                 this.CrewAssignment = defaultOn;
                 this.Flags = defaultOn;
@@ -915,7 +915,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
                 ret.Add((Name, null));
                 ret.Add((Description, null));
-                ret.Add((Categroy, null));
+                ret.Add((Category, null));
                 ret.Add((SkillGroup, null));
                 ret.Add((CrewAssignment, null));
                 ret.Add((Flags, null));
@@ -1095,7 +1095,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         new TranslatedString? Name { get; set; }
         new TranslatedString Description { get; set; }
-        new PerkCategory Categroy { get; set; }
+        new PerkCategory Category { get; set; }
         new PerkSkillGroup SkillGroup { get; set; }
         new Perk.PerkCrewAssignment CrewAssignment { get; set; }
         new Perk.Flag Flags { get; set; }
@@ -1145,7 +1145,7 @@ namespace Mutagen.Bethesda.Starfield
         ITranslatedStringGetter? Name { get; }
         #endregion
         ITranslatedStringGetter Description { get; }
-        PerkCategory Categroy { get; }
+        PerkCategory Category { get; }
         PerkSkillGroup SkillGroup { get; }
         Perk.PerkCrewAssignment CrewAssignment { get; }
         Perk.Flag Flags { get; }
@@ -1337,7 +1337,7 @@ namespace Mutagen.Bethesda.Starfield
         VirtualMachineAdapter = 7,
         Name = 8,
         Description = 9,
-        Categroy = 10,
+        Category = 10,
         SkillGroup = 11,
         CrewAssignment = 12,
         Flags = 13,
@@ -1467,7 +1467,7 @@ namespace Mutagen.Bethesda.Starfield
             item.VirtualMachineAdapter = null;
             item.Name = default;
             item.Description.Clear();
-            item.Categroy = default(PerkCategory);
+            item.Category = default(PerkCategory);
             item.SkillGroup = default(PerkSkillGroup);
             item.CrewAssignment = default(Perk.PerkCrewAssignment);
             item.Flags = default(Perk.Flag);
@@ -1522,7 +1522,7 @@ namespace Mutagen.Bethesda.Starfield
             base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
             if (queryCategories.HasFlag(AssetLinkQuery.Listed))
             {
-                obj.PerkIcon = obj.PerkIcon?.RelinkToNew(mapping);
+                obj.PerkIcon?.Relink(mapping);
             }
         }
         
@@ -1598,7 +1598,7 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.Name = object.Equals(item.Name, rhs.Name);
             ret.Description = object.Equals(item.Description, rhs.Description);
-            ret.Categroy = item.Categroy == rhs.Categroy;
+            ret.Category = item.Category == rhs.Category;
             ret.SkillGroup = item.SkillGroup == rhs.SkillGroup;
             ret.CrewAssignment = item.CrewAssignment == rhs.CrewAssignment;
             ret.Flags = item.Flags == rhs.Flags;
@@ -1676,9 +1676,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Description, "Description");
             }
-            if (printMask?.Categroy ?? true)
+            if (printMask?.Category ?? true)
             {
-                sb.AppendItem(item.Categroy, "Categroy");
+                sb.AppendItem(item.Category, "Category");
             }
             if (printMask?.SkillGroup ?? true)
             {
@@ -1799,9 +1799,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!object.Equals(lhs.Description, rhs.Description)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Perk_FieldIndex.Categroy) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Perk_FieldIndex.Category) ?? true))
             {
-                if (lhs.Categroy != rhs.Categroy) return false;
+                if (lhs.Category != rhs.Category) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Perk_FieldIndex.SkillGroup) ?? true))
             {
@@ -1872,7 +1872,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(Nameitem);
             }
             hash.Add(item.Description);
-            hash.Add(item.Categroy);
+            hash.Add(item.Category);
             hash.Add(item.SkillGroup);
             hash.Add(item.CrewAssignment);
             hash.Add(item.Flags);
@@ -1882,14 +1882,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(PerkIconitem);
             }
             hash.Add(item.Training);
-            foreach (var subItem in item.Ranks)
-            {
-                hash.Add(subItem);
-            }
-            foreach (var subItem in item.BackgroundSkills)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.Ranks);
+            hash.Add(item.BackgroundSkills);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -2088,9 +2082,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Description = rhs.Description.DeepCopy();
             }
-            if ((copyMask?.GetShouldTranslate((int)Perk_FieldIndex.Categroy) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Perk_FieldIndex.Category) ?? true))
             {
-                item.Categroy = rhs.Categroy;
+                item.Category = rhs.Category;
             }
             if ((copyMask?.GetShouldTranslate((int)Perk_FieldIndex.SkillGroup) ?? true))
             {
@@ -2348,7 +2342,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 EnumBinaryTranslation<PerkCategory, MutagenFrame, MutagenWriter>.Instance.Write(
                     writer,
-                    item.Categroy,
+                    item.Category,
                     length: 1);
                 EnumBinaryTranslation<PerkSkillGroup, MutagenFrame, MutagenWriter>.Instance.Write(
                     writer,
@@ -2501,7 +2495,7 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
-                    item.Categroy = EnumBinaryTranslation<PerkCategory, MutagenFrame, MutagenWriter>.Instance.Parse(
+                    item.Category = EnumBinaryTranslation<PerkCategory, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 1);
                     if (dataFrame.Remaining < 1) return null;
@@ -2646,25 +2640,25 @@ namespace Mutagen.Bethesda.Starfield
         public ITranslatedStringGetter Description => _DescriptionLocation.HasValue ? StringBinaryTranslation.Instance.Parse(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DescriptionLocation.Value, _package.MetaData.Constants), StringsSource.DL, parsingBundle: _package.MetaData, eager: false) : TranslatedString.Empty;
         #endregion
         private RangeInt32? _DATALocation;
-        #region Categroy
-        private int _CategroyLocation => _DATALocation!.Value.Min;
-        private bool _Categroy_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CategroyLocation + 1 >= 1;
-        public PerkCategory Categroy => _Categroy_IsSet ? (PerkCategory)_recordData.Span.Slice(_CategroyLocation, 0x1)[0] : default(PerkCategory);
+        #region Category
+        private int _CategoryLocation => _DATALocation!.Value.Min;
+        private bool _Category_IsSet => _DATALocation.HasValue;
+        public PerkCategory Category => _Category_IsSet ? (PerkCategory)_recordData.Span.Slice(_CategoryLocation, 0x1)[0] : default;
         #endregion
         #region SkillGroup
         private int _SkillGroupLocation => _DATALocation!.Value.Min + 0x1;
-        private bool _SkillGroup_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _SkillGroupLocation + 1 >= 1;
-        public PerkSkillGroup SkillGroup => _SkillGroup_IsSet ? (PerkSkillGroup)_recordData.Span.Slice(_SkillGroupLocation, 0x1)[0] : default(PerkSkillGroup);
+        private bool _SkillGroup_IsSet => _DATALocation.HasValue;
+        public PerkSkillGroup SkillGroup => _SkillGroup_IsSet ? (PerkSkillGroup)_recordData.Span.Slice(_SkillGroupLocation, 0x1)[0] : default;
         #endregion
         #region CrewAssignment
         private int _CrewAssignmentLocation => _DATALocation!.Value.Min + 0x2;
-        private bool _CrewAssignment_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _CrewAssignmentLocation + 1 >= 1;
-        public Perk.PerkCrewAssignment CrewAssignment => _CrewAssignment_IsSet ? (Perk.PerkCrewAssignment)_recordData.Span.Slice(_CrewAssignmentLocation, 0x1)[0] : default(Perk.PerkCrewAssignment);
+        private bool _CrewAssignment_IsSet => _DATALocation.HasValue;
+        public Perk.PerkCrewAssignment CrewAssignment => _CrewAssignment_IsSet ? (Perk.PerkCrewAssignment)_recordData.Span.Slice(_CrewAssignmentLocation, 0x1)[0] : default;
         #endregion
         #region Flags
         private int _FlagsLocation => _DATALocation!.Value.Min + 0x3;
-        private bool _Flags_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _FlagsLocation + 1 >= 1;
-        public Perk.Flag Flags => _Flags_IsSet ? (Perk.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default(Perk.Flag);
+        private bool _Flags_IsSet => _DATALocation.HasValue;
+        public Perk.Flag Flags => _Flags_IsSet ? (Perk.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default;
         #endregion
         #region Restriction
         private int? _RestrictionLocation;
