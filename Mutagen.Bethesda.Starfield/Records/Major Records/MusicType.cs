@@ -9,6 +9,7 @@ partial class MusicType
         AbruptTransition = 0x02,
         CycleTracks = 0x04,
         MaintainTrackOrder = 0x08,
+        RemovalQueued = 0x10,
         DucksCurrentTrack = 0x20,
         DoesNotQueue = 0x40,
     }

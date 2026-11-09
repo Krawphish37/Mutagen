@@ -39,4 +39,15 @@ public class MusicTypeIntervalTests
             written.Content.ToArray().ShouldBe(Hex(GenesisCombat));
         }
     }
+
+    [Fact]
+    public void Flag_RemovalQueued()
+    {
+        // xEdit's FNAM bit 0x10 (Removal Queued); not set in Starfield.esm
+        ((int)MusicType.Flag.RemovalQueued).ShouldBe(0x10);
+        foreach (var musc in ReadBoth<IMusicTypeGetter>(Record("MUSC", Subrecord("FNAM", "10-00-00-00")), f => MusicType.CreateFromBinary(f), (s, p) => MusicTypeBinaryOverlay.MusicTypeFactory(s, p)))
+        {
+            musc.Flags.ShouldBe(MusicType.Flag.RemovalQueued);
+        }
+    }
 }
