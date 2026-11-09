@@ -55,7 +55,7 @@
       <RefDirect name="Collision" refName="PlacedObjectCollision" />
       <RefList name="PowerLinks" refName="PowerLink" />
       <Int32 name="Count" recordType="XCNT" />
-      <ByteArray name="XFLG" recordType="XFLG" unknown="true" />
+      <Enum name="ExtraFlags" enumName="PlacedObject.ExtraFlag" byteLength="4" recordType="XFLG" />
       <RefDirect name="LightFlicker" refName="PlacedObjectLightFlicker" />
       <RefDirect name="MapMarker" refName="PlacedObjectMapMarker" markerType="XMRK" />
       <Bool name="LightLayerData" recordType="XLLD" byteLength="4" />
@@ -67,7 +67,7 @@
       <RefDirect name="GroupedPackIn" refName="GroupedPackIn" />
       <UInt32 name="BlueprintPartOrigin" recordType="XBPO" />
       <FormLink name="Layer" refName="Layer" recordType="XLYR" />
-      <UInt16 name="BOLV" recordType="BOLV" unknown="true" />
+      <UInt16 name="WaterReflection" recordType="BOLV" />
       <FormLink name="XWCN" recordType="XWCN" refName="Static" unknown="true" />
       <ByteArray name="XWCU" recordType="XWCU" unknown="true" />
       <FormLink name="Location" refName="Location" recordType="XLRL" />

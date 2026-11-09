@@ -479,16 +479,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Int32? IPlacedObjectGetter.Count => this.Count;
         #endregion
-        #region XFLG
+        #region ExtraFlags
+        public PlacedObject.ExtraFlag? ExtraFlags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _XFLG;
-        public MemorySlice<Byte>? XFLG
-        {
-            get => this._XFLG;
-            set => this._XFLG = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IPlacedObjectGetter.XFLG => this.XFLG;
+        PlacedObject.ExtraFlag? IPlacedObjectGetter.ExtraFlags => this.ExtraFlags;
         #endregion
         #region LightFlicker
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -583,10 +577,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<ILayerGetter> IPlacedObjectGetter.Layer => this.Layer;
         #endregion
-        #region BOLV
-        public UInt16? BOLV { get; set; }
+        #region WaterReflection
+        public UInt16? WaterReflection { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt16? IPlacedObjectGetter.BOLV => this.BOLV;
+        UInt16? IPlacedObjectGetter.WaterReflection => this.WaterReflection;
         #endregion
         #region XWCN
         private readonly IFormLinkNullable<IStaticGetter> _XWCN = new FormLinkNullable<IStaticGetter>();
@@ -911,7 +905,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Collision = new MaskItem<TItem, PlacedObjectCollision.Mask<TItem>?>(initialValue, new PlacedObjectCollision.Mask<TItem>(initialValue));
                 this.PowerLinks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PowerLink.Mask<TItem>?>>?>(initialValue, []);
                 this.Count = initialValue;
-                this.XFLG = initialValue;
+                this.ExtraFlags = initialValue;
                 this.LightFlicker = new MaskItem<TItem, PlacedObjectLightFlicker.Mask<TItem>?>(initialValue, new PlacedObjectLightFlicker.Mask<TItem>(initialValue));
                 this.MapMarker = new MaskItem<TItem, PlacedObjectMapMarker.Mask<TItem>?>(initialValue, new PlacedObjectMapMarker.Mask<TItem>(initialValue));
                 this.LightLayerData = initialValue;
@@ -923,7 +917,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.GroupedPackIn = new MaskItem<TItem, GroupedPackIn.Mask<TItem>?>(initialValue, new GroupedPackIn.Mask<TItem>(initialValue));
                 this.BlueprintPartOrigin = initialValue;
                 this.Layer = initialValue;
-                this.BOLV = initialValue;
+                this.WaterReflection = initialValue;
                 this.XWCN = initialValue;
                 this.XWCU = initialValue;
                 this.Location = initialValue;
@@ -1006,7 +1000,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Collision,
                 TItem PowerLinks,
                 TItem Count,
-                TItem XFLG,
+                TItem ExtraFlags,
                 TItem LightFlicker,
                 TItem MapMarker,
                 TItem LightLayerData,
@@ -1018,7 +1012,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem GroupedPackIn,
                 TItem BlueprintPartOrigin,
                 TItem Layer,
-                TItem BOLV,
+                TItem WaterReflection,
                 TItem XWCN,
                 TItem XWCU,
                 TItem Location,
@@ -1100,7 +1094,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Collision = new MaskItem<TItem, PlacedObjectCollision.Mask<TItem>?>(Collision, new PlacedObjectCollision.Mask<TItem>(Collision));
                 this.PowerLinks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PowerLink.Mask<TItem>?>>?>(PowerLinks, []);
                 this.Count = Count;
-                this.XFLG = XFLG;
+                this.ExtraFlags = ExtraFlags;
                 this.LightFlicker = new MaskItem<TItem, PlacedObjectLightFlicker.Mask<TItem>?>(LightFlicker, new PlacedObjectLightFlicker.Mask<TItem>(LightFlicker));
                 this.MapMarker = new MaskItem<TItem, PlacedObjectMapMarker.Mask<TItem>?>(MapMarker, new PlacedObjectMapMarker.Mask<TItem>(MapMarker));
                 this.LightLayerData = LightLayerData;
@@ -1112,7 +1106,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.GroupedPackIn = new MaskItem<TItem, GroupedPackIn.Mask<TItem>?>(GroupedPackIn, new GroupedPackIn.Mask<TItem>(GroupedPackIn));
                 this.BlueprintPartOrigin = BlueprintPartOrigin;
                 this.Layer = Layer;
-                this.BOLV = BOLV;
+                this.WaterReflection = WaterReflection;
                 this.XWCN = XWCN;
                 this.XWCU = XWCU;
                 this.Location = Location;
@@ -1196,7 +1190,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, PlacedObjectCollision.Mask<TItem>?>? Collision { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PowerLink.Mask<TItem>?>>?>? PowerLinks;
             public TItem Count;
-            public TItem XFLG;
+            public TItem ExtraFlags;
             public MaskItem<TItem, PlacedObjectLightFlicker.Mask<TItem>?>? LightFlicker { get; set; }
             public MaskItem<TItem, PlacedObjectMapMarker.Mask<TItem>?>? MapMarker { get; set; }
             public TItem LightLayerData;
@@ -1208,7 +1202,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, GroupedPackIn.Mask<TItem>?>? GroupedPackIn { get; set; }
             public TItem BlueprintPartOrigin;
             public TItem Layer;
-            public TItem BOLV;
+            public TItem WaterReflection;
             public TItem XWCN;
             public TItem XWCU;
             public TItem Location;
@@ -1294,7 +1288,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Collision, rhs.Collision)) return false;
                 if (!object.Equals(this.PowerLinks, rhs.PowerLinks)) return false;
                 if (!object.Equals(this.Count, rhs.Count)) return false;
-                if (!object.Equals(this.XFLG, rhs.XFLG)) return false;
+                if (!object.Equals(this.ExtraFlags, rhs.ExtraFlags)) return false;
                 if (!object.Equals(this.LightFlicker, rhs.LightFlicker)) return false;
                 if (!object.Equals(this.MapMarker, rhs.MapMarker)) return false;
                 if (!object.Equals(this.LightLayerData, rhs.LightLayerData)) return false;
@@ -1306,7 +1300,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.GroupedPackIn, rhs.GroupedPackIn)) return false;
                 if (!object.Equals(this.BlueprintPartOrigin, rhs.BlueprintPartOrigin)) return false;
                 if (!object.Equals(this.Layer, rhs.Layer)) return false;
-                if (!object.Equals(this.BOLV, rhs.BOLV)) return false;
+                if (!object.Equals(this.WaterReflection, rhs.WaterReflection)) return false;
                 if (!object.Equals(this.XWCN, rhs.XWCN)) return false;
                 if (!object.Equals(this.XWCU, rhs.XWCU)) return false;
                 if (!object.Equals(this.Location, rhs.Location)) return false;
@@ -1384,7 +1378,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Collision);
                 hash.Add(this.PowerLinks);
                 hash.Add(this.Count);
-                hash.Add(this.XFLG);
+                hash.Add(this.ExtraFlags);
                 hash.Add(this.LightFlicker);
                 hash.Add(this.MapMarker);
                 hash.Add(this.LightLayerData);
@@ -1396,7 +1390,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.GroupedPackIn);
                 hash.Add(this.BlueprintPartOrigin);
                 hash.Add(this.Layer);
-                hash.Add(this.BOLV);
+                hash.Add(this.WaterReflection);
                 hash.Add(this.XWCN);
                 hash.Add(this.XWCU);
                 hash.Add(this.Location);
@@ -1617,7 +1611,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.Count)) return false;
-                if (!eval(this.XFLG)) return false;
+                if (!eval(this.ExtraFlags)) return false;
                 if (LightFlicker != null)
                 {
                     if (!eval(this.LightFlicker.Overall)) return false;
@@ -1656,7 +1650,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.BlueprintPartOrigin)) return false;
                 if (!eval(this.Layer)) return false;
-                if (!eval(this.BOLV)) return false;
+                if (!eval(this.WaterReflection)) return false;
                 if (!eval(this.XWCN)) return false;
                 if (!eval(this.XWCU)) return false;
                 if (!eval(this.Location)) return false;
@@ -1943,7 +1937,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.Count)) return true;
-                if (eval(this.XFLG)) return true;
+                if (eval(this.ExtraFlags)) return true;
                 if (LightFlicker != null)
                 {
                     if (eval(this.LightFlicker.Overall)) return true;
@@ -1982,7 +1976,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.BlueprintPartOrigin)) return true;
                 if (eval(this.Layer)) return true;
-                if (eval(this.BOLV)) return true;
+                if (eval(this.WaterReflection)) return true;
                 if (eval(this.XWCN)) return true;
                 if (eval(this.XWCU)) return true;
                 if (eval(this.Location)) return true;
@@ -2233,7 +2227,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.Count = eval(this.Count);
-                obj.XFLG = eval(this.XFLG);
+                obj.ExtraFlags = eval(this.ExtraFlags);
                 obj.LightFlicker = this.LightFlicker == null ? null : new MaskItem<R, PlacedObjectLightFlicker.Mask<R>?>(eval(this.LightFlicker.Overall), this.LightFlicker.Specific?.Translate(eval));
                 obj.MapMarker = this.MapMarker == null ? null : new MaskItem<R, PlacedObjectMapMarker.Mask<R>?>(eval(this.MapMarker.Overall), this.MapMarker.Specific?.Translate(eval));
                 obj.LightLayerData = eval(this.LightLayerData);
@@ -2259,7 +2253,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.GroupedPackIn = this.GroupedPackIn == null ? null : new MaskItem<R, GroupedPackIn.Mask<R>?>(eval(this.GroupedPackIn.Overall), this.GroupedPackIn.Specific?.Translate(eval));
                 obj.BlueprintPartOrigin = eval(this.BlueprintPartOrigin);
                 obj.Layer = eval(this.Layer);
-                obj.BOLV = eval(this.BOLV);
+                obj.WaterReflection = eval(this.WaterReflection);
                 obj.XWCN = eval(this.XWCN);
                 obj.XWCU = eval(this.XWCU);
                 obj.Location = eval(this.Location);
@@ -2640,9 +2634,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Count, "Count");
                     }
-                    if (printMask?.XFLG ?? true)
+                    if (printMask?.ExtraFlags ?? true)
                     {
-                        sb.AppendItem(XFLG, "XFLG");
+                        sb.AppendItem(ExtraFlags, "ExtraFlags");
                     }
                     if (printMask?.LightFlicker?.Overall ?? true)
                     {
@@ -2703,9 +2697,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Layer, "Layer");
                     }
-                    if (printMask?.BOLV ?? true)
+                    if (printMask?.WaterReflection ?? true)
                     {
-                        sb.AppendItem(BOLV, "BOLV");
+                        sb.AppendItem(WaterReflection, "WaterReflection");
                     }
                     if (printMask?.XWCN ?? true)
                     {
@@ -2943,7 +2937,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, PlacedObjectCollision.ErrorMask?>? Collision;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PowerLink.ErrorMask?>>?>? PowerLinks;
             public Exception? Count;
-            public Exception? XFLG;
+            public Exception? ExtraFlags;
             public MaskItem<Exception?, PlacedObjectLightFlicker.ErrorMask?>? LightFlicker;
             public MaskItem<Exception?, PlacedObjectMapMarker.ErrorMask?>? MapMarker;
             public Exception? LightLayerData;
@@ -2955,7 +2949,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, GroupedPackIn.ErrorMask?>? GroupedPackIn;
             public Exception? BlueprintPartOrigin;
             public Exception? Layer;
-            public Exception? BOLV;
+            public Exception? WaterReflection;
             public Exception? XWCN;
             public Exception? XWCU;
             public Exception? Location;
@@ -3077,8 +3071,8 @@ namespace Mutagen.Bethesda.Starfield
                         return PowerLinks;
                     case PlacedObject_FieldIndex.Count:
                         return Count;
-                    case PlacedObject_FieldIndex.XFLG:
-                        return XFLG;
+                    case PlacedObject_FieldIndex.ExtraFlags:
+                        return ExtraFlags;
                     case PlacedObject_FieldIndex.LightFlicker:
                         return LightFlicker;
                     case PlacedObject_FieldIndex.MapMarker:
@@ -3101,8 +3095,8 @@ namespace Mutagen.Bethesda.Starfield
                         return BlueprintPartOrigin;
                     case PlacedObject_FieldIndex.Layer:
                         return Layer;
-                    case PlacedObject_FieldIndex.BOLV:
-                        return BOLV;
+                    case PlacedObject_FieldIndex.WaterReflection:
+                        return WaterReflection;
                     case PlacedObject_FieldIndex.XWCN:
                         return XWCN;
                     case PlacedObject_FieldIndex.XWCU:
@@ -3298,8 +3292,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.Count:
                         this.Count = ex;
                         break;
-                    case PlacedObject_FieldIndex.XFLG:
-                        this.XFLG = ex;
+                    case PlacedObject_FieldIndex.ExtraFlags:
+                        this.ExtraFlags = ex;
                         break;
                     case PlacedObject_FieldIndex.LightFlicker:
                         this.LightFlicker = new MaskItem<Exception?, PlacedObjectLightFlicker.ErrorMask?>(ex, null);
@@ -3334,8 +3328,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.Layer:
                         this.Layer = ex;
                         break;
-                    case PlacedObject_FieldIndex.BOLV:
-                        this.BOLV = ex;
+                    case PlacedObject_FieldIndex.WaterReflection:
+                        this.WaterReflection = ex;
                         break;
                     case PlacedObject_FieldIndex.XWCN:
                         this.XWCN = ex;
@@ -3564,8 +3558,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.Count:
                         this.Count = (Exception?)obj;
                         break;
-                    case PlacedObject_FieldIndex.XFLG:
-                        this.XFLG = (Exception?)obj;
+                    case PlacedObject_FieldIndex.ExtraFlags:
+                        this.ExtraFlags = (Exception?)obj;
                         break;
                     case PlacedObject_FieldIndex.LightFlicker:
                         this.LightFlicker = (MaskItem<Exception?, PlacedObjectLightFlicker.ErrorMask?>?)obj;
@@ -3600,8 +3594,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.Layer:
                         this.Layer = (Exception?)obj;
                         break;
-                    case PlacedObject_FieldIndex.BOLV:
-                        this.BOLV = (Exception?)obj;
+                    case PlacedObject_FieldIndex.WaterReflection:
+                        this.WaterReflection = (Exception?)obj;
                         break;
                     case PlacedObject_FieldIndex.XWCN:
                         this.XWCN = (Exception?)obj;
@@ -3746,7 +3740,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Collision != null) return true;
                 if (PowerLinks != null) return true;
                 if (Count != null) return true;
-                if (XFLG != null) return true;
+                if (ExtraFlags != null) return true;
                 if (LightFlicker != null) return true;
                 if (MapMarker != null) return true;
                 if (LightLayerData != null) return true;
@@ -3758,7 +3752,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (GroupedPackIn != null) return true;
                 if (BlueprintPartOrigin != null) return true;
                 if (Layer != null) return true;
-                if (BOLV != null) return true;
+                if (WaterReflection != null) return true;
                 if (XWCN != null) return true;
                 if (XWCU != null) return true;
                 if (Location != null) return true;
@@ -4019,7 +4013,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Count, "Count");
                 }
                 {
-                    sb.AppendItem(XFLG, "XFLG");
+                    sb.AppendItem(ExtraFlags, "ExtraFlags");
                 }
                 LightFlicker?.Print(sb);
                 MapMarker?.Print(sb);
@@ -4062,7 +4056,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Layer, "Layer");
                 }
                 {
-                    sb.AppendItem(BOLV, "BOLV");
+                    sb.AppendItem(WaterReflection, "WaterReflection");
                 }
                 {
                     sb.AppendItem(XWCN, "XWCN");
@@ -4254,7 +4248,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Collision = this.Collision.Combine(rhs.Collision, (l, r) => l.Combine(r));
                 ret.PowerLinks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PowerLink.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.PowerLinks?.Overall, rhs.PowerLinks?.Overall), Noggog.ExceptionExt.Combine(this.PowerLinks?.Specific, rhs.PowerLinks?.Specific));
                 ret.Count = this.Count.Combine(rhs.Count);
-                ret.XFLG = this.XFLG.Combine(rhs.XFLG);
+                ret.ExtraFlags = this.ExtraFlags.Combine(rhs.ExtraFlags);
                 ret.LightFlicker = this.LightFlicker.Combine(rhs.LightFlicker, (l, r) => l.Combine(r));
                 ret.MapMarker = this.MapMarker.Combine(rhs.MapMarker, (l, r) => l.Combine(r));
                 ret.LightLayerData = this.LightLayerData.Combine(rhs.LightLayerData);
@@ -4266,7 +4260,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.GroupedPackIn = this.GroupedPackIn.Combine(rhs.GroupedPackIn, (l, r) => l.Combine(r));
                 ret.BlueprintPartOrigin = this.BlueprintPartOrigin.Combine(rhs.BlueprintPartOrigin);
                 ret.Layer = this.Layer.Combine(rhs.Layer);
-                ret.BOLV = this.BOLV.Combine(rhs.BOLV);
+                ret.WaterReflection = this.WaterReflection.Combine(rhs.WaterReflection);
                 ret.XWCN = this.XWCN.Combine(rhs.XWCN);
                 ret.XWCU = this.XWCU.Combine(rhs.XWCU);
                 ret.Location = this.Location.Combine(rhs.Location);
@@ -4361,7 +4355,7 @@ namespace Mutagen.Bethesda.Starfield
             public PlacedObjectCollision.TranslationMask? Collision;
             public PowerLink.TranslationMask? PowerLinks;
             public bool Count;
-            public bool XFLG;
+            public bool ExtraFlags;
             public PlacedObjectLightFlicker.TranslationMask? LightFlicker;
             public PlacedObjectMapMarker.TranslationMask? MapMarker;
             public bool LightLayerData;
@@ -4373,7 +4367,7 @@ namespace Mutagen.Bethesda.Starfield
             public GroupedPackIn.TranslationMask? GroupedPackIn;
             public bool BlueprintPartOrigin;
             public bool Layer;
-            public bool BOLV;
+            public bool WaterReflection;
             public bool XWCN;
             public bool XWCU;
             public bool Location;
@@ -4434,14 +4428,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.IsIgnoredBySandbox = defaultOn;
                 this.FactionRank = defaultOn;
                 this.Count = defaultOn;
-                this.XFLG = defaultOn;
+                this.ExtraFlags = defaultOn;
                 this.LightLayerData = defaultOn;
                 this.LightStaticShadowMap = defaultOn;
                 this.LightVolumetricData = defaultOn;
                 this.LightRadiusFalloutExponent = defaultOn;
                 this.BlueprintPartOrigin = defaultOn;
                 this.Layer = defaultOn;
-                this.BOLV = defaultOn;
+                this.WaterReflection = defaultOn;
                 this.XWCN = defaultOn;
                 this.XWCU = defaultOn;
                 this.Location = defaultOn;
@@ -4511,7 +4505,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Collision != null ? Collision.OnOverall : DefaultOn, Collision?.GetCrystal()));
                 ret.Add((PowerLinks == null ? DefaultOn : !PowerLinks.GetCrystal().CopyNothing, PowerLinks?.GetCrystal()));
                 ret.Add((Count, null));
-                ret.Add((XFLG, null));
+                ret.Add((ExtraFlags, null));
                 ret.Add((LightFlicker != null ? LightFlicker.OnOverall : DefaultOn, LightFlicker?.GetCrystal()));
                 ret.Add((MapMarker != null ? MapMarker.OnOverall : DefaultOn, MapMarker?.GetCrystal()));
                 ret.Add((LightLayerData, null));
@@ -4523,7 +4517,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((GroupedPackIn != null ? GroupedPackIn.OnOverall : DefaultOn, GroupedPackIn?.GetCrystal()));
                 ret.Add((BlueprintPartOrigin, null));
                 ret.Add((Layer, null));
-                ret.Add((BOLV, null));
+                ret.Add((WaterReflection, null));
                 ret.Add((XWCN, null));
                 ret.Add((XWCU, null));
                 ret.Add((Location, null));
@@ -4761,7 +4755,7 @@ namespace Mutagen.Bethesda.Starfield
         new PlacedObjectCollision? Collision { get; set; }
         new ExtendedList<PowerLink> PowerLinks { get; }
         new Int32? Count { get; set; }
-        new MemorySlice<Byte>? XFLG { get; set; }
+        new PlacedObject.ExtraFlag? ExtraFlags { get; set; }
         new PlacedObjectLightFlicker? LightFlicker { get; set; }
         new PlacedObjectMapMarker? MapMarker { get; set; }
         new Boolean? LightLayerData { get; set; }
@@ -4773,7 +4767,7 @@ namespace Mutagen.Bethesda.Starfield
         new GroupedPackIn? GroupedPackIn { get; set; }
         new UInt32? BlueprintPartOrigin { get; set; }
         new IFormLinkNullable<ILayerGetter> Layer { get; set; }
-        new UInt16? BOLV { get; set; }
+        new UInt16? WaterReflection { get; set; }
         new IFormLinkNullable<IStaticGetter> XWCN { get; set; }
         new MemorySlice<Byte>? XWCU { get; set; }
         new IFormLinkNullable<ILocationGetter> Location { get; set; }
@@ -4880,7 +4874,7 @@ namespace Mutagen.Bethesda.Starfield
         IPlacedObjectCollisionGetter? Collision { get; }
         IReadOnlyList<IPowerLinkGetter> PowerLinks { get; }
         Int32? Count { get; }
-        ReadOnlyMemorySlice<Byte>? XFLG { get; }
+        PlacedObject.ExtraFlag? ExtraFlags { get; }
         IPlacedObjectLightFlickerGetter? LightFlicker { get; }
         IPlacedObjectMapMarkerGetter? MapMarker { get; }
         Boolean? LightLayerData { get; }
@@ -4892,7 +4886,7 @@ namespace Mutagen.Bethesda.Starfield
         IGroupedPackInGetter? GroupedPackIn { get; }
         UInt32? BlueprintPartOrigin { get; }
         IFormLinkNullableGetter<ILayerGetter> Layer { get; }
-        UInt16? BOLV { get; }
+        UInt16? WaterReflection { get; }
         IFormLinkNullableGetter<IStaticGetter> XWCN { get; }
         ReadOnlyMemorySlice<Byte>? XWCU { get; }
         IFormLinkNullableGetter<ILocationGetter> Location { get; }
@@ -5141,7 +5135,7 @@ namespace Mutagen.Bethesda.Starfield
         Collision = 45,
         PowerLinks = 46,
         Count = 47,
-        XFLG = 48,
+        ExtraFlags = 48,
         LightFlicker = 49,
         MapMarker = 50,
         LightLayerData = 51,
@@ -5153,7 +5147,7 @@ namespace Mutagen.Bethesda.Starfield
         GroupedPackIn = 57,
         BlueprintPartOrigin = 58,
         Layer = 59,
-        BOLV = 60,
+        WaterReflection = 60,
         XWCN = 61,
         XWCU = 62,
         Location = 63,
@@ -5402,7 +5396,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Collision = null;
             item.PowerLinks.Clear();
             item.Count = default;
-            item.XFLG = default;
+            item.ExtraFlags = default;
             item.LightFlicker = null;
             item.MapMarker = null;
             item.LightLayerData = default;
@@ -5414,7 +5408,7 @@ namespace Mutagen.Bethesda.Starfield
             item.GroupedPackIn = null;
             item.BlueprintPartOrigin = default;
             item.Layer.Clear();
-            item.BOLV = default;
+            item.WaterReflection = default;
             item.XWCN.Clear();
             item.XWCU = default;
             item.Location.Clear();
@@ -5720,7 +5714,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             ret.Count = item.Count == rhs.Count;
-            ret.XFLG = MemorySliceExt.SequenceEqual(item.XFLG, rhs.XFLG);
+            ret.ExtraFlags = item.ExtraFlags == rhs.ExtraFlags;
             ret.LightFlicker = EqualsMaskHelper.EqualsHelper(
                 item.LightFlicker,
                 rhs.LightFlicker,
@@ -5751,7 +5745,7 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.BlueprintPartOrigin = item.BlueprintPartOrigin == rhs.BlueprintPartOrigin;
             ret.Layer = item.Layer.Equals(rhs.Layer);
-            ret.BOLV = item.BOLV == rhs.BOLV;
+            ret.WaterReflection = item.WaterReflection == rhs.WaterReflection;
             ret.XWCN = item.XWCN.Equals(rhs.XWCN);
             ret.XWCU = MemorySliceExt.SequenceEqual(item.XWCU, rhs.XWCU);
             ret.Location = item.Location.Equals(rhs.Location);
@@ -6129,10 +6123,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(CountItem, "Count");
             }
-            if ((printMask?.XFLG ?? true)
-                && item.XFLG is {} XFLGItem)
+            if ((printMask?.ExtraFlags ?? true)
+                && item.ExtraFlags is {} ExtraFlagsItem)
             {
-                sb.AppendLine($"XFLG => {SpanExt.ToHexString(XFLGItem)}");
+                sb.AppendItem(ExtraFlagsItem, "ExtraFlags");
             }
             if ((printMask?.LightFlicker?.Overall ?? true)
                 && item.LightFlicker is {} LightFlickerItem)
@@ -6197,10 +6191,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Layer.FormKeyNullable, "Layer");
             }
-            if ((printMask?.BOLV ?? true)
-                && item.BOLV is {} BOLVItem)
+            if ((printMask?.WaterReflection ?? true)
+                && item.WaterReflection is {} WaterReflectionItem)
             {
-                sb.AppendItem(BOLVItem, "BOLV");
+                sb.AppendItem(WaterReflectionItem, "WaterReflection");
             }
             if (printMask?.XWCN ?? true)
             {
@@ -6662,9 +6656,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Count != rhs.Count) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.XFLG) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.ExtraFlags) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.XFLG, rhs.XFLG)) return false;
+                if (lhs.ExtraFlags != rhs.ExtraFlags) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.LightFlicker) ?? true))
             {
@@ -6726,9 +6720,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Layer.Equals(rhs.Layer)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.BOLV) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.WaterReflection) ?? true))
             {
-                if (lhs.BOLV != rhs.BOLV) return false;
+                if (lhs.WaterReflection != rhs.WaterReflection) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.XWCN) ?? true))
             {
@@ -7016,9 +7010,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Countitem);
             }
-            if (item.XFLG is {} XFLGItem)
+            if (item.ExtraFlags is {} ExtraFlagsitem)
             {
-                hash.Add(XFLGItem);
+                hash.Add(ExtraFlagsitem);
             }
             if (item.LightFlicker is {} LightFlickeritem)
             {
@@ -7058,9 +7052,9 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(BlueprintPartOriginitem);
             }
             hash.Add(item.Layer);
-            if (item.BOLV is {} BOLVitem)
+            if (item.WaterReflection is {} WaterReflectionitem)
             {
-                hash.Add(BOLVitem);
+                hash.Add(WaterReflectionitem);
             }
             hash.Add(item.XWCN);
             if (item.XWCU is {} XWCUItem)
@@ -8158,16 +8152,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Count = rhs.Count;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.XFLG) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.ExtraFlags) ?? true))
             {
-                if(rhs.XFLG is {} XFLGrhs)
-                {
-                    item.XFLG = XFLGrhs.ToArray();
-                }
-                else
-                {
-                    item.XFLG = default;
-                }
+                item.ExtraFlags = rhs.ExtraFlags;
             }
             if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.LightFlicker) ?? true))
             {
@@ -8321,9 +8308,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Layer.SetTo(rhs.Layer.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.BOLV) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.WaterReflection) ?? true))
             {
-                item.BOLV = rhs.BOLV;
+                item.WaterReflection = rhs.WaterReflection;
             }
             if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.XWCN) ?? true))
             {
@@ -9141,9 +9128,10 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.Count,
                 header: translationParams.ConvertToCustom(RecordTypes.XCNT));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.XFLG,
+            EnumBinaryTranslation<PlacedObject.ExtraFlag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.ExtraFlags,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.XFLG));
             if (item.LightFlicker is {} LightFlickerItem)
             {
@@ -9213,7 +9201,7 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.XLYR));
             UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.BOLV,
+                item: item.WaterReflection,
                 header: translationParams.ConvertToCustom(RecordTypes.BOLV));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -9746,8 +9734,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XFLG:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.XFLG = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)PlacedObject_FieldIndex.XFLG;
+                    item.ExtraFlags = EnumBinaryTranslation<PlacedObject.ExtraFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)PlacedObject_FieldIndex.ExtraFlags;
                 }
                 case RecordTypeInts.XLFD:
                 {
@@ -9827,8 +9817,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.BOLV:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BOLV = frame.ReadUInt16();
-                    return (int)PlacedObject_FieldIndex.BOLV;
+                    item.WaterReflection = frame.ReadUInt16();
+                    return (int)PlacedObject_FieldIndex.WaterReflection;
                 }
                 case RecordTypeInts.XWCN:
                 {
@@ -10222,9 +10212,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _CountLocation;
         public Int32? Count => _CountLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _CountLocation.Value, _package.MetaData.Constants)) : default(Int32?);
         #endregion
-        #region XFLG
-        private int? _XFLGLocation;
-        public ReadOnlyMemorySlice<Byte>? XFLG => _XFLGLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _XFLGLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region ExtraFlags
+        private int? _ExtraFlagsLocation;
+        public PlacedObject.ExtraFlag? ExtraFlags => EnumBinaryTranslation<PlacedObject.ExtraFlag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_ExtraFlagsLocation, _recordData, _package, 4);
         #endregion
         #region LightFlicker
         private RangeInt32? _LightFlickerLocation;
@@ -10261,9 +10251,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _LayerLocation;
         public IFormLinkNullableGetter<ILayerGetter> Layer => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ILayerGetter>(_package, _recordData, _LayerLocation);
         #endregion
-        #region BOLV
-        private int? _BOLVLocation;
-        public UInt16? BOLV => _BOLVLocation.HasValue ? BinaryPrimitives.ReadUInt16LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _BOLVLocation.Value, _package.MetaData.Constants)) : default(UInt16?);
+        #region WaterReflection
+        private int? _WaterReflectionLocation;
+        public UInt16? WaterReflection => _WaterReflectionLocation.HasValue ? BinaryPrimitives.ReadUInt16LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _WaterReflectionLocation.Value, _package.MetaData.Constants)) : default(UInt16?);
         #endregion
         #region XWCN
         private int? _XWCNLocation;
@@ -10714,8 +10704,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.XFLG:
                 {
-                    _XFLGLocation = (stream.Position - offset);
-                    return (int)PlacedObject_FieldIndex.XFLG;
+                    _ExtraFlagsLocation = (stream.Position - offset);
+                    return (int)PlacedObject_FieldIndex.ExtraFlags;
                 }
                 case RecordTypeInts.XLFD:
                 {
@@ -10796,8 +10786,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BOLV:
                 {
-                    _BOLVLocation = (stream.Position - offset);
-                    return (int)PlacedObject_FieldIndex.BOLV;
+                    _WaterReflectionLocation = (stream.Position - offset);
+                    return (int)PlacedObject_FieldIndex.WaterReflection;
                 }
                 case RecordTypeInts.XWCN:
                 {
