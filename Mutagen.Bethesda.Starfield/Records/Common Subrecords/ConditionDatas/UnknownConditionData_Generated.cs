@@ -124,6 +124,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem RunOnType,
                 TItem Reference,
                 TItem Unknown3,
+                TItem LinkedReferenceKeyword,
                 TItem UseAliases,
                 TItem UsePackageData,
                 TItem Function,
@@ -135,6 +136,7 @@ namespace Mutagen.Bethesda.Starfield
                 RunOnType: RunOnType,
                 Reference: Reference,
                 Unknown3: Unknown3,
+                LinkedReferenceKeyword: LinkedReferenceKeyword,
                 UseAliases: UseAliases,
                 UsePackageData: UsePackageData)
             {
@@ -743,13 +745,14 @@ namespace Mutagen.Bethesda.Starfield
         RunOnType = 0,
         Reference = 1,
         Unknown3 = 2,
-        UseAliases = 3,
-        UsePackageData = 4,
-        Function = 5,
-        ParameterOne = 6,
-        ParameterTwo = 7,
-        FirstUnusedStringParameter = 8,
-        SecondUnusedStringParameter = 9,
+        LinkedReferenceKeyword = 3,
+        UseAliases = 4,
+        UsePackageData = 5,
+        Function = 6,
+        ParameterOne = 7,
+        ParameterTwo = 8,
+        FirstUnusedStringParameter = 9,
+        SecondUnusedStringParameter = 10,
     }
     #endregion
 
@@ -762,7 +765,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 5;
 
-        public const ushort FieldCount = 10;
+        public const ushort FieldCount = 11;
 
         public static readonly Type MaskType = typeof(UnknownConditionData.Mask<>);
 
@@ -987,6 +990,8 @@ namespace Mutagen.Bethesda.Starfield
                 case ConditionData_FieldIndex.Reference:
                     return (UnknownConditionData_FieldIndex)((int)index);
                 case ConditionData_FieldIndex.Unknown3:
+                    return (UnknownConditionData_FieldIndex)((int)index);
+                case ConditionData_FieldIndex.LinkedReferenceKeyword:
                     return (UnknownConditionData_FieldIndex)((int)index);
                 case ConditionData_FieldIndex.UseAliases:
                     return (UnknownConditionData_FieldIndex)((int)index);

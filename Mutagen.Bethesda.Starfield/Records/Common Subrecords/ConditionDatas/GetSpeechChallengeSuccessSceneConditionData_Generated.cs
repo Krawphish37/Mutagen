@@ -120,6 +120,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem RunOnType,
                 TItem Reference,
                 TItem Unknown3,
+                TItem LinkedReferenceKeyword,
                 TItem UseAliases,
                 TItem UsePackageData,
                 TItem FirstParameter,
@@ -130,6 +131,7 @@ namespace Mutagen.Bethesda.Starfield
                 RunOnType: RunOnType,
                 Reference: Reference,
                 Unknown3: Unknown3,
+                LinkedReferenceKeyword: LinkedReferenceKeyword,
                 UseAliases: UseAliases,
                 UsePackageData: UsePackageData)
             {
@@ -708,12 +710,13 @@ namespace Mutagen.Bethesda.Starfield
         RunOnType = 0,
         Reference = 1,
         Unknown3 = 2,
-        UseAliases = 3,
-        UsePackageData = 4,
-        FirstParameter = 5,
-        FirstUnusedStringParameter = 6,
-        SecondParameter = 7,
-        SecondUnusedStringParameter = 8,
+        LinkedReferenceKeyword = 3,
+        UseAliases = 4,
+        UsePackageData = 5,
+        FirstParameter = 6,
+        FirstUnusedStringParameter = 7,
+        SecondParameter = 8,
+        SecondUnusedStringParameter = 9,
     }
     #endregion
 
@@ -726,7 +729,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 4;
 
-        public const ushort FieldCount = 9;
+        public const ushort FieldCount = 10;
 
         public static readonly Type MaskType = typeof(GetSpeechChallengeSuccessSceneConditionData.Mask<>);
 
@@ -945,6 +948,8 @@ namespace Mutagen.Bethesda.Starfield
                 case ConditionData_FieldIndex.Reference:
                     return (GetSpeechChallengeSuccessSceneConditionData_FieldIndex)((int)index);
                 case ConditionData_FieldIndex.Unknown3:
+                    return (GetSpeechChallengeSuccessSceneConditionData_FieldIndex)((int)index);
+                case ConditionData_FieldIndex.LinkedReferenceKeyword:
                     return (GetSpeechChallengeSuccessSceneConditionData_FieldIndex)((int)index);
                 case ConditionData_FieldIndex.UseAliases:
                     return (GetSpeechChallengeSuccessSceneConditionData_FieldIndex)((int)index);

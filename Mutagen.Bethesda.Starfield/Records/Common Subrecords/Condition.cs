@@ -1179,7 +1179,15 @@ partial class ConditionBinaryCreateTranslation
             FormLinkBinaryTranslation.Instance.Parse(
                 reader: frame,
                 defaultVal: FormKey.Null));
-        item.Unknown3 = frame.ReadInt32();
+        // Parameter #3 is a keyword FormID when Run On is Linked Reference (xEdit wbConditionParam3Decider), and an
+        // alias index or event member code otherwise, so it is only read as a link for Linked Reference. Unknown3 keeps
+        // the raw value either way; 0 and -1 mean no keyword.
+        var param3 = frame.ReadSpan(4);
+        item.Unknown3 = BinaryPrimitives.ReadInt32LittleEndian(param3);
+        if (item.RunOnType == Condition.RunOnType.LinkedReference && item.Unknown3 != 0 && item.Unknown3 != -1)
+        {
+            item.LinkedReferenceKeyword.SetTo(FormKeyBinaryTranslation.Instance.Parse(param3, frame.MetaData.MasterReferences));
+        }
     }
 
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -2514,7 +2522,14 @@ partial class ConditionBinaryWriteTranslation
 
         EnumBinaryTranslation<RunOnType, MutagenFrame, MutagenWriter>.Instance.Write(writer, data.RunOnType, 4);
         FormLinkBinaryTranslation.Instance.Write(writer, data.Reference);
-        writer.Write(item.Data.Unknown3);
+        if (data.RunOnType == RunOnType.LinkedReference && !data.LinkedReferenceKeyword.IsNull)
+        {
+            FormLinkBinaryTranslation.Instance.Write(writer, data.LinkedReferenceKeyword);
+        }
+        else
+        {
+            writer.Write(data.Unknown3);
+        }
     }
 }
 
