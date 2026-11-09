@@ -71,7 +71,8 @@
   <Object name="CellGrid" objType="Subrecord" recordType="XCLC">
     <Fields>
       <P2Int32 name="Point" />
-      <Enum name="Flags" enumName="CellGrid.Flag" byteLength="4" />
+      <Enum name="Flags" enumName="CellGrid.Flag" byteLength="1" />
+      <ByteArray name="Unused" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="CellLighting" objType="Subrecord" recordType="XCLL">

@@ -1,12 +1,17 @@
-﻿namespace Mutagen.Bethesda.Starfield;
+namespace Mutagen.Bethesda.Starfield;
 
 public partial class CellGrid
 {
-    public enum Flag
+    [Flags]
+    public enum Flag : byte
     {
-        Quad1,
-        Quad2,
-        Quad3,
-        Quad4,
+        HideQuad1 = 0x01,
+        HideQuad2 = 0x02,
+        HideQuad3 = 0x04,
+        HideQuad4 = 0x08,
+        NoCollisionQuad1 = 0x10,
+        NoCollisionQuad2 = 0x20,
+        NoCollisionQuad3 = 0x40,
+        NoCollisionQuad4 = 0x80,
     }
 }
