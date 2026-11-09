@@ -27,7 +27,8 @@
   </Object>
   <Object name="DialogResponseFlags" objType="Subrecord" recordType="ENAM" >
     <Fields>
-      <Int16 name="Flags" byteLength="2" />
+      <!-- Response flags. On an INFO group (record flag InfoGroup 0x40) the same bits are DialogResponses.InfoFlag (xEdit). -->
+      <Enum name="Flags" enumName="DialogResponses.Flag" byteLength="2" />
       <Float name="ResetHours" integerType="UShort" divisor="65535" multiplier="24" />
     </Fields>
   </Object>

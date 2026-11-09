@@ -52,7 +52,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region Flags
-        public Int16 Flags { get; set; } = default(Int16);
+        public DialogResponses.Flag Flags { get; set; } = default(DialogResponses.Flag);
         #endregion
         #region ResetHours
         public Single ResetHours { get; set; } = default(Single);
@@ -447,7 +447,7 @@ namespace Mutagen.Bethesda.Starfield
         IDialogResponseFlagsGetter,
         ILoquiObjectSetter<IDialogResponseFlags>
     {
-        new Int16 Flags { get; set; }
+        new DialogResponses.Flag Flags { get; set; }
         new Single ResetHours { get; set; }
     }
 
@@ -463,7 +463,7 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => DialogResponseFlags_Registration.Instance;
-        Int16 Flags { get; }
+        DialogResponses.Flag Flags { get; }
         Single ResetHours { get; }
 
     }
@@ -721,7 +721,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IDialogResponseFlags item)
         {
             ClearPartial();
-            item.Flags = default(Int16);
+            item.Flags = default(DialogResponses.Flag);
             item.ResetHours = default(Single);
         }
         
@@ -1003,7 +1003,10 @@ namespace Mutagen.Bethesda.Starfield
             IDialogResponseFlagsGetter item,
             MutagenWriter writer)
         {
-            writer.Write(item.Flags, length: 2);
+            EnumBinaryTranslation<DialogResponses.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.Flags,
+                length: 2);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.ResetHours,
@@ -1050,7 +1053,9 @@ namespace Mutagen.Bethesda.Starfield
             IDialogResponseFlags item,
             MutagenFrame frame)
         {
-            item.Flags = frame.ReadInt16();
+            item.Flags = EnumBinaryTranslation<DialogResponses.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                length: 2);
             item.ResetHours = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.UShort,
@@ -1121,7 +1126,7 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Int16 Flags => BinaryPrimitives.ReadInt16LittleEndian(_structData.Slice(0x0, 0x2));
+        public DialogResponses.Flag Flags => (DialogResponses.Flag)BinaryPrimitives.ReadUInt16LittleEndian(_structData.Span.Slice(0x0, 0x2));
         public Single ResetHours => FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.GetFloat(_structData.Slice(0x2, 0x2), FloatIntegerType.UShort, multiplier: 24f, divisor: 65535f);
         partial void CustomFactoryEnd(
             OverlayStream stream,
