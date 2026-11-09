@@ -55,36 +55,36 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region DNAM
-        public Boolean DNAM { get; set; } = default(Boolean);
+        #region DisableCharacterController
+        public Boolean DisableCharacterController { get; set; } = default(Boolean);
         #endregion
-        #region NVCI
-        public Boolean NVCI { get; set; } = default(Boolean);
+        #region OffNavmesh
+        public Boolean OffNavmesh { get; set; } = default(Boolean);
         #endregion
-        #region ALLA
-        public Int32 ALLA { get; set; } = default(Int32);
+        #region TargetAlias
+        public Int32 TargetAlias { get; set; } = default(Int32);
         #endregion
-        #region REPL
-        private readonly IFormLink<IPlacedGetter> _REPL = new FormLink<IPlacedGetter>();
-        public IFormLink<IPlacedGetter> REPL
+        #region TargetReference
+        private readonly IFormLink<IPlacedGetter> _TargetReference = new FormLink<IPlacedGetter>();
+        public IFormLink<IPlacedGetter> TargetReference
         {
-            get => _REPL;
-            set => _REPL.SetTo(value);
+            get => _TargetReference;
+            set => _TargetReference.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IPlacedGetter> IMoveSceneActionGetter.REPL => this.REPL;
+        IFormLinkGetter<IPlacedGetter> IMoveSceneActionGetter.TargetReference => this.TargetReference;
         #endregion
-        #region HNAM
-        public Single HNAM { get; set; } = default(Single);
+        #region FrontBack
+        public Single FrontBack { get; set; } = default(Single);
         #endregion
-        #region VCLR
-        public Single VCLR { get; set; } = default(Single);
+        #region LeftRight
+        public Single LeftRight { get; set; } = default(Single);
         #endregion
-        #region VNML
-        public Single VNML { get; set; } = default(Single);
+        #region UpDown
+        public Single UpDown { get; set; } = default(Single);
         #endregion
-        #region FLMV
-        public Int32 FLMV { get; set; } = default(Int32);
+        #region MoveFlags
+        public MoveSceneAction.Flag MoveFlags { get; set; } = default(MoveSceneAction.Flag);
         #endregion
 
         #region To String
@@ -127,14 +127,14 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.DNAM = initialValue;
-                this.NVCI = initialValue;
-                this.ALLA = initialValue;
-                this.REPL = initialValue;
-                this.HNAM = initialValue;
-                this.VCLR = initialValue;
-                this.VNML = initialValue;
-                this.FLMV = initialValue;
+                this.DisableCharacterController = initialValue;
+                this.OffNavmesh = initialValue;
+                this.TargetAlias = initialValue;
+                this.TargetReference = initialValue;
+                this.FrontBack = initialValue;
+                this.LeftRight = initialValue;
+                this.UpDown = initialValue;
+                this.MoveFlags = initialValue;
             }
 
             public Mask(
@@ -145,14 +145,14 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Flags,
                 TItem StartPhase,
                 TItem EndPhase,
-                TItem DNAM,
-                TItem NVCI,
-                TItem ALLA,
-                TItem REPL,
-                TItem HNAM,
-                TItem VCLR,
-                TItem VNML,
-                TItem FLMV)
+                TItem DisableCharacterController,
+                TItem OffNavmesh,
+                TItem TargetAlias,
+                TItem TargetReference,
+                TItem FrontBack,
+                TItem LeftRight,
+                TItem UpDown,
+                TItem MoveFlags)
             : base(
                 Name: Name,
                 SceneNotes: SceneNotes,
@@ -162,14 +162,14 @@ namespace Mutagen.Bethesda.Starfield
                 StartPhase: StartPhase,
                 EndPhase: EndPhase)
             {
-                this.DNAM = DNAM;
-                this.NVCI = NVCI;
-                this.ALLA = ALLA;
-                this.REPL = REPL;
-                this.HNAM = HNAM;
-                this.VCLR = VCLR;
-                this.VNML = VNML;
-                this.FLMV = FLMV;
+                this.DisableCharacterController = DisableCharacterController;
+                this.OffNavmesh = OffNavmesh;
+                this.TargetAlias = TargetAlias;
+                this.TargetReference = TargetReference;
+                this.FrontBack = FrontBack;
+                this.LeftRight = LeftRight;
+                this.UpDown = UpDown;
+                this.MoveFlags = MoveFlags;
             }
 
             #pragma warning disable CS8618
@@ -181,14 +181,14 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem DNAM;
-            public TItem NVCI;
-            public TItem ALLA;
-            public TItem REPL;
-            public TItem HNAM;
-            public TItem VCLR;
-            public TItem VNML;
-            public TItem FLMV;
+            public TItem DisableCharacterController;
+            public TItem OffNavmesh;
+            public TItem TargetAlias;
+            public TItem TargetReference;
+            public TItem FrontBack;
+            public TItem LeftRight;
+            public TItem UpDown;
+            public TItem MoveFlags;
             #endregion
 
             #region Equals
@@ -202,27 +202,27 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.DNAM, rhs.DNAM)) return false;
-                if (!object.Equals(this.NVCI, rhs.NVCI)) return false;
-                if (!object.Equals(this.ALLA, rhs.ALLA)) return false;
-                if (!object.Equals(this.REPL, rhs.REPL)) return false;
-                if (!object.Equals(this.HNAM, rhs.HNAM)) return false;
-                if (!object.Equals(this.VCLR, rhs.VCLR)) return false;
-                if (!object.Equals(this.VNML, rhs.VNML)) return false;
-                if (!object.Equals(this.FLMV, rhs.FLMV)) return false;
+                if (!object.Equals(this.DisableCharacterController, rhs.DisableCharacterController)) return false;
+                if (!object.Equals(this.OffNavmesh, rhs.OffNavmesh)) return false;
+                if (!object.Equals(this.TargetAlias, rhs.TargetAlias)) return false;
+                if (!object.Equals(this.TargetReference, rhs.TargetReference)) return false;
+                if (!object.Equals(this.FrontBack, rhs.FrontBack)) return false;
+                if (!object.Equals(this.LeftRight, rhs.LeftRight)) return false;
+                if (!object.Equals(this.UpDown, rhs.UpDown)) return false;
+                if (!object.Equals(this.MoveFlags, rhs.MoveFlags)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.DNAM);
-                hash.Add(this.NVCI);
-                hash.Add(this.ALLA);
-                hash.Add(this.REPL);
-                hash.Add(this.HNAM);
-                hash.Add(this.VCLR);
-                hash.Add(this.VNML);
-                hash.Add(this.FLMV);
+                hash.Add(this.DisableCharacterController);
+                hash.Add(this.OffNavmesh);
+                hash.Add(this.TargetAlias);
+                hash.Add(this.TargetReference);
+                hash.Add(this.FrontBack);
+                hash.Add(this.LeftRight);
+                hash.Add(this.UpDown);
+                hash.Add(this.MoveFlags);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -233,14 +233,14 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.DNAM)) return false;
-                if (!eval(this.NVCI)) return false;
-                if (!eval(this.ALLA)) return false;
-                if (!eval(this.REPL)) return false;
-                if (!eval(this.HNAM)) return false;
-                if (!eval(this.VCLR)) return false;
-                if (!eval(this.VNML)) return false;
-                if (!eval(this.FLMV)) return false;
+                if (!eval(this.DisableCharacterController)) return false;
+                if (!eval(this.OffNavmesh)) return false;
+                if (!eval(this.TargetAlias)) return false;
+                if (!eval(this.TargetReference)) return false;
+                if (!eval(this.FrontBack)) return false;
+                if (!eval(this.LeftRight)) return false;
+                if (!eval(this.UpDown)) return false;
+                if (!eval(this.MoveFlags)) return false;
                 return true;
             }
             #endregion
@@ -249,14 +249,14 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.DNAM)) return true;
-                if (eval(this.NVCI)) return true;
-                if (eval(this.ALLA)) return true;
-                if (eval(this.REPL)) return true;
-                if (eval(this.HNAM)) return true;
-                if (eval(this.VCLR)) return true;
-                if (eval(this.VNML)) return true;
-                if (eval(this.FLMV)) return true;
+                if (eval(this.DisableCharacterController)) return true;
+                if (eval(this.OffNavmesh)) return true;
+                if (eval(this.TargetAlias)) return true;
+                if (eval(this.TargetReference)) return true;
+                if (eval(this.FrontBack)) return true;
+                if (eval(this.LeftRight)) return true;
+                if (eval(this.UpDown)) return true;
+                if (eval(this.MoveFlags)) return true;
                 return false;
             }
             #endregion
@@ -272,14 +272,14 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.DNAM = eval(this.DNAM);
-                obj.NVCI = eval(this.NVCI);
-                obj.ALLA = eval(this.ALLA);
-                obj.REPL = eval(this.REPL);
-                obj.HNAM = eval(this.HNAM);
-                obj.VCLR = eval(this.VCLR);
-                obj.VNML = eval(this.VNML);
-                obj.FLMV = eval(this.FLMV);
+                obj.DisableCharacterController = eval(this.DisableCharacterController);
+                obj.OffNavmesh = eval(this.OffNavmesh);
+                obj.TargetAlias = eval(this.TargetAlias);
+                obj.TargetReference = eval(this.TargetReference);
+                obj.FrontBack = eval(this.FrontBack);
+                obj.LeftRight = eval(this.LeftRight);
+                obj.UpDown = eval(this.UpDown);
+                obj.MoveFlags = eval(this.MoveFlags);
             }
             #endregion
 
@@ -298,37 +298,37 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(MoveSceneAction.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.DNAM ?? true)
+                    if (printMask?.DisableCharacterController ?? true)
                     {
-                        sb.AppendItem(DNAM, "DNAM");
+                        sb.AppendItem(DisableCharacterController, "DisableCharacterController");
                     }
-                    if (printMask?.NVCI ?? true)
+                    if (printMask?.OffNavmesh ?? true)
                     {
-                        sb.AppendItem(NVCI, "NVCI");
+                        sb.AppendItem(OffNavmesh, "OffNavmesh");
                     }
-                    if (printMask?.ALLA ?? true)
+                    if (printMask?.TargetAlias ?? true)
                     {
-                        sb.AppendItem(ALLA, "ALLA");
+                        sb.AppendItem(TargetAlias, "TargetAlias");
                     }
-                    if (printMask?.REPL ?? true)
+                    if (printMask?.TargetReference ?? true)
                     {
-                        sb.AppendItem(REPL, "REPL");
+                        sb.AppendItem(TargetReference, "TargetReference");
                     }
-                    if (printMask?.HNAM ?? true)
+                    if (printMask?.FrontBack ?? true)
                     {
-                        sb.AppendItem(HNAM, "HNAM");
+                        sb.AppendItem(FrontBack, "FrontBack");
                     }
-                    if (printMask?.VCLR ?? true)
+                    if (printMask?.LeftRight ?? true)
                     {
-                        sb.AppendItem(VCLR, "VCLR");
+                        sb.AppendItem(LeftRight, "LeftRight");
                     }
-                    if (printMask?.VNML ?? true)
+                    if (printMask?.UpDown ?? true)
                     {
-                        sb.AppendItem(VNML, "VNML");
+                        sb.AppendItem(UpDown, "UpDown");
                     }
-                    if (printMask?.FLMV ?? true)
+                    if (printMask?.MoveFlags ?? true)
                     {
-                        sb.AppendItem(FLMV, "FLMV");
+                        sb.AppendItem(MoveFlags, "MoveFlags");
                     }
                 }
             }
@@ -341,14 +341,14 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? DNAM;
-            public Exception? NVCI;
-            public Exception? ALLA;
-            public Exception? REPL;
-            public Exception? HNAM;
-            public Exception? VCLR;
-            public Exception? VNML;
-            public Exception? FLMV;
+            public Exception? DisableCharacterController;
+            public Exception? OffNavmesh;
+            public Exception? TargetAlias;
+            public Exception? TargetReference;
+            public Exception? FrontBack;
+            public Exception? LeftRight;
+            public Exception? UpDown;
+            public Exception? MoveFlags;
             #endregion
 
             #region IErrorMask
@@ -357,22 +357,22 @@ namespace Mutagen.Bethesda.Starfield
                 MoveSceneAction_FieldIndex enu = (MoveSceneAction_FieldIndex)index;
                 switch (enu)
                 {
-                    case MoveSceneAction_FieldIndex.DNAM:
-                        return DNAM;
-                    case MoveSceneAction_FieldIndex.NVCI:
-                        return NVCI;
-                    case MoveSceneAction_FieldIndex.ALLA:
-                        return ALLA;
-                    case MoveSceneAction_FieldIndex.REPL:
-                        return REPL;
-                    case MoveSceneAction_FieldIndex.HNAM:
-                        return HNAM;
-                    case MoveSceneAction_FieldIndex.VCLR:
-                        return VCLR;
-                    case MoveSceneAction_FieldIndex.VNML:
-                        return VNML;
-                    case MoveSceneAction_FieldIndex.FLMV:
-                        return FLMV;
+                    case MoveSceneAction_FieldIndex.DisableCharacterController:
+                        return DisableCharacterController;
+                    case MoveSceneAction_FieldIndex.OffNavmesh:
+                        return OffNavmesh;
+                    case MoveSceneAction_FieldIndex.TargetAlias:
+                        return TargetAlias;
+                    case MoveSceneAction_FieldIndex.TargetReference:
+                        return TargetReference;
+                    case MoveSceneAction_FieldIndex.FrontBack:
+                        return FrontBack;
+                    case MoveSceneAction_FieldIndex.LeftRight:
+                        return LeftRight;
+                    case MoveSceneAction_FieldIndex.UpDown:
+                        return UpDown;
+                    case MoveSceneAction_FieldIndex.MoveFlags:
+                        return MoveFlags;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -383,29 +383,29 @@ namespace Mutagen.Bethesda.Starfield
                 MoveSceneAction_FieldIndex enu = (MoveSceneAction_FieldIndex)index;
                 switch (enu)
                 {
-                    case MoveSceneAction_FieldIndex.DNAM:
-                        this.DNAM = ex;
+                    case MoveSceneAction_FieldIndex.DisableCharacterController:
+                        this.DisableCharacterController = ex;
                         break;
-                    case MoveSceneAction_FieldIndex.NVCI:
-                        this.NVCI = ex;
+                    case MoveSceneAction_FieldIndex.OffNavmesh:
+                        this.OffNavmesh = ex;
                         break;
-                    case MoveSceneAction_FieldIndex.ALLA:
-                        this.ALLA = ex;
+                    case MoveSceneAction_FieldIndex.TargetAlias:
+                        this.TargetAlias = ex;
                         break;
-                    case MoveSceneAction_FieldIndex.REPL:
-                        this.REPL = ex;
+                    case MoveSceneAction_FieldIndex.TargetReference:
+                        this.TargetReference = ex;
                         break;
-                    case MoveSceneAction_FieldIndex.HNAM:
-                        this.HNAM = ex;
+                    case MoveSceneAction_FieldIndex.FrontBack:
+                        this.FrontBack = ex;
                         break;
-                    case MoveSceneAction_FieldIndex.VCLR:
-                        this.VCLR = ex;
+                    case MoveSceneAction_FieldIndex.LeftRight:
+                        this.LeftRight = ex;
                         break;
-                    case MoveSceneAction_FieldIndex.VNML:
-                        this.VNML = ex;
+                    case MoveSceneAction_FieldIndex.UpDown:
+                        this.UpDown = ex;
                         break;
-                    case MoveSceneAction_FieldIndex.FLMV:
-                        this.FLMV = ex;
+                    case MoveSceneAction_FieldIndex.MoveFlags:
+                        this.MoveFlags = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -418,29 +418,29 @@ namespace Mutagen.Bethesda.Starfield
                 MoveSceneAction_FieldIndex enu = (MoveSceneAction_FieldIndex)index;
                 switch (enu)
                 {
-                    case MoveSceneAction_FieldIndex.DNAM:
-                        this.DNAM = (Exception?)obj;
+                    case MoveSceneAction_FieldIndex.DisableCharacterController:
+                        this.DisableCharacterController = (Exception?)obj;
                         break;
-                    case MoveSceneAction_FieldIndex.NVCI:
-                        this.NVCI = (Exception?)obj;
+                    case MoveSceneAction_FieldIndex.OffNavmesh:
+                        this.OffNavmesh = (Exception?)obj;
                         break;
-                    case MoveSceneAction_FieldIndex.ALLA:
-                        this.ALLA = (Exception?)obj;
+                    case MoveSceneAction_FieldIndex.TargetAlias:
+                        this.TargetAlias = (Exception?)obj;
                         break;
-                    case MoveSceneAction_FieldIndex.REPL:
-                        this.REPL = (Exception?)obj;
+                    case MoveSceneAction_FieldIndex.TargetReference:
+                        this.TargetReference = (Exception?)obj;
                         break;
-                    case MoveSceneAction_FieldIndex.HNAM:
-                        this.HNAM = (Exception?)obj;
+                    case MoveSceneAction_FieldIndex.FrontBack:
+                        this.FrontBack = (Exception?)obj;
                         break;
-                    case MoveSceneAction_FieldIndex.VCLR:
-                        this.VCLR = (Exception?)obj;
+                    case MoveSceneAction_FieldIndex.LeftRight:
+                        this.LeftRight = (Exception?)obj;
                         break;
-                    case MoveSceneAction_FieldIndex.VNML:
-                        this.VNML = (Exception?)obj;
+                    case MoveSceneAction_FieldIndex.UpDown:
+                        this.UpDown = (Exception?)obj;
                         break;
-                    case MoveSceneAction_FieldIndex.FLMV:
-                        this.FLMV = (Exception?)obj;
+                    case MoveSceneAction_FieldIndex.MoveFlags:
+                        this.MoveFlags = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -451,14 +451,14 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (DNAM != null) return true;
-                if (NVCI != null) return true;
-                if (ALLA != null) return true;
-                if (REPL != null) return true;
-                if (HNAM != null) return true;
-                if (VCLR != null) return true;
-                if (VNML != null) return true;
-                if (FLMV != null) return true;
+                if (DisableCharacterController != null) return true;
+                if (OffNavmesh != null) return true;
+                if (TargetAlias != null) return true;
+                if (TargetReference != null) return true;
+                if (FrontBack != null) return true;
+                if (LeftRight != null) return true;
+                if (UpDown != null) return true;
+                if (MoveFlags != null) return true;
                 return false;
             }
             #endregion
@@ -486,28 +486,28 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(DNAM, "DNAM");
+                    sb.AppendItem(DisableCharacterController, "DisableCharacterController");
                 }
                 {
-                    sb.AppendItem(NVCI, "NVCI");
+                    sb.AppendItem(OffNavmesh, "OffNavmesh");
                 }
                 {
-                    sb.AppendItem(ALLA, "ALLA");
+                    sb.AppendItem(TargetAlias, "TargetAlias");
                 }
                 {
-                    sb.AppendItem(REPL, "REPL");
+                    sb.AppendItem(TargetReference, "TargetReference");
                 }
                 {
-                    sb.AppendItem(HNAM, "HNAM");
+                    sb.AppendItem(FrontBack, "FrontBack");
                 }
                 {
-                    sb.AppendItem(VCLR, "VCLR");
+                    sb.AppendItem(LeftRight, "LeftRight");
                 }
                 {
-                    sb.AppendItem(VNML, "VNML");
+                    sb.AppendItem(UpDown, "UpDown");
                 }
                 {
-                    sb.AppendItem(FLMV, "FLMV");
+                    sb.AppendItem(MoveFlags, "MoveFlags");
                 }
             }
             #endregion
@@ -517,14 +517,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.DNAM = this.DNAM.Combine(rhs.DNAM);
-                ret.NVCI = this.NVCI.Combine(rhs.NVCI);
-                ret.ALLA = this.ALLA.Combine(rhs.ALLA);
-                ret.REPL = this.REPL.Combine(rhs.REPL);
-                ret.HNAM = this.HNAM.Combine(rhs.HNAM);
-                ret.VCLR = this.VCLR.Combine(rhs.VCLR);
-                ret.VNML = this.VNML.Combine(rhs.VNML);
-                ret.FLMV = this.FLMV.Combine(rhs.FLMV);
+                ret.DisableCharacterController = this.DisableCharacterController.Combine(rhs.DisableCharacterController);
+                ret.OffNavmesh = this.OffNavmesh.Combine(rhs.OffNavmesh);
+                ret.TargetAlias = this.TargetAlias.Combine(rhs.TargetAlias);
+                ret.TargetReference = this.TargetReference.Combine(rhs.TargetReference);
+                ret.FrontBack = this.FrontBack.Combine(rhs.FrontBack);
+                ret.LeftRight = this.LeftRight.Combine(rhs.LeftRight);
+                ret.UpDown = this.UpDown.Combine(rhs.UpDown);
+                ret.MoveFlags = this.MoveFlags.Combine(rhs.MoveFlags);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -547,14 +547,14 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool DNAM;
-            public bool NVCI;
-            public bool ALLA;
-            public bool REPL;
-            public bool HNAM;
-            public bool VCLR;
-            public bool VNML;
-            public bool FLMV;
+            public bool DisableCharacterController;
+            public bool OffNavmesh;
+            public bool TargetAlias;
+            public bool TargetReference;
+            public bool FrontBack;
+            public bool LeftRight;
+            public bool UpDown;
+            public bool MoveFlags;
             #endregion
 
             #region Ctors
@@ -563,14 +563,14 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.DNAM = defaultOn;
-                this.NVCI = defaultOn;
-                this.ALLA = defaultOn;
-                this.REPL = defaultOn;
-                this.HNAM = defaultOn;
-                this.VCLR = defaultOn;
-                this.VNML = defaultOn;
-                this.FLMV = defaultOn;
+                this.DisableCharacterController = defaultOn;
+                this.OffNavmesh = defaultOn;
+                this.TargetAlias = defaultOn;
+                this.TargetReference = defaultOn;
+                this.FrontBack = defaultOn;
+                this.LeftRight = defaultOn;
+                this.UpDown = defaultOn;
+                this.MoveFlags = defaultOn;
             }
 
             #endregion
@@ -578,14 +578,14 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((DNAM, null));
-                ret.Add((NVCI, null));
-                ret.Add((ALLA, null));
-                ret.Add((REPL, null));
-                ret.Add((HNAM, null));
-                ret.Add((VCLR, null));
-                ret.Add((VNML, null));
-                ret.Add((FLMV, null));
+                ret.Add((DisableCharacterController, null));
+                ret.Add((OffNavmesh, null));
+                ret.Add((TargetAlias, null));
+                ret.Add((TargetReference, null));
+                ret.Add((FrontBack, null));
+                ret.Add((LeftRight, null));
+                ret.Add((UpDown, null));
+                ret.Add((MoveFlags, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -664,14 +664,14 @@ namespace Mutagen.Bethesda.Starfield
         IMoveSceneActionGetter,
         INamedRequired
     {
-        new Boolean DNAM { get; set; }
-        new Boolean NVCI { get; set; }
-        new Int32 ALLA { get; set; }
-        new IFormLink<IPlacedGetter> REPL { get; set; }
-        new Single HNAM { get; set; }
-        new Single VCLR { get; set; }
-        new Single VNML { get; set; }
-        new Int32 FLMV { get; set; }
+        new Boolean DisableCharacterController { get; set; }
+        new Boolean OffNavmesh { get; set; }
+        new Int32 TargetAlias { get; set; }
+        new IFormLink<IPlacedGetter> TargetReference { get; set; }
+        new Single FrontBack { get; set; }
+        new Single LeftRight { get; set; }
+        new Single UpDown { get; set; }
+        new MoveSceneAction.Flag MoveFlags { get; set; }
     }
 
     public partial interface IMoveSceneActionGetter :
@@ -682,14 +682,14 @@ namespace Mutagen.Bethesda.Starfield
         INamedRequiredGetter
     {
         static new ILoquiRegistration StaticRegistration => MoveSceneAction_Registration.Instance;
-        Boolean DNAM { get; }
-        Boolean NVCI { get; }
-        Int32 ALLA { get; }
-        IFormLinkGetter<IPlacedGetter> REPL { get; }
-        Single HNAM { get; }
-        Single VCLR { get; }
-        Single VNML { get; }
-        Int32 FLMV { get; }
+        Boolean DisableCharacterController { get; }
+        Boolean OffNavmesh { get; }
+        Int32 TargetAlias { get; }
+        IFormLinkGetter<IPlacedGetter> TargetReference { get; }
+        Single FrontBack { get; }
+        Single LeftRight { get; }
+        Single UpDown { get; }
+        MoveSceneAction.Flag MoveFlags { get; }
 
     }
 
@@ -841,14 +841,14 @@ namespace Mutagen.Bethesda.Starfield
         Flags = 4,
         StartPhase = 5,
         EndPhase = 6,
-        DNAM = 7,
-        NVCI = 8,
-        ALLA = 9,
-        REPL = 10,
-        HNAM = 11,
-        VCLR = 12,
-        VNML = 13,
-        FLMV = 14,
+        DisableCharacterController = 7,
+        OffNavmesh = 8,
+        TargetAlias = 9,
+        TargetReference = 10,
+        FrontBack = 11,
+        LeftRight = 12,
+        UpDown = 13,
+        MoveFlags = 14,
     }
     #endregion
 
@@ -946,14 +946,14 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IMoveSceneAction item)
         {
             ClearPartial();
-            item.DNAM = default(Boolean);
-            item.NVCI = default(Boolean);
-            item.ALLA = default(Int32);
-            item.REPL.Clear();
-            item.HNAM = default(Single);
-            item.VCLR = default(Single);
-            item.VNML = default(Single);
-            item.FLMV = default(Int32);
+            item.DisableCharacterController = default(Boolean);
+            item.OffNavmesh = default(Boolean);
+            item.TargetAlias = default(Int32);
+            item.TargetReference.Clear();
+            item.FrontBack = default(Single);
+            item.LeftRight = default(Single);
+            item.UpDown = default(Single);
+            item.MoveFlags = default(MoveSceneAction.Flag);
             base.Clear(item);
         }
         
@@ -966,7 +966,7 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IMoveSceneAction obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             base.RemapLinks(obj, mapping);
-            obj.REPL.Relink(mapping);
+            obj.TargetReference.Relink(mapping);
         }
         
         #endregion
@@ -1022,14 +1022,14 @@ namespace Mutagen.Bethesda.Starfield
             MoveSceneAction.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.DNAM = item.DNAM == rhs.DNAM;
-            ret.NVCI = item.NVCI == rhs.NVCI;
-            ret.ALLA = item.ALLA == rhs.ALLA;
-            ret.REPL = item.REPL.Equals(rhs.REPL);
-            ret.HNAM = item.HNAM.EqualsWithin(rhs.HNAM);
-            ret.VCLR = item.VCLR.EqualsWithin(rhs.VCLR);
-            ret.VNML = item.VNML.EqualsWithin(rhs.VNML);
-            ret.FLMV = item.FLMV == rhs.FLMV;
+            ret.DisableCharacterController = item.DisableCharacterController == rhs.DisableCharacterController;
+            ret.OffNavmesh = item.OffNavmesh == rhs.OffNavmesh;
+            ret.TargetAlias = item.TargetAlias == rhs.TargetAlias;
+            ret.TargetReference = item.TargetReference.Equals(rhs.TargetReference);
+            ret.FrontBack = item.FrontBack.EqualsWithin(rhs.FrontBack);
+            ret.LeftRight = item.LeftRight.EqualsWithin(rhs.LeftRight);
+            ret.UpDown = item.UpDown.EqualsWithin(rhs.UpDown);
+            ret.MoveFlags = item.MoveFlags == rhs.MoveFlags;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1079,37 +1079,37 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if (printMask?.DNAM ?? true)
+            if (printMask?.DisableCharacterController ?? true)
             {
-                sb.AppendItem(item.DNAM, "DNAM");
+                sb.AppendItem(item.DisableCharacterController, "DisableCharacterController");
             }
-            if (printMask?.NVCI ?? true)
+            if (printMask?.OffNavmesh ?? true)
             {
-                sb.AppendItem(item.NVCI, "NVCI");
+                sb.AppendItem(item.OffNavmesh, "OffNavmesh");
             }
-            if (printMask?.ALLA ?? true)
+            if (printMask?.TargetAlias ?? true)
             {
-                sb.AppendItem(item.ALLA, "ALLA");
+                sb.AppendItem(item.TargetAlias, "TargetAlias");
             }
-            if (printMask?.REPL ?? true)
+            if (printMask?.TargetReference ?? true)
             {
-                sb.AppendItem(item.REPL.FormKey, "REPL");
+                sb.AppendItem(item.TargetReference.FormKey, "TargetReference");
             }
-            if (printMask?.HNAM ?? true)
+            if (printMask?.FrontBack ?? true)
             {
-                sb.AppendItem(item.HNAM, "HNAM");
+                sb.AppendItem(item.FrontBack, "FrontBack");
             }
-            if (printMask?.VCLR ?? true)
+            if (printMask?.LeftRight ?? true)
             {
-                sb.AppendItem(item.VCLR, "VCLR");
+                sb.AppendItem(item.LeftRight, "LeftRight");
             }
-            if (printMask?.VNML ?? true)
+            if (printMask?.UpDown ?? true)
             {
-                sb.AppendItem(item.VNML, "VNML");
+                sb.AppendItem(item.UpDown, "UpDown");
             }
-            if (printMask?.FLMV ?? true)
+            if (printMask?.MoveFlags ?? true)
             {
-                sb.AppendItem(item.FLMV, "FLMV");
+                sb.AppendItem(item.MoveFlags, "MoveFlags");
             }
         }
         
@@ -1144,37 +1144,37 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IASceneActionGetter)lhs, (IASceneActionGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.DNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.DisableCharacterController) ?? true))
             {
-                if (lhs.DNAM != rhs.DNAM) return false;
+                if (lhs.DisableCharacterController != rhs.DisableCharacterController) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.NVCI) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.OffNavmesh) ?? true))
             {
-                if (lhs.NVCI != rhs.NVCI) return false;
+                if (lhs.OffNavmesh != rhs.OffNavmesh) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.ALLA) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.TargetAlias) ?? true))
             {
-                if (lhs.ALLA != rhs.ALLA) return false;
+                if (lhs.TargetAlias != rhs.TargetAlias) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.REPL) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.TargetReference) ?? true))
             {
-                if (!lhs.REPL.Equals(rhs.REPL)) return false;
+                if (!lhs.TargetReference.Equals(rhs.TargetReference)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.HNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.FrontBack) ?? true))
             {
-                if (!lhs.HNAM.EqualsWithin(rhs.HNAM)) return false;
+                if (!lhs.FrontBack.EqualsWithin(rhs.FrontBack)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.VCLR) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.LeftRight) ?? true))
             {
-                if (!lhs.VCLR.EqualsWithin(rhs.VCLR)) return false;
+                if (!lhs.LeftRight.EqualsWithin(rhs.LeftRight)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.VNML) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.UpDown) ?? true))
             {
-                if (!lhs.VNML.EqualsWithin(rhs.VNML)) return false;
+                if (!lhs.UpDown.EqualsWithin(rhs.UpDown)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.FLMV) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.MoveFlags) ?? true))
             {
-                if (lhs.FLMV != rhs.FLMV) return false;
+                if (lhs.MoveFlags != rhs.MoveFlags) return false;
             }
             return true;
         }
@@ -1193,14 +1193,14 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IMoveSceneActionGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.DNAM);
-            hash.Add(item.NVCI);
-            hash.Add(item.ALLA);
-            hash.Add(item.REPL);
-            hash.Add(item.HNAM);
-            hash.Add(item.VCLR);
-            hash.Add(item.VNML);
-            hash.Add(item.FLMV);
+            hash.Add(item.DisableCharacterController);
+            hash.Add(item.OffNavmesh);
+            hash.Add(item.TargetAlias);
+            hash.Add(item.TargetReference);
+            hash.Add(item.FrontBack);
+            hash.Add(item.LeftRight);
+            hash.Add(item.UpDown);
+            hash.Add(item.MoveFlags);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1225,7 +1225,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
-            yield return FormLinkInformation.Factory(obj.REPL);
+            yield return FormLinkInformation.Factory(obj.TargetReference);
             yield break;
         }
         
@@ -1250,37 +1250,37 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.DNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.DisableCharacterController) ?? true))
             {
-                item.DNAM = rhs.DNAM;
+                item.DisableCharacterController = rhs.DisableCharacterController;
             }
-            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.NVCI) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.OffNavmesh) ?? true))
             {
-                item.NVCI = rhs.NVCI;
+                item.OffNavmesh = rhs.OffNavmesh;
             }
-            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.ALLA) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.TargetAlias) ?? true))
             {
-                item.ALLA = rhs.ALLA;
+                item.TargetAlias = rhs.TargetAlias;
             }
-            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.REPL) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.TargetReference) ?? true))
             {
-                item.REPL.SetTo(rhs.REPL.FormKey);
+                item.TargetReference.SetTo(rhs.TargetReference.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.HNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.FrontBack) ?? true))
             {
-                item.HNAM = rhs.HNAM;
+                item.FrontBack = rhs.FrontBack;
             }
-            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.VCLR) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.LeftRight) ?? true))
             {
-                item.VCLR = rhs.VCLR;
+                item.LeftRight = rhs.LeftRight;
             }
-            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.VNML) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.UpDown) ?? true))
             {
-                item.VNML = rhs.VNML;
+                item.UpDown = rhs.UpDown;
             }
-            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.FLMV) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MoveSceneAction_FieldIndex.MoveFlags) ?? true))
             {
-                item.FLMV = rhs.FLMV;
+                item.MoveFlags = rhs.MoveFlags;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1409,35 +1409,36 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.DNAM,
+                item: item.DisableCharacterController,
                 header: translationParams.ConvertToCustom(RecordTypes.DNAM));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.NVCI,
+                item: item.OffNavmesh,
                 header: translationParams.ConvertToCustom(RecordTypes.NVCI));
             Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.ALLA,
+                item: item.TargetAlias,
                 header: translationParams.ConvertToCustom(RecordTypes.ALLA));
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.REPL,
+                item: item.TargetReference,
                 header: translationParams.ConvertToCustom(RecordTypes.REPL));
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.HNAM,
+                item: item.FrontBack,
                 header: translationParams.ConvertToCustom(RecordTypes.HNAM));
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.VCLR,
+                item: item.LeftRight,
                 header: translationParams.ConvertToCustom(RecordTypes.VCLR));
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.VNML,
+                item: item.UpDown,
                 header: translationParams.ConvertToCustom(RecordTypes.VNML));
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.FLMV,
+            EnumBinaryTranslation<MoveSceneAction.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.MoveFlags,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.FLMV));
         }
 
@@ -1494,49 +1495,51 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.DNAM:
                 {
-                    item.DNAM = true;
-                    return (int)MoveSceneAction_FieldIndex.DNAM;
+                    item.DisableCharacterController = true;
+                    return (int)MoveSceneAction_FieldIndex.DisableCharacterController;
                 }
                 case RecordTypeInts.NVCI:
                 {
-                    item.NVCI = true;
-                    return (int)MoveSceneAction_FieldIndex.NVCI;
+                    item.OffNavmesh = true;
+                    return (int)MoveSceneAction_FieldIndex.OffNavmesh;
                 }
                 case RecordTypeInts.ALLA:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ALLA = frame.ReadInt32();
-                    return (int)MoveSceneAction_FieldIndex.ALLA;
+                    item.TargetAlias = frame.ReadInt32();
+                    return (int)MoveSceneAction_FieldIndex.TargetAlias;
                 }
                 case RecordTypeInts.REPL:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.REPL.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-                    return (int)MoveSceneAction_FieldIndex.REPL;
+                    item.TargetReference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)MoveSceneAction_FieldIndex.TargetReference;
                 }
                 case RecordTypeInts.HNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.HNAM = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)MoveSceneAction_FieldIndex.HNAM;
+                    item.FrontBack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)MoveSceneAction_FieldIndex.FrontBack;
                 }
                 case RecordTypeInts.VCLR:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.VCLR = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)MoveSceneAction_FieldIndex.VCLR;
+                    item.LeftRight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)MoveSceneAction_FieldIndex.LeftRight;
                 }
                 case RecordTypeInts.VNML:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.VNML = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)MoveSceneAction_FieldIndex.VNML;
+                    item.UpDown = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)MoveSceneAction_FieldIndex.UpDown;
                 }
                 case RecordTypeInts.FLMV:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FLMV = frame.ReadInt32();
-                    return (int)MoveSceneAction_FieldIndex.FLMV;
+                    item.MoveFlags = EnumBinaryTranslation<MoveSceneAction.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)MoveSceneAction_FieldIndex.MoveFlags;
                 }
                 default:
                     return ASceneActionBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1595,37 +1598,37 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region DNAM
-        private int? _DNAMLocation;
-        public Boolean DNAM => _DNAMLocation.HasValue ? true : default(Boolean);
+        #region DisableCharacterController
+        private int? _DisableCharacterControllerLocation;
+        public Boolean DisableCharacterController => _DisableCharacterControllerLocation.HasValue ? true : default(Boolean);
         #endregion
-        #region NVCI
-        private int? _NVCILocation;
-        public Boolean NVCI => _NVCILocation.HasValue ? true : default(Boolean);
+        #region OffNavmesh
+        private int? _OffNavmeshLocation;
+        public Boolean OffNavmesh => _OffNavmeshLocation.HasValue ? true : default(Boolean);
         #endregion
-        #region ALLA
-        private int? _ALLALocation;
-        public Int32 ALLA => _ALLALocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ALLALocation.Value, _package.MetaData.Constants)) : default(Int32);
+        #region TargetAlias
+        private int? _TargetAliasLocation;
+        public Int32 TargetAlias => _TargetAliasLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TargetAliasLocation.Value, _package.MetaData.Constants)) : default(Int32);
         #endregion
-        #region REPL
-        private int? _REPLLocation;
-        public IFormLinkGetter<IPlacedGetter> REPL => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IPlacedGetter>(_package, _recordData, _REPLLocation);
+        #region TargetReference
+        private int? _TargetReferenceLocation;
+        public IFormLinkGetter<IPlacedGetter> TargetReference => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IPlacedGetter>(_package, _recordData, _TargetReferenceLocation);
         #endregion
-        #region HNAM
-        private int? _HNAMLocation;
-        public Single HNAM => _HNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _HNAMLocation.Value, _package.MetaData.Constants).Float() : default(Single);
+        #region FrontBack
+        private int? _FrontBackLocation;
+        public Single FrontBack => _FrontBackLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FrontBackLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
-        #region VCLR
-        private int? _VCLRLocation;
-        public Single VCLR => _VCLRLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _VCLRLocation.Value, _package.MetaData.Constants).Float() : default(Single);
+        #region LeftRight
+        private int? _LeftRightLocation;
+        public Single LeftRight => _LeftRightLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _LeftRightLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
-        #region VNML
-        private int? _VNMLLocation;
-        public Single VNML => _VNMLLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _VNMLLocation.Value, _package.MetaData.Constants).Float() : default(Single);
+        #region UpDown
+        private int? _UpDownLocation;
+        public Single UpDown => _UpDownLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _UpDownLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
-        #region FLMV
-        private int? _FLMVLocation;
-        public Int32 FLMV => _FLMVLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _FLMVLocation.Value, _package.MetaData.Constants)) : default(Int32);
+        #region MoveFlags
+        private int? _MoveFlagsLocation;
+        public MoveSceneAction.Flag MoveFlags => EnumBinaryTranslation<MoveSceneAction.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecord(_MoveFlagsLocation, _recordData, _package, 4);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1692,43 +1695,43 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.DNAM:
                 {
-                    _DNAMLocation = (stream.Position - offset);
-                    return (int)MoveSceneAction_FieldIndex.DNAM;
+                    _DisableCharacterControllerLocation = (stream.Position - offset);
+                    return (int)MoveSceneAction_FieldIndex.DisableCharacterController;
                 }
                 case RecordTypeInts.NVCI:
                 {
-                    _NVCILocation = (stream.Position - offset);
-                    return (int)MoveSceneAction_FieldIndex.NVCI;
+                    _OffNavmeshLocation = (stream.Position - offset);
+                    return (int)MoveSceneAction_FieldIndex.OffNavmesh;
                 }
                 case RecordTypeInts.ALLA:
                 {
-                    _ALLALocation = (stream.Position - offset);
-                    return (int)MoveSceneAction_FieldIndex.ALLA;
+                    _TargetAliasLocation = (stream.Position - offset);
+                    return (int)MoveSceneAction_FieldIndex.TargetAlias;
                 }
                 case RecordTypeInts.REPL:
                 {
-                    _REPLLocation = (stream.Position - offset);
-                    return (int)MoveSceneAction_FieldIndex.REPL;
+                    _TargetReferenceLocation = (stream.Position - offset);
+                    return (int)MoveSceneAction_FieldIndex.TargetReference;
                 }
                 case RecordTypeInts.HNAM:
                 {
-                    _HNAMLocation = (stream.Position - offset);
-                    return (int)MoveSceneAction_FieldIndex.HNAM;
+                    _FrontBackLocation = (stream.Position - offset);
+                    return (int)MoveSceneAction_FieldIndex.FrontBack;
                 }
                 case RecordTypeInts.VCLR:
                 {
-                    _VCLRLocation = (stream.Position - offset);
-                    return (int)MoveSceneAction_FieldIndex.VCLR;
+                    _LeftRightLocation = (stream.Position - offset);
+                    return (int)MoveSceneAction_FieldIndex.LeftRight;
                 }
                 case RecordTypeInts.VNML:
                 {
-                    _VNMLLocation = (stream.Position - offset);
-                    return (int)MoveSceneAction_FieldIndex.VNML;
+                    _UpDownLocation = (stream.Position - offset);
+                    return (int)MoveSceneAction_FieldIndex.UpDown;
                 }
                 case RecordTypeInts.FLMV:
                 {
-                    _FLMVLocation = (stream.Position - offset);
-                    return (int)MoveSceneAction_FieldIndex.FLMV;
+                    _MoveFlagsLocation = (stream.Position - offset);
+                    return (int)MoveSceneAction_FieldIndex.MoveFlags;
                 }
                 default:
                     return base.FillRecordType(

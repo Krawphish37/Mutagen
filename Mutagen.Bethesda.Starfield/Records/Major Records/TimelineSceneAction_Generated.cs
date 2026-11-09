@@ -54,15 +54,15 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region TNAM
-        public Int32? TNAM { get; set; }
+        #region Type
+        public TimelineSceneAction.TimelineType? Type { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Int32? ITimelineSceneActionGetter.TNAM => this.TNAM;
+        TimelineSceneAction.TimelineType? ITimelineSceneActionGetter.Type => this.Type;
         #endregion
-        #region SNAM
-        public Int32? SNAM { get; set; }
+        #region StartTime
+        public Single? StartTime { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Int32? ITimelineSceneActionGetter.SNAM => this.SNAM;
+        Single? ITimelineSceneActionGetter.StartTime => this.StartTime;
         #endregion
         #region UNAM
         public Int32? UNAM { get; set; }
@@ -120,8 +120,8 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.TNAM = initialValue;
-                this.SNAM = initialValue;
+                this.Type = initialValue;
+                this.StartTime = initialValue;
                 this.UNAM = initialValue;
                 this.LNAM = initialValue;
                 this.CNAM = initialValue;
@@ -135,8 +135,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Flags,
                 TItem StartPhase,
                 TItem EndPhase,
-                TItem TNAM,
-                TItem SNAM,
+                TItem Type,
+                TItem StartTime,
                 TItem UNAM,
                 TItem LNAM,
                 TItem CNAM)
@@ -149,8 +149,8 @@ namespace Mutagen.Bethesda.Starfield
                 StartPhase: StartPhase,
                 EndPhase: EndPhase)
             {
-                this.TNAM = TNAM;
-                this.SNAM = SNAM;
+                this.Type = Type;
+                this.StartTime = StartTime;
                 this.UNAM = UNAM;
                 this.LNAM = LNAM;
                 this.CNAM = CNAM;
@@ -165,8 +165,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem TNAM;
-            public TItem SNAM;
+            public TItem Type;
+            public TItem StartTime;
             public TItem UNAM;
             public TItem LNAM;
             public TItem CNAM;
@@ -183,8 +183,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.TNAM, rhs.TNAM)) return false;
-                if (!object.Equals(this.SNAM, rhs.SNAM)) return false;
+                if (!object.Equals(this.Type, rhs.Type)) return false;
+                if (!object.Equals(this.StartTime, rhs.StartTime)) return false;
                 if (!object.Equals(this.UNAM, rhs.UNAM)) return false;
                 if (!object.Equals(this.LNAM, rhs.LNAM)) return false;
                 if (!object.Equals(this.CNAM, rhs.CNAM)) return false;
@@ -193,8 +193,8 @@ namespace Mutagen.Bethesda.Starfield
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.TNAM);
-                hash.Add(this.SNAM);
+                hash.Add(this.Type);
+                hash.Add(this.StartTime);
                 hash.Add(this.UNAM);
                 hash.Add(this.LNAM);
                 hash.Add(this.CNAM);
@@ -208,8 +208,8 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.TNAM)) return false;
-                if (!eval(this.SNAM)) return false;
+                if (!eval(this.Type)) return false;
+                if (!eval(this.StartTime)) return false;
                 if (!eval(this.UNAM)) return false;
                 if (!eval(this.LNAM)) return false;
                 if (!eval(this.CNAM)) return false;
@@ -221,8 +221,8 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.TNAM)) return true;
-                if (eval(this.SNAM)) return true;
+                if (eval(this.Type)) return true;
+                if (eval(this.StartTime)) return true;
                 if (eval(this.UNAM)) return true;
                 if (eval(this.LNAM)) return true;
                 if (eval(this.CNAM)) return true;
@@ -241,8 +241,8 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.TNAM = eval(this.TNAM);
-                obj.SNAM = eval(this.SNAM);
+                obj.Type = eval(this.Type);
+                obj.StartTime = eval(this.StartTime);
                 obj.UNAM = eval(this.UNAM);
                 obj.LNAM = eval(this.LNAM);
                 obj.CNAM = eval(this.CNAM);
@@ -264,13 +264,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(TimelineSceneAction.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.TNAM ?? true)
+                    if (printMask?.Type ?? true)
                     {
-                        sb.AppendItem(TNAM, "TNAM");
+                        sb.AppendItem(Type, "Type");
                     }
-                    if (printMask?.SNAM ?? true)
+                    if (printMask?.StartTime ?? true)
                     {
-                        sb.AppendItem(SNAM, "SNAM");
+                        sb.AppendItem(StartTime, "StartTime");
                     }
                     if (printMask?.UNAM ?? true)
                     {
@@ -295,8 +295,8 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? TNAM;
-            public Exception? SNAM;
+            public Exception? Type;
+            public Exception? StartTime;
             public Exception? UNAM;
             public Exception? LNAM;
             public Exception? CNAM;
@@ -308,10 +308,10 @@ namespace Mutagen.Bethesda.Starfield
                 TimelineSceneAction_FieldIndex enu = (TimelineSceneAction_FieldIndex)index;
                 switch (enu)
                 {
-                    case TimelineSceneAction_FieldIndex.TNAM:
-                        return TNAM;
-                    case TimelineSceneAction_FieldIndex.SNAM:
-                        return SNAM;
+                    case TimelineSceneAction_FieldIndex.Type:
+                        return Type;
+                    case TimelineSceneAction_FieldIndex.StartTime:
+                        return StartTime;
                     case TimelineSceneAction_FieldIndex.UNAM:
                         return UNAM;
                     case TimelineSceneAction_FieldIndex.LNAM:
@@ -328,11 +328,11 @@ namespace Mutagen.Bethesda.Starfield
                 TimelineSceneAction_FieldIndex enu = (TimelineSceneAction_FieldIndex)index;
                 switch (enu)
                 {
-                    case TimelineSceneAction_FieldIndex.TNAM:
-                        this.TNAM = ex;
+                    case TimelineSceneAction_FieldIndex.Type:
+                        this.Type = ex;
                         break;
-                    case TimelineSceneAction_FieldIndex.SNAM:
-                        this.SNAM = ex;
+                    case TimelineSceneAction_FieldIndex.StartTime:
+                        this.StartTime = ex;
                         break;
                     case TimelineSceneAction_FieldIndex.UNAM:
                         this.UNAM = ex;
@@ -354,11 +354,11 @@ namespace Mutagen.Bethesda.Starfield
                 TimelineSceneAction_FieldIndex enu = (TimelineSceneAction_FieldIndex)index;
                 switch (enu)
                 {
-                    case TimelineSceneAction_FieldIndex.TNAM:
-                        this.TNAM = (Exception?)obj;
+                    case TimelineSceneAction_FieldIndex.Type:
+                        this.Type = (Exception?)obj;
                         break;
-                    case TimelineSceneAction_FieldIndex.SNAM:
-                        this.SNAM = (Exception?)obj;
+                    case TimelineSceneAction_FieldIndex.StartTime:
+                        this.StartTime = (Exception?)obj;
                         break;
                     case TimelineSceneAction_FieldIndex.UNAM:
                         this.UNAM = (Exception?)obj;
@@ -378,8 +378,8 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (TNAM != null) return true;
-                if (SNAM != null) return true;
+                if (Type != null) return true;
+                if (StartTime != null) return true;
                 if (UNAM != null) return true;
                 if (LNAM != null) return true;
                 if (CNAM != null) return true;
@@ -410,10 +410,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(TNAM, "TNAM");
+                    sb.AppendItem(Type, "Type");
                 }
                 {
-                    sb.AppendItem(SNAM, "SNAM");
+                    sb.AppendItem(StartTime, "StartTime");
                 }
                 {
                     sb.AppendItem(UNAM, "UNAM");
@@ -432,8 +432,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.TNAM = this.TNAM.Combine(rhs.TNAM);
-                ret.SNAM = this.SNAM.Combine(rhs.SNAM);
+                ret.Type = this.Type.Combine(rhs.Type);
+                ret.StartTime = this.StartTime.Combine(rhs.StartTime);
                 ret.UNAM = this.UNAM.Combine(rhs.UNAM);
                 ret.LNAM = this.LNAM.Combine(rhs.LNAM);
                 ret.CNAM = this.CNAM.Combine(rhs.CNAM);
@@ -459,8 +459,8 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool TNAM;
-            public bool SNAM;
+            public bool Type;
+            public bool StartTime;
             public bool UNAM;
             public bool LNAM;
             public bool CNAM;
@@ -472,8 +472,8 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.TNAM = defaultOn;
-                this.SNAM = defaultOn;
+                this.Type = defaultOn;
+                this.StartTime = defaultOn;
                 this.UNAM = defaultOn;
                 this.LNAM = defaultOn;
                 this.CNAM = defaultOn;
@@ -484,8 +484,8 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((TNAM, null));
-                ret.Add((SNAM, null));
+                ret.Add((Type, null));
+                ret.Add((StartTime, null));
                 ret.Add((UNAM, null));
                 ret.Add((LNAM, null));
                 ret.Add((CNAM, null));
@@ -561,8 +561,8 @@ namespace Mutagen.Bethesda.Starfield
         INamedRequired,
         ITimelineSceneActionGetter
     {
-        new Int32? TNAM { get; set; }
-        new Int32? SNAM { get; set; }
+        new TimelineSceneAction.TimelineType? Type { get; set; }
+        new Single? StartTime { get; set; }
         new Int32? UNAM { get; set; }
         new Int32? LNAM { get; set; }
         new Int32? CNAM { get; set; }
@@ -575,8 +575,8 @@ namespace Mutagen.Bethesda.Starfield
         INamedRequiredGetter
     {
         static new ILoquiRegistration StaticRegistration => TimelineSceneAction_Registration.Instance;
-        Int32? TNAM { get; }
-        Int32? SNAM { get; }
+        TimelineSceneAction.TimelineType? Type { get; }
+        Single? StartTime { get; }
         Int32? UNAM { get; }
         Int32? LNAM { get; }
         Int32? CNAM { get; }
@@ -731,8 +731,8 @@ namespace Mutagen.Bethesda.Starfield
         Flags = 4,
         StartPhase = 5,
         EndPhase = 6,
-        TNAM = 7,
-        SNAM = 8,
+        Type = 7,
+        StartTime = 8,
         UNAM = 9,
         LNAM = 10,
         CNAM = 11,
@@ -830,8 +830,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ITimelineSceneAction item)
         {
             ClearPartial();
-            item.TNAM = default;
-            item.SNAM = default;
+            item.Type = default;
+            item.StartTime = default;
             item.UNAM = default;
             item.LNAM = default;
             item.CNAM = default;
@@ -902,8 +902,8 @@ namespace Mutagen.Bethesda.Starfield
             TimelineSceneAction.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.TNAM = item.TNAM == rhs.TNAM;
-            ret.SNAM = item.SNAM == rhs.SNAM;
+            ret.Type = item.Type == rhs.Type;
+            ret.StartTime = item.StartTime.EqualsWithin(rhs.StartTime);
             ret.UNAM = item.UNAM == rhs.UNAM;
             ret.LNAM = item.LNAM == rhs.LNAM;
             ret.CNAM = item.CNAM == rhs.CNAM;
@@ -956,15 +956,15 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.TNAM ?? true)
-                && item.TNAM is {} TNAMItem)
+            if ((printMask?.Type ?? true)
+                && item.Type is {} TypeItem)
             {
-                sb.AppendItem(TNAMItem, "TNAM");
+                sb.AppendItem(TypeItem, "Type");
             }
-            if ((printMask?.SNAM ?? true)
-                && item.SNAM is {} SNAMItem)
+            if ((printMask?.StartTime ?? true)
+                && item.StartTime is {} StartTimeItem)
             {
-                sb.AppendItem(SNAMItem, "SNAM");
+                sb.AppendItem(StartTimeItem, "StartTime");
             }
             if ((printMask?.UNAM ?? true)
                 && item.UNAM is {} UNAMItem)
@@ -1014,13 +1014,13 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IASceneActionGetter)lhs, (IASceneActionGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)TimelineSceneAction_FieldIndex.TNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TimelineSceneAction_FieldIndex.Type) ?? true))
             {
-                if (lhs.TNAM != rhs.TNAM) return false;
+                if (lhs.Type != rhs.Type) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TimelineSceneAction_FieldIndex.SNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TimelineSceneAction_FieldIndex.StartTime) ?? true))
             {
-                if (lhs.SNAM != rhs.SNAM) return false;
+                if (!lhs.StartTime.EqualsWithin(rhs.StartTime)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)TimelineSceneAction_FieldIndex.UNAM) ?? true))
             {
@@ -1051,13 +1051,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ITimelineSceneActionGetter item)
         {
             var hash = new HashCode();
-            if (item.TNAM is {} TNAMitem)
+            if (item.Type is {} Typeitem)
             {
-                hash.Add(TNAMitem);
+                hash.Add(Typeitem);
             }
-            if (item.SNAM is {} SNAMitem)
+            if (item.StartTime is {} StartTimeitem)
             {
-                hash.Add(SNAMitem);
+                hash.Add(StartTimeitem);
             }
             if (item.UNAM is {} UNAMitem)
             {
@@ -1119,13 +1119,13 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)TimelineSceneAction_FieldIndex.TNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TimelineSceneAction_FieldIndex.Type) ?? true))
             {
-                item.TNAM = rhs.TNAM;
+                item.Type = rhs.Type;
             }
-            if ((copyMask?.GetShouldTranslate((int)TimelineSceneAction_FieldIndex.SNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TimelineSceneAction_FieldIndex.StartTime) ?? true))
             {
-                item.SNAM = rhs.SNAM;
+                item.StartTime = rhs.StartTime;
             }
             if ((copyMask?.GetShouldTranslate((int)TimelineSceneAction_FieldIndex.UNAM) ?? true))
             {
@@ -1264,13 +1264,14 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.TNAM,
+            EnumBinaryTranslation<TimelineSceneAction.TimelineType, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Type,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.TNAM));
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.SNAM,
+                item: item.StartTime,
                 header: translationParams.ConvertToCustom(RecordTypes.SNAM));
             Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
@@ -1340,8 +1341,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.TNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.TNAM = frame.ReadInt32();
-                    return (int)TimelineSceneAction_FieldIndex.TNAM;
+                    item.Type = EnumBinaryTranslation<TimelineSceneAction.TimelineType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)TimelineSceneAction_FieldIndex.Type;
                 }
                 case RecordTypeInts.SNAM:
                 {
@@ -1357,11 +1360,11 @@ namespace Mutagen.Bethesda.Starfield
                             contentLength: contentLength,
                             translationParams: translationParams.WithNoConverter());
                     }
-                    else if (lastParsed.ParsedIndex.Value <= (int)TimelineSceneAction_FieldIndex.TNAM)
+                    else if (lastParsed.ParsedIndex.Value <= (int)TimelineSceneAction_FieldIndex.Type)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                        item.SNAM = frame.ReadInt32();
-                        return new ParseResult((int)TimelineSceneAction_FieldIndex.SNAM, nextRecordType);
+                        item.StartTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                        return new ParseResult((int)TimelineSceneAction_FieldIndex.StartTime, nextRecordType);
                     }
                     else
                     {
@@ -1378,8 +1381,8 @@ namespace Mutagen.Bethesda.Starfield
                                     translationParams: translationParams.WithNoConverter());
                             case 1:
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                                item.SNAM = frame.ReadInt32();
-                                return new ParseResult((int)TimelineSceneAction_FieldIndex.SNAM, nextRecordType);
+                                item.StartTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                                return new ParseResult((int)TimelineSceneAction_FieldIndex.StartTime, nextRecordType);
                             default:
                                 throw new NotImplementedException();
                         }
@@ -1459,13 +1462,13 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region TNAM
-        private int? _TNAMLocation;
-        public Int32? TNAM => _TNAMLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TNAMLocation.Value, _package.MetaData.Constants)) : default(Int32?);
+        #region Type
+        private int? _TypeLocation;
+        public TimelineSceneAction.TimelineType? Type => EnumBinaryTranslation<TimelineSceneAction.TimelineType, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_TypeLocation, _recordData, _package, 4);
         #endregion
-        #region SNAM
-        private int? _SNAMLocation;
-        public Int32? SNAM => _SNAMLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _SNAMLocation.Value, _package.MetaData.Constants)) : default(Int32?);
+        #region StartTime
+        private int? _StartTimeLocation;
+        public Single? StartTime => _StartTimeLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _StartTimeLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
         #region UNAM
         private int? _UNAMLocation;
@@ -1544,8 +1547,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.TNAM:
                 {
-                    _TNAMLocation = (stream.Position - offset);
-                    return (int)TimelineSceneAction_FieldIndex.TNAM;
+                    _TypeLocation = (stream.Position - offset);
+                    return (int)TimelineSceneAction_FieldIndex.Type;
                 }
                 case RecordTypeInts.SNAM:
                 {
@@ -1561,10 +1564,10 @@ namespace Mutagen.Bethesda.Starfield
                             recordParseCount: recordParseCount,
                             translationParams: translationParams.WithNoConverter());
                     }
-                    else if (lastParsed.ParsedIndex.Value <= (int)TimelineSceneAction_FieldIndex.TNAM)
+                    else if (lastParsed.ParsedIndex.Value <= (int)TimelineSceneAction_FieldIndex.Type)
                     {
-                        _SNAMLocation = (stream.Position - offset);
-                        return new ParseResult((int)TimelineSceneAction_FieldIndex.SNAM, type);
+                        _StartTimeLocation = (stream.Position - offset);
+                        return new ParseResult((int)TimelineSceneAction_FieldIndex.StartTime, type);
                     }
                     else
                     {
@@ -1583,8 +1586,8 @@ namespace Mutagen.Bethesda.Starfield
                             }
                             case 1:
                             {
-                                _SNAMLocation = (stream.Position - offset);
-                                return new ParseResult((int)TimelineSceneAction_FieldIndex.SNAM, type);
+                                _StartTimeLocation = (stream.Position - offset);
+                                return new ParseResult((int)TimelineSceneAction_FieldIndex.StartTime, type);
                             }
                             default:
                                 throw new NotImplementedException();

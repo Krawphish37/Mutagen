@@ -64,8 +64,8 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Single? ITimerSceneActionGetter.MinSeconds => this.MinSeconds;
         #endregion
-        #region HNAM
-        public Boolean HNAM { get; set; } = default(Boolean);
+        #region HoldForAnimationEvent
+        public Boolean HoldForAnimationEvent { get; set; } = default(Boolean);
         #endregion
         #region SCQS
         public Int16? SCQS { get; set; }
@@ -120,7 +120,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.MaxSeconds = initialValue;
                 this.MinSeconds = initialValue;
-                this.HNAM = initialValue;
+                this.HoldForAnimationEvent = initialValue;
                 this.SCQS = initialValue;
                 this.INTV = initialValue;
             }
@@ -135,7 +135,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem EndPhase,
                 TItem MaxSeconds,
                 TItem MinSeconds,
-                TItem HNAM,
+                TItem HoldForAnimationEvent,
                 TItem SCQS,
                 TItem INTV)
             : base(
@@ -149,7 +149,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.MaxSeconds = MaxSeconds;
                 this.MinSeconds = MinSeconds;
-                this.HNAM = HNAM;
+                this.HoldForAnimationEvent = HoldForAnimationEvent;
                 this.SCQS = SCQS;
                 this.INTV = INTV;
             }
@@ -165,7 +165,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem MaxSeconds;
             public TItem MinSeconds;
-            public TItem HNAM;
+            public TItem HoldForAnimationEvent;
             public TItem SCQS;
             public TItem INTV;
             #endregion
@@ -183,7 +183,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.MaxSeconds, rhs.MaxSeconds)) return false;
                 if (!object.Equals(this.MinSeconds, rhs.MinSeconds)) return false;
-                if (!object.Equals(this.HNAM, rhs.HNAM)) return false;
+                if (!object.Equals(this.HoldForAnimationEvent, rhs.HoldForAnimationEvent)) return false;
                 if (!object.Equals(this.SCQS, rhs.SCQS)) return false;
                 if (!object.Equals(this.INTV, rhs.INTV)) return false;
                 return true;
@@ -193,7 +193,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.MaxSeconds);
                 hash.Add(this.MinSeconds);
-                hash.Add(this.HNAM);
+                hash.Add(this.HoldForAnimationEvent);
                 hash.Add(this.SCQS);
                 hash.Add(this.INTV);
                 hash.Add(base.GetHashCode());
@@ -208,7 +208,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!base.All(eval)) return false;
                 if (!eval(this.MaxSeconds)) return false;
                 if (!eval(this.MinSeconds)) return false;
-                if (!eval(this.HNAM)) return false;
+                if (!eval(this.HoldForAnimationEvent)) return false;
                 if (!eval(this.SCQS)) return false;
                 if (!eval(this.INTV)) return false;
                 return true;
@@ -221,7 +221,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (base.Any(eval)) return true;
                 if (eval(this.MaxSeconds)) return true;
                 if (eval(this.MinSeconds)) return true;
-                if (eval(this.HNAM)) return true;
+                if (eval(this.HoldForAnimationEvent)) return true;
                 if (eval(this.SCQS)) return true;
                 if (eval(this.INTV)) return true;
                 return false;
@@ -241,7 +241,7 @@ namespace Mutagen.Bethesda.Starfield
                 base.Translate_InternalFill(obj, eval);
                 obj.MaxSeconds = eval(this.MaxSeconds);
                 obj.MinSeconds = eval(this.MinSeconds);
-                obj.HNAM = eval(this.HNAM);
+                obj.HoldForAnimationEvent = eval(this.HoldForAnimationEvent);
                 obj.SCQS = eval(this.SCQS);
                 obj.INTV = eval(this.INTV);
             }
@@ -270,9 +270,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(MinSeconds, "MinSeconds");
                     }
-                    if (printMask?.HNAM ?? true)
+                    if (printMask?.HoldForAnimationEvent ?? true)
                     {
-                        sb.AppendItem(HNAM, "HNAM");
+                        sb.AppendItem(HoldForAnimationEvent, "HoldForAnimationEvent");
                     }
                     if (printMask?.SCQS ?? true)
                     {
@@ -295,7 +295,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public Exception? MaxSeconds;
             public Exception? MinSeconds;
-            public Exception? HNAM;
+            public Exception? HoldForAnimationEvent;
             public Exception? SCQS;
             public Exception? INTV;
             #endregion
@@ -310,8 +310,8 @@ namespace Mutagen.Bethesda.Starfield
                         return MaxSeconds;
                     case TimerSceneAction_FieldIndex.MinSeconds:
                         return MinSeconds;
-                    case TimerSceneAction_FieldIndex.HNAM:
-                        return HNAM;
+                    case TimerSceneAction_FieldIndex.HoldForAnimationEvent:
+                        return HoldForAnimationEvent;
                     case TimerSceneAction_FieldIndex.SCQS:
                         return SCQS;
                     case TimerSceneAction_FieldIndex.INTV:
@@ -332,8 +332,8 @@ namespace Mutagen.Bethesda.Starfield
                     case TimerSceneAction_FieldIndex.MinSeconds:
                         this.MinSeconds = ex;
                         break;
-                    case TimerSceneAction_FieldIndex.HNAM:
-                        this.HNAM = ex;
+                    case TimerSceneAction_FieldIndex.HoldForAnimationEvent:
+                        this.HoldForAnimationEvent = ex;
                         break;
                     case TimerSceneAction_FieldIndex.SCQS:
                         this.SCQS = ex;
@@ -358,8 +358,8 @@ namespace Mutagen.Bethesda.Starfield
                     case TimerSceneAction_FieldIndex.MinSeconds:
                         this.MinSeconds = (Exception?)obj;
                         break;
-                    case TimerSceneAction_FieldIndex.HNAM:
-                        this.HNAM = (Exception?)obj;
+                    case TimerSceneAction_FieldIndex.HoldForAnimationEvent:
+                        this.HoldForAnimationEvent = (Exception?)obj;
                         break;
                     case TimerSceneAction_FieldIndex.SCQS:
                         this.SCQS = (Exception?)obj;
@@ -378,7 +378,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (MaxSeconds != null) return true;
                 if (MinSeconds != null) return true;
-                if (HNAM != null) return true;
+                if (HoldForAnimationEvent != null) return true;
                 if (SCQS != null) return true;
                 if (INTV != null) return true;
                 return false;
@@ -414,7 +414,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(MinSeconds, "MinSeconds");
                 }
                 {
-                    sb.AppendItem(HNAM, "HNAM");
+                    sb.AppendItem(HoldForAnimationEvent, "HoldForAnimationEvent");
                 }
                 {
                     sb.AppendItem(SCQS, "SCQS");
@@ -432,7 +432,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.MaxSeconds = this.MaxSeconds.Combine(rhs.MaxSeconds);
                 ret.MinSeconds = this.MinSeconds.Combine(rhs.MinSeconds);
-                ret.HNAM = this.HNAM.Combine(rhs.HNAM);
+                ret.HoldForAnimationEvent = this.HoldForAnimationEvent.Combine(rhs.HoldForAnimationEvent);
                 ret.SCQS = this.SCQS.Combine(rhs.SCQS);
                 ret.INTV = this.INTV.Combine(rhs.INTV);
                 return ret;
@@ -459,7 +459,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public bool MaxSeconds;
             public bool MinSeconds;
-            public bool HNAM;
+            public bool HoldForAnimationEvent;
             public bool SCQS;
             public bool INTV;
             #endregion
@@ -472,7 +472,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.MaxSeconds = defaultOn;
                 this.MinSeconds = defaultOn;
-                this.HNAM = defaultOn;
+                this.HoldForAnimationEvent = defaultOn;
                 this.SCQS = defaultOn;
                 this.INTV = defaultOn;
             }
@@ -484,7 +484,7 @@ namespace Mutagen.Bethesda.Starfield
                 base.GetCrystal(ret);
                 ret.Add((MaxSeconds, null));
                 ret.Add((MinSeconds, null));
-                ret.Add((HNAM, null));
+                ret.Add((HoldForAnimationEvent, null));
                 ret.Add((SCQS, null));
                 ret.Add((INTV, null));
             }
@@ -561,7 +561,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new Single? MaxSeconds { get; set; }
         new Single? MinSeconds { get; set; }
-        new Boolean HNAM { get; set; }
+        new Boolean HoldForAnimationEvent { get; set; }
         new Int16? SCQS { get; set; }
         new Int16? INTV { get; set; }
     }
@@ -575,7 +575,7 @@ namespace Mutagen.Bethesda.Starfield
         static new ILoquiRegistration StaticRegistration => TimerSceneAction_Registration.Instance;
         Single? MaxSeconds { get; }
         Single? MinSeconds { get; }
-        Boolean HNAM { get; }
+        Boolean HoldForAnimationEvent { get; }
         Int16? SCQS { get; }
         Int16? INTV { get; }
 
@@ -731,7 +731,7 @@ namespace Mutagen.Bethesda.Starfield
         EndPhase = 6,
         MaxSeconds = 7,
         MinSeconds = 8,
-        HNAM = 9,
+        HoldForAnimationEvent = 9,
         SCQS = 10,
         INTV = 11,
     }
@@ -830,7 +830,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.MaxSeconds = default;
             item.MinSeconds = default;
-            item.HNAM = default(Boolean);
+            item.HoldForAnimationEvent = default(Boolean);
             item.SCQS = default;
             item.INTV = default;
             base.Clear(item);
@@ -902,7 +902,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.MaxSeconds = item.MaxSeconds.EqualsWithin(rhs.MaxSeconds);
             ret.MinSeconds = item.MinSeconds.EqualsWithin(rhs.MinSeconds);
-            ret.HNAM = item.HNAM == rhs.HNAM;
+            ret.HoldForAnimationEvent = item.HoldForAnimationEvent == rhs.HoldForAnimationEvent;
             ret.SCQS = item.SCQS == rhs.SCQS;
             ret.INTV = item.INTV == rhs.INTV;
             base.FillEqualsMask(item, rhs, ret, include);
@@ -964,9 +964,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(MinSecondsItem, "MinSeconds");
             }
-            if (printMask?.HNAM ?? true)
+            if (printMask?.HoldForAnimationEvent ?? true)
             {
-                sb.AppendItem(item.HNAM, "HNAM");
+                sb.AppendItem(item.HoldForAnimationEvent, "HoldForAnimationEvent");
             }
             if ((printMask?.SCQS ?? true)
                 && item.SCQS is {} SCQSItem)
@@ -1019,9 +1019,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.MinSeconds.EqualsWithin(rhs.MinSeconds)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TimerSceneAction_FieldIndex.HNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TimerSceneAction_FieldIndex.HoldForAnimationEvent) ?? true))
             {
-                if (lhs.HNAM != rhs.HNAM) return false;
+                if (lhs.HoldForAnimationEvent != rhs.HoldForAnimationEvent) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)TimerSceneAction_FieldIndex.SCQS) ?? true))
             {
@@ -1056,7 +1056,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(MinSecondsitem);
             }
-            hash.Add(item.HNAM);
+            hash.Add(item.HoldForAnimationEvent);
             if (item.SCQS is {} SCQSitem)
             {
                 hash.Add(SCQSitem);
@@ -1121,9 +1121,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.MinSeconds = rhs.MinSeconds;
             }
-            if ((copyMask?.GetShouldTranslate((int)TimerSceneAction_FieldIndex.HNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TimerSceneAction_FieldIndex.HoldForAnimationEvent) ?? true))
             {
-                item.HNAM = rhs.HNAM;
+                item.HoldForAnimationEvent = rhs.HoldForAnimationEvent;
             }
             if ((copyMask?.GetShouldTranslate((int)TimerSceneAction_FieldIndex.SCQS) ?? true))
             {
@@ -1268,7 +1268,7 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.TNAM));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.HNAM,
+                item: item.HoldForAnimationEvent,
                 header: translationParams.ConvertToCustom(RecordTypes.HNAM));
             Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
@@ -1381,8 +1381,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.HNAM:
                 {
-                    item.HNAM = true;
-                    return (int)TimerSceneAction_FieldIndex.HNAM;
+                    item.HoldForAnimationEvent = true;
+                    return (int)TimerSceneAction_FieldIndex.HoldForAnimationEvent;
                 }
                 case RecordTypeInts.SCQS:
                 {
@@ -1460,9 +1460,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _MinSecondsLocation;
         public Single? MinSeconds => _MinSecondsLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _MinSecondsLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
-        #region HNAM
-        private int? _HNAMLocation;
-        public Boolean HNAM => _HNAMLocation.HasValue ? true : default(Boolean);
+        #region HoldForAnimationEvent
+        private int? _HoldForAnimationEventLocation;
+        public Boolean HoldForAnimationEvent => _HoldForAnimationEventLocation.HasValue ? true : default(Boolean);
         #endregion
         #region SCQS
         private int? _SCQSLocation;
@@ -1586,8 +1586,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.HNAM:
                 {
-                    _HNAMLocation = (stream.Position - offset);
-                    return (int)TimerSceneAction_FieldIndex.HNAM;
+                    _HoldForAnimationEventLocation = (stream.Position - offset);
+                    return (int)TimerSceneAction_FieldIndex.HoldForAnimationEvent;
                 }
                 case RecordTypeInts.SCQS:
                 {

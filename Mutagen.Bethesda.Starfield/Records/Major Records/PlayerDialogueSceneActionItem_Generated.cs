@@ -62,25 +62,25 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IDialogTopicGetter> IPlayerDialogueSceneActionItemGetter.PlayerChoice => this.PlayerChoice;
         #endregion
-        #region PPST
-        private readonly IFormLinkNullable<IKeywordGetter> _PPST = new FormLinkNullable<IKeywordGetter>();
-        public IFormLinkNullable<IKeywordGetter> PPST
+        #region PlayerDialogueSubtype
+        private readonly IFormLinkNullable<IKeywordGetter> _PlayerDialogueSubtype = new FormLinkNullable<IKeywordGetter>();
+        public IFormLinkNullable<IKeywordGetter> PlayerDialogueSubtype
         {
-            get => _PPST;
-            set => _PPST.SetTo(value);
+            get => _PlayerDialogueSubtype;
+            set => _PlayerDialogueSubtype.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkNullableGetter<IKeywordGetter> IPlayerDialogueSceneActionItemGetter.PPST => this.PPST;
+        IFormLinkNullableGetter<IKeywordGetter> IPlayerDialogueSceneActionItemGetter.PlayerDialogueSubtype => this.PlayerDialogueSubtype;
         #endregion
-        #region PNST
-        private readonly IFormLinkNullable<IKeywordGetter> _PNST = new FormLinkNullable<IKeywordGetter>();
-        public IFormLinkNullable<IKeywordGetter> PNST
+        #region NpcDialogueSubtype
+        private readonly IFormLinkNullable<IKeywordGetter> _NpcDialogueSubtype = new FormLinkNullable<IKeywordGetter>();
+        public IFormLinkNullable<IKeywordGetter> NpcDialogueSubtype
         {
-            get => _PNST;
-            set => _PNST.SetTo(value);
+            get => _NpcDialogueSubtype;
+            set => _NpcDialogueSubtype.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkNullableGetter<IKeywordGetter> IPlayerDialogueSceneActionItemGetter.PNST => this.PNST;
+        IFormLinkNullableGetter<IKeywordGetter> IPlayerDialogueSceneActionItemGetter.NpcDialogueSubtype => this.NpcDialogueSubtype;
         #endregion
         #region StartScene
         private readonly IFormLinkNullable<ISceneGetter> _StartScene = new FormLinkNullable<ISceneGetter>();
@@ -97,10 +97,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         UInt32? IPlayerDialogueSceneActionItemGetter.PhaseIndex => this.PhaseIndex;
         #endregion
-        #region PAPN
-        public String? PAPN { get; set; }
+        #region PhaseName
+        public String? PhaseName { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IPlayerDialogueSceneActionItemGetter.PAPN => this.PAPN;
+        String? IPlayerDialogueSceneActionItemGetter.PhaseName => this.PhaseName;
         #endregion
         #region NpcResponse
         private readonly IFormLink<IDialogTopicGetter> _NpcResponse = new FormLink<IDialogTopicGetter>();
@@ -152,29 +152,29 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.PlayerChoice = initialValue;
-                this.PPST = initialValue;
-                this.PNST = initialValue;
+                this.PlayerDialogueSubtype = initialValue;
+                this.NpcDialogueSubtype = initialValue;
                 this.StartScene = initialValue;
                 this.PhaseIndex = initialValue;
-                this.PAPN = initialValue;
+                this.PhaseName = initialValue;
                 this.NpcResponse = initialValue;
             }
 
             public Mask(
                 TItem PlayerChoice,
-                TItem PPST,
-                TItem PNST,
+                TItem PlayerDialogueSubtype,
+                TItem NpcDialogueSubtype,
                 TItem StartScene,
                 TItem PhaseIndex,
-                TItem PAPN,
+                TItem PhaseName,
                 TItem NpcResponse)
             {
                 this.PlayerChoice = PlayerChoice;
-                this.PPST = PPST;
-                this.PNST = PNST;
+                this.PlayerDialogueSubtype = PlayerDialogueSubtype;
+                this.NpcDialogueSubtype = NpcDialogueSubtype;
                 this.StartScene = StartScene;
                 this.PhaseIndex = PhaseIndex;
-                this.PAPN = PAPN;
+                this.PhaseName = PhaseName;
                 this.NpcResponse = NpcResponse;
             }
 
@@ -188,11 +188,11 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem PlayerChoice;
-            public TItem PPST;
-            public TItem PNST;
+            public TItem PlayerDialogueSubtype;
+            public TItem NpcDialogueSubtype;
             public TItem StartScene;
             public TItem PhaseIndex;
-            public TItem PAPN;
+            public TItem PhaseName;
             public TItem NpcResponse;
             #endregion
 
@@ -207,11 +207,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.PlayerChoice, rhs.PlayerChoice)) return false;
-                if (!object.Equals(this.PPST, rhs.PPST)) return false;
-                if (!object.Equals(this.PNST, rhs.PNST)) return false;
+                if (!object.Equals(this.PlayerDialogueSubtype, rhs.PlayerDialogueSubtype)) return false;
+                if (!object.Equals(this.NpcDialogueSubtype, rhs.NpcDialogueSubtype)) return false;
                 if (!object.Equals(this.StartScene, rhs.StartScene)) return false;
                 if (!object.Equals(this.PhaseIndex, rhs.PhaseIndex)) return false;
-                if (!object.Equals(this.PAPN, rhs.PAPN)) return false;
+                if (!object.Equals(this.PhaseName, rhs.PhaseName)) return false;
                 if (!object.Equals(this.NpcResponse, rhs.NpcResponse)) return false;
                 return true;
             }
@@ -219,11 +219,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.PlayerChoice);
-                hash.Add(this.PPST);
-                hash.Add(this.PNST);
+                hash.Add(this.PlayerDialogueSubtype);
+                hash.Add(this.NpcDialogueSubtype);
                 hash.Add(this.StartScene);
                 hash.Add(this.PhaseIndex);
-                hash.Add(this.PAPN);
+                hash.Add(this.PhaseName);
                 hash.Add(this.NpcResponse);
                 return hash.ToHashCode();
             }
@@ -234,11 +234,11 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.PlayerChoice)) return false;
-                if (!eval(this.PPST)) return false;
-                if (!eval(this.PNST)) return false;
+                if (!eval(this.PlayerDialogueSubtype)) return false;
+                if (!eval(this.NpcDialogueSubtype)) return false;
                 if (!eval(this.StartScene)) return false;
                 if (!eval(this.PhaseIndex)) return false;
-                if (!eval(this.PAPN)) return false;
+                if (!eval(this.PhaseName)) return false;
                 if (!eval(this.NpcResponse)) return false;
                 return true;
             }
@@ -248,11 +248,11 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.PlayerChoice)) return true;
-                if (eval(this.PPST)) return true;
-                if (eval(this.PNST)) return true;
+                if (eval(this.PlayerDialogueSubtype)) return true;
+                if (eval(this.NpcDialogueSubtype)) return true;
                 if (eval(this.StartScene)) return true;
                 if (eval(this.PhaseIndex)) return true;
-                if (eval(this.PAPN)) return true;
+                if (eval(this.PhaseName)) return true;
                 if (eval(this.NpcResponse)) return true;
                 return false;
             }
@@ -269,11 +269,11 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.PlayerChoice = eval(this.PlayerChoice);
-                obj.PPST = eval(this.PPST);
-                obj.PNST = eval(this.PNST);
+                obj.PlayerDialogueSubtype = eval(this.PlayerDialogueSubtype);
+                obj.NpcDialogueSubtype = eval(this.NpcDialogueSubtype);
                 obj.StartScene = eval(this.StartScene);
                 obj.PhaseIndex = eval(this.PhaseIndex);
-                obj.PAPN = eval(this.PAPN);
+                obj.PhaseName = eval(this.PhaseName);
                 obj.NpcResponse = eval(this.NpcResponse);
             }
             #endregion
@@ -297,13 +297,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(PlayerChoice, "PlayerChoice");
                     }
-                    if (printMask?.PPST ?? true)
+                    if (printMask?.PlayerDialogueSubtype ?? true)
                     {
-                        sb.AppendItem(PPST, "PPST");
+                        sb.AppendItem(PlayerDialogueSubtype, "PlayerDialogueSubtype");
                     }
-                    if (printMask?.PNST ?? true)
+                    if (printMask?.NpcDialogueSubtype ?? true)
                     {
-                        sb.AppendItem(PNST, "PNST");
+                        sb.AppendItem(NpcDialogueSubtype, "NpcDialogueSubtype");
                     }
                     if (printMask?.StartScene ?? true)
                     {
@@ -313,9 +313,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(PhaseIndex, "PhaseIndex");
                     }
-                    if (printMask?.PAPN ?? true)
+                    if (printMask?.PhaseName ?? true)
                     {
-                        sb.AppendItem(PAPN, "PAPN");
+                        sb.AppendItem(PhaseName, "PhaseName");
                     }
                     if (printMask?.NpcResponse ?? true)
                     {
@@ -346,11 +346,11 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? PlayerChoice;
-            public Exception? PPST;
-            public Exception? PNST;
+            public Exception? PlayerDialogueSubtype;
+            public Exception? NpcDialogueSubtype;
             public Exception? StartScene;
             public Exception? PhaseIndex;
-            public Exception? PAPN;
+            public Exception? PhaseName;
             public Exception? NpcResponse;
             #endregion
 
@@ -362,16 +362,16 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case PlayerDialogueSceneActionItem_FieldIndex.PlayerChoice:
                         return PlayerChoice;
-                    case PlayerDialogueSceneActionItem_FieldIndex.PPST:
-                        return PPST;
-                    case PlayerDialogueSceneActionItem_FieldIndex.PNST:
-                        return PNST;
+                    case PlayerDialogueSceneActionItem_FieldIndex.PlayerDialogueSubtype:
+                        return PlayerDialogueSubtype;
+                    case PlayerDialogueSceneActionItem_FieldIndex.NpcDialogueSubtype:
+                        return NpcDialogueSubtype;
                     case PlayerDialogueSceneActionItem_FieldIndex.StartScene:
                         return StartScene;
                     case PlayerDialogueSceneActionItem_FieldIndex.PhaseIndex:
                         return PhaseIndex;
-                    case PlayerDialogueSceneActionItem_FieldIndex.PAPN:
-                        return PAPN;
+                    case PlayerDialogueSceneActionItem_FieldIndex.PhaseName:
+                        return PhaseName;
                     case PlayerDialogueSceneActionItem_FieldIndex.NpcResponse:
                         return NpcResponse;
                     default:
@@ -387,11 +387,11 @@ namespace Mutagen.Bethesda.Starfield
                     case PlayerDialogueSceneActionItem_FieldIndex.PlayerChoice:
                         this.PlayerChoice = ex;
                         break;
-                    case PlayerDialogueSceneActionItem_FieldIndex.PPST:
-                        this.PPST = ex;
+                    case PlayerDialogueSceneActionItem_FieldIndex.PlayerDialogueSubtype:
+                        this.PlayerDialogueSubtype = ex;
                         break;
-                    case PlayerDialogueSceneActionItem_FieldIndex.PNST:
-                        this.PNST = ex;
+                    case PlayerDialogueSceneActionItem_FieldIndex.NpcDialogueSubtype:
+                        this.NpcDialogueSubtype = ex;
                         break;
                     case PlayerDialogueSceneActionItem_FieldIndex.StartScene:
                         this.StartScene = ex;
@@ -399,8 +399,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlayerDialogueSceneActionItem_FieldIndex.PhaseIndex:
                         this.PhaseIndex = ex;
                         break;
-                    case PlayerDialogueSceneActionItem_FieldIndex.PAPN:
-                        this.PAPN = ex;
+                    case PlayerDialogueSceneActionItem_FieldIndex.PhaseName:
+                        this.PhaseName = ex;
                         break;
                     case PlayerDialogueSceneActionItem_FieldIndex.NpcResponse:
                         this.NpcResponse = ex;
@@ -418,11 +418,11 @@ namespace Mutagen.Bethesda.Starfield
                     case PlayerDialogueSceneActionItem_FieldIndex.PlayerChoice:
                         this.PlayerChoice = (Exception?)obj;
                         break;
-                    case PlayerDialogueSceneActionItem_FieldIndex.PPST:
-                        this.PPST = (Exception?)obj;
+                    case PlayerDialogueSceneActionItem_FieldIndex.PlayerDialogueSubtype:
+                        this.PlayerDialogueSubtype = (Exception?)obj;
                         break;
-                    case PlayerDialogueSceneActionItem_FieldIndex.PNST:
-                        this.PNST = (Exception?)obj;
+                    case PlayerDialogueSceneActionItem_FieldIndex.NpcDialogueSubtype:
+                        this.NpcDialogueSubtype = (Exception?)obj;
                         break;
                     case PlayerDialogueSceneActionItem_FieldIndex.StartScene:
                         this.StartScene = (Exception?)obj;
@@ -430,8 +430,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlayerDialogueSceneActionItem_FieldIndex.PhaseIndex:
                         this.PhaseIndex = (Exception?)obj;
                         break;
-                    case PlayerDialogueSceneActionItem_FieldIndex.PAPN:
-                        this.PAPN = (Exception?)obj;
+                    case PlayerDialogueSceneActionItem_FieldIndex.PhaseName:
+                        this.PhaseName = (Exception?)obj;
                         break;
                     case PlayerDialogueSceneActionItem_FieldIndex.NpcResponse:
                         this.NpcResponse = (Exception?)obj;
@@ -445,11 +445,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (PlayerChoice != null) return true;
-                if (PPST != null) return true;
-                if (PNST != null) return true;
+                if (PlayerDialogueSubtype != null) return true;
+                if (NpcDialogueSubtype != null) return true;
                 if (StartScene != null) return true;
                 if (PhaseIndex != null) return true;
-                if (PAPN != null) return true;
+                if (PhaseName != null) return true;
                 if (NpcResponse != null) return true;
                 return false;
             }
@@ -480,10 +480,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(PlayerChoice, "PlayerChoice");
                 }
                 {
-                    sb.AppendItem(PPST, "PPST");
+                    sb.AppendItem(PlayerDialogueSubtype, "PlayerDialogueSubtype");
                 }
                 {
-                    sb.AppendItem(PNST, "PNST");
+                    sb.AppendItem(NpcDialogueSubtype, "NpcDialogueSubtype");
                 }
                 {
                     sb.AppendItem(StartScene, "StartScene");
@@ -492,7 +492,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(PhaseIndex, "PhaseIndex");
                 }
                 {
-                    sb.AppendItem(PAPN, "PAPN");
+                    sb.AppendItem(PhaseName, "PhaseName");
                 }
                 {
                     sb.AppendItem(NpcResponse, "NpcResponse");
@@ -506,11 +506,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.PlayerChoice = this.PlayerChoice.Combine(rhs.PlayerChoice);
-                ret.PPST = this.PPST.Combine(rhs.PPST);
-                ret.PNST = this.PNST.Combine(rhs.PNST);
+                ret.PlayerDialogueSubtype = this.PlayerDialogueSubtype.Combine(rhs.PlayerDialogueSubtype);
+                ret.NpcDialogueSubtype = this.NpcDialogueSubtype.Combine(rhs.NpcDialogueSubtype);
                 ret.StartScene = this.StartScene.Combine(rhs.StartScene);
                 ret.PhaseIndex = this.PhaseIndex.Combine(rhs.PhaseIndex);
-                ret.PAPN = this.PAPN.Combine(rhs.PAPN);
+                ret.PhaseName = this.PhaseName.Combine(rhs.PhaseName);
                 ret.NpcResponse = this.NpcResponse.Combine(rhs.NpcResponse);
                 return ret;
             }
@@ -536,11 +536,11 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool PlayerChoice;
-            public bool PPST;
-            public bool PNST;
+            public bool PlayerDialogueSubtype;
+            public bool NpcDialogueSubtype;
             public bool StartScene;
             public bool PhaseIndex;
-            public bool PAPN;
+            public bool PhaseName;
             public bool NpcResponse;
             #endregion
 
@@ -552,11 +552,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.PlayerChoice = defaultOn;
-                this.PPST = defaultOn;
-                this.PNST = defaultOn;
+                this.PlayerDialogueSubtype = defaultOn;
+                this.NpcDialogueSubtype = defaultOn;
                 this.StartScene = defaultOn;
                 this.PhaseIndex = defaultOn;
-                this.PAPN = defaultOn;
+                this.PhaseName = defaultOn;
                 this.NpcResponse = defaultOn;
             }
 
@@ -574,11 +574,11 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((PlayerChoice, null));
-                ret.Add((PPST, null));
-                ret.Add((PNST, null));
+                ret.Add((PlayerDialogueSubtype, null));
+                ret.Add((NpcDialogueSubtype, null));
                 ret.Add((StartScene, null));
                 ret.Add((PhaseIndex, null));
-                ret.Add((PAPN, null));
+                ret.Add((PhaseName, null));
                 ret.Add((NpcResponse, null));
             }
 
@@ -659,11 +659,11 @@ namespace Mutagen.Bethesda.Starfield
         IPlayerDialogueSceneActionItemGetter
     {
         new IFormLinkNullable<IDialogTopicGetter> PlayerChoice { get; set; }
-        new IFormLinkNullable<IKeywordGetter> PPST { get; set; }
-        new IFormLinkNullable<IKeywordGetter> PNST { get; set; }
+        new IFormLinkNullable<IKeywordGetter> PlayerDialogueSubtype { get; set; }
+        new IFormLinkNullable<IKeywordGetter> NpcDialogueSubtype { get; set; }
         new IFormLinkNullable<ISceneGetter> StartScene { get; set; }
         new UInt32? PhaseIndex { get; set; }
-        new String? PAPN { get; set; }
+        new String? PhaseName { get; set; }
         new IFormLink<IDialogTopicGetter> NpcResponse { get; set; }
     }
 
@@ -681,11 +681,11 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => PlayerDialogueSceneActionItem_Registration.Instance;
         IFormLinkNullableGetter<IDialogTopicGetter> PlayerChoice { get; }
-        IFormLinkNullableGetter<IKeywordGetter> PPST { get; }
-        IFormLinkNullableGetter<IKeywordGetter> PNST { get; }
+        IFormLinkNullableGetter<IKeywordGetter> PlayerDialogueSubtype { get; }
+        IFormLinkNullableGetter<IKeywordGetter> NpcDialogueSubtype { get; }
         IFormLinkNullableGetter<ISceneGetter> StartScene { get; }
         UInt32? PhaseIndex { get; }
-        String? PAPN { get; }
+        String? PhaseName { get; }
         IFormLinkGetter<IDialogTopicGetter> NpcResponse { get; }
 
     }
@@ -857,11 +857,11 @@ namespace Mutagen.Bethesda.Starfield
     internal enum PlayerDialogueSceneActionItem_FieldIndex
     {
         PlayerChoice = 0,
-        PPST = 1,
-        PNST = 2,
+        PlayerDialogueSubtype = 1,
+        NpcDialogueSubtype = 2,
         StartScene = 3,
         PhaseIndex = 4,
-        PAPN = 5,
+        PhaseName = 5,
         NpcResponse = 6,
     }
     #endregion
@@ -955,11 +955,11 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.PlayerChoice.Clear();
-            item.PPST.Clear();
-            item.PNST.Clear();
+            item.PlayerDialogueSubtype.Clear();
+            item.NpcDialogueSubtype.Clear();
             item.StartScene.Clear();
             item.PhaseIndex = default;
-            item.PAPN = default;
+            item.PhaseName = default;
             item.NpcResponse.Clear();
         }
         
@@ -967,8 +967,8 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IPlayerDialogueSceneActionItem obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             obj.PlayerChoice.Relink(mapping);
-            obj.PPST.Relink(mapping);
-            obj.PNST.Relink(mapping);
+            obj.PlayerDialogueSubtype.Relink(mapping);
+            obj.NpcDialogueSubtype.Relink(mapping);
             obj.StartScene.Relink(mapping);
             obj.NpcResponse.Relink(mapping);
         }
@@ -1016,11 +1016,11 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.PlayerChoice = item.PlayerChoice.Equals(rhs.PlayerChoice);
-            ret.PPST = item.PPST.Equals(rhs.PPST);
-            ret.PNST = item.PNST.Equals(rhs.PNST);
+            ret.PlayerDialogueSubtype = item.PlayerDialogueSubtype.Equals(rhs.PlayerDialogueSubtype);
+            ret.NpcDialogueSubtype = item.NpcDialogueSubtype.Equals(rhs.NpcDialogueSubtype);
             ret.StartScene = item.StartScene.Equals(rhs.StartScene);
             ret.PhaseIndex = item.PhaseIndex == rhs.PhaseIndex;
-            ret.PAPN = string.Equals(item.PAPN, rhs.PAPN);
+            ret.PhaseName = string.Equals(item.PhaseName, rhs.PhaseName);
             ret.NpcResponse = item.NpcResponse.Equals(rhs.NpcResponse);
         }
         
@@ -1070,13 +1070,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.PlayerChoice.FormKeyNullable, "PlayerChoice");
             }
-            if (printMask?.PPST ?? true)
+            if (printMask?.PlayerDialogueSubtype ?? true)
             {
-                sb.AppendItem(item.PPST.FormKeyNullable, "PPST");
+                sb.AppendItem(item.PlayerDialogueSubtype.FormKeyNullable, "PlayerDialogueSubtype");
             }
-            if (printMask?.PNST ?? true)
+            if (printMask?.NpcDialogueSubtype ?? true)
             {
-                sb.AppendItem(item.PNST.FormKeyNullable, "PNST");
+                sb.AppendItem(item.NpcDialogueSubtype.FormKeyNullable, "NpcDialogueSubtype");
             }
             if (printMask?.StartScene ?? true)
             {
@@ -1087,10 +1087,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(PhaseIndexItem, "PhaseIndex");
             }
-            if ((printMask?.PAPN ?? true)
-                && item.PAPN is {} PAPNItem)
+            if ((printMask?.PhaseName ?? true)
+                && item.PhaseName is {} PhaseNameItem)
             {
-                sb.AppendItem(PAPNItem, "PAPN");
+                sb.AppendItem(PhaseNameItem, "PhaseName");
             }
             if (printMask?.NpcResponse ?? true)
             {
@@ -1109,13 +1109,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.PlayerChoice.Equals(rhs.PlayerChoice)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.PPST) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.PlayerDialogueSubtype) ?? true))
             {
-                if (!lhs.PPST.Equals(rhs.PPST)) return false;
+                if (!lhs.PlayerDialogueSubtype.Equals(rhs.PlayerDialogueSubtype)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.PNST) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.NpcDialogueSubtype) ?? true))
             {
-                if (!lhs.PNST.Equals(rhs.PNST)) return false;
+                if (!lhs.NpcDialogueSubtype.Equals(rhs.NpcDialogueSubtype)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.StartScene) ?? true))
             {
@@ -1125,9 +1125,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.PhaseIndex != rhs.PhaseIndex) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.PAPN) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.PhaseName) ?? true))
             {
-                if (!string.Equals(lhs.PAPN, rhs.PAPN)) return false;
+                if (!string.Equals(lhs.PhaseName, rhs.PhaseName)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.NpcResponse) ?? true))
             {
@@ -1140,16 +1140,16 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.PlayerChoice);
-            hash.Add(item.PPST);
-            hash.Add(item.PNST);
+            hash.Add(item.PlayerDialogueSubtype);
+            hash.Add(item.NpcDialogueSubtype);
             hash.Add(item.StartScene);
             if (item.PhaseIndex is {} PhaseIndexitem)
             {
                 hash.Add(PhaseIndexitem);
             }
-            if (item.PAPN is {} PAPNitem)
+            if (item.PhaseName is {} PhaseNameitem)
             {
-                hash.Add(PAPNitem);
+                hash.Add(PhaseNameitem);
             }
             hash.Add(item.NpcResponse);
             return hash.ToHashCode();
@@ -1170,13 +1170,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return PlayerChoiceInfo;
             }
-            if (FormLinkInformation.TryFactory(obj.PPST, out var PPSTInfo))
+            if (FormLinkInformation.TryFactory(obj.PlayerDialogueSubtype, out var PlayerDialogueSubtypeInfo))
             {
-                yield return PPSTInfo;
+                yield return PlayerDialogueSubtypeInfo;
             }
-            if (FormLinkInformation.TryFactory(obj.PNST, out var PNSTInfo))
+            if (FormLinkInformation.TryFactory(obj.NpcDialogueSubtype, out var NpcDialogueSubtypeInfo))
             {
-                yield return PNSTInfo;
+                yield return NpcDialogueSubtypeInfo;
             }
             if (FormLinkInformation.TryFactory(obj.StartScene, out var StartSceneInfo))
             {
@@ -1205,13 +1205,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.PlayerChoice.SetTo(rhs.PlayerChoice.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.PPST) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.PlayerDialogueSubtype) ?? true))
             {
-                item.PPST.SetTo(rhs.PPST.FormKeyNullable);
+                item.PlayerDialogueSubtype.SetTo(rhs.PlayerDialogueSubtype.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.PNST) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.NpcDialogueSubtype) ?? true))
             {
-                item.PNST.SetTo(rhs.PNST.FormKeyNullable);
+                item.NpcDialogueSubtype.SetTo(rhs.NpcDialogueSubtype.FormKeyNullable);
             }
             if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.StartScene) ?? true))
             {
@@ -1221,9 +1221,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.PhaseIndex = rhs.PhaseIndex;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.PAPN) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.PhaseName) ?? true))
             {
-                item.PAPN = rhs.PAPN;
+                item.PhaseName = rhs.PhaseName;
             }
             if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneActionItem_FieldIndex.NpcResponse) ?? true))
             {
@@ -1344,11 +1344,11 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.ESCE));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.PPST,
+                item: item.PlayerDialogueSubtype,
                 header: translationParams.ConvertToCustom(RecordTypes.PPST));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.PNST,
+                item: item.NpcDialogueSubtype,
                 header: translationParams.ConvertToCustom(RecordTypes.PNST));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -1360,7 +1360,7 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.PAPI));
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.PAPN,
+                item: item.PhaseName,
                 header: translationParams.ConvertToCustom(RecordTypes.PAPN),
                 binaryType: StringBinaryType.NullTerminate);
             FormLinkBinaryTranslation.Instance.Write(
@@ -1418,17 +1418,17 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.PPST:
                 {
-                    if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PPST, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PlayerDialogueSubtype, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.PPST.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-                    return (int)PlayerDialogueSceneActionItem_FieldIndex.PPST;
+                    item.PlayerDialogueSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)PlayerDialogueSceneActionItem_FieldIndex.PlayerDialogueSubtype;
                 }
                 case RecordTypeInts.PNST:
                 {
-                    if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PNST, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.NpcDialogueSubtype, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.PNST.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-                    return (int)PlayerDialogueSceneActionItem_FieldIndex.PNST;
+                    item.NpcDialogueSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)PlayerDialogueSceneActionItem_FieldIndex.NpcDialogueSubtype;
                 }
                 case RecordTypeInts.PASP:
                 {
@@ -1446,13 +1446,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.PAPN:
                 {
-                    if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PAPN, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PhaseName, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.PAPN = StringBinaryTranslation.Instance.Parse(
+                    item.PhaseName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)PlayerDialogueSceneActionItem_FieldIndex.PAPN;
+                    return (int)PlayerDialogueSceneActionItem_FieldIndex.PhaseName;
                 }
                 case RecordTypeInts.ESCS:
                 {
@@ -1534,13 +1534,13 @@ namespace Mutagen.Bethesda.Starfield
         private int? _PlayerChoiceLocation;
         public IFormLinkNullableGetter<IDialogTopicGetter> PlayerChoice => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IDialogTopicGetter>(_package, _recordData, _PlayerChoiceLocation);
         #endregion
-        #region PPST
-        private int? _PPSTLocation;
-        public IFormLinkNullableGetter<IKeywordGetter> PPST => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IKeywordGetter>(_package, _recordData, _PPSTLocation);
+        #region PlayerDialogueSubtype
+        private int? _PlayerDialogueSubtypeLocation;
+        public IFormLinkNullableGetter<IKeywordGetter> PlayerDialogueSubtype => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IKeywordGetter>(_package, _recordData, _PlayerDialogueSubtypeLocation);
         #endregion
-        #region PNST
-        private int? _PNSTLocation;
-        public IFormLinkNullableGetter<IKeywordGetter> PNST => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IKeywordGetter>(_package, _recordData, _PNSTLocation);
+        #region NpcDialogueSubtype
+        private int? _NpcDialogueSubtypeLocation;
+        public IFormLinkNullableGetter<IKeywordGetter> NpcDialogueSubtype => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IKeywordGetter>(_package, _recordData, _NpcDialogueSubtypeLocation);
         #endregion
         #region StartScene
         private int? _StartSceneLocation;
@@ -1550,9 +1550,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _PhaseIndexLocation;
         public UInt32? PhaseIndex => _PhaseIndexLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _PhaseIndexLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region PAPN
-        private int? _PAPNLocation;
-        public String? PAPN => _PAPNLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _PAPNLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region PhaseName
+        private int? _PhaseNameLocation;
+        public String? PhaseName => _PhaseNameLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _PhaseNameLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         #region NpcResponse
         private int? _NpcResponseLocation;
@@ -1629,15 +1629,15 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.PPST:
                 {
-                    if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PPST, translationParams)) return ParseResult.Stop;
-                    _PPSTLocation = (stream.Position - offset);
-                    return (int)PlayerDialogueSceneActionItem_FieldIndex.PPST;
+                    if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PlayerDialogueSubtype, translationParams)) return ParseResult.Stop;
+                    _PlayerDialogueSubtypeLocation = (stream.Position - offset);
+                    return (int)PlayerDialogueSceneActionItem_FieldIndex.PlayerDialogueSubtype;
                 }
                 case RecordTypeInts.PNST:
                 {
-                    if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PNST, translationParams)) return ParseResult.Stop;
-                    _PNSTLocation = (stream.Position - offset);
-                    return (int)PlayerDialogueSceneActionItem_FieldIndex.PNST;
+                    if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.NpcDialogueSubtype, translationParams)) return ParseResult.Stop;
+                    _NpcDialogueSubtypeLocation = (stream.Position - offset);
+                    return (int)PlayerDialogueSceneActionItem_FieldIndex.NpcDialogueSubtype;
                 }
                 case RecordTypeInts.PASP:
                 {
@@ -1653,9 +1653,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.PAPN:
                 {
-                    if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PAPN, translationParams)) return ParseResult.Stop;
-                    _PAPNLocation = (stream.Position - offset);
-                    return (int)PlayerDialogueSceneActionItem_FieldIndex.PAPN;
+                    if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PhaseName, translationParams)) return ParseResult.Stop;
+                    _PhaseNameLocation = (stream.Position - offset);
+                    return (int)PlayerDialogueSceneActionItem_FieldIndex.PhaseName;
                 }
                 case RecordTypeInts.ESCS:
                 {

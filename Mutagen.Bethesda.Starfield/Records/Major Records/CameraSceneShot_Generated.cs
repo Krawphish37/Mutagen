@@ -63,45 +63,52 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<ICameraShotGetter> ICameraSceneShotGetter.CameraShot => this.CameraShot;
         #endregion
-        #region ALLA
-        public Int32 ALLA { get; set; } = default(Int32);
-        #endregion
-        #region REPL
-        private readonly IFormLink<IPlacedGetter> _REPL = new FormLink<IPlacedGetter>();
-        public IFormLink<IPlacedGetter> REPL
+        #region CameraLocationReference
+        private readonly IFormLink<IPlacedGetter> _CameraLocationReference = new FormLink<IPlacedGetter>();
+        public IFormLink<IPlacedGetter> CameraLocationReference
         {
-            get => _REPL;
-            set => _REPL.SetTo(value);
+            get => _CameraLocationReference;
+            set => _CameraLocationReference.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IPlacedGetter> ICameraSceneShotGetter.REPL => this.REPL;
+        IFormLinkGetter<IPlacedGetter> ICameraSceneShotGetter.CameraLocationReference => this.CameraLocationReference;
         #endregion
-        #region HNAM
-        public Int32 HNAM { get; set; } = default(Int32);
+        #region LookTargetReference
+        private readonly IFormLink<IPlacedGetter> _LookTargetReference = new FormLink<IPlacedGetter>();
+        public IFormLink<IPlacedGetter> LookTargetReference
+        {
+            get => _LookTargetReference;
+            set => _LookTargetReference.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkGetter<IPlacedGetter> ICameraSceneShotGetter.LookTargetReference => this.LookTargetReference;
         #endregion
-        #region VCLR
-        public Int32 VCLR { get; set; } = default(Int32);
+        #region LookTargetAlias
+        public Int32 LookTargetAlias { get; set; } = default(Int32);
         #endregion
-        #region LVCR
-        public Int32 LVCR { get; set; } = default(Int32);
+        #region CameraLocationAlias
+        public Int32 CameraLocationAlias { get; set; } = default(Int32);
         #endregion
-        #region BTXT
-        public Boolean BTXT { get; set; } = default(Boolean);
+        #region DelayStartTimeAction
+        public Single DelayStartTimeAction { get; set; } = default(Single);
         #endregion
-        #region ATXT
-        public Boolean ATXT { get; set; } = default(Boolean);
+        #region UseCameraLocationReference
+        public Boolean UseCameraLocationReference { get; set; } = default(Boolean);
         #endregion
-        #region VTXT
-        public Boolean VTXT { get; set; } = default(Boolean);
+        #region UseLookTargetReference
+        public Boolean UseLookTargetReference { get; set; } = default(Boolean);
         #endregion
-        #region AIDT
-        public Boolean AIDT { get; set; } = default(Boolean);
+        #region UseCameraLocationAlias
+        public Boolean UseCameraLocationAlias { get; set; } = default(Boolean);
         #endregion
-        #region MPCD
-        public Boolean MPCD { get; set; } = default(Boolean);
+        #region IgnoreCollision
+        public Boolean IgnoreCollision { get; set; } = default(Boolean);
         #endregion
-        #region VNAM
-        public Boolean VNAM { get; set; } = default(Boolean);
+        #region UseLookTargetAlias
+        public Boolean UseLookTargetAlias { get; set; } = default(Boolean);
+        #endregion
+        #region ForceLookAtFirstPersonCamera
+        public Boolean ForceLookAtFirstPersonCamera { get; set; } = default(Boolean);
         #endregion
         #region Conditions
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -157,47 +164,47 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.CameraShot = initialValue;
-                this.ALLA = initialValue;
-                this.REPL = initialValue;
-                this.HNAM = initialValue;
-                this.VCLR = initialValue;
-                this.LVCR = initialValue;
-                this.BTXT = initialValue;
-                this.ATXT = initialValue;
-                this.VTXT = initialValue;
-                this.AIDT = initialValue;
-                this.MPCD = initialValue;
-                this.VNAM = initialValue;
+                this.CameraLocationReference = initialValue;
+                this.LookTargetReference = initialValue;
+                this.LookTargetAlias = initialValue;
+                this.CameraLocationAlias = initialValue;
+                this.DelayStartTimeAction = initialValue;
+                this.UseCameraLocationReference = initialValue;
+                this.UseLookTargetReference = initialValue;
+                this.UseCameraLocationAlias = initialValue;
+                this.IgnoreCollision = initialValue;
+                this.UseLookTargetAlias = initialValue;
+                this.ForceLookAtFirstPersonCamera = initialValue;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
                 TItem CameraShot,
-                TItem ALLA,
-                TItem REPL,
-                TItem HNAM,
-                TItem VCLR,
-                TItem LVCR,
-                TItem BTXT,
-                TItem ATXT,
-                TItem VTXT,
-                TItem AIDT,
-                TItem MPCD,
-                TItem VNAM,
+                TItem CameraLocationReference,
+                TItem LookTargetReference,
+                TItem LookTargetAlias,
+                TItem CameraLocationAlias,
+                TItem DelayStartTimeAction,
+                TItem UseCameraLocationReference,
+                TItem UseLookTargetReference,
+                TItem UseCameraLocationAlias,
+                TItem IgnoreCollision,
+                TItem UseLookTargetAlias,
+                TItem ForceLookAtFirstPersonCamera,
                 TItem Conditions)
             {
                 this.CameraShot = CameraShot;
-                this.ALLA = ALLA;
-                this.REPL = REPL;
-                this.HNAM = HNAM;
-                this.VCLR = VCLR;
-                this.LVCR = LVCR;
-                this.BTXT = BTXT;
-                this.ATXT = ATXT;
-                this.VTXT = VTXT;
-                this.AIDT = AIDT;
-                this.MPCD = MPCD;
-                this.VNAM = VNAM;
+                this.CameraLocationReference = CameraLocationReference;
+                this.LookTargetReference = LookTargetReference;
+                this.LookTargetAlias = LookTargetAlias;
+                this.CameraLocationAlias = CameraLocationAlias;
+                this.DelayStartTimeAction = DelayStartTimeAction;
+                this.UseCameraLocationReference = UseCameraLocationReference;
+                this.UseLookTargetReference = UseLookTargetReference;
+                this.UseCameraLocationAlias = UseCameraLocationAlias;
+                this.IgnoreCollision = IgnoreCollision;
+                this.UseLookTargetAlias = UseLookTargetAlias;
+                this.ForceLookAtFirstPersonCamera = ForceLookAtFirstPersonCamera;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
             }
 
@@ -211,17 +218,17 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem CameraShot;
-            public TItem ALLA;
-            public TItem REPL;
-            public TItem HNAM;
-            public TItem VCLR;
-            public TItem LVCR;
-            public TItem BTXT;
-            public TItem ATXT;
-            public TItem VTXT;
-            public TItem AIDT;
-            public TItem MPCD;
-            public TItem VNAM;
+            public TItem CameraLocationReference;
+            public TItem LookTargetReference;
+            public TItem LookTargetAlias;
+            public TItem CameraLocationAlias;
+            public TItem DelayStartTimeAction;
+            public TItem UseCameraLocationReference;
+            public TItem UseLookTargetReference;
+            public TItem UseCameraLocationAlias;
+            public TItem IgnoreCollision;
+            public TItem UseLookTargetAlias;
+            public TItem ForceLookAtFirstPersonCamera;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
             #endregion
 
@@ -236,17 +243,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.CameraShot, rhs.CameraShot)) return false;
-                if (!object.Equals(this.ALLA, rhs.ALLA)) return false;
-                if (!object.Equals(this.REPL, rhs.REPL)) return false;
-                if (!object.Equals(this.HNAM, rhs.HNAM)) return false;
-                if (!object.Equals(this.VCLR, rhs.VCLR)) return false;
-                if (!object.Equals(this.LVCR, rhs.LVCR)) return false;
-                if (!object.Equals(this.BTXT, rhs.BTXT)) return false;
-                if (!object.Equals(this.ATXT, rhs.ATXT)) return false;
-                if (!object.Equals(this.VTXT, rhs.VTXT)) return false;
-                if (!object.Equals(this.AIDT, rhs.AIDT)) return false;
-                if (!object.Equals(this.MPCD, rhs.MPCD)) return false;
-                if (!object.Equals(this.VNAM, rhs.VNAM)) return false;
+                if (!object.Equals(this.CameraLocationReference, rhs.CameraLocationReference)) return false;
+                if (!object.Equals(this.LookTargetReference, rhs.LookTargetReference)) return false;
+                if (!object.Equals(this.LookTargetAlias, rhs.LookTargetAlias)) return false;
+                if (!object.Equals(this.CameraLocationAlias, rhs.CameraLocationAlias)) return false;
+                if (!object.Equals(this.DelayStartTimeAction, rhs.DelayStartTimeAction)) return false;
+                if (!object.Equals(this.UseCameraLocationReference, rhs.UseCameraLocationReference)) return false;
+                if (!object.Equals(this.UseLookTargetReference, rhs.UseLookTargetReference)) return false;
+                if (!object.Equals(this.UseCameraLocationAlias, rhs.UseCameraLocationAlias)) return false;
+                if (!object.Equals(this.IgnoreCollision, rhs.IgnoreCollision)) return false;
+                if (!object.Equals(this.UseLookTargetAlias, rhs.UseLookTargetAlias)) return false;
+                if (!object.Equals(this.ForceLookAtFirstPersonCamera, rhs.ForceLookAtFirstPersonCamera)) return false;
                 if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
                 return true;
             }
@@ -254,17 +261,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.CameraShot);
-                hash.Add(this.ALLA);
-                hash.Add(this.REPL);
-                hash.Add(this.HNAM);
-                hash.Add(this.VCLR);
-                hash.Add(this.LVCR);
-                hash.Add(this.BTXT);
-                hash.Add(this.ATXT);
-                hash.Add(this.VTXT);
-                hash.Add(this.AIDT);
-                hash.Add(this.MPCD);
-                hash.Add(this.VNAM);
+                hash.Add(this.CameraLocationReference);
+                hash.Add(this.LookTargetReference);
+                hash.Add(this.LookTargetAlias);
+                hash.Add(this.CameraLocationAlias);
+                hash.Add(this.DelayStartTimeAction);
+                hash.Add(this.UseCameraLocationReference);
+                hash.Add(this.UseLookTargetReference);
+                hash.Add(this.UseCameraLocationAlias);
+                hash.Add(this.IgnoreCollision);
+                hash.Add(this.UseLookTargetAlias);
+                hash.Add(this.ForceLookAtFirstPersonCamera);
                 hash.Add(this.Conditions);
                 return hash.ToHashCode();
             }
@@ -275,17 +282,17 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.CameraShot)) return false;
-                if (!eval(this.ALLA)) return false;
-                if (!eval(this.REPL)) return false;
-                if (!eval(this.HNAM)) return false;
-                if (!eval(this.VCLR)) return false;
-                if (!eval(this.LVCR)) return false;
-                if (!eval(this.BTXT)) return false;
-                if (!eval(this.ATXT)) return false;
-                if (!eval(this.VTXT)) return false;
-                if (!eval(this.AIDT)) return false;
-                if (!eval(this.MPCD)) return false;
-                if (!eval(this.VNAM)) return false;
+                if (!eval(this.CameraLocationReference)) return false;
+                if (!eval(this.LookTargetReference)) return false;
+                if (!eval(this.LookTargetAlias)) return false;
+                if (!eval(this.CameraLocationAlias)) return false;
+                if (!eval(this.DelayStartTimeAction)) return false;
+                if (!eval(this.UseCameraLocationReference)) return false;
+                if (!eval(this.UseLookTargetReference)) return false;
+                if (!eval(this.UseCameraLocationAlias)) return false;
+                if (!eval(this.IgnoreCollision)) return false;
+                if (!eval(this.UseLookTargetAlias)) return false;
+                if (!eval(this.ForceLookAtFirstPersonCamera)) return false;
                 if (this.Conditions != null)
                 {
                     if (!eval(this.Conditions.Overall)) return false;
@@ -306,17 +313,17 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.CameraShot)) return true;
-                if (eval(this.ALLA)) return true;
-                if (eval(this.REPL)) return true;
-                if (eval(this.HNAM)) return true;
-                if (eval(this.VCLR)) return true;
-                if (eval(this.LVCR)) return true;
-                if (eval(this.BTXT)) return true;
-                if (eval(this.ATXT)) return true;
-                if (eval(this.VTXT)) return true;
-                if (eval(this.AIDT)) return true;
-                if (eval(this.MPCD)) return true;
-                if (eval(this.VNAM)) return true;
+                if (eval(this.CameraLocationReference)) return true;
+                if (eval(this.LookTargetReference)) return true;
+                if (eval(this.LookTargetAlias)) return true;
+                if (eval(this.CameraLocationAlias)) return true;
+                if (eval(this.DelayStartTimeAction)) return true;
+                if (eval(this.UseCameraLocationReference)) return true;
+                if (eval(this.UseLookTargetReference)) return true;
+                if (eval(this.UseCameraLocationAlias)) return true;
+                if (eval(this.IgnoreCollision)) return true;
+                if (eval(this.UseLookTargetAlias)) return true;
+                if (eval(this.ForceLookAtFirstPersonCamera)) return true;
                 if (this.Conditions != null)
                 {
                     if (eval(this.Conditions.Overall)) return true;
@@ -344,17 +351,17 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.CameraShot = eval(this.CameraShot);
-                obj.ALLA = eval(this.ALLA);
-                obj.REPL = eval(this.REPL);
-                obj.HNAM = eval(this.HNAM);
-                obj.VCLR = eval(this.VCLR);
-                obj.LVCR = eval(this.LVCR);
-                obj.BTXT = eval(this.BTXT);
-                obj.ATXT = eval(this.ATXT);
-                obj.VTXT = eval(this.VTXT);
-                obj.AIDT = eval(this.AIDT);
-                obj.MPCD = eval(this.MPCD);
-                obj.VNAM = eval(this.VNAM);
+                obj.CameraLocationReference = eval(this.CameraLocationReference);
+                obj.LookTargetReference = eval(this.LookTargetReference);
+                obj.LookTargetAlias = eval(this.LookTargetAlias);
+                obj.CameraLocationAlias = eval(this.CameraLocationAlias);
+                obj.DelayStartTimeAction = eval(this.DelayStartTimeAction);
+                obj.UseCameraLocationReference = eval(this.UseCameraLocationReference);
+                obj.UseLookTargetReference = eval(this.UseLookTargetReference);
+                obj.UseCameraLocationAlias = eval(this.UseCameraLocationAlias);
+                obj.IgnoreCollision = eval(this.IgnoreCollision);
+                obj.UseLookTargetAlias = eval(this.UseLookTargetAlias);
+                obj.ForceLookAtFirstPersonCamera = eval(this.ForceLookAtFirstPersonCamera);
                 if (Conditions != null)
                 {
                     obj.Conditions = new MaskItem<R, IEnumerable<MaskItemIndexed<R, Condition.Mask<R>?>>?>(eval(this.Conditions.Overall), []);
@@ -392,49 +399,49 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(CameraShot, "CameraShot");
                     }
-                    if (printMask?.ALLA ?? true)
+                    if (printMask?.CameraLocationReference ?? true)
                     {
-                        sb.AppendItem(ALLA, "ALLA");
+                        sb.AppendItem(CameraLocationReference, "CameraLocationReference");
                     }
-                    if (printMask?.REPL ?? true)
+                    if (printMask?.LookTargetReference ?? true)
                     {
-                        sb.AppendItem(REPL, "REPL");
+                        sb.AppendItem(LookTargetReference, "LookTargetReference");
                     }
-                    if (printMask?.HNAM ?? true)
+                    if (printMask?.LookTargetAlias ?? true)
                     {
-                        sb.AppendItem(HNAM, "HNAM");
+                        sb.AppendItem(LookTargetAlias, "LookTargetAlias");
                     }
-                    if (printMask?.VCLR ?? true)
+                    if (printMask?.CameraLocationAlias ?? true)
                     {
-                        sb.AppendItem(VCLR, "VCLR");
+                        sb.AppendItem(CameraLocationAlias, "CameraLocationAlias");
                     }
-                    if (printMask?.LVCR ?? true)
+                    if (printMask?.DelayStartTimeAction ?? true)
                     {
-                        sb.AppendItem(LVCR, "LVCR");
+                        sb.AppendItem(DelayStartTimeAction, "DelayStartTimeAction");
                     }
-                    if (printMask?.BTXT ?? true)
+                    if (printMask?.UseCameraLocationReference ?? true)
                     {
-                        sb.AppendItem(BTXT, "BTXT");
+                        sb.AppendItem(UseCameraLocationReference, "UseCameraLocationReference");
                     }
-                    if (printMask?.ATXT ?? true)
+                    if (printMask?.UseLookTargetReference ?? true)
                     {
-                        sb.AppendItem(ATXT, "ATXT");
+                        sb.AppendItem(UseLookTargetReference, "UseLookTargetReference");
                     }
-                    if (printMask?.VTXT ?? true)
+                    if (printMask?.UseCameraLocationAlias ?? true)
                     {
-                        sb.AppendItem(VTXT, "VTXT");
+                        sb.AppendItem(UseCameraLocationAlias, "UseCameraLocationAlias");
                     }
-                    if (printMask?.AIDT ?? true)
+                    if (printMask?.IgnoreCollision ?? true)
                     {
-                        sb.AppendItem(AIDT, "AIDT");
+                        sb.AppendItem(IgnoreCollision, "IgnoreCollision");
                     }
-                    if (printMask?.MPCD ?? true)
+                    if (printMask?.UseLookTargetAlias ?? true)
                     {
-                        sb.AppendItem(MPCD, "MPCD");
+                        sb.AppendItem(UseLookTargetAlias, "UseLookTargetAlias");
                     }
-                    if (printMask?.VNAM ?? true)
+                    if (printMask?.ForceLookAtFirstPersonCamera ?? true)
                     {
-                        sb.AppendItem(VNAM, "VNAM");
+                        sb.AppendItem(ForceLookAtFirstPersonCamera, "ForceLookAtFirstPersonCamera");
                     }
                     if ((printMask?.Conditions?.Overall ?? true)
                         && Conditions is {} ConditionsItem)
@@ -480,17 +487,17 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? CameraShot;
-            public Exception? ALLA;
-            public Exception? REPL;
-            public Exception? HNAM;
-            public Exception? VCLR;
-            public Exception? LVCR;
-            public Exception? BTXT;
-            public Exception? ATXT;
-            public Exception? VTXT;
-            public Exception? AIDT;
-            public Exception? MPCD;
-            public Exception? VNAM;
+            public Exception? CameraLocationReference;
+            public Exception? LookTargetReference;
+            public Exception? LookTargetAlias;
+            public Exception? CameraLocationAlias;
+            public Exception? DelayStartTimeAction;
+            public Exception? UseCameraLocationReference;
+            public Exception? UseLookTargetReference;
+            public Exception? UseCameraLocationAlias;
+            public Exception? IgnoreCollision;
+            public Exception? UseLookTargetAlias;
+            public Exception? ForceLookAtFirstPersonCamera;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
             #endregion
 
@@ -502,28 +509,28 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case CameraSceneShot_FieldIndex.CameraShot:
                         return CameraShot;
-                    case CameraSceneShot_FieldIndex.ALLA:
-                        return ALLA;
-                    case CameraSceneShot_FieldIndex.REPL:
-                        return REPL;
-                    case CameraSceneShot_FieldIndex.HNAM:
-                        return HNAM;
-                    case CameraSceneShot_FieldIndex.VCLR:
-                        return VCLR;
-                    case CameraSceneShot_FieldIndex.LVCR:
-                        return LVCR;
-                    case CameraSceneShot_FieldIndex.BTXT:
-                        return BTXT;
-                    case CameraSceneShot_FieldIndex.ATXT:
-                        return ATXT;
-                    case CameraSceneShot_FieldIndex.VTXT:
-                        return VTXT;
-                    case CameraSceneShot_FieldIndex.AIDT:
-                        return AIDT;
-                    case CameraSceneShot_FieldIndex.MPCD:
-                        return MPCD;
-                    case CameraSceneShot_FieldIndex.VNAM:
-                        return VNAM;
+                    case CameraSceneShot_FieldIndex.CameraLocationReference:
+                        return CameraLocationReference;
+                    case CameraSceneShot_FieldIndex.LookTargetReference:
+                        return LookTargetReference;
+                    case CameraSceneShot_FieldIndex.LookTargetAlias:
+                        return LookTargetAlias;
+                    case CameraSceneShot_FieldIndex.CameraLocationAlias:
+                        return CameraLocationAlias;
+                    case CameraSceneShot_FieldIndex.DelayStartTimeAction:
+                        return DelayStartTimeAction;
+                    case CameraSceneShot_FieldIndex.UseCameraLocationReference:
+                        return UseCameraLocationReference;
+                    case CameraSceneShot_FieldIndex.UseLookTargetReference:
+                        return UseLookTargetReference;
+                    case CameraSceneShot_FieldIndex.UseCameraLocationAlias:
+                        return UseCameraLocationAlias;
+                    case CameraSceneShot_FieldIndex.IgnoreCollision:
+                        return IgnoreCollision;
+                    case CameraSceneShot_FieldIndex.UseLookTargetAlias:
+                        return UseLookTargetAlias;
+                    case CameraSceneShot_FieldIndex.ForceLookAtFirstPersonCamera:
+                        return ForceLookAtFirstPersonCamera;
                     case CameraSceneShot_FieldIndex.Conditions:
                         return Conditions;
                     default:
@@ -539,38 +546,38 @@ namespace Mutagen.Bethesda.Starfield
                     case CameraSceneShot_FieldIndex.CameraShot:
                         this.CameraShot = ex;
                         break;
-                    case CameraSceneShot_FieldIndex.ALLA:
-                        this.ALLA = ex;
+                    case CameraSceneShot_FieldIndex.CameraLocationReference:
+                        this.CameraLocationReference = ex;
                         break;
-                    case CameraSceneShot_FieldIndex.REPL:
-                        this.REPL = ex;
+                    case CameraSceneShot_FieldIndex.LookTargetReference:
+                        this.LookTargetReference = ex;
                         break;
-                    case CameraSceneShot_FieldIndex.HNAM:
-                        this.HNAM = ex;
+                    case CameraSceneShot_FieldIndex.LookTargetAlias:
+                        this.LookTargetAlias = ex;
                         break;
-                    case CameraSceneShot_FieldIndex.VCLR:
-                        this.VCLR = ex;
+                    case CameraSceneShot_FieldIndex.CameraLocationAlias:
+                        this.CameraLocationAlias = ex;
                         break;
-                    case CameraSceneShot_FieldIndex.LVCR:
-                        this.LVCR = ex;
+                    case CameraSceneShot_FieldIndex.DelayStartTimeAction:
+                        this.DelayStartTimeAction = ex;
                         break;
-                    case CameraSceneShot_FieldIndex.BTXT:
-                        this.BTXT = ex;
+                    case CameraSceneShot_FieldIndex.UseCameraLocationReference:
+                        this.UseCameraLocationReference = ex;
                         break;
-                    case CameraSceneShot_FieldIndex.ATXT:
-                        this.ATXT = ex;
+                    case CameraSceneShot_FieldIndex.UseLookTargetReference:
+                        this.UseLookTargetReference = ex;
                         break;
-                    case CameraSceneShot_FieldIndex.VTXT:
-                        this.VTXT = ex;
+                    case CameraSceneShot_FieldIndex.UseCameraLocationAlias:
+                        this.UseCameraLocationAlias = ex;
                         break;
-                    case CameraSceneShot_FieldIndex.AIDT:
-                        this.AIDT = ex;
+                    case CameraSceneShot_FieldIndex.IgnoreCollision:
+                        this.IgnoreCollision = ex;
                         break;
-                    case CameraSceneShot_FieldIndex.MPCD:
-                        this.MPCD = ex;
+                    case CameraSceneShot_FieldIndex.UseLookTargetAlias:
+                        this.UseLookTargetAlias = ex;
                         break;
-                    case CameraSceneShot_FieldIndex.VNAM:
-                        this.VNAM = ex;
+                    case CameraSceneShot_FieldIndex.ForceLookAtFirstPersonCamera:
+                        this.ForceLookAtFirstPersonCamera = ex;
                         break;
                     case CameraSceneShot_FieldIndex.Conditions:
                         this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
@@ -588,38 +595,38 @@ namespace Mutagen.Bethesda.Starfield
                     case CameraSceneShot_FieldIndex.CameraShot:
                         this.CameraShot = (Exception?)obj;
                         break;
-                    case CameraSceneShot_FieldIndex.ALLA:
-                        this.ALLA = (Exception?)obj;
+                    case CameraSceneShot_FieldIndex.CameraLocationReference:
+                        this.CameraLocationReference = (Exception?)obj;
                         break;
-                    case CameraSceneShot_FieldIndex.REPL:
-                        this.REPL = (Exception?)obj;
+                    case CameraSceneShot_FieldIndex.LookTargetReference:
+                        this.LookTargetReference = (Exception?)obj;
                         break;
-                    case CameraSceneShot_FieldIndex.HNAM:
-                        this.HNAM = (Exception?)obj;
+                    case CameraSceneShot_FieldIndex.LookTargetAlias:
+                        this.LookTargetAlias = (Exception?)obj;
                         break;
-                    case CameraSceneShot_FieldIndex.VCLR:
-                        this.VCLR = (Exception?)obj;
+                    case CameraSceneShot_FieldIndex.CameraLocationAlias:
+                        this.CameraLocationAlias = (Exception?)obj;
                         break;
-                    case CameraSceneShot_FieldIndex.LVCR:
-                        this.LVCR = (Exception?)obj;
+                    case CameraSceneShot_FieldIndex.DelayStartTimeAction:
+                        this.DelayStartTimeAction = (Exception?)obj;
                         break;
-                    case CameraSceneShot_FieldIndex.BTXT:
-                        this.BTXT = (Exception?)obj;
+                    case CameraSceneShot_FieldIndex.UseCameraLocationReference:
+                        this.UseCameraLocationReference = (Exception?)obj;
                         break;
-                    case CameraSceneShot_FieldIndex.ATXT:
-                        this.ATXT = (Exception?)obj;
+                    case CameraSceneShot_FieldIndex.UseLookTargetReference:
+                        this.UseLookTargetReference = (Exception?)obj;
                         break;
-                    case CameraSceneShot_FieldIndex.VTXT:
-                        this.VTXT = (Exception?)obj;
+                    case CameraSceneShot_FieldIndex.UseCameraLocationAlias:
+                        this.UseCameraLocationAlias = (Exception?)obj;
                         break;
-                    case CameraSceneShot_FieldIndex.AIDT:
-                        this.AIDT = (Exception?)obj;
+                    case CameraSceneShot_FieldIndex.IgnoreCollision:
+                        this.IgnoreCollision = (Exception?)obj;
                         break;
-                    case CameraSceneShot_FieldIndex.MPCD:
-                        this.MPCD = (Exception?)obj;
+                    case CameraSceneShot_FieldIndex.UseLookTargetAlias:
+                        this.UseLookTargetAlias = (Exception?)obj;
                         break;
-                    case CameraSceneShot_FieldIndex.VNAM:
-                        this.VNAM = (Exception?)obj;
+                    case CameraSceneShot_FieldIndex.ForceLookAtFirstPersonCamera:
+                        this.ForceLookAtFirstPersonCamera = (Exception?)obj;
                         break;
                     case CameraSceneShot_FieldIndex.Conditions:
                         this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
@@ -633,17 +640,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (CameraShot != null) return true;
-                if (ALLA != null) return true;
-                if (REPL != null) return true;
-                if (HNAM != null) return true;
-                if (VCLR != null) return true;
-                if (LVCR != null) return true;
-                if (BTXT != null) return true;
-                if (ATXT != null) return true;
-                if (VTXT != null) return true;
-                if (AIDT != null) return true;
-                if (MPCD != null) return true;
-                if (VNAM != null) return true;
+                if (CameraLocationReference != null) return true;
+                if (LookTargetReference != null) return true;
+                if (LookTargetAlias != null) return true;
+                if (CameraLocationAlias != null) return true;
+                if (DelayStartTimeAction != null) return true;
+                if (UseCameraLocationReference != null) return true;
+                if (UseLookTargetReference != null) return true;
+                if (UseCameraLocationAlias != null) return true;
+                if (IgnoreCollision != null) return true;
+                if (UseLookTargetAlias != null) return true;
+                if (ForceLookAtFirstPersonCamera != null) return true;
                 if (Conditions != null) return true;
                 return false;
             }
@@ -674,37 +681,37 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(CameraShot, "CameraShot");
                 }
                 {
-                    sb.AppendItem(ALLA, "ALLA");
+                    sb.AppendItem(CameraLocationReference, "CameraLocationReference");
                 }
                 {
-                    sb.AppendItem(REPL, "REPL");
+                    sb.AppendItem(LookTargetReference, "LookTargetReference");
                 }
                 {
-                    sb.AppendItem(HNAM, "HNAM");
+                    sb.AppendItem(LookTargetAlias, "LookTargetAlias");
                 }
                 {
-                    sb.AppendItem(VCLR, "VCLR");
+                    sb.AppendItem(CameraLocationAlias, "CameraLocationAlias");
                 }
                 {
-                    sb.AppendItem(LVCR, "LVCR");
+                    sb.AppendItem(DelayStartTimeAction, "DelayStartTimeAction");
                 }
                 {
-                    sb.AppendItem(BTXT, "BTXT");
+                    sb.AppendItem(UseCameraLocationReference, "UseCameraLocationReference");
                 }
                 {
-                    sb.AppendItem(ATXT, "ATXT");
+                    sb.AppendItem(UseLookTargetReference, "UseLookTargetReference");
                 }
                 {
-                    sb.AppendItem(VTXT, "VTXT");
+                    sb.AppendItem(UseCameraLocationAlias, "UseCameraLocationAlias");
                 }
                 {
-                    sb.AppendItem(AIDT, "AIDT");
+                    sb.AppendItem(IgnoreCollision, "IgnoreCollision");
                 }
                 {
-                    sb.AppendItem(MPCD, "MPCD");
+                    sb.AppendItem(UseLookTargetAlias, "UseLookTargetAlias");
                 }
                 {
-                    sb.AppendItem(VNAM, "VNAM");
+                    sb.AppendItem(ForceLookAtFirstPersonCamera, "ForceLookAtFirstPersonCamera");
                 }
                 if (Conditions is {} ConditionsItem)
                 {
@@ -733,17 +740,17 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.CameraShot = this.CameraShot.Combine(rhs.CameraShot);
-                ret.ALLA = this.ALLA.Combine(rhs.ALLA);
-                ret.REPL = this.REPL.Combine(rhs.REPL);
-                ret.HNAM = this.HNAM.Combine(rhs.HNAM);
-                ret.VCLR = this.VCLR.Combine(rhs.VCLR);
-                ret.LVCR = this.LVCR.Combine(rhs.LVCR);
-                ret.BTXT = this.BTXT.Combine(rhs.BTXT);
-                ret.ATXT = this.ATXT.Combine(rhs.ATXT);
-                ret.VTXT = this.VTXT.Combine(rhs.VTXT);
-                ret.AIDT = this.AIDT.Combine(rhs.AIDT);
-                ret.MPCD = this.MPCD.Combine(rhs.MPCD);
-                ret.VNAM = this.VNAM.Combine(rhs.VNAM);
+                ret.CameraLocationReference = this.CameraLocationReference.Combine(rhs.CameraLocationReference);
+                ret.LookTargetReference = this.LookTargetReference.Combine(rhs.LookTargetReference);
+                ret.LookTargetAlias = this.LookTargetAlias.Combine(rhs.LookTargetAlias);
+                ret.CameraLocationAlias = this.CameraLocationAlias.Combine(rhs.CameraLocationAlias);
+                ret.DelayStartTimeAction = this.DelayStartTimeAction.Combine(rhs.DelayStartTimeAction);
+                ret.UseCameraLocationReference = this.UseCameraLocationReference.Combine(rhs.UseCameraLocationReference);
+                ret.UseLookTargetReference = this.UseLookTargetReference.Combine(rhs.UseLookTargetReference);
+                ret.UseCameraLocationAlias = this.UseCameraLocationAlias.Combine(rhs.UseCameraLocationAlias);
+                ret.IgnoreCollision = this.IgnoreCollision.Combine(rhs.IgnoreCollision);
+                ret.UseLookTargetAlias = this.UseLookTargetAlias.Combine(rhs.UseLookTargetAlias);
+                ret.ForceLookAtFirstPersonCamera = this.ForceLookAtFirstPersonCamera.Combine(rhs.ForceLookAtFirstPersonCamera);
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
                 return ret;
             }
@@ -769,17 +776,17 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool CameraShot;
-            public bool ALLA;
-            public bool REPL;
-            public bool HNAM;
-            public bool VCLR;
-            public bool LVCR;
-            public bool BTXT;
-            public bool ATXT;
-            public bool VTXT;
-            public bool AIDT;
-            public bool MPCD;
-            public bool VNAM;
+            public bool CameraLocationReference;
+            public bool LookTargetReference;
+            public bool LookTargetAlias;
+            public bool CameraLocationAlias;
+            public bool DelayStartTimeAction;
+            public bool UseCameraLocationReference;
+            public bool UseLookTargetReference;
+            public bool UseCameraLocationAlias;
+            public bool IgnoreCollision;
+            public bool UseLookTargetAlias;
+            public bool ForceLookAtFirstPersonCamera;
             public Condition.TranslationMask? Conditions;
             #endregion
 
@@ -791,17 +798,17 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.CameraShot = defaultOn;
-                this.ALLA = defaultOn;
-                this.REPL = defaultOn;
-                this.HNAM = defaultOn;
-                this.VCLR = defaultOn;
-                this.LVCR = defaultOn;
-                this.BTXT = defaultOn;
-                this.ATXT = defaultOn;
-                this.VTXT = defaultOn;
-                this.AIDT = defaultOn;
-                this.MPCD = defaultOn;
-                this.VNAM = defaultOn;
+                this.CameraLocationReference = defaultOn;
+                this.LookTargetReference = defaultOn;
+                this.LookTargetAlias = defaultOn;
+                this.CameraLocationAlias = defaultOn;
+                this.DelayStartTimeAction = defaultOn;
+                this.UseCameraLocationReference = defaultOn;
+                this.UseLookTargetReference = defaultOn;
+                this.UseCameraLocationAlias = defaultOn;
+                this.IgnoreCollision = defaultOn;
+                this.UseLookTargetAlias = defaultOn;
+                this.ForceLookAtFirstPersonCamera = defaultOn;
             }
 
             #endregion
@@ -818,17 +825,17 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((CameraShot, null));
-                ret.Add((ALLA, null));
-                ret.Add((REPL, null));
-                ret.Add((HNAM, null));
-                ret.Add((VCLR, null));
-                ret.Add((LVCR, null));
-                ret.Add((BTXT, null));
-                ret.Add((ATXT, null));
-                ret.Add((VTXT, null));
-                ret.Add((AIDT, null));
-                ret.Add((MPCD, null));
-                ret.Add((VNAM, null));
+                ret.Add((CameraLocationReference, null));
+                ret.Add((LookTargetReference, null));
+                ret.Add((LookTargetAlias, null));
+                ret.Add((CameraLocationAlias, null));
+                ret.Add((DelayStartTimeAction, null));
+                ret.Add((UseCameraLocationReference, null));
+                ret.Add((UseLookTargetReference, null));
+                ret.Add((UseCameraLocationAlias, null));
+                ret.Add((IgnoreCollision, null));
+                ret.Add((UseLookTargetAlias, null));
+                ret.Add((ForceLookAtFirstPersonCamera, null));
                 ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
             }
 
@@ -909,17 +916,17 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<ICameraSceneShot>
     {
         new IFormLinkNullable<ICameraShotGetter> CameraShot { get; set; }
-        new Int32 ALLA { get; set; }
-        new IFormLink<IPlacedGetter> REPL { get; set; }
-        new Int32 HNAM { get; set; }
-        new Int32 VCLR { get; set; }
-        new Int32 LVCR { get; set; }
-        new Boolean BTXT { get; set; }
-        new Boolean ATXT { get; set; }
-        new Boolean VTXT { get; set; }
-        new Boolean AIDT { get; set; }
-        new Boolean MPCD { get; set; }
-        new Boolean VNAM { get; set; }
+        new IFormLink<IPlacedGetter> CameraLocationReference { get; set; }
+        new IFormLink<IPlacedGetter> LookTargetReference { get; set; }
+        new Int32 LookTargetAlias { get; set; }
+        new Int32 CameraLocationAlias { get; set; }
+        new Single DelayStartTimeAction { get; set; }
+        new Boolean UseCameraLocationReference { get; set; }
+        new Boolean UseLookTargetReference { get; set; }
+        new Boolean UseCameraLocationAlias { get; set; }
+        new Boolean IgnoreCollision { get; set; }
+        new Boolean UseLookTargetAlias { get; set; }
+        new Boolean ForceLookAtFirstPersonCamera { get; set; }
         new ExtendedList<Condition> Conditions { get; }
     }
 
@@ -937,17 +944,17 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => CameraSceneShot_Registration.Instance;
         IFormLinkNullableGetter<ICameraShotGetter> CameraShot { get; }
-        Int32 ALLA { get; }
-        IFormLinkGetter<IPlacedGetter> REPL { get; }
-        Int32 HNAM { get; }
-        Int32 VCLR { get; }
-        Int32 LVCR { get; }
-        Boolean BTXT { get; }
-        Boolean ATXT { get; }
-        Boolean VTXT { get; }
-        Boolean AIDT { get; }
-        Boolean MPCD { get; }
-        Boolean VNAM { get; }
+        IFormLinkGetter<IPlacedGetter> CameraLocationReference { get; }
+        IFormLinkGetter<IPlacedGetter> LookTargetReference { get; }
+        Int32 LookTargetAlias { get; }
+        Int32 CameraLocationAlias { get; }
+        Single DelayStartTimeAction { get; }
+        Boolean UseCameraLocationReference { get; }
+        Boolean UseLookTargetReference { get; }
+        Boolean UseCameraLocationAlias { get; }
+        Boolean IgnoreCollision { get; }
+        Boolean UseLookTargetAlias { get; }
+        Boolean ForceLookAtFirstPersonCamera { get; }
         IReadOnlyList<IConditionGetter> Conditions { get; }
 
     }
@@ -1119,17 +1126,17 @@ namespace Mutagen.Bethesda.Starfield
     internal enum CameraSceneShot_FieldIndex
     {
         CameraShot = 0,
-        ALLA = 1,
-        REPL = 2,
-        HNAM = 3,
-        VCLR = 4,
-        LVCR = 5,
-        BTXT = 6,
-        ATXT = 7,
-        VTXT = 8,
-        AIDT = 9,
-        MPCD = 10,
-        VNAM = 11,
+        CameraLocationReference = 1,
+        LookTargetReference = 2,
+        LookTargetAlias = 3,
+        CameraLocationAlias = 4,
+        DelayStartTimeAction = 5,
+        UseCameraLocationReference = 6,
+        UseLookTargetReference = 7,
+        UseCameraLocationAlias = 8,
+        IgnoreCollision = 9,
+        UseLookTargetAlias = 10,
+        ForceLookAtFirstPersonCamera = 11,
         Conditions = 12,
     }
     #endregion
@@ -1240,17 +1247,17 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.CameraShot.Clear();
-            item.ALLA = default(Int32);
-            item.REPL.Clear();
-            item.HNAM = default(Int32);
-            item.VCLR = default(Int32);
-            item.LVCR = default(Int32);
-            item.BTXT = default(Boolean);
-            item.ATXT = default(Boolean);
-            item.VTXT = default(Boolean);
-            item.AIDT = default(Boolean);
-            item.MPCD = default(Boolean);
-            item.VNAM = default(Boolean);
+            item.CameraLocationReference.Clear();
+            item.LookTargetReference.Clear();
+            item.LookTargetAlias = default(Int32);
+            item.CameraLocationAlias = default(Int32);
+            item.DelayStartTimeAction = default(Single);
+            item.UseCameraLocationReference = default(Boolean);
+            item.UseLookTargetReference = default(Boolean);
+            item.UseCameraLocationAlias = default(Boolean);
+            item.IgnoreCollision = default(Boolean);
+            item.UseLookTargetAlias = default(Boolean);
+            item.ForceLookAtFirstPersonCamera = default(Boolean);
             item.Conditions.Clear();
         }
         
@@ -1258,7 +1265,8 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(ICameraSceneShot obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             obj.CameraShot.Relink(mapping);
-            obj.REPL.Relink(mapping);
+            obj.CameraLocationReference.Relink(mapping);
+            obj.LookTargetReference.Relink(mapping);
             obj.Conditions.RemapLinks(mapping);
         }
         
@@ -1305,17 +1313,17 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.CameraShot = item.CameraShot.Equals(rhs.CameraShot);
-            ret.ALLA = item.ALLA == rhs.ALLA;
-            ret.REPL = item.REPL.Equals(rhs.REPL);
-            ret.HNAM = item.HNAM == rhs.HNAM;
-            ret.VCLR = item.VCLR == rhs.VCLR;
-            ret.LVCR = item.LVCR == rhs.LVCR;
-            ret.BTXT = item.BTXT == rhs.BTXT;
-            ret.ATXT = item.ATXT == rhs.ATXT;
-            ret.VTXT = item.VTXT == rhs.VTXT;
-            ret.AIDT = item.AIDT == rhs.AIDT;
-            ret.MPCD = item.MPCD == rhs.MPCD;
-            ret.VNAM = item.VNAM == rhs.VNAM;
+            ret.CameraLocationReference = item.CameraLocationReference.Equals(rhs.CameraLocationReference);
+            ret.LookTargetReference = item.LookTargetReference.Equals(rhs.LookTargetReference);
+            ret.LookTargetAlias = item.LookTargetAlias == rhs.LookTargetAlias;
+            ret.CameraLocationAlias = item.CameraLocationAlias == rhs.CameraLocationAlias;
+            ret.DelayStartTimeAction = item.DelayStartTimeAction.EqualsWithin(rhs.DelayStartTimeAction);
+            ret.UseCameraLocationReference = item.UseCameraLocationReference == rhs.UseCameraLocationReference;
+            ret.UseLookTargetReference = item.UseLookTargetReference == rhs.UseLookTargetReference;
+            ret.UseCameraLocationAlias = item.UseCameraLocationAlias == rhs.UseCameraLocationAlias;
+            ret.IgnoreCollision = item.IgnoreCollision == rhs.IgnoreCollision;
+            ret.UseLookTargetAlias = item.UseLookTargetAlias == rhs.UseLookTargetAlias;
+            ret.ForceLookAtFirstPersonCamera = item.ForceLookAtFirstPersonCamera == rhs.ForceLookAtFirstPersonCamera;
             ret.Conditions = item.Conditions.CollectionEqualsHelper(
                 rhs.Conditions,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -1368,49 +1376,49 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.CameraShot.FormKeyNullable, "CameraShot");
             }
-            if (printMask?.ALLA ?? true)
+            if (printMask?.CameraLocationReference ?? true)
             {
-                sb.AppendItem(item.ALLA, "ALLA");
+                sb.AppendItem(item.CameraLocationReference.FormKey, "CameraLocationReference");
             }
-            if (printMask?.REPL ?? true)
+            if (printMask?.LookTargetReference ?? true)
             {
-                sb.AppendItem(item.REPL.FormKey, "REPL");
+                sb.AppendItem(item.LookTargetReference.FormKey, "LookTargetReference");
             }
-            if (printMask?.HNAM ?? true)
+            if (printMask?.LookTargetAlias ?? true)
             {
-                sb.AppendItem(item.HNAM, "HNAM");
+                sb.AppendItem(item.LookTargetAlias, "LookTargetAlias");
             }
-            if (printMask?.VCLR ?? true)
+            if (printMask?.CameraLocationAlias ?? true)
             {
-                sb.AppendItem(item.VCLR, "VCLR");
+                sb.AppendItem(item.CameraLocationAlias, "CameraLocationAlias");
             }
-            if (printMask?.LVCR ?? true)
+            if (printMask?.DelayStartTimeAction ?? true)
             {
-                sb.AppendItem(item.LVCR, "LVCR");
+                sb.AppendItem(item.DelayStartTimeAction, "DelayStartTimeAction");
             }
-            if (printMask?.BTXT ?? true)
+            if (printMask?.UseCameraLocationReference ?? true)
             {
-                sb.AppendItem(item.BTXT, "BTXT");
+                sb.AppendItem(item.UseCameraLocationReference, "UseCameraLocationReference");
             }
-            if (printMask?.ATXT ?? true)
+            if (printMask?.UseLookTargetReference ?? true)
             {
-                sb.AppendItem(item.ATXT, "ATXT");
+                sb.AppendItem(item.UseLookTargetReference, "UseLookTargetReference");
             }
-            if (printMask?.VTXT ?? true)
+            if (printMask?.UseCameraLocationAlias ?? true)
             {
-                sb.AppendItem(item.VTXT, "VTXT");
+                sb.AppendItem(item.UseCameraLocationAlias, "UseCameraLocationAlias");
             }
-            if (printMask?.AIDT ?? true)
+            if (printMask?.IgnoreCollision ?? true)
             {
-                sb.AppendItem(item.AIDT, "AIDT");
+                sb.AppendItem(item.IgnoreCollision, "IgnoreCollision");
             }
-            if (printMask?.MPCD ?? true)
+            if (printMask?.UseLookTargetAlias ?? true)
             {
-                sb.AppendItem(item.MPCD, "MPCD");
+                sb.AppendItem(item.UseLookTargetAlias, "UseLookTargetAlias");
             }
-            if (printMask?.VNAM ?? true)
+            if (printMask?.ForceLookAtFirstPersonCamera ?? true)
             {
-                sb.AppendItem(item.VNAM, "VNAM");
+                sb.AppendItem(item.ForceLookAtFirstPersonCamera, "ForceLookAtFirstPersonCamera");
             }
             if (printMask?.Conditions?.Overall ?? true)
             {
@@ -1439,49 +1447,49 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.CameraShot.Equals(rhs.CameraShot)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.ALLA) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.CameraLocationReference) ?? true))
             {
-                if (lhs.ALLA != rhs.ALLA) return false;
+                if (!lhs.CameraLocationReference.Equals(rhs.CameraLocationReference)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.REPL) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.LookTargetReference) ?? true))
             {
-                if (!lhs.REPL.Equals(rhs.REPL)) return false;
+                if (!lhs.LookTargetReference.Equals(rhs.LookTargetReference)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.HNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.LookTargetAlias) ?? true))
             {
-                if (lhs.HNAM != rhs.HNAM) return false;
+                if (lhs.LookTargetAlias != rhs.LookTargetAlias) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.VCLR) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.CameraLocationAlias) ?? true))
             {
-                if (lhs.VCLR != rhs.VCLR) return false;
+                if (lhs.CameraLocationAlias != rhs.CameraLocationAlias) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.LVCR) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.DelayStartTimeAction) ?? true))
             {
-                if (lhs.LVCR != rhs.LVCR) return false;
+                if (!lhs.DelayStartTimeAction.EqualsWithin(rhs.DelayStartTimeAction)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.BTXT) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.UseCameraLocationReference) ?? true))
             {
-                if (lhs.BTXT != rhs.BTXT) return false;
+                if (lhs.UseCameraLocationReference != rhs.UseCameraLocationReference) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.ATXT) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.UseLookTargetReference) ?? true))
             {
-                if (lhs.ATXT != rhs.ATXT) return false;
+                if (lhs.UseLookTargetReference != rhs.UseLookTargetReference) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.VTXT) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.UseCameraLocationAlias) ?? true))
             {
-                if (lhs.VTXT != rhs.VTXT) return false;
+                if (lhs.UseCameraLocationAlias != rhs.UseCameraLocationAlias) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.AIDT) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.IgnoreCollision) ?? true))
             {
-                if (lhs.AIDT != rhs.AIDT) return false;
+                if (lhs.IgnoreCollision != rhs.IgnoreCollision) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.MPCD) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.UseLookTargetAlias) ?? true))
             {
-                if (lhs.MPCD != rhs.MPCD) return false;
+                if (lhs.UseLookTargetAlias != rhs.UseLookTargetAlias) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.VNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.ForceLookAtFirstPersonCamera) ?? true))
             {
-                if (lhs.VNAM != rhs.VNAM) return false;
+                if (lhs.ForceLookAtFirstPersonCamera != rhs.ForceLookAtFirstPersonCamera) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.Conditions) ?? true))
             {
@@ -1494,21 +1502,18 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.CameraShot);
-            hash.Add(item.ALLA);
-            hash.Add(item.REPL);
-            hash.Add(item.HNAM);
-            hash.Add(item.VCLR);
-            hash.Add(item.LVCR);
-            hash.Add(item.BTXT);
-            hash.Add(item.ATXT);
-            hash.Add(item.VTXT);
-            hash.Add(item.AIDT);
-            hash.Add(item.MPCD);
-            hash.Add(item.VNAM);
-            foreach (var subItem in item.Conditions)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.CameraLocationReference);
+            hash.Add(item.LookTargetReference);
+            hash.Add(item.LookTargetAlias);
+            hash.Add(item.CameraLocationAlias);
+            hash.Add(item.DelayStartTimeAction);
+            hash.Add(item.UseCameraLocationReference);
+            hash.Add(item.UseLookTargetReference);
+            hash.Add(item.UseCameraLocationAlias);
+            hash.Add(item.IgnoreCollision);
+            hash.Add(item.UseLookTargetAlias);
+            hash.Add(item.ForceLookAtFirstPersonCamera);
+            hash.Add(item.Conditions);
             return hash.ToHashCode();
         }
         
@@ -1527,7 +1532,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return CameraShotInfo;
             }
-            yield return FormLinkInformation.Factory(obj.REPL);
+            yield return FormLinkInformation.Factory(obj.CameraLocationReference);
+            yield return FormLinkInformation.Factory(obj.LookTargetReference);
             foreach (var item in obj.Conditions.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
             {
                 yield return FormLinkInformation.Factory(item);
@@ -1554,49 +1560,49 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.CameraShot.SetTo(rhs.CameraShot.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.ALLA) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.CameraLocationReference) ?? true))
             {
-                item.ALLA = rhs.ALLA;
+                item.CameraLocationReference.SetTo(rhs.CameraLocationReference.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.REPL) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.LookTargetReference) ?? true))
             {
-                item.REPL.SetTo(rhs.REPL.FormKey);
+                item.LookTargetReference.SetTo(rhs.LookTargetReference.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.HNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.LookTargetAlias) ?? true))
             {
-                item.HNAM = rhs.HNAM;
+                item.LookTargetAlias = rhs.LookTargetAlias;
             }
-            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.VCLR) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.CameraLocationAlias) ?? true))
             {
-                item.VCLR = rhs.VCLR;
+                item.CameraLocationAlias = rhs.CameraLocationAlias;
             }
-            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.LVCR) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.DelayStartTimeAction) ?? true))
             {
-                item.LVCR = rhs.LVCR;
+                item.DelayStartTimeAction = rhs.DelayStartTimeAction;
             }
-            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.BTXT) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.UseCameraLocationReference) ?? true))
             {
-                item.BTXT = rhs.BTXT;
+                item.UseCameraLocationReference = rhs.UseCameraLocationReference;
             }
-            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.ATXT) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.UseLookTargetReference) ?? true))
             {
-                item.ATXT = rhs.ATXT;
+                item.UseLookTargetReference = rhs.UseLookTargetReference;
             }
-            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.VTXT) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.UseCameraLocationAlias) ?? true))
             {
-                item.VTXT = rhs.VTXT;
+                item.UseCameraLocationAlias = rhs.UseCameraLocationAlias;
             }
-            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.AIDT) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.IgnoreCollision) ?? true))
             {
-                item.AIDT = rhs.AIDT;
+                item.IgnoreCollision = rhs.IgnoreCollision;
             }
-            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.MPCD) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.UseLookTargetAlias) ?? true))
             {
-                item.MPCD = rhs.MPCD;
+                item.UseLookTargetAlias = rhs.UseLookTargetAlias;
             }
-            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.VNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.ForceLookAtFirstPersonCamera) ?? true))
             {
-                item.VNAM = rhs.VNAM;
+                item.ForceLookAtFirstPersonCamera = rhs.ForceLookAtFirstPersonCamera;
             }
             if ((copyMask?.GetShouldTranslate((int)CameraSceneShot_FieldIndex.Conditions) ?? true))
             {
@@ -1735,49 +1741,49 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.CameraShot,
                 header: translationParams.ConvertToCustom(RecordTypes.CNAM));
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.ALLA,
+                item: item.CameraLocationReference,
                 header: translationParams.ConvertToCustom(RecordTypes.ALLA));
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.REPL,
+                item: item.LookTargetReference,
                 header: translationParams.ConvertToCustom(RecordTypes.REPL));
             Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.HNAM,
+                item: item.LookTargetAlias,
                 header: translationParams.ConvertToCustom(RecordTypes.HNAM));
             Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.VCLR,
+                item: item.CameraLocationAlias,
                 header: translationParams.ConvertToCustom(RecordTypes.VCLR));
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.LVCR,
+                item: item.DelayStartTimeAction,
                 header: translationParams.ConvertToCustom(RecordTypes.LVCR));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.BTXT,
+                item: item.UseCameraLocationReference,
                 header: translationParams.ConvertToCustom(RecordTypes.BTXT));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.ATXT,
+                item: item.UseLookTargetReference,
                 header: translationParams.ConvertToCustom(RecordTypes.ATXT));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.VTXT,
+                item: item.UseCameraLocationAlias,
                 header: translationParams.ConvertToCustom(RecordTypes.VTXT));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.AIDT,
+                item: item.IgnoreCollision,
                 header: translationParams.ConvertToCustom(RecordTypes.AIDT));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.MPCD,
+                item: item.UseLookTargetAlias,
                 header: translationParams.ConvertToCustom(RecordTypes.MPCD));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.VNAM,
+                item: item.ForceLookAtFirstPersonCamera,
                 header: translationParams.ConvertToCustom(RecordTypes.VNAM));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IConditionGetter>.Instance.Write(
                 writer: writer,
@@ -1842,64 +1848,64 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ALLA:
                 {
-                    if (lastParsed.ShortCircuit((int)CameraSceneShot_FieldIndex.ALLA, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)CameraSceneShot_FieldIndex.CameraLocationReference, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ALLA = frame.ReadInt32();
-                    return (int)CameraSceneShot_FieldIndex.ALLA;
+                    item.CameraLocationReference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)CameraSceneShot_FieldIndex.CameraLocationReference;
                 }
                 case RecordTypeInts.REPL:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.REPL.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-                    return (int)CameraSceneShot_FieldIndex.REPL;
+                    item.LookTargetReference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)CameraSceneShot_FieldIndex.LookTargetReference;
                 }
                 case RecordTypeInts.HNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.HNAM = frame.ReadInt32();
-                    return (int)CameraSceneShot_FieldIndex.HNAM;
+                    item.LookTargetAlias = frame.ReadInt32();
+                    return (int)CameraSceneShot_FieldIndex.LookTargetAlias;
                 }
                 case RecordTypeInts.VCLR:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.VCLR = frame.ReadInt32();
-                    return (int)CameraSceneShot_FieldIndex.VCLR;
+                    item.CameraLocationAlias = frame.ReadInt32();
+                    return (int)CameraSceneShot_FieldIndex.CameraLocationAlias;
                 }
                 case RecordTypeInts.LVCR:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.LVCR = frame.ReadInt32();
-                    return (int)CameraSceneShot_FieldIndex.LVCR;
+                    item.DelayStartTimeAction = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)CameraSceneShot_FieldIndex.DelayStartTimeAction;
                 }
                 case RecordTypeInts.BTXT:
                 {
-                    item.BTXT = true;
-                    return (int)CameraSceneShot_FieldIndex.BTXT;
+                    item.UseCameraLocationReference = true;
+                    return (int)CameraSceneShot_FieldIndex.UseCameraLocationReference;
                 }
                 case RecordTypeInts.ATXT:
                 {
-                    item.ATXT = true;
-                    return (int)CameraSceneShot_FieldIndex.ATXT;
+                    item.UseLookTargetReference = true;
+                    return (int)CameraSceneShot_FieldIndex.UseLookTargetReference;
                 }
                 case RecordTypeInts.VTXT:
                 {
-                    item.VTXT = true;
-                    return (int)CameraSceneShot_FieldIndex.VTXT;
+                    item.UseCameraLocationAlias = true;
+                    return (int)CameraSceneShot_FieldIndex.UseCameraLocationAlias;
                 }
                 case RecordTypeInts.AIDT:
                 {
-                    item.AIDT = true;
-                    return (int)CameraSceneShot_FieldIndex.AIDT;
+                    item.IgnoreCollision = true;
+                    return (int)CameraSceneShot_FieldIndex.IgnoreCollision;
                 }
                 case RecordTypeInts.MPCD:
                 {
-                    item.MPCD = true;
-                    return (int)CameraSceneShot_FieldIndex.MPCD;
+                    item.UseLookTargetAlias = true;
+                    return (int)CameraSceneShot_FieldIndex.UseLookTargetAlias;
                 }
                 case RecordTypeInts.VNAM:
                 {
-                    item.VNAM = true;
-                    return (int)CameraSceneShot_FieldIndex.VNAM;
+                    item.ForceLookAtFirstPersonCamera = true;
+                    return (int)CameraSceneShot_FieldIndex.ForceLookAtFirstPersonCamera;
                 }
                 case RecordTypeInts.CTDA:
                 {
@@ -1989,49 +1995,49 @@ namespace Mutagen.Bethesda.Starfield
         private int? _CameraShotLocation;
         public IFormLinkNullableGetter<ICameraShotGetter> CameraShot => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ICameraShotGetter>(_package, _recordData, _CameraShotLocation);
         #endregion
-        #region ALLA
-        private int? _ALLALocation;
-        public Int32 ALLA => _ALLALocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ALLALocation.Value, _package.MetaData.Constants)) : default(Int32);
+        #region CameraLocationReference
+        private int? _CameraLocationReferenceLocation;
+        public IFormLinkGetter<IPlacedGetter> CameraLocationReference => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IPlacedGetter>(_package, _recordData, _CameraLocationReferenceLocation);
         #endregion
-        #region REPL
-        private int? _REPLLocation;
-        public IFormLinkGetter<IPlacedGetter> REPL => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IPlacedGetter>(_package, _recordData, _REPLLocation);
+        #region LookTargetReference
+        private int? _LookTargetReferenceLocation;
+        public IFormLinkGetter<IPlacedGetter> LookTargetReference => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IPlacedGetter>(_package, _recordData, _LookTargetReferenceLocation);
         #endregion
-        #region HNAM
-        private int? _HNAMLocation;
-        public Int32 HNAM => _HNAMLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _HNAMLocation.Value, _package.MetaData.Constants)) : default(Int32);
+        #region LookTargetAlias
+        private int? _LookTargetAliasLocation;
+        public Int32 LookTargetAlias => _LookTargetAliasLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _LookTargetAliasLocation.Value, _package.MetaData.Constants)) : default(Int32);
         #endregion
-        #region VCLR
-        private int? _VCLRLocation;
-        public Int32 VCLR => _VCLRLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _VCLRLocation.Value, _package.MetaData.Constants)) : default(Int32);
+        #region CameraLocationAlias
+        private int? _CameraLocationAliasLocation;
+        public Int32 CameraLocationAlias => _CameraLocationAliasLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _CameraLocationAliasLocation.Value, _package.MetaData.Constants)) : default(Int32);
         #endregion
-        #region LVCR
-        private int? _LVCRLocation;
-        public Int32 LVCR => _LVCRLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _LVCRLocation.Value, _package.MetaData.Constants)) : default(Int32);
+        #region DelayStartTimeAction
+        private int? _DelayStartTimeActionLocation;
+        public Single DelayStartTimeAction => _DelayStartTimeActionLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DelayStartTimeActionLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
-        #region BTXT
-        private int? _BTXTLocation;
-        public Boolean BTXT => _BTXTLocation.HasValue ? true : default(Boolean);
+        #region UseCameraLocationReference
+        private int? _UseCameraLocationReferenceLocation;
+        public Boolean UseCameraLocationReference => _UseCameraLocationReferenceLocation.HasValue ? true : default(Boolean);
         #endregion
-        #region ATXT
-        private int? _ATXTLocation;
-        public Boolean ATXT => _ATXTLocation.HasValue ? true : default(Boolean);
+        #region UseLookTargetReference
+        private int? _UseLookTargetReferenceLocation;
+        public Boolean UseLookTargetReference => _UseLookTargetReferenceLocation.HasValue ? true : default(Boolean);
         #endregion
-        #region VTXT
-        private int? _VTXTLocation;
-        public Boolean VTXT => _VTXTLocation.HasValue ? true : default(Boolean);
+        #region UseCameraLocationAlias
+        private int? _UseCameraLocationAliasLocation;
+        public Boolean UseCameraLocationAlias => _UseCameraLocationAliasLocation.HasValue ? true : default(Boolean);
         #endregion
-        #region AIDT
-        private int? _AIDTLocation;
-        public Boolean AIDT => _AIDTLocation.HasValue ? true : default(Boolean);
+        #region IgnoreCollision
+        private int? _IgnoreCollisionLocation;
+        public Boolean IgnoreCollision => _IgnoreCollisionLocation.HasValue ? true : default(Boolean);
         #endregion
-        #region MPCD
-        private int? _MPCDLocation;
-        public Boolean MPCD => _MPCDLocation.HasValue ? true : default(Boolean);
+        #region UseLookTargetAlias
+        private int? _UseLookTargetAliasLocation;
+        public Boolean UseLookTargetAlias => _UseLookTargetAliasLocation.HasValue ? true : default(Boolean);
         #endregion
-        #region VNAM
-        private int? _VNAMLocation;
-        public Boolean VNAM => _VNAMLocation.HasValue ? true : default(Boolean);
+        #region ForceLookAtFirstPersonCamera
+        private int? _ForceLookAtFirstPersonCameraLocation;
+        public Boolean ForceLookAtFirstPersonCamera => _ForceLookAtFirstPersonCameraLocation.HasValue ? true : default(Boolean);
         #endregion
         public IReadOnlyList<IConditionGetter> Conditions { get; private set; } = [];
         partial void CustomFactoryEnd(
@@ -2105,59 +2111,59 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ALLA:
                 {
-                    if (lastParsed.ShortCircuit((int)CameraSceneShot_FieldIndex.ALLA, translationParams)) return ParseResult.Stop;
-                    _ALLALocation = (stream.Position - offset);
-                    return (int)CameraSceneShot_FieldIndex.ALLA;
+                    if (lastParsed.ShortCircuit((int)CameraSceneShot_FieldIndex.CameraLocationReference, translationParams)) return ParseResult.Stop;
+                    _CameraLocationReferenceLocation = (stream.Position - offset);
+                    return (int)CameraSceneShot_FieldIndex.CameraLocationReference;
                 }
                 case RecordTypeInts.REPL:
                 {
-                    _REPLLocation = (stream.Position - offset);
-                    return (int)CameraSceneShot_FieldIndex.REPL;
+                    _LookTargetReferenceLocation = (stream.Position - offset);
+                    return (int)CameraSceneShot_FieldIndex.LookTargetReference;
                 }
                 case RecordTypeInts.HNAM:
                 {
-                    _HNAMLocation = (stream.Position - offset);
-                    return (int)CameraSceneShot_FieldIndex.HNAM;
+                    _LookTargetAliasLocation = (stream.Position - offset);
+                    return (int)CameraSceneShot_FieldIndex.LookTargetAlias;
                 }
                 case RecordTypeInts.VCLR:
                 {
-                    _VCLRLocation = (stream.Position - offset);
-                    return (int)CameraSceneShot_FieldIndex.VCLR;
+                    _CameraLocationAliasLocation = (stream.Position - offset);
+                    return (int)CameraSceneShot_FieldIndex.CameraLocationAlias;
                 }
                 case RecordTypeInts.LVCR:
                 {
-                    _LVCRLocation = (stream.Position - offset);
-                    return (int)CameraSceneShot_FieldIndex.LVCR;
+                    _DelayStartTimeActionLocation = (stream.Position - offset);
+                    return (int)CameraSceneShot_FieldIndex.DelayStartTimeAction;
                 }
                 case RecordTypeInts.BTXT:
                 {
-                    _BTXTLocation = (stream.Position - offset);
-                    return (int)CameraSceneShot_FieldIndex.BTXT;
+                    _UseCameraLocationReferenceLocation = (stream.Position - offset);
+                    return (int)CameraSceneShot_FieldIndex.UseCameraLocationReference;
                 }
                 case RecordTypeInts.ATXT:
                 {
-                    _ATXTLocation = (stream.Position - offset);
-                    return (int)CameraSceneShot_FieldIndex.ATXT;
+                    _UseLookTargetReferenceLocation = (stream.Position - offset);
+                    return (int)CameraSceneShot_FieldIndex.UseLookTargetReference;
                 }
                 case RecordTypeInts.VTXT:
                 {
-                    _VTXTLocation = (stream.Position - offset);
-                    return (int)CameraSceneShot_FieldIndex.VTXT;
+                    _UseCameraLocationAliasLocation = (stream.Position - offset);
+                    return (int)CameraSceneShot_FieldIndex.UseCameraLocationAlias;
                 }
                 case RecordTypeInts.AIDT:
                 {
-                    _AIDTLocation = (stream.Position - offset);
-                    return (int)CameraSceneShot_FieldIndex.AIDT;
+                    _IgnoreCollisionLocation = (stream.Position - offset);
+                    return (int)CameraSceneShot_FieldIndex.IgnoreCollision;
                 }
                 case RecordTypeInts.MPCD:
                 {
-                    _MPCDLocation = (stream.Position - offset);
-                    return (int)CameraSceneShot_FieldIndex.MPCD;
+                    _UseLookTargetAliasLocation = (stream.Position - offset);
+                    return (int)CameraSceneShot_FieldIndex.UseLookTargetAlias;
                 }
                 case RecordTypeInts.VNAM:
                 {
-                    _VNAMLocation = (stream.Position - offset);
-                    return (int)CameraSceneShot_FieldIndex.VNAM;
+                    _ForceLookAtFirstPersonCameraLocation = (stream.Position - offset);
+                    return (int)CameraSceneShot_FieldIndex.ForceLookAtFirstPersonCamera;
                 }
                 case RecordTypeInts.CTDA:
                 {

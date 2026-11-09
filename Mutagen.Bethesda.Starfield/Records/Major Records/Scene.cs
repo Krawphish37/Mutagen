@@ -215,3 +215,57 @@ partial class SceneBinaryOverlay
         Actions = ret;
     }
 }
+public partial class FxSceneAction
+{
+    // FLMV (xEdit)
+    [Flags]
+    public enum Flag
+    {
+        FadeOut = 0x0001,
+        FadeIn = 0x0002,
+        FaderWhite = 0x0004,
+        FaderBlack = 0x0008,
+        UseFaderOpts = 0x0010,
+        UseImageSpaceMod = 0x0020,
+        HoldFadeOut = 0x0040,
+        UseSoundFile = 0x0080,
+        UseReference = 0x0100,
+        UseAlias = 0x0200,
+        UseDisableEnableReference = 0x0400,
+        EnableReference = 0x0800,
+        DisableReference = 0x1000,
+    }
+}
+
+public partial class MoveSceneAction
+{
+    // FLMV (xEdit)
+    [Flags]
+    public enum Flag
+    {
+        Front = 0x01,
+        Back = 0x02,
+        Right = 0x04,
+        Left = 0x08,
+        TargetAlias = 0x10,
+        TargetReference = 0x20,
+        Up = 0x40,
+        Down = 0x80,
+    }
+}
+
+public partial class TimelineSceneAction
+{
+    // TNAM (xEdit)
+    public enum TimelineType
+    {
+        Headtrack = 0,
+        HeadtrackStop = 1,
+        Camera = 2,
+        PhaseTime = 3,
+        HeadtrackAngles = 4,
+        EyetrackAngles = 5,
+        HeadtrackDisable = 6,
+        HeadtrackEnable = 7,
+    }
+}

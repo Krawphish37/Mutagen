@@ -104,9 +104,9 @@
       <FormLink name="Topic" refName="DialogTopic" recordType="DATA" />
       <Float name="LoopingMax" recordType="DMAX" />
       <Float name="LoopingMin" recordType="DMIN" />
-      <RefDirect name="HNAM" refName="HeadTracking" nullable="false" />
+      <RefDirect name="Headtracking" refName="HeadTracking" nullable="false" />
       <FormLink name="DialogueSubtype" recordType="VENC" refName="Keyword" />
-      <RefDirect name="WED0" recordType="WED0" unknown="true" refName="SoundReference" />
+      <RefDirect name="VoiceOverride" recordType="WED0" refName="SoundReference" />
     </Fields>
   </Object>
   <Object name="PackageSceneAction" objType="Subrecord" baseClass="ASceneAction">
@@ -120,7 +120,7 @@
     <Fields>
       <Float name="MaxSeconds" recordType="SNAM" />
       <Float name="MinSeconds" recordType="TNAM" />
-      <Bool name="HNAM" recordType="HNAM" boolAsMarker="True" unknown="true" />
+      <Bool name="HoldForAnimationEvent" recordType="HNAM" boolAsMarker="True" />
       <Int16 name="SCQS" recordType="SCQS" />
       <Int16 name="INTV" recordType="INTV" />
     </Fields>
@@ -128,29 +128,29 @@
   <Object name="PlayerDialogueSceneAction" objType="Subrecord" baseClass="ASceneAction">
     <Fields>
       <RefDirect name="WED0" recordType="WED0" unknown="true" refName="SoundReference" />
-      <RefDirect name="HNAM" refName="HeadTracking" nullable="false" />
+      <RefDirect name="Headtracking" refName="HeadTracking" nullable="false" />
       <Int32 name="DialogueTargetActor" recordType="DTGT" />
       <RefList name="DialogueList" refName="PlayerDialogueSceneActionItem" />
-      <ByteArray name="ATTR" recordType="ATTR" unknown="true" />
-      <Bool name="ACBS" recordType="ACBS" boolAsMarker="True" unknown="true" />
+      <UInt32 name="ReactToAction" recordType="ATTR" />
+      <Bool name="NpcReaction" recordType="ACBS" boolAsMarker="True" />
       <Bool name="JAIL" recordType="JAIL" boolAsMarker="True" unknown="true" />
     </Fields>
   </Object>
   <Object name="PlayerDialogueSceneActionItem" objType="Subrecord">
     <Fields>
       <FormLink name="PlayerChoice" refName="DialogTopic" recordType="ESCE" />
-      <FormLink name="PPST" refName="Keyword" recordType="PPST" unknown="true" />
-      <FormLink name="PNST" refName="Keyword" recordType="PNST" unknown="true" />
+      <FormLink name="PlayerDialogueSubtype" refName="Keyword" recordType="PPST" />
+      <FormLink name="NpcDialogueSubtype" refName="Keyword" recordType="PNST" />
       <FormLink name="StartScene" refName="Scene" recordType="PASP" />
       <UInt32 name="PhaseIndex" recordType="PAPI" />
-      <String name="PAPN" recordType="PAPN" unknown="true" />
+      <String name="PhaseName" recordType="PAPN" />
       <FormLink name="NpcResponse" refName="DialogTopic" recordType="ESCS" nullable="False" />
     </Fields>
   </Object>
   <Object name="StartSceneAction" objType="Subrecord" baseClass="ASceneAction">
     <Fields>
       <RefList name="StartScenes" refName="StartScene" />
-      <Bool name="HTID" recordType="HTID" boolAsMarker="True" unknown="true" />
+      <Bool name="EndScene" recordType="HTID" boolAsMarker="True" />
     </Fields>
   </Object>
   <Object name="StartScene" objType="Subrecord" >
@@ -166,23 +166,23 @@
   <Object name="RadioSceneAction" objType="Subrecord" baseClass="ASceneAction">
     <Fields>
       <FormLink name="Topic" recordType="DATA" refName="DialogTopic" nullable="false" />
-      <RefDirect name="WED0" recordType="WED0" unknown="true" refName="SoundReference" />
-      <RefDirect name="WED1" recordType="WED1" unknown="true" refName="SoundReference" />
+      <RefDirect name="VoiceOverride" recordType="WED0" refName="SoundReference" />
+      <RefDirect name="SoundEffect" recordType="WED1" refName="SoundReference" />
       <FormLink name="DialogueSubtype" recordType="VENC" refName="Keyword" />
     </Fields>
   </Object>
   <Object name="MoveSceneAction" objType="Subrecord" baseClass="ASceneAction">
     <Fields>
-      <Bool name="DNAM" recordType="DNAM" boolAsMarker="True" unknown="true" />
-      <Bool name="NVCI" recordType="NVCI" boolAsMarker="True" unknown="true" />
-      <Int32 name="ALLA" recordType="ALLA" unknown="true" nullable="False" />
-      <FormLink name="REPL" recordType="REPL" unknown="true" nullable="False" >
+      <Bool name="DisableCharacterController" recordType="DNAM" boolAsMarker="True" />
+      <Bool name="OffNavmesh" recordType="NVCI" boolAsMarker="True" />
+      <Int32 name="TargetAlias" recordType="ALLA" nullable="False" />
+      <FormLink name="TargetReference" recordType="REPL" nullable="False" >
         <Interface>IPlaced</Interface>
       </FormLink>
-      <Float name="HNAM" recordType="HNAM" nullable="false" />
-      <Float name="VCLR" recordType="VCLR" nullable="false" />
-      <Float name="VNML" recordType="VNML" nullable="false" />
-      <Int32 name="FLMV" recordType="FLMV" nullable="false" />
+      <Float name="FrontBack" recordType="HNAM" nullable="false" />
+      <Float name="LeftRight" recordType="VCLR" nullable="false" />
+      <Float name="UpDown" recordType="VNML" nullable="false" />
+      <Enum name="MoveFlags" enumName="MoveSceneAction.Flag" recordType="FLMV" byteLength="4" nullable="false" />
     </Fields>
   </Object>
   <Object name="CameraSceneAction" objType="Subrecord" baseClass="ASceneAction">
@@ -193,33 +193,35 @@
   <Object name="CameraSceneShot" objType="Subrecord" endMarkerType="XNAM">
     <Fields>
       <FormLink name="CameraShot" refName="CameraShot" recordType="CNAM" />
-      <Int32 name="ALLA" recordType="ALLA" unknown="true" nullable="false" />
-      <FormLink name="REPL" recordType="REPL" unknown="true" nullable="False" >
+      <FormLink name="CameraLocationReference" recordType="ALLA" nullable="False" >
         <Interface>IPlaced</Interface>
       </FormLink>
-      <Int32 name="HNAM" recordType="HNAM" nullable="false" />
-      <Int32 name="VCLR" recordType="VCLR" nullable="false" />
-      <Int32 name="LVCR" recordType="LVCR" nullable="false" />
-      <Bool name="BTXT" recordType="BTXT" boolAsMarker="True" unknown="true" />
-      <Bool name="ATXT" recordType="ATXT" boolAsMarker="True" unknown="true" />
-      <Bool name="VTXT" recordType="VTXT" boolAsMarker="True" unknown="true" />
-      <Bool name="AIDT" recordType="AIDT" boolAsMarker="True" unknown="true" />
-      <Bool name="MPCD" recordType="MPCD" boolAsMarker="True" unknown="true" />
-      <Bool name="VNAM" recordType="VNAM" boolAsMarker="True" unknown="true" />
+      <FormLink name="LookTargetReference" recordType="REPL" nullable="False" >
+        <Interface>IPlaced</Interface>
+      </FormLink>
+      <Int32 name="LookTargetAlias" recordType="HNAM" nullable="false" />
+      <Int32 name="CameraLocationAlias" recordType="VCLR" nullable="false" />
+      <Float name="DelayStartTimeAction" recordType="LVCR" nullable="false" />
+      <Bool name="UseCameraLocationReference" recordType="BTXT" boolAsMarker="True" />
+      <Bool name="UseLookTargetReference" recordType="ATXT" boolAsMarker="True" />
+      <Bool name="UseCameraLocationAlias" recordType="VTXT" boolAsMarker="True" />
+      <Bool name="IgnoreCollision" recordType="AIDT" boolAsMarker="True" />
+      <Bool name="UseLookTargetAlias" recordType="MPCD" boolAsMarker="True" />
+      <Bool name="ForceLookAtFirstPersonCamera" recordType="VNAM" boolAsMarker="True" />
       <RefList name="Conditions" refName="Condition" />
     </Fields>
   </Object>
   <Object name="FxSceneAction" objType="Subrecord" baseClass="ASceneAction">
     <Fields>
-      <FormLink name="REPL" refName="ImageSpaceAdapter" recordType="REPL" nullable="false" />
-      <Float name="HNAM" recordType="HNAM" nullable="false" />
-      <Float name="VCLR" recordType="VCLR" nullable="false" />
+      <FormLink name="ImageSpaceModifier" refName="ImageSpaceAdapter" recordType="REPL" nullable="false" />
+      <Float name="FadeOutTime" recordType="HNAM" nullable="false" />
+      <Float name="ImageSpaceStrengthOrSoundVolume" recordType="VCLR" nullable="false" />
       <Float name="StartTime" recordType="BTXT" nullable="false" />
-      <Int32 name="FLMV" recordType="FLMV" nullable="false" />
-      <RefDirect name="WED0" recordType="WED0" unknown="true" refName="SoundReference" />
+      <Enum name="FxFlags" enumName="FxSceneAction.Flag" recordType="FLMV" byteLength="4" nullable="false" />
+      <RefDirect name="Sound" recordType="WED0" refName="SoundReference" />
       <RefList name="Conditions" refName="Condition" />
-      <FormLink name="BIPL" refName="PlacedObject" recordType="BIPL" nullable="false" />
-      <Int32 name="LVLO" recordType="LVLO" unknown="true" />
+      <FormLink name="Reference" refName="PlacedObject" recordType="BIPL" nullable="false" />
+      <Int32 name="Alias" recordType="LVLO" />
     </Fields>
   </Object>
   <Object name="AnimationSceneAction" objType="Subrecord" baseClass="ASceneAction">
@@ -229,8 +231,8 @@
   </Object>
   <Object name="TimelineSceneAction" objType="Subrecord" baseClass="ASceneAction">
     <Fields>
-      <Int32 name="TNAM" recordType="TNAM" unknown="true" />
-      <Int32 name="SNAM" recordType="SNAM" unknown="true" />
+      <Enum name="Type" enumName="TimelineSceneAction.TimelineType" recordType="TNAM" byteLength="4" />
+      <Float name="StartTime" recordType="SNAM" />
       <Int32 name="UNAM" recordType="UNAM" unknown="true" />
       <Int32 name="LNAM" recordType="LNAM" unknown="true" />
       <Int32 name="CNAM" recordType="CNAM" unknown="true" />
