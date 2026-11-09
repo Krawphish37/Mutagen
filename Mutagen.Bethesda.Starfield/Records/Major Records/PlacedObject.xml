@@ -16,6 +16,7 @@
       <RefDirect name="ShipArrival" refName="PlacedObjectShipArrival" />
       <Enum name="LevelModifier" enumName="Level" byteLength="4" recordType="XLCM" />
       <Enum name="Action" enumName="PlacedObject.ActionFlag" recordType="XACT" byteLength="4" />
+      <Int32 name="FactionRank" recordType="XRNK" />
       <RefDirect name="Primitive" refName="PlacedPrimitive" />
       <RefList name="PlacedObjectXCZRXCZA" refName="PlacedObjectXCZRXCZA" />
       <RefDirect name="VolumeReflectionProbeOffsetIntensity" refName="VolumeReflectionProbeOffsetIntensity" />
@@ -32,7 +33,6 @@
       <RefList name="RagdollData" refName="RagdollData" recordType="XRGD" />
       <RefDirect name="TeleportDestination" refName="TeleportDestination" />
       <FormLink name="TeleportName" refName="Message" recordType="XTNM" />
-      <FormLink name="ReferenceGroup" recordType="XRFG" refName="ReferenceGroup" />
       <List name="LocationRefTypes" recordType="XLRT">
         <FormLink refName="LocationReferenceType" />
       </List>
@@ -40,7 +40,6 @@
         <FormLink refName="LayeredMaterialSwap" />
       </List>
       <FormLink name="XPCK" recordType="XPCK" refName="ReferenceGroup" unknown="true" />
-      <FormLink name="SourcePackIn" refName="PackIn" recordType="XPCS"/>
       <FormLink name="PersistentLocation" refName="Location" recordType="XLCN" />
       <RefDirect name="ProjectedDecal" refName="PlacedObjectProjectedDecal" />
       <List name="ProjectedDecalReferences" recordType="XPDO" >
@@ -50,20 +49,18 @@
       </List>
       <P3Float name="ConstrainedDecal" recordType="XCDD" />
       <Bool name="IsIgnoredBySandbox" boolAsMarker="XIS2" />
-      <Int32 name="FactionRank" recordType="XRNK" />
       <RefDirect name="GoboAnimatedProperties" refName="PlacedObjectGoboAnimatedProperties" />
       <RefDirect name="Collision" refName="PlacedObjectCollision" />
       <RefList name="PowerLinks" refName="PowerLink" />
       <Int32 name="Count" recordType="XCNT" />
       <ByteArray name="XFLG" recordType="XFLG" unknown="true" />
-      <RefDirect name="LightFlicker" refName="PlacedObjectLightFlicker" />
       <RefDirect name="MapMarker" refName="PlacedObjectMapMarker" markerType="XMRK" />
       <Bool name="LightLayerData" recordType="XLLD" byteLength="4" />
       <Bool name="LightStaticShadowMap" recordType="XLSM" byteLength="4" />
       <Float name="LightVolumetricData" recordType="XLVD" />
       <Float name="LightRadiusFalloutExponent" recordType="XRFE" />
-      <RefDirect name="Ownership" refName="Ownership"/>
       <RefList name="LightColors" refName="PlacedObjectLightColor" additive="true" />
+      <FormLink name="SourcePackIn" refName="PackIn" recordType="XPCS"/>
       <RefDirect name="GroupedPackIn" refName="GroupedPackIn" />
       <UInt32 name="BlueprintPartOrigin" recordType="XBPO" />
       <FormLink name="Layer" refName="Layer" recordType="XLYR" />
@@ -73,6 +70,7 @@
       <FormLink name="Location" refName="Location" recordType="XLRL" />
       <UInt32 name="XTRI" recordType="XTRI" unknown="true" />
       <RefDirect name="LightRoundedness" refName="LightRoundness" recordType="XLRD" />
+      <FormLink name="ReferenceGroup" recordType="XRFG" refName="ReferenceGroup" />
       <RefList name="LinkedReferences" refName="LinkedReferences" />
       <Bool name="IsLinkedRefTransient" boolAsMarker="XLKT" />
       <FormLink name="XLIB" recordType="XLIB" refName="LeveledItem" unknown="true" />
@@ -92,6 +90,8 @@
       <Percent name="HealthPercent" recordType="XHLT" />
       <FormLink name="TimeOfDay" refName="TimeOfDayRecord" recordType="TODD" />
       <RefDirect name="EnableParent" refName="EnableParent" />
+      <RefDirect name="LightFlicker" refName="PlacedObjectLightFlicker" />
+      <RefDirect name="Ownership" refName="Ownership"/>
       <RefList name="Traversals" refName="TraversalReference" recordType="XTV2" binary="Custom" />
       <UInt32 name="NumTraversalFluffBytes" binary="NoGeneration" />
       <RefDirect name="NavigationDoorLink" refName="NavigationDoorLink" />
