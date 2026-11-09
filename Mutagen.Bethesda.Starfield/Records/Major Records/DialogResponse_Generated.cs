@@ -130,16 +130,16 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IHeadTrackingGetter? IDialogResponseGetter.HeadTracking => this.HeadTracking;
         #endregion
-        #region RVSH
+        #region Sound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _RVSH;
-        public SoundReference? RVSH
+        private SoundReference? _Sound;
+        public SoundReference? Sound
         {
-            get => _RVSH;
-            set => _RVSH = value;
+            get => _Sound;
+            set => _Sound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? IDialogResponseGetter.RVSH => this.RVSH;
+        ISoundReferenceGetter? IDialogResponseGetter.Sound => this.Sound;
         #endregion
 
         #region To String
@@ -191,7 +191,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.TextHash = initialValue;
                 this.Animation = new MaskItem<TItem, Animation.Mask<TItem>?>(initialValue, new Animation.Mask<TItem>(initialValue));
                 this.HeadTracking = new MaskItem<TItem, HeadTracking.Mask<TItem>?>(initialValue, new HeadTracking.Mask<TItem>(initialValue));
-                this.RVSH = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
             }
 
             public Mask(
@@ -206,7 +206,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem TextHash,
                 TItem Animation,
                 TItem HeadTracking,
-                TItem RVSH)
+                TItem Sound)
             {
                 this.Emotion = Emotion;
                 this.WEMFile = WEMFile;
@@ -219,7 +219,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.TextHash = TextHash;
                 this.Animation = new MaskItem<TItem, Animation.Mask<TItem>?>(Animation, new Animation.Mask<TItem>(Animation));
                 this.HeadTracking = new MaskItem<TItem, HeadTracking.Mask<TItem>?>(HeadTracking, new HeadTracking.Mask<TItem>(HeadTracking));
-                this.RVSH = new MaskItem<TItem, SoundReference.Mask<TItem>?>(RVSH, new SoundReference.Mask<TItem>(RVSH));
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Sound, new SoundReference.Mask<TItem>(Sound));
             }
 
             #pragma warning disable CS8618
@@ -242,7 +242,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem TextHash;
             public MaskItem<TItem, Animation.Mask<TItem>?>? Animation { get; set; }
             public MaskItem<TItem, HeadTracking.Mask<TItem>?>? HeadTracking { get; set; }
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? RVSH { get; set; }
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? Sound { get; set; }
             #endregion
 
             #region Equals
@@ -266,7 +266,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.TextHash, rhs.TextHash)) return false;
                 if (!object.Equals(this.Animation, rhs.Animation)) return false;
                 if (!object.Equals(this.HeadTracking, rhs.HeadTracking)) return false;
-                if (!object.Equals(this.RVSH, rhs.RVSH)) return false;
+                if (!object.Equals(this.Sound, rhs.Sound)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -283,7 +283,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.TextHash);
                 hash.Add(this.Animation);
                 hash.Add(this.HeadTracking);
-                hash.Add(this.RVSH);
+                hash.Add(this.Sound);
                 return hash.ToHashCode();
             }
 
@@ -322,10 +322,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.HeadTracking.Overall)) return false;
                     if (this.HeadTracking.Specific != null && !this.HeadTracking.Specific.All(eval)) return false;
                 }
-                if (RVSH != null)
+                if (Sound != null)
                 {
-                    if (!eval(this.RVSH.Overall)) return false;
-                    if (this.RVSH.Specific != null && !this.RVSH.Specific.All(eval)) return false;
+                    if (!eval(this.Sound.Overall)) return false;
+                    if (this.Sound.Specific != null && !this.Sound.Specific.All(eval)) return false;
                 }
                 return true;
             }
@@ -364,10 +364,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.HeadTracking.Overall)) return true;
                     if (this.HeadTracking.Specific != null && this.HeadTracking.Specific.Any(eval)) return true;
                 }
-                if (RVSH != null)
+                if (Sound != null)
                 {
-                    if (eval(this.RVSH.Overall)) return true;
-                    if (this.RVSH.Specific != null && this.RVSH.Specific.Any(eval)) return true;
+                    if (eval(this.Sound.Overall)) return true;
+                    if (this.Sound.Specific != null && this.Sound.Specific.Any(eval)) return true;
                 }
                 return false;
             }
@@ -408,7 +408,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.TextHash = eval(this.TextHash);
                 obj.Animation = this.Animation == null ? null : new MaskItem<R, Animation.Mask<R>?>(eval(this.Animation.Overall), this.Animation.Specific?.Translate(eval));
                 obj.HeadTracking = this.HeadTracking == null ? null : new MaskItem<R, HeadTracking.Mask<R>?>(eval(this.HeadTracking.Overall), this.HeadTracking.Specific?.Translate(eval));
-                obj.RVSH = this.RVSH == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.RVSH.Overall), this.RVSH.Specific?.Translate(eval));
+                obj.Sound = this.Sound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
             }
             #endregion
 
@@ -486,9 +486,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         HeadTracking?.Print(sb);
                     }
-                    if (printMask?.RVSH?.Overall ?? true)
+                    if (printMask?.Sound?.Overall ?? true)
                     {
-                        RVSH?.Print(sb);
+                        Sound?.Print(sb);
                     }
                 }
             }
@@ -525,7 +525,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? TextHash;
             public MaskItem<Exception?, Animation.ErrorMask?>? Animation;
             public MaskItem<Exception?, HeadTracking.ErrorMask?>? HeadTracking;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? RVSH;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? Sound;
             #endregion
 
             #region IErrorMask
@@ -556,8 +556,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Animation;
                     case DialogResponse_FieldIndex.HeadTracking:
                         return HeadTracking;
-                    case DialogResponse_FieldIndex.RVSH:
-                        return RVSH;
+                    case DialogResponse_FieldIndex.Sound:
+                        return Sound;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -601,8 +601,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DialogResponse_FieldIndex.HeadTracking:
                         this.HeadTracking = new MaskItem<Exception?, HeadTracking.ErrorMask?>(ex, null);
                         break;
-                    case DialogResponse_FieldIndex.RVSH:
-                        this.RVSH = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case DialogResponse_FieldIndex.Sound:
+                        this.Sound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -647,8 +647,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DialogResponse_FieldIndex.HeadTracking:
                         this.HeadTracking = (MaskItem<Exception?, HeadTracking.ErrorMask?>?)obj;
                         break;
-                    case DialogResponse_FieldIndex.RVSH:
-                        this.RVSH = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case DialogResponse_FieldIndex.Sound:
+                        this.Sound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -669,7 +669,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (TextHash != null) return true;
                 if (Animation != null) return true;
                 if (HeadTracking != null) return true;
-                if (RVSH != null) return true;
+                if (Sound != null) return true;
                 return false;
             }
             #endregion
@@ -739,7 +739,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 Animation?.Print(sb);
                 HeadTracking?.Print(sb);
-                RVSH?.Print(sb);
+                Sound?.Print(sb);
             }
             #endregion
 
@@ -759,7 +759,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.TextHash = this.TextHash.Combine(rhs.TextHash);
                 ret.Animation = this.Animation.Combine(rhs.Animation, (l, r) => l.Combine(r));
                 ret.HeadTracking = this.HeadTracking.Combine(rhs.HeadTracking, (l, r) => l.Combine(r));
-                ret.RVSH = this.RVSH.Combine(rhs.RVSH, (l, r) => l.Combine(r));
+                ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -794,7 +794,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool TextHash;
             public Animation.TranslationMask? Animation;
             public HeadTracking.TranslationMask? HeadTracking;
-            public SoundReference.TranslationMask? RVSH;
+            public SoundReference.TranslationMask? Sound;
             #endregion
 
             #region Ctors
@@ -838,7 +838,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((TextHash, null));
                 ret.Add((Animation != null ? Animation.OnOverall : DefaultOn, Animation?.GetCrystal()));
                 ret.Add((HeadTracking != null ? HeadTracking.OnOverall : DefaultOn, HeadTracking?.GetCrystal()));
-                ret.Add((RVSH != null ? RVSH.OnOverall : DefaultOn, RVSH?.GetCrystal()));
+                ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -928,7 +928,7 @@ namespace Mutagen.Bethesda.Starfield
         new MemorySlice<Byte>? TextHash { get; set; }
         new Animation? Animation { get; set; }
         new HeadTracking? HeadTracking { get; set; }
-        new SoundReference? RVSH { get; set; }
+        new SoundReference? Sound { get; set; }
     }
 
     public partial interface IDialogResponseGetter :
@@ -955,7 +955,7 @@ namespace Mutagen.Bethesda.Starfield
         ReadOnlyMemorySlice<Byte>? TextHash { get; }
         IAnimationGetter? Animation { get; }
         IHeadTrackingGetter? HeadTracking { get; }
-        ISoundReferenceGetter? RVSH { get; }
+        ISoundReferenceGetter? Sound { get; }
 
     }
 
@@ -1136,7 +1136,7 @@ namespace Mutagen.Bethesda.Starfield
         TextHash = 8,
         Animation = 9,
         HeadTracking = 10,
-        RVSH = 11,
+        Sound = 11,
     }
     #endregion
 
@@ -1246,7 +1246,7 @@ namespace Mutagen.Bethesda.Starfield
             item.TextHash = default;
             item.Animation = null;
             item.HeadTracking = null;
-            item.RVSH = null;
+            item.Sound = null;
         }
         
         #region Mutagen
@@ -1255,7 +1255,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.Emotion.Relink(mapping);
             obj.TROTs.RemapLinks(mapping);
             obj.Animation?.RemapLinks(mapping);
-            obj.RVSH?.RemapLinks(mapping);
+            obj.Sound?.RemapLinks(mapping);
         }
         
         #endregion
@@ -1322,9 +1322,9 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.HeadTracking,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.RVSH = EqualsMaskHelper.EqualsHelper(
-                item.RVSH,
-                rhs.RVSH,
+            ret.Sound = EqualsMaskHelper.EqualsHelper(
+                item.Sound,
+                rhs.Sound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
         }
@@ -1428,10 +1428,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 HeadTrackingItem?.Print(sb, "HeadTracking");
             }
-            if ((printMask?.RVSH?.Overall ?? true)
-                && item.RVSH is {} RVSHItem)
+            if ((printMask?.Sound?.Overall ?? true)
+                && item.Sound is {} SoundItem)
             {
-                RVSHItem?.Print(sb, "RVSH");
+                SoundItem?.Print(sb, "Sound");
             }
         }
         
@@ -1494,13 +1494,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isHeadTrackingEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)DialogResponse_FieldIndex.RVSH) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)DialogResponse_FieldIndex.Sound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.RVSH, rhs.RVSH, out var lhsRVSH, out var rhsRVSH, out var isRVSHEqual))
+                if (EqualsMaskHelper.RefEquality(lhs.Sound, rhs.Sound, out var lhsSound, out var rhsSound, out var isSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsRVSH).CommonInstance()!).Equals(lhsRVSH, rhsRVSH, equalsMask?.GetSubCrystal((int)DialogResponse_FieldIndex.RVSH))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsSound).CommonInstance()!).Equals(lhsSound, rhsSound, equalsMask?.GetSubCrystal((int)DialogResponse_FieldIndex.Sound))) return false;
                 }
-                else if (!isRVSHEqual) return false;
+                else if (!isSoundEqual) return false;
             }
             return true;
         }
@@ -1528,9 +1528,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(HeadTrackingitem);
             }
-            if (item.RVSH is {} RVSHitem)
+            if (item.Sound is {} Sounditem)
             {
-                hash.Add(RVSHitem);
+                hash.Add(Sounditem);
             }
             return hash.ToHashCode();
         }
@@ -1558,9 +1558,9 @@ namespace Mutagen.Bethesda.Starfield
                     yield return item;
                 }
             }
-            if (obj.RVSH is {} RVSHItems)
+            if (obj.Sound is {} SoundItems)
             {
-                foreach (var item in RVSHItems.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in SoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -1698,20 +1698,20 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)DialogResponse_FieldIndex.RVSH) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)DialogResponse_FieldIndex.Sound) ?? true))
             {
-                errorMask?.PushIndex((int)DialogResponse_FieldIndex.RVSH);
+                errorMask?.PushIndex((int)DialogResponse_FieldIndex.Sound);
                 try
                 {
-                    if(rhs.RVSH is {} rhsRVSH)
+                    if(rhs.Sound is {} rhsSound)
                     {
-                        item.RVSH = rhsRVSH.DeepCopy(
+                        item.Sound = rhsSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)DialogResponse_FieldIndex.RVSH));
+                            copyMask?.GetSubCrystal((int)DialogResponse_FieldIndex.Sound));
                     }
                     else
                     {
-                        item.RVSH = default;
+                        item.Sound = default;
                     }
                 }
                 catch (Exception ex)
@@ -1893,12 +1893,12 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     translationParams: translationParams);
             }
-            if (item.RVSH is {} RVSHItem)
+            if (item.Sound is {} SoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.RVSH))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)RVSHItem).BinaryWriteTranslator).Write(
-                        item: RVSHItem,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)SoundItem).BinaryWriteTranslator).Write(
+                        item: SoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -2032,8 +2032,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.RVSH:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.RVSH = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)DialogResponse_FieldIndex.RVSH;
+                    item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)DialogResponse_FieldIndex.Sound;
                 }
                 default:
                     return ParseResult.Stop;
@@ -2143,7 +2143,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         public IAnimationGetter? Animation { get; private set; }
         public IHeadTrackingGetter? HeadTracking { get; private set; }
-        public ISoundReferenceGetter? RVSH { get; private set; }
+        public ISoundReferenceGetter? Sound { get; private set; }
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -2272,11 +2272,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.RVSH:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.RVSH = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.Sound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)DialogResponse_FieldIndex.RVSH;
+                    return (int)DialogResponse_FieldIndex.Sound;
                 }
                 default:
                     return ParseResult.Stop;
