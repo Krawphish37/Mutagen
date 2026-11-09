@@ -160,15 +160,15 @@
   </Object>
   <Object name="ExternalEmittance" objType="Subrecord" recordType="XEED" >
     <Fields>
-      <ByteArray name="Data" byteLength="8" nullable="false" />
+      <Float name="LuminanceScale" />
+      <Bool name="OverrideEnabled" byteLength="1" />
+      <ByteArray name="OverrideEnabledUnused" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="VolumeReflectionProbeOffsetIntensity" objType="Subrecord" recordType="XVOI" >
     <Fields>
-      <Float name="Float1" />
-      <Float name="Float2" />
-      <Float name="Float3" />
-      <Float name="Float4" />
+      <P3Float name="Offset" />
+      <Float name="Intensity" />
     </Fields>
   </Object>
   <Object name="PlacedObjectLightBarndoorData" objType="Subrecord" recordType="XLBD" >
@@ -198,14 +198,15 @@
   <Object name="PlacedObjectLighting" objType="Subrecord" recordType="XLIG">
     <Fields>
       <Float name="Fov90PlusMinus" />
-      <Float name="Fade1PlusMinus" />
+      <Float name="LuminousScale" />
       <Float name="EndDistanceCap" />
-      <Float name="ShadowDepthBias" />
-      <Float name="NearClip" />
-      <Float name="VolumetricIntensity" />
+      <Float name="NearClipCutOn" />
+      <Float name="InnerFov" />
+      <Float name="ShadowOffset" />
       <UInt32 name="Unknown1" />
       <Break />
-      <UInt32 name="Unknown2" />
+      <UInt8 name="Unknown2" />
+      <ByteArray name="Unknown2Unused" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="TeleportDestination" objType="Subrecord" recordType="XTEL">
