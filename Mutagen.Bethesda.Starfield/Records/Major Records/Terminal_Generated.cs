@@ -37,6 +37,7 @@ using RecordTypes = Mutagen.Bethesda.Starfield.Internals.RecordTypes;
 using System.Buffers.Binary;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 #endregion
@@ -253,54 +254,30 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region PNAM
+        #region DefaultPrimitiveColor
+        public Color? DefaultPrimitiveColor { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _PNAM;
-        public MemorySlice<Byte>? PNAM
-        {
-            get => this._PNAM;
-            set => this._PNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ITerminalGetter.PNAM => this.PNAM;
+        Color? ITerminalGetter.DefaultPrimitiveColor => this.DefaultPrimitiveColor;
         #endregion
-        #region FNAM
+        #region Flags
+        public Terminal.Flag? Flags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _FNAM;
-        public MemorySlice<Byte>? FNAM
-        {
-            get => this._FNAM;
-            set => this._FNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ITerminalGetter.FNAM => this.FNAM;
+        Terminal.Flag? ITerminalGetter.Flags => this.Flags;
         #endregion
-        #region JNAM
+        #region ActivationAngleForPlayer
+        public UInt16? ActivationAngleForPlayer { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _JNAM;
-        public MemorySlice<Byte>? JNAM
-        {
-            get => this._JNAM;
-            set => this._JNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ITerminalGetter.JNAM => this.JNAM;
+        UInt16? ITerminalGetter.ActivationAngleForPlayer => this.ActivationAngleForPlayer;
         #endregion
         #region MarkerFlags
         public FurnitureMarkerFlags? MarkerFlags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         FurnitureMarkerFlags? ITerminalGetter.MarkerFlags => this.MarkerFlags;
         #endregion
-        #region GNAM
+        #region ActivationAngleForSittingActor
+        public UInt16? ActivationAngleForSittingActor { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _GNAM;
-        public MemorySlice<Byte>? GNAM
-        {
-            get => this._GNAM;
-            set => this._GNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ITerminalGetter.GNAM => this.GNAM;
+        UInt16? ITerminalGetter.ActivationAngleForSittingActor => this.ActivationAngleForSittingActor;
         #endregion
         #region WorkbenchData
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -323,16 +300,19 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IFurnitureGetter> ITerminalGetter.FurnitureTemplate => this.FurnitureTemplate;
         #endregion
-        #region FNPR
+        #region MarkerEntryPoints
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _FNPR;
-        public MemorySlice<Byte>? FNPR
+        private ExtendedList<FurnitureMarkerEntryPoints> _MarkerEntryPoints = new ExtendedList<FurnitureMarkerEntryPoints>();
+        public ExtendedList<FurnitureMarkerEntryPoints> MarkerEntryPoints
         {
-            get => this._FNPR;
-            set => this._FNPR = value;
+            get => this._MarkerEntryPoints;
+            init => this._MarkerEntryPoints = value;
         }
+        #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ITerminalGetter.FNPR => this.FNPR;
+        IReadOnlyList<IFurnitureMarkerEntryPointsGetter> ITerminalGetter.MarkerEntryPoints => _MarkerEntryPoints;
+        #endregion
+
         #endregion
         #region MarkerModel
         public String? MarkerModel { get; set; }
@@ -391,14 +371,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>(initialValue, []);
                 this.ForcedLocations = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.PNAM = initialValue;
-                this.FNAM = initialValue;
-                this.JNAM = initialValue;
+                this.DefaultPrimitiveColor = initialValue;
+                this.Flags = initialValue;
+                this.ActivationAngleForPlayer = initialValue;
                 this.MarkerFlags = initialValue;
-                this.GNAM = initialValue;
+                this.ActivationAngleForSittingActor = initialValue;
                 this.WorkbenchData = initialValue;
                 this.FurnitureTemplate = initialValue;
-                this.FNPR = initialValue;
+                this.MarkerEntryPoints = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, FurnitureMarkerEntryPoints.Mask<TItem>?>>?>(initialValue, []);
                 this.MarkerModel = initialValue;
                 this.MarkerParameters = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, FurnitureMarkerParameters.Mask<TItem>?>>?>(initialValue, []);
             }
@@ -424,14 +404,14 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Keywords,
                 TItem Properties,
                 TItem ForcedLocations,
-                TItem PNAM,
-                TItem FNAM,
-                TItem JNAM,
+                TItem DefaultPrimitiveColor,
+                TItem Flags,
+                TItem ActivationAngleForPlayer,
                 TItem MarkerFlags,
-                TItem GNAM,
+                TItem ActivationAngleForSittingActor,
                 TItem WorkbenchData,
                 TItem FurnitureTemplate,
-                TItem FNPR,
+                TItem MarkerEntryPoints,
                 TItem MarkerModel,
                 TItem MarkerParameters)
             : base(
@@ -456,14 +436,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
                 this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>(Properties, []);
                 this.ForcedLocations = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ForcedLocations, []);
-                this.PNAM = PNAM;
-                this.FNAM = FNAM;
-                this.JNAM = JNAM;
+                this.DefaultPrimitiveColor = DefaultPrimitiveColor;
+                this.Flags = Flags;
+                this.ActivationAngleForPlayer = ActivationAngleForPlayer;
                 this.MarkerFlags = MarkerFlags;
-                this.GNAM = GNAM;
+                this.ActivationAngleForSittingActor = ActivationAngleForSittingActor;
                 this.WorkbenchData = WorkbenchData;
                 this.FurnitureTemplate = FurnitureTemplate;
-                this.FNPR = FNPR;
+                this.MarkerEntryPoints = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, FurnitureMarkerEntryPoints.Mask<TItem>?>>?>(MarkerEntryPoints, []);
                 this.MarkerModel = MarkerModel;
                 this.MarkerParameters = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, FurnitureMarkerParameters.Mask<TItem>?>>?>(MarkerParameters, []);
             }
@@ -490,14 +470,14 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>? Properties;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ForcedLocations;
-            public TItem PNAM;
-            public TItem FNAM;
-            public TItem JNAM;
+            public TItem DefaultPrimitiveColor;
+            public TItem Flags;
+            public TItem ActivationAngleForPlayer;
             public TItem MarkerFlags;
-            public TItem GNAM;
+            public TItem ActivationAngleForSittingActor;
             public TItem WorkbenchData;
             public TItem FurnitureTemplate;
-            public TItem FNPR;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, FurnitureMarkerEntryPoints.Mask<TItem>?>>?>? MarkerEntryPoints;
             public TItem MarkerModel;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, FurnitureMarkerParameters.Mask<TItem>?>>?>? MarkerParameters;
             #endregion
@@ -526,14 +506,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
                 if (!object.Equals(this.Properties, rhs.Properties)) return false;
                 if (!object.Equals(this.ForcedLocations, rhs.ForcedLocations)) return false;
-                if (!object.Equals(this.PNAM, rhs.PNAM)) return false;
-                if (!object.Equals(this.FNAM, rhs.FNAM)) return false;
-                if (!object.Equals(this.JNAM, rhs.JNAM)) return false;
+                if (!object.Equals(this.DefaultPrimitiveColor, rhs.DefaultPrimitiveColor)) return false;
+                if (!object.Equals(this.Flags, rhs.Flags)) return false;
+                if (!object.Equals(this.ActivationAngleForPlayer, rhs.ActivationAngleForPlayer)) return false;
                 if (!object.Equals(this.MarkerFlags, rhs.MarkerFlags)) return false;
-                if (!object.Equals(this.GNAM, rhs.GNAM)) return false;
+                if (!object.Equals(this.ActivationAngleForSittingActor, rhs.ActivationAngleForSittingActor)) return false;
                 if (!object.Equals(this.WorkbenchData, rhs.WorkbenchData)) return false;
                 if (!object.Equals(this.FurnitureTemplate, rhs.FurnitureTemplate)) return false;
-                if (!object.Equals(this.FNPR, rhs.FNPR)) return false;
+                if (!object.Equals(this.MarkerEntryPoints, rhs.MarkerEntryPoints)) return false;
                 if (!object.Equals(this.MarkerModel, rhs.MarkerModel)) return false;
                 if (!object.Equals(this.MarkerParameters, rhs.MarkerParameters)) return false;
                 return true;
@@ -554,14 +534,14 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Keywords);
                 hash.Add(this.Properties);
                 hash.Add(this.ForcedLocations);
-                hash.Add(this.PNAM);
-                hash.Add(this.FNAM);
-                hash.Add(this.JNAM);
+                hash.Add(this.DefaultPrimitiveColor);
+                hash.Add(this.Flags);
+                hash.Add(this.ActivationAngleForPlayer);
                 hash.Add(this.MarkerFlags);
-                hash.Add(this.GNAM);
+                hash.Add(this.ActivationAngleForSittingActor);
                 hash.Add(this.WorkbenchData);
                 hash.Add(this.FurnitureTemplate);
-                hash.Add(this.FNPR);
+                hash.Add(this.MarkerEntryPoints);
                 hash.Add(this.MarkerModel);
                 hash.Add(this.MarkerParameters);
                 hash.Add(base.GetHashCode());
@@ -645,14 +625,25 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.PNAM)) return false;
-                if (!eval(this.FNAM)) return false;
-                if (!eval(this.JNAM)) return false;
+                if (!eval(this.DefaultPrimitiveColor)) return false;
+                if (!eval(this.Flags)) return false;
+                if (!eval(this.ActivationAngleForPlayer)) return false;
                 if (!eval(this.MarkerFlags)) return false;
-                if (!eval(this.GNAM)) return false;
+                if (!eval(this.ActivationAngleForSittingActor)) return false;
                 if (!eval(this.WorkbenchData)) return false;
                 if (!eval(this.FurnitureTemplate)) return false;
-                if (!eval(this.FNPR)) return false;
+                if (this.MarkerEntryPoints != null)
+                {
+                    if (!eval(this.MarkerEntryPoints.Overall)) return false;
+                    if (this.MarkerEntryPoints.Specific != null)
+                    {
+                        foreach (var item in this.MarkerEntryPoints.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (!eval(this.MarkerModel)) return false;
                 if (this.MarkerParameters != null)
                 {
@@ -745,14 +736,25 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.PNAM)) return true;
-                if (eval(this.FNAM)) return true;
-                if (eval(this.JNAM)) return true;
+                if (eval(this.DefaultPrimitiveColor)) return true;
+                if (eval(this.Flags)) return true;
+                if (eval(this.ActivationAngleForPlayer)) return true;
                 if (eval(this.MarkerFlags)) return true;
-                if (eval(this.GNAM)) return true;
+                if (eval(this.ActivationAngleForSittingActor)) return true;
                 if (eval(this.WorkbenchData)) return true;
                 if (eval(this.FurnitureTemplate)) return true;
-                if (eval(this.FNPR)) return true;
+                if (this.MarkerEntryPoints != null)
+                {
+                    if (eval(this.MarkerEntryPoints.Overall)) return true;
+                    if (this.MarkerEntryPoints.Specific != null)
+                    {
+                        foreach (var item in this.MarkerEntryPoints.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (eval(this.MarkerModel)) return true;
                 if (this.MarkerParameters != null)
                 {
@@ -848,14 +850,28 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.PNAM = eval(this.PNAM);
-                obj.FNAM = eval(this.FNAM);
-                obj.JNAM = eval(this.JNAM);
+                obj.DefaultPrimitiveColor = eval(this.DefaultPrimitiveColor);
+                obj.Flags = eval(this.Flags);
+                obj.ActivationAngleForPlayer = eval(this.ActivationAngleForPlayer);
                 obj.MarkerFlags = eval(this.MarkerFlags);
-                obj.GNAM = eval(this.GNAM);
+                obj.ActivationAngleForSittingActor = eval(this.ActivationAngleForSittingActor);
                 obj.WorkbenchData = eval(this.WorkbenchData);
                 obj.FurnitureTemplate = eval(this.FurnitureTemplate);
-                obj.FNPR = eval(this.FNPR);
+                if (MarkerEntryPoints != null)
+                {
+                    obj.MarkerEntryPoints = new MaskItem<R, IEnumerable<MaskItemIndexed<R, FurnitureMarkerEntryPoints.Mask<R>?>>?>(eval(this.MarkerEntryPoints.Overall), []);
+                    if (MarkerEntryPoints.Specific != null)
+                    {
+                        var l = new List<MaskItemIndexed<R, FurnitureMarkerEntryPoints.Mask<R>?>>();
+                        obj.MarkerEntryPoints.Specific = l;
+                        foreach (var item in MarkerEntryPoints.Specific)
+                        {
+                            MaskItemIndexed<R, FurnitureMarkerEntryPoints.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, FurnitureMarkerEntryPoints.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
+                        }
+                    }
+                }
                 obj.MarkerModel = eval(this.MarkerModel);
                 if (MarkerParameters != null)
                 {
@@ -1006,25 +1022,25 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.PNAM ?? true)
+                    if (printMask?.DefaultPrimitiveColor ?? true)
                     {
-                        sb.AppendItem(PNAM, "PNAM");
+                        sb.AppendItem(DefaultPrimitiveColor, "DefaultPrimitiveColor");
                     }
-                    if (printMask?.FNAM ?? true)
+                    if (printMask?.Flags ?? true)
                     {
-                        sb.AppendItem(FNAM, "FNAM");
+                        sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.JNAM ?? true)
+                    if (printMask?.ActivationAngleForPlayer ?? true)
                     {
-                        sb.AppendItem(JNAM, "JNAM");
+                        sb.AppendItem(ActivationAngleForPlayer, "ActivationAngleForPlayer");
                     }
                     if (printMask?.MarkerFlags ?? true)
                     {
                         sb.AppendItem(MarkerFlags, "MarkerFlags");
                     }
-                    if (printMask?.GNAM ?? true)
+                    if (printMask?.ActivationAngleForSittingActor ?? true)
                     {
-                        sb.AppendItem(GNAM, "GNAM");
+                        sb.AppendItem(ActivationAngleForSittingActor, "ActivationAngleForSittingActor");
                     }
                     if (printMask?.WorkbenchData ?? true)
                     {
@@ -1034,9 +1050,24 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(FurnitureTemplate, "FurnitureTemplate");
                     }
-                    if (printMask?.FNPR ?? true)
+                    if ((printMask?.MarkerEntryPoints?.Overall ?? true)
+                        && MarkerEntryPoints is {} MarkerEntryPointsItem)
                     {
-                        sb.AppendItem(FNPR, "FNPR");
+                        sb.AppendLine("MarkerEntryPoints =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(MarkerEntryPointsItem.Overall);
+                            if (MarkerEntryPointsItem.Specific != null)
+                            {
+                                foreach (var subItem in MarkerEntryPointsItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        subItem?.Print(sb);
+                                    }
+                                }
+                            }
+                        }
                     }
                     if (printMask?.MarkerModel ?? true)
                     {
@@ -1085,14 +1116,14 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>? Properties;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ForcedLocations;
-            public Exception? PNAM;
-            public Exception? FNAM;
-            public Exception? JNAM;
+            public Exception? DefaultPrimitiveColor;
+            public Exception? Flags;
+            public Exception? ActivationAngleForPlayer;
             public Exception? MarkerFlags;
-            public Exception? GNAM;
+            public Exception? ActivationAngleForSittingActor;
             public Exception? WorkbenchData;
             public Exception? FurnitureTemplate;
-            public Exception? FNPR;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, FurnitureMarkerEntryPoints.ErrorMask?>>?>? MarkerEntryPoints;
             public Exception? MarkerModel;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, FurnitureMarkerParameters.ErrorMask?>>?>? MarkerParameters;
             #endregion
@@ -1129,22 +1160,22 @@ namespace Mutagen.Bethesda.Starfield
                         return Properties;
                     case Terminal_FieldIndex.ForcedLocations:
                         return ForcedLocations;
-                    case Terminal_FieldIndex.PNAM:
-                        return PNAM;
-                    case Terminal_FieldIndex.FNAM:
-                        return FNAM;
-                    case Terminal_FieldIndex.JNAM:
-                        return JNAM;
+                    case Terminal_FieldIndex.DefaultPrimitiveColor:
+                        return DefaultPrimitiveColor;
+                    case Terminal_FieldIndex.Flags:
+                        return Flags;
+                    case Terminal_FieldIndex.ActivationAngleForPlayer:
+                        return ActivationAngleForPlayer;
                     case Terminal_FieldIndex.MarkerFlags:
                         return MarkerFlags;
-                    case Terminal_FieldIndex.GNAM:
-                        return GNAM;
+                    case Terminal_FieldIndex.ActivationAngleForSittingActor:
+                        return ActivationAngleForSittingActor;
                     case Terminal_FieldIndex.WorkbenchData:
                         return WorkbenchData;
                     case Terminal_FieldIndex.FurnitureTemplate:
                         return FurnitureTemplate;
-                    case Terminal_FieldIndex.FNPR:
-                        return FNPR;
+                    case Terminal_FieldIndex.MarkerEntryPoints:
+                        return MarkerEntryPoints;
                     case Terminal_FieldIndex.MarkerModel:
                         return MarkerModel;
                     case Terminal_FieldIndex.MarkerParameters:
@@ -1198,20 +1229,20 @@ namespace Mutagen.Bethesda.Starfield
                     case Terminal_FieldIndex.ForcedLocations:
                         this.ForcedLocations = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case Terminal_FieldIndex.PNAM:
-                        this.PNAM = ex;
+                    case Terminal_FieldIndex.DefaultPrimitiveColor:
+                        this.DefaultPrimitiveColor = ex;
                         break;
-                    case Terminal_FieldIndex.FNAM:
-                        this.FNAM = ex;
+                    case Terminal_FieldIndex.Flags:
+                        this.Flags = ex;
                         break;
-                    case Terminal_FieldIndex.JNAM:
-                        this.JNAM = ex;
+                    case Terminal_FieldIndex.ActivationAngleForPlayer:
+                        this.ActivationAngleForPlayer = ex;
                         break;
                     case Terminal_FieldIndex.MarkerFlags:
                         this.MarkerFlags = ex;
                         break;
-                    case Terminal_FieldIndex.GNAM:
-                        this.GNAM = ex;
+                    case Terminal_FieldIndex.ActivationAngleForSittingActor:
+                        this.ActivationAngleForSittingActor = ex;
                         break;
                     case Terminal_FieldIndex.WorkbenchData:
                         this.WorkbenchData = ex;
@@ -1219,8 +1250,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Terminal_FieldIndex.FurnitureTemplate:
                         this.FurnitureTemplate = ex;
                         break;
-                    case Terminal_FieldIndex.FNPR:
-                        this.FNPR = ex;
+                    case Terminal_FieldIndex.MarkerEntryPoints:
+                        this.MarkerEntryPoints = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, FurnitureMarkerEntryPoints.ErrorMask?>>?>(ex, null);
                         break;
                     case Terminal_FieldIndex.MarkerModel:
                         this.MarkerModel = ex;
@@ -1278,20 +1309,20 @@ namespace Mutagen.Bethesda.Starfield
                     case Terminal_FieldIndex.ForcedLocations:
                         this.ForcedLocations = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case Terminal_FieldIndex.PNAM:
-                        this.PNAM = (Exception?)obj;
+                    case Terminal_FieldIndex.DefaultPrimitiveColor:
+                        this.DefaultPrimitiveColor = (Exception?)obj;
                         break;
-                    case Terminal_FieldIndex.FNAM:
-                        this.FNAM = (Exception?)obj;
+                    case Terminal_FieldIndex.Flags:
+                        this.Flags = (Exception?)obj;
                         break;
-                    case Terminal_FieldIndex.JNAM:
-                        this.JNAM = (Exception?)obj;
+                    case Terminal_FieldIndex.ActivationAngleForPlayer:
+                        this.ActivationAngleForPlayer = (Exception?)obj;
                         break;
                     case Terminal_FieldIndex.MarkerFlags:
                         this.MarkerFlags = (Exception?)obj;
                         break;
-                    case Terminal_FieldIndex.GNAM:
-                        this.GNAM = (Exception?)obj;
+                    case Terminal_FieldIndex.ActivationAngleForSittingActor:
+                        this.ActivationAngleForSittingActor = (Exception?)obj;
                         break;
                     case Terminal_FieldIndex.WorkbenchData:
                         this.WorkbenchData = (Exception?)obj;
@@ -1299,8 +1330,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Terminal_FieldIndex.FurnitureTemplate:
                         this.FurnitureTemplate = (Exception?)obj;
                         break;
-                    case Terminal_FieldIndex.FNPR:
-                        this.FNPR = (Exception?)obj;
+                    case Terminal_FieldIndex.MarkerEntryPoints:
+                        this.MarkerEntryPoints = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, FurnitureMarkerEntryPoints.ErrorMask?>>?>)obj;
                         break;
                     case Terminal_FieldIndex.MarkerModel:
                         this.MarkerModel = (Exception?)obj;
@@ -1330,14 +1361,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (Keywords != null) return true;
                 if (Properties != null) return true;
                 if (ForcedLocations != null) return true;
-                if (PNAM != null) return true;
-                if (FNAM != null) return true;
-                if (JNAM != null) return true;
+                if (DefaultPrimitiveColor != null) return true;
+                if (Flags != null) return true;
+                if (ActivationAngleForPlayer != null) return true;
                 if (MarkerFlags != null) return true;
-                if (GNAM != null) return true;
+                if (ActivationAngleForSittingActor != null) return true;
                 if (WorkbenchData != null) return true;
                 if (FurnitureTemplate != null) return true;
-                if (FNPR != null) return true;
+                if (MarkerEntryPoints != null) return true;
                 if (MarkerModel != null) return true;
                 if (MarkerParameters != null) return true;
                 return false;
@@ -1462,19 +1493,19 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(PNAM, "PNAM");
+                    sb.AppendItem(DefaultPrimitiveColor, "DefaultPrimitiveColor");
                 }
                 {
-                    sb.AppendItem(FNAM, "FNAM");
+                    sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(JNAM, "JNAM");
+                    sb.AppendItem(ActivationAngleForPlayer, "ActivationAngleForPlayer");
                 }
                 {
                     sb.AppendItem(MarkerFlags, "MarkerFlags");
                 }
                 {
-                    sb.AppendItem(GNAM, "GNAM");
+                    sb.AppendItem(ActivationAngleForSittingActor, "ActivationAngleForSittingActor");
                 }
                 {
                     sb.AppendItem(WorkbenchData, "WorkbenchData");
@@ -1482,8 +1513,23 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(FurnitureTemplate, "FurnitureTemplate");
                 }
+                if (MarkerEntryPoints is {} MarkerEntryPointsItem)
                 {
-                    sb.AppendItem(FNPR, "FNPR");
+                    sb.AppendLine("MarkerEntryPoints =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(MarkerEntryPointsItem.Overall);
+                        if (MarkerEntryPointsItem.Specific != null)
+                        {
+                            foreach (var subItem in MarkerEntryPointsItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    subItem?.Print(sb);
+                                }
+                            }
+                        }
+                    }
                 }
                 {
                     sb.AppendItem(MarkerModel, "MarkerModel");
@@ -1527,14 +1573,14 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
                 ret.Properties = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Properties?.Overall, rhs.Properties?.Overall), Noggog.ExceptionExt.Combine(this.Properties?.Specific, rhs.Properties?.Specific));
                 ret.ForcedLocations = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ForcedLocations?.Overall, rhs.ForcedLocations?.Overall), Noggog.ExceptionExt.Combine(this.ForcedLocations?.Specific, rhs.ForcedLocations?.Specific));
-                ret.PNAM = this.PNAM.Combine(rhs.PNAM);
-                ret.FNAM = this.FNAM.Combine(rhs.FNAM);
-                ret.JNAM = this.JNAM.Combine(rhs.JNAM);
+                ret.DefaultPrimitiveColor = this.DefaultPrimitiveColor.Combine(rhs.DefaultPrimitiveColor);
+                ret.Flags = this.Flags.Combine(rhs.Flags);
+                ret.ActivationAngleForPlayer = this.ActivationAngleForPlayer.Combine(rhs.ActivationAngleForPlayer);
                 ret.MarkerFlags = this.MarkerFlags.Combine(rhs.MarkerFlags);
-                ret.GNAM = this.GNAM.Combine(rhs.GNAM);
+                ret.ActivationAngleForSittingActor = this.ActivationAngleForSittingActor.Combine(rhs.ActivationAngleForSittingActor);
                 ret.WorkbenchData = this.WorkbenchData.Combine(rhs.WorkbenchData);
                 ret.FurnitureTemplate = this.FurnitureTemplate.Combine(rhs.FurnitureTemplate);
-                ret.FNPR = this.FNPR.Combine(rhs.FNPR);
+                ret.MarkerEntryPoints = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, FurnitureMarkerEntryPoints.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.MarkerEntryPoints?.Overall, rhs.MarkerEntryPoints?.Overall), Noggog.ExceptionExt.Combine(this.MarkerEntryPoints?.Specific, rhs.MarkerEntryPoints?.Specific));
                 ret.MarkerModel = this.MarkerModel.Combine(rhs.MarkerModel);
                 ret.MarkerParameters = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, FurnitureMarkerParameters.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.MarkerParameters?.Overall, rhs.MarkerParameters?.Overall), Noggog.ExceptionExt.Combine(this.MarkerParameters?.Specific, rhs.MarkerParameters?.Specific));
                 return ret;
@@ -1572,14 +1618,14 @@ namespace Mutagen.Bethesda.Starfield
             public bool Keywords;
             public ObjectProperty.TranslationMask? Properties;
             public bool ForcedLocations;
-            public bool PNAM;
-            public bool FNAM;
-            public bool JNAM;
+            public bool DefaultPrimitiveColor;
+            public bool Flags;
+            public bool ActivationAngleForPlayer;
             public bool MarkerFlags;
-            public bool GNAM;
+            public bool ActivationAngleForSittingActor;
             public bool WorkbenchData;
             public bool FurnitureTemplate;
-            public bool FNPR;
+            public FurnitureMarkerEntryPoints.TranslationMask? MarkerEntryPoints;
             public bool MarkerModel;
             public FurnitureMarkerParameters.TranslationMask? MarkerParameters;
             #endregion
@@ -1597,14 +1643,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.Name = defaultOn;
                 this.Keywords = defaultOn;
                 this.ForcedLocations = defaultOn;
-                this.PNAM = defaultOn;
-                this.FNAM = defaultOn;
-                this.JNAM = defaultOn;
+                this.DefaultPrimitiveColor = defaultOn;
+                this.Flags = defaultOn;
+                this.ActivationAngleForPlayer = defaultOn;
                 this.MarkerFlags = defaultOn;
-                this.GNAM = defaultOn;
+                this.ActivationAngleForSittingActor = defaultOn;
                 this.WorkbenchData = defaultOn;
                 this.FurnitureTemplate = defaultOn;
-                this.FNPR = defaultOn;
                 this.MarkerModel = defaultOn;
             }
 
@@ -1626,14 +1671,14 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Keywords, null));
                 ret.Add((Properties == null ? DefaultOn : !Properties.GetCrystal().CopyNothing, Properties?.GetCrystal()));
                 ret.Add((ForcedLocations, null));
-                ret.Add((PNAM, null));
-                ret.Add((FNAM, null));
-                ret.Add((JNAM, null));
+                ret.Add((DefaultPrimitiveColor, null));
+                ret.Add((Flags, null));
+                ret.Add((ActivationAngleForPlayer, null));
                 ret.Add((MarkerFlags, null));
-                ret.Add((GNAM, null));
+                ret.Add((ActivationAngleForSittingActor, null));
                 ret.Add((WorkbenchData, null));
                 ret.Add((FurnitureTemplate, null));
-                ret.Add((FNPR, null));
+                ret.Add((MarkerEntryPoints == null ? DefaultOn : !MarkerEntryPoints.GetCrystal().CopyNothing, MarkerEntryPoints?.GetCrystal()));
                 ret.Add((MarkerModel, null));
                 ret.Add((MarkerParameters == null ? DefaultOn : !MarkerParameters.GetCrystal().CopyNothing, MarkerParameters?.GetCrystal()));
             }
@@ -1832,14 +1877,14 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; set; }
         new ExtendedList<ObjectProperty>? Properties { get; set; }
         new ExtendedList<IFormLinkGetter<ILocationReferenceTypeGetter>>? ForcedLocations { get; set; }
-        new MemorySlice<Byte>? PNAM { get; set; }
-        new MemorySlice<Byte>? FNAM { get; set; }
-        new MemorySlice<Byte>? JNAM { get; set; }
+        new Color? DefaultPrimitiveColor { get; set; }
+        new Terminal.Flag? Flags { get; set; }
+        new UInt16? ActivationAngleForPlayer { get; set; }
         new FurnitureMarkerFlags? MarkerFlags { get; set; }
-        new MemorySlice<Byte>? GNAM { get; set; }
+        new UInt16? ActivationAngleForSittingActor { get; set; }
         new MemorySlice<Byte>? WorkbenchData { get; set; }
         new IFormLinkNullable<IFurnitureGetter> FurnitureTemplate { get; set; }
-        new MemorySlice<Byte>? FNPR { get; set; }
+        new ExtendedList<FurnitureMarkerEntryPoints> MarkerEntryPoints { get; }
         new String? MarkerModel { get; set; }
         new ExtendedList<FurnitureMarkerParameters>? MarkerParameters { get; set; }
         #region Mutagen
@@ -1914,14 +1959,14 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         IReadOnlyList<IObjectPropertyGetter>? Properties { get; }
         IReadOnlyList<IFormLinkGetter<ILocationReferenceTypeGetter>>? ForcedLocations { get; }
-        ReadOnlyMemorySlice<Byte>? PNAM { get; }
-        ReadOnlyMemorySlice<Byte>? FNAM { get; }
-        ReadOnlyMemorySlice<Byte>? JNAM { get; }
+        Color? DefaultPrimitiveColor { get; }
+        Terminal.Flag? Flags { get; }
+        UInt16? ActivationAngleForPlayer { get; }
         FurnitureMarkerFlags? MarkerFlags { get; }
-        ReadOnlyMemorySlice<Byte>? GNAM { get; }
+        UInt16? ActivationAngleForSittingActor { get; }
         ReadOnlyMemorySlice<Byte>? WorkbenchData { get; }
         IFormLinkNullableGetter<IFurnitureGetter> FurnitureTemplate { get; }
-        ReadOnlyMemorySlice<Byte>? FNPR { get; }
+        IReadOnlyList<IFurnitureMarkerEntryPointsGetter> MarkerEntryPoints { get; }
         String? MarkerModel { get; }
         IReadOnlyList<IFurnitureMarkerParametersGetter>? MarkerParameters { get; }
 
@@ -2117,14 +2162,14 @@ namespace Mutagen.Bethesda.Starfield
         Keywords = 17,
         Properties = 18,
         ForcedLocations = 19,
-        PNAM = 20,
-        FNAM = 21,
-        JNAM = 22,
+        DefaultPrimitiveColor = 20,
+        Flags = 21,
+        ActivationAngleForPlayer = 22,
         MarkerFlags = 23,
-        GNAM = 24,
+        ActivationAngleForSittingActor = 24,
         WorkbenchData = 25,
         FurnitureTemplate = 26,
-        FNPR = 27,
+        MarkerEntryPoints = 27,
         MarkerModel = 28,
         MarkerParameters = 29,
     }
@@ -2264,14 +2309,14 @@ namespace Mutagen.Bethesda.Starfield
             item.Keywords = null;
             item.Properties = null;
             item.ForcedLocations = null;
-            item.PNAM = default;
-            item.FNAM = default;
-            item.JNAM = default;
+            item.DefaultPrimitiveColor = default;
+            item.Flags = default;
+            item.ActivationAngleForPlayer = default;
             item.MarkerFlags = default;
-            item.GNAM = default;
+            item.ActivationAngleForSittingActor = default;
             item.WorkbenchData = default;
             item.FurnitureTemplate.Clear();
-            item.FNPR = default;
+            item.MarkerEntryPoints.Clear();
             item.MarkerModel = default;
             item.MarkerParameters = null;
             base.Clear(item);
@@ -2438,14 +2483,17 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.ForcedLocations,
                 (l, r) => object.Equals(l, r),
                 include);
-            ret.PNAM = MemorySliceExt.SequenceEqual(item.PNAM, rhs.PNAM);
-            ret.FNAM = MemorySliceExt.SequenceEqual(item.FNAM, rhs.FNAM);
-            ret.JNAM = MemorySliceExt.SequenceEqual(item.JNAM, rhs.JNAM);
+            ret.DefaultPrimitiveColor = item.DefaultPrimitiveColor.ColorOnlyEquals(rhs.DefaultPrimitiveColor);
+            ret.Flags = item.Flags == rhs.Flags;
+            ret.ActivationAngleForPlayer = item.ActivationAngleForPlayer == rhs.ActivationAngleForPlayer;
             ret.MarkerFlags = item.MarkerFlags == rhs.MarkerFlags;
-            ret.GNAM = MemorySliceExt.SequenceEqual(item.GNAM, rhs.GNAM);
+            ret.ActivationAngleForSittingActor = item.ActivationAngleForSittingActor == rhs.ActivationAngleForSittingActor;
             ret.WorkbenchData = MemorySliceExt.SequenceEqual(item.WorkbenchData, rhs.WorkbenchData);
             ret.FurnitureTemplate = item.FurnitureTemplate.Equals(rhs.FurnitureTemplate);
-            ret.FNPR = MemorySliceExt.SequenceEqual(item.FNPR, rhs.FNPR);
+            ret.MarkerEntryPoints = item.MarkerEntryPoints.CollectionEqualsHelper(
+                rhs.MarkerEntryPoints,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
+                include);
             ret.MarkerModel = string.Equals(item.MarkerModel, rhs.MarkerModel);
             ret.MarkerParameters = item.MarkerParameters.CollectionEqualsHelper(
                 rhs.MarkerParameters,
@@ -2600,30 +2648,30 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.PNAM ?? true)
-                && item.PNAM is {} PNAMItem)
+            if ((printMask?.DefaultPrimitiveColor ?? true)
+                && item.DefaultPrimitiveColor is {} DefaultPrimitiveColorItem)
             {
-                sb.AppendLine($"PNAM => {SpanExt.ToHexString(PNAMItem)}");
+                sb.AppendItem(DefaultPrimitiveColorItem, "DefaultPrimitiveColor");
             }
-            if ((printMask?.FNAM ?? true)
-                && item.FNAM is {} FNAMItem)
+            if ((printMask?.Flags ?? true)
+                && item.Flags is {} FlagsItem)
             {
-                sb.AppendLine($"FNAM => {SpanExt.ToHexString(FNAMItem)}");
+                sb.AppendItem(FlagsItem, "Flags");
             }
-            if ((printMask?.JNAM ?? true)
-                && item.JNAM is {} JNAMItem)
+            if ((printMask?.ActivationAngleForPlayer ?? true)
+                && item.ActivationAngleForPlayer is {} ActivationAngleForPlayerItem)
             {
-                sb.AppendLine($"JNAM => {SpanExt.ToHexString(JNAMItem)}");
+                sb.AppendItem(ActivationAngleForPlayerItem, "ActivationAngleForPlayer");
             }
             if ((printMask?.MarkerFlags ?? true)
                 && item.MarkerFlags is {} MarkerFlagsItem)
             {
                 sb.AppendItem(MarkerFlagsItem, "MarkerFlags");
             }
-            if ((printMask?.GNAM ?? true)
-                && item.GNAM is {} GNAMItem)
+            if ((printMask?.ActivationAngleForSittingActor ?? true)
+                && item.ActivationAngleForSittingActor is {} ActivationAngleForSittingActorItem)
             {
-                sb.AppendLine($"GNAM => {SpanExt.ToHexString(GNAMItem)}");
+                sb.AppendItem(ActivationAngleForSittingActorItem, "ActivationAngleForSittingActor");
             }
             if ((printMask?.WorkbenchData ?? true)
                 && item.WorkbenchData is {} WorkbenchDataItem)
@@ -2634,10 +2682,19 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.FurnitureTemplate.FormKeyNullable, "FurnitureTemplate");
             }
-            if ((printMask?.FNPR ?? true)
-                && item.FNPR is {} FNPRItem)
+            if (printMask?.MarkerEntryPoints?.Overall ?? true)
             {
-                sb.AppendLine($"FNPR => {SpanExt.ToHexString(FNPRItem)}");
+                sb.AppendLine("MarkerEntryPoints =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in item.MarkerEntryPoints)
+                    {
+                        using (sb.Brace())
+                        {
+                            subItem?.Print(sb, "Item");
+                        }
+                    }
+                }
             }
             if ((printMask?.MarkerModel ?? true)
                 && item.MarkerModel is {} MarkerModelItem)
@@ -2777,25 +2834,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ForcedLocations.SequenceEqualNullable(rhs.ForcedLocations)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.PNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.DefaultPrimitiveColor) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.PNAM, rhs.PNAM)) return false;
+                if (!lhs.DefaultPrimitiveColor.ColorOnlyEquals(rhs.DefaultPrimitiveColor)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.FNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.Flags) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.FNAM, rhs.FNAM)) return false;
+                if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.JNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.ActivationAngleForPlayer) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.JNAM, rhs.JNAM)) return false;
+                if (lhs.ActivationAngleForPlayer != rhs.ActivationAngleForPlayer) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.MarkerFlags) ?? true))
             {
                 if (lhs.MarkerFlags != rhs.MarkerFlags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.GNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.ActivationAngleForSittingActor) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.GNAM, rhs.GNAM)) return false;
+                if (lhs.ActivationAngleForSittingActor != rhs.ActivationAngleForSittingActor) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.WorkbenchData) ?? true))
             {
@@ -2805,9 +2862,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.FurnitureTemplate.Equals(rhs.FurnitureTemplate)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.FNPR) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.MarkerEntryPoints) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.FNPR, rhs.FNPR)) return false;
+                if (!lhs.MarkerEntryPoints.SequenceEqual(rhs.MarkerEntryPoints, (l, r) => ((FurnitureMarkerEntryPointsCommon)((IFurnitureMarkerEntryPointsGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Terminal_FieldIndex.MarkerEntryPoints)))) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Terminal_FieldIndex.MarkerModel) ?? true))
             {
@@ -2873,35 +2930,32 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Keywords);
             hash.Add(item.Properties);
             hash.Add(item.ForcedLocations);
-            if (item.PNAM is {} PNAMItem)
+            if (item.DefaultPrimitiveColor is {} DefaultPrimitiveColoritem)
             {
-                hash.Add(PNAMItem);
+                hash.Add(DefaultPrimitiveColoritem);
             }
-            if (item.FNAM is {} FNAMItem)
+            if (item.Flags is {} Flagsitem)
             {
-                hash.Add(FNAMItem);
+                hash.Add(Flagsitem);
             }
-            if (item.JNAM is {} JNAMItem)
+            if (item.ActivationAngleForPlayer is {} ActivationAngleForPlayeritem)
             {
-                hash.Add(JNAMItem);
+                hash.Add(ActivationAngleForPlayeritem);
             }
             if (item.MarkerFlags is {} MarkerFlagsitem)
             {
                 hash.Add(MarkerFlagsitem);
             }
-            if (item.GNAM is {} GNAMItem)
+            if (item.ActivationAngleForSittingActor is {} ActivationAngleForSittingActoritem)
             {
-                hash.Add(GNAMItem);
+                hash.Add(ActivationAngleForSittingActoritem);
             }
             if (item.WorkbenchData is {} WorkbenchDataItem)
             {
                 hash.Add(WorkbenchDataItem);
             }
             hash.Add(item.FurnitureTemplate);
-            if (item.FNPR is {} FNPRItem)
-            {
-                hash.Add(FNPRItem);
-            }
+            hash.Add(item.MarkerEntryPoints);
             if (item.MarkerModel is {} MarkerModelitem)
             {
                 hash.Add(MarkerModelitem);
@@ -3349,53 +3403,25 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.PNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.DefaultPrimitiveColor) ?? true))
             {
-                if(rhs.PNAM is {} PNAMrhs)
-                {
-                    item.PNAM = PNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.PNAM = default;
-                }
+                item.DefaultPrimitiveColor = rhs.DefaultPrimitiveColor;
             }
-            if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.FNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.Flags) ?? true))
             {
-                if(rhs.FNAM is {} FNAMrhs)
-                {
-                    item.FNAM = FNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.FNAM = default;
-                }
+                item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.JNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.ActivationAngleForPlayer) ?? true))
             {
-                if(rhs.JNAM is {} JNAMrhs)
-                {
-                    item.JNAM = JNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.JNAM = default;
-                }
+                item.ActivationAngleForPlayer = rhs.ActivationAngleForPlayer;
             }
             if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.MarkerFlags) ?? true))
             {
                 item.MarkerFlags = rhs.MarkerFlags;
             }
-            if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.GNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.ActivationAngleForSittingActor) ?? true))
             {
-                if(rhs.GNAM is {} GNAMrhs)
-                {
-                    item.GNAM = GNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.GNAM = default;
-                }
+                item.ActivationAngleForSittingActor = rhs.ActivationAngleForSittingActor;
             }
             if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.WorkbenchData) ?? true))
             {
@@ -3412,15 +3438,28 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.FurnitureTemplate.SetTo(rhs.FurnitureTemplate.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.FNPR) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.MarkerEntryPoints) ?? true))
             {
-                if(rhs.FNPR is {} FNPRrhs)
+                errorMask?.PushIndex((int)Terminal_FieldIndex.MarkerEntryPoints);
+                try
                 {
-                    item.FNPR = FNPRrhs.ToArray();
+                    item.MarkerEntryPoints.SetTo(
+                        rhs.MarkerEntryPoints
+                        .Select(r =>
+                        {
+                            return r.DeepCopy(
+                                errorMask: errorMask,
+                                default(TranslationCrystal));
+                        }));
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.FNPR = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             if ((copyMask?.GetShouldTranslate((int)Terminal_FieldIndex.MarkerModel) ?? true))
@@ -3723,26 +3762,27 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         item: subItem);
                 });
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            ColorBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.PNAM,
+                item: item.DefaultPrimitiveColor,
                 header: translationParams.ConvertToCustom(RecordTypes.PNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.FNAM,
+            EnumBinaryTranslation<Terminal.Flag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Flags,
+                length: 2,
                 header: translationParams.ConvertToCustom(RecordTypes.FNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.JNAM,
+                item: item.ActivationAngleForPlayer,
                 header: translationParams.ConvertToCustom(RecordTypes.JNAM));
             EnumBinaryTranslation<FurnitureMarkerFlags, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer,
                 item.MarkerFlags,
                 length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.MNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.GNAM,
+                item: item.ActivationAngleForSittingActor,
                 header: translationParams.ConvertToCustom(RecordTypes.GNAM));
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
@@ -3752,10 +3792,17 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.FurnitureTemplate,
                 header: translationParams.ConvertToCustom(RecordTypes.FTMP));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFurnitureMarkerEntryPointsGetter>.Instance.Write(
                 writer: writer,
-                item: item.FNPR,
-                header: translationParams.ConvertToCustom(RecordTypes.FNPR));
+                items: item.MarkerEntryPoints,
+                transl: (MutagenWriter subWriter, IFurnitureMarkerEntryPointsGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((FurnitureMarkerEntryPointsBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.MarkerModel,
@@ -3957,20 +4004,22 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.PNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.PNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Terminal_FieldIndex.PNAM;
+                    item.DefaultPrimitiveColor = frame.ReadColor(ColorBinaryType.Alpha);
+                    return (int)Terminal_FieldIndex.DefaultPrimitiveColor;
                 }
                 case RecordTypeInts.FNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Terminal_FieldIndex.FNAM;
+                    item.Flags = EnumBinaryTranslation<Terminal.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)Terminal_FieldIndex.Flags;
                 }
                 case RecordTypeInts.JNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.JNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Terminal_FieldIndex.JNAM;
+                    item.ActivationAngleForPlayer = frame.ReadUInt16();
+                    return (int)Terminal_FieldIndex.ActivationAngleForPlayer;
                 }
                 case RecordTypeInts.MNAM:
                 {
@@ -3983,8 +4032,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.GNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.GNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Terminal_FieldIndex.GNAM;
+                    item.ActivationAngleForSittingActor = frame.ReadUInt16();
+                    return (int)Terminal_FieldIndex.ActivationAngleForSittingActor;
                 }
                 case RecordTypeInts.WBDT:
                 {
@@ -4000,9 +4049,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FNPR:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FNPR = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Terminal_FieldIndex.FNPR;
+                    item.MarkerEntryPoints.SetTo(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<FurnitureMarkerEntryPoints>.Instance.Parse(
+                            reader: frame,
+                            triggeringRecord: FurnitureMarkerEntryPoints_Registration.TriggerSpecs,
+                            translationParams: translationParams,
+                            transl: FurnitureMarkerEntryPoints.TryCreateFromBinary));
+                    return (int)Terminal_FieldIndex.MarkerEntryPoints;
                 }
                 case RecordTypeInts.XMRK:
                 {
@@ -4145,25 +4198,25 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         public IReadOnlyList<IObjectPropertyGetter>? Properties { get; private set; }
         public IReadOnlyList<IFormLinkGetter<ILocationReferenceTypeGetter>>? ForcedLocations { get; private set; }
-        #region PNAM
-        private int? _PNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? PNAM => _PNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _PNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region DefaultPrimitiveColor
+        private int? _DefaultPrimitiveColorLocation;
+        public Color? DefaultPrimitiveColor => _DefaultPrimitiveColorLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DefaultPrimitiveColorLocation.Value, _package.MetaData.Constants).ReadColor(ColorBinaryType.Alpha) : default(Color?);
         #endregion
-        #region FNAM
-        private int? _FNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? FNAM => _FNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Flags
+        private int? _FlagsLocation;
+        public Terminal.Flag? Flags => EnumBinaryTranslation<Terminal.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_FlagsLocation, _recordData, _package, 2);
         #endregion
-        #region JNAM
-        private int? _JNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? JNAM => _JNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _JNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region ActivationAngleForPlayer
+        private int? _ActivationAngleForPlayerLocation;
+        public UInt16? ActivationAngleForPlayer => _ActivationAngleForPlayerLocation.HasValue ? BinaryPrimitives.ReadUInt16LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ActivationAngleForPlayerLocation.Value, _package.MetaData.Constants)) : default(UInt16?);
         #endregion
         #region MarkerFlags
         private int? _MarkerFlagsLocation;
         public FurnitureMarkerFlags? MarkerFlags => EnumBinaryTranslation<FurnitureMarkerFlags, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_MarkerFlagsLocation, _recordData, _package, 4);
         #endregion
-        #region GNAM
-        private int? _GNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? GNAM => _GNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _GNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region ActivationAngleForSittingActor
+        private int? _ActivationAngleForSittingActorLocation;
+        public UInt16? ActivationAngleForSittingActor => _ActivationAngleForSittingActorLocation.HasValue ? BinaryPrimitives.ReadUInt16LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ActivationAngleForSittingActorLocation.Value, _package.MetaData.Constants)) : default(UInt16?);
         #endregion
         #region WorkbenchData
         private int? _WorkbenchDataLocation;
@@ -4173,10 +4226,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _FurnitureTemplateLocation;
         public IFormLinkNullableGetter<IFurnitureGetter> FurnitureTemplate => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IFurnitureGetter>(_package, _recordData, _FurnitureTemplateLocation);
         #endregion
-        #region FNPR
-        private int? _FNPRLocation;
-        public ReadOnlyMemorySlice<Byte>? FNPR => _FNPRLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FNPRLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
-        #endregion
+        public IReadOnlyList<IFurnitureMarkerEntryPointsGetter> MarkerEntryPoints { get; private set; } = [];
         #region MarkerModel
         private int? _MarkerModelLocation;
         public String? MarkerModel => _MarkerModelLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _MarkerModelLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
@@ -4354,18 +4404,18 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.PNAM:
                 {
-                    _PNAMLocation = (stream.Position - offset);
-                    return (int)Terminal_FieldIndex.PNAM;
+                    _DefaultPrimitiveColorLocation = (stream.Position - offset);
+                    return (int)Terminal_FieldIndex.DefaultPrimitiveColor;
                 }
                 case RecordTypeInts.FNAM:
                 {
-                    _FNAMLocation = (stream.Position - offset);
-                    return (int)Terminal_FieldIndex.FNAM;
+                    _FlagsLocation = (stream.Position - offset);
+                    return (int)Terminal_FieldIndex.Flags;
                 }
                 case RecordTypeInts.JNAM:
                 {
-                    _JNAMLocation = (stream.Position - offset);
-                    return (int)Terminal_FieldIndex.JNAM;
+                    _ActivationAngleForPlayerLocation = (stream.Position - offset);
+                    return (int)Terminal_FieldIndex.ActivationAngleForPlayer;
                 }
                 case RecordTypeInts.MNAM:
                 {
@@ -4374,8 +4424,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.GNAM:
                 {
-                    _GNAMLocation = (stream.Position - offset);
-                    return (int)Terminal_FieldIndex.GNAM;
+                    _ActivationAngleForSittingActorLocation = (stream.Position - offset);
+                    return (int)Terminal_FieldIndex.ActivationAngleForSittingActor;
                 }
                 case RecordTypeInts.WBDT:
                 {
@@ -4389,8 +4439,18 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FNPR:
                 {
-                    _FNPRLocation = (stream.Position - offset);
-                    return (int)Terminal_FieldIndex.FNPR;
+                    this.MarkerEntryPoints = BinaryOverlayList.FactoryByArray<IFurnitureMarkerEntryPointsGetter>(
+                        mem: stream.RemainingMemory,
+                        package: _package,
+                        translationParams: translationParams,
+                        getter: (s, p, recConv) => FurnitureMarkerEntryPointsBinaryOverlay.FurnitureMarkerEntryPointsFactory(new OverlayStream(s, p), p, recConv),
+                        locs: ParseRecordLocations(
+                            stream: stream,
+                            trigger: FurnitureMarkerEntryPoints_Registration.TriggerSpecs,
+                            triggersAlwaysAreNewRecords: true,
+                            constants: _package.MetaData.Constants.SubConstants,
+                            skipHeader: false));
+                    return (int)Terminal_FieldIndex.MarkerEntryPoints;
                 }
                 case RecordTypeInts.XMRK:
                 {
