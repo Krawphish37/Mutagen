@@ -1,6 +1,7 @@
 ﻿using Noggog;
 using System.Buffers.Binary;
 using System.Runtime.CompilerServices;
+using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Exceptions;
 
 namespace Mutagen.Bethesda.Translations.Binary;
@@ -15,7 +16,8 @@ public sealed class FloatBinaryTranslation<TReader, TWriter> : PrimitiveBinaryTr
     public override float Parse(TReader reader)
     {
         var ret = reader.ReadFloat();
-        if (ret == float.Epsilon)
+        if (ret == float.Epsilon
+            && reader is not IMutagenReadStream { MetaData.Constants.ExactFloats: true })
         {
             return 0f;
         }
@@ -85,6 +87,12 @@ public sealed class FloatBinaryTranslation<TReader, TWriter> : PrimitiveBinaryTr
 
     public override void Write(TWriter writer, float item)
     {
+        if (writer is MutagenWriter { MetaData.Constants.ExactFloats: true })
+        {
+            // Keep the stored bits: -0.0 and float.Epsilon round-trip as themselves
+            writer.Write(item);
+            return;
+        }
         if (item == float.Epsilon)
         {
             item = 0f;

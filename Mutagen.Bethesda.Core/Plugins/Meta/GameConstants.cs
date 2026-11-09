@@ -66,6 +66,12 @@ public sealed record GameConstants
 
     public string DataFolderRelativePath { get; init; } = "Data";
 
+    /// <summary>
+    /// Whether floats are read and written with their exact stored bits.
+    /// When false (the long-standing default), float.Epsilon is read as 0, and -0.0 and float.Epsilon are written as 0.
+    /// </summary>
+    public bool ExactFloats { get; init; }
+
     public bool UsesStrings => StringsLanguageFormat != null;
     
     public bool SeparateMasterLoadOrders { get; init; }
@@ -545,7 +551,10 @@ public sealed record GameConstants
         pluginsFileInGameFolder: false,
         smallMasterFlag: 0x0000_0100,
         mediumMasterFlag: 0x0000_0400,
-        encodings: new(NonTranslated: MutagenEncoding._1252, NonLocalized: MutagenEncoding._1252));
+        encodings: new(NonTranslated: MutagenEncoding._1252, NonLocalized: MutagenEncoding._1252))
+    {
+        ExactFloats = true,
+    };
 
     /// <summary> 
     /// Returns record constants related to a certain ObjectType 
