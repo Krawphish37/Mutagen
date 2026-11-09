@@ -20,4 +20,14 @@ partial class Terminal
         UnitedColonies,
         CrimsonFleet,
     }
+
+    [Flags]
+    public enum Flag
+    {
+        NonPlanar = 0x01,
+        IgnoredBySandbox = 0x02,
+        Unknown2 = 0x04,
+        IsARadio = 0x10,
+        AllowWaterDisplacements = 0x20,
+    }
 }

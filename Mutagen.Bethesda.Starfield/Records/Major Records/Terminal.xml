@@ -19,14 +19,14 @@
       <List name="ForcedLocations" recordType="FTYP" >
         <FormLink refName="LocationReferenceType" />
       </List>
-      <ByteArray name="PNAM" recordType="PNAM" unknown="true" />
-      <ByteArray name="FNAM" recordType="FNAM" unknown="true" />
-      <ByteArray name="JNAM" recordType="JNAM" unknown="true" />
+      <Color name="DefaultPrimitiveColor" recordType="PNAM" binaryType="Alpha" />
+      <Enum name="Flags" enumName="Terminal.Flag" recordType="FNAM" byteLength="2" />
+      <UInt16 name="ActivationAngleForPlayer" recordType="JNAM" />
       <Enum name="MarkerFlags" enumName="FurnitureMarkerFlags" recordType="MNAM" />
-      <ByteArray name="GNAM" recordType="GNAM" unknown="true" />
+      <UInt16 name="ActivationAngleForSittingActor" recordType="GNAM" />
       <ByteArray name="WorkbenchData" recordType="WBDT" />
       <FormLink name="FurnitureTemplate" refName="Furniture" recordType="FTMP" />
-      <ByteArray name="FNPR" recordType="FNPR" unknown="true" />
+      <RefList name="MarkerEntryPoints" refName="FurnitureMarkerEntryPoints" />
       <String name="MarkerModel" recordType="XMRK" />
       <RefList name="MarkerParameters" refName="FurnitureMarkerParameters" recordType="SNAM" />
     </Fields>
