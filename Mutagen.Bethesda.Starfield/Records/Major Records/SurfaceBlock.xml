@@ -5,7 +5,7 @@
       <RefList name="Components" refName="AComponent" />
       <String name="DataFile" recordType="ANAM" />
       <RefDirect name="Size" recordType="DNAM" refName="SurfaceBlockIntItem" nullable="False" />
-      <RefDirect name="ENAM" recordType="ENAM" refName="SurfaceBlockFloatItem" nullable="False" />
+      <RefDirect name="Height" recordType="ENAM" refName="SurfaceBlockFloatItem" nullable="False" />
       <List name="Connections" recordType="FNAM">
         <UInt16 />
       </List>
@@ -19,7 +19,7 @@
       <String name="NAM1" recordType="NAM1" />
       <P2Int32 name="CellMin" recordType="NAM2" />
       <P2Int32 name="CellMax" recordType="NAM3" />
-      <RefDirect name="NAM4" recordType="NAM4" refName="SurfaceBlockFloatItem" />
+      <RefDirect name="HeightRange" recordType="NAM4" refName="SurfaceBlockFloatItem" />
       <FormLink name="SourceBlock" recordType="NAM5" refName="SurfaceBlock" />
     </Fields>
   </Object>

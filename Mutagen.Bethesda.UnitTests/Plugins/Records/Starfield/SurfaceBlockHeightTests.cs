@@ -20,10 +20,10 @@ public class SurfaceBlockHeightTests
         var bytes = Record("SFBK", Subrecord("ENAM", "00-00-FA-C3-00-00-7A-44"), Subrecord("NAM4", "00-00-00-00-00-00-48-44"));
         foreach (var block in ReadBoth<ISurfaceBlockGetter>(bytes, f => SurfaceBlock.CreateFromBinary(f), (s, p) => SurfaceBlockBinaryOverlay.SurfaceBlockFactory(s, p)))
         {
-            block.ENAM.Min.ShouldBe(-500f);
-            block.ENAM.Max.ShouldBe(1000f);
-            block.NAM4!.Min.ShouldBe(0f);
-            block.NAM4!.Max.ShouldBe(800f);
+            block.Height.Min.ShouldBe(-500f);
+            block.Height.Max.ShouldBe(1000f);
+            block.HeightRange!.Min.ShouldBe(0f);
+            block.HeightRange!.Max.ShouldBe(800f);
         }
     }
 
@@ -31,8 +31,8 @@ public class SurfaceBlockHeightTests
     public void Height_Writes()
     {
         var block = new SurfaceBlock(new FormKey(TestModKey, 0x800), StarfieldRelease.Starfield);
-        block.ENAM.Min = -500f;
-        block.ENAM.Max = 1000f;
+        block.Height.Min = -500f;
+        block.Height.Max = 1000f;
         var written = GameConstants.Starfield.MajorRecord(Write(w => block.WriteToBinary(w)));
         written.FindSubrecord(new RecordType("ENAM")).Content.ToArray().ShouldBe(Hex("00-00-FA-C3-00-00-7A-44"));
     }

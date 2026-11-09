@@ -81,10 +81,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ISurfaceBlockIntItemGetter ISurfaceBlockGetter.Size => Size;
         #endregion
-        #region ENAM
-        public SurfaceBlockFloatItem ENAM { get; set; } = new SurfaceBlockFloatItem();
+        #region Height
+        public SurfaceBlockFloatItem Height { get; set; } = new SurfaceBlockFloatItem();
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISurfaceBlockFloatItemGetter ISurfaceBlockGetter.ENAM => ENAM;
+        ISurfaceBlockFloatItemGetter ISurfaceBlockGetter.Height => Height;
         #endregion
         #region Connections
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -140,16 +140,16 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         P2Int? ISurfaceBlockGetter.CellMax => this.CellMax;
         #endregion
-        #region NAM4
+        #region HeightRange
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SurfaceBlockFloatItem? _NAM4;
-        public SurfaceBlockFloatItem? NAM4
+        private SurfaceBlockFloatItem? _HeightRange;
+        public SurfaceBlockFloatItem? HeightRange
         {
-            get => _NAM4;
-            set => _NAM4 = value;
+            get => _HeightRange;
+            set => _HeightRange = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISurfaceBlockFloatItemGetter? ISurfaceBlockGetter.NAM4 => this.NAM4;
+        ISurfaceBlockFloatItemGetter? ISurfaceBlockGetter.HeightRange => this.HeightRange;
         #endregion
         #region SourceBlock
         private readonly IFormLinkNullable<ISurfaceBlockGetter> _SourceBlock = new FormLinkNullable<ISurfaceBlockGetter>();
@@ -189,7 +189,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
                 this.DataFile = initialValue;
                 this.Size = new MaskItem<TItem, SurfaceBlockIntItem.Mask<TItem>?>(initialValue, new SurfaceBlockIntItem.Mask<TItem>(initialValue));
-                this.ENAM = new MaskItem<TItem, SurfaceBlockFloatItem.Mask<TItem>?>(initialValue, new SurfaceBlockFloatItem.Mask<TItem>(initialValue));
+                this.Height = new MaskItem<TItem, SurfaceBlockFloatItem.Mask<TItem>?>(initialValue, new SurfaceBlockFloatItem.Mask<TItem>(initialValue));
                 this.Connections = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.Rarity = initialValue;
                 this.ManualAlignmentValue = initialValue;
@@ -201,7 +201,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.NAM1 = initialValue;
                 this.CellMin = initialValue;
                 this.CellMax = initialValue;
-                this.NAM4 = new MaskItem<TItem, SurfaceBlockFloatItem.Mask<TItem>?>(initialValue, new SurfaceBlockFloatItem.Mask<TItem>(initialValue));
+                this.HeightRange = new MaskItem<TItem, SurfaceBlockFloatItem.Mask<TItem>?>(initialValue, new SurfaceBlockFloatItem.Mask<TItem>(initialValue));
                 this.SourceBlock = initialValue;
             }
 
@@ -216,7 +216,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Components,
                 TItem DataFile,
                 TItem Size,
-                TItem ENAM,
+                TItem Height,
                 TItem Connections,
                 TItem Rarity,
                 TItem ManualAlignmentValue,
@@ -228,7 +228,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem NAM1,
                 TItem CellMin,
                 TItem CellMax,
-                TItem NAM4,
+                TItem HeightRange,
                 TItem SourceBlock)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
@@ -242,7 +242,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
                 this.DataFile = DataFile;
                 this.Size = new MaskItem<TItem, SurfaceBlockIntItem.Mask<TItem>?>(Size, new SurfaceBlockIntItem.Mask<TItem>(Size));
-                this.ENAM = new MaskItem<TItem, SurfaceBlockFloatItem.Mask<TItem>?>(ENAM, new SurfaceBlockFloatItem.Mask<TItem>(ENAM));
+                this.Height = new MaskItem<TItem, SurfaceBlockFloatItem.Mask<TItem>?>(Height, new SurfaceBlockFloatItem.Mask<TItem>(Height));
                 this.Connections = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Connections, []);
                 this.Rarity = Rarity;
                 this.ManualAlignmentValue = ManualAlignmentValue;
@@ -254,7 +254,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.NAM1 = NAM1;
                 this.CellMin = CellMin;
                 this.CellMax = CellMax;
-                this.NAM4 = new MaskItem<TItem, SurfaceBlockFloatItem.Mask<TItem>?>(NAM4, new SurfaceBlockFloatItem.Mask<TItem>(NAM4));
+                this.HeightRange = new MaskItem<TItem, SurfaceBlockFloatItem.Mask<TItem>?>(HeightRange, new SurfaceBlockFloatItem.Mask<TItem>(HeightRange));
                 this.SourceBlock = SourceBlock;
             }
 
@@ -270,7 +270,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
             public TItem DataFile;
             public MaskItem<TItem, SurfaceBlockIntItem.Mask<TItem>?>? Size { get; set; }
-            public MaskItem<TItem, SurfaceBlockFloatItem.Mask<TItem>?>? ENAM { get; set; }
+            public MaskItem<TItem, SurfaceBlockFloatItem.Mask<TItem>?>? Height { get; set; }
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Connections;
             public TItem Rarity;
             public TItem ManualAlignmentValue;
@@ -282,7 +282,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem NAM1;
             public TItem CellMin;
             public TItem CellMax;
-            public MaskItem<TItem, SurfaceBlockFloatItem.Mask<TItem>?>? NAM4 { get; set; }
+            public MaskItem<TItem, SurfaceBlockFloatItem.Mask<TItem>?>? HeightRange { get; set; }
             public TItem SourceBlock;
             #endregion
 
@@ -300,7 +300,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Components, rhs.Components)) return false;
                 if (!object.Equals(this.DataFile, rhs.DataFile)) return false;
                 if (!object.Equals(this.Size, rhs.Size)) return false;
-                if (!object.Equals(this.ENAM, rhs.ENAM)) return false;
+                if (!object.Equals(this.Height, rhs.Height)) return false;
                 if (!object.Equals(this.Connections, rhs.Connections)) return false;
                 if (!object.Equals(this.Rarity, rhs.Rarity)) return false;
                 if (!object.Equals(this.ManualAlignmentValue, rhs.ManualAlignmentValue)) return false;
@@ -312,7 +312,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.NAM1, rhs.NAM1)) return false;
                 if (!object.Equals(this.CellMin, rhs.CellMin)) return false;
                 if (!object.Equals(this.CellMax, rhs.CellMax)) return false;
-                if (!object.Equals(this.NAM4, rhs.NAM4)) return false;
+                if (!object.Equals(this.HeightRange, rhs.HeightRange)) return false;
                 if (!object.Equals(this.SourceBlock, rhs.SourceBlock)) return false;
                 return true;
             }
@@ -322,7 +322,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Components);
                 hash.Add(this.DataFile);
                 hash.Add(this.Size);
-                hash.Add(this.ENAM);
+                hash.Add(this.Height);
                 hash.Add(this.Connections);
                 hash.Add(this.Rarity);
                 hash.Add(this.ManualAlignmentValue);
@@ -334,7 +334,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.NAM1);
                 hash.Add(this.CellMin);
                 hash.Add(this.CellMax);
-                hash.Add(this.NAM4);
+                hash.Add(this.HeightRange);
                 hash.Add(this.SourceBlock);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -364,10 +364,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.Size.Overall)) return false;
                     if (this.Size.Specific != null && !this.Size.Specific.All(eval)) return false;
                 }
-                if (ENAM != null)
+                if (Height != null)
                 {
-                    if (!eval(this.ENAM.Overall)) return false;
-                    if (this.ENAM.Specific != null && !this.ENAM.Specific.All(eval)) return false;
+                    if (!eval(this.Height.Overall)) return false;
+                    if (this.Height.Specific != null && !this.Height.Specific.All(eval)) return false;
                 }
                 if (this.Connections != null)
                 {
@@ -390,10 +390,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.NAM1)) return false;
                 if (!eval(this.CellMin)) return false;
                 if (!eval(this.CellMax)) return false;
-                if (NAM4 != null)
+                if (HeightRange != null)
                 {
-                    if (!eval(this.NAM4.Overall)) return false;
-                    if (this.NAM4.Specific != null && !this.NAM4.Specific.All(eval)) return false;
+                    if (!eval(this.HeightRange.Overall)) return false;
+                    if (this.HeightRange.Specific != null && !this.HeightRange.Specific.All(eval)) return false;
                 }
                 if (!eval(this.SourceBlock)) return false;
                 return true;
@@ -422,10 +422,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.Size.Overall)) return true;
                     if (this.Size.Specific != null && this.Size.Specific.Any(eval)) return true;
                 }
-                if (ENAM != null)
+                if (Height != null)
                 {
-                    if (eval(this.ENAM.Overall)) return true;
-                    if (this.ENAM.Specific != null && this.ENAM.Specific.Any(eval)) return true;
+                    if (eval(this.Height.Overall)) return true;
+                    if (this.Height.Specific != null && this.Height.Specific.Any(eval)) return true;
                 }
                 if (this.Connections != null)
                 {
@@ -448,10 +448,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.NAM1)) return true;
                 if (eval(this.CellMin)) return true;
                 if (eval(this.CellMax)) return true;
-                if (NAM4 != null)
+                if (HeightRange != null)
                 {
-                    if (eval(this.NAM4.Overall)) return true;
-                    if (this.NAM4.Specific != null && this.NAM4.Specific.Any(eval)) return true;
+                    if (eval(this.HeightRange.Overall)) return true;
+                    if (this.HeightRange.Specific != null && this.HeightRange.Specific.Any(eval)) return true;
                 }
                 if (eval(this.SourceBlock)) return true;
                 return false;
@@ -486,7 +486,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 obj.DataFile = eval(this.DataFile);
                 obj.Size = this.Size == null ? null : new MaskItem<R, SurfaceBlockIntItem.Mask<R>?>(eval(this.Size.Overall), this.Size.Specific?.Translate(eval));
-                obj.ENAM = this.ENAM == null ? null : new MaskItem<R, SurfaceBlockFloatItem.Mask<R>?>(eval(this.ENAM.Overall), this.ENAM.Specific?.Translate(eval));
+                obj.Height = this.Height == null ? null : new MaskItem<R, SurfaceBlockFloatItem.Mask<R>?>(eval(this.Height.Overall), this.Height.Specific?.Translate(eval));
                 if (Connections != null)
                 {
                     obj.Connections = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.Connections.Overall), []);
@@ -511,7 +511,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.NAM1 = eval(this.NAM1);
                 obj.CellMin = eval(this.CellMin);
                 obj.CellMax = eval(this.CellMax);
-                obj.NAM4 = this.NAM4 == null ? null : new MaskItem<R, SurfaceBlockFloatItem.Mask<R>?>(eval(this.NAM4.Overall), this.NAM4.Specific?.Translate(eval));
+                obj.HeightRange = this.HeightRange == null ? null : new MaskItem<R, SurfaceBlockFloatItem.Mask<R>?>(eval(this.HeightRange.Overall), this.HeightRange.Specific?.Translate(eval));
                 obj.SourceBlock = eval(this.SourceBlock);
             }
             #endregion
@@ -558,9 +558,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         Size?.Print(sb);
                     }
-                    if (printMask?.ENAM?.Overall ?? true)
+                    if (printMask?.Height?.Overall ?? true)
                     {
-                        ENAM?.Print(sb);
+                        Height?.Print(sb);
                     }
                     if ((printMask?.Connections?.Overall ?? true)
                         && Connections is {} ConnectionsItem)
@@ -623,9 +623,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(CellMax, "CellMax");
                     }
-                    if (printMask?.NAM4?.Overall ?? true)
+                    if (printMask?.HeightRange?.Overall ?? true)
                     {
-                        NAM4?.Print(sb);
+                        HeightRange?.Print(sb);
                     }
                     if (printMask?.SourceBlock ?? true)
                     {
@@ -645,7 +645,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
             public Exception? DataFile;
             public MaskItem<Exception?, SurfaceBlockIntItem.ErrorMask?>? Size;
-            public MaskItem<Exception?, SurfaceBlockFloatItem.ErrorMask?>? ENAM;
+            public MaskItem<Exception?, SurfaceBlockFloatItem.ErrorMask?>? Height;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Connections;
             public Exception? Rarity;
             public Exception? ManualAlignmentValue;
@@ -657,7 +657,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? NAM1;
             public Exception? CellMin;
             public Exception? CellMax;
-            public MaskItem<Exception?, SurfaceBlockFloatItem.ErrorMask?>? NAM4;
+            public MaskItem<Exception?, SurfaceBlockFloatItem.ErrorMask?>? HeightRange;
             public Exception? SourceBlock;
             #endregion
 
@@ -673,8 +673,8 @@ namespace Mutagen.Bethesda.Starfield
                         return DataFile;
                     case SurfaceBlock_FieldIndex.Size:
                         return Size;
-                    case SurfaceBlock_FieldIndex.ENAM:
-                        return ENAM;
+                    case SurfaceBlock_FieldIndex.Height:
+                        return Height;
                     case SurfaceBlock_FieldIndex.Connections:
                         return Connections;
                     case SurfaceBlock_FieldIndex.Rarity:
@@ -697,8 +697,8 @@ namespace Mutagen.Bethesda.Starfield
                         return CellMin;
                     case SurfaceBlock_FieldIndex.CellMax:
                         return CellMax;
-                    case SurfaceBlock_FieldIndex.NAM4:
-                        return NAM4;
+                    case SurfaceBlock_FieldIndex.HeightRange:
+                        return HeightRange;
                     case SurfaceBlock_FieldIndex.SourceBlock:
                         return SourceBlock;
                     default:
@@ -720,8 +720,8 @@ namespace Mutagen.Bethesda.Starfield
                     case SurfaceBlock_FieldIndex.Size:
                         this.Size = new MaskItem<Exception?, SurfaceBlockIntItem.ErrorMask?>(ex, null);
                         break;
-                    case SurfaceBlock_FieldIndex.ENAM:
-                        this.ENAM = new MaskItem<Exception?, SurfaceBlockFloatItem.ErrorMask?>(ex, null);
+                    case SurfaceBlock_FieldIndex.Height:
+                        this.Height = new MaskItem<Exception?, SurfaceBlockFloatItem.ErrorMask?>(ex, null);
                         break;
                     case SurfaceBlock_FieldIndex.Connections:
                         this.Connections = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
@@ -756,8 +756,8 @@ namespace Mutagen.Bethesda.Starfield
                     case SurfaceBlock_FieldIndex.CellMax:
                         this.CellMax = ex;
                         break;
-                    case SurfaceBlock_FieldIndex.NAM4:
-                        this.NAM4 = new MaskItem<Exception?, SurfaceBlockFloatItem.ErrorMask?>(ex, null);
+                    case SurfaceBlock_FieldIndex.HeightRange:
+                        this.HeightRange = new MaskItem<Exception?, SurfaceBlockFloatItem.ErrorMask?>(ex, null);
                         break;
                     case SurfaceBlock_FieldIndex.SourceBlock:
                         this.SourceBlock = ex;
@@ -782,8 +782,8 @@ namespace Mutagen.Bethesda.Starfield
                     case SurfaceBlock_FieldIndex.Size:
                         this.Size = (MaskItem<Exception?, SurfaceBlockIntItem.ErrorMask?>?)obj;
                         break;
-                    case SurfaceBlock_FieldIndex.ENAM:
-                        this.ENAM = (MaskItem<Exception?, SurfaceBlockFloatItem.ErrorMask?>?)obj;
+                    case SurfaceBlock_FieldIndex.Height:
+                        this.Height = (MaskItem<Exception?, SurfaceBlockFloatItem.ErrorMask?>?)obj;
                         break;
                     case SurfaceBlock_FieldIndex.Connections:
                         this.Connections = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
@@ -818,8 +818,8 @@ namespace Mutagen.Bethesda.Starfield
                     case SurfaceBlock_FieldIndex.CellMax:
                         this.CellMax = (Exception?)obj;
                         break;
-                    case SurfaceBlock_FieldIndex.NAM4:
-                        this.NAM4 = (MaskItem<Exception?, SurfaceBlockFloatItem.ErrorMask?>?)obj;
+                    case SurfaceBlock_FieldIndex.HeightRange:
+                        this.HeightRange = (MaskItem<Exception?, SurfaceBlockFloatItem.ErrorMask?>?)obj;
                         break;
                     case SurfaceBlock_FieldIndex.SourceBlock:
                         this.SourceBlock = (Exception?)obj;
@@ -836,7 +836,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Components != null) return true;
                 if (DataFile != null) return true;
                 if (Size != null) return true;
-                if (ENAM != null) return true;
+                if (Height != null) return true;
                 if (Connections != null) return true;
                 if (Rarity != null) return true;
                 if (ManualAlignmentValue != null) return true;
@@ -848,7 +848,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (NAM1 != null) return true;
                 if (CellMin != null) return true;
                 if (CellMax != null) return true;
-                if (NAM4 != null) return true;
+                if (HeightRange != null) return true;
                 if (SourceBlock != null) return true;
                 return false;
             }
@@ -898,7 +898,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(DataFile, "DataFile");
                 }
                 Size?.Print(sb);
-                ENAM?.Print(sb);
+                Height?.Print(sb);
                 if (Connections is {} ConnectionsItem)
                 {
                     sb.AppendLine("Connections =>");
@@ -949,7 +949,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(CellMax, "CellMax");
                 }
-                NAM4?.Print(sb);
+                HeightRange?.Print(sb);
                 {
                     sb.AppendItem(SourceBlock, "SourceBlock");
                 }
@@ -964,7 +964,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
                 ret.DataFile = this.DataFile.Combine(rhs.DataFile);
                 ret.Size = this.Size.Combine(rhs.Size, (l, r) => l.Combine(r));
-                ret.ENAM = this.ENAM.Combine(rhs.ENAM, (l, r) => l.Combine(r));
+                ret.Height = this.Height.Combine(rhs.Height, (l, r) => l.Combine(r));
                 ret.Connections = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Connections?.Overall, rhs.Connections?.Overall), Noggog.ExceptionExt.Combine(this.Connections?.Specific, rhs.Connections?.Specific));
                 ret.Rarity = this.Rarity.Combine(rhs.Rarity);
                 ret.ManualAlignmentValue = this.ManualAlignmentValue.Combine(rhs.ManualAlignmentValue);
@@ -976,7 +976,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.NAM1 = this.NAM1.Combine(rhs.NAM1);
                 ret.CellMin = this.CellMin.Combine(rhs.CellMin);
                 ret.CellMax = this.CellMax.Combine(rhs.CellMax);
-                ret.NAM4 = this.NAM4.Combine(rhs.NAM4, (l, r) => l.Combine(r));
+                ret.HeightRange = this.HeightRange.Combine(rhs.HeightRange, (l, r) => l.Combine(r));
                 ret.SourceBlock = this.SourceBlock.Combine(rhs.SourceBlock);
                 return ret;
             }
@@ -1003,7 +1003,7 @@ namespace Mutagen.Bethesda.Starfield
             public AComponent.TranslationMask? Components;
             public bool DataFile;
             public SurfaceBlockIntItem.TranslationMask? Size;
-            public SurfaceBlockFloatItem.TranslationMask? ENAM;
+            public SurfaceBlockFloatItem.TranslationMask? Height;
             public bool Connections;
             public bool Rarity;
             public bool ManualAlignmentValue;
@@ -1015,7 +1015,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool NAM1;
             public bool CellMin;
             public bool CellMax;
-            public SurfaceBlockFloatItem.TranslationMask? NAM4;
+            public SurfaceBlockFloatItem.TranslationMask? HeightRange;
             public bool SourceBlock;
             #endregion
 
@@ -1048,7 +1048,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
                 ret.Add((DataFile, null));
                 ret.Add((Size != null ? Size.OnOverall : DefaultOn, Size?.GetCrystal()));
-                ret.Add((ENAM != null ? ENAM.OnOverall : DefaultOn, ENAM?.GetCrystal()));
+                ret.Add((Height != null ? Height.OnOverall : DefaultOn, Height?.GetCrystal()));
                 ret.Add((Connections, null));
                 ret.Add((Rarity, null));
                 ret.Add((ManualAlignmentValue, null));
@@ -1060,7 +1060,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((NAM1, null));
                 ret.Add((CellMin, null));
                 ret.Add((CellMax, null));
-                ret.Add((NAM4 != null ? NAM4.OnOverall : DefaultOn, NAM4?.GetCrystal()));
+                ret.Add((HeightRange != null ? HeightRange.OnOverall : DefaultOn, HeightRange?.GetCrystal()));
                 ret.Add((SourceBlock, null));
             }
 
@@ -1217,7 +1217,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<AComponent> Components { get; }
         new String? DataFile { get; set; }
         new SurfaceBlockIntItem Size { get; set; }
-        new SurfaceBlockFloatItem ENAM { get; set; }
+        new SurfaceBlockFloatItem Height { get; set; }
         new ExtendedList<UInt16>? Connections { get; set; }
         new SurfaceBlock.RarityEnum? Rarity { get; set; }
         new Int16 ManualAlignmentValue { get; set; }
@@ -1229,7 +1229,7 @@ namespace Mutagen.Bethesda.Starfield
         new String? NAM1 { get; set; }
         new P2Int? CellMin { get; set; }
         new P2Int? CellMax { get; set; }
-        new SurfaceBlockFloatItem? NAM4 { get; set; }
+        new SurfaceBlockFloatItem? HeightRange { get; set; }
         new IFormLinkNullable<ISurfaceBlockGetter> SourceBlock { get; set; }
     }
 
@@ -1253,7 +1253,7 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IAComponentGetter> Components { get; }
         String? DataFile { get; }
         ISurfaceBlockIntItemGetter Size { get; }
-        ISurfaceBlockFloatItemGetter ENAM { get; }
+        ISurfaceBlockFloatItemGetter Height { get; }
         IReadOnlyList<UInt16>? Connections { get; }
         SurfaceBlock.RarityEnum? Rarity { get; }
         Int16 ManualAlignmentValue { get; }
@@ -1265,7 +1265,7 @@ namespace Mutagen.Bethesda.Starfield
         String? NAM1 { get; }
         P2Int? CellMin { get; }
         P2Int? CellMax { get; }
-        ISurfaceBlockFloatItemGetter? NAM4 { get; }
+        ISurfaceBlockFloatItemGetter? HeightRange { get; }
         IFormLinkNullableGetter<ISurfaceBlockGetter> SourceBlock { get; }
 
     }
@@ -1446,7 +1446,7 @@ namespace Mutagen.Bethesda.Starfield
         Components = 7,
         DataFile = 8,
         Size = 9,
-        ENAM = 10,
+        Height = 10,
         Connections = 11,
         Rarity = 12,
         ManualAlignmentValue = 13,
@@ -1458,7 +1458,7 @@ namespace Mutagen.Bethesda.Starfield
         NAM1 = 19,
         CellMin = 20,
         CellMax = 21,
-        NAM4 = 22,
+        HeightRange = 22,
         SourceBlock = 23,
     }
     #endregion
@@ -1570,7 +1570,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Components.Clear();
             item.DataFile = default;
             item.Size.Clear();
-            item.ENAM.Clear();
+            item.Height.Clear();
             item.Connections = null;
             item.Rarity = default;
             item.ManualAlignmentValue = default(Int16);
@@ -1582,7 +1582,7 @@ namespace Mutagen.Bethesda.Starfield
             item.NAM1 = default;
             item.CellMin = default;
             item.CellMax = default;
-            item.NAM4 = null;
+            item.HeightRange = null;
             item.SourceBlock.Clear();
             base.Clear(item);
         }
@@ -1700,7 +1700,7 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.DataFile = string.Equals(item.DataFile, rhs.DataFile);
             ret.Size = MaskItemExt.Factory(item.Size.GetEqualsMask(rhs.Size, include), include);
-            ret.ENAM = MaskItemExt.Factory(item.ENAM.GetEqualsMask(rhs.ENAM, include), include);
+            ret.Height = MaskItemExt.Factory(item.Height.GetEqualsMask(rhs.Height, include), include);
             ret.Connections = item.Connections.CollectionEqualsHelper(
                 rhs.Connections,
                 (l, r) => l == r,
@@ -1715,9 +1715,9 @@ namespace Mutagen.Bethesda.Starfield
             ret.NAM1 = string.Equals(item.NAM1, rhs.NAM1);
             ret.CellMin = item.CellMin.Equals(rhs.CellMin);
             ret.CellMax = item.CellMax.Equals(rhs.CellMax);
-            ret.NAM4 = EqualsMaskHelper.EqualsHelper(
-                item.NAM4,
-                rhs.NAM4,
+            ret.HeightRange = EqualsMaskHelper.EqualsHelper(
+                item.HeightRange,
+                rhs.HeightRange,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.SourceBlock = item.SourceBlock.Equals(rhs.SourceBlock);
@@ -1793,9 +1793,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Size?.Print(sb, "Size");
             }
-            if (printMask?.ENAM?.Overall ?? true)
+            if (printMask?.Height?.Overall ?? true)
             {
-                item.ENAM?.Print(sb, "ENAM");
+                item.Height?.Print(sb, "Height");
             }
             if ((printMask?.Connections?.Overall ?? true)
                 && item.Connections is {} ConnectionsItem)
@@ -1857,10 +1857,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(CellMaxItem, "CellMax");
             }
-            if ((printMask?.NAM4?.Overall ?? true)
-                && item.NAM4 is {} NAM4Item)
+            if ((printMask?.HeightRange?.Overall ?? true)
+                && item.HeightRange is {} HeightRangeItem)
             {
-                NAM4Item?.Print(sb, "NAM4");
+                HeightRangeItem?.Print(sb, "HeightRange");
             }
             if (printMask?.SourceBlock ?? true)
             {
@@ -1932,13 +1932,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isSizeEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SurfaceBlock_FieldIndex.ENAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SurfaceBlock_FieldIndex.Height) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.ENAM, rhs.ENAM, out var lhsENAM, out var rhsENAM, out var isENAMEqual))
+                if (EqualsMaskHelper.RefEquality(lhs.Height, rhs.Height, out var lhsHeight, out var rhsHeight, out var isHeightEqual))
                 {
-                    if (!((SurfaceBlockFloatItemCommon)((ISurfaceBlockFloatItemGetter)lhsENAM).CommonInstance()!).Equals(lhsENAM, rhsENAM, equalsMask?.GetSubCrystal((int)SurfaceBlock_FieldIndex.ENAM))) return false;
+                    if (!((SurfaceBlockFloatItemCommon)((ISurfaceBlockFloatItemGetter)lhsHeight).CommonInstance()!).Equals(lhsHeight, rhsHeight, equalsMask?.GetSubCrystal((int)SurfaceBlock_FieldIndex.Height))) return false;
                 }
-                else if (!isENAMEqual) return false;
+                else if (!isHeightEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SurfaceBlock_FieldIndex.Connections) ?? true))
             {
@@ -1984,13 +1984,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.CellMax.Equals(rhs.CellMax)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SurfaceBlock_FieldIndex.NAM4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SurfaceBlock_FieldIndex.HeightRange) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.NAM4, rhs.NAM4, out var lhsNAM4, out var rhsNAM4, out var isNAM4Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.HeightRange, rhs.HeightRange, out var lhsHeightRange, out var rhsHeightRange, out var isHeightRangeEqual))
                 {
-                    if (!((SurfaceBlockFloatItemCommon)((ISurfaceBlockFloatItemGetter)lhsNAM4).CommonInstance()!).Equals(lhsNAM4, rhsNAM4, equalsMask?.GetSubCrystal((int)SurfaceBlock_FieldIndex.NAM4))) return false;
+                    if (!((SurfaceBlockFloatItemCommon)((ISurfaceBlockFloatItemGetter)lhsHeightRange).CommonInstance()!).Equals(lhsHeightRange, rhsHeightRange, equalsMask?.GetSubCrystal((int)SurfaceBlock_FieldIndex.HeightRange))) return false;
                 }
-                else if (!isNAM4Equal) return false;
+                else if (!isHeightRangeEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SurfaceBlock_FieldIndex.SourceBlock) ?? true))
             {
@@ -2030,7 +2030,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(DataFileitem);
             }
             hash.Add(item.Size);
-            hash.Add(item.ENAM);
+            hash.Add(item.Height);
             hash.Add(item.Connections);
             if (item.Rarity is {} Rarityitem)
             {
@@ -2057,9 +2057,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(CellMaxitem);
             }
-            if (item.NAM4 is {} NAM4item)
+            if (item.HeightRange is {} HeightRangeitem)
             {
-                hash.Add(NAM4item);
+                hash.Add(HeightRangeitem);
             }
             hash.Add(item.SourceBlock);
             hash.Add(base.GetHashCode());
@@ -2260,15 +2260,15 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)SurfaceBlock_FieldIndex.ENAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SurfaceBlock_FieldIndex.Height) ?? true))
             {
-                errorMask?.PushIndex((int)SurfaceBlock_FieldIndex.ENAM);
+                errorMask?.PushIndex((int)SurfaceBlock_FieldIndex.Height);
                 try
                 {
-                    if ((copyMask?.GetShouldTranslate((int)SurfaceBlock_FieldIndex.ENAM) ?? true))
+                    if ((copyMask?.GetShouldTranslate((int)SurfaceBlock_FieldIndex.Height) ?? true))
                     {
-                        item.ENAM = rhs.ENAM.DeepCopy(
-                            copyMask: copyMask?.GetSubCrystal((int)SurfaceBlock_FieldIndex.ENAM),
+                        item.Height = rhs.Height.DeepCopy(
+                            copyMask: copyMask?.GetSubCrystal((int)SurfaceBlock_FieldIndex.Height),
                             errorMask: errorMask);
                     }
                 }
@@ -2348,20 +2348,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.CellMax = rhs.CellMax;
             }
-            if ((copyMask?.GetShouldTranslate((int)SurfaceBlock_FieldIndex.NAM4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SurfaceBlock_FieldIndex.HeightRange) ?? true))
             {
-                errorMask?.PushIndex((int)SurfaceBlock_FieldIndex.NAM4);
+                errorMask?.PushIndex((int)SurfaceBlock_FieldIndex.HeightRange);
                 try
                 {
-                    if(rhs.NAM4 is {} rhsNAM4)
+                    if(rhs.HeightRange is {} rhsHeightRange)
                     {
-                        item.NAM4 = rhsNAM4.DeepCopy(
+                        item.HeightRange = rhsHeightRange.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)SurfaceBlock_FieldIndex.NAM4));
+                            copyMask?.GetSubCrystal((int)SurfaceBlock_FieldIndex.HeightRange));
                     }
                     else
                     {
-                        item.NAM4 = default;
+                        item.HeightRange = default;
                     }
                 }
                 catch (Exception ex)
@@ -2571,11 +2571,11 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     translationParams: translationParams);
             }
-            var ENAMItem = item.ENAM;
+            var HeightItem = item.Height;
             using (HeaderExport.Subrecord(writer, RecordTypes.ENAM))
             {
-                ((SurfaceBlockFloatItemBinaryWriteTranslation)((IBinaryItem)ENAMItem).BinaryWriteTranslator).Write(
-                    item: ENAMItem,
+                ((SurfaceBlockFloatItemBinaryWriteTranslation)((IBinaryItem)HeightItem).BinaryWriteTranslator).Write(
+                    item: HeightItem,
                     writer: writer,
                     translationParams: translationParams);
             }
@@ -2630,12 +2630,12 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.CellMax,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM3));
-            if (item.NAM4 is {} NAM4Item)
+            if (item.HeightRange is {} HeightRangeItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.NAM4))
                 {
-                    ((SurfaceBlockFloatItemBinaryWriteTranslation)((IBinaryItem)NAM4Item).BinaryWriteTranslator).Write(
-                        item: NAM4Item,
+                    ((SurfaceBlockFloatItemBinaryWriteTranslation)((IBinaryItem)HeightRangeItem).BinaryWriteTranslator).Write(
+                        item: HeightRangeItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -2740,8 +2740,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ENAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.ENAM = Mutagen.Bethesda.Starfield.SurfaceBlockFloatItem.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)SurfaceBlock_FieldIndex.ENAM;
+                    item.Height = Mutagen.Bethesda.Starfield.SurfaceBlockFloatItem.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)SurfaceBlock_FieldIndex.Height;
                 }
                 case RecordTypeInts.FNAM:
                 {
@@ -2830,8 +2830,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NAM4:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.NAM4 = Mutagen.Bethesda.Starfield.SurfaceBlockFloatItem.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)SurfaceBlock_FieldIndex.NAM4;
+                    item.HeightRange = Mutagen.Bethesda.Starfield.SurfaceBlockFloatItem.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)SurfaceBlock_FieldIndex.HeightRange;
                 }
                 case RecordTypeInts.NAM5:
                 {
@@ -2908,9 +2908,9 @@ namespace Mutagen.Bethesda.Starfield
         private ISurfaceBlockIntItemGetter? _Size;
         public ISurfaceBlockIntItemGetter Size => _Size ?? new SurfaceBlockIntItem();
         #endregion
-        #region ENAM
-        private ISurfaceBlockFloatItemGetter? _ENAM;
-        public ISurfaceBlockFloatItemGetter ENAM => _ENAM ?? new SurfaceBlockFloatItem();
+        #region Height
+        private ISurfaceBlockFloatItemGetter? _Height;
+        public ISurfaceBlockFloatItemGetter Height => _Height ?? new SurfaceBlockFloatItem();
         #endregion
         public IReadOnlyList<UInt16>? Connections { get; private set; }
         #region Rarity
@@ -2953,7 +2953,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _CellMaxLocation;
         public P2Int? CellMax => _CellMaxLocation.HasValue ? P2IntBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(HeaderTranslation.ExtractSubrecordMemory(_recordData, _CellMaxLocation.Value, _package.MetaData.Constants)) : default(P2Int?);
         #endregion
-        public ISurfaceBlockFloatItemGetter? NAM4 { get; private set; }
+        public ISurfaceBlockFloatItemGetter? HeightRange { get; private set; }
         #region SourceBlock
         private int? _SourceBlockLocation;
         public IFormLinkNullableGetter<ISurfaceBlockGetter> SourceBlock => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ISurfaceBlockGetter>(_package, _recordData, _SourceBlockLocation);
@@ -3053,11 +3053,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ENAM:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this._ENAM = SurfaceBlockFloatItemBinaryOverlay.SurfaceBlockFloatItemFactory(
+                    this._Height = SurfaceBlockFloatItemBinaryOverlay.SurfaceBlockFloatItemFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)SurfaceBlock_FieldIndex.ENAM;
+                    return (int)SurfaceBlock_FieldIndex.Height;
                 }
                 case RecordTypeInts.FNAM:
                 {
@@ -3122,11 +3122,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NAM4:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.NAM4 = SurfaceBlockFloatItemBinaryOverlay.SurfaceBlockFloatItemFactory(
+                    this.HeightRange = SurfaceBlockFloatItemBinaryOverlay.SurfaceBlockFloatItemFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)SurfaceBlock_FieldIndex.NAM4;
+                    return (int)SurfaceBlock_FieldIndex.HeightRange;
                 }
                 case RecordTypeInts.NAM5:
                 {
