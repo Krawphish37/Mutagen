@@ -2404,6 +2404,18 @@
     <Compile Include="Records\Major Records\PackIn.cs">
       <DependentUpon>PackIn.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\SnapTemplateBehavior.cs">
+      <DependentUpon>SnapTemplateBehavior.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\SpeechChallenge.cs">
+      <DependentUpon>SpeechChallenge.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\Traversal.cs">
+      <DependentUpon>Traversal.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\WWiseKeywordMapping.cs">
+      <DependentUpon>WWiseKeywordMapping.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\PcLevelMult.cs">
       <DependentUpon>Npc.xml</DependentUpon>
     </Compile>

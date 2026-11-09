@@ -2,9 +2,9 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="PlanetContentManagerTree" recordType="PCMT" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
-      <ByteArray name="NAM1" recordType="NAM1" nullable="False" unknown="true" />
-      <ByteArray name="NAM2" recordType="NAM2" nullable="False" unknown="true" />
-      <ByteArray name="NAM5" recordType="NAM5" nullable="False" unknown="true" />
+      <Enum name="NodeType" recordType="NAM1" nullable="False" enumName="PlanetContentManagerBranchNode.NodeTypeOption" byteLength="4" />
+      <Enum name="ChildSelection" recordType="NAM2" nullable="False" enumName="PlanetContentManagerBranchNode.ChildSelectionOption" byteLength="4" />
+      <Bool name="ConsumeRequestEvenOnFailure" recordType="NAM5" nullable="False" byteLength="1" />
       <List name="Nodes" >
         <FormLink recordType="PCCB" refName="PlanetContentManagerBranchNode" />
       </List>

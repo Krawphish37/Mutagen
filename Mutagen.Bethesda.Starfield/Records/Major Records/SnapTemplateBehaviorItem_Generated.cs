@@ -53,8 +53,8 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region ENAM
-        public Int32 ENAM { get; set; } = default(Int32);
+        #region Operation
+        public SnapTemplateBehavior.OperationType Operation { get; set; } = default(SnapTemplateBehavior.OperationType);
         #endregion
         #region BaseObject
         private readonly IFormLink<IBaseObjectGetter> _BaseObject = new FormLink<IBaseObjectGetter>();
@@ -139,7 +139,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.ENAM = initialValue;
+                this.Operation = initialValue;
                 this.BaseObject = initialValue;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
                 this.SnapTemplateNode = initialValue;
@@ -147,13 +147,13 @@ namespace Mutagen.Bethesda.Starfield
             }
 
             public Mask(
-                TItem ENAM,
+                TItem Operation,
                 TItem BaseObject,
                 TItem Conditions,
                 TItem SnapTemplateNode,
                 TItem Keyword)
             {
-                this.ENAM = ENAM;
+                this.Operation = Operation;
                 this.BaseObject = BaseObject;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
                 this.SnapTemplateNode = SnapTemplateNode;
@@ -169,7 +169,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem ENAM;
+            public TItem Operation;
             public TItem BaseObject;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
             public TItem SnapTemplateNode;
@@ -186,7 +186,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.ENAM, rhs.ENAM)) return false;
+                if (!object.Equals(this.Operation, rhs.Operation)) return false;
                 if (!object.Equals(this.BaseObject, rhs.BaseObject)) return false;
                 if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
                 if (!object.Equals(this.SnapTemplateNode, rhs.SnapTemplateNode)) return false;
@@ -196,7 +196,7 @@ namespace Mutagen.Bethesda.Starfield
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.ENAM);
+                hash.Add(this.Operation);
                 hash.Add(this.BaseObject);
                 hash.Add(this.Conditions);
                 hash.Add(this.SnapTemplateNode);
@@ -209,7 +209,7 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.ENAM)) return false;
+                if (!eval(this.Operation)) return false;
                 if (!eval(this.BaseObject)) return false;
                 if (this.Conditions != null)
                 {
@@ -232,7 +232,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.ENAM)) return true;
+                if (eval(this.Operation)) return true;
                 if (eval(this.BaseObject)) return true;
                 if (this.Conditions != null)
                 {
@@ -262,7 +262,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.ENAM = eval(this.ENAM);
+                obj.Operation = eval(this.Operation);
                 obj.BaseObject = eval(this.BaseObject);
                 if (Conditions != null)
                 {
@@ -299,9 +299,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(SnapTemplateBehaviorItem.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.ENAM ?? true)
+                    if (printMask?.Operation ?? true)
                     {
-                        sb.AppendItem(ENAM, "ENAM");
+                        sb.AppendItem(Operation, "Operation");
                     }
                     if (printMask?.BaseObject ?? true)
                     {
@@ -358,7 +358,7 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? ENAM;
+            public Exception? Operation;
             public Exception? BaseObject;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
             public Exception? SnapTemplateNode;
@@ -371,8 +371,8 @@ namespace Mutagen.Bethesda.Starfield
                 SnapTemplateBehaviorItem_FieldIndex enu = (SnapTemplateBehaviorItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case SnapTemplateBehaviorItem_FieldIndex.ENAM:
-                        return ENAM;
+                    case SnapTemplateBehaviorItem_FieldIndex.Operation:
+                        return Operation;
                     case SnapTemplateBehaviorItem_FieldIndex.BaseObject:
                         return BaseObject;
                     case SnapTemplateBehaviorItem_FieldIndex.Conditions:
@@ -391,8 +391,8 @@ namespace Mutagen.Bethesda.Starfield
                 SnapTemplateBehaviorItem_FieldIndex enu = (SnapTemplateBehaviorItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case SnapTemplateBehaviorItem_FieldIndex.ENAM:
-                        this.ENAM = ex;
+                    case SnapTemplateBehaviorItem_FieldIndex.Operation:
+                        this.Operation = ex;
                         break;
                     case SnapTemplateBehaviorItem_FieldIndex.BaseObject:
                         this.BaseObject = ex;
@@ -416,8 +416,8 @@ namespace Mutagen.Bethesda.Starfield
                 SnapTemplateBehaviorItem_FieldIndex enu = (SnapTemplateBehaviorItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case SnapTemplateBehaviorItem_FieldIndex.ENAM:
-                        this.ENAM = (Exception?)obj;
+                    case SnapTemplateBehaviorItem_FieldIndex.Operation:
+                        this.Operation = (Exception?)obj;
                         break;
                     case SnapTemplateBehaviorItem_FieldIndex.BaseObject:
                         this.BaseObject = (Exception?)obj;
@@ -439,7 +439,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (ENAM != null) return true;
+                if (Operation != null) return true;
                 if (BaseObject != null) return true;
                 if (Conditions != null) return true;
                 if (SnapTemplateNode != null) return true;
@@ -470,7 +470,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(ENAM, "ENAM");
+                    sb.AppendItem(Operation, "Operation");
                 }
                 {
                     sb.AppendItem(BaseObject, "BaseObject");
@@ -507,7 +507,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.ENAM = this.ENAM.Combine(rhs.ENAM);
+                ret.Operation = this.Operation.Combine(rhs.Operation);
                 ret.BaseObject = this.BaseObject.Combine(rhs.BaseObject);
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
                 ret.SnapTemplateNode = this.SnapTemplateNode.Combine(rhs.SnapTemplateNode);
@@ -535,7 +535,7 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool ENAM;
+            public bool Operation;
             public bool BaseObject;
             public Condition.TranslationMask? Conditions;
             public bool SnapTemplateNode;
@@ -549,7 +549,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.ENAM = defaultOn;
+                this.Operation = defaultOn;
                 this.BaseObject = defaultOn;
                 this.SnapTemplateNode = defaultOn;
                 this.Keyword = defaultOn;
@@ -568,7 +568,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((ENAM, null));
+                ret.Add((Operation, null));
                 ret.Add((BaseObject, null));
                 ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
                 ret.Add((SnapTemplateNode, null));
@@ -651,7 +651,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<ISnapTemplateBehaviorItem>,
         ISnapTemplateBehaviorItemGetter
     {
-        new Int32 ENAM { get; set; }
+        new SnapTemplateBehavior.OperationType Operation { get; set; }
         new IFormLink<IBaseObjectGetter> BaseObject { get; set; }
         new ExtendedList<Condition>? Conditions { get; set; }
         new IFormLink<ISnapTemplateNodeGetter> SnapTemplateNode { get; set; }
@@ -671,7 +671,7 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => SnapTemplateBehaviorItem_Registration.Instance;
-        Int32 ENAM { get; }
+        SnapTemplateBehavior.OperationType Operation { get; }
         IFormLinkGetter<IBaseObjectGetter> BaseObject { get; }
         IReadOnlyList<IConditionGetter>? Conditions { get; }
         IFormLinkGetter<ISnapTemplateNodeGetter> SnapTemplateNode { get; }
@@ -845,7 +845,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum SnapTemplateBehaviorItem_FieldIndex
     {
-        ENAM = 0,
+        Operation = 0,
         BaseObject = 1,
         Conditions = 2,
         SnapTemplateNode = 3,
@@ -946,7 +946,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ISnapTemplateBehaviorItem item)
         {
             ClearPartial();
-            item.ENAM = default(Int32);
+            item.Operation = default(SnapTemplateBehavior.OperationType);
             item.BaseObject.Clear();
             item.Conditions = null;
             item.SnapTemplateNode.Clear();
@@ -1004,7 +1004,7 @@ namespace Mutagen.Bethesda.Starfield
             SnapTemplateBehaviorItem.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.ENAM = item.ENAM == rhs.ENAM;
+            ret.Operation = item.Operation == rhs.Operation;
             ret.BaseObject = item.BaseObject.Equals(rhs.BaseObject);
             ret.Conditions = item.Conditions.CollectionEqualsHelper(
                 rhs.Conditions,
@@ -1056,9 +1056,9 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             SnapTemplateBehaviorItem.Mask<bool>? printMask = null)
         {
-            if (printMask?.ENAM ?? true)
+            if (printMask?.Operation ?? true)
             {
-                sb.AppendItem(item.ENAM, "ENAM");
+                sb.AppendItem(item.Operation, "Operation");
             }
             if (printMask?.BaseObject ?? true)
             {
@@ -1096,9 +1096,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)SnapTemplateBehaviorItem_FieldIndex.ENAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SnapTemplateBehaviorItem_FieldIndex.Operation) ?? true))
             {
-                if (lhs.ENAM != rhs.ENAM) return false;
+                if (lhs.Operation != rhs.Operation) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SnapTemplateBehaviorItem_FieldIndex.BaseObject) ?? true))
             {
@@ -1122,7 +1122,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ISnapTemplateBehaviorItemGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.ENAM);
+            hash.Add(item.Operation);
             hash.Add(item.BaseObject);
             hash.Add(item.Conditions);
             hash.Add(item.SnapTemplateNode);
@@ -1169,9 +1169,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)SnapTemplateBehaviorItem_FieldIndex.ENAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SnapTemplateBehaviorItem_FieldIndex.Operation) ?? true))
             {
-                item.ENAM = rhs.ENAM;
+                item.Operation = rhs.Operation;
             }
             if ((copyMask?.GetShouldTranslate((int)SnapTemplateBehaviorItem_FieldIndex.BaseObject) ?? true))
             {
@@ -1326,9 +1326,10 @@ namespace Mutagen.Bethesda.Starfield
             MutagenWriter writer,
             TypedWriteParams translationParams)
         {
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.ENAM,
+            EnumBinaryTranslation<SnapTemplateBehavior.OperationType, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.Operation,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.ENAM));
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
@@ -1399,10 +1400,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.ENAM:
                 {
-                    if (lastParsed.ShortCircuit((int)SnapTemplateBehaviorItem_FieldIndex.ENAM, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)SnapTemplateBehaviorItem_FieldIndex.Operation, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ENAM = frame.ReadInt32();
-                    return (int)SnapTemplateBehaviorItem_FieldIndex.ENAM;
+                    item.Operation = EnumBinaryTranslation<SnapTemplateBehavior.OperationType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)SnapTemplateBehaviorItem_FieldIndex.Operation;
                 }
                 case RecordTypeInts.PNAM:
                 {
@@ -1505,9 +1508,9 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region ENAM
-        private int? _ENAMLocation;
-        public Int32 ENAM => _ENAMLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ENAMLocation.Value, _package.MetaData.Constants)) : default(Int32);
+        #region Operation
+        private int? _OperationLocation;
+        public SnapTemplateBehavior.OperationType Operation => EnumBinaryTranslation<SnapTemplateBehavior.OperationType, MutagenFrame, MutagenWriter>.Instance.ParseRecord(_OperationLocation, _recordData, _package, 4);
         #endregion
         #region BaseObject
         private int? _BaseObjectLocation;
@@ -1587,9 +1590,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.ENAM:
                 {
-                    if (lastParsed.ShortCircuit((int)SnapTemplateBehaviorItem_FieldIndex.ENAM, translationParams)) return ParseResult.Stop;
-                    _ENAMLocation = (stream.Position - offset);
-                    return (int)SnapTemplateBehaviorItem_FieldIndex.ENAM;
+                    if (lastParsed.ShortCircuit((int)SnapTemplateBehaviorItem_FieldIndex.Operation, translationParams)) return ParseResult.Stop;
+                    _OperationLocation = (stream.Position - offset);
+                    return (int)SnapTemplateBehaviorItem_FieldIndex.Operation;
                 }
                 case RecordTypeInts.PNAM:
                 {

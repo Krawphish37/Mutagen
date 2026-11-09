@@ -14,7 +14,7 @@
       <List name="Scenes" recordType="SPMA" >
         <FormLink refName="Scene" />
       </List>
-      <ByteArray name="DIFF" recordType="DIFF" />
+      <Enum name="Difficulty" recordType="DIFF" enumName="SpeechChallenge.DifficultyLevel" byteLength="2" />
     </Fields>
   </Object>
 </Loqui>

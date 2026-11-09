@@ -137,16 +137,10 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region DIFF
+        #region Difficulty
+        public SpeechChallenge.DifficultyLevel? Difficulty { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _DIFF;
-        public MemorySlice<Byte>? DIFF
-        {
-            get => this._DIFF;
-            set => this._DIFF = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ISpeechChallengeGetter.DIFF => this.DIFF;
+        SpeechChallenge.DifficultyLevel? ISpeechChallengeGetter.Difficulty => this.Difficulty;
         #endregion
 
         #region To String
@@ -181,7 +175,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Quest = initialValue;
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.Scenes = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.DIFF = initialValue;
+                this.Difficulty = initialValue;
             }
 
             public Mask(
@@ -200,7 +194,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Quest,
                 TItem Keywords,
                 TItem Scenes,
-                TItem DIFF)
+                TItem Difficulty)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -218,7 +212,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Quest = Quest;
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
                 this.Scenes = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Scenes, []);
-                this.DIFF = DIFF;
+                this.Difficulty = Difficulty;
             }
 
             #pragma warning disable CS8618
@@ -238,7 +232,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Quest;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Scenes;
-            public TItem DIFF;
+            public TItem Difficulty;
             #endregion
 
             #region Equals
@@ -260,7 +254,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Quest, rhs.Quest)) return false;
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
                 if (!object.Equals(this.Scenes, rhs.Scenes)) return false;
-                if (!object.Equals(this.DIFF, rhs.DIFF)) return false;
+                if (!object.Equals(this.Difficulty, rhs.Difficulty)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -274,7 +268,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Quest);
                 hash.Add(this.Keywords);
                 hash.Add(this.Scenes);
-                hash.Add(this.DIFF);
+                hash.Add(this.Difficulty);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -317,7 +311,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.DIFF)) return false;
+                if (!eval(this.Difficulty)) return false;
                 return true;
             }
             #endregion
@@ -358,7 +352,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.DIFF)) return true;
+                if (eval(this.Difficulty)) return true;
                 return false;
             }
             #endregion
@@ -408,7 +402,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.DIFF = eval(this.DIFF);
+                obj.Difficulty = eval(this.Difficulty);
             }
             #endregion
 
@@ -493,9 +487,9 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.DIFF ?? true)
+                    if (printMask?.Difficulty ?? true)
                     {
-                        sb.AppendItem(DIFF, "DIFF");
+                        sb.AppendItem(Difficulty, "Difficulty");
                     }
                 }
             }
@@ -516,7 +510,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Quest;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Scenes;
-            public Exception? DIFF;
+            public Exception? Difficulty;
             #endregion
 
             #region IErrorMask
@@ -541,8 +535,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Keywords;
                     case SpeechChallenge_FieldIndex.Scenes:
                         return Scenes;
-                    case SpeechChallenge_FieldIndex.DIFF:
-                        return DIFF;
+                    case SpeechChallenge_FieldIndex.Difficulty:
+                        return Difficulty;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -577,8 +571,8 @@ namespace Mutagen.Bethesda.Starfield
                     case SpeechChallenge_FieldIndex.Scenes:
                         this.Scenes = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case SpeechChallenge_FieldIndex.DIFF:
-                        this.DIFF = ex;
+                    case SpeechChallenge_FieldIndex.Difficulty:
+                        this.Difficulty = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -615,8 +609,8 @@ namespace Mutagen.Bethesda.Starfield
                     case SpeechChallenge_FieldIndex.Scenes:
                         this.Scenes = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case SpeechChallenge_FieldIndex.DIFF:
-                        this.DIFF = (Exception?)obj;
+                    case SpeechChallenge_FieldIndex.Difficulty:
+                        this.Difficulty = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -635,7 +629,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Quest != null) return true;
                 if (Keywords != null) return true;
                 if (Scenes != null) return true;
-                if (DIFF != null) return true;
+                if (Difficulty != null) return true;
                 return false;
             }
             #endregion
@@ -719,7 +713,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(DIFF, "DIFF");
+                    sb.AppendItem(Difficulty, "Difficulty");
                 }
             }
             #endregion
@@ -737,7 +731,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Quest = this.Quest.Combine(rhs.Quest);
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
                 ret.Scenes = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Scenes?.Overall, rhs.Scenes?.Overall), Noggog.ExceptionExt.Combine(this.Scenes?.Specific, rhs.Scenes?.Specific));
-                ret.DIFF = this.DIFF.Combine(rhs.DIFF);
+                ret.Difficulty = this.Difficulty.Combine(rhs.Difficulty);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -768,7 +762,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Quest;
             public bool Keywords;
             public bool Scenes;
-            public bool DIFF;
+            public bool Difficulty;
             #endregion
 
             #region Ctors
@@ -784,7 +778,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Quest = defaultOn;
                 this.Keywords = defaultOn;
                 this.Scenes = defaultOn;
-                this.DIFF = defaultOn;
+                this.Difficulty = defaultOn;
             }
 
             #endregion
@@ -800,7 +794,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Quest, null));
                 ret.Add((Keywords, null));
                 ret.Add((Scenes, null));
-                ret.Add((DIFF, null));
+                ret.Add((Difficulty, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -965,7 +959,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; set; }
         new ExtendedList<IFormLinkGetter<ISceneGetter>>? Scenes { get; set; }
-        new MemorySlice<Byte>? DIFF { get; set; }
+        new SpeechChallenge.DifficultyLevel? Difficulty { get; set; }
     }
 
     public partial interface ISpeechChallengeInternal :
@@ -1005,7 +999,7 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; }
         #endregion
         IReadOnlyList<IFormLinkGetter<ISceneGetter>>? Scenes { get; }
-        ReadOnlyMemorySlice<Byte>? DIFF { get; }
+        SpeechChallenge.DifficultyLevel? Difficulty { get; }
 
     }
 
@@ -1190,7 +1184,7 @@ namespace Mutagen.Bethesda.Starfield
         Quest = 12,
         Keywords = 13,
         Scenes = 14,
-        DIFF = 15,
+        Difficulty = 15,
     }
     #endregion
 
@@ -1299,7 +1293,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Quest.Clear();
             item.Keywords = null;
             item.Scenes = null;
-            item.DIFF = default;
+            item.Difficulty = default;
             base.Clear(item);
         }
         
@@ -1406,7 +1400,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Scenes,
                 (l, r) => object.Equals(l, r),
                 include);
-            ret.DIFF = MemorySliceExt.SequenceEqual(item.DIFF, rhs.DIFF);
+            ret.Difficulty = item.Difficulty == rhs.Difficulty;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1513,10 +1507,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.DIFF ?? true)
-                && item.DIFF is {} DIFFItem)
+            if ((printMask?.Difficulty ?? true)
+                && item.Difficulty is {} DifficultyItem)
             {
-                sb.AppendLine($"DIFF => {SpanExt.ToHexString(DIFFItem)}");
+                sb.AppendItem(DifficultyItem, "Difficulty");
             }
         }
         
@@ -1604,9 +1598,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Scenes.SequenceEqualNullable(rhs.Scenes)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.DIFF) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.Difficulty) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.DIFF, rhs.DIFF)) return false;
+                if (lhs.Difficulty != rhs.Difficulty) return false;
             }
             return true;
         }
@@ -1653,9 +1647,9 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Quest);
             hash.Add(item.Keywords);
             hash.Add(item.Scenes);
-            if (item.DIFF is {} DIFFItem)
+            if (item.Difficulty is {} Difficultyitem)
             {
-                hash.Add(DIFFItem);
+                hash.Add(Difficultyitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1907,16 +1901,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.DIFF) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.Difficulty) ?? true))
             {
-                if(rhs.DIFF is {} DIFFrhs)
-                {
-                    item.DIFF = DIFFrhs.ToArray();
-                }
-                else
-                {
-                    item.DIFF = default;
-                }
+                item.Difficulty = rhs.Difficulty;
             }
             DeepCopyInCustom(
                 item: item,
@@ -2136,9 +2123,10 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         item: subItem);
                 });
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.DIFF,
+            EnumBinaryTranslation<SpeechChallenge.DifficultyLevel, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Difficulty,
+                length: 2,
                 header: translationParams.ConvertToCustom(RecordTypes.DIFF));
         }
 
@@ -2269,8 +2257,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DIFF:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DIFF = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)SpeechChallenge_FieldIndex.DIFF;
+                    item.Difficulty = EnumBinaryTranslation<SpeechChallenge.DifficultyLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)SpeechChallenge_FieldIndex.Difficulty;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -2367,9 +2357,9 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IFormLinkGetter<IKeywordCommonGetter>>? IKeywordedGetter.Keywords => this.Keywords;
         #endregion
         public IReadOnlyList<IFormLinkGetter<ISceneGetter>>? Scenes { get; private set; }
-        #region DIFF
-        private int? _DIFFLocation;
-        public ReadOnlyMemorySlice<Byte>? DIFF => _DIFFLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DIFFLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Difficulty
+        private int? _DifficultyLocation;
+        public SpeechChallenge.DifficultyLevel? Difficulty => EnumBinaryTranslation<SpeechChallenge.DifficultyLevel, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_DifficultyLocation, _recordData, _package, 2);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -2500,8 +2490,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DIFF:
                 {
-                    _DIFFLocation = (stream.Position - offset);
-                    return (int)SpeechChallenge_FieldIndex.DIFF;
+                    _DifficultyLocation = (stream.Position - offset);
+                    return (int)SpeechChallenge_FieldIndex.Difficulty;
                 }
                 case RecordTypeInts.XXXX:
                 {
