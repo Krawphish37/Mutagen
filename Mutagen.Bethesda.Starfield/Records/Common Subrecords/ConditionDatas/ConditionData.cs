@@ -88,4 +88,8 @@ partial class ConditionDataBinaryOverlay
     public Condition.RunOnType RunOnType => (Condition.RunOnType)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0xC, 0x4));
     public IFormLinkGetter<IStarfieldMajorRecordGetter> Reference => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x10, 0x4));
     public Int32 Unknown3 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x14, 0x4));
+    public IFormLinkGetter<IKeywordGetter> LinkedReferenceKeyword =>
+        RunOnType == Condition.RunOnType.LinkedReference && Unknown3 != 0 && Unknown3 != -1
+            ? FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _structData.Span.Slice(0x14, 0x4))
+            : FormLink<IKeywordGetter>.Null;
 }
