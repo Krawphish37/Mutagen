@@ -162,16 +162,46 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Int32? IObjectEffectGetter.MUID => this.MUID;
         #endregion
-        #region UnknownENIT
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _UnknownENIT = new byte[27];
-        public MemorySlice<Byte> UnknownENIT
+        #region EnchantmentCost
+        public Int32 EnchantmentCost { get; set; } = default(Int32);
+        #endregion
+        #region Flags
+        public ObjectEffect.Flag Flags { get; set; } = default(ObjectEffect.Flag);
+        #endregion
+        #region CastType
+        public CastType CastType { get; set; } = default(CastType);
+        #endregion
+        #region EnchantmentAmount
+        public Int32 EnchantmentAmount { get; set; } = default(Int32);
+        #endregion
+        #region TargetType
+        public TargetType TargetType { get; set; } = default(TargetType);
+        #endregion
+        #region EnchantType
+        public ObjectEffect.EnchantTypeEnum EnchantType { get; set; } = default(ObjectEffect.EnchantTypeEnum);
+        #endregion
+        #region ChargeTime
+        public Single ChargeTime { get; set; } = default(Single);
+        #endregion
+        #region BaseEnchantment
+        private readonly IFormLink<IObjectEffectGetter> _BaseEnchantment = new FormLink<IObjectEffectGetter>();
+        public IFormLink<IObjectEffectGetter> BaseEnchantment
         {
-            get => _UnknownENIT;
-            set => this._UnknownENIT = value;
+            get => _BaseEnchantment;
+            set => _BaseEnchantment.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IObjectEffectGetter.UnknownENIT => this.UnknownENIT;
+        IFormLinkGetter<IObjectEffectGetter> IObjectEffectGetter.BaseEnchantment => this.BaseEnchantment;
+        #endregion
+        #region WornRestrictions
+        private readonly IFormLink<IFormListGetter> _WornRestrictions = new FormLink<IFormListGetter>();
+        public IFormLink<IFormListGetter> WornRestrictions
+        {
+            get => _WornRestrictions;
+            set => _WornRestrictions.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkGetter<IFormListGetter> IObjectEffectGetter.WornRestrictions => this.WornRestrictions;
         #endregion
         #region Effects
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -219,7 +249,15 @@ namespace Mutagen.Bethesda.Starfield
                 this.Name = initialValue;
                 this.MAGF = initialValue;
                 this.MUID = initialValue;
-                this.UnknownENIT = initialValue;
+                this.EnchantmentCost = initialValue;
+                this.Flags = initialValue;
+                this.CastType = initialValue;
+                this.EnchantmentAmount = initialValue;
+                this.TargetType = initialValue;
+                this.EnchantType = initialValue;
+                this.ChargeTime = initialValue;
+                this.BaseEnchantment = initialValue;
+                this.WornRestrictions = initialValue;
                 this.Effects = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Effect.Mask<TItem>?>>?>(initialValue, []);
             }
 
@@ -238,7 +276,15 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Name,
                 TItem MAGF,
                 TItem MUID,
-                TItem UnknownENIT,
+                TItem EnchantmentCost,
+                TItem Flags,
+                TItem CastType,
+                TItem EnchantmentAmount,
+                TItem TargetType,
+                TItem EnchantType,
+                TItem ChargeTime,
+                TItem BaseEnchantment,
+                TItem WornRestrictions,
                 TItem Effects)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
@@ -256,7 +302,15 @@ namespace Mutagen.Bethesda.Starfield
                 this.Name = Name;
                 this.MAGF = MAGF;
                 this.MUID = MUID;
-                this.UnknownENIT = UnknownENIT;
+                this.EnchantmentCost = EnchantmentCost;
+                this.Flags = Flags;
+                this.CastType = CastType;
+                this.EnchantmentAmount = EnchantmentAmount;
+                this.TargetType = TargetType;
+                this.EnchantType = EnchantType;
+                this.ChargeTime = ChargeTime;
+                this.BaseEnchantment = BaseEnchantment;
+                this.WornRestrictions = WornRestrictions;
                 this.Effects = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Effect.Mask<TItem>?>>?>(Effects, []);
             }
 
@@ -276,7 +330,15 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Name;
             public TItem MAGF;
             public TItem MUID;
-            public TItem UnknownENIT;
+            public TItem EnchantmentCost;
+            public TItem Flags;
+            public TItem CastType;
+            public TItem EnchantmentAmount;
+            public TItem TargetType;
+            public TItem EnchantType;
+            public TItem ChargeTime;
+            public TItem BaseEnchantment;
+            public TItem WornRestrictions;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Effect.Mask<TItem>?>>?>? Effects;
             #endregion
 
@@ -298,7 +360,15 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Name, rhs.Name)) return false;
                 if (!object.Equals(this.MAGF, rhs.MAGF)) return false;
                 if (!object.Equals(this.MUID, rhs.MUID)) return false;
-                if (!object.Equals(this.UnknownENIT, rhs.UnknownENIT)) return false;
+                if (!object.Equals(this.EnchantmentCost, rhs.EnchantmentCost)) return false;
+                if (!object.Equals(this.Flags, rhs.Flags)) return false;
+                if (!object.Equals(this.CastType, rhs.CastType)) return false;
+                if (!object.Equals(this.EnchantmentAmount, rhs.EnchantmentAmount)) return false;
+                if (!object.Equals(this.TargetType, rhs.TargetType)) return false;
+                if (!object.Equals(this.EnchantType, rhs.EnchantType)) return false;
+                if (!object.Equals(this.ChargeTime, rhs.ChargeTime)) return false;
+                if (!object.Equals(this.BaseEnchantment, rhs.BaseEnchantment)) return false;
+                if (!object.Equals(this.WornRestrictions, rhs.WornRestrictions)) return false;
                 if (!object.Equals(this.Effects, rhs.Effects)) return false;
                 return true;
             }
@@ -312,7 +382,15 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Name);
                 hash.Add(this.MAGF);
                 hash.Add(this.MUID);
-                hash.Add(this.UnknownENIT);
+                hash.Add(this.EnchantmentCost);
+                hash.Add(this.Flags);
+                hash.Add(this.CastType);
+                hash.Add(this.EnchantmentAmount);
+                hash.Add(this.TargetType);
+                hash.Add(this.EnchantType);
+                hash.Add(this.ChargeTime);
+                hash.Add(this.BaseEnchantment);
+                hash.Add(this.WornRestrictions);
                 hash.Add(this.Effects);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -350,7 +428,15 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Name)) return false;
                 if (!eval(this.MAGF)) return false;
                 if (!eval(this.MUID)) return false;
-                if (!eval(this.UnknownENIT)) return false;
+                if (!eval(this.EnchantmentCost)) return false;
+                if (!eval(this.Flags)) return false;
+                if (!eval(this.CastType)) return false;
+                if (!eval(this.EnchantmentAmount)) return false;
+                if (!eval(this.TargetType)) return false;
+                if (!eval(this.EnchantType)) return false;
+                if (!eval(this.ChargeTime)) return false;
+                if (!eval(this.BaseEnchantment)) return false;
+                if (!eval(this.WornRestrictions)) return false;
                 if (this.Effects != null)
                 {
                     if (!eval(this.Effects.Overall)) return false;
@@ -397,7 +483,15 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Name)) return true;
                 if (eval(this.MAGF)) return true;
                 if (eval(this.MUID)) return true;
-                if (eval(this.UnknownENIT)) return true;
+                if (eval(this.EnchantmentCost)) return true;
+                if (eval(this.Flags)) return true;
+                if (eval(this.CastType)) return true;
+                if (eval(this.EnchantmentAmount)) return true;
+                if (eval(this.TargetType)) return true;
+                if (eval(this.EnchantType)) return true;
+                if (eval(this.ChargeTime)) return true;
+                if (eval(this.BaseEnchantment)) return true;
+                if (eval(this.WornRestrictions)) return true;
                 if (this.Effects != null)
                 {
                     if (eval(this.Effects.Overall)) return true;
@@ -446,7 +540,15 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Name = eval(this.Name);
                 obj.MAGF = eval(this.MAGF);
                 obj.MUID = eval(this.MUID);
-                obj.UnknownENIT = eval(this.UnknownENIT);
+                obj.EnchantmentCost = eval(this.EnchantmentCost);
+                obj.Flags = eval(this.Flags);
+                obj.CastType = eval(this.CastType);
+                obj.EnchantmentAmount = eval(this.EnchantmentAmount);
+                obj.TargetType = eval(this.TargetType);
+                obj.EnchantType = eval(this.EnchantType);
+                obj.ChargeTime = eval(this.ChargeTime);
+                obj.BaseEnchantment = eval(this.BaseEnchantment);
+                obj.WornRestrictions = eval(this.WornRestrictions);
                 if (Effects != null)
                 {
                     obj.Effects = new MaskItem<R, IEnumerable<MaskItemIndexed<R, Effect.Mask<R>?>>?>(eval(this.Effects.Overall), []);
@@ -523,9 +625,41 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(MUID, "MUID");
                     }
-                    if (printMask?.UnknownENIT ?? true)
+                    if (printMask?.EnchantmentCost ?? true)
                     {
-                        sb.AppendItem(UnknownENIT, "UnknownENIT");
+                        sb.AppendItem(EnchantmentCost, "EnchantmentCost");
+                    }
+                    if (printMask?.Flags ?? true)
+                    {
+                        sb.AppendItem(Flags, "Flags");
+                    }
+                    if (printMask?.CastType ?? true)
+                    {
+                        sb.AppendItem(CastType, "CastType");
+                    }
+                    if (printMask?.EnchantmentAmount ?? true)
+                    {
+                        sb.AppendItem(EnchantmentAmount, "EnchantmentAmount");
+                    }
+                    if (printMask?.TargetType ?? true)
+                    {
+                        sb.AppendItem(TargetType, "TargetType");
+                    }
+                    if (printMask?.EnchantType ?? true)
+                    {
+                        sb.AppendItem(EnchantType, "EnchantType");
+                    }
+                    if (printMask?.ChargeTime ?? true)
+                    {
+                        sb.AppendItem(ChargeTime, "ChargeTime");
+                    }
+                    if (printMask?.BaseEnchantment ?? true)
+                    {
+                        sb.AppendItem(BaseEnchantment, "BaseEnchantment");
+                    }
+                    if (printMask?.WornRestrictions ?? true)
+                    {
+                        sb.AppendItem(WornRestrictions, "WornRestrictions");
                     }
                     if ((printMask?.Effects?.Overall ?? true)
                         && Effects is {} EffectsItem)
@@ -564,7 +698,15 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Name;
             public Exception? MAGF;
             public Exception? MUID;
-            public Exception? UnknownENIT;
+            public Exception? EnchantmentCost;
+            public Exception? Flags;
+            public Exception? CastType;
+            public Exception? EnchantmentAmount;
+            public Exception? TargetType;
+            public Exception? EnchantType;
+            public Exception? ChargeTime;
+            public Exception? BaseEnchantment;
+            public Exception? WornRestrictions;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Effect.ErrorMask?>>?>? Effects;
             #endregion
 
@@ -588,8 +730,24 @@ namespace Mutagen.Bethesda.Starfield
                         return MAGF;
                     case ObjectEffect_FieldIndex.MUID:
                         return MUID;
-                    case ObjectEffect_FieldIndex.UnknownENIT:
-                        return UnknownENIT;
+                    case ObjectEffect_FieldIndex.EnchantmentCost:
+                        return EnchantmentCost;
+                    case ObjectEffect_FieldIndex.Flags:
+                        return Flags;
+                    case ObjectEffect_FieldIndex.CastType:
+                        return CastType;
+                    case ObjectEffect_FieldIndex.EnchantmentAmount:
+                        return EnchantmentAmount;
+                    case ObjectEffect_FieldIndex.TargetType:
+                        return TargetType;
+                    case ObjectEffect_FieldIndex.EnchantType:
+                        return EnchantType;
+                    case ObjectEffect_FieldIndex.ChargeTime:
+                        return ChargeTime;
+                    case ObjectEffect_FieldIndex.BaseEnchantment:
+                        return BaseEnchantment;
+                    case ObjectEffect_FieldIndex.WornRestrictions:
+                        return WornRestrictions;
                     case ObjectEffect_FieldIndex.Effects:
                         return Effects;
                     default:
@@ -623,8 +781,32 @@ namespace Mutagen.Bethesda.Starfield
                     case ObjectEffect_FieldIndex.MUID:
                         this.MUID = ex;
                         break;
-                    case ObjectEffect_FieldIndex.UnknownENIT:
-                        this.UnknownENIT = ex;
+                    case ObjectEffect_FieldIndex.EnchantmentCost:
+                        this.EnchantmentCost = ex;
+                        break;
+                    case ObjectEffect_FieldIndex.Flags:
+                        this.Flags = ex;
+                        break;
+                    case ObjectEffect_FieldIndex.CastType:
+                        this.CastType = ex;
+                        break;
+                    case ObjectEffect_FieldIndex.EnchantmentAmount:
+                        this.EnchantmentAmount = ex;
+                        break;
+                    case ObjectEffect_FieldIndex.TargetType:
+                        this.TargetType = ex;
+                        break;
+                    case ObjectEffect_FieldIndex.EnchantType:
+                        this.EnchantType = ex;
+                        break;
+                    case ObjectEffect_FieldIndex.ChargeTime:
+                        this.ChargeTime = ex;
+                        break;
+                    case ObjectEffect_FieldIndex.BaseEnchantment:
+                        this.BaseEnchantment = ex;
+                        break;
+                    case ObjectEffect_FieldIndex.WornRestrictions:
+                        this.WornRestrictions = ex;
                         break;
                     case ObjectEffect_FieldIndex.Effects:
                         this.Effects = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Effect.ErrorMask?>>?>(ex, null);
@@ -661,8 +843,32 @@ namespace Mutagen.Bethesda.Starfield
                     case ObjectEffect_FieldIndex.MUID:
                         this.MUID = (Exception?)obj;
                         break;
-                    case ObjectEffect_FieldIndex.UnknownENIT:
-                        this.UnknownENIT = (Exception?)obj;
+                    case ObjectEffect_FieldIndex.EnchantmentCost:
+                        this.EnchantmentCost = (Exception?)obj;
+                        break;
+                    case ObjectEffect_FieldIndex.Flags:
+                        this.Flags = (Exception?)obj;
+                        break;
+                    case ObjectEffect_FieldIndex.CastType:
+                        this.CastType = (Exception?)obj;
+                        break;
+                    case ObjectEffect_FieldIndex.EnchantmentAmount:
+                        this.EnchantmentAmount = (Exception?)obj;
+                        break;
+                    case ObjectEffect_FieldIndex.TargetType:
+                        this.TargetType = (Exception?)obj;
+                        break;
+                    case ObjectEffect_FieldIndex.EnchantType:
+                        this.EnchantType = (Exception?)obj;
+                        break;
+                    case ObjectEffect_FieldIndex.ChargeTime:
+                        this.ChargeTime = (Exception?)obj;
+                        break;
+                    case ObjectEffect_FieldIndex.BaseEnchantment:
+                        this.BaseEnchantment = (Exception?)obj;
+                        break;
+                    case ObjectEffect_FieldIndex.WornRestrictions:
+                        this.WornRestrictions = (Exception?)obj;
                         break;
                     case ObjectEffect_FieldIndex.Effects:
                         this.Effects = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Effect.ErrorMask?>>?>)obj;
@@ -683,7 +889,15 @@ namespace Mutagen.Bethesda.Starfield
                 if (Name != null) return true;
                 if (MAGF != null) return true;
                 if (MUID != null) return true;
-                if (UnknownENIT != null) return true;
+                if (EnchantmentCost != null) return true;
+                if (Flags != null) return true;
+                if (CastType != null) return true;
+                if (EnchantmentAmount != null) return true;
+                if (TargetType != null) return true;
+                if (EnchantType != null) return true;
+                if (ChargeTime != null) return true;
+                if (BaseEnchantment != null) return true;
+                if (WornRestrictions != null) return true;
                 if (Effects != null) return true;
                 return false;
             }
@@ -744,7 +958,31 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(MUID, "MUID");
                 }
                 {
-                    sb.AppendItem(UnknownENIT, "UnknownENIT");
+                    sb.AppendItem(EnchantmentCost, "EnchantmentCost");
+                }
+                {
+                    sb.AppendItem(Flags, "Flags");
+                }
+                {
+                    sb.AppendItem(CastType, "CastType");
+                }
+                {
+                    sb.AppendItem(EnchantmentAmount, "EnchantmentAmount");
+                }
+                {
+                    sb.AppendItem(TargetType, "TargetType");
+                }
+                {
+                    sb.AppendItem(EnchantType, "EnchantType");
+                }
+                {
+                    sb.AppendItem(ChargeTime, "ChargeTime");
+                }
+                {
+                    sb.AppendItem(BaseEnchantment, "BaseEnchantment");
+                }
+                {
+                    sb.AppendItem(WornRestrictions, "WornRestrictions");
                 }
                 if (Effects is {} EffectsItem)
                 {
@@ -779,7 +1017,15 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Name = this.Name.Combine(rhs.Name);
                 ret.MAGF = this.MAGF.Combine(rhs.MAGF);
                 ret.MUID = this.MUID.Combine(rhs.MUID);
-                ret.UnknownENIT = this.UnknownENIT.Combine(rhs.UnknownENIT);
+                ret.EnchantmentCost = this.EnchantmentCost.Combine(rhs.EnchantmentCost);
+                ret.Flags = this.Flags.Combine(rhs.Flags);
+                ret.CastType = this.CastType.Combine(rhs.CastType);
+                ret.EnchantmentAmount = this.EnchantmentAmount.Combine(rhs.EnchantmentAmount);
+                ret.TargetType = this.TargetType.Combine(rhs.TargetType);
+                ret.EnchantType = this.EnchantType.Combine(rhs.EnchantType);
+                ret.ChargeTime = this.ChargeTime.Combine(rhs.ChargeTime);
+                ret.BaseEnchantment = this.BaseEnchantment.Combine(rhs.BaseEnchantment);
+                ret.WornRestrictions = this.WornRestrictions.Combine(rhs.WornRestrictions);
                 ret.Effects = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Effect.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Effects?.Overall, rhs.Effects?.Overall), Noggog.ExceptionExt.Combine(this.Effects?.Specific, rhs.Effects?.Specific));
                 return ret;
             }
@@ -810,7 +1056,15 @@ namespace Mutagen.Bethesda.Starfield
             public bool Name;
             public bool MAGF;
             public bool MUID;
-            public bool UnknownENIT;
+            public bool EnchantmentCost;
+            public bool Flags;
+            public bool CastType;
+            public bool EnchantmentAmount;
+            public bool TargetType;
+            public bool EnchantType;
+            public bool ChargeTime;
+            public bool BaseEnchantment;
+            public bool WornRestrictions;
             public Effect.TranslationMask? Effects;
             #endregion
 
@@ -824,7 +1078,15 @@ namespace Mutagen.Bethesda.Starfield
                 this.Name = defaultOn;
                 this.MAGF = defaultOn;
                 this.MUID = defaultOn;
-                this.UnknownENIT = defaultOn;
+                this.EnchantmentCost = defaultOn;
+                this.Flags = defaultOn;
+                this.CastType = defaultOn;
+                this.EnchantmentAmount = defaultOn;
+                this.TargetType = defaultOn;
+                this.EnchantType = defaultOn;
+                this.ChargeTime = defaultOn;
+                this.BaseEnchantment = defaultOn;
+                this.WornRestrictions = defaultOn;
             }
 
             #endregion
@@ -839,7 +1101,15 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Name, null));
                 ret.Add((MAGF, null));
                 ret.Add((MUID, null));
-                ret.Add((UnknownENIT, null));
+                ret.Add((EnchantmentCost, null));
+                ret.Add((Flags, null));
+                ret.Add((CastType, null));
+                ret.Add((EnchantmentAmount, null));
+                ret.Add((TargetType, null));
+                ret.Add((EnchantType, null));
+                ret.Add((ChargeTime, null));
+                ret.Add((BaseEnchantment, null));
+                ret.Add((WornRestrictions, null));
                 ret.Add((Effects == null ? DefaultOn : !Effects.GetCrystal().CopyNothing, Effects?.GetCrystal()));
             }
 
@@ -1019,7 +1289,15 @@ namespace Mutagen.Bethesda.Starfield
         new TranslatedString? Name { get; set; }
         new Int32? MAGF { get; set; }
         new Int32? MUID { get; set; }
-        new MemorySlice<Byte> UnknownENIT { get; set; }
+        new Int32 EnchantmentCost { get; set; }
+        new ObjectEffect.Flag Flags { get; set; }
+        new CastType CastType { get; set; }
+        new Int32 EnchantmentAmount { get; set; }
+        new TargetType TargetType { get; set; }
+        new ObjectEffect.EnchantTypeEnum EnchantType { get; set; }
+        new Single ChargeTime { get; set; }
+        new IFormLink<IObjectEffectGetter> BaseEnchantment { get; set; }
+        new IFormLink<IFormListGetter> WornRestrictions { get; set; }
         new ExtendedList<Effect> Effects { get; }
     }
 
@@ -1072,7 +1350,15 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         Int32? MAGF { get; }
         Int32? MUID { get; }
-        ReadOnlyMemorySlice<Byte> UnknownENIT { get; }
+        Int32 EnchantmentCost { get; }
+        ObjectEffect.Flag Flags { get; }
+        CastType CastType { get; }
+        Int32 EnchantmentAmount { get; }
+        TargetType TargetType { get; }
+        ObjectEffect.EnchantTypeEnum EnchantType { get; }
+        Single ChargeTime { get; }
+        IFormLinkGetter<IObjectEffectGetter> BaseEnchantment { get; }
+        IFormLinkGetter<IFormListGetter> WornRestrictions { get; }
         IReadOnlyList<IEffectGetter> Effects { get; }
 
     }
@@ -1257,8 +1543,16 @@ namespace Mutagen.Bethesda.Starfield
         Name = 11,
         MAGF = 12,
         MUID = 13,
-        UnknownENIT = 14,
-        Effects = 15,
+        EnchantmentCost = 14,
+        Flags = 15,
+        CastType = 16,
+        EnchantmentAmount = 17,
+        TargetType = 18,
+        EnchantType = 19,
+        ChargeTime = 20,
+        BaseEnchantment = 21,
+        WornRestrictions = 22,
+        Effects = 23,
     }
     #endregion
 
@@ -1269,9 +1563,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 9;
+        public const ushort AdditionalFieldCount = 17;
 
-        public const ushort FieldCount = 16;
+        public const ushort FieldCount = 24;
 
         public static readonly Type MaskType = typeof(ObjectEffect.Mask<>);
 
@@ -1375,7 +1669,15 @@ namespace Mutagen.Bethesda.Starfield
             item.Name = default;
             item.MAGF = default;
             item.MUID = default;
-            item.UnknownENIT = new byte[27];
+            item.EnchantmentCost = default(Int32);
+            item.Flags = default(ObjectEffect.Flag);
+            item.CastType = default(CastType);
+            item.EnchantmentAmount = default(Int32);
+            item.TargetType = default(TargetType);
+            item.EnchantType = default(ObjectEffect.EnchantTypeEnum);
+            item.ChargeTime = default(Single);
+            item.BaseEnchantment.Clear();
+            item.WornRestrictions.Clear();
             item.Effects.Clear();
             base.Clear(item);
         }
@@ -1396,6 +1698,8 @@ namespace Mutagen.Bethesda.Starfield
             base.RemapLinks(obj, mapping);
             obj.VirtualMachineAdapter?.RemapLinks(mapping);
             obj.Components.RemapLinks(mapping);
+            obj.BaseEnchantment.Relink(mapping);
+            obj.WornRestrictions.Relink(mapping);
             obj.Effects.RemapLinks(mapping);
         }
         
@@ -1502,7 +1806,15 @@ namespace Mutagen.Bethesda.Starfield
             ret.Name = object.Equals(item.Name, rhs.Name);
             ret.MAGF = item.MAGF == rhs.MAGF;
             ret.MUID = item.MUID == rhs.MUID;
-            ret.UnknownENIT = MemoryExtensions.SequenceEqual(item.UnknownENIT.Span, rhs.UnknownENIT.Span);
+            ret.EnchantmentCost = item.EnchantmentCost == rhs.EnchantmentCost;
+            ret.Flags = item.Flags == rhs.Flags;
+            ret.CastType = item.CastType == rhs.CastType;
+            ret.EnchantmentAmount = item.EnchantmentAmount == rhs.EnchantmentAmount;
+            ret.TargetType = item.TargetType == rhs.TargetType;
+            ret.EnchantType = item.EnchantType == rhs.EnchantType;
+            ret.ChargeTime = item.ChargeTime.EqualsWithin(rhs.ChargeTime);
+            ret.BaseEnchantment = item.BaseEnchantment.Equals(rhs.BaseEnchantment);
+            ret.WornRestrictions = item.WornRestrictions.Equals(rhs.WornRestrictions);
             ret.Effects = item.Effects.CollectionEqualsHelper(
                 rhs.Effects,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -1598,9 +1910,41 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(MUIDItem, "MUID");
             }
-            if (printMask?.UnknownENIT ?? true)
+            if (printMask?.EnchantmentCost ?? true)
             {
-                sb.AppendLine($"UnknownENIT => {SpanExt.ToHexString(item.UnknownENIT)}");
+                sb.AppendItem(item.EnchantmentCost, "EnchantmentCost");
+            }
+            if (printMask?.Flags ?? true)
+            {
+                sb.AppendItem(item.Flags, "Flags");
+            }
+            if (printMask?.CastType ?? true)
+            {
+                sb.AppendItem(item.CastType, "CastType");
+            }
+            if (printMask?.EnchantmentAmount ?? true)
+            {
+                sb.AppendItem(item.EnchantmentAmount, "EnchantmentAmount");
+            }
+            if (printMask?.TargetType ?? true)
+            {
+                sb.AppendItem(item.TargetType, "TargetType");
+            }
+            if (printMask?.EnchantType ?? true)
+            {
+                sb.AppendItem(item.EnchantType, "EnchantType");
+            }
+            if (printMask?.ChargeTime ?? true)
+            {
+                sb.AppendItem(item.ChargeTime, "ChargeTime");
+            }
+            if (printMask?.BaseEnchantment ?? true)
+            {
+                sb.AppendItem(item.BaseEnchantment.FormKey, "BaseEnchantment");
+            }
+            if (printMask?.WornRestrictions ?? true)
+            {
+                sb.AppendItem(item.WornRestrictions.FormKey, "WornRestrictions");
             }
             if (printMask?.Effects?.Overall ?? true)
             {
@@ -1702,9 +2046,41 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.MUID != rhs.MUID) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.UnknownENIT) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.EnchantmentCost) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.UnknownENIT.Span, rhs.UnknownENIT.Span)) return false;
+                if (lhs.EnchantmentCost != rhs.EnchantmentCost) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.Flags) ?? true))
+            {
+                if (lhs.Flags != rhs.Flags) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.CastType) ?? true))
+            {
+                if (lhs.CastType != rhs.CastType) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.EnchantmentAmount) ?? true))
+            {
+                if (lhs.EnchantmentAmount != rhs.EnchantmentAmount) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.TargetType) ?? true))
+            {
+                if (lhs.TargetType != rhs.TargetType) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.EnchantType) ?? true))
+            {
+                if (lhs.EnchantType != rhs.EnchantType) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.ChargeTime) ?? true))
+            {
+                if (!lhs.ChargeTime.EqualsWithin(rhs.ChargeTime)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.BaseEnchantment) ?? true))
+            {
+                if (!lhs.BaseEnchantment.Equals(rhs.BaseEnchantment)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.WornRestrictions) ?? true))
+            {
+                if (!lhs.WornRestrictions.Equals(rhs.WornRestrictions)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.Effects) ?? true))
             {
@@ -1757,7 +2133,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(MUIDitem);
             }
-            hash.Add(item.UnknownENIT);
+            hash.Add(item.EnchantmentCost);
+            hash.Add(item.Flags);
+            hash.Add(item.CastType);
+            hash.Add(item.EnchantmentAmount);
+            hash.Add(item.TargetType);
+            hash.Add(item.EnchantType);
+            hash.Add(item.ChargeTime);
+            hash.Add(item.BaseEnchantment);
+            hash.Add(item.WornRestrictions);
             hash.Add(item.Effects);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1800,6 +2184,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return FormLinkInformation.Factory(item);
             }
+            yield return FormLinkInformation.Factory(obj.BaseEnchantment);
+            yield return FormLinkInformation.Factory(obj.WornRestrictions);
             foreach (var item in obj.Effects.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
             {
                 yield return FormLinkInformation.Factory(item);
@@ -2002,9 +2388,41 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.MUID = rhs.MUID;
             }
-            if ((copyMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.UnknownENIT) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.EnchantmentCost) ?? true))
             {
-                item.UnknownENIT = rhs.UnknownENIT.ToArray();
+                item.EnchantmentCost = rhs.EnchantmentCost;
+            }
+            if ((copyMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.Flags) ?? true))
+            {
+                item.Flags = rhs.Flags;
+            }
+            if ((copyMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.CastType) ?? true))
+            {
+                item.CastType = rhs.CastType;
+            }
+            if ((copyMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.EnchantmentAmount) ?? true))
+            {
+                item.EnchantmentAmount = rhs.EnchantmentAmount;
+            }
+            if ((copyMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.TargetType) ?? true))
+            {
+                item.TargetType = rhs.TargetType;
+            }
+            if ((copyMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.EnchantType) ?? true))
+            {
+                item.EnchantType = rhs.EnchantType;
+            }
+            if ((copyMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.ChargeTime) ?? true))
+            {
+                item.ChargeTime = rhs.ChargeTime;
+            }
+            if ((copyMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.BaseEnchantment) ?? true))
+            {
+                item.BaseEnchantment.SetTo(rhs.BaseEnchantment.FormKey);
+            }
+            if ((copyMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.WornRestrictions) ?? true))
+            {
+                item.WornRestrictions.SetTo(rhs.WornRestrictions.FormKey);
             }
             if ((copyMask?.GetShouldTranslate((int)ObjectEffect_FieldIndex.Effects) ?? true))
             {
@@ -2243,9 +2661,33 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.MUID));
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.ENIT)))
             {
-                ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer.Write(item.EnchantmentCost);
+                EnumBinaryTranslation<ObjectEffect.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.Flags,
+                    length: 4);
+                EnumBinaryTranslation<CastType, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.CastType,
+                    length: 1);
+                writer.Write(item.EnchantmentAmount);
+                EnumBinaryTranslation<TargetType, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.TargetType,
+                    length: 1);
+                EnumBinaryTranslation<ObjectEffect.EnchantTypeEnum, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.EnchantType,
+                    length: 1);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UnknownENIT);
+                    item: item.ChargeTime);
+                FormLinkBinaryTranslation.Instance.Write(
+                    writer: writer,
+                    item: item.BaseEnchantment);
+                FormLinkBinaryTranslation.Instance.Write(
+                    writer: writer,
+                    item: item.WornRestrictions);
             }
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IEffectGetter>.Instance.Write(
                 writer: writer,
@@ -2376,7 +2818,7 @@ namespace Mutagen.Bethesda.Starfield
                         item.MAGF = frame.ReadInt32();
                         return new ParseResult((int)ObjectEffect_FieldIndex.MAGF, nextRecordType);
                     }
-                    else if (lastParsed.ParsedIndex.Value <= (int)ObjectEffect_FieldIndex.UnknownENIT)
+                    else if (lastParsed.ParsedIndex.Value <= (int)ObjectEffect_FieldIndex.WornRestrictions)
                     {
                         item.Effects.SetTo(
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Effect>.Instance.Parse(
@@ -2416,7 +2858,7 @@ namespace Mutagen.Bethesda.Starfield
                         item.MUID = frame.ReadInt32();
                         return new ParseResult((int)ObjectEffect_FieldIndex.MUID, nextRecordType);
                     }
-                    else if (lastParsed.ParsedIndex.Value <= (int)ObjectEffect_FieldIndex.UnknownENIT)
+                    else if (lastParsed.ParsedIndex.Value <= (int)ObjectEffect_FieldIndex.WornRestrictions)
                     {
                         item.Effects.SetTo(
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Effect>.Instance.Parse(
@@ -2451,8 +2893,33 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
-                    item.UnknownENIT = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(27));
-                    return (int)ObjectEffect_FieldIndex.UnknownENIT;
+                    if (dataFrame.Remaining < 4) return null;
+                    item.EnchantmentCost = dataFrame.ReadInt32();
+                    if (dataFrame.Remaining < 4) return null;
+                    item.Flags = EnumBinaryTranslation<ObjectEffect.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    if (dataFrame.Remaining < 1) return null;
+                    item.CastType = EnumBinaryTranslation<CastType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 1);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.EnchantmentAmount = dataFrame.ReadInt32();
+                    if (dataFrame.Remaining < 1) return null;
+                    item.TargetType = EnumBinaryTranslation<TargetType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 1);
+                    if (dataFrame.Remaining < 1) return null;
+                    item.EnchantType = EnumBinaryTranslation<ObjectEffect.EnchantTypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 1);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.ChargeTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.BaseEnchantment.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (dataFrame.Remaining < 4) return null;
+                    item.WornRestrictions.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)ObjectEffect_FieldIndex.WornRestrictions;
                 }
                 case RecordTypeInts.EFID:
                 case RecordTypeInts.EFIT:
@@ -2572,10 +3039,50 @@ namespace Mutagen.Bethesda.Starfield
         public Int32? MUID => _MUIDLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _MUIDLocation.Value, _package.MetaData.Constants)) : default(Int32?);
         #endregion
         private RangeInt32? _ENITLocation;
-        #region UnknownENIT
-        private int _UnknownENITLocation => _ENITLocation!.Value.Min;
-        private bool _UnknownENIT_IsSet => _ENITLocation.HasValue;
-        public ReadOnlyMemorySlice<Byte> UnknownENIT => _UnknownENIT_IsSet ? _recordData.Span.Slice(_UnknownENITLocation, 27).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        #region EnchantmentCost
+        private int _EnchantmentCostLocation => _ENITLocation!.Value.Min;
+        private bool _EnchantmentCost_IsSet => _ENITLocation.HasValue;
+        public Int32 EnchantmentCost => _EnchantmentCost_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_EnchantmentCostLocation, 4)) : default(Int32);
+        #endregion
+        #region Flags
+        private int _FlagsLocation => _ENITLocation!.Value.Min + 0x4;
+        private bool _Flags_IsSet => _ENITLocation.HasValue;
+        public ObjectEffect.Flag Flags => _Flags_IsSet ? (ObjectEffect.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
+        #endregion
+        #region CastType
+        private int _CastTypeLocation => _ENITLocation!.Value.Min + 0x8;
+        private bool _CastType_IsSet => _ENITLocation.HasValue;
+        public CastType CastType => _CastType_IsSet ? (CastType)_recordData.Span.Slice(_CastTypeLocation, 0x1)[0] : default;
+        #endregion
+        #region EnchantmentAmount
+        private int _EnchantmentAmountLocation => _ENITLocation!.Value.Min + 0x9;
+        private bool _EnchantmentAmount_IsSet => _ENITLocation.HasValue;
+        public Int32 EnchantmentAmount => _EnchantmentAmount_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_EnchantmentAmountLocation, 4)) : default(Int32);
+        #endregion
+        #region TargetType
+        private int _TargetTypeLocation => _ENITLocation!.Value.Min + 0xD;
+        private bool _TargetType_IsSet => _ENITLocation.HasValue;
+        public TargetType TargetType => _TargetType_IsSet ? (TargetType)_recordData.Span.Slice(_TargetTypeLocation, 0x1)[0] : default;
+        #endregion
+        #region EnchantType
+        private int _EnchantTypeLocation => _ENITLocation!.Value.Min + 0xE;
+        private bool _EnchantType_IsSet => _ENITLocation.HasValue;
+        public ObjectEffect.EnchantTypeEnum EnchantType => _EnchantType_IsSet ? (ObjectEffect.EnchantTypeEnum)_recordData.Span.Slice(_EnchantTypeLocation, 0x1)[0] : default;
+        #endregion
+        #region ChargeTime
+        private int _ChargeTimeLocation => _ENITLocation!.Value.Min + 0xF;
+        private bool _ChargeTime_IsSet => _ENITLocation.HasValue;
+        public Single ChargeTime => _ChargeTime_IsSet ? _recordData.Slice(_ChargeTimeLocation, 4).Float() : default(Single);
+        #endregion
+        #region BaseEnchantment
+        private int _BaseEnchantmentLocation => _ENITLocation!.Value.Min + 0x13;
+        private bool _BaseEnchantment_IsSet => _ENITLocation.HasValue;
+        public IFormLinkGetter<IObjectEffectGetter> BaseEnchantment => _BaseEnchantment_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IObjectEffectGetter>(_package, _recordData.Span.Slice(_BaseEnchantmentLocation, 0x4), isSet: _BaseEnchantment_IsSet) : FormLink<IObjectEffectGetter>.Null;
+        #endregion
+        #region WornRestrictions
+        private int _WornRestrictionsLocation => _ENITLocation!.Value.Min + 0x17;
+        private bool _WornRestrictions_IsSet => _ENITLocation.HasValue;
+        public IFormLinkGetter<IFormListGetter> WornRestrictions => _WornRestrictions_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IFormListGetter>(_package, _recordData.Span.Slice(_WornRestrictionsLocation, 0x4), isSet: _WornRestrictions_IsSet) : FormLink<IFormListGetter>.Null;
         #endregion
         public IReadOnlyList<IEffectGetter> Effects { get; private set; } = [];
         partial void CustomFactoryEnd(
@@ -2689,7 +3196,7 @@ namespace Mutagen.Bethesda.Starfield
                         _MAGFLocation = (stream.Position - offset);
                         return new ParseResult((int)ObjectEffect_FieldIndex.MAGF, type);
                     }
-                    else if (lastParsed.ParsedIndex.Value <= (int)ObjectEffect_FieldIndex.UnknownENIT)
+                    else if (lastParsed.ParsedIndex.Value <= (int)ObjectEffect_FieldIndex.WornRestrictions)
                     {
                         this.Effects = this.ParseRepeatedTypelessSubrecord<IEffectGetter>(
                             stream: stream,
@@ -2729,7 +3236,7 @@ namespace Mutagen.Bethesda.Starfield
                         _MUIDLocation = (stream.Position - offset);
                         return new ParseResult((int)ObjectEffect_FieldIndex.MUID, type);
                     }
-                    else if (lastParsed.ParsedIndex.Value <= (int)ObjectEffect_FieldIndex.UnknownENIT)
+                    else if (lastParsed.ParsedIndex.Value <= (int)ObjectEffect_FieldIndex.WornRestrictions)
                     {
                         this.Effects = this.ParseRepeatedTypelessSubrecord<IEffectGetter>(
                             stream: stream,
@@ -2764,7 +3271,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ENIT:
                 {
                     _ENITLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)ObjectEffect_FieldIndex.UnknownENIT;
+                    return (int)ObjectEffect_FieldIndex.WornRestrictions;
                 }
                 case RecordTypeInts.EFID:
                 case RecordTypeInts.EFIT:
