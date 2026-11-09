@@ -39,28 +39,28 @@ using System.Reactive.Linq;
 namespace Mutagen.Bethesda.Starfield
 {
     #region Class
-    public partial class PlacedObjectXCZRXCZA :
-        IEquatable<IPlacedObjectXCZRXCZAGetter>,
-        ILoquiObjectSetter<PlacedObjectXCZRXCZA>,
-        IPlacedObjectXCZRXCZA
+    public partial class PlacedObjectWaterCurrentReference :
+        IEquatable<IPlacedObjectWaterCurrentReferenceGetter>,
+        ILoquiObjectSetter<PlacedObjectWaterCurrentReference>,
+        IPlacedObjectWaterCurrentReference
     {
         #region Ctor
-        public PlacedObjectXCZRXCZA()
+        public PlacedObjectWaterCurrentReference()
         {
             CustomCtor();
         }
         partial void CustomCtor();
         #endregion
 
-        #region XCZR
-        private readonly IFormLink<IPlacedObjectGetter> _XCZR = new FormLink<IPlacedObjectGetter>();
-        public IFormLink<IPlacedObjectGetter> XCZR
+        #region Reference
+        private readonly IFormLink<IPlacedObjectGetter> _Reference = new FormLink<IPlacedObjectGetter>();
+        public IFormLink<IPlacedObjectGetter> Reference
         {
-            get => _XCZR;
-            set => _XCZR.SetTo(value);
+            get => _Reference;
+            set => _Reference.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IPlacedObjectGetter> IPlacedObjectXCZRXCZAGetter.XCZR => this.XCZR;
+        IFormLinkGetter<IPlacedObjectGetter> IPlacedObjectWaterCurrentReferenceGetter.Reference => this.Reference;
         #endregion
         #region XCZA
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -71,7 +71,7 @@ namespace Mutagen.Bethesda.Starfield
             set => this._XCZA = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IPlacedObjectXCZRXCZAGetter.XCZA => this.XCZA;
+        ReadOnlyMemorySlice<Byte>? IPlacedObjectWaterCurrentReferenceGetter.XCZA => this.XCZA;
         #endregion
 
         #region To String
@@ -80,7 +80,7 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             string? name = null)
         {
-            PlacedObjectXCZRXCZAMixIn.Print(
+            PlacedObjectWaterCurrentReferenceMixIn.Print(
                 item: this,
                 sb: sb,
                 name: name);
@@ -91,16 +91,16 @@ namespace Mutagen.Bethesda.Starfield
         #region Equals and Hash
         public override bool Equals(object? obj)
         {
-            if (obj is not IPlacedObjectXCZRXCZAGetter rhs) return false;
-            return ((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
+            if (obj is not IPlacedObjectWaterCurrentReferenceGetter rhs) return false;
+            return ((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
         }
 
-        public bool Equals(IPlacedObjectXCZRXCZAGetter? obj)
+        public bool Equals(IPlacedObjectWaterCurrentReferenceGetter? obj)
         {
-            return ((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
+            return ((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
         }
 
-        public override int GetHashCode() => ((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)this).CommonInstance()!).GetHashCode(this);
+        public override int GetHashCode() => ((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)this).CommonInstance()!).GetHashCode(this);
 
         #endregion
 
@@ -112,15 +112,15 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.XCZR = initialValue;
+                this.Reference = initialValue;
                 this.XCZA = initialValue;
             }
 
             public Mask(
-                TItem XCZR,
+                TItem Reference,
                 TItem XCZA)
             {
-                this.XCZR = XCZR;
+                this.Reference = Reference;
                 this.XCZA = XCZA;
             }
 
@@ -133,7 +133,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem XCZR;
+            public TItem Reference;
             public TItem XCZA;
             #endregion
 
@@ -147,14 +147,14 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.XCZR, rhs.XCZR)) return false;
+                if (!object.Equals(this.Reference, rhs.Reference)) return false;
                 if (!object.Equals(this.XCZA, rhs.XCZA)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.XCZR);
+                hash.Add(this.Reference);
                 hash.Add(this.XCZA);
                 return hash.ToHashCode();
             }
@@ -164,7 +164,7 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.XCZR)) return false;
+                if (!eval(this.Reference)) return false;
                 if (!eval(this.XCZA)) return false;
                 return true;
             }
@@ -173,7 +173,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.XCZR)) return true;
+                if (eval(this.Reference)) return true;
                 if (eval(this.XCZA)) return true;
                 return false;
             }
@@ -182,14 +182,14 @@ namespace Mutagen.Bethesda.Starfield
             #region Translate
             public Mask<R> Translate<R>(Func<TItem, R> eval)
             {
-                var ret = new PlacedObjectXCZRXCZA.Mask<R>();
+                var ret = new PlacedObjectWaterCurrentReference.Mask<R>();
                 this.Translate_InternalFill(ret, eval);
                 return ret;
             }
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.XCZR = eval(this.XCZR);
+                obj.Reference = eval(this.Reference);
                 obj.XCZA = eval(this.XCZA);
             }
             #endregion
@@ -197,21 +197,21 @@ namespace Mutagen.Bethesda.Starfield
             #region To String
             public override string ToString() => this.Print();
 
-            public string Print(PlacedObjectXCZRXCZA.Mask<bool>? printMask = null)
+            public string Print(PlacedObjectWaterCurrentReference.Mask<bool>? printMask = null)
             {
                 var sb = new StructuredStringBuilder();
                 Print(sb, printMask);
                 return sb.ToString();
             }
 
-            public void Print(StructuredStringBuilder sb, PlacedObjectXCZRXCZA.Mask<bool>? printMask = null)
+            public void Print(StructuredStringBuilder sb, PlacedObjectWaterCurrentReference.Mask<bool>? printMask = null)
             {
-                sb.AppendLine($"{nameof(PlacedObjectXCZRXCZA.Mask<TItem>)} =>");
+                sb.AppendLine($"{nameof(PlacedObjectWaterCurrentReference.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.XCZR ?? true)
+                    if (printMask?.Reference ?? true)
                     {
-                        sb.AppendItem(XCZR, "XCZR");
+                        sb.AppendItem(Reference, "Reference");
                     }
                     if (printMask?.XCZA ?? true)
                     {
@@ -241,19 +241,19 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? XCZR;
+            public Exception? Reference;
             public Exception? XCZA;
             #endregion
 
             #region IErrorMask
             public object? GetNthMask(int index)
             {
-                PlacedObjectXCZRXCZA_FieldIndex enu = (PlacedObjectXCZRXCZA_FieldIndex)index;
+                PlacedObjectWaterCurrentReference_FieldIndex enu = (PlacedObjectWaterCurrentReference_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlacedObjectXCZRXCZA_FieldIndex.XCZR:
-                        return XCZR;
-                    case PlacedObjectXCZRXCZA_FieldIndex.XCZA:
+                    case PlacedObjectWaterCurrentReference_FieldIndex.Reference:
+                        return Reference;
+                    case PlacedObjectWaterCurrentReference_FieldIndex.XCZA:
                         return XCZA;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -262,13 +262,13 @@ namespace Mutagen.Bethesda.Starfield
 
             public void SetNthException(int index, Exception ex)
             {
-                PlacedObjectXCZRXCZA_FieldIndex enu = (PlacedObjectXCZRXCZA_FieldIndex)index;
+                PlacedObjectWaterCurrentReference_FieldIndex enu = (PlacedObjectWaterCurrentReference_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlacedObjectXCZRXCZA_FieldIndex.XCZR:
-                        this.XCZR = ex;
+                    case PlacedObjectWaterCurrentReference_FieldIndex.Reference:
+                        this.Reference = ex;
                         break;
-                    case PlacedObjectXCZRXCZA_FieldIndex.XCZA:
+                    case PlacedObjectWaterCurrentReference_FieldIndex.XCZA:
                         this.XCZA = ex;
                         break;
                     default:
@@ -278,13 +278,13 @@ namespace Mutagen.Bethesda.Starfield
 
             public void SetNthMask(int index, object obj)
             {
-                PlacedObjectXCZRXCZA_FieldIndex enu = (PlacedObjectXCZRXCZA_FieldIndex)index;
+                PlacedObjectWaterCurrentReference_FieldIndex enu = (PlacedObjectWaterCurrentReference_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlacedObjectXCZRXCZA_FieldIndex.XCZR:
-                        this.XCZR = (Exception?)obj;
+                    case PlacedObjectWaterCurrentReference_FieldIndex.Reference:
+                        this.Reference = (Exception?)obj;
                         break;
-                    case PlacedObjectXCZRXCZA_FieldIndex.XCZA:
+                    case PlacedObjectWaterCurrentReference_FieldIndex.XCZA:
                         this.XCZA = (Exception?)obj;
                         break;
                     default:
@@ -295,7 +295,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (XCZR != null) return true;
+                if (Reference != null) return true;
                 if (XCZA != null) return true;
                 return false;
             }
@@ -323,7 +323,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(XCZR, "XCZR");
+                    sb.AppendItem(Reference, "Reference");
                 }
                 {
                     sb.AppendItem(XCZA, "XCZA");
@@ -336,7 +336,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.XCZR = this.XCZR.Combine(rhs.XCZR);
+                ret.Reference = this.Reference.Combine(rhs.Reference);
                 ret.XCZA = this.XCZA.Combine(rhs.XCZA);
                 return ret;
             }
@@ -361,7 +361,7 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool XCZR;
+            public bool Reference;
             public bool XCZA;
             #endregion
 
@@ -372,7 +372,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.XCZR = defaultOn;
+                this.Reference = defaultOn;
                 this.XCZA = defaultOn;
             }
 
@@ -389,7 +389,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((XCZR, null));
+                ret.Add((Reference, null));
                 ret.Add((XCZA, null));
             }
 
@@ -402,31 +402,31 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region Mutagen
-        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => PlacedObjectXCZRXCZACommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
-        public void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => PlacedObjectXCZRXCZASetterCommon.Instance.RemapLinks(this, mapping);
+        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => PlacedObjectWaterCurrentReferenceCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
+        public void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => PlacedObjectWaterCurrentReferenceSetterCommon.Instance.RemapLinks(this, mapping);
         #endregion
 
         #region Binary Translation
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected object BinaryWriteTranslator => PlacedObjectXCZRXCZABinaryWriteTranslation.Instance;
+        protected object BinaryWriteTranslator => PlacedObjectWaterCurrentReferenceBinaryWriteTranslation.Instance;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         object IBinaryItem.BinaryWriteTranslator => this.BinaryWriteTranslator;
         void IBinaryItem.WriteToBinary(
             MutagenWriter writer,
             TypedWriteParams translationParams = default)
         {
-            ((PlacedObjectXCZRXCZABinaryWriteTranslation)this.BinaryWriteTranslator).Write(
+            ((PlacedObjectWaterCurrentReferenceBinaryWriteTranslation)this.BinaryWriteTranslator).Write(
                 item: this,
                 writer: writer,
                 translationParams: translationParams);
         }
         #region Binary Create
-        public static PlacedObjectXCZRXCZA CreateFromBinary(
+        public static PlacedObjectWaterCurrentReference CreateFromBinary(
             MutagenFrame frame,
             TypedParseParams translationParams = default)
         {
-            var ret = new PlacedObjectXCZRXCZA();
-            ((PlacedObjectXCZRXCZASetterCommon)((IPlacedObjectXCZRXCZAGetter)ret).CommonSetterInstance()!).CopyInFromBinary(
+            var ret = new PlacedObjectWaterCurrentReference();
+            ((PlacedObjectWaterCurrentReferenceSetterCommon)((IPlacedObjectWaterCurrentReferenceGetter)ret).CommonSetterInstance()!).CopyInFromBinary(
                 item: ret,
                 frame: frame,
                 translationParams: translationParams);
@@ -437,7 +437,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public static bool TryCreateFromBinary(
             MutagenFrame frame,
-            out PlacedObjectXCZRXCZA item,
+            out PlacedObjectWaterCurrentReference item,
             TypedParseParams translationParams = default)
         {
             var startPos = frame.Position;
@@ -452,32 +452,32 @@ namespace Mutagen.Bethesda.Starfield
 
         void IClearable.Clear()
         {
-            ((PlacedObjectXCZRXCZASetterCommon)((IPlacedObjectXCZRXCZAGetter)this).CommonSetterInstance()!).Clear(this);
+            ((PlacedObjectWaterCurrentReferenceSetterCommon)((IPlacedObjectWaterCurrentReferenceGetter)this).CommonSetterInstance()!).Clear(this);
         }
 
-        internal static PlacedObjectXCZRXCZA GetNew()
+        internal static PlacedObjectWaterCurrentReference GetNew()
         {
-            return new PlacedObjectXCZRXCZA();
+            return new PlacedObjectWaterCurrentReference();
         }
 
     }
     #endregion
 
     #region Interface
-    public partial interface IPlacedObjectXCZRXCZA :
+    public partial interface IPlacedObjectWaterCurrentReference :
         IFormLinkContainer,
-        ILoquiObjectSetter<IPlacedObjectXCZRXCZA>,
-        IPlacedObjectXCZRXCZAGetter
+        ILoquiObjectSetter<IPlacedObjectWaterCurrentReference>,
+        IPlacedObjectWaterCurrentReferenceGetter
     {
-        new IFormLink<IPlacedObjectGetter> XCZR { get; set; }
+        new IFormLink<IPlacedObjectGetter> Reference { get; set; }
         new MemorySlice<Byte>? XCZA { get; set; }
     }
 
-    public partial interface IPlacedObjectXCZRXCZAGetter :
+    public partial interface IPlacedObjectWaterCurrentReferenceGetter :
         ILoquiObject,
         IBinaryItem,
         IFormLinkContainerGetter,
-        ILoquiObject<IPlacedObjectXCZRXCZAGetter>
+        ILoquiObject<IPlacedObjectWaterCurrentReferenceGetter>
     {
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonInstance();
@@ -485,8 +485,8 @@ namespace Mutagen.Bethesda.Starfield
         object? CommonSetterInstance();
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
-        static ILoquiRegistration StaticRegistration => PlacedObjectXCZRXCZA_Registration.Instance;
-        IFormLinkGetter<IPlacedObjectGetter> XCZR { get; }
+        static ILoquiRegistration StaticRegistration => PlacedObjectWaterCurrentReference_Registration.Instance;
+        IFormLinkGetter<IPlacedObjectGetter> Reference { get; }
         ReadOnlyMemorySlice<Byte>? XCZA { get; }
 
     }
@@ -494,42 +494,42 @@ namespace Mutagen.Bethesda.Starfield
     #endregion
 
     #region Common MixIn
-    public static partial class PlacedObjectXCZRXCZAMixIn
+    public static partial class PlacedObjectWaterCurrentReferenceMixIn
     {
-        public static void Clear(this IPlacedObjectXCZRXCZA item)
+        public static void Clear(this IPlacedObjectWaterCurrentReference item)
         {
-            ((PlacedObjectXCZRXCZASetterCommon)((IPlacedObjectXCZRXCZAGetter)item).CommonSetterInstance()!).Clear(item: item);
+            ((PlacedObjectWaterCurrentReferenceSetterCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonSetterInstance()!).Clear(item: item);
         }
 
-        public static PlacedObjectXCZRXCZA.Mask<bool> GetEqualsMask(
-            this IPlacedObjectXCZRXCZAGetter item,
-            IPlacedObjectXCZRXCZAGetter rhs,
+        public static PlacedObjectWaterCurrentReference.Mask<bool> GetEqualsMask(
+            this IPlacedObjectWaterCurrentReferenceGetter item,
+            IPlacedObjectWaterCurrentReferenceGetter rhs,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            return ((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)item).CommonInstance()!).GetEqualsMask(
+            return ((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonInstance()!).GetEqualsMask(
                 item: item,
                 rhs: rhs,
                 include: include);
         }
 
         public static string Print(
-            this IPlacedObjectXCZRXCZAGetter item,
+            this IPlacedObjectWaterCurrentReferenceGetter item,
             string? name = null,
-            PlacedObjectXCZRXCZA.Mask<bool>? printMask = null)
+            PlacedObjectWaterCurrentReference.Mask<bool>? printMask = null)
         {
-            return ((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)item).CommonInstance()!).Print(
+            return ((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonInstance()!).Print(
                 item: item,
                 name: name,
                 printMask: printMask);
         }
 
         public static void Print(
-            this IPlacedObjectXCZRXCZAGetter item,
+            this IPlacedObjectWaterCurrentReferenceGetter item,
             StructuredStringBuilder sb,
             string? name = null,
-            PlacedObjectXCZRXCZA.Mask<bool>? printMask = null)
+            PlacedObjectWaterCurrentReference.Mask<bool>? printMask = null)
         {
-            ((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)item).CommonInstance()!).Print(
+            ((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonInstance()!).Print(
                 item: item,
                 sb: sb,
                 name: name,
@@ -537,21 +537,21 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public static bool Equals(
-            this IPlacedObjectXCZRXCZAGetter item,
-            IPlacedObjectXCZRXCZAGetter rhs,
-            PlacedObjectXCZRXCZA.TranslationMask? equalsMask = null)
+            this IPlacedObjectWaterCurrentReferenceGetter item,
+            IPlacedObjectWaterCurrentReferenceGetter rhs,
+            PlacedObjectWaterCurrentReference.TranslationMask? equalsMask = null)
         {
-            return ((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)item).CommonInstance()!).Equals(
+            return ((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonInstance()!).Equals(
                 lhs: item,
                 rhs: rhs,
                 equalsMask: equalsMask?.GetCrystal());
         }
 
         public static void DeepCopyIn(
-            this IPlacedObjectXCZRXCZA lhs,
-            IPlacedObjectXCZRXCZAGetter rhs)
+            this IPlacedObjectWaterCurrentReference lhs,
+            IPlacedObjectWaterCurrentReferenceGetter rhs)
         {
-            ((PlacedObjectXCZRXCZASetterTranslationCommon)((IPlacedObjectXCZRXCZAGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((PlacedObjectWaterCurrentReferenceSetterTranslationCommon)((IPlacedObjectWaterCurrentReferenceGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: default,
@@ -560,11 +560,11 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public static void DeepCopyIn(
-            this IPlacedObjectXCZRXCZA lhs,
-            IPlacedObjectXCZRXCZAGetter rhs,
-            PlacedObjectXCZRXCZA.TranslationMask? copyMask = null)
+            this IPlacedObjectWaterCurrentReference lhs,
+            IPlacedObjectWaterCurrentReferenceGetter rhs,
+            PlacedObjectWaterCurrentReference.TranslationMask? copyMask = null)
         {
-            ((PlacedObjectXCZRXCZASetterTranslationCommon)((IPlacedObjectXCZRXCZAGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((PlacedObjectWaterCurrentReferenceSetterTranslationCommon)((IPlacedObjectWaterCurrentReferenceGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: default,
@@ -573,28 +573,28 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public static void DeepCopyIn(
-            this IPlacedObjectXCZRXCZA lhs,
-            IPlacedObjectXCZRXCZAGetter rhs,
-            out PlacedObjectXCZRXCZA.ErrorMask errorMask,
-            PlacedObjectXCZRXCZA.TranslationMask? copyMask = null)
+            this IPlacedObjectWaterCurrentReference lhs,
+            IPlacedObjectWaterCurrentReferenceGetter rhs,
+            out PlacedObjectWaterCurrentReference.ErrorMask errorMask,
+            PlacedObjectWaterCurrentReference.TranslationMask? copyMask = null)
         {
             var errorMaskBuilder = new ErrorMaskBuilder();
-            ((PlacedObjectXCZRXCZASetterTranslationCommon)((IPlacedObjectXCZRXCZAGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((PlacedObjectWaterCurrentReferenceSetterTranslationCommon)((IPlacedObjectWaterCurrentReferenceGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: errorMaskBuilder,
                 copyMask: copyMask?.GetCrystal(),
                 deepCopy: false);
-            errorMask = PlacedObjectXCZRXCZA.ErrorMask.Factory(errorMaskBuilder);
+            errorMask = PlacedObjectWaterCurrentReference.ErrorMask.Factory(errorMaskBuilder);
         }
 
         public static void DeepCopyIn(
-            this IPlacedObjectXCZRXCZA lhs,
-            IPlacedObjectXCZRXCZAGetter rhs,
+            this IPlacedObjectWaterCurrentReference lhs,
+            IPlacedObjectWaterCurrentReferenceGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask)
         {
-            ((PlacedObjectXCZRXCZASetterTranslationCommon)((IPlacedObjectXCZRXCZAGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((PlacedObjectWaterCurrentReferenceSetterTranslationCommon)((IPlacedObjectWaterCurrentReferenceGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: errorMask,
@@ -602,32 +602,32 @@ namespace Mutagen.Bethesda.Starfield
                 deepCopy: false);
         }
 
-        public static PlacedObjectXCZRXCZA DeepCopy(
-            this IPlacedObjectXCZRXCZAGetter item,
-            PlacedObjectXCZRXCZA.TranslationMask? copyMask = null)
+        public static PlacedObjectWaterCurrentReference DeepCopy(
+            this IPlacedObjectWaterCurrentReferenceGetter item,
+            PlacedObjectWaterCurrentReference.TranslationMask? copyMask = null)
         {
-            return ((PlacedObjectXCZRXCZASetterTranslationCommon)((IPlacedObjectXCZRXCZAGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
+            return ((PlacedObjectWaterCurrentReferenceSetterTranslationCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
                 item: item,
                 copyMask: copyMask);
         }
 
-        public static PlacedObjectXCZRXCZA DeepCopy(
-            this IPlacedObjectXCZRXCZAGetter item,
-            out PlacedObjectXCZRXCZA.ErrorMask errorMask,
-            PlacedObjectXCZRXCZA.TranslationMask? copyMask = null)
+        public static PlacedObjectWaterCurrentReference DeepCopy(
+            this IPlacedObjectWaterCurrentReferenceGetter item,
+            out PlacedObjectWaterCurrentReference.ErrorMask errorMask,
+            PlacedObjectWaterCurrentReference.TranslationMask? copyMask = null)
         {
-            return ((PlacedObjectXCZRXCZASetterTranslationCommon)((IPlacedObjectXCZRXCZAGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
+            return ((PlacedObjectWaterCurrentReferenceSetterTranslationCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
                 item: item,
                 copyMask: copyMask,
                 errorMask: out errorMask);
         }
 
-        public static PlacedObjectXCZRXCZA DeepCopy(
-            this IPlacedObjectXCZRXCZAGetter item,
+        public static PlacedObjectWaterCurrentReference DeepCopy(
+            this IPlacedObjectWaterCurrentReferenceGetter item,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask = null)
         {
-            return ((PlacedObjectXCZRXCZASetterTranslationCommon)((IPlacedObjectXCZRXCZAGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
+            return ((PlacedObjectWaterCurrentReferenceSetterTranslationCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
                 item: item,
                 copyMask: copyMask,
                 errorMask: errorMask);
@@ -635,11 +635,11 @@ namespace Mutagen.Bethesda.Starfield
 
         #region Binary Translation
         public static void CopyInFromBinary(
-            this IPlacedObjectXCZRXCZA item,
+            this IPlacedObjectWaterCurrentReference item,
             MutagenFrame frame,
             TypedParseParams translationParams = default)
         {
-            ((PlacedObjectXCZRXCZASetterCommon)((IPlacedObjectXCZRXCZAGetter)item).CommonSetterInstance()!).CopyInFromBinary(
+            ((PlacedObjectWaterCurrentReferenceSetterCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonSetterInstance()!).CopyInFromBinary(
                 item: item,
                 frame: frame,
                 translationParams: translationParams);
@@ -655,17 +655,17 @@ namespace Mutagen.Bethesda.Starfield
 namespace Mutagen.Bethesda.Starfield
 {
     #region Field Index
-    internal enum PlacedObjectXCZRXCZA_FieldIndex
+    internal enum PlacedObjectWaterCurrentReference_FieldIndex
     {
-        XCZR = 0,
+        Reference = 0,
         XCZA = 1,
     }
     #endregion
 
     #region Registration
-    internal partial class PlacedObjectXCZRXCZA_Registration : ILoquiRegistration
+    internal partial class PlacedObjectWaterCurrentReference_Registration : ILoquiRegistration
     {
-        public static readonly PlacedObjectXCZRXCZA_Registration Instance = new PlacedObjectXCZRXCZA_Registration();
+        public static readonly PlacedObjectWaterCurrentReference_Registration Instance = new PlacedObjectWaterCurrentReference_Registration();
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
@@ -673,23 +673,23 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort FieldCount = 2;
 
-        public static readonly Type MaskType = typeof(PlacedObjectXCZRXCZA.Mask<>);
+        public static readonly Type MaskType = typeof(PlacedObjectWaterCurrentReference.Mask<>);
 
-        public static readonly Type ErrorMaskType = typeof(PlacedObjectXCZRXCZA.ErrorMask);
+        public static readonly Type ErrorMaskType = typeof(PlacedObjectWaterCurrentReference.ErrorMask);
 
-        public static readonly Type ClassType = typeof(PlacedObjectXCZRXCZA);
+        public static readonly Type ClassType = typeof(PlacedObjectWaterCurrentReference);
 
-        public static readonly Type GetterType = typeof(IPlacedObjectXCZRXCZAGetter);
+        public static readonly Type GetterType = typeof(IPlacedObjectWaterCurrentReferenceGetter);
 
         public static readonly Type? InternalGetterType = null;
 
-        public static readonly Type SetterType = typeof(IPlacedObjectXCZRXCZA);
+        public static readonly Type SetterType = typeof(IPlacedObjectWaterCurrentReference);
 
         public static readonly Type? InternalSetterType = null;
 
-        public const string FullName = "Mutagen.Bethesda.Starfield.PlacedObjectXCZRXCZA";
+        public const string FullName = "Mutagen.Bethesda.Starfield.PlacedObjectWaterCurrentReference";
 
-        public const string Name = "PlacedObjectXCZRXCZA";
+        public const string Name = "PlacedObjectWaterCurrentReference";
 
         public const string Namespace = "Mutagen.Bethesda.Starfield";
 
@@ -709,7 +709,7 @@ namespace Mutagen.Bethesda.Starfield
                 allRecordTypes: all,
                 triggeringRecordTypes: triggers);
         });
-        public static readonly Type BinaryWriteTranslation = typeof(PlacedObjectXCZRXCZABinaryWriteTranslation);
+        public static readonly Type BinaryWriteTranslation = typeof(PlacedObjectWaterCurrentReferenceBinaryWriteTranslation);
         #region Interface
         ProtocolKey ILoquiRegistration.ProtocolKey => ProtocolKey;
         ushort ILoquiRegistration.FieldCount => FieldCount;
@@ -740,30 +740,30 @@ namespace Mutagen.Bethesda.Starfield
     #endregion
 
     #region Common
-    internal partial class PlacedObjectXCZRXCZASetterCommon
+    internal partial class PlacedObjectWaterCurrentReferenceSetterCommon
     {
-        public static readonly PlacedObjectXCZRXCZASetterCommon Instance = new PlacedObjectXCZRXCZASetterCommon();
+        public static readonly PlacedObjectWaterCurrentReferenceSetterCommon Instance = new PlacedObjectWaterCurrentReferenceSetterCommon();
 
         partial void ClearPartial();
         
-        public void Clear(IPlacedObjectXCZRXCZA item)
+        public void Clear(IPlacedObjectWaterCurrentReference item)
         {
             ClearPartial();
-            item.XCZR.Clear();
+            item.Reference.Clear();
             item.XCZA = default;
         }
         
         #region Mutagen
-        public void RemapLinks(IPlacedObjectXCZRXCZA obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
+        public void RemapLinks(IPlacedObjectWaterCurrentReference obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
-            obj.XCZR.Relink(mapping);
+            obj.Reference.Relink(mapping);
         }
         
         #endregion
         
         #region Binary Translation
         public virtual void CopyInFromBinary(
-            IPlacedObjectXCZRXCZA item,
+            IPlacedObjectWaterCurrentReference item,
             MutagenFrame frame,
             TypedParseParams translationParams)
         {
@@ -771,23 +771,23 @@ namespace Mutagen.Bethesda.Starfield
                 record: item,
                 frame: frame,
                 translationParams: translationParams,
-                fillTyped: PlacedObjectXCZRXCZABinaryCreateTranslation.FillBinaryRecordTypes);
+                fillTyped: PlacedObjectWaterCurrentReferenceBinaryCreateTranslation.FillBinaryRecordTypes);
         }
         
         #endregion
         
     }
-    internal partial class PlacedObjectXCZRXCZACommon
+    internal partial class PlacedObjectWaterCurrentReferenceCommon
     {
-        public static readonly PlacedObjectXCZRXCZACommon Instance = new PlacedObjectXCZRXCZACommon();
+        public static readonly PlacedObjectWaterCurrentReferenceCommon Instance = new PlacedObjectWaterCurrentReferenceCommon();
 
-        public PlacedObjectXCZRXCZA.Mask<bool> GetEqualsMask(
-            IPlacedObjectXCZRXCZAGetter item,
-            IPlacedObjectXCZRXCZAGetter rhs,
+        public PlacedObjectWaterCurrentReference.Mask<bool> GetEqualsMask(
+            IPlacedObjectWaterCurrentReferenceGetter item,
+            IPlacedObjectWaterCurrentReferenceGetter rhs,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            var ret = new PlacedObjectXCZRXCZA.Mask<bool>(false);
-            ((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)item).CommonInstance()!).FillEqualsMask(
+            var ret = new PlacedObjectWaterCurrentReference.Mask<bool>(false);
+            ((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonInstance()!).FillEqualsMask(
                 item: item,
                 rhs: rhs,
                 ret: ret,
@@ -796,19 +796,19 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         public void FillEqualsMask(
-            IPlacedObjectXCZRXCZAGetter item,
-            IPlacedObjectXCZRXCZAGetter rhs,
-            PlacedObjectXCZRXCZA.Mask<bool> ret,
+            IPlacedObjectWaterCurrentReferenceGetter item,
+            IPlacedObjectWaterCurrentReferenceGetter rhs,
+            PlacedObjectWaterCurrentReference.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.XCZR = item.XCZR.Equals(rhs.XCZR);
+            ret.Reference = item.Reference.Equals(rhs.Reference);
             ret.XCZA = MemorySliceExt.SequenceEqual(item.XCZA, rhs.XCZA);
         }
         
         public string Print(
-            IPlacedObjectXCZRXCZAGetter item,
+            IPlacedObjectWaterCurrentReferenceGetter item,
             string? name = null,
-            PlacedObjectXCZRXCZA.Mask<bool>? printMask = null)
+            PlacedObjectWaterCurrentReference.Mask<bool>? printMask = null)
         {
             var sb = new StructuredStringBuilder();
             Print(
@@ -820,18 +820,18 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         public void Print(
-            IPlacedObjectXCZRXCZAGetter item,
+            IPlacedObjectWaterCurrentReferenceGetter item,
             StructuredStringBuilder sb,
             string? name = null,
-            PlacedObjectXCZRXCZA.Mask<bool>? printMask = null)
+            PlacedObjectWaterCurrentReference.Mask<bool>? printMask = null)
         {
             if (name == null)
             {
-                sb.AppendLine($"PlacedObjectXCZRXCZA =>");
+                sb.AppendLine($"PlacedObjectWaterCurrentReference =>");
             }
             else
             {
-                sb.AppendLine($"{name} (PlacedObjectXCZRXCZA) =>");
+                sb.AppendLine($"{name} (PlacedObjectWaterCurrentReference) =>");
             }
             using (sb.Brace())
             {
@@ -843,13 +843,13 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         protected static void ToStringFields(
-            IPlacedObjectXCZRXCZAGetter item,
+            IPlacedObjectWaterCurrentReferenceGetter item,
             StructuredStringBuilder sb,
-            PlacedObjectXCZRXCZA.Mask<bool>? printMask = null)
+            PlacedObjectWaterCurrentReference.Mask<bool>? printMask = null)
         {
-            if (printMask?.XCZR ?? true)
+            if (printMask?.Reference ?? true)
             {
-                sb.AppendItem(item.XCZR.FormKey, "XCZR");
+                sb.AppendItem(item.Reference.FormKey, "Reference");
             }
             if ((printMask?.XCZA ?? true)
                 && item.XCZA is {} XCZAItem)
@@ -860,26 +860,26 @@ namespace Mutagen.Bethesda.Starfield
         
         #region Equals and Hash
         public virtual bool Equals(
-            IPlacedObjectXCZRXCZAGetter? lhs,
-            IPlacedObjectXCZRXCZAGetter? rhs,
+            IPlacedObjectWaterCurrentReferenceGetter? lhs,
+            IPlacedObjectWaterCurrentReferenceGetter? rhs,
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectXCZRXCZA_FieldIndex.XCZR) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectWaterCurrentReference_FieldIndex.Reference) ?? true))
             {
-                if (!lhs.XCZR.Equals(rhs.XCZR)) return false;
+                if (!lhs.Reference.Equals(rhs.Reference)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectXCZRXCZA_FieldIndex.XCZA) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectWaterCurrentReference_FieldIndex.XCZA) ?? true))
             {
                 if (!MemorySliceExt.SequenceEqual(lhs.XCZA, rhs.XCZA)) return false;
             }
             return true;
         }
         
-        public virtual int GetHashCode(IPlacedObjectXCZRXCZAGetter item)
+        public virtual int GetHashCode(IPlacedObjectWaterCurrentReferenceGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.XCZR);
+            hash.Add(item.Reference);
             if (item.XCZA is {} XCZAItem)
             {
                 hash.Add(XCZAItem);
@@ -892,36 +892,36 @@ namespace Mutagen.Bethesda.Starfield
         
         public object GetNew()
         {
-            return PlacedObjectXCZRXCZA.GetNew();
+            return PlacedObjectWaterCurrentReference.GetNew();
         }
         
         #region Mutagen
-        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(IPlacedObjectXCZRXCZAGetter obj, bool iterateNestedRecords = true)
+        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(IPlacedObjectWaterCurrentReferenceGetter obj, bool iterateNestedRecords = true)
         {
-            yield return FormLinkInformation.Factory(obj.XCZR);
+            yield return FormLinkInformation.Factory(obj.Reference);
             yield break;
         }
         
         #endregion
         
     }
-    internal partial class PlacedObjectXCZRXCZASetterTranslationCommon
+    internal partial class PlacedObjectWaterCurrentReferenceSetterTranslationCommon
     {
-        public static readonly PlacedObjectXCZRXCZASetterTranslationCommon Instance = new PlacedObjectXCZRXCZASetterTranslationCommon();
+        public static readonly PlacedObjectWaterCurrentReferenceSetterTranslationCommon Instance = new PlacedObjectWaterCurrentReferenceSetterTranslationCommon();
 
         #region DeepCopyIn
         public void DeepCopyIn(
-            IPlacedObjectXCZRXCZA item,
-            IPlacedObjectXCZRXCZAGetter rhs,
+            IPlacedObjectWaterCurrentReference item,
+            IPlacedObjectWaterCurrentReferenceGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectXCZRXCZA_FieldIndex.XCZR) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectWaterCurrentReference_FieldIndex.Reference) ?? true))
             {
-                item.XCZR.SetTo(rhs.XCZR.FormKey);
+                item.Reference.SetTo(rhs.Reference.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectXCZRXCZA_FieldIndex.XCZA) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectWaterCurrentReference_FieldIndex.XCZA) ?? true))
             {
                 if(rhs.XCZA is {} XCZArhs)
                 {
@@ -941,19 +941,19 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         partial void DeepCopyInCustom(
-            IPlacedObjectXCZRXCZA item,
-            IPlacedObjectXCZRXCZAGetter rhs,
+            IPlacedObjectWaterCurrentReference item,
+            IPlacedObjectWaterCurrentReferenceGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask,
             bool deepCopy);
         #endregion
         
-        public PlacedObjectXCZRXCZA DeepCopy(
-            IPlacedObjectXCZRXCZAGetter item,
-            PlacedObjectXCZRXCZA.TranslationMask? copyMask = null)
+        public PlacedObjectWaterCurrentReference DeepCopy(
+            IPlacedObjectWaterCurrentReferenceGetter item,
+            PlacedObjectWaterCurrentReference.TranslationMask? copyMask = null)
         {
-            PlacedObjectXCZRXCZA ret = (PlacedObjectXCZRXCZA)((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)item).CommonInstance()!).GetNew();
-            ((PlacedObjectXCZRXCZASetterTranslationCommon)((IPlacedObjectXCZRXCZAGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
+            PlacedObjectWaterCurrentReference ret = (PlacedObjectWaterCurrentReference)((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonInstance()!).GetNew();
+            ((PlacedObjectWaterCurrentReferenceSetterTranslationCommon)((IPlacedObjectWaterCurrentReferenceGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: ret,
                 rhs: item,
                 errorMask: null,
@@ -962,30 +962,30 @@ namespace Mutagen.Bethesda.Starfield
             return ret;
         }
         
-        public PlacedObjectXCZRXCZA DeepCopy(
-            IPlacedObjectXCZRXCZAGetter item,
-            out PlacedObjectXCZRXCZA.ErrorMask errorMask,
-            PlacedObjectXCZRXCZA.TranslationMask? copyMask = null)
+        public PlacedObjectWaterCurrentReference DeepCopy(
+            IPlacedObjectWaterCurrentReferenceGetter item,
+            out PlacedObjectWaterCurrentReference.ErrorMask errorMask,
+            PlacedObjectWaterCurrentReference.TranslationMask? copyMask = null)
         {
             var errorMaskBuilder = new ErrorMaskBuilder();
-            PlacedObjectXCZRXCZA ret = (PlacedObjectXCZRXCZA)((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)item).CommonInstance()!).GetNew();
-            ((PlacedObjectXCZRXCZASetterTranslationCommon)((IPlacedObjectXCZRXCZAGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
+            PlacedObjectWaterCurrentReference ret = (PlacedObjectWaterCurrentReference)((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonInstance()!).GetNew();
+            ((PlacedObjectWaterCurrentReferenceSetterTranslationCommon)((IPlacedObjectWaterCurrentReferenceGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
                 ret,
                 item,
                 errorMask: errorMaskBuilder,
                 copyMask: copyMask?.GetCrystal(),
                 deepCopy: true);
-            errorMask = PlacedObjectXCZRXCZA.ErrorMask.Factory(errorMaskBuilder);
+            errorMask = PlacedObjectWaterCurrentReference.ErrorMask.Factory(errorMaskBuilder);
             return ret;
         }
         
-        public PlacedObjectXCZRXCZA DeepCopy(
-            IPlacedObjectXCZRXCZAGetter item,
+        public PlacedObjectWaterCurrentReference DeepCopy(
+            IPlacedObjectWaterCurrentReferenceGetter item,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask = null)
         {
-            PlacedObjectXCZRXCZA ret = (PlacedObjectXCZRXCZA)((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)item).CommonInstance()!).GetNew();
-            ((PlacedObjectXCZRXCZASetterTranslationCommon)((IPlacedObjectXCZRXCZAGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
+            PlacedObjectWaterCurrentReference ret = (PlacedObjectWaterCurrentReference)((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)item).CommonInstance()!).GetNew();
+            ((PlacedObjectWaterCurrentReferenceSetterTranslationCommon)((IPlacedObjectWaterCurrentReferenceGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: ret,
                 rhs: item,
                 errorMask: errorMask,
@@ -1001,27 +1001,27 @@ namespace Mutagen.Bethesda.Starfield
 
 namespace Mutagen.Bethesda.Starfield
 {
-    public partial class PlacedObjectXCZRXCZA
+    public partial class PlacedObjectWaterCurrentReference
     {
         #region Common Routing
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ILoquiRegistration ILoquiObject.Registration => PlacedObjectXCZRXCZA_Registration.Instance;
-        public static ILoquiRegistration StaticRegistration => PlacedObjectXCZRXCZA_Registration.Instance;
+        ILoquiRegistration ILoquiObject.Registration => PlacedObjectWaterCurrentReference_Registration.Instance;
+        public static ILoquiRegistration StaticRegistration => PlacedObjectWaterCurrentReference_Registration.Instance;
         [DebuggerStepThrough]
-        protected object CommonInstance() => PlacedObjectXCZRXCZACommon.Instance;
+        protected object CommonInstance() => PlacedObjectWaterCurrentReferenceCommon.Instance;
         [DebuggerStepThrough]
         protected object CommonSetterInstance()
         {
-            return PlacedObjectXCZRXCZASetterCommon.Instance;
+            return PlacedObjectWaterCurrentReferenceSetterCommon.Instance;
         }
         [DebuggerStepThrough]
-        protected object CommonSetterTranslationInstance() => PlacedObjectXCZRXCZASetterTranslationCommon.Instance;
+        protected object CommonSetterTranslationInstance() => PlacedObjectWaterCurrentReferenceSetterTranslationCommon.Instance;
         [DebuggerStepThrough]
-        object IPlacedObjectXCZRXCZAGetter.CommonInstance() => this.CommonInstance();
+        object IPlacedObjectWaterCurrentReferenceGetter.CommonInstance() => this.CommonInstance();
         [DebuggerStepThrough]
-        object IPlacedObjectXCZRXCZAGetter.CommonSetterInstance() => this.CommonSetterInstance();
+        object IPlacedObjectWaterCurrentReferenceGetter.CommonSetterInstance() => this.CommonSetterInstance();
         [DebuggerStepThrough]
-        object IPlacedObjectXCZRXCZAGetter.CommonSetterTranslationInstance() => this.CommonSetterTranslationInstance();
+        object IPlacedObjectWaterCurrentReferenceGetter.CommonSetterTranslationInstance() => this.CommonSetterTranslationInstance();
 
         #endregion
 
@@ -1032,18 +1032,18 @@ namespace Mutagen.Bethesda.Starfield
 #region Binary Translation
 namespace Mutagen.Bethesda.Starfield
 {
-    public partial class PlacedObjectXCZRXCZABinaryWriteTranslation : IBinaryWriteTranslator
+    public partial class PlacedObjectWaterCurrentReferenceBinaryWriteTranslation : IBinaryWriteTranslator
     {
-        public static readonly PlacedObjectXCZRXCZABinaryWriteTranslation Instance = new();
+        public static readonly PlacedObjectWaterCurrentReferenceBinaryWriteTranslation Instance = new();
 
         public static void WriteRecordTypes(
-            IPlacedObjectXCZRXCZAGetter item,
+            IPlacedObjectWaterCurrentReferenceGetter item,
             MutagenWriter writer,
             TypedWriteParams translationParams)
         {
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.XCZR,
+                item: item.Reference,
                 header: translationParams.ConvertToCustom(RecordTypes.XCZR));
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
@@ -1053,7 +1053,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public void Write(
             MutagenWriter writer,
-            IPlacedObjectXCZRXCZAGetter item,
+            IPlacedObjectWaterCurrentReferenceGetter item,
             TypedWriteParams translationParams)
         {
             WriteRecordTypes(
@@ -1068,19 +1068,19 @@ namespace Mutagen.Bethesda.Starfield
             TypedWriteParams translationParams = default)
         {
             Write(
-                item: (IPlacedObjectXCZRXCZAGetter)item,
+                item: (IPlacedObjectWaterCurrentReferenceGetter)item,
                 writer: writer,
                 translationParams: translationParams);
         }
 
     }
 
-    internal partial class PlacedObjectXCZRXCZABinaryCreateTranslation
+    internal partial class PlacedObjectWaterCurrentReferenceBinaryCreateTranslation
     {
-        public static readonly PlacedObjectXCZRXCZABinaryCreateTranslation Instance = new PlacedObjectXCZRXCZABinaryCreateTranslation();
+        public static readonly PlacedObjectWaterCurrentReferenceBinaryCreateTranslation Instance = new PlacedObjectWaterCurrentReferenceBinaryCreateTranslation();
 
         public static ParseResult FillBinaryRecordTypes(
-            IPlacedObjectXCZRXCZA item,
+            IPlacedObjectWaterCurrentReference item,
             MutagenFrame frame,
             PreviousParse lastParsed,
             Dictionary<RecordType, int>? recordParseCount,
@@ -1093,16 +1093,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.XCZR:
                 {
-                    if (lastParsed.ShortCircuit((int)PlacedObjectXCZRXCZA_FieldIndex.XCZR, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)PlacedObjectWaterCurrentReference_FieldIndex.Reference, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.XCZR.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-                    return (int)PlacedObjectXCZRXCZA_FieldIndex.XCZR;
+                    item.Reference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)PlacedObjectWaterCurrentReference_FieldIndex.Reference;
                 }
                 case RecordTypeInts.XCZA:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.XCZA = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)PlacedObjectXCZRXCZA_FieldIndex.XCZA;
+                    return (int)PlacedObjectWaterCurrentReference_FieldIndex.XCZA;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1115,14 +1115,14 @@ namespace Mutagen.Bethesda.Starfield
 namespace Mutagen.Bethesda.Starfield
 {
     #region Binary Write Mixins
-    public static class PlacedObjectXCZRXCZABinaryTranslationMixIn
+    public static class PlacedObjectWaterCurrentReferenceBinaryTranslationMixIn
     {
         public static void WriteToBinary(
-            this IPlacedObjectXCZRXCZAGetter item,
+            this IPlacedObjectWaterCurrentReferenceGetter item,
             MutagenWriter writer,
             TypedWriteParams translationParams = default)
         {
-            ((PlacedObjectXCZRXCZABinaryWriteTranslation)item.BinaryWriteTranslator).Write(
+            ((PlacedObjectWaterCurrentReferenceBinaryWriteTranslation)item.BinaryWriteTranslator).Write(
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
@@ -1135,47 +1135,47 @@ namespace Mutagen.Bethesda.Starfield
 }
 namespace Mutagen.Bethesda.Starfield
 {
-    internal partial class PlacedObjectXCZRXCZABinaryOverlay :
+    internal partial class PlacedObjectWaterCurrentReferenceBinaryOverlay :
         PluginBinaryOverlay,
-        IPlacedObjectXCZRXCZAGetter
+        IPlacedObjectWaterCurrentReferenceGetter
     {
         #region Common Routing
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ILoquiRegistration ILoquiObject.Registration => PlacedObjectXCZRXCZA_Registration.Instance;
-        public static ILoquiRegistration StaticRegistration => PlacedObjectXCZRXCZA_Registration.Instance;
+        ILoquiRegistration ILoquiObject.Registration => PlacedObjectWaterCurrentReference_Registration.Instance;
+        public static ILoquiRegistration StaticRegistration => PlacedObjectWaterCurrentReference_Registration.Instance;
         [DebuggerStepThrough]
-        protected object CommonInstance() => PlacedObjectXCZRXCZACommon.Instance;
+        protected object CommonInstance() => PlacedObjectWaterCurrentReferenceCommon.Instance;
         [DebuggerStepThrough]
-        protected object CommonSetterTranslationInstance() => PlacedObjectXCZRXCZASetterTranslationCommon.Instance;
+        protected object CommonSetterTranslationInstance() => PlacedObjectWaterCurrentReferenceSetterTranslationCommon.Instance;
         [DebuggerStepThrough]
-        object IPlacedObjectXCZRXCZAGetter.CommonInstance() => this.CommonInstance();
+        object IPlacedObjectWaterCurrentReferenceGetter.CommonInstance() => this.CommonInstance();
         [DebuggerStepThrough]
-        object? IPlacedObjectXCZRXCZAGetter.CommonSetterInstance() => null;
+        object? IPlacedObjectWaterCurrentReferenceGetter.CommonSetterInstance() => null;
         [DebuggerStepThrough]
-        object IPlacedObjectXCZRXCZAGetter.CommonSetterTranslationInstance() => this.CommonSetterTranslationInstance();
+        object IPlacedObjectWaterCurrentReferenceGetter.CommonSetterTranslationInstance() => this.CommonSetterTranslationInstance();
 
         #endregion
 
         void IPrintable.Print(StructuredStringBuilder sb, string? name) => this.Print(sb, name);
 
-        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => PlacedObjectXCZRXCZACommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
+        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => PlacedObjectWaterCurrentReferenceCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected object BinaryWriteTranslator => PlacedObjectXCZRXCZABinaryWriteTranslation.Instance;
+        protected object BinaryWriteTranslator => PlacedObjectWaterCurrentReferenceBinaryWriteTranslation.Instance;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         object IBinaryItem.BinaryWriteTranslator => this.BinaryWriteTranslator;
         void IBinaryItem.WriteToBinary(
             MutagenWriter writer,
             TypedWriteParams translationParams = default)
         {
-            ((PlacedObjectXCZRXCZABinaryWriteTranslation)this.BinaryWriteTranslator).Write(
+            ((PlacedObjectWaterCurrentReferenceBinaryWriteTranslation)this.BinaryWriteTranslator).Write(
                 item: this,
                 writer: writer,
                 translationParams: translationParams);
         }
 
-        #region XCZR
-        private int? _XCZRLocation;
-        public IFormLinkGetter<IPlacedObjectGetter> XCZR => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IPlacedObjectGetter>(_package, _recordData, _XCZRLocation);
+        #region Reference
+        private int? _ReferenceLocation;
+        public IFormLinkGetter<IPlacedObjectGetter> Reference => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IPlacedObjectGetter>(_package, _recordData, _ReferenceLocation);
         #endregion
         #region XCZA
         private int? _XCZALocation;
@@ -1187,7 +1187,7 @@ namespace Mutagen.Bethesda.Starfield
             int offset);
 
         partial void CustomCtor();
-        protected PlacedObjectXCZRXCZABinaryOverlay(
+        protected PlacedObjectWaterCurrentReferenceBinaryOverlay(
             MemoryPair memoryPair,
             BinaryOverlayFactoryPackage package)
             : base(
@@ -1197,7 +1197,7 @@ namespace Mutagen.Bethesda.Starfield
             this.CustomCtor();
         }
 
-        public static IPlacedObjectXCZRXCZAGetter PlacedObjectXCZRXCZAFactory(
+        public static IPlacedObjectWaterCurrentReferenceGetter PlacedObjectWaterCurrentReferenceFactory(
             OverlayStream stream,
             BinaryOverlayFactoryPackage package,
             TypedParseParams translationParams = default)
@@ -1209,7 +1209,7 @@ namespace Mutagen.Bethesda.Starfield
                 memoryPair: out var memoryPair,
                 offset: out var offset,
                 finalPos: out var finalPos);
-            var ret = new PlacedObjectXCZRXCZABinaryOverlay(
+            var ret = new PlacedObjectWaterCurrentReferenceBinaryOverlay(
                 memoryPair: memoryPair,
                 package: package);
             ret.FillTypelessSubrecordTypes(
@@ -1221,12 +1221,12 @@ namespace Mutagen.Bethesda.Starfield
             return ret;
         }
 
-        public static IPlacedObjectXCZRXCZAGetter PlacedObjectXCZRXCZAFactory(
+        public static IPlacedObjectWaterCurrentReferenceGetter PlacedObjectWaterCurrentReferenceFactory(
             ReadOnlyMemorySlice<byte> slice,
             BinaryOverlayFactoryPackage package,
             TypedParseParams translationParams = default)
         {
-            return PlacedObjectXCZRXCZAFactory(
+            return PlacedObjectWaterCurrentReferenceFactory(
                 stream: new OverlayStream(slice, package),
                 package: package,
                 translationParams: translationParams);
@@ -1246,14 +1246,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.XCZR:
                 {
-                    if (lastParsed.ShortCircuit((int)PlacedObjectXCZRXCZA_FieldIndex.XCZR, translationParams)) return ParseResult.Stop;
-                    _XCZRLocation = (stream.Position - offset);
-                    return (int)PlacedObjectXCZRXCZA_FieldIndex.XCZR;
+                    if (lastParsed.ShortCircuit((int)PlacedObjectWaterCurrentReference_FieldIndex.Reference, translationParams)) return ParseResult.Stop;
+                    _ReferenceLocation = (stream.Position - offset);
+                    return (int)PlacedObjectWaterCurrentReference_FieldIndex.Reference;
                 }
                 case RecordTypeInts.XCZA:
                 {
                     _XCZALocation = (stream.Position - offset);
-                    return (int)PlacedObjectXCZRXCZA_FieldIndex.XCZA;
+                    return (int)PlacedObjectWaterCurrentReference_FieldIndex.XCZA;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1265,7 +1265,7 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             string? name = null)
         {
-            PlacedObjectXCZRXCZAMixIn.Print(
+            PlacedObjectWaterCurrentReferenceMixIn.Print(
                 item: this,
                 sb: sb,
                 name: name);
@@ -1276,16 +1276,16 @@ namespace Mutagen.Bethesda.Starfield
         #region Equals and Hash
         public override bool Equals(object? obj)
         {
-            if (obj is not IPlacedObjectXCZRXCZAGetter rhs) return false;
-            return ((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
+            if (obj is not IPlacedObjectWaterCurrentReferenceGetter rhs) return false;
+            return ((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
         }
 
-        public bool Equals(IPlacedObjectXCZRXCZAGetter? obj)
+        public bool Equals(IPlacedObjectWaterCurrentReferenceGetter? obj)
         {
-            return ((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
+            return ((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
         }
 
-        public override int GetHashCode() => ((PlacedObjectXCZRXCZACommon)((IPlacedObjectXCZRXCZAGetter)this).CommonInstance()!).GetHashCode(this);
+        public override int GetHashCode() => ((PlacedObjectWaterCurrentReferenceCommon)((IPlacedObjectWaterCurrentReferenceGetter)this).CommonInstance()!).GetHashCode(this);
 
         #endregion
 

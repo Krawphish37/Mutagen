@@ -17,7 +17,7 @@
       <Enum name="LevelModifier" enumName="Level" byteLength="4" recordType="XLCM" />
       <Enum name="Action" enumName="PlacedObject.ActionFlag" recordType="XACT" byteLength="4" />
       <RefDirect name="Primitive" refName="PlacedPrimitive" />
-      <RefList name="PlacedObjectXCZRXCZA" refName="PlacedObjectXCZRXCZA" />
+      <RefList name="WaterCurrentReferences" refName="PlacedObjectWaterCurrentReference" />
       <RefDirect name="VolumeReflectionProbeOffsetIntensity" refName="VolumeReflectionProbeOffsetIntensity" />
       <RefDirect name="DebugText" refName="PlacedObjectDebugText" />
       <FormLink name="Emittance" recordType="XEMI">
@@ -68,8 +68,8 @@
       <UInt32 name="BlueprintPartOrigin" recordType="XBPO" />
       <FormLink name="Layer" refName="Layer" recordType="XLYR" />
       <UInt16 name="BOLV" recordType="BOLV" unknown="true" />
-      <FormLink name="XWCN" recordType="XWCN" refName="Static" unknown="true" />
-      <ByteArray name="XWCU" recordType="XWCU" unknown="true" />
+      <UInt32 name="WaterCurrentVelocityCount" recordType="XWCN" />
+      <RefList name="WaterCurrentVelocities" refName="WaterCurrentVelocity" recordType="XWCU" />
       <FormLink name="Location" refName="Location" recordType="XLRL" />
       <UInt32 name="XTRI" recordType="XTRI" unknown="true" />
       <RefDirect name="LightRoundedness" refName="LightRoundness" recordType="XLRD" />
@@ -314,9 +314,9 @@
       <Bool name="IsAnimated" byteLength="4" importantByteLength="1" />
     </Fields>
   </Object>
-  <Object name="PlacedObjectXCZRXCZA" objType="Subrecord" >
+  <Object name="PlacedObjectWaterCurrentReference" objType="Subrecord" >
     <Fields>
-      <FormLink name="XCZR" recordType="XCZR" unknown="true" refName="PlacedObject" nullable="False" />
+      <FormLink name="Reference" recordType="XCZR" refName="PlacedObject" nullable="False" />
       <ByteArray name="XCZA" recordType="XCZA" unknown="true" />
     </Fields>
   </Object>

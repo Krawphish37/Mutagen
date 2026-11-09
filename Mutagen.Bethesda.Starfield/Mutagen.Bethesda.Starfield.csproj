@@ -5789,9 +5789,6 @@
     <Compile Include="Records\Major Records\CellLighting_Generated.cs">
       <DependentUpon>Cell.xml</DependentUpon>
     </Compile>
-    <Compile Include="Records\Major Records\CellWaterVelocity_Generated.cs">
-      <DependentUpon>Cell.xml</DependentUpon>
-    </Compile>
     <Compile Include="Records\Major Records\CellShipBlueprintSnapLink_Generated.cs">
       <DependentUpon>Cell.xml</DependentUpon>
     </Compile>
@@ -6700,9 +6697,6 @@
     <Compile Include="Records\Major Records\PlacedObjectGoboAnimatedProperties_Generated.cs">
       <DependentUpon>PlacedObject.xml</DependentUpon>
     </Compile>
-    <Compile Include="Records\Major Records\PlacedObjectXCZRXCZA_Generated.cs">
-      <DependentUpon>PlacedObject.xml</DependentUpon>
-    </Compile>
     <Compile Include="Records\Major Records\PlacedObjectCurrentZoneCell_Generated.cs">
       <DependentUpon>PlacedObject.xml</DependentUpon>
     </Compile>
@@ -6906,6 +6900,12 @@
     </Compile>
     <Compile Include="Records\Major Records\LegendaryItemLnamEntry_Generated.cs">
       <DependentUpon>LegendaryItem.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\WaterCurrentVelocity_Generated.cs">
+      <DependentUpon>Cell.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\PlacedObjectWaterCurrentReference_Generated.cs">
+      <DependentUpon>PlacedObject.xml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

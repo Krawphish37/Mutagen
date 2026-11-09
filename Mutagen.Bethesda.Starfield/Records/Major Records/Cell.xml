@@ -30,14 +30,14 @@
       <Float name="WaterHeight" recordType="XCLW" />
       <Float name="XILS" recordType="XILS" unknown="true" />
       <RefList name="XCLAs" refName="CellXCLAItem" />
-      <ByteArray name="WaterData" recordType="XWCN" />
       <FormLink name="CellSkyRegion" refName="Region" recordType="XCCM" />
       <RefDirect name="Ownership" refName="Ownership" />
       <FormLink name="Location" refName="Location" recordType="XLCN" />
       <FormLink name="Water" refName="Water" recordType="XCWT" />
       <String name="WaterType" recordType="XCWM" />
       <RefList name="ShipBlueprintSnapLinks" refName="CellShipBlueprintSnapLink" recordType="XBPS" />
-      <RefDirect name="WaterVelocity" refName="CellWaterVelocity" />
+      <UInt32 name="WaterCurrentVelocityCount" recordType="XWCN" />
+      <RefList name="WaterCurrentVelocities" refName="WaterCurrentVelocity" recordType="XWCU" />
       <FormLink name="AcousticSpace" refName="AcousticSpace" recordType="XCAS" />
       <FormLink name="ImageSpace" refName="ImageSpace" recordType="XCIM" />
       <String name="WaterEnvironmentMap" recordType="XWEM" />
@@ -106,12 +106,10 @@
       <Enum name="InteriorType" enumName="Cell.InteriorType" byteLength="4" />
     </Fields>
   </Object>
-  <Object name="CellWaterVelocity" objType="Subrecord" recordType="XWCU">
+  <Object name="WaterCurrentVelocity" objType="Subrecord">
     <Fields>
-      <P3Float name="Offset" />
-      <Int32 name="Unknown" />
-      <P3Float name="Angle" />
-      <ByteArray name="UnknownBytes" />
+      <P3Float name="Velocity" />
+      <ByteArray name="Unknown" byteLength="4" nullable="False" />
     </Fields>
   </Object>
   <Object name="CellShipBlueprintSnapLink" objType="Subrecord">
