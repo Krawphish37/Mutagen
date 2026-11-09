@@ -6,8 +6,8 @@
       <Enum name="Flags" enumName="MusicType.Flag" byteLength="4" recordType="FNAM" nullable="False" />
       <RefDirect name="Data" refName="MusicTypeData" />
       <Float name="FadeDuration" recordType="WNAM" />
-      <ByteArray name="VNAM" recordType="VNAM" unknown="true" />
-      <ByteArray name="UNAM" recordType="UNAM" unknown="true" />
+      <UInt64 name="ReevaluateIntervalMilliseconds" recordType="VNAM" />
+      <UInt64 name="StabilityIntervalMilliseconds" recordType="UNAM" />
       <List name="Tracks" recordType="TNAM">
         <FormLink refName="MusicTrack" />
       </List>

@@ -95,27 +95,15 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Single? IMusicTypeGetter.FadeDuration => this.FadeDuration;
         #endregion
-        #region VNAM
+        #region ReevaluateIntervalMilliseconds
+        public UInt64? ReevaluateIntervalMilliseconds { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _VNAM;
-        public MemorySlice<Byte>? VNAM
-        {
-            get => this._VNAM;
-            set => this._VNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IMusicTypeGetter.VNAM => this.VNAM;
+        UInt64? IMusicTypeGetter.ReevaluateIntervalMilliseconds => this.ReevaluateIntervalMilliseconds;
         #endregion
-        #region UNAM
+        #region StabilityIntervalMilliseconds
+        public UInt64? StabilityIntervalMilliseconds { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _UNAM;
-        public MemorySlice<Byte>? UNAM
-        {
-            get => this._UNAM;
-            set => this._UNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IMusicTypeGetter.UNAM => this.UNAM;
+        UInt64? IMusicTypeGetter.StabilityIntervalMilliseconds => this.StabilityIntervalMilliseconds;
         #endregion
         #region Tracks
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -160,8 +148,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Flags = initialValue;
                 this.Data = new MaskItem<TItem, MusicTypeData.Mask<TItem>?>(initialValue, new MusicTypeData.Mask<TItem>(initialValue));
                 this.FadeDuration = initialValue;
-                this.VNAM = initialValue;
-                this.UNAM = initialValue;
+                this.ReevaluateIntervalMilliseconds = initialValue;
+                this.StabilityIntervalMilliseconds = initialValue;
                 this.Tracks = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
             }
 
@@ -177,8 +165,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Flags,
                 TItem Data,
                 TItem FadeDuration,
-                TItem VNAM,
-                TItem UNAM,
+                TItem ReevaluateIntervalMilliseconds,
+                TItem StabilityIntervalMilliseconds,
                 TItem Tracks)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
@@ -193,8 +181,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Flags = Flags;
                 this.Data = new MaskItem<TItem, MusicTypeData.Mask<TItem>?>(Data, new MusicTypeData.Mask<TItem>(Data));
                 this.FadeDuration = FadeDuration;
-                this.VNAM = VNAM;
-                this.UNAM = UNAM;
+                this.ReevaluateIntervalMilliseconds = ReevaluateIntervalMilliseconds;
+                this.StabilityIntervalMilliseconds = StabilityIntervalMilliseconds;
                 this.Tracks = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Tracks, []);
             }
 
@@ -211,8 +199,8 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Flags;
             public MaskItem<TItem, MusicTypeData.Mask<TItem>?>? Data { get; set; }
             public TItem FadeDuration;
-            public TItem VNAM;
-            public TItem UNAM;
+            public TItem ReevaluateIntervalMilliseconds;
+            public TItem StabilityIntervalMilliseconds;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Tracks;
             #endregion
 
@@ -231,8 +219,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.Data, rhs.Data)) return false;
                 if (!object.Equals(this.FadeDuration, rhs.FadeDuration)) return false;
-                if (!object.Equals(this.VNAM, rhs.VNAM)) return false;
-                if (!object.Equals(this.UNAM, rhs.UNAM)) return false;
+                if (!object.Equals(this.ReevaluateIntervalMilliseconds, rhs.ReevaluateIntervalMilliseconds)) return false;
+                if (!object.Equals(this.StabilityIntervalMilliseconds, rhs.StabilityIntervalMilliseconds)) return false;
                 if (!object.Equals(this.Tracks, rhs.Tracks)) return false;
                 return true;
             }
@@ -243,8 +231,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Flags);
                 hash.Add(this.Data);
                 hash.Add(this.FadeDuration);
-                hash.Add(this.VNAM);
-                hash.Add(this.UNAM);
+                hash.Add(this.ReevaluateIntervalMilliseconds);
+                hash.Add(this.StabilityIntervalMilliseconds);
                 hash.Add(this.Tracks);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -268,8 +256,8 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.Data.Specific != null && !this.Data.Specific.All(eval)) return false;
                 }
                 if (!eval(this.FadeDuration)) return false;
-                if (!eval(this.VNAM)) return false;
-                if (!eval(this.UNAM)) return false;
+                if (!eval(this.ReevaluateIntervalMilliseconds)) return false;
+                if (!eval(this.StabilityIntervalMilliseconds)) return false;
                 if (this.Tracks != null)
                 {
                     if (!eval(this.Tracks.Overall)) return false;
@@ -301,8 +289,8 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.Data.Specific != null && this.Data.Specific.Any(eval)) return true;
                 }
                 if (eval(this.FadeDuration)) return true;
-                if (eval(this.VNAM)) return true;
-                if (eval(this.UNAM)) return true;
+                if (eval(this.ReevaluateIntervalMilliseconds)) return true;
+                if (eval(this.StabilityIntervalMilliseconds)) return true;
                 if (this.Tracks != null)
                 {
                     if (eval(this.Tracks.Overall)) return true;
@@ -333,8 +321,8 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Flags = eval(this.Flags);
                 obj.Data = this.Data == null ? null : new MaskItem<R, MusicTypeData.Mask<R>?>(eval(this.Data.Overall), this.Data.Specific?.Translate(eval));
                 obj.FadeDuration = eval(this.FadeDuration);
-                obj.VNAM = eval(this.VNAM);
-                obj.UNAM = eval(this.UNAM);
+                obj.ReevaluateIntervalMilliseconds = eval(this.ReevaluateIntervalMilliseconds);
+                obj.StabilityIntervalMilliseconds = eval(this.StabilityIntervalMilliseconds);
                 if (Tracks != null)
                 {
                     obj.Tracks = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.Tracks.Overall), []);
@@ -383,13 +371,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(FadeDuration, "FadeDuration");
                     }
-                    if (printMask?.VNAM ?? true)
+                    if (printMask?.ReevaluateIntervalMilliseconds ?? true)
                     {
-                        sb.AppendItem(VNAM, "VNAM");
+                        sb.AppendItem(ReevaluateIntervalMilliseconds, "ReevaluateIntervalMilliseconds");
                     }
-                    if (printMask?.UNAM ?? true)
+                    if (printMask?.StabilityIntervalMilliseconds ?? true)
                     {
-                        sb.AppendItem(UNAM, "UNAM");
+                        sb.AppendItem(StabilityIntervalMilliseconds, "StabilityIntervalMilliseconds");
                     }
                     if ((printMask?.Tracks?.Overall ?? true)
                         && Tracks is {} TracksItem)
@@ -427,8 +415,8 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Flags;
             public MaskItem<Exception?, MusicTypeData.ErrorMask?>? Data;
             public Exception? FadeDuration;
-            public Exception? VNAM;
-            public Exception? UNAM;
+            public Exception? ReevaluateIntervalMilliseconds;
+            public Exception? StabilityIntervalMilliseconds;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Tracks;
             #endregion
 
@@ -446,10 +434,10 @@ namespace Mutagen.Bethesda.Starfield
                         return Data;
                     case MusicType_FieldIndex.FadeDuration:
                         return FadeDuration;
-                    case MusicType_FieldIndex.VNAM:
-                        return VNAM;
-                    case MusicType_FieldIndex.UNAM:
-                        return UNAM;
+                    case MusicType_FieldIndex.ReevaluateIntervalMilliseconds:
+                        return ReevaluateIntervalMilliseconds;
+                    case MusicType_FieldIndex.StabilityIntervalMilliseconds:
+                        return StabilityIntervalMilliseconds;
                     case MusicType_FieldIndex.Tracks:
                         return Tracks;
                     default:
@@ -474,11 +462,11 @@ namespace Mutagen.Bethesda.Starfield
                     case MusicType_FieldIndex.FadeDuration:
                         this.FadeDuration = ex;
                         break;
-                    case MusicType_FieldIndex.VNAM:
-                        this.VNAM = ex;
+                    case MusicType_FieldIndex.ReevaluateIntervalMilliseconds:
+                        this.ReevaluateIntervalMilliseconds = ex;
                         break;
-                    case MusicType_FieldIndex.UNAM:
-                        this.UNAM = ex;
+                    case MusicType_FieldIndex.StabilityIntervalMilliseconds:
+                        this.StabilityIntervalMilliseconds = ex;
                         break;
                     case MusicType_FieldIndex.Tracks:
                         this.Tracks = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
@@ -506,11 +494,11 @@ namespace Mutagen.Bethesda.Starfield
                     case MusicType_FieldIndex.FadeDuration:
                         this.FadeDuration = (Exception?)obj;
                         break;
-                    case MusicType_FieldIndex.VNAM:
-                        this.VNAM = (Exception?)obj;
+                    case MusicType_FieldIndex.ReevaluateIntervalMilliseconds:
+                        this.ReevaluateIntervalMilliseconds = (Exception?)obj;
                         break;
-                    case MusicType_FieldIndex.UNAM:
-                        this.UNAM = (Exception?)obj;
+                    case MusicType_FieldIndex.StabilityIntervalMilliseconds:
+                        this.StabilityIntervalMilliseconds = (Exception?)obj;
                         break;
                     case MusicType_FieldIndex.Tracks:
                         this.Tracks = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
@@ -528,8 +516,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (Flags != null) return true;
                 if (Data != null) return true;
                 if (FadeDuration != null) return true;
-                if (VNAM != null) return true;
-                if (UNAM != null) return true;
+                if (ReevaluateIntervalMilliseconds != null) return true;
+                if (StabilityIntervalMilliseconds != null) return true;
                 if (Tracks != null) return true;
                 return false;
             }
@@ -566,10 +554,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(FadeDuration, "FadeDuration");
                 }
                 {
-                    sb.AppendItem(VNAM, "VNAM");
+                    sb.AppendItem(ReevaluateIntervalMilliseconds, "ReevaluateIntervalMilliseconds");
                 }
                 {
-                    sb.AppendItem(UNAM, "UNAM");
+                    sb.AppendItem(StabilityIntervalMilliseconds, "StabilityIntervalMilliseconds");
                 }
                 if (Tracks is {} TracksItem)
                 {
@@ -603,8 +591,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.Data = this.Data.Combine(rhs.Data, (l, r) => l.Combine(r));
                 ret.FadeDuration = this.FadeDuration.Combine(rhs.FadeDuration);
-                ret.VNAM = this.VNAM.Combine(rhs.VNAM);
-                ret.UNAM = this.UNAM.Combine(rhs.UNAM);
+                ret.ReevaluateIntervalMilliseconds = this.ReevaluateIntervalMilliseconds.Combine(rhs.ReevaluateIntervalMilliseconds);
+                ret.StabilityIntervalMilliseconds = this.StabilityIntervalMilliseconds.Combine(rhs.StabilityIntervalMilliseconds);
                 ret.Tracks = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Tracks?.Overall, rhs.Tracks?.Overall), Noggog.ExceptionExt.Combine(this.Tracks?.Specific, rhs.Tracks?.Specific));
                 return ret;
             }
@@ -632,8 +620,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool Flags;
             public MusicTypeData.TranslationMask? Data;
             public bool FadeDuration;
-            public bool VNAM;
-            public bool UNAM;
+            public bool ReevaluateIntervalMilliseconds;
+            public bool StabilityIntervalMilliseconds;
             public bool Tracks;
             #endregion
 
@@ -645,8 +633,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Flags = defaultOn;
                 this.FadeDuration = defaultOn;
-                this.VNAM = defaultOn;
-                this.UNAM = defaultOn;
+                this.ReevaluateIntervalMilliseconds = defaultOn;
+                this.StabilityIntervalMilliseconds = defaultOn;
                 this.Tracks = defaultOn;
             }
 
@@ -659,8 +647,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Flags, null));
                 ret.Add((Data != null ? Data.OnOverall : DefaultOn, Data?.GetCrystal()));
                 ret.Add((FadeDuration, null));
-                ret.Add((VNAM, null));
-                ret.Add((UNAM, null));
+                ret.Add((ReevaluateIntervalMilliseconds, null));
+                ret.Add((StabilityIntervalMilliseconds, null));
                 ret.Add((Tracks, null));
             }
 
@@ -818,8 +806,8 @@ namespace Mutagen.Bethesda.Starfield
         new MusicType.Flag Flags { get; set; }
         new MusicTypeData? Data { get; set; }
         new Single? FadeDuration { get; set; }
-        new MemorySlice<Byte>? VNAM { get; set; }
-        new MemorySlice<Byte>? UNAM { get; set; }
+        new UInt64? ReevaluateIntervalMilliseconds { get; set; }
+        new UInt64? StabilityIntervalMilliseconds { get; set; }
         new ExtendedList<IFormLinkGetter<IMusicTrackGetter>>? Tracks { get; set; }
     }
 
@@ -850,8 +838,8 @@ namespace Mutagen.Bethesda.Starfield
         MusicType.Flag Flags { get; }
         IMusicTypeDataGetter? Data { get; }
         Single? FadeDuration { get; }
-        ReadOnlyMemorySlice<Byte>? VNAM { get; }
-        ReadOnlyMemorySlice<Byte>? UNAM { get; }
+        UInt64? ReevaluateIntervalMilliseconds { get; }
+        UInt64? StabilityIntervalMilliseconds { get; }
         IReadOnlyList<IFormLinkGetter<IMusicTrackGetter>>? Tracks { get; }
 
     }
@@ -1033,8 +1021,8 @@ namespace Mutagen.Bethesda.Starfield
         Flags = 8,
         Data = 9,
         FadeDuration = 10,
-        VNAM = 11,
-        UNAM = 12,
+        ReevaluateIntervalMilliseconds = 11,
+        StabilityIntervalMilliseconds = 12,
         Tracks = 13,
     }
     #endregion
@@ -1137,8 +1125,8 @@ namespace Mutagen.Bethesda.Starfield
             item.Flags = default(MusicType.Flag);
             item.Data = null;
             item.FadeDuration = default;
-            item.VNAM = default;
-            item.UNAM = default;
+            item.ReevaluateIntervalMilliseconds = default;
+            item.StabilityIntervalMilliseconds = default;
             item.Tracks = null;
             base.Clear(item);
         }
@@ -1238,8 +1226,8 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.FadeDuration = item.FadeDuration.EqualsWithin(rhs.FadeDuration);
-            ret.VNAM = MemorySliceExt.SequenceEqual(item.VNAM, rhs.VNAM);
-            ret.UNAM = MemorySliceExt.SequenceEqual(item.UNAM, rhs.UNAM);
+            ret.ReevaluateIntervalMilliseconds = item.ReevaluateIntervalMilliseconds == rhs.ReevaluateIntervalMilliseconds;
+            ret.StabilityIntervalMilliseconds = item.StabilityIntervalMilliseconds == rhs.StabilityIntervalMilliseconds;
             ret.Tracks = item.Tracks.CollectionEqualsHelper(
                 rhs.Tracks,
                 (l, r) => object.Equals(l, r),
@@ -1312,15 +1300,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(FadeDurationItem, "FadeDuration");
             }
-            if ((printMask?.VNAM ?? true)
-                && item.VNAM is {} VNAMItem)
+            if ((printMask?.ReevaluateIntervalMilliseconds ?? true)
+                && item.ReevaluateIntervalMilliseconds is {} ReevaluateIntervalMillisecondsItem)
             {
-                sb.AppendLine($"VNAM => {SpanExt.ToHexString(VNAMItem)}");
+                sb.AppendItem(ReevaluateIntervalMillisecondsItem, "ReevaluateIntervalMilliseconds");
             }
-            if ((printMask?.UNAM ?? true)
-                && item.UNAM is {} UNAMItem)
+            if ((printMask?.StabilityIntervalMilliseconds ?? true)
+                && item.StabilityIntervalMilliseconds is {} StabilityIntervalMillisecondsItem)
             {
-                sb.AppendLine($"UNAM => {SpanExt.ToHexString(UNAMItem)}");
+                sb.AppendItem(StabilityIntervalMillisecondsItem, "StabilityIntervalMilliseconds");
             }
             if ((printMask?.Tracks?.Overall ?? true)
                 && item.Tracks is {} TracksItem)
@@ -1411,13 +1399,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.FadeDuration.EqualsWithin(rhs.FadeDuration)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MusicType_FieldIndex.VNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MusicType_FieldIndex.ReevaluateIntervalMilliseconds) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.VNAM, rhs.VNAM)) return false;
+                if (lhs.ReevaluateIntervalMilliseconds != rhs.ReevaluateIntervalMilliseconds) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MusicType_FieldIndex.UNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MusicType_FieldIndex.StabilityIntervalMilliseconds) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.UNAM, rhs.UNAM)) return false;
+                if (lhs.StabilityIntervalMilliseconds != rhs.StabilityIntervalMilliseconds) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)MusicType_FieldIndex.Tracks) ?? true))
             {
@@ -1464,21 +1452,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(FadeDurationitem);
             }
-            if (item.VNAM is {} VNAMItem)
+            if (item.ReevaluateIntervalMilliseconds is {} ReevaluateIntervalMillisecondsitem)
             {
-                hash.AddBytes(VNAMItem);
+                hash.Add(ReevaluateIntervalMillisecondsitem);
             }
-            if (item.UNAM is {} UNAMItem)
+            if (item.StabilityIntervalMilliseconds is {} StabilityIntervalMillisecondsitem)
             {
-                hash.AddBytes(UNAMItem);
+                hash.Add(StabilityIntervalMillisecondsitem);
             }
-            if (item.Tracks is {} Tracksitem)
-            {
-                foreach (var subItem in Tracksitem)
-                {
-                    hash.Add(subItem);
-                }
-            }
+            hash.Add(item.Tracks);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1678,27 +1660,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.FadeDuration = rhs.FadeDuration;
             }
-            if ((copyMask?.GetShouldTranslate((int)MusicType_FieldIndex.VNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MusicType_FieldIndex.ReevaluateIntervalMilliseconds) ?? true))
             {
-                if(rhs.VNAM is {} VNAMrhs)
-                {
-                    item.VNAM = VNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.VNAM = default;
-                }
+                item.ReevaluateIntervalMilliseconds = rhs.ReevaluateIntervalMilliseconds;
             }
-            if ((copyMask?.GetShouldTranslate((int)MusicType_FieldIndex.UNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MusicType_FieldIndex.StabilityIntervalMilliseconds) ?? true))
             {
-                if(rhs.UNAM is {} UNAMrhs)
-                {
-                    item.UNAM = UNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.UNAM = default;
-                }
+                item.StabilityIntervalMilliseconds = rhs.StabilityIntervalMilliseconds;
             }
             if ((copyMask?.GetShouldTranslate((int)MusicType_FieldIndex.Tracks) ?? true))
             {
@@ -1919,13 +1887,13 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.FadeDuration,
                 header: translationParams.ConvertToCustom(RecordTypes.WNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt64BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.VNAM,
+                item: item.ReevaluateIntervalMilliseconds,
                 header: translationParams.ConvertToCustom(RecordTypes.VNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt64BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.UNAM,
+                item: item.StabilityIntervalMilliseconds,
                 header: translationParams.ConvertToCustom(RecordTypes.UNAM));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IMusicTrackGetter>>.Instance.Write(
                 writer: writer,
@@ -2034,14 +2002,14 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.VNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.VNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)MusicType_FieldIndex.VNAM;
+                    item.ReevaluateIntervalMilliseconds = frame.ReadUInt64();
+                    return (int)MusicType_FieldIndex.ReevaluateIntervalMilliseconds;
                 }
                 case RecordTypeInts.UNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.UNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)MusicType_FieldIndex.UNAM;
+                    item.StabilityIntervalMilliseconds = frame.ReadUInt64();
+                    return (int)MusicType_FieldIndex.StabilityIntervalMilliseconds;
                 }
                 case RecordTypeInts.TNAM:
                 {
@@ -2135,13 +2103,13 @@ namespace Mutagen.Bethesda.Starfield
         private int? _FadeDurationLocation;
         public Single? FadeDuration => _FadeDurationLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FadeDurationLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
-        #region VNAM
-        private int? _VNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? VNAM => _VNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _VNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region ReevaluateIntervalMilliseconds
+        private int? _ReevaluateIntervalMillisecondsLocation;
+        public UInt64? ReevaluateIntervalMilliseconds => _ReevaluateIntervalMillisecondsLocation.HasValue ? BinaryPrimitives.ReadUInt64LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ReevaluateIntervalMillisecondsLocation.Value, _package.MetaData.Constants)) : default(UInt64?);
         #endregion
-        #region UNAM
-        private int? _UNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? UNAM => _UNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _UNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region StabilityIntervalMilliseconds
+        private int? _StabilityIntervalMillisecondsLocation;
+        public UInt64? StabilityIntervalMilliseconds => _StabilityIntervalMillisecondsLocation.HasValue ? BinaryPrimitives.ReadUInt64LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _StabilityIntervalMillisecondsLocation.Value, _package.MetaData.Constants)) : default(UInt64?);
         #endregion
         public IReadOnlyList<IFormLinkGetter<IMusicTrackGetter>>? Tracks { get; private set; }
         partial void CustomFactoryEnd(
@@ -2240,13 +2208,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.VNAM:
                 {
-                    _VNAMLocation = (stream.Position - offset);
-                    return (int)MusicType_FieldIndex.VNAM;
+                    _ReevaluateIntervalMillisecondsLocation = (stream.Position - offset);
+                    return (int)MusicType_FieldIndex.ReevaluateIntervalMilliseconds;
                 }
                 case RecordTypeInts.UNAM:
                 {
-                    _UNAMLocation = (stream.Position - offset);
-                    return (int)MusicType_FieldIndex.UNAM;
+                    _StabilityIntervalMillisecondsLocation = (stream.Position - offset);
+                    return (int)MusicType_FieldIndex.StabilityIntervalMilliseconds;
                 }
                 case RecordTypeInts.TNAM:
                 {
