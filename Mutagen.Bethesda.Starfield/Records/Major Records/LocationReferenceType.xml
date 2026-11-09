@@ -5,7 +5,7 @@
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
       <RefList name="Components" refName="AComponent" />
       <Color name="Color" recordType="CNAM" binaryType="Alpha" />
-      <ByteArray name="TNAM" recordType="TNAM" unknown="true" />
+      <Enum name="Type" enumName="Keyword.TypeEnum" byteLength="4" recordType="TNAM" />
       <ByteArray name="FNAM" recordType="FNAM" unknown="true" />
     </Fields>
     <LinkInterface>ILocationRecord</LinkInterface>

@@ -98,16 +98,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Color? ILocationReferenceTypeGetter.Color => this.Color;
         #endregion
-        #region TNAM
+        #region Type
+        public Keyword.TypeEnum? Type { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _TNAM;
-        public MemorySlice<Byte>? TNAM
-        {
-            get => this._TNAM;
-            set => this._TNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ILocationReferenceTypeGetter.TNAM => this.TNAM;
+        Keyword.TypeEnum? ILocationReferenceTypeGetter.Type => this.Type;
         #endregion
         #region FNAM
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -148,7 +142,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(initialValue, new VirtualMachineAdapter.Mask<TItem>(initialValue));
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
                 this.Color = initialValue;
-                this.TNAM = initialValue;
+                this.Type = initialValue;
                 this.FNAM = initialValue;
             }
 
@@ -163,7 +157,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem VirtualMachineAdapter,
                 TItem Components,
                 TItem Color,
-                TItem TNAM,
+                TItem Type,
                 TItem FNAM)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
@@ -177,7 +171,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(VirtualMachineAdapter, new VirtualMachineAdapter.Mask<TItem>(VirtualMachineAdapter));
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
                 this.Color = Color;
-                this.TNAM = TNAM;
+                this.Type = Type;
                 this.FNAM = FNAM;
             }
 
@@ -193,7 +187,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
             public TItem Color;
-            public TItem TNAM;
+            public TItem Type;
             public TItem FNAM;
             #endregion
 
@@ -211,7 +205,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
                 if (!object.Equals(this.Components, rhs.Components)) return false;
                 if (!object.Equals(this.Color, rhs.Color)) return false;
-                if (!object.Equals(this.TNAM, rhs.TNAM)) return false;
+                if (!object.Equals(this.Type, rhs.Type)) return false;
                 if (!object.Equals(this.FNAM, rhs.FNAM)) return false;
                 return true;
             }
@@ -221,7 +215,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.VirtualMachineAdapter);
                 hash.Add(this.Components);
                 hash.Add(this.Color);
-                hash.Add(this.TNAM);
+                hash.Add(this.Type);
                 hash.Add(this.FNAM);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -251,7 +245,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.Color)) return false;
-                if (!eval(this.TNAM)) return false;
+                if (!eval(this.Type)) return false;
                 if (!eval(this.FNAM)) return false;
                 return true;
             }
@@ -279,7 +273,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.Color)) return true;
-                if (eval(this.TNAM)) return true;
+                if (eval(this.Type)) return true;
                 if (eval(this.FNAM)) return true;
                 return false;
             }
@@ -313,7 +307,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.Color = eval(this.Color);
-                obj.TNAM = eval(this.TNAM);
+                obj.Type = eval(this.Type);
                 obj.FNAM = eval(this.FNAM);
             }
             #endregion
@@ -360,9 +354,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Color, "Color");
                     }
-                    if (printMask?.TNAM ?? true)
+                    if (printMask?.Type ?? true)
                     {
-                        sb.AppendItem(TNAM, "TNAM");
+                        sb.AppendItem(Type, "Type");
                     }
                     if (printMask?.FNAM ?? true)
                     {
@@ -382,7 +376,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>? VirtualMachineAdapter;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
             public Exception? Color;
-            public Exception? TNAM;
+            public Exception? Type;
             public Exception? FNAM;
             #endregion
 
@@ -398,8 +392,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Components;
                     case LocationReferenceType_FieldIndex.Color:
                         return Color;
-                    case LocationReferenceType_FieldIndex.TNAM:
-                        return TNAM;
+                    case LocationReferenceType_FieldIndex.Type:
+                        return Type;
                     case LocationReferenceType_FieldIndex.FNAM:
                         return FNAM;
                     default:
@@ -421,8 +415,8 @@ namespace Mutagen.Bethesda.Starfield
                     case LocationReferenceType_FieldIndex.Color:
                         this.Color = ex;
                         break;
-                    case LocationReferenceType_FieldIndex.TNAM:
-                        this.TNAM = ex;
+                    case LocationReferenceType_FieldIndex.Type:
+                        this.Type = ex;
                         break;
                     case LocationReferenceType_FieldIndex.FNAM:
                         this.FNAM = ex;
@@ -447,8 +441,8 @@ namespace Mutagen.Bethesda.Starfield
                     case LocationReferenceType_FieldIndex.Color:
                         this.Color = (Exception?)obj;
                         break;
-                    case LocationReferenceType_FieldIndex.TNAM:
-                        this.TNAM = (Exception?)obj;
+                    case LocationReferenceType_FieldIndex.Type:
+                        this.Type = (Exception?)obj;
                         break;
                     case LocationReferenceType_FieldIndex.FNAM:
                         this.FNAM = (Exception?)obj;
@@ -465,7 +459,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (VirtualMachineAdapter != null) return true;
                 if (Components != null) return true;
                 if (Color != null) return true;
-                if (TNAM != null) return true;
+                if (Type != null) return true;
                 if (FNAM != null) return true;
                 return false;
             }
@@ -516,7 +510,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Color, "Color");
                 }
                 {
-                    sb.AppendItem(TNAM, "TNAM");
+                    sb.AppendItem(Type, "Type");
                 }
                 {
                     sb.AppendItem(FNAM, "FNAM");
@@ -532,7 +526,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
                 ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
                 ret.Color = this.Color.Combine(rhs.Color);
-                ret.TNAM = this.TNAM.Combine(rhs.TNAM);
+                ret.Type = this.Type.Combine(rhs.Type);
                 ret.FNAM = this.FNAM.Combine(rhs.FNAM);
                 return ret;
             }
@@ -559,7 +553,7 @@ namespace Mutagen.Bethesda.Starfield
             public VirtualMachineAdapter.TranslationMask? VirtualMachineAdapter;
             public AComponent.TranslationMask? Components;
             public bool Color;
-            public bool TNAM;
+            public bool Type;
             public bool FNAM;
             #endregion
 
@@ -570,7 +564,7 @@ namespace Mutagen.Bethesda.Starfield
                 : base(defaultOn, onOverall)
             {
                 this.Color = defaultOn;
-                this.TNAM = defaultOn;
+                this.Type = defaultOn;
                 this.FNAM = defaultOn;
             }
 
@@ -582,7 +576,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
                 ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
                 ret.Add((Color, null));
-                ret.Add((TNAM, null));
+                ret.Add((Type, null));
                 ret.Add((FNAM, null));
             }
 
@@ -745,7 +739,7 @@ namespace Mutagen.Bethesda.Starfield
         new VirtualMachineAdapter? VirtualMachineAdapter { get; set; }
         new ExtendedList<AComponent> Components { get; }
         new Color? Color { get; set; }
-        new MemorySlice<Byte>? TNAM { get; set; }
+        new Keyword.TypeEnum? Type { get; set; }
         new MemorySlice<Byte>? FNAM { get; set; }
     }
 
@@ -777,7 +771,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         IReadOnlyList<IAComponentGetter> Components { get; }
         Color? Color { get; }
-        ReadOnlyMemorySlice<Byte>? TNAM { get; }
+        Keyword.TypeEnum? Type { get; }
         ReadOnlyMemorySlice<Byte>? FNAM { get; }
 
     }
@@ -958,7 +952,7 @@ namespace Mutagen.Bethesda.Starfield
         VirtualMachineAdapter = 7,
         Components = 8,
         Color = 9,
-        TNAM = 10,
+        Type = 10,
         FNAM = 11,
     }
     #endregion
@@ -1059,7 +1053,7 @@ namespace Mutagen.Bethesda.Starfield
             item.VirtualMachineAdapter = null;
             item.Components.Clear();
             item.Color = default;
-            item.TNAM = default;
+            item.Type = default;
             item.FNAM = default;
             base.Clear(item);
         }
@@ -1181,7 +1175,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             ret.Color = item.Color.ColorOnlyEquals(rhs.Color);
-            ret.TNAM = MemorySliceExt.SequenceEqual(item.TNAM, rhs.TNAM);
+            ret.Type = item.Type == rhs.Type;
             ret.FNAM = MemorySliceExt.SequenceEqual(item.FNAM, rhs.FNAM);
             base.FillEqualsMask(item, rhs, ret, include);
         }
@@ -1256,10 +1250,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(ColorItem, "Color");
             }
-            if ((printMask?.TNAM ?? true)
-                && item.TNAM is {} TNAMItem)
+            if ((printMask?.Type ?? true)
+                && item.Type is {} TypeItem)
             {
-                sb.AppendLine($"TNAM => {SpanExt.ToHexString(TNAMItem)}");
+                sb.AppendItem(TypeItem, "Type");
             }
             if ((printMask?.FNAM ?? true)
                 && item.FNAM is {} FNAMItem)
@@ -1332,9 +1326,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Color.ColorOnlyEquals(rhs.Color)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)LocationReferenceType_FieldIndex.TNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)LocationReferenceType_FieldIndex.Type) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.TNAM, rhs.TNAM)) return false;
+                if (lhs.Type != rhs.Type) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)LocationReferenceType_FieldIndex.FNAM) ?? true))
             {
@@ -1372,21 +1366,18 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            foreach (var subItem in item.Components)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.Components);
             if (item.Color is {} Coloritem)
             {
-                hash.Add(Coloritem.ToArgb());
+                hash.Add(Coloritem);
             }
-            if (item.TNAM is {} TNAMItem)
+            if (item.Type is {} Typeitem)
             {
-                hash.AddBytes(TNAMItem);
+                hash.Add(Typeitem);
             }
             if (item.FNAM is {} FNAMItem)
             {
-                hash.AddBytes(FNAMItem);
+                hash.Add(FNAMItem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1593,16 +1584,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Color = rhs.Color;
             }
-            if ((copyMask?.GetShouldTranslate((int)LocationReferenceType_FieldIndex.TNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)LocationReferenceType_FieldIndex.Type) ?? true))
             {
-                if(rhs.TNAM is {} TNAMrhs)
-                {
-                    item.TNAM = TNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.TNAM = default;
-                }
+                item.Type = rhs.Type;
             }
             if ((copyMask?.GetShouldTranslate((int)LocationReferenceType_FieldIndex.FNAM) ?? true))
             {
@@ -1806,9 +1790,10 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.Color,
                 header: translationParams.ConvertToCustom(RecordTypes.CNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.TNAM,
+            EnumBinaryTranslation<Keyword.TypeEnum, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Type,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.TNAM));
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
@@ -1908,8 +1893,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.TNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.TNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)LocationReferenceType_FieldIndex.TNAM;
+                    item.Type = EnumBinaryTranslation<Keyword.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)LocationReferenceType_FieldIndex.Type;
                 }
                 case RecordTypeInts.FNAM:
                 {
@@ -1993,9 +1980,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _ColorLocation;
         public Color? Color => _ColorLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ColorLocation.Value, _package.MetaData.Constants).ReadColor(ColorBinaryType.Alpha) : default(Color?);
         #endregion
-        #region TNAM
-        private int? _TNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? TNAM => _TNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _TNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Type
+        private int? _TypeLocation;
+        public Keyword.TypeEnum? Type => EnumBinaryTranslation<Keyword.TypeEnum, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_TypeLocation, _recordData, _package, 4);
         #endregion
         #region FNAM
         private int? _FNAMLocation;
@@ -2096,8 +2083,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.TNAM:
                 {
-                    _TNAMLocation = (stream.Position - offset);
-                    return (int)LocationReferenceType_FieldIndex.TNAM;
+                    _TypeLocation = (stream.Position - offset);
+                    return (int)LocationReferenceType_FieldIndex.Type;
                 }
                 case RecordTypeInts.FNAM:
                 {
