@@ -91,8 +91,8 @@ namespace Mutagen.Bethesda.Starfield
         #region AvoidThreatChance
         public Percent AvoidThreatChance { get; set; } = default(Percent);
         #endregion
-        #region DodgeThreadChance
-        public Percent DodgeThreadChance { get; set; } = default(Percent);
+        #region DodgeThreatChance
+        public Percent DodgeThreatChance { get; set; } = default(Percent);
         #endregion
         #region EvadeThreatChance
         public Percent EvadeThreatChance { get; set; } = default(Percent);
@@ -489,7 +489,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.EquipmentScoreMultUnarmed = initialValue;
                 this.EquipmentScoreMultStaff = initialValue;
                 this.AvoidThreatChance = initialValue;
-                this.DodgeThreadChance = initialValue;
+                this.DodgeThreatChance = initialValue;
                 this.EvadeThreatChance = initialValue;
                 this.HealAllyDistance = initialValue;
                 this.JumpCostMult = initialValue;
@@ -610,7 +610,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem EquipmentScoreMultUnarmed,
                 TItem EquipmentScoreMultStaff,
                 TItem AvoidThreatChance,
-                TItem DodgeThreadChance,
+                TItem DodgeThreatChance,
                 TItem EvadeThreatChance,
                 TItem HealAllyDistance,
                 TItem JumpCostMult,
@@ -730,7 +730,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.EquipmentScoreMultUnarmed = EquipmentScoreMultUnarmed;
                 this.EquipmentScoreMultStaff = EquipmentScoreMultStaff;
                 this.AvoidThreatChance = AvoidThreatChance;
-                this.DodgeThreadChance = DodgeThreadChance;
+                this.DodgeThreatChance = DodgeThreatChance;
                 this.EvadeThreatChance = EvadeThreatChance;
                 this.HealAllyDistance = HealAllyDistance;
                 this.JumpCostMult = JumpCostMult;
@@ -852,7 +852,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem EquipmentScoreMultUnarmed;
             public TItem EquipmentScoreMultStaff;
             public TItem AvoidThreatChance;
-            public TItem DodgeThreadChance;
+            public TItem DodgeThreatChance;
             public TItem EvadeThreatChance;
             public TItem HealAllyDistance;
             public TItem JumpCostMult;
@@ -976,7 +976,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.EquipmentScoreMultUnarmed, rhs.EquipmentScoreMultUnarmed)) return false;
                 if (!object.Equals(this.EquipmentScoreMultStaff, rhs.EquipmentScoreMultStaff)) return false;
                 if (!object.Equals(this.AvoidThreatChance, rhs.AvoidThreatChance)) return false;
-                if (!object.Equals(this.DodgeThreadChance, rhs.DodgeThreadChance)) return false;
+                if (!object.Equals(this.DodgeThreatChance, rhs.DodgeThreatChance)) return false;
                 if (!object.Equals(this.EvadeThreatChance, rhs.EvadeThreatChance)) return false;
                 if (!object.Equals(this.HealAllyDistance, rhs.HealAllyDistance)) return false;
                 if (!object.Equals(this.JumpCostMult, rhs.JumpCostMult)) return false;
@@ -1092,7 +1092,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.EquipmentScoreMultUnarmed);
                 hash.Add(this.EquipmentScoreMultStaff);
                 hash.Add(this.AvoidThreatChance);
-                hash.Add(this.DodgeThreadChance);
+                hash.Add(this.DodgeThreatChance);
                 hash.Add(this.EvadeThreatChance);
                 hash.Add(this.HealAllyDistance);
                 hash.Add(this.JumpCostMult);
@@ -1213,7 +1213,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.EquipmentScoreMultUnarmed)) return false;
                 if (!eval(this.EquipmentScoreMultStaff)) return false;
                 if (!eval(this.AvoidThreatChance)) return false;
-                if (!eval(this.DodgeThreadChance)) return false;
+                if (!eval(this.DodgeThreatChance)) return false;
                 if (!eval(this.EvadeThreatChance)) return false;
                 if (!eval(this.HealAllyDistance)) return false;
                 if (!eval(this.JumpCostMult)) return false;
@@ -1360,7 +1360,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.EquipmentScoreMultUnarmed)) return true;
                 if (eval(this.EquipmentScoreMultStaff)) return true;
                 if (eval(this.AvoidThreatChance)) return true;
-                if (eval(this.DodgeThreadChance)) return true;
+                if (eval(this.DodgeThreatChance)) return true;
                 if (eval(this.EvadeThreatChance)) return true;
                 if (eval(this.HealAllyDistance)) return true;
                 if (eval(this.JumpCostMult)) return true;
@@ -1514,7 +1514,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.EquipmentScoreMultUnarmed = eval(this.EquipmentScoreMultUnarmed);
                 obj.EquipmentScoreMultStaff = eval(this.EquipmentScoreMultStaff);
                 obj.AvoidThreatChance = eval(this.AvoidThreatChance);
-                obj.DodgeThreadChance = eval(this.DodgeThreadChance);
+                obj.DodgeThreatChance = eval(this.DodgeThreatChance);
                 obj.EvadeThreatChance = eval(this.EvadeThreatChance);
                 obj.HealAllyDistance = eval(this.HealAllyDistance);
                 obj.JumpCostMult = eval(this.JumpCostMult);
@@ -1673,9 +1673,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(AvoidThreatChance, "AvoidThreatChance");
                     }
-                    if (printMask?.DodgeThreadChance ?? true)
+                    if (printMask?.DodgeThreatChance ?? true)
                     {
-                        sb.AppendItem(DodgeThreadChance, "DodgeThreadChance");
+                        sb.AppendItem(DodgeThreatChance, "DodgeThreatChance");
                     }
                     if (printMask?.EvadeThreatChance ?? true)
                     {
@@ -2098,7 +2098,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? EquipmentScoreMultUnarmed;
             public Exception? EquipmentScoreMultStaff;
             public Exception? AvoidThreatChance;
-            public Exception? DodgeThreadChance;
+            public Exception? DodgeThreatChance;
             public Exception? EvadeThreatChance;
             public Exception? HealAllyDistance;
             public Exception? JumpCostMult;
@@ -2227,8 +2227,8 @@ namespace Mutagen.Bethesda.Starfield
                         return EquipmentScoreMultStaff;
                     case CombatStyle_FieldIndex.AvoidThreatChance:
                         return AvoidThreatChance;
-                    case CombatStyle_FieldIndex.DodgeThreadChance:
-                        return DodgeThreadChance;
+                    case CombatStyle_FieldIndex.DodgeThreatChance:
+                        return DodgeThreatChance;
                     case CombatStyle_FieldIndex.EvadeThreatChance:
                         return EvadeThreatChance;
                     case CombatStyle_FieldIndex.HealAllyDistance:
@@ -2469,8 +2469,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CombatStyle_FieldIndex.AvoidThreatChance:
                         this.AvoidThreatChance = ex;
                         break;
-                    case CombatStyle_FieldIndex.DodgeThreadChance:
-                        this.DodgeThreadChance = ex;
+                    case CombatStyle_FieldIndex.DodgeThreatChance:
+                        this.DodgeThreatChance = ex;
                         break;
                     case CombatStyle_FieldIndex.EvadeThreatChance:
                         this.EvadeThreatChance = ex;
@@ -2813,8 +2813,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CombatStyle_FieldIndex.AvoidThreatChance:
                         this.AvoidThreatChance = (Exception?)obj;
                         break;
-                    case CombatStyle_FieldIndex.DodgeThreadChance:
-                        this.DodgeThreadChance = (Exception?)obj;
+                    case CombatStyle_FieldIndex.DodgeThreatChance:
+                        this.DodgeThreatChance = (Exception?)obj;
                         break;
                     case CombatStyle_FieldIndex.EvadeThreatChance:
                         this.EvadeThreatChance = (Exception?)obj;
@@ -3135,7 +3135,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (EquipmentScoreMultUnarmed != null) return true;
                 if (EquipmentScoreMultStaff != null) return true;
                 if (AvoidThreatChance != null) return true;
-                if (DodgeThreadChance != null) return true;
+                if (DodgeThreatChance != null) return true;
                 if (EvadeThreatChance != null) return true;
                 if (HealAllyDistance != null) return true;
                 if (JumpCostMult != null) return true;
@@ -3293,7 +3293,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(AvoidThreatChance, "AvoidThreatChance");
                 }
                 {
-                    sb.AppendItem(DodgeThreadChance, "DodgeThreadChance");
+                    sb.AppendItem(DodgeThreatChance, "DodgeThreatChance");
                 }
                 {
                     sb.AppendItem(EvadeThreatChance, "EvadeThreatChance");
@@ -3599,7 +3599,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.EquipmentScoreMultUnarmed = this.EquipmentScoreMultUnarmed.Combine(rhs.EquipmentScoreMultUnarmed);
                 ret.EquipmentScoreMultStaff = this.EquipmentScoreMultStaff.Combine(rhs.EquipmentScoreMultStaff);
                 ret.AvoidThreatChance = this.AvoidThreatChance.Combine(rhs.AvoidThreatChance);
-                ret.DodgeThreadChance = this.DodgeThreadChance.Combine(rhs.DodgeThreadChance);
+                ret.DodgeThreatChance = this.DodgeThreatChance.Combine(rhs.DodgeThreatChance);
                 ret.EvadeThreatChance = this.EvadeThreatChance.Combine(rhs.EvadeThreatChance);
                 ret.HealAllyDistance = this.HealAllyDistance.Combine(rhs.HealAllyDistance);
                 ret.JumpCostMult = this.JumpCostMult.Combine(rhs.JumpCostMult);
@@ -3732,7 +3732,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool EquipmentScoreMultUnarmed;
             public bool EquipmentScoreMultStaff;
             public bool AvoidThreatChance;
-            public bool DodgeThreadChance;
+            public bool DodgeThreatChance;
             public bool EvadeThreatChance;
             public bool HealAllyDistance;
             public bool JumpCostMult;
@@ -3851,7 +3851,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.EquipmentScoreMultUnarmed = defaultOn;
                 this.EquipmentScoreMultStaff = defaultOn;
                 this.AvoidThreatChance = defaultOn;
-                this.DodgeThreadChance = defaultOn;
+                this.DodgeThreatChance = defaultOn;
                 this.EvadeThreatChance = defaultOn;
                 this.HealAllyDistance = defaultOn;
                 this.JumpCostMult = defaultOn;
@@ -3962,7 +3962,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((EquipmentScoreMultUnarmed, null));
                 ret.Add((EquipmentScoreMultStaff, null));
                 ret.Add((AvoidThreatChance, null));
-                ret.Add((DodgeThreadChance, null));
+                ret.Add((DodgeThreatChance, null));
                 ret.Add((EvadeThreatChance, null));
                 ret.Add((HealAllyDistance, null));
                 ret.Add((JumpCostMult, null));
@@ -4225,7 +4225,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single EquipmentScoreMultUnarmed { get; set; }
         new Single EquipmentScoreMultStaff { get; set; }
         new Percent AvoidThreatChance { get; set; }
-        new Percent DodgeThreadChance { get; set; }
+        new Percent DodgeThreatChance { get; set; }
         new Percent EvadeThreatChance { get; set; }
         new Single HealAllyDistance { get; set; }
         new Single JumpCostMult { get; set; }
@@ -4358,7 +4358,7 @@ namespace Mutagen.Bethesda.Starfield
         Single EquipmentScoreMultUnarmed { get; }
         Single EquipmentScoreMultStaff { get; }
         Percent AvoidThreatChance { get; }
-        Percent DodgeThreadChance { get; }
+        Percent DodgeThreatChance { get; }
         Percent EvadeThreatChance { get; }
         Single HealAllyDistance { get; }
         Single JumpCostMult { get; }
@@ -4649,7 +4649,7 @@ namespace Mutagen.Bethesda.Starfield
         EquipmentScoreMultUnarmed = 14,
         EquipmentScoreMultStaff = 15,
         AvoidThreatChance = 16,
-        DodgeThreadChance = 17,
+        DodgeThreatChance = 17,
         EvadeThreatChance = 18,
         HealAllyDistance = 19,
         JumpCostMult = 20,
@@ -4866,7 +4866,7 @@ namespace Mutagen.Bethesda.Starfield
             item.EquipmentScoreMultUnarmed = default(Single);
             item.EquipmentScoreMultStaff = default(Single);
             item.AvoidThreatChance = default(Percent);
-            item.DodgeThreadChance = default(Percent);
+            item.DodgeThreatChance = default(Percent);
             item.EvadeThreatChance = default(Percent);
             item.HealAllyDistance = default(Single);
             item.JumpCostMult = default(Single);
@@ -5063,7 +5063,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.EquipmentScoreMultUnarmed = item.EquipmentScoreMultUnarmed.EqualsWithin(rhs.EquipmentScoreMultUnarmed);
             ret.EquipmentScoreMultStaff = item.EquipmentScoreMultStaff.EqualsWithin(rhs.EquipmentScoreMultStaff);
             ret.AvoidThreatChance = item.AvoidThreatChance.Equals(rhs.AvoidThreatChance);
-            ret.DodgeThreadChance = item.DodgeThreadChance.Equals(rhs.DodgeThreadChance);
+            ret.DodgeThreatChance = item.DodgeThreatChance.Equals(rhs.DodgeThreatChance);
             ret.EvadeThreatChance = item.EvadeThreatChance.Equals(rhs.EvadeThreatChance);
             ret.HealAllyDistance = item.HealAllyDistance.EqualsWithin(rhs.HealAllyDistance);
             ret.JumpCostMult = item.JumpCostMult.EqualsWithin(rhs.JumpCostMult);
@@ -5257,9 +5257,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.AvoidThreatChance, "AvoidThreatChance");
             }
-            if (printMask?.DodgeThreadChance ?? true)
+            if (printMask?.DodgeThreatChance ?? true)
             {
-                sb.AppendItem(item.DodgeThreadChance, "DodgeThreadChance");
+                sb.AppendItem(item.DodgeThreatChance, "DodgeThreatChance");
             }
             if (printMask?.EvadeThreatChance ?? true)
             {
@@ -5754,9 +5754,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.AvoidThreatChance.Equals(rhs.AvoidThreatChance)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.DodgeThreadChance) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.DodgeThreatChance) ?? true))
             {
-                if (!lhs.DodgeThreadChance.Equals(rhs.DodgeThreadChance)) return false;
+                if (!lhs.DodgeThreatChance.Equals(rhs.DodgeThreatChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.EvadeThreatChance) ?? true))
             {
@@ -6224,7 +6224,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.EquipmentScoreMultUnarmed);
             hash.Add(item.EquipmentScoreMultStaff);
             hash.Add(item.AvoidThreatChance);
-            hash.Add(item.DodgeThreadChance);
+            hash.Add(item.DodgeThreatChance);
             hash.Add(item.EvadeThreatChance);
             hash.Add(item.HealAllyDistance);
             hash.Add(item.JumpCostMult);
@@ -6510,9 +6510,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.AvoidThreatChance = rhs.AvoidThreatChance;
             }
-            if ((copyMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.DodgeThreadChance) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.DodgeThreatChance) ?? true))
             {
-                item.DodgeThreadChance = rhs.DodgeThreadChance;
+                item.DodgeThreatChance = rhs.DodgeThreatChance;
             }
             if ((copyMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.EvadeThreatChance) ?? true))
             {
@@ -7258,7 +7258,7 @@ namespace Mutagen.Bethesda.Starfield
                     integerType: FloatIntegerType.UInt);
                 PercentBinaryTranslation.Write(
                     writer: writer,
-                    item: item.DodgeThreadChance,
+                    item: item.DodgeThreatChance,
                     integerType: FloatIntegerType.UInt);
                 PercentBinaryTranslation.Write(
                     writer: writer,
@@ -7770,7 +7770,7 @@ namespace Mutagen.Bethesda.Starfield
                         reader: dataFrame,
                         integerType: FloatIntegerType.UInt);
                     if (dataFrame.Remaining < 4) return null;
-                    item.DodgeThreadChance = PercentBinaryTranslation.Parse(
+                    item.DodgeThreatChance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.UInt);
                     if (dataFrame.Remaining < 4) return null;
@@ -8295,10 +8295,10 @@ namespace Mutagen.Bethesda.Starfield
         private bool _AvoidThreatChance_IsSet => _CSGDLocation.HasValue;
         public Percent AvoidThreatChance => _AvoidThreatChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_AvoidThreatChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
-        #region DodgeThreadChance
-        private int _DodgeThreadChanceLocation => _CSGDLocation!.Value.Min + 0x28;
-        private bool _DodgeThreadChance_IsSet => _CSGDLocation.HasValue;
-        public Percent DodgeThreadChance => _DodgeThreadChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_DodgeThreadChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
+        #region DodgeThreatChance
+        private int _DodgeThreatChanceLocation => _CSGDLocation!.Value.Min + 0x28;
+        private bool _DodgeThreatChance_IsSet => _CSGDLocation.HasValue;
+        public Percent DodgeThreatChance => _DodgeThreatChance_IsSet ? PercentBinaryTranslation.GetPercent(_recordData.Slice(_DodgeThreatChanceLocation, 4), FloatIntegerType.UInt) : default(Percent);
         #endregion
         #region EvadeThreatChance
         private int _EvadeThreatChanceLocation => _CSGDLocation!.Value.Min + 0x2C;

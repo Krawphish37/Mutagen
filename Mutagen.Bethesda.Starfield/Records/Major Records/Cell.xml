@@ -94,8 +94,8 @@
       <Int32 name="Unknown1" unknown="true" />
       <Float name="NearHeightMid" />
       <Float name="NearHeightRange" />
-      <Color name="ForColorHighNear" binaryType="Alpha" />
-      <Color name="ForColorHighFar" binaryType="Alpha" />
+      <Color name="FogColorHighNear" binaryType="Alpha" />
+      <Color name="FogColorHighFar" binaryType="Alpha" />
       <Float name="HighDensityScale" />
       <Float name="FogNearScale" />
       <Float name="FogFarScale" />
