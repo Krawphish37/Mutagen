@@ -10,7 +10,9 @@
   <Object name="NavigationMapInfo" objType="Subrecord" recordType="NVMI">
     <Fields>
       <FormLink name="NavigationMesh" refName="NavigationMesh" />
-      <ByteArray name="Data" byteLength="20" nullable="False" />
+      <Enum name="Flags" enumName="NavigationMapInfo.Flag" byteLength="4" />
+      <P3Float name="ApproxLocation" />
+      <Float name="PreferredPercent" />
       <List name="MergedTo" counterLength="4">
         <FormLink refName="NavigationMesh" />
       </List>
@@ -18,7 +20,52 @@
         <FormLink refName="NavigationMesh" />
       </List>
       <RefList name="LinkedDoors" refName="LinkedDoor" counterLength="4" />
+      <RefList name="Traversals" refName="NavmeshTraversal" counterLength="4" />
+      <!-- Island data (a has-byte, then the data), the pathing cell (world + grid, or a cell) and the 5-byte tail are read by custom logic: the cell part is a union. -->
+      <CustomLogic name="IslandAndPathingLogic" />
+      <RefDirect name="IslandData" refName="NavmeshIslandData" nullable="True" binary="NoGeneration" />
+      <RefDirect name="PathingCell" refName="NavmeshPathingCell" binary="NoGeneration" />
+      <UInt8 name="UnknownByte" binary="NoGeneration" />
+      <List name="UnknownCrcs" binary="NoGeneration">
+        <UInt32 />
+      </List>
       <ByteArray name="Unknown" />
+    </Fields>
+  </Object>
+  <Object name="NavmeshTraversal" objType="Subrecord">
+    <Fields>
+      <UInt32 name="Type" />
+      <FormLink name="CellOrObject" refName="StarfieldMajorRecord" />
+      <FormLink name="Traversal" refName="StarfieldMajorRecord" />
+      <P3Float name="FromPosition" />
+      <P3Float name="ToPosition" />
+      <Float name="Unknown1" />
+      <Float name="Unknown2" />
+      <Float name="Unknown3" />
+      <UInt32 name="Flags" />
+      <FormLink name="FromNavmesh" refName="NavigationMesh" />
+      <FormLink name="ToNavmesh" refName="NavigationMesh" />
+    </Fields>
+  </Object>
+  <Object name="NavmeshIslandData" objType="Subrecord">
+    <Fields>
+      <P3Float name="Min" />
+      <P3Float name="Max" />
+      <List name="Triangles" counterLength="4">
+        <P3Int16 />
+      </List>
+      <List name="Vertices" counterLength="4">
+        <P3Float />
+      </List>
+    </Fields>
+  </Object>
+  <Object name="NavmeshPathingCell" objType="Subrecord">
+    <Fields>
+      <UInt32 name="Crc" />
+      <FormLink name="ParentWorld" refName="StarfieldMajorRecord" />
+      <!-- One of these follows: the parent cell when ParentWorld is null, else the grid (stored Y then X). Read and written by NavigationMapInfo. -->
+      <FormLink name="ParentCell" refName="Cell" binary="NoGeneration" />
+      <P2Int16 name="Grid" binary="NoGeneration" />
     </Fields>
   </Object>
   <Object name="LinkedDoor" objType="Subrecord">

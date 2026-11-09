@@ -63,16 +63,14 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<INavigationMeshGetter> INavigationMapInfoGetter.NavigationMesh => this.NavigationMesh;
         #endregion
-        #region Data
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _Data = new byte[20];
-        public MemorySlice<Byte> Data
-        {
-            get => _Data;
-            set => this._Data = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> INavigationMapInfoGetter.Data => this.Data;
+        #region Flags
+        public NavigationMapInfo.Flag Flags { get; set; } = default(NavigationMapInfo.Flag);
+        #endregion
+        #region ApproxLocation
+        public P3Float ApproxLocation { get; set; } = default(P3Float);
+        #endregion
+        #region PreferredPercent
+        public Single PreferredPercent { get; set; } = default(Single);
         #endregion
         #region MergedTo
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -113,6 +111,53 @@ namespace Mutagen.Bethesda.Starfield
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IReadOnlyList<ILinkedDoorGetter> INavigationMapInfoGetter.LinkedDoors => _LinkedDoors;
+        #endregion
+
+        #endregion
+        #region Traversals
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private ExtendedList<NavmeshTraversal> _Traversals = new ExtendedList<NavmeshTraversal>();
+        public ExtendedList<NavmeshTraversal> Traversals
+        {
+            get => this._Traversals;
+            init => this._Traversals = value;
+        }
+        #region Interface Members
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IReadOnlyList<INavmeshTraversalGetter> INavigationMapInfoGetter.Traversals => _Traversals;
+        #endregion
+
+        #endregion
+        #region IslandData
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private NavmeshIslandData? _IslandData;
+        public NavmeshIslandData? IslandData
+        {
+            get => _IslandData;
+            set => _IslandData = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        INavmeshIslandDataGetter? INavigationMapInfoGetter.IslandData => this.IslandData;
+        #endregion
+        #region PathingCell
+        public NavmeshPathingCell PathingCell { get; set; } = new NavmeshPathingCell();
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        INavmeshPathingCellGetter INavigationMapInfoGetter.PathingCell => PathingCell;
+        #endregion
+        #region UnknownByte
+        public Byte UnknownByte { get; set; } = default(Byte);
+        #endregion
+        #region UnknownCrcs
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private ExtendedList<UInt32> _UnknownCrcs = new ExtendedList<UInt32>();
+        public ExtendedList<UInt32> UnknownCrcs
+        {
+            get => this._UnknownCrcs;
+            init => this._UnknownCrcs = value;
+        }
+        #region Interface Members
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IReadOnlyList<UInt32> INavigationMapInfoGetter.UnknownCrcs => _UnknownCrcs;
         #endregion
 
         #endregion
@@ -167,26 +212,47 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.NavigationMesh = initialValue;
-                this.Data = initialValue;
+                this.Flags = initialValue;
+                this.ApproxLocation = initialValue;
+                this.PreferredPercent = initialValue;
                 this.MergedTo = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.PreferredMerges = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.LinkedDoors = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LinkedDoor.Mask<TItem>?>>?>(initialValue, []);
+                this.Traversals = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, NavmeshTraversal.Mask<TItem>?>>?>(initialValue, []);
+                this.IslandData = new MaskItem<TItem, NavmeshIslandData.Mask<TItem>?>(initialValue, new NavmeshIslandData.Mask<TItem>(initialValue));
+                this.PathingCell = new MaskItem<TItem, NavmeshPathingCell.Mask<TItem>?>(initialValue, new NavmeshPathingCell.Mask<TItem>(initialValue));
+                this.UnknownByte = initialValue;
+                this.UnknownCrcs = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.Unknown = initialValue;
             }
 
             public Mask(
                 TItem NavigationMesh,
-                TItem Data,
+                TItem Flags,
+                TItem ApproxLocation,
+                TItem PreferredPercent,
                 TItem MergedTo,
                 TItem PreferredMerges,
                 TItem LinkedDoors,
+                TItem Traversals,
+                TItem IslandData,
+                TItem PathingCell,
+                TItem UnknownByte,
+                TItem UnknownCrcs,
                 TItem Unknown)
             {
                 this.NavigationMesh = NavigationMesh;
-                this.Data = Data;
+                this.Flags = Flags;
+                this.ApproxLocation = ApproxLocation;
+                this.PreferredPercent = PreferredPercent;
                 this.MergedTo = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(MergedTo, []);
                 this.PreferredMerges = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(PreferredMerges, []);
                 this.LinkedDoors = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LinkedDoor.Mask<TItem>?>>?>(LinkedDoors, []);
+                this.Traversals = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, NavmeshTraversal.Mask<TItem>?>>?>(Traversals, []);
+                this.IslandData = new MaskItem<TItem, NavmeshIslandData.Mask<TItem>?>(IslandData, new NavmeshIslandData.Mask<TItem>(IslandData));
+                this.PathingCell = new MaskItem<TItem, NavmeshPathingCell.Mask<TItem>?>(PathingCell, new NavmeshPathingCell.Mask<TItem>(PathingCell));
+                this.UnknownByte = UnknownByte;
+                this.UnknownCrcs = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(UnknownCrcs, []);
                 this.Unknown = Unknown;
             }
 
@@ -200,10 +266,17 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem NavigationMesh;
-            public TItem Data;
+            public TItem Flags;
+            public TItem ApproxLocation;
+            public TItem PreferredPercent;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? MergedTo;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? PreferredMerges;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LinkedDoor.Mask<TItem>?>>?>? LinkedDoors;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, NavmeshTraversal.Mask<TItem>?>>?>? Traversals;
+            public MaskItem<TItem, NavmeshIslandData.Mask<TItem>?>? IslandData { get; set; }
+            public MaskItem<TItem, NavmeshPathingCell.Mask<TItem>?>? PathingCell { get; set; }
+            public TItem UnknownByte;
+            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? UnknownCrcs;
             public TItem Unknown;
             #endregion
 
@@ -218,10 +291,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.NavigationMesh, rhs.NavigationMesh)) return false;
-                if (!object.Equals(this.Data, rhs.Data)) return false;
+                if (!object.Equals(this.Flags, rhs.Flags)) return false;
+                if (!object.Equals(this.ApproxLocation, rhs.ApproxLocation)) return false;
+                if (!object.Equals(this.PreferredPercent, rhs.PreferredPercent)) return false;
                 if (!object.Equals(this.MergedTo, rhs.MergedTo)) return false;
                 if (!object.Equals(this.PreferredMerges, rhs.PreferredMerges)) return false;
                 if (!object.Equals(this.LinkedDoors, rhs.LinkedDoors)) return false;
+                if (!object.Equals(this.Traversals, rhs.Traversals)) return false;
+                if (!object.Equals(this.IslandData, rhs.IslandData)) return false;
+                if (!object.Equals(this.PathingCell, rhs.PathingCell)) return false;
+                if (!object.Equals(this.UnknownByte, rhs.UnknownByte)) return false;
+                if (!object.Equals(this.UnknownCrcs, rhs.UnknownCrcs)) return false;
                 if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 return true;
             }
@@ -229,10 +309,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.NavigationMesh);
-                hash.Add(this.Data);
+                hash.Add(this.Flags);
+                hash.Add(this.ApproxLocation);
+                hash.Add(this.PreferredPercent);
                 hash.Add(this.MergedTo);
                 hash.Add(this.PreferredMerges);
                 hash.Add(this.LinkedDoors);
+                hash.Add(this.Traversals);
+                hash.Add(this.IslandData);
+                hash.Add(this.PathingCell);
+                hash.Add(this.UnknownByte);
+                hash.Add(this.UnknownCrcs);
                 hash.Add(this.Unknown);
                 return hash.ToHashCode();
             }
@@ -243,7 +330,9 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.NavigationMesh)) return false;
-                if (!eval(this.Data)) return false;
+                if (!eval(this.Flags)) return false;
+                if (!eval(this.ApproxLocation)) return false;
+                if (!eval(this.PreferredPercent)) return false;
                 if (this.MergedTo != null)
                 {
                     if (!eval(this.MergedTo.Overall)) return false;
@@ -278,6 +367,40 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (this.Traversals != null)
+                {
+                    if (!eval(this.Traversals.Overall)) return false;
+                    if (this.Traversals.Specific != null)
+                    {
+                        foreach (var item in this.Traversals.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
+                if (IslandData != null)
+                {
+                    if (!eval(this.IslandData.Overall)) return false;
+                    if (this.IslandData.Specific != null && !this.IslandData.Specific.All(eval)) return false;
+                }
+                if (PathingCell != null)
+                {
+                    if (!eval(this.PathingCell.Overall)) return false;
+                    if (this.PathingCell.Specific != null && !this.PathingCell.Specific.All(eval)) return false;
+                }
+                if (!eval(this.UnknownByte)) return false;
+                if (this.UnknownCrcs != null)
+                {
+                    if (!eval(this.UnknownCrcs.Overall)) return false;
+                    if (this.UnknownCrcs.Specific != null)
+                    {
+                        foreach (var item in this.UnknownCrcs.Specific)
+                        {
+                            if (!eval(item.Value)) return false;
+                        }
+                    }
+                }
                 if (!eval(this.Unknown)) return false;
                 return true;
             }
@@ -287,7 +410,9 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.NavigationMesh)) return true;
-                if (eval(this.Data)) return true;
+                if (eval(this.Flags)) return true;
+                if (eval(this.ApproxLocation)) return true;
+                if (eval(this.PreferredPercent)) return true;
                 if (this.MergedTo != null)
                 {
                     if (eval(this.MergedTo.Overall)) return true;
@@ -322,6 +447,40 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (this.Traversals != null)
+                {
+                    if (eval(this.Traversals.Overall)) return true;
+                    if (this.Traversals.Specific != null)
+                    {
+                        foreach (var item in this.Traversals.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
+                if (IslandData != null)
+                {
+                    if (eval(this.IslandData.Overall)) return true;
+                    if (this.IslandData.Specific != null && this.IslandData.Specific.Any(eval)) return true;
+                }
+                if (PathingCell != null)
+                {
+                    if (eval(this.PathingCell.Overall)) return true;
+                    if (this.PathingCell.Specific != null && this.PathingCell.Specific.Any(eval)) return true;
+                }
+                if (eval(this.UnknownByte)) return true;
+                if (this.UnknownCrcs != null)
+                {
+                    if (eval(this.UnknownCrcs.Overall)) return true;
+                    if (this.UnknownCrcs.Specific != null)
+                    {
+                        foreach (var item in this.UnknownCrcs.Specific)
+                        {
+                            if (!eval(item.Value)) return false;
+                        }
+                    }
+                }
                 if (eval(this.Unknown)) return true;
                 return false;
             }
@@ -338,7 +497,9 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.NavigationMesh = eval(this.NavigationMesh);
-                obj.Data = eval(this.Data);
+                obj.Flags = eval(this.Flags);
+                obj.ApproxLocation = eval(this.ApproxLocation);
+                obj.PreferredPercent = eval(this.PreferredPercent);
                 if (MergedTo != null)
                 {
                     obj.MergedTo = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.MergedTo.Overall), []);
@@ -382,6 +543,38 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (Traversals != null)
+                {
+                    obj.Traversals = new MaskItem<R, IEnumerable<MaskItemIndexed<R, NavmeshTraversal.Mask<R>?>>?>(eval(this.Traversals.Overall), []);
+                    if (Traversals.Specific != null)
+                    {
+                        var l = new List<MaskItemIndexed<R, NavmeshTraversal.Mask<R>?>>();
+                        obj.Traversals.Specific = l;
+                        foreach (var item in Traversals.Specific)
+                        {
+                            MaskItemIndexed<R, NavmeshTraversal.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, NavmeshTraversal.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
+                        }
+                    }
+                }
+                obj.IslandData = this.IslandData == null ? null : new MaskItem<R, NavmeshIslandData.Mask<R>?>(eval(this.IslandData.Overall), this.IslandData.Specific?.Translate(eval));
+                obj.PathingCell = this.PathingCell == null ? null : new MaskItem<R, NavmeshPathingCell.Mask<R>?>(eval(this.PathingCell.Overall), this.PathingCell.Specific?.Translate(eval));
+                obj.UnknownByte = eval(this.UnknownByte);
+                if (UnknownCrcs != null)
+                {
+                    obj.UnknownCrcs = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.UnknownCrcs.Overall), []);
+                    if (UnknownCrcs.Specific != null)
+                    {
+                        var l = new List<(int Index, R Item)>();
+                        obj.UnknownCrcs.Specific = l;
+                        foreach (var item in UnknownCrcs.Specific)
+                        {
+                            R mask = eval(item.Value);
+                            l.Add((item.Index, mask));
+                        }
+                    }
+                }
                 obj.Unknown = eval(this.Unknown);
             }
             #endregion
@@ -405,9 +598,17 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(NavigationMesh, "NavigationMesh");
                     }
-                    if (printMask?.Data ?? true)
+                    if (printMask?.Flags ?? true)
                     {
-                        sb.AppendItem(Data, "Data");
+                        sb.AppendItem(Flags, "Flags");
+                    }
+                    if (printMask?.ApproxLocation ?? true)
+                    {
+                        sb.AppendItem(ApproxLocation, "ApproxLocation");
+                    }
+                    if (printMask?.PreferredPercent ?? true)
+                    {
+                        sb.AppendItem(PreferredPercent, "PreferredPercent");
                     }
                     if ((printMask?.MergedTo?.Overall ?? true)
                         && MergedTo is {} MergedToItem)
@@ -470,6 +671,58 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
+                    if ((printMask?.Traversals?.Overall ?? true)
+                        && Traversals is {} TraversalsItem)
+                    {
+                        sb.AppendLine("Traversals =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(TraversalsItem.Overall);
+                            if (TraversalsItem.Specific != null)
+                            {
+                                foreach (var subItem in TraversalsItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        subItem?.Print(sb);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (printMask?.IslandData?.Overall ?? true)
+                    {
+                        IslandData?.Print(sb);
+                    }
+                    if (printMask?.PathingCell?.Overall ?? true)
+                    {
+                        PathingCell?.Print(sb);
+                    }
+                    if (printMask?.UnknownByte ?? true)
+                    {
+                        sb.AppendItem(UnknownByte, "UnknownByte");
+                    }
+                    if ((printMask?.UnknownCrcs?.Overall ?? true)
+                        && UnknownCrcs is {} UnknownCrcsItem)
+                    {
+                        sb.AppendLine("UnknownCrcs =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(UnknownCrcsItem.Overall);
+                            if (UnknownCrcsItem.Specific != null)
+                            {
+                                foreach (var subItem in UnknownCrcsItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        {
+                                            sb.AppendItem(subItem);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     if (printMask?.Unknown ?? true)
                     {
                         sb.AppendItem(Unknown, "Unknown");
@@ -499,10 +752,17 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? NavigationMesh;
-            public Exception? Data;
+            public Exception? Flags;
+            public Exception? ApproxLocation;
+            public Exception? PreferredPercent;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? MergedTo;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? PreferredMerges;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LinkedDoor.ErrorMask?>>?>? LinkedDoors;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, NavmeshTraversal.ErrorMask?>>?>? Traversals;
+            public MaskItem<Exception?, NavmeshIslandData.ErrorMask?>? IslandData;
+            public MaskItem<Exception?, NavmeshPathingCell.ErrorMask?>? PathingCell;
+            public Exception? UnknownByte;
+            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? UnknownCrcs;
             public Exception? Unknown;
             #endregion
 
@@ -514,14 +774,28 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case NavigationMapInfo_FieldIndex.NavigationMesh:
                         return NavigationMesh;
-                    case NavigationMapInfo_FieldIndex.Data:
-                        return Data;
+                    case NavigationMapInfo_FieldIndex.Flags:
+                        return Flags;
+                    case NavigationMapInfo_FieldIndex.ApproxLocation:
+                        return ApproxLocation;
+                    case NavigationMapInfo_FieldIndex.PreferredPercent:
+                        return PreferredPercent;
                     case NavigationMapInfo_FieldIndex.MergedTo:
                         return MergedTo;
                     case NavigationMapInfo_FieldIndex.PreferredMerges:
                         return PreferredMerges;
                     case NavigationMapInfo_FieldIndex.LinkedDoors:
                         return LinkedDoors;
+                    case NavigationMapInfo_FieldIndex.Traversals:
+                        return Traversals;
+                    case NavigationMapInfo_FieldIndex.IslandData:
+                        return IslandData;
+                    case NavigationMapInfo_FieldIndex.PathingCell:
+                        return PathingCell;
+                    case NavigationMapInfo_FieldIndex.UnknownByte:
+                        return UnknownByte;
+                    case NavigationMapInfo_FieldIndex.UnknownCrcs:
+                        return UnknownCrcs;
                     case NavigationMapInfo_FieldIndex.Unknown:
                         return Unknown;
                     default:
@@ -537,8 +811,14 @@ namespace Mutagen.Bethesda.Starfield
                     case NavigationMapInfo_FieldIndex.NavigationMesh:
                         this.NavigationMesh = ex;
                         break;
-                    case NavigationMapInfo_FieldIndex.Data:
-                        this.Data = ex;
+                    case NavigationMapInfo_FieldIndex.Flags:
+                        this.Flags = ex;
+                        break;
+                    case NavigationMapInfo_FieldIndex.ApproxLocation:
+                        this.ApproxLocation = ex;
+                        break;
+                    case NavigationMapInfo_FieldIndex.PreferredPercent:
+                        this.PreferredPercent = ex;
                         break;
                     case NavigationMapInfo_FieldIndex.MergedTo:
                         this.MergedTo = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
@@ -548,6 +828,21 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case NavigationMapInfo_FieldIndex.LinkedDoors:
                         this.LinkedDoors = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LinkedDoor.ErrorMask?>>?>(ex, null);
+                        break;
+                    case NavigationMapInfo_FieldIndex.Traversals:
+                        this.Traversals = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, NavmeshTraversal.ErrorMask?>>?>(ex, null);
+                        break;
+                    case NavigationMapInfo_FieldIndex.IslandData:
+                        this.IslandData = new MaskItem<Exception?, NavmeshIslandData.ErrorMask?>(ex, null);
+                        break;
+                    case NavigationMapInfo_FieldIndex.PathingCell:
+                        this.PathingCell = new MaskItem<Exception?, NavmeshPathingCell.ErrorMask?>(ex, null);
+                        break;
+                    case NavigationMapInfo_FieldIndex.UnknownByte:
+                        this.UnknownByte = ex;
+                        break;
+                    case NavigationMapInfo_FieldIndex.UnknownCrcs:
+                        this.UnknownCrcs = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
                     case NavigationMapInfo_FieldIndex.Unknown:
                         this.Unknown = ex;
@@ -565,8 +860,14 @@ namespace Mutagen.Bethesda.Starfield
                     case NavigationMapInfo_FieldIndex.NavigationMesh:
                         this.NavigationMesh = (Exception?)obj;
                         break;
-                    case NavigationMapInfo_FieldIndex.Data:
-                        this.Data = (Exception?)obj;
+                    case NavigationMapInfo_FieldIndex.Flags:
+                        this.Flags = (Exception?)obj;
+                        break;
+                    case NavigationMapInfo_FieldIndex.ApproxLocation:
+                        this.ApproxLocation = (Exception?)obj;
+                        break;
+                    case NavigationMapInfo_FieldIndex.PreferredPercent:
+                        this.PreferredPercent = (Exception?)obj;
                         break;
                     case NavigationMapInfo_FieldIndex.MergedTo:
                         this.MergedTo = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
@@ -576,6 +877,21 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case NavigationMapInfo_FieldIndex.LinkedDoors:
                         this.LinkedDoors = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LinkedDoor.ErrorMask?>>?>)obj;
+                        break;
+                    case NavigationMapInfo_FieldIndex.Traversals:
+                        this.Traversals = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, NavmeshTraversal.ErrorMask?>>?>)obj;
+                        break;
+                    case NavigationMapInfo_FieldIndex.IslandData:
+                        this.IslandData = (MaskItem<Exception?, NavmeshIslandData.ErrorMask?>?)obj;
+                        break;
+                    case NavigationMapInfo_FieldIndex.PathingCell:
+                        this.PathingCell = (MaskItem<Exception?, NavmeshPathingCell.ErrorMask?>?)obj;
+                        break;
+                    case NavigationMapInfo_FieldIndex.UnknownByte:
+                        this.UnknownByte = (Exception?)obj;
+                        break;
+                    case NavigationMapInfo_FieldIndex.UnknownCrcs:
+                        this.UnknownCrcs = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
                     case NavigationMapInfo_FieldIndex.Unknown:
                         this.Unknown = (Exception?)obj;
@@ -589,10 +905,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (NavigationMesh != null) return true;
-                if (Data != null) return true;
+                if (Flags != null) return true;
+                if (ApproxLocation != null) return true;
+                if (PreferredPercent != null) return true;
                 if (MergedTo != null) return true;
                 if (PreferredMerges != null) return true;
                 if (LinkedDoors != null) return true;
+                if (Traversals != null) return true;
+                if (IslandData != null) return true;
+                if (PathingCell != null) return true;
+                if (UnknownByte != null) return true;
+                if (UnknownCrcs != null) return true;
                 if (Unknown != null) return true;
                 return false;
             }
@@ -623,7 +946,13 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(NavigationMesh, "NavigationMesh");
                 }
                 {
-                    sb.AppendItem(Data, "Data");
+                    sb.AppendItem(Flags, "Flags");
+                }
+                {
+                    sb.AppendItem(ApproxLocation, "ApproxLocation");
+                }
+                {
+                    sb.AppendItem(PreferredPercent, "PreferredPercent");
                 }
                 if (MergedTo is {} MergedToItem)
                 {
@@ -683,6 +1012,49 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (Traversals is {} TraversalsItem)
+                {
+                    sb.AppendLine("Traversals =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(TraversalsItem.Overall);
+                        if (TraversalsItem.Specific != null)
+                        {
+                            foreach (var subItem in TraversalsItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    subItem?.Print(sb);
+                                }
+                            }
+                        }
+                    }
+                }
+                IslandData?.Print(sb);
+                PathingCell?.Print(sb);
+                {
+                    sb.AppendItem(UnknownByte, "UnknownByte");
+                }
+                if (UnknownCrcs is {} UnknownCrcsItem)
+                {
+                    sb.AppendLine("UnknownCrcs =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(UnknownCrcsItem.Overall);
+                        if (UnknownCrcsItem.Specific != null)
+                        {
+                            foreach (var subItem in UnknownCrcsItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    {
+                                        sb.AppendItem(subItem);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 {
                     sb.AppendItem(Unknown, "Unknown");
                 }
@@ -695,10 +1067,17 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.NavigationMesh = this.NavigationMesh.Combine(rhs.NavigationMesh);
-                ret.Data = this.Data.Combine(rhs.Data);
+                ret.Flags = this.Flags.Combine(rhs.Flags);
+                ret.ApproxLocation = this.ApproxLocation.Combine(rhs.ApproxLocation);
+                ret.PreferredPercent = this.PreferredPercent.Combine(rhs.PreferredPercent);
                 ret.MergedTo = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.MergedTo?.Overall, rhs.MergedTo?.Overall), Noggog.ExceptionExt.Combine(this.MergedTo?.Specific, rhs.MergedTo?.Specific));
                 ret.PreferredMerges = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.PreferredMerges?.Overall, rhs.PreferredMerges?.Overall), Noggog.ExceptionExt.Combine(this.PreferredMerges?.Specific, rhs.PreferredMerges?.Specific));
                 ret.LinkedDoors = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LinkedDoor.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.LinkedDoors?.Overall, rhs.LinkedDoors?.Overall), Noggog.ExceptionExt.Combine(this.LinkedDoors?.Specific, rhs.LinkedDoors?.Specific));
+                ret.Traversals = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, NavmeshTraversal.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Traversals?.Overall, rhs.Traversals?.Overall), Noggog.ExceptionExt.Combine(this.Traversals?.Specific, rhs.Traversals?.Specific));
+                ret.IslandData = this.IslandData.Combine(rhs.IslandData, (l, r) => l.Combine(r));
+                ret.PathingCell = this.PathingCell.Combine(rhs.PathingCell, (l, r) => l.Combine(r));
+                ret.UnknownByte = this.UnknownByte.Combine(rhs.UnknownByte);
+                ret.UnknownCrcs = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.UnknownCrcs?.Overall, rhs.UnknownCrcs?.Overall), Noggog.ExceptionExt.Combine(this.UnknownCrcs?.Specific, rhs.UnknownCrcs?.Specific));
                 ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 return ret;
             }
@@ -724,10 +1103,17 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool NavigationMesh;
-            public bool Data;
+            public bool Flags;
+            public bool ApproxLocation;
+            public bool PreferredPercent;
             public bool MergedTo;
             public bool PreferredMerges;
             public LinkedDoor.TranslationMask? LinkedDoors;
+            public NavmeshTraversal.TranslationMask? Traversals;
+            public NavmeshIslandData.TranslationMask? IslandData;
+            public NavmeshPathingCell.TranslationMask? PathingCell;
+            public bool UnknownByte;
+            public bool UnknownCrcs;
             public bool Unknown;
             #endregion
 
@@ -739,9 +1125,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.NavigationMesh = defaultOn;
-                this.Data = defaultOn;
+                this.Flags = defaultOn;
+                this.ApproxLocation = defaultOn;
+                this.PreferredPercent = defaultOn;
                 this.MergedTo = defaultOn;
                 this.PreferredMerges = defaultOn;
+                this.UnknownByte = defaultOn;
+                this.UnknownCrcs = defaultOn;
                 this.Unknown = defaultOn;
             }
 
@@ -759,10 +1149,17 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((NavigationMesh, null));
-                ret.Add((Data, null));
+                ret.Add((Flags, null));
+                ret.Add((ApproxLocation, null));
+                ret.Add((PreferredPercent, null));
                 ret.Add((MergedTo, null));
                 ret.Add((PreferredMerges, null));
                 ret.Add((LinkedDoors == null ? DefaultOn : !LinkedDoors.GetCrystal().CopyNothing, LinkedDoors?.GetCrystal()));
+                ret.Add((Traversals == null ? DefaultOn : !Traversals.GetCrystal().CopyNothing, Traversals?.GetCrystal()));
+                ret.Add((IslandData != null ? IslandData.OnOverall : DefaultOn, IslandData?.GetCrystal()));
+                ret.Add((PathingCell != null ? PathingCell.OnOverall : DefaultOn, PathingCell?.GetCrystal()));
+                ret.Add((UnknownByte, null));
+                ret.Add((UnknownCrcs, null));
                 ret.Add((Unknown, null));
             }
 
@@ -843,10 +1240,17 @@ namespace Mutagen.Bethesda.Starfield
         INavigationMapInfoGetter
     {
         new IFormLink<INavigationMeshGetter> NavigationMesh { get; set; }
-        new MemorySlice<Byte> Data { get; set; }
+        new NavigationMapInfo.Flag Flags { get; set; }
+        new P3Float ApproxLocation { get; set; }
+        new Single PreferredPercent { get; set; }
         new ExtendedList<IFormLinkGetter<INavigationMeshGetter>> MergedTo { get; }
         new ExtendedList<IFormLinkGetter<INavigationMeshGetter>> PreferredMerges { get; }
         new ExtendedList<LinkedDoor> LinkedDoors { get; }
+        new ExtendedList<NavmeshTraversal> Traversals { get; }
+        new NavmeshIslandData? IslandData { get; set; }
+        new NavmeshPathingCell PathingCell { get; set; }
+        new Byte UnknownByte { get; set; }
+        new ExtendedList<UInt32> UnknownCrcs { get; }
         new MemorySlice<Byte> Unknown { get; set; }
     }
 
@@ -864,10 +1268,17 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => NavigationMapInfo_Registration.Instance;
         IFormLinkGetter<INavigationMeshGetter> NavigationMesh { get; }
-        ReadOnlyMemorySlice<Byte> Data { get; }
+        NavigationMapInfo.Flag Flags { get; }
+        P3Float ApproxLocation { get; }
+        Single PreferredPercent { get; }
         IReadOnlyList<IFormLinkGetter<INavigationMeshGetter>> MergedTo { get; }
         IReadOnlyList<IFormLinkGetter<INavigationMeshGetter>> PreferredMerges { get; }
         IReadOnlyList<ILinkedDoorGetter> LinkedDoors { get; }
+        IReadOnlyList<INavmeshTraversalGetter> Traversals { get; }
+        INavmeshIslandDataGetter? IslandData { get; }
+        INavmeshPathingCellGetter PathingCell { get; }
+        Byte UnknownByte { get; }
+        IReadOnlyList<UInt32> UnknownCrcs { get; }
         ReadOnlyMemorySlice<Byte> Unknown { get; }
 
     }
@@ -1039,11 +1450,18 @@ namespace Mutagen.Bethesda.Starfield
     internal enum NavigationMapInfo_FieldIndex
     {
         NavigationMesh = 0,
-        Data = 1,
-        MergedTo = 2,
-        PreferredMerges = 3,
-        LinkedDoors = 4,
-        Unknown = 5,
+        Flags = 1,
+        ApproxLocation = 2,
+        PreferredPercent = 3,
+        MergedTo = 4,
+        PreferredMerges = 5,
+        LinkedDoors = 6,
+        Traversals = 7,
+        IslandData = 8,
+        PathingCell = 9,
+        UnknownByte = 10,
+        UnknownCrcs = 11,
+        Unknown = 12,
     }
     #endregion
 
@@ -1054,9 +1472,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 6;
+        public const ushort AdditionalFieldCount = 13;
 
-        public const ushort FieldCount = 6;
+        public const ushort FieldCount = 13;
 
         public static readonly Type MaskType = typeof(NavigationMapInfo.Mask<>);
 
@@ -1130,10 +1548,17 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.NavigationMesh.Clear();
-            item.Data = new byte[20];
+            item.Flags = default(NavigationMapInfo.Flag);
+            item.ApproxLocation = default(P3Float);
+            item.PreferredPercent = default(Single);
             item.MergedTo.Clear();
             item.PreferredMerges.Clear();
             item.LinkedDoors.Clear();
+            item.Traversals.Clear();
+            item.IslandData = null;
+            item.PathingCell.Clear();
+            item.UnknownByte = default(Byte);
+            item.UnknownCrcs.Clear();
             item.Unknown = [];
         }
         
@@ -1144,6 +1569,8 @@ namespace Mutagen.Bethesda.Starfield
             obj.MergedTo.RemapLinks(mapping);
             obj.PreferredMerges.RemapLinks(mapping);
             obj.LinkedDoors.RemapLinks(mapping);
+            obj.Traversals.RemapLinks(mapping);
+            obj.PathingCell.RemapLinks(mapping);
         }
         
         #endregion
@@ -1193,7 +1620,9 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.NavigationMesh = item.NavigationMesh.Equals(rhs.NavigationMesh);
-            ret.Data = MemoryExtensions.SequenceEqual(item.Data.Span, rhs.Data.Span);
+            ret.Flags = item.Flags == rhs.Flags;
+            ret.ApproxLocation = item.ApproxLocation.Equals(rhs.ApproxLocation);
+            ret.PreferredPercent = item.PreferredPercent.EqualsWithin(rhs.PreferredPercent);
             ret.MergedTo = item.MergedTo.CollectionEqualsHelper(
                 rhs.MergedTo,
                 (l, r) => object.Equals(l, r),
@@ -1205,6 +1634,21 @@ namespace Mutagen.Bethesda.Starfield
             ret.LinkedDoors = item.LinkedDoors.CollectionEqualsHelper(
                 rhs.LinkedDoors,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
+                include);
+            ret.Traversals = item.Traversals.CollectionEqualsHelper(
+                rhs.Traversals,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
+                include);
+            ret.IslandData = EqualsMaskHelper.EqualsHelper(
+                item.IslandData,
+                rhs.IslandData,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
+            ret.PathingCell = MaskItemExt.Factory(item.PathingCell.GetEqualsMask(rhs.PathingCell, include), include);
+            ret.UnknownByte = item.UnknownByte == rhs.UnknownByte;
+            ret.UnknownCrcs = item.UnknownCrcs.CollectionEqualsHelper(
+                rhs.UnknownCrcs,
+                (l, r) => l == r,
                 include);
             ret.Unknown = MemoryExtensions.SequenceEqual(item.Unknown.Span, rhs.Unknown.Span);
         }
@@ -1255,9 +1699,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.NavigationMesh.FormKey, "NavigationMesh");
             }
-            if (printMask?.Data ?? true)
+            if (printMask?.Flags ?? true)
             {
-                sb.AppendLine($"Data => {SpanExt.ToHexString(item.Data)}");
+                sb.AppendItem(item.Flags, "Flags");
+            }
+            if (printMask?.ApproxLocation ?? true)
+            {
+                sb.AppendItem(item.ApproxLocation, "ApproxLocation");
+            }
+            if (printMask?.PreferredPercent ?? true)
+            {
+                sb.AppendItem(item.PreferredPercent, "PreferredPercent");
             }
             if (printMask?.MergedTo?.Overall ?? true)
             {
@@ -1301,6 +1753,47 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
+            if (printMask?.Traversals?.Overall ?? true)
+            {
+                sb.AppendLine("Traversals =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in item.Traversals)
+                    {
+                        using (sb.Brace())
+                        {
+                            subItem?.Print(sb, "Item");
+                        }
+                    }
+                }
+            }
+            if ((printMask?.IslandData?.Overall ?? true)
+                && item.IslandData is {} IslandDataItem)
+            {
+                IslandDataItem?.Print(sb, "IslandData");
+            }
+            if (printMask?.PathingCell?.Overall ?? true)
+            {
+                item.PathingCell?.Print(sb, "PathingCell");
+            }
+            if (printMask?.UnknownByte ?? true)
+            {
+                sb.AppendItem(item.UnknownByte, "UnknownByte");
+            }
+            if (printMask?.UnknownCrcs?.Overall ?? true)
+            {
+                sb.AppendLine("UnknownCrcs =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in item.UnknownCrcs)
+                    {
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(subItem);
+                        }
+                    }
+                }
+            }
             if (printMask?.Unknown ?? true)
             {
                 sb.AppendLine($"Unknown => {SpanExt.ToHexString(item.Unknown)}");
@@ -1318,9 +1811,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.NavigationMesh.Equals(rhs.NavigationMesh)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.Data) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.Flags) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.Data.Span, rhs.Data.Span)) return false;
+                if (lhs.Flags != rhs.Flags) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.ApproxLocation) ?? true))
+            {
+                if (!lhs.ApproxLocation.Equals(rhs.ApproxLocation)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.PreferredPercent) ?? true))
+            {
+                if (!lhs.PreferredPercent.EqualsWithin(rhs.PreferredPercent)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.MergedTo) ?? true))
             {
@@ -1334,6 +1835,34 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.LinkedDoors.SequenceEqual(rhs.LinkedDoors, (l, r) => ((LinkedDoorCommon)((ILinkedDoorGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)NavigationMapInfo_FieldIndex.LinkedDoors)))) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.Traversals) ?? true))
+            {
+                if (!lhs.Traversals.SequenceEqual(rhs.Traversals, (l, r) => ((NavmeshTraversalCommon)((INavmeshTraversalGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)NavigationMapInfo_FieldIndex.Traversals)))) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.IslandData) ?? true))
+            {
+                if (EqualsMaskHelper.RefEquality(lhs.IslandData, rhs.IslandData, out var lhsIslandData, out var rhsIslandData, out var isIslandDataEqual))
+                {
+                    if (!((NavmeshIslandDataCommon)((INavmeshIslandDataGetter)lhsIslandData).CommonInstance()!).Equals(lhsIslandData, rhsIslandData, equalsMask?.GetSubCrystal((int)NavigationMapInfo_FieldIndex.IslandData))) return false;
+                }
+                else if (!isIslandDataEqual) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.PathingCell) ?? true))
+            {
+                if (EqualsMaskHelper.RefEquality(lhs.PathingCell, rhs.PathingCell, out var lhsPathingCell, out var rhsPathingCell, out var isPathingCellEqual))
+                {
+                    if (!((NavmeshPathingCellCommon)((INavmeshPathingCellGetter)lhsPathingCell).CommonInstance()!).Equals(lhsPathingCell, rhsPathingCell, equalsMask?.GetSubCrystal((int)NavigationMapInfo_FieldIndex.PathingCell))) return false;
+                }
+                else if (!isPathingCellEqual) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.UnknownByte) ?? true))
+            {
+                if (lhs.UnknownByte != rhs.UnknownByte) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.UnknownCrcs) ?? true))
+            {
+                if (!lhs.UnknownCrcs.SequenceEqualNullable(rhs.UnknownCrcs)) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.Unknown) ?? true))
             {
                 if (!MemoryExtensions.SequenceEqual(lhs.Unknown.Span, rhs.Unknown.Span)) return false;
@@ -1345,10 +1874,20 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.NavigationMesh);
-            hash.Add(item.Data);
+            hash.Add(item.Flags);
+            hash.Add(item.ApproxLocation);
+            hash.Add(item.PreferredPercent);
             hash.Add(item.MergedTo);
             hash.Add(item.PreferredMerges);
             hash.Add(item.LinkedDoors);
+            hash.Add(item.Traversals);
+            if (item.IslandData is {} IslandDataitem)
+            {
+                hash.Add(IslandDataitem);
+            }
+            hash.Add(item.PathingCell);
+            hash.Add(item.UnknownByte);
+            hash.Add(item.UnknownCrcs);
             hash.Add(item.Unknown);
             return hash.ToHashCode();
         }
@@ -1377,6 +1916,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return FormLinkInformation.Factory(item);
             }
+            foreach (var item in obj.Traversals.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+            {
+                yield return FormLinkInformation.Factory(item);
+            }
+            foreach (var item in obj.PathingCell.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
             yield break;
         }
         
@@ -1399,9 +1946,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.NavigationMesh.SetTo(rhs.NavigationMesh.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.Data) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.Flags) ?? true))
             {
-                item.Data = rhs.Data.ToArray();
+                item.Flags = rhs.Flags;
+            }
+            if ((copyMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.ApproxLocation) ?? true))
+            {
+                item.ApproxLocation = rhs.ApproxLocation;
+            }
+            if ((copyMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.PreferredPercent) ?? true))
+            {
+                item.PreferredPercent = rhs.PreferredPercent;
             }
             if ((copyMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.MergedTo) ?? true))
             {
@@ -1454,6 +2009,99 @@ namespace Mutagen.Bethesda.Starfield
                                 errorMask: errorMask,
                                 default(TranslationCrystal));
                         }));
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
+            }
+            if ((copyMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.Traversals) ?? true))
+            {
+                errorMask?.PushIndex((int)NavigationMapInfo_FieldIndex.Traversals);
+                try
+                {
+                    item.Traversals.SetTo(
+                        rhs.Traversals
+                        .Select(r =>
+                        {
+                            return r.DeepCopy(
+                                errorMask: errorMask,
+                                default(TranslationCrystal));
+                        }));
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
+            }
+            if ((copyMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.IslandData) ?? true))
+            {
+                errorMask?.PushIndex((int)NavigationMapInfo_FieldIndex.IslandData);
+                try
+                {
+                    if(rhs.IslandData is {} rhsIslandData)
+                    {
+                        item.IslandData = rhsIslandData.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)NavigationMapInfo_FieldIndex.IslandData));
+                    }
+                    else
+                    {
+                        item.IslandData = default;
+                    }
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
+            }
+            if ((copyMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.PathingCell) ?? true))
+            {
+                errorMask?.PushIndex((int)NavigationMapInfo_FieldIndex.PathingCell);
+                try
+                {
+                    if ((copyMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.PathingCell) ?? true))
+                    {
+                        item.PathingCell = rhs.PathingCell.DeepCopy(
+                            copyMask: copyMask?.GetSubCrystal((int)NavigationMapInfo_FieldIndex.PathingCell),
+                            errorMask: errorMask);
+                    }
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
+            }
+            if ((copyMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.UnknownByte) ?? true))
+            {
+                item.UnknownByte = rhs.UnknownByte;
+            }
+            if ((copyMask?.GetShouldTranslate((int)NavigationMapInfo_FieldIndex.UnknownCrcs) ?? true))
+            {
+                errorMask?.PushIndex((int)NavigationMapInfo_FieldIndex.UnknownCrcs);
+                try
+                {
+                    item.UnknownCrcs.SetTo(rhs.UnknownCrcs);
                 }
                 catch (Exception ex)
                 when (errorMask != null)
@@ -1580,9 +2228,16 @@ namespace Mutagen.Bethesda.Starfield
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.NavigationMesh);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            EnumBinaryTranslation<NavigationMapInfo.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.Flags,
+                length: 4);
+            P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Data);
+                item: item.ApproxLocation);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.PreferredPercent);
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<INavigationMeshGetter>>.Instance.Write(
                 writer: writer,
                 items: item.MergedTo,
@@ -1615,9 +2270,37 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<INavmeshTraversalGetter>.Instance.Write(
+                writer: writer,
+                items: item.Traversals,
+                countLengthLength: 4,
+                transl: (MutagenWriter subWriter, INavmeshTraversalGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((NavmeshTraversalBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
+            NavigationMapInfoBinaryWriteTranslation.WriteBinaryIslandAndPathingLogic(
+                writer: writer,
+                item: item);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.Unknown);
+        }
+
+        public static partial void WriteBinaryIslandAndPathingLogicCustom(
+            MutagenWriter writer,
+            INavigationMapInfoGetter item);
+
+        public static void WriteBinaryIslandAndPathingLogic(
+            MutagenWriter writer,
+            INavigationMapInfoGetter item)
+        {
+            WriteBinaryIslandAndPathingLogicCustom(
+                writer: writer,
+                item: item);
         }
 
         public void Write(
@@ -1659,7 +2342,11 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.NavigationMesh.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.Data = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(20));
+            item.Flags = EnumBinaryTranslation<NavigationMapInfo.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                length: 4);
+            item.ApproxLocation = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.PreferredPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.MergedTo.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<INavigationMeshGetter>>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
@@ -1675,8 +2362,20 @@ namespace Mutagen.Bethesda.Starfield
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: LinkedDoor.TryCreateFromBinary));
+            item.Traversals.SetTo(
+                Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshTraversal>.Instance.Parse(
+                    amount: checked((int)frame.ReadUInt32()),
+                    reader: frame,
+                    transl: NavmeshTraversal.TryCreateFromBinary));
+            NavigationMapInfoBinaryCreateTranslation.FillBinaryIslandAndPathingLogicCustom(
+                frame: frame,
+                item: item);
             item.Unknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
         }
+
+        public static partial void FillBinaryIslandAndPathingLogicCustom(
+            MutagenFrame frame,
+            INavigationMapInfo item);
 
     }
 
@@ -1743,7 +2442,9 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public IFormLinkGetter<INavigationMeshGetter> NavigationMesh => FormLinkBinaryTranslation.Instance.OverlayFactory<INavigationMeshGetter>(_package, _structData.Span.Slice(0x0, 0x4));
-        public ReadOnlyMemorySlice<Byte> Data => _structData.Span.Slice(0x4, 0x14).ToArray();
+        public NavigationMapInfo.Flag Flags => (NavigationMapInfo.Flag)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x4, 0x4));
+        public P3Float ApproxLocation => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x8, 0xC));
+        public Single PreferredPercent => _structData.Slice(0x14, 0x4).Float();
         #region MergedTo
         public IReadOnlyList<IFormLinkGetter<INavigationMeshGetter>> MergedTo => BinaryOverlayList.FactoryByCountLength<IFormLinkGetter<INavigationMeshGetter>>(_structData.Slice(0x18), _package, 4, countLength: 4, (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<INavigationMeshGetter>(p, s));
         protected int MergedToEndingPos;
@@ -1756,8 +2457,18 @@ namespace Mutagen.Bethesda.Starfield
         public IReadOnlyList<ILinkedDoorGetter> LinkedDoors => BinaryOverlayList.FactoryByCountLength<ILinkedDoorGetter>(_structData.Slice(PreferredMergesEndingPos), _package, 8, countLength: 4, (s, p) => LinkedDoorBinaryOverlay.LinkedDoorFactory(s, p));
         protected int LinkedDoorsEndingPos;
         #endregion
+        #region Traversals
+        public IReadOnlyList<INavmeshTraversalGetter> Traversals => BinaryOverlayList.FactoryByCountLength<INavmeshTraversalGetter>(_structData.Slice(LinkedDoorsEndingPos), _package, 60, countLength: 4, (s, p) => NavmeshTraversalBinaryOverlay.NavmeshTraversalFactory(s, p));
+        protected int TraversalsEndingPos;
+        #endregion
+        #region IslandAndPathingLogic
+        partial void IslandAndPathingLogicCustomParse(
+            OverlayStream stream,
+            int offset);
+        protected int IslandAndPathingLogicEndingPos;
+        #endregion
         #region Unknown
-        public ReadOnlyMemorySlice<Byte> Unknown => _structData.Span.Slice(LinkedDoorsEndingPos).ToArray();
+        public ReadOnlyMemorySlice<Byte> Unknown => _structData.Span.Slice(IslandAndPathingLogicEndingPos).ToArray();
         protected int UnknownEndingPos;
         #endregion
         partial void CustomFactoryEnd(
@@ -1783,6 +2494,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.MergedToEndingPos = 0x18 + BinaryPrimitives.ReadInt32LittleEndian(ret._structData.Slice(0x18)) * 4 + 4;
             ret.PreferredMergesEndingPos = ret.MergedToEndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._structData.Slice(ret.MergedToEndingPos)) * 4 + 4;
             ret.LinkedDoorsEndingPos = ret.PreferredMergesEndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._structData.Slice(ret.PreferredMergesEndingPos)) * 8 + 4;
+            ret.TraversalsEndingPos = ret.LinkedDoorsEndingPos + BinaryPrimitives.ReadInt32LittleEndian(ret._structData.Slice(ret.LinkedDoorsEndingPos)) * 60 + 4;
         }
 
         public static INavigationMapInfoGetter NavigationMapInfoFactory(

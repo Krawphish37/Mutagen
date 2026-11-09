@@ -6397,6 +6397,9 @@
     <Compile Include="Records\Major Records\NavigationMeshInfoMap_Generated.cs">
       <DependentUpon>NavigationMeshInfoMap.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\NavigationMapInfo.cs">
+      <DependentUpon>NavigationMeshInfoMap.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\NavigationMapInfo_Generated.cs">
       <DependentUpon>NavigationMeshInfoMap.xml</DependentUpon>
     </Compile>
@@ -6906,6 +6909,15 @@
     </Compile>
     <Compile Include="Records\Major Records\LegendaryItemLnamEntry_Generated.cs">
       <DependentUpon>LegendaryItem.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\NavmeshTraversal_Generated.cs">
+      <DependentUpon>NavigationMeshInfoMap.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\NavmeshIslandData_Generated.cs">
+      <DependentUpon>NavigationMeshInfoMap.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\NavmeshPathingCell_Generated.cs">
+      <DependentUpon>NavigationMeshInfoMap.xml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
