@@ -51,11 +51,11 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region First
-        public UInt32 First { get; set; } = default(UInt32);
+        #region X
+        public UInt32 X { get; set; } = default(UInt32);
         #endregion
-        #region Second
-        public UInt32 Second { get; set; } = default(UInt32);
+        #region Y
+        public UInt32 Y { get; set; } = default(UInt32);
         #endregion
 
         #region To String
@@ -96,16 +96,16 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.First = initialValue;
-                this.Second = initialValue;
+                this.X = initialValue;
+                this.Y = initialValue;
             }
 
             public Mask(
-                TItem First,
-                TItem Second)
+                TItem X,
+                TItem Y)
             {
-                this.First = First;
-                this.Second = Second;
+                this.X = X;
+                this.Y = Y;
             }
 
             #pragma warning disable CS8618
@@ -117,8 +117,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem First;
-            public TItem Second;
+            public TItem X;
+            public TItem Y;
             #endregion
 
             #region Equals
@@ -131,15 +131,15 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.First, rhs.First)) return false;
-                if (!object.Equals(this.Second, rhs.Second)) return false;
+                if (!object.Equals(this.X, rhs.X)) return false;
+                if (!object.Equals(this.Y, rhs.Y)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.First);
-                hash.Add(this.Second);
+                hash.Add(this.X);
+                hash.Add(this.Y);
                 return hash.ToHashCode();
             }
 
@@ -148,8 +148,8 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.First)) return false;
-                if (!eval(this.Second)) return false;
+                if (!eval(this.X)) return false;
+                if (!eval(this.Y)) return false;
                 return true;
             }
             #endregion
@@ -157,8 +157,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.First)) return true;
-                if (eval(this.Second)) return true;
+                if (eval(this.X)) return true;
+                if (eval(this.Y)) return true;
                 return false;
             }
             #endregion
@@ -173,8 +173,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.First = eval(this.First);
-                obj.Second = eval(this.Second);
+                obj.X = eval(this.X);
+                obj.Y = eval(this.Y);
             }
             #endregion
 
@@ -193,13 +193,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(SurfaceBlockIntItem.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.First ?? true)
+                    if (printMask?.X ?? true)
                     {
-                        sb.AppendItem(First, "First");
+                        sb.AppendItem(X, "X");
                     }
-                    if (printMask?.Second ?? true)
+                    if (printMask?.Y ?? true)
                     {
-                        sb.AppendItem(Second, "Second");
+                        sb.AppendItem(Y, "Y");
                     }
                 }
             }
@@ -225,8 +225,8 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? First;
-            public Exception? Second;
+            public Exception? X;
+            public Exception? Y;
             #endregion
 
             #region IErrorMask
@@ -235,10 +235,10 @@ namespace Mutagen.Bethesda.Starfield
                 SurfaceBlockIntItem_FieldIndex enu = (SurfaceBlockIntItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case SurfaceBlockIntItem_FieldIndex.First:
-                        return First;
-                    case SurfaceBlockIntItem_FieldIndex.Second:
-                        return Second;
+                    case SurfaceBlockIntItem_FieldIndex.X:
+                        return X;
+                    case SurfaceBlockIntItem_FieldIndex.Y:
+                        return Y;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -249,11 +249,11 @@ namespace Mutagen.Bethesda.Starfield
                 SurfaceBlockIntItem_FieldIndex enu = (SurfaceBlockIntItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case SurfaceBlockIntItem_FieldIndex.First:
-                        this.First = ex;
+                    case SurfaceBlockIntItem_FieldIndex.X:
+                        this.X = ex;
                         break;
-                    case SurfaceBlockIntItem_FieldIndex.Second:
-                        this.Second = ex;
+                    case SurfaceBlockIntItem_FieldIndex.Y:
+                        this.Y = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -265,11 +265,11 @@ namespace Mutagen.Bethesda.Starfield
                 SurfaceBlockIntItem_FieldIndex enu = (SurfaceBlockIntItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case SurfaceBlockIntItem_FieldIndex.First:
-                        this.First = (Exception?)obj;
+                    case SurfaceBlockIntItem_FieldIndex.X:
+                        this.X = (Exception?)obj;
                         break;
-                    case SurfaceBlockIntItem_FieldIndex.Second:
-                        this.Second = (Exception?)obj;
+                    case SurfaceBlockIntItem_FieldIndex.Y:
+                        this.Y = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -279,8 +279,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (First != null) return true;
-                if (Second != null) return true;
+                if (X != null) return true;
+                if (Y != null) return true;
                 return false;
             }
             #endregion
@@ -307,10 +307,10 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(First, "First");
+                    sb.AppendItem(X, "X");
                 }
                 {
-                    sb.AppendItem(Second, "Second");
+                    sb.AppendItem(Y, "Y");
                 }
             }
             #endregion
@@ -320,8 +320,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.First = this.First.Combine(rhs.First);
-                ret.Second = this.Second.Combine(rhs.Second);
+                ret.X = this.X.Combine(rhs.X);
+                ret.Y = this.Y.Combine(rhs.Y);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -345,8 +345,8 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool First;
-            public bool Second;
+            public bool X;
+            public bool Y;
             #endregion
 
             #region Ctors
@@ -356,8 +356,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.First = defaultOn;
-                this.Second = defaultOn;
+                this.X = defaultOn;
+                this.Y = defaultOn;
             }
 
             #endregion
@@ -373,8 +373,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((First, null));
-                ret.Add((Second, null));
+                ret.Add((X, null));
+                ret.Add((Y, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -447,8 +447,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<ISurfaceBlockIntItem>,
         ISurfaceBlockIntItemGetter
     {
-        new UInt32 First { get; set; }
-        new UInt32 Second { get; set; }
+        new UInt32 X { get; set; }
+        new UInt32 Y { get; set; }
     }
 
     public partial interface ISurfaceBlockIntItemGetter :
@@ -463,8 +463,8 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => SurfaceBlockIntItem_Registration.Instance;
-        UInt32 First { get; }
-        UInt32 Second { get; }
+        UInt32 X { get; }
+        UInt32 Y { get; }
 
     }
 
@@ -634,8 +634,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum SurfaceBlockIntItem_FieldIndex
     {
-        First = 0,
-        Second = 1,
+        X = 0,
+        Y = 1,
     }
     #endregion
 
@@ -714,8 +714,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ISurfaceBlockIntItem item)
         {
             ClearPartial();
-            item.First = default(UInt32);
-            item.Second = default(UInt32);
+            item.X = default(UInt32);
+            item.Y = default(UInt32);
         }
         
         #region Mutagen
@@ -765,8 +765,8 @@ namespace Mutagen.Bethesda.Starfield
             SurfaceBlockIntItem.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.First = item.First == rhs.First;
-            ret.Second = item.Second == rhs.Second;
+            ret.X = item.X == rhs.X;
+            ret.Y = item.Y == rhs.Y;
         }
         
         public string Print(
@@ -811,13 +811,13 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             SurfaceBlockIntItem.Mask<bool>? printMask = null)
         {
-            if (printMask?.First ?? true)
+            if (printMask?.X ?? true)
             {
-                sb.AppendItem(item.First, "First");
+                sb.AppendItem(item.X, "X");
             }
-            if (printMask?.Second ?? true)
+            if (printMask?.Y ?? true)
             {
-                sb.AppendItem(item.Second, "Second");
+                sb.AppendItem(item.Y, "Y");
             }
         }
         
@@ -828,13 +828,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)SurfaceBlockIntItem_FieldIndex.First) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SurfaceBlockIntItem_FieldIndex.X) ?? true))
             {
-                if (lhs.First != rhs.First) return false;
+                if (lhs.X != rhs.X) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SurfaceBlockIntItem_FieldIndex.Second) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SurfaceBlockIntItem_FieldIndex.Y) ?? true))
             {
-                if (lhs.Second != rhs.Second) return false;
+                if (lhs.Y != rhs.Y) return false;
             }
             return true;
         }
@@ -842,8 +842,8 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ISurfaceBlockIntItemGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.First);
-            hash.Add(item.Second);
+            hash.Add(item.X);
+            hash.Add(item.Y);
             return hash.ToHashCode();
         }
         
@@ -876,13 +876,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)SurfaceBlockIntItem_FieldIndex.First) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SurfaceBlockIntItem_FieldIndex.X) ?? true))
             {
-                item.First = rhs.First;
+                item.X = rhs.X;
             }
-            if ((copyMask?.GetShouldTranslate((int)SurfaceBlockIntItem_FieldIndex.Second) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SurfaceBlockIntItem_FieldIndex.Y) ?? true))
             {
-                item.Second = rhs.Second;
+                item.Y = rhs.Y;
             }
             DeepCopyInCustom(
                 item: item,
@@ -992,8 +992,8 @@ namespace Mutagen.Bethesda.Starfield
             ISurfaceBlockIntItemGetter item,
             MutagenWriter writer)
         {
-            writer.Write(item.First);
-            writer.Write(item.Second);
+            writer.Write(item.X);
+            writer.Write(item.Y);
         }
 
         public void Write(
@@ -1027,8 +1027,8 @@ namespace Mutagen.Bethesda.Starfield
             ISurfaceBlockIntItem item,
             MutagenFrame frame)
         {
-            item.First = frame.ReadUInt32();
-            item.Second = frame.ReadUInt32();
+            item.X = frame.ReadUInt32();
+            item.Y = frame.ReadUInt32();
         }
 
     }
@@ -1094,8 +1094,8 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public UInt32 First => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x0, 0x4));
-        public UInt32 Second => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x4, 0x4));
+        public UInt32 X => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x0, 0x4));
+        public UInt32 Y => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x4, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

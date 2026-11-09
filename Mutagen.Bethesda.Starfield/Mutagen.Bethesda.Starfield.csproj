@@ -2590,6 +2590,9 @@
     <Compile Include="Records\Major Records\TalkingActivator.cs">
       <DependentUpon>TalkingActivator.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\SurfaceBlock.cs">
+      <DependentUpon>SurfaceBlock.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\TeleportDestination.cs">
       <DependentUpon>PlacedObject.xml</DependentUpon>
     </Compile>
