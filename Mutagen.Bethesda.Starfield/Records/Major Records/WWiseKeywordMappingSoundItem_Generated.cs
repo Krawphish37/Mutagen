@@ -58,17 +58,17 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ISoundReferenceGetter IWWiseKeywordMappingSoundItemGetter.Sound => Sound;
         #endregion
-        #region GuidPairs
+        #region SwitchData
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<WWiseKeywordMappingSoundItemGuidPair> _GuidPairs = new ExtendedList<WWiseKeywordMappingSoundItemGuidPair>();
-        public ExtendedList<WWiseKeywordMappingSoundItemGuidPair> GuidPairs
+        private ExtendedList<WWiseKeywordMappingSoundItemGuidPair> _SwitchData = new ExtendedList<WWiseKeywordMappingSoundItemGuidPair>();
+        public ExtendedList<WWiseKeywordMappingSoundItemGuidPair> SwitchData
         {
-            get => this._GuidPairs;
-            init => this._GuidPairs = value;
+            get => this._SwitchData;
+            init => this._SwitchData = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<IWWiseKeywordMappingSoundItemGuidPairGetter> IWWiseKeywordMappingSoundItemGetter.GuidPairs => _GuidPairs;
+        IReadOnlyList<IWWiseKeywordMappingSoundItemGuidPairGetter> IWWiseKeywordMappingSoundItemGetter.SwitchData => _SwitchData;
         #endregion
 
         #endregion
@@ -112,15 +112,15 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
-                this.GuidPairs = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WWiseKeywordMappingSoundItemGuidPair.Mask<TItem>?>>?>(initialValue, []);
+                this.SwitchData = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WWiseKeywordMappingSoundItemGuidPair.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
                 TItem Sound,
-                TItem GuidPairs)
+                TItem SwitchData)
             {
                 this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Sound, new SoundReference.Mask<TItem>(Sound));
-                this.GuidPairs = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WWiseKeywordMappingSoundItemGuidPair.Mask<TItem>?>>?>(GuidPairs, []);
+                this.SwitchData = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WWiseKeywordMappingSoundItemGuidPair.Mask<TItem>?>>?>(SwitchData, []);
             }
 
             #pragma warning disable CS8618
@@ -133,7 +133,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? Sound { get; set; }
-            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WWiseKeywordMappingSoundItemGuidPair.Mask<TItem>?>>?>? GuidPairs;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WWiseKeywordMappingSoundItemGuidPair.Mask<TItem>?>>?>? SwitchData;
             #endregion
 
             #region Equals
@@ -147,14 +147,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.Sound, rhs.Sound)) return false;
-                if (!object.Equals(this.GuidPairs, rhs.GuidPairs)) return false;
+                if (!object.Equals(this.SwitchData, rhs.SwitchData)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.Sound);
-                hash.Add(this.GuidPairs);
+                hash.Add(this.SwitchData);
                 return hash.ToHashCode();
             }
 
@@ -168,12 +168,12 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.Sound.Overall)) return false;
                     if (this.Sound.Specific != null && !this.Sound.Specific.All(eval)) return false;
                 }
-                if (this.GuidPairs != null)
+                if (this.SwitchData != null)
                 {
-                    if (!eval(this.GuidPairs.Overall)) return false;
-                    if (this.GuidPairs.Specific != null)
+                    if (!eval(this.SwitchData.Overall)) return false;
+                    if (this.SwitchData.Specific != null)
                     {
-                        foreach (var item in this.GuidPairs.Specific)
+                        foreach (var item in this.SwitchData.Specific)
                         {
                             if (!eval(item.Overall)) return false;
                             if (item.Specific != null && !item.Specific.All(eval)) return false;
@@ -192,12 +192,12 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.Sound.Overall)) return true;
                     if (this.Sound.Specific != null && this.Sound.Specific.Any(eval)) return true;
                 }
-                if (this.GuidPairs != null)
+                if (this.SwitchData != null)
                 {
-                    if (eval(this.GuidPairs.Overall)) return true;
-                    if (this.GuidPairs.Specific != null)
+                    if (eval(this.SwitchData.Overall)) return true;
+                    if (this.SwitchData.Specific != null)
                     {
-                        foreach (var item in this.GuidPairs.Specific)
+                        foreach (var item in this.SwitchData.Specific)
                         {
                             if (!eval(item.Overall)) return false;
                             if (item.Specific != null && !item.Specific.All(eval)) return false;
@@ -219,14 +219,14 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.Sound = this.Sound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
-                if (GuidPairs != null)
+                if (SwitchData != null)
                 {
-                    obj.GuidPairs = new MaskItem<R, IEnumerable<MaskItemIndexed<R, WWiseKeywordMappingSoundItemGuidPair.Mask<R>?>>?>(eval(this.GuidPairs.Overall), []);
-                    if (GuidPairs.Specific != null)
+                    obj.SwitchData = new MaskItem<R, IEnumerable<MaskItemIndexed<R, WWiseKeywordMappingSoundItemGuidPair.Mask<R>?>>?>(eval(this.SwitchData.Overall), []);
+                    if (SwitchData.Specific != null)
                     {
                         var l = new List<MaskItemIndexed<R, WWiseKeywordMappingSoundItemGuidPair.Mask<R>?>>();
-                        obj.GuidPairs.Specific = l;
-                        foreach (var item in GuidPairs.Specific)
+                        obj.SwitchData.Specific = l;
+                        foreach (var item in SwitchData.Specific)
                         {
                             MaskItemIndexed<R, WWiseKeywordMappingSoundItemGuidPair.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, WWiseKeywordMappingSoundItemGuidPair.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
                             if (mask == null) continue;
@@ -256,16 +256,16 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         Sound?.Print(sb);
                     }
-                    if ((printMask?.GuidPairs?.Overall ?? true)
-                        && GuidPairs is {} GuidPairsItem)
+                    if ((printMask?.SwitchData?.Overall ?? true)
+                        && SwitchData is {} SwitchDataItem)
                     {
-                        sb.AppendLine("GuidPairs =>");
+                        sb.AppendLine("SwitchData =>");
                         using (sb.Brace())
                         {
-                            sb.AppendItem(GuidPairsItem.Overall);
-                            if (GuidPairsItem.Specific != null)
+                            sb.AppendItem(SwitchDataItem.Overall);
+                            if (SwitchDataItem.Specific != null)
                             {
-                                foreach (var subItem in GuidPairsItem.Specific)
+                                foreach (var subItem in SwitchDataItem.Specific)
                                 {
                                     using (sb.Brace())
                                     {
@@ -300,7 +300,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public MaskItem<Exception?, SoundReference.ErrorMask?>? Sound;
-            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WWiseKeywordMappingSoundItemGuidPair.ErrorMask?>>?>? GuidPairs;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WWiseKeywordMappingSoundItemGuidPair.ErrorMask?>>?>? SwitchData;
             #endregion
 
             #region IErrorMask
@@ -311,8 +311,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case WWiseKeywordMappingSoundItem_FieldIndex.Sound:
                         return Sound;
-                    case WWiseKeywordMappingSoundItem_FieldIndex.GuidPairs:
-                        return GuidPairs;
+                    case WWiseKeywordMappingSoundItem_FieldIndex.SwitchData:
+                        return SwitchData;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -326,8 +326,8 @@ namespace Mutagen.Bethesda.Starfield
                     case WWiseKeywordMappingSoundItem_FieldIndex.Sound:
                         this.Sound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
-                    case WWiseKeywordMappingSoundItem_FieldIndex.GuidPairs:
-                        this.GuidPairs = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WWiseKeywordMappingSoundItemGuidPair.ErrorMask?>>?>(ex, null);
+                    case WWiseKeywordMappingSoundItem_FieldIndex.SwitchData:
+                        this.SwitchData = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WWiseKeywordMappingSoundItemGuidPair.ErrorMask?>>?>(ex, null);
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -342,8 +342,8 @@ namespace Mutagen.Bethesda.Starfield
                     case WWiseKeywordMappingSoundItem_FieldIndex.Sound:
                         this.Sound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
-                    case WWiseKeywordMappingSoundItem_FieldIndex.GuidPairs:
-                        this.GuidPairs = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WWiseKeywordMappingSoundItemGuidPair.ErrorMask?>>?>)obj;
+                    case WWiseKeywordMappingSoundItem_FieldIndex.SwitchData:
+                        this.SwitchData = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WWiseKeywordMappingSoundItemGuidPair.ErrorMask?>>?>)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -354,7 +354,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Sound != null) return true;
-                if (GuidPairs != null) return true;
+                if (SwitchData != null) return true;
                 return false;
             }
             #endregion
@@ -381,15 +381,15 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 Sound?.Print(sb);
-                if (GuidPairs is {} GuidPairsItem)
+                if (SwitchData is {} SwitchDataItem)
                 {
-                    sb.AppendLine("GuidPairs =>");
+                    sb.AppendLine("SwitchData =>");
                     using (sb.Brace())
                     {
-                        sb.AppendItem(GuidPairsItem.Overall);
-                        if (GuidPairsItem.Specific != null)
+                        sb.AppendItem(SwitchDataItem.Overall);
+                        if (SwitchDataItem.Specific != null)
                         {
-                            foreach (var subItem in GuidPairsItem.Specific)
+                            foreach (var subItem in SwitchDataItem.Specific)
                             {
                                 using (sb.Brace())
                                 {
@@ -408,7 +408,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
-                ret.GuidPairs = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WWiseKeywordMappingSoundItemGuidPair.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.GuidPairs?.Overall, rhs.GuidPairs?.Overall), Noggog.ExceptionExt.Combine(this.GuidPairs?.Specific, rhs.GuidPairs?.Specific));
+                ret.SwitchData = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WWiseKeywordMappingSoundItemGuidPair.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.SwitchData?.Overall, rhs.SwitchData?.Overall), Noggog.ExceptionExt.Combine(this.SwitchData?.Specific, rhs.SwitchData?.Specific));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -433,7 +433,7 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public SoundReference.TranslationMask? Sound;
-            public WWiseKeywordMappingSoundItemGuidPair.TranslationMask? GuidPairs;
+            public WWiseKeywordMappingSoundItemGuidPair.TranslationMask? SwitchData;
             #endregion
 
             #region Ctors
@@ -459,7 +459,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
-                ret.Add((GuidPairs == null ? DefaultOn : !GuidPairs.GetCrystal().CopyNothing, GuidPairs?.GetCrystal()));
+                ret.Add((SwitchData == null ? DefaultOn : !SwitchData.GetCrystal().CopyNothing, SwitchData?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -539,7 +539,7 @@ namespace Mutagen.Bethesda.Starfield
         IWWiseKeywordMappingSoundItemGetter
     {
         new SoundReference Sound { get; set; }
-        new ExtendedList<WWiseKeywordMappingSoundItemGuidPair> GuidPairs { get; }
+        new ExtendedList<WWiseKeywordMappingSoundItemGuidPair> SwitchData { get; }
     }
 
     public partial interface IWWiseKeywordMappingSoundItemGetter :
@@ -556,7 +556,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => WWiseKeywordMappingSoundItem_Registration.Instance;
         ISoundReferenceGetter Sound { get; }
-        IReadOnlyList<IWWiseKeywordMappingSoundItemGuidPairGetter> GuidPairs { get; }
+        IReadOnlyList<IWWiseKeywordMappingSoundItemGuidPairGetter> SwitchData { get; }
 
     }
 
@@ -727,7 +727,7 @@ namespace Mutagen.Bethesda.Starfield
     internal enum WWiseKeywordMappingSoundItem_FieldIndex
     {
         Sound = 0,
-        GuidPairs = 1,
+        SwitchData = 1,
     }
     #endregion
 
@@ -814,7 +814,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Sound.Clear();
-            item.GuidPairs.Clear();
+            item.SwitchData.Clear();
         }
         
         #region Mutagen
@@ -870,8 +870,8 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Sound = MaskItemExt.Factory(item.Sound.GetEqualsMask(rhs.Sound, include), include);
-            ret.GuidPairs = item.GuidPairs.CollectionEqualsHelper(
-                rhs.GuidPairs,
+            ret.SwitchData = item.SwitchData.CollectionEqualsHelper(
+                rhs.SwitchData,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
         }
@@ -922,12 +922,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Sound?.Print(sb, "Sound");
             }
-            if (printMask?.GuidPairs?.Overall ?? true)
+            if (printMask?.SwitchData?.Overall ?? true)
             {
-                sb.AppendLine("GuidPairs =>");
+                sb.AppendLine("SwitchData =>");
                 using (sb.Brace())
                 {
-                    foreach (var subItem in item.GuidPairs)
+                    foreach (var subItem in item.SwitchData)
                     {
                         using (sb.Brace())
                         {
@@ -953,9 +953,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isSoundEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)WWiseKeywordMappingSoundItem_FieldIndex.GuidPairs) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)WWiseKeywordMappingSoundItem_FieldIndex.SwitchData) ?? true))
             {
-                if (!lhs.GuidPairs.SequenceEqual(rhs.GuidPairs, (l, r) => ((WWiseKeywordMappingSoundItemGuidPairCommon)((IWWiseKeywordMappingSoundItemGuidPairGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)WWiseKeywordMappingSoundItem_FieldIndex.GuidPairs)))) return false;
+                if (!lhs.SwitchData.SequenceEqual(rhs.SwitchData, (l, r) => ((WWiseKeywordMappingSoundItemGuidPairCommon)((IWWiseKeywordMappingSoundItemGuidPairGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)WWiseKeywordMappingSoundItem_FieldIndex.SwitchData)))) return false;
             }
             return true;
         }
@@ -964,7 +964,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Sound);
-            hash.Add(item.GuidPairs);
+            hash.Add(item.SwitchData);
             return hash.ToHashCode();
         }
         
@@ -1023,13 +1023,13 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)WWiseKeywordMappingSoundItem_FieldIndex.GuidPairs) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)WWiseKeywordMappingSoundItem_FieldIndex.SwitchData) ?? true))
             {
-                errorMask?.PushIndex((int)WWiseKeywordMappingSoundItem_FieldIndex.GuidPairs);
+                errorMask?.PushIndex((int)WWiseKeywordMappingSoundItem_FieldIndex.SwitchData);
                 try
                 {
-                    item.GuidPairs.SetTo(
-                        rhs.GuidPairs
+                    item.SwitchData.SetTo(
+                        rhs.SwitchData
                         .Select(r =>
                         {
                             return r.DeepCopy(
@@ -1161,7 +1161,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer);
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IWWiseKeywordMappingSoundItemGuidPairGetter>.Instance.Write(
                 writer: writer,
-                items: item.GuidPairs,
+                items: item.SwitchData,
                 countLengthLength: 4,
                 transl: (MutagenWriter subWriter, IWWiseKeywordMappingSoundItemGuidPairGetter subItem, TypedWriteParams conv) =>
                 {
@@ -1212,7 +1212,7 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
-            item.GuidPairs.SetTo(
+            item.SwitchData.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<WWiseKeywordMappingSoundItemGuidPair>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
@@ -1284,9 +1284,9 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public ISoundReferenceGetter Sound => SoundReferenceBinaryOverlay.SoundReferenceFactory(_structData, _package, default(TypedParseParams));
-        #region GuidPairs
-        public IReadOnlyList<IWWiseKeywordMappingSoundItemGuidPairGetter> GuidPairs => BinaryOverlayList.FactoryByCountLength<IWWiseKeywordMappingSoundItemGuidPairGetter>(_structData.Slice(0x28), _package, 32, countLength: 4, (s, p) => WWiseKeywordMappingSoundItemGuidPairBinaryOverlay.WWiseKeywordMappingSoundItemGuidPairFactory(s, p));
-        protected int GuidPairsEndingPos;
+        #region SwitchData
+        public IReadOnlyList<IWWiseKeywordMappingSoundItemGuidPairGetter> SwitchData => BinaryOverlayList.FactoryByCountLength<IWWiseKeywordMappingSoundItemGuidPairGetter>(_structData.Slice(0x28), _package, 32, countLength: 4, (s, p) => WWiseKeywordMappingSoundItemGuidPairBinaryOverlay.WWiseKeywordMappingSoundItemGuidPairFactory(s, p));
+        protected int SwitchDataEndingPos;
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1308,7 +1308,7 @@ namespace Mutagen.Bethesda.Starfield
             WWiseKeywordMappingSoundItemBinaryOverlay ret,
             BinaryOverlayFactoryPackage package)
         {
-            ret.GuidPairsEndingPos = 0x28 + BinaryPrimitives.ReadInt32LittleEndian(ret._structData.Slice(0x28)) * 32 + 4;
+            ret.SwitchDataEndingPos = 0x28 + BinaryPrimitives.ReadInt32LittleEndian(ret._structData.Slice(0x28)) * 32 + 4;
         }
 
         public static IWWiseKeywordMappingSoundItemGetter WWiseKeywordMappingSoundItemFactory(
