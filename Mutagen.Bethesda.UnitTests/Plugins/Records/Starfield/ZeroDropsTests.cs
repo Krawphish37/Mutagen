@@ -124,6 +124,58 @@ public class ZeroDropsTests
     }
 
     [Fact]
+    public void DeletedReference_KeepsItsBaseObject()
+    {
+        // As in Starfield.esm: a deleted REFR whose only content is its base object
+        var bytes = Record("REFR", 0x20, Subrecord("NAME", 0x08, 0xF8, 0x03, 0x00));
+        foreach (var placed in ReadPlaced(bytes))
+        {
+            placed.IsDeleted.ShouldBeTrue();
+            placed.Base.FormKey.ID.ShouldBe(0x03F808u);
+            Write(w => placed.WriteToBinary(w)).ShouldBe(bytes);
+        }
+    }
+
+    [Fact]
+    public void DeletedReference_WithNoData_StaysWithout()
+    {
+        var bytes = Record("REFR", 0x20, Subrecord("NAME", 0, 8, 0, 0));
+        foreach (var placed in ReadPlaced(bytes))
+        {
+            placed.HasPlacementData.ShouldBeFalse();
+            Has(Write(w => placed.WriteToBinary(w)), RecordTypes.DATA).ShouldBeFalse();
+        }
+    }
+
+    [Fact]
+    public void DeletedReference_WithStoredZeros_KeepsThem()
+    {
+        var bytes = Record("REFR", 0x20, Subrecord("NAME", 0, 8, 0, 0), Subrecord("DATA", new byte[24]));
+        foreach (var placed in ReadPlaced(bytes))
+        {
+            placed.HasPlacementData.ShouldBeTrue();
+            Has(Write(w => placed.WriteToBinary(w)), RecordTypes.DATA).ShouldBeTrue();
+        }
+    }
+
+    [Fact]
+    public void DeletedNpcReference_WithNoData_StaysWithout()
+    {
+        var bytes = Record("ACHR", 0x20, Subrecord("NAME", 0, 8, 0, 0));
+        var meta = Meta();
+        IPlacedNpcGetter[] placed =
+        [
+            PlacedNpc.CreateFromBinary(new MutagenFrame(new MutagenMemoryReadStream(bytes, Meta()))),
+            PlacedNpcBinaryOverlay.PlacedNpcFactory(new OverlayStream(bytes, meta), new BinaryOverlayFactoryPackage(meta)),
+        ];
+        foreach (var item in placed)
+        {
+            item.HasPlacementData.ShouldBeFalse();
+            Has(Write(w => item.WriteToBinary(w)), RecordTypes.DATA).ShouldBeFalse();
+        }
+    }
+
+    [Fact]
     public void NewReference_StillGetsData()
     {
         var placed = new PlacedObject(new FormKey(TestModKey, 0x800), StarfieldRelease.Starfield);
