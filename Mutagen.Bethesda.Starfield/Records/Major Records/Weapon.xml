@@ -80,7 +80,18 @@
           <Enum name="MeleeDetectionSoundLevel" enumName="SoundLevel" byteLength="4" />
         </Fields>
       </Data>
-      <ByteArray name="WTUR" recordType="WTUR" unknown="true" />
+      <Data recordType="WTUR" >
+        <Fields>
+          <Bool name="TurretEnabled" byteLength="1" />
+          <Float name="TurretHeadingMin" />
+          <Float name="TurretHeadingMax" />
+          <Float name="TurretPitchMin" />
+          <Float name="TurretPitchMax" />
+          <Float name="TurretHeadingSpeed" />
+          <Float name="TurretPitchSpeed" />
+          <Float name="TurretAccuracy" />
+        </Fields>
+      </Data>
       <Data recordType="WCHG" >
         <Fields>
           <Float name="ChargeFullPowerSeconds" />
