@@ -118,7 +118,7 @@ namespace Mutagen.Bethesda.Starfield
         public Boolean Geostationary { get; set; } = default(Boolean);
         #endregion
         #region RandomSeed
-        public Int32 RandomSeed { get; set; } = default(Int32);
+        public UInt32 RandomSeed { get; set; } = default(UInt32);
         #endregion
         #region Rings
         public Boolean Rings { get; set; } = default(Boolean);
@@ -1195,7 +1195,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single YearLengthInDays { get; set; }
         new UInt32 Asteroids { get; set; }
         new Boolean Geostationary { get; set; }
-        new Int32 RandomSeed { get; set; }
+        new UInt32 RandomSeed { get; set; }
         new Boolean Rings { get; set; }
     }
 
@@ -1233,7 +1233,7 @@ namespace Mutagen.Bethesda.Starfield
         Single YearLengthInDays { get; }
         UInt32 Asteroids { get; }
         Boolean Geostationary { get; }
-        Int32 RandomSeed { get; }
+        UInt32 RandomSeed { get; }
         Boolean Rings { get; }
 
     }
@@ -1535,7 +1535,7 @@ namespace Mutagen.Bethesda.Starfield
             item.YearLengthInDays = default(Single);
             item.Asteroids = default(UInt32);
             item.Geostationary = default(Boolean);
-            item.RandomSeed = default(Int32);
+            item.RandomSeed = default(UInt32);
             item.Rings = default(Boolean);
         }
         
@@ -2277,7 +2277,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Geostationary = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                 reader: frame,
                 byteLength: 4);
-            item.RandomSeed = frame.ReadInt32();
+            item.RandomSeed = frame.ReadUInt32();
             item.Rings = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                 reader: frame,
                 byteLength: 4);
@@ -2392,7 +2392,7 @@ namespace Mutagen.Bethesda.Starfield
         public Single YearLengthInDays => _structData.Slice(SpecialEndingPos + 0x30, 0x4).Float();
         public UInt32 Asteroids => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(SpecialEndingPos + 0x34, 0x4));
         public Boolean Geostationary => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(SpecialEndingPos + 0x38, 0x4)) >= 1;
-        public Int32 RandomSeed => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(SpecialEndingPos + 0x3C, 0x4));
+        public UInt32 RandomSeed => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(SpecialEndingPos + 0x3C, 0x4));
         public Boolean Rings => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(SpecialEndingPos + 0x40, 0x4)) >= 1;
         partial void CustomFactoryEnd(
             OverlayStream stream,

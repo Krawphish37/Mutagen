@@ -87,9 +87,9 @@
   <Object name="PlanetModelComponentXMPMSubItem" objType="Subrecord">
     <Fields>
       <String name="ResourceID" binaryType="PrependLengthUShort" />
-      <Int32 name="FileHash" />
+      <UInt32 name="FileHash" />
       <String name="Extension" binaryType="NullTerminate" />
-      <Int32 name="FolderHash" />
+      <UInt32 name="FolderHash" />
     </Fields>
   </Object>
   <Object name="HoudiniDataComponent" objType="Subrecord" baseClass="AComponent">

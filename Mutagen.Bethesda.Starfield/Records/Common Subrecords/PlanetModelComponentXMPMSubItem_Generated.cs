@@ -55,13 +55,13 @@ namespace Mutagen.Bethesda.Starfield
         public String ResourceID { get; set; } = string.Empty;
         #endregion
         #region FileHash
-        public Int32 FileHash { get; set; } = default(Int32);
+        public UInt32 FileHash { get; set; } = default(UInt32);
         #endregion
         #region Extension
         public String Extension { get; set; } = string.Empty;
         #endregion
         #region FolderHash
-        public Int32 FolderHash { get; set; } = default(Int32);
+        public UInt32 FolderHash { get; set; } = default(UInt32);
         #endregion
 
         #region To String
@@ -514,9 +514,9 @@ namespace Mutagen.Bethesda.Starfield
         IPlanetModelComponentXMPMSubItemGetter
     {
         new String ResourceID { get; set; }
-        new Int32 FileHash { get; set; }
+        new UInt32 FileHash { get; set; }
         new String Extension { get; set; }
-        new Int32 FolderHash { get; set; }
+        new UInt32 FolderHash { get; set; }
     }
 
     public partial interface IPlanetModelComponentXMPMSubItemGetter :
@@ -532,9 +532,9 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => PlanetModelComponentXMPMSubItem_Registration.Instance;
         String ResourceID { get; }
-        Int32 FileHash { get; }
+        UInt32 FileHash { get; }
         String Extension { get; }
-        Int32 FolderHash { get; }
+        UInt32 FolderHash { get; }
 
     }
 
@@ -787,9 +787,9 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.ResourceID = string.Empty;
-            item.FileHash = default(Int32);
+            item.FileHash = default(UInt32);
             item.Extension = string.Empty;
-            item.FolderHash = default(Int32);
+            item.FolderHash = default(UInt32);
         }
         
         #region Mutagen
@@ -1141,12 +1141,12 @@ namespace Mutagen.Bethesda.Starfield
                 reader: frame,
                 stringBinaryType: StringBinaryType.PrependLengthUShort,
                 parseWhole: true);
-            item.FileHash = frame.ReadInt32();
+            item.FileHash = frame.ReadUInt32();
             item.Extension = StringBinaryTranslation.Instance.Parse(
                 reader: frame,
                 stringBinaryType: StringBinaryType.NullTerminate,
                 parseWhole: false);
-            item.FolderHash = frame.ReadInt32();
+            item.FolderHash = frame.ReadUInt32();
         }
 
     }
@@ -1216,12 +1216,12 @@ namespace Mutagen.Bethesda.Starfield
         public String ResourceID => BinaryStringUtility.ParsePrependedString(_structData.Slice(0x0), lengthLength: 2, encoding: _package.MetaData.Encodings.NonTranslated);
         protected int ResourceIDEndingPos;
         #endregion
-        public Int32 FileHash => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(ResourceIDEndingPos, 0x4));
+        public UInt32 FileHash => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(ResourceIDEndingPos, 0x4));
         #region Extension
         public String Extension { get; private set; } = string.Empty;
         protected int ExtensionEndingPos;
         #endregion
-        public Int32 FolderHash => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(ExtensionEndingPos, 0x4));
+        public UInt32 FolderHash => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(ExtensionEndingPos, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
