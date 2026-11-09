@@ -191,6 +191,11 @@ public class DataBinaryTranslationGeneration : BinaryTranslationGeneration
         {
             sb.AppendLine($"this.{dataType.StateName} = {objGen.ObjectName}.{dataType.EnumName}.Has;");
         }
+        if (await NeedsInlineEndingPositions(objGen, dataType))
+        {
+            await GenerateInlineEndingPositionsAndBreaks(sb, objGen, dataType, locationAccessor);
+            return;
+        }
         bool generatedStart = false;
         var lengths = await this.Module.IteratePassedLengths(
                 objGen,
@@ -296,6 +301,9 @@ public class DataBinaryTranslationGeneration : BinaryTranslationGeneration
         DataType? data = null)
     {
         var dataType = typeGen as DataType;
+        // A data block whose breaks depend on end positions computes them in its record type parse instead
+        // (GenerateInlineEndingPositionsAndBreaks), where the break checks need them.
+        if (dataType != null && await NeedsInlineEndingPositions(objGen, dataType)) return;
         var lengths = await this.Module.IteratePassedLengths(
                 objGen,
                 dataType.SubFields,
@@ -323,50 +331,154 @@ public class DataBinaryTranslationGeneration : BinaryTranslationGeneration
     {
         foreach (var field in dataType.IterateFieldsWithMeta())
         {
-            if (!this.Module.TryGetTypeGeneration(field.Field.GetType(), out var subTypeGen)) continue;
-            var fieldData = field.Field.GetFieldData();
-            switch (fieldData.BinaryOverlayFallback)
-            {
-                case BinaryGenerationType.Normal:
-                case BinaryGenerationType.Custom:
-                    break;
-                default:
-                    continue;
-            }
-            if (fieldData.HasTrigger) continue;
-            var amount = await subTypeGen.GetPassedAmount(objGen, field.Field);
-            if (amount != null) continue;
-            if (field.Field is CustomLogic) continue;
-            switch (fieldData.BinaryOverlayFallback)
-            {
-                case BinaryGenerationType.Custom:
-                    sb.AppendLine($"ret.Custom{field.Field.Name}EndPos();");
-                    break;
-                case BinaryGenerationType.NoGeneration:
-                    break;
-                case BinaryGenerationType.Normal:
-                    var length = lengths.FirstOrDefault(l => l.Field == field.Field);
-                    if (length.Field == null)
-                    {
-                        throw new ArgumentException();
-                    }
+            await GenerateFieldEndingPosition(sb, objGen, dataType, field.Field, lengths, dataAccessor);
+        }
+    }
 
-                    var passedLenForField = length.PassedAccessor;
-                    if (length.PassedType == BinaryTranslationModule.PassedType.Direct)
-                    {
-                        passedLenForField =
-                            $"ret._{dataType.GetFieldData().RecordType}Location!.Value.{nameof(RangeInt32.Min)}{(passedLenForField.IsNullOrWhitespace() ? null : $" + {passedLenForField}")}";
-                    }
-                    
-                    await subTypeGen.GenerateWrapperUnknownLengthParse(
-                        sb,
-                        objGen,
-                        field.Field,
-                        dataAccessor,
-                        length.PassedLength,
-                        passedLenForField,
-                        data: dataType);
-                    break;
+    private async Task GenerateFieldEndingPosition(
+        StructuredStringBuilder sb,
+        ObjectGeneration objGen,
+        DataType dataType,
+        TypeGeneration field,
+        List<BinaryTranslationModule.PassedLengths> lengths,
+        Accessor dataAccessor)
+    {
+        if (!this.Module.TryGetTypeGeneration(field.GetType(), out var subTypeGen)) return;
+        var fieldData = field.GetFieldData();
+        switch (fieldData.BinaryOverlayFallback)
+        {
+            case BinaryGenerationType.Normal:
+            case BinaryGenerationType.Custom:
+                break;
+            default:
+                return;
+        }
+        if (fieldData.HasTrigger) return;
+        var amount = await subTypeGen.GetPassedAmount(objGen, field);
+        if (amount != null) return;
+        if (field is CustomLogic) return;
+        switch (fieldData.BinaryOverlayFallback)
+        {
+            case BinaryGenerationType.Custom:
+                sb.AppendLine($"ret.Custom{field.Name}EndPos();");
+                break;
+            case BinaryGenerationType.NoGeneration:
+                break;
+            case BinaryGenerationType.Normal:
+                var length = lengths.FirstOrDefault(l => l.Field == field);
+                if (length.Field == null)
+                {
+                    throw new ArgumentException();
+                }
+
+                var passedLenForField = length.PassedAccessor;
+                if (length.PassedType == BinaryTranslationModule.PassedType.Direct)
+                {
+                    passedLenForField =
+                        $"ret._{dataType.GetFieldData().RecordType}Location!.Value.{nameof(RangeInt32.Min)}{(passedLenForField.IsNullOrWhitespace() ? null : $" + {passedLenForField}")}";
+                }
+
+                await subTypeGen.GenerateWrapperUnknownLengthParse(
+                    sb,
+                    objGen,
+                    field,
+                    dataAccessor,
+                    length.PassedLength,
+                    passedLenForField,
+                    data: dataType);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// True when a break in the data block comes after a field of unknown length.  Its break check then needs the end
+    /// positions of the fields before it, which the factory only computes after the record types are parsed, so this
+    /// data block computes them itself, where the checks are.
+    /// </summary>
+    public async Task<bool> NeedsInlineEndingPositions(ObjectGeneration objGen, DataType dataType)
+    {
+        if (!dataType.IterateFieldsWithMeta().Any(f => f.BreakIndex != -1)) return false;
+        var lengths = await this.Module.IteratePassedLengths(
+                objGen,
+                dataType.SubFields,
+                forOverlay: true)
+            .ToListAsync();
+        foreach (var item in dataType.IterateFieldsWithMeta())
+        {
+            if (item.BreakIndex == -1) continue;
+            var length = lengths.FirstOrDefault(l => l.Field == item.Field);
+            if (length.Field != null && length.PassedType == BinaryTranslationModule.PassedType.Relative) return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Record type parse for a data block that needs inline end positions: computes the end positions in field order,
+    /// checks each break against the position inside the subrecord, and skips the end positions after a break that
+    /// fired, so nothing reads past a short subrecord
+    /// </summary>
+    private async Task GenerateInlineEndingPositionsAndBreaks(
+        StructuredStringBuilder sb,
+        ObjectGeneration objGen,
+        DataType dataType,
+        Accessor locationAccessor)
+    {
+        var locationName = $"_{dataType.GetFieldData().RecordType}Location";
+        sb.AppendLine($"var subLen = _package.{nameof(BinaryOverlayFactoryPackage.MetaData)}.{nameof(ParsingMeta.Constants)}.SubrecordHeader(_recordData.Slice({locationAccessor})).ContentLength;");
+        // The end position code is shared with the factory, which writes it against "ret" and "package"
+        sb.AppendLine("var ret = this;");
+        sb.AppendLine("var package = _package;");
+        var lengths = await this.Module.IteratePassedLengths(
+                objGen,
+                dataType.SubFields,
+                passedLenPrefix: "ret.",
+                forOverlay: true)
+            .ToListAsync();
+        var openGuards = new Stack<IDisposable>();
+        var pendingBreaks = new List<int>();
+        foreach (var item in dataType.IterateFieldsWithMeta())
+        {
+            if (!this.Module.TryGetTypeGeneration(item.Field.GetType(), out _)) continue;
+            var length = lengths.FirstOrDefault(l => l.Field == item.Field);
+            if (length.Field == null)
+            {
+                throw new ArgumentException();
+            }
+            if (item.BreakIndex != -1)
+            {
+                // A relative length is a position in the record data; the subrecord length counts from its start
+                var limit = length.PassedType == BinaryTranslationModule.PassedType.Relative
+                    ? $"{length.PassedAccessor} - {locationName}!.Value.{nameof(RangeInt32.Min)}"
+                    : length.PassedAccessor;
+                sb.AppendLine($"if (subLen <= {limit})");
+                using (sb.CurlyBrace())
+                {
+                    sb.AppendLine($"this.{dataType.StateName} |= {objGen.ObjectName}.{dataType.EnumName}.Break{item.BreakIndex};");
+                }
+                pendingBreaks.Add(item.BreakIndex);
+            }
+            var fieldSb = new StructuredStringBuilder();
+            await GenerateFieldEndingPosition(fieldSb, objGen, dataType, item.Field, lengths, new Accessor("_recordData"));
+            if (fieldSb.Count == 0) continue;
+            foreach (var breakIndex in pendingBreaks)
+            {
+                sb.AppendLine($"if (!this.{dataType.StateName}.HasFlag({objGen.ObjectName}.{dataType.EnumName}.Break{breakIndex}))");
+                openGuards.Push(sb.CurlyBrace());
+            }
+            pendingBreaks.Clear();
+            sb.AppendLines(fieldSb);
+        }
+        while (openGuards.Count > 0)
+        {
+            openGuards.Pop().Dispose();
+        }
+        for (int i = 0; i < dataType.RangeIndices.Count; i++)
+        {
+            var range = dataType.RangeIndices[i];
+            sb.AppendLine($"if (subLen > {range.DataSetSizeMin})");
+            using (sb.CurlyBrace())
+            {
+                sb.AppendLine($"this.{dataType.StateName} |= {objGen.ObjectName}.{dataType.EnumName}.Range{i};");
             }
         }
     }

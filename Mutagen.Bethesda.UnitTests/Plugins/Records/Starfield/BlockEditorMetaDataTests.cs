@@ -12,7 +12,7 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield;
 
 // The block editor meta data component (SFBK DAT2), per xEdit: Created Time, Source Type (1 byte), Also Created Time,
 // Source Editor ID, a counted list of 5-byte items (4 + 1), Location X, Location Y, Planet System ID, Satellite ID,
-// then Longitude and Latitude as doubles (kept raw for now, see C59). Mutagen read the items as Int32s, so every field after them was shifted by
+// then Longitude and Latitude as doubles (optional: Breaks). Mutagen read the items as Int32s, so every field after them was shifted by
 // the item count (Location X = 1 read as 256 on 410 of 471 SFBK). In Starfield.esm 470 blocks end with the 2 doubles
 // and one (2990F9, an old record) has only 8 bytes after the 4 Int32s.
 public class BlockEditorMetaDataTests
@@ -58,7 +58,9 @@ public class BlockEditorMetaDataTests
             meta.LocationY.ShouldBe(1);
             meta.PlanetSystemId.ShouldBe(-1);
             meta.SatelliteId.ShouldBe(-1);
-            meta.LongitudeLatitude.Length.ShouldBe(16); // two doubles, both 0 here
+            meta.Longitude.ShouldBe(0d);
+            meta.Latitude.ShouldBe(0d);
+            meta.DAT2DataTypeState.ShouldBe((BlockEditorMetaDataComponent.DAT2DataType)0);
         }
     }
 
@@ -82,7 +84,11 @@ public class BlockEditorMetaDataTests
             meta.UnknownItems.Count.ShouldBe(4);
             meta.LocationX.ShouldBe(7);
             meta.LocationY.ShouldBe(7);
-            meta.LongitudeLatitude.Length.ShouldBe(8);
+            // Only 8 bytes after the Int32s: Longitude is read, the second Break fires and Latitude is unset
+            meta.DAT2DataTypeState.HasFlag(BlockEditorMetaDataComponent.DAT2DataType.Break0).ShouldBeFalse();
+            meta.DAT2DataTypeState.HasFlag(BlockEditorMetaDataComponent.DAT2DataType.Break1).ShouldBeTrue();
+            meta.Longitude.ShouldBe(0d);
+            meta.Latitude.ShouldBe(0d);
         }
     }
 
