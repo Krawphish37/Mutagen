@@ -8,10 +8,11 @@
           <Enum name="FeatureType" byteLength="1" enumName="PhotoModeFeature.Mode" />
           <Float name="XOffset" />
           <Float name="YOffset" />
-          <Int64 name="UnknownFNAM1" />
-          <UInt32 name="Width" />
-          <UInt32 name="Height" />
-          <UInt32 name="UnknownFNAM2" />
+          <UInt32 name="TextureWidth" />
+          <UInt32 name="TextureHeight" />
+          <UInt32 name="ContentWidth" />
+          <UInt32 name="ContentHeight" />
+          <Enum name="Flags" enumName="PhotoModeFeature.Flag" byteLength="4" />
         </Fields>
       </Data>
       <String name="Texture" recordType="HNAM" />
