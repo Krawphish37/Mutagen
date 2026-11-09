@@ -9,7 +9,8 @@
       <RefDirect name="Model" refName="Model" />
       <CustomLogic name="DataParse" recordType="DATA" />
       <UInt16 name="Unknown" binary="NoGeneration" />
-      <UInt16 name="Unknown2" binary="NoGeneration" />
+      <UInt8 name="MaxRank" binary="NoGeneration" />
+      <UInt8 name="LevelTierScaledOffset" binary="NoGeneration" />
       <FormLink name="AttachPoint" refName="Keyword" binary="NoGeneration" />
       <List name="AttachParentSlots" binary="NoGeneration">
         <FormLink refName="Keyword" />

@@ -112,7 +112,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Description,
                 TItem Model,
                 TItem Unknown,
-                TItem Unknown2,
+                TItem MaxRank,
+                TItem LevelTierScaledOffset,
                 TItem AttachPoint,
                 TItem AttachParentSlots,
                 TItem Unknown3,
@@ -137,7 +138,8 @@ namespace Mutagen.Bethesda.Starfield
                 Description: Description,
                 Model: Model,
                 Unknown: Unknown,
-                Unknown2: Unknown2,
+                MaxRank: MaxRank,
+                LevelTierScaledOffset: LevelTierScaledOffset,
                 AttachPoint: AttachPoint,
                 AttachParentSlots: AttachParentSlots,
                 Unknown3: Unknown3,
@@ -804,17 +806,18 @@ namespace Mutagen.Bethesda.Starfield
         Description = 10,
         Model = 11,
         Unknown = 12,
-        Unknown2 = 13,
-        AttachPoint = 14,
-        AttachParentSlots = 15,
-        Unknown3 = 16,
-        Includes = 17,
-        TargetOmodKeywords = 18,
-        FilterKeywords = 19,
-        LooseMod = 20,
-        Priority = 21,
-        Filter = 22,
-        Properties = 23,
+        MaxRank = 13,
+        LevelTierScaledOffset = 14,
+        AttachPoint = 15,
+        AttachParentSlots = 16,
+        Unknown3 = 17,
+        Includes = 18,
+        TargetOmodKeywords = 19,
+        FilterKeywords = 20,
+        LooseMod = 21,
+        Priority = 22,
+        Filter = 23,
+        Properties = 24,
     }
     #endregion
 
@@ -827,7 +830,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 24;
+        public const ushort FieldCount = 25;
 
         public static readonly Type MaskType = typeof(FloraModification.Mask<>);
 
@@ -1101,7 +1104,9 @@ namespace Mutagen.Bethesda.Starfield
                     return (FloraModification_FieldIndex)((int)index);
                 case AObjectModification_FieldIndex.Unknown:
                     return (FloraModification_FieldIndex)((int)index);
-                case AObjectModification_FieldIndex.Unknown2:
+                case AObjectModification_FieldIndex.MaxRank:
+                    return (FloraModification_FieldIndex)((int)index);
+                case AObjectModification_FieldIndex.LevelTierScaledOffset:
                     return (FloraModification_FieldIndex)((int)index);
                 case AObjectModification_FieldIndex.AttachPoint:
                     return (FloraModification_FieldIndex)((int)index);

@@ -98,7 +98,8 @@ partial class AObjectModificationBinaryCreateTranslation
         var propertyCount = frame.ReadInt32();
         item.Unknown = frame.ReadUInt16();
         var dataName = StringBinaryTranslation.Instance.Parse(frame, StringBinaryType.PrependLengthWithNullIfContent, parseWhole: true);
-        item.Unknown2 = frame.ReadUInt16();
+        item.MaxRank = frame.ReadUInt8();
+        item.LevelTierScaledOffset = frame.ReadUInt8();
         item.AttachPoint.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
         item.AttachParentSlots.SetTo(
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
@@ -225,7 +226,8 @@ partial class AObjectModificationBinaryWriteTranslation
             throw new NotImplementedException();
         }
         StringBinaryTranslation.Instance.Write(writer, dataName, StringBinaryType.PrependLengthWithNullIfContent);
-        writer.Write(item.Unknown2);
+        writer.Write(item.MaxRank);
+        writer.Write(item.LevelTierScaledOffset);
         FormLinkBinaryTranslation.Instance.Write(
             writer: writer,
             item: item.AttachPoint);
@@ -263,13 +265,14 @@ partial class AObjectModificationBinaryOverlay
     private int AttachSlotsStart => StringEnd + 6;
     private int AttachSlotsEnd => 4 + AttachSlotsStart + AttachParentSlots.Count * 4;
     public ushort Unknown => BinaryPrimitives.ReadUInt16LittleEndian(_dataBytes.Slice(0x8, 2));
-    public ushort Unknown2 => BinaryPrimitives.ReadUInt16LittleEndian(_dataBytes.Slice(StringEnd));
-    public string DataName => StringBinaryTranslation.Instance.Parse(_dataBytes.Slice(10, StringLen), 
+    public string DataName => StringBinaryTranslation.Instance.Parse(_dataBytes.Slice(10, StringLen),
         _package.MetaData.Encodings.NonTranslated, parseWhole: true);
 
-    public byte MaxRank => _dataBytes[0xE];
+    // The two bytes right after the target name (xEdit: Max Rank, Level Tier Scaled Offset). Fallout 4's fixed
+    // offsets 0xE and 0xF fall inside Starfield's target name string.
+    public byte MaxRank => _dataBytes[StringEnd];
 
-    public byte LevelTierScaledOffset => _dataBytes[0xF];
+    public byte LevelTierScaledOffset => _dataBytes[StringEnd + 1];
 
     public IFormLinkGetter<IKeywordGetter> AttachPoint => FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _dataBytes.Slice(StringEnd + 2, 0x4));
 

@@ -158,8 +158,11 @@ namespace Mutagen.Bethesda.Starfield
         #region Unknown
         public UInt16 Unknown { get; set; } = default(UInt16);
         #endregion
-        #region Unknown2
-        public UInt16 Unknown2 { get; set; } = default(UInt16);
+        #region MaxRank
+        public Byte MaxRank { get; set; } = default(Byte);
+        #endregion
+        #region LevelTierScaledOffset
+        public Byte LevelTierScaledOffset { get; set; } = default(Byte);
         #endregion
         #region AttachPoint
         private readonly IFormLink<IKeywordGetter> _AttachPoint = new FormLink<IKeywordGetter>();
@@ -281,7 +284,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Description = initialValue;
                 this.Model = new MaskItem<TItem, Model.Mask<TItem>?>(initialValue, new Model.Mask<TItem>(initialValue));
                 this.Unknown = initialValue;
-                this.Unknown2 = initialValue;
+                this.MaxRank = initialValue;
+                this.LevelTierScaledOffset = initialValue;
                 this.AttachPoint = initialValue;
                 this.AttachParentSlots = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.Unknown3 = initialValue;
@@ -307,7 +311,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Description,
                 TItem Model,
                 TItem Unknown,
-                TItem Unknown2,
+                TItem MaxRank,
+                TItem LevelTierScaledOffset,
                 TItem AttachPoint,
                 TItem AttachParentSlots,
                 TItem Unknown3,
@@ -332,7 +337,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Description = Description;
                 this.Model = new MaskItem<TItem, Model.Mask<TItem>?>(Model, new Model.Mask<TItem>(Model));
                 this.Unknown = Unknown;
-                this.Unknown2 = Unknown2;
+                this.MaxRank = MaxRank;
+                this.LevelTierScaledOffset = LevelTierScaledOffset;
                 this.AttachPoint = AttachPoint;
                 this.AttachParentSlots = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(AttachParentSlots, []);
                 this.Unknown3 = Unknown3;
@@ -359,7 +365,8 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Description;
             public MaskItem<TItem, Model.Mask<TItem>?>? Model { get; set; }
             public TItem Unknown;
-            public TItem Unknown2;
+            public TItem MaxRank;
+            public TItem LevelTierScaledOffset;
             public TItem AttachPoint;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? AttachParentSlots;
             public TItem Unknown3;
@@ -388,7 +395,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Description, rhs.Description)) return false;
                 if (!object.Equals(this.Model, rhs.Model)) return false;
                 if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.MaxRank, rhs.MaxRank)) return false;
+                if (!object.Equals(this.LevelTierScaledOffset, rhs.LevelTierScaledOffset)) return false;
                 if (!object.Equals(this.AttachPoint, rhs.AttachPoint)) return false;
                 if (!object.Equals(this.AttachParentSlots, rhs.AttachParentSlots)) return false;
                 if (!object.Equals(this.Unknown3, rhs.Unknown3)) return false;
@@ -409,7 +417,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Description);
                 hash.Add(this.Model);
                 hash.Add(this.Unknown);
-                hash.Add(this.Unknown2);
+                hash.Add(this.MaxRank);
+                hash.Add(this.LevelTierScaledOffset);
                 hash.Add(this.AttachPoint);
                 hash.Add(this.AttachParentSlots);
                 hash.Add(this.Unknown3);
@@ -454,7 +463,8 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.Model.Specific != null && !this.Model.Specific.All(eval)) return false;
                 }
                 if (!eval(this.Unknown)) return false;
-                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.MaxRank)) return false;
+                if (!eval(this.LevelTierScaledOffset)) return false;
                 if (!eval(this.AttachPoint)) return false;
                 if (this.AttachParentSlots != null)
                 {
@@ -538,7 +548,8 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.Model.Specific != null && this.Model.Specific.Any(eval)) return true;
                 }
                 if (eval(this.Unknown)) return true;
-                if (eval(this.Unknown2)) return true;
+                if (eval(this.MaxRank)) return true;
+                if (eval(this.LevelTierScaledOffset)) return true;
                 if (eval(this.AttachPoint)) return true;
                 if (this.AttachParentSlots != null)
                 {
@@ -624,7 +635,8 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Description = eval(this.Description);
                 obj.Model = this.Model == null ? null : new MaskItem<R, Model.Mask<R>?>(eval(this.Model.Overall), this.Model.Specific?.Translate(eval));
                 obj.Unknown = eval(this.Unknown);
-                obj.Unknown2 = eval(this.Unknown2);
+                obj.MaxRank = eval(this.MaxRank);
+                obj.LevelTierScaledOffset = eval(this.LevelTierScaledOffset);
                 obj.AttachPoint = eval(this.AttachPoint);
                 if (AttachParentSlots != null)
                 {
@@ -744,9 +756,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Unknown, "Unknown");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.MaxRank ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(MaxRank, "MaxRank");
+                    }
+                    if (printMask?.LevelTierScaledOffset ?? true)
+                    {
+                        sb.AppendItem(LevelTierScaledOffset, "LevelTierScaledOffset");
                     }
                     if (printMask?.AttachPoint ?? true)
                     {
@@ -867,7 +883,8 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Description;
             public MaskItem<Exception?, Model.ErrorMask?>? Model;
             public Exception? Unknown;
-            public Exception? Unknown2;
+            public Exception? MaxRank;
+            public Exception? LevelTierScaledOffset;
             public Exception? AttachPoint;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? AttachParentSlots;
             public Exception? Unknown3;
@@ -897,8 +914,10 @@ namespace Mutagen.Bethesda.Starfield
                         return Model;
                     case AObjectModification_FieldIndex.Unknown:
                         return Unknown;
-                    case AObjectModification_FieldIndex.Unknown2:
-                        return Unknown2;
+                    case AObjectModification_FieldIndex.MaxRank:
+                        return MaxRank;
+                    case AObjectModification_FieldIndex.LevelTierScaledOffset:
+                        return LevelTierScaledOffset;
                     case AObjectModification_FieldIndex.AttachPoint:
                         return AttachPoint;
                     case AObjectModification_FieldIndex.AttachParentSlots:
@@ -945,8 +964,11 @@ namespace Mutagen.Bethesda.Starfield
                     case AObjectModification_FieldIndex.Unknown:
                         this.Unknown = ex;
                         break;
-                    case AObjectModification_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case AObjectModification_FieldIndex.MaxRank:
+                        this.MaxRank = ex;
+                        break;
+                    case AObjectModification_FieldIndex.LevelTierScaledOffset:
+                        this.LevelTierScaledOffset = ex;
                         break;
                     case AObjectModification_FieldIndex.AttachPoint:
                         this.AttachPoint = ex;
@@ -1004,8 +1026,11 @@ namespace Mutagen.Bethesda.Starfield
                     case AObjectModification_FieldIndex.Unknown:
                         this.Unknown = (Exception?)obj;
                         break;
-                    case AObjectModification_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case AObjectModification_FieldIndex.MaxRank:
+                        this.MaxRank = (Exception?)obj;
+                        break;
+                    case AObjectModification_FieldIndex.LevelTierScaledOffset:
+                        this.LevelTierScaledOffset = (Exception?)obj;
                         break;
                     case AObjectModification_FieldIndex.AttachPoint:
                         this.AttachPoint = (Exception?)obj;
@@ -1049,7 +1074,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (Description != null) return true;
                 if (Model != null) return true;
                 if (Unknown != null) return true;
-                if (Unknown2 != null) return true;
+                if (MaxRank != null) return true;
+                if (LevelTierScaledOffset != null) return true;
                 if (AttachPoint != null) return true;
                 if (AttachParentSlots != null) return true;
                 if (Unknown3 != null) return true;
@@ -1115,7 +1141,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Unknown, "Unknown");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(MaxRank, "MaxRank");
+                }
+                {
+                    sb.AppendItem(LevelTierScaledOffset, "LevelTierScaledOffset");
                 }
                 {
                     sb.AppendItem(AttachPoint, "AttachPoint");
@@ -1224,7 +1253,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Description = this.Description.Combine(rhs.Description);
                 ret.Model = this.Model.Combine(rhs.Model, (l, r) => l.Combine(r));
                 ret.Unknown = this.Unknown.Combine(rhs.Unknown);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.MaxRank = this.MaxRank.Combine(rhs.MaxRank);
+                ret.LevelTierScaledOffset = this.LevelTierScaledOffset.Combine(rhs.LevelTierScaledOffset);
                 ret.AttachPoint = this.AttachPoint.Combine(rhs.AttachPoint);
                 ret.AttachParentSlots = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.AttachParentSlots?.Overall, rhs.AttachParentSlots?.Overall), Noggog.ExceptionExt.Combine(this.AttachParentSlots?.Specific, rhs.AttachParentSlots?.Specific));
                 ret.Unknown3 = this.Unknown3.Combine(rhs.Unknown3);
@@ -1262,7 +1292,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool Description;
             public Model.TranslationMask? Model;
             public bool Unknown;
-            public bool Unknown2;
+            public bool MaxRank;
+            public bool LevelTierScaledOffset;
             public bool AttachPoint;
             public bool AttachParentSlots;
             public bool Unknown3;
@@ -1283,7 +1314,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Name = defaultOn;
                 this.Description = defaultOn;
                 this.Unknown = defaultOn;
-                this.Unknown2 = defaultOn;
+                this.MaxRank = defaultOn;
+                this.LevelTierScaledOffset = defaultOn;
                 this.AttachPoint = defaultOn;
                 this.AttachParentSlots = defaultOn;
                 this.Unknown3 = defaultOn;
@@ -1305,7 +1337,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Description, null));
                 ret.Add((Model != null ? Model.OnOverall : DefaultOn, Model?.GetCrystal()));
                 ret.Add((Unknown, null));
-                ret.Add((Unknown2, null));
+                ret.Add((MaxRank, null));
+                ret.Add((LevelTierScaledOffset, null));
                 ret.Add((AttachPoint, null));
                 ret.Add((AttachParentSlots, null));
                 ret.Add((Unknown3, null));
@@ -1471,7 +1504,8 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         new Model? Model { get; set; }
         new UInt16 Unknown { get; set; }
-        new UInt16 Unknown2 { get; set; }
+        new Byte MaxRank { get; set; }
+        new Byte LevelTierScaledOffset { get; set; }
         new IFormLink<IKeywordGetter> AttachPoint { get; set; }
         new ExtendedList<IFormLinkGetter<IKeywordGetter>> AttachParentSlots { get; }
         new UInt32 Unknown3 { get; set; }
@@ -1535,7 +1569,8 @@ namespace Mutagen.Bethesda.Starfield
         IModelGetter? Model { get; }
         #endregion
         UInt16 Unknown { get; }
-        UInt16 Unknown2 { get; }
+        Byte MaxRank { get; }
+        Byte LevelTierScaledOffset { get; }
         IFormLinkGetter<IKeywordGetter> AttachPoint { get; }
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>> AttachParentSlots { get; }
         UInt32 Unknown3 { get; }
@@ -1731,16 +1766,17 @@ namespace Mutagen.Bethesda.Starfield
         Description = 10,
         Model = 11,
         Unknown = 12,
-        Unknown2 = 13,
-        AttachPoint = 14,
-        AttachParentSlots = 15,
-        Unknown3 = 16,
-        Includes = 17,
-        TargetOmodKeywords = 18,
-        FilterKeywords = 19,
-        LooseMod = 20,
-        Priority = 21,
-        Filter = 22,
+        MaxRank = 13,
+        LevelTierScaledOffset = 14,
+        AttachPoint = 15,
+        AttachParentSlots = 16,
+        Unknown3 = 17,
+        Includes = 18,
+        TargetOmodKeywords = 19,
+        FilterKeywords = 20,
+        LooseMod = 21,
+        Priority = 22,
+        Filter = 23,
     }
     #endregion
 
@@ -1751,9 +1787,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 16;
+        public const ushort AdditionalFieldCount = 17;
 
-        public const ushort FieldCount = 23;
+        public const ushort FieldCount = 24;
 
         public static readonly Type MaskType = typeof(AObjectModification.Mask<>);
 
@@ -2039,7 +2075,8 @@ namespace Mutagen.Bethesda.Starfield
             item.Description = default;
             item.Model = null;
             item.Unknown = default(UInt16);
-            item.Unknown2 = default(UInt16);
+            item.MaxRank = default(Byte);
+            item.LevelTierScaledOffset = default(Byte);
             item.AttachPoint.Clear();
             item.AttachParentSlots.Clear();
             item.Unknown3 = default(UInt32);
@@ -2191,7 +2228,8 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.Unknown = item.Unknown == rhs.Unknown;
-            ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
+            ret.MaxRank = item.MaxRank == rhs.MaxRank;
+            ret.LevelTierScaledOffset = item.LevelTierScaledOffset == rhs.LevelTierScaledOffset;
             ret.AttachPoint = item.AttachPoint.Equals(rhs.AttachPoint);
             ret.AttachParentSlots = item.AttachParentSlots.CollectionEqualsHelper(
                 rhs.AttachParentSlots,
@@ -2300,9 +2338,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Unknown, "Unknown");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.MaxRank ?? true)
             {
-                sb.AppendItem(item.Unknown2, "Unknown2");
+                sb.AppendItem(item.MaxRank, "MaxRank");
+            }
+            if (printMask?.LevelTierScaledOffset ?? true)
+            {
+                sb.AppendItem(item.LevelTierScaledOffset, "LevelTierScaledOffset");
             }
             if (printMask?.AttachPoint ?? true)
             {
@@ -2466,9 +2508,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Unknown != rhs.Unknown) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)AObjectModification_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)AObjectModification_FieldIndex.MaxRank) ?? true))
             {
-                if (lhs.Unknown2 != rhs.Unknown2) return false;
+                if (lhs.MaxRank != rhs.MaxRank) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)AObjectModification_FieldIndex.LevelTierScaledOffset) ?? true))
+            {
+                if (lhs.LevelTierScaledOffset != rhs.LevelTierScaledOffset) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)AObjectModification_FieldIndex.AttachPoint) ?? true))
             {
@@ -2552,7 +2598,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(Modelitem);
             }
             hash.Add(item.Unknown);
-            hash.Add(item.Unknown2);
+            hash.Add(item.MaxRank);
+            hash.Add(item.LevelTierScaledOffset);
             hash.Add(item.AttachPoint);
             hash.Add(item.AttachParentSlots);
             hash.Add(item.Unknown3);
@@ -2846,9 +2893,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Unknown = rhs.Unknown;
             }
-            if ((copyMask?.GetShouldTranslate((int)AObjectModification_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)AObjectModification_FieldIndex.MaxRank) ?? true))
             {
-                item.Unknown2 = rhs.Unknown2;
+                item.MaxRank = rhs.MaxRank;
+            }
+            if ((copyMask?.GetShouldTranslate((int)AObjectModification_FieldIndex.LevelTierScaledOffset) ?? true))
+            {
+                item.LevelTierScaledOffset = rhs.LevelTierScaledOffset;
             }
             if ((copyMask?.GetShouldTranslate((int)AObjectModification_FieldIndex.AttachPoint) ?? true))
             {
