@@ -70,9 +70,9 @@
         <Interface>ILocationOwner</Interface>
       </FormLink>
       <Int8 name="FactionRank" default="-1" />
-      <Int8 name="EncounterMinLevel" />
+      <UInt8 name="EncounterMinLevel" />
       <Enum name="EncounterFlags" enumName="LocationOwnerData.EncounterFlag" byteLength="1" />
-      <Int8 name="EncounterMaxLevel" />
+      <UInt8 name="EncounterMaxLevel" />
     </Fields>
   </Object>
   <Object name="LocationReference" objType="Subrecord">
