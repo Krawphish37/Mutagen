@@ -51,17 +51,11 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Float1
-        public Single Float1 { get; set; } = default(Single);
+        #region Offset
+        public P3Float Offset { get; set; } = default(P3Float);
         #endregion
-        #region Float2
-        public Single Float2 { get; set; } = default(Single);
-        #endregion
-        #region Float3
-        public Single Float3 { get; set; } = default(Single);
-        #endregion
-        #region Float4
-        public Single Float4 { get; set; } = default(Single);
+        #region Intensity
+        public Single Intensity { get; set; } = default(Single);
         #endregion
 
         #region To String
@@ -102,22 +96,16 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Float1 = initialValue;
-                this.Float2 = initialValue;
-                this.Float3 = initialValue;
-                this.Float4 = initialValue;
+                this.Offset = initialValue;
+                this.Intensity = initialValue;
             }
 
             public Mask(
-                TItem Float1,
-                TItem Float2,
-                TItem Float3,
-                TItem Float4)
+                TItem Offset,
+                TItem Intensity)
             {
-                this.Float1 = Float1;
-                this.Float2 = Float2;
-                this.Float3 = Float3;
-                this.Float4 = Float4;
+                this.Offset = Offset;
+                this.Intensity = Intensity;
             }
 
             #pragma warning disable CS8618
@@ -129,10 +117,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Float1;
-            public TItem Float2;
-            public TItem Float3;
-            public TItem Float4;
+            public TItem Offset;
+            public TItem Intensity;
             #endregion
 
             #region Equals
@@ -145,19 +131,15 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Float1, rhs.Float1)) return false;
-                if (!object.Equals(this.Float2, rhs.Float2)) return false;
-                if (!object.Equals(this.Float3, rhs.Float3)) return false;
-                if (!object.Equals(this.Float4, rhs.Float4)) return false;
+                if (!object.Equals(this.Offset, rhs.Offset)) return false;
+                if (!object.Equals(this.Intensity, rhs.Intensity)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Float1);
-                hash.Add(this.Float2);
-                hash.Add(this.Float3);
-                hash.Add(this.Float4);
+                hash.Add(this.Offset);
+                hash.Add(this.Intensity);
                 return hash.ToHashCode();
             }
 
@@ -166,10 +148,8 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Float1)) return false;
-                if (!eval(this.Float2)) return false;
-                if (!eval(this.Float3)) return false;
-                if (!eval(this.Float4)) return false;
+                if (!eval(this.Offset)) return false;
+                if (!eval(this.Intensity)) return false;
                 return true;
             }
             #endregion
@@ -177,10 +157,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Float1)) return true;
-                if (eval(this.Float2)) return true;
-                if (eval(this.Float3)) return true;
-                if (eval(this.Float4)) return true;
+                if (eval(this.Offset)) return true;
+                if (eval(this.Intensity)) return true;
                 return false;
             }
             #endregion
@@ -195,10 +173,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Float1 = eval(this.Float1);
-                obj.Float2 = eval(this.Float2);
-                obj.Float3 = eval(this.Float3);
-                obj.Float4 = eval(this.Float4);
+                obj.Offset = eval(this.Offset);
+                obj.Intensity = eval(this.Intensity);
             }
             #endregion
 
@@ -217,21 +193,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(VolumeReflectionProbeOffsetIntensity.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Float1 ?? true)
+                    if (printMask?.Offset ?? true)
                     {
-                        sb.AppendItem(Float1, "Float1");
+                        sb.AppendItem(Offset, "Offset");
                     }
-                    if (printMask?.Float2 ?? true)
+                    if (printMask?.Intensity ?? true)
                     {
-                        sb.AppendItem(Float2, "Float2");
-                    }
-                    if (printMask?.Float3 ?? true)
-                    {
-                        sb.AppendItem(Float3, "Float3");
-                    }
-                    if (printMask?.Float4 ?? true)
-                    {
-                        sb.AppendItem(Float4, "Float4");
+                        sb.AppendItem(Intensity, "Intensity");
                     }
                 }
             }
@@ -257,10 +225,8 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Float1;
-            public Exception? Float2;
-            public Exception? Float3;
-            public Exception? Float4;
+            public Exception? Offset;
+            public Exception? Intensity;
             #endregion
 
             #region IErrorMask
@@ -269,14 +235,10 @@ namespace Mutagen.Bethesda.Starfield
                 VolumeReflectionProbeOffsetIntensity_FieldIndex enu = (VolumeReflectionProbeOffsetIntensity_FieldIndex)index;
                 switch (enu)
                 {
-                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Float1:
-                        return Float1;
-                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Float2:
-                        return Float2;
-                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Float3:
-                        return Float3;
-                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Float4:
-                        return Float4;
+                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Offset:
+                        return Offset;
+                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Intensity:
+                        return Intensity;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -287,17 +249,11 @@ namespace Mutagen.Bethesda.Starfield
                 VolumeReflectionProbeOffsetIntensity_FieldIndex enu = (VolumeReflectionProbeOffsetIntensity_FieldIndex)index;
                 switch (enu)
                 {
-                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Float1:
-                        this.Float1 = ex;
+                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Offset:
+                        this.Offset = ex;
                         break;
-                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Float2:
-                        this.Float2 = ex;
-                        break;
-                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Float3:
-                        this.Float3 = ex;
-                        break;
-                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Float4:
-                        this.Float4 = ex;
+                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Intensity:
+                        this.Intensity = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -309,17 +265,11 @@ namespace Mutagen.Bethesda.Starfield
                 VolumeReflectionProbeOffsetIntensity_FieldIndex enu = (VolumeReflectionProbeOffsetIntensity_FieldIndex)index;
                 switch (enu)
                 {
-                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Float1:
-                        this.Float1 = (Exception?)obj;
+                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Offset:
+                        this.Offset = (Exception?)obj;
                         break;
-                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Float2:
-                        this.Float2 = (Exception?)obj;
-                        break;
-                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Float3:
-                        this.Float3 = (Exception?)obj;
-                        break;
-                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Float4:
-                        this.Float4 = (Exception?)obj;
+                    case VolumeReflectionProbeOffsetIntensity_FieldIndex.Intensity:
+                        this.Intensity = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -329,10 +279,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Float1 != null) return true;
-                if (Float2 != null) return true;
-                if (Float3 != null) return true;
-                if (Float4 != null) return true;
+                if (Offset != null) return true;
+                if (Intensity != null) return true;
                 return false;
             }
             #endregion
@@ -359,16 +307,10 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Float1, "Float1");
+                    sb.AppendItem(Offset, "Offset");
                 }
                 {
-                    sb.AppendItem(Float2, "Float2");
-                }
-                {
-                    sb.AppendItem(Float3, "Float3");
-                }
-                {
-                    sb.AppendItem(Float4, "Float4");
+                    sb.AppendItem(Intensity, "Intensity");
                 }
             }
             #endregion
@@ -378,10 +320,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Float1 = this.Float1.Combine(rhs.Float1);
-                ret.Float2 = this.Float2.Combine(rhs.Float2);
-                ret.Float3 = this.Float3.Combine(rhs.Float3);
-                ret.Float4 = this.Float4.Combine(rhs.Float4);
+                ret.Offset = this.Offset.Combine(rhs.Offset);
+                ret.Intensity = this.Intensity.Combine(rhs.Intensity);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -405,10 +345,8 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Float1;
-            public bool Float2;
-            public bool Float3;
-            public bool Float4;
+            public bool Offset;
+            public bool Intensity;
             #endregion
 
             #region Ctors
@@ -418,10 +356,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Float1 = defaultOn;
-                this.Float2 = defaultOn;
-                this.Float3 = defaultOn;
-                this.Float4 = defaultOn;
+                this.Offset = defaultOn;
+                this.Intensity = defaultOn;
             }
 
             #endregion
@@ -437,10 +373,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Float1, null));
-                ret.Add((Float2, null));
-                ret.Add((Float3, null));
-                ret.Add((Float4, null));
+                ret.Add((Offset, null));
+                ret.Add((Intensity, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -513,10 +447,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IVolumeReflectionProbeOffsetIntensity>,
         IVolumeReflectionProbeOffsetIntensityGetter
     {
-        new Single Float1 { get; set; }
-        new Single Float2 { get; set; }
-        new Single Float3 { get; set; }
-        new Single Float4 { get; set; }
+        new P3Float Offset { get; set; }
+        new Single Intensity { get; set; }
     }
 
     public partial interface IVolumeReflectionProbeOffsetIntensityGetter :
@@ -531,10 +463,8 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => VolumeReflectionProbeOffsetIntensity_Registration.Instance;
-        Single Float1 { get; }
-        Single Float2 { get; }
-        Single Float3 { get; }
-        Single Float4 { get; }
+        P3Float Offset { get; }
+        Single Intensity { get; }
 
     }
 
@@ -704,10 +634,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum VolumeReflectionProbeOffsetIntensity_FieldIndex
     {
-        Float1 = 0,
-        Float2 = 1,
-        Float3 = 2,
-        Float4 = 3,
+        Offset = 0,
+        Intensity = 1,
     }
     #endregion
 
@@ -718,9 +646,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 4;
+        public const ushort AdditionalFieldCount = 2;
 
-        public const ushort FieldCount = 4;
+        public const ushort FieldCount = 2;
 
         public static readonly Type MaskType = typeof(VolumeReflectionProbeOffsetIntensity.Mask<>);
 
@@ -793,10 +721,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IVolumeReflectionProbeOffsetIntensity item)
         {
             ClearPartial();
-            item.Float1 = default(Single);
-            item.Float2 = default(Single);
-            item.Float3 = default(Single);
-            item.Float4 = default(Single);
+            item.Offset = default(P3Float);
+            item.Intensity = default(Single);
         }
         
         #region Mutagen
@@ -850,10 +776,8 @@ namespace Mutagen.Bethesda.Starfield
             VolumeReflectionProbeOffsetIntensity.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Float1 = item.Float1.EqualsWithin(rhs.Float1);
-            ret.Float2 = item.Float2.EqualsWithin(rhs.Float2);
-            ret.Float3 = item.Float3.EqualsWithin(rhs.Float3);
-            ret.Float4 = item.Float4.EqualsWithin(rhs.Float4);
+            ret.Offset = item.Offset.Equals(rhs.Offset);
+            ret.Intensity = item.Intensity.EqualsWithin(rhs.Intensity);
         }
         
         public string Print(
@@ -898,21 +822,13 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             VolumeReflectionProbeOffsetIntensity.Mask<bool>? printMask = null)
         {
-            if (printMask?.Float1 ?? true)
+            if (printMask?.Offset ?? true)
             {
-                sb.AppendItem(item.Float1, "Float1");
+                sb.AppendItem(item.Offset, "Offset");
             }
-            if (printMask?.Float2 ?? true)
+            if (printMask?.Intensity ?? true)
             {
-                sb.AppendItem(item.Float2, "Float2");
-            }
-            if (printMask?.Float3 ?? true)
-            {
-                sb.AppendItem(item.Float3, "Float3");
-            }
-            if (printMask?.Float4 ?? true)
-            {
-                sb.AppendItem(item.Float4, "Float4");
+                sb.AppendItem(item.Intensity, "Intensity");
             }
         }
         
@@ -923,21 +839,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)VolumeReflectionProbeOffsetIntensity_FieldIndex.Float1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)VolumeReflectionProbeOffsetIntensity_FieldIndex.Offset) ?? true))
             {
-                if (!lhs.Float1.EqualsWithin(rhs.Float1)) return false;
+                if (!lhs.Offset.Equals(rhs.Offset)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)VolumeReflectionProbeOffsetIntensity_FieldIndex.Float2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)VolumeReflectionProbeOffsetIntensity_FieldIndex.Intensity) ?? true))
             {
-                if (!lhs.Float2.EqualsWithin(rhs.Float2)) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)VolumeReflectionProbeOffsetIntensity_FieldIndex.Float3) ?? true))
-            {
-                if (!lhs.Float3.EqualsWithin(rhs.Float3)) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)VolumeReflectionProbeOffsetIntensity_FieldIndex.Float4) ?? true))
-            {
-                if (!lhs.Float4.EqualsWithin(rhs.Float4)) return false;
+                if (!lhs.Intensity.EqualsWithin(rhs.Intensity)) return false;
             }
             return true;
         }
@@ -945,10 +853,8 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IVolumeReflectionProbeOffsetIntensityGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Float1);
-            hash.Add(item.Float2);
-            hash.Add(item.Float3);
-            hash.Add(item.Float4);
+            hash.Add(item.Offset);
+            hash.Add(item.Intensity);
             return hash.ToHashCode();
         }
         
@@ -981,21 +887,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)VolumeReflectionProbeOffsetIntensity_FieldIndex.Float1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)VolumeReflectionProbeOffsetIntensity_FieldIndex.Offset) ?? true))
             {
-                item.Float1 = rhs.Float1;
+                item.Offset = rhs.Offset;
             }
-            if ((copyMask?.GetShouldTranslate((int)VolumeReflectionProbeOffsetIntensity_FieldIndex.Float2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)VolumeReflectionProbeOffsetIntensity_FieldIndex.Intensity) ?? true))
             {
-                item.Float2 = rhs.Float2;
-            }
-            if ((copyMask?.GetShouldTranslate((int)VolumeReflectionProbeOffsetIntensity_FieldIndex.Float3) ?? true))
-            {
-                item.Float3 = rhs.Float3;
-            }
-            if ((copyMask?.GetShouldTranslate((int)VolumeReflectionProbeOffsetIntensity_FieldIndex.Float4) ?? true))
-            {
-                item.Float4 = rhs.Float4;
+                item.Intensity = rhs.Intensity;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1105,18 +1003,12 @@ namespace Mutagen.Bethesda.Starfield
             IVolumeReflectionProbeOffsetIntensityGetter item,
             MutagenWriter writer)
         {
+            P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.Offset);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Float1);
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.Float2);
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.Float3);
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.Float4);
+                item: item.Intensity);
         }
 
         public void Write(
@@ -1157,10 +1049,8 @@ namespace Mutagen.Bethesda.Starfield
             IVolumeReflectionProbeOffsetIntensity item,
             MutagenFrame frame)
         {
-            item.Float1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Float2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Float3 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Float4 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Offset = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Intensity = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
         }
 
     }
@@ -1226,10 +1116,8 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Single Float1 => _structData.Slice(0x0, 0x4).Float();
-        public Single Float2 => _structData.Slice(0x4, 0x4).Float();
-        public Single Float3 => _structData.Slice(0x8, 0x4).Float();
-        public Single Float4 => _structData.Slice(0xC, 0x4).Float();
+        public P3Float Offset => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x0, 0xC));
+        public Single Intensity => _structData.Slice(0xC, 0x4).Float();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
