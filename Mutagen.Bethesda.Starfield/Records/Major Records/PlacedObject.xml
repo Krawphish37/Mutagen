@@ -273,7 +273,7 @@
       <Float name="Thickness" />
       <P3Float name="HalfExtents" />
       <Bool name="IsWindDetachedEnd" byteLength="1" />
-      <ByteArray name="IsWindDetachedEndUnused" byteLength="3" nullable="False" />
+      <ByteArray name="IsWindDetachedEndUnused" byteLength="3" nullable="false" />
     </Fields>
   </Object>
   <Object name="NavigationDoorLink" objType="Subrecord" recordType="XNDP">
@@ -313,7 +313,7 @@
       <Float name="WaveScrollAmountV" />
       <Float name="RandomTimeOffsetRange" />
       <Bool name="IsAnimated" byteLength="1" />
-      <ByteArray name="IsAnimatedUnused" byteLength="3" nullable="False" />
+      <ByteArray name="IsAnimatedUnused" byteLength="3" nullable="false" />
     </Fields>
   </Object>
   <Object name="PlacedObjectXCZRXCZA" objType="Subrecord" >
