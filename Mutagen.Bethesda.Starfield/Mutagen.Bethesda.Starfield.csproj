@@ -6998,5 +6998,14 @@
     <Compile Include="Records\Major Records\PlacedObjectWaterCurrentReference_Generated.cs">
       <DependentUpon>PlacedObject.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\MovementData_Generated.cs">
+      <DependentUpon>MovementType.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\MovementSpeeds_Generated.cs">
+      <DependentUpon>MovementType.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\MovementRotationSpeeds_Generated.cs">
+      <DependentUpon>MovementType.xml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

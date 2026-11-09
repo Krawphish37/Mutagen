@@ -3,11 +3,51 @@
   <Object name="MovementType" recordType="MOVT" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <String name="Name" recordType="MNAM" />
-      <ByteArray name="SPED" recordType="SPED" unknown="true" />
+      <RefDirect name="MovementData" refName="MovementData" />
       <Float name="FlightAngleGain" recordType="LNAM" />
-      <Float name="KNAM" recordType="KNAM" unknown="true" />
-      <UInt32 name="INTV" recordType="INTV" unknown="true" />
-      <Bool name="BOLV" boolAsMarker="BOLV" unknown="true" />
+      <Float name="FastWalk" recordType="KNAM" />
+      <Data recordType="INTV">
+        <Fields>
+          <Bool name="ClampMaxAnimationSpeeds" byteLength="1" />
+          <ByteArray name="FlagsUnused" byteLength="3" nullable="False" />
+        </Fields>
+      </Data>
+      <Bool name="DisplayForNonCharacters" boolAsMarker="BOLV" />
+    </Fields>
+  </Object>
+  <Object name="MovementData" objType="Subrecord" recordType="SPED">
+    <Fields>
+      <RefDirect name="MaxSpeedForward" refName="MovementSpeeds" nullable="False" />
+      <RefDirect name="MaxSpeedLeft" refName="MovementSpeeds" nullable="False" />
+      <RefDirect name="MaxSpeedRight" refName="MovementSpeeds" nullable="False" />
+      <RefDirect name="MaxSpeedBack" refName="MovementSpeeds" nullable="False" />
+      <RefDirect name="MaxSpeedUp" refName="MovementSpeeds" nullable="False" />
+      <RefDirect name="MaxSpeedDown" refName="MovementSpeeds" nullable="False" />
+      <RefDirect name="MaxRotationSpeedPitch" refName="MovementRotationSpeeds" nullable="False" />
+      <RefDirect name="MaxRotationSpeedRoll" refName="MovementRotationSpeeds" nullable="False" />
+      <RefDirect name="MaxRotationSpeedYaw" refName="MovementRotationSpeeds" nullable="False" />
+    </Fields>
+  </Object>
+  <Object name="MovementSpeeds" objType="Subrecord">
+    <Fields>
+      <Float name="Unknown" />
+      <Float name="Walk" />
+      <Float name="Jog" />
+      <Float name="Run" />
+      <Float name="Sprint" />
+      <Float name="Acceleration" />
+      <Float name="Deceleration" />
+    </Fields>
+  </Object>
+  <Object name="MovementRotationSpeeds" objType="Subrecord">
+    <Fields>
+      <Float name="Stand" />
+      <Float name="Walk" />
+      <Float name="Jog" />
+      <Float name="Run" />
+      <Float name="Sprint" />
+      <Float name="Acceleration" />
+      <Float name="Unused" />
     </Fields>
   </Object>
 </Loqui>
