@@ -52,128 +52,135 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region UnknownInt
-        public Int32 UnknownInt { get; set; } = default(Int32);
+        #region ReactionType
+        public Npc.ReactionTypeOption ReactionType { get; set; } = default(Npc.ReactionTypeOption);
         #endregion
-        #region UnknownInt2
-        public Int32 UnknownInt2 { get; set; } = default(Int32);
+        #region ReactionTarget
+        public Npc.ReactionTargetOption ReactionTarget { get; set; } = default(Npc.ReactionTargetOption);
         #endregion
-        #region UnknownLink1
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _UnknownLink1 = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> UnknownLink1
+        #region Packages
+        private readonly IFormLink<IFormListGetter> _Packages = new FormLink<IFormListGetter>();
+        public IFormLink<IFormListGetter> Packages
         {
-            get => _UnknownLink1;
-            set => _UnknownLink1.SetTo(value);
+            get => _Packages;
+            set => _Packages.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> INpcRDSAGetter.UnknownLink1 => this.UnknownLink1;
+        IFormLinkGetter<IFormListGetter> INpcRDSAGetter.Packages => this.Packages;
         #endregion
-        #region UnknownInt3
-        public Int32 UnknownInt3 { get; set; } = default(Int32);
+        #region Flags
+        public Npc.ReactionRadiusFlag Flags { get; set; } = default(Npc.ReactionRadiusFlag);
         #endregion
-        #region UnknownLink2
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _UnknownLink2 = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> UnknownLink2
+        #region ReactionRadiusGlobal
+        private readonly IFormLink<IGlobalGetter> _ReactionRadiusGlobal = new FormLink<IGlobalGetter>();
+        public IFormLink<IGlobalGetter> ReactionRadiusGlobal
         {
-            get => _UnknownLink2;
-            set => _UnknownLink2.SetTo(value);
+            get => _ReactionRadiusGlobal;
+            set => _ReactionRadiusGlobal.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> INpcRDSAGetter.UnknownLink2 => this.UnknownLink2;
+        IFormLinkGetter<IGlobalGetter> INpcRDSAGetter.ReactionRadiusGlobal => this.ReactionRadiusGlobal;
         #endregion
-        #region UnknownLink3
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _UnknownLink3 = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> UnknownLink3
+        #region ExitRadiusGlobal
+        private readonly IFormLink<IGlobalGetter> _ExitRadiusGlobal = new FormLink<IGlobalGetter>();
+        public IFormLink<IGlobalGetter> ExitRadiusGlobal
         {
-            get => _UnknownLink3;
-            set => _UnknownLink3.SetTo(value);
+            get => _ExitRadiusGlobal;
+            set => _ExitRadiusGlobal.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> INpcRDSAGetter.UnknownLink3 => this.UnknownLink3;
+        IFormLinkGetter<IGlobalGetter> INpcRDSAGetter.ExitRadiusGlobal => this.ExitRadiusGlobal;
         #endregion
-        #region UnknownLink4
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _UnknownLink4 = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> UnknownLink4
+        #region MaxNumberOfTimesToReactGlobal
+        private readonly IFormLink<IGlobalGetter> _MaxNumberOfTimesToReactGlobal = new FormLink<IGlobalGetter>();
+        public IFormLink<IGlobalGetter> MaxNumberOfTimesToReactGlobal
         {
-            get => _UnknownLink4;
-            set => _UnknownLink4.SetTo(value);
+            get => _MaxNumberOfTimesToReactGlobal;
+            set => _MaxNumberOfTimesToReactGlobal.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> INpcRDSAGetter.UnknownLink4 => this.UnknownLink4;
+        IFormLinkGetter<IGlobalGetter> INpcRDSAGetter.MaxNumberOfTimesToReactGlobal => this.MaxNumberOfTimesToReactGlobal;
         #endregion
-        #region UnknownLink5
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _UnknownLink5 = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> UnknownLink5
+        #region MaxHerdMembersToAnimateGlobal
+        private readonly IFormLink<IGlobalGetter> _MaxHerdMembersToAnimateGlobal = new FormLink<IGlobalGetter>();
+        public IFormLink<IGlobalGetter> MaxHerdMembersToAnimateGlobal
         {
-            get => _UnknownLink5;
-            set => _UnknownLink5.SetTo(value);
+            get => _MaxHerdMembersToAnimateGlobal;
+            set => _MaxHerdMembersToAnimateGlobal.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> INpcRDSAGetter.UnknownLink5 => this.UnknownLink5;
+        IFormLinkGetter<IGlobalGetter> INpcRDSAGetter.MaxHerdMembersToAnimateGlobal => this.MaxHerdMembersToAnimateGlobal;
         #endregion
-        #region UnknownLink6
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _UnknownLink6 = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> UnknownLink6
+        #region NumberOfWarningsBeforeAttackGlobal
+        private readonly IFormLink<IGlobalGetter> _NumberOfWarningsBeforeAttackGlobal = new FormLink<IGlobalGetter>();
+        public IFormLink<IGlobalGetter> NumberOfWarningsBeforeAttackGlobal
         {
-            get => _UnknownLink6;
-            set => _UnknownLink6.SetTo(value);
+            get => _NumberOfWarningsBeforeAttackGlobal;
+            set => _NumberOfWarningsBeforeAttackGlobal.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> INpcRDSAGetter.UnknownLink6 => this.UnknownLink6;
+        IFormLinkGetter<IGlobalGetter> INpcRDSAGetter.NumberOfWarningsBeforeAttackGlobal => this.NumberOfWarningsBeforeAttackGlobal;
         #endregion
-        #region UnknownFloat1
-        public Single UnknownFloat1 { get; set; } = default(Single);
+        #region MaxNumberOfTimesToReact
+        public Single MaxNumberOfTimesToReact { get; set; } = default(Single);
         #endregion
-        #region UnknownFloat2
-        public Single UnknownFloat2 { get; set; } = default(Single);
+        #region ReactionRadius
+        public Single ReactionRadius { get; set; } = default(Single);
         #endregion
-        #region UnknownFloat3
-        public Single UnknownFloat3 { get; set; } = default(Single);
+        #region ExitRadius
+        public Single ExitRadius { get; set; } = default(Single);
         #endregion
-        #region UnknownFloat4
-        public Single UnknownFloat4 { get; set; } = default(Single);
+        #region MaxHerdMembersToAnimate
+        public Single MaxHerdMembersToAnimate { get; set; } = default(Single);
         #endregion
-        #region UnknownFloat5
-        public Single UnknownFloat5 { get; set; } = default(Single);
+        #region NumberOfWarningsBeforeAttack
+        public Single NumberOfWarningsBeforeAttack { get; set; } = default(Single);
         #endregion
-        #region UnknownLink7
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _UnknownLink7 = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> UnknownLink7
+        #region LinkedRefKeyword
+        private readonly IFormLink<IKeywordGetter> _LinkedRefKeyword = new FormLink<IKeywordGetter>();
+        public IFormLink<IKeywordGetter> LinkedRefKeyword
         {
-            get => _UnknownLink7;
-            set => _UnknownLink7.SetTo(value);
+            get => _LinkedRefKeyword;
+            set => _LinkedRefKeyword.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> INpcRDSAGetter.UnknownLink7 => this.UnknownLink7;
+        IFormLinkGetter<IKeywordGetter> INpcRDSAGetter.LinkedRefKeyword => this.LinkedRefKeyword;
         #endregion
-        #region UnknownInt4
-        public Int32 UnknownInt4 { get; set; } = default(Int32);
-        #endregion
-        #region UnknownLink8
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _UnknownLink8 = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> UnknownLink8
+        #region SpecificReference
+        private readonly IFormLink<IPlacedGetter> _SpecificReference = new FormLink<IPlacedGetter>();
+        public IFormLink<IPlacedGetter> SpecificReference
         {
-            get => _UnknownLink8;
-            set => _UnknownLink8.SetTo(value);
+            get => _SpecificReference;
+            set => _SpecificReference.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> INpcRDSAGetter.UnknownLink8 => this.UnknownLink8;
+        IFormLinkGetter<IPlacedGetter> INpcRDSAGetter.SpecificReference => this.SpecificReference;
         #endregion
-        #region UnknownFloat6
-        public Single UnknownFloat6 { get; set; } = default(Single);
-        #endregion
-        #region UnknownInt5
-        public Int32 UnknownInt5 { get; set; } = default(Int32);
-        #endregion
-        #region UnknownLink9
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _UnknownLink9 = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> UnknownLink9
+        #region WarnTimerOnWarnAttackGlobal
+        private readonly IFormLink<IGlobalGetter> _WarnTimerOnWarnAttackGlobal = new FormLink<IGlobalGetter>();
+        public IFormLink<IGlobalGetter> WarnTimerOnWarnAttackGlobal
         {
-            get => _UnknownLink9;
-            set => _UnknownLink9.SetTo(value);
+            get => _WarnTimerOnWarnAttackGlobal;
+            set => _WarnTimerOnWarnAttackGlobal.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> INpcRDSAGetter.UnknownLink9 => this.UnknownLink9;
+        IFormLinkGetter<IGlobalGetter> INpcRDSAGetter.WarnTimerOnWarnAttackGlobal => this.WarnTimerOnWarnAttackGlobal;
+        #endregion
+        #region WarnTimerOnWarnAttack
+        public Single WarnTimerOnWarnAttack { get; set; } = default(Single);
+        #endregion
+        #region CoolDownTimer
+        public Single CoolDownTimer { get; set; } = default(Single);
+        #endregion
+        #region CoolDownTimerGlobal
+        private readonly IFormLink<IGlobalGetter> _CoolDownTimerGlobal = new FormLink<IGlobalGetter>();
+        public IFormLink<IGlobalGetter> CoolDownTimerGlobal
+        {
+            get => _CoolDownTimerGlobal;
+            set => _CoolDownTimerGlobal.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkGetter<IGlobalGetter> INpcRDSAGetter.CoolDownTimerGlobal => this.CoolDownTimerGlobal;
         #endregion
 
         #region To String
@@ -214,70 +221,70 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.UnknownInt = initialValue;
-                this.UnknownInt2 = initialValue;
-                this.UnknownLink1 = initialValue;
-                this.UnknownInt3 = initialValue;
-                this.UnknownLink2 = initialValue;
-                this.UnknownLink3 = initialValue;
-                this.UnknownLink4 = initialValue;
-                this.UnknownLink5 = initialValue;
-                this.UnknownLink6 = initialValue;
-                this.UnknownFloat1 = initialValue;
-                this.UnknownFloat2 = initialValue;
-                this.UnknownFloat3 = initialValue;
-                this.UnknownFloat4 = initialValue;
-                this.UnknownFloat5 = initialValue;
-                this.UnknownLink7 = initialValue;
-                this.UnknownInt4 = initialValue;
-                this.UnknownLink8 = initialValue;
-                this.UnknownFloat6 = initialValue;
-                this.UnknownInt5 = initialValue;
-                this.UnknownLink9 = initialValue;
+                this.ReactionType = initialValue;
+                this.ReactionTarget = initialValue;
+                this.Packages = initialValue;
+                this.Flags = initialValue;
+                this.ReactionRadiusGlobal = initialValue;
+                this.ExitRadiusGlobal = initialValue;
+                this.MaxNumberOfTimesToReactGlobal = initialValue;
+                this.MaxHerdMembersToAnimateGlobal = initialValue;
+                this.NumberOfWarningsBeforeAttackGlobal = initialValue;
+                this.MaxNumberOfTimesToReact = initialValue;
+                this.ReactionRadius = initialValue;
+                this.ExitRadius = initialValue;
+                this.MaxHerdMembersToAnimate = initialValue;
+                this.NumberOfWarningsBeforeAttack = initialValue;
+                this.LinkedRefKeyword = initialValue;
+                this.SpecificReference = initialValue;
+                this.WarnTimerOnWarnAttackGlobal = initialValue;
+                this.WarnTimerOnWarnAttack = initialValue;
+                this.CoolDownTimer = initialValue;
+                this.CoolDownTimerGlobal = initialValue;
             }
 
             public Mask(
-                TItem UnknownInt,
-                TItem UnknownInt2,
-                TItem UnknownLink1,
-                TItem UnknownInt3,
-                TItem UnknownLink2,
-                TItem UnknownLink3,
-                TItem UnknownLink4,
-                TItem UnknownLink5,
-                TItem UnknownLink6,
-                TItem UnknownFloat1,
-                TItem UnknownFloat2,
-                TItem UnknownFloat3,
-                TItem UnknownFloat4,
-                TItem UnknownFloat5,
-                TItem UnknownLink7,
-                TItem UnknownInt4,
-                TItem UnknownLink8,
-                TItem UnknownFloat6,
-                TItem UnknownInt5,
-                TItem UnknownLink9)
+                TItem ReactionType,
+                TItem ReactionTarget,
+                TItem Packages,
+                TItem Flags,
+                TItem ReactionRadiusGlobal,
+                TItem ExitRadiusGlobal,
+                TItem MaxNumberOfTimesToReactGlobal,
+                TItem MaxHerdMembersToAnimateGlobal,
+                TItem NumberOfWarningsBeforeAttackGlobal,
+                TItem MaxNumberOfTimesToReact,
+                TItem ReactionRadius,
+                TItem ExitRadius,
+                TItem MaxHerdMembersToAnimate,
+                TItem NumberOfWarningsBeforeAttack,
+                TItem LinkedRefKeyword,
+                TItem SpecificReference,
+                TItem WarnTimerOnWarnAttackGlobal,
+                TItem WarnTimerOnWarnAttack,
+                TItem CoolDownTimer,
+                TItem CoolDownTimerGlobal)
             {
-                this.UnknownInt = UnknownInt;
-                this.UnknownInt2 = UnknownInt2;
-                this.UnknownLink1 = UnknownLink1;
-                this.UnknownInt3 = UnknownInt3;
-                this.UnknownLink2 = UnknownLink2;
-                this.UnknownLink3 = UnknownLink3;
-                this.UnknownLink4 = UnknownLink4;
-                this.UnknownLink5 = UnknownLink5;
-                this.UnknownLink6 = UnknownLink6;
-                this.UnknownFloat1 = UnknownFloat1;
-                this.UnknownFloat2 = UnknownFloat2;
-                this.UnknownFloat3 = UnknownFloat3;
-                this.UnknownFloat4 = UnknownFloat4;
-                this.UnknownFloat5 = UnknownFloat5;
-                this.UnknownLink7 = UnknownLink7;
-                this.UnknownInt4 = UnknownInt4;
-                this.UnknownLink8 = UnknownLink8;
-                this.UnknownFloat6 = UnknownFloat6;
-                this.UnknownInt5 = UnknownInt5;
-                this.UnknownLink9 = UnknownLink9;
+                this.ReactionType = ReactionType;
+                this.ReactionTarget = ReactionTarget;
+                this.Packages = Packages;
+                this.Flags = Flags;
+                this.ReactionRadiusGlobal = ReactionRadiusGlobal;
+                this.ExitRadiusGlobal = ExitRadiusGlobal;
+                this.MaxNumberOfTimesToReactGlobal = MaxNumberOfTimesToReactGlobal;
+                this.MaxHerdMembersToAnimateGlobal = MaxHerdMembersToAnimateGlobal;
+                this.NumberOfWarningsBeforeAttackGlobal = NumberOfWarningsBeforeAttackGlobal;
+                this.MaxNumberOfTimesToReact = MaxNumberOfTimesToReact;
+                this.ReactionRadius = ReactionRadius;
+                this.ExitRadius = ExitRadius;
+                this.MaxHerdMembersToAnimate = MaxHerdMembersToAnimate;
+                this.NumberOfWarningsBeforeAttack = NumberOfWarningsBeforeAttack;
+                this.LinkedRefKeyword = LinkedRefKeyword;
+                this.SpecificReference = SpecificReference;
+                this.WarnTimerOnWarnAttackGlobal = WarnTimerOnWarnAttackGlobal;
+                this.WarnTimerOnWarnAttack = WarnTimerOnWarnAttack;
+                this.CoolDownTimer = CoolDownTimer;
+                this.CoolDownTimerGlobal = CoolDownTimerGlobal;
             }
 
             #pragma warning disable CS8618
@@ -289,26 +296,26 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem UnknownInt;
-            public TItem UnknownInt2;
-            public TItem UnknownLink1;
-            public TItem UnknownInt3;
-            public TItem UnknownLink2;
-            public TItem UnknownLink3;
-            public TItem UnknownLink4;
-            public TItem UnknownLink5;
-            public TItem UnknownLink6;
-            public TItem UnknownFloat1;
-            public TItem UnknownFloat2;
-            public TItem UnknownFloat3;
-            public TItem UnknownFloat4;
-            public TItem UnknownFloat5;
-            public TItem UnknownLink7;
-            public TItem UnknownInt4;
-            public TItem UnknownLink8;
-            public TItem UnknownFloat6;
-            public TItem UnknownInt5;
-            public TItem UnknownLink9;
+            public TItem ReactionType;
+            public TItem ReactionTarget;
+            public TItem Packages;
+            public TItem Flags;
+            public TItem ReactionRadiusGlobal;
+            public TItem ExitRadiusGlobal;
+            public TItem MaxNumberOfTimesToReactGlobal;
+            public TItem MaxHerdMembersToAnimateGlobal;
+            public TItem NumberOfWarningsBeforeAttackGlobal;
+            public TItem MaxNumberOfTimesToReact;
+            public TItem ReactionRadius;
+            public TItem ExitRadius;
+            public TItem MaxHerdMembersToAnimate;
+            public TItem NumberOfWarningsBeforeAttack;
+            public TItem LinkedRefKeyword;
+            public TItem SpecificReference;
+            public TItem WarnTimerOnWarnAttackGlobal;
+            public TItem WarnTimerOnWarnAttack;
+            public TItem CoolDownTimer;
+            public TItem CoolDownTimerGlobal;
             #endregion
 
             #region Equals
@@ -321,51 +328,51 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.UnknownInt, rhs.UnknownInt)) return false;
-                if (!object.Equals(this.UnknownInt2, rhs.UnknownInt2)) return false;
-                if (!object.Equals(this.UnknownLink1, rhs.UnknownLink1)) return false;
-                if (!object.Equals(this.UnknownInt3, rhs.UnknownInt3)) return false;
-                if (!object.Equals(this.UnknownLink2, rhs.UnknownLink2)) return false;
-                if (!object.Equals(this.UnknownLink3, rhs.UnknownLink3)) return false;
-                if (!object.Equals(this.UnknownLink4, rhs.UnknownLink4)) return false;
-                if (!object.Equals(this.UnknownLink5, rhs.UnknownLink5)) return false;
-                if (!object.Equals(this.UnknownLink6, rhs.UnknownLink6)) return false;
-                if (!object.Equals(this.UnknownFloat1, rhs.UnknownFloat1)) return false;
-                if (!object.Equals(this.UnknownFloat2, rhs.UnknownFloat2)) return false;
-                if (!object.Equals(this.UnknownFloat3, rhs.UnknownFloat3)) return false;
-                if (!object.Equals(this.UnknownFloat4, rhs.UnknownFloat4)) return false;
-                if (!object.Equals(this.UnknownFloat5, rhs.UnknownFloat5)) return false;
-                if (!object.Equals(this.UnknownLink7, rhs.UnknownLink7)) return false;
-                if (!object.Equals(this.UnknownInt4, rhs.UnknownInt4)) return false;
-                if (!object.Equals(this.UnknownLink8, rhs.UnknownLink8)) return false;
-                if (!object.Equals(this.UnknownFloat6, rhs.UnknownFloat6)) return false;
-                if (!object.Equals(this.UnknownInt5, rhs.UnknownInt5)) return false;
-                if (!object.Equals(this.UnknownLink9, rhs.UnknownLink9)) return false;
+                if (!object.Equals(this.ReactionType, rhs.ReactionType)) return false;
+                if (!object.Equals(this.ReactionTarget, rhs.ReactionTarget)) return false;
+                if (!object.Equals(this.Packages, rhs.Packages)) return false;
+                if (!object.Equals(this.Flags, rhs.Flags)) return false;
+                if (!object.Equals(this.ReactionRadiusGlobal, rhs.ReactionRadiusGlobal)) return false;
+                if (!object.Equals(this.ExitRadiusGlobal, rhs.ExitRadiusGlobal)) return false;
+                if (!object.Equals(this.MaxNumberOfTimesToReactGlobal, rhs.MaxNumberOfTimesToReactGlobal)) return false;
+                if (!object.Equals(this.MaxHerdMembersToAnimateGlobal, rhs.MaxHerdMembersToAnimateGlobal)) return false;
+                if (!object.Equals(this.NumberOfWarningsBeforeAttackGlobal, rhs.NumberOfWarningsBeforeAttackGlobal)) return false;
+                if (!object.Equals(this.MaxNumberOfTimesToReact, rhs.MaxNumberOfTimesToReact)) return false;
+                if (!object.Equals(this.ReactionRadius, rhs.ReactionRadius)) return false;
+                if (!object.Equals(this.ExitRadius, rhs.ExitRadius)) return false;
+                if (!object.Equals(this.MaxHerdMembersToAnimate, rhs.MaxHerdMembersToAnimate)) return false;
+                if (!object.Equals(this.NumberOfWarningsBeforeAttack, rhs.NumberOfWarningsBeforeAttack)) return false;
+                if (!object.Equals(this.LinkedRefKeyword, rhs.LinkedRefKeyword)) return false;
+                if (!object.Equals(this.SpecificReference, rhs.SpecificReference)) return false;
+                if (!object.Equals(this.WarnTimerOnWarnAttackGlobal, rhs.WarnTimerOnWarnAttackGlobal)) return false;
+                if (!object.Equals(this.WarnTimerOnWarnAttack, rhs.WarnTimerOnWarnAttack)) return false;
+                if (!object.Equals(this.CoolDownTimer, rhs.CoolDownTimer)) return false;
+                if (!object.Equals(this.CoolDownTimerGlobal, rhs.CoolDownTimerGlobal)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.UnknownInt);
-                hash.Add(this.UnknownInt2);
-                hash.Add(this.UnknownLink1);
-                hash.Add(this.UnknownInt3);
-                hash.Add(this.UnknownLink2);
-                hash.Add(this.UnknownLink3);
-                hash.Add(this.UnknownLink4);
-                hash.Add(this.UnknownLink5);
-                hash.Add(this.UnknownLink6);
-                hash.Add(this.UnknownFloat1);
-                hash.Add(this.UnknownFloat2);
-                hash.Add(this.UnknownFloat3);
-                hash.Add(this.UnknownFloat4);
-                hash.Add(this.UnknownFloat5);
-                hash.Add(this.UnknownLink7);
-                hash.Add(this.UnknownInt4);
-                hash.Add(this.UnknownLink8);
-                hash.Add(this.UnknownFloat6);
-                hash.Add(this.UnknownInt5);
-                hash.Add(this.UnknownLink9);
+                hash.Add(this.ReactionType);
+                hash.Add(this.ReactionTarget);
+                hash.Add(this.Packages);
+                hash.Add(this.Flags);
+                hash.Add(this.ReactionRadiusGlobal);
+                hash.Add(this.ExitRadiusGlobal);
+                hash.Add(this.MaxNumberOfTimesToReactGlobal);
+                hash.Add(this.MaxHerdMembersToAnimateGlobal);
+                hash.Add(this.NumberOfWarningsBeforeAttackGlobal);
+                hash.Add(this.MaxNumberOfTimesToReact);
+                hash.Add(this.ReactionRadius);
+                hash.Add(this.ExitRadius);
+                hash.Add(this.MaxHerdMembersToAnimate);
+                hash.Add(this.NumberOfWarningsBeforeAttack);
+                hash.Add(this.LinkedRefKeyword);
+                hash.Add(this.SpecificReference);
+                hash.Add(this.WarnTimerOnWarnAttackGlobal);
+                hash.Add(this.WarnTimerOnWarnAttack);
+                hash.Add(this.CoolDownTimer);
+                hash.Add(this.CoolDownTimerGlobal);
                 return hash.ToHashCode();
             }
 
@@ -374,26 +381,26 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.UnknownInt)) return false;
-                if (!eval(this.UnknownInt2)) return false;
-                if (!eval(this.UnknownLink1)) return false;
-                if (!eval(this.UnknownInt3)) return false;
-                if (!eval(this.UnknownLink2)) return false;
-                if (!eval(this.UnknownLink3)) return false;
-                if (!eval(this.UnknownLink4)) return false;
-                if (!eval(this.UnknownLink5)) return false;
-                if (!eval(this.UnknownLink6)) return false;
-                if (!eval(this.UnknownFloat1)) return false;
-                if (!eval(this.UnknownFloat2)) return false;
-                if (!eval(this.UnknownFloat3)) return false;
-                if (!eval(this.UnknownFloat4)) return false;
-                if (!eval(this.UnknownFloat5)) return false;
-                if (!eval(this.UnknownLink7)) return false;
-                if (!eval(this.UnknownInt4)) return false;
-                if (!eval(this.UnknownLink8)) return false;
-                if (!eval(this.UnknownFloat6)) return false;
-                if (!eval(this.UnknownInt5)) return false;
-                if (!eval(this.UnknownLink9)) return false;
+                if (!eval(this.ReactionType)) return false;
+                if (!eval(this.ReactionTarget)) return false;
+                if (!eval(this.Packages)) return false;
+                if (!eval(this.Flags)) return false;
+                if (!eval(this.ReactionRadiusGlobal)) return false;
+                if (!eval(this.ExitRadiusGlobal)) return false;
+                if (!eval(this.MaxNumberOfTimesToReactGlobal)) return false;
+                if (!eval(this.MaxHerdMembersToAnimateGlobal)) return false;
+                if (!eval(this.NumberOfWarningsBeforeAttackGlobal)) return false;
+                if (!eval(this.MaxNumberOfTimesToReact)) return false;
+                if (!eval(this.ReactionRadius)) return false;
+                if (!eval(this.ExitRadius)) return false;
+                if (!eval(this.MaxHerdMembersToAnimate)) return false;
+                if (!eval(this.NumberOfWarningsBeforeAttack)) return false;
+                if (!eval(this.LinkedRefKeyword)) return false;
+                if (!eval(this.SpecificReference)) return false;
+                if (!eval(this.WarnTimerOnWarnAttackGlobal)) return false;
+                if (!eval(this.WarnTimerOnWarnAttack)) return false;
+                if (!eval(this.CoolDownTimer)) return false;
+                if (!eval(this.CoolDownTimerGlobal)) return false;
                 return true;
             }
             #endregion
@@ -401,26 +408,26 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.UnknownInt)) return true;
-                if (eval(this.UnknownInt2)) return true;
-                if (eval(this.UnknownLink1)) return true;
-                if (eval(this.UnknownInt3)) return true;
-                if (eval(this.UnknownLink2)) return true;
-                if (eval(this.UnknownLink3)) return true;
-                if (eval(this.UnknownLink4)) return true;
-                if (eval(this.UnknownLink5)) return true;
-                if (eval(this.UnknownLink6)) return true;
-                if (eval(this.UnknownFloat1)) return true;
-                if (eval(this.UnknownFloat2)) return true;
-                if (eval(this.UnknownFloat3)) return true;
-                if (eval(this.UnknownFloat4)) return true;
-                if (eval(this.UnknownFloat5)) return true;
-                if (eval(this.UnknownLink7)) return true;
-                if (eval(this.UnknownInt4)) return true;
-                if (eval(this.UnknownLink8)) return true;
-                if (eval(this.UnknownFloat6)) return true;
-                if (eval(this.UnknownInt5)) return true;
-                if (eval(this.UnknownLink9)) return true;
+                if (eval(this.ReactionType)) return true;
+                if (eval(this.ReactionTarget)) return true;
+                if (eval(this.Packages)) return true;
+                if (eval(this.Flags)) return true;
+                if (eval(this.ReactionRadiusGlobal)) return true;
+                if (eval(this.ExitRadiusGlobal)) return true;
+                if (eval(this.MaxNumberOfTimesToReactGlobal)) return true;
+                if (eval(this.MaxHerdMembersToAnimateGlobal)) return true;
+                if (eval(this.NumberOfWarningsBeforeAttackGlobal)) return true;
+                if (eval(this.MaxNumberOfTimesToReact)) return true;
+                if (eval(this.ReactionRadius)) return true;
+                if (eval(this.ExitRadius)) return true;
+                if (eval(this.MaxHerdMembersToAnimate)) return true;
+                if (eval(this.NumberOfWarningsBeforeAttack)) return true;
+                if (eval(this.LinkedRefKeyword)) return true;
+                if (eval(this.SpecificReference)) return true;
+                if (eval(this.WarnTimerOnWarnAttackGlobal)) return true;
+                if (eval(this.WarnTimerOnWarnAttack)) return true;
+                if (eval(this.CoolDownTimer)) return true;
+                if (eval(this.CoolDownTimerGlobal)) return true;
                 return false;
             }
             #endregion
@@ -435,26 +442,26 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.UnknownInt = eval(this.UnknownInt);
-                obj.UnknownInt2 = eval(this.UnknownInt2);
-                obj.UnknownLink1 = eval(this.UnknownLink1);
-                obj.UnknownInt3 = eval(this.UnknownInt3);
-                obj.UnknownLink2 = eval(this.UnknownLink2);
-                obj.UnknownLink3 = eval(this.UnknownLink3);
-                obj.UnknownLink4 = eval(this.UnknownLink4);
-                obj.UnknownLink5 = eval(this.UnknownLink5);
-                obj.UnknownLink6 = eval(this.UnknownLink6);
-                obj.UnknownFloat1 = eval(this.UnknownFloat1);
-                obj.UnknownFloat2 = eval(this.UnknownFloat2);
-                obj.UnknownFloat3 = eval(this.UnknownFloat3);
-                obj.UnknownFloat4 = eval(this.UnknownFloat4);
-                obj.UnknownFloat5 = eval(this.UnknownFloat5);
-                obj.UnknownLink7 = eval(this.UnknownLink7);
-                obj.UnknownInt4 = eval(this.UnknownInt4);
-                obj.UnknownLink8 = eval(this.UnknownLink8);
-                obj.UnknownFloat6 = eval(this.UnknownFloat6);
-                obj.UnknownInt5 = eval(this.UnknownInt5);
-                obj.UnknownLink9 = eval(this.UnknownLink9);
+                obj.ReactionType = eval(this.ReactionType);
+                obj.ReactionTarget = eval(this.ReactionTarget);
+                obj.Packages = eval(this.Packages);
+                obj.Flags = eval(this.Flags);
+                obj.ReactionRadiusGlobal = eval(this.ReactionRadiusGlobal);
+                obj.ExitRadiusGlobal = eval(this.ExitRadiusGlobal);
+                obj.MaxNumberOfTimesToReactGlobal = eval(this.MaxNumberOfTimesToReactGlobal);
+                obj.MaxHerdMembersToAnimateGlobal = eval(this.MaxHerdMembersToAnimateGlobal);
+                obj.NumberOfWarningsBeforeAttackGlobal = eval(this.NumberOfWarningsBeforeAttackGlobal);
+                obj.MaxNumberOfTimesToReact = eval(this.MaxNumberOfTimesToReact);
+                obj.ReactionRadius = eval(this.ReactionRadius);
+                obj.ExitRadius = eval(this.ExitRadius);
+                obj.MaxHerdMembersToAnimate = eval(this.MaxHerdMembersToAnimate);
+                obj.NumberOfWarningsBeforeAttack = eval(this.NumberOfWarningsBeforeAttack);
+                obj.LinkedRefKeyword = eval(this.LinkedRefKeyword);
+                obj.SpecificReference = eval(this.SpecificReference);
+                obj.WarnTimerOnWarnAttackGlobal = eval(this.WarnTimerOnWarnAttackGlobal);
+                obj.WarnTimerOnWarnAttack = eval(this.WarnTimerOnWarnAttack);
+                obj.CoolDownTimer = eval(this.CoolDownTimer);
+                obj.CoolDownTimerGlobal = eval(this.CoolDownTimerGlobal);
             }
             #endregion
 
@@ -473,85 +480,85 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(NpcRDSA.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.UnknownInt ?? true)
+                    if (printMask?.ReactionType ?? true)
                     {
-                        sb.AppendItem(UnknownInt, "UnknownInt");
+                        sb.AppendItem(ReactionType, "ReactionType");
                     }
-                    if (printMask?.UnknownInt2 ?? true)
+                    if (printMask?.ReactionTarget ?? true)
                     {
-                        sb.AppendItem(UnknownInt2, "UnknownInt2");
+                        sb.AppendItem(ReactionTarget, "ReactionTarget");
                     }
-                    if (printMask?.UnknownLink1 ?? true)
+                    if (printMask?.Packages ?? true)
                     {
-                        sb.AppendItem(UnknownLink1, "UnknownLink1");
+                        sb.AppendItem(Packages, "Packages");
                     }
-                    if (printMask?.UnknownInt3 ?? true)
+                    if (printMask?.Flags ?? true)
                     {
-                        sb.AppendItem(UnknownInt3, "UnknownInt3");
+                        sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.UnknownLink2 ?? true)
+                    if (printMask?.ReactionRadiusGlobal ?? true)
                     {
-                        sb.AppendItem(UnknownLink2, "UnknownLink2");
+                        sb.AppendItem(ReactionRadiusGlobal, "ReactionRadiusGlobal");
                     }
-                    if (printMask?.UnknownLink3 ?? true)
+                    if (printMask?.ExitRadiusGlobal ?? true)
                     {
-                        sb.AppendItem(UnknownLink3, "UnknownLink3");
+                        sb.AppendItem(ExitRadiusGlobal, "ExitRadiusGlobal");
                     }
-                    if (printMask?.UnknownLink4 ?? true)
+                    if (printMask?.MaxNumberOfTimesToReactGlobal ?? true)
                     {
-                        sb.AppendItem(UnknownLink4, "UnknownLink4");
+                        sb.AppendItem(MaxNumberOfTimesToReactGlobal, "MaxNumberOfTimesToReactGlobal");
                     }
-                    if (printMask?.UnknownLink5 ?? true)
+                    if (printMask?.MaxHerdMembersToAnimateGlobal ?? true)
                     {
-                        sb.AppendItem(UnknownLink5, "UnknownLink5");
+                        sb.AppendItem(MaxHerdMembersToAnimateGlobal, "MaxHerdMembersToAnimateGlobal");
                     }
-                    if (printMask?.UnknownLink6 ?? true)
+                    if (printMask?.NumberOfWarningsBeforeAttackGlobal ?? true)
                     {
-                        sb.AppendItem(UnknownLink6, "UnknownLink6");
+                        sb.AppendItem(NumberOfWarningsBeforeAttackGlobal, "NumberOfWarningsBeforeAttackGlobal");
                     }
-                    if (printMask?.UnknownFloat1 ?? true)
+                    if (printMask?.MaxNumberOfTimesToReact ?? true)
                     {
-                        sb.AppendItem(UnknownFloat1, "UnknownFloat1");
+                        sb.AppendItem(MaxNumberOfTimesToReact, "MaxNumberOfTimesToReact");
                     }
-                    if (printMask?.UnknownFloat2 ?? true)
+                    if (printMask?.ReactionRadius ?? true)
                     {
-                        sb.AppendItem(UnknownFloat2, "UnknownFloat2");
+                        sb.AppendItem(ReactionRadius, "ReactionRadius");
                     }
-                    if (printMask?.UnknownFloat3 ?? true)
+                    if (printMask?.ExitRadius ?? true)
                     {
-                        sb.AppendItem(UnknownFloat3, "UnknownFloat3");
+                        sb.AppendItem(ExitRadius, "ExitRadius");
                     }
-                    if (printMask?.UnknownFloat4 ?? true)
+                    if (printMask?.MaxHerdMembersToAnimate ?? true)
                     {
-                        sb.AppendItem(UnknownFloat4, "UnknownFloat4");
+                        sb.AppendItem(MaxHerdMembersToAnimate, "MaxHerdMembersToAnimate");
                     }
-                    if (printMask?.UnknownFloat5 ?? true)
+                    if (printMask?.NumberOfWarningsBeforeAttack ?? true)
                     {
-                        sb.AppendItem(UnknownFloat5, "UnknownFloat5");
+                        sb.AppendItem(NumberOfWarningsBeforeAttack, "NumberOfWarningsBeforeAttack");
                     }
-                    if (printMask?.UnknownLink7 ?? true)
+                    if (printMask?.LinkedRefKeyword ?? true)
                     {
-                        sb.AppendItem(UnknownLink7, "UnknownLink7");
+                        sb.AppendItem(LinkedRefKeyword, "LinkedRefKeyword");
                     }
-                    if (printMask?.UnknownInt4 ?? true)
+                    if (printMask?.SpecificReference ?? true)
                     {
-                        sb.AppendItem(UnknownInt4, "UnknownInt4");
+                        sb.AppendItem(SpecificReference, "SpecificReference");
                     }
-                    if (printMask?.UnknownLink8 ?? true)
+                    if (printMask?.WarnTimerOnWarnAttackGlobal ?? true)
                     {
-                        sb.AppendItem(UnknownLink8, "UnknownLink8");
+                        sb.AppendItem(WarnTimerOnWarnAttackGlobal, "WarnTimerOnWarnAttackGlobal");
                     }
-                    if (printMask?.UnknownFloat6 ?? true)
+                    if (printMask?.WarnTimerOnWarnAttack ?? true)
                     {
-                        sb.AppendItem(UnknownFloat6, "UnknownFloat6");
+                        sb.AppendItem(WarnTimerOnWarnAttack, "WarnTimerOnWarnAttack");
                     }
-                    if (printMask?.UnknownInt5 ?? true)
+                    if (printMask?.CoolDownTimer ?? true)
                     {
-                        sb.AppendItem(UnknownInt5, "UnknownInt5");
+                        sb.AppendItem(CoolDownTimer, "CoolDownTimer");
                     }
-                    if (printMask?.UnknownLink9 ?? true)
+                    if (printMask?.CoolDownTimerGlobal ?? true)
                     {
-                        sb.AppendItem(UnknownLink9, "UnknownLink9");
+                        sb.AppendItem(CoolDownTimerGlobal, "CoolDownTimerGlobal");
                     }
                 }
             }
@@ -577,26 +584,26 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? UnknownInt;
-            public Exception? UnknownInt2;
-            public Exception? UnknownLink1;
-            public Exception? UnknownInt3;
-            public Exception? UnknownLink2;
-            public Exception? UnknownLink3;
-            public Exception? UnknownLink4;
-            public Exception? UnknownLink5;
-            public Exception? UnknownLink6;
-            public Exception? UnknownFloat1;
-            public Exception? UnknownFloat2;
-            public Exception? UnknownFloat3;
-            public Exception? UnknownFloat4;
-            public Exception? UnknownFloat5;
-            public Exception? UnknownLink7;
-            public Exception? UnknownInt4;
-            public Exception? UnknownLink8;
-            public Exception? UnknownFloat6;
-            public Exception? UnknownInt5;
-            public Exception? UnknownLink9;
+            public Exception? ReactionType;
+            public Exception? ReactionTarget;
+            public Exception? Packages;
+            public Exception? Flags;
+            public Exception? ReactionRadiusGlobal;
+            public Exception? ExitRadiusGlobal;
+            public Exception? MaxNumberOfTimesToReactGlobal;
+            public Exception? MaxHerdMembersToAnimateGlobal;
+            public Exception? NumberOfWarningsBeforeAttackGlobal;
+            public Exception? MaxNumberOfTimesToReact;
+            public Exception? ReactionRadius;
+            public Exception? ExitRadius;
+            public Exception? MaxHerdMembersToAnimate;
+            public Exception? NumberOfWarningsBeforeAttack;
+            public Exception? LinkedRefKeyword;
+            public Exception? SpecificReference;
+            public Exception? WarnTimerOnWarnAttackGlobal;
+            public Exception? WarnTimerOnWarnAttack;
+            public Exception? CoolDownTimer;
+            public Exception? CoolDownTimerGlobal;
             #endregion
 
             #region IErrorMask
@@ -605,46 +612,46 @@ namespace Mutagen.Bethesda.Starfield
                 NpcRDSA_FieldIndex enu = (NpcRDSA_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcRDSA_FieldIndex.UnknownInt:
-                        return UnknownInt;
-                    case NpcRDSA_FieldIndex.UnknownInt2:
-                        return UnknownInt2;
-                    case NpcRDSA_FieldIndex.UnknownLink1:
-                        return UnknownLink1;
-                    case NpcRDSA_FieldIndex.UnknownInt3:
-                        return UnknownInt3;
-                    case NpcRDSA_FieldIndex.UnknownLink2:
-                        return UnknownLink2;
-                    case NpcRDSA_FieldIndex.UnknownLink3:
-                        return UnknownLink3;
-                    case NpcRDSA_FieldIndex.UnknownLink4:
-                        return UnknownLink4;
-                    case NpcRDSA_FieldIndex.UnknownLink5:
-                        return UnknownLink5;
-                    case NpcRDSA_FieldIndex.UnknownLink6:
-                        return UnknownLink6;
-                    case NpcRDSA_FieldIndex.UnknownFloat1:
-                        return UnknownFloat1;
-                    case NpcRDSA_FieldIndex.UnknownFloat2:
-                        return UnknownFloat2;
-                    case NpcRDSA_FieldIndex.UnknownFloat3:
-                        return UnknownFloat3;
-                    case NpcRDSA_FieldIndex.UnknownFloat4:
-                        return UnknownFloat4;
-                    case NpcRDSA_FieldIndex.UnknownFloat5:
-                        return UnknownFloat5;
-                    case NpcRDSA_FieldIndex.UnknownLink7:
-                        return UnknownLink7;
-                    case NpcRDSA_FieldIndex.UnknownInt4:
-                        return UnknownInt4;
-                    case NpcRDSA_FieldIndex.UnknownLink8:
-                        return UnknownLink8;
-                    case NpcRDSA_FieldIndex.UnknownFloat6:
-                        return UnknownFloat6;
-                    case NpcRDSA_FieldIndex.UnknownInt5:
-                        return UnknownInt5;
-                    case NpcRDSA_FieldIndex.UnknownLink9:
-                        return UnknownLink9;
+                    case NpcRDSA_FieldIndex.ReactionType:
+                        return ReactionType;
+                    case NpcRDSA_FieldIndex.ReactionTarget:
+                        return ReactionTarget;
+                    case NpcRDSA_FieldIndex.Packages:
+                        return Packages;
+                    case NpcRDSA_FieldIndex.Flags:
+                        return Flags;
+                    case NpcRDSA_FieldIndex.ReactionRadiusGlobal:
+                        return ReactionRadiusGlobal;
+                    case NpcRDSA_FieldIndex.ExitRadiusGlobal:
+                        return ExitRadiusGlobal;
+                    case NpcRDSA_FieldIndex.MaxNumberOfTimesToReactGlobal:
+                        return MaxNumberOfTimesToReactGlobal;
+                    case NpcRDSA_FieldIndex.MaxHerdMembersToAnimateGlobal:
+                        return MaxHerdMembersToAnimateGlobal;
+                    case NpcRDSA_FieldIndex.NumberOfWarningsBeforeAttackGlobal:
+                        return NumberOfWarningsBeforeAttackGlobal;
+                    case NpcRDSA_FieldIndex.MaxNumberOfTimesToReact:
+                        return MaxNumberOfTimesToReact;
+                    case NpcRDSA_FieldIndex.ReactionRadius:
+                        return ReactionRadius;
+                    case NpcRDSA_FieldIndex.ExitRadius:
+                        return ExitRadius;
+                    case NpcRDSA_FieldIndex.MaxHerdMembersToAnimate:
+                        return MaxHerdMembersToAnimate;
+                    case NpcRDSA_FieldIndex.NumberOfWarningsBeforeAttack:
+                        return NumberOfWarningsBeforeAttack;
+                    case NpcRDSA_FieldIndex.LinkedRefKeyword:
+                        return LinkedRefKeyword;
+                    case NpcRDSA_FieldIndex.SpecificReference:
+                        return SpecificReference;
+                    case NpcRDSA_FieldIndex.WarnTimerOnWarnAttackGlobal:
+                        return WarnTimerOnWarnAttackGlobal;
+                    case NpcRDSA_FieldIndex.WarnTimerOnWarnAttack:
+                        return WarnTimerOnWarnAttack;
+                    case NpcRDSA_FieldIndex.CoolDownTimer:
+                        return CoolDownTimer;
+                    case NpcRDSA_FieldIndex.CoolDownTimerGlobal:
+                        return CoolDownTimerGlobal;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -655,65 +662,65 @@ namespace Mutagen.Bethesda.Starfield
                 NpcRDSA_FieldIndex enu = (NpcRDSA_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcRDSA_FieldIndex.UnknownInt:
-                        this.UnknownInt = ex;
+                    case NpcRDSA_FieldIndex.ReactionType:
+                        this.ReactionType = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownInt2:
-                        this.UnknownInt2 = ex;
+                    case NpcRDSA_FieldIndex.ReactionTarget:
+                        this.ReactionTarget = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink1:
-                        this.UnknownLink1 = ex;
+                    case NpcRDSA_FieldIndex.Packages:
+                        this.Packages = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownInt3:
-                        this.UnknownInt3 = ex;
+                    case NpcRDSA_FieldIndex.Flags:
+                        this.Flags = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink2:
-                        this.UnknownLink2 = ex;
+                    case NpcRDSA_FieldIndex.ReactionRadiusGlobal:
+                        this.ReactionRadiusGlobal = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink3:
-                        this.UnknownLink3 = ex;
+                    case NpcRDSA_FieldIndex.ExitRadiusGlobal:
+                        this.ExitRadiusGlobal = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink4:
-                        this.UnknownLink4 = ex;
+                    case NpcRDSA_FieldIndex.MaxNumberOfTimesToReactGlobal:
+                        this.MaxNumberOfTimesToReactGlobal = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink5:
-                        this.UnknownLink5 = ex;
+                    case NpcRDSA_FieldIndex.MaxHerdMembersToAnimateGlobal:
+                        this.MaxHerdMembersToAnimateGlobal = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink6:
-                        this.UnknownLink6 = ex;
+                    case NpcRDSA_FieldIndex.NumberOfWarningsBeforeAttackGlobal:
+                        this.NumberOfWarningsBeforeAttackGlobal = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownFloat1:
-                        this.UnknownFloat1 = ex;
+                    case NpcRDSA_FieldIndex.MaxNumberOfTimesToReact:
+                        this.MaxNumberOfTimesToReact = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownFloat2:
-                        this.UnknownFloat2 = ex;
+                    case NpcRDSA_FieldIndex.ReactionRadius:
+                        this.ReactionRadius = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownFloat3:
-                        this.UnknownFloat3 = ex;
+                    case NpcRDSA_FieldIndex.ExitRadius:
+                        this.ExitRadius = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownFloat4:
-                        this.UnknownFloat4 = ex;
+                    case NpcRDSA_FieldIndex.MaxHerdMembersToAnimate:
+                        this.MaxHerdMembersToAnimate = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownFloat5:
-                        this.UnknownFloat5 = ex;
+                    case NpcRDSA_FieldIndex.NumberOfWarningsBeforeAttack:
+                        this.NumberOfWarningsBeforeAttack = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink7:
-                        this.UnknownLink7 = ex;
+                    case NpcRDSA_FieldIndex.LinkedRefKeyword:
+                        this.LinkedRefKeyword = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownInt4:
-                        this.UnknownInt4 = ex;
+                    case NpcRDSA_FieldIndex.SpecificReference:
+                        this.SpecificReference = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink8:
-                        this.UnknownLink8 = ex;
+                    case NpcRDSA_FieldIndex.WarnTimerOnWarnAttackGlobal:
+                        this.WarnTimerOnWarnAttackGlobal = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownFloat6:
-                        this.UnknownFloat6 = ex;
+                    case NpcRDSA_FieldIndex.WarnTimerOnWarnAttack:
+                        this.WarnTimerOnWarnAttack = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownInt5:
-                        this.UnknownInt5 = ex;
+                    case NpcRDSA_FieldIndex.CoolDownTimer:
+                        this.CoolDownTimer = ex;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink9:
-                        this.UnknownLink9 = ex;
+                    case NpcRDSA_FieldIndex.CoolDownTimerGlobal:
+                        this.CoolDownTimerGlobal = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -725,65 +732,65 @@ namespace Mutagen.Bethesda.Starfield
                 NpcRDSA_FieldIndex enu = (NpcRDSA_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcRDSA_FieldIndex.UnknownInt:
-                        this.UnknownInt = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.ReactionType:
+                        this.ReactionType = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownInt2:
-                        this.UnknownInt2 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.ReactionTarget:
+                        this.ReactionTarget = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink1:
-                        this.UnknownLink1 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.Packages:
+                        this.Packages = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownInt3:
-                        this.UnknownInt3 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.Flags:
+                        this.Flags = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink2:
-                        this.UnknownLink2 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.ReactionRadiusGlobal:
+                        this.ReactionRadiusGlobal = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink3:
-                        this.UnknownLink3 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.ExitRadiusGlobal:
+                        this.ExitRadiusGlobal = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink4:
-                        this.UnknownLink4 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.MaxNumberOfTimesToReactGlobal:
+                        this.MaxNumberOfTimesToReactGlobal = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink5:
-                        this.UnknownLink5 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.MaxHerdMembersToAnimateGlobal:
+                        this.MaxHerdMembersToAnimateGlobal = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink6:
-                        this.UnknownLink6 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.NumberOfWarningsBeforeAttackGlobal:
+                        this.NumberOfWarningsBeforeAttackGlobal = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownFloat1:
-                        this.UnknownFloat1 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.MaxNumberOfTimesToReact:
+                        this.MaxNumberOfTimesToReact = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownFloat2:
-                        this.UnknownFloat2 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.ReactionRadius:
+                        this.ReactionRadius = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownFloat3:
-                        this.UnknownFloat3 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.ExitRadius:
+                        this.ExitRadius = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownFloat4:
-                        this.UnknownFloat4 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.MaxHerdMembersToAnimate:
+                        this.MaxHerdMembersToAnimate = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownFloat5:
-                        this.UnknownFloat5 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.NumberOfWarningsBeforeAttack:
+                        this.NumberOfWarningsBeforeAttack = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink7:
-                        this.UnknownLink7 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.LinkedRefKeyword:
+                        this.LinkedRefKeyword = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownInt4:
-                        this.UnknownInt4 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.SpecificReference:
+                        this.SpecificReference = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink8:
-                        this.UnknownLink8 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.WarnTimerOnWarnAttackGlobal:
+                        this.WarnTimerOnWarnAttackGlobal = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownFloat6:
-                        this.UnknownFloat6 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.WarnTimerOnWarnAttack:
+                        this.WarnTimerOnWarnAttack = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownInt5:
-                        this.UnknownInt5 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.CoolDownTimer:
+                        this.CoolDownTimer = (Exception?)obj;
                         break;
-                    case NpcRDSA_FieldIndex.UnknownLink9:
-                        this.UnknownLink9 = (Exception?)obj;
+                    case NpcRDSA_FieldIndex.CoolDownTimerGlobal:
+                        this.CoolDownTimerGlobal = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -793,26 +800,26 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (UnknownInt != null) return true;
-                if (UnknownInt2 != null) return true;
-                if (UnknownLink1 != null) return true;
-                if (UnknownInt3 != null) return true;
-                if (UnknownLink2 != null) return true;
-                if (UnknownLink3 != null) return true;
-                if (UnknownLink4 != null) return true;
-                if (UnknownLink5 != null) return true;
-                if (UnknownLink6 != null) return true;
-                if (UnknownFloat1 != null) return true;
-                if (UnknownFloat2 != null) return true;
-                if (UnknownFloat3 != null) return true;
-                if (UnknownFloat4 != null) return true;
-                if (UnknownFloat5 != null) return true;
-                if (UnknownLink7 != null) return true;
-                if (UnknownInt4 != null) return true;
-                if (UnknownLink8 != null) return true;
-                if (UnknownFloat6 != null) return true;
-                if (UnknownInt5 != null) return true;
-                if (UnknownLink9 != null) return true;
+                if (ReactionType != null) return true;
+                if (ReactionTarget != null) return true;
+                if (Packages != null) return true;
+                if (Flags != null) return true;
+                if (ReactionRadiusGlobal != null) return true;
+                if (ExitRadiusGlobal != null) return true;
+                if (MaxNumberOfTimesToReactGlobal != null) return true;
+                if (MaxHerdMembersToAnimateGlobal != null) return true;
+                if (NumberOfWarningsBeforeAttackGlobal != null) return true;
+                if (MaxNumberOfTimesToReact != null) return true;
+                if (ReactionRadius != null) return true;
+                if (ExitRadius != null) return true;
+                if (MaxHerdMembersToAnimate != null) return true;
+                if (NumberOfWarningsBeforeAttack != null) return true;
+                if (LinkedRefKeyword != null) return true;
+                if (SpecificReference != null) return true;
+                if (WarnTimerOnWarnAttackGlobal != null) return true;
+                if (WarnTimerOnWarnAttack != null) return true;
+                if (CoolDownTimer != null) return true;
+                if (CoolDownTimerGlobal != null) return true;
                 return false;
             }
             #endregion
@@ -839,64 +846,64 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(UnknownInt, "UnknownInt");
+                    sb.AppendItem(ReactionType, "ReactionType");
                 }
                 {
-                    sb.AppendItem(UnknownInt2, "UnknownInt2");
+                    sb.AppendItem(ReactionTarget, "ReactionTarget");
                 }
                 {
-                    sb.AppendItem(UnknownLink1, "UnknownLink1");
+                    sb.AppendItem(Packages, "Packages");
                 }
                 {
-                    sb.AppendItem(UnknownInt3, "UnknownInt3");
+                    sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(UnknownLink2, "UnknownLink2");
+                    sb.AppendItem(ReactionRadiusGlobal, "ReactionRadiusGlobal");
                 }
                 {
-                    sb.AppendItem(UnknownLink3, "UnknownLink3");
+                    sb.AppendItem(ExitRadiusGlobal, "ExitRadiusGlobal");
                 }
                 {
-                    sb.AppendItem(UnknownLink4, "UnknownLink4");
+                    sb.AppendItem(MaxNumberOfTimesToReactGlobal, "MaxNumberOfTimesToReactGlobal");
                 }
                 {
-                    sb.AppendItem(UnknownLink5, "UnknownLink5");
+                    sb.AppendItem(MaxHerdMembersToAnimateGlobal, "MaxHerdMembersToAnimateGlobal");
                 }
                 {
-                    sb.AppendItem(UnknownLink6, "UnknownLink6");
+                    sb.AppendItem(NumberOfWarningsBeforeAttackGlobal, "NumberOfWarningsBeforeAttackGlobal");
                 }
                 {
-                    sb.AppendItem(UnknownFloat1, "UnknownFloat1");
+                    sb.AppendItem(MaxNumberOfTimesToReact, "MaxNumberOfTimesToReact");
                 }
                 {
-                    sb.AppendItem(UnknownFloat2, "UnknownFloat2");
+                    sb.AppendItem(ReactionRadius, "ReactionRadius");
                 }
                 {
-                    sb.AppendItem(UnknownFloat3, "UnknownFloat3");
+                    sb.AppendItem(ExitRadius, "ExitRadius");
                 }
                 {
-                    sb.AppendItem(UnknownFloat4, "UnknownFloat4");
+                    sb.AppendItem(MaxHerdMembersToAnimate, "MaxHerdMembersToAnimate");
                 }
                 {
-                    sb.AppendItem(UnknownFloat5, "UnknownFloat5");
+                    sb.AppendItem(NumberOfWarningsBeforeAttack, "NumberOfWarningsBeforeAttack");
                 }
                 {
-                    sb.AppendItem(UnknownLink7, "UnknownLink7");
+                    sb.AppendItem(LinkedRefKeyword, "LinkedRefKeyword");
                 }
                 {
-                    sb.AppendItem(UnknownInt4, "UnknownInt4");
+                    sb.AppendItem(SpecificReference, "SpecificReference");
                 }
                 {
-                    sb.AppendItem(UnknownLink8, "UnknownLink8");
+                    sb.AppendItem(WarnTimerOnWarnAttackGlobal, "WarnTimerOnWarnAttackGlobal");
                 }
                 {
-                    sb.AppendItem(UnknownFloat6, "UnknownFloat6");
+                    sb.AppendItem(WarnTimerOnWarnAttack, "WarnTimerOnWarnAttack");
                 }
                 {
-                    sb.AppendItem(UnknownInt5, "UnknownInt5");
+                    sb.AppendItem(CoolDownTimer, "CoolDownTimer");
                 }
                 {
-                    sb.AppendItem(UnknownLink9, "UnknownLink9");
+                    sb.AppendItem(CoolDownTimerGlobal, "CoolDownTimerGlobal");
                 }
             }
             #endregion
@@ -906,26 +913,26 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.UnknownInt = this.UnknownInt.Combine(rhs.UnknownInt);
-                ret.UnknownInt2 = this.UnknownInt2.Combine(rhs.UnknownInt2);
-                ret.UnknownLink1 = this.UnknownLink1.Combine(rhs.UnknownLink1);
-                ret.UnknownInt3 = this.UnknownInt3.Combine(rhs.UnknownInt3);
-                ret.UnknownLink2 = this.UnknownLink2.Combine(rhs.UnknownLink2);
-                ret.UnknownLink3 = this.UnknownLink3.Combine(rhs.UnknownLink3);
-                ret.UnknownLink4 = this.UnknownLink4.Combine(rhs.UnknownLink4);
-                ret.UnknownLink5 = this.UnknownLink5.Combine(rhs.UnknownLink5);
-                ret.UnknownLink6 = this.UnknownLink6.Combine(rhs.UnknownLink6);
-                ret.UnknownFloat1 = this.UnknownFloat1.Combine(rhs.UnknownFloat1);
-                ret.UnknownFloat2 = this.UnknownFloat2.Combine(rhs.UnknownFloat2);
-                ret.UnknownFloat3 = this.UnknownFloat3.Combine(rhs.UnknownFloat3);
-                ret.UnknownFloat4 = this.UnknownFloat4.Combine(rhs.UnknownFloat4);
-                ret.UnknownFloat5 = this.UnknownFloat5.Combine(rhs.UnknownFloat5);
-                ret.UnknownLink7 = this.UnknownLink7.Combine(rhs.UnknownLink7);
-                ret.UnknownInt4 = this.UnknownInt4.Combine(rhs.UnknownInt4);
-                ret.UnknownLink8 = this.UnknownLink8.Combine(rhs.UnknownLink8);
-                ret.UnknownFloat6 = this.UnknownFloat6.Combine(rhs.UnknownFloat6);
-                ret.UnknownInt5 = this.UnknownInt5.Combine(rhs.UnknownInt5);
-                ret.UnknownLink9 = this.UnknownLink9.Combine(rhs.UnknownLink9);
+                ret.ReactionType = this.ReactionType.Combine(rhs.ReactionType);
+                ret.ReactionTarget = this.ReactionTarget.Combine(rhs.ReactionTarget);
+                ret.Packages = this.Packages.Combine(rhs.Packages);
+                ret.Flags = this.Flags.Combine(rhs.Flags);
+                ret.ReactionRadiusGlobal = this.ReactionRadiusGlobal.Combine(rhs.ReactionRadiusGlobal);
+                ret.ExitRadiusGlobal = this.ExitRadiusGlobal.Combine(rhs.ExitRadiusGlobal);
+                ret.MaxNumberOfTimesToReactGlobal = this.MaxNumberOfTimesToReactGlobal.Combine(rhs.MaxNumberOfTimesToReactGlobal);
+                ret.MaxHerdMembersToAnimateGlobal = this.MaxHerdMembersToAnimateGlobal.Combine(rhs.MaxHerdMembersToAnimateGlobal);
+                ret.NumberOfWarningsBeforeAttackGlobal = this.NumberOfWarningsBeforeAttackGlobal.Combine(rhs.NumberOfWarningsBeforeAttackGlobal);
+                ret.MaxNumberOfTimesToReact = this.MaxNumberOfTimesToReact.Combine(rhs.MaxNumberOfTimesToReact);
+                ret.ReactionRadius = this.ReactionRadius.Combine(rhs.ReactionRadius);
+                ret.ExitRadius = this.ExitRadius.Combine(rhs.ExitRadius);
+                ret.MaxHerdMembersToAnimate = this.MaxHerdMembersToAnimate.Combine(rhs.MaxHerdMembersToAnimate);
+                ret.NumberOfWarningsBeforeAttack = this.NumberOfWarningsBeforeAttack.Combine(rhs.NumberOfWarningsBeforeAttack);
+                ret.LinkedRefKeyword = this.LinkedRefKeyword.Combine(rhs.LinkedRefKeyword);
+                ret.SpecificReference = this.SpecificReference.Combine(rhs.SpecificReference);
+                ret.WarnTimerOnWarnAttackGlobal = this.WarnTimerOnWarnAttackGlobal.Combine(rhs.WarnTimerOnWarnAttackGlobal);
+                ret.WarnTimerOnWarnAttack = this.WarnTimerOnWarnAttack.Combine(rhs.WarnTimerOnWarnAttack);
+                ret.CoolDownTimer = this.CoolDownTimer.Combine(rhs.CoolDownTimer);
+                ret.CoolDownTimerGlobal = this.CoolDownTimerGlobal.Combine(rhs.CoolDownTimerGlobal);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -949,26 +956,26 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool UnknownInt;
-            public bool UnknownInt2;
-            public bool UnknownLink1;
-            public bool UnknownInt3;
-            public bool UnknownLink2;
-            public bool UnknownLink3;
-            public bool UnknownLink4;
-            public bool UnknownLink5;
-            public bool UnknownLink6;
-            public bool UnknownFloat1;
-            public bool UnknownFloat2;
-            public bool UnknownFloat3;
-            public bool UnknownFloat4;
-            public bool UnknownFloat5;
-            public bool UnknownLink7;
-            public bool UnknownInt4;
-            public bool UnknownLink8;
-            public bool UnknownFloat6;
-            public bool UnknownInt5;
-            public bool UnknownLink9;
+            public bool ReactionType;
+            public bool ReactionTarget;
+            public bool Packages;
+            public bool Flags;
+            public bool ReactionRadiusGlobal;
+            public bool ExitRadiusGlobal;
+            public bool MaxNumberOfTimesToReactGlobal;
+            public bool MaxHerdMembersToAnimateGlobal;
+            public bool NumberOfWarningsBeforeAttackGlobal;
+            public bool MaxNumberOfTimesToReact;
+            public bool ReactionRadius;
+            public bool ExitRadius;
+            public bool MaxHerdMembersToAnimate;
+            public bool NumberOfWarningsBeforeAttack;
+            public bool LinkedRefKeyword;
+            public bool SpecificReference;
+            public bool WarnTimerOnWarnAttackGlobal;
+            public bool WarnTimerOnWarnAttack;
+            public bool CoolDownTimer;
+            public bool CoolDownTimerGlobal;
             #endregion
 
             #region Ctors
@@ -978,26 +985,26 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.UnknownInt = defaultOn;
-                this.UnknownInt2 = defaultOn;
-                this.UnknownLink1 = defaultOn;
-                this.UnknownInt3 = defaultOn;
-                this.UnknownLink2 = defaultOn;
-                this.UnknownLink3 = defaultOn;
-                this.UnknownLink4 = defaultOn;
-                this.UnknownLink5 = defaultOn;
-                this.UnknownLink6 = defaultOn;
-                this.UnknownFloat1 = defaultOn;
-                this.UnknownFloat2 = defaultOn;
-                this.UnknownFloat3 = defaultOn;
-                this.UnknownFloat4 = defaultOn;
-                this.UnknownFloat5 = defaultOn;
-                this.UnknownLink7 = defaultOn;
-                this.UnknownInt4 = defaultOn;
-                this.UnknownLink8 = defaultOn;
-                this.UnknownFloat6 = defaultOn;
-                this.UnknownInt5 = defaultOn;
-                this.UnknownLink9 = defaultOn;
+                this.ReactionType = defaultOn;
+                this.ReactionTarget = defaultOn;
+                this.Packages = defaultOn;
+                this.Flags = defaultOn;
+                this.ReactionRadiusGlobal = defaultOn;
+                this.ExitRadiusGlobal = defaultOn;
+                this.MaxNumberOfTimesToReactGlobal = defaultOn;
+                this.MaxHerdMembersToAnimateGlobal = defaultOn;
+                this.NumberOfWarningsBeforeAttackGlobal = defaultOn;
+                this.MaxNumberOfTimesToReact = defaultOn;
+                this.ReactionRadius = defaultOn;
+                this.ExitRadius = defaultOn;
+                this.MaxHerdMembersToAnimate = defaultOn;
+                this.NumberOfWarningsBeforeAttack = defaultOn;
+                this.LinkedRefKeyword = defaultOn;
+                this.SpecificReference = defaultOn;
+                this.WarnTimerOnWarnAttackGlobal = defaultOn;
+                this.WarnTimerOnWarnAttack = defaultOn;
+                this.CoolDownTimer = defaultOn;
+                this.CoolDownTimerGlobal = defaultOn;
             }
 
             #endregion
@@ -1013,26 +1020,26 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((UnknownInt, null));
-                ret.Add((UnknownInt2, null));
-                ret.Add((UnknownLink1, null));
-                ret.Add((UnknownInt3, null));
-                ret.Add((UnknownLink2, null));
-                ret.Add((UnknownLink3, null));
-                ret.Add((UnknownLink4, null));
-                ret.Add((UnknownLink5, null));
-                ret.Add((UnknownLink6, null));
-                ret.Add((UnknownFloat1, null));
-                ret.Add((UnknownFloat2, null));
-                ret.Add((UnknownFloat3, null));
-                ret.Add((UnknownFloat4, null));
-                ret.Add((UnknownFloat5, null));
-                ret.Add((UnknownLink7, null));
-                ret.Add((UnknownInt4, null));
-                ret.Add((UnknownLink8, null));
-                ret.Add((UnknownFloat6, null));
-                ret.Add((UnknownInt5, null));
-                ret.Add((UnknownLink9, null));
+                ret.Add((ReactionType, null));
+                ret.Add((ReactionTarget, null));
+                ret.Add((Packages, null));
+                ret.Add((Flags, null));
+                ret.Add((ReactionRadiusGlobal, null));
+                ret.Add((ExitRadiusGlobal, null));
+                ret.Add((MaxNumberOfTimesToReactGlobal, null));
+                ret.Add((MaxHerdMembersToAnimateGlobal, null));
+                ret.Add((NumberOfWarningsBeforeAttackGlobal, null));
+                ret.Add((MaxNumberOfTimesToReact, null));
+                ret.Add((ReactionRadius, null));
+                ret.Add((ExitRadius, null));
+                ret.Add((MaxHerdMembersToAnimate, null));
+                ret.Add((NumberOfWarningsBeforeAttack, null));
+                ret.Add((LinkedRefKeyword, null));
+                ret.Add((SpecificReference, null));
+                ret.Add((WarnTimerOnWarnAttackGlobal, null));
+                ret.Add((WarnTimerOnWarnAttack, null));
+                ret.Add((CoolDownTimer, null));
+                ret.Add((CoolDownTimerGlobal, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -1111,26 +1118,26 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<INpcRDSA>,
         INpcRDSAGetter
     {
-        new Int32 UnknownInt { get; set; }
-        new Int32 UnknownInt2 { get; set; }
-        new IFormLink<IStarfieldMajorRecordGetter> UnknownLink1 { get; set; }
-        new Int32 UnknownInt3 { get; set; }
-        new IFormLink<IStarfieldMajorRecordGetter> UnknownLink2 { get; set; }
-        new IFormLink<IStarfieldMajorRecordGetter> UnknownLink3 { get; set; }
-        new IFormLink<IStarfieldMajorRecordGetter> UnknownLink4 { get; set; }
-        new IFormLink<IStarfieldMajorRecordGetter> UnknownLink5 { get; set; }
-        new IFormLink<IStarfieldMajorRecordGetter> UnknownLink6 { get; set; }
-        new Single UnknownFloat1 { get; set; }
-        new Single UnknownFloat2 { get; set; }
-        new Single UnknownFloat3 { get; set; }
-        new Single UnknownFloat4 { get; set; }
-        new Single UnknownFloat5 { get; set; }
-        new IFormLink<IStarfieldMajorRecordGetter> UnknownLink7 { get; set; }
-        new Int32 UnknownInt4 { get; set; }
-        new IFormLink<IStarfieldMajorRecordGetter> UnknownLink8 { get; set; }
-        new Single UnknownFloat6 { get; set; }
-        new Int32 UnknownInt5 { get; set; }
-        new IFormLink<IStarfieldMajorRecordGetter> UnknownLink9 { get; set; }
+        new Npc.ReactionTypeOption ReactionType { get; set; }
+        new Npc.ReactionTargetOption ReactionTarget { get; set; }
+        new IFormLink<IFormListGetter> Packages { get; set; }
+        new Npc.ReactionRadiusFlag Flags { get; set; }
+        new IFormLink<IGlobalGetter> ReactionRadiusGlobal { get; set; }
+        new IFormLink<IGlobalGetter> ExitRadiusGlobal { get; set; }
+        new IFormLink<IGlobalGetter> MaxNumberOfTimesToReactGlobal { get; set; }
+        new IFormLink<IGlobalGetter> MaxHerdMembersToAnimateGlobal { get; set; }
+        new IFormLink<IGlobalGetter> NumberOfWarningsBeforeAttackGlobal { get; set; }
+        new Single MaxNumberOfTimesToReact { get; set; }
+        new Single ReactionRadius { get; set; }
+        new Single ExitRadius { get; set; }
+        new Single MaxHerdMembersToAnimate { get; set; }
+        new Single NumberOfWarningsBeforeAttack { get; set; }
+        new IFormLink<IKeywordGetter> LinkedRefKeyword { get; set; }
+        new IFormLink<IPlacedGetter> SpecificReference { get; set; }
+        new IFormLink<IGlobalGetter> WarnTimerOnWarnAttackGlobal { get; set; }
+        new Single WarnTimerOnWarnAttack { get; set; }
+        new Single CoolDownTimer { get; set; }
+        new IFormLink<IGlobalGetter> CoolDownTimerGlobal { get; set; }
     }
 
     public partial interface INpcRDSAGetter :
@@ -1146,26 +1153,26 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => NpcRDSA_Registration.Instance;
-        Int32 UnknownInt { get; }
-        Int32 UnknownInt2 { get; }
-        IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink1 { get; }
-        Int32 UnknownInt3 { get; }
-        IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink2 { get; }
-        IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink3 { get; }
-        IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink4 { get; }
-        IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink5 { get; }
-        IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink6 { get; }
-        Single UnknownFloat1 { get; }
-        Single UnknownFloat2 { get; }
-        Single UnknownFloat3 { get; }
-        Single UnknownFloat4 { get; }
-        Single UnknownFloat5 { get; }
-        IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink7 { get; }
-        Int32 UnknownInt4 { get; }
-        IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink8 { get; }
-        Single UnknownFloat6 { get; }
-        Int32 UnknownInt5 { get; }
-        IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink9 { get; }
+        Npc.ReactionTypeOption ReactionType { get; }
+        Npc.ReactionTargetOption ReactionTarget { get; }
+        IFormLinkGetter<IFormListGetter> Packages { get; }
+        Npc.ReactionRadiusFlag Flags { get; }
+        IFormLinkGetter<IGlobalGetter> ReactionRadiusGlobal { get; }
+        IFormLinkGetter<IGlobalGetter> ExitRadiusGlobal { get; }
+        IFormLinkGetter<IGlobalGetter> MaxNumberOfTimesToReactGlobal { get; }
+        IFormLinkGetter<IGlobalGetter> MaxHerdMembersToAnimateGlobal { get; }
+        IFormLinkGetter<IGlobalGetter> NumberOfWarningsBeforeAttackGlobal { get; }
+        Single MaxNumberOfTimesToReact { get; }
+        Single ReactionRadius { get; }
+        Single ExitRadius { get; }
+        Single MaxHerdMembersToAnimate { get; }
+        Single NumberOfWarningsBeforeAttack { get; }
+        IFormLinkGetter<IKeywordGetter> LinkedRefKeyword { get; }
+        IFormLinkGetter<IPlacedGetter> SpecificReference { get; }
+        IFormLinkGetter<IGlobalGetter> WarnTimerOnWarnAttackGlobal { get; }
+        Single WarnTimerOnWarnAttack { get; }
+        Single CoolDownTimer { get; }
+        IFormLinkGetter<IGlobalGetter> CoolDownTimerGlobal { get; }
 
     }
 
@@ -1335,26 +1342,26 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum NpcRDSA_FieldIndex
     {
-        UnknownInt = 0,
-        UnknownInt2 = 1,
-        UnknownLink1 = 2,
-        UnknownInt3 = 3,
-        UnknownLink2 = 4,
-        UnknownLink3 = 5,
-        UnknownLink4 = 6,
-        UnknownLink5 = 7,
-        UnknownLink6 = 8,
-        UnknownFloat1 = 9,
-        UnknownFloat2 = 10,
-        UnknownFloat3 = 11,
-        UnknownFloat4 = 12,
-        UnknownFloat5 = 13,
-        UnknownLink7 = 14,
-        UnknownInt4 = 15,
-        UnknownLink8 = 16,
-        UnknownFloat6 = 17,
-        UnknownInt5 = 18,
-        UnknownLink9 = 19,
+        ReactionType = 0,
+        ReactionTarget = 1,
+        Packages = 2,
+        Flags = 3,
+        ReactionRadiusGlobal = 4,
+        ExitRadiusGlobal = 5,
+        MaxNumberOfTimesToReactGlobal = 6,
+        MaxHerdMembersToAnimateGlobal = 7,
+        NumberOfWarningsBeforeAttackGlobal = 8,
+        MaxNumberOfTimesToReact = 9,
+        ReactionRadius = 10,
+        ExitRadius = 11,
+        MaxHerdMembersToAnimate = 12,
+        NumberOfWarningsBeforeAttack = 13,
+        LinkedRefKeyword = 14,
+        SpecificReference = 15,
+        WarnTimerOnWarnAttackGlobal = 16,
+        WarnTimerOnWarnAttack = 17,
+        CoolDownTimer = 18,
+        CoolDownTimerGlobal = 19,
     }
     #endregion
 
@@ -1433,40 +1440,41 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(INpcRDSA item)
         {
             ClearPartial();
-            item.UnknownInt = default(Int32);
-            item.UnknownInt2 = default(Int32);
-            item.UnknownLink1.Clear();
-            item.UnknownInt3 = default(Int32);
-            item.UnknownLink2.Clear();
-            item.UnknownLink3.Clear();
-            item.UnknownLink4.Clear();
-            item.UnknownLink5.Clear();
-            item.UnknownLink6.Clear();
-            item.UnknownFloat1 = default(Single);
-            item.UnknownFloat2 = default(Single);
-            item.UnknownFloat3 = default(Single);
-            item.UnknownFloat4 = default(Single);
-            item.UnknownFloat5 = default(Single);
-            item.UnknownLink7.Clear();
-            item.UnknownInt4 = default(Int32);
-            item.UnknownLink8.Clear();
-            item.UnknownFloat6 = default(Single);
-            item.UnknownInt5 = default(Int32);
-            item.UnknownLink9.Clear();
+            item.ReactionType = default(Npc.ReactionTypeOption);
+            item.ReactionTarget = default(Npc.ReactionTargetOption);
+            item.Packages.Clear();
+            item.Flags = default(Npc.ReactionRadiusFlag);
+            item.ReactionRadiusGlobal.Clear();
+            item.ExitRadiusGlobal.Clear();
+            item.MaxNumberOfTimesToReactGlobal.Clear();
+            item.MaxHerdMembersToAnimateGlobal.Clear();
+            item.NumberOfWarningsBeforeAttackGlobal.Clear();
+            item.MaxNumberOfTimesToReact = default(Single);
+            item.ReactionRadius = default(Single);
+            item.ExitRadius = default(Single);
+            item.MaxHerdMembersToAnimate = default(Single);
+            item.NumberOfWarningsBeforeAttack = default(Single);
+            item.LinkedRefKeyword.Clear();
+            item.SpecificReference.Clear();
+            item.WarnTimerOnWarnAttackGlobal.Clear();
+            item.WarnTimerOnWarnAttack = default(Single);
+            item.CoolDownTimer = default(Single);
+            item.CoolDownTimerGlobal.Clear();
         }
         
         #region Mutagen
         public void RemapLinks(INpcRDSA obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
-            obj.UnknownLink1.Relink(mapping);
-            obj.UnknownLink2.Relink(mapping);
-            obj.UnknownLink3.Relink(mapping);
-            obj.UnknownLink4.Relink(mapping);
-            obj.UnknownLink5.Relink(mapping);
-            obj.UnknownLink6.Relink(mapping);
-            obj.UnknownLink7.Relink(mapping);
-            obj.UnknownLink8.Relink(mapping);
-            obj.UnknownLink9.Relink(mapping);
+            obj.Packages.Relink(mapping);
+            obj.ReactionRadiusGlobal.Relink(mapping);
+            obj.ExitRadiusGlobal.Relink(mapping);
+            obj.MaxNumberOfTimesToReactGlobal.Relink(mapping);
+            obj.MaxHerdMembersToAnimateGlobal.Relink(mapping);
+            obj.NumberOfWarningsBeforeAttackGlobal.Relink(mapping);
+            obj.LinkedRefKeyword.Relink(mapping);
+            obj.SpecificReference.Relink(mapping);
+            obj.WarnTimerOnWarnAttackGlobal.Relink(mapping);
+            obj.CoolDownTimerGlobal.Relink(mapping);
         }
         
         #endregion
@@ -1511,26 +1519,26 @@ namespace Mutagen.Bethesda.Starfield
             NpcRDSA.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.UnknownInt = item.UnknownInt == rhs.UnknownInt;
-            ret.UnknownInt2 = item.UnknownInt2 == rhs.UnknownInt2;
-            ret.UnknownLink1 = item.UnknownLink1.Equals(rhs.UnknownLink1);
-            ret.UnknownInt3 = item.UnknownInt3 == rhs.UnknownInt3;
-            ret.UnknownLink2 = item.UnknownLink2.Equals(rhs.UnknownLink2);
-            ret.UnknownLink3 = item.UnknownLink3.Equals(rhs.UnknownLink3);
-            ret.UnknownLink4 = item.UnknownLink4.Equals(rhs.UnknownLink4);
-            ret.UnknownLink5 = item.UnknownLink5.Equals(rhs.UnknownLink5);
-            ret.UnknownLink6 = item.UnknownLink6.Equals(rhs.UnknownLink6);
-            ret.UnknownFloat1 = item.UnknownFloat1.EqualsWithin(rhs.UnknownFloat1);
-            ret.UnknownFloat2 = item.UnknownFloat2.EqualsWithin(rhs.UnknownFloat2);
-            ret.UnknownFloat3 = item.UnknownFloat3.EqualsWithin(rhs.UnknownFloat3);
-            ret.UnknownFloat4 = item.UnknownFloat4.EqualsWithin(rhs.UnknownFloat4);
-            ret.UnknownFloat5 = item.UnknownFloat5.EqualsWithin(rhs.UnknownFloat5);
-            ret.UnknownLink7 = item.UnknownLink7.Equals(rhs.UnknownLink7);
-            ret.UnknownInt4 = item.UnknownInt4 == rhs.UnknownInt4;
-            ret.UnknownLink8 = item.UnknownLink8.Equals(rhs.UnknownLink8);
-            ret.UnknownFloat6 = item.UnknownFloat6.EqualsWithin(rhs.UnknownFloat6);
-            ret.UnknownInt5 = item.UnknownInt5 == rhs.UnknownInt5;
-            ret.UnknownLink9 = item.UnknownLink9.Equals(rhs.UnknownLink9);
+            ret.ReactionType = item.ReactionType == rhs.ReactionType;
+            ret.ReactionTarget = item.ReactionTarget == rhs.ReactionTarget;
+            ret.Packages = item.Packages.Equals(rhs.Packages);
+            ret.Flags = item.Flags == rhs.Flags;
+            ret.ReactionRadiusGlobal = item.ReactionRadiusGlobal.Equals(rhs.ReactionRadiusGlobal);
+            ret.ExitRadiusGlobal = item.ExitRadiusGlobal.Equals(rhs.ExitRadiusGlobal);
+            ret.MaxNumberOfTimesToReactGlobal = item.MaxNumberOfTimesToReactGlobal.Equals(rhs.MaxNumberOfTimesToReactGlobal);
+            ret.MaxHerdMembersToAnimateGlobal = item.MaxHerdMembersToAnimateGlobal.Equals(rhs.MaxHerdMembersToAnimateGlobal);
+            ret.NumberOfWarningsBeforeAttackGlobal = item.NumberOfWarningsBeforeAttackGlobal.Equals(rhs.NumberOfWarningsBeforeAttackGlobal);
+            ret.MaxNumberOfTimesToReact = item.MaxNumberOfTimesToReact.EqualsWithin(rhs.MaxNumberOfTimesToReact);
+            ret.ReactionRadius = item.ReactionRadius.EqualsWithin(rhs.ReactionRadius);
+            ret.ExitRadius = item.ExitRadius.EqualsWithin(rhs.ExitRadius);
+            ret.MaxHerdMembersToAnimate = item.MaxHerdMembersToAnimate.EqualsWithin(rhs.MaxHerdMembersToAnimate);
+            ret.NumberOfWarningsBeforeAttack = item.NumberOfWarningsBeforeAttack.EqualsWithin(rhs.NumberOfWarningsBeforeAttack);
+            ret.LinkedRefKeyword = item.LinkedRefKeyword.Equals(rhs.LinkedRefKeyword);
+            ret.SpecificReference = item.SpecificReference.Equals(rhs.SpecificReference);
+            ret.WarnTimerOnWarnAttackGlobal = item.WarnTimerOnWarnAttackGlobal.Equals(rhs.WarnTimerOnWarnAttackGlobal);
+            ret.WarnTimerOnWarnAttack = item.WarnTimerOnWarnAttack.EqualsWithin(rhs.WarnTimerOnWarnAttack);
+            ret.CoolDownTimer = item.CoolDownTimer.EqualsWithin(rhs.CoolDownTimer);
+            ret.CoolDownTimerGlobal = item.CoolDownTimerGlobal.Equals(rhs.CoolDownTimerGlobal);
         }
         
         public string Print(
@@ -1575,85 +1583,85 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             NpcRDSA.Mask<bool>? printMask = null)
         {
-            if (printMask?.UnknownInt ?? true)
+            if (printMask?.ReactionType ?? true)
             {
-                sb.AppendItem(item.UnknownInt, "UnknownInt");
+                sb.AppendItem(item.ReactionType, "ReactionType");
             }
-            if (printMask?.UnknownInt2 ?? true)
+            if (printMask?.ReactionTarget ?? true)
             {
-                sb.AppendItem(item.UnknownInt2, "UnknownInt2");
+                sb.AppendItem(item.ReactionTarget, "ReactionTarget");
             }
-            if (printMask?.UnknownLink1 ?? true)
+            if (printMask?.Packages ?? true)
             {
-                sb.AppendItem(item.UnknownLink1.FormKey, "UnknownLink1");
+                sb.AppendItem(item.Packages.FormKey, "Packages");
             }
-            if (printMask?.UnknownInt3 ?? true)
+            if (printMask?.Flags ?? true)
             {
-                sb.AppendItem(item.UnknownInt3, "UnknownInt3");
+                sb.AppendItem(item.Flags, "Flags");
             }
-            if (printMask?.UnknownLink2 ?? true)
+            if (printMask?.ReactionRadiusGlobal ?? true)
             {
-                sb.AppendItem(item.UnknownLink2.FormKey, "UnknownLink2");
+                sb.AppendItem(item.ReactionRadiusGlobal.FormKey, "ReactionRadiusGlobal");
             }
-            if (printMask?.UnknownLink3 ?? true)
+            if (printMask?.ExitRadiusGlobal ?? true)
             {
-                sb.AppendItem(item.UnknownLink3.FormKey, "UnknownLink3");
+                sb.AppendItem(item.ExitRadiusGlobal.FormKey, "ExitRadiusGlobal");
             }
-            if (printMask?.UnknownLink4 ?? true)
+            if (printMask?.MaxNumberOfTimesToReactGlobal ?? true)
             {
-                sb.AppendItem(item.UnknownLink4.FormKey, "UnknownLink4");
+                sb.AppendItem(item.MaxNumberOfTimesToReactGlobal.FormKey, "MaxNumberOfTimesToReactGlobal");
             }
-            if (printMask?.UnknownLink5 ?? true)
+            if (printMask?.MaxHerdMembersToAnimateGlobal ?? true)
             {
-                sb.AppendItem(item.UnknownLink5.FormKey, "UnknownLink5");
+                sb.AppendItem(item.MaxHerdMembersToAnimateGlobal.FormKey, "MaxHerdMembersToAnimateGlobal");
             }
-            if (printMask?.UnknownLink6 ?? true)
+            if (printMask?.NumberOfWarningsBeforeAttackGlobal ?? true)
             {
-                sb.AppendItem(item.UnknownLink6.FormKey, "UnknownLink6");
+                sb.AppendItem(item.NumberOfWarningsBeforeAttackGlobal.FormKey, "NumberOfWarningsBeforeAttackGlobal");
             }
-            if (printMask?.UnknownFloat1 ?? true)
+            if (printMask?.MaxNumberOfTimesToReact ?? true)
             {
-                sb.AppendItem(item.UnknownFloat1, "UnknownFloat1");
+                sb.AppendItem(item.MaxNumberOfTimesToReact, "MaxNumberOfTimesToReact");
             }
-            if (printMask?.UnknownFloat2 ?? true)
+            if (printMask?.ReactionRadius ?? true)
             {
-                sb.AppendItem(item.UnknownFloat2, "UnknownFloat2");
+                sb.AppendItem(item.ReactionRadius, "ReactionRadius");
             }
-            if (printMask?.UnknownFloat3 ?? true)
+            if (printMask?.ExitRadius ?? true)
             {
-                sb.AppendItem(item.UnknownFloat3, "UnknownFloat3");
+                sb.AppendItem(item.ExitRadius, "ExitRadius");
             }
-            if (printMask?.UnknownFloat4 ?? true)
+            if (printMask?.MaxHerdMembersToAnimate ?? true)
             {
-                sb.AppendItem(item.UnknownFloat4, "UnknownFloat4");
+                sb.AppendItem(item.MaxHerdMembersToAnimate, "MaxHerdMembersToAnimate");
             }
-            if (printMask?.UnknownFloat5 ?? true)
+            if (printMask?.NumberOfWarningsBeforeAttack ?? true)
             {
-                sb.AppendItem(item.UnknownFloat5, "UnknownFloat5");
+                sb.AppendItem(item.NumberOfWarningsBeforeAttack, "NumberOfWarningsBeforeAttack");
             }
-            if (printMask?.UnknownLink7 ?? true)
+            if (printMask?.LinkedRefKeyword ?? true)
             {
-                sb.AppendItem(item.UnknownLink7.FormKey, "UnknownLink7");
+                sb.AppendItem(item.LinkedRefKeyword.FormKey, "LinkedRefKeyword");
             }
-            if (printMask?.UnknownInt4 ?? true)
+            if (printMask?.SpecificReference ?? true)
             {
-                sb.AppendItem(item.UnknownInt4, "UnknownInt4");
+                sb.AppendItem(item.SpecificReference.FormKey, "SpecificReference");
             }
-            if (printMask?.UnknownLink8 ?? true)
+            if (printMask?.WarnTimerOnWarnAttackGlobal ?? true)
             {
-                sb.AppendItem(item.UnknownLink8.FormKey, "UnknownLink8");
+                sb.AppendItem(item.WarnTimerOnWarnAttackGlobal.FormKey, "WarnTimerOnWarnAttackGlobal");
             }
-            if (printMask?.UnknownFloat6 ?? true)
+            if (printMask?.WarnTimerOnWarnAttack ?? true)
             {
-                sb.AppendItem(item.UnknownFloat6, "UnknownFloat6");
+                sb.AppendItem(item.WarnTimerOnWarnAttack, "WarnTimerOnWarnAttack");
             }
-            if (printMask?.UnknownInt5 ?? true)
+            if (printMask?.CoolDownTimer ?? true)
             {
-                sb.AppendItem(item.UnknownInt5, "UnknownInt5");
+                sb.AppendItem(item.CoolDownTimer, "CoolDownTimer");
             }
-            if (printMask?.UnknownLink9 ?? true)
+            if (printMask?.CoolDownTimerGlobal ?? true)
             {
-                sb.AppendItem(item.UnknownLink9.FormKey, "UnknownLink9");
+                sb.AppendItem(item.CoolDownTimerGlobal.FormKey, "CoolDownTimerGlobal");
             }
         }
         
@@ -1664,85 +1672,85 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownInt) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.ReactionType) ?? true))
             {
-                if (lhs.UnknownInt != rhs.UnknownInt) return false;
+                if (lhs.ReactionType != rhs.ReactionType) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownInt2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.ReactionTarget) ?? true))
             {
-                if (lhs.UnknownInt2 != rhs.UnknownInt2) return false;
+                if (lhs.ReactionTarget != rhs.ReactionTarget) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.Packages) ?? true))
             {
-                if (!lhs.UnknownLink1.Equals(rhs.UnknownLink1)) return false;
+                if (!lhs.Packages.Equals(rhs.Packages)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownInt3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.Flags) ?? true))
             {
-                if (lhs.UnknownInt3 != rhs.UnknownInt3) return false;
+                if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.ReactionRadiusGlobal) ?? true))
             {
-                if (!lhs.UnknownLink2.Equals(rhs.UnknownLink2)) return false;
+                if (!lhs.ReactionRadiusGlobal.Equals(rhs.ReactionRadiusGlobal)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.ExitRadiusGlobal) ?? true))
             {
-                if (!lhs.UnknownLink3.Equals(rhs.UnknownLink3)) return false;
+                if (!lhs.ExitRadiusGlobal.Equals(rhs.ExitRadiusGlobal)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.MaxNumberOfTimesToReactGlobal) ?? true))
             {
-                if (!lhs.UnknownLink4.Equals(rhs.UnknownLink4)) return false;
+                if (!lhs.MaxNumberOfTimesToReactGlobal.Equals(rhs.MaxNumberOfTimesToReactGlobal)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink5) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.MaxHerdMembersToAnimateGlobal) ?? true))
             {
-                if (!lhs.UnknownLink5.Equals(rhs.UnknownLink5)) return false;
+                if (!lhs.MaxHerdMembersToAnimateGlobal.Equals(rhs.MaxHerdMembersToAnimateGlobal)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink6) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.NumberOfWarningsBeforeAttackGlobal) ?? true))
             {
-                if (!lhs.UnknownLink6.Equals(rhs.UnknownLink6)) return false;
+                if (!lhs.NumberOfWarningsBeforeAttackGlobal.Equals(rhs.NumberOfWarningsBeforeAttackGlobal)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownFloat1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.MaxNumberOfTimesToReact) ?? true))
             {
-                if (!lhs.UnknownFloat1.EqualsWithin(rhs.UnknownFloat1)) return false;
+                if (!lhs.MaxNumberOfTimesToReact.EqualsWithin(rhs.MaxNumberOfTimesToReact)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownFloat2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.ReactionRadius) ?? true))
             {
-                if (!lhs.UnknownFloat2.EqualsWithin(rhs.UnknownFloat2)) return false;
+                if (!lhs.ReactionRadius.EqualsWithin(rhs.ReactionRadius)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownFloat3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.ExitRadius) ?? true))
             {
-                if (!lhs.UnknownFloat3.EqualsWithin(rhs.UnknownFloat3)) return false;
+                if (!lhs.ExitRadius.EqualsWithin(rhs.ExitRadius)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownFloat4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.MaxHerdMembersToAnimate) ?? true))
             {
-                if (!lhs.UnknownFloat4.EqualsWithin(rhs.UnknownFloat4)) return false;
+                if (!lhs.MaxHerdMembersToAnimate.EqualsWithin(rhs.MaxHerdMembersToAnimate)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownFloat5) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.NumberOfWarningsBeforeAttack) ?? true))
             {
-                if (!lhs.UnknownFloat5.EqualsWithin(rhs.UnknownFloat5)) return false;
+                if (!lhs.NumberOfWarningsBeforeAttack.EqualsWithin(rhs.NumberOfWarningsBeforeAttack)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink7) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.LinkedRefKeyword) ?? true))
             {
-                if (!lhs.UnknownLink7.Equals(rhs.UnknownLink7)) return false;
+                if (!lhs.LinkedRefKeyword.Equals(rhs.LinkedRefKeyword)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownInt4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.SpecificReference) ?? true))
             {
-                if (lhs.UnknownInt4 != rhs.UnknownInt4) return false;
+                if (!lhs.SpecificReference.Equals(rhs.SpecificReference)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink8) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.WarnTimerOnWarnAttackGlobal) ?? true))
             {
-                if (!lhs.UnknownLink8.Equals(rhs.UnknownLink8)) return false;
+                if (!lhs.WarnTimerOnWarnAttackGlobal.Equals(rhs.WarnTimerOnWarnAttackGlobal)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownFloat6) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.WarnTimerOnWarnAttack) ?? true))
             {
-                if (!lhs.UnknownFloat6.EqualsWithin(rhs.UnknownFloat6)) return false;
+                if (!lhs.WarnTimerOnWarnAttack.EqualsWithin(rhs.WarnTimerOnWarnAttack)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownInt5) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.CoolDownTimer) ?? true))
             {
-                if (lhs.UnknownInt5 != rhs.UnknownInt5) return false;
+                if (!lhs.CoolDownTimer.EqualsWithin(rhs.CoolDownTimer)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink9) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.CoolDownTimerGlobal) ?? true))
             {
-                if (!lhs.UnknownLink9.Equals(rhs.UnknownLink9)) return false;
+                if (!lhs.CoolDownTimerGlobal.Equals(rhs.CoolDownTimerGlobal)) return false;
             }
             return true;
         }
@@ -1750,26 +1758,26 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(INpcRDSAGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.UnknownInt);
-            hash.Add(item.UnknownInt2);
-            hash.Add(item.UnknownLink1);
-            hash.Add(item.UnknownInt3);
-            hash.Add(item.UnknownLink2);
-            hash.Add(item.UnknownLink3);
-            hash.Add(item.UnknownLink4);
-            hash.Add(item.UnknownLink5);
-            hash.Add(item.UnknownLink6);
-            hash.Add(item.UnknownFloat1);
-            hash.Add(item.UnknownFloat2);
-            hash.Add(item.UnknownFloat3);
-            hash.Add(item.UnknownFloat4);
-            hash.Add(item.UnknownFloat5);
-            hash.Add(item.UnknownLink7);
-            hash.Add(item.UnknownInt4);
-            hash.Add(item.UnknownLink8);
-            hash.Add(item.UnknownFloat6);
-            hash.Add(item.UnknownInt5);
-            hash.Add(item.UnknownLink9);
+            hash.Add(item.ReactionType);
+            hash.Add(item.ReactionTarget);
+            hash.Add(item.Packages);
+            hash.Add(item.Flags);
+            hash.Add(item.ReactionRadiusGlobal);
+            hash.Add(item.ExitRadiusGlobal);
+            hash.Add(item.MaxNumberOfTimesToReactGlobal);
+            hash.Add(item.MaxHerdMembersToAnimateGlobal);
+            hash.Add(item.NumberOfWarningsBeforeAttackGlobal);
+            hash.Add(item.MaxNumberOfTimesToReact);
+            hash.Add(item.ReactionRadius);
+            hash.Add(item.ExitRadius);
+            hash.Add(item.MaxHerdMembersToAnimate);
+            hash.Add(item.NumberOfWarningsBeforeAttack);
+            hash.Add(item.LinkedRefKeyword);
+            hash.Add(item.SpecificReference);
+            hash.Add(item.WarnTimerOnWarnAttackGlobal);
+            hash.Add(item.WarnTimerOnWarnAttack);
+            hash.Add(item.CoolDownTimer);
+            hash.Add(item.CoolDownTimerGlobal);
             return hash.ToHashCode();
         }
         
@@ -1784,15 +1792,16 @@ namespace Mutagen.Bethesda.Starfield
         #region Mutagen
         public IEnumerable<IFormLinkGetter> EnumerateFormLinks(INpcRDSAGetter obj, bool iterateNestedRecords = true)
         {
-            yield return FormLinkInformation.Factory(obj.UnknownLink1);
-            yield return FormLinkInformation.Factory(obj.UnknownLink2);
-            yield return FormLinkInformation.Factory(obj.UnknownLink3);
-            yield return FormLinkInformation.Factory(obj.UnknownLink4);
-            yield return FormLinkInformation.Factory(obj.UnknownLink5);
-            yield return FormLinkInformation.Factory(obj.UnknownLink6);
-            yield return FormLinkInformation.Factory(obj.UnknownLink7);
-            yield return FormLinkInformation.Factory(obj.UnknownLink8);
-            yield return FormLinkInformation.Factory(obj.UnknownLink9);
+            yield return FormLinkInformation.Factory(obj.Packages);
+            yield return FormLinkInformation.Factory(obj.ReactionRadiusGlobal);
+            yield return FormLinkInformation.Factory(obj.ExitRadiusGlobal);
+            yield return FormLinkInformation.Factory(obj.MaxNumberOfTimesToReactGlobal);
+            yield return FormLinkInformation.Factory(obj.MaxHerdMembersToAnimateGlobal);
+            yield return FormLinkInformation.Factory(obj.NumberOfWarningsBeforeAttackGlobal);
+            yield return FormLinkInformation.Factory(obj.LinkedRefKeyword);
+            yield return FormLinkInformation.Factory(obj.SpecificReference);
+            yield return FormLinkInformation.Factory(obj.WarnTimerOnWarnAttackGlobal);
+            yield return FormLinkInformation.Factory(obj.CoolDownTimerGlobal);
             yield break;
         }
         
@@ -1811,85 +1820,85 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownInt) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.ReactionType) ?? true))
             {
-                item.UnknownInt = rhs.UnknownInt;
+                item.ReactionType = rhs.ReactionType;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownInt2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.ReactionTarget) ?? true))
             {
-                item.UnknownInt2 = rhs.UnknownInt2;
+                item.ReactionTarget = rhs.ReactionTarget;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.Packages) ?? true))
             {
-                item.UnknownLink1.SetTo(rhs.UnknownLink1.FormKey);
+                item.Packages.SetTo(rhs.Packages.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownInt3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.Flags) ?? true))
             {
-                item.UnknownInt3 = rhs.UnknownInt3;
+                item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.ReactionRadiusGlobal) ?? true))
             {
-                item.UnknownLink2.SetTo(rhs.UnknownLink2.FormKey);
+                item.ReactionRadiusGlobal.SetTo(rhs.ReactionRadiusGlobal.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.ExitRadiusGlobal) ?? true))
             {
-                item.UnknownLink3.SetTo(rhs.UnknownLink3.FormKey);
+                item.ExitRadiusGlobal.SetTo(rhs.ExitRadiusGlobal.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.MaxNumberOfTimesToReactGlobal) ?? true))
             {
-                item.UnknownLink4.SetTo(rhs.UnknownLink4.FormKey);
+                item.MaxNumberOfTimesToReactGlobal.SetTo(rhs.MaxNumberOfTimesToReactGlobal.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink5) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.MaxHerdMembersToAnimateGlobal) ?? true))
             {
-                item.UnknownLink5.SetTo(rhs.UnknownLink5.FormKey);
+                item.MaxHerdMembersToAnimateGlobal.SetTo(rhs.MaxHerdMembersToAnimateGlobal.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink6) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.NumberOfWarningsBeforeAttackGlobal) ?? true))
             {
-                item.UnknownLink6.SetTo(rhs.UnknownLink6.FormKey);
+                item.NumberOfWarningsBeforeAttackGlobal.SetTo(rhs.NumberOfWarningsBeforeAttackGlobal.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownFloat1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.MaxNumberOfTimesToReact) ?? true))
             {
-                item.UnknownFloat1 = rhs.UnknownFloat1;
+                item.MaxNumberOfTimesToReact = rhs.MaxNumberOfTimesToReact;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownFloat2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.ReactionRadius) ?? true))
             {
-                item.UnknownFloat2 = rhs.UnknownFloat2;
+                item.ReactionRadius = rhs.ReactionRadius;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownFloat3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.ExitRadius) ?? true))
             {
-                item.UnknownFloat3 = rhs.UnknownFloat3;
+                item.ExitRadius = rhs.ExitRadius;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownFloat4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.MaxHerdMembersToAnimate) ?? true))
             {
-                item.UnknownFloat4 = rhs.UnknownFloat4;
+                item.MaxHerdMembersToAnimate = rhs.MaxHerdMembersToAnimate;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownFloat5) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.NumberOfWarningsBeforeAttack) ?? true))
             {
-                item.UnknownFloat5 = rhs.UnknownFloat5;
+                item.NumberOfWarningsBeforeAttack = rhs.NumberOfWarningsBeforeAttack;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink7) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.LinkedRefKeyword) ?? true))
             {
-                item.UnknownLink7.SetTo(rhs.UnknownLink7.FormKey);
+                item.LinkedRefKeyword.SetTo(rhs.LinkedRefKeyword.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownInt4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.SpecificReference) ?? true))
             {
-                item.UnknownInt4 = rhs.UnknownInt4;
+                item.SpecificReference.SetTo(rhs.SpecificReference.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink8) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.WarnTimerOnWarnAttackGlobal) ?? true))
             {
-                item.UnknownLink8.SetTo(rhs.UnknownLink8.FormKey);
+                item.WarnTimerOnWarnAttackGlobal.SetTo(rhs.WarnTimerOnWarnAttackGlobal.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownFloat6) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.WarnTimerOnWarnAttack) ?? true))
             {
-                item.UnknownFloat6 = rhs.UnknownFloat6;
+                item.WarnTimerOnWarnAttack = rhs.WarnTimerOnWarnAttack;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownInt5) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.CoolDownTimer) ?? true))
             {
-                item.UnknownInt5 = rhs.UnknownInt5;
+                item.CoolDownTimer = rhs.CoolDownTimer;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.UnknownLink9) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcRDSA_FieldIndex.CoolDownTimerGlobal) ?? true))
             {
-                item.UnknownLink9.SetTo(rhs.UnknownLink9.FormKey);
+                item.CoolDownTimerGlobal.SetTo(rhs.CoolDownTimerGlobal.FormKey);
             }
             DeepCopyInCustom(
                 item: item,
@@ -1999,56 +2008,69 @@ namespace Mutagen.Bethesda.Starfield
             INpcRDSAGetter item,
             MutagenWriter writer)
         {
-            writer.Write(item.UnknownInt);
-            writer.Write(item.UnknownInt2);
+            EnumBinaryTranslation<Npc.ReactionTypeOption, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.ReactionType,
+                length: 4);
+            EnumBinaryTranslation<Npc.ReactionTargetOption, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.ReactionTarget,
+                length: 4);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownLink1);
-            writer.Write(item.UnknownInt3);
+                item: item.Packages);
+            EnumBinaryTranslation<Npc.ReactionRadiusFlag, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.Flags,
+                length: 4);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownLink2);
+                item: item.ReactionRadiusGlobal);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownLink3);
+                item: item.ExitRadiusGlobal);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownLink4);
+                item: item.MaxNumberOfTimesToReactGlobal);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownLink5);
+                item: item.MaxHerdMembersToAnimateGlobal);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownLink6);
+                item: item.NumberOfWarningsBeforeAttackGlobal);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.UnknownFloat1);
+                item: item.MaxNumberOfTimesToReact);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.UnknownFloat2);
+                item: item.ReactionRadius);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.UnknownFloat3);
+                item: item.ExitRadius);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.UnknownFloat4);
+                item: item.MaxHerdMembersToAnimate);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.UnknownFloat5);
+                item: item.NumberOfWarningsBeforeAttack);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownLink7);
-            writer.Write(item.UnknownInt4);
+                item: item.LinkedRefKeyword);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownLink8);
+                item: item.SpecificReference);
+            FormLinkBinaryTranslation.Instance.Write(
+                writer: writer,
+                item: item.WarnTimerOnWarnAttackGlobal);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.UnknownFloat6);
-            writer.Write(item.UnknownInt5);
+                item: item.WarnTimerOnWarnAttack);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.CoolDownTimer);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownLink9);
+                item: item.CoolDownTimerGlobal);
         }
 
         public void Write(
@@ -2082,26 +2104,32 @@ namespace Mutagen.Bethesda.Starfield
             INpcRDSA item,
             MutagenFrame frame)
         {
-            item.UnknownInt = frame.ReadInt32();
-            item.UnknownInt2 = frame.ReadInt32();
-            item.UnknownLink1.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownInt3 = frame.ReadInt32();
-            item.UnknownLink2.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownLink3.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownLink4.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownLink5.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownLink6.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownFloat1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.UnknownFloat2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.UnknownFloat3 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.UnknownFloat4 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.UnknownFloat5 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.UnknownLink7.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownInt4 = frame.ReadInt32();
-            item.UnknownLink8.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownFloat6 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.UnknownInt5 = frame.ReadInt32();
-            item.UnknownLink9.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.ReactionType = EnumBinaryTranslation<Npc.ReactionTypeOption, MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                length: 4);
+            item.ReactionTarget = EnumBinaryTranslation<Npc.ReactionTargetOption, MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                length: 4);
+            item.Packages.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.Flags = EnumBinaryTranslation<Npc.ReactionRadiusFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                length: 4);
+            item.ReactionRadiusGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.ExitRadiusGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.MaxNumberOfTimesToReactGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.MaxHerdMembersToAnimateGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.NumberOfWarningsBeforeAttackGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.MaxNumberOfTimesToReact = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.ReactionRadius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.ExitRadius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.MaxHerdMembersToAnimate = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.NumberOfWarningsBeforeAttack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.LinkedRefKeyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.SpecificReference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.WarnTimerOnWarnAttackGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.WarnTimerOnWarnAttack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.CoolDownTimer = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.CoolDownTimerGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
         }
 
     }
@@ -2168,26 +2196,26 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Int32 UnknownInt => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x0, 0x4));
-        public Int32 UnknownInt2 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x4, 0x4));
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink1 => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x8, 0x4));
-        public Int32 UnknownInt3 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0xC, 0x4));
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink2 => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x10, 0x4));
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink3 => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x14, 0x4));
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink4 => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x18, 0x4));
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink5 => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x1C, 0x4));
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink6 => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x20, 0x4));
-        public Single UnknownFloat1 => _structData.Slice(0x24, 0x4).Float();
-        public Single UnknownFloat2 => _structData.Slice(0x28, 0x4).Float();
-        public Single UnknownFloat3 => _structData.Slice(0x2C, 0x4).Float();
-        public Single UnknownFloat4 => _structData.Slice(0x30, 0x4).Float();
-        public Single UnknownFloat5 => _structData.Slice(0x34, 0x4).Float();
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink7 => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x38, 0x4));
-        public Int32 UnknownInt4 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x3C, 0x4));
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink8 => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x40, 0x4));
-        public Single UnknownFloat6 => _structData.Slice(0x44, 0x4).Float();
-        public Int32 UnknownInt5 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x48, 0x4));
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink9 => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x4C, 0x4));
+        public Npc.ReactionTypeOption ReactionType => (Npc.ReactionTypeOption)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x0, 0x4));
+        public Npc.ReactionTargetOption ReactionTarget => (Npc.ReactionTargetOption)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x4, 0x4));
+        public IFormLinkGetter<IFormListGetter> Packages => FormLinkBinaryTranslation.Instance.OverlayFactory<IFormListGetter>(_package, _structData.Span.Slice(0x8, 0x4));
+        public Npc.ReactionRadiusFlag Flags => (Npc.ReactionRadiusFlag)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0xC, 0x4));
+        public IFormLinkGetter<IGlobalGetter> ReactionRadiusGlobal => FormLinkBinaryTranslation.Instance.OverlayFactory<IGlobalGetter>(_package, _structData.Span.Slice(0x10, 0x4));
+        public IFormLinkGetter<IGlobalGetter> ExitRadiusGlobal => FormLinkBinaryTranslation.Instance.OverlayFactory<IGlobalGetter>(_package, _structData.Span.Slice(0x14, 0x4));
+        public IFormLinkGetter<IGlobalGetter> MaxNumberOfTimesToReactGlobal => FormLinkBinaryTranslation.Instance.OverlayFactory<IGlobalGetter>(_package, _structData.Span.Slice(0x18, 0x4));
+        public IFormLinkGetter<IGlobalGetter> MaxHerdMembersToAnimateGlobal => FormLinkBinaryTranslation.Instance.OverlayFactory<IGlobalGetter>(_package, _structData.Span.Slice(0x1C, 0x4));
+        public IFormLinkGetter<IGlobalGetter> NumberOfWarningsBeforeAttackGlobal => FormLinkBinaryTranslation.Instance.OverlayFactory<IGlobalGetter>(_package, _structData.Span.Slice(0x20, 0x4));
+        public Single MaxNumberOfTimesToReact => _structData.Slice(0x24, 0x4).Float();
+        public Single ReactionRadius => _structData.Slice(0x28, 0x4).Float();
+        public Single ExitRadius => _structData.Slice(0x2C, 0x4).Float();
+        public Single MaxHerdMembersToAnimate => _structData.Slice(0x30, 0x4).Float();
+        public Single NumberOfWarningsBeforeAttack => _structData.Slice(0x34, 0x4).Float();
+        public IFormLinkGetter<IKeywordGetter> LinkedRefKeyword => FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _structData.Span.Slice(0x38, 0x4));
+        public IFormLinkGetter<IPlacedGetter> SpecificReference => FormLinkBinaryTranslation.Instance.OverlayFactory<IPlacedGetter>(_package, _structData.Span.Slice(0x3C, 0x4));
+        public IFormLinkGetter<IGlobalGetter> WarnTimerOnWarnAttackGlobal => FormLinkBinaryTranslation.Instance.OverlayFactory<IGlobalGetter>(_package, _structData.Span.Slice(0x40, 0x4));
+        public Single WarnTimerOnWarnAttack => _structData.Slice(0x44, 0x4).Float();
+        public Single CoolDownTimer => _structData.Slice(0x48, 0x4).Float();
+        public IFormLinkGetter<IGlobalGetter> CoolDownTimerGlobal => FormLinkBinaryTranslation.Instance.OverlayFactory<IGlobalGetter>(_package, _structData.Span.Slice(0x4C, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

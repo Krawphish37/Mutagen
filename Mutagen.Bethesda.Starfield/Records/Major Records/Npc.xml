@@ -224,26 +224,28 @@
   </Object>
   <Object name="NpcRDSA" objType="Subrecord" >
     <Fields>
-      <Int32 name="UnknownInt" />
-      <Int32 name="UnknownInt2" />
-      <FormLink name="UnknownLink1" refName="StarfieldMajorRecord" />
-      <Int32 name="UnknownInt3" />
-      <FormLink name="UnknownLink2" refName="StarfieldMajorRecord" />
-      <FormLink name="UnknownLink3" refName="StarfieldMajorRecord" />
-      <FormLink name="UnknownLink4" refName="StarfieldMajorRecord" />
-      <FormLink name="UnknownLink5" refName="StarfieldMajorRecord" />
-      <FormLink name="UnknownLink6" refName="StarfieldMajorRecord" />
-      <Float name="UnknownFloat1" />
-      <Float name="UnknownFloat2" />
-      <Float name="UnknownFloat3" />
-      <Float name="UnknownFloat4" />
-      <Float name="UnknownFloat5" />
-      <FormLink name="UnknownLink7" refName="StarfieldMajorRecord" />
-      <Int32 name="UnknownInt4" />
-      <FormLink name="UnknownLink8" refName="StarfieldMajorRecord" />
-      <Float name="UnknownFloat6" />
-      <Int32 name="UnknownInt5" />
-      <FormLink name="UnknownLink9" refName="StarfieldMajorRecord" />
+      <Enum name="ReactionType" enumName="Npc.ReactionTypeOption" byteLength="4" />
+      <Enum name="ReactionTarget" enumName="Npc.ReactionTargetOption" byteLength="4" />
+      <FormLink name="Packages" refName="FormList" />
+      <Enum name="Flags" enumName="Npc.ReactionRadiusFlag" byteLength="4" />
+      <FormLink name="ReactionRadiusGlobal" refName="Global" />
+      <FormLink name="ExitRadiusGlobal" refName="Global" />
+      <FormLink name="MaxNumberOfTimesToReactGlobal" refName="Global" />
+      <FormLink name="MaxHerdMembersToAnimateGlobal" refName="Global" />
+      <FormLink name="NumberOfWarningsBeforeAttackGlobal" refName="Global" />
+      <Float name="MaxNumberOfTimesToReact" />
+      <Float name="ReactionRadius" />
+      <Float name="ExitRadius" />
+      <Float name="MaxHerdMembersToAnimate" />
+      <Float name="NumberOfWarningsBeforeAttack" />
+      <FormLink name="LinkedRefKeyword" refName="Keyword" />
+      <FormLink name="SpecificReference">
+        <Interface>IPlaced</Interface>
+      </FormLink>
+      <FormLink name="WarnTimerOnWarnAttackGlobal" refName="Global" />
+      <Float name="WarnTimerOnWarnAttack" />
+      <Float name="CoolDownTimer" />
+      <FormLink name="CoolDownTimerGlobal" refName="Global" />
     </Fields>
   </Object>
   <Object name="NpcWeight" objType="Subrecord" recordType="MWGT">

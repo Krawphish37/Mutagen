@@ -130,6 +130,49 @@ public partial class Npc
         Keywords = 0x1000,
     }
 
+    // RDSA Reaction Radius Behavior (xEdit)
+    public enum ReactionTypeOption
+    {
+        Warn = 0,
+        WarnAndAttack = 1,
+        Attack = 2,
+        Curious = 3,
+        Flee = 4,
+        WarnAndAlarm = 5,
+    }
+
+    public enum ReactionTargetOption
+    {
+        Player = 0,
+        Enemies = 1,
+        Neutral = 2,
+        PlayerNeutralEnemies = 3,
+        PlayerNeutral = 4,
+        PlayerEnemies = 5,
+        EnemiesNeutral = 6,
+    }
+
+    [Flags]
+    public enum ReactionRadiusFlag : uint
+    {
+        UseGlobalReactionRadius = 0x0001,
+        UseGlobalExitRadius = 0x0002,
+        UseGlobalMaxNumberOfTimesToReact = 0x0004,
+        UseGlobalMaxHerdMembersToAnimate = 0x0008,
+        UseGlobalNumberOfWarningsBeforeAttack = 0x0010,
+        ReactionCenterOverride = 0x0020,
+        UseLinkedReference = 0x0040,
+        UseSpecificReference = 0x0080,
+        NumberOfWarningsBeforeAttack = 0x0100,
+        WarnTimerOnWarnAttack = 0x0200,
+        UseGlobalWarnTimerOnWarnAttack = 0x0400,
+        AllReactionBehavior = 0x0800,
+        AvoidTarget = 0x1000,
+        UseGlobalCoolDownTimer = 0x2000,
+        FightBack = 0x4000,
+        DisallowThreatBackdown = 0x8000,
+    }
+
     public ANpcLevel Level { get; set; } = new NpcLevel();
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     IANpcLevelGetter INpcGetter.Level => Level;
