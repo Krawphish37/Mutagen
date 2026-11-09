@@ -528,10 +528,10 @@
     <Fields>
       <Data>
         <Fields>
-          <UInt64 name="Unknown1" />
+          <Double name="GravityWell" />
           <Float name="MassInSm" divisor="1.98847E30" multiplier="1" />
           <Float name="RadiusInKm" />
-          <Float name="Unknown2" />
+          <Float name="SurfaceGravity" />
         </Fields>
       </Data>
     </Fields>
