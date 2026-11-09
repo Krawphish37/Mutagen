@@ -7,7 +7,7 @@
         <FormLink refName="Keyword" />
       </List>
       <String name="Name" recordType="ANAM" />
-      <P3Float name="BNAM" recordType="BNAM" unknown="true" />
+      <P3Float name="SystemParsecLocation" recordType="BNAM" />
       <ByteArray name="ONAM" recordType="ONAM" unknown="true" />
       <UInt32 name="ID" recordType="DNAM" />
       <Color name="Color" recordType="ENAM" />

@@ -564,10 +564,10 @@
     <Fields>
       <Data>
         <Fields>
-          <UInt64 name="Unknown1" />
+          <Double name="GravityWell" />
           <Float name="MassInKg" />
           <Float name="RadiusInKm" />
-          <Float name="Unknown2" />
+          <Float name="SurfaceGravity" />
         </Fields>
       </Data>
     </Fields>

@@ -112,10 +112,10 @@ namespace Mutagen.Bethesda.Starfield
         }
         #endregion
         #endregion
-        #region BNAM
-        public P3Float? BNAM { get; set; }
+        #region SystemParsecLocation
+        public P3Float? SystemParsecLocation { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        P3Float? IStarGetter.BNAM => this.BNAM;
+        P3Float? IStarGetter.SystemParsecLocation => this.SystemParsecLocation;
         #endregion
         #region ONAM
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -176,7 +176,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.Name = initialValue;
-                this.BNAM = initialValue;
+                this.SystemParsecLocation = initialValue;
                 this.ONAM = initialValue;
                 this.ID = initialValue;
                 this.Color = initialValue;
@@ -194,7 +194,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Components,
                 TItem Keywords,
                 TItem Name,
-                TItem BNAM,
+                TItem SystemParsecLocation,
                 TItem ONAM,
                 TItem ID,
                 TItem Color,
@@ -211,7 +211,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
                 this.Name = Name;
-                this.BNAM = BNAM;
+                this.SystemParsecLocation = SystemParsecLocation;
                 this.ONAM = ONAM;
                 this.ID = ID;
                 this.Color = Color;
@@ -230,7 +230,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
             public TItem Name;
-            public TItem BNAM;
+            public TItem SystemParsecLocation;
             public TItem ONAM;
             public TItem ID;
             public TItem Color;
@@ -251,7 +251,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Components, rhs.Components)) return false;
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
                 if (!object.Equals(this.Name, rhs.Name)) return false;
-                if (!object.Equals(this.BNAM, rhs.BNAM)) return false;
+                if (!object.Equals(this.SystemParsecLocation, rhs.SystemParsecLocation)) return false;
                 if (!object.Equals(this.ONAM, rhs.ONAM)) return false;
                 if (!object.Equals(this.ID, rhs.ID)) return false;
                 if (!object.Equals(this.Color, rhs.Color)) return false;
@@ -264,7 +264,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Components);
                 hash.Add(this.Keywords);
                 hash.Add(this.Name);
-                hash.Add(this.BNAM);
+                hash.Add(this.SystemParsecLocation);
                 hash.Add(this.ONAM);
                 hash.Add(this.ID);
                 hash.Add(this.Color);
@@ -303,7 +303,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.Name)) return false;
-                if (!eval(this.BNAM)) return false;
+                if (!eval(this.SystemParsecLocation)) return false;
                 if (!eval(this.ONAM)) return false;
                 if (!eval(this.ID)) return false;
                 if (!eval(this.Color)) return false;
@@ -340,7 +340,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.Name)) return true;
-                if (eval(this.BNAM)) return true;
+                if (eval(this.SystemParsecLocation)) return true;
                 if (eval(this.ONAM)) return true;
                 if (eval(this.ID)) return true;
                 if (eval(this.Color)) return true;
@@ -390,7 +390,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.Name = eval(this.Name);
-                obj.BNAM = eval(this.BNAM);
+                obj.SystemParsecLocation = eval(this.SystemParsecLocation);
                 obj.ONAM = eval(this.ONAM);
                 obj.ID = eval(this.ID);
                 obj.Color = eval(this.Color);
@@ -457,9 +457,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Name, "Name");
                     }
-                    if (printMask?.BNAM ?? true)
+                    if (printMask?.SystemParsecLocation ?? true)
                     {
-                        sb.AppendItem(BNAM, "BNAM");
+                        sb.AppendItem(SystemParsecLocation, "SystemParsecLocation");
                     }
                     if (printMask?.ONAM ?? true)
                     {
@@ -491,7 +491,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
             public Exception? Name;
-            public Exception? BNAM;
+            public Exception? SystemParsecLocation;
             public Exception? ONAM;
             public Exception? ID;
             public Exception? Color;
@@ -510,8 +510,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Keywords;
                     case Star_FieldIndex.Name:
                         return Name;
-                    case Star_FieldIndex.BNAM:
-                        return BNAM;
+                    case Star_FieldIndex.SystemParsecLocation:
+                        return SystemParsecLocation;
                     case Star_FieldIndex.ONAM:
                         return ONAM;
                     case Star_FieldIndex.ID:
@@ -539,8 +539,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Star_FieldIndex.Name:
                         this.Name = ex;
                         break;
-                    case Star_FieldIndex.BNAM:
-                        this.BNAM = ex;
+                    case Star_FieldIndex.SystemParsecLocation:
+                        this.SystemParsecLocation = ex;
                         break;
                     case Star_FieldIndex.ONAM:
                         this.ONAM = ex;
@@ -574,8 +574,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Star_FieldIndex.Name:
                         this.Name = (Exception?)obj;
                         break;
-                    case Star_FieldIndex.BNAM:
-                        this.BNAM = (Exception?)obj;
+                    case Star_FieldIndex.SystemParsecLocation:
+                        this.SystemParsecLocation = (Exception?)obj;
                         break;
                     case Star_FieldIndex.ONAM:
                         this.ONAM = (Exception?)obj;
@@ -601,7 +601,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Components != null) return true;
                 if (Keywords != null) return true;
                 if (Name != null) return true;
-                if (BNAM != null) return true;
+                if (SystemParsecLocation != null) return true;
                 if (ONAM != null) return true;
                 if (ID != null) return true;
                 if (Color != null) return true;
@@ -674,7 +674,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Name, "Name");
                 }
                 {
-                    sb.AppendItem(BNAM, "BNAM");
+                    sb.AppendItem(SystemParsecLocation, "SystemParsecLocation");
                 }
                 {
                     sb.AppendItem(ONAM, "ONAM");
@@ -699,7 +699,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
                 ret.Name = this.Name.Combine(rhs.Name);
-                ret.BNAM = this.BNAM.Combine(rhs.BNAM);
+                ret.SystemParsecLocation = this.SystemParsecLocation.Combine(rhs.SystemParsecLocation);
                 ret.ONAM = this.ONAM.Combine(rhs.ONAM);
                 ret.ID = this.ID.Combine(rhs.ID);
                 ret.Color = this.Color.Combine(rhs.Color);
@@ -729,7 +729,7 @@ namespace Mutagen.Bethesda.Starfield
             public AComponent.TranslationMask? Components;
             public bool Keywords;
             public bool Name;
-            public bool BNAM;
+            public bool SystemParsecLocation;
             public bool ONAM;
             public bool ID;
             public bool Color;
@@ -744,7 +744,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Keywords = defaultOn;
                 this.Name = defaultOn;
-                this.BNAM = defaultOn;
+                this.SystemParsecLocation = defaultOn;
                 this.ONAM = defaultOn;
                 this.ID = defaultOn;
                 this.Color = defaultOn;
@@ -759,7 +759,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
                 ret.Add((Keywords, null));
                 ret.Add((Name, null));
-                ret.Add((BNAM, null));
+                ret.Add((SystemParsecLocation, null));
                 ret.Add((ONAM, null));
                 ret.Add((ID, null));
                 ret.Add((Color, null));
@@ -928,7 +928,7 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: INamed, INamedRequired
         /// </summary>
         new String? Name { get; set; }
-        new P3Float? BNAM { get; set; }
+        new P3Float? SystemParsecLocation { get; set; }
         new MemorySlice<Byte>? ONAM { get; set; }
         new UInt32? ID { get; set; }
         new Color? Color { get; set; }
@@ -968,7 +968,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         String? Name { get; }
         #endregion
-        P3Float? BNAM { get; }
+        P3Float? SystemParsecLocation { get; }
         ReadOnlyMemorySlice<Byte>? ONAM { get; }
         UInt32? ID { get; }
         Color? Color { get; }
@@ -1152,7 +1152,7 @@ namespace Mutagen.Bethesda.Starfield
         Components = 7,
         Keywords = 8,
         Name = 9,
-        BNAM = 10,
+        SystemParsecLocation = 10,
         ONAM = 11,
         ID = 12,
         Color = 13,
@@ -1259,7 +1259,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Components.Clear();
             item.Keywords = null;
             item.Name = default;
-            item.BNAM = default;
+            item.SystemParsecLocation = default;
             item.ONAM = default;
             item.ID = default;
             item.Color = default;
@@ -1384,7 +1384,7 @@ namespace Mutagen.Bethesda.Starfield
                 (l, r) => object.Equals(l, r),
                 include);
             ret.Name = string.Equals(item.Name, rhs.Name);
-            ret.BNAM = item.BNAM.Equals(rhs.BNAM);
+            ret.SystemParsecLocation = item.SystemParsecLocation.Equals(rhs.SystemParsecLocation);
             ret.ONAM = MemorySliceExt.SequenceEqual(item.ONAM, rhs.ONAM);
             ret.ID = item.ID == rhs.ID;
             ret.Color = item.Color.ColorOnlyEquals(rhs.Color);
@@ -1472,10 +1472,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(NameItem, "Name");
             }
-            if ((printMask?.BNAM ?? true)
-                && item.BNAM is {} BNAMItem)
+            if ((printMask?.SystemParsecLocation ?? true)
+                && item.SystemParsecLocation is {} SystemParsecLocationItem)
             {
-                sb.AppendItem(BNAMItem, "BNAM");
+                sb.AppendItem(SystemParsecLocationItem, "SystemParsecLocation");
             }
             if ((printMask?.ONAM ?? true)
                 && item.ONAM is {} ONAMItem)
@@ -1558,9 +1558,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!string.Equals(lhs.Name, rhs.Name)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Star_FieldIndex.BNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Star_FieldIndex.SystemParsecLocation) ?? true))
             {
-                if (!lhs.BNAM.Equals(rhs.BNAM)) return false;
+                if (!lhs.SystemParsecLocation.Equals(rhs.SystemParsecLocation)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Star_FieldIndex.ONAM) ?? true))
             {
@@ -1621,9 +1621,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Nameitem);
             }
-            if (item.BNAM is {} BNAMitem)
+            if (item.SystemParsecLocation is {} SystemParsecLocationitem)
             {
-                hash.Add(BNAMitem);
+                hash.Add(SystemParsecLocationitem);
             }
             if (item.ONAM is {} ONAMItem)
             {
@@ -1848,9 +1848,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Name = rhs.Name;
             }
-            if ((copyMask?.GetShouldTranslate((int)Star_FieldIndex.BNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Star_FieldIndex.SystemParsecLocation) ?? true))
             {
-                item.BNAM = rhs.BNAM;
+                item.SystemParsecLocation = rhs.SystemParsecLocation;
             }
             if ((copyMask?.GetShouldTranslate((int)Star_FieldIndex.ONAM) ?? true))
             {
@@ -2074,7 +2074,7 @@ namespace Mutagen.Bethesda.Starfield
                 binaryType: StringBinaryType.NullTerminate);
             P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.BNAM,
+                item: item.SystemParsecLocation,
                 header: translationParams.ConvertToCustom(RecordTypes.BNAM));
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
@@ -2195,8 +2195,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.BNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BNAM = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Star_FieldIndex.BNAM;
+                    item.SystemParsecLocation = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)Star_FieldIndex.SystemParsecLocation;
                 }
                 case RecordTypeInts.ONAM:
                 {
@@ -2295,9 +2295,9 @@ namespace Mutagen.Bethesda.Starfield
         string INamedRequiredGetter.Name => this.Name ?? string.Empty;
         #endregion
         #endregion
-        #region BNAM
-        private int? _BNAMLocation;
-        public P3Float? BNAM => _BNAMLocation.HasValue ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(HeaderTranslation.ExtractSubrecordMemory(_recordData, _BNAMLocation.Value, _package.MetaData.Constants)) : default(P3Float?);
+        #region SystemParsecLocation
+        private int? _SystemParsecLocationLocation;
+        public P3Float? SystemParsecLocation => _SystemParsecLocationLocation.HasValue ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(HeaderTranslation.ExtractSubrecordMemory(_recordData, _SystemParsecLocationLocation.Value, _package.MetaData.Constants)) : default(P3Float?);
         #endregion
         #region ONAM
         private int? _ONAMLocation;
@@ -2413,8 +2413,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BNAM:
                 {
-                    _BNAMLocation = (stream.Position - offset);
-                    return (int)Star_FieldIndex.BNAM;
+                    _SystemParsecLocationLocation = (stream.Position - offset);
+                    return (int)Star_FieldIndex.SystemParsecLocation;
                 }
                 case RecordTypeInts.ONAM:
                 {
