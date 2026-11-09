@@ -98,7 +98,7 @@
       <Float name="YearLengthInDays" />
       <UInt32 name="Asteroids" />
       <Bool name="Geostationary" byteLength="4" />
-      <Int32 name="RandomSeed" />
+      <UInt32 name="RandomSeed" />
       <Bool name="Rings" byteLength="4" />
     </Fields>
   </Object>
