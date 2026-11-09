@@ -18,6 +18,15 @@ public partial class PlacedObject
         OpenByDefault,
     }
 
+    /// <summary>
+    /// XFLG Extra Flags. xEdit names only bit 6 (Unknown 6), the only bit set in Starfield.esm.
+    /// </summary>
+    [Flags]
+    public enum ExtraFlag : uint
+    {
+        Unknown6 = 0x40,
+    }
+
     [Flags]
     public enum DefaultMajorFlag : uint
     {
