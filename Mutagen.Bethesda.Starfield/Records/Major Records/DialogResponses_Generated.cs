@@ -102,16 +102,15 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IDialogResponseFlagsGetter? IDialogResponsesGetter.Flags => this.Flags;
         #endregion
-        #region TPIC
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _TPIC;
-        public MemorySlice<Byte>? TPIC
+        #region PreviousTopic
+        private readonly IFormLinkNullable<IDialogTopicGetter> _PreviousTopic = new FormLinkNullable<IDialogTopicGetter>();
+        public IFormLinkNullable<IDialogTopicGetter> PreviousTopic
         {
-            get => this._TPIC;
-            set => this._TPIC = value;
+            get => _PreviousTopic;
+            set => _PreviousTopic.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IDialogResponsesGetter.TPIC => this.TPIC;
+        IFormLinkNullableGetter<IDialogTopicGetter> IDialogResponsesGetter.PreviousTopic => this.PreviousTopic;
         #endregion
         #region SharedDialog
         private readonly IFormLinkNullable<IDialogResponsesGetter> _SharedDialog = new FormLinkNullable<IDialogResponsesGetter>();
@@ -186,27 +185,21 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<ISceneGetter> IDialogResponsesGetter.StartScene => this.StartScene;
         #endregion
-        #region INTV
+        #region StartScenePhaseIndex
+        public UInt32? StartScenePhaseIndex { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _INTV;
-        public MemorySlice<Byte>? INTV
-        {
-            get => this._INTV;
-            set => this._INTV = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IDialogResponsesGetter.INTV => this.INTV;
+        UInt32? IDialogResponsesGetter.StartScenePhaseIndex => this.StartScenePhaseIndex;
         #endregion
-        #region WED0
+        #region Sound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _WED0;
-        public SoundReference? WED0
+        private SoundReference? _Sound;
+        public SoundReference? Sound
         {
-            get => _WED0;
-            set => _WED0 = value;
+            get => _Sound;
+            set => _Sound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? IDialogResponsesGetter.WED0 => this.WED0;
+        ISoundReferenceGetter? IDialogResponsesGetter.Sound => this.Sound;
         #endregion
         #region SetParentQuestStage
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -220,9 +213,7 @@ namespace Mutagen.Bethesda.Starfield
         IDialogSetParentQuestStageGetter? IDialogResponsesGetter.SetParentQuestStage => this.SetParentQuestStage;
         #endregion
         #region StartScenePhase
-        public String? StartScenePhase { get; set; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IDialogResponsesGetter.StartScenePhase => this.StartScenePhase;
+        public String StartScenePhase { get; set; } = string.Empty;
         #endregion
         #region ResetGlobal
         private readonly IFormLinkNullable<IGlobalGetter> _ResetGlobal = new FormLinkNullable<IGlobalGetter>();
@@ -300,7 +291,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.VirtualMachineAdapter = new MaskItem<TItem, DialogResponsesAdapter.Mask<TItem>?>(initialValue, new DialogResponsesAdapter.Mask<TItem>(initialValue));
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
                 this.Flags = new MaskItem<TItem, DialogResponseFlags.Mask<TItem>?>(initialValue, new DialogResponseFlags.Mask<TItem>(initialValue));
-                this.TPIC = initialValue;
+                this.PreviousTopic = initialValue;
                 this.SharedDialog = initialValue;
                 this.DialogGroup = initialValue;
                 this.Responses = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, DialogResponse.Mask<TItem>?>>?>(initialValue, []);
@@ -308,8 +299,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Prompt = initialValue;
                 this.Speaker = initialValue;
                 this.StartScene = initialValue;
-                this.INTV = initialValue;
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.StartScenePhaseIndex = initialValue;
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.SetParentQuestStage = new MaskItem<TItem, DialogSetParentQuestStage.Mask<TItem>?>(initialValue, new DialogSetParentQuestStage.Mask<TItem>(initialValue));
                 this.StartScenePhase = initialValue;
                 this.ResetGlobal = initialValue;
@@ -331,7 +322,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem VirtualMachineAdapter,
                 TItem Components,
                 TItem Flags,
-                TItem TPIC,
+                TItem PreviousTopic,
                 TItem SharedDialog,
                 TItem DialogGroup,
                 TItem Responses,
@@ -339,8 +330,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Prompt,
                 TItem Speaker,
                 TItem StartScene,
-                TItem INTV,
-                TItem WED0,
+                TItem StartScenePhaseIndex,
+                TItem Sound,
                 TItem SetParentQuestStage,
                 TItem StartScenePhase,
                 TItem ResetGlobal,
@@ -361,7 +352,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.VirtualMachineAdapter = new MaskItem<TItem, DialogResponsesAdapter.Mask<TItem>?>(VirtualMachineAdapter, new DialogResponsesAdapter.Mask<TItem>(VirtualMachineAdapter));
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
                 this.Flags = new MaskItem<TItem, DialogResponseFlags.Mask<TItem>?>(Flags, new DialogResponseFlags.Mask<TItem>(Flags));
-                this.TPIC = TPIC;
+                this.PreviousTopic = PreviousTopic;
                 this.SharedDialog = SharedDialog;
                 this.DialogGroup = DialogGroup;
                 this.Responses = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, DialogResponse.Mask<TItem>?>>?>(Responses, []);
@@ -369,8 +360,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Prompt = Prompt;
                 this.Speaker = Speaker;
                 this.StartScene = StartScene;
-                this.INTV = INTV;
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WED0, new SoundReference.Mask<TItem>(WED0));
+                this.StartScenePhaseIndex = StartScenePhaseIndex;
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Sound, new SoundReference.Mask<TItem>(Sound));
                 this.SetParentQuestStage = new MaskItem<TItem, DialogSetParentQuestStage.Mask<TItem>?>(SetParentQuestStage, new DialogSetParentQuestStage.Mask<TItem>(SetParentQuestStage));
                 this.StartScenePhase = StartScenePhase;
                 this.ResetGlobal = ResetGlobal;
@@ -393,7 +384,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, DialogResponsesAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
             public MaskItem<TItem, DialogResponseFlags.Mask<TItem>?>? Flags { get; set; }
-            public TItem TPIC;
+            public TItem PreviousTopic;
             public TItem SharedDialog;
             public TItem DialogGroup;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, DialogResponse.Mask<TItem>?>>?>? Responses;
@@ -401,8 +392,8 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Prompt;
             public TItem Speaker;
             public TItem StartScene;
-            public TItem INTV;
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? WED0 { get; set; }
+            public TItem StartScenePhaseIndex;
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? Sound { get; set; }
             public MaskItem<TItem, DialogSetParentQuestStage.Mask<TItem>?>? SetParentQuestStage { get; set; }
             public TItem StartScenePhase;
             public TItem ResetGlobal;
@@ -427,7 +418,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
                 if (!object.Equals(this.Components, rhs.Components)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
-                if (!object.Equals(this.TPIC, rhs.TPIC)) return false;
+                if (!object.Equals(this.PreviousTopic, rhs.PreviousTopic)) return false;
                 if (!object.Equals(this.SharedDialog, rhs.SharedDialog)) return false;
                 if (!object.Equals(this.DialogGroup, rhs.DialogGroup)) return false;
                 if (!object.Equals(this.Responses, rhs.Responses)) return false;
@@ -435,8 +426,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Prompt, rhs.Prompt)) return false;
                 if (!object.Equals(this.Speaker, rhs.Speaker)) return false;
                 if (!object.Equals(this.StartScene, rhs.StartScene)) return false;
-                if (!object.Equals(this.INTV, rhs.INTV)) return false;
-                if (!object.Equals(this.WED0, rhs.WED0)) return false;
+                if (!object.Equals(this.StartScenePhaseIndex, rhs.StartScenePhaseIndex)) return false;
+                if (!object.Equals(this.Sound, rhs.Sound)) return false;
                 if (!object.Equals(this.SetParentQuestStage, rhs.SetParentQuestStage)) return false;
                 if (!object.Equals(this.StartScenePhase, rhs.StartScenePhase)) return false;
                 if (!object.Equals(this.ResetGlobal, rhs.ResetGlobal)) return false;
@@ -453,7 +444,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.VirtualMachineAdapter);
                 hash.Add(this.Components);
                 hash.Add(this.Flags);
-                hash.Add(this.TPIC);
+                hash.Add(this.PreviousTopic);
                 hash.Add(this.SharedDialog);
                 hash.Add(this.DialogGroup);
                 hash.Add(this.Responses);
@@ -461,8 +452,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Prompt);
                 hash.Add(this.Speaker);
                 hash.Add(this.StartScene);
-                hash.Add(this.INTV);
-                hash.Add(this.WED0);
+                hash.Add(this.StartScenePhaseIndex);
+                hash.Add(this.Sound);
                 hash.Add(this.SetParentQuestStage);
                 hash.Add(this.StartScenePhase);
                 hash.Add(this.ResetGlobal);
@@ -503,7 +494,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.Flags.Overall)) return false;
                     if (this.Flags.Specific != null && !this.Flags.Specific.All(eval)) return false;
                 }
-                if (!eval(this.TPIC)) return false;
+                if (!eval(this.PreviousTopic)) return false;
                 if (!eval(this.SharedDialog)) return false;
                 if (!eval(this.DialogGroup)) return false;
                 if (this.Responses != null)
@@ -533,11 +524,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Prompt)) return false;
                 if (!eval(this.Speaker)) return false;
                 if (!eval(this.StartScene)) return false;
-                if (!eval(this.INTV)) return false;
-                if (WED0 != null)
+                if (!eval(this.StartScenePhaseIndex)) return false;
+                if (Sound != null)
                 {
-                    if (!eval(this.WED0.Overall)) return false;
-                    if (this.WED0.Specific != null && !this.WED0.Specific.All(eval)) return false;
+                    if (!eval(this.Sound.Overall)) return false;
+                    if (this.Sound.Specific != null && !this.Sound.Specific.All(eval)) return false;
                 }
                 if (SetParentQuestStage != null)
                 {
@@ -581,7 +572,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.Flags.Overall)) return true;
                     if (this.Flags.Specific != null && this.Flags.Specific.Any(eval)) return true;
                 }
-                if (eval(this.TPIC)) return true;
+                if (eval(this.PreviousTopic)) return true;
                 if (eval(this.SharedDialog)) return true;
                 if (eval(this.DialogGroup)) return true;
                 if (this.Responses != null)
@@ -611,11 +602,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Prompt)) return true;
                 if (eval(this.Speaker)) return true;
                 if (eval(this.StartScene)) return true;
-                if (eval(this.INTV)) return true;
-                if (WED0 != null)
+                if (eval(this.StartScenePhaseIndex)) return true;
+                if (Sound != null)
                 {
-                    if (eval(this.WED0.Overall)) return true;
-                    if (this.WED0.Specific != null && this.WED0.Specific.Any(eval)) return true;
+                    if (eval(this.Sound.Overall)) return true;
+                    if (this.Sound.Specific != null && this.Sound.Specific.Any(eval)) return true;
                 }
                 if (SetParentQuestStage != null)
                 {
@@ -661,7 +652,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.Flags = this.Flags == null ? null : new MaskItem<R, DialogResponseFlags.Mask<R>?>(eval(this.Flags.Overall), this.Flags.Specific?.Translate(eval));
-                obj.TPIC = eval(this.TPIC);
+                obj.PreviousTopic = eval(this.PreviousTopic);
                 obj.SharedDialog = eval(this.SharedDialog);
                 obj.DialogGroup = eval(this.DialogGroup);
                 if (Responses != null)
@@ -697,8 +688,8 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Prompt = eval(this.Prompt);
                 obj.Speaker = eval(this.Speaker);
                 obj.StartScene = eval(this.StartScene);
-                obj.INTV = eval(this.INTV);
-                obj.WED0 = this.WED0 == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WED0.Overall), this.WED0.Specific?.Translate(eval));
+                obj.StartScenePhaseIndex = eval(this.StartScenePhaseIndex);
+                obj.Sound = this.Sound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
                 obj.SetParentQuestStage = this.SetParentQuestStage == null ? null : new MaskItem<R, DialogSetParentQuestStage.Mask<R>?>(eval(this.SetParentQuestStage.Overall), this.SetParentQuestStage.Specific?.Translate(eval));
                 obj.StartScenePhase = eval(this.StartScenePhase);
                 obj.ResetGlobal = eval(this.ResetGlobal);
@@ -752,9 +743,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         Flags?.Print(sb);
                     }
-                    if (printMask?.TPIC ?? true)
+                    if (printMask?.PreviousTopic ?? true)
                     {
-                        sb.AppendItem(TPIC, "TPIC");
+                        sb.AppendItem(PreviousTopic, "PreviousTopic");
                     }
                     if (printMask?.SharedDialog ?? true)
                     {
@@ -814,13 +805,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(StartScene, "StartScene");
                     }
-                    if (printMask?.INTV ?? true)
+                    if (printMask?.StartScenePhaseIndex ?? true)
                     {
-                        sb.AppendItem(INTV, "INTV");
+                        sb.AppendItem(StartScenePhaseIndex, "StartScenePhaseIndex");
                     }
-                    if (printMask?.WED0?.Overall ?? true)
+                    if (printMask?.Sound?.Overall ?? true)
                     {
-                        WED0?.Print(sb);
+                        Sound?.Print(sb);
                     }
                     if (printMask?.SetParentQuestStage?.Overall ?? true)
                     {
@@ -868,7 +859,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, DialogResponsesAdapter.ErrorMask?>? VirtualMachineAdapter;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
             public MaskItem<Exception?, DialogResponseFlags.ErrorMask?>? Flags;
-            public Exception? TPIC;
+            public Exception? PreviousTopic;
             public Exception? SharedDialog;
             public Exception? DialogGroup;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DialogResponse.ErrorMask?>>?>? Responses;
@@ -876,8 +867,8 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Prompt;
             public Exception? Speaker;
             public Exception? StartScene;
-            public Exception? INTV;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? WED0;
+            public Exception? StartScenePhaseIndex;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? Sound;
             public MaskItem<Exception?, DialogSetParentQuestStage.ErrorMask?>? SetParentQuestStage;
             public Exception? StartScenePhase;
             public Exception? ResetGlobal;
@@ -900,8 +891,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Components;
                     case DialogResponses_FieldIndex.Flags:
                         return Flags;
-                    case DialogResponses_FieldIndex.TPIC:
-                        return TPIC;
+                    case DialogResponses_FieldIndex.PreviousTopic:
+                        return PreviousTopic;
                     case DialogResponses_FieldIndex.SharedDialog:
                         return SharedDialog;
                     case DialogResponses_FieldIndex.DialogGroup:
@@ -916,10 +907,10 @@ namespace Mutagen.Bethesda.Starfield
                         return Speaker;
                     case DialogResponses_FieldIndex.StartScene:
                         return StartScene;
-                    case DialogResponses_FieldIndex.INTV:
-                        return INTV;
-                    case DialogResponses_FieldIndex.WED0:
-                        return WED0;
+                    case DialogResponses_FieldIndex.StartScenePhaseIndex:
+                        return StartScenePhaseIndex;
+                    case DialogResponses_FieldIndex.Sound:
+                        return Sound;
                     case DialogResponses_FieldIndex.SetParentQuestStage:
                         return SetParentQuestStage;
                     case DialogResponses_FieldIndex.StartScenePhase:
@@ -955,8 +946,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DialogResponses_FieldIndex.Flags:
                         this.Flags = new MaskItem<Exception?, DialogResponseFlags.ErrorMask?>(ex, null);
                         break;
-                    case DialogResponses_FieldIndex.TPIC:
-                        this.TPIC = ex;
+                    case DialogResponses_FieldIndex.PreviousTopic:
+                        this.PreviousTopic = ex;
                         break;
                     case DialogResponses_FieldIndex.SharedDialog:
                         this.SharedDialog = ex;
@@ -979,11 +970,11 @@ namespace Mutagen.Bethesda.Starfield
                     case DialogResponses_FieldIndex.StartScene:
                         this.StartScene = ex;
                         break;
-                    case DialogResponses_FieldIndex.INTV:
-                        this.INTV = ex;
+                    case DialogResponses_FieldIndex.StartScenePhaseIndex:
+                        this.StartScenePhaseIndex = ex;
                         break;
-                    case DialogResponses_FieldIndex.WED0:
-                        this.WED0 = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case DialogResponses_FieldIndex.Sound:
+                        this.Sound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
                     case DialogResponses_FieldIndex.SetParentQuestStage:
                         this.SetParentQuestStage = new MaskItem<Exception?, DialogSetParentQuestStage.ErrorMask?>(ex, null);
@@ -1029,8 +1020,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DialogResponses_FieldIndex.Flags:
                         this.Flags = (MaskItem<Exception?, DialogResponseFlags.ErrorMask?>?)obj;
                         break;
-                    case DialogResponses_FieldIndex.TPIC:
-                        this.TPIC = (Exception?)obj;
+                    case DialogResponses_FieldIndex.PreviousTopic:
+                        this.PreviousTopic = (Exception?)obj;
                         break;
                     case DialogResponses_FieldIndex.SharedDialog:
                         this.SharedDialog = (Exception?)obj;
@@ -1053,11 +1044,11 @@ namespace Mutagen.Bethesda.Starfield
                     case DialogResponses_FieldIndex.StartScene:
                         this.StartScene = (Exception?)obj;
                         break;
-                    case DialogResponses_FieldIndex.INTV:
-                        this.INTV = (Exception?)obj;
+                    case DialogResponses_FieldIndex.StartScenePhaseIndex:
+                        this.StartScenePhaseIndex = (Exception?)obj;
                         break;
-                    case DialogResponses_FieldIndex.WED0:
-                        this.WED0 = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case DialogResponses_FieldIndex.Sound:
+                        this.Sound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
                     case DialogResponses_FieldIndex.SetParentQuestStage:
                         this.SetParentQuestStage = (MaskItem<Exception?, DialogSetParentQuestStage.ErrorMask?>?)obj;
@@ -1095,7 +1086,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (VirtualMachineAdapter != null) return true;
                 if (Components != null) return true;
                 if (Flags != null) return true;
-                if (TPIC != null) return true;
+                if (PreviousTopic != null) return true;
                 if (SharedDialog != null) return true;
                 if (DialogGroup != null) return true;
                 if (Responses != null) return true;
@@ -1103,8 +1094,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (Prompt != null) return true;
                 if (Speaker != null) return true;
                 if (StartScene != null) return true;
-                if (INTV != null) return true;
-                if (WED0 != null) return true;
+                if (StartScenePhaseIndex != null) return true;
+                if (Sound != null) return true;
                 if (SetParentQuestStage != null) return true;
                 if (StartScenePhase != null) return true;
                 if (ResetGlobal != null) return true;
@@ -1160,7 +1151,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 Flags?.Print(sb);
                 {
-                    sb.AppendItem(TPIC, "TPIC");
+                    sb.AppendItem(PreviousTopic, "PreviousTopic");
                 }
                 {
                     sb.AppendItem(SharedDialog, "SharedDialog");
@@ -1214,9 +1205,9 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(StartScene, "StartScene");
                 }
                 {
-                    sb.AppendItem(INTV, "INTV");
+                    sb.AppendItem(StartScenePhaseIndex, "StartScenePhaseIndex");
                 }
-                WED0?.Print(sb);
+                Sound?.Print(sb);
                 SetParentQuestStage?.Print(sb);
                 {
                     sb.AppendItem(StartScenePhase, "StartScenePhase");
@@ -1250,7 +1241,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
                 ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
                 ret.Flags = this.Flags.Combine(rhs.Flags, (l, r) => l.Combine(r));
-                ret.TPIC = this.TPIC.Combine(rhs.TPIC);
+                ret.PreviousTopic = this.PreviousTopic.Combine(rhs.PreviousTopic);
                 ret.SharedDialog = this.SharedDialog.Combine(rhs.SharedDialog);
                 ret.DialogGroup = this.DialogGroup.Combine(rhs.DialogGroup);
                 ret.Responses = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DialogResponse.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Responses?.Overall, rhs.Responses?.Overall), Noggog.ExceptionExt.Combine(this.Responses?.Specific, rhs.Responses?.Specific));
@@ -1258,8 +1249,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Prompt = this.Prompt.Combine(rhs.Prompt);
                 ret.Speaker = this.Speaker.Combine(rhs.Speaker);
                 ret.StartScene = this.StartScene.Combine(rhs.StartScene);
-                ret.INTV = this.INTV.Combine(rhs.INTV);
-                ret.WED0 = this.WED0.Combine(rhs.WED0, (l, r) => l.Combine(r));
+                ret.StartScenePhaseIndex = this.StartScenePhaseIndex.Combine(rhs.StartScenePhaseIndex);
+                ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
                 ret.SetParentQuestStage = this.SetParentQuestStage.Combine(rhs.SetParentQuestStage, (l, r) => l.Combine(r));
                 ret.StartScenePhase = this.StartScenePhase.Combine(rhs.StartScenePhase);
                 ret.ResetGlobal = this.ResetGlobal.Combine(rhs.ResetGlobal);
@@ -1293,7 +1284,7 @@ namespace Mutagen.Bethesda.Starfield
             public DialogResponsesAdapter.TranslationMask? VirtualMachineAdapter;
             public AComponent.TranslationMask? Components;
             public DialogResponseFlags.TranslationMask? Flags;
-            public bool TPIC;
+            public bool PreviousTopic;
             public bool SharedDialog;
             public bool DialogGroup;
             public DialogResponse.TranslationMask? Responses;
@@ -1301,8 +1292,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool Prompt;
             public bool Speaker;
             public bool StartScene;
-            public bool INTV;
-            public SoundReference.TranslationMask? WED0;
+            public bool StartScenePhaseIndex;
+            public SoundReference.TranslationMask? Sound;
             public DialogSetParentQuestStage.TranslationMask? SetParentQuestStage;
             public bool StartScenePhase;
             public bool ResetGlobal;
@@ -1319,13 +1310,13 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.TPIC = defaultOn;
+                this.PreviousTopic = defaultOn;
                 this.SharedDialog = defaultOn;
                 this.DialogGroup = defaultOn;
                 this.Prompt = defaultOn;
                 this.Speaker = defaultOn;
                 this.StartScene = defaultOn;
-                this.INTV = defaultOn;
+                this.StartScenePhaseIndex = defaultOn;
                 this.StartScenePhase = defaultOn;
                 this.ResetGlobal = defaultOn;
                 this.SubtitlePriority = defaultOn;
@@ -1343,7 +1334,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
                 ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
                 ret.Add((Flags != null ? Flags.OnOverall : DefaultOn, Flags?.GetCrystal()));
-                ret.Add((TPIC, null));
+                ret.Add((PreviousTopic, null));
                 ret.Add((SharedDialog, null));
                 ret.Add((DialogGroup, null));
                 ret.Add((Responses == null ? DefaultOn : !Responses.GetCrystal().CopyNothing, Responses?.GetCrystal()));
@@ -1351,8 +1342,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Prompt, null));
                 ret.Add((Speaker, null));
                 ret.Add((StartScene, null));
-                ret.Add((INTV, null));
-                ret.Add((WED0 != null ? WED0.OnOverall : DefaultOn, WED0?.GetCrystal()));
+                ret.Add((StartScenePhaseIndex, null));
+                ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
                 ret.Add((SetParentQuestStage != null ? SetParentQuestStage.OnOverall : DefaultOn, SetParentQuestStage?.GetCrystal()));
                 ret.Add((StartScenePhase, null));
                 ret.Add((ResetGlobal, null));
@@ -1525,7 +1516,7 @@ namespace Mutagen.Bethesda.Starfield
         new DialogResponsesAdapter? VirtualMachineAdapter { get; set; }
         new ExtendedList<AComponent> Components { get; }
         new DialogResponseFlags? Flags { get; set; }
-        new MemorySlice<Byte>? TPIC { get; set; }
+        new IFormLinkNullable<IDialogTopicGetter> PreviousTopic { get; set; }
         new IFormLinkNullable<IDialogResponsesGetter> SharedDialog { get; set; }
         new IFormLinkNullable<IDialogResponsesGetter> DialogGroup { get; set; }
         new ExtendedList<DialogResponse> Responses { get; }
@@ -1533,10 +1524,10 @@ namespace Mutagen.Bethesda.Starfield
         new TranslatedString? Prompt { get; set; }
         new IFormLinkNullable<INpcGetter> Speaker { get; set; }
         new IFormLinkNullable<ISceneGetter> StartScene { get; set; }
-        new MemorySlice<Byte>? INTV { get; set; }
-        new SoundReference? WED0 { get; set; }
+        new UInt32? StartScenePhaseIndex { get; set; }
+        new SoundReference? Sound { get; set; }
         new DialogSetParentQuestStage? SetParentQuestStage { get; set; }
-        new String? StartScenePhase { get; set; }
+        new String StartScenePhase { get; set; }
         new IFormLinkNullable<IGlobalGetter> ResetGlobal { get; set; }
         new DialogResponses.SubtitlePriorityLevel? SubtitlePriority { get; set; }
         new Boolean COCT { get; set; }
@@ -1575,7 +1566,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         IReadOnlyList<IAComponentGetter> Components { get; }
         IDialogResponseFlagsGetter? Flags { get; }
-        ReadOnlyMemorySlice<Byte>? TPIC { get; }
+        IFormLinkNullableGetter<IDialogTopicGetter> PreviousTopic { get; }
         IFormLinkNullableGetter<IDialogResponsesGetter> SharedDialog { get; }
         IFormLinkNullableGetter<IDialogResponsesGetter> DialogGroup { get; }
         IReadOnlyList<IDialogResponseGetter> Responses { get; }
@@ -1583,10 +1574,10 @@ namespace Mutagen.Bethesda.Starfield
         ITranslatedStringGetter? Prompt { get; }
         IFormLinkNullableGetter<INpcGetter> Speaker { get; }
         IFormLinkNullableGetter<ISceneGetter> StartScene { get; }
-        ReadOnlyMemorySlice<Byte>? INTV { get; }
-        ISoundReferenceGetter? WED0 { get; }
+        UInt32? StartScenePhaseIndex { get; }
+        ISoundReferenceGetter? Sound { get; }
         IDialogSetParentQuestStageGetter? SetParentQuestStage { get; }
-        String? StartScenePhase { get; }
+        String StartScenePhase { get; }
         IFormLinkNullableGetter<IGlobalGetter> ResetGlobal { get; }
         DialogResponses.SubtitlePriorityLevel? SubtitlePriority { get; }
         Boolean COCT { get; }
@@ -1776,7 +1767,7 @@ namespace Mutagen.Bethesda.Starfield
         VirtualMachineAdapter = 7,
         Components = 8,
         Flags = 9,
-        TPIC = 10,
+        PreviousTopic = 10,
         SharedDialog = 11,
         DialogGroup = 12,
         Responses = 13,
@@ -1784,8 +1775,8 @@ namespace Mutagen.Bethesda.Starfield
         Prompt = 15,
         Speaker = 16,
         StartScene = 17,
-        INTV = 18,
-        WED0 = 19,
+        StartScenePhaseIndex = 18,
+        Sound = 19,
         SetParentQuestStage = 20,
         StartScenePhase = 21,
         ResetGlobal = 22,
@@ -1848,7 +1839,6 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.DNAM,
                 RecordTypes.GNAM,
                 RecordTypes.TRDA,
-                RecordTypes.TROI,
                 RecordTypes.TROT,
                 RecordTypes.NAM1,
                 RecordTypes.NAM2,
@@ -1922,7 +1912,7 @@ namespace Mutagen.Bethesda.Starfield
             item.VirtualMachineAdapter = null;
             item.Components.Clear();
             item.Flags = null;
-            item.TPIC = default;
+            item.PreviousTopic.Clear();
             item.SharedDialog.Clear();
             item.DialogGroup.Clear();
             item.Responses.Clear();
@@ -1930,10 +1920,10 @@ namespace Mutagen.Bethesda.Starfield
             item.Prompt = default;
             item.Speaker.Clear();
             item.StartScene.Clear();
-            item.INTV = default;
-            item.WED0 = null;
+            item.StartScenePhaseIndex = default;
+            item.Sound = null;
             item.SetParentQuestStage = null;
-            item.StartScenePhase = default;
+            item.StartScenePhase = string.Empty;
             item.ResetGlobal.Clear();
             item.SubtitlePriority = default;
             item.COCT = default(Boolean);
@@ -1959,13 +1949,14 @@ namespace Mutagen.Bethesda.Starfield
             base.RemapLinks(obj, mapping);
             obj.VirtualMachineAdapter?.RemapLinks(mapping);
             obj.Components.RemapLinks(mapping);
+            obj.PreviousTopic.Relink(mapping);
             obj.SharedDialog.Relink(mapping);
             obj.DialogGroup.Relink(mapping);
             obj.Responses.RemapLinks(mapping);
             obj.Conditions.RemapLinks(mapping);
             obj.Speaker.Relink(mapping);
             obj.StartScene.Relink(mapping);
-            obj.WED0?.RemapLinks(mapping);
+            obj.Sound?.RemapLinks(mapping);
             obj.ResetGlobal.Relink(mapping);
             obj.AffinityEvent.Relink(mapping);
             obj.SpeechChallenge.Relink(mapping);
@@ -2075,7 +2066,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Flags,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.TPIC = MemorySliceExt.SequenceEqual(item.TPIC, rhs.TPIC);
+            ret.PreviousTopic = item.PreviousTopic.Equals(rhs.PreviousTopic);
             ret.SharedDialog = item.SharedDialog.Equals(rhs.SharedDialog);
             ret.DialogGroup = item.DialogGroup.Equals(rhs.DialogGroup);
             ret.Responses = item.Responses.CollectionEqualsHelper(
@@ -2089,10 +2080,10 @@ namespace Mutagen.Bethesda.Starfield
             ret.Prompt = object.Equals(item.Prompt, rhs.Prompt);
             ret.Speaker = item.Speaker.Equals(rhs.Speaker);
             ret.StartScene = item.StartScene.Equals(rhs.StartScene);
-            ret.INTV = MemorySliceExt.SequenceEqual(item.INTV, rhs.INTV);
-            ret.WED0 = EqualsMaskHelper.EqualsHelper(
-                item.WED0,
-                rhs.WED0,
+            ret.StartScenePhaseIndex = item.StartScenePhaseIndex == rhs.StartScenePhaseIndex;
+            ret.Sound = EqualsMaskHelper.EqualsHelper(
+                item.Sound,
+                rhs.Sound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.SetParentQuestStage = EqualsMaskHelper.EqualsHelper(
@@ -2180,10 +2171,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 FlagsItem?.Print(sb, "Flags");
             }
-            if ((printMask?.TPIC ?? true)
-                && item.TPIC is {} TPICItem)
+            if (printMask?.PreviousTopic ?? true)
             {
-                sb.AppendLine($"TPIC => {SpanExt.ToHexString(TPICItem)}");
+                sb.AppendItem(item.PreviousTopic.FormKeyNullable, "PreviousTopic");
             }
             if (printMask?.SharedDialog ?? true)
             {
@@ -2234,25 +2224,24 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.StartScene.FormKeyNullable, "StartScene");
             }
-            if ((printMask?.INTV ?? true)
-                && item.INTV is {} INTVItem)
+            if ((printMask?.StartScenePhaseIndex ?? true)
+                && item.StartScenePhaseIndex is {} StartScenePhaseIndexItem)
             {
-                sb.AppendLine($"INTV => {SpanExt.ToHexString(INTVItem)}");
+                sb.AppendItem(StartScenePhaseIndexItem, "StartScenePhaseIndex");
             }
-            if ((printMask?.WED0?.Overall ?? true)
-                && item.WED0 is {} WED0Item)
+            if ((printMask?.Sound?.Overall ?? true)
+                && item.Sound is {} SoundItem)
             {
-                WED0Item?.Print(sb, "WED0");
+                SoundItem?.Print(sb, "Sound");
             }
             if ((printMask?.SetParentQuestStage?.Overall ?? true)
                 && item.SetParentQuestStage is {} SetParentQuestStageItem)
             {
                 SetParentQuestStageItem?.Print(sb, "SetParentQuestStage");
             }
-            if ((printMask?.StartScenePhase ?? true)
-                && item.StartScenePhase is {} StartScenePhaseItem)
+            if (printMask?.StartScenePhase ?? true)
             {
-                sb.AppendItem(StartScenePhaseItem, "StartScenePhase");
+                sb.AppendItem(item.StartScenePhase, "StartScenePhase");
             }
             if (printMask?.ResetGlobal ?? true)
             {
@@ -2349,9 +2338,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isFlagsEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.TPIC) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.PreviousTopic) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.TPIC, rhs.TPIC)) return false;
+                if (!lhs.PreviousTopic.Equals(rhs.PreviousTopic)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.SharedDialog) ?? true))
             {
@@ -2381,17 +2370,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.StartScene.Equals(rhs.StartScene)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.INTV) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.StartScenePhaseIndex) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.INTV, rhs.INTV)) return false;
+                if (lhs.StartScenePhaseIndex != rhs.StartScenePhaseIndex) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.WED0) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.Sound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.WED0, rhs.WED0, out var lhsWED0, out var rhsWED0, out var isWED0Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.Sound, rhs.Sound, out var lhsSound, out var rhsSound, out var isSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsWED0).CommonInstance()!).Equals(lhsWED0, rhsWED0, equalsMask?.GetSubCrystal((int)DialogResponses_FieldIndex.WED0))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsSound).CommonInstance()!).Equals(lhsSound, rhsSound, equalsMask?.GetSubCrystal((int)DialogResponses_FieldIndex.Sound))) return false;
                 }
-                else if (!isWED0Equal) return false;
+                else if (!isSoundEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.SetParentQuestStage) ?? true))
             {
@@ -2461,50 +2450,35 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            foreach (var subItem in item.Components)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.Components);
             if (item.Flags is {} Flagsitem)
             {
                 hash.Add(Flagsitem);
             }
-            if (item.TPIC is {} TPICItem)
-            {
-                hash.AddBytes(TPICItem);
-            }
+            hash.Add(item.PreviousTopic);
             hash.Add(item.SharedDialog);
             hash.Add(item.DialogGroup);
-            foreach (var subItem in item.Responses)
-            {
-                hash.Add(subItem);
-            }
-            foreach (var subItem in item.Conditions)
-            {
-                hash.Add(subItem);
-            }
+            hash.Add(item.Responses);
+            hash.Add(item.Conditions);
             if (item.Prompt is {} Promptitem)
             {
                 hash.Add(Promptitem);
             }
             hash.Add(item.Speaker);
             hash.Add(item.StartScene);
-            if (item.INTV is {} INTVItem)
+            if (item.StartScenePhaseIndex is {} StartScenePhaseIndexitem)
             {
-                hash.AddBytes(INTVItem);
+                hash.Add(StartScenePhaseIndexitem);
             }
-            if (item.WED0 is {} WED0item)
+            if (item.Sound is {} Sounditem)
             {
-                hash.Add(WED0item);
+                hash.Add(Sounditem);
             }
             if (item.SetParentQuestStage is {} SetParentQuestStageitem)
             {
                 hash.Add(SetParentQuestStageitem);
             }
-            if (item.StartScenePhase is {} StartScenePhaseitem)
-            {
-                hash.Add(StartScenePhaseitem);
-            }
+            hash.Add(item.StartScenePhase);
             hash.Add(item.ResetGlobal);
             if (item.SubtitlePriority is {} SubtitlePriorityitem)
             {
@@ -2555,6 +2529,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return FormLinkInformation.Factory(item);
             }
+            if (FormLinkInformation.TryFactory(obj.PreviousTopic, out var PreviousTopicInfo))
+            {
+                yield return PreviousTopicInfo;
+            }
             if (FormLinkInformation.TryFactory(obj.SharedDialog, out var SharedDialogInfo))
             {
                 yield return SharedDialogInfo;
@@ -2579,9 +2557,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return StartSceneInfo;
             }
-            if (obj.WED0 is {} WED0Items)
+            if (obj.Sound is {} SoundItems)
             {
-                foreach (var item in WED0Items.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in SoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -2788,16 +2766,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.TPIC) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.PreviousTopic) ?? true))
             {
-                if(rhs.TPIC is {} TPICrhs)
-                {
-                    item.TPIC = TPICrhs.ToArray();
-                }
-                else
-                {
-                    item.TPIC = default;
-                }
+                item.PreviousTopic.SetTo(rhs.PreviousTopic.FormKeyNullable);
             }
             if ((copyMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.SharedDialog) ?? true))
             {
@@ -2867,31 +2838,24 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.StartScene.SetTo(rhs.StartScene.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.INTV) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.StartScenePhaseIndex) ?? true))
             {
-                if(rhs.INTV is {} INTVrhs)
-                {
-                    item.INTV = INTVrhs.ToArray();
-                }
-                else
-                {
-                    item.INTV = default;
-                }
+                item.StartScenePhaseIndex = rhs.StartScenePhaseIndex;
             }
-            if ((copyMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.WED0) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)DialogResponses_FieldIndex.Sound) ?? true))
             {
-                errorMask?.PushIndex((int)DialogResponses_FieldIndex.WED0);
+                errorMask?.PushIndex((int)DialogResponses_FieldIndex.Sound);
                 try
                 {
-                    if(rhs.WED0 is {} rhsWED0)
+                    if(rhs.Sound is {} rhsSound)
                     {
-                        item.WED0 = rhsWED0.DeepCopy(
+                        item.Sound = rhsSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)DialogResponses_FieldIndex.WED0));
+                            copyMask?.GetSubCrystal((int)DialogResponses_FieldIndex.Sound));
                     }
                     else
                     {
-                        item.WED0 = default;
+                        item.Sound = default;
                     }
                 }
                 catch (Exception ex)
@@ -3152,9 +3116,9 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     translationParams: translationParams);
             }
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.TPIC,
+                item: item.PreviousTopic,
                 header: translationParams.ConvertToCustom(RecordTypes.TPIC));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -3200,16 +3164,16 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.StartScene,
                 header: translationParams.ConvertToCustom(RecordTypes.TSCE));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.INTV,
+                item: item.StartScenePhaseIndex,
                 header: translationParams.ConvertToCustom(RecordTypes.INTV));
-            if (item.WED0 is {} WED0Item)
+            if (item.Sound is {} SoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.WED0))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)WED0Item).BinaryWriteTranslator).Write(
-                        item: WED0Item,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)SoundItem).BinaryWriteTranslator).Write(
+                        item: SoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -3221,7 +3185,7 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     translationParams: translationParams);
             }
-            StringBinaryTranslation.Instance.WriteNullable(
+            StringBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.StartScenePhase,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM0),
@@ -3344,8 +3308,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.TPIC:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.TPIC = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)DialogResponses_FieldIndex.TPIC;
+                    item.PreviousTopic.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)DialogResponses_FieldIndex.PreviousTopic;
                 }
                 case RecordTypeInts.DNAM:
                 {
@@ -3405,14 +3369,14 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.INTV:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.INTV = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)DialogResponses_FieldIndex.INTV;
+                    item.StartScenePhaseIndex = frame.ReadUInt32();
+                    return (int)DialogResponses_FieldIndex.StartScenePhaseIndex;
                 }
                 case RecordTypeInts.WED0:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.WED0 = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)DialogResponses_FieldIndex.WED0;
+                    item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)DialogResponses_FieldIndex.Sound;
                 }
                 case RecordTypeInts.TIQS:
                 {
@@ -3542,9 +3506,9 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _FlagsLocation;
         public IDialogResponseFlagsGetter? Flags => _FlagsLocation.HasValue ? DialogResponseFlagsBinaryOverlay.DialogResponseFlagsFactory(_recordData.Slice(_FlagsLocation!.Value.Min), _package) : default;
         #endregion
-        #region TPIC
-        private int? _TPICLocation;
-        public ReadOnlyMemorySlice<Byte>? TPIC => _TPICLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _TPICLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region PreviousTopic
+        private int? _PreviousTopicLocation;
+        public IFormLinkNullableGetter<IDialogTopicGetter> PreviousTopic => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IDialogTopicGetter>(_package, _recordData, _PreviousTopicLocation);
         #endregion
         #region SharedDialog
         private int? _SharedDialogLocation;
@@ -3568,18 +3532,18 @@ namespace Mutagen.Bethesda.Starfield
         private int? _StartSceneLocation;
         public IFormLinkNullableGetter<ISceneGetter> StartScene => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ISceneGetter>(_package, _recordData, _StartSceneLocation);
         #endregion
-        #region INTV
-        private int? _INTVLocation;
-        public ReadOnlyMemorySlice<Byte>? INTV => _INTVLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _INTVLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region StartScenePhaseIndex
+        private int? _StartScenePhaseIndexLocation;
+        public UInt32? StartScenePhaseIndex => _StartScenePhaseIndexLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _StartScenePhaseIndexLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        public ISoundReferenceGetter? WED0 { get; private set; }
+        public ISoundReferenceGetter? Sound { get; private set; }
         #region SetParentQuestStage
         private RangeInt32? _SetParentQuestStageLocation;
         public IDialogSetParentQuestStageGetter? SetParentQuestStage => _SetParentQuestStageLocation.HasValue ? DialogSetParentQuestStageBinaryOverlay.DialogSetParentQuestStageFactory(_recordData.Slice(_SetParentQuestStageLocation!.Value.Min), _package) : default;
         #endregion
         #region StartScenePhase
         private int? _StartScenePhaseLocation;
-        public String? StartScenePhase => _StartScenePhaseLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _StartScenePhaseLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        public String StartScenePhase => _StartScenePhaseLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _StartScenePhaseLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
         #endregion
         #region ResetGlobal
         private int? _ResetGlobalLocation;
@@ -3700,8 +3664,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.TPIC:
                 {
-                    _TPICLocation = (stream.Position - offset);
-                    return (int)DialogResponses_FieldIndex.TPIC;
+                    _PreviousTopicLocation = (stream.Position - offset);
+                    return (int)DialogResponses_FieldIndex.PreviousTopic;
                 }
                 case RecordTypeInts.DNAM:
                 {
@@ -3754,17 +3718,17 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.INTV:
                 {
-                    _INTVLocation = (stream.Position - offset);
-                    return (int)DialogResponses_FieldIndex.INTV;
+                    _StartScenePhaseIndexLocation = (stream.Position - offset);
+                    return (int)DialogResponses_FieldIndex.StartScenePhaseIndex;
                 }
                 case RecordTypeInts.WED0:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.WED0 = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.Sound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)DialogResponses_FieldIndex.WED0;
+                    return (int)DialogResponses_FieldIndex.Sound;
                 }
                 case RecordTypeInts.TIQS:
                 {
