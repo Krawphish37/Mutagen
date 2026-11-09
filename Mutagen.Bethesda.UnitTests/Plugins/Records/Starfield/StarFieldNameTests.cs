@@ -45,7 +45,7 @@ public class StarFieldNameTests
         {
             var orbited = star.Components.OfType<IOrbitedDataComponentGetter>().Single();
             orbited.GravityWell.ShouldBe(0d);
-            orbited.MassInSm.ShouldBe(0.93f, 0.001f);
+            (orbited.MassInKg / 1.98847E30f).ShouldBe(0.93f, 0.001f); // fixes.3 keeps the stored kg (MassInKg); 0.93 solar masses
             orbited.RadiusInKm.ShouldBe(647559f);
             orbited.SurfaceGravity.ShouldBe(1f);
             var written = GameConstants.Starfield.MajorRecord(Write(w => star.WriteToBinary(w)));
