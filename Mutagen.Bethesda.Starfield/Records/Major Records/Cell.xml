@@ -84,14 +84,14 @@
       <Float name="FogFar" />
       <Int32 name="DirectionalRotationXY" />
       <Int32 name="DirectionalRotationZ" />
-      <Float name="DirectionalFade" />
+      <Float name="GravityScale" />
       <Float name="FogClipDistance" />
       <Float name="FogPower" />
       <Color name="FogFarColor" binaryType="Alpha" />
       <Float name="FogMax" />
       <Float name="LightFadeBegin" />
       <Float name="LightFadeEnd" />
-      <Int32 name="Unknown1" unknown="true" />
+      <Color name="UnknownColor" binaryType="Alpha" />
       <Float name="NearHeightMid" />
       <Float name="NearHeightRange" />
       <Color name="FogColorHighNear" binaryType="Alpha" />

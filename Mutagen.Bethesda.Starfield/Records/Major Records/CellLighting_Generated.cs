@@ -73,8 +73,8 @@ namespace Mutagen.Bethesda.Starfield
         #region DirectionalRotationZ
         public Int32 DirectionalRotationZ { get; set; } = default(Int32);
         #endregion
-        #region DirectionalFade
-        public Single DirectionalFade { get; set; } = default(Single);
+        #region GravityScale
+        public Single GravityScale { get; set; } = default(Single);
         #endregion
         #region FogClipDistance
         public Single FogClipDistance { get; set; } = default(Single);
@@ -94,8 +94,8 @@ namespace Mutagen.Bethesda.Starfield
         #region LightFadeEnd
         public Single LightFadeEnd { get; set; } = default(Single);
         #endregion
-        #region Unknown1
-        public Int32 Unknown1 { get; set; } = default(Int32);
+        #region UnknownColor
+        public Color UnknownColor { get; set; } = default(Color);
         #endregion
         #region NearHeightMid
         public Single NearHeightMid { get; set; } = default(Single);
@@ -179,14 +179,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.FogFar = initialValue;
                 this.DirectionalRotationXY = initialValue;
                 this.DirectionalRotationZ = initialValue;
-                this.DirectionalFade = initialValue;
+                this.GravityScale = initialValue;
                 this.FogClipDistance = initialValue;
                 this.FogPower = initialValue;
                 this.FogFarColor = initialValue;
                 this.FogMax = initialValue;
                 this.LightFadeBegin = initialValue;
                 this.LightFadeEnd = initialValue;
-                this.Unknown1 = initialValue;
+                this.UnknownColor = initialValue;
                 this.NearHeightMid = initialValue;
                 this.NearHeightRange = initialValue;
                 this.FogColorHighNear = initialValue;
@@ -209,14 +209,14 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FogFar,
                 TItem DirectionalRotationXY,
                 TItem DirectionalRotationZ,
-                TItem DirectionalFade,
+                TItem GravityScale,
                 TItem FogClipDistance,
                 TItem FogPower,
                 TItem FogFarColor,
                 TItem FogMax,
                 TItem LightFadeBegin,
                 TItem LightFadeEnd,
-                TItem Unknown1,
+                TItem UnknownColor,
                 TItem NearHeightMid,
                 TItem NearHeightRange,
                 TItem FogColorHighNear,
@@ -237,14 +237,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.FogFar = FogFar;
                 this.DirectionalRotationXY = DirectionalRotationXY;
                 this.DirectionalRotationZ = DirectionalRotationZ;
-                this.DirectionalFade = DirectionalFade;
+                this.GravityScale = GravityScale;
                 this.FogClipDistance = FogClipDistance;
                 this.FogPower = FogPower;
                 this.FogFarColor = FogFarColor;
                 this.FogMax = FogMax;
                 this.LightFadeBegin = LightFadeBegin;
                 this.LightFadeEnd = LightFadeEnd;
-                this.Unknown1 = Unknown1;
+                this.UnknownColor = UnknownColor;
                 this.NearHeightMid = NearHeightMid;
                 this.NearHeightRange = NearHeightRange;
                 this.FogColorHighNear = FogColorHighNear;
@@ -275,14 +275,14 @@ namespace Mutagen.Bethesda.Starfield
             public TItem FogFar;
             public TItem DirectionalRotationXY;
             public TItem DirectionalRotationZ;
-            public TItem DirectionalFade;
+            public TItem GravityScale;
             public TItem FogClipDistance;
             public TItem FogPower;
             public TItem FogFarColor;
             public TItem FogMax;
             public TItem LightFadeBegin;
             public TItem LightFadeEnd;
-            public TItem Unknown1;
+            public TItem UnknownColor;
             public TItem NearHeightMid;
             public TItem NearHeightRange;
             public TItem FogColorHighNear;
@@ -314,14 +314,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.FogFar, rhs.FogFar)) return false;
                 if (!object.Equals(this.DirectionalRotationXY, rhs.DirectionalRotationXY)) return false;
                 if (!object.Equals(this.DirectionalRotationZ, rhs.DirectionalRotationZ)) return false;
-                if (!object.Equals(this.DirectionalFade, rhs.DirectionalFade)) return false;
+                if (!object.Equals(this.GravityScale, rhs.GravityScale)) return false;
                 if (!object.Equals(this.FogClipDistance, rhs.FogClipDistance)) return false;
                 if (!object.Equals(this.FogPower, rhs.FogPower)) return false;
                 if (!object.Equals(this.FogFarColor, rhs.FogFarColor)) return false;
                 if (!object.Equals(this.FogMax, rhs.FogMax)) return false;
                 if (!object.Equals(this.LightFadeBegin, rhs.LightFadeBegin)) return false;
                 if (!object.Equals(this.LightFadeEnd, rhs.LightFadeEnd)) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
+                if (!object.Equals(this.UnknownColor, rhs.UnknownColor)) return false;
                 if (!object.Equals(this.NearHeightMid, rhs.NearHeightMid)) return false;
                 if (!object.Equals(this.NearHeightRange, rhs.NearHeightRange)) return false;
                 if (!object.Equals(this.FogColorHighNear, rhs.FogColorHighNear)) return false;
@@ -346,14 +346,14 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.FogFar);
                 hash.Add(this.DirectionalRotationXY);
                 hash.Add(this.DirectionalRotationZ);
-                hash.Add(this.DirectionalFade);
+                hash.Add(this.GravityScale);
                 hash.Add(this.FogClipDistance);
                 hash.Add(this.FogPower);
                 hash.Add(this.FogFarColor);
                 hash.Add(this.FogMax);
                 hash.Add(this.LightFadeBegin);
                 hash.Add(this.LightFadeEnd);
-                hash.Add(this.Unknown1);
+                hash.Add(this.UnknownColor);
                 hash.Add(this.NearHeightMid);
                 hash.Add(this.NearHeightRange);
                 hash.Add(this.FogColorHighNear);
@@ -381,14 +381,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.FogFar)) return false;
                 if (!eval(this.DirectionalRotationXY)) return false;
                 if (!eval(this.DirectionalRotationZ)) return false;
-                if (!eval(this.DirectionalFade)) return false;
+                if (!eval(this.GravityScale)) return false;
                 if (!eval(this.FogClipDistance)) return false;
                 if (!eval(this.FogPower)) return false;
                 if (!eval(this.FogFarColor)) return false;
                 if (!eval(this.FogMax)) return false;
                 if (!eval(this.LightFadeBegin)) return false;
                 if (!eval(this.LightFadeEnd)) return false;
-                if (!eval(this.Unknown1)) return false;
+                if (!eval(this.UnknownColor)) return false;
                 if (!eval(this.NearHeightMid)) return false;
                 if (!eval(this.NearHeightRange)) return false;
                 if (!eval(this.FogColorHighNear)) return false;
@@ -415,14 +415,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.FogFar)) return true;
                 if (eval(this.DirectionalRotationXY)) return true;
                 if (eval(this.DirectionalRotationZ)) return true;
-                if (eval(this.DirectionalFade)) return true;
+                if (eval(this.GravityScale)) return true;
                 if (eval(this.FogClipDistance)) return true;
                 if (eval(this.FogPower)) return true;
                 if (eval(this.FogFarColor)) return true;
                 if (eval(this.FogMax)) return true;
                 if (eval(this.LightFadeBegin)) return true;
                 if (eval(this.LightFadeEnd)) return true;
-                if (eval(this.Unknown1)) return true;
+                if (eval(this.UnknownColor)) return true;
                 if (eval(this.NearHeightMid)) return true;
                 if (eval(this.NearHeightRange)) return true;
                 if (eval(this.FogColorHighNear)) return true;
@@ -456,14 +456,14 @@ namespace Mutagen.Bethesda.Starfield
                 obj.FogFar = eval(this.FogFar);
                 obj.DirectionalRotationXY = eval(this.DirectionalRotationXY);
                 obj.DirectionalRotationZ = eval(this.DirectionalRotationZ);
-                obj.DirectionalFade = eval(this.DirectionalFade);
+                obj.GravityScale = eval(this.GravityScale);
                 obj.FogClipDistance = eval(this.FogClipDistance);
                 obj.FogPower = eval(this.FogPower);
                 obj.FogFarColor = eval(this.FogFarColor);
                 obj.FogMax = eval(this.FogMax);
                 obj.LightFadeBegin = eval(this.LightFadeBegin);
                 obj.LightFadeEnd = eval(this.LightFadeEnd);
-                obj.Unknown1 = eval(this.Unknown1);
+                obj.UnknownColor = eval(this.UnknownColor);
                 obj.NearHeightMid = eval(this.NearHeightMid);
                 obj.NearHeightRange = eval(this.NearHeightRange);
                 obj.FogColorHighNear = eval(this.FogColorHighNear);
@@ -522,9 +522,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(DirectionalRotationZ, "DirectionalRotationZ");
                     }
-                    if (printMask?.DirectionalFade ?? true)
+                    if (printMask?.GravityScale ?? true)
                     {
-                        sb.AppendItem(DirectionalFade, "DirectionalFade");
+                        sb.AppendItem(GravityScale, "GravityScale");
                     }
                     if (printMask?.FogClipDistance ?? true)
                     {
@@ -550,9 +550,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(LightFadeEnd, "LightFadeEnd");
                     }
-                    if (printMask?.Unknown1 ?? true)
+                    if (printMask?.UnknownColor ?? true)
                     {
-                        sb.AppendItem(Unknown1, "Unknown1");
+                        sb.AppendItem(UnknownColor, "UnknownColor");
                     }
                     if (printMask?.NearHeightMid ?? true)
                     {
@@ -633,14 +633,14 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? FogFar;
             public Exception? DirectionalRotationXY;
             public Exception? DirectionalRotationZ;
-            public Exception? DirectionalFade;
+            public Exception? GravityScale;
             public Exception? FogClipDistance;
             public Exception? FogPower;
             public Exception? FogFarColor;
             public Exception? FogMax;
             public Exception? LightFadeBegin;
             public Exception? LightFadeEnd;
-            public Exception? Unknown1;
+            public Exception? UnknownColor;
             public Exception? NearHeightMid;
             public Exception? NearHeightRange;
             public Exception? FogColorHighNear;
@@ -675,8 +675,8 @@ namespace Mutagen.Bethesda.Starfield
                         return DirectionalRotationXY;
                     case CellLighting_FieldIndex.DirectionalRotationZ:
                         return DirectionalRotationZ;
-                    case CellLighting_FieldIndex.DirectionalFade:
-                        return DirectionalFade;
+                    case CellLighting_FieldIndex.GravityScale:
+                        return GravityScale;
                     case CellLighting_FieldIndex.FogClipDistance:
                         return FogClipDistance;
                     case CellLighting_FieldIndex.FogPower:
@@ -689,8 +689,8 @@ namespace Mutagen.Bethesda.Starfield
                         return LightFadeBegin;
                     case CellLighting_FieldIndex.LightFadeEnd:
                         return LightFadeEnd;
-                    case CellLighting_FieldIndex.Unknown1:
-                        return Unknown1;
+                    case CellLighting_FieldIndex.UnknownColor:
+                        return UnknownColor;
                     case CellLighting_FieldIndex.NearHeightMid:
                         return NearHeightMid;
                     case CellLighting_FieldIndex.NearHeightRange:
@@ -746,8 +746,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CellLighting_FieldIndex.DirectionalRotationZ:
                         this.DirectionalRotationZ = ex;
                         break;
-                    case CellLighting_FieldIndex.DirectionalFade:
-                        this.DirectionalFade = ex;
+                    case CellLighting_FieldIndex.GravityScale:
+                        this.GravityScale = ex;
                         break;
                     case CellLighting_FieldIndex.FogClipDistance:
                         this.FogClipDistance = ex;
@@ -767,8 +767,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CellLighting_FieldIndex.LightFadeEnd:
                         this.LightFadeEnd = ex;
                         break;
-                    case CellLighting_FieldIndex.Unknown1:
-                        this.Unknown1 = ex;
+                    case CellLighting_FieldIndex.UnknownColor:
+                        this.UnknownColor = ex;
                         break;
                     case CellLighting_FieldIndex.NearHeightMid:
                         this.NearHeightMid = ex;
@@ -837,8 +837,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CellLighting_FieldIndex.DirectionalRotationZ:
                         this.DirectionalRotationZ = (Exception?)obj;
                         break;
-                    case CellLighting_FieldIndex.DirectionalFade:
-                        this.DirectionalFade = (Exception?)obj;
+                    case CellLighting_FieldIndex.GravityScale:
+                        this.GravityScale = (Exception?)obj;
                         break;
                     case CellLighting_FieldIndex.FogClipDistance:
                         this.FogClipDistance = (Exception?)obj;
@@ -858,8 +858,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CellLighting_FieldIndex.LightFadeEnd:
                         this.LightFadeEnd = (Exception?)obj;
                         break;
-                    case CellLighting_FieldIndex.Unknown1:
-                        this.Unknown1 = (Exception?)obj;
+                    case CellLighting_FieldIndex.UnknownColor:
+                        this.UnknownColor = (Exception?)obj;
                         break;
                     case CellLighting_FieldIndex.NearHeightMid:
                         this.NearHeightMid = (Exception?)obj;
@@ -912,14 +912,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (FogFar != null) return true;
                 if (DirectionalRotationXY != null) return true;
                 if (DirectionalRotationZ != null) return true;
-                if (DirectionalFade != null) return true;
+                if (GravityScale != null) return true;
                 if (FogClipDistance != null) return true;
                 if (FogPower != null) return true;
                 if (FogFarColor != null) return true;
                 if (FogMax != null) return true;
                 if (LightFadeBegin != null) return true;
                 if (LightFadeEnd != null) return true;
-                if (Unknown1 != null) return true;
+                if (UnknownColor != null) return true;
                 if (NearHeightMid != null) return true;
                 if (NearHeightRange != null) return true;
                 if (FogColorHighNear != null) return true;
@@ -979,7 +979,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(DirectionalRotationZ, "DirectionalRotationZ");
                 }
                 {
-                    sb.AppendItem(DirectionalFade, "DirectionalFade");
+                    sb.AppendItem(GravityScale, "GravityScale");
                 }
                 {
                     sb.AppendItem(FogClipDistance, "FogClipDistance");
@@ -1000,7 +1000,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(LightFadeEnd, "LightFadeEnd");
                 }
                 {
-                    sb.AppendItem(Unknown1, "Unknown1");
+                    sb.AppendItem(UnknownColor, "UnknownColor");
                 }
                 {
                     sb.AppendItem(NearHeightMid, "NearHeightMid");
@@ -1053,14 +1053,14 @@ namespace Mutagen.Bethesda.Starfield
                 ret.FogFar = this.FogFar.Combine(rhs.FogFar);
                 ret.DirectionalRotationXY = this.DirectionalRotationXY.Combine(rhs.DirectionalRotationXY);
                 ret.DirectionalRotationZ = this.DirectionalRotationZ.Combine(rhs.DirectionalRotationZ);
-                ret.DirectionalFade = this.DirectionalFade.Combine(rhs.DirectionalFade);
+                ret.GravityScale = this.GravityScale.Combine(rhs.GravityScale);
                 ret.FogClipDistance = this.FogClipDistance.Combine(rhs.FogClipDistance);
                 ret.FogPower = this.FogPower.Combine(rhs.FogPower);
                 ret.FogFarColor = this.FogFarColor.Combine(rhs.FogFarColor);
                 ret.FogMax = this.FogMax.Combine(rhs.FogMax);
                 ret.LightFadeBegin = this.LightFadeBegin.Combine(rhs.LightFadeBegin);
                 ret.LightFadeEnd = this.LightFadeEnd.Combine(rhs.LightFadeEnd);
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
+                ret.UnknownColor = this.UnknownColor.Combine(rhs.UnknownColor);
                 ret.NearHeightMid = this.NearHeightMid.Combine(rhs.NearHeightMid);
                 ret.NearHeightRange = this.NearHeightRange.Combine(rhs.NearHeightRange);
                 ret.FogColorHighNear = this.FogColorHighNear.Combine(rhs.FogColorHighNear);
@@ -1103,14 +1103,14 @@ namespace Mutagen.Bethesda.Starfield
             public bool FogFar;
             public bool DirectionalRotationXY;
             public bool DirectionalRotationZ;
-            public bool DirectionalFade;
+            public bool GravityScale;
             public bool FogClipDistance;
             public bool FogPower;
             public bool FogFarColor;
             public bool FogMax;
             public bool LightFadeBegin;
             public bool LightFadeEnd;
-            public bool Unknown1;
+            public bool UnknownColor;
             public bool NearHeightMid;
             public bool NearHeightRange;
             public bool FogColorHighNear;
@@ -1139,14 +1139,14 @@ namespace Mutagen.Bethesda.Starfield
                 this.FogFar = defaultOn;
                 this.DirectionalRotationXY = defaultOn;
                 this.DirectionalRotationZ = defaultOn;
-                this.DirectionalFade = defaultOn;
+                this.GravityScale = defaultOn;
                 this.FogClipDistance = defaultOn;
                 this.FogPower = defaultOn;
                 this.FogFarColor = defaultOn;
                 this.FogMax = defaultOn;
                 this.LightFadeBegin = defaultOn;
                 this.LightFadeEnd = defaultOn;
-                this.Unknown1 = defaultOn;
+                this.UnknownColor = defaultOn;
                 this.NearHeightMid = defaultOn;
                 this.NearHeightRange = defaultOn;
                 this.FogColorHighNear = defaultOn;
@@ -1181,14 +1181,14 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((FogFar, null));
                 ret.Add((DirectionalRotationXY, null));
                 ret.Add((DirectionalRotationZ, null));
-                ret.Add((DirectionalFade, null));
+                ret.Add((GravityScale, null));
                 ret.Add((FogClipDistance, null));
                 ret.Add((FogPower, null));
                 ret.Add((FogFarColor, null));
                 ret.Add((FogMax, null));
                 ret.Add((LightFadeBegin, null));
                 ret.Add((LightFadeEnd, null));
-                ret.Add((Unknown1, null));
+                ret.Add((UnknownColor, null));
                 ret.Add((NearHeightMid, null));
                 ret.Add((NearHeightRange, null));
                 ret.Add((FogColorHighNear, null));
@@ -1280,14 +1280,14 @@ namespace Mutagen.Bethesda.Starfield
         new Single FogFar { get; set; }
         new Int32 DirectionalRotationXY { get; set; }
         new Int32 DirectionalRotationZ { get; set; }
-        new Single DirectionalFade { get; set; }
+        new Single GravityScale { get; set; }
         new Single FogClipDistance { get; set; }
         new Single FogPower { get; set; }
         new Color FogFarColor { get; set; }
         new Single FogMax { get; set; }
         new Single LightFadeBegin { get; set; }
         new Single LightFadeEnd { get; set; }
-        new Int32 Unknown1 { get; set; }
+        new Color UnknownColor { get; set; }
         new Single NearHeightMid { get; set; }
         new Single NearHeightRange { get; set; }
         new Color FogColorHighNear { get; set; }
@@ -1321,14 +1321,14 @@ namespace Mutagen.Bethesda.Starfield
         Single FogFar { get; }
         Int32 DirectionalRotationXY { get; }
         Int32 DirectionalRotationZ { get; }
-        Single DirectionalFade { get; }
+        Single GravityScale { get; }
         Single FogClipDistance { get; }
         Single FogPower { get; }
         Color FogFarColor { get; }
         Single FogMax { get; }
         Single LightFadeBegin { get; }
         Single LightFadeEnd { get; }
-        Int32 Unknown1 { get; }
+        Color UnknownColor { get; }
         Single NearHeightMid { get; }
         Single NearHeightRange { get; }
         Color FogColorHighNear { get; }
@@ -1517,14 +1517,14 @@ namespace Mutagen.Bethesda.Starfield
         FogFar = 4,
         DirectionalRotationXY = 5,
         DirectionalRotationZ = 6,
-        DirectionalFade = 7,
+        GravityScale = 7,
         FogClipDistance = 8,
         FogPower = 9,
         FogFarColor = 10,
         FogMax = 11,
         LightFadeBegin = 12,
         LightFadeEnd = 13,
-        Unknown1 = 14,
+        UnknownColor = 14,
         NearHeightMid = 15,
         NearHeightRange = 16,
         FogColorHighNear = 17,
@@ -1629,14 +1629,14 @@ namespace Mutagen.Bethesda.Starfield
             item.FogFar = default(Single);
             item.DirectionalRotationXY = default(Int32);
             item.DirectionalRotationZ = default(Int32);
-            item.DirectionalFade = default(Single);
+            item.GravityScale = default(Single);
             item.FogClipDistance = default(Single);
             item.FogPower = default(Single);
             item.FogFarColor = default(Color);
             item.FogMax = default(Single);
             item.LightFadeBegin = default(Single);
             item.LightFadeEnd = default(Single);
-            item.Unknown1 = default(Int32);
+            item.UnknownColor = default(Color);
             item.NearHeightMid = default(Single);
             item.NearHeightRange = default(Single);
             item.FogColorHighNear = default(Color);
@@ -1709,14 +1709,14 @@ namespace Mutagen.Bethesda.Starfield
             ret.FogFar = item.FogFar.EqualsWithin(rhs.FogFar);
             ret.DirectionalRotationXY = item.DirectionalRotationXY == rhs.DirectionalRotationXY;
             ret.DirectionalRotationZ = item.DirectionalRotationZ == rhs.DirectionalRotationZ;
-            ret.DirectionalFade = item.DirectionalFade.EqualsWithin(rhs.DirectionalFade);
+            ret.GravityScale = item.GravityScale.EqualsWithin(rhs.GravityScale);
             ret.FogClipDistance = item.FogClipDistance.EqualsWithin(rhs.FogClipDistance);
             ret.FogPower = item.FogPower.EqualsWithin(rhs.FogPower);
             ret.FogFarColor = item.FogFarColor.ColorOnlyEquals(rhs.FogFarColor);
             ret.FogMax = item.FogMax.EqualsWithin(rhs.FogMax);
             ret.LightFadeBegin = item.LightFadeBegin.EqualsWithin(rhs.LightFadeBegin);
             ret.LightFadeEnd = item.LightFadeEnd.EqualsWithin(rhs.LightFadeEnd);
-            ret.Unknown1 = item.Unknown1 == rhs.Unknown1;
+            ret.UnknownColor = item.UnknownColor.ColorOnlyEquals(rhs.UnknownColor);
             ret.NearHeightMid = item.NearHeightMid.EqualsWithin(rhs.NearHeightMid);
             ret.NearHeightRange = item.NearHeightRange.EqualsWithin(rhs.NearHeightRange);
             ret.FogColorHighNear = item.FogColorHighNear.ColorOnlyEquals(rhs.FogColorHighNear);
@@ -1801,9 +1801,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.DirectionalRotationZ, "DirectionalRotationZ");
             }
-            if (printMask?.DirectionalFade ?? true)
+            if (printMask?.GravityScale ?? true)
             {
-                sb.AppendItem(item.DirectionalFade, "DirectionalFade");
+                sb.AppendItem(item.GravityScale, "GravityScale");
             }
             if (printMask?.FogClipDistance ?? true)
             {
@@ -1829,9 +1829,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.LightFadeEnd, "LightFadeEnd");
             }
-            if (printMask?.Unknown1 ?? true)
+            if (printMask?.UnknownColor ?? true)
             {
-                sb.AppendItem(item.Unknown1, "Unknown1");
+                sb.AppendItem(item.UnknownColor, "UnknownColor");
             }
             if (printMask?.NearHeightMid ?? true)
             {
@@ -1918,9 +1918,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.DirectionalRotationZ != rhs.DirectionalRotationZ) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CellLighting_FieldIndex.DirectionalFade) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CellLighting_FieldIndex.GravityScale) ?? true))
             {
-                if (!lhs.DirectionalFade.EqualsWithin(rhs.DirectionalFade)) return false;
+                if (!lhs.GravityScale.EqualsWithin(rhs.GravityScale)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CellLighting_FieldIndex.FogClipDistance) ?? true))
             {
@@ -1946,9 +1946,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.LightFadeEnd.EqualsWithin(rhs.LightFadeEnd)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CellLighting_FieldIndex.Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CellLighting_FieldIndex.UnknownColor) ?? true))
             {
-                if (lhs.Unknown1 != rhs.Unknown1) return false;
+                if (!lhs.UnknownColor.ColorOnlyEquals(rhs.UnknownColor)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CellLighting_FieldIndex.NearHeightMid) ?? true))
             {
@@ -2011,14 +2011,14 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.FogFar);
             hash.Add(item.DirectionalRotationXY);
             hash.Add(item.DirectionalRotationZ);
-            hash.Add(item.DirectionalFade);
+            hash.Add(item.GravityScale);
             hash.Add(item.FogClipDistance);
             hash.Add(item.FogPower);
             hash.Add(item.FogFarColor);
             hash.Add(item.FogMax);
             hash.Add(item.LightFadeBegin);
             hash.Add(item.LightFadeEnd);
-            hash.Add(item.Unknown1);
+            hash.Add(item.UnknownColor);
             hash.Add(item.NearHeightMid);
             hash.Add(item.NearHeightRange);
             hash.Add(item.FogColorHighNear);
@@ -2091,9 +2091,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.DirectionalRotationZ = rhs.DirectionalRotationZ;
             }
-            if ((copyMask?.GetShouldTranslate((int)CellLighting_FieldIndex.DirectionalFade) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CellLighting_FieldIndex.GravityScale) ?? true))
             {
-                item.DirectionalFade = rhs.DirectionalFade;
+                item.GravityScale = rhs.GravityScale;
             }
             if ((copyMask?.GetShouldTranslate((int)CellLighting_FieldIndex.FogClipDistance) ?? true))
             {
@@ -2119,9 +2119,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.LightFadeEnd = rhs.LightFadeEnd;
             }
-            if ((copyMask?.GetShouldTranslate((int)CellLighting_FieldIndex.Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CellLighting_FieldIndex.UnknownColor) ?? true))
             {
-                item.Unknown1 = rhs.Unknown1;
+                item.UnknownColor = rhs.UnknownColor;
             }
             if ((copyMask?.GetShouldTranslate((int)CellLighting_FieldIndex.NearHeightMid) ?? true))
             {
@@ -2298,7 +2298,7 @@ namespace Mutagen.Bethesda.Starfield
             writer.Write(item.DirectionalRotationZ);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.DirectionalFade);
+                item: item.GravityScale);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.FogClipDistance);
@@ -2317,7 +2317,9 @@ namespace Mutagen.Bethesda.Starfield
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.LightFadeEnd);
-            writer.Write(item.Unknown1);
+            ColorBinaryTranslation.Instance.Write(
+                writer: writer,
+                item: item.UnknownColor);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.NearHeightMid);
@@ -2402,14 +2404,14 @@ namespace Mutagen.Bethesda.Starfield
             item.FogFar = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.DirectionalRotationXY = frame.ReadInt32();
             item.DirectionalRotationZ = frame.ReadInt32();
-            item.DirectionalFade = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.GravityScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.FogClipDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.FogPower = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.FogFarColor = frame.ReadColor(ColorBinaryType.Alpha);
             item.FogMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.LightFadeBegin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.LightFadeEnd = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown1 = frame.ReadInt32();
+            item.UnknownColor = frame.ReadColor(ColorBinaryType.Alpha);
             item.NearHeightMid = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.NearHeightRange = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.FogColorHighNear = frame.ReadColor(ColorBinaryType.Alpha);
@@ -2496,14 +2498,14 @@ namespace Mutagen.Bethesda.Starfield
         public Single FogFar => _structData.Slice(0x10, 0x4).Float();
         public Int32 DirectionalRotationXY => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x14, 0x4));
         public Int32 DirectionalRotationZ => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x18, 0x4));
-        public Single DirectionalFade => _structData.Slice(0x1C, 0x4).Float();
+        public Single GravityScale => _structData.Slice(0x1C, 0x4).Float();
         public Single FogClipDistance => _structData.Slice(0x20, 0x4).Float();
         public Single FogPower => _structData.Slice(0x24, 0x4).Float();
         public Color FogFarColor => _structData.Slice(0x28, 0x4).ReadColor(ColorBinaryType.Alpha);
         public Single FogMax => _structData.Slice(0x2C, 0x4).Float();
         public Single LightFadeBegin => _structData.Slice(0x30, 0x4).Float();
         public Single LightFadeEnd => _structData.Slice(0x34, 0x4).Float();
-        public Int32 Unknown1 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x38, 0x4));
+        public Color UnknownColor => _structData.Slice(0x38, 0x4).ReadColor(ColorBinaryType.Alpha);
         public Single NearHeightMid => _structData.Slice(0x3C, 0x4).Float();
         public Single NearHeightRange => _structData.Slice(0x40, 0x4).Float();
         public Color FogColorHighNear => _structData.Slice(0x44, 0x4).ReadColor(ColorBinaryType.Alpha);
