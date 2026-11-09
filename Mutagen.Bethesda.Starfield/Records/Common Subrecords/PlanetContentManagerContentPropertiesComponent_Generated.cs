@@ -32,6 +32,7 @@ using RecordTypes = Mutagen.Bethesda.Starfield.Internals.RecordTypes;
 using System.Buffers.Binary;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 #endregion
@@ -59,35 +60,40 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         UInt32? IPlanetContentManagerContentPropertiesComponentGetter.ZNAM => this.ZNAM;
         #endregion
-        #region YNAM
-        public Byte? YNAM { get; set; }
+        #region DoAllBeforeRepeating
+        public Byte? DoAllBeforeRepeating { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Byte? IPlanetContentManagerContentPropertiesComponentGetter.YNAM => this.YNAM;
+        Byte? IPlanetContentManagerContentPropertiesComponentGetter.DoAllBeforeRepeating => this.DoAllBeforeRepeating;
         #endregion
-        #region XNAM
-        public UInt32? XNAM { get; set; }
+        #region NumberOfTimesAllowedGlobal
+        public UInt32? NumberOfTimesAllowedGlobal { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.XNAM => this.XNAM;
+        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.NumberOfTimesAllowedGlobal => this.NumberOfTimesAllowedGlobal;
         #endregion
-        #region WNAM
-        public UInt32? WNAM { get; set; }
+        #region NumberOfTimesAllowedPerSystem
+        public UInt32? NumberOfTimesAllowedPerSystem { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.WNAM => this.WNAM;
+        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.NumberOfTimesAllowedPerSystem => this.NumberOfTimesAllowedPerSystem;
         #endregion
-        #region VNAM
-        public Byte? VNAM { get; set; }
+        #region SavePlacement
+        public Byte? SavePlacement { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Byte? IPlanetContentManagerContentPropertiesComponentGetter.VNAM => this.VNAM;
+        Byte? IPlanetContentManagerContentPropertiesComponentGetter.SavePlacement => this.SavePlacement;
         #endregion
-        #region UNAM
-        public UInt32? UNAM { get; set; }
+        #region DaysUntilResetGlobal
+        private readonly IFormLinkNullable<IGlobalGetter> _DaysUntilResetGlobal = new FormLinkNullable<IGlobalGetter>();
+        public IFormLinkNullable<IGlobalGetter> DaysUntilResetGlobal
+        {
+            get => _DaysUntilResetGlobal;
+            set => _DaysUntilResetGlobal.SetTo(value);
+        }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.UNAM => this.UNAM;
+        IFormLinkNullableGetter<IGlobalGetter> IPlanetContentManagerContentPropertiesComponentGetter.DaysUntilResetGlobal => this.DaysUntilResetGlobal;
         #endregion
-        #region NAM1
-        public Single? NAM1 { get; set; }
+        #region MinimumDensityChance
+        public Single? MinimumDensityChance { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Single? IPlanetContentManagerContentPropertiesComponentGetter.NAM1 => this.NAM1;
+        Single? IPlanetContentManagerContentPropertiesComponentGetter.MinimumDensityChance => this.MinimumDensityChance;
         #endregion
         #region Global
         private readonly IFormLinkNullable<IGlobalGetter> _Global = new FormLinkNullable<IGlobalGetter>();
@@ -99,46 +105,55 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IGlobalGetter> IPlanetContentManagerContentPropertiesComponentGetter.Global => this.Global;
         #endregion
-        #region NAM3
-        public UInt32? NAM3 { get; set; }
+        #region NumberOfTimesAllowedPerPlanet
+        public UInt32? NumberOfTimesAllowedPerPlanet { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.NAM3 => this.NAM3;
+        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.NumberOfTimesAllowedPerPlanet => this.NumberOfTimesAllowedPerPlanet;
         #endregion
-        #region NAM4
+        #region DebugColor
+        public Color? DebugColor { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _NAM4;
-        public MemorySlice<Byte>? NAM4
+        Color? IPlanetContentManagerContentPropertiesComponentGetter.DebugColor => this.DebugColor;
+        #endregion
+        #region NumberOfTimesPerRequestCurve
+        private readonly IFormLinkNullable<ICurveTableGetter> _NumberOfTimesPerRequestCurve = new FormLinkNullable<ICurveTableGetter>();
+        public IFormLinkNullable<ICurveTableGetter> NumberOfTimesPerRequestCurve
         {
-            get => this._NAM4;
-            set => this._NAM4 = value;
+            get => _NumberOfTimesPerRequestCurve;
+            set => _NumberOfTimesPerRequestCurve.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IPlanetContentManagerContentPropertiesComponentGetter.NAM4 => this.NAM4;
+        IFormLinkNullableGetter<ICurveTableGetter> IPlanetContentManagerContentPropertiesComponentGetter.NumberOfTimesPerRequestCurve => this.NumberOfTimesPerRequestCurve;
         #endregion
-        #region NAM5
-        public UInt32? NAM5 { get; set; }
+        #region SpawnGroupsLimitCurve
+        private readonly IFormLinkNullable<ICurveTableGetter> _SpawnGroupsLimitCurve = new FormLinkNullable<ICurveTableGetter>();
+        public IFormLinkNullable<ICurveTableGetter> SpawnGroupsLimitCurve
+        {
+            get => _SpawnGroupsLimitCurve;
+            set => _SpawnGroupsLimitCurve.SetTo(value);
+        }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.NAM5 => this.NAM5;
+        IFormLinkNullableGetter<ICurveTableGetter> IPlanetContentManagerContentPropertiesComponentGetter.SpawnGroupsLimitCurve => this.SpawnGroupsLimitCurve;
         #endregion
-        #region NAM6
-        public UInt32? NAM6 { get; set; }
+        #region SpawnGroupDistanceOverrideCurve
+        private readonly IFormLinkNullable<ICurveTableGetter> _SpawnGroupDistanceOverrideCurve = new FormLinkNullable<ICurveTableGetter>();
+        public IFormLinkNullable<ICurveTableGetter> SpawnGroupDistanceOverrideCurve
+        {
+            get => _SpawnGroupDistanceOverrideCurve;
+            set => _SpawnGroupDistanceOverrideCurve.SetTo(value);
+        }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.NAM6 => this.NAM6;
+        IFormLinkNullableGetter<ICurveTableGetter> IPlanetContentManagerContentPropertiesComponentGetter.SpawnGroupDistanceOverrideCurve => this.SpawnGroupDistanceOverrideCurve;
         #endregion
-        #region NAM7
-        public UInt32? NAM7 { get; set; }
+        #region AllowInvalidBiomeMarkers
+        public Byte? AllowInvalidBiomeMarkers { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.NAM7 => this.NAM7;
+        Byte? IPlanetContentManagerContentPropertiesComponentGetter.AllowInvalidBiomeMarkers => this.AllowInvalidBiomeMarkers;
         #endregion
-        #region NAM8
-        public Byte? NAM8 { get; set; }
+        #region NumberOfTimesAllowedPerPlanetWorld
+        public UInt32? NumberOfTimesAllowedPerPlanetWorld { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Byte? IPlanetContentManagerContentPropertiesComponentGetter.NAM8 => this.NAM8;
-        #endregion
-        #region NAM9
-        public UInt32? NAM9 { get; set; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.NAM9 => this.NAM9;
+        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.NumberOfTimesAllowedPerPlanetWorld => this.NumberOfTimesAllowedPerPlanetWorld;
         #endregion
         #region Conditions
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -196,57 +211,57 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.ZNAM = initialValue;
-                this.YNAM = initialValue;
-                this.XNAM = initialValue;
-                this.WNAM = initialValue;
-                this.VNAM = initialValue;
-                this.UNAM = initialValue;
-                this.NAM1 = initialValue;
+                this.DoAllBeforeRepeating = initialValue;
+                this.NumberOfTimesAllowedGlobal = initialValue;
+                this.NumberOfTimesAllowedPerSystem = initialValue;
+                this.SavePlacement = initialValue;
+                this.DaysUntilResetGlobal = initialValue;
+                this.MinimumDensityChance = initialValue;
                 this.Global = initialValue;
-                this.NAM3 = initialValue;
-                this.NAM4 = initialValue;
-                this.NAM5 = initialValue;
-                this.NAM6 = initialValue;
-                this.NAM7 = initialValue;
-                this.NAM8 = initialValue;
-                this.NAM9 = initialValue;
+                this.NumberOfTimesAllowedPerPlanet = initialValue;
+                this.DebugColor = initialValue;
+                this.NumberOfTimesPerRequestCurve = initialValue;
+                this.SpawnGroupsLimitCurve = initialValue;
+                this.SpawnGroupDistanceOverrideCurve = initialValue;
+                this.AllowInvalidBiomeMarkers = initialValue;
+                this.NumberOfTimesAllowedPerPlanetWorld = initialValue;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
                 TItem ZNAM,
-                TItem YNAM,
-                TItem XNAM,
-                TItem WNAM,
-                TItem VNAM,
-                TItem UNAM,
-                TItem NAM1,
+                TItem DoAllBeforeRepeating,
+                TItem NumberOfTimesAllowedGlobal,
+                TItem NumberOfTimesAllowedPerSystem,
+                TItem SavePlacement,
+                TItem DaysUntilResetGlobal,
+                TItem MinimumDensityChance,
                 TItem Global,
-                TItem NAM3,
-                TItem NAM4,
-                TItem NAM5,
-                TItem NAM6,
-                TItem NAM7,
-                TItem NAM8,
-                TItem NAM9,
+                TItem NumberOfTimesAllowedPerPlanet,
+                TItem DebugColor,
+                TItem NumberOfTimesPerRequestCurve,
+                TItem SpawnGroupsLimitCurve,
+                TItem SpawnGroupDistanceOverrideCurve,
+                TItem AllowInvalidBiomeMarkers,
+                TItem NumberOfTimesAllowedPerPlanetWorld,
                 TItem Conditions)
             : base()
             {
                 this.ZNAM = ZNAM;
-                this.YNAM = YNAM;
-                this.XNAM = XNAM;
-                this.WNAM = WNAM;
-                this.VNAM = VNAM;
-                this.UNAM = UNAM;
-                this.NAM1 = NAM1;
+                this.DoAllBeforeRepeating = DoAllBeforeRepeating;
+                this.NumberOfTimesAllowedGlobal = NumberOfTimesAllowedGlobal;
+                this.NumberOfTimesAllowedPerSystem = NumberOfTimesAllowedPerSystem;
+                this.SavePlacement = SavePlacement;
+                this.DaysUntilResetGlobal = DaysUntilResetGlobal;
+                this.MinimumDensityChance = MinimumDensityChance;
                 this.Global = Global;
-                this.NAM3 = NAM3;
-                this.NAM4 = NAM4;
-                this.NAM5 = NAM5;
-                this.NAM6 = NAM6;
-                this.NAM7 = NAM7;
-                this.NAM8 = NAM8;
-                this.NAM9 = NAM9;
+                this.NumberOfTimesAllowedPerPlanet = NumberOfTimesAllowedPerPlanet;
+                this.DebugColor = DebugColor;
+                this.NumberOfTimesPerRequestCurve = NumberOfTimesPerRequestCurve;
+                this.SpawnGroupsLimitCurve = SpawnGroupsLimitCurve;
+                this.SpawnGroupDistanceOverrideCurve = SpawnGroupDistanceOverrideCurve;
+                this.AllowInvalidBiomeMarkers = AllowInvalidBiomeMarkers;
+                this.NumberOfTimesAllowedPerPlanetWorld = NumberOfTimesAllowedPerPlanetWorld;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
             }
 
@@ -260,20 +275,20 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem ZNAM;
-            public TItem YNAM;
-            public TItem XNAM;
-            public TItem WNAM;
-            public TItem VNAM;
-            public TItem UNAM;
-            public TItem NAM1;
+            public TItem DoAllBeforeRepeating;
+            public TItem NumberOfTimesAllowedGlobal;
+            public TItem NumberOfTimesAllowedPerSystem;
+            public TItem SavePlacement;
+            public TItem DaysUntilResetGlobal;
+            public TItem MinimumDensityChance;
             public TItem Global;
-            public TItem NAM3;
-            public TItem NAM4;
-            public TItem NAM5;
-            public TItem NAM6;
-            public TItem NAM7;
-            public TItem NAM8;
-            public TItem NAM9;
+            public TItem NumberOfTimesAllowedPerPlanet;
+            public TItem DebugColor;
+            public TItem NumberOfTimesPerRequestCurve;
+            public TItem SpawnGroupsLimitCurve;
+            public TItem SpawnGroupDistanceOverrideCurve;
+            public TItem AllowInvalidBiomeMarkers;
+            public TItem NumberOfTimesAllowedPerPlanetWorld;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
             #endregion
 
@@ -289,20 +304,20 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.ZNAM, rhs.ZNAM)) return false;
-                if (!object.Equals(this.YNAM, rhs.YNAM)) return false;
-                if (!object.Equals(this.XNAM, rhs.XNAM)) return false;
-                if (!object.Equals(this.WNAM, rhs.WNAM)) return false;
-                if (!object.Equals(this.VNAM, rhs.VNAM)) return false;
-                if (!object.Equals(this.UNAM, rhs.UNAM)) return false;
-                if (!object.Equals(this.NAM1, rhs.NAM1)) return false;
+                if (!object.Equals(this.DoAllBeforeRepeating, rhs.DoAllBeforeRepeating)) return false;
+                if (!object.Equals(this.NumberOfTimesAllowedGlobal, rhs.NumberOfTimesAllowedGlobal)) return false;
+                if (!object.Equals(this.NumberOfTimesAllowedPerSystem, rhs.NumberOfTimesAllowedPerSystem)) return false;
+                if (!object.Equals(this.SavePlacement, rhs.SavePlacement)) return false;
+                if (!object.Equals(this.DaysUntilResetGlobal, rhs.DaysUntilResetGlobal)) return false;
+                if (!object.Equals(this.MinimumDensityChance, rhs.MinimumDensityChance)) return false;
                 if (!object.Equals(this.Global, rhs.Global)) return false;
-                if (!object.Equals(this.NAM3, rhs.NAM3)) return false;
-                if (!object.Equals(this.NAM4, rhs.NAM4)) return false;
-                if (!object.Equals(this.NAM5, rhs.NAM5)) return false;
-                if (!object.Equals(this.NAM6, rhs.NAM6)) return false;
-                if (!object.Equals(this.NAM7, rhs.NAM7)) return false;
-                if (!object.Equals(this.NAM8, rhs.NAM8)) return false;
-                if (!object.Equals(this.NAM9, rhs.NAM9)) return false;
+                if (!object.Equals(this.NumberOfTimesAllowedPerPlanet, rhs.NumberOfTimesAllowedPerPlanet)) return false;
+                if (!object.Equals(this.DebugColor, rhs.DebugColor)) return false;
+                if (!object.Equals(this.NumberOfTimesPerRequestCurve, rhs.NumberOfTimesPerRequestCurve)) return false;
+                if (!object.Equals(this.SpawnGroupsLimitCurve, rhs.SpawnGroupsLimitCurve)) return false;
+                if (!object.Equals(this.SpawnGroupDistanceOverrideCurve, rhs.SpawnGroupDistanceOverrideCurve)) return false;
+                if (!object.Equals(this.AllowInvalidBiomeMarkers, rhs.AllowInvalidBiomeMarkers)) return false;
+                if (!object.Equals(this.NumberOfTimesAllowedPerPlanetWorld, rhs.NumberOfTimesAllowedPerPlanetWorld)) return false;
                 if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
                 return true;
             }
@@ -310,20 +325,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.ZNAM);
-                hash.Add(this.YNAM);
-                hash.Add(this.XNAM);
-                hash.Add(this.WNAM);
-                hash.Add(this.VNAM);
-                hash.Add(this.UNAM);
-                hash.Add(this.NAM1);
+                hash.Add(this.DoAllBeforeRepeating);
+                hash.Add(this.NumberOfTimesAllowedGlobal);
+                hash.Add(this.NumberOfTimesAllowedPerSystem);
+                hash.Add(this.SavePlacement);
+                hash.Add(this.DaysUntilResetGlobal);
+                hash.Add(this.MinimumDensityChance);
                 hash.Add(this.Global);
-                hash.Add(this.NAM3);
-                hash.Add(this.NAM4);
-                hash.Add(this.NAM5);
-                hash.Add(this.NAM6);
-                hash.Add(this.NAM7);
-                hash.Add(this.NAM8);
-                hash.Add(this.NAM9);
+                hash.Add(this.NumberOfTimesAllowedPerPlanet);
+                hash.Add(this.DebugColor);
+                hash.Add(this.NumberOfTimesPerRequestCurve);
+                hash.Add(this.SpawnGroupsLimitCurve);
+                hash.Add(this.SpawnGroupDistanceOverrideCurve);
+                hash.Add(this.AllowInvalidBiomeMarkers);
+                hash.Add(this.NumberOfTimesAllowedPerPlanetWorld);
                 hash.Add(this.Conditions);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -336,20 +351,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!base.All(eval)) return false;
                 if (!eval(this.ZNAM)) return false;
-                if (!eval(this.YNAM)) return false;
-                if (!eval(this.XNAM)) return false;
-                if (!eval(this.WNAM)) return false;
-                if (!eval(this.VNAM)) return false;
-                if (!eval(this.UNAM)) return false;
-                if (!eval(this.NAM1)) return false;
+                if (!eval(this.DoAllBeforeRepeating)) return false;
+                if (!eval(this.NumberOfTimesAllowedGlobal)) return false;
+                if (!eval(this.NumberOfTimesAllowedPerSystem)) return false;
+                if (!eval(this.SavePlacement)) return false;
+                if (!eval(this.DaysUntilResetGlobal)) return false;
+                if (!eval(this.MinimumDensityChance)) return false;
                 if (!eval(this.Global)) return false;
-                if (!eval(this.NAM3)) return false;
-                if (!eval(this.NAM4)) return false;
-                if (!eval(this.NAM5)) return false;
-                if (!eval(this.NAM6)) return false;
-                if (!eval(this.NAM7)) return false;
-                if (!eval(this.NAM8)) return false;
-                if (!eval(this.NAM9)) return false;
+                if (!eval(this.NumberOfTimesAllowedPerPlanet)) return false;
+                if (!eval(this.DebugColor)) return false;
+                if (!eval(this.NumberOfTimesPerRequestCurve)) return false;
+                if (!eval(this.SpawnGroupsLimitCurve)) return false;
+                if (!eval(this.SpawnGroupDistanceOverrideCurve)) return false;
+                if (!eval(this.AllowInvalidBiomeMarkers)) return false;
+                if (!eval(this.NumberOfTimesAllowedPerPlanetWorld)) return false;
                 if (this.Conditions != null)
                 {
                     if (!eval(this.Conditions.Overall)) return false;
@@ -371,20 +386,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (base.Any(eval)) return true;
                 if (eval(this.ZNAM)) return true;
-                if (eval(this.YNAM)) return true;
-                if (eval(this.XNAM)) return true;
-                if (eval(this.WNAM)) return true;
-                if (eval(this.VNAM)) return true;
-                if (eval(this.UNAM)) return true;
-                if (eval(this.NAM1)) return true;
+                if (eval(this.DoAllBeforeRepeating)) return true;
+                if (eval(this.NumberOfTimesAllowedGlobal)) return true;
+                if (eval(this.NumberOfTimesAllowedPerSystem)) return true;
+                if (eval(this.SavePlacement)) return true;
+                if (eval(this.DaysUntilResetGlobal)) return true;
+                if (eval(this.MinimumDensityChance)) return true;
                 if (eval(this.Global)) return true;
-                if (eval(this.NAM3)) return true;
-                if (eval(this.NAM4)) return true;
-                if (eval(this.NAM5)) return true;
-                if (eval(this.NAM6)) return true;
-                if (eval(this.NAM7)) return true;
-                if (eval(this.NAM8)) return true;
-                if (eval(this.NAM9)) return true;
+                if (eval(this.NumberOfTimesAllowedPerPlanet)) return true;
+                if (eval(this.DebugColor)) return true;
+                if (eval(this.NumberOfTimesPerRequestCurve)) return true;
+                if (eval(this.SpawnGroupsLimitCurve)) return true;
+                if (eval(this.SpawnGroupDistanceOverrideCurve)) return true;
+                if (eval(this.AllowInvalidBiomeMarkers)) return true;
+                if (eval(this.NumberOfTimesAllowedPerPlanetWorld)) return true;
                 if (this.Conditions != null)
                 {
                     if (eval(this.Conditions.Overall)) return true;
@@ -413,20 +428,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.Translate_InternalFill(obj, eval);
                 obj.ZNAM = eval(this.ZNAM);
-                obj.YNAM = eval(this.YNAM);
-                obj.XNAM = eval(this.XNAM);
-                obj.WNAM = eval(this.WNAM);
-                obj.VNAM = eval(this.VNAM);
-                obj.UNAM = eval(this.UNAM);
-                obj.NAM1 = eval(this.NAM1);
+                obj.DoAllBeforeRepeating = eval(this.DoAllBeforeRepeating);
+                obj.NumberOfTimesAllowedGlobal = eval(this.NumberOfTimesAllowedGlobal);
+                obj.NumberOfTimesAllowedPerSystem = eval(this.NumberOfTimesAllowedPerSystem);
+                obj.SavePlacement = eval(this.SavePlacement);
+                obj.DaysUntilResetGlobal = eval(this.DaysUntilResetGlobal);
+                obj.MinimumDensityChance = eval(this.MinimumDensityChance);
                 obj.Global = eval(this.Global);
-                obj.NAM3 = eval(this.NAM3);
-                obj.NAM4 = eval(this.NAM4);
-                obj.NAM5 = eval(this.NAM5);
-                obj.NAM6 = eval(this.NAM6);
-                obj.NAM7 = eval(this.NAM7);
-                obj.NAM8 = eval(this.NAM8);
-                obj.NAM9 = eval(this.NAM9);
+                obj.NumberOfTimesAllowedPerPlanet = eval(this.NumberOfTimesAllowedPerPlanet);
+                obj.DebugColor = eval(this.DebugColor);
+                obj.NumberOfTimesPerRequestCurve = eval(this.NumberOfTimesPerRequestCurve);
+                obj.SpawnGroupsLimitCurve = eval(this.SpawnGroupsLimitCurve);
+                obj.SpawnGroupDistanceOverrideCurve = eval(this.SpawnGroupDistanceOverrideCurve);
+                obj.AllowInvalidBiomeMarkers = eval(this.AllowInvalidBiomeMarkers);
+                obj.NumberOfTimesAllowedPerPlanetWorld = eval(this.NumberOfTimesAllowedPerPlanetWorld);
                 if (Conditions != null)
                 {
                     obj.Conditions = new MaskItem<R, IEnumerable<MaskItemIndexed<R, Condition.Mask<R>?>>?>(eval(this.Conditions.Overall), []);
@@ -464,61 +479,61 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ZNAM, "ZNAM");
                     }
-                    if (printMask?.YNAM ?? true)
+                    if (printMask?.DoAllBeforeRepeating ?? true)
                     {
-                        sb.AppendItem(YNAM, "YNAM");
+                        sb.AppendItem(DoAllBeforeRepeating, "DoAllBeforeRepeating");
                     }
-                    if (printMask?.XNAM ?? true)
+                    if (printMask?.NumberOfTimesAllowedGlobal ?? true)
                     {
-                        sb.AppendItem(XNAM, "XNAM");
+                        sb.AppendItem(NumberOfTimesAllowedGlobal, "NumberOfTimesAllowedGlobal");
                     }
-                    if (printMask?.WNAM ?? true)
+                    if (printMask?.NumberOfTimesAllowedPerSystem ?? true)
                     {
-                        sb.AppendItem(WNAM, "WNAM");
+                        sb.AppendItem(NumberOfTimesAllowedPerSystem, "NumberOfTimesAllowedPerSystem");
                     }
-                    if (printMask?.VNAM ?? true)
+                    if (printMask?.SavePlacement ?? true)
                     {
-                        sb.AppendItem(VNAM, "VNAM");
+                        sb.AppendItem(SavePlacement, "SavePlacement");
                     }
-                    if (printMask?.UNAM ?? true)
+                    if (printMask?.DaysUntilResetGlobal ?? true)
                     {
-                        sb.AppendItem(UNAM, "UNAM");
+                        sb.AppendItem(DaysUntilResetGlobal, "DaysUntilResetGlobal");
                     }
-                    if (printMask?.NAM1 ?? true)
+                    if (printMask?.MinimumDensityChance ?? true)
                     {
-                        sb.AppendItem(NAM1, "NAM1");
+                        sb.AppendItem(MinimumDensityChance, "MinimumDensityChance");
                     }
                     if (printMask?.Global ?? true)
                     {
                         sb.AppendItem(Global, "Global");
                     }
-                    if (printMask?.NAM3 ?? true)
+                    if (printMask?.NumberOfTimesAllowedPerPlanet ?? true)
                     {
-                        sb.AppendItem(NAM3, "NAM3");
+                        sb.AppendItem(NumberOfTimesAllowedPerPlanet, "NumberOfTimesAllowedPerPlanet");
                     }
-                    if (printMask?.NAM4 ?? true)
+                    if (printMask?.DebugColor ?? true)
                     {
-                        sb.AppendItem(NAM4, "NAM4");
+                        sb.AppendItem(DebugColor, "DebugColor");
                     }
-                    if (printMask?.NAM5 ?? true)
+                    if (printMask?.NumberOfTimesPerRequestCurve ?? true)
                     {
-                        sb.AppendItem(NAM5, "NAM5");
+                        sb.AppendItem(NumberOfTimesPerRequestCurve, "NumberOfTimesPerRequestCurve");
                     }
-                    if (printMask?.NAM6 ?? true)
+                    if (printMask?.SpawnGroupsLimitCurve ?? true)
                     {
-                        sb.AppendItem(NAM6, "NAM6");
+                        sb.AppendItem(SpawnGroupsLimitCurve, "SpawnGroupsLimitCurve");
                     }
-                    if (printMask?.NAM7 ?? true)
+                    if (printMask?.SpawnGroupDistanceOverrideCurve ?? true)
                     {
-                        sb.AppendItem(NAM7, "NAM7");
+                        sb.AppendItem(SpawnGroupDistanceOverrideCurve, "SpawnGroupDistanceOverrideCurve");
                     }
-                    if (printMask?.NAM8 ?? true)
+                    if (printMask?.AllowInvalidBiomeMarkers ?? true)
                     {
-                        sb.AppendItem(NAM8, "NAM8");
+                        sb.AppendItem(AllowInvalidBiomeMarkers, "AllowInvalidBiomeMarkers");
                     }
-                    if (printMask?.NAM9 ?? true)
+                    if (printMask?.NumberOfTimesAllowedPerPlanetWorld ?? true)
                     {
-                        sb.AppendItem(NAM9, "NAM9");
+                        sb.AppendItem(NumberOfTimesAllowedPerPlanetWorld, "NumberOfTimesAllowedPerPlanetWorld");
                     }
                     if ((printMask?.Conditions?.Overall ?? true)
                         && Conditions is {} ConditionsItem)
@@ -551,20 +566,20 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public Exception? ZNAM;
-            public Exception? YNAM;
-            public Exception? XNAM;
-            public Exception? WNAM;
-            public Exception? VNAM;
-            public Exception? UNAM;
-            public Exception? NAM1;
+            public Exception? DoAllBeforeRepeating;
+            public Exception? NumberOfTimesAllowedGlobal;
+            public Exception? NumberOfTimesAllowedPerSystem;
+            public Exception? SavePlacement;
+            public Exception? DaysUntilResetGlobal;
+            public Exception? MinimumDensityChance;
             public Exception? Global;
-            public Exception? NAM3;
-            public Exception? NAM4;
-            public Exception? NAM5;
-            public Exception? NAM6;
-            public Exception? NAM7;
-            public Exception? NAM8;
-            public Exception? NAM9;
+            public Exception? NumberOfTimesAllowedPerPlanet;
+            public Exception? DebugColor;
+            public Exception? NumberOfTimesPerRequestCurve;
+            public Exception? SpawnGroupsLimitCurve;
+            public Exception? SpawnGroupDistanceOverrideCurve;
+            public Exception? AllowInvalidBiomeMarkers;
+            public Exception? NumberOfTimesAllowedPerPlanetWorld;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
             #endregion
 
@@ -576,34 +591,34 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case PlanetContentManagerContentPropertiesComponent_FieldIndex.ZNAM:
                         return ZNAM;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.YNAM:
-                        return YNAM;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.XNAM:
-                        return XNAM;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.WNAM:
-                        return WNAM;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.VNAM:
-                        return VNAM;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.UNAM:
-                        return UNAM;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM1:
-                        return NAM1;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.DoAllBeforeRepeating:
+                        return DoAllBeforeRepeating;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedGlobal:
+                        return NumberOfTimesAllowedGlobal;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerSystem:
+                        return NumberOfTimesAllowedPerSystem;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.SavePlacement:
+                        return SavePlacement;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.DaysUntilResetGlobal:
+                        return DaysUntilResetGlobal;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.MinimumDensityChance:
+                        return MinimumDensityChance;
                     case PlanetContentManagerContentPropertiesComponent_FieldIndex.Global:
                         return Global;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM3:
-                        return NAM3;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM4:
-                        return NAM4;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM5:
-                        return NAM5;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM6:
-                        return NAM6;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM7:
-                        return NAM7;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM8:
-                        return NAM8;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM9:
-                        return NAM9;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanet:
+                        return NumberOfTimesAllowedPerPlanet;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.DebugColor:
+                        return DebugColor;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesPerRequestCurve:
+                        return NumberOfTimesPerRequestCurve;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupsLimitCurve:
+                        return SpawnGroupsLimitCurve;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupDistanceOverrideCurve:
+                        return SpawnGroupDistanceOverrideCurve;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.AllowInvalidBiomeMarkers:
+                        return AllowInvalidBiomeMarkers;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanetWorld:
+                        return NumberOfTimesAllowedPerPlanetWorld;
                     case PlanetContentManagerContentPropertiesComponent_FieldIndex.Conditions:
                         return Conditions;
                     default:
@@ -619,47 +634,47 @@ namespace Mutagen.Bethesda.Starfield
                     case PlanetContentManagerContentPropertiesComponent_FieldIndex.ZNAM:
                         this.ZNAM = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.YNAM:
-                        this.YNAM = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.DoAllBeforeRepeating:
+                        this.DoAllBeforeRepeating = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.XNAM:
-                        this.XNAM = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedGlobal:
+                        this.NumberOfTimesAllowedGlobal = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.WNAM:
-                        this.WNAM = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerSystem:
+                        this.NumberOfTimesAllowedPerSystem = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.VNAM:
-                        this.VNAM = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.SavePlacement:
+                        this.SavePlacement = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.UNAM:
-                        this.UNAM = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.DaysUntilResetGlobal:
+                        this.DaysUntilResetGlobal = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM1:
-                        this.NAM1 = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.MinimumDensityChance:
+                        this.MinimumDensityChance = ex;
                         break;
                     case PlanetContentManagerContentPropertiesComponent_FieldIndex.Global:
                         this.Global = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM3:
-                        this.NAM3 = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanet:
+                        this.NumberOfTimesAllowedPerPlanet = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM4:
-                        this.NAM4 = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.DebugColor:
+                        this.DebugColor = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM5:
-                        this.NAM5 = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesPerRequestCurve:
+                        this.NumberOfTimesPerRequestCurve = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM6:
-                        this.NAM6 = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupsLimitCurve:
+                        this.SpawnGroupsLimitCurve = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM7:
-                        this.NAM7 = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupDistanceOverrideCurve:
+                        this.SpawnGroupDistanceOverrideCurve = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM8:
-                        this.NAM8 = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.AllowInvalidBiomeMarkers:
+                        this.AllowInvalidBiomeMarkers = ex;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM9:
-                        this.NAM9 = ex;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanetWorld:
+                        this.NumberOfTimesAllowedPerPlanetWorld = ex;
                         break;
                     case PlanetContentManagerContentPropertiesComponent_FieldIndex.Conditions:
                         this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
@@ -678,47 +693,47 @@ namespace Mutagen.Bethesda.Starfield
                     case PlanetContentManagerContentPropertiesComponent_FieldIndex.ZNAM:
                         this.ZNAM = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.YNAM:
-                        this.YNAM = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.DoAllBeforeRepeating:
+                        this.DoAllBeforeRepeating = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.XNAM:
-                        this.XNAM = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedGlobal:
+                        this.NumberOfTimesAllowedGlobal = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.WNAM:
-                        this.WNAM = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerSystem:
+                        this.NumberOfTimesAllowedPerSystem = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.VNAM:
-                        this.VNAM = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.SavePlacement:
+                        this.SavePlacement = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.UNAM:
-                        this.UNAM = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.DaysUntilResetGlobal:
+                        this.DaysUntilResetGlobal = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM1:
-                        this.NAM1 = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.MinimumDensityChance:
+                        this.MinimumDensityChance = (Exception?)obj;
                         break;
                     case PlanetContentManagerContentPropertiesComponent_FieldIndex.Global:
                         this.Global = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM3:
-                        this.NAM3 = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanet:
+                        this.NumberOfTimesAllowedPerPlanet = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM4:
-                        this.NAM4 = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.DebugColor:
+                        this.DebugColor = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM5:
-                        this.NAM5 = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesPerRequestCurve:
+                        this.NumberOfTimesPerRequestCurve = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM6:
-                        this.NAM6 = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupsLimitCurve:
+                        this.SpawnGroupsLimitCurve = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM7:
-                        this.NAM7 = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupDistanceOverrideCurve:
+                        this.SpawnGroupDistanceOverrideCurve = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM8:
-                        this.NAM8 = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.AllowInvalidBiomeMarkers:
+                        this.AllowInvalidBiomeMarkers = (Exception?)obj;
                         break;
-                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM9:
-                        this.NAM9 = (Exception?)obj;
+                    case PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanetWorld:
+                        this.NumberOfTimesAllowedPerPlanetWorld = (Exception?)obj;
                         break;
                     case PlanetContentManagerContentPropertiesComponent_FieldIndex.Conditions:
                         this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
@@ -733,20 +748,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (ZNAM != null) return true;
-                if (YNAM != null) return true;
-                if (XNAM != null) return true;
-                if (WNAM != null) return true;
-                if (VNAM != null) return true;
-                if (UNAM != null) return true;
-                if (NAM1 != null) return true;
+                if (DoAllBeforeRepeating != null) return true;
+                if (NumberOfTimesAllowedGlobal != null) return true;
+                if (NumberOfTimesAllowedPerSystem != null) return true;
+                if (SavePlacement != null) return true;
+                if (DaysUntilResetGlobal != null) return true;
+                if (MinimumDensityChance != null) return true;
                 if (Global != null) return true;
-                if (NAM3 != null) return true;
-                if (NAM4 != null) return true;
-                if (NAM5 != null) return true;
-                if (NAM6 != null) return true;
-                if (NAM7 != null) return true;
-                if (NAM8 != null) return true;
-                if (NAM9 != null) return true;
+                if (NumberOfTimesAllowedPerPlanet != null) return true;
+                if (DebugColor != null) return true;
+                if (NumberOfTimesPerRequestCurve != null) return true;
+                if (SpawnGroupsLimitCurve != null) return true;
+                if (SpawnGroupDistanceOverrideCurve != null) return true;
+                if (AllowInvalidBiomeMarkers != null) return true;
+                if (NumberOfTimesAllowedPerPlanetWorld != null) return true;
                 if (Conditions != null) return true;
                 return false;
             }
@@ -778,46 +793,46 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ZNAM, "ZNAM");
                 }
                 {
-                    sb.AppendItem(YNAM, "YNAM");
+                    sb.AppendItem(DoAllBeforeRepeating, "DoAllBeforeRepeating");
                 }
                 {
-                    sb.AppendItem(XNAM, "XNAM");
+                    sb.AppendItem(NumberOfTimesAllowedGlobal, "NumberOfTimesAllowedGlobal");
                 }
                 {
-                    sb.AppendItem(WNAM, "WNAM");
+                    sb.AppendItem(NumberOfTimesAllowedPerSystem, "NumberOfTimesAllowedPerSystem");
                 }
                 {
-                    sb.AppendItem(VNAM, "VNAM");
+                    sb.AppendItem(SavePlacement, "SavePlacement");
                 }
                 {
-                    sb.AppendItem(UNAM, "UNAM");
+                    sb.AppendItem(DaysUntilResetGlobal, "DaysUntilResetGlobal");
                 }
                 {
-                    sb.AppendItem(NAM1, "NAM1");
+                    sb.AppendItem(MinimumDensityChance, "MinimumDensityChance");
                 }
                 {
                     sb.AppendItem(Global, "Global");
                 }
                 {
-                    sb.AppendItem(NAM3, "NAM3");
+                    sb.AppendItem(NumberOfTimesAllowedPerPlanet, "NumberOfTimesAllowedPerPlanet");
                 }
                 {
-                    sb.AppendItem(NAM4, "NAM4");
+                    sb.AppendItem(DebugColor, "DebugColor");
                 }
                 {
-                    sb.AppendItem(NAM5, "NAM5");
+                    sb.AppendItem(NumberOfTimesPerRequestCurve, "NumberOfTimesPerRequestCurve");
                 }
                 {
-                    sb.AppendItem(NAM6, "NAM6");
+                    sb.AppendItem(SpawnGroupsLimitCurve, "SpawnGroupsLimitCurve");
                 }
                 {
-                    sb.AppendItem(NAM7, "NAM7");
+                    sb.AppendItem(SpawnGroupDistanceOverrideCurve, "SpawnGroupDistanceOverrideCurve");
                 }
                 {
-                    sb.AppendItem(NAM8, "NAM8");
+                    sb.AppendItem(AllowInvalidBiomeMarkers, "AllowInvalidBiomeMarkers");
                 }
                 {
-                    sb.AppendItem(NAM9, "NAM9");
+                    sb.AppendItem(NumberOfTimesAllowedPerPlanetWorld, "NumberOfTimesAllowedPerPlanetWorld");
                 }
                 if (Conditions is {} ConditionsItem)
                 {
@@ -846,20 +861,20 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.ZNAM = this.ZNAM.Combine(rhs.ZNAM);
-                ret.YNAM = this.YNAM.Combine(rhs.YNAM);
-                ret.XNAM = this.XNAM.Combine(rhs.XNAM);
-                ret.WNAM = this.WNAM.Combine(rhs.WNAM);
-                ret.VNAM = this.VNAM.Combine(rhs.VNAM);
-                ret.UNAM = this.UNAM.Combine(rhs.UNAM);
-                ret.NAM1 = this.NAM1.Combine(rhs.NAM1);
+                ret.DoAllBeforeRepeating = this.DoAllBeforeRepeating.Combine(rhs.DoAllBeforeRepeating);
+                ret.NumberOfTimesAllowedGlobal = this.NumberOfTimesAllowedGlobal.Combine(rhs.NumberOfTimesAllowedGlobal);
+                ret.NumberOfTimesAllowedPerSystem = this.NumberOfTimesAllowedPerSystem.Combine(rhs.NumberOfTimesAllowedPerSystem);
+                ret.SavePlacement = this.SavePlacement.Combine(rhs.SavePlacement);
+                ret.DaysUntilResetGlobal = this.DaysUntilResetGlobal.Combine(rhs.DaysUntilResetGlobal);
+                ret.MinimumDensityChance = this.MinimumDensityChance.Combine(rhs.MinimumDensityChance);
                 ret.Global = this.Global.Combine(rhs.Global);
-                ret.NAM3 = this.NAM3.Combine(rhs.NAM3);
-                ret.NAM4 = this.NAM4.Combine(rhs.NAM4);
-                ret.NAM5 = this.NAM5.Combine(rhs.NAM5);
-                ret.NAM6 = this.NAM6.Combine(rhs.NAM6);
-                ret.NAM7 = this.NAM7.Combine(rhs.NAM7);
-                ret.NAM8 = this.NAM8.Combine(rhs.NAM8);
-                ret.NAM9 = this.NAM9.Combine(rhs.NAM9);
+                ret.NumberOfTimesAllowedPerPlanet = this.NumberOfTimesAllowedPerPlanet.Combine(rhs.NumberOfTimesAllowedPerPlanet);
+                ret.DebugColor = this.DebugColor.Combine(rhs.DebugColor);
+                ret.NumberOfTimesPerRequestCurve = this.NumberOfTimesPerRequestCurve.Combine(rhs.NumberOfTimesPerRequestCurve);
+                ret.SpawnGroupsLimitCurve = this.SpawnGroupsLimitCurve.Combine(rhs.SpawnGroupsLimitCurve);
+                ret.SpawnGroupDistanceOverrideCurve = this.SpawnGroupDistanceOverrideCurve.Combine(rhs.SpawnGroupDistanceOverrideCurve);
+                ret.AllowInvalidBiomeMarkers = this.AllowInvalidBiomeMarkers.Combine(rhs.AllowInvalidBiomeMarkers);
+                ret.NumberOfTimesAllowedPerPlanetWorld = this.NumberOfTimesAllowedPerPlanetWorld.Combine(rhs.NumberOfTimesAllowedPerPlanetWorld);
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
                 return ret;
             }
@@ -884,20 +899,20 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public bool ZNAM;
-            public bool YNAM;
-            public bool XNAM;
-            public bool WNAM;
-            public bool VNAM;
-            public bool UNAM;
-            public bool NAM1;
+            public bool DoAllBeforeRepeating;
+            public bool NumberOfTimesAllowedGlobal;
+            public bool NumberOfTimesAllowedPerSystem;
+            public bool SavePlacement;
+            public bool DaysUntilResetGlobal;
+            public bool MinimumDensityChance;
             public bool Global;
-            public bool NAM3;
-            public bool NAM4;
-            public bool NAM5;
-            public bool NAM6;
-            public bool NAM7;
-            public bool NAM8;
-            public bool NAM9;
+            public bool NumberOfTimesAllowedPerPlanet;
+            public bool DebugColor;
+            public bool NumberOfTimesPerRequestCurve;
+            public bool SpawnGroupsLimitCurve;
+            public bool SpawnGroupDistanceOverrideCurve;
+            public bool AllowInvalidBiomeMarkers;
+            public bool NumberOfTimesAllowedPerPlanetWorld;
             public Condition.TranslationMask? Conditions;
             #endregion
 
@@ -908,20 +923,20 @@ namespace Mutagen.Bethesda.Starfield
                 : base(defaultOn, onOverall)
             {
                 this.ZNAM = defaultOn;
-                this.YNAM = defaultOn;
-                this.XNAM = defaultOn;
-                this.WNAM = defaultOn;
-                this.VNAM = defaultOn;
-                this.UNAM = defaultOn;
-                this.NAM1 = defaultOn;
+                this.DoAllBeforeRepeating = defaultOn;
+                this.NumberOfTimesAllowedGlobal = defaultOn;
+                this.NumberOfTimesAllowedPerSystem = defaultOn;
+                this.SavePlacement = defaultOn;
+                this.DaysUntilResetGlobal = defaultOn;
+                this.MinimumDensityChance = defaultOn;
                 this.Global = defaultOn;
-                this.NAM3 = defaultOn;
-                this.NAM4 = defaultOn;
-                this.NAM5 = defaultOn;
-                this.NAM6 = defaultOn;
-                this.NAM7 = defaultOn;
-                this.NAM8 = defaultOn;
-                this.NAM9 = defaultOn;
+                this.NumberOfTimesAllowedPerPlanet = defaultOn;
+                this.DebugColor = defaultOn;
+                this.NumberOfTimesPerRequestCurve = defaultOn;
+                this.SpawnGroupsLimitCurve = defaultOn;
+                this.SpawnGroupDistanceOverrideCurve = defaultOn;
+                this.AllowInvalidBiomeMarkers = defaultOn;
+                this.NumberOfTimesAllowedPerPlanetWorld = defaultOn;
             }
 
             #endregion
@@ -930,20 +945,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((ZNAM, null));
-                ret.Add((YNAM, null));
-                ret.Add((XNAM, null));
-                ret.Add((WNAM, null));
-                ret.Add((VNAM, null));
-                ret.Add((UNAM, null));
-                ret.Add((NAM1, null));
+                ret.Add((DoAllBeforeRepeating, null));
+                ret.Add((NumberOfTimesAllowedGlobal, null));
+                ret.Add((NumberOfTimesAllowedPerSystem, null));
+                ret.Add((SavePlacement, null));
+                ret.Add((DaysUntilResetGlobal, null));
+                ret.Add((MinimumDensityChance, null));
                 ret.Add((Global, null));
-                ret.Add((NAM3, null));
-                ret.Add((NAM4, null));
-                ret.Add((NAM5, null));
-                ret.Add((NAM6, null));
-                ret.Add((NAM7, null));
-                ret.Add((NAM8, null));
-                ret.Add((NAM9, null));
+                ret.Add((NumberOfTimesAllowedPerPlanet, null));
+                ret.Add((DebugColor, null));
+                ret.Add((NumberOfTimesPerRequestCurve, null));
+                ret.Add((SpawnGroupsLimitCurve, null));
+                ret.Add((SpawnGroupDistanceOverrideCurve, null));
+                ret.Add((AllowInvalidBiomeMarkers, null));
+                ret.Add((NumberOfTimesAllowedPerPlanetWorld, null));
                 ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
             }
 
@@ -1023,20 +1038,20 @@ namespace Mutagen.Bethesda.Starfield
         IPlanetContentManagerContentPropertiesComponentGetter
     {
         new UInt32? ZNAM { get; set; }
-        new Byte? YNAM { get; set; }
-        new UInt32? XNAM { get; set; }
-        new UInt32? WNAM { get; set; }
-        new Byte? VNAM { get; set; }
-        new UInt32? UNAM { get; set; }
-        new Single? NAM1 { get; set; }
+        new Byte? DoAllBeforeRepeating { get; set; }
+        new UInt32? NumberOfTimesAllowedGlobal { get; set; }
+        new UInt32? NumberOfTimesAllowedPerSystem { get; set; }
+        new Byte? SavePlacement { get; set; }
+        new IFormLinkNullable<IGlobalGetter> DaysUntilResetGlobal { get; set; }
+        new Single? MinimumDensityChance { get; set; }
         new IFormLinkNullable<IGlobalGetter> Global { get; set; }
-        new UInt32? NAM3 { get; set; }
-        new MemorySlice<Byte>? NAM4 { get; set; }
-        new UInt32? NAM5 { get; set; }
-        new UInt32? NAM6 { get; set; }
-        new UInt32? NAM7 { get; set; }
-        new Byte? NAM8 { get; set; }
-        new UInt32? NAM9 { get; set; }
+        new UInt32? NumberOfTimesAllowedPerPlanet { get; set; }
+        new Color? DebugColor { get; set; }
+        new IFormLinkNullable<ICurveTableGetter> NumberOfTimesPerRequestCurve { get; set; }
+        new IFormLinkNullable<ICurveTableGetter> SpawnGroupsLimitCurve { get; set; }
+        new IFormLinkNullable<ICurveTableGetter> SpawnGroupDistanceOverrideCurve { get; set; }
+        new Byte? AllowInvalidBiomeMarkers { get; set; }
+        new UInt32? NumberOfTimesAllowedPerPlanetWorld { get; set; }
         new ExtendedList<Condition>? Conditions { get; set; }
     }
 
@@ -1048,20 +1063,20 @@ namespace Mutagen.Bethesda.Starfield
     {
         static new ILoquiRegistration StaticRegistration => PlanetContentManagerContentPropertiesComponent_Registration.Instance;
         UInt32? ZNAM { get; }
-        Byte? YNAM { get; }
-        UInt32? XNAM { get; }
-        UInt32? WNAM { get; }
-        Byte? VNAM { get; }
-        UInt32? UNAM { get; }
-        Single? NAM1 { get; }
+        Byte? DoAllBeforeRepeating { get; }
+        UInt32? NumberOfTimesAllowedGlobal { get; }
+        UInt32? NumberOfTimesAllowedPerSystem { get; }
+        Byte? SavePlacement { get; }
+        IFormLinkNullableGetter<IGlobalGetter> DaysUntilResetGlobal { get; }
+        Single? MinimumDensityChance { get; }
         IFormLinkNullableGetter<IGlobalGetter> Global { get; }
-        UInt32? NAM3 { get; }
-        ReadOnlyMemorySlice<Byte>? NAM4 { get; }
-        UInt32? NAM5 { get; }
-        UInt32? NAM6 { get; }
-        UInt32? NAM7 { get; }
-        Byte? NAM8 { get; }
-        UInt32? NAM9 { get; }
+        UInt32? NumberOfTimesAllowedPerPlanet { get; }
+        Color? DebugColor { get; }
+        IFormLinkNullableGetter<ICurveTableGetter> NumberOfTimesPerRequestCurve { get; }
+        IFormLinkNullableGetter<ICurveTableGetter> SpawnGroupsLimitCurve { get; }
+        IFormLinkNullableGetter<ICurveTableGetter> SpawnGroupDistanceOverrideCurve { get; }
+        Byte? AllowInvalidBiomeMarkers { get; }
+        UInt32? NumberOfTimesAllowedPerPlanetWorld { get; }
         IReadOnlyList<IConditionGetter>? Conditions { get; }
 
     }
@@ -1208,20 +1223,20 @@ namespace Mutagen.Bethesda.Starfield
     internal enum PlanetContentManagerContentPropertiesComponent_FieldIndex
     {
         ZNAM = 0,
-        YNAM = 1,
-        XNAM = 2,
-        WNAM = 3,
-        VNAM = 4,
-        UNAM = 5,
-        NAM1 = 6,
+        DoAllBeforeRepeating = 1,
+        NumberOfTimesAllowedGlobal = 2,
+        NumberOfTimesAllowedPerSystem = 3,
+        SavePlacement = 4,
+        DaysUntilResetGlobal = 5,
+        MinimumDensityChance = 6,
         Global = 7,
-        NAM3 = 8,
-        NAM4 = 9,
-        NAM5 = 10,
-        NAM6 = 11,
-        NAM7 = 12,
-        NAM8 = 13,
-        NAM9 = 14,
+        NumberOfTimesAllowedPerPlanet = 8,
+        DebugColor = 9,
+        NumberOfTimesPerRequestCurve = 10,
+        SpawnGroupsLimitCurve = 11,
+        SpawnGroupDistanceOverrideCurve = 12,
+        AllowInvalidBiomeMarkers = 13,
+        NumberOfTimesAllowedPerPlanetWorld = 14,
         Conditions = 15,
     }
     #endregion
@@ -1332,20 +1347,20 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.ZNAM = default;
-            item.YNAM = default;
-            item.XNAM = default;
-            item.WNAM = default;
-            item.VNAM = default;
-            item.UNAM = default;
-            item.NAM1 = default;
+            item.DoAllBeforeRepeating = default;
+            item.NumberOfTimesAllowedGlobal = default;
+            item.NumberOfTimesAllowedPerSystem = default;
+            item.SavePlacement = default;
+            item.DaysUntilResetGlobal.Clear();
+            item.MinimumDensityChance = default;
             item.Global.Clear();
-            item.NAM3 = default;
-            item.NAM4 = default;
-            item.NAM5 = default;
-            item.NAM6 = default;
-            item.NAM7 = default;
-            item.NAM8 = default;
-            item.NAM9 = default;
+            item.NumberOfTimesAllowedPerPlanet = default;
+            item.DebugColor = default;
+            item.NumberOfTimesPerRequestCurve.Clear();
+            item.SpawnGroupsLimitCurve.Clear();
+            item.SpawnGroupDistanceOverrideCurve.Clear();
+            item.AllowInvalidBiomeMarkers = default;
+            item.NumberOfTimesAllowedPerPlanetWorld = default;
             item.Conditions = null;
             base.Clear(item);
         }
@@ -1359,7 +1374,11 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IPlanetContentManagerContentPropertiesComponent obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             base.RemapLinks(obj, mapping);
+            obj.DaysUntilResetGlobal.Relink(mapping);
             obj.Global.Relink(mapping);
+            obj.NumberOfTimesPerRequestCurve.Relink(mapping);
+            obj.SpawnGroupsLimitCurve.Relink(mapping);
+            obj.SpawnGroupDistanceOverrideCurve.Relink(mapping);
             obj.Conditions?.RemapLinks(mapping);
         }
         
@@ -1417,20 +1436,20 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.ZNAM = item.ZNAM == rhs.ZNAM;
-            ret.YNAM = item.YNAM == rhs.YNAM;
-            ret.XNAM = item.XNAM == rhs.XNAM;
-            ret.WNAM = item.WNAM == rhs.WNAM;
-            ret.VNAM = item.VNAM == rhs.VNAM;
-            ret.UNAM = item.UNAM == rhs.UNAM;
-            ret.NAM1 = item.NAM1.EqualsWithin(rhs.NAM1);
+            ret.DoAllBeforeRepeating = item.DoAllBeforeRepeating == rhs.DoAllBeforeRepeating;
+            ret.NumberOfTimesAllowedGlobal = item.NumberOfTimesAllowedGlobal == rhs.NumberOfTimesAllowedGlobal;
+            ret.NumberOfTimesAllowedPerSystem = item.NumberOfTimesAllowedPerSystem == rhs.NumberOfTimesAllowedPerSystem;
+            ret.SavePlacement = item.SavePlacement == rhs.SavePlacement;
+            ret.DaysUntilResetGlobal = item.DaysUntilResetGlobal.Equals(rhs.DaysUntilResetGlobal);
+            ret.MinimumDensityChance = item.MinimumDensityChance.EqualsWithin(rhs.MinimumDensityChance);
             ret.Global = item.Global.Equals(rhs.Global);
-            ret.NAM3 = item.NAM3 == rhs.NAM3;
-            ret.NAM4 = MemorySliceExt.SequenceEqual(item.NAM4, rhs.NAM4);
-            ret.NAM5 = item.NAM5 == rhs.NAM5;
-            ret.NAM6 = item.NAM6 == rhs.NAM6;
-            ret.NAM7 = item.NAM7 == rhs.NAM7;
-            ret.NAM8 = item.NAM8 == rhs.NAM8;
-            ret.NAM9 = item.NAM9 == rhs.NAM9;
+            ret.NumberOfTimesAllowedPerPlanet = item.NumberOfTimesAllowedPerPlanet == rhs.NumberOfTimesAllowedPerPlanet;
+            ret.DebugColor = item.DebugColor.ColorOnlyEquals(rhs.DebugColor);
+            ret.NumberOfTimesPerRequestCurve = item.NumberOfTimesPerRequestCurve.Equals(rhs.NumberOfTimesPerRequestCurve);
+            ret.SpawnGroupsLimitCurve = item.SpawnGroupsLimitCurve.Equals(rhs.SpawnGroupsLimitCurve);
+            ret.SpawnGroupDistanceOverrideCurve = item.SpawnGroupDistanceOverrideCurve.Equals(rhs.SpawnGroupDistanceOverrideCurve);
+            ret.AllowInvalidBiomeMarkers = item.AllowInvalidBiomeMarkers == rhs.AllowInvalidBiomeMarkers;
+            ret.NumberOfTimesAllowedPerPlanetWorld = item.NumberOfTimesAllowedPerPlanetWorld == rhs.NumberOfTimesAllowedPerPlanetWorld;
             ret.Conditions = item.Conditions.CollectionEqualsHelper(
                 rhs.Conditions,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -1489,74 +1508,70 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(ZNAMItem, "ZNAM");
             }
-            if ((printMask?.YNAM ?? true)
-                && item.YNAM is {} YNAMItem)
+            if ((printMask?.DoAllBeforeRepeating ?? true)
+                && item.DoAllBeforeRepeating is {} DoAllBeforeRepeatingItem)
             {
-                sb.AppendItem(YNAMItem, "YNAM");
+                sb.AppendItem(DoAllBeforeRepeatingItem, "DoAllBeforeRepeating");
             }
-            if ((printMask?.XNAM ?? true)
-                && item.XNAM is {} XNAMItem)
+            if ((printMask?.NumberOfTimesAllowedGlobal ?? true)
+                && item.NumberOfTimesAllowedGlobal is {} NumberOfTimesAllowedGlobalItem)
             {
-                sb.AppendItem(XNAMItem, "XNAM");
+                sb.AppendItem(NumberOfTimesAllowedGlobalItem, "NumberOfTimesAllowedGlobal");
             }
-            if ((printMask?.WNAM ?? true)
-                && item.WNAM is {} WNAMItem)
+            if ((printMask?.NumberOfTimesAllowedPerSystem ?? true)
+                && item.NumberOfTimesAllowedPerSystem is {} NumberOfTimesAllowedPerSystemItem)
             {
-                sb.AppendItem(WNAMItem, "WNAM");
+                sb.AppendItem(NumberOfTimesAllowedPerSystemItem, "NumberOfTimesAllowedPerSystem");
             }
-            if ((printMask?.VNAM ?? true)
-                && item.VNAM is {} VNAMItem)
+            if ((printMask?.SavePlacement ?? true)
+                && item.SavePlacement is {} SavePlacementItem)
             {
-                sb.AppendItem(VNAMItem, "VNAM");
+                sb.AppendItem(SavePlacementItem, "SavePlacement");
             }
-            if ((printMask?.UNAM ?? true)
-                && item.UNAM is {} UNAMItem)
+            if (printMask?.DaysUntilResetGlobal ?? true)
             {
-                sb.AppendItem(UNAMItem, "UNAM");
+                sb.AppendItem(item.DaysUntilResetGlobal.FormKeyNullable, "DaysUntilResetGlobal");
             }
-            if ((printMask?.NAM1 ?? true)
-                && item.NAM1 is {} NAM1Item)
+            if ((printMask?.MinimumDensityChance ?? true)
+                && item.MinimumDensityChance is {} MinimumDensityChanceItem)
             {
-                sb.AppendItem(NAM1Item, "NAM1");
+                sb.AppendItem(MinimumDensityChanceItem, "MinimumDensityChance");
             }
             if (printMask?.Global ?? true)
             {
                 sb.AppendItem(item.Global.FormKeyNullable, "Global");
             }
-            if ((printMask?.NAM3 ?? true)
-                && item.NAM3 is {} NAM3Item)
+            if ((printMask?.NumberOfTimesAllowedPerPlanet ?? true)
+                && item.NumberOfTimesAllowedPerPlanet is {} NumberOfTimesAllowedPerPlanetItem)
             {
-                sb.AppendItem(NAM3Item, "NAM3");
+                sb.AppendItem(NumberOfTimesAllowedPerPlanetItem, "NumberOfTimesAllowedPerPlanet");
             }
-            if ((printMask?.NAM4 ?? true)
-                && item.NAM4 is {} NAM4Item)
+            if ((printMask?.DebugColor ?? true)
+                && item.DebugColor is {} DebugColorItem)
             {
-                sb.AppendLine($"NAM4 => {SpanExt.ToHexString(NAM4Item)}");
+                sb.AppendItem(DebugColorItem, "DebugColor");
             }
-            if ((printMask?.NAM5 ?? true)
-                && item.NAM5 is {} NAM5Item)
+            if (printMask?.NumberOfTimesPerRequestCurve ?? true)
             {
-                sb.AppendItem(NAM5Item, "NAM5");
+                sb.AppendItem(item.NumberOfTimesPerRequestCurve.FormKeyNullable, "NumberOfTimesPerRequestCurve");
             }
-            if ((printMask?.NAM6 ?? true)
-                && item.NAM6 is {} NAM6Item)
+            if (printMask?.SpawnGroupsLimitCurve ?? true)
             {
-                sb.AppendItem(NAM6Item, "NAM6");
+                sb.AppendItem(item.SpawnGroupsLimitCurve.FormKeyNullable, "SpawnGroupsLimitCurve");
             }
-            if ((printMask?.NAM7 ?? true)
-                && item.NAM7 is {} NAM7Item)
+            if (printMask?.SpawnGroupDistanceOverrideCurve ?? true)
             {
-                sb.AppendItem(NAM7Item, "NAM7");
+                sb.AppendItem(item.SpawnGroupDistanceOverrideCurve.FormKeyNullable, "SpawnGroupDistanceOverrideCurve");
             }
-            if ((printMask?.NAM8 ?? true)
-                && item.NAM8 is {} NAM8Item)
+            if ((printMask?.AllowInvalidBiomeMarkers ?? true)
+                && item.AllowInvalidBiomeMarkers is {} AllowInvalidBiomeMarkersItem)
             {
-                sb.AppendItem(NAM8Item, "NAM8");
+                sb.AppendItem(AllowInvalidBiomeMarkersItem, "AllowInvalidBiomeMarkers");
             }
-            if ((printMask?.NAM9 ?? true)
-                && item.NAM9 is {} NAM9Item)
+            if ((printMask?.NumberOfTimesAllowedPerPlanetWorld ?? true)
+                && item.NumberOfTimesAllowedPerPlanetWorld is {} NumberOfTimesAllowedPerPlanetWorldItem)
             {
-                sb.AppendItem(NAM9Item, "NAM9");
+                sb.AppendItem(NumberOfTimesAllowedPerPlanetWorldItem, "NumberOfTimesAllowedPerPlanetWorld");
             }
             if ((printMask?.Conditions?.Overall ?? true)
                 && item.Conditions is {} ConditionsItem)
@@ -1596,61 +1611,61 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.ZNAM != rhs.ZNAM) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.YNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DoAllBeforeRepeating) ?? true))
             {
-                if (lhs.YNAM != rhs.YNAM) return false;
+                if (lhs.DoAllBeforeRepeating != rhs.DoAllBeforeRepeating) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.XNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedGlobal) ?? true))
             {
-                if (lhs.XNAM != rhs.XNAM) return false;
+                if (lhs.NumberOfTimesAllowedGlobal != rhs.NumberOfTimesAllowedGlobal) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.WNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerSystem) ?? true))
             {
-                if (lhs.WNAM != rhs.WNAM) return false;
+                if (lhs.NumberOfTimesAllowedPerSystem != rhs.NumberOfTimesAllowedPerSystem) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.VNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SavePlacement) ?? true))
             {
-                if (lhs.VNAM != rhs.VNAM) return false;
+                if (lhs.SavePlacement != rhs.SavePlacement) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.UNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DaysUntilResetGlobal) ?? true))
             {
-                if (lhs.UNAM != rhs.UNAM) return false;
+                if (!lhs.DaysUntilResetGlobal.Equals(rhs.DaysUntilResetGlobal)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.MinimumDensityChance) ?? true))
             {
-                if (!lhs.NAM1.EqualsWithin(rhs.NAM1)) return false;
+                if (!lhs.MinimumDensityChance.EqualsWithin(rhs.MinimumDensityChance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.Global) ?? true))
             {
                 if (!lhs.Global.Equals(rhs.Global)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanet) ?? true))
             {
-                if (lhs.NAM3 != rhs.NAM3) return false;
+                if (lhs.NumberOfTimesAllowedPerPlanet != rhs.NumberOfTimesAllowedPerPlanet) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DebugColor) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.NAM4, rhs.NAM4)) return false;
+                if (!lhs.DebugColor.ColorOnlyEquals(rhs.DebugColor)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM5) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesPerRequestCurve) ?? true))
             {
-                if (lhs.NAM5 != rhs.NAM5) return false;
+                if (!lhs.NumberOfTimesPerRequestCurve.Equals(rhs.NumberOfTimesPerRequestCurve)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM6) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupsLimitCurve) ?? true))
             {
-                if (lhs.NAM6 != rhs.NAM6) return false;
+                if (!lhs.SpawnGroupsLimitCurve.Equals(rhs.SpawnGroupsLimitCurve)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM7) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupDistanceOverrideCurve) ?? true))
             {
-                if (lhs.NAM7 != rhs.NAM7) return false;
+                if (!lhs.SpawnGroupDistanceOverrideCurve.Equals(rhs.SpawnGroupDistanceOverrideCurve)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM8) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.AllowInvalidBiomeMarkers) ?? true))
             {
-                if (lhs.NAM8 != rhs.NAM8) return false;
+                if (lhs.AllowInvalidBiomeMarkers != rhs.AllowInvalidBiomeMarkers) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM9) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanetWorld) ?? true))
             {
-                if (lhs.NAM9 != rhs.NAM9) return false;
+                if (lhs.NumberOfTimesAllowedPerPlanetWorld != rhs.NumberOfTimesAllowedPerPlanetWorld) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.Conditions) ?? true))
             {
@@ -1677,58 +1692,46 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(ZNAMitem);
             }
-            if (item.YNAM is {} YNAMitem)
+            if (item.DoAllBeforeRepeating is {} DoAllBeforeRepeatingitem)
             {
-                hash.Add(YNAMitem);
+                hash.Add(DoAllBeforeRepeatingitem);
             }
-            if (item.XNAM is {} XNAMitem)
+            if (item.NumberOfTimesAllowedGlobal is {} NumberOfTimesAllowedGlobalitem)
             {
-                hash.Add(XNAMitem);
+                hash.Add(NumberOfTimesAllowedGlobalitem);
             }
-            if (item.WNAM is {} WNAMitem)
+            if (item.NumberOfTimesAllowedPerSystem is {} NumberOfTimesAllowedPerSystemitem)
             {
-                hash.Add(WNAMitem);
+                hash.Add(NumberOfTimesAllowedPerSystemitem);
             }
-            if (item.VNAM is {} VNAMitem)
+            if (item.SavePlacement is {} SavePlacementitem)
             {
-                hash.Add(VNAMitem);
+                hash.Add(SavePlacementitem);
             }
-            if (item.UNAM is {} UNAMitem)
+            hash.Add(item.DaysUntilResetGlobal);
+            if (item.MinimumDensityChance is {} MinimumDensityChanceitem)
             {
-                hash.Add(UNAMitem);
-            }
-            if (item.NAM1 is {} NAM1item)
-            {
-                hash.Add(NAM1item);
+                hash.Add(MinimumDensityChanceitem);
             }
             hash.Add(item.Global);
-            if (item.NAM3 is {} NAM3item)
+            if (item.NumberOfTimesAllowedPerPlanet is {} NumberOfTimesAllowedPerPlanetitem)
             {
-                hash.Add(NAM3item);
+                hash.Add(NumberOfTimesAllowedPerPlanetitem);
             }
-            if (item.NAM4 is {} NAM4Item)
+            if (item.DebugColor is {} DebugColoritem)
             {
-                hash.AddBytes(NAM4Item);
+                hash.Add(DebugColoritem.ToArgb());
             }
-            if (item.NAM5 is {} NAM5item)
+            hash.Add(item.NumberOfTimesPerRequestCurve);
+            hash.Add(item.SpawnGroupsLimitCurve);
+            hash.Add(item.SpawnGroupDistanceOverrideCurve);
+            if (item.AllowInvalidBiomeMarkers is {} AllowInvalidBiomeMarkersitem)
             {
-                hash.Add(NAM5item);
+                hash.Add(AllowInvalidBiomeMarkersitem);
             }
-            if (item.NAM6 is {} NAM6item)
+            if (item.NumberOfTimesAllowedPerPlanetWorld is {} NumberOfTimesAllowedPerPlanetWorlditem)
             {
-                hash.Add(NAM6item);
-            }
-            if (item.NAM7 is {} NAM7item)
-            {
-                hash.Add(NAM7item);
-            }
-            if (item.NAM8 is {} NAM8item)
-            {
-                hash.Add(NAM8item);
-            }
-            if (item.NAM9 is {} NAM9item)
-            {
-                hash.Add(NAM9item);
+                hash.Add(NumberOfTimesAllowedPerPlanetWorlditem);
             }
             if (item.Conditions is {} Conditionsitem)
             {
@@ -1761,9 +1764,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
+            if (FormLinkInformation.TryFactory(obj.DaysUntilResetGlobal, out var DaysUntilResetGlobalInfo))
+            {
+                yield return DaysUntilResetGlobalInfo;
+            }
             if (FormLinkInformation.TryFactory(obj.Global, out var GlobalInfo))
             {
                 yield return GlobalInfo;
+            }
+            if (FormLinkInformation.TryFactory(obj.NumberOfTimesPerRequestCurve, out var NumberOfTimesPerRequestCurveInfo))
+            {
+                yield return NumberOfTimesPerRequestCurveInfo;
+            }
+            if (FormLinkInformation.TryFactory(obj.SpawnGroupsLimitCurve, out var SpawnGroupsLimitCurveInfo))
+            {
+                yield return SpawnGroupsLimitCurveInfo;
+            }
+            if (FormLinkInformation.TryFactory(obj.SpawnGroupDistanceOverrideCurve, out var SpawnGroupDistanceOverrideCurveInfo))
+            {
+                yield return SpawnGroupDistanceOverrideCurveInfo;
             }
             if (obj.Conditions is {} ConditionsItem)
             {
@@ -1800,68 +1819,61 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ZNAM = rhs.ZNAM;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.YNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DoAllBeforeRepeating) ?? true))
             {
-                item.YNAM = rhs.YNAM;
+                item.DoAllBeforeRepeating = rhs.DoAllBeforeRepeating;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.XNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedGlobal) ?? true))
             {
-                item.XNAM = rhs.XNAM;
+                item.NumberOfTimesAllowedGlobal = rhs.NumberOfTimesAllowedGlobal;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.WNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerSystem) ?? true))
             {
-                item.WNAM = rhs.WNAM;
+                item.NumberOfTimesAllowedPerSystem = rhs.NumberOfTimesAllowedPerSystem;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.VNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SavePlacement) ?? true))
             {
-                item.VNAM = rhs.VNAM;
+                item.SavePlacement = rhs.SavePlacement;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.UNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DaysUntilResetGlobal) ?? true))
             {
-                item.UNAM = rhs.UNAM;
+                item.DaysUntilResetGlobal.SetTo(rhs.DaysUntilResetGlobal.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.MinimumDensityChance) ?? true))
             {
-                item.NAM1 = rhs.NAM1;
+                item.MinimumDensityChance = rhs.MinimumDensityChance;
             }
             if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.Global) ?? true))
             {
                 item.Global.SetTo(rhs.Global.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanet) ?? true))
             {
-                item.NAM3 = rhs.NAM3;
+                item.NumberOfTimesAllowedPerPlanet = rhs.NumberOfTimesAllowedPerPlanet;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DebugColor) ?? true))
             {
-                if(rhs.NAM4 is {} NAM4rhs)
-                {
-                    item.NAM4 = NAM4rhs.ToArray();
-                }
-                else
-                {
-                    item.NAM4 = default;
-                }
+                item.DebugColor = rhs.DebugColor;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM5) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesPerRequestCurve) ?? true))
             {
-                item.NAM5 = rhs.NAM5;
+                item.NumberOfTimesPerRequestCurve.SetTo(rhs.NumberOfTimesPerRequestCurve.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM6) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupsLimitCurve) ?? true))
             {
-                item.NAM6 = rhs.NAM6;
+                item.SpawnGroupsLimitCurve.SetTo(rhs.SpawnGroupsLimitCurve.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM7) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupDistanceOverrideCurve) ?? true))
             {
-                item.NAM7 = rhs.NAM7;
+                item.SpawnGroupDistanceOverrideCurve.SetTo(rhs.SpawnGroupDistanceOverrideCurve.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM8) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.AllowInvalidBiomeMarkers) ?? true))
             {
-                item.NAM8 = rhs.NAM8;
+                item.AllowInvalidBiomeMarkers = rhs.AllowInvalidBiomeMarkers;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM9) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanetWorld) ?? true))
             {
-                item.NAM9 = rhs.NAM9;
+                item.NumberOfTimesAllowedPerPlanetWorld = rhs.NumberOfTimesAllowedPerPlanetWorld;
             }
             if ((copyMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.Conditions) ?? true))
             {
@@ -2026,27 +2038,27 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.ZNAM));
             ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.YNAM,
+                item: item.DoAllBeforeRepeating,
                 header: translationParams.ConvertToCustom(RecordTypes.YNAM));
             UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.XNAM,
+                item: item.NumberOfTimesAllowedGlobal,
                 header: translationParams.ConvertToCustom(RecordTypes.XNAM));
             UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.WNAM,
+                item: item.NumberOfTimesAllowedPerSystem,
                 header: translationParams.ConvertToCustom(RecordTypes.WNAM));
             ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.VNAM,
+                item: item.SavePlacement,
                 header: translationParams.ConvertToCustom(RecordTypes.VNAM));
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.UNAM,
+                item: item.DaysUntilResetGlobal,
                 header: translationParams.ConvertToCustom(RecordTypes.UNAM));
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.NAM1,
+                item: item.MinimumDensityChance,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM1));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -2054,31 +2066,31 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.NAM2));
             UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.NAM3,
+                item: item.NumberOfTimesAllowedPerPlanet,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM3));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            ColorBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.NAM4,
+                item: item.DebugColor,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM4));
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.NAM5,
+                item: item.NumberOfTimesPerRequestCurve,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM5));
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.NAM6,
+                item: item.SpawnGroupsLimitCurve,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM6));
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.NAM7,
+                item: item.SpawnGroupDistanceOverrideCurve,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM7));
             ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.NAM8,
+                item: item.AllowInvalidBiomeMarkers,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM8));
             UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.NAM9,
+                item: item.NumberOfTimesAllowedPerPlanetWorld,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM9));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IConditionGetter>.Instance.WriteWithCounter(
                 writer: writer,
@@ -2156,38 +2168,38 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.YNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.YNAM = frame.ReadUInt8();
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.YNAM;
+                    item.DoAllBeforeRepeating = frame.ReadUInt8();
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DoAllBeforeRepeating;
                 }
                 case RecordTypeInts.XNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.XNAM = frame.ReadUInt32();
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.XNAM;
+                    item.NumberOfTimesAllowedGlobal = frame.ReadUInt32();
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedGlobal;
                 }
                 case RecordTypeInts.WNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.WNAM = frame.ReadUInt32();
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.WNAM;
+                    item.NumberOfTimesAllowedPerSystem = frame.ReadUInt32();
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerSystem;
                 }
                 case RecordTypeInts.VNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.VNAM = frame.ReadUInt8();
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.VNAM;
+                    item.SavePlacement = frame.ReadUInt8();
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SavePlacement;
                 }
                 case RecordTypeInts.UNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.UNAM = frame.ReadUInt32();
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.UNAM;
+                    item.DaysUntilResetGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DaysUntilResetGlobal;
                 }
                 case RecordTypeInts.NAM1:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.NAM1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM1;
+                    item.MinimumDensityChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.MinimumDensityChance;
                 }
                 case RecordTypeInts.NAM2:
                 {
@@ -2198,44 +2210,44 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NAM3:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.NAM3 = frame.ReadUInt32();
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM3;
+                    item.NumberOfTimesAllowedPerPlanet = frame.ReadUInt32();
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanet;
                 }
                 case RecordTypeInts.NAM4:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.NAM4 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM4;
+                    item.DebugColor = frame.ReadColor(ColorBinaryType.Alpha);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DebugColor;
                 }
                 case RecordTypeInts.NAM5:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.NAM5 = frame.ReadUInt32();
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM5;
+                    item.NumberOfTimesPerRequestCurve.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesPerRequestCurve;
                 }
                 case RecordTypeInts.NAM6:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.NAM6 = frame.ReadUInt32();
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM6;
+                    item.SpawnGroupsLimitCurve.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupsLimitCurve;
                 }
                 case RecordTypeInts.NAM7:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.NAM7 = frame.ReadUInt32();
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM7;
+                    item.SpawnGroupDistanceOverrideCurve.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupDistanceOverrideCurve;
                 }
                 case RecordTypeInts.NAM8:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.NAM8 = frame.ReadUInt8();
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM8;
+                    item.AllowInvalidBiomeMarkers = frame.ReadUInt8();
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.AllowInvalidBiomeMarkers;
                 }
                 case RecordTypeInts.NAM9:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.NAM9 = frame.ReadUInt32();
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM9;
+                    item.NumberOfTimesAllowedPerPlanetWorld = frame.ReadUInt32();
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanetWorld;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
@@ -2312,61 +2324,61 @@ namespace Mutagen.Bethesda.Starfield
         private int? _ZNAMLocation;
         public UInt32? ZNAM => _ZNAMLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ZNAMLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region YNAM
-        private int? _YNAMLocation;
-        public Byte? YNAM => _YNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _YNAMLocation.Value, _package.MetaData.Constants)[0] : default(Byte?);
+        #region DoAllBeforeRepeating
+        private int? _DoAllBeforeRepeatingLocation;
+        public Byte? DoAllBeforeRepeating => _DoAllBeforeRepeatingLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DoAllBeforeRepeatingLocation.Value, _package.MetaData.Constants)[0] : default(Byte?);
         #endregion
-        #region XNAM
-        private int? _XNAMLocation;
-        public UInt32? XNAM => _XNAMLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _XNAMLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region NumberOfTimesAllowedGlobal
+        private int? _NumberOfTimesAllowedGlobalLocation;
+        public UInt32? NumberOfTimesAllowedGlobal => _NumberOfTimesAllowedGlobalLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NumberOfTimesAllowedGlobalLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region WNAM
-        private int? _WNAMLocation;
-        public UInt32? WNAM => _WNAMLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _WNAMLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region NumberOfTimesAllowedPerSystem
+        private int? _NumberOfTimesAllowedPerSystemLocation;
+        public UInt32? NumberOfTimesAllowedPerSystem => _NumberOfTimesAllowedPerSystemLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NumberOfTimesAllowedPerSystemLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region VNAM
-        private int? _VNAMLocation;
-        public Byte? VNAM => _VNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _VNAMLocation.Value, _package.MetaData.Constants)[0] : default(Byte?);
+        #region SavePlacement
+        private int? _SavePlacementLocation;
+        public Byte? SavePlacement => _SavePlacementLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _SavePlacementLocation.Value, _package.MetaData.Constants)[0] : default(Byte?);
         #endregion
-        #region UNAM
-        private int? _UNAMLocation;
-        public UInt32? UNAM => _UNAMLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _UNAMLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region DaysUntilResetGlobal
+        private int? _DaysUntilResetGlobalLocation;
+        public IFormLinkNullableGetter<IGlobalGetter> DaysUntilResetGlobal => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IGlobalGetter>(_package, _recordData, _DaysUntilResetGlobalLocation);
         #endregion
-        #region NAM1
-        private int? _NAM1Location;
-        public Single? NAM1 => _NAM1Location.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _NAM1Location.Value, _package.MetaData.Constants).Float() : default(Single?);
+        #region MinimumDensityChance
+        private int? _MinimumDensityChanceLocation;
+        public Single? MinimumDensityChance => _MinimumDensityChanceLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _MinimumDensityChanceLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
         #region Global
         private int? _GlobalLocation;
         public IFormLinkNullableGetter<IGlobalGetter> Global => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IGlobalGetter>(_package, _recordData, _GlobalLocation);
         #endregion
-        #region NAM3
-        private int? _NAM3Location;
-        public UInt32? NAM3 => _NAM3Location.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NAM3Location.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region NumberOfTimesAllowedPerPlanet
+        private int? _NumberOfTimesAllowedPerPlanetLocation;
+        public UInt32? NumberOfTimesAllowedPerPlanet => _NumberOfTimesAllowedPerPlanetLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NumberOfTimesAllowedPerPlanetLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region NAM4
-        private int? _NAM4Location;
-        public ReadOnlyMemorySlice<Byte>? NAM4 => _NAM4Location.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _NAM4Location.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region DebugColor
+        private int? _DebugColorLocation;
+        public Color? DebugColor => _DebugColorLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DebugColorLocation.Value, _package.MetaData.Constants).ReadColor(ColorBinaryType.Alpha) : default(Color?);
         #endregion
-        #region NAM5
-        private int? _NAM5Location;
-        public UInt32? NAM5 => _NAM5Location.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NAM5Location.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region NumberOfTimesPerRequestCurve
+        private int? _NumberOfTimesPerRequestCurveLocation;
+        public IFormLinkNullableGetter<ICurveTableGetter> NumberOfTimesPerRequestCurve => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ICurveTableGetter>(_package, _recordData, _NumberOfTimesPerRequestCurveLocation);
         #endregion
-        #region NAM6
-        private int? _NAM6Location;
-        public UInt32? NAM6 => _NAM6Location.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NAM6Location.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region SpawnGroupsLimitCurve
+        private int? _SpawnGroupsLimitCurveLocation;
+        public IFormLinkNullableGetter<ICurveTableGetter> SpawnGroupsLimitCurve => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ICurveTableGetter>(_package, _recordData, _SpawnGroupsLimitCurveLocation);
         #endregion
-        #region NAM7
-        private int? _NAM7Location;
-        public UInt32? NAM7 => _NAM7Location.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NAM7Location.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region SpawnGroupDistanceOverrideCurve
+        private int? _SpawnGroupDistanceOverrideCurveLocation;
+        public IFormLinkNullableGetter<ICurveTableGetter> SpawnGroupDistanceOverrideCurve => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ICurveTableGetter>(_package, _recordData, _SpawnGroupDistanceOverrideCurveLocation);
         #endregion
-        #region NAM8
-        private int? _NAM8Location;
-        public Byte? NAM8 => _NAM8Location.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _NAM8Location.Value, _package.MetaData.Constants)[0] : default(Byte?);
+        #region AllowInvalidBiomeMarkers
+        private int? _AllowInvalidBiomeMarkersLocation;
+        public Byte? AllowInvalidBiomeMarkers => _AllowInvalidBiomeMarkersLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _AllowInvalidBiomeMarkersLocation.Value, _package.MetaData.Constants)[0] : default(Byte?);
         #endregion
-        #region NAM9
-        private int? _NAM9Location;
-        public UInt32? NAM9 => _NAM9Location.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NAM9Location.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region NumberOfTimesAllowedPerPlanetWorld
+        private int? _NumberOfTimesAllowedPerPlanetWorldLocation;
+        public UInt32? NumberOfTimesAllowedPerPlanetWorld => _NumberOfTimesAllowedPerPlanetWorldLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NumberOfTimesAllowedPerPlanetWorldLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
         public IReadOnlyList<IConditionGetter>? Conditions { get; private set; }
         partial void CustomFactoryEnd(
@@ -2439,33 +2451,33 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.YNAM:
                 {
-                    _YNAMLocation = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.YNAM;
+                    _DoAllBeforeRepeatingLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DoAllBeforeRepeating;
                 }
                 case RecordTypeInts.XNAM:
                 {
-                    _XNAMLocation = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.XNAM;
+                    _NumberOfTimesAllowedGlobalLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedGlobal;
                 }
                 case RecordTypeInts.WNAM:
                 {
-                    _WNAMLocation = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.WNAM;
+                    _NumberOfTimesAllowedPerSystemLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerSystem;
                 }
                 case RecordTypeInts.VNAM:
                 {
-                    _VNAMLocation = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.VNAM;
+                    _SavePlacementLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SavePlacement;
                 }
                 case RecordTypeInts.UNAM:
                 {
-                    _UNAMLocation = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.UNAM;
+                    _DaysUntilResetGlobalLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DaysUntilResetGlobal;
                 }
                 case RecordTypeInts.NAM1:
                 {
-                    _NAM1Location = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM1;
+                    _MinimumDensityChanceLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.MinimumDensityChance;
                 }
                 case RecordTypeInts.NAM2:
                 {
@@ -2474,38 +2486,38 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.NAM3:
                 {
-                    _NAM3Location = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM3;
+                    _NumberOfTimesAllowedPerPlanetLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanet;
                 }
                 case RecordTypeInts.NAM4:
                 {
-                    _NAM4Location = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM4;
+                    _DebugColorLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DebugColor;
                 }
                 case RecordTypeInts.NAM5:
                 {
-                    _NAM5Location = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM5;
+                    _NumberOfTimesPerRequestCurveLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesPerRequestCurve;
                 }
                 case RecordTypeInts.NAM6:
                 {
-                    _NAM6Location = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM6;
+                    _SpawnGroupsLimitCurveLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupsLimitCurve;
                 }
                 case RecordTypeInts.NAM7:
                 {
-                    _NAM7Location = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM7;
+                    _SpawnGroupDistanceOverrideCurveLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupDistanceOverrideCurve;
                 }
                 case RecordTypeInts.NAM8:
                 {
-                    _NAM8Location = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM8;
+                    _AllowInvalidBiomeMarkersLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.AllowInvalidBiomeMarkers;
                 }
                 case RecordTypeInts.NAM9:
                 {
-                    _NAM9Location = (stream.Position - offset);
-                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NAM9;
+                    _NumberOfTimesAllowedPerPlanetWorldLocation = (stream.Position - offset);
+                    return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanetWorld;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
