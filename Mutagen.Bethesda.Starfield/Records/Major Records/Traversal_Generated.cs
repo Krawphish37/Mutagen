@@ -76,16 +76,17 @@ namespace Mutagen.Bethesda.Starfield
         IVirtualMachineAdapterGetter? IScriptedGetter.VirtualMachineAdapter => this.VirtualMachineAdapter;
         #endregion
         #endregion
-        #region DNAM
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _DNAM;
-        public MemorySlice<Byte>? DNAM
-        {
-            get => this._DNAM;
-            set => this._DNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ITraversalGetter.DNAM => this.DNAM;
+        #region Type
+        public Traversal.TraversalType Type { get; set; } = default(Traversal.TraversalType);
+        #endregion
+        #region MinHeight
+        public Single MinHeight { get; set; } = default(Single);
+        #endregion
+        #region MaxHeight
+        public Single MaxHeight { get; set; } = default(Single);
+        #endregion
+        #region Unknown
+        public UInt32 Unknown { get; set; } = default(UInt32);
         #endregion
 
         #region To String
@@ -113,7 +114,10 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(initialValue, new VirtualMachineAdapter.Mask<TItem>(initialValue));
-                this.DNAM = initialValue;
+                this.Type = initialValue;
+                this.MinHeight = initialValue;
+                this.MaxHeight = initialValue;
+                this.Unknown = initialValue;
             }
 
             public Mask(
@@ -125,7 +129,10 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
                 TItem VirtualMachineAdapter,
-                TItem DNAM)
+                TItem Type,
+                TItem MinHeight,
+                TItem MaxHeight,
+                TItem Unknown)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -136,7 +143,10 @@ namespace Mutagen.Bethesda.Starfield
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(VirtualMachineAdapter, new VirtualMachineAdapter.Mask<TItem>(VirtualMachineAdapter));
-                this.DNAM = DNAM;
+                this.Type = Type;
+                this.MinHeight = MinHeight;
+                this.MaxHeight = MaxHeight;
+                this.Unknown = Unknown;
             }
 
             #pragma warning disable CS8618
@@ -149,7 +159,10 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
-            public TItem DNAM;
+            public TItem Type;
+            public TItem MinHeight;
+            public TItem MaxHeight;
+            public TItem Unknown;
             #endregion
 
             #region Equals
@@ -164,14 +177,20 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
-                if (!object.Equals(this.DNAM, rhs.DNAM)) return false;
+                if (!object.Equals(this.Type, rhs.Type)) return false;
+                if (!object.Equals(this.MinHeight, rhs.MinHeight)) return false;
+                if (!object.Equals(this.MaxHeight, rhs.MaxHeight)) return false;
+                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.VirtualMachineAdapter);
-                hash.Add(this.DNAM);
+                hash.Add(this.Type);
+                hash.Add(this.MinHeight);
+                hash.Add(this.MaxHeight);
+                hash.Add(this.Unknown);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -187,7 +206,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.VirtualMachineAdapter.Overall)) return false;
                     if (this.VirtualMachineAdapter.Specific != null && !this.VirtualMachineAdapter.Specific.All(eval)) return false;
                 }
-                if (!eval(this.DNAM)) return false;
+                if (!eval(this.Type)) return false;
+                if (!eval(this.MinHeight)) return false;
+                if (!eval(this.MaxHeight)) return false;
+                if (!eval(this.Unknown)) return false;
                 return true;
             }
             #endregion
@@ -201,7 +223,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.VirtualMachineAdapter.Overall)) return true;
                     if (this.VirtualMachineAdapter.Specific != null && this.VirtualMachineAdapter.Specific.Any(eval)) return true;
                 }
-                if (eval(this.DNAM)) return true;
+                if (eval(this.Type)) return true;
+                if (eval(this.MinHeight)) return true;
+                if (eval(this.MaxHeight)) return true;
+                if (eval(this.Unknown)) return true;
                 return false;
             }
             #endregion
@@ -218,7 +243,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.Translate_InternalFill(obj, eval);
                 obj.VirtualMachineAdapter = this.VirtualMachineAdapter == null ? null : new MaskItem<R, VirtualMachineAdapter.Mask<R>?>(eval(this.VirtualMachineAdapter.Overall), this.VirtualMachineAdapter.Specific?.Translate(eval));
-                obj.DNAM = eval(this.DNAM);
+                obj.Type = eval(this.Type);
+                obj.MinHeight = eval(this.MinHeight);
+                obj.MaxHeight = eval(this.MaxHeight);
+                obj.Unknown = eval(this.Unknown);
             }
             #endregion
 
@@ -241,9 +269,21 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         VirtualMachineAdapter?.Print(sb);
                     }
-                    if (printMask?.DNAM ?? true)
+                    if (printMask?.Type ?? true)
                     {
-                        sb.AppendItem(DNAM, "DNAM");
+                        sb.AppendItem(Type, "Type");
+                    }
+                    if (printMask?.MinHeight ?? true)
+                    {
+                        sb.AppendItem(MinHeight, "MinHeight");
+                    }
+                    if (printMask?.MaxHeight ?? true)
+                    {
+                        sb.AppendItem(MaxHeight, "MaxHeight");
+                    }
+                    if (printMask?.Unknown ?? true)
+                    {
+                        sb.AppendItem(Unknown, "Unknown");
                     }
                 }
             }
@@ -257,7 +297,10 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>? VirtualMachineAdapter;
-            public Exception? DNAM;
+            public Exception? Type;
+            public Exception? MinHeight;
+            public Exception? MaxHeight;
+            public Exception? Unknown;
             #endregion
 
             #region IErrorMask
@@ -268,8 +311,14 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case Traversal_FieldIndex.VirtualMachineAdapter:
                         return VirtualMachineAdapter;
-                    case Traversal_FieldIndex.DNAM:
-                        return DNAM;
+                    case Traversal_FieldIndex.Type:
+                        return Type;
+                    case Traversal_FieldIndex.MinHeight:
+                        return MinHeight;
+                    case Traversal_FieldIndex.MaxHeight:
+                        return MaxHeight;
+                    case Traversal_FieldIndex.Unknown:
+                        return Unknown;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -283,8 +332,17 @@ namespace Mutagen.Bethesda.Starfield
                     case Traversal_FieldIndex.VirtualMachineAdapter:
                         this.VirtualMachineAdapter = new MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>(ex, null);
                         break;
-                    case Traversal_FieldIndex.DNAM:
-                        this.DNAM = ex;
+                    case Traversal_FieldIndex.Type:
+                        this.Type = ex;
+                        break;
+                    case Traversal_FieldIndex.MinHeight:
+                        this.MinHeight = ex;
+                        break;
+                    case Traversal_FieldIndex.MaxHeight:
+                        this.MaxHeight = ex;
+                        break;
+                    case Traversal_FieldIndex.Unknown:
+                        this.Unknown = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -300,8 +358,17 @@ namespace Mutagen.Bethesda.Starfield
                     case Traversal_FieldIndex.VirtualMachineAdapter:
                         this.VirtualMachineAdapter = (MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>?)obj;
                         break;
-                    case Traversal_FieldIndex.DNAM:
-                        this.DNAM = (Exception?)obj;
+                    case Traversal_FieldIndex.Type:
+                        this.Type = (Exception?)obj;
+                        break;
+                    case Traversal_FieldIndex.MinHeight:
+                        this.MinHeight = (Exception?)obj;
+                        break;
+                    case Traversal_FieldIndex.MaxHeight:
+                        this.MaxHeight = (Exception?)obj;
+                        break;
+                    case Traversal_FieldIndex.Unknown:
+                        this.Unknown = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -313,7 +380,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (VirtualMachineAdapter != null) return true;
-                if (DNAM != null) return true;
+                if (Type != null) return true;
+                if (MinHeight != null) return true;
+                if (MaxHeight != null) return true;
+                if (Unknown != null) return true;
                 return false;
             }
             #endregion
@@ -342,7 +412,16 @@ namespace Mutagen.Bethesda.Starfield
                 base.PrintFillInternal(sb);
                 VirtualMachineAdapter?.Print(sb);
                 {
-                    sb.AppendItem(DNAM, "DNAM");
+                    sb.AppendItem(Type, "Type");
+                }
+                {
+                    sb.AppendItem(MinHeight, "MinHeight");
+                }
+                {
+                    sb.AppendItem(MaxHeight, "MaxHeight");
+                }
+                {
+                    sb.AppendItem(Unknown, "Unknown");
                 }
             }
             #endregion
@@ -353,7 +432,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
-                ret.DNAM = this.DNAM.Combine(rhs.DNAM);
+                ret.Type = this.Type.Combine(rhs.Type);
+                ret.MinHeight = this.MinHeight.Combine(rhs.MinHeight);
+                ret.MaxHeight = this.MaxHeight.Combine(rhs.MaxHeight);
+                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -377,7 +459,10 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public VirtualMachineAdapter.TranslationMask? VirtualMachineAdapter;
-            public bool DNAM;
+            public bool Type;
+            public bool MinHeight;
+            public bool MaxHeight;
+            public bool Unknown;
             #endregion
 
             #region Ctors
@@ -386,7 +471,10 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.DNAM = defaultOn;
+                this.Type = defaultOn;
+                this.MinHeight = defaultOn;
+                this.MaxHeight = defaultOn;
+                this.Unknown = defaultOn;
             }
 
             #endregion
@@ -395,7 +483,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
-                ret.Add((DNAM, null));
+                ret.Add((Type, null));
+                ret.Add((MinHeight, null));
+                ret.Add((MaxHeight, null));
+                ret.Add((Unknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -550,7 +641,10 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IHaveVirtualMachineAdapter, IScripted
         /// </summary>
         new VirtualMachineAdapter? VirtualMachineAdapter { get; set; }
-        new MemorySlice<Byte>? DNAM { get; set; }
+        new Traversal.TraversalType Type { get; set; }
+        new Single MinHeight { get; set; }
+        new Single MaxHeight { get; set; }
+        new UInt32 Unknown { get; set; }
     }
 
     public partial interface ITraversalInternal :
@@ -578,7 +672,10 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IVirtualMachineAdapterGetter? VirtualMachineAdapter { get; }
         #endregion
-        ReadOnlyMemorySlice<Byte>? DNAM { get; }
+        Traversal.TraversalType Type { get; }
+        Single MinHeight { get; }
+        Single MaxHeight { get; }
+        UInt32 Unknown { get; }
 
     }
 
@@ -756,7 +853,10 @@ namespace Mutagen.Bethesda.Starfield
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
         VirtualMachineAdapter = 7,
-        DNAM = 8,
+        Type = 8,
+        MinHeight = 9,
+        MaxHeight = 10,
+        Unknown = 11,
     }
     #endregion
 
@@ -767,9 +867,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 2;
+        public const ushort AdditionalFieldCount = 5;
 
-        public const ushort FieldCount = 9;
+        public const ushort FieldCount = 12;
 
         public static readonly Type MaskType = typeof(Traversal.Mask<>);
 
@@ -850,7 +950,10 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.VirtualMachineAdapter = null;
-            item.DNAM = default;
+            item.Type = default(Traversal.TraversalType);
+            item.MinHeight = default(Single);
+            item.MaxHeight = default(Single);
+            item.Unknown = default(UInt32);
             base.Clear(item);
         }
         
@@ -941,7 +1044,10 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.VirtualMachineAdapter,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.DNAM = MemorySliceExt.SequenceEqual(item.DNAM, rhs.DNAM);
+            ret.Type = item.Type == rhs.Type;
+            ret.MinHeight = item.MinHeight.EqualsWithin(rhs.MinHeight);
+            ret.MaxHeight = item.MaxHeight.EqualsWithin(rhs.MaxHeight);
+            ret.Unknown = item.Unknown == rhs.Unknown;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -996,10 +1102,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 VirtualMachineAdapterItem?.Print(sb, "VirtualMachineAdapter");
             }
-            if ((printMask?.DNAM ?? true)
-                && item.DNAM is {} DNAMItem)
+            if (printMask?.Type ?? true)
             {
-                sb.AppendLine($"DNAM => {SpanExt.ToHexString(DNAMItem)}");
+                sb.AppendItem(item.Type, "Type");
+            }
+            if (printMask?.MinHeight ?? true)
+            {
+                sb.AppendItem(item.MinHeight, "MinHeight");
+            }
+            if (printMask?.MaxHeight ?? true)
+            {
+                sb.AppendItem(item.MaxHeight, "MaxHeight");
+            }
+            if (printMask?.Unknown ?? true)
+            {
+                sb.AppendItem(item.Unknown, "Unknown");
             }
         }
         
@@ -1059,9 +1176,21 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isVirtualMachineAdapterEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Traversal_FieldIndex.DNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Traversal_FieldIndex.Type) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.DNAM, rhs.DNAM)) return false;
+                if (lhs.Type != rhs.Type) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Traversal_FieldIndex.MinHeight) ?? true))
+            {
+                if (!lhs.MinHeight.EqualsWithin(rhs.MinHeight)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Traversal_FieldIndex.MaxHeight) ?? true))
+            {
+                if (!lhs.MaxHeight.EqualsWithin(rhs.MaxHeight)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Traversal_FieldIndex.Unknown) ?? true))
+            {
+                if (lhs.Unknown != rhs.Unknown) return false;
             }
             return true;
         }
@@ -1095,10 +1224,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            if (item.DNAM is {} DNAMItem)
-            {
-                hash.AddBytes(DNAMItem);
-            }
+            hash.Add(item.Type);
+            hash.Add(item.MinHeight);
+            hash.Add(item.MaxHeight);
+            hash.Add(item.Unknown);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1257,16 +1386,21 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Traversal_FieldIndex.DNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Traversal_FieldIndex.Type) ?? true))
             {
-                if(rhs.DNAM is {} DNAMrhs)
-                {
-                    item.DNAM = DNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.DNAM = default;
-                }
+                item.Type = rhs.Type;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Traversal_FieldIndex.MinHeight) ?? true))
+            {
+                item.MinHeight = rhs.MinHeight;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Traversal_FieldIndex.MaxHeight) ?? true))
+            {
+                item.MaxHeight = rhs.MaxHeight;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Traversal_FieldIndex.Unknown) ?? true))
+            {
+                item.Unknown = rhs.Unknown;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1444,10 +1578,20 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     translationParams: translationParams.With(RecordTypes.XXXX));
             }
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.DNAM,
-                header: translationParams.ConvertToCustom(RecordTypes.DNAM));
+            using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.DNAM)))
+            {
+                EnumBinaryTranslation<Traversal.TraversalType, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.Type,
+                    length: 4);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.MinHeight);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.MaxHeight);
+                writer.Write(item.Unknown);
+            }
         }
 
         public void Write(
@@ -1526,8 +1670,18 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Traversal_FieldIndex.DNAM;
+                    var dataFrame = frame.SpawnWithLength(contentLength);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.Type = EnumBinaryTranslation<Traversal.TraversalType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.MinHeight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.MaxHeight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.Unknown = dataFrame.ReadUInt32();
+                    return (int)Traversal_FieldIndex.Unknown;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -1599,9 +1753,26 @@ namespace Mutagen.Bethesda.Starfield
         public IVirtualMachineAdapterGetter? VirtualMachineAdapter => _VirtualMachineAdapterLocation.HasValue ? VirtualMachineAdapterBinaryOverlay.VirtualMachineAdapterFactory(_recordData.Slice(_VirtualMachineAdapterLocation!.Value.Min), _package, TypedParseParams.FromLengthOverride(_VirtualMachineAdapterLengthOverride)) : default;
         IAVirtualMachineAdapterGetter? IHaveVirtualMachineAdapterGetter.VirtualMachineAdapter => this.VirtualMachineAdapter;
         #endregion
-        #region DNAM
-        private int? _DNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? DNAM => _DNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        private RangeInt32? _DNAMLocation;
+        #region Type
+        private int _TypeLocation => _DNAMLocation!.Value.Min;
+        private bool _Type_IsSet => _DNAMLocation.HasValue;
+        public Traversal.TraversalType Type => _Type_IsSet ? (Traversal.TraversalType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_TypeLocation, 0x4)) : default;
+        #endregion
+        #region MinHeight
+        private int _MinHeightLocation => _DNAMLocation!.Value.Min + 0x4;
+        private bool _MinHeight_IsSet => _DNAMLocation.HasValue;
+        public Single MinHeight => _MinHeight_IsSet ? _recordData.Slice(_MinHeightLocation, 4).Float() : default(Single);
+        #endregion
+        #region MaxHeight
+        private int _MaxHeightLocation => _DNAMLocation!.Value.Min + 0x8;
+        private bool _MaxHeight_IsSet => _DNAMLocation.HasValue;
+        public Single MaxHeight => _MaxHeight_IsSet ? _recordData.Slice(_MaxHeightLocation, 4).Float() : default(Single);
+        #endregion
+        #region Unknown
+        private int _UnknownLocation => _DNAMLocation!.Value.Min + 0xC;
+        private bool _Unknown_IsSet => _DNAMLocation.HasValue;
+        public UInt32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(UInt32);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1684,8 +1855,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DNAM:
                 {
-                    _DNAMLocation = (stream.Position - offset);
-                    return (int)Traversal_FieldIndex.DNAM;
+                    _DNAMLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
+                    return (int)Traversal_FieldIndex.Unknown;
                 }
                 case RecordTypeInts.XXXX:
                 {

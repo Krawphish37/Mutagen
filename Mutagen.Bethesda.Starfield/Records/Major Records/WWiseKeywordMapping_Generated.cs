@@ -56,10 +56,10 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region WMTI
-        public UInt16? WMTI { get; set; }
+        #region MappingTemplate
+        public WWiseKeywordMapping.MappingTemplateType? MappingTemplate { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt16? IWWiseKeywordMappingGetter.WMTI => this.WMTI;
+        WWiseKeywordMapping.MappingTemplateType? IWWiseKeywordMappingGetter.MappingTemplate => this.MappingTemplate;
         #endregion
         #region Keywords
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -126,7 +126,7 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.WMTI = initialValue;
+                this.MappingTemplate = initialValue;
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.WMSS = initialValue;
                 this.Items = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WWiseKeywordMappingItem.Mask<TItem>?>>?>(initialValue, []);
@@ -140,7 +140,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
-                TItem WMTI,
+                TItem MappingTemplate,
                 TItem Keywords,
                 TItem WMSS,
                 TItem Items)
@@ -153,7 +153,7 @@ namespace Mutagen.Bethesda.Starfield
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
             {
-                this.WMTI = WMTI;
+                this.MappingTemplate = MappingTemplate;
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
                 this.WMSS = WMSS;
                 this.Items = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WWiseKeywordMappingItem.Mask<TItem>?>>?>(Items, []);
@@ -168,7 +168,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem WMTI;
+            public TItem MappingTemplate;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
             public TItem WMSS;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, WWiseKeywordMappingItem.Mask<TItem>?>>?>? Items;
@@ -185,7 +185,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.WMTI, rhs.WMTI)) return false;
+                if (!object.Equals(this.MappingTemplate, rhs.MappingTemplate)) return false;
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
                 if (!object.Equals(this.WMSS, rhs.WMSS)) return false;
                 if (!object.Equals(this.Items, rhs.Items)) return false;
@@ -194,7 +194,7 @@ namespace Mutagen.Bethesda.Starfield
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.WMTI);
+                hash.Add(this.MappingTemplate);
                 hash.Add(this.Keywords);
                 hash.Add(this.WMSS);
                 hash.Add(this.Items);
@@ -208,7 +208,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.WMTI)) return false;
+                if (!eval(this.MappingTemplate)) return false;
                 if (this.Keywords != null)
                 {
                     if (!eval(this.Keywords.Overall)) return false;
@@ -241,7 +241,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.WMTI)) return true;
+                if (eval(this.MappingTemplate)) return true;
                 if (this.Keywords != null)
                 {
                     if (eval(this.Keywords.Overall)) return true;
@@ -281,7 +281,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.WMTI = eval(this.WMTI);
+                obj.MappingTemplate = eval(this.MappingTemplate);
                 if (Keywords != null)
                 {
                     obj.Keywords = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.Keywords.Overall), []);
@@ -330,9 +330,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(WWiseKeywordMapping.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.WMTI ?? true)
+                    if (printMask?.MappingTemplate ?? true)
                     {
-                        sb.AppendItem(WMTI, "WMTI");
+                        sb.AppendItem(MappingTemplate, "MappingTemplate");
                     }
                     if ((printMask?.Keywords?.Overall ?? true)
                         && Keywords is {} KeywordsItem)
@@ -389,7 +389,7 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? WMTI;
+            public Exception? MappingTemplate;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
             public Exception? WMSS;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WWiseKeywordMappingItem.ErrorMask?>>?>? Items;
@@ -401,8 +401,8 @@ namespace Mutagen.Bethesda.Starfield
                 WWiseKeywordMapping_FieldIndex enu = (WWiseKeywordMapping_FieldIndex)index;
                 switch (enu)
                 {
-                    case WWiseKeywordMapping_FieldIndex.WMTI:
-                        return WMTI;
+                    case WWiseKeywordMapping_FieldIndex.MappingTemplate:
+                        return MappingTemplate;
                     case WWiseKeywordMapping_FieldIndex.Keywords:
                         return Keywords;
                     case WWiseKeywordMapping_FieldIndex.WMSS:
@@ -419,8 +419,8 @@ namespace Mutagen.Bethesda.Starfield
                 WWiseKeywordMapping_FieldIndex enu = (WWiseKeywordMapping_FieldIndex)index;
                 switch (enu)
                 {
-                    case WWiseKeywordMapping_FieldIndex.WMTI:
-                        this.WMTI = ex;
+                    case WWiseKeywordMapping_FieldIndex.MappingTemplate:
+                        this.MappingTemplate = ex;
                         break;
                     case WWiseKeywordMapping_FieldIndex.Keywords:
                         this.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
@@ -442,8 +442,8 @@ namespace Mutagen.Bethesda.Starfield
                 WWiseKeywordMapping_FieldIndex enu = (WWiseKeywordMapping_FieldIndex)index;
                 switch (enu)
                 {
-                    case WWiseKeywordMapping_FieldIndex.WMTI:
-                        this.WMTI = (Exception?)obj;
+                    case WWiseKeywordMapping_FieldIndex.MappingTemplate:
+                        this.MappingTemplate = (Exception?)obj;
                         break;
                     case WWiseKeywordMapping_FieldIndex.Keywords:
                         this.Keywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
@@ -463,7 +463,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (WMTI != null) return true;
+                if (MappingTemplate != null) return true;
                 if (Keywords != null) return true;
                 if (WMSS != null) return true;
                 if (Items != null) return true;
@@ -494,7 +494,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(WMTI, "WMTI");
+                    sb.AppendItem(MappingTemplate, "MappingTemplate");
                 }
                 if (Keywords is {} KeywordsItem)
                 {
@@ -545,7 +545,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.WMTI = this.WMTI.Combine(rhs.WMTI);
+                ret.MappingTemplate = this.MappingTemplate.Combine(rhs.MappingTemplate);
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
                 ret.WMSS = this.WMSS.Combine(rhs.WMSS);
                 ret.Items = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, WWiseKeywordMappingItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Items?.Overall, rhs.Items?.Overall), Noggog.ExceptionExt.Combine(this.Items?.Specific, rhs.Items?.Specific));
@@ -571,7 +571,7 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool WMTI;
+            public bool MappingTemplate;
             public bool Keywords;
             public bool WMSS;
             public WWiseKeywordMappingItem.TranslationMask? Items;
@@ -583,7 +583,7 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.WMTI = defaultOn;
+                this.MappingTemplate = defaultOn;
                 this.Keywords = defaultOn;
                 this.WMSS = defaultOn;
             }
@@ -593,7 +593,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((WMTI, null));
+                ret.Add((MappingTemplate, null));
                 ret.Add((Keywords, null));
                 ret.Add((WMSS, null));
                 ret.Add((Items == null ? DefaultOn : !Items.GetCrystal().CopyNothing, Items?.GetCrystal()));
@@ -745,7 +745,7 @@ namespace Mutagen.Bethesda.Starfield
         IStarfieldMajorRecordInternal,
         IWWiseKeywordMappingGetter
     {
-        new UInt16? WMTI { get; set; }
+        new WWiseKeywordMapping.MappingTemplateType? MappingTemplate { get; set; }
         /// <summary>
         /// Aspects: IKeyworded&lt;IKeywordGetter&gt;
         /// </summary>
@@ -771,7 +771,7 @@ namespace Mutagen.Bethesda.Starfield
         IMapsToGetter<IWWiseKeywordMappingGetter>
     {
         static new ILoquiRegistration StaticRegistration => WWiseKeywordMapping_Registration.Instance;
-        UInt16? WMTI { get; }
+        WWiseKeywordMapping.MappingTemplateType? MappingTemplate { get; }
         #region Keywords
         /// <summary>
         /// Aspects: IKeywordedGetter&lt;IKeywordGetter&gt;
@@ -956,7 +956,7 @@ namespace Mutagen.Bethesda.Starfield
         FormVersion = 4,
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
-        WMTI = 7,
+        MappingTemplate = 7,
         Keywords = 8,
         WMSS = 9,
         Items = 10,
@@ -1054,7 +1054,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IWWiseKeywordMappingInternal item)
         {
             ClearPartial();
-            item.WMTI = default;
+            item.MappingTemplate = default;
             item.Keywords = null;
             item.WMSS = default;
             item.Items.Clear();
@@ -1144,7 +1144,7 @@ namespace Mutagen.Bethesda.Starfield
             WWiseKeywordMapping.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.WMTI = item.WMTI == rhs.WMTI;
+            ret.MappingTemplate = item.MappingTemplate == rhs.MappingTemplate;
             ret.Keywords = item.Keywords.CollectionEqualsHelper(
                 rhs.Keywords,
                 (l, r) => object.Equals(l, r),
@@ -1203,10 +1203,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.WMTI ?? true)
-                && item.WMTI is {} WMTIItem)
+            if ((printMask?.MappingTemplate ?? true)
+                && item.MappingTemplate is {} MappingTemplateItem)
             {
-                sb.AppendItem(WMTIItem, "WMTI");
+                sb.AppendItem(MappingTemplateItem, "MappingTemplate");
             }
             if ((printMask?.Keywords?.Overall ?? true)
                 && item.Keywords is {} KeywordsItem)
@@ -1292,9 +1292,9 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IStarfieldMajorRecordGetter)lhs, (IStarfieldMajorRecordGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)WWiseKeywordMapping_FieldIndex.WMTI) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)WWiseKeywordMapping_FieldIndex.MappingTemplate) ?? true))
             {
-                if (lhs.WMTI != rhs.WMTI) return false;
+                if (lhs.MappingTemplate != rhs.MappingTemplate) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)WWiseKeywordMapping_FieldIndex.Keywords) ?? true))
             {
@@ -1336,9 +1336,9 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IWWiseKeywordMappingGetter item)
         {
             var hash = new HashCode();
-            if (item.WMTI is {} WMTIitem)
+            if (item.MappingTemplate is {} MappingTemplateitem)
             {
-                hash.Add(WMTIitem);
+                hash.Add(MappingTemplateitem);
             }
             if (item.Keywords is {} Keywordsitem)
             {
@@ -1491,9 +1491,9 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)WWiseKeywordMapping_FieldIndex.WMTI) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)WWiseKeywordMapping_FieldIndex.MappingTemplate) ?? true))
             {
-                item.WMTI = rhs.WMTI;
+                item.MappingTemplate = rhs.MappingTemplate;
             }
             if ((copyMask?.GetShouldTranslate((int)WWiseKeywordMapping_FieldIndex.Keywords) ?? true))
             {
@@ -1719,9 +1719,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.WMTI,
+            EnumBinaryTranslation<WWiseKeywordMapping.MappingTemplateType, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.MappingTemplate,
+                length: 2,
                 header: translationParams.ConvertToCustom(RecordTypes.WMTI));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Write(
                 writer: writer,
@@ -1819,8 +1820,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WMTI:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.WMTI = frame.ReadUInt16();
-                    return (int)WWiseKeywordMapping_FieldIndex.WMTI;
+                    item.MappingTemplate = EnumBinaryTranslation<WWiseKeywordMapping.MappingTemplateType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)WWiseKeywordMapping_FieldIndex.MappingTemplate;
                 }
                 case RecordTypeInts.WMKA:
                 {
@@ -1908,9 +1911,9 @@ namespace Mutagen.Bethesda.Starfield
         protected override Type LinkType => typeof(IWWiseKeywordMappingGetter);
 
 
-        #region WMTI
-        private int? _WMTILocation;
-        public UInt16? WMTI => _WMTILocation.HasValue ? BinaryPrimitives.ReadUInt16LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _WMTILocation.Value, _package.MetaData.Constants)) : default(UInt16?);
+        #region MappingTemplate
+        private int? _MappingTemplateLocation;
+        public WWiseKeywordMapping.MappingTemplateType? MappingTemplate => EnumBinaryTranslation<WWiseKeywordMapping.MappingTemplateType, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_MappingTemplateLocation, _recordData, _package, 2);
         #endregion
         #region Keywords
         public IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; private set; }
@@ -1992,8 +1995,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.WMTI:
                 {
-                    _WMTILocation = (stream.Position - offset);
-                    return (int)WWiseKeywordMapping_FieldIndex.WMTI;
+                    _MappingTemplateLocation = (stream.Position - offset);
+                    return (int)WWiseKeywordMapping_FieldIndex.MappingTemplate;
                 }
                 case RecordTypeInts.WMKA:
                 {

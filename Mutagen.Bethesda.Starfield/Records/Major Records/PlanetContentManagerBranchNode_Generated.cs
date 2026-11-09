@@ -78,7 +78,7 @@ namespace Mutagen.Bethesda.Starfield
         PlanetContentManagerBranchNode.NodeTypeOption? IPlanetContentManagerBranchNodeGetter.NodeType => this.NodeType;
         #endregion
         #region ChildSelection
-        public Int32 ChildSelection { get; set; } = default(Int32);
+        public PlanetContentManagerBranchNode.ChildSelectionOption ChildSelection { get; set; } = default(PlanetContentManagerBranchNode.ChildSelectionOption);
         #endregion
         #region CountCurve
         private readonly IFormLinkNullable<ICurveTableGetter> _CountCurve = new FormLinkNullable<ICurveTableGetter>();
@@ -1169,7 +1169,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new ExtendedList<AComponent> Components { get; }
         new PlanetContentManagerBranchNode.NodeTypeOption? NodeType { get; set; }
-        new Int32 ChildSelection { get; set; }
+        new PlanetContentManagerBranchNode.ChildSelectionOption ChildSelection { get; set; }
         new IFormLinkNullable<ICurveTableGetter> CountCurve { get; set; }
         new IFormLinkNullable<ICurveTableGetter> DistributionCurve { get; set; }
         new Boolean? ConsumeRequestEvenOnFailure { get; set; }
@@ -1205,7 +1205,7 @@ namespace Mutagen.Bethesda.Starfield
         static new ILoquiRegistration StaticRegistration => PlanetContentManagerBranchNode_Registration.Instance;
         IReadOnlyList<IAComponentGetter> Components { get; }
         PlanetContentManagerBranchNode.NodeTypeOption? NodeType { get; }
-        Int32 ChildSelection { get; }
+        PlanetContentManagerBranchNode.ChildSelectionOption ChildSelection { get; }
         IFormLinkNullableGetter<ICurveTableGetter> CountCurve { get; }
         IFormLinkNullableGetter<ICurveTableGetter> DistributionCurve { get; }
         Boolean? ConsumeRequestEvenOnFailure { get; }
@@ -1512,7 +1512,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.Components.Clear();
             item.NodeType = default;
-            item.ChildSelection = default(Int32);
+            item.ChildSelection = default(PlanetContentManagerBranchNode.ChildSelectionOption);
             item.CountCurve.Clear();
             item.DistributionCurve.Clear();
             item.ConsumeRequestEvenOnFailure = default;
@@ -2447,9 +2447,10 @@ namespace Mutagen.Bethesda.Starfield
                 item.NodeType,
                 length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM1));
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.ChildSelection,
+            EnumBinaryTranslation<PlanetContentManagerBranchNode.ChildSelectionOption, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.ChildSelection,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM2));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -2593,7 +2594,9 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NAM2:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ChildSelection = frame.ReadInt32();
+                    item.ChildSelection = EnumBinaryTranslation<PlanetContentManagerBranchNode.ChildSelectionOption, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
                     return (int)PlanetContentManagerBranchNode_FieldIndex.ChildSelection;
                 }
                 case RecordTypeInts.NAM3:
@@ -2726,7 +2729,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region ChildSelection
         private int? _ChildSelectionLocation;
-        public Int32 ChildSelection => _ChildSelectionLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ChildSelectionLocation.Value, _package.MetaData.Constants)) : default(Int32);
+        public PlanetContentManagerBranchNode.ChildSelectionOption ChildSelection => EnumBinaryTranslation<PlanetContentManagerBranchNode.ChildSelectionOption, MutagenFrame, MutagenWriter>.Instance.ParseRecord(_ChildSelectionLocation, _recordData, _package, 4);
         #endregion
         #region CountCurve
         private int? _CountCurveLocation;

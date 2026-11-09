@@ -8,7 +8,7 @@
   </Object>
   <Object name="SnapTemplateBehaviorItem" objType="Subrecord">
     <Fields>
-      <Int32 name="ENAM" recordType="ENAM" unknown="true" nullable="False" />
+      <Enum name="Operation" recordType="ENAM" nullable="False" enumName="SnapTemplateBehavior.OperationType" byteLength="4" />
       <FormLink name="BaseObject"  recordType="PNAM" nullable="false" >
         <Interface>IBaseObject</Interface>
       </FormLink>

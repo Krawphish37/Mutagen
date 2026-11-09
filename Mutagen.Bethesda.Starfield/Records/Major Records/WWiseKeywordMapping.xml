@@ -2,7 +2,7 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="WWiseKeywordMapping" recordType="WKMF" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
-      <UInt16 name="WMTI" recordType="WMTI" unknown="true" />
+      <Enum name="MappingTemplate" recordType="WMTI" enumName="WWiseKeywordMapping.MappingTemplateType" byteLength="2" />
       <List name="Keywords" recordType="WMKA" >
         <FormLink refName="Keyword" />
       </List>

@@ -3,7 +3,14 @@
   <Object name="Traversal" recordType="TRAV" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
-      <ByteArray name="DNAM" recordType="DNAM" unknown="true" />
+      <Data recordType="DNAM">
+        <Fields>
+          <Enum name="Type" enumName="Traversal.TraversalType" byteLength="4" />
+          <Float name="MinHeight" />
+          <Float name="MaxHeight" />
+          <UInt32 name="Unknown" unknown="true" />
+        </Fields>
+      </Data>
     </Fields>
     <LinkInterface>ITraversalTarget</LinkInterface>
   </Object>

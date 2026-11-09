@@ -4,7 +4,7 @@
     <Fields>
       <RefList name="Components" refName="AComponent" />
       <Enum name="NodeType" recordType="NAM1" enumName="PlanetContentManagerBranchNode.NodeTypeOption" />
-      <Int32 name="ChildSelection" recordType="NAM2" nullable="False" enumName="PlanetContentManagerBranchNode.ChildSelectionOption" />
+      <Enum name="ChildSelection" recordType="NAM2" nullable="False" enumName="PlanetContentManagerBranchNode.ChildSelectionOption" byteLength="4" />
       <FormLink name="CountCurve" refName="CurveTable" recordType="NAM3" unknown="true" />
       <FormLink name="DistributionCurve" refName="CurveTable" recordType="NAM4" unknown="true" />
       <Bool name="ConsumeRequestEvenOnFailure" recordType="NAM5" byteLength="1" />
