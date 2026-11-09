@@ -6907,5 +6907,14 @@
     <Compile Include="Records\Major Records\LegendaryItemLnamEntry_Generated.cs">
       <DependentUpon>LegendaryItem.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\MovementData_Generated.cs">
+      <DependentUpon>MovementType.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\MovementSpeeds_Generated.cs">
+      <DependentUpon>MovementType.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\MovementRotationSpeeds_Generated.cs">
+      <DependentUpon>MovementType.xml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

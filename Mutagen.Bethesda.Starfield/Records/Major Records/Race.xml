@@ -127,7 +127,7 @@
   <Object name="MovementDataOverride" objType="Subrecord">
     <Fields>
       <FormLink name="MovementType" recordType="MTYP" refName="MovementType" />
-      <ByteArray name="SPED" recordType="SPED" unknown="true" />
+      <RefDirect name="MovementData" refName="MovementData" />
     </Fields>
   </Object>
   <Object name="MovementRotationData" objType="Subrecord">
