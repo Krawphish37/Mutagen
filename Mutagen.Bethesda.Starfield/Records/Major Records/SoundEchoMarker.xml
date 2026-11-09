@@ -17,13 +17,13 @@
   </Object>
   <Object name="EchoMarker" objType="Subrecord" >
     <Fields>
-      <Guid name="ECTE" recordType="ECTE" unknown="true" />
+      <Guid name="WwiseGuid" recordType="ECTE" />
       <RefDirect name="Sound" refName="SoundReference" recordType="ECSH" />
-      <ByteArray name="ANAM" recordType="ANAM" unknown="true" />
-      <Float name="BNAM" recordType="BNAM" unknown="true" />
-      <ByteArray name="CNAM" recordType="CNAM" unknown="true" />
-      <ByteArray name="DNAM" recordType="DNAM" unknown="true" />
-      <ByteArray name="ENAM" recordType="ENAM" unknown="true" />
+      <UInt32 name="VoiceCount" recordType="ANAM" />
+      <Float name="Duration" recordType="BNAM" />
+      <Enum name="ActionAtLimit" recordType="CNAM" enumName="EchoMarker.ActionAtLimitType" byteLength="1" />
+      <Enum name="Use" recordType="DNAM" enumName="EchoMarker.UseType" byteLength="1" />
+      <Bool name="TriggerRelease" recordType="ENAM" byteLength="1" />
       <RefList name="Conditions" refName="Condition" />
       <String name="Description" recordType="NNAM" />
     </Fields>
