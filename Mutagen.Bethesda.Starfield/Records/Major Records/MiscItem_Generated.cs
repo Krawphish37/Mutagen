@@ -299,16 +299,10 @@ namespace Mutagen.Bethesda.Starfield
         #region Weight
         public Single Weight { get; set; } = default(Single);
         #endregion
-        #region FLAG
+        #region Flags
+        public MiscItem.Flag? Flags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _FLAG;
-        public MemorySlice<Byte>? FLAG
-        {
-            get => this._FLAG;
-            set => this._FLAG = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IMiscItemGetter.FLAG => this.FLAG;
+        MiscItem.Flag? IMiscItemGetter.Flags => this.Flags;
         #endregion
         #region ShortName
         public TranslatedString? ShortName { get; set; }
@@ -358,7 +352,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Resources = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ItemResource.Mask<TItem>?>>?>(initialValue, []);
                 this.Value = initialValue;
                 this.Weight = initialValue;
-                this.FLAG = initialValue;
+                this.Flags = initialValue;
                 this.ShortName = initialValue;
             }
 
@@ -388,7 +382,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Resources,
                 TItem Value,
                 TItem Weight,
-                TItem FLAG,
+                TItem Flags,
                 TItem ShortName)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
@@ -417,7 +411,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Resources = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ItemResource.Mask<TItem>?>>?>(Resources, []);
                 this.Value = Value;
                 this.Weight = Weight;
-                this.FLAG = FLAG;
+                this.Flags = Flags;
                 this.ShortName = ShortName;
             }
 
@@ -448,7 +442,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ItemResource.Mask<TItem>?>>?>? Resources;
             public TItem Value;
             public TItem Weight;
-            public TItem FLAG;
+            public TItem Flags;
             public TItem ShortName;
             #endregion
 
@@ -481,7 +475,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Resources, rhs.Resources)) return false;
                 if (!object.Equals(this.Value, rhs.Value)) return false;
                 if (!object.Equals(this.Weight, rhs.Weight)) return false;
-                if (!object.Equals(this.FLAG, rhs.FLAG)) return false;
+                if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.ShortName, rhs.ShortName)) return false;
                 return true;
             }
@@ -506,7 +500,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Resources);
                 hash.Add(this.Value);
                 hash.Add(this.Weight);
-                hash.Add(this.FLAG);
+                hash.Add(this.Flags);
                 hash.Add(this.ShortName);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -604,7 +598,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.Value)) return false;
                 if (!eval(this.Weight)) return false;
-                if (!eval(this.FLAG)) return false;
+                if (!eval(this.Flags)) return false;
                 if (!eval(this.ShortName)) return false;
                 return true;
             }
@@ -700,7 +694,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.Value)) return true;
                 if (eval(this.Weight)) return true;
-                if (eval(this.FLAG)) return true;
+                if (eval(this.Flags)) return true;
                 if (eval(this.ShortName)) return true;
                 return false;
             }
@@ -776,7 +770,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 obj.Value = eval(this.Value);
                 obj.Weight = eval(this.Weight);
-                obj.FLAG = eval(this.FLAG);
+                obj.Flags = eval(this.Flags);
                 obj.ShortName = eval(this.ShortName);
             }
             #endregion
@@ -915,9 +909,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Weight, "Weight");
                     }
-                    if (printMask?.FLAG ?? true)
+                    if (printMask?.Flags ?? true)
                     {
-                        sb.AppendItem(FLAG, "FLAG");
+                        sb.AppendItem(Flags, "Flags");
                     }
                     if (printMask?.ShortName ?? true)
                     {
@@ -952,7 +946,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ItemResource.ErrorMask?>>?>? Resources;
             public Exception? Value;
             public Exception? Weight;
-            public Exception? FLAG;
+            public Exception? Flags;
             public Exception? ShortName;
             #endregion
 
@@ -998,8 +992,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Value;
                     case MiscItem_FieldIndex.Weight:
                         return Weight;
-                    case MiscItem_FieldIndex.FLAG:
-                        return FLAG;
+                    case MiscItem_FieldIndex.Flags:
+                        return Flags;
                     case MiscItem_FieldIndex.ShortName:
                         return ShortName;
                     default:
@@ -1066,8 +1060,8 @@ namespace Mutagen.Bethesda.Starfield
                     case MiscItem_FieldIndex.Weight:
                         this.Weight = ex;
                         break;
-                    case MiscItem_FieldIndex.FLAG:
-                        this.FLAG = ex;
+                    case MiscItem_FieldIndex.Flags:
+                        this.Flags = ex;
                         break;
                     case MiscItem_FieldIndex.ShortName:
                         this.ShortName = ex;
@@ -1137,8 +1131,8 @@ namespace Mutagen.Bethesda.Starfield
                     case MiscItem_FieldIndex.Weight:
                         this.Weight = (Exception?)obj;
                         break;
-                    case MiscItem_FieldIndex.FLAG:
-                        this.FLAG = (Exception?)obj;
+                    case MiscItem_FieldIndex.Flags:
+                        this.Flags = (Exception?)obj;
                         break;
                     case MiscItem_FieldIndex.ShortName:
                         this.ShortName = (Exception?)obj;
@@ -1170,7 +1164,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Resources != null) return true;
                 if (Value != null) return true;
                 if (Weight != null) return true;
-                if (FLAG != null) return true;
+                if (Flags != null) return true;
                 if (ShortName != null) return true;
                 return false;
             }
@@ -1282,7 +1276,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Weight, "Weight");
                 }
                 {
-                    sb.AppendItem(FLAG, "FLAG");
+                    sb.AppendItem(Flags, "Flags");
                 }
                 {
                     sb.AppendItem(ShortName, "ShortName");
@@ -1313,7 +1307,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Resources = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ItemResource.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Resources?.Overall, rhs.Resources?.Overall), Noggog.ExceptionExt.Combine(this.Resources?.Specific, rhs.Resources?.Specific));
                 ret.Value = this.Value.Combine(rhs.Value);
                 ret.Weight = this.Weight.Combine(rhs.Weight);
-                ret.FLAG = this.FLAG.Combine(rhs.FLAG);
+                ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.ShortName = this.ShortName.Combine(rhs.ShortName);
                 return ret;
             }
@@ -1355,7 +1349,7 @@ namespace Mutagen.Bethesda.Starfield
             public ItemResource.TranslationMask? Resources;
             public bool Value;
             public bool Weight;
-            public bool FLAG;
+            public bool Flags;
             public bool ShortName;
             #endregion
 
@@ -1372,7 +1366,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.FeaturedItemMessage = defaultOn;
                 this.Value = defaultOn;
                 this.Weight = defaultOn;
-                this.FLAG = defaultOn;
+                this.Flags = defaultOn;
                 this.ShortName = defaultOn;
             }
 
@@ -1399,7 +1393,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Resources == null ? DefaultOn : !Resources.GetCrystal().CopyNothing, Resources?.GetCrystal()));
                 ret.Add((Value, null));
                 ret.Add((Weight, null));
-                ret.Add((FLAG, null));
+                ret.Add((Flags, null));
                 ret.Add((ShortName, null));
             }
 
@@ -1610,7 +1604,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<ItemResource>? Resources { get; set; }
         new Int32 Value { get; set; }
         new Single Weight { get; set; }
-        new MemorySlice<Byte>? FLAG { get; set; }
+        new MiscItem.Flag? Flags { get; set; }
         new TranslatedString? ShortName { get; set; }
         #region Mutagen
         new MiscItem.MajorFlag MajorFlags { get; set; }
@@ -1699,7 +1693,7 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IItemResourceGetter>? Resources { get; }
         Int32 Value { get; }
         Single Weight { get; }
-        ReadOnlyMemorySlice<Byte>? FLAG { get; }
+        MiscItem.Flag? Flags { get; }
         ITranslatedStringGetter? ShortName { get; }
 
         #region Mutagen
@@ -1899,7 +1893,7 @@ namespace Mutagen.Bethesda.Starfield
         Resources = 22,
         Value = 23,
         Weight = 24,
-        FLAG = 25,
+        Flags = 25,
         ShortName = 26,
     }
     #endregion
@@ -2039,7 +2033,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Resources = null;
             item.Value = default(Int32);
             item.Weight = default(Single);
-            item.FLAG = default;
+            item.Flags = default;
             item.ShortName = default;
             base.Clear(item);
         }
@@ -2235,7 +2229,7 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.Value = item.Value == rhs.Value;
             ret.Weight = item.Weight.EqualsWithin(rhs.Weight);
-            ret.FLAG = MemorySliceExt.SequenceEqual(item.FLAG, rhs.FLAG);
+            ret.Flags = item.Flags == rhs.Flags;
             ret.ShortName = object.Equals(item.ShortName, rhs.ShortName);
             base.FillEqualsMask(item, rhs, ret, include);
         }
@@ -2400,10 +2394,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Weight, "Weight");
             }
-            if ((printMask?.FLAG ?? true)
-                && item.FLAG is {} FLAGItem)
+            if ((printMask?.Flags ?? true)
+                && item.Flags is {} FlagsItem)
             {
-                sb.AppendLine($"FLAG => {SpanExt.ToHexString(FLAGItem)}");
+                sb.AppendItem(FlagsItem, "Flags");
             }
             if ((printMask?.ShortName ?? true)
                 && item.ShortName is {} ShortNameItem)
@@ -2568,9 +2562,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Weight.EqualsWithin(rhs.Weight)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MiscItem_FieldIndex.FLAG) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MiscItem_FieldIndex.Flags) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.FLAG, rhs.FLAG)) return false;
+                if (lhs.Flags != rhs.Flags) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)MiscItem_FieldIndex.ShortName) ?? true))
             {
@@ -2652,9 +2646,9 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Resources);
             hash.Add(item.Value);
             hash.Add(item.Weight);
-            if (item.FLAG is {} FLAGItem)
+            if (item.Flags is {} Flagsitem)
             {
-                hash.Add(FLAGItem);
+                hash.Add(Flagsitem);
             }
             if (item.ShortName is {} ShortNameitem)
             {
@@ -3222,16 +3216,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Weight = rhs.Weight;
             }
-            if ((copyMask?.GetShouldTranslate((int)MiscItem_FieldIndex.FLAG) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MiscItem_FieldIndex.Flags) ?? true))
             {
-                if(rhs.FLAG is {} FLAGrhs)
-                {
-                    item.FLAG = FLAGrhs.ToArray();
-                }
-                else
-                {
-                    item.FLAG = default;
-                }
+                item.Flags = rhs.Flags;
             }
             if ((copyMask?.GetShouldTranslate((int)MiscItem_FieldIndex.ShortName) ?? true))
             {
@@ -3537,9 +3524,10 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     item: item.Weight);
             }
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.FLAG,
+            EnumBinaryTranslation<MiscItem.Flag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Flags,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.FLAG));
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -3755,8 +3743,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FLAG:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FLAG = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)MiscItem_FieldIndex.FLAG;
+                    item.Flags = EnumBinaryTranslation<MiscItem.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)MiscItem_FieldIndex.Flags;
                 }
                 case RecordTypeInts.NNAM:
                 {
@@ -3900,9 +3890,9 @@ namespace Mutagen.Bethesda.Starfield
         private bool _Weight_IsSet => _DATALocation.HasValue;
         public Single Weight => _Weight_IsSet ? _recordData.Slice(_WeightLocation, 4).Float() : default(Single);
         #endregion
-        #region FLAG
-        private int? _FLAGLocation;
-        public ReadOnlyMemorySlice<Byte>? FLAG => _FLAGLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FLAGLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Flags
+        private int? _FlagsLocation;
+        public MiscItem.Flag? Flags => EnumBinaryTranslation<MiscItem.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_FlagsLocation, _recordData, _package, 4);
         #endregion
         #region ShortName
         private int? _ShortNameLocation;
@@ -4113,8 +4103,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FLAG:
                 {
-                    _FLAGLocation = (stream.Position - offset);
-                    return (int)MiscItem_FieldIndex.FLAG;
+                    _FlagsLocation = (stream.Position - offset);
+                    return (int)MiscItem_FieldIndex.Flags;
                 }
                 case RecordTypeInts.NNAM:
                 {

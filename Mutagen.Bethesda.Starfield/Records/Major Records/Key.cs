@@ -13,7 +13,7 @@ partial class Key
     [Flags]
     public enum Flag
     {
-        AllowQuestItemCrafting,
-        NonInstancedKey,
+        AllowQuestItemCrafting = 0x01,
+        NonInstancedKey = 0x02,
     }
 }

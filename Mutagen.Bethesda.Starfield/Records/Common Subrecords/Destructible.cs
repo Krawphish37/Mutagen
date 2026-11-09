@@ -7,6 +7,7 @@ public partial class Destructible
     {
         VATSTargetable = 0x01,
         LargeActorDestroys = 0x02,
+        ResistAllExcept = 0x04,
     }
 
     [Flags]
@@ -17,5 +18,7 @@ public partial class Destructible
         Destroy = 0x04,
         IgnoreExternalDamage = 0x08,
         BecomesDynamic = 0x10,
+        ObjectCleared = 0x20,
+        FallbackSpawnAtBoundsCenter = 0x40,
     }
 }
