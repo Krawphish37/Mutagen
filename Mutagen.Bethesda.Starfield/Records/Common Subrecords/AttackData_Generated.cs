@@ -74,8 +74,8 @@ namespace Mutagen.Bethesda.Starfield
         #region AttackAngle
         public Single AttackAngle { get; set; } = default(Single);
         #endregion
-        #region StrikeAngle
-        public Single StrikeAngle { get; set; } = default(Single);
+        #region HitCone
+        public Single HitCone { get; set; } = default(Single);
         #endregion
         #region Stagger
         public Single Stagger { get; set; } = default(Single);
@@ -92,8 +92,8 @@ namespace Mutagen.Bethesda.Starfield
         #region StaggerOffset
         public Int32 StaggerOffset { get; set; } = default(Int32);
         #endregion
-        #region Unknown
-        public Int32 Unknown { get; set; } = default(Int32);
+        #region StrikeAngle
+        public Single StrikeAngle { get; set; } = default(Single);
         #endregion
 
         #region To String
@@ -139,13 +139,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.Spell = initialValue;
                 this.Flags = initialValue;
                 this.AttackAngle = initialValue;
-                this.StrikeAngle = initialValue;
+                this.HitCone = initialValue;
                 this.Stagger = initialValue;
                 this.Knockdown = initialValue;
                 this.RecoveryTime = initialValue;
                 this.ActionPointsMult = initialValue;
                 this.StaggerOffset = initialValue;
-                this.Unknown = initialValue;
+                this.StrikeAngle = initialValue;
             }
 
             public Mask(
@@ -154,26 +154,26 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Spell,
                 TItem Flags,
                 TItem AttackAngle,
-                TItem StrikeAngle,
+                TItem HitCone,
                 TItem Stagger,
                 TItem Knockdown,
                 TItem RecoveryTime,
                 TItem ActionPointsMult,
                 TItem StaggerOffset,
-                TItem Unknown)
+                TItem StrikeAngle)
             {
                 this.DamageMult = DamageMult;
                 this.Chance = Chance;
                 this.Spell = Spell;
                 this.Flags = Flags;
                 this.AttackAngle = AttackAngle;
-                this.StrikeAngle = StrikeAngle;
+                this.HitCone = HitCone;
                 this.Stagger = Stagger;
                 this.Knockdown = Knockdown;
                 this.RecoveryTime = RecoveryTime;
                 this.ActionPointsMult = ActionPointsMult;
                 this.StaggerOffset = StaggerOffset;
-                this.Unknown = Unknown;
+                this.StrikeAngle = StrikeAngle;
             }
 
             #pragma warning disable CS8618
@@ -190,13 +190,13 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Spell;
             public TItem Flags;
             public TItem AttackAngle;
-            public TItem StrikeAngle;
+            public TItem HitCone;
             public TItem Stagger;
             public TItem Knockdown;
             public TItem RecoveryTime;
             public TItem ActionPointsMult;
             public TItem StaggerOffset;
-            public TItem Unknown;
+            public TItem StrikeAngle;
             #endregion
 
             #region Equals
@@ -214,13 +214,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Spell, rhs.Spell)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.AttackAngle, rhs.AttackAngle)) return false;
-                if (!object.Equals(this.StrikeAngle, rhs.StrikeAngle)) return false;
+                if (!object.Equals(this.HitCone, rhs.HitCone)) return false;
                 if (!object.Equals(this.Stagger, rhs.Stagger)) return false;
                 if (!object.Equals(this.Knockdown, rhs.Knockdown)) return false;
                 if (!object.Equals(this.RecoveryTime, rhs.RecoveryTime)) return false;
                 if (!object.Equals(this.ActionPointsMult, rhs.ActionPointsMult)) return false;
                 if (!object.Equals(this.StaggerOffset, rhs.StaggerOffset)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.StrikeAngle, rhs.StrikeAngle)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -231,13 +231,13 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Spell);
                 hash.Add(this.Flags);
                 hash.Add(this.AttackAngle);
-                hash.Add(this.StrikeAngle);
+                hash.Add(this.HitCone);
                 hash.Add(this.Stagger);
                 hash.Add(this.Knockdown);
                 hash.Add(this.RecoveryTime);
                 hash.Add(this.ActionPointsMult);
                 hash.Add(this.StaggerOffset);
-                hash.Add(this.Unknown);
+                hash.Add(this.StrikeAngle);
                 return hash.ToHashCode();
             }
 
@@ -251,13 +251,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Spell)) return false;
                 if (!eval(this.Flags)) return false;
                 if (!eval(this.AttackAngle)) return false;
-                if (!eval(this.StrikeAngle)) return false;
+                if (!eval(this.HitCone)) return false;
                 if (!eval(this.Stagger)) return false;
                 if (!eval(this.Knockdown)) return false;
                 if (!eval(this.RecoveryTime)) return false;
                 if (!eval(this.ActionPointsMult)) return false;
                 if (!eval(this.StaggerOffset)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.StrikeAngle)) return false;
                 return true;
             }
             #endregion
@@ -270,13 +270,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Spell)) return true;
                 if (eval(this.Flags)) return true;
                 if (eval(this.AttackAngle)) return true;
-                if (eval(this.StrikeAngle)) return true;
+                if (eval(this.HitCone)) return true;
                 if (eval(this.Stagger)) return true;
                 if (eval(this.Knockdown)) return true;
                 if (eval(this.RecoveryTime)) return true;
                 if (eval(this.ActionPointsMult)) return true;
                 if (eval(this.StaggerOffset)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.StrikeAngle)) return true;
                 return false;
             }
             #endregion
@@ -296,13 +296,13 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Spell = eval(this.Spell);
                 obj.Flags = eval(this.Flags);
                 obj.AttackAngle = eval(this.AttackAngle);
-                obj.StrikeAngle = eval(this.StrikeAngle);
+                obj.HitCone = eval(this.HitCone);
                 obj.Stagger = eval(this.Stagger);
                 obj.Knockdown = eval(this.Knockdown);
                 obj.RecoveryTime = eval(this.RecoveryTime);
                 obj.ActionPointsMult = eval(this.ActionPointsMult);
                 obj.StaggerOffset = eval(this.StaggerOffset);
-                obj.Unknown = eval(this.Unknown);
+                obj.StrikeAngle = eval(this.StrikeAngle);
             }
             #endregion
 
@@ -341,9 +341,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(AttackAngle, "AttackAngle");
                     }
-                    if (printMask?.StrikeAngle ?? true)
+                    if (printMask?.HitCone ?? true)
                     {
-                        sb.AppendItem(StrikeAngle, "StrikeAngle");
+                        sb.AppendItem(HitCone, "HitCone");
                     }
                     if (printMask?.Stagger ?? true)
                     {
@@ -365,9 +365,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(StaggerOffset, "StaggerOffset");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.StrikeAngle ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(StrikeAngle, "StrikeAngle");
                     }
                 }
             }
@@ -398,13 +398,13 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Spell;
             public Exception? Flags;
             public Exception? AttackAngle;
-            public Exception? StrikeAngle;
+            public Exception? HitCone;
             public Exception? Stagger;
             public Exception? Knockdown;
             public Exception? RecoveryTime;
             public Exception? ActionPointsMult;
             public Exception? StaggerOffset;
-            public Exception? Unknown;
+            public Exception? StrikeAngle;
             #endregion
 
             #region IErrorMask
@@ -423,8 +423,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Flags;
                     case AttackData_FieldIndex.AttackAngle:
                         return AttackAngle;
-                    case AttackData_FieldIndex.StrikeAngle:
-                        return StrikeAngle;
+                    case AttackData_FieldIndex.HitCone:
+                        return HitCone;
                     case AttackData_FieldIndex.Stagger:
                         return Stagger;
                     case AttackData_FieldIndex.Knockdown:
@@ -435,8 +435,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ActionPointsMult;
                     case AttackData_FieldIndex.StaggerOffset:
                         return StaggerOffset;
-                    case AttackData_FieldIndex.Unknown:
-                        return Unknown;
+                    case AttackData_FieldIndex.StrikeAngle:
+                        return StrikeAngle;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -462,8 +462,8 @@ namespace Mutagen.Bethesda.Starfield
                     case AttackData_FieldIndex.AttackAngle:
                         this.AttackAngle = ex;
                         break;
-                    case AttackData_FieldIndex.StrikeAngle:
-                        this.StrikeAngle = ex;
+                    case AttackData_FieldIndex.HitCone:
+                        this.HitCone = ex;
                         break;
                     case AttackData_FieldIndex.Stagger:
                         this.Stagger = ex;
@@ -480,8 +480,8 @@ namespace Mutagen.Bethesda.Starfield
                     case AttackData_FieldIndex.StaggerOffset:
                         this.StaggerOffset = ex;
                         break;
-                    case AttackData_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case AttackData_FieldIndex.StrikeAngle:
+                        this.StrikeAngle = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -508,8 +508,8 @@ namespace Mutagen.Bethesda.Starfield
                     case AttackData_FieldIndex.AttackAngle:
                         this.AttackAngle = (Exception?)obj;
                         break;
-                    case AttackData_FieldIndex.StrikeAngle:
-                        this.StrikeAngle = (Exception?)obj;
+                    case AttackData_FieldIndex.HitCone:
+                        this.HitCone = (Exception?)obj;
                         break;
                     case AttackData_FieldIndex.Stagger:
                         this.Stagger = (Exception?)obj;
@@ -526,8 +526,8 @@ namespace Mutagen.Bethesda.Starfield
                     case AttackData_FieldIndex.StaggerOffset:
                         this.StaggerOffset = (Exception?)obj;
                         break;
-                    case AttackData_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case AttackData_FieldIndex.StrikeAngle:
+                        this.StrikeAngle = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -542,13 +542,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (Spell != null) return true;
                 if (Flags != null) return true;
                 if (AttackAngle != null) return true;
-                if (StrikeAngle != null) return true;
+                if (HitCone != null) return true;
                 if (Stagger != null) return true;
                 if (Knockdown != null) return true;
                 if (RecoveryTime != null) return true;
                 if (ActionPointsMult != null) return true;
                 if (StaggerOffset != null) return true;
-                if (Unknown != null) return true;
+                if (StrikeAngle != null) return true;
                 return false;
             }
             #endregion
@@ -590,7 +590,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(AttackAngle, "AttackAngle");
                 }
                 {
-                    sb.AppendItem(StrikeAngle, "StrikeAngle");
+                    sb.AppendItem(HitCone, "HitCone");
                 }
                 {
                     sb.AppendItem(Stagger, "Stagger");
@@ -608,7 +608,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(StaggerOffset, "StaggerOffset");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(StrikeAngle, "StrikeAngle");
                 }
             }
             #endregion
@@ -623,13 +623,13 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Spell = this.Spell.Combine(rhs.Spell);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.AttackAngle = this.AttackAngle.Combine(rhs.AttackAngle);
-                ret.StrikeAngle = this.StrikeAngle.Combine(rhs.StrikeAngle);
+                ret.HitCone = this.HitCone.Combine(rhs.HitCone);
                 ret.Stagger = this.Stagger.Combine(rhs.Stagger);
                 ret.Knockdown = this.Knockdown.Combine(rhs.Knockdown);
                 ret.RecoveryTime = this.RecoveryTime.Combine(rhs.RecoveryTime);
                 ret.ActionPointsMult = this.ActionPointsMult.Combine(rhs.ActionPointsMult);
                 ret.StaggerOffset = this.StaggerOffset.Combine(rhs.StaggerOffset);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.StrikeAngle = this.StrikeAngle.Combine(rhs.StrikeAngle);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -658,13 +658,13 @@ namespace Mutagen.Bethesda.Starfield
             public bool Spell;
             public bool Flags;
             public bool AttackAngle;
-            public bool StrikeAngle;
+            public bool HitCone;
             public bool Stagger;
             public bool Knockdown;
             public bool RecoveryTime;
             public bool ActionPointsMult;
             public bool StaggerOffset;
-            public bool Unknown;
+            public bool StrikeAngle;
             #endregion
 
             #region Ctors
@@ -679,13 +679,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.Spell = defaultOn;
                 this.Flags = defaultOn;
                 this.AttackAngle = defaultOn;
-                this.StrikeAngle = defaultOn;
+                this.HitCone = defaultOn;
                 this.Stagger = defaultOn;
                 this.Knockdown = defaultOn;
                 this.RecoveryTime = defaultOn;
                 this.ActionPointsMult = defaultOn;
                 this.StaggerOffset = defaultOn;
-                this.Unknown = defaultOn;
+                this.StrikeAngle = defaultOn;
             }
 
             #endregion
@@ -706,13 +706,13 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Spell, null));
                 ret.Add((Flags, null));
                 ret.Add((AttackAngle, null));
-                ret.Add((StrikeAngle, null));
+                ret.Add((HitCone, null));
                 ret.Add((Stagger, null));
                 ret.Add((Knockdown, null));
                 ret.Add((RecoveryTime, null));
                 ret.Add((ActionPointsMult, null));
                 ret.Add((StaggerOffset, null));
-                ret.Add((Unknown, null));
+                ret.Add((StrikeAngle, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -796,13 +796,13 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<ISpellGetter> Spell { get; set; }
         new AttackData.Flag Flags { get; set; }
         new Single AttackAngle { get; set; }
-        new Single StrikeAngle { get; set; }
+        new Single HitCone { get; set; }
         new Single Stagger { get; set; }
         new Single Knockdown { get; set; }
         new Single RecoveryTime { get; set; }
         new Single ActionPointsMult { get; set; }
         new Int32 StaggerOffset { get; set; }
-        new Int32 Unknown { get; set; }
+        new Single StrikeAngle { get; set; }
     }
 
     public partial interface IAttackDataGetter :
@@ -823,13 +823,13 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<ISpellGetter> Spell { get; }
         AttackData.Flag Flags { get; }
         Single AttackAngle { get; }
-        Single StrikeAngle { get; }
+        Single HitCone { get; }
         Single Stagger { get; }
         Single Knockdown { get; }
         Single RecoveryTime { get; }
         Single ActionPointsMult { get; }
         Int32 StaggerOffset { get; }
-        Int32 Unknown { get; }
+        Single StrikeAngle { get; }
 
     }
 
@@ -1004,13 +1004,13 @@ namespace Mutagen.Bethesda.Starfield
         Spell = 2,
         Flags = 3,
         AttackAngle = 4,
-        StrikeAngle = 5,
+        HitCone = 5,
         Stagger = 6,
         Knockdown = 7,
         RecoveryTime = 8,
         ActionPointsMult = 9,
         StaggerOffset = 10,
-        Unknown = 11,
+        StrikeAngle = 11,
     }
     #endregion
 
@@ -1101,13 +1101,13 @@ namespace Mutagen.Bethesda.Starfield
             item.Spell.Clear();
             item.Flags = default(AttackData.Flag);
             item.AttackAngle = default(Single);
-            item.StrikeAngle = default(Single);
+            item.HitCone = default(Single);
             item.Stagger = default(Single);
             item.Knockdown = default(Single);
             item.RecoveryTime = default(Single);
             item.ActionPointsMult = default(Single);
             item.StaggerOffset = default(Int32);
-            item.Unknown = default(Int32);
+            item.StrikeAngle = default(Single);
         }
         
         #region Mutagen
@@ -1167,13 +1167,13 @@ namespace Mutagen.Bethesda.Starfield
             ret.Spell = item.Spell.Equals(rhs.Spell);
             ret.Flags = item.Flags == rhs.Flags;
             ret.AttackAngle = item.AttackAngle.EqualsWithin(rhs.AttackAngle);
-            ret.StrikeAngle = item.StrikeAngle.EqualsWithin(rhs.StrikeAngle);
+            ret.HitCone = item.HitCone.EqualsWithin(rhs.HitCone);
             ret.Stagger = item.Stagger.EqualsWithin(rhs.Stagger);
             ret.Knockdown = item.Knockdown.EqualsWithin(rhs.Knockdown);
             ret.RecoveryTime = item.RecoveryTime.EqualsWithin(rhs.RecoveryTime);
             ret.ActionPointsMult = item.ActionPointsMult.EqualsWithin(rhs.ActionPointsMult);
             ret.StaggerOffset = item.StaggerOffset == rhs.StaggerOffset;
-            ret.Unknown = item.Unknown == rhs.Unknown;
+            ret.StrikeAngle = item.StrikeAngle.EqualsWithin(rhs.StrikeAngle);
         }
         
         public string Print(
@@ -1238,9 +1238,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.AttackAngle, "AttackAngle");
             }
-            if (printMask?.StrikeAngle ?? true)
+            if (printMask?.HitCone ?? true)
             {
-                sb.AppendItem(item.StrikeAngle, "StrikeAngle");
+                sb.AppendItem(item.HitCone, "HitCone");
             }
             if (printMask?.Stagger ?? true)
             {
@@ -1262,9 +1262,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.StaggerOffset, "StaggerOffset");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.StrikeAngle ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.StrikeAngle, "StrikeAngle");
             }
         }
         
@@ -1295,9 +1295,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.AttackAngle.EqualsWithin(rhs.AttackAngle)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)AttackData_FieldIndex.StrikeAngle) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)AttackData_FieldIndex.HitCone) ?? true))
             {
-                if (!lhs.StrikeAngle.EqualsWithin(rhs.StrikeAngle)) return false;
+                if (!lhs.HitCone.EqualsWithin(rhs.HitCone)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)AttackData_FieldIndex.Stagger) ?? true))
             {
@@ -1319,9 +1319,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.StaggerOffset != rhs.StaggerOffset) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)AttackData_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)AttackData_FieldIndex.StrikeAngle) ?? true))
             {
-                if (lhs.Unknown != rhs.Unknown) return false;
+                if (!lhs.StrikeAngle.EqualsWithin(rhs.StrikeAngle)) return false;
             }
             return true;
         }
@@ -1334,13 +1334,13 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Spell);
             hash.Add(item.Flags);
             hash.Add(item.AttackAngle);
-            hash.Add(item.StrikeAngle);
+            hash.Add(item.HitCone);
             hash.Add(item.Stagger);
             hash.Add(item.Knockdown);
             hash.Add(item.RecoveryTime);
             hash.Add(item.ActionPointsMult);
             hash.Add(item.StaggerOffset);
-            hash.Add(item.Unknown);
+            hash.Add(item.StrikeAngle);
             return hash.ToHashCode();
         }
         
@@ -1394,9 +1394,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.AttackAngle = rhs.AttackAngle;
             }
-            if ((copyMask?.GetShouldTranslate((int)AttackData_FieldIndex.StrikeAngle) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)AttackData_FieldIndex.HitCone) ?? true))
             {
-                item.StrikeAngle = rhs.StrikeAngle;
+                item.HitCone = rhs.HitCone;
             }
             if ((copyMask?.GetShouldTranslate((int)AttackData_FieldIndex.Stagger) ?? true))
             {
@@ -1418,9 +1418,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.StaggerOffset = rhs.StaggerOffset;
             }
-            if ((copyMask?.GetShouldTranslate((int)AttackData_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)AttackData_FieldIndex.StrikeAngle) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.StrikeAngle = rhs.StrikeAngle;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1548,7 +1548,7 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.AttackAngle);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.StrikeAngle);
+                item: item.HitCone);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.Stagger);
@@ -1562,7 +1562,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.ActionPointsMult);
             writer.Write(item.StaggerOffset);
-            writer.Write(item.Unknown);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.StrikeAngle);
         }
 
         public void Write(
@@ -1610,13 +1612,13 @@ namespace Mutagen.Bethesda.Starfield
                 reader: frame,
                 length: 4);
             item.AttackAngle = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.StrikeAngle = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.HitCone = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Stagger = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Knockdown = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.RecoveryTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.ActionPointsMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.StaggerOffset = frame.ReadInt32();
-            item.Unknown = frame.ReadInt32();
+            item.StrikeAngle = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
         }
 
     }
@@ -1688,13 +1690,13 @@ namespace Mutagen.Bethesda.Starfield
         public IFormLinkGetter<ISpellGetter> Spell => FormLinkBinaryTranslation.Instance.OverlayFactory<ISpellGetter>(_package, _structData.Span.Slice(0x8, 0x4));
         public AttackData.Flag Flags => (AttackData.Flag)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0xC, 0x4));
         public Single AttackAngle => _structData.Slice(0x10, 0x4).Float();
-        public Single StrikeAngle => _structData.Slice(0x14, 0x4).Float();
+        public Single HitCone => _structData.Slice(0x14, 0x4).Float();
         public Single Stagger => _structData.Slice(0x18, 0x4).Float();
         public Single Knockdown => _structData.Slice(0x1C, 0x4).Float();
         public Single RecoveryTime => _structData.Slice(0x20, 0x4).Float();
         public Single ActionPointsMult => _structData.Slice(0x24, 0x4).Float();
         public Int32 StaggerOffset => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x28, 0x4));
-        public Int32 Unknown => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x2C, 0x4));
+        public Single StrikeAngle => _structData.Slice(0x2C, 0x4).Float();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
