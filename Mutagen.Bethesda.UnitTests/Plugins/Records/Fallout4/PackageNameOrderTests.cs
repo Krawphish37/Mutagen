@@ -13,8 +13,9 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Fallout4;
 
 // C117 for Fallout 4: the UNAM/BNAM/PNAM list after the procedure tree (names and flags of the data inputs) was written
 // sorted by index, but records hold it in their own order. DN121_TravelForgeSceneJakeFacePrisoner holds 01 03 05 07 04
-// (the 5 differing packages of Fallout4.esm after C97 were all this). Each entry now keeps its place in that list
-// (NameListPosition) for the writer. Read whole with both readers and written back byte for byte.
+// (the 5 differing packages of Fallout4.esm after C97 were all this). As for Starfield (C82), the package keeps the read
+// order (internal ProcedureTreeDataOrder, kept by copies, not compared). Read whole with both readers and written back
+// byte for byte.
 public class PackageNameOrderTests
 {
     private static readonly ModKey TestModKey = new("Test", ModType.Plugin);
@@ -40,6 +41,20 @@ public class PackageNameOrderTests
         return record.ToArray();
     }
 
+    private static byte[] Write(IPackageGetter pack)
+    {
+        var stream = new MemoryStream();
+        using (var writer = new MutagenWriter(stream, new WritingBundle(GameConstants.Fallout4)
+               {
+                   MasterReferences = Masters,
+                   SeparatedMasterPackage = SeparatedMasterPackage.NotSeparate(Masters),
+               }, dispose: false))
+        {
+            pack.WriteToBinary(writer);
+        }
+        return GameConstants.Fallout4.MajorRecord(stream.ToArray()).Content.ToArray();
+    }
+
     [Fact]
     public void NameList_KeepsRecordOrder()
     {
@@ -51,18 +66,34 @@ public class PackageNameOrderTests
         };
         foreach (var pack in all)
         {
-            pack.Data[0x07].NameListPosition.ShouldBe(3);
-            pack.Data[0x04].NameListPosition.ShouldBe(4);
-            var stream = new MemoryStream();
-            using (var writer = new MutagenWriter(stream, new WritingBundle(GameConstants.Fallout4)
-                   {
-                       MasterReferences = Masters,
-                       SeparatedMasterPackage = SeparatedMasterPackage.NotSeparate(Masters),
-                   }, dispose: false))
-            {
-                pack.WriteToBinary(writer);
-            }
-            GameConstants.Fallout4.MajorRecord(stream.ToArray()).Content.ToArray().ShouldBe(Convert.FromHexString(JakeFacePrisoner));
+            Write(pack).ShouldBe(Convert.FromHexString(JakeFacePrisoner));
+            Write(pack.DeepCopy()).ShouldBe(Convert.FromHexString(JakeFacePrisoner));
         }
+    }
+
+    [Fact]
+    public void NameList_OrderIsNotData()
+    {
+        var read = Package.CreateFromBinary(new MutagenFrame(new MutagenMemoryReadStream(Record(), Meta())));
+        read.ProcedureTreeDataOrder.ShouldBe(new sbyte[] { 0x01, 0x03, 0x05, 0x07, 0x04 });
+        // Without the read order the list is written by index: other bytes, same data
+        var copy = read.DeepCopy();
+        copy.ProcedureTreeDataOrder = null;
+        var sorted = Write(copy);
+        sorted.ShouldNotBe(Convert.FromHexString(JakeFacePrisoner));
+        var body = sorted;
+        var record = new MemoryStream();
+        record.Write(Encoding.ASCII.GetBytes("PACK"));
+        record.Write(BitConverter.GetBytes(body.Length));
+        record.Write(BitConverter.GetBytes(0));
+        record.Write(BitConverter.GetBytes(0x800));
+        record.Write(BitConverter.GetBytes(0));
+        record.Write(BitConverter.GetBytes((ushort)131));
+        record.Write(BitConverter.GetBytes((ushort)0));
+        record.Write(body);
+        var readSorted = Package.CreateFromBinary(new MutagenFrame(new MutagenMemoryReadStream(record.ToArray(), Meta())));
+        readSorted.Equals(read).ShouldBeTrue();
+        read.Equals(readSorted).ShouldBeTrue();
+        readSorted.GetHashCode().ShouldBe(read.GetHashCode());
     }
 }

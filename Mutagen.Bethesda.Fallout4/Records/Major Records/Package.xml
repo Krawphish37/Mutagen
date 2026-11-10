@@ -75,8 +75,6 @@
     <Fields>
       <String name="Name" recordType="BNAM" binary="NoGeneration" nullable="True" />
       <Enum name="Flags" enumName="APackageData.Flag" recordType="PNAM" nullable="True" binary="NoGeneration" />
-      <!-- Place in the record's name/flags list (the UNAMs after the procedure tree), which need not be by index; the writer keeps it -->
-      <Int32 name="NameListPosition" nullable="True" binary="NoGeneration" />
     </Fields>
   </Object>
   <Object name="PackageDataBool" objType="Subrecord" baseClass="APackageData">

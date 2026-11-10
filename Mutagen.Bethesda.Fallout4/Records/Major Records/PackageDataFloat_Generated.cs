@@ -104,12 +104,10 @@ namespace Mutagen.Bethesda.Fallout4
             public Mask(
                 TItem Name,
                 TItem Flags,
-                TItem NameListPosition,
                 TItem Data)
             : base(
                 Name: Name,
-                Flags: Flags,
-                NameListPosition: NameListPosition)
+                Flags: Flags)
             {
                 this.Data = Data;
             }
@@ -570,8 +568,7 @@ namespace Mutagen.Bethesda.Fallout4
     {
         Name = 0,
         Flags = 1,
-        NameListPosition = 2,
-        Data = 3,
+        Data = 2,
     }
     #endregion
 
@@ -584,7 +581,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 4;
+        public const ushort FieldCount = 3;
 
         public static readonly Type MaskType = typeof(PackageDataFloat.Mask<>);
 
@@ -790,8 +787,6 @@ namespace Mutagen.Bethesda.Fallout4
                 case APackageData_FieldIndex.Name:
                     return (PackageDataFloat_FieldIndex)((int)index);
                 case APackageData_FieldIndex.Flags:
-                    return (PackageDataFloat_FieldIndex)((int)index);
-                case APackageData_FieldIndex.NameListPosition:
                     return (PackageDataFloat_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
@@ -1000,9 +995,6 @@ namespace Mutagen.Bethesda.Fallout4
             IPackageDataFloatGetter item,
             MutagenWriter writer)
         {
-            APackageDataBinaryWriteTranslation.WriteEmbedded(
-                item: item,
-                writer: writer);
         }
 
         public void Write(
@@ -1051,9 +1043,6 @@ namespace Mutagen.Bethesda.Fallout4
             IPackageDataFloat item,
             MutagenFrame frame)
         {
-            APackageDataBinaryCreateTranslation.FillBinaryStructs(
-                item: item,
-                frame: frame);
         }
 
     }
