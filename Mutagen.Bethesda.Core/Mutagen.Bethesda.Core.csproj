@@ -812,6 +812,7 @@
         <Compile Include="Plugins\Binary\Streams\MutagenWriter.cs" />
         <Compile Include="Plugins\Binary\Translations\RecordTypeBinaryTranslation.cs" />
         <Compile Include="Plugins\Binary\Translations\StringBinaryTranslation.cs" />
+        <Compile Include="Plugins\Binary\Translations\SubrecordOrder.cs" />
         <Compile Include="Plugins\Binary\Translations\PluginUtilityTranslation.cs" />
         <Compile Include="Strings\StringsLookupOverlay.cs" />
         <Compile Include="Plugins\Records\MajorRecord_Generated.cs">

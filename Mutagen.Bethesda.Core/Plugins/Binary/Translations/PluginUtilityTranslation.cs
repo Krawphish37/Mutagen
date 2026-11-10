@@ -108,6 +108,10 @@ internal static class PluginUtilityTranslation
 
             Dictionary<RecordType, int>? recordParseCount = null;
             var lastParsed = new PreviousParse();
+            // To note records whose subrecords come in an order Mutagen does not write (see SubrecordOrder)
+            var contentStart = targetFrame.Position;
+            var highestIndex = -1;
+            var outOfOrder = false;
             while (!targetFrame.Complete)
             {
                 var subMeta = targetFrame.GetSubrecordHeader();
@@ -137,6 +141,17 @@ internal static class PluginUtilityTranslation
                 }
 
                 if (!parsed.KeepParsing) break;
+                if (parsed.ParsedIndex is { } parsedIndex)
+                {
+                    if (parsedIndex < highestIndex)
+                    {
+                        outOfOrder = true;
+                    }
+                    else
+                    {
+                        highestIndex = parsedIndex;
+                    }
+                }
                 if (parsed.DuplicateParseMarker != null)
                 {
                     if (recordParseCount == null)
@@ -154,6 +169,15 @@ internal static class PluginUtilityTranslation
                 }
 
                 lastParsed = parsed;
+            }
+
+            if (outOfOrder && frame.MetaData.Constants.KeepSubrecordOrder)
+            {
+                targetFrame.Position = contentStart;
+                SubrecordOrder.Remember(
+                    record,
+                    targetFrame.ReadSpan(checked((int)(targetFrame.FinalLocation - contentStart))),
+                    frame.MetaData.Constants);
             }
 
             frame.SetToFinalPosition();
@@ -620,10 +644,32 @@ internal static class PluginUtilityTranslation
                 writer.MetaData.FormVersion = item.FormVersion;
                 using (CompressionExport.Compression(item.IsCompressed, writer, out var writerToUse))
                 {
-                    writeRecordTypes(item, writerToUse, translationParams);
-                    if (endMarker != null)
+                    if (writer.MetaData.Constants.KeepSubrecordOrder
+                        && SubrecordOrder.TryGet(item, writer.MetaData.Constants, out var order))
                     {
-                        using (HeaderExport.Subrecord(writerToUse, endMarker.Value)) {}
+                        // Written as usual into a buffer, then in the order the record was read in, if it is unchanged
+                        using var buffer = new MemoryStream();
+                        using (var bufferWriter = new MutagenWriter(buffer, writerToUse.MetaData, dispose: false))
+                        {
+                            writeRecordTypes(item, bufferWriter, translationParams);
+                            if (endMarker != null)
+                            {
+                                using (HeaderExport.Subrecord(bufferWriter, endMarker.Value)) {}
+                            }
+                        }
+                        var written = buffer.GetBuffer().AsSpan(0, checked((int)buffer.Length));
+                        if (!SubrecordOrder.TryWriteInOrder(written, order, writerToUse))
+                        {
+                            writerToUse.Write(written);
+                        }
+                    }
+                    else
+                    {
+                        writeRecordTypes(item, writerToUse, translationParams);
+                        if (endMarker != null)
+                        {
+                            using (HeaderExport.Subrecord(writerToUse, endMarker.Value)) {}
+                        }
                     }
                 }
                 writer.MetaData.FormVersion = null;
