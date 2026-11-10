@@ -201,6 +201,16 @@ internal class StarfieldInheritingInterfaceMapping : IInterfaceMapping
                 Setter: typeof(IPlacedTrap),
                 Getter: typeof(IPlacedTrapGetter)));
         dict[typeof(IPlacedTrapGetter)] = dict[typeof(IPlacedTrap)] with { Setter = false };
+        dict[typeof(ISpaceshipModification)] = new InterfaceMappingResult(
+            true,
+            new ILoquiRegistration[]
+            {
+                AObjectModification_Registration.Instance,
+            },
+            new InterfaceMappingTypes(
+                Setter: typeof(ISpaceshipModification),
+                Getter: typeof(ISpaceshipModificationGetter)));
+        dict[typeof(ISpaceshipModificationGetter)] = dict[typeof(ISpaceshipModification)] with { Setter = false };
         dict[typeof(IUnknownObjectModification)] = new InterfaceMappingResult(
             true,
             new ILoquiRegistration[]

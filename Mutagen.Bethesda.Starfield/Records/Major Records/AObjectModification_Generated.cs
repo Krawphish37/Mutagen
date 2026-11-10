@@ -46,7 +46,7 @@ namespace Mutagen.Bethesda.Starfield
 {
     #region Class
     /// <summary>
-    /// Implemented by: [ArmorModification, ContainerModification, FloraModification, NpcModification, ObjectModification, UnknownObjectModification, WeaponModification]
+    /// Implemented by: [ArmorModification, ContainerModification, FloraModification, NpcModification, ObjectModification, SpaceshipModification, UnknownObjectModification, WeaponModification]
     /// </summary>
     public abstract partial class AObjectModification :
         StarfieldMajorRecord,
@@ -1471,7 +1471,7 @@ namespace Mutagen.Bethesda.Starfield
 
     #region Interface
     /// <summary>
-    /// Implemented by: [ArmorModification, ContainerModification, FloraModification, NpcModification, ObjectModification, UnknownObjectModification, WeaponModification]
+    /// Implemented by: [ArmorModification, ContainerModification, FloraModification, NpcModification, ObjectModification, SpaceshipModification, UnknownObjectModification, WeaponModification]
     /// </summary>
     public partial interface IAObjectModification :
         IAObjectModificationGetter,
@@ -1531,7 +1531,7 @@ namespace Mutagen.Bethesda.Starfield
     }
 
     /// <summary>
-    /// Implemented by: [ArmorModification, ContainerModification, FloraModification, NpcModification, ObjectModification, UnknownObjectModification, WeaponModification]
+    /// Implemented by: [ArmorModification, ContainerModification, FloraModification, NpcModification, ObjectModification, SpaceshipModification, UnknownObjectModification, WeaponModification]
     /// </summary>
     public partial interface IAObjectModificationGetter :
         IStarfieldMajorRecordGetter,
