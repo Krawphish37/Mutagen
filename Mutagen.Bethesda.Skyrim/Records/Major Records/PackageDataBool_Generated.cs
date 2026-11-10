@@ -57,6 +57,11 @@ namespace Mutagen.Bethesda.Skyrim
         #region Data
         public Boolean Data { get; set; } = default(Boolean);
         #endregion
+        #region RawValue
+        public Byte? RawValue { get; set; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        Byte? IPackageDataBoolGetter.RawValue => this.RawValue;
+        #endregion
 
         #region To String
 
@@ -99,17 +104,20 @@ namespace Mutagen.Bethesda.Skyrim
             : base(initialValue)
             {
                 this.Data = initialValue;
+                this.RawValue = initialValue;
             }
 
             public Mask(
                 TItem Name,
                 TItem Flags,
-                TItem Data)
+                TItem Data,
+                TItem RawValue)
             : base(
                 Name: Name,
                 Flags: Flags)
             {
                 this.Data = Data;
+                this.RawValue = RawValue;
             }
 
             #pragma warning disable CS8618
@@ -122,6 +130,7 @@ namespace Mutagen.Bethesda.Skyrim
 
             #region Members
             public TItem Data;
+            public TItem RawValue;
             #endregion
 
             #region Equals
@@ -136,12 +145,14 @@ namespace Mutagen.Bethesda.Skyrim
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.Data, rhs.Data)) return false;
+                if (!object.Equals(this.RawValue, rhs.RawValue)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.Data);
+                hash.Add(this.RawValue);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -153,6 +164,7 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 if (!base.All(eval)) return false;
                 if (!eval(this.Data)) return false;
+                if (!eval(this.RawValue)) return false;
                 return true;
             }
             #endregion
@@ -162,6 +174,7 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 if (base.Any(eval)) return true;
                 if (eval(this.Data)) return true;
+                if (eval(this.RawValue)) return true;
                 return false;
             }
             #endregion
@@ -178,6 +191,7 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 base.Translate_InternalFill(obj, eval);
                 obj.Data = eval(this.Data);
+                obj.RawValue = eval(this.RawValue);
             }
             #endregion
 
@@ -200,6 +214,10 @@ namespace Mutagen.Bethesda.Skyrim
                     {
                         sb.AppendItem(Data, "Data");
                     }
+                    if (printMask?.RawValue ?? true)
+                    {
+                        sb.AppendItem(RawValue, "RawValue");
+                    }
                 }
             }
             #endregion
@@ -212,6 +230,7 @@ namespace Mutagen.Bethesda.Skyrim
         {
             #region Members
             public Exception? Data;
+            public Exception? RawValue;
             #endregion
 
             #region IErrorMask
@@ -222,6 +241,8 @@ namespace Mutagen.Bethesda.Skyrim
                 {
                     case PackageDataBool_FieldIndex.Data:
                         return Data;
+                    case PackageDataBool_FieldIndex.RawValue:
+                        return RawValue;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -234,6 +255,9 @@ namespace Mutagen.Bethesda.Skyrim
                 {
                     case PackageDataBool_FieldIndex.Data:
                         this.Data = ex;
+                        break;
+                    case PackageDataBool_FieldIndex.RawValue:
+                        this.RawValue = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -249,6 +273,9 @@ namespace Mutagen.Bethesda.Skyrim
                     case PackageDataBool_FieldIndex.Data:
                         this.Data = (Exception?)obj;
                         break;
+                    case PackageDataBool_FieldIndex.RawValue:
+                        this.RawValue = (Exception?)obj;
+                        break;
                     default:
                         base.SetNthMask(index, obj);
                         break;
@@ -259,6 +286,7 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 if (Overall != null) return true;
                 if (Data != null) return true;
+                if (RawValue != null) return true;
                 return false;
             }
             #endregion
@@ -288,6 +316,9 @@ namespace Mutagen.Bethesda.Skyrim
                 {
                     sb.AppendItem(Data, "Data");
                 }
+                {
+                    sb.AppendItem(RawValue, "RawValue");
+                }
             }
             #endregion
 
@@ -297,6 +328,7 @@ namespace Mutagen.Bethesda.Skyrim
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Data = this.Data.Combine(rhs.Data);
+                ret.RawValue = this.RawValue.Combine(rhs.RawValue);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -320,6 +352,7 @@ namespace Mutagen.Bethesda.Skyrim
         {
             #region Members
             public bool Data;
+            public bool RawValue;
             #endregion
 
             #region Ctors
@@ -329,6 +362,7 @@ namespace Mutagen.Bethesda.Skyrim
                 : base(defaultOn, onOverall)
             {
                 this.Data = defaultOn;
+                this.RawValue = defaultOn;
             }
 
             #endregion
@@ -337,6 +371,7 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 base.GetCrystal(ret);
                 ret.Add((Data, null));
+                ret.Add((RawValue, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -411,6 +446,7 @@ namespace Mutagen.Bethesda.Skyrim
         IPackageDataBoolGetter
     {
         new Boolean Data { get; set; }
+        new Byte? RawValue { get; set; }
     }
 
     public partial interface IPackageDataBoolGetter :
@@ -422,6 +458,7 @@ namespace Mutagen.Bethesda.Skyrim
     {
         static new ILoquiRegistration StaticRegistration => PackageDataBool_Registration.Instance;
         Boolean Data { get; }
+        Byte? RawValue { get; }
 
     }
 
@@ -569,6 +606,7 @@ namespace Mutagen.Bethesda.Skyrim
         Name = 0,
         Flags = 1,
         Data = 2,
+        RawValue = 3,
     }
     #endregion
 
@@ -579,9 +617,9 @@ namespace Mutagen.Bethesda.Skyrim
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Skyrim.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 1;
+        public const ushort AdditionalFieldCount = 2;
 
-        public const ushort FieldCount = 3;
+        public const ushort FieldCount = 4;
 
         public static readonly Type MaskType = typeof(PackageDataBool.Mask<>);
 
@@ -656,6 +694,7 @@ namespace Mutagen.Bethesda.Skyrim
         {
             ClearPartial();
             item.Data = default(Boolean);
+            item.RawValue = default;
             base.Clear(item);
         }
         
@@ -725,6 +764,7 @@ namespace Mutagen.Bethesda.Skyrim
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Data = item.Data == rhs.Data;
+            ret.RawValue = item.RawValue == rhs.RawValue;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -778,6 +818,11 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 sb.AppendItem(item.Data, "Data");
             }
+            if ((printMask?.RawValue ?? true)
+                && item.RawValue is {} RawValueItem)
+            {
+                sb.AppendItem(RawValueItem, "RawValue");
+            }
         }
         
         public static PackageDataBool_FieldIndex ConvertFieldIndex(APackageData_FieldIndex index)
@@ -805,6 +850,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 if (lhs.Data != rhs.Data) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)PackageDataBool_FieldIndex.RawValue) ?? true))
+            {
+                if (lhs.RawValue != rhs.RawValue) return false;
+            }
             return true;
         }
         
@@ -823,6 +872,10 @@ namespace Mutagen.Bethesda.Skyrim
         {
             var hash = new HashCode();
             hash.Add(item.Data);
+            if (item.RawValue is {} RawValueitem)
+            {
+                hash.Add(RawValueitem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -874,6 +927,10 @@ namespace Mutagen.Bethesda.Skyrim
             if ((copyMask?.GetShouldTranslate((int)PackageDataBool_FieldIndex.Data) ?? true))
             {
                 item.Data = rhs.Data;
+            }
+            if ((copyMask?.GetShouldTranslate((int)PackageDataBool_FieldIndex.RawValue) ?? true))
+            {
+                item.RawValue = rhs.RawValue;
             }
             DeepCopyInCustom(
                 item: item,

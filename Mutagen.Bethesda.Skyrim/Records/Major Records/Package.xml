@@ -66,6 +66,8 @@
   <Object name="PackageDataBool" objType="Subrecord" baseClass="APackageData">
     <Fields>
       <Bool name="Data" binary="NoGeneration" />
+      <!-- The stored byte when it is not 0 or 1 (it reads as true): written back instead of 1 while Data stays true. Skyrim.esm has 150 packages with such bytes (e.g. 0x62). -->
+      <UInt8 name="RawValue" binary="NoGeneration" nullable="True" />
     </Fields>
   </Object>
   <Object name="PackageDataInt" objType="Subrecord" baseClass="APackageData">
