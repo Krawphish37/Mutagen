@@ -11,6 +11,10 @@ namespace Mutagen.Bethesda.Starfield;
 
 partial class Package
 {
+    // The order of the names/flags after the procedure tree (UNAM BNAM PNAM) as read; not part of the record's data
+    // (not compared or copied). Starfield.esm mostly holds them by index, but not always.
+    internal IReadOnlyList<sbyte>? ProcedureTreeDataOrder { get; set; }
+
     public enum Types
     {
         Package = 18,
@@ -413,11 +417,17 @@ partial class PackageBinaryCreateTranslation
                     listSubItem = PackageBranch.CreateFromBinary(r);
                     return true;
                 }));
-        AbsorbPackageData(frame.Reader, item.Data);
+        var order = AbsorbPackageData(frame.Reader, item.Data);
+        if (item is Package package)
+        {
+            package.ProcedureTreeDataOrder = order;
+        }
     }
 
-    public static void AbsorbPackageData(IMutagenReadStream stream, IDictionary<sbyte, APackageData> dict)
+    /// <returns>The indexes in the order they were read</returns>
+    public static List<sbyte> AbsorbPackageData(IMutagenReadStream stream, IDictionary<sbyte, APackageData> dict)
     {
+        var order = new List<sbyte>();
         APackageData? lastPackage = null;
         while (stream.TryGetSubrecord(out var subRecord))
         {
@@ -425,6 +435,7 @@ partial class PackageBinaryCreateTranslation
             {
                 case RecordTypeInts.UNAM:
                     lastPackage = dict.GetOrAdd((sbyte)subRecord.Content[0], () => new APackageData());
+                    order.Add((sbyte)subRecord.Content[0]);
                     break;
                 case RecordTypeInts.BNAM:
                     lastPackage!.Name = BinaryStringUtility.ProcessWholeToZString(subRecord.Content, stream.MetaData.Encodings.NonTranslated);
@@ -433,10 +444,11 @@ partial class PackageBinaryCreateTranslation
                     lastPackage!.Flags = (APackageData.Flag)BinaryPrimitives.ReadInt32LittleEndian(subRecord.Content);
                     break;
                 default:
-                    return;
+                    return order;
             }
             stream.Position += subRecord.TotalLength;
         }
+        return order;
     }
 }
 
@@ -572,15 +584,32 @@ partial class PackageBinaryWriteTranslation
         }
     
         var data = item.Data;
-        // By index read as unsigned, as Starfield.esm holds them (0x00..0x7F, then 0x80..0xFF)
-        foreach (var val in data.OrderBy(k => (byte)k.Key))
+        // By index read as unsigned, as Starfield.esm mostly holds them (0x00..0x7F, then 0x80..0xFF),
+        // or in the order they were read when the record still has the same indexes here
+        var keys = data.Where(kv => kv.Value.Name != null || kv.Value.Flags != null)
+            .Select(kv => kv.Key)
+            .OrderBy(k => (byte)k)
+            .ToList();
+        var readOrder = item switch
         {
-            var name = val.Value.Name;
-            var flags = val.Value.Flags;
-            if (name == null && flags == null) continue;
+            Package package => package.ProcedureTreeDataOrder,
+            PackageBinaryOverlay overlay => overlay.ProcedureTreeDataOrder,
+            _ => null
+        };
+        if (readOrder != null
+            && readOrder.Count == keys.Count
+            && readOrder.Distinct().Count() == keys.Count
+            && readOrder.All(keys.Contains))
+        {
+            keys = readOrder.ToList();
+        }
+        foreach (var key in keys)
+        {
+            var name = data[key].Name;
+            var flags = data[key].Flags;
             using (HeaderExport.Subrecord(writer, RecordTypes.UNAM))
             {
-                writer.Write(val.Key);
+                writer.Write(key);
             }
             if (name != null)
             {
@@ -602,6 +631,8 @@ partial class PackageBinaryWriteTranslation
 
 partial class PackageBinaryOverlay
 {
+    internal IReadOnlyList<sbyte>? ProcedureTreeDataOrder { get; private set; }
+
     public IReadOnlyList<IPackageBranchGetter> ProcedureTree { get; private set; } = [];
 
     private readonly Dictionary<sbyte, APackageData> _packageData = new Dictionary<sbyte, APackageData>();
@@ -638,7 +669,7 @@ partial class PackageBinaryOverlay
             translationParams: null,
             trigger: RecordTypes.ANAM,
             factory: PackageBranchBinaryOverlay.PackageBranchFactory);
-        PackageBinaryCreateTranslation.AbsorbPackageData(
+        ProcedureTreeDataOrder = PackageBinaryCreateTranslation.AbsorbPackageData(
             new MutagenInterfaceReadStream(stream, _package.MetaData), _packageData);
     }
 }
