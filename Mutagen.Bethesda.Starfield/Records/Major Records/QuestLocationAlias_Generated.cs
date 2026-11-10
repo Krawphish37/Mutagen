@@ -136,16 +136,16 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region ALPS
+        #region PlanetContentRequest
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private QuestLocationAliasALPS? _ALPS;
-        public QuestLocationAliasALPS? ALPS
+        private QuestLocationAliasALPS? _PlanetContentRequest;
+        public QuestLocationAliasALPS? PlanetContentRequest
         {
-            get => _ALPS;
-            set => _ALPS = value;
+            get => _PlanetContentRequest;
+            set => _PlanetContentRequest = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuestLocationAliasALPSGetter? IQuestLocationAliasGetter.ALPS => this.ALPS;
+        IQuestLocationAliasALPSGetter? IQuestLocationAliasGetter.PlanetContentRequest => this.PlanetContentRequest;
         #endregion
         #region ClosestToAlias
         public Int32? ClosestToAlias { get; set; }
@@ -233,7 +233,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ExternalAliasLocation = new MaskItem<TItem, ExternalAliasLocation.Mask<TItem>?>(initialValue, new ExternalAliasLocation.Mask<TItem>(initialValue));
                 this.FindMatchingRefFromEvent = new MaskItem<TItem, FindMatchingRefFromEvent.Mask<TItem>?>(initialValue, new FindMatchingRefFromEvent.Mask<TItem>(initialValue));
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
-                this.ALPS = new MaskItem<TItem, QuestLocationAliasALPS.Mask<TItem>?>(initialValue, new QuestLocationAliasALPS.Mask<TItem>(initialValue));
+                this.PlanetContentRequest = new MaskItem<TItem, QuestLocationAliasALPS.Mask<TItem>?>(initialValue, new QuestLocationAliasALPS.Mask<TItem>(initialValue));
                 this.ClosestToAlias = initialValue;
                 this.SystemLocationAliasID = initialValue;
                 this.ParentSystemLocationAliasID = initialValue;
@@ -252,7 +252,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ExternalAliasLocation,
                 TItem FindMatchingRefFromEvent,
                 TItem Conditions,
-                TItem ALPS,
+                TItem PlanetContentRequest,
                 TItem ClosestToAlias,
                 TItem SystemLocationAliasID,
                 TItem ParentSystemLocationAliasID,
@@ -270,7 +270,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ExternalAliasLocation = new MaskItem<TItem, ExternalAliasLocation.Mask<TItem>?>(ExternalAliasLocation, new ExternalAliasLocation.Mask<TItem>(ExternalAliasLocation));
                 this.FindMatchingRefFromEvent = new MaskItem<TItem, FindMatchingRefFromEvent.Mask<TItem>?>(FindMatchingRefFromEvent, new FindMatchingRefFromEvent.Mask<TItem>(FindMatchingRefFromEvent));
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
-                this.ALPS = new MaskItem<TItem, QuestLocationAliasALPS.Mask<TItem>?>(ALPS, new QuestLocationAliasALPS.Mask<TItem>(ALPS));
+                this.PlanetContentRequest = new MaskItem<TItem, QuestLocationAliasALPS.Mask<TItem>?>(PlanetContentRequest, new QuestLocationAliasALPS.Mask<TItem>(PlanetContentRequest));
                 this.ClosestToAlias = ClosestToAlias;
                 this.SystemLocationAliasID = SystemLocationAliasID;
                 this.ParentSystemLocationAliasID = ParentSystemLocationAliasID;
@@ -297,7 +297,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, ExternalAliasLocation.Mask<TItem>?>? ExternalAliasLocation { get; set; }
             public MaskItem<TItem, FindMatchingRefFromEvent.Mask<TItem>?>? FindMatchingRefFromEvent { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
-            public MaskItem<TItem, QuestLocationAliasALPS.Mask<TItem>?>? ALPS { get; set; }
+            public MaskItem<TItem, QuestLocationAliasALPS.Mask<TItem>?>? PlanetContentRequest { get; set; }
             public TItem ClosestToAlias;
             public TItem SystemLocationAliasID;
             public TItem ParentSystemLocationAliasID;
@@ -326,7 +326,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ExternalAliasLocation, rhs.ExternalAliasLocation)) return false;
                 if (!object.Equals(this.FindMatchingRefFromEvent, rhs.FindMatchingRefFromEvent)) return false;
                 if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
-                if (!object.Equals(this.ALPS, rhs.ALPS)) return false;
+                if (!object.Equals(this.PlanetContentRequest, rhs.PlanetContentRequest)) return false;
                 if (!object.Equals(this.ClosestToAlias, rhs.ClosestToAlias)) return false;
                 if (!object.Equals(this.SystemLocationAliasID, rhs.SystemLocationAliasID)) return false;
                 if (!object.Equals(this.ParentSystemLocationAliasID, rhs.ParentSystemLocationAliasID)) return false;
@@ -347,7 +347,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ExternalAliasLocation);
                 hash.Add(this.FindMatchingRefFromEvent);
                 hash.Add(this.Conditions);
-                hash.Add(this.ALPS);
+                hash.Add(this.PlanetContentRequest);
                 hash.Add(this.ClosestToAlias);
                 hash.Add(this.SystemLocationAliasID);
                 hash.Add(this.ParentSystemLocationAliasID);
@@ -396,10 +396,10 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (ALPS != null)
+                if (PlanetContentRequest != null)
                 {
-                    if (!eval(this.ALPS.Overall)) return false;
-                    if (this.ALPS.Specific != null && !this.ALPS.Specific.All(eval)) return false;
+                    if (!eval(this.PlanetContentRequest.Overall)) return false;
+                    if (this.PlanetContentRequest.Specific != null && !this.PlanetContentRequest.Specific.All(eval)) return false;
                 }
                 if (!eval(this.ClosestToAlias)) return false;
                 if (!eval(this.SystemLocationAliasID)) return false;
@@ -447,10 +447,10 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (ALPS != null)
+                if (PlanetContentRequest != null)
                 {
-                    if (eval(this.ALPS.Overall)) return true;
-                    if (this.ALPS.Specific != null && this.ALPS.Specific.Any(eval)) return true;
+                    if (eval(this.PlanetContentRequest.Overall)) return true;
+                    if (this.PlanetContentRequest.Specific != null && this.PlanetContentRequest.Specific.Any(eval)) return true;
                 }
                 if (eval(this.ClosestToAlias)) return true;
                 if (eval(this.SystemLocationAliasID)) return true;
@@ -496,7 +496,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.ALPS = this.ALPS == null ? null : new MaskItem<R, QuestLocationAliasALPS.Mask<R>?>(eval(this.ALPS.Overall), this.ALPS.Specific?.Translate(eval));
+                obj.PlanetContentRequest = this.PlanetContentRequest == null ? null : new MaskItem<R, QuestLocationAliasALPS.Mask<R>?>(eval(this.PlanetContentRequest.Overall), this.PlanetContentRequest.Specific?.Translate(eval));
                 obj.ClosestToAlias = eval(this.ClosestToAlias);
                 obj.SystemLocationAliasID = eval(this.SystemLocationAliasID);
                 obj.ParentSystemLocationAliasID = eval(this.ParentSystemLocationAliasID);
@@ -575,9 +575,9 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.ALPS?.Overall ?? true)
+                    if (printMask?.PlanetContentRequest?.Overall ?? true)
                     {
-                        ALPS?.Print(sb);
+                        PlanetContentRequest?.Print(sb);
                     }
                     if (printMask?.ClosestToAlias ?? true)
                     {
@@ -620,7 +620,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, ExternalAliasLocation.ErrorMask?>? ExternalAliasLocation;
             public MaskItem<Exception?, FindMatchingRefFromEvent.ErrorMask?>? FindMatchingRefFromEvent;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
-            public MaskItem<Exception?, QuestLocationAliasALPS.ErrorMask?>? ALPS;
+            public MaskItem<Exception?, QuestLocationAliasALPS.ErrorMask?>? PlanetContentRequest;
             public Exception? ClosestToAlias;
             public Exception? SystemLocationAliasID;
             public Exception? ParentSystemLocationAliasID;
@@ -654,8 +654,8 @@ namespace Mutagen.Bethesda.Starfield
                         return FindMatchingRefFromEvent;
                     case QuestLocationAlias_FieldIndex.Conditions:
                         return Conditions;
-                    case QuestLocationAlias_FieldIndex.ALPS:
-                        return ALPS;
+                    case QuestLocationAlias_FieldIndex.PlanetContentRequest:
+                        return PlanetContentRequest;
                     case QuestLocationAlias_FieldIndex.ClosestToAlias:
                         return ClosestToAlias;
                     case QuestLocationAlias_FieldIndex.SystemLocationAliasID:
@@ -706,8 +706,8 @@ namespace Mutagen.Bethesda.Starfield
                     case QuestLocationAlias_FieldIndex.Conditions:
                         this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
                         break;
-                    case QuestLocationAlias_FieldIndex.ALPS:
-                        this.ALPS = new MaskItem<Exception?, QuestLocationAliasALPS.ErrorMask?>(ex, null);
+                    case QuestLocationAlias_FieldIndex.PlanetContentRequest:
+                        this.PlanetContentRequest = new MaskItem<Exception?, QuestLocationAliasALPS.ErrorMask?>(ex, null);
                         break;
                     case QuestLocationAlias_FieldIndex.ClosestToAlias:
                         this.ClosestToAlias = ex;
@@ -765,8 +765,8 @@ namespace Mutagen.Bethesda.Starfield
                     case QuestLocationAlias_FieldIndex.Conditions:
                         this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
                         break;
-                    case QuestLocationAlias_FieldIndex.ALPS:
-                        this.ALPS = (MaskItem<Exception?, QuestLocationAliasALPS.ErrorMask?>?)obj;
+                    case QuestLocationAlias_FieldIndex.PlanetContentRequest:
+                        this.PlanetContentRequest = (MaskItem<Exception?, QuestLocationAliasALPS.ErrorMask?>?)obj;
                         break;
                     case QuestLocationAlias_FieldIndex.ClosestToAlias:
                         this.ClosestToAlias = (Exception?)obj;
@@ -802,7 +802,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ExternalAliasLocation != null) return true;
                 if (FindMatchingRefFromEvent != null) return true;
                 if (Conditions != null) return true;
-                if (ALPS != null) return true;
+                if (PlanetContentRequest != null) return true;
                 if (ClosestToAlias != null) return true;
                 if (SystemLocationAliasID != null) return true;
                 if (ParentSystemLocationAliasID != null) return true;
@@ -873,7 +873,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                ALPS?.Print(sb);
+                PlanetContentRequest?.Print(sb);
                 {
                     sb.AppendItem(ClosestToAlias, "ClosestToAlias");
                 }
@@ -907,7 +907,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ExternalAliasLocation = this.ExternalAliasLocation.Combine(rhs.ExternalAliasLocation, (l, r) => l.Combine(r));
                 ret.FindMatchingRefFromEvent = this.FindMatchingRefFromEvent.Combine(rhs.FindMatchingRefFromEvent, (l, r) => l.Combine(r));
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
-                ret.ALPS = this.ALPS.Combine(rhs.ALPS, (l, r) => l.Combine(r));
+                ret.PlanetContentRequest = this.PlanetContentRequest.Combine(rhs.PlanetContentRequest, (l, r) => l.Combine(r));
                 ret.ClosestToAlias = this.ClosestToAlias.Combine(rhs.ClosestToAlias);
                 ret.SystemLocationAliasID = this.SystemLocationAliasID.Combine(rhs.SystemLocationAliasID);
                 ret.ParentSystemLocationAliasID = this.ParentSystemLocationAliasID.Combine(rhs.ParentSystemLocationAliasID);
@@ -945,7 +945,7 @@ namespace Mutagen.Bethesda.Starfield
             public ExternalAliasLocation.TranslationMask? ExternalAliasLocation;
             public FindMatchingRefFromEvent.TranslationMask? FindMatchingRefFromEvent;
             public Condition.TranslationMask? Conditions;
-            public QuestLocationAliasALPS.TranslationMask? ALPS;
+            public QuestLocationAliasALPS.TranslationMask? PlanetContentRequest;
             public bool ClosestToAlias;
             public bool SystemLocationAliasID;
             public bool ParentSystemLocationAliasID;
@@ -987,7 +987,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ExternalAliasLocation != null ? ExternalAliasLocation.OnOverall : DefaultOn, ExternalAliasLocation?.GetCrystal()));
                 ret.Add((FindMatchingRefFromEvent != null ? FindMatchingRefFromEvent.OnOverall : DefaultOn, FindMatchingRefFromEvent?.GetCrystal()));
                 ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
-                ret.Add((ALPS != null ? ALPS.OnOverall : DefaultOn, ALPS?.GetCrystal()));
+                ret.Add((PlanetContentRequest != null ? PlanetContentRequest.OnOverall : DefaultOn, PlanetContentRequest?.GetCrystal()));
                 ret.Add((ClosestToAlias, null));
                 ret.Add((SystemLocationAliasID, null));
                 ret.Add((ParentSystemLocationAliasID, null));
@@ -1084,7 +1084,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExternalAliasLocation? ExternalAliasLocation { get; set; }
         new FindMatchingRefFromEvent? FindMatchingRefFromEvent { get; set; }
         new ExtendedList<Condition> Conditions { get; }
-        new QuestLocationAliasALPS? ALPS { get; set; }
+        new QuestLocationAliasALPS? PlanetContentRequest { get; set; }
         new Int32? ClosestToAlias { get; set; }
         new Int32? SystemLocationAliasID { get; set; }
         new Int32? ParentSystemLocationAliasID { get; set; }
@@ -1115,7 +1115,7 @@ namespace Mutagen.Bethesda.Starfield
         IExternalAliasLocationGetter? ExternalAliasLocation { get; }
         IFindMatchingRefFromEventGetter? FindMatchingRefFromEvent { get; }
         IReadOnlyList<IConditionGetter> Conditions { get; }
-        IQuestLocationAliasALPSGetter? ALPS { get; }
+        IQuestLocationAliasALPSGetter? PlanetContentRequest { get; }
         Int32? ClosestToAlias { get; }
         Int32? SystemLocationAliasID { get; }
         Int32? ParentSystemLocationAliasID { get; }
@@ -1275,7 +1275,7 @@ namespace Mutagen.Bethesda.Starfield
         ExternalAliasLocation = 7,
         FindMatchingRefFromEvent = 8,
         Conditions = 9,
-        ALPS = 10,
+        PlanetContentRequest = 10,
         ClosestToAlias = 11,
         SystemLocationAliasID = 12,
         ParentSystemLocationAliasID = 13,
@@ -1401,7 +1401,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ExternalAliasLocation = null;
             item.FindMatchingRefFromEvent = null;
             item.Conditions.Clear();
-            item.ALPS = null;
+            item.PlanetContentRequest = null;
             item.ClosestToAlias = default;
             item.SystemLocationAliasID = default;
             item.ParentSystemLocationAliasID = default;
@@ -1423,7 +1423,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.ReferenceAliasLocation?.RemapLinks(mapping);
             obj.ExternalAliasLocation?.RemapLinks(mapping);
             obj.Conditions.RemapLinks(mapping);
-            obj.ALPS?.RemapLinks(mapping);
+            obj.PlanetContentRequest?.RemapLinks(mapping);
             obj.LocationTypeKeyword.Relink(mapping);
             obj.DisplayName.Relink(mapping);
         }
@@ -1506,9 +1506,9 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Conditions,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.ALPS = EqualsMaskHelper.EqualsHelper(
-                item.ALPS,
-                rhs.ALPS,
+            ret.PlanetContentRequest = EqualsMaskHelper.EqualsHelper(
+                item.PlanetContentRequest,
+                rhs.PlanetContentRequest,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.ClosestToAlias = item.ClosestToAlias == rhs.ClosestToAlias;
@@ -1621,10 +1621,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.ALPS?.Overall ?? true)
-                && item.ALPS is {} ALPSItem)
+            if ((printMask?.PlanetContentRequest?.Overall ?? true)
+                && item.PlanetContentRequest is {} PlanetContentRequestItem)
             {
-                ALPSItem?.Print(sb, "ALPS");
+                PlanetContentRequestItem?.Print(sb, "PlanetContentRequest");
             }
             if ((printMask?.ClosestToAlias ?? true)
                 && item.ClosestToAlias is {} ClosestToAliasItem)
@@ -1720,13 +1720,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Conditions.SequenceEqual(rhs.Conditions, (l, r) => ((ConditionCommon)((IConditionGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)QuestLocationAlias_FieldIndex.Conditions)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)QuestLocationAlias_FieldIndex.ALPS) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)QuestLocationAlias_FieldIndex.PlanetContentRequest) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.ALPS, rhs.ALPS, out var lhsALPS, out var rhsALPS, out var isALPSEqual))
+                if (EqualsMaskHelper.RefEquality(lhs.PlanetContentRequest, rhs.PlanetContentRequest, out var lhsPlanetContentRequest, out var rhsPlanetContentRequest, out var isPlanetContentRequestEqual))
                 {
-                    if (!((QuestLocationAliasALPSCommon)((IQuestLocationAliasALPSGetter)lhsALPS).CommonInstance()!).Equals(lhsALPS, rhsALPS, equalsMask?.GetSubCrystal((int)QuestLocationAlias_FieldIndex.ALPS))) return false;
+                    if (!((QuestLocationAliasALPSCommon)((IQuestLocationAliasALPSGetter)lhsPlanetContentRequest).CommonInstance()!).Equals(lhsPlanetContentRequest, rhsPlanetContentRequest, equalsMask?.GetSubCrystal((int)QuestLocationAlias_FieldIndex.PlanetContentRequest))) return false;
                 }
-                else if (!isALPSEqual) return false;
+                else if (!isPlanetContentRequestEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)QuestLocationAlias_FieldIndex.ClosestToAlias) ?? true))
             {
@@ -1796,9 +1796,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(subItem);
             }
-            if (item.ALPS is {} ALPSitem)
+            if (item.PlanetContentRequest is {} PlanetContentRequestitem)
             {
-                hash.Add(ALPSitem);
+                hash.Add(PlanetContentRequestitem);
             }
             if (item.ClosestToAlias is {} ClosestToAliasitem)
             {
@@ -1860,9 +1860,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return FormLinkInformation.Factory(item);
             }
-            if (obj.ALPS is {} ALPSItems)
+            if (obj.PlanetContentRequest is {} PlanetContentRequestItems)
             {
-                foreach (var item in ALPSItems.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in PlanetContentRequestItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -2025,20 +2025,20 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)QuestLocationAlias_FieldIndex.ALPS) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)QuestLocationAlias_FieldIndex.PlanetContentRequest) ?? true))
             {
-                errorMask?.PushIndex((int)QuestLocationAlias_FieldIndex.ALPS);
+                errorMask?.PushIndex((int)QuestLocationAlias_FieldIndex.PlanetContentRequest);
                 try
                 {
-                    if(rhs.ALPS is {} rhsALPS)
+                    if(rhs.PlanetContentRequest is {} rhsPlanetContentRequest)
                     {
-                        item.ALPS = rhsALPS.DeepCopy(
+                        item.PlanetContentRequest = rhsPlanetContentRequest.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)QuestLocationAlias_FieldIndex.ALPS));
+                            copyMask?.GetSubCrystal((int)QuestLocationAlias_FieldIndex.PlanetContentRequest));
                     }
                     else
                     {
-                        item.ALPS = default;
+                        item.PlanetContentRequest = default;
                     }
                 }
                 catch (Exception ex)
@@ -2250,10 +2250,10 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            if (item.ALPS is {} ALPSItem)
+            if (item.PlanetContentRequest is {} PlanetContentRequestItem)
             {
-                ((QuestLocationAliasALPSBinaryWriteTranslation)((IBinaryItem)ALPSItem).BinaryWriteTranslator).Write(
-                    item: ALPSItem,
+                ((QuestLocationAliasALPSBinaryWriteTranslation)((IBinaryItem)PlanetContentRequestItem).BinaryWriteTranslator).Write(
+                    item: PlanetContentRequestItem,
                     writer: writer,
                     translationParams: translationParams);
             }
@@ -2408,10 +2408,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ALPS:
                 {
-                    item.ALPS = Mutagen.Bethesda.Starfield.QuestLocationAliasALPS.CreateFromBinary(
+                    item.PlanetContentRequest = Mutagen.Bethesda.Starfield.QuestLocationAliasALPS.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)QuestLocationAlias_FieldIndex.ALPS;
+                    return (int)QuestLocationAlias_FieldIndex.PlanetContentRequest;
                 }
                 case RecordTypeInts.ALCC:
                 {
@@ -2521,7 +2521,7 @@ namespace Mutagen.Bethesda.Starfield
         public IExternalAliasLocationGetter? ExternalAliasLocation { get; private set; }
         public IFindMatchingRefFromEventGetter? FindMatchingRefFromEvent { get; private set; }
         public IReadOnlyList<IConditionGetter> Conditions { get; private set; } = [];
-        public IQuestLocationAliasALPSGetter? ALPS { get; private set; }
+        public IQuestLocationAliasALPSGetter? PlanetContentRequest { get; private set; }
         #region ClosestToAlias
         private int? _ClosestToAliasLocation;
         public Int32? ClosestToAlias => _ClosestToAliasLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ClosestToAliasLocation.Value, _package.MetaData.Constants)) : default(Int32?);
@@ -2680,11 +2680,11 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ALPS:
                 {
-                    this.ALPS = QuestLocationAliasALPSBinaryOverlay.QuestLocationAliasALPSFactory(
+                    this.PlanetContentRequest = QuestLocationAliasALPSBinaryOverlay.QuestLocationAliasALPSFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)QuestLocationAlias_FieldIndex.ALPS;
+                    return (int)QuestLocationAlias_FieldIndex.PlanetContentRequest;
                 }
                 case RecordTypeInts.ALCC:
                 {

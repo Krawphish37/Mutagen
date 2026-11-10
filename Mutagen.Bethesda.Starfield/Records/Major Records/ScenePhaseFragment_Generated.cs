@@ -55,10 +55,10 @@ namespace Mutagen.Bethesda.Starfield
         public ScenePhaseFragment.Flag Flags { get; set; } = default(ScenePhaseFragment.Flag);
         #endregion
         #region Index
-        public Byte Index { get; set; } = default(Byte);
+        public UInt32 Index { get; set; } = default(UInt32);
         #endregion
         #region Unknown
-        public UInt32 Unknown { get; set; } = default(UInt32);
+        public Byte Unknown { get; set; } = default(Byte);
         #endregion
         #region ScriptName
         public String ScriptName { get; set; } = string.Empty;
@@ -547,8 +547,8 @@ namespace Mutagen.Bethesda.Starfield
         IScenePhaseFragmentGetter
     {
         new ScenePhaseFragment.Flag Flags { get; set; }
-        new Byte Index { get; set; }
-        new UInt32 Unknown { get; set; }
+        new UInt32 Index { get; set; }
+        new Byte Unknown { get; set; }
         new String ScriptName { get; set; }
         new String FragmentName { get; set; }
     }
@@ -566,8 +566,8 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => ScenePhaseFragment_Registration.Instance;
         ScenePhaseFragment.Flag Flags { get; }
-        Byte Index { get; }
-        UInt32 Unknown { get; }
+        UInt32 Index { get; }
+        Byte Unknown { get; }
         String ScriptName { get; }
         String FragmentName { get; }
 
@@ -823,8 +823,8 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Flags = default(ScenePhaseFragment.Flag);
-            item.Index = default(Byte);
-            item.Unknown = default(UInt32);
+            item.Index = default(UInt32);
+            item.Unknown = default(Byte);
             item.ScriptName = string.Empty;
             item.FragmentName = string.Empty;
         }
@@ -1195,8 +1195,8 @@ namespace Mutagen.Bethesda.Starfield
             item.Flags = EnumBinaryTranslation<ScenePhaseFragment.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
-            item.Index = frame.ReadUInt8();
-            item.Unknown = frame.ReadUInt32();
+            item.Index = frame.ReadUInt32();
+            item.Unknown = frame.ReadUInt8();
             item.ScriptName = StringBinaryTranslation.Instance.Parse(
                 reader: frame,
                 stringBinaryType: StringBinaryType.PrependLengthUShort,
@@ -1271,8 +1271,8 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public ScenePhaseFragment.Flag Flags => (ScenePhaseFragment.Flag)_structData.Span.Slice(0x0, 0x1)[0];
-        public Byte Index => _structData.Span[0x1];
-        public UInt32 Unknown => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x2, 0x4));
+        public UInt32 Index => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x1, 0x4));
+        public Byte Unknown => _structData.Span[0x5];
         #region ScriptName
         public String ScriptName => BinaryStringUtility.ParsePrependedString(_structData.Slice(0x6), lengthLength: 2, encoding: _package.MetaData.Encodings.NonTranslated);
         protected int ScriptNameEndingPos;
