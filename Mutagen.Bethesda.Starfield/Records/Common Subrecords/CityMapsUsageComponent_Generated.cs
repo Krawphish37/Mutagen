@@ -53,16 +53,10 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region MOD2
+        #region ModelPath
+        public String? ModelPath { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _MOD2;
-        public MemorySlice<Byte>? MOD2
-        {
-            get => this._MOD2;
-            set => this._MOD2 = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ICityMapsUsageComponentGetter.MOD2 => this.MOD2;
+        String? ICityMapsUsageComponentGetter.ModelPath => this.ModelPath;
         #endregion
 
         #region To String
@@ -102,10 +96,10 @@ namespace Mutagen.Bethesda.Starfield
             IMask<TItem>
         {
             #region Ctors
-            public Mask(TItem MOD2)
+            public Mask(TItem ModelPath)
             : base()
             {
-                this.MOD2 = MOD2;
+                this.ModelPath = ModelPath;
             }
 
             #pragma warning disable CS8618
@@ -117,7 +111,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem MOD2;
+            public TItem ModelPath;
             #endregion
 
             #region Equals
@@ -131,13 +125,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.MOD2, rhs.MOD2)) return false;
+                if (!object.Equals(this.ModelPath, rhs.ModelPath)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.MOD2);
+                hash.Add(this.ModelPath);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -148,7 +142,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.MOD2)) return false;
+                if (!eval(this.ModelPath)) return false;
                 return true;
             }
             #endregion
@@ -157,7 +151,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.MOD2)) return true;
+                if (eval(this.ModelPath)) return true;
                 return false;
             }
             #endregion
@@ -173,7 +167,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.MOD2 = eval(this.MOD2);
+                obj.ModelPath = eval(this.ModelPath);
             }
             #endregion
 
@@ -192,9 +186,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(CityMapsUsageComponent.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.MOD2 ?? true)
+                    if (printMask?.ModelPath ?? true)
                     {
-                        sb.AppendItem(MOD2, "MOD2");
+                        sb.AppendItem(ModelPath, "ModelPath");
                     }
                 }
             }
@@ -207,7 +201,7 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? MOD2;
+            public Exception? ModelPath;
             #endregion
 
             #region IErrorMask
@@ -216,8 +210,8 @@ namespace Mutagen.Bethesda.Starfield
                 CityMapsUsageComponent_FieldIndex enu = (CityMapsUsageComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case CityMapsUsageComponent_FieldIndex.MOD2:
-                        return MOD2;
+                    case CityMapsUsageComponent_FieldIndex.ModelPath:
+                        return ModelPath;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -228,8 +222,8 @@ namespace Mutagen.Bethesda.Starfield
                 CityMapsUsageComponent_FieldIndex enu = (CityMapsUsageComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case CityMapsUsageComponent_FieldIndex.MOD2:
-                        this.MOD2 = ex;
+                    case CityMapsUsageComponent_FieldIndex.ModelPath:
+                        this.ModelPath = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -242,8 +236,8 @@ namespace Mutagen.Bethesda.Starfield
                 CityMapsUsageComponent_FieldIndex enu = (CityMapsUsageComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case CityMapsUsageComponent_FieldIndex.MOD2:
-                        this.MOD2 = (Exception?)obj;
+                    case CityMapsUsageComponent_FieldIndex.ModelPath:
+                        this.ModelPath = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -254,7 +248,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (MOD2 != null) return true;
+                if (ModelPath != null) return true;
                 return false;
             }
             #endregion
@@ -282,7 +276,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(MOD2, "MOD2");
+                    sb.AppendItem(ModelPath, "ModelPath");
                 }
             }
             #endregion
@@ -292,7 +286,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.MOD2 = this.MOD2.Combine(rhs.MOD2);
+                ret.ModelPath = this.ModelPath.Combine(rhs.ModelPath);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -315,7 +309,7 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool MOD2;
+            public bool ModelPath;
             #endregion
 
             #region Ctors
@@ -324,7 +318,7 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.MOD2 = defaultOn;
+                this.ModelPath = defaultOn;
             }
 
             #endregion
@@ -332,7 +326,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((MOD2, null));
+                ret.Add((ModelPath, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -404,7 +398,7 @@ namespace Mutagen.Bethesda.Starfield
         ICityMapsUsageComponentGetter,
         ILoquiObjectSetter<ICityMapsUsageComponent>
     {
-        new MemorySlice<Byte>? MOD2 { get; set; }
+        new String? ModelPath { get; set; }
     }
 
     public partial interface ICityMapsUsageComponentGetter :
@@ -413,7 +407,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<ICityMapsUsageComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => CityMapsUsageComponent_Registration.Instance;
-        ReadOnlyMemorySlice<Byte>? MOD2 { get; }
+        String? ModelPath { get; }
 
     }
 
@@ -558,7 +552,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum CityMapsUsageComponent_FieldIndex
     {
-        MOD2 = 0,
+        ModelPath = 0,
     }
     #endregion
 
@@ -649,7 +643,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ICityMapsUsageComponent item)
         {
             ClearPartial();
-            item.MOD2 = default;
+            item.ModelPath = default;
             base.Clear(item);
         }
         
@@ -717,7 +711,7 @@ namespace Mutagen.Bethesda.Starfield
             CityMapsUsageComponent.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.MOD2 = MemorySliceExt.SequenceEqual(item.MOD2, rhs.MOD2);
+            ret.ModelPath = string.Equals(item.ModelPath, rhs.ModelPath);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -767,10 +761,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.MOD2 ?? true)
-                && item.MOD2 is {} MOD2Item)
+            if ((printMask?.ModelPath ?? true)
+                && item.ModelPath is {} ModelPathItem)
             {
-                sb.AppendLine($"MOD2 => {SpanExt.ToHexString(MOD2Item)}");
+                sb.AppendItem(ModelPathItem, "ModelPath");
             }
         }
         
@@ -791,9 +785,9 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IAComponentGetter)lhs, (IAComponentGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)CityMapsUsageComponent_FieldIndex.MOD2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CityMapsUsageComponent_FieldIndex.ModelPath) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.MOD2, rhs.MOD2)) return false;
+                if (!string.Equals(lhs.ModelPath, rhs.ModelPath)) return false;
             }
             return true;
         }
@@ -812,9 +806,9 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ICityMapsUsageComponentGetter item)
         {
             var hash = new HashCode();
-            if (item.MOD2 is {} MOD2Item)
+            if (item.ModelPath is {} ModelPathitem)
             {
-                hash.AddBytes(MOD2Item);
+                hash.Add(ModelPathitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -864,16 +858,9 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)CityMapsUsageComponent_FieldIndex.MOD2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CityMapsUsageComponent_FieldIndex.ModelPath) ?? true))
             {
-                if(rhs.MOD2 is {} MOD2rhs)
-                {
-                    item.MOD2 = MOD2rhs.ToArray();
-                }
-                else
-                {
-                    item.MOD2 = default;
-                }
+                item.ModelPath = rhs.ModelPath;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1000,10 +987,16 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.MOD2,
-                header: translationParams.ConvertToCustom(RecordTypes.MOD2));
+            if (item.ModelPath is {} ModelPathFixedItem)
+            {
+                using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.MOD2)))
+                {
+                    StringBinaryTranslation.Instance.WriteNullPaddedFixedLength(
+                        writer: writer,
+                        item: ModelPathFixedItem,
+                        byteLength: 260);
+                }
+            }
         }
 
         public void Write(
@@ -1061,8 +1054,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MOD2:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.MOD2 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)CityMapsUsageComponent_FieldIndex.MOD2;
+                    item.ModelPath = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame.SpawnWithLength(contentLength), byteLength: contentLength);
+                    return (int)CityMapsUsageComponent_FieldIndex.ModelPath;
                 }
                 default:
                     return AComponentBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1120,9 +1113,9 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region MOD2
-        private int? _MOD2Location;
-        public ReadOnlyMemorySlice<Byte>? MOD2 => _MOD2Location.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _MOD2Location.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region ModelPath
+        private int? _ModelPathLocation;
+        public String? ModelPath => _ModelPathLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ModelPathLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1189,8 +1182,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.MOD2:
                 {
-                    _MOD2Location = (stream.Position - offset);
-                    return (int)CityMapsUsageComponent_FieldIndex.MOD2;
+                    _ModelPathLocation = (stream.Position - offset);
+                    return (int)CityMapsUsageComponent_FieldIndex.ModelPath;
                 }
                 default:
                     return base.FillRecordType(

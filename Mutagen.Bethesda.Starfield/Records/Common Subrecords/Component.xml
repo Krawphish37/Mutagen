@@ -613,7 +613,8 @@
   </Object>
   <Object name="CityMapsUsageComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="MOD2" recordType="MOD2" unknown="true" />
+      <!-- xEdit: Model Path, a 260-byte zero-padded string (SFBGS008.esm) -->
+      <String name="ModelPath" recordType="MOD2" binaryType="NullPaddedFixedLength" byteLength="260" />
     </Fields>
   </Object>
   <Object name="VehicleManagementComponent" objType="Subrecord" baseClass="AComponent">
