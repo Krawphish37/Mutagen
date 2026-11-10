@@ -64,14 +64,43 @@ public class KeepSubrecordOrderTests
     }
 
     [Fact]
-    public void Copy_WrittenInMutagenOrder()
+    public void Copy_KeepsFileOrder()
     {
         foreach (var refr in ReadRefr())
         {
-            // A copy is a new record: it has no file order to keep
+            // A copy (DeepCopy, override copies) takes over the order of the record it copies
             var copy = refr.DeepCopy();
+            GameConstants.Starfield.MajorRecord(Write(w => copy.WriteToBinary(w))).Content.ToArray().ShouldBe(Hex(Refr));
+            var into = new PlacedObject(refr.FormKey, StarfieldRelease.Starfield);
+            into.DeepCopyIn(refr);
+            GameConstants.Starfield.MajorRecord(Write(w => into.WriteToBinary(w))).Content.ToArray().ShouldBe(Hex(Refr));
+        }
+    }
+
+    [Fact]
+    public void ChangedCopy_WrittenInMutagenOrder()
+    {
+        foreach (var refr in ReadRefr())
+        {
+            var copy = refr.DeepCopy();
+            copy.Radius = 6f;
             var sigs = Signatures(GameConstants.Starfield.MajorRecord(Write(w => copy.WriteToBinary(w))).Content);
             sigs.IndexOf("XLYR").ShouldBeLessThan(sigs.IndexOf("XGDS"));
+        }
+    }
+
+    // REFR 23AE33 (Starfield.esm): NAME XBPO XWPK..XWPK XLKR XLKT XPRD XPPA INAM PDTO DATA. INAM is in both the XWPK and the
+    // XPRD group; Mutagen writes XPRD first. The kept order knows which field each subrecord was read into.
+    private const string TwoInams = "4E414D4504002A1926005842504F0400010000005857504B0000474E414D040092222900494E414D020000004A4E414D0400922229004C4E414D0400000000005857504B0000584C4B5208000000000041071500584C4B54000058505244040000002041585050410000494E414D0400000000005044544F0800000000000000000044415441180071014E3765508A42D01C1741000000000000000000000000";
+
+    [Fact]
+    public void SameSubrecordInTwoFields_WrittenInFileOrder()
+    {
+        var bytes = Hex(TwoInams);
+        foreach (var refr in ReadBoth<IPlacedObjectGetter>(Record("REFR", bytes),
+                     f => PlacedObject.CreateFromBinary(f), (s, p) => PlacedObjectBinaryOverlay.PlacedObjectFactory(s, p)))
+        {
+            GameConstants.Starfield.MajorRecord(Write(w => refr.WriteToBinary(w))).Content.ToArray().ShouldBe(bytes);
         }
     }
 

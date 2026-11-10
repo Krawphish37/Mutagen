@@ -12,106 +12,97 @@ namespace Mutagen.Bethesda.Plugins.Binary.Translations;
 /// more than one order (<see cref="GameConstants.KeepSubrecordOrder"/>; Starfield). Mutagen writes fields in one fixed
 /// order, so without this an unchanged record can come back with the same subrecords in another order.<br/>
 /// Reading notes a record only when its subrecords came in an order Mutagen would not write (a field read before a
-/// field that comes earlier in Mutagen's order). A full import keeps, per such record, the subrecord types and a hash
-/// of each one's bytes; an overlay keeps only a mark, since its bytes are still there to compare with.<br/>
-/// Writing a noted record writes it as usual into a buffer first. When every subrecord written has the same type and
-/// bytes as the one at the same place among the file's subrecords of that type, the subrecords are written in the
-/// file's order. If anything differs (the record was changed), Mutagen's order is kept.
+/// field that comes earlier in Mutagen's order). For such a record it keeps, per subrecord in file order, its type,
+/// a hash of its bytes and the field it was read into.<br/>
+/// Writing a noted record writes it as usual into a buffer first. Mutagen writes fields in field order, so the file's
+/// subrecords sorted by field (keeping the file's order within a field) predict what an unchanged record writes.
+/// When the written subrecords are exactly that (same types and bytes, place by place), they are written in the
+/// file's order. If anything differs (the record was changed), Mutagen's order is kept.<br/>
+/// A copy (DeepCopy, DeepCopyIn) takes over the noted order of the record it copies.
 /// </summary>
 internal static class SubrecordOrder
 {
-    // A full import's record -> one entry per subrecord in file order: (type << 32) | hash of its content.
-    // An overlay's record -> OverlayMark (its own bytes are read again when it is written).
-    private static readonly ConditionalWeakTable<object, ulong[]> Orders = new();
-    private static readonly ulong[] OverlayMark = [];
+    internal readonly record struct Entry(uint Type, uint Hash, int Field);
+
+    private static readonly ConditionalWeakTable<object, Entry[]> Orders = new();
+
+    // Field starts of the records being read on this thread (a reader appends, and removes its own when done)
+    [ThreadStatic] private static List<(int Offset, int Field)>? _fieldStarts;
+    internal static List<(int Offset, int Field)> FieldStarts => _fieldStarts ??= new();
 
     /// <summary>
-    /// Notes a full import's record whose subrecords were read out of Mutagen's order
+    /// Notes a record whose subrecords were read out of Mutagen's order
     /// </summary>
-    public static void Remember(object record, ReadOnlySpan<byte> content, GameConstants constants)
+    /// <param name="record">The record</param>
+    /// <param name="content">The record's subrecords, as read</param>
+    /// <param name="constants">Game constants</param>
+    /// <param name="fieldStarts">Where in content each field's subrecords started, with the field's index, in read order,
+    /// from index <paramref name="first"/> on</param>
+    /// <param name="first">Where this record's entries start in fieldStarts</param>
+    public static void Remember(
+        object record,
+        ReadOnlySpan<byte> content,
+        GameConstants constants,
+        List<(int Offset, int Field)> fieldStarts,
+        int first)
     {
-        Orders.AddOrUpdate(record, Capture(content, constants));
-    }
-
-    /// <summary>
-    /// Notes an overlay's record whose subrecords were read out of Mutagen's order
-    /// </summary>
-    public static void RememberOverlay(object record)
-    {
-        Orders.AddOrUpdate(record, OverlayMark);
-    }
-
-    public static bool TryGet(object record, GameConstants constants, out ulong[] order)
-    {
-        if (!Orders.TryGetValue(record, out var stored))
+        var units = Units(content, constants);
+        var entries = new Entry[units.Count];
+        var call = first - 1;
+        for (int i = 0; i < entries.Length; i++)
         {
-            order = null!;
-            return false;
-        }
-        if (ReferenceEquals(stored, OverlayMark))
-        {
-            if (record is not PluginBinaryOverlay overlay)
+            while (call + 1 < fieldStarts.Count && fieldStarts[call + 1].Offset <= units[i].SubrecordStart)
             {
-                order = null!;
-                return false;
+                call++;
             }
-            order = Capture(overlay._recordData, constants);
-            return true;
+            entries[i] = new Entry(units[i].Type, units[i].Hash, call < first ? -1 : fieldStarts[call].Field);
         }
-        order = stored;
-        return true;
+        Orders.AddOrUpdate(record, entries);
     }
+
+    /// <summary>
+    /// A copy of a record takes over its noted order; one of a record that has none has none
+    /// </summary>
+    public static void Copy(object from, object to)
+    {
+        if (ReferenceEquals(from, to)) return;
+        if (Orders.TryGetValue(from, out var entries))
+        {
+            Orders.AddOrUpdate(to, entries);
+        }
+        else
+        {
+            Orders.Remove(to);
+        }
+    }
+
+    public static bool TryGet(object record, out Entry[] order) => Orders.TryGetValue(record, out order!);
 
     /// <summary>
     /// Writes <paramref name="written"/> (a record's subrecords in Mutagen's order) in the order of <paramref name="order"/>
-    /// when the two hold the same subrecords. Returns false, writing nothing, when they don't.
+    /// when they are the record's subrecords unchanged. Returns false, writing nothing, when they aren't.
     /// </summary>
-    public static bool TryWriteInOrder(ReadOnlySpan<byte> written, ulong[] order, MutagenWriter writer)
+    public static bool TryWriteInOrder(ReadOnlySpan<byte> written, Entry[] order, MutagenWriter writer)
     {
         var units = Units(written, writer.MetaData.Constants);
         if (units.Count != order.Length) return false;
-        // The n-th written subrecord of a type takes the place of the n-th subrecord of that type in the file
-        var byType = new Dictionary<uint, Queue<int>>();
-        for (int i = 0; i < units.Count; i++)
+        // predicted[k]: the file's subrecord that Mutagen writes k-th (by field, then as read)
+        var predicted = Enumerable.Range(0, order.Length).OrderBy(i => order[i].Field).ToArray();
+        var place = new int[order.Length];
+        for (int k = 0; k < predicted.Length; k++)
         {
-            var type = (uint)(units[i].Key >> 32);
-            if (!byType.TryGetValue(type, out var queue))
-            {
-                byType[type] = queue = new Queue<int>();
-            }
-            queue.Enqueue(i);
+            var expected = order[predicted[k]];
+            if (units[k].Type != expected.Type || units[k].Hash != expected.Hash) return false;
+            place[predicted[k]] = k;
         }
-        var placed = new int[order.Length];
-        for (int i = 0; i < order.Length; i++)
+        foreach (var k in place)
         {
-            if (!byType.TryGetValue((uint)(order[i] >> 32), out var queue)
-                || queue.Count == 0)
-            {
-                return false;
-            }
-            var unit = queue.Dequeue();
-            if (units[unit].Key != order[i]) return false;
-            placed[i] = unit;
-        }
-        foreach (var unit in placed)
-        {
-            writer.Write(written.Slice(units[unit].Start, units[unit].Length));
+            writer.Write(written.Slice(units[k].Start, units[k].Length));
         }
         return true;
     }
 
-    private static ulong[] Capture(ReadOnlySpan<byte> content, GameConstants constants)
-    {
-        var units = Units(content, constants);
-        var ret = new ulong[units.Count];
-        for (int i = 0; i < ret.Length; i++)
-        {
-            ret[i] = units[i].Key;
-        }
-        return ret;
-    }
-
-    private readonly record struct Unit(ulong Key, int Start, int Length);
+    private readonly record struct Unit(uint Type, uint Hash, int Start, int SubrecordStart, int Length);
 
     // The subrecords of a record's content. An XXXX subrecord (the length of the next one) is kept with the next one.
     private static List<Unit> Units(ReadOnlySpan<byte> content, GameConstants constants)
@@ -133,8 +124,7 @@ internal static class SubrecordOrder
             }
             var contentStart = pos + headerLength;
             var end = Math.Min(content.Length, contentStart + length);
-            var hash = Hash(content.Slice(contentStart, end - contentStart));
-            ret.Add(new Unit(((ulong)type << 32) | hash, start, end - start));
+            ret.Add(new Unit(type, Hash(content.Slice(contentStart, end - contentStart)), start, pos, end - start));
             pos = end;
         }
         return ret;

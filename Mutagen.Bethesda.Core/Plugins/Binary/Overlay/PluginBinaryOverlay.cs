@@ -206,7 +206,8 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
         int finalPos,
         int offset,
         TypedParseParams translationParams,
-        RecordTypeFillWrapper fill)
+        RecordTypeFillWrapper fill,
+        List<(int Offset, int Field)>? fieldStarts = null)
     {
         var lastParsed = new PreviousParse();
         Dictionary<RecordType, int>? recordParseCount = null;
@@ -228,6 +229,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
                 {
                     minimumFinalPos += subMeta.TotalLength;
                 }
+                var subrecordStart = stream.Position;
                 var parsed = fill(
                     stream: stream,
                     finalPos: minimumFinalPos,
@@ -243,6 +245,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
                 }
                 if (parsed.ParsedIndex is { } parsedIndex)
                 {
+                    fieldStarts?.Add((subrecordStart - offset, parsedIndex));
                     if (parsedIndex < highestIndex)
                     {
                         outOfOrder = true;
@@ -281,6 +284,9 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
         TypedParseParams translationParams,
         RecordTypeFillWrapper fill)
     {
+        // Where each field's subrecords start, to note records whose subrecords come in an order Mutagen does not write
+        var fieldStarts = stream.MetaData.Constants.KeepSubrecordOrder ? SubrecordOrder.FieldStarts : null;
+        var firstField = fieldStarts?.Count ?? 0;
         try
         {
             if (FillSubrecordTypes(
@@ -288,16 +294,21 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
                     finalPos: finalPos,
                     offset: offset,
                     translationParams: translationParams,
-                    fill: fill)
-                && stream.MetaData.Constants.KeepSubrecordOrder)
+                    fill: fill,
+                    fieldStarts: fieldStarts)
+                && fieldStarts != null)
             {
-                SubrecordOrder.RememberOverlay(majorReference);
+                SubrecordOrder.Remember(majorReference, _recordData, stream.MetaData.Constants, fieldStarts, firstField);
             }
         }
         catch (Exception ex)
         {
             RecordException.EnrichAndThrow(ex, majorReference);
             throw;
+        }
+        finally
+        {
+            fieldStarts?.RemoveRange(firstField, fieldStarts.Count - firstField);
         }
     }
 

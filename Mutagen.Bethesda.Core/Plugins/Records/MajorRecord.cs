@@ -159,3 +159,18 @@ internal abstract partial class MajorRecordBinaryOverlay : IMajorRecordGetter
         return other.Equals(this);
     }
 }
+
+internal partial class MajorRecordSetterTranslationCommon
+{
+    // A copy takes over the subrecord order the copied record was read with (see SubrecordOrder; only Starfield notes
+    // any). It is used on write only while the copy still holds the same subrecords.
+    partial void DeepCopyInCustom(
+        IMajorRecord item,
+        IMajorRecordGetter rhs,
+        global::Loqui.Internal.ErrorMaskBuilder? errorMask,
+        global::Loqui.Internal.TranslationCrystal? copyMask,
+        bool deepCopy)
+    {
+        Mutagen.Bethesda.Plugins.Binary.Translations.SubrecordOrder.Copy(rhs, item);
+    }
+}
