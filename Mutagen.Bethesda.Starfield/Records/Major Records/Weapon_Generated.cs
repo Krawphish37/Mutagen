@@ -338,16 +338,8 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IAObjectModificationGetter> IWeaponGetter.EmbeddedWeaponMod => this.EmbeddedWeaponMod;
         #endregion
-        #region BNAM
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _BNAM;
-        public MemorySlice<Byte>? BNAM
-        {
-            get => this._BNAM;
-            set => this._BNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWeaponGetter.BNAM => this.BNAM;
+        #region IsEmbeddedWeapon
+        public Boolean IsEmbeddedWeapon { get; set; } = default(Boolean);
         #endregion
         #region SightedTransitionSeconds
         public Single SightedTransitionSeconds { get; set; } = default(Single);
@@ -1012,7 +1004,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.AttachParentSlots = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.ObjectTemplates = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectTemplate.Mask<TItem>?>>?>(initialValue, []);
                 this.EmbeddedWeaponMod = initialValue;
-                this.BNAM = initialValue;
+                this.IsEmbeddedWeapon = initialValue;
                 this.SightedTransitionSeconds = initialValue;
                 this.AimDownSightTemplate = initialValue;
                 this.AimModel = initialValue;
@@ -1189,7 +1181,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem AttachParentSlots,
                 TItem ObjectTemplates,
                 TItem EmbeddedWeaponMod,
-                TItem BNAM,
+                TItem IsEmbeddedWeapon,
                 TItem SightedTransitionSeconds,
                 TItem AimDownSightTemplate,
                 TItem AimModel,
@@ -1365,7 +1357,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.AttachParentSlots = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(AttachParentSlots, []);
                 this.ObjectTemplates = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectTemplate.Mask<TItem>?>>?>(ObjectTemplates, []);
                 this.EmbeddedWeaponMod = EmbeddedWeaponMod;
-                this.BNAM = BNAM;
+                this.IsEmbeddedWeapon = IsEmbeddedWeapon;
                 this.SightedTransitionSeconds = SightedTransitionSeconds;
                 this.AimDownSightTemplate = AimDownSightTemplate;
                 this.AimModel = AimModel;
@@ -1543,7 +1535,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? AttachParentSlots;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectTemplate.Mask<TItem>?>>?>? ObjectTemplates;
             public TItem EmbeddedWeaponMod;
-            public TItem BNAM;
+            public TItem IsEmbeddedWeapon;
             public TItem SightedTransitionSeconds;
             public TItem AimDownSightTemplate;
             public TItem AimModel;
@@ -1723,7 +1715,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.AttachParentSlots, rhs.AttachParentSlots)) return false;
                 if (!object.Equals(this.ObjectTemplates, rhs.ObjectTemplates)) return false;
                 if (!object.Equals(this.EmbeddedWeaponMod, rhs.EmbeddedWeaponMod)) return false;
-                if (!object.Equals(this.BNAM, rhs.BNAM)) return false;
+                if (!object.Equals(this.IsEmbeddedWeapon, rhs.IsEmbeddedWeapon)) return false;
                 if (!object.Equals(this.SightedTransitionSeconds, rhs.SightedTransitionSeconds)) return false;
                 if (!object.Equals(this.AimDownSightTemplate, rhs.AimDownSightTemplate)) return false;
                 if (!object.Equals(this.AimModel, rhs.AimModel)) return false;
@@ -1895,7 +1887,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.AttachParentSlots);
                 hash.Add(this.ObjectTemplates);
                 hash.Add(this.EmbeddedWeaponMod);
-                hash.Add(this.BNAM);
+                hash.Add(this.IsEmbeddedWeapon);
                 hash.Add(this.SightedTransitionSeconds);
                 hash.Add(this.AimDownSightTemplate);
                 hash.Add(this.AimModel);
@@ -2142,7 +2134,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.EmbeddedWeaponMod)) return false;
-                if (!eval(this.BNAM)) return false;
+                if (!eval(this.IsEmbeddedWeapon)) return false;
                 if (!eval(this.SightedTransitionSeconds)) return false;
                 if (!eval(this.AimDownSightTemplate)) return false;
                 if (!eval(this.AimModel)) return false;
@@ -2430,7 +2422,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.EmbeddedWeaponMod)) return true;
-                if (eval(this.BNAM)) return true;
+                if (eval(this.IsEmbeddedWeapon)) return true;
                 if (eval(this.SightedTransitionSeconds)) return true;
                 if (eval(this.AimDownSightTemplate)) return true;
                 if (eval(this.AimModel)) return true;
@@ -2709,7 +2701,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.EmbeddedWeaponMod = eval(this.EmbeddedWeaponMod);
-                obj.BNAM = eval(this.BNAM);
+                obj.IsEmbeddedWeapon = eval(this.IsEmbeddedWeapon);
                 obj.SightedTransitionSeconds = eval(this.SightedTransitionSeconds);
                 obj.AimDownSightTemplate = eval(this.AimDownSightTemplate);
                 obj.AimModel = eval(this.AimModel);
@@ -3038,9 +3030,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(EmbeddedWeaponMod, "EmbeddedWeaponMod");
                     }
-                    if (printMask?.BNAM ?? true)
+                    if (printMask?.IsEmbeddedWeapon ?? true)
                     {
-                        sb.AppendItem(BNAM, "BNAM");
+                        sb.AppendItem(IsEmbeddedWeapon, "IsEmbeddedWeapon");
                     }
                     if (printMask?.SightedTransitionSeconds ?? true)
                     {
@@ -3666,7 +3658,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? AttachParentSlots;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectTemplate.ErrorMask?>>?>? ObjectTemplates;
             public Exception? EmbeddedWeaponMod;
-            public Exception? BNAM;
+            public Exception? IsEmbeddedWeapon;
             public Exception? SightedTransitionSeconds;
             public Exception? AimDownSightTemplate;
             public Exception? AimModel;
@@ -3863,8 +3855,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ObjectTemplates;
                     case Weapon_FieldIndex.EmbeddedWeaponMod:
                         return EmbeddedWeaponMod;
-                    case Weapon_FieldIndex.BNAM:
-                        return BNAM;
+                    case Weapon_FieldIndex.IsEmbeddedWeapon:
+                        return IsEmbeddedWeapon;
                     case Weapon_FieldIndex.SightedTransitionSeconds:
                         return SightedTransitionSeconds;
                     case Weapon_FieldIndex.AimDownSightTemplate:
@@ -4229,8 +4221,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.EmbeddedWeaponMod:
                         this.EmbeddedWeaponMod = ex;
                         break;
-                    case Weapon_FieldIndex.BNAM:
-                        this.BNAM = ex;
+                    case Weapon_FieldIndex.IsEmbeddedWeapon:
+                        this.IsEmbeddedWeapon = ex;
                         break;
                     case Weapon_FieldIndex.SightedTransitionSeconds:
                         this.SightedTransitionSeconds = ex;
@@ -4741,8 +4733,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.EmbeddedWeaponMod:
                         this.EmbeddedWeaponMod = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.BNAM:
-                        this.BNAM = (Exception?)obj;
+                    case Weapon_FieldIndex.IsEmbeddedWeapon:
+                        this.IsEmbeddedWeapon = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.SightedTransitionSeconds:
                         this.SightedTransitionSeconds = (Exception?)obj;
@@ -5207,7 +5199,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (AttachParentSlots != null) return true;
                 if (ObjectTemplates != null) return true;
                 if (EmbeddedWeaponMod != null) return true;
-                if (BNAM != null) return true;
+                if (IsEmbeddedWeapon != null) return true;
                 if (SightedTransitionSeconds != null) return true;
                 if (AimDownSightTemplate != null) return true;
                 if (AimModel != null) return true;
@@ -5495,7 +5487,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(EmbeddedWeaponMod, "EmbeddedWeaponMod");
                 }
                 {
-                    sb.AppendItem(BNAM, "BNAM");
+                    sb.AppendItem(IsEmbeddedWeapon, "IsEmbeddedWeapon");
                 }
                 {
                     sb.AppendItem(SightedTransitionSeconds, "SightedTransitionSeconds");
@@ -5958,7 +5950,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.AttachParentSlots = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.AttachParentSlots?.Overall, rhs.AttachParentSlots?.Overall), Noggog.ExceptionExt.Combine(this.AttachParentSlots?.Specific, rhs.AttachParentSlots?.Specific));
                 ret.ObjectTemplates = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectTemplate.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.ObjectTemplates?.Overall, rhs.ObjectTemplates?.Overall), Noggog.ExceptionExt.Combine(this.ObjectTemplates?.Specific, rhs.ObjectTemplates?.Specific));
                 ret.EmbeddedWeaponMod = this.EmbeddedWeaponMod.Combine(rhs.EmbeddedWeaponMod);
-                ret.BNAM = this.BNAM.Combine(rhs.BNAM);
+                ret.IsEmbeddedWeapon = this.IsEmbeddedWeapon.Combine(rhs.IsEmbeddedWeapon);
                 ret.SightedTransitionSeconds = this.SightedTransitionSeconds.Combine(rhs.SightedTransitionSeconds);
                 ret.AimDownSightTemplate = this.AimDownSightTemplate.Combine(rhs.AimDownSightTemplate);
                 ret.AimModel = this.AimModel.Combine(rhs.AimModel);
@@ -6147,7 +6139,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool AttachParentSlots;
             public ObjectTemplate.TranslationMask? ObjectTemplates;
             public bool EmbeddedWeaponMod;
-            public bool BNAM;
+            public bool IsEmbeddedWeapon;
             public bool SightedTransitionSeconds;
             public bool AimDownSightTemplate;
             public bool AimModel;
@@ -6313,7 +6305,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.InstanceNaming = defaultOn;
                 this.AttachParentSlots = defaultOn;
                 this.EmbeddedWeaponMod = defaultOn;
-                this.BNAM = defaultOn;
+                this.IsEmbeddedWeapon = defaultOn;
                 this.SightedTransitionSeconds = defaultOn;
                 this.AimDownSightTemplate = defaultOn;
                 this.AimModel = defaultOn;
@@ -6478,7 +6470,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((AttachParentSlots, null));
                 ret.Add((ObjectTemplates == null ? DefaultOn : !ObjectTemplates.GetCrystal().CopyNothing, ObjectTemplates?.GetCrystal()));
                 ret.Add((EmbeddedWeaponMod, null));
-                ret.Add((BNAM, null));
+                ret.Add((IsEmbeddedWeapon, null));
                 ret.Add((SightedTransitionSeconds, null));
                 ret.Add((AimDownSightTemplate, null));
                 ret.Add((AimModel, null));
@@ -6835,7 +6827,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? AttachParentSlots { get; set; }
         new ExtendedList<ObjectTemplate<Weapon.Property>>? ObjectTemplates { get; set; }
         new IFormLinkNullable<IAObjectModificationGetter> EmbeddedWeaponMod { get; set; }
-        new MemorySlice<Byte>? BNAM { get; set; }
+        new Boolean IsEmbeddedWeapon { get; set; }
         new Single SightedTransitionSeconds { get; set; }
         new IFormLink<IZoomGetter> AimDownSightTemplate { get; set; }
         new IFormLink<IAimModelGetter> AimModel { get; set; }
@@ -7068,7 +7060,7 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? AttachParentSlots { get; }
         IReadOnlyList<IObjectTemplateGetter<Weapon.Property>>? ObjectTemplates { get; }
         IFormLinkNullableGetter<IAObjectModificationGetter> EmbeddedWeaponMod { get; }
-        ReadOnlyMemorySlice<Byte>? BNAM { get; }
+        Boolean IsEmbeddedWeapon { get; }
         Single SightedTransitionSeconds { get; }
         IFormLinkGetter<IZoomGetter> AimDownSightTemplate { get; }
         IFormLinkGetter<IAimModelGetter> AimModel { get; }
@@ -7415,7 +7407,7 @@ namespace Mutagen.Bethesda.Starfield
         AttachParentSlots = 26,
         ObjectTemplates = 27,
         EmbeddedWeaponMod = 28,
-        BNAM = 29,
+        IsEmbeddedWeapon = 29,
         SightedTransitionSeconds = 30,
         AimDownSightTemplate = 31,
         AimModel = 32,
@@ -7728,7 +7720,7 @@ namespace Mutagen.Bethesda.Starfield
             item.AttachParentSlots = null;
             item.ObjectTemplates = null;
             item.EmbeddedWeaponMod.Clear();
-            item.BNAM = default;
+            item.IsEmbeddedWeapon = default(Boolean);
             item.SightedTransitionSeconds = default(Single);
             item.AimDownSightTemplate.Clear();
             item.AimModel.Clear();
@@ -8098,7 +8090,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             ret.EmbeddedWeaponMod = item.EmbeddedWeaponMod.Equals(rhs.EmbeddedWeaponMod);
-            ret.BNAM = MemorySliceExt.SequenceEqual(item.BNAM, rhs.BNAM);
+            ret.IsEmbeddedWeapon = item.IsEmbeddedWeapon == rhs.IsEmbeddedWeapon;
             ret.SightedTransitionSeconds = item.SightedTransitionSeconds.EqualsWithin(rhs.SightedTransitionSeconds);
             ret.AimDownSightTemplate = item.AimDownSightTemplate.Equals(rhs.AimDownSightTemplate);
             ret.AimModel = item.AimModel.Equals(rhs.AimModel);
@@ -8440,10 +8432,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.EmbeddedWeaponMod.FormKeyNullable, "EmbeddedWeaponMod");
             }
-            if ((printMask?.BNAM ?? true)
-                && item.BNAM is {} BNAMItem)
+            if (printMask?.IsEmbeddedWeapon ?? true)
             {
-                sb.AppendLine($"BNAM => {SpanExt.ToHexString(BNAMItem)}");
+                sb.AppendItem(item.IsEmbeddedWeapon, "IsEmbeddedWeapon");
             }
             if (printMask?.SightedTransitionSeconds ?? true)
             {
@@ -9202,9 +9193,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.EmbeddedWeaponMod.Equals(rhs.EmbeddedWeaponMod)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.BNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.IsEmbeddedWeapon) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.BNAM, rhs.BNAM)) return false;
+                if (lhs.IsEmbeddedWeapon != rhs.IsEmbeddedWeapon) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.SightedTransitionSeconds) ?? true))
             {
@@ -9915,10 +9906,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             hash.Add(item.EmbeddedWeaponMod);
-            if (item.BNAM is {} BNAMItem)
-            {
-                hash.AddBytes(BNAMItem);
-            }
+            hash.Add(item.IsEmbeddedWeapon);
             hash.Add(item.SightedTransitionSeconds);
             hash.Add(item.AimDownSightTemplate);
             hash.Add(item.AimModel);
@@ -10712,16 +10700,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.EmbeddedWeaponMod.SetTo(rhs.EmbeddedWeaponMod.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.BNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.IsEmbeddedWeapon) ?? true))
             {
-                if(rhs.BNAM is {} BNAMrhs)
-                {
-                    item.BNAM = BNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.BNAM = default;
-                }
+                item.IsEmbeddedWeapon = rhs.IsEmbeddedWeapon;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.SightedTransitionSeconds) ?? true))
             {
@@ -11807,9 +11788,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.EmbeddedWeaponMod,
                 header: translationParams.ConvertToCustom(RecordTypes.NNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.BNAM,
+                item: item.IsEmbeddedWeapon,
                 header: translationParams.ConvertToCustom(RecordTypes.BNAM));
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.WAIM)))
             {
@@ -12515,9 +12496,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BNAM:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Weapon_FieldIndex.BNAM;
+                    item.IsEmbeddedWeapon = true;
+                    return (int)Weapon_FieldIndex.IsEmbeddedWeapon;
                 }
                 case RecordTypeInts.WAIM:
                 {
@@ -13092,9 +13072,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _EmbeddedWeaponModLocation;
         public IFormLinkNullableGetter<IAObjectModificationGetter> EmbeddedWeaponMod => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IAObjectModificationGetter>(_package, _recordData, _EmbeddedWeaponModLocation);
         #endregion
-        #region BNAM
-        private int? _BNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? BNAM => _BNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _BNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region IsEmbeddedWeapon
+        private int? _IsEmbeddedWeaponLocation;
+        public Boolean IsEmbeddedWeapon => _IsEmbeddedWeaponLocation.HasValue ? true : default(Boolean);
         #endregion
         private RangeInt32? _WAIMLocation;
         #region SightedTransitionSeconds
@@ -14096,8 +14076,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BNAM:
                 {
-                    _BNAMLocation = (stream.Position - offset);
-                    return (int)Weapon_FieldIndex.BNAM;
+                    _IsEmbeddedWeaponLocation = (stream.Position - offset);
+                    return (int)Weapon_FieldIndex.IsEmbeddedWeapon;
                 }
                 case RecordTypeInts.WAIM:
                 {

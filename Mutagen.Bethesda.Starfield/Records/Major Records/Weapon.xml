@@ -35,7 +35,7 @@
       </List>
       <Marker name="STOP" recordType="STOP" />
       <FormLink name="EmbeddedWeaponMod" refName="AObjectModification" recordType="NNAM" />
-      <ByteArray name="BNAM" recordType="BNAM" unknown="true" />
+      <Bool name="IsEmbeddedWeapon" recordType="BNAM" boolAsMarker="True" />
       <Data recordType="WAIM" >
         <Fields>
           <Float name="SightedTransitionSeconds" />
