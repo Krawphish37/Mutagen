@@ -46,8 +46,14 @@
         <Float />
       </List>
       <UInt8 name="HNAM" recordType="HNAM" unknown="true" />
-      <ByteArray name="OffsetData" recordType="OFST" overflowRecordType="XXXX" />
-      <ByteArray name="CellSizeData" recordType="CLSZ" overflowRecordType="XXXX" />
+      <!-- OFST: for each exterior cell of the grid (rows by NAM0/NAM9, a row per Y), the offset of the CELL record from the
+           start of this WRLD record, 0 for none. CLSZ (xEdit: Cell Sizes): the same grid, one size per cell. Kept as read; not regenerated on write. -->
+      <List name="OffsetData" recordType="OFST" overflowRecordType="XXXX">
+        <UInt32 />
+      </List>
+      <List name="CellSizeData" recordType="CLSZ" overflowRecordType="XXXX">
+        <UInt32 />
+      </List>
       <RefDirect name="TopCell" refName="Cell" binary="NoGeneration" />
       <Int32 name="SubCellsTimestamp" binary="NoGeneration" />
       <Int32 name="SubCellsUnknown" binary="NoGeneration" />
