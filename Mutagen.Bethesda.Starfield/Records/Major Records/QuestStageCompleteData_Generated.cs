@@ -53,26 +53,10 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region QSRD
+        #region RewardCount
+        public UInt32? RewardCount { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _QSRD;
-        public MemorySlice<Byte>? QSRD
-        {
-            get => this._QSRD;
-            set => this._QSRD = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IQuestStageCompleteDataGetter.QSRD => this.QSRD;
-        #endregion
-        #region AffinityChange
-        private readonly IFormLinkNullable<IAffinityEventGetter> _AffinityChange = new FormLinkNullable<IAffinityEventGetter>();
-        public IFormLinkNullable<IAffinityEventGetter> AffinityChange
-        {
-            get => _AffinityChange;
-            set => _AffinityChange.SetTo(value);
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkNullableGetter<IAffinityEventGetter> IQuestStageCompleteDataGetter.AffinityChange => this.AffinityChange;
+        UInt32? IQuestStageCompleteDataGetter.RewardCount => this.RewardCount;
         #endregion
         #region RewardDatas
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -87,6 +71,16 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IQuestStageRewardDataGetter> IQuestStageCompleteDataGetter.RewardDatas => _RewardDatas;
         #endregion
 
+        #endregion
+        #region AffinityChange
+        private readonly IFormLinkNullable<IAffinityEventGetter> _AffinityChange = new FormLinkNullable<IAffinityEventGetter>();
+        public IFormLinkNullable<IAffinityEventGetter> AffinityChange
+        {
+            get => _AffinityChange;
+            set => _AffinityChange.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkNullableGetter<IAffinityEventGetter> IQuestStageCompleteDataGetter.AffinityChange => this.AffinityChange;
         #endregion
 
         #region To String
@@ -127,19 +121,19 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.QSRD = initialValue;
-                this.AffinityChange = initialValue;
+                this.RewardCount = initialValue;
                 this.RewardDatas = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, QuestStageRewardData.Mask<TItem>?>>?>(initialValue, []);
+                this.AffinityChange = initialValue;
             }
 
             public Mask(
-                TItem QSRD,
-                TItem AffinityChange,
-                TItem RewardDatas)
+                TItem RewardCount,
+                TItem RewardDatas,
+                TItem AffinityChange)
             {
-                this.QSRD = QSRD;
-                this.AffinityChange = AffinityChange;
+                this.RewardCount = RewardCount;
                 this.RewardDatas = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, QuestStageRewardData.Mask<TItem>?>>?>(RewardDatas, []);
+                this.AffinityChange = AffinityChange;
             }
 
             #pragma warning disable CS8618
@@ -151,9 +145,9 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem QSRD;
-            public TItem AffinityChange;
+            public TItem RewardCount;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, QuestStageRewardData.Mask<TItem>?>>?>? RewardDatas;
+            public TItem AffinityChange;
             #endregion
 
             #region Equals
@@ -166,17 +160,17 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.QSRD, rhs.QSRD)) return false;
-                if (!object.Equals(this.AffinityChange, rhs.AffinityChange)) return false;
+                if (!object.Equals(this.RewardCount, rhs.RewardCount)) return false;
                 if (!object.Equals(this.RewardDatas, rhs.RewardDatas)) return false;
+                if (!object.Equals(this.AffinityChange, rhs.AffinityChange)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.QSRD);
-                hash.Add(this.AffinityChange);
+                hash.Add(this.RewardCount);
                 hash.Add(this.RewardDatas);
+                hash.Add(this.AffinityChange);
                 return hash.ToHashCode();
             }
 
@@ -185,8 +179,7 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.QSRD)) return false;
-                if (!eval(this.AffinityChange)) return false;
+                if (!eval(this.RewardCount)) return false;
                 if (this.RewardDatas != null)
                 {
                     if (!eval(this.RewardDatas.Overall)) return false;
@@ -199,6 +192,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (!eval(this.AffinityChange)) return false;
                 return true;
             }
             #endregion
@@ -206,8 +200,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.QSRD)) return true;
-                if (eval(this.AffinityChange)) return true;
+                if (eval(this.RewardCount)) return true;
                 if (this.RewardDatas != null)
                 {
                     if (eval(this.RewardDatas.Overall)) return true;
@@ -220,6 +213,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (eval(this.AffinityChange)) return true;
                 return false;
             }
             #endregion
@@ -234,8 +228,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.QSRD = eval(this.QSRD);
-                obj.AffinityChange = eval(this.AffinityChange);
+                obj.RewardCount = eval(this.RewardCount);
                 if (RewardDatas != null)
                 {
                     obj.RewardDatas = new MaskItem<R, IEnumerable<MaskItemIndexed<R, QuestStageRewardData.Mask<R>?>>?>(eval(this.RewardDatas.Overall), []);
@@ -251,6 +244,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                obj.AffinityChange = eval(this.AffinityChange);
             }
             #endregion
 
@@ -269,13 +263,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(QuestStageCompleteData.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.QSRD ?? true)
+                    if (printMask?.RewardCount ?? true)
                     {
-                        sb.AppendItem(QSRD, "QSRD");
-                    }
-                    if (printMask?.AffinityChange ?? true)
-                    {
-                        sb.AppendItem(AffinityChange, "AffinityChange");
+                        sb.AppendItem(RewardCount, "RewardCount");
                     }
                     if ((printMask?.RewardDatas?.Overall ?? true)
                         && RewardDatas is {} RewardDatasItem)
@@ -295,6 +285,10 @@ namespace Mutagen.Bethesda.Starfield
                                 }
                             }
                         }
+                    }
+                    if (printMask?.AffinityChange ?? true)
+                    {
+                        sb.AppendItem(AffinityChange, "AffinityChange");
                     }
                 }
             }
@@ -320,9 +314,9 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? QSRD;
-            public Exception? AffinityChange;
+            public Exception? RewardCount;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestStageRewardData.ErrorMask?>>?>? RewardDatas;
+            public Exception? AffinityChange;
             #endregion
 
             #region IErrorMask
@@ -331,12 +325,12 @@ namespace Mutagen.Bethesda.Starfield
                 QuestStageCompleteData_FieldIndex enu = (QuestStageCompleteData_FieldIndex)index;
                 switch (enu)
                 {
-                    case QuestStageCompleteData_FieldIndex.QSRD:
-                        return QSRD;
-                    case QuestStageCompleteData_FieldIndex.AffinityChange:
-                        return AffinityChange;
+                    case QuestStageCompleteData_FieldIndex.RewardCount:
+                        return RewardCount;
                     case QuestStageCompleteData_FieldIndex.RewardDatas:
                         return RewardDatas;
+                    case QuestStageCompleteData_FieldIndex.AffinityChange:
+                        return AffinityChange;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -347,14 +341,14 @@ namespace Mutagen.Bethesda.Starfield
                 QuestStageCompleteData_FieldIndex enu = (QuestStageCompleteData_FieldIndex)index;
                 switch (enu)
                 {
-                    case QuestStageCompleteData_FieldIndex.QSRD:
-                        this.QSRD = ex;
-                        break;
-                    case QuestStageCompleteData_FieldIndex.AffinityChange:
-                        this.AffinityChange = ex;
+                    case QuestStageCompleteData_FieldIndex.RewardCount:
+                        this.RewardCount = ex;
                         break;
                     case QuestStageCompleteData_FieldIndex.RewardDatas:
                         this.RewardDatas = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestStageRewardData.ErrorMask?>>?>(ex, null);
+                        break;
+                    case QuestStageCompleteData_FieldIndex.AffinityChange:
+                        this.AffinityChange = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -366,14 +360,14 @@ namespace Mutagen.Bethesda.Starfield
                 QuestStageCompleteData_FieldIndex enu = (QuestStageCompleteData_FieldIndex)index;
                 switch (enu)
                 {
-                    case QuestStageCompleteData_FieldIndex.QSRD:
-                        this.QSRD = (Exception?)obj;
-                        break;
-                    case QuestStageCompleteData_FieldIndex.AffinityChange:
-                        this.AffinityChange = (Exception?)obj;
+                    case QuestStageCompleteData_FieldIndex.RewardCount:
+                        this.RewardCount = (Exception?)obj;
                         break;
                     case QuestStageCompleteData_FieldIndex.RewardDatas:
                         this.RewardDatas = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestStageRewardData.ErrorMask?>>?>)obj;
+                        break;
+                    case QuestStageCompleteData_FieldIndex.AffinityChange:
+                        this.AffinityChange = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -383,9 +377,9 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (QSRD != null) return true;
-                if (AffinityChange != null) return true;
+                if (RewardCount != null) return true;
                 if (RewardDatas != null) return true;
+                if (AffinityChange != null) return true;
                 return false;
             }
             #endregion
@@ -412,10 +406,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(QSRD, "QSRD");
-                }
-                {
-                    sb.AppendItem(AffinityChange, "AffinityChange");
+                    sb.AppendItem(RewardCount, "RewardCount");
                 }
                 if (RewardDatas is {} RewardDatasItem)
                 {
@@ -435,6 +426,9 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                {
+                    sb.AppendItem(AffinityChange, "AffinityChange");
+                }
             }
             #endregion
 
@@ -443,9 +437,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.QSRD = this.QSRD.Combine(rhs.QSRD);
-                ret.AffinityChange = this.AffinityChange.Combine(rhs.AffinityChange);
+                ret.RewardCount = this.RewardCount.Combine(rhs.RewardCount);
                 ret.RewardDatas = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestStageRewardData.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.RewardDatas?.Overall, rhs.RewardDatas?.Overall), Noggog.ExceptionExt.Combine(this.RewardDatas?.Specific, rhs.RewardDatas?.Specific));
+                ret.AffinityChange = this.AffinityChange.Combine(rhs.AffinityChange);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -469,9 +463,9 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool QSRD;
-            public bool AffinityChange;
+            public bool RewardCount;
             public QuestStageRewardData.TranslationMask? RewardDatas;
+            public bool AffinityChange;
             #endregion
 
             #region Ctors
@@ -481,7 +475,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.QSRD = defaultOn;
+                this.RewardCount = defaultOn;
                 this.AffinityChange = defaultOn;
             }
 
@@ -498,9 +492,9 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((QSRD, null));
-                ret.Add((AffinityChange, null));
+                ret.Add((RewardCount, null));
                 ret.Add((RewardDatas == null ? DefaultOn : !RewardDatas.GetCrystal().CopyNothing, RewardDatas?.GetCrystal()));
+                ret.Add((AffinityChange, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -579,9 +573,9 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IQuestStageCompleteData>,
         IQuestStageCompleteDataGetter
     {
-        new MemorySlice<Byte>? QSRD { get; set; }
-        new IFormLinkNullable<IAffinityEventGetter> AffinityChange { get; set; }
+        new UInt32? RewardCount { get; set; }
         new ExtendedList<QuestStageRewardData> RewardDatas { get; }
+        new IFormLinkNullable<IAffinityEventGetter> AffinityChange { get; set; }
     }
 
     public partial interface IQuestStageCompleteDataGetter :
@@ -597,9 +591,9 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => QuestStageCompleteData_Registration.Instance;
-        ReadOnlyMemorySlice<Byte>? QSRD { get; }
-        IFormLinkNullableGetter<IAffinityEventGetter> AffinityChange { get; }
+        UInt32? RewardCount { get; }
         IReadOnlyList<IQuestStageRewardDataGetter> RewardDatas { get; }
+        IFormLinkNullableGetter<IAffinityEventGetter> AffinityChange { get; }
 
     }
 
@@ -769,9 +763,9 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum QuestStageCompleteData_FieldIndex
     {
-        QSRD = 0,
-        AffinityChange = 1,
-        RewardDatas = 2,
+        RewardCount = 0,
+        RewardDatas = 1,
+        AffinityChange = 2,
     }
     #endregion
 
@@ -815,18 +809,18 @@ namespace Mutagen.Bethesda.Starfield
         {
             var triggers = RecordCollection.Factory(
                 RecordTypes.QSRD,
-                RecordTypes.NAM1,
-                RecordTypes.QRXP,
-                RecordTypes.QRCR,
-                RecordTypes.QRRD,
-                RecordTypes.CTDA);
-            var all = RecordCollection.Factory(
-                RecordTypes.QSRD,
-                RecordTypes.NAM1,
                 RecordTypes.QRXP,
                 RecordTypes.QRCR,
                 RecordTypes.QRRD,
                 RecordTypes.CTDA,
+                RecordTypes.NAM1);
+            var all = RecordCollection.Factory(
+                RecordTypes.QSRD,
+                RecordTypes.QRXP,
+                RecordTypes.QRCR,
+                RecordTypes.QRRD,
+                RecordTypes.CTDA,
+                RecordTypes.NAM1,
                 RecordTypes.CITC,
                 RecordTypes.CIS1,
                 RecordTypes.CIS2);
@@ -874,16 +868,16 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IQuestStageCompleteData item)
         {
             ClearPartial();
-            item.QSRD = default;
-            item.AffinityChange.Clear();
+            item.RewardCount = default;
             item.RewardDatas.Clear();
+            item.AffinityChange.Clear();
         }
         
         #region Mutagen
         public void RemapLinks(IQuestStageCompleteData obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
-            obj.AffinityChange.Relink(mapping);
             obj.RewardDatas.RemapLinks(mapping);
+            obj.AffinityChange.Relink(mapping);
         }
         
         #endregion
@@ -928,12 +922,12 @@ namespace Mutagen.Bethesda.Starfield
             QuestStageCompleteData.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.QSRD = MemorySliceExt.SequenceEqual(item.QSRD, rhs.QSRD);
-            ret.AffinityChange = item.AffinityChange.Equals(rhs.AffinityChange);
+            ret.RewardCount = item.RewardCount == rhs.RewardCount;
             ret.RewardDatas = item.RewardDatas.CollectionEqualsHelper(
                 rhs.RewardDatas,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
+            ret.AffinityChange = item.AffinityChange.Equals(rhs.AffinityChange);
         }
         
         public string Print(
@@ -978,14 +972,10 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             QuestStageCompleteData.Mask<bool>? printMask = null)
         {
-            if ((printMask?.QSRD ?? true)
-                && item.QSRD is {} QSRDItem)
+            if ((printMask?.RewardCount ?? true)
+                && item.RewardCount is {} RewardCountItem)
             {
-                sb.AppendLine($"QSRD => {SpanExt.ToHexString(QSRDItem)}");
-            }
-            if (printMask?.AffinityChange ?? true)
-            {
-                sb.AppendItem(item.AffinityChange.FormKeyNullable, "AffinityChange");
+                sb.AppendItem(RewardCountItem, "RewardCount");
             }
             if (printMask?.RewardDatas?.Overall ?? true)
             {
@@ -1001,6 +991,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
+            if (printMask?.AffinityChange ?? true)
+            {
+                sb.AppendItem(item.AffinityChange.FormKeyNullable, "AffinityChange");
+            }
         }
         
         #region Equals and Hash
@@ -1010,17 +1004,17 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)QuestStageCompleteData_FieldIndex.QSRD) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)QuestStageCompleteData_FieldIndex.RewardCount) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.QSRD, rhs.QSRD)) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)QuestStageCompleteData_FieldIndex.AffinityChange) ?? true))
-            {
-                if (!lhs.AffinityChange.Equals(rhs.AffinityChange)) return false;
+                if (lhs.RewardCount != rhs.RewardCount) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)QuestStageCompleteData_FieldIndex.RewardDatas) ?? true))
             {
                 if (!lhs.RewardDatas.SequenceEqual(rhs.RewardDatas, (l, r) => ((QuestStageRewardDataCommon)((IQuestStageRewardDataGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)QuestStageCompleteData_FieldIndex.RewardDatas)))) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)QuestStageCompleteData_FieldIndex.AffinityChange) ?? true))
+            {
+                if (!lhs.AffinityChange.Equals(rhs.AffinityChange)) return false;
             }
             return true;
         }
@@ -1028,15 +1022,15 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IQuestStageCompleteDataGetter item)
         {
             var hash = new HashCode();
-            if (item.QSRD is {} QSRDItem)
+            if (item.RewardCount is {} RewardCountitem)
             {
-                hash.AddBytes(QSRDItem);
+                hash.Add(RewardCountitem);
             }
-            hash.Add(item.AffinityChange);
             foreach (var subItem in item.RewardDatas)
             {
                 hash.Add(subItem);
             }
+            hash.Add(item.AffinityChange);
             return hash.ToHashCode();
         }
         
@@ -1051,13 +1045,13 @@ namespace Mutagen.Bethesda.Starfield
         #region Mutagen
         public IEnumerable<IFormLinkGetter> EnumerateFormLinks(IQuestStageCompleteDataGetter obj, bool iterateNestedRecords = true)
         {
-            if (FormLinkInformation.TryFactory(obj.AffinityChange, out var AffinityChangeInfo))
-            {
-                yield return AffinityChangeInfo;
-            }
             foreach (var item in obj.RewardDatas.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
             {
                 yield return FormLinkInformation.Factory(item);
+            }
+            if (FormLinkInformation.TryFactory(obj.AffinityChange, out var AffinityChangeInfo))
+            {
+                yield return AffinityChangeInfo;
             }
             yield break;
         }
@@ -1077,20 +1071,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)QuestStageCompleteData_FieldIndex.QSRD) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)QuestStageCompleteData_FieldIndex.RewardCount) ?? true))
             {
-                if(rhs.QSRD is {} QSRDrhs)
-                {
-                    item.QSRD = QSRDrhs.ToArray();
-                }
-                else
-                {
-                    item.QSRD = default;
-                }
-            }
-            if ((copyMask?.GetShouldTranslate((int)QuestStageCompleteData_FieldIndex.AffinityChange) ?? true))
-            {
-                item.AffinityChange.SetTo(rhs.AffinityChange.FormKeyNullable);
+                item.RewardCount = rhs.RewardCount;
             }
             if ((copyMask?.GetShouldTranslate((int)QuestStageCompleteData_FieldIndex.RewardDatas) ?? true))
             {
@@ -1115,6 +1098,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     errorMask?.PopIndex();
                 }
+            }
+            if ((copyMask?.GetShouldTranslate((int)QuestStageCompleteData_FieldIndex.AffinityChange) ?? true))
+            {
+                item.AffinityChange.SetTo(rhs.AffinityChange.FormKeyNullable);
             }
             DeepCopyInCustom(
                 item: item,
@@ -1225,14 +1212,10 @@ namespace Mutagen.Bethesda.Starfield
             MutagenWriter writer,
             TypedWriteParams translationParams)
         {
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.QSRD,
+                item: item.RewardCount,
                 header: translationParams.ConvertToCustom(RecordTypes.QSRD));
-            FormLinkBinaryTranslation.Instance.WriteNullable(
-                writer: writer,
-                item: item.AffinityChange,
-                header: translationParams.ConvertToCustom(RecordTypes.NAM1));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IQuestStageRewardDataGetter>.Instance.Write(
                 writer: writer,
                 items: item.RewardDatas,
@@ -1244,6 +1227,11 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
+            using (HeaderExport.Subrecord(writer, RecordTypes.QSRD)) { }
+            FormLinkBinaryTranslation.Instance.WriteNullable(
+                writer: writer,
+                item: item.AffinityChange,
+                header: translationParams.ConvertToCustom(RecordTypes.NAM1));
         }
 
         public void Write(
@@ -1288,17 +1276,34 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.QSRD:
                 {
-                    if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.QSRD, translationParams)) return ParseResult.Stop;
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.QSRD = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)QuestStageCompleteData_FieldIndex.QSRD;
-                }
-                case RecordTypeInts.NAM1:
-                {
-                    if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.AffinityChange, translationParams)) return ParseResult.Stop;
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.AffinityChange.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-                    return (int)QuestStageCompleteData_FieldIndex.AffinityChange;
+                    if (!lastParsed.ParsedIndex.HasValue)
+                    {
+                        if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.RewardCount, translationParams)) return ParseResult.Stop;
+                        frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                        item.RewardCount = frame.ReadUInt32();
+                        return new ParseResult((int)QuestStageCompleteData_FieldIndex.RewardCount, nextRecordType);
+                    }
+                    else if (lastParsed.ParsedIndex.Value <= (int)QuestStageCompleteData_FieldIndex.RewardDatas)
+                    {
+                        frame.ReadSubrecord();
+                        return new ParseResult(default(int?), nextRecordType);
+                    }
+                    else
+                    {
+                        switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
+                        {
+                            case 0:
+                                if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.RewardCount, translationParams)) return ParseResult.Stop;
+                                frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                                item.RewardCount = frame.ReadUInt32();
+                                return new ParseResult((int)QuestStageCompleteData_FieldIndex.RewardCount, nextRecordType);
+                            case 1:
+                                frame.ReadSubrecord();
+                                return new ParseResult(default(int?), nextRecordType);
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
                 }
                 case RecordTypeInts.QRXP:
                 case RecordTypeInts.QRCR:
@@ -1313,6 +1318,13 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: QuestStageRewardData.TryCreateFromBinary));
                     return (int)QuestStageCompleteData_FieldIndex.RewardDatas;
+                }
+                case RecordTypeInts.NAM1:
+                {
+                    if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.AffinityChange, translationParams)) return ParseResult.Stop;
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                    item.AffinityChange.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)QuestStageCompleteData_FieldIndex.AffinityChange;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1383,15 +1395,15 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region QSRD
-        private int? _QSRDLocation;
-        public ReadOnlyMemorySlice<Byte>? QSRD => _QSRDLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _QSRDLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region RewardCount
+        private int? _RewardCountLocation;
+        public UInt32? RewardCount => _RewardCountLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _RewardCountLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
+        public IReadOnlyList<IQuestStageRewardDataGetter> RewardDatas { get; private set; } = [];
         #region AffinityChange
         private int? _AffinityChangeLocation;
         public IFormLinkNullableGetter<IAffinityEventGetter> AffinityChange => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IAffinityEventGetter>(_package, _recordData, _AffinityChangeLocation);
         #endregion
-        public IReadOnlyList<IQuestStageRewardDataGetter> RewardDatas { get; private set; } = [];
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1457,15 +1469,36 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.QSRD:
                 {
-                    if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.QSRD, translationParams)) return ParseResult.Stop;
-                    _QSRDLocation = (stream.Position - offset);
-                    return (int)QuestStageCompleteData_FieldIndex.QSRD;
-                }
-                case RecordTypeInts.NAM1:
-                {
-                    if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.AffinityChange, translationParams)) return ParseResult.Stop;
-                    _AffinityChangeLocation = (stream.Position - offset);
-                    return (int)QuestStageCompleteData_FieldIndex.AffinityChange;
+                    if (!lastParsed.ParsedIndex.HasValue)
+                    {
+                        if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.RewardCount, translationParams)) return ParseResult.Stop;
+                        _RewardCountLocation = (stream.Position - offset);
+                        return new ParseResult((int)QuestStageCompleteData_FieldIndex.RewardCount, type);
+                    }
+                    else if (lastParsed.ParsedIndex.Value <= (int)QuestStageCompleteData_FieldIndex.RewardDatas)
+                    {
+                        stream.ReadSubrecord();
+                        return new ParseResult(default(int?), type);
+                    }
+                    else
+                    {
+                        switch (recordParseCount?.GetOrAdd(type) ?? 0)
+                        {
+                            case 0:
+                            {
+                                if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.RewardCount, translationParams)) return ParseResult.Stop;
+                                _RewardCountLocation = (stream.Position - offset);
+                                return new ParseResult((int)QuestStageCompleteData_FieldIndex.RewardCount, type);
+                            }
+                            case 1:
+                            {
+                                stream.ReadSubrecord();
+                                return new ParseResult(default(int?), type);
+                            }
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
                 }
                 case RecordTypeInts.QRXP:
                 case RecordTypeInts.QRCR:
@@ -1479,6 +1512,12 @@ namespace Mutagen.Bethesda.Starfield
                         trigger: QuestStageRewardData_Registration.TriggerSpecs,
                         factory: QuestStageRewardDataBinaryOverlay.QuestStageRewardDataFactory);
                     return (int)QuestStageCompleteData_FieldIndex.RewardDatas;
+                }
+                case RecordTypeInts.NAM1:
+                {
+                    if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.AffinityChange, translationParams)) return ParseResult.Stop;
+                    _AffinityChangeLocation = (stream.Position - offset);
+                    return (int)QuestStageCompleteData_FieldIndex.AffinityChange;
                 }
                 default:
                     return ParseResult.Stop;

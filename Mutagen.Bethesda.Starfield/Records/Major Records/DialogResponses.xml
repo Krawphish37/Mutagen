@@ -53,7 +53,8 @@
       <String name="ScriptNotes" recordType="NAM2" nullable="False" />
       <String name="Edits" recordType="NAM3" nullable="False" />
       <String name="AlternateLipText" recordType="NAM4" nullable="False" />
-      <ByteArray name="TextHash" recordType="NAM9" />
+      <!-- NAM9: a Windows FILETIME (100 ns ticks since 1601, UTC). xEdit calls it Text Hash, but every value in Starfield.esm decodes to 2016-2023 (Fallout4.esm: 2013-2015). -->
+      <UInt64 name="CreationTime" recordType="NAM9" />
       <RefDirect name="Animation" refName="Animation" />
       <RefDirect name="HeadTracking" refName="HeadTracking" />
       <RefDirect name="Sound" recordType="RVSH" refName="SoundReference" />

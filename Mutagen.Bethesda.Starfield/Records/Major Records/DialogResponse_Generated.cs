@@ -107,16 +107,10 @@ namespace Mutagen.Bethesda.Starfield
         #region AlternateLipText
         public String AlternateLipText { get; set; } = string.Empty;
         #endregion
-        #region TextHash
+        #region CreationTime
+        public UInt64? CreationTime { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _TextHash;
-        public MemorySlice<Byte>? TextHash
-        {
-            get => this._TextHash;
-            set => this._TextHash = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IDialogResponseGetter.TextHash => this.TextHash;
+        UInt64? IDialogResponseGetter.CreationTime => this.CreationTime;
         #endregion
         #region Animation
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -199,7 +193,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ScriptNotes = initialValue;
                 this.Edits = initialValue;
                 this.AlternateLipText = initialValue;
-                this.TextHash = initialValue;
+                this.CreationTime = initialValue;
                 this.Animation = new MaskItem<TItem, Animation.Mask<TItem>?>(initialValue, new Animation.Mask<TItem>(initialValue));
                 this.HeadTracking = new MaskItem<TItem, HeadTracking.Mask<TItem>?>(initialValue, new HeadTracking.Mask<TItem>(initialValue));
                 this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
@@ -215,7 +209,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ScriptNotes,
                 TItem Edits,
                 TItem AlternateLipText,
-                TItem TextHash,
+                TItem CreationTime,
                 TItem Animation,
                 TItem HeadTracking,
                 TItem Sound)
@@ -229,7 +223,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ScriptNotes = ScriptNotes;
                 this.Edits = Edits;
                 this.AlternateLipText = AlternateLipText;
-                this.TextHash = TextHash;
+                this.CreationTime = CreationTime;
                 this.Animation = new MaskItem<TItem, Animation.Mask<TItem>?>(Animation, new Animation.Mask<TItem>(Animation));
                 this.HeadTracking = new MaskItem<TItem, HeadTracking.Mask<TItem>?>(HeadTracking, new HeadTracking.Mask<TItem>(HeadTracking));
                 this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Sound, new SoundReference.Mask<TItem>(Sound));
@@ -253,7 +247,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem ScriptNotes;
             public TItem Edits;
             public TItem AlternateLipText;
-            public TItem TextHash;
+            public TItem CreationTime;
             public MaskItem<TItem, Animation.Mask<TItem>?>? Animation { get; set; }
             public MaskItem<TItem, HeadTracking.Mask<TItem>?>? HeadTracking { get; set; }
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? Sound { get; set; }
@@ -278,7 +272,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ScriptNotes, rhs.ScriptNotes)) return false;
                 if (!object.Equals(this.Edits, rhs.Edits)) return false;
                 if (!object.Equals(this.AlternateLipText, rhs.AlternateLipText)) return false;
-                if (!object.Equals(this.TextHash, rhs.TextHash)) return false;
+                if (!object.Equals(this.CreationTime, rhs.CreationTime)) return false;
                 if (!object.Equals(this.Animation, rhs.Animation)) return false;
                 if (!object.Equals(this.HeadTracking, rhs.HeadTracking)) return false;
                 if (!object.Equals(this.Sound, rhs.Sound)) return false;
@@ -296,7 +290,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ScriptNotes);
                 hash.Add(this.Edits);
                 hash.Add(this.AlternateLipText);
-                hash.Add(this.TextHash);
+                hash.Add(this.CreationTime);
                 hash.Add(this.Animation);
                 hash.Add(this.HeadTracking);
                 hash.Add(this.Sound);
@@ -328,7 +322,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.ScriptNotes)) return false;
                 if (!eval(this.Edits)) return false;
                 if (!eval(this.AlternateLipText)) return false;
-                if (!eval(this.TextHash)) return false;
+                if (!eval(this.CreationTime)) return false;
                 if (Animation != null)
                 {
                     if (!eval(this.Animation.Overall)) return false;
@@ -371,7 +365,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.ScriptNotes)) return true;
                 if (eval(this.Edits)) return true;
                 if (eval(this.AlternateLipText)) return true;
-                if (eval(this.TextHash)) return true;
+                if (eval(this.CreationTime)) return true;
                 if (Animation != null)
                 {
                     if (eval(this.Animation.Overall)) return true;
@@ -424,7 +418,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.ScriptNotes = eval(this.ScriptNotes);
                 obj.Edits = eval(this.Edits);
                 obj.AlternateLipText = eval(this.AlternateLipText);
-                obj.TextHash = eval(this.TextHash);
+                obj.CreationTime = eval(this.CreationTime);
                 obj.Animation = this.Animation == null ? null : new MaskItem<R, Animation.Mask<R>?>(eval(this.Animation.Overall), this.Animation.Specific?.Translate(eval));
                 obj.HeadTracking = this.HeadTracking == null ? null : new MaskItem<R, HeadTracking.Mask<R>?>(eval(this.HeadTracking.Overall), this.HeadTracking.Specific?.Translate(eval));
                 obj.Sound = this.Sound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
@@ -497,9 +491,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(AlternateLipText, "AlternateLipText");
                     }
-                    if (printMask?.TextHash ?? true)
+                    if (printMask?.CreationTime ?? true)
                     {
-                        sb.AppendItem(TextHash, "TextHash");
+                        sb.AppendItem(CreationTime, "CreationTime");
                     }
                     if (printMask?.Animation?.Overall ?? true)
                     {
@@ -546,7 +540,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? ScriptNotes;
             public Exception? Edits;
             public Exception? AlternateLipText;
-            public Exception? TextHash;
+            public Exception? CreationTime;
             public MaskItem<Exception?, Animation.ErrorMask?>? Animation;
             public MaskItem<Exception?, HeadTracking.ErrorMask?>? HeadTracking;
             public MaskItem<Exception?, SoundReference.ErrorMask?>? Sound;
@@ -576,8 +570,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Edits;
                     case DialogResponse_FieldIndex.AlternateLipText:
                         return AlternateLipText;
-                    case DialogResponse_FieldIndex.TextHash:
-                        return TextHash;
+                    case DialogResponse_FieldIndex.CreationTime:
+                        return CreationTime;
                     case DialogResponse_FieldIndex.Animation:
                         return Animation;
                     case DialogResponse_FieldIndex.HeadTracking:
@@ -621,8 +615,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DialogResponse_FieldIndex.AlternateLipText:
                         this.AlternateLipText = ex;
                         break;
-                    case DialogResponse_FieldIndex.TextHash:
-                        this.TextHash = ex;
+                    case DialogResponse_FieldIndex.CreationTime:
+                        this.CreationTime = ex;
                         break;
                     case DialogResponse_FieldIndex.Animation:
                         this.Animation = new MaskItem<Exception?, Animation.ErrorMask?>(ex, null);
@@ -670,8 +664,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DialogResponse_FieldIndex.AlternateLipText:
                         this.AlternateLipText = (Exception?)obj;
                         break;
-                    case DialogResponse_FieldIndex.TextHash:
-                        this.TextHash = (Exception?)obj;
+                    case DialogResponse_FieldIndex.CreationTime:
+                        this.CreationTime = (Exception?)obj;
                         break;
                     case DialogResponse_FieldIndex.Animation:
                         this.Animation = (MaskItem<Exception?, Animation.ErrorMask?>?)obj;
@@ -699,7 +693,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ScriptNotes != null) return true;
                 if (Edits != null) return true;
                 if (AlternateLipText != null) return true;
-                if (TextHash != null) return true;
+                if (CreationTime != null) return true;
                 if (Animation != null) return true;
                 if (HeadTracking != null) return true;
                 if (Sound != null) return true;
@@ -771,7 +765,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(AlternateLipText, "AlternateLipText");
                 }
                 {
-                    sb.AppendItem(TextHash, "TextHash");
+                    sb.AppendItem(CreationTime, "CreationTime");
                 }
                 Animation?.Print(sb);
                 HeadTracking?.Print(sb);
@@ -793,7 +787,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ScriptNotes = this.ScriptNotes.Combine(rhs.ScriptNotes);
                 ret.Edits = this.Edits.Combine(rhs.Edits);
                 ret.AlternateLipText = this.AlternateLipText.Combine(rhs.AlternateLipText);
-                ret.TextHash = this.TextHash.Combine(rhs.TextHash);
+                ret.CreationTime = this.CreationTime.Combine(rhs.CreationTime);
                 ret.Animation = this.Animation.Combine(rhs.Animation, (l, r) => l.Combine(r));
                 ret.HeadTracking = this.HeadTracking.Combine(rhs.HeadTracking, (l, r) => l.Combine(r));
                 ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
@@ -829,7 +823,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool ScriptNotes;
             public bool Edits;
             public bool AlternateLipText;
-            public bool TextHash;
+            public bool CreationTime;
             public Animation.TranslationMask? Animation;
             public HeadTracking.TranslationMask? HeadTracking;
             public SoundReference.TranslationMask? Sound;
@@ -850,7 +844,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ScriptNotes = defaultOn;
                 this.Edits = defaultOn;
                 this.AlternateLipText = defaultOn;
-                this.TextHash = defaultOn;
+                this.CreationTime = defaultOn;
             }
 
             #endregion
@@ -875,7 +869,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ScriptNotes, null));
                 ret.Add((Edits, null));
                 ret.Add((AlternateLipText, null));
-                ret.Add((TextHash, null));
+                ret.Add((CreationTime, null));
                 ret.Add((Animation != null ? Animation.OnOverall : DefaultOn, Animation?.GetCrystal()));
                 ret.Add((HeadTracking != null ? HeadTracking.OnOverall : DefaultOn, HeadTracking?.GetCrystal()));
                 ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
@@ -966,7 +960,7 @@ namespace Mutagen.Bethesda.Starfield
         new String ScriptNotes { get; set; }
         new String Edits { get; set; }
         new String AlternateLipText { get; set; }
-        new MemorySlice<Byte>? TextHash { get; set; }
+        new UInt64? CreationTime { get; set; }
         new Animation? Animation { get; set; }
         new HeadTracking? HeadTracking { get; set; }
         new SoundReference? Sound { get; set; }
@@ -994,7 +988,7 @@ namespace Mutagen.Bethesda.Starfield
         String ScriptNotes { get; }
         String Edits { get; }
         String AlternateLipText { get; }
-        ReadOnlyMemorySlice<Byte>? TextHash { get; }
+        UInt64? CreationTime { get; }
         IAnimationGetter? Animation { get; }
         IHeadTrackingGetter? HeadTracking { get; }
         ISoundReferenceGetter? Sound { get; }
@@ -1176,7 +1170,7 @@ namespace Mutagen.Bethesda.Starfield
         ScriptNotes = 6,
         Edits = 7,
         AlternateLipText = 8,
-        TextHash = 9,
+        CreationTime = 9,
         Animation = 10,
         HeadTracking = 11,
         Sound = 12,
@@ -1288,7 +1282,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ScriptNotes = string.Empty;
             item.Edits = string.Empty;
             item.AlternateLipText = string.Empty;
-            item.TextHash = default;
+            item.CreationTime = default;
             item.Animation = null;
             item.HeadTracking = null;
             item.Sound = null;
@@ -1358,7 +1352,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.ScriptNotes = string.Equals(item.ScriptNotes, rhs.ScriptNotes);
             ret.Edits = string.Equals(item.Edits, rhs.Edits);
             ret.AlternateLipText = string.Equals(item.AlternateLipText, rhs.AlternateLipText);
-            ret.TextHash = MemorySliceExt.SequenceEqual(item.TextHash, rhs.TextHash);
+            ret.CreationTime = item.CreationTime == rhs.CreationTime;
             ret.Animation = EqualsMaskHelper.EqualsHelper(
                 item.Animation,
                 rhs.Animation,
@@ -1464,10 +1458,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.AlternateLipText, "AlternateLipText");
             }
-            if ((printMask?.TextHash ?? true)
-                && item.TextHash is {} TextHashItem)
+            if ((printMask?.CreationTime ?? true)
+                && item.CreationTime is {} CreationTimeItem)
             {
-                sb.AppendLine($"TextHash => {SpanExt.ToHexString(TextHashItem)}");
+                sb.AppendItem(CreationTimeItem, "CreationTime");
             }
             if ((printMask?.Animation?.Overall ?? true)
                 && item.Animation is {} AnimationItem)
@@ -1529,9 +1523,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!string.Equals(lhs.AlternateLipText, rhs.AlternateLipText)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)DialogResponse_FieldIndex.TextHash) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)DialogResponse_FieldIndex.CreationTime) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.TextHash, rhs.TextHash)) return false;
+                if (lhs.CreationTime != rhs.CreationTime) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)DialogResponse_FieldIndex.Animation) ?? true))
             {
@@ -1575,9 +1569,9 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ScriptNotes);
             hash.Add(item.Edits);
             hash.Add(item.AlternateLipText);
-            if (item.TextHash is {} TextHashItem)
+            if (item.CreationTime is {} CreationTimeitem)
             {
-                hash.AddBytes(TextHashItem);
+                hash.Add(CreationTimeitem);
             }
             if (item.Animation is {} Animationitem)
             {
@@ -1702,16 +1696,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.AlternateLipText = rhs.AlternateLipText;
             }
-            if ((copyMask?.GetShouldTranslate((int)DialogResponse_FieldIndex.TextHash) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)DialogResponse_FieldIndex.CreationTime) ?? true))
             {
-                if(rhs.TextHash is {} TextHashrhs)
-                {
-                    item.TextHash = TextHashrhs.ToArray();
-                }
-                else
-                {
-                    item.TextHash = default;
-                }
+                item.CreationTime = rhs.CreationTime;
             }
             if ((copyMask?.GetShouldTranslate((int)DialogResponse_FieldIndex.Animation) ?? true))
             {
@@ -1946,9 +1933,9 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.AlternateLipText,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM4),
                 binaryType: StringBinaryType.NullTerminate);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt64BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.TextHash,
+                item: item.CreationTime,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM9));
             if (item.Animation is {} AnimationItem)
             {
@@ -2089,8 +2076,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NAM9:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.TextHash = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)DialogResponse_FieldIndex.TextHash;
+                    item.CreationTime = frame.ReadUInt64();
+                    return (int)DialogResponse_FieldIndex.CreationTime;
                 }
                 case RecordTypeInts.BNAM:
                 {
@@ -2218,9 +2205,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _AlternateLipTextLocation;
         public String AlternateLipText => _AlternateLipTextLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _AlternateLipTextLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
         #endregion
-        #region TextHash
-        private int? _TextHashLocation;
-        public ReadOnlyMemorySlice<Byte>? TextHash => _TextHashLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _TextHashLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region CreationTime
+        private int? _CreationTimeLocation;
+        public UInt64? CreationTime => _CreationTimeLocation.HasValue ? BinaryPrimitives.ReadUInt64LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _CreationTimeLocation.Value, _package.MetaData.Constants)) : default(UInt64?);
         #endregion
         public IAnimationGetter? Animation { get; private set; }
         public IHeadTrackingGetter? HeadTracking { get; private set; }
@@ -2336,8 +2323,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.NAM9:
                 {
-                    _TextHashLocation = (stream.Position - offset);
-                    return (int)DialogResponse_FieldIndex.TextHash;
+                    _CreationTimeLocation = (stream.Position - offset);
+                    return (int)DialogResponse_FieldIndex.CreationTime;
                 }
                 case RecordTypeInts.BNAM:
                 {

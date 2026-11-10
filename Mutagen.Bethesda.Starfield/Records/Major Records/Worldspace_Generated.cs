@@ -184,10 +184,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IWaterGetter> IWorldspaceGetter.Water => this.Water;
         #endregion
-        #region NAM7
-        public String? NAM7 { get; set; }
+        #region WaterMaterial
+        public String? WaterMaterial { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IWorldspaceGetter.NAM7 => this.NAM7;
+        String? IWorldspaceGetter.WaterMaterial => this.WaterMaterial;
         #endregion
         #region LodWater
         private readonly IFormLinkNullable<IWaterGetter> _LodWater = new FormLinkNullable<IWaterGetter>();
@@ -447,7 +447,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Parent = new MaskItem<TItem, WorldspaceParent.Mask<TItem>?>(initialValue, new WorldspaceParent.Mask<TItem>(initialValue));
                 this.Climate = initialValue;
                 this.Water = initialValue;
-                this.NAM7 = initialValue;
+                this.WaterMaterial = initialValue;
                 this.LodWater = initialValue;
                 this.LodWaterHeight = initialValue;
                 this.LandDefaults = new MaskItem<TItem, WorldspaceLandDefaults.Mask<TItem>?>(initialValue, new WorldspaceLandDefaults.Mask<TItem>(initialValue));
@@ -493,7 +493,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Parent,
                 TItem Climate,
                 TItem Water,
-                TItem NAM7,
+                TItem WaterMaterial,
                 TItem LodWater,
                 TItem LodWaterHeight,
                 TItem LandDefaults,
@@ -538,7 +538,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Parent = new MaskItem<TItem, WorldspaceParent.Mask<TItem>?>(Parent, new WorldspaceParent.Mask<TItem>(Parent));
                 this.Climate = Climate;
                 this.Water = Water;
-                this.NAM7 = NAM7;
+                this.WaterMaterial = WaterMaterial;
                 this.LodWater = LodWater;
                 this.LodWaterHeight = LodWaterHeight;
                 this.LandDefaults = new MaskItem<TItem, WorldspaceLandDefaults.Mask<TItem>?>(LandDefaults, new WorldspaceLandDefaults.Mask<TItem>(LandDefaults));
@@ -585,7 +585,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, WorldspaceParent.Mask<TItem>?>? Parent { get; set; }
             public TItem Climate;
             public TItem Water;
-            public TItem NAM7;
+            public TItem WaterMaterial;
             public TItem LodWater;
             public TItem LodWaterHeight;
             public MaskItem<TItem, WorldspaceLandDefaults.Mask<TItem>?>? LandDefaults { get; set; }
@@ -634,7 +634,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Parent, rhs.Parent)) return false;
                 if (!object.Equals(this.Climate, rhs.Climate)) return false;
                 if (!object.Equals(this.Water, rhs.Water)) return false;
-                if (!object.Equals(this.NAM7, rhs.NAM7)) return false;
+                if (!object.Equals(this.WaterMaterial, rhs.WaterMaterial)) return false;
                 if (!object.Equals(this.LodWater, rhs.LodWater)) return false;
                 if (!object.Equals(this.LodWaterHeight, rhs.LodWaterHeight)) return false;
                 if (!object.Equals(this.LandDefaults, rhs.LandDefaults)) return false;
@@ -675,7 +675,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Parent);
                 hash.Add(this.Climate);
                 hash.Add(this.Water);
-                hash.Add(this.NAM7);
+                hash.Add(this.WaterMaterial);
                 hash.Add(this.LodWater);
                 hash.Add(this.LodWaterHeight);
                 hash.Add(this.LandDefaults);
@@ -747,7 +747,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.Climate)) return false;
                 if (!eval(this.Water)) return false;
-                if (!eval(this.NAM7)) return false;
+                if (!eval(this.WaterMaterial)) return false;
                 if (!eval(this.LodWater)) return false;
                 if (!eval(this.LodWaterHeight)) return false;
                 if (LandDefaults != null)
@@ -905,7 +905,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.Climate)) return true;
                 if (eval(this.Water)) return true;
-                if (eval(this.NAM7)) return true;
+                if (eval(this.WaterMaterial)) return true;
                 if (eval(this.LodWater)) return true;
                 if (eval(this.LodWaterHeight)) return true;
                 if (LandDefaults != null)
@@ -1072,7 +1072,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Parent = this.Parent == null ? null : new MaskItem<R, WorldspaceParent.Mask<R>?>(eval(this.Parent.Overall), this.Parent.Specific?.Translate(eval));
                 obj.Climate = eval(this.Climate);
                 obj.Water = eval(this.Water);
-                obj.NAM7 = eval(this.NAM7);
+                obj.WaterMaterial = eval(this.WaterMaterial);
                 obj.LodWater = eval(this.LodWater);
                 obj.LodWaterHeight = eval(this.LodWaterHeight);
                 obj.LandDefaults = this.LandDefaults == null ? null : new MaskItem<R, WorldspaceLandDefaults.Mask<R>?>(eval(this.LandDefaults.Overall), this.LandDefaults.Specific?.Translate(eval));
@@ -1276,9 +1276,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Water, "Water");
                     }
-                    if (printMask?.NAM7 ?? true)
+                    if (printMask?.WaterMaterial ?? true)
                     {
-                        sb.AppendItem(NAM7, "NAM7");
+                        sb.AppendItem(WaterMaterial, "WaterMaterial");
                     }
                     if (printMask?.LodWater ?? true)
                     {
@@ -1519,7 +1519,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, WorldspaceParent.ErrorMask?>? Parent;
             public Exception? Climate;
             public Exception? Water;
-            public Exception? NAM7;
+            public Exception? WaterMaterial;
             public Exception? LodWater;
             public Exception? LodWaterHeight;
             public MaskItem<Exception?, WorldspaceLandDefaults.ErrorMask?>? LandDefaults;
@@ -1572,8 +1572,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Climate;
                     case Worldspace_FieldIndex.Water:
                         return Water;
-                    case Worldspace_FieldIndex.NAM7:
-                        return NAM7;
+                    case Worldspace_FieldIndex.WaterMaterial:
+                        return WaterMaterial;
                     case Worldspace_FieldIndex.LodWater:
                         return LodWater;
                     case Worldspace_FieldIndex.LodWaterHeight:
@@ -1663,8 +1663,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Worldspace_FieldIndex.Water:
                         this.Water = ex;
                         break;
-                    case Worldspace_FieldIndex.NAM7:
-                        this.NAM7 = ex;
+                    case Worldspace_FieldIndex.WaterMaterial:
+                        this.WaterMaterial = ex;
                         break;
                     case Worldspace_FieldIndex.LodWater:
                         this.LodWater = ex;
@@ -1782,8 +1782,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Worldspace_FieldIndex.Water:
                         this.Water = (Exception?)obj;
                         break;
-                    case Worldspace_FieldIndex.NAM7:
-                        this.NAM7 = (Exception?)obj;
+                    case Worldspace_FieldIndex.WaterMaterial:
+                        this.WaterMaterial = (Exception?)obj;
                         break;
                     case Worldspace_FieldIndex.LodWater:
                         this.LodWater = (Exception?)obj;
@@ -1881,7 +1881,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Parent != null) return true;
                 if (Climate != null) return true;
                 if (Water != null) return true;
-                if (NAM7 != null) return true;
+                if (WaterMaterial != null) return true;
                 if (LodWater != null) return true;
                 if (LodWaterHeight != null) return true;
                 if (LandDefaults != null) return true;
@@ -1990,7 +1990,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Water, "Water");
                 }
                 {
-                    sb.AppendItem(NAM7, "NAM7");
+                    sb.AppendItem(WaterMaterial, "WaterMaterial");
                 }
                 {
                     sb.AppendItem(LodWater, "LodWater");
@@ -2194,7 +2194,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Parent = this.Parent.Combine(rhs.Parent, (l, r) => l.Combine(r));
                 ret.Climate = this.Climate.Combine(rhs.Climate);
                 ret.Water = this.Water.Combine(rhs.Water);
-                ret.NAM7 = this.NAM7.Combine(rhs.NAM7);
+                ret.WaterMaterial = this.WaterMaterial.Combine(rhs.WaterMaterial);
                 ret.LodWater = this.LodWater.Combine(rhs.LodWater);
                 ret.LodWaterHeight = this.LodWaterHeight.Combine(rhs.LodWaterHeight);
                 ret.LandDefaults = this.LandDefaults.Combine(rhs.LandDefaults, (l, r) => l.Combine(r));
@@ -2252,7 +2252,7 @@ namespace Mutagen.Bethesda.Starfield
             public WorldspaceParent.TranslationMask? Parent;
             public bool Climate;
             public bool Water;
-            public bool NAM7;
+            public bool WaterMaterial;
             public bool LodWater;
             public bool LodWaterHeight;
             public WorldspaceLandDefaults.TranslationMask? LandDefaults;
@@ -2293,7 +2293,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Biome = defaultOn;
                 this.Climate = defaultOn;
                 this.Water = defaultOn;
-                this.NAM7 = defaultOn;
+                this.WaterMaterial = defaultOn;
                 this.LodWater = defaultOn;
                 this.LodWaterHeight = defaultOn;
                 this.DistantLodMultiplier = defaultOn;
@@ -2330,7 +2330,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Parent != null ? Parent.OnOverall : DefaultOn, Parent?.GetCrystal()));
                 ret.Add((Climate, null));
                 ret.Add((Water, null));
-                ret.Add((NAM7, null));
+                ret.Add((WaterMaterial, null));
                 ret.Add((LodWater, null));
                 ret.Add((LodWaterHeight, null));
                 ret.Add((LandDefaults != null ? LandDefaults.OnOverall : DefaultOn, LandDefaults?.GetCrystal()));
@@ -2571,7 +2571,7 @@ namespace Mutagen.Bethesda.Starfield
         new WorldspaceParent? Parent { get; set; }
         new IFormLinkNullable<IClimateGetter> Climate { get; set; }
         new IFormLinkNullable<IWaterGetter> Water { get; set; }
-        new String? NAM7 { get; set; }
+        new String? WaterMaterial { get; set; }
         new IFormLinkNullable<IWaterGetter> LodWater { get; set; }
         new Single? LodWaterHeight { get; set; }
         new WorldspaceLandDefaults? LandDefaults { get; set; }
@@ -2642,7 +2642,7 @@ namespace Mutagen.Bethesda.Starfield
         IWorldspaceParentGetter? Parent { get; }
         IFormLinkNullableGetter<IClimateGetter> Climate { get; }
         IFormLinkNullableGetter<IWaterGetter> Water { get; }
-        String? NAM7 { get; }
+        String? WaterMaterial { get; }
         IFormLinkNullableGetter<IWaterGetter> LodWater { get; }
         Single? LodWaterHeight { get; }
         IWorldspaceLandDefaultsGetter? LandDefaults { get; }
@@ -3084,7 +3084,7 @@ namespace Mutagen.Bethesda.Starfield
         Parent = 13,
         Climate = 14,
         Water = 15,
-        NAM7 = 16,
+        WaterMaterial = 16,
         LodWater = 17,
         LodWaterHeight = 18,
         LandDefaults = 19,
@@ -3287,7 +3287,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Parent = null;
             item.Climate.Clear();
             item.Water.Clear();
-            item.NAM7 = default;
+            item.WaterMaterial = default;
             item.LodWater.Clear();
             item.LodWaterHeight = default;
             item.LandDefaults = null;
@@ -4036,7 +4036,7 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.Climate = item.Climate.Equals(rhs.Climate);
             ret.Water = item.Water.Equals(rhs.Water);
-            ret.NAM7 = string.Equals(item.NAM7, rhs.NAM7);
+            ret.WaterMaterial = string.Equals(item.WaterMaterial, rhs.WaterMaterial);
             ret.LodWater = item.LodWater.Equals(rhs.LodWater);
             ret.LodWaterHeight = item.LodWaterHeight.EqualsWithin(rhs.LodWaterHeight);
             ret.LandDefaults = EqualsMaskHelper.EqualsHelper(
@@ -4207,10 +4207,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Water.FormKeyNullable, "Water");
             }
-            if ((printMask?.NAM7 ?? true)
-                && item.NAM7 is {} NAM7Item)
+            if ((printMask?.WaterMaterial ?? true)
+                && item.WaterMaterial is {} WaterMaterialItem)
             {
-                sb.AppendItem(NAM7Item, "NAM7");
+                sb.AppendItem(WaterMaterialItem, "WaterMaterial");
             }
             if (printMask?.LodWater ?? true)
             {
@@ -4492,9 +4492,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Water.Equals(rhs.Water)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.NAM7) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.WaterMaterial) ?? true))
             {
-                if (!string.Equals(lhs.NAM7, rhs.NAM7)) return false;
+                if (!string.Equals(lhs.WaterMaterial, rhs.WaterMaterial)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.LodWater) ?? true))
             {
@@ -4665,9 +4665,9 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.Climate);
             hash.Add(item.Water);
-            if (item.NAM7 is {} NAM7item)
+            if (item.WaterMaterial is {} WaterMaterialitem)
             {
-                hash.Add(NAM7item);
+                hash.Add(WaterMaterialitem);
             }
             hash.Add(item.LodWater);
             if (item.LodWaterHeight is {} LodWaterHeightitem)
@@ -5744,9 +5744,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Water.SetTo(rhs.Water.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.NAM7) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.WaterMaterial) ?? true))
             {
-                item.NAM7 = rhs.NAM7;
+                item.WaterMaterial = rhs.WaterMaterial;
             }
             if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.LodWater) ?? true))
             {
@@ -6318,7 +6318,7 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.NAM2));
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.NAM7,
+                item: item.WaterMaterial,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM7),
                 binaryType: StringBinaryType.NullTerminate);
             FormLinkBinaryTranslation.Instance.WriteNullable(
@@ -6633,11 +6633,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NAM7:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.NAM7 = StringBinaryTranslation.Instance.Parse(
+                    item.WaterMaterial = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)Worldspace_FieldIndex.NAM7;
+                    return (int)Worldspace_FieldIndex.WaterMaterial;
                 }
                 case RecordTypeInts.NAM3:
                 {
@@ -6934,9 +6934,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _WaterLocation;
         public IFormLinkNullableGetter<IWaterGetter> Water => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IWaterGetter>(_package, _recordData, _WaterLocation);
         #endregion
-        #region NAM7
-        private int? _NAM7Location;
-        public String? NAM7 => _NAM7Location.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NAM7Location.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region WaterMaterial
+        private int? _WaterMaterialLocation;
+        public String? WaterMaterial => _WaterMaterialLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _WaterMaterialLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         #region LodWater
         private int? _LodWaterLocation;
@@ -7156,8 +7156,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.NAM7:
                 {
-                    _NAM7Location = (stream.Position - offset);
-                    return (int)Worldspace_FieldIndex.NAM7;
+                    _WaterMaterialLocation = (stream.Position - offset);
+                    return (int)Worldspace_FieldIndex.WaterMaterial;
                 }
                 case RecordTypeInts.NAM3:
                 {

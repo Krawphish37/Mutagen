@@ -49,7 +49,7 @@ public class SceneSpeechChallengeTests
             scen.ChallengeReward.ShouldBe(2u);
             scen.ChallengeRepeatable.ShouldBeTrue();
             scen.ChallengeDefault.ShouldBeTrue();
-            scen.SPPQ.ShouldBeTrue();
+            scen.ChallengeDataMarker.ShouldBeTrue();
             scen.ChallengeOrKeywords!.Select(k => k.FormKey.ID).ShouldBe(new[] { 0x013B28u, 0x013B29u });
             scen.ChallengeAndKeywords.ShouldBeNull();
             scen.BOLV.ShouldBeTrue();

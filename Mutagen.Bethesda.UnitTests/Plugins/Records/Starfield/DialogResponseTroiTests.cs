@@ -123,12 +123,12 @@ public class DialogResponseTroiTests
             var first = info.Responses[0];
             first.TROI.IsNull.ShouldBeTrue();
             first.ResponseText.String.ShouldBe("First line");
-            first.TextHash!.Value.ToArray().ShouldBe(Hash1);
+            first.CreationTime.ShouldBe(BitConverter.ToUInt64(Hash1));
 
             var second = info.Responses[1];
             second.TROI.FormKeyNullable.ShouldBe(new FormKey(TestModKey, 0x802));
             second.ResponseText.String.ShouldBe("Second line");
-            second.TextHash!.Value.ToArray().ShouldBe(Hash2);
+            second.CreationTime.ShouldBe(BitConverter.ToUInt64(Hash2));
         }
     }
 

@@ -998,10 +998,10 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.SCFC,
                 RecordTypes.CNAM,
                 RecordTypes.QSRD,
-                RecordTypes.NAM1,
                 RecordTypes.QRXP,
                 RecordTypes.QRCR,
-                RecordTypes.QRRD);
+                RecordTypes.QRRD,
+                RecordTypes.NAM1);
             var all = RecordCollection.Factory(
                 RecordTypes.QSDT,
                 RecordTypes.CTDA,
@@ -1009,10 +1009,10 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.SCFC,
                 RecordTypes.CNAM,
                 RecordTypes.QSRD,
-                RecordTypes.NAM1,
                 RecordTypes.QRXP,
                 RecordTypes.QRCR,
                 RecordTypes.QRRD,
+                RecordTypes.NAM1,
                 RecordTypes.CITC,
                 RecordTypes.CIS1,
                 RecordTypes.CIS2);
@@ -1676,10 +1676,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)QuestLogEntry_FieldIndex.Entry;
                 }
                 case RecordTypeInts.QSRD:
-                case RecordTypeInts.NAM1:
                 case RecordTypeInts.QRXP:
                 case RecordTypeInts.QRCR:
                 case RecordTypeInts.QRRD:
+                case RecordTypeInts.NAM1:
                 {
                     if (lastParsed.ShortCircuit((int)QuestLogEntry_FieldIndex.StageCompleteDatas, translationParams)) return ParseResult.Stop;
                     item.StageCompleteDatas.SetTo(
@@ -1929,10 +1929,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)QuestLogEntry_FieldIndex.Entry;
                 }
                 case RecordTypeInts.QSRD:
-                case RecordTypeInts.NAM1:
                 case RecordTypeInts.QRXP:
                 case RecordTypeInts.QRCR:
                 case RecordTypeInts.QRRD:
+                case RecordTypeInts.NAM1:
                 {
                     if (lastParsed.ShortCircuit((int)QuestLogEntry_FieldIndex.StageCompleteDatas, translationParams)) return ParseResult.Stop;
                     this.StageCompleteDatas = this.ParseRepeatedTypelessSubrecord<IQuestStageCompleteDataGetter>(

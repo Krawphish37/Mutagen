@@ -94,7 +94,7 @@
         <Fields>
           <UInt16 name="Index" />
           <Enum name="Flags" enumName="QuestStage.Flag" byteLength="1" />
-          <UInt8 name="Unknown" />
+          <ByteArray name="FlagsUnused" byteLength="1" nullable="False" />
         </Fields>
       </Data>
       <RefList name="LogEntries" refName="QuestLogEntry" />
@@ -112,9 +112,11 @@
   </Object>
   <Object name="QuestStageCompleteData" objType="Subrecord">
     <Fields>
-      <ByteArray name="QSRD" recordType="QSRD" unknown="true" />
-      <FormLink name="AffinityChange" recordType="NAM1" refName="AffinityEvent" />
+      <!-- QSRD twice: first the number of reward entries (UInt32), then an empty QSRD that ends the rewards (xEdit) -->
+      <UInt32 name="RewardCount" recordType="QSRD" />
       <RefList name="RewardDatas" refName="QuestStageRewardData" />
+      <Marker name="RewardDataEndMarker" recordType="QSRD" />
+      <FormLink name="AffinityChange" recordType="NAM1" refName="AffinityEvent" />
     </Fields>
   </Object>
   <Object name="QuestStageRewardData" objType="Subrecord">

@@ -32,7 +32,8 @@
       <UInt32 name="ChallengeReward" recordType="SPRW" />
       <Bool name="ChallengeRepeatable" recordType="SPRP" boolAsMarker="True" />
       <Bool name="ChallengeDefault" recordType="SPDF" boolAsMarker="True" />
-      <Bool name="SPPQ" recordType="SPPQ" boolAsMarker="True" unknown="true" />
+      <!-- SPPQ: empty marker on every scene with speech challenge data (993 of 993 SCSP scenes in Starfield.esm), required by xEdit -->
+      <Bool name="ChallengeDataMarker" recordType="SPPQ" boolAsMarker="True" />
       <List name="ChallengeAndKeywords" recordType="SPKW" >
         <FormLink refName="Keyword" />
       </List>

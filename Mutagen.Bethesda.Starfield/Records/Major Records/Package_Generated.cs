@@ -102,14 +102,30 @@ namespace Mutagen.Bethesda.Starfield
         #region PreferredSpeed
         public Package.Speed PreferredSpeed { get; set; } = default(Package.Speed);
         #endregion
-        #region Unknown
-        public Byte Unknown { get; set; } = default(Byte);
+        #region PreferredSpeedUnused
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private MemorySlice<Byte> _PreferredSpeedUnused = new byte[1];
+        public MemorySlice<Byte> PreferredSpeedUnused
+        {
+            get => _PreferredSpeedUnused;
+            set => this._PreferredSpeedUnused = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte> IPackageGetter.PreferredSpeedUnused => this.PreferredSpeedUnused;
         #endregion
         #region InterruptFlags
         public Package.InterruptFlag InterruptFlags { get; set; } = default(Package.InterruptFlag);
         #endregion
-        #region Unknown2
-        public UInt16 Unknown2 { get; set; } = default(UInt16);
+        #region InterruptFlagsUnused
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private MemorySlice<Byte> _InterruptFlagsUnused = new byte[2];
+        public MemorySlice<Byte> InterruptFlagsUnused
+        {
+            get => _InterruptFlagsUnused;
+            set => this._InterruptFlagsUnused = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte> IPackageGetter.InterruptFlagsUnused => this.InterruptFlagsUnused;
         #endregion
         #region ScheduleMonth
         public SByte ScheduleMonth { get; set; } = default(SByte);
@@ -126,16 +142,16 @@ namespace Mutagen.Bethesda.Starfield
         #region ScheduleMinute
         public SByte ScheduleMinute { get; set; } = default(SByte);
         #endregion
-        #region Unknown3
+        #region ScheduleMinuteUnused
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _Unknown3 = new byte[3];
-        public MemorySlice<Byte> Unknown3
+        private MemorySlice<Byte> _ScheduleMinuteUnused = new byte[3];
+        public MemorySlice<Byte> ScheduleMinuteUnused
         {
-            get => _Unknown3;
-            set => this._Unknown3 = value;
+            get => _ScheduleMinuteUnused;
+            set => this._ScheduleMinuteUnused = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IPackageGetter.Unknown3 => this.Unknown3;
+        ReadOnlyMemorySlice<Byte> IPackageGetter.ScheduleMinuteUnused => this.ScheduleMinuteUnused;
         #endregion
         #region ScheduleDurationInMinutes
         public Int32 ScheduleDurationInMinutes { get; set; } = default(Int32);
@@ -298,15 +314,15 @@ namespace Mutagen.Bethesda.Starfield
                 this.Type = initialValue;
                 this.InterruptOverride = initialValue;
                 this.PreferredSpeed = initialValue;
-                this.Unknown = initialValue;
+                this.PreferredSpeedUnused = initialValue;
                 this.InterruptFlags = initialValue;
-                this.Unknown2 = initialValue;
+                this.InterruptFlagsUnused = initialValue;
                 this.ScheduleMonth = initialValue;
                 this.ScheduleDayOfWeek = initialValue;
                 this.ScheduleDate = initialValue;
                 this.ScheduleHour = initialValue;
                 this.ScheduleMinute = initialValue;
-                this.Unknown3 = initialValue;
+                this.ScheduleMinuteUnused = initialValue;
                 this.ScheduleDurationInMinutes = initialValue;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
                 this.IdleAnimations = new MaskItem<TItem, PackageIdles.Mask<TItem>?>(initialValue, new PackageIdles.Mask<TItem>(initialValue));
@@ -337,15 +353,15 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Type,
                 TItem InterruptOverride,
                 TItem PreferredSpeed,
-                TItem Unknown,
+                TItem PreferredSpeedUnused,
                 TItem InterruptFlags,
-                TItem Unknown2,
+                TItem InterruptFlagsUnused,
                 TItem ScheduleMonth,
                 TItem ScheduleDayOfWeek,
                 TItem ScheduleDate,
                 TItem ScheduleHour,
                 TItem ScheduleMinute,
-                TItem Unknown3,
+                TItem ScheduleMinuteUnused,
                 TItem ScheduleDurationInMinutes,
                 TItem Conditions,
                 TItem IdleAnimations,
@@ -375,15 +391,15 @@ namespace Mutagen.Bethesda.Starfield
                 this.Type = Type;
                 this.InterruptOverride = InterruptOverride;
                 this.PreferredSpeed = PreferredSpeed;
-                this.Unknown = Unknown;
+                this.PreferredSpeedUnused = PreferredSpeedUnused;
                 this.InterruptFlags = InterruptFlags;
-                this.Unknown2 = Unknown2;
+                this.InterruptFlagsUnused = InterruptFlagsUnused;
                 this.ScheduleMonth = ScheduleMonth;
                 this.ScheduleDayOfWeek = ScheduleDayOfWeek;
                 this.ScheduleDate = ScheduleDate;
                 this.ScheduleHour = ScheduleHour;
                 this.ScheduleMinute = ScheduleMinute;
-                this.Unknown3 = Unknown3;
+                this.ScheduleMinuteUnused = ScheduleMinuteUnused;
                 this.ScheduleDurationInMinutes = ScheduleDurationInMinutes;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
                 this.IdleAnimations = new MaskItem<TItem, PackageIdles.Mask<TItem>?>(IdleAnimations, new PackageIdles.Mask<TItem>(IdleAnimations));
@@ -415,15 +431,15 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Type;
             public TItem InterruptOverride;
             public TItem PreferredSpeed;
-            public TItem Unknown;
+            public TItem PreferredSpeedUnused;
             public TItem InterruptFlags;
-            public TItem Unknown2;
+            public TItem InterruptFlagsUnused;
             public TItem ScheduleMonth;
             public TItem ScheduleDayOfWeek;
             public TItem ScheduleDate;
             public TItem ScheduleHour;
             public TItem ScheduleMinute;
-            public TItem Unknown3;
+            public TItem ScheduleMinuteUnused;
             public TItem ScheduleDurationInMinutes;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
             public MaskItem<TItem, PackageIdles.Mask<TItem>?>? IdleAnimations { get; set; }
@@ -457,15 +473,15 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Type, rhs.Type)) return false;
                 if (!object.Equals(this.InterruptOverride, rhs.InterruptOverride)) return false;
                 if (!object.Equals(this.PreferredSpeed, rhs.PreferredSpeed)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.PreferredSpeedUnused, rhs.PreferredSpeedUnused)) return false;
                 if (!object.Equals(this.InterruptFlags, rhs.InterruptFlags)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.InterruptFlagsUnused, rhs.InterruptFlagsUnused)) return false;
                 if (!object.Equals(this.ScheduleMonth, rhs.ScheduleMonth)) return false;
                 if (!object.Equals(this.ScheduleDayOfWeek, rhs.ScheduleDayOfWeek)) return false;
                 if (!object.Equals(this.ScheduleDate, rhs.ScheduleDate)) return false;
                 if (!object.Equals(this.ScheduleHour, rhs.ScheduleHour)) return false;
                 if (!object.Equals(this.ScheduleMinute, rhs.ScheduleMinute)) return false;
-                if (!object.Equals(this.Unknown3, rhs.Unknown3)) return false;
+                if (!object.Equals(this.ScheduleMinuteUnused, rhs.ScheduleMinuteUnused)) return false;
                 if (!object.Equals(this.ScheduleDurationInMinutes, rhs.ScheduleDurationInMinutes)) return false;
                 if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
                 if (!object.Equals(this.IdleAnimations, rhs.IdleAnimations)) return false;
@@ -491,15 +507,15 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Type);
                 hash.Add(this.InterruptOverride);
                 hash.Add(this.PreferredSpeed);
-                hash.Add(this.Unknown);
+                hash.Add(this.PreferredSpeedUnused);
                 hash.Add(this.InterruptFlags);
-                hash.Add(this.Unknown2);
+                hash.Add(this.InterruptFlagsUnused);
                 hash.Add(this.ScheduleMonth);
                 hash.Add(this.ScheduleDayOfWeek);
                 hash.Add(this.ScheduleDate);
                 hash.Add(this.ScheduleHour);
                 hash.Add(this.ScheduleMinute);
-                hash.Add(this.Unknown3);
+                hash.Add(this.ScheduleMinuteUnused);
                 hash.Add(this.ScheduleDurationInMinutes);
                 hash.Add(this.Conditions);
                 hash.Add(this.IdleAnimations);
@@ -545,15 +561,15 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Type)) return false;
                 if (!eval(this.InterruptOverride)) return false;
                 if (!eval(this.PreferredSpeed)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.PreferredSpeedUnused)) return false;
                 if (!eval(this.InterruptFlags)) return false;
-                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.InterruptFlagsUnused)) return false;
                 if (!eval(this.ScheduleMonth)) return false;
                 if (!eval(this.ScheduleDayOfWeek)) return false;
                 if (!eval(this.ScheduleDate)) return false;
                 if (!eval(this.ScheduleHour)) return false;
                 if (!eval(this.ScheduleMinute)) return false;
-                if (!eval(this.Unknown3)) return false;
+                if (!eval(this.ScheduleMinuteUnused)) return false;
                 if (!eval(this.ScheduleDurationInMinutes)) return false;
                 if (this.Conditions != null)
                 {
@@ -649,15 +665,15 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Type)) return true;
                 if (eval(this.InterruptOverride)) return true;
                 if (eval(this.PreferredSpeed)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.PreferredSpeedUnused)) return true;
                 if (eval(this.InterruptFlags)) return true;
-                if (eval(this.Unknown2)) return true;
+                if (eval(this.InterruptFlagsUnused)) return true;
                 if (eval(this.ScheduleMonth)) return true;
                 if (eval(this.ScheduleDayOfWeek)) return true;
                 if (eval(this.ScheduleDate)) return true;
                 if (eval(this.ScheduleHour)) return true;
                 if (eval(this.ScheduleMinute)) return true;
-                if (eval(this.Unknown3)) return true;
+                if (eval(this.ScheduleMinuteUnused)) return true;
                 if (eval(this.ScheduleDurationInMinutes)) return true;
                 if (this.Conditions != null)
                 {
@@ -759,15 +775,15 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Type = eval(this.Type);
                 obj.InterruptOverride = eval(this.InterruptOverride);
                 obj.PreferredSpeed = eval(this.PreferredSpeed);
-                obj.Unknown = eval(this.Unknown);
+                obj.PreferredSpeedUnused = eval(this.PreferredSpeedUnused);
                 obj.InterruptFlags = eval(this.InterruptFlags);
-                obj.Unknown2 = eval(this.Unknown2);
+                obj.InterruptFlagsUnused = eval(this.InterruptFlagsUnused);
                 obj.ScheduleMonth = eval(this.ScheduleMonth);
                 obj.ScheduleDayOfWeek = eval(this.ScheduleDayOfWeek);
                 obj.ScheduleDate = eval(this.ScheduleDate);
                 obj.ScheduleHour = eval(this.ScheduleHour);
                 obj.ScheduleMinute = eval(this.ScheduleMinute);
-                obj.Unknown3 = eval(this.Unknown3);
+                obj.ScheduleMinuteUnused = eval(this.ScheduleMinuteUnused);
                 obj.ScheduleDurationInMinutes = eval(this.ScheduleDurationInMinutes);
                 if (Conditions != null)
                 {
@@ -879,17 +895,17 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(PreferredSpeed, "PreferredSpeed");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.PreferredSpeedUnused ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(PreferredSpeedUnused, "PreferredSpeedUnused");
                     }
                     if (printMask?.InterruptFlags ?? true)
                     {
                         sb.AppendItem(InterruptFlags, "InterruptFlags");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.InterruptFlagsUnused ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(InterruptFlagsUnused, "InterruptFlagsUnused");
                     }
                     if (printMask?.ScheduleMonth ?? true)
                     {
@@ -911,9 +927,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ScheduleMinute, "ScheduleMinute");
                     }
-                    if (printMask?.Unknown3 ?? true)
+                    if (printMask?.ScheduleMinuteUnused ?? true)
                     {
-                        sb.AppendItem(Unknown3, "Unknown3");
+                        sb.AppendItem(ScheduleMinuteUnused, "ScheduleMinuteUnused");
                     }
                     if (printMask?.ScheduleDurationInMinutes ?? true)
                     {
@@ -1051,15 +1067,15 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Type;
             public Exception? InterruptOverride;
             public Exception? PreferredSpeed;
-            public Exception? Unknown;
+            public Exception? PreferredSpeedUnused;
             public Exception? InterruptFlags;
-            public Exception? Unknown2;
+            public Exception? InterruptFlagsUnused;
             public Exception? ScheduleMonth;
             public Exception? ScheduleDayOfWeek;
             public Exception? ScheduleDate;
             public Exception? ScheduleHour;
             public Exception? ScheduleMinute;
-            public Exception? Unknown3;
+            public Exception? ScheduleMinuteUnused;
             public Exception? ScheduleDurationInMinutes;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
             public MaskItem<Exception?, PackageIdles.ErrorMask?>? IdleAnimations;
@@ -1094,12 +1110,12 @@ namespace Mutagen.Bethesda.Starfield
                         return InterruptOverride;
                     case Package_FieldIndex.PreferredSpeed:
                         return PreferredSpeed;
-                    case Package_FieldIndex.Unknown:
-                        return Unknown;
+                    case Package_FieldIndex.PreferredSpeedUnused:
+                        return PreferredSpeedUnused;
                     case Package_FieldIndex.InterruptFlags:
                         return InterruptFlags;
-                    case Package_FieldIndex.Unknown2:
-                        return Unknown2;
+                    case Package_FieldIndex.InterruptFlagsUnused:
+                        return InterruptFlagsUnused;
                     case Package_FieldIndex.ScheduleMonth:
                         return ScheduleMonth;
                     case Package_FieldIndex.ScheduleDayOfWeek:
@@ -1110,8 +1126,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ScheduleHour;
                     case Package_FieldIndex.ScheduleMinute:
                         return ScheduleMinute;
-                    case Package_FieldIndex.Unknown3:
-                        return Unknown3;
+                    case Package_FieldIndex.ScheduleMinuteUnused:
+                        return ScheduleMinuteUnused;
                     case Package_FieldIndex.ScheduleDurationInMinutes:
                         return ScheduleDurationInMinutes;
                     case Package_FieldIndex.Conditions:
@@ -1168,14 +1184,14 @@ namespace Mutagen.Bethesda.Starfield
                     case Package_FieldIndex.PreferredSpeed:
                         this.PreferredSpeed = ex;
                         break;
-                    case Package_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case Package_FieldIndex.PreferredSpeedUnused:
+                        this.PreferredSpeedUnused = ex;
                         break;
                     case Package_FieldIndex.InterruptFlags:
                         this.InterruptFlags = ex;
                         break;
-                    case Package_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case Package_FieldIndex.InterruptFlagsUnused:
+                        this.InterruptFlagsUnused = ex;
                         break;
                     case Package_FieldIndex.ScheduleMonth:
                         this.ScheduleMonth = ex;
@@ -1192,8 +1208,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Package_FieldIndex.ScheduleMinute:
                         this.ScheduleMinute = ex;
                         break;
-                    case Package_FieldIndex.Unknown3:
-                        this.Unknown3 = ex;
+                    case Package_FieldIndex.ScheduleMinuteUnused:
+                        this.ScheduleMinuteUnused = ex;
                         break;
                     case Package_FieldIndex.ScheduleDurationInMinutes:
                         this.ScheduleDurationInMinutes = ex;
@@ -1266,14 +1282,14 @@ namespace Mutagen.Bethesda.Starfield
                     case Package_FieldIndex.PreferredSpeed:
                         this.PreferredSpeed = (Exception?)obj;
                         break;
-                    case Package_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case Package_FieldIndex.PreferredSpeedUnused:
+                        this.PreferredSpeedUnused = (Exception?)obj;
                         break;
                     case Package_FieldIndex.InterruptFlags:
                         this.InterruptFlags = (Exception?)obj;
                         break;
-                    case Package_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case Package_FieldIndex.InterruptFlagsUnused:
+                        this.InterruptFlagsUnused = (Exception?)obj;
                         break;
                     case Package_FieldIndex.ScheduleMonth:
                         this.ScheduleMonth = (Exception?)obj;
@@ -1290,8 +1306,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Package_FieldIndex.ScheduleMinute:
                         this.ScheduleMinute = (Exception?)obj;
                         break;
-                    case Package_FieldIndex.Unknown3:
-                        this.Unknown3 = (Exception?)obj;
+                    case Package_FieldIndex.ScheduleMinuteUnused:
+                        this.ScheduleMinuteUnused = (Exception?)obj;
                         break;
                     case Package_FieldIndex.ScheduleDurationInMinutes:
                         this.ScheduleDurationInMinutes = (Exception?)obj;
@@ -1350,15 +1366,15 @@ namespace Mutagen.Bethesda.Starfield
                 if (Type != null) return true;
                 if (InterruptOverride != null) return true;
                 if (PreferredSpeed != null) return true;
-                if (Unknown != null) return true;
+                if (PreferredSpeedUnused != null) return true;
                 if (InterruptFlags != null) return true;
-                if (Unknown2 != null) return true;
+                if (InterruptFlagsUnused != null) return true;
                 if (ScheduleMonth != null) return true;
                 if (ScheduleDayOfWeek != null) return true;
                 if (ScheduleDate != null) return true;
                 if (ScheduleHour != null) return true;
                 if (ScheduleMinute != null) return true;
-                if (Unknown3 != null) return true;
+                if (ScheduleMinuteUnused != null) return true;
                 if (ScheduleDurationInMinutes != null) return true;
                 if (Conditions != null) return true;
                 if (IdleAnimations != null) return true;
@@ -1431,13 +1447,13 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(PreferredSpeed, "PreferredSpeed");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(PreferredSpeedUnused, "PreferredSpeedUnused");
                 }
                 {
                     sb.AppendItem(InterruptFlags, "InterruptFlags");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(InterruptFlagsUnused, "InterruptFlagsUnused");
                 }
                 {
                     sb.AppendItem(ScheduleMonth, "ScheduleMonth");
@@ -1455,7 +1471,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ScheduleMinute, "ScheduleMinute");
                 }
                 {
-                    sb.AppendItem(Unknown3, "Unknown3");
+                    sb.AppendItem(ScheduleMinuteUnused, "ScheduleMinuteUnused");
                 }
                 {
                     sb.AppendItem(ScheduleDurationInMinutes, "ScheduleDurationInMinutes");
@@ -1568,15 +1584,15 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Type = this.Type.Combine(rhs.Type);
                 ret.InterruptOverride = this.InterruptOverride.Combine(rhs.InterruptOverride);
                 ret.PreferredSpeed = this.PreferredSpeed.Combine(rhs.PreferredSpeed);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.PreferredSpeedUnused = this.PreferredSpeedUnused.Combine(rhs.PreferredSpeedUnused);
                 ret.InterruptFlags = this.InterruptFlags.Combine(rhs.InterruptFlags);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.InterruptFlagsUnused = this.InterruptFlagsUnused.Combine(rhs.InterruptFlagsUnused);
                 ret.ScheduleMonth = this.ScheduleMonth.Combine(rhs.ScheduleMonth);
                 ret.ScheduleDayOfWeek = this.ScheduleDayOfWeek.Combine(rhs.ScheduleDayOfWeek);
                 ret.ScheduleDate = this.ScheduleDate.Combine(rhs.ScheduleDate);
                 ret.ScheduleHour = this.ScheduleHour.Combine(rhs.ScheduleHour);
                 ret.ScheduleMinute = this.ScheduleMinute.Combine(rhs.ScheduleMinute);
-                ret.Unknown3 = this.Unknown3.Combine(rhs.Unknown3);
+                ret.ScheduleMinuteUnused = this.ScheduleMinuteUnused.Combine(rhs.ScheduleMinuteUnused);
                 ret.ScheduleDurationInMinutes = this.ScheduleDurationInMinutes.Combine(rhs.ScheduleDurationInMinutes);
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
                 ret.IdleAnimations = this.IdleAnimations.Combine(rhs.IdleAnimations, (l, r) => l.Combine(r));
@@ -1619,15 +1635,15 @@ namespace Mutagen.Bethesda.Starfield
             public bool Type;
             public bool InterruptOverride;
             public bool PreferredSpeed;
-            public bool Unknown;
+            public bool PreferredSpeedUnused;
             public bool InterruptFlags;
-            public bool Unknown2;
+            public bool InterruptFlagsUnused;
             public bool ScheduleMonth;
             public bool ScheduleDayOfWeek;
             public bool ScheduleDate;
             public bool ScheduleHour;
             public bool ScheduleMinute;
-            public bool Unknown3;
+            public bool ScheduleMinuteUnused;
             public bool ScheduleDurationInMinutes;
             public Condition.TranslationMask? Conditions;
             public PackageIdles.TranslationMask? IdleAnimations;
@@ -1654,15 +1670,15 @@ namespace Mutagen.Bethesda.Starfield
                 this.Type = defaultOn;
                 this.InterruptOverride = defaultOn;
                 this.PreferredSpeed = defaultOn;
-                this.Unknown = defaultOn;
+                this.PreferredSpeedUnused = defaultOn;
                 this.InterruptFlags = defaultOn;
-                this.Unknown2 = defaultOn;
+                this.InterruptFlagsUnused = defaultOn;
                 this.ScheduleMonth = defaultOn;
                 this.ScheduleDayOfWeek = defaultOn;
                 this.ScheduleDate = defaultOn;
                 this.ScheduleHour = defaultOn;
                 this.ScheduleMinute = defaultOn;
-                this.Unknown3 = defaultOn;
+                this.ScheduleMinuteUnused = defaultOn;
                 this.ScheduleDurationInMinutes = defaultOn;
                 this.CombatStyle = defaultOn;
                 this.OwnerQuest = defaultOn;
@@ -1683,15 +1699,15 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Type, null));
                 ret.Add((InterruptOverride, null));
                 ret.Add((PreferredSpeed, null));
-                ret.Add((Unknown, null));
+                ret.Add((PreferredSpeedUnused, null));
                 ret.Add((InterruptFlags, null));
-                ret.Add((Unknown2, null));
+                ret.Add((InterruptFlagsUnused, null));
                 ret.Add((ScheduleMonth, null));
                 ret.Add((ScheduleDayOfWeek, null));
                 ret.Add((ScheduleDate, null));
                 ret.Add((ScheduleHour, null));
                 ret.Add((ScheduleMinute, null));
-                ret.Add((Unknown3, null));
+                ret.Add((ScheduleMinuteUnused, null));
                 ret.Add((ScheduleDurationInMinutes, null));
                 ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
                 ret.Add((IdleAnimations != null ? IdleAnimations.OnOverall : DefaultOn, IdleAnimations?.GetCrystal()));
@@ -1868,15 +1884,15 @@ namespace Mutagen.Bethesda.Starfield
         new Package.Types Type { get; set; }
         new Package.Interrupt InterruptOverride { get; set; }
         new Package.Speed PreferredSpeed { get; set; }
-        new Byte Unknown { get; set; }
+        new MemorySlice<Byte> PreferredSpeedUnused { get; set; }
         new Package.InterruptFlag InterruptFlags { get; set; }
-        new UInt16 Unknown2 { get; set; }
+        new MemorySlice<Byte> InterruptFlagsUnused { get; set; }
         new SByte ScheduleMonth { get; set; }
         new Package.DayOfWeek ScheduleDayOfWeek { get; set; }
         new Byte ScheduleDate { get; set; }
         new SByte ScheduleHour { get; set; }
         new SByte ScheduleMinute { get; set; }
-        new MemorySlice<Byte> Unknown3 { get; set; }
+        new MemorySlice<Byte> ScheduleMinuteUnused { get; set; }
         new Int32 ScheduleDurationInMinutes { get; set; }
         new ExtendedList<Condition> Conditions { get; }
         new PackageIdles? IdleAnimations { get; set; }
@@ -1923,15 +1939,15 @@ namespace Mutagen.Bethesda.Starfield
         Package.Types Type { get; }
         Package.Interrupt InterruptOverride { get; }
         Package.Speed PreferredSpeed { get; }
-        Byte Unknown { get; }
+        ReadOnlyMemorySlice<Byte> PreferredSpeedUnused { get; }
         Package.InterruptFlag InterruptFlags { get; }
-        UInt16 Unknown2 { get; }
+        ReadOnlyMemorySlice<Byte> InterruptFlagsUnused { get; }
         SByte ScheduleMonth { get; }
         Package.DayOfWeek ScheduleDayOfWeek { get; }
         Byte ScheduleDate { get; }
         SByte ScheduleHour { get; }
         SByte ScheduleMinute { get; }
-        ReadOnlyMemorySlice<Byte> Unknown3 { get; }
+        ReadOnlyMemorySlice<Byte> ScheduleMinuteUnused { get; }
         Int32 ScheduleDurationInMinutes { get; }
         IReadOnlyList<IConditionGetter> Conditions { get; }
         IPackageIdlesGetter? IdleAnimations { get; }
@@ -2128,15 +2144,15 @@ namespace Mutagen.Bethesda.Starfield
         Type = 10,
         InterruptOverride = 11,
         PreferredSpeed = 12,
-        Unknown = 13,
+        PreferredSpeedUnused = 13,
         InterruptFlags = 14,
-        Unknown2 = 15,
+        InterruptFlagsUnused = 15,
         ScheduleMonth = 16,
         ScheduleDayOfWeek = 17,
         ScheduleDate = 18,
         ScheduleHour = 19,
         ScheduleMinute = 20,
-        Unknown3 = 21,
+        ScheduleMinuteUnused = 21,
         ScheduleDurationInMinutes = 22,
         Conditions = 23,
         IdleAnimations = 24,
@@ -2274,15 +2290,15 @@ namespace Mutagen.Bethesda.Starfield
             item.Type = default(Package.Types);
             item.InterruptOverride = default(Package.Interrupt);
             item.PreferredSpeed = default(Package.Speed);
-            item.Unknown = default(Byte);
+            item.PreferredSpeedUnused = new byte[1];
             item.InterruptFlags = default(Package.InterruptFlag);
-            item.Unknown2 = default(UInt16);
+            item.InterruptFlagsUnused = new byte[2];
             item.ScheduleMonth = default(SByte);
             item.ScheduleDayOfWeek = default(Package.DayOfWeek);
             item.ScheduleDate = default(Byte);
             item.ScheduleHour = default(SByte);
             item.ScheduleMinute = default(SByte);
-            item.Unknown3 = new byte[3];
+            item.ScheduleMinuteUnused = new byte[3];
             item.ScheduleDurationInMinutes = default(Int32);
             item.Conditions.Clear();
             item.IdleAnimations = null;
@@ -2431,15 +2447,15 @@ namespace Mutagen.Bethesda.Starfield
             ret.Type = item.Type == rhs.Type;
             ret.InterruptOverride = item.InterruptOverride == rhs.InterruptOverride;
             ret.PreferredSpeed = item.PreferredSpeed == rhs.PreferredSpeed;
-            ret.Unknown = item.Unknown == rhs.Unknown;
+            ret.PreferredSpeedUnused = MemoryExtensions.SequenceEqual(item.PreferredSpeedUnused.Span, rhs.PreferredSpeedUnused.Span);
             ret.InterruptFlags = item.InterruptFlags == rhs.InterruptFlags;
-            ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
+            ret.InterruptFlagsUnused = MemoryExtensions.SequenceEqual(item.InterruptFlagsUnused.Span, rhs.InterruptFlagsUnused.Span);
             ret.ScheduleMonth = item.ScheduleMonth == rhs.ScheduleMonth;
             ret.ScheduleDayOfWeek = item.ScheduleDayOfWeek == rhs.ScheduleDayOfWeek;
             ret.ScheduleDate = item.ScheduleDate == rhs.ScheduleDate;
             ret.ScheduleHour = item.ScheduleHour == rhs.ScheduleHour;
             ret.ScheduleMinute = item.ScheduleMinute == rhs.ScheduleMinute;
-            ret.Unknown3 = MemoryExtensions.SequenceEqual(item.Unknown3.Span, rhs.Unknown3.Span);
+            ret.ScheduleMinuteUnused = MemoryExtensions.SequenceEqual(item.ScheduleMinuteUnused.Span, rhs.ScheduleMinuteUnused.Span);
             ret.ScheduleDurationInMinutes = item.ScheduleDurationInMinutes == rhs.ScheduleDurationInMinutes;
             ret.Conditions = item.Conditions.CollectionEqualsHelper(
                 rhs.Conditions,
@@ -2564,17 +2580,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.PreferredSpeed, "PreferredSpeed");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.PreferredSpeedUnused ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendLine($"PreferredSpeedUnused => {SpanExt.ToHexString(item.PreferredSpeedUnused)}");
             }
             if (printMask?.InterruptFlags ?? true)
             {
                 sb.AppendItem(item.InterruptFlags, "InterruptFlags");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.InterruptFlagsUnused ?? true)
             {
-                sb.AppendItem(item.Unknown2, "Unknown2");
+                sb.AppendLine($"InterruptFlagsUnused => {SpanExt.ToHexString(item.InterruptFlagsUnused)}");
             }
             if (printMask?.ScheduleMonth ?? true)
             {
@@ -2596,9 +2612,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ScheduleMinute, "ScheduleMinute");
             }
-            if (printMask?.Unknown3 ?? true)
+            if (printMask?.ScheduleMinuteUnused ?? true)
             {
-                sb.AppendLine($"Unknown3 => {SpanExt.ToHexString(item.Unknown3)}");
+                sb.AppendLine($"ScheduleMinuteUnused => {SpanExt.ToHexString(item.ScheduleMinuteUnused)}");
             }
             if (printMask?.ScheduleDurationInMinutes ?? true)
             {
@@ -2769,17 +2785,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.PreferredSpeed != rhs.PreferredSpeed) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Package_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Package_FieldIndex.PreferredSpeedUnused) ?? true))
             {
-                if (lhs.Unknown != rhs.Unknown) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.PreferredSpeedUnused.Span, rhs.PreferredSpeedUnused.Span)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Package_FieldIndex.InterruptFlags) ?? true))
             {
                 if (lhs.InterruptFlags != rhs.InterruptFlags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Package_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Package_FieldIndex.InterruptFlagsUnused) ?? true))
             {
-                if (lhs.Unknown2 != rhs.Unknown2) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.InterruptFlagsUnused.Span, rhs.InterruptFlagsUnused.Span)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Package_FieldIndex.ScheduleMonth) ?? true))
             {
@@ -2801,9 +2817,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.ScheduleMinute != rhs.ScheduleMinute) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Package_FieldIndex.Unknown3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Package_FieldIndex.ScheduleMinuteUnused) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.Unknown3.Span, rhs.Unknown3.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.ScheduleMinuteUnused.Span, rhs.ScheduleMinuteUnused.Span)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Package_FieldIndex.ScheduleDurationInMinutes) ?? true))
             {
@@ -2917,15 +2933,15 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Type);
             hash.Add(item.InterruptOverride);
             hash.Add(item.PreferredSpeed);
-            hash.Add(item.Unknown);
+            hash.AddBytes(item.PreferredSpeedUnused);
             hash.Add(item.InterruptFlags);
-            hash.Add(item.Unknown2);
+            hash.AddBytes(item.InterruptFlagsUnused);
             hash.Add(item.ScheduleMonth);
             hash.Add(item.ScheduleDayOfWeek);
             hash.Add(item.ScheduleDate);
             hash.Add(item.ScheduleHour);
             hash.Add(item.ScheduleMinute);
-            hash.AddBytes(item.Unknown3);
+            hash.AddBytes(item.ScheduleMinuteUnused);
             hash.Add(item.ScheduleDurationInMinutes);
             foreach (var subItem in item.Conditions)
             {
@@ -3234,17 +3250,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.PreferredSpeed = rhs.PreferredSpeed;
             }
-            if ((copyMask?.GetShouldTranslate((int)Package_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Package_FieldIndex.PreferredSpeedUnused) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.PreferredSpeedUnused = rhs.PreferredSpeedUnused.ToArray();
             }
             if ((copyMask?.GetShouldTranslate((int)Package_FieldIndex.InterruptFlags) ?? true))
             {
                 item.InterruptFlags = rhs.InterruptFlags;
             }
-            if ((copyMask?.GetShouldTranslate((int)Package_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Package_FieldIndex.InterruptFlagsUnused) ?? true))
             {
-                item.Unknown2 = rhs.Unknown2;
+                item.InterruptFlagsUnused = rhs.InterruptFlagsUnused.ToArray();
             }
             if ((copyMask?.GetShouldTranslate((int)Package_FieldIndex.ScheduleMonth) ?? true))
             {
@@ -3266,9 +3282,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ScheduleMinute = rhs.ScheduleMinute;
             }
-            if ((copyMask?.GetShouldTranslate((int)Package_FieldIndex.Unknown3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Package_FieldIndex.ScheduleMinuteUnused) ?? true))
             {
-                item.Unknown3 = rhs.Unknown3.ToArray();
+                item.ScheduleMinuteUnused = rhs.ScheduleMinuteUnused.ToArray();
             }
             if ((copyMask?.GetShouldTranslate((int)Package_FieldIndex.ScheduleDurationInMinutes) ?? true))
             {
@@ -3676,12 +3692,16 @@ namespace Mutagen.Bethesda.Starfield
                     writer,
                     item.PreferredSpeed,
                     length: 1);
-                writer.Write(item.Unknown);
+                ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.PreferredSpeedUnused);
                 EnumBinaryTranslation<Package.InterruptFlag, MutagenFrame, MutagenWriter>.Instance.Write(
                     writer,
                     item.InterruptFlags,
                     length: 2);
-                writer.Write(item.Unknown2);
+                ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.InterruptFlagsUnused);
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.PSDT)))
             {
@@ -3695,7 +3715,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer.Write(item.ScheduleMinute);
                 ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.Unknown3);
+                    item: item.ScheduleMinuteUnused);
                 writer.Write(item.ScheduleDurationInMinutes);
             }
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IConditionGetter>.Instance.Write(
@@ -3919,15 +3939,13 @@ namespace Mutagen.Bethesda.Starfield
                     item.PreferredSpeed = EnumBinaryTranslation<Package.Speed, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 1);
-                    if (dataFrame.Remaining < 1) return null;
-                    item.Unknown = dataFrame.ReadUInt8();
+                    item.PreferredSpeedUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(1));
                     if (dataFrame.Remaining < 2) return null;
                     item.InterruptFlags = EnumBinaryTranslation<Package.InterruptFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 2);
-                    if (dataFrame.Remaining < 2) return null;
-                    item.Unknown2 = dataFrame.ReadUInt16();
-                    return (int)Package_FieldIndex.Unknown2;
+                    item.InterruptFlagsUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(2));
+                    return (int)Package_FieldIndex.InterruptFlagsUnused;
                 }
                 case RecordTypeInts.PSDT:
                 {
@@ -3945,7 +3963,7 @@ namespace Mutagen.Bethesda.Starfield
                     item.ScheduleHour = dataFrame.ReadInt8();
                     if (dataFrame.Remaining < 1) return null;
                     item.ScheduleMinute = dataFrame.ReadInt8();
-                    item.Unknown3 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(3));
+                    item.ScheduleMinuteUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(3));
                     if (dataFrame.Remaining < 4) return null;
                     item.ScheduleDurationInMinutes = dataFrame.ReadInt32();
                     return (int)Package_FieldIndex.ScheduleDurationInMinutes;
@@ -4148,20 +4166,20 @@ namespace Mutagen.Bethesda.Starfield
         private bool _PreferredSpeed_IsSet => _PKDTLocation.HasValue && _PKDTLocation!.Value.Max - _PreferredSpeedLocation + 1 >= 1;
         public Package.Speed PreferredSpeed => _PreferredSpeed_IsSet ? (Package.Speed)_recordData.Span.Slice(_PreferredSpeedLocation, 0x1)[0] : default(Package.Speed);
         #endregion
-        #region Unknown
-        private int _UnknownLocation => _PKDTLocation!.Value.Min + 0x7;
-        private bool _Unknown_IsSet => _PKDTLocation.HasValue && _PKDTLocation!.Value.Max - _UnknownLocation + 1 >= 1;
-        public Byte Unknown => _Unknown_IsSet ? _recordData.Span[_UnknownLocation] : default(Byte);
+        #region PreferredSpeedUnused
+        private int _PreferredSpeedUnusedLocation => _PKDTLocation!.Value.Min + 0x7;
+        private bool _PreferredSpeedUnused_IsSet => _PKDTLocation.HasValue;
+        public ReadOnlyMemorySlice<Byte> PreferredSpeedUnused => _PreferredSpeedUnused_IsSet ? _recordData.Span.Slice(_PreferredSpeedUnusedLocation, 1).ToArray() : UtilityTranslation.Zeros.Slice(0, 1);
         #endregion
         #region InterruptFlags
         private int _InterruptFlagsLocation => _PKDTLocation!.Value.Min + 0x8;
         private bool _InterruptFlags_IsSet => _PKDTLocation.HasValue && _PKDTLocation!.Value.Max - _InterruptFlagsLocation + 1 >= 2;
         public Package.InterruptFlag InterruptFlags => _InterruptFlags_IsSet ? (Package.InterruptFlag)BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Span.Slice(_InterruptFlagsLocation, 0x2)) : default(Package.InterruptFlag);
         #endregion
-        #region Unknown2
-        private int _Unknown2Location => _PKDTLocation!.Value.Min + 0xA;
-        private bool _Unknown2_IsSet => _PKDTLocation.HasValue && _PKDTLocation!.Value.Max - _Unknown2Location + 1 >= 2;
-        public UInt16 Unknown2 => _Unknown2_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_Unknown2Location, 2)) : default(UInt16);
+        #region InterruptFlagsUnused
+        private int _InterruptFlagsUnusedLocation => _PKDTLocation!.Value.Min + 0xA;
+        private bool _InterruptFlagsUnused_IsSet => _PKDTLocation.HasValue;
+        public ReadOnlyMemorySlice<Byte> InterruptFlagsUnused => _InterruptFlagsUnused_IsSet ? _recordData.Span.Slice(_InterruptFlagsUnusedLocation, 2).ToArray() : UtilityTranslation.Zeros.Slice(0, 2);
         #endregion
         private RangeInt32? _PSDTLocation;
         #region ScheduleMonth
@@ -4189,10 +4207,10 @@ namespace Mutagen.Bethesda.Starfield
         private bool _ScheduleMinute_IsSet => _PSDTLocation.HasValue && _PSDTLocation!.Value.Max - _ScheduleMinuteLocation + 1 >= 1;
         public SByte ScheduleMinute => _ScheduleMinute_IsSet ? (sbyte)_recordData.Slice(_ScheduleMinuteLocation, 1)[0] : default(SByte);
         #endregion
-        #region Unknown3
-        private int _Unknown3Location => _PSDTLocation!.Value.Min + 0x5;
-        private bool _Unknown3_IsSet => _PSDTLocation.HasValue;
-        public ReadOnlyMemorySlice<Byte> Unknown3 => _Unknown3_IsSet ? _recordData.Span.Slice(_Unknown3Location, 3).ToArray() : UtilityTranslation.Zeros.Slice(0, 3);
+        #region ScheduleMinuteUnused
+        private int _ScheduleMinuteUnusedLocation => _PSDTLocation!.Value.Min + 0x5;
+        private bool _ScheduleMinuteUnused_IsSet => _PSDTLocation.HasValue;
+        public ReadOnlyMemorySlice<Byte> ScheduleMinuteUnused => _ScheduleMinuteUnused_IsSet ? _recordData.Span.Slice(_ScheduleMinuteUnusedLocation, 3).ToArray() : UtilityTranslation.Zeros.Slice(0, 3);
         #endregion
         #region ScheduleDurationInMinutes
         private int _ScheduleDurationInMinutesLocation => _PSDTLocation!.Value.Min + 0x8;
@@ -4333,7 +4351,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.PKDT:
                 {
                     _PKDTLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)Package_FieldIndex.Unknown2;
+                    return (int)Package_FieldIndex.InterruptFlagsUnused;
                 }
                 case RecordTypeInts.PSDT:
                 {

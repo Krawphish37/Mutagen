@@ -11,7 +11,7 @@
       <RefDirect name="Parent" refName="WorldspaceParent" />
       <FormLink name="Climate" refName="Climate" recordType="CNAM" />
       <FormLink name="Water" refName="Water" recordType="NAM2" />
-      <String name="NAM7" recordType="NAM7" unknown="true" />
+      <String name="WaterMaterial" recordType="NAM7" />
       <FormLink name="LodWater" refName="Water" recordType="NAM3" />
       <Float name="LodWaterHeight" recordType="NAM4" />
       <RefDirect name="LandDefaults" refName="WorldspaceLandDefaults" />

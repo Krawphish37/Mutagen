@@ -55,3 +55,21 @@ partial class DialogResponses
         Force = 3,
     }
 }
+
+/// <summary>
+/// Reads a response's NAM9 (<see cref="IDialogResponseGetter.CreationTime"/>) as a date.
+/// </summary>
+public static partial class DialogResponseMixIn
+{
+    /// <summary>
+    /// NAM9 holds a Windows FILETIME (100 ns ticks since 1601-01-01, UTC) that the Creation Kit stamps on a response.
+    /// xEdit calls it "Text Hash"; every value in Starfield.esm decodes to 2016-2023 and every value in Fallout4.esm to
+    /// 2013-2015. Returns null when the response has no NAM9 or the value is not a valid FILETIME.
+    /// </summary>
+    public static DateTime? GetCreationTimeUtc(this IDialogResponseGetter response)
+    {
+        if (response.CreationTime is not { } ticks) return null;
+        if (ticks > (ulong)DateTime.MaxValue.ToFileTimeUtc()) return null;
+        return DateTime.FromFileTimeUtc((long)ticks);
+    }
+}

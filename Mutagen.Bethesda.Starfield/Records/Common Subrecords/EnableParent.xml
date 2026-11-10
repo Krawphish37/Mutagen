@@ -6,7 +6,7 @@
         <Interface>IPlaced</Interface>
       </FormLink>
       <Enum name="Flags" enumName="EnableParent.Flag" byteLength="1" />
-      <ByteArray name="Unknown" byteLength="3" nullable="False" />
+      <ByteArray name="FlagsUnused" byteLength="3" nullable="False" />
     </Fields>
   </Object>
 </Loqui>
