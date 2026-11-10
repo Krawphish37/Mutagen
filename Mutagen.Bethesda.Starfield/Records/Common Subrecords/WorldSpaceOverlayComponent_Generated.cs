@@ -54,27 +54,15 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region SNAM
+        #region StarSystemId
+        public Int32? StarSystemId { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _SNAM;
-        public MemorySlice<Byte>? SNAM
-        {
-            get => this._SNAM;
-            set => this._SNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWorldSpaceOverlayComponentGetter.SNAM => this.SNAM;
+        Int32? IWorldSpaceOverlayComponentGetter.StarSystemId => this.StarSystemId;
         #endregion
-        #region PNAM
+        #region PlanetId
+        public Int32? PlanetId { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _PNAM;
-        public MemorySlice<Byte>? PNAM
-        {
-            get => this._PNAM;
-            set => this._PNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWorldSpaceOverlayComponentGetter.PNAM => this.PNAM;
+        Int32? IWorldSpaceOverlayComponentGetter.PlanetId => this.PlanetId;
         #endregion
         #region SurfaceBlock
         private readonly IFormLinkNullable<ISurfaceBlockGetter> _SurfaceBlock = new FormLinkNullable<ISurfaceBlockGetter>();
@@ -127,19 +115,19 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.SNAM = initialValue;
-                this.PNAM = initialValue;
+                this.StarSystemId = initialValue;
+                this.PlanetId = initialValue;
                 this.SurfaceBlock = initialValue;
             }
 
             public Mask(
-                TItem SNAM,
-                TItem PNAM,
+                TItem StarSystemId,
+                TItem PlanetId,
                 TItem SurfaceBlock)
             : base()
             {
-                this.SNAM = SNAM;
-                this.PNAM = PNAM;
+                this.StarSystemId = StarSystemId;
+                this.PlanetId = PlanetId;
                 this.SurfaceBlock = SurfaceBlock;
             }
 
@@ -152,8 +140,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem SNAM;
-            public TItem PNAM;
+            public TItem StarSystemId;
+            public TItem PlanetId;
             public TItem SurfaceBlock;
             #endregion
 
@@ -168,16 +156,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.SNAM, rhs.SNAM)) return false;
-                if (!object.Equals(this.PNAM, rhs.PNAM)) return false;
+                if (!object.Equals(this.StarSystemId, rhs.StarSystemId)) return false;
+                if (!object.Equals(this.PlanetId, rhs.PlanetId)) return false;
                 if (!object.Equals(this.SurfaceBlock, rhs.SurfaceBlock)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.SNAM);
-                hash.Add(this.PNAM);
+                hash.Add(this.StarSystemId);
+                hash.Add(this.PlanetId);
                 hash.Add(this.SurfaceBlock);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -189,8 +177,8 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.SNAM)) return false;
-                if (!eval(this.PNAM)) return false;
+                if (!eval(this.StarSystemId)) return false;
+                if (!eval(this.PlanetId)) return false;
                 if (!eval(this.SurfaceBlock)) return false;
                 return true;
             }
@@ -200,8 +188,8 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.SNAM)) return true;
-                if (eval(this.PNAM)) return true;
+                if (eval(this.StarSystemId)) return true;
+                if (eval(this.PlanetId)) return true;
                 if (eval(this.SurfaceBlock)) return true;
                 return false;
             }
@@ -218,8 +206,8 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.SNAM = eval(this.SNAM);
-                obj.PNAM = eval(this.PNAM);
+                obj.StarSystemId = eval(this.StarSystemId);
+                obj.PlanetId = eval(this.PlanetId);
                 obj.SurfaceBlock = eval(this.SurfaceBlock);
             }
             #endregion
@@ -239,13 +227,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(WorldSpaceOverlayComponent.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.SNAM ?? true)
+                    if (printMask?.StarSystemId ?? true)
                     {
-                        sb.AppendItem(SNAM, "SNAM");
+                        sb.AppendItem(StarSystemId, "StarSystemId");
                     }
-                    if (printMask?.PNAM ?? true)
+                    if (printMask?.PlanetId ?? true)
                     {
-                        sb.AppendItem(PNAM, "PNAM");
+                        sb.AppendItem(PlanetId, "PlanetId");
                     }
                     if (printMask?.SurfaceBlock ?? true)
                     {
@@ -262,8 +250,8 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? SNAM;
-            public Exception? PNAM;
+            public Exception? StarSystemId;
+            public Exception? PlanetId;
             public Exception? SurfaceBlock;
             #endregion
 
@@ -273,10 +261,10 @@ namespace Mutagen.Bethesda.Starfield
                 WorldSpaceOverlayComponent_FieldIndex enu = (WorldSpaceOverlayComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case WorldSpaceOverlayComponent_FieldIndex.SNAM:
-                        return SNAM;
-                    case WorldSpaceOverlayComponent_FieldIndex.PNAM:
-                        return PNAM;
+                    case WorldSpaceOverlayComponent_FieldIndex.StarSystemId:
+                        return StarSystemId;
+                    case WorldSpaceOverlayComponent_FieldIndex.PlanetId:
+                        return PlanetId;
                     case WorldSpaceOverlayComponent_FieldIndex.SurfaceBlock:
                         return SurfaceBlock;
                     default:
@@ -289,11 +277,11 @@ namespace Mutagen.Bethesda.Starfield
                 WorldSpaceOverlayComponent_FieldIndex enu = (WorldSpaceOverlayComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case WorldSpaceOverlayComponent_FieldIndex.SNAM:
-                        this.SNAM = ex;
+                    case WorldSpaceOverlayComponent_FieldIndex.StarSystemId:
+                        this.StarSystemId = ex;
                         break;
-                    case WorldSpaceOverlayComponent_FieldIndex.PNAM:
-                        this.PNAM = ex;
+                    case WorldSpaceOverlayComponent_FieldIndex.PlanetId:
+                        this.PlanetId = ex;
                         break;
                     case WorldSpaceOverlayComponent_FieldIndex.SurfaceBlock:
                         this.SurfaceBlock = ex;
@@ -309,11 +297,11 @@ namespace Mutagen.Bethesda.Starfield
                 WorldSpaceOverlayComponent_FieldIndex enu = (WorldSpaceOverlayComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case WorldSpaceOverlayComponent_FieldIndex.SNAM:
-                        this.SNAM = (Exception?)obj;
+                    case WorldSpaceOverlayComponent_FieldIndex.StarSystemId:
+                        this.StarSystemId = (Exception?)obj;
                         break;
-                    case WorldSpaceOverlayComponent_FieldIndex.PNAM:
-                        this.PNAM = (Exception?)obj;
+                    case WorldSpaceOverlayComponent_FieldIndex.PlanetId:
+                        this.PlanetId = (Exception?)obj;
                         break;
                     case WorldSpaceOverlayComponent_FieldIndex.SurfaceBlock:
                         this.SurfaceBlock = (Exception?)obj;
@@ -327,8 +315,8 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (SNAM != null) return true;
-                if (PNAM != null) return true;
+                if (StarSystemId != null) return true;
+                if (PlanetId != null) return true;
                 if (SurfaceBlock != null) return true;
                 return false;
             }
@@ -357,10 +345,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(SNAM, "SNAM");
+                    sb.AppendItem(StarSystemId, "StarSystemId");
                 }
                 {
-                    sb.AppendItem(PNAM, "PNAM");
+                    sb.AppendItem(PlanetId, "PlanetId");
                 }
                 {
                     sb.AppendItem(SurfaceBlock, "SurfaceBlock");
@@ -373,8 +361,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.SNAM = this.SNAM.Combine(rhs.SNAM);
-                ret.PNAM = this.PNAM.Combine(rhs.PNAM);
+                ret.StarSystemId = this.StarSystemId.Combine(rhs.StarSystemId);
+                ret.PlanetId = this.PlanetId.Combine(rhs.PlanetId);
                 ret.SurfaceBlock = this.SurfaceBlock.Combine(rhs.SurfaceBlock);
                 return ret;
             }
@@ -398,8 +386,8 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool SNAM;
-            public bool PNAM;
+            public bool StarSystemId;
+            public bool PlanetId;
             public bool SurfaceBlock;
             #endregion
 
@@ -409,8 +397,8 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.SNAM = defaultOn;
-                this.PNAM = defaultOn;
+                this.StarSystemId = defaultOn;
+                this.PlanetId = defaultOn;
                 this.SurfaceBlock = defaultOn;
             }
 
@@ -419,8 +407,8 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((SNAM, null));
-                ret.Add((PNAM, null));
+                ret.Add((StarSystemId, null));
+                ret.Add((PlanetId, null));
                 ret.Add((SurfaceBlock, null));
             }
 
@@ -499,8 +487,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IWorldSpaceOverlayComponent>,
         IWorldSpaceOverlayComponentGetter
     {
-        new MemorySlice<Byte>? SNAM { get; set; }
-        new MemorySlice<Byte>? PNAM { get; set; }
+        new Int32? StarSystemId { get; set; }
+        new Int32? PlanetId { get; set; }
         new IFormLinkNullable<ISurfaceBlockGetter> SurfaceBlock { get; set; }
     }
 
@@ -511,8 +499,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IWorldSpaceOverlayComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => WorldSpaceOverlayComponent_Registration.Instance;
-        ReadOnlyMemorySlice<Byte>? SNAM { get; }
-        ReadOnlyMemorySlice<Byte>? PNAM { get; }
+        Int32? StarSystemId { get; }
+        Int32? PlanetId { get; }
         IFormLinkNullableGetter<ISurfaceBlockGetter> SurfaceBlock { get; }
 
     }
@@ -658,8 +646,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum WorldSpaceOverlayComponent_FieldIndex
     {
-        SNAM = 0,
-        PNAM = 1,
+        StarSystemId = 0,
+        PlanetId = 1,
         SurfaceBlock = 2,
     }
     #endregion
@@ -753,8 +741,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IWorldSpaceOverlayComponent item)
         {
             ClearPartial();
-            item.SNAM = default;
-            item.PNAM = default;
+            item.StarSystemId = default;
+            item.PlanetId = default;
             item.SurfaceBlock.Clear();
             base.Clear(item);
         }
@@ -824,8 +812,8 @@ namespace Mutagen.Bethesda.Starfield
             WorldSpaceOverlayComponent.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.SNAM = MemorySliceExt.SequenceEqual(item.SNAM, rhs.SNAM);
-            ret.PNAM = MemorySliceExt.SequenceEqual(item.PNAM, rhs.PNAM);
+            ret.StarSystemId = item.StarSystemId == rhs.StarSystemId;
+            ret.PlanetId = item.PlanetId == rhs.PlanetId;
             ret.SurfaceBlock = item.SurfaceBlock.Equals(rhs.SurfaceBlock);
             base.FillEqualsMask(item, rhs, ret, include);
         }
@@ -876,15 +864,15 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.SNAM ?? true)
-                && item.SNAM is {} SNAMItem)
+            if ((printMask?.StarSystemId ?? true)
+                && item.StarSystemId is {} StarSystemIdItem)
             {
-                sb.AppendLine($"SNAM => {SpanExt.ToHexString(SNAMItem)}");
+                sb.AppendItem(StarSystemIdItem, "StarSystemId");
             }
-            if ((printMask?.PNAM ?? true)
-                && item.PNAM is {} PNAMItem)
+            if ((printMask?.PlanetId ?? true)
+                && item.PlanetId is {} PlanetIdItem)
             {
-                sb.AppendLine($"PNAM => {SpanExt.ToHexString(PNAMItem)}");
+                sb.AppendItem(PlanetIdItem, "PlanetId");
             }
             if (printMask?.SurfaceBlock ?? true)
             {
@@ -909,13 +897,13 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IAComponentGetter)lhs, (IAComponentGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)WorldSpaceOverlayComponent_FieldIndex.SNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)WorldSpaceOverlayComponent_FieldIndex.StarSystemId) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.SNAM, rhs.SNAM)) return false;
+                if (lhs.StarSystemId != rhs.StarSystemId) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)WorldSpaceOverlayComponent_FieldIndex.PNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)WorldSpaceOverlayComponent_FieldIndex.PlanetId) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.PNAM, rhs.PNAM)) return false;
+                if (lhs.PlanetId != rhs.PlanetId) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)WorldSpaceOverlayComponent_FieldIndex.SurfaceBlock) ?? true))
             {
@@ -938,13 +926,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IWorldSpaceOverlayComponentGetter item)
         {
             var hash = new HashCode();
-            if (item.SNAM is {} SNAMItem)
+            if (item.StarSystemId is {} StarSystemIditem)
             {
-                hash.AddBytes(SNAMItem);
+                hash.Add(StarSystemIditem);
             }
-            if (item.PNAM is {} PNAMItem)
+            if (item.PlanetId is {} PlanetIditem)
             {
-                hash.AddBytes(PNAMItem);
+                hash.Add(PlanetIditem);
             }
             hash.Add(item.SurfaceBlock);
             hash.Add(base.GetHashCode());
@@ -999,27 +987,13 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)WorldSpaceOverlayComponent_FieldIndex.SNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)WorldSpaceOverlayComponent_FieldIndex.StarSystemId) ?? true))
             {
-                if(rhs.SNAM is {} SNAMrhs)
-                {
-                    item.SNAM = SNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.SNAM = default;
-                }
+                item.StarSystemId = rhs.StarSystemId;
             }
-            if ((copyMask?.GetShouldTranslate((int)WorldSpaceOverlayComponent_FieldIndex.PNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)WorldSpaceOverlayComponent_FieldIndex.PlanetId) ?? true))
             {
-                if(rhs.PNAM is {} PNAMrhs)
-                {
-                    item.PNAM = PNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.PNAM = default;
-                }
+                item.PlanetId = rhs.PlanetId;
             }
             if ((copyMask?.GetShouldTranslate((int)WorldSpaceOverlayComponent_FieldIndex.SurfaceBlock) ?? true))
             {
@@ -1150,13 +1124,13 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.SNAM,
+                item: item.StarSystemId,
                 header: translationParams.ConvertToCustom(RecordTypes.SNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.PNAM,
+                item: item.PlanetId,
                 header: translationParams.ConvertToCustom(RecordTypes.PNAM));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -1219,14 +1193,14 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.SNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.SNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)WorldSpaceOverlayComponent_FieldIndex.SNAM;
+                    item.StarSystemId = frame.ReadInt32();
+                    return (int)WorldSpaceOverlayComponent_FieldIndex.StarSystemId;
                 }
                 case RecordTypeInts.PNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.PNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)WorldSpaceOverlayComponent_FieldIndex.PNAM;
+                    item.PlanetId = frame.ReadInt32();
+                    return (int)WorldSpaceOverlayComponent_FieldIndex.PlanetId;
                 }
                 case RecordTypeInts.BNAM:
                 {
@@ -1291,13 +1265,13 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region SNAM
-        private int? _SNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? SNAM => _SNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _SNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region StarSystemId
+        private int? _StarSystemIdLocation;
+        public Int32? StarSystemId => _StarSystemIdLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _StarSystemIdLocation.Value, _package.MetaData.Constants)) : default(Int32?);
         #endregion
-        #region PNAM
-        private int? _PNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? PNAM => _PNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _PNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region PlanetId
+        private int? _PlanetIdLocation;
+        public Int32? PlanetId => _PlanetIdLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _PlanetIdLocation.Value, _package.MetaData.Constants)) : default(Int32?);
         #endregion
         #region SurfaceBlock
         private int? _SurfaceBlockLocation;
@@ -1368,13 +1342,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.SNAM:
                 {
-                    _SNAMLocation = (stream.Position - offset);
-                    return (int)WorldSpaceOverlayComponent_FieldIndex.SNAM;
+                    _StarSystemIdLocation = (stream.Position - offset);
+                    return (int)WorldSpaceOverlayComponent_FieldIndex.StarSystemId;
                 }
                 case RecordTypeInts.PNAM:
                 {
-                    _PNAMLocation = (stream.Position - offset);
-                    return (int)WorldSpaceOverlayComponent_FieldIndex.PNAM;
+                    _PlanetIdLocation = (stream.Position - offset);
+                    return (int)WorldSpaceOverlayComponent_FieldIndex.PlanetId;
                 }
                 case RecordTypeInts.BNAM:
                 {

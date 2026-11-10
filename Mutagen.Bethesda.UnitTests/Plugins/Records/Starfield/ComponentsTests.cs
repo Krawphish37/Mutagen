@@ -250,8 +250,7 @@ public class ComponentsTests
         {
             location.Components.Count.ShouldBe(2);
             var overlay = location.Components[0].ShouldBeAssignableTo<IWorldSpaceOverlayComponentGetter>()!;
-            overlay.PNAM.ShouldNotBeNull();
-            overlay.PNAM.Value.ToArray().ShouldBe(new byte[] { 0xFF, 0xFF, 0xFF, 0xFF });
+            overlay.PlanetId.ShouldBe(-1);
             var props = location.Components[1].ShouldBeAssignableTo<IPlanetContentManagerContentPropertiesComponentGetter>()!;
             props.DoAllBeforeRepeating.ShouldBe((byte)7);
             props.NumberOfTimesAllowedGlobal.ShouldBe(0u);
