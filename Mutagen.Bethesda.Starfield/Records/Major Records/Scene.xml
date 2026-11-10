@@ -58,8 +58,8 @@
   <Object name="ScenePhaseFragment" objType="Subrecord">
     <Fields>
       <Enum name="Flags" enumName="ScenePhaseFragment.Flag" byteLength="1" />
-      <UInt8 name="Index" />
-      <UInt32 name="Unknown" />
+      <UInt32 name="Index" />
+      <UInt8 name="Unknown" />
       <String name="ScriptName" binaryType="PrependLengthUShort" />
       <String name="FragmentName" binaryType="PrependLengthUShort" />
     </Fields>
@@ -79,7 +79,7 @@
       <UInt32 name="EditorWidth" recordType="WNAM" />
       <Enum name="Flags" enumName="ScenePhase.Flag" byteLength="2" recordType="FNAM" />
       <RefDirect name="PhaseSetParentQuestStage" refName="SceneSetParentQuestStage" />
-      <ByteArray name="SPMV" recordType="SPMV" unknown="true" />
+      <Bool name="PhaseVisibilityMarker" recordType="SPMV" boolAsMarker="True" />
       <Marker name="EndMarker" recordType="HNAM" />
     </Fields>
   </Object>

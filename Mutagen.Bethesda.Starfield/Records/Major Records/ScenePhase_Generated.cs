@@ -121,16 +121,8 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ISceneSetParentQuestStageGetter? IScenePhaseGetter.PhaseSetParentQuestStage => this.PhaseSetParentQuestStage;
         #endregion
-        #region SPMV
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _SPMV;
-        public MemorySlice<Byte>? SPMV
-        {
-            get => this._SPMV;
-            set => this._SPMV = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IScenePhaseGetter.SPMV => this.SPMV;
+        #region PhaseVisibilityMarker
+        public Boolean PhaseVisibilityMarker { get; set; } = default(Boolean);
         #endregion
 
         #region To String
@@ -177,7 +169,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.EditorWidth = initialValue;
                 this.Flags = initialValue;
                 this.PhaseSetParentQuestStage = new MaskItem<TItem, SceneSetParentQuestStage.Mask<TItem>?>(initialValue, new SceneSetParentQuestStage.Mask<TItem>(initialValue));
-                this.SPMV = initialValue;
+                this.PhaseVisibilityMarker = initialValue;
             }
 
             public Mask(
@@ -187,7 +179,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem EditorWidth,
                 TItem Flags,
                 TItem PhaseSetParentQuestStage,
-                TItem SPMV)
+                TItem PhaseVisibilityMarker)
             {
                 this.Name = Name;
                 this.StartConditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(StartConditions, []);
@@ -195,7 +187,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.EditorWidth = EditorWidth;
                 this.Flags = Flags;
                 this.PhaseSetParentQuestStage = new MaskItem<TItem, SceneSetParentQuestStage.Mask<TItem>?>(PhaseSetParentQuestStage, new SceneSetParentQuestStage.Mask<TItem>(PhaseSetParentQuestStage));
-                this.SPMV = SPMV;
+                this.PhaseVisibilityMarker = PhaseVisibilityMarker;
             }
 
             #pragma warning disable CS8618
@@ -213,7 +205,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem EditorWidth;
             public TItem Flags;
             public MaskItem<TItem, SceneSetParentQuestStage.Mask<TItem>?>? PhaseSetParentQuestStage { get; set; }
-            public TItem SPMV;
+            public TItem PhaseVisibilityMarker;
             #endregion
 
             #region Equals
@@ -232,7 +224,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.EditorWidth, rhs.EditorWidth)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.PhaseSetParentQuestStage, rhs.PhaseSetParentQuestStage)) return false;
-                if (!object.Equals(this.SPMV, rhs.SPMV)) return false;
+                if (!object.Equals(this.PhaseVisibilityMarker, rhs.PhaseVisibilityMarker)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -244,7 +236,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.EditorWidth);
                 hash.Add(this.Flags);
                 hash.Add(this.PhaseSetParentQuestStage);
-                hash.Add(this.SPMV);
+                hash.Add(this.PhaseVisibilityMarker);
                 return hash.ToHashCode();
             }
 
@@ -285,7 +277,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.PhaseSetParentQuestStage.Overall)) return false;
                     if (this.PhaseSetParentQuestStage.Specific != null && !this.PhaseSetParentQuestStage.Specific.All(eval)) return false;
                 }
-                if (!eval(this.SPMV)) return false;
+                if (!eval(this.PhaseVisibilityMarker)) return false;
                 return true;
             }
             #endregion
@@ -325,7 +317,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.PhaseSetParentQuestStage.Overall)) return true;
                     if (this.PhaseSetParentQuestStage.Specific != null && this.PhaseSetParentQuestStage.Specific.Any(eval)) return true;
                 }
-                if (eval(this.SPMV)) return true;
+                if (eval(this.PhaseVisibilityMarker)) return true;
                 return false;
             }
             #endregion
@@ -374,7 +366,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.EditorWidth = eval(this.EditorWidth);
                 obj.Flags = eval(this.Flags);
                 obj.PhaseSetParentQuestStage = this.PhaseSetParentQuestStage == null ? null : new MaskItem<R, SceneSetParentQuestStage.Mask<R>?>(eval(this.PhaseSetParentQuestStage.Overall), this.PhaseSetParentQuestStage.Specific?.Translate(eval));
-                obj.SPMV = eval(this.SPMV);
+                obj.PhaseVisibilityMarker = eval(this.PhaseVisibilityMarker);
             }
             #endregion
 
@@ -447,9 +439,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         PhaseSetParentQuestStage?.Print(sb);
                     }
-                    if (printMask?.SPMV ?? true)
+                    if (printMask?.PhaseVisibilityMarker ?? true)
                     {
-                        sb.AppendItem(SPMV, "SPMV");
+                        sb.AppendItem(PhaseVisibilityMarker, "PhaseVisibilityMarker");
                     }
                 }
             }
@@ -481,7 +473,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? EditorWidth;
             public Exception? Flags;
             public MaskItem<Exception?, SceneSetParentQuestStage.ErrorMask?>? PhaseSetParentQuestStage;
-            public Exception? SPMV;
+            public Exception? PhaseVisibilityMarker;
             #endregion
 
             #region IErrorMask
@@ -502,8 +494,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Flags;
                     case ScenePhase_FieldIndex.PhaseSetParentQuestStage:
                         return PhaseSetParentQuestStage;
-                    case ScenePhase_FieldIndex.SPMV:
-                        return SPMV;
+                    case ScenePhase_FieldIndex.PhaseVisibilityMarker:
+                        return PhaseVisibilityMarker;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -532,8 +524,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ScenePhase_FieldIndex.PhaseSetParentQuestStage:
                         this.PhaseSetParentQuestStage = new MaskItem<Exception?, SceneSetParentQuestStage.ErrorMask?>(ex, null);
                         break;
-                    case ScenePhase_FieldIndex.SPMV:
-                        this.SPMV = ex;
+                    case ScenePhase_FieldIndex.PhaseVisibilityMarker:
+                        this.PhaseVisibilityMarker = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -563,8 +555,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ScenePhase_FieldIndex.PhaseSetParentQuestStage:
                         this.PhaseSetParentQuestStage = (MaskItem<Exception?, SceneSetParentQuestStage.ErrorMask?>?)obj;
                         break;
-                    case ScenePhase_FieldIndex.SPMV:
-                        this.SPMV = (Exception?)obj;
+                    case ScenePhase_FieldIndex.PhaseVisibilityMarker:
+                        this.PhaseVisibilityMarker = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -580,7 +572,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (EditorWidth != null) return true;
                 if (Flags != null) return true;
                 if (PhaseSetParentQuestStage != null) return true;
-                if (SPMV != null) return true;
+                if (PhaseVisibilityMarker != null) return true;
                 return false;
             }
             #endregion
@@ -653,7 +645,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 PhaseSetParentQuestStage?.Print(sb);
                 {
-                    sb.AppendItem(SPMV, "SPMV");
+                    sb.AppendItem(PhaseVisibilityMarker, "PhaseVisibilityMarker");
                 }
             }
             #endregion
@@ -669,7 +661,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.EditorWidth = this.EditorWidth.Combine(rhs.EditorWidth);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.PhaseSetParentQuestStage = this.PhaseSetParentQuestStage.Combine(rhs.PhaseSetParentQuestStage, (l, r) => l.Combine(r));
-                ret.SPMV = this.SPMV.Combine(rhs.SPMV);
+                ret.PhaseVisibilityMarker = this.PhaseVisibilityMarker.Combine(rhs.PhaseVisibilityMarker);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -699,7 +691,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool EditorWidth;
             public bool Flags;
             public SceneSetParentQuestStage.TranslationMask? PhaseSetParentQuestStage;
-            public bool SPMV;
+            public bool PhaseVisibilityMarker;
             #endregion
 
             #region Ctors
@@ -712,7 +704,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Name = defaultOn;
                 this.EditorWidth = defaultOn;
                 this.Flags = defaultOn;
-                this.SPMV = defaultOn;
+                this.PhaseVisibilityMarker = defaultOn;
             }
 
             #endregion
@@ -734,7 +726,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((EditorWidth, null));
                 ret.Add((Flags, null));
                 ret.Add((PhaseSetParentQuestStage != null ? PhaseSetParentQuestStage.OnOverall : DefaultOn, PhaseSetParentQuestStage?.GetCrystal()));
-                ret.Add((SPMV, null));
+                ret.Add((PhaseVisibilityMarker, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -824,7 +816,7 @@ namespace Mutagen.Bethesda.Starfield
         new UInt32? EditorWidth { get; set; }
         new ScenePhase.Flag? Flags { get; set; }
         new SceneSetParentQuestStage? PhaseSetParentQuestStage { get; set; }
-        new MemorySlice<Byte>? SPMV { get; set; }
+        new Boolean PhaseVisibilityMarker { get; set; }
     }
 
     public partial interface IScenePhaseGetter :
@@ -853,7 +845,7 @@ namespace Mutagen.Bethesda.Starfield
         UInt32? EditorWidth { get; }
         ScenePhase.Flag? Flags { get; }
         ISceneSetParentQuestStageGetter? PhaseSetParentQuestStage { get; }
-        ReadOnlyMemorySlice<Byte>? SPMV { get; }
+        Boolean PhaseVisibilityMarker { get; }
 
     }
 
@@ -1029,7 +1021,7 @@ namespace Mutagen.Bethesda.Starfield
         EditorWidth = 3,
         Flags = 4,
         PhaseSetParentQuestStage = 5,
-        SPMV = 6,
+        PhaseVisibilityMarker = 6,
     }
     #endregion
 
@@ -1135,7 +1127,7 @@ namespace Mutagen.Bethesda.Starfield
             item.EditorWidth = default;
             item.Flags = default;
             item.PhaseSetParentQuestStage = null;
-            item.SPMV = default;
+            item.PhaseVisibilityMarker = default(Boolean);
         }
         
         #region Mutagen
@@ -1203,7 +1195,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.PhaseSetParentQuestStage,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.SPMV = MemorySliceExt.SequenceEqual(item.SPMV, rhs.SPMV);
+            ret.PhaseVisibilityMarker = item.PhaseVisibilityMarker == rhs.PhaseVisibilityMarker;
         }
         
         public string Print(
@@ -1296,10 +1288,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 PhaseSetParentQuestStageItem?.Print(sb, "PhaseSetParentQuestStage");
             }
-            if ((printMask?.SPMV ?? true)
-                && item.SPMV is {} SPMVItem)
+            if (printMask?.PhaseVisibilityMarker ?? true)
             {
-                sb.AppendLine($"SPMV => {SpanExt.ToHexString(SPMVItem)}");
+                sb.AppendItem(item.PhaseVisibilityMarker, "PhaseVisibilityMarker");
             }
         }
         
@@ -1338,9 +1329,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isPhaseSetParentQuestStageEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ScenePhase_FieldIndex.SPMV) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ScenePhase_FieldIndex.PhaseVisibilityMarker) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.SPMV, rhs.SPMV)) return false;
+                if (lhs.PhaseVisibilityMarker != rhs.PhaseVisibilityMarker) return false;
             }
             return true;
         }
@@ -1372,10 +1363,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(PhaseSetParentQuestStageitem);
             }
-            if (item.SPMV is {} SPMVItem)
-            {
-                hash.AddBytes(SPMVItem);
-            }
+            hash.Add(item.PhaseVisibilityMarker);
             return hash.ToHashCode();
         }
         
@@ -1502,16 +1490,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)ScenePhase_FieldIndex.SPMV) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ScenePhase_FieldIndex.PhaseVisibilityMarker) ?? true))
             {
-                if(rhs.SPMV is {} SPMVrhs)
-                {
-                    item.SPMV = SPMVrhs.ToArray();
-                }
-                else
-                {
-                    item.SPMV = default;
-                }
+                item.PhaseVisibilityMarker = rhs.PhaseVisibilityMarker;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1650,9 +1631,9 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     translationParams: translationParams);
             }
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.SPMV,
+                item: item.PhaseVisibilityMarker,
                 header: translationParams.ConvertToCustom(RecordTypes.SPMV));
             using (HeaderExport.Subrecord(writer, RecordTypes.HNAM)) { }
         }
@@ -1730,7 +1711,7 @@ namespace Mutagen.Bethesda.Starfield
                         frame.ReadSubrecord();
                         return new ParseResult(default(int?), nextRecordType);
                     }
-                    else if (lastParsed.ParsedIndex.Value <= (int)ScenePhase_FieldIndex.SPMV)
+                    else if (lastParsed.ParsedIndex.Value <= (int)ScenePhase_FieldIndex.PhaseVisibilityMarker)
                     {
                         frame.ReadSubrecord();
                         return ParseResult.Stop;
@@ -1796,9 +1777,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SPMV:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.SPMV = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)ScenePhase_FieldIndex.SPMV;
+                    item.PhaseVisibilityMarker = true;
+                    return (int)ScenePhase_FieldIndex.PhaseVisibilityMarker;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1915,9 +1895,9 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _PhaseSetParentQuestStageLocation;
         public ISceneSetParentQuestStageGetter? PhaseSetParentQuestStage => _PhaseSetParentQuestStageLocation.HasValue ? SceneSetParentQuestStageBinaryOverlay.SceneSetParentQuestStageFactory(_recordData.Slice(_PhaseSetParentQuestStageLocation!.Value.Min), _package) : default;
         #endregion
-        #region SPMV
-        private int? _SPMVLocation;
-        public ReadOnlyMemorySlice<Byte>? SPMV => _SPMVLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _SPMVLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region PhaseVisibilityMarker
+        private int? _PhaseVisibilityMarkerLocation;
+        public Boolean PhaseVisibilityMarker => _PhaseVisibilityMarkerLocation.HasValue ? true : default(Boolean);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1989,7 +1969,7 @@ namespace Mutagen.Bethesda.Starfield
                         stream.ReadSubrecord();
                         return new ParseResult(default(int?), type);
                     }
-                    else if (lastParsed.ParsedIndex.Value <= (int)ScenePhase_FieldIndex.SPMV)
+                    else if (lastParsed.ParsedIndex.Value <= (int)ScenePhase_FieldIndex.PhaseVisibilityMarker)
                     {
                         stream.ReadSubrecord();
                         return ParseResult.Stop;
@@ -2055,8 +2035,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SPMV:
                 {
-                    _SPMVLocation = (stream.Position - offset);
-                    return (int)ScenePhase_FieldIndex.SPMV;
+                    _PhaseVisibilityMarkerLocation = (stream.Position - offset);
+                    return (int)ScenePhase_FieldIndex.PhaseVisibilityMarker;
                 }
                 default:
                     return ParseResult.Stop;

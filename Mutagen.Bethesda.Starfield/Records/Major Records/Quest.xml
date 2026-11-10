@@ -219,7 +219,7 @@
       <RefDirect name="ExternalAliasLocation" refName="ExternalAliasLocation" />
       <RefDirect name="FindMatchingRefFromEvent" refName="FindMatchingRefFromEvent" />
       <RefList name="Conditions" refName="Condition" />
-      <RefDirect name="ALPS" refName="QuestLocationAliasALPS" nullable="true" />
+      <RefDirect name="PlanetContentRequest" refName="QuestLocationAliasALPS" nullable="true" />
       <Int32 name="ClosestToAlias" recordType="ALCC" />
       <Int32 name="SystemLocationAliasID" recordType="ALSY" />
       <Int32 name="ParentSystemLocationAliasID" recordType="ALPN" />

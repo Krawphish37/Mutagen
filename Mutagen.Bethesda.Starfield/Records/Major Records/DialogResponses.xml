@@ -61,7 +61,7 @@
   </Object>
   <Object name="DialogResponseTROT" objType="Subrecord" recordType="TROT" >
     <Fields>
-      <FormLink name="VoiceType" refName="VoiceType" unknown="true" />
+      <FormLink name="VoiceType" refName="VoiceType" />
       <Float name="EmotionOut" />
     </Fields>
   </Object>
