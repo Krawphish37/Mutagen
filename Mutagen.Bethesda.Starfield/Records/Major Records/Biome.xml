@@ -51,7 +51,13 @@
       <FormLink name="PackIn" >
         <Interface>IBiomeObjectPackInTarget</Interface>
       </FormLink>
-      <ByteArray name="Unknown" />
+      <ByteArray name="Unknown1" byteLength="16" nullable="False" />
+      <Float name="Unknown2" />
+      <ByteArray name="Unknown3" byteLength="28" nullable="False" />
+      <Float name="Unknown4" />
+      <ByteArray name="Unknown5" byteLength="4" nullable="False" />
+      <Float name="ObjectDensity" />
+      <ByteArray name="Unknown6" byteLength="20" nullable="False" />
     </Fields>
   </Object>
   <Object name="BiomeWaterData" objType="Subrecord" >
