@@ -450,6 +450,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -486,6 +488,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2341,37 +2345,39 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        ObjectPaletteDefaults = 10,
-        Transforms = 11,
-        SnapTemplate = 12,
-        SnapBehavior = 13,
-        DefaultLayer = 14,
-        XalgFlags = 15,
-        Components = 16,
-        Name = 17,
-        Model = 18,
-        Destructible = 19,
-        Keywords = 20,
-        Properties = 21,
-        ForcedLocations = 22,
-        NativeTerminal = 23,
-        MarkerColor = 24,
-        WaterMaterial = 25,
-        LoopingSound = 26,
-        ActivateSound = 27,
-        ActivateTextOverride = 28,
-        Water = 29,
-        Flags = 30,
-        ActivationAngle = 31,
-        InvertFacing = 32,
-        Conditions = 33,
-        NavmeshGeometry = 34,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        ObjectPaletteDefaults = 12,
+        Transforms = 13,
+        SnapTemplate = 14,
+        SnapBehavior = 15,
+        DefaultLayer = 16,
+        XalgFlags = 17,
+        Components = 18,
+        Name = 19,
+        Model = 20,
+        Destructible = 21,
+        Keywords = 22,
+        Properties = 23,
+        ForcedLocations = 24,
+        NativeTerminal = 25,
+        MarkerColor = 26,
+        WaterMaterial = 27,
+        LoopingSound = 28,
+        ActivateSound = 29,
+        ActivateTextOverride = 30,
+        Water = 31,
+        Flags = 32,
+        ActivationAngle = 33,
+        InvertFacing = 34,
+        Conditions = 35,
+        NavmeshGeometry = 36,
     }
     #endregion
 
@@ -2384,7 +2390,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 28;
 
-        public const ushort FieldCount = 35;
+        public const ushort FieldCount = 37;
 
         public static readonly Type MaskType = typeof(Activator.Mask<>);
 
@@ -2992,6 +2998,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Activator_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Activator_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Activator_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Activator_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Activator_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -3014,6 +3024,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Activator_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Activator_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Activator_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Activator_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -450,6 +450,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -485,6 +487,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2486,36 +2490,38 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        PreviewTransform = 9,
-        Name = 10,
-        Model = 11,
-        Destructible = 12,
-        Keywords = 13,
-        Properties = 14,
-        NativeTerminal = 15,
-        ForcedLocRefType = 16,
-        PNAM = 17,
-        DrinkingWater = 18,
-        ActivateTextOverride = 19,
-        Flags = 20,
-        Conditions = 21,
-        Items = 22,
-        BenchType = 23,
-        UsesSkill = 24,
-        AssociatedForm = 25,
-        EnabledEntryPoints = 26,
-        MarkerEntryPoints = 27,
-        MarkerModel = 28,
-        MarkerParameters = 29,
-        AttachParentSlots = 30,
-        ObjectTemplates = 31,
-        NavmeshGeometry = 32,
-        WBDTDataTypeState = 33,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        PreviewTransform = 11,
+        Name = 12,
+        Model = 13,
+        Destructible = 14,
+        Keywords = 15,
+        Properties = 16,
+        NativeTerminal = 17,
+        ForcedLocRefType = 18,
+        PNAM = 19,
+        DrinkingWater = 20,
+        ActivateTextOverride = 21,
+        Flags = 22,
+        Conditions = 23,
+        Items = 24,
+        BenchType = 25,
+        UsesSkill = 26,
+        AssociatedForm = 27,
+        EnabledEntryPoints = 28,
+        MarkerEntryPoints = 29,
+        MarkerModel = 30,
+        MarkerParameters = 31,
+        AttachParentSlots = 32,
+        ObjectTemplates = 33,
+        NavmeshGeometry = 34,
+        WBDTDataTypeState = 35,
     }
     #endregion
 
@@ -2528,7 +2534,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 27;
 
-        public const ushort FieldCount = 34;
+        public const ushort FieldCount = 36;
 
         public static readonly Type MaskType = typeof(Furniture.Mask<>);
 
@@ -3109,6 +3115,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Furniture_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Furniture_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Furniture_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Furniture_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Furniture_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -3131,6 +3141,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Furniture_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Furniture_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Furniture_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Furniture_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

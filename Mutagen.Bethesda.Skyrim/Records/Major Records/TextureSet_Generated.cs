@@ -178,6 +178,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -197,6 +199,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1099,20 +1103,22 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        ObjectBounds = 7,
-        Diffuse = 8,
-        NormalOrGloss = 9,
-        EnvironmentMaskOrSubsurfaceTint = 10,
-        GlowOrDetailMap = 11,
-        Height = 12,
-        Environment = 13,
-        Multilayer = 14,
-        BacklightMaskOrSpecular = 15,
-        Decal = 16,
-        Flags = 17,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        ObjectBounds = 9,
+        Diffuse = 10,
+        NormalOrGloss = 11,
+        EnvironmentMaskOrSubsurfaceTint = 12,
+        GlowOrDetailMap = 13,
+        Height = 14,
+        Environment = 15,
+        Multilayer = 16,
+        BacklightMaskOrSpecular = 17,
+        Decal = 18,
+        Flags = 19,
     }
     #endregion
 
@@ -1125,7 +1131,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 11;
 
-        public const ushort FieldCount = 18;
+        public const ushort FieldCount = 20;
 
         public static readonly Type MaskType = typeof(TextureSet.Mask<>);
 
@@ -1501,6 +1507,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (TextureSet_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (TextureSet_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (TextureSet_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (TextureSet_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (TextureSet_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1523,6 +1533,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (TextureSet_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (TextureSet_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (TextureSet_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (TextureSet_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

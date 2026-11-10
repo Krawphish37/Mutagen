@@ -326,6 +326,8 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem Base,
                 TItem XPCIFluff,
@@ -358,6 +360,8 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.Base = Base;
@@ -1699,33 +1703,35 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        OblivionMajorRecordFlags = 4,
-        Base = 5,
-        XPCIFluff = 6,
-        FULLFluff = 7,
-        TeleportDestination = 8,
-        Lock = 9,
-        Owner = 10,
-        FactionRank = 11,
-        GlobalVariable = 12,
-        EnableParent = 13,
-        Target = 14,
-        SpeedTreeSeed = 15,
-        DistantLODData = 16,
-        Charge = 17,
-        Health = 18,
-        LevelModifier = 19,
-        XRTM = 20,
-        ActionFlags = 21,
-        Count = 22,
-        MapMarker = 23,
-        OpenByDefault = 24,
-        RagdollData = 25,
-        Scale = 26,
-        ContainedSoul = 27,
-        Location = 28,
-        XAAG = 29,
-        XACN = 30,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        OblivionMajorRecordFlags = 6,
+        Base = 7,
+        XPCIFluff = 8,
+        FULLFluff = 9,
+        TeleportDestination = 10,
+        Lock = 11,
+        Owner = 12,
+        FactionRank = 13,
+        GlobalVariable = 14,
+        EnableParent = 15,
+        Target = 16,
+        SpeedTreeSeed = 17,
+        DistantLODData = 18,
+        Charge = 19,
+        Health = 20,
+        LevelModifier = 21,
+        XRTM = 22,
+        ActionFlags = 23,
+        Count = 24,
+        MapMarker = 25,
+        OpenByDefault = 26,
+        RagdollData = 27,
+        Scale = 28,
+        ContainedSoul = 29,
+        Location = 30,
+        XAAG = 31,
+        XACN = 32,
     }
     #endregion
 
@@ -1738,7 +1744,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 26;
 
-        public const ushort FieldCount = 31;
+        public const ushort FieldCount = 33;
 
         public static readonly Type MaskType = typeof(PlacedObject.Mask<>);
 
@@ -2196,6 +2202,10 @@ namespace Mutagen.Bethesda.Oblivion
                     return (PlacedObject_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (PlacedObject_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedObject_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (PlacedObject_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (PlacedObject_FieldIndex)((int)index);
                 default:
@@ -2214,6 +2224,10 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PlacedObject_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (PlacedObject_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedObject_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedObject_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

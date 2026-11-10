@@ -304,6 +304,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -340,6 +342,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1727,37 +1731,39 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        Name = 7,
-        Type = 8,
-        LoopBattleDayOuter = 9,
-        ExploreDayMiddle = 10,
-        SuspenseDayInner = 11,
-        NightOuter = 12,
-        NightMiddle = 13,
-        NightInner = 14,
-        LoopBattleDayOuterDb = 15,
-        ExploreDayMiddleDb = 16,
-        SuspenseDayInnerDb = 17,
-        NightOuterDb = 18,
-        NightMiddleDb = 19,
-        NightInnerDb = 20,
-        DayOuterBoundaryPercent = 21,
-        DayMiddleBoundaryPercent = 22,
-        DayInnerBoundaryPercent = 23,
-        NightOuterBoundaryPercent = 24,
-        NightMiddleBoundaryPercent = 25,
-        NightInnerBoundaryPercent = 26,
-        EnableFlags = 27,
-        WaitTimeMinTimeOnDaytimeMin = 28,
-        LoopFadeOutCrossfadeOverlapNighttimeMin = 29,
-        RecoveryTimeCrossfadeTimeDaytimeMax = 30,
-        NighttimeMax = 31,
-        IntroDaytime = 32,
-        OutroNighttime = 33,
-        DATA = 34,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        Name = 9,
+        Type = 10,
+        LoopBattleDayOuter = 11,
+        ExploreDayMiddle = 12,
+        SuspenseDayInner = 13,
+        NightOuter = 14,
+        NightMiddle = 15,
+        NightInner = 16,
+        LoopBattleDayOuterDb = 17,
+        ExploreDayMiddleDb = 18,
+        SuspenseDayInnerDb = 19,
+        NightOuterDb = 20,
+        NightMiddleDb = 21,
+        NightInnerDb = 22,
+        DayOuterBoundaryPercent = 23,
+        DayMiddleBoundaryPercent = 24,
+        DayInnerBoundaryPercent = 25,
+        NightOuterBoundaryPercent = 26,
+        NightMiddleBoundaryPercent = 27,
+        NightInnerBoundaryPercent = 28,
+        EnableFlags = 29,
+        WaitTimeMinTimeOnDaytimeMin = 30,
+        LoopFadeOutCrossfadeOverlapNighttimeMin = 31,
+        RecoveryTimeCrossfadeTimeDaytimeMax = 32,
+        NighttimeMax = 33,
+        IntroDaytime = 34,
+        OutroNighttime = 35,
+        DATA = 36,
     }
     #endregion
 
@@ -1770,7 +1776,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 28;
 
-        public const ushort FieldCount = 35;
+        public const ushort FieldCount = 37;
 
         public static readonly Type MaskType = typeof(MediaSet.Mask<>);
 
@@ -2218,6 +2224,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (MediaSet_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (MediaSet_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (MediaSet_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (MediaSet_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (MediaSet_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2240,6 +2250,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (MediaSet_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (MediaSet_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (MediaSet_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (MediaSet_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

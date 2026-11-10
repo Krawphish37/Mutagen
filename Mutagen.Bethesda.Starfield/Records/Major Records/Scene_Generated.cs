@@ -433,6 +433,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -475,6 +477,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2657,43 +2661,45 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Flags = 8,
-        Phases = 9,
-        Actors = 10,
-        Actions = 11,
-        Quest = 12,
-        LastActionIndex = 13,
-        DeathBehavior = 14,
-        CombatBehavior = 15,
-        PlayerDialogueBehavior = 16,
-        ObserveCombatBehavior = 17,
-        ReactionRadiusBehavior = 18,
-        Conditions = 19,
-        SetParentQuestStage = 20,
-        Notes = 21,
-        Template = 22,
-        BOLV = 23,
-        Index = 24,
-        Priority = 25,
-        OverrideSubtitlePriority = 26,
-        SCPP = 27,
-        IsSpeechChallenge = 28,
-        MandatoryNextChallenges = 29,
-        ExcludedChallenges = 30,
-        ChallengeRisk = 31,
-        ChallengeReward = 32,
-        ChallengeRepeatable = 33,
-        ChallengeDefault = 34,
-        ChallengeDataMarker = 35,
-        ChallengeAndKeywords = 36,
-        ChallengePerks = 37,
-        ChallengeOrKeywords = 38,
-        ShowOneDialogueTrack = 39,
-        VNAMDataTypeState = 40,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Flags = 10,
+        Phases = 11,
+        Actors = 12,
+        Actions = 13,
+        Quest = 14,
+        LastActionIndex = 15,
+        DeathBehavior = 16,
+        CombatBehavior = 17,
+        PlayerDialogueBehavior = 18,
+        ObserveCombatBehavior = 19,
+        ReactionRadiusBehavior = 20,
+        Conditions = 21,
+        SetParentQuestStage = 22,
+        Notes = 23,
+        Template = 24,
+        BOLV = 25,
+        Index = 26,
+        Priority = 27,
+        OverrideSubtitlePriority = 28,
+        SCPP = 29,
+        IsSpeechChallenge = 30,
+        MandatoryNextChallenges = 31,
+        ExcludedChallenges = 32,
+        ChallengeRisk = 33,
+        ChallengeReward = 34,
+        ChallengeRepeatable = 35,
+        ChallengeDefault = 36,
+        ChallengeDataMarker = 37,
+        ChallengeAndKeywords = 38,
+        ChallengePerks = 39,
+        ChallengeOrKeywords = 40,
+        ShowOneDialogueTrack = 41,
+        VNAMDataTypeState = 42,
     }
     #endregion
 
@@ -2706,7 +2712,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 34;
 
-        public const ushort FieldCount = 41;
+        public const ushort FieldCount = 43;
 
         public static readonly Type MaskType = typeof(Scene.Mask<>);
 
@@ -3329,6 +3335,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Scene_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Scene_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Scene_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Scene_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Scene_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -3351,6 +3361,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Scene_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Scene_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Scene_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Scene_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

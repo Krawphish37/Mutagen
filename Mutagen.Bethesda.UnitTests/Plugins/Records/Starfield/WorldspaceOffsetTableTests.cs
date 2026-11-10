@@ -40,6 +40,27 @@ public class WorldspaceOffsetTableTests
         }
     }
 
+    // Copied as an override into another plugin, a worldspace loses both tables, as in xEdit: they only fit the file
+    // they were read from. Everything else is copied as read.
+    [Fact]
+    public void OverrideCopy_DropsOffsetsAndCellSizes()
+    {
+        var original = GameConstants.Starfield.MajorRecord(Record("WRLD", Hex(CharredWater)));
+        var expected = original.EnumerateSubrecords()
+            .Where(x => x.RecordType != new RecordType("OFST") && x.RecordType != new RecordType("CLSZ"))
+            .SelectMany(x => x.HeaderAndContentData.ToArray())
+            .ToArray();
+        foreach (var world in Read(Record("WRLD", Hex(CharredWater))))
+        {
+            var mod = new StarfieldMod(ModKey.FromFileName("OverrideTest.esp"), StarfieldRelease.Starfield);
+            var copy = mod.Worldspaces.GetOrAddAsOverride(world);
+            copy.OffsetData.ShouldBeNull();
+            copy.CellSizeData.ShouldBeNull();
+            var written = GameConstants.Starfield.MajorRecord(Write(w => copy.WriteToBinary(w)));
+            written.Content.ToArray().ShouldBe(expected);
+        }
+    }
+
     // More than 65,535 bytes goes in an XXXX subrecord first (none in Starfield.esm, but a large worldspace needs it)
     [Fact]
     public void Overflow()

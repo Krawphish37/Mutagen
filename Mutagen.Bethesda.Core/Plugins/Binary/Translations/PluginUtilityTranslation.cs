@@ -123,6 +123,7 @@ internal static class PluginUtilityTranslation
                 var finalPos = targetFrame.Position + subMeta.TotalLength;
                 var subrecordStart = targetFrame.Position;
                 ParseResult parsed;
+                var unknownBefore = fieldStarts != null ? SubrecordOrder.UnknownLength(record) : 0;
                 try
                 {
                     if (rewritten != null) SubrecordOrder.NonCanonicalFormIdRead = false;
@@ -163,6 +164,12 @@ internal static class PluginUtilityTranslation
                     {
                         highestIndex = parsedIndex;
                     }
+                }
+                else if (fieldStarts != null && SubrecordOrder.UnknownLength(record) > unknownBefore)
+                {
+                    // A subrecord no field claims, kept as unknown: it is written after every field
+                    fieldStarts.Add((checked((int)(subrecordStart - contentStart)), SubrecordOrder.UnknownField));
+                    highestIndex = SubrecordOrder.UnknownField;
                 }
                 if (parsed.DuplicateParseMarker != null)
                 {
@@ -676,6 +683,8 @@ internal static class PluginUtilityTranslation
                         using (var bufferWriter = new MutagenWriter(buffer, writerToUse.MetaData, dispose: false))
                         {
                             writeRecordTypes(item, bufferWriter, translationParams);
+                            // Subrecords no field claimed, kept from the read (written only to the same plugin and master list)
+                            MajorRecordUnknownSubrecords.Write(item, writer, bufferWriter);
                             if (endMarker != null)
                             {
                                 using (HeaderExport.Subrecord(bufferWriter, endMarker.Value)) {}
@@ -691,6 +700,7 @@ internal static class PluginUtilityTranslation
                     else
                     {
                         writeRecordTypes(item, writerToUse, translationParams);
+                        MajorRecordUnknownSubrecords.Write(item, writer, writerToUse);
                         if (endMarker != null)
                         {
                             using (HeaderExport.Subrecord(writerToUse, endMarker.Value)) {}

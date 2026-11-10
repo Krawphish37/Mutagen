@@ -397,6 +397,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -431,6 +433,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2222,35 +2226,37 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Components = 8,
-        Name = 9,
-        Description = 10,
-        WorkbenchKeyword = 11,
-        Conditions = 12,
-        ConstructibleComponents = 13,
-        RequiredPerks = 14,
-        CreatedObject = 15,
-        AmountProduced = 16,
-        MenuSortOrder = 17,
-        Tier = 18,
-        CraftingSound = 19,
-        PickupSound = 20,
-        DropdownSound = 21,
-        RepairComponents = 22,
-        LearnMethod = 23,
-        Value = 24,
-        MenuArtObject = 25,
-        LearnedFrom = 26,
-        BaseReturnScaleTable = 27,
-        LearnChance = 28,
-        MaxBuildCountGlobal = 29,
-        RecipeFilters = 30,
-        InstantiationFilterKeyword = 31,
-        Flags = 32,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Components = 10,
+        Name = 11,
+        Description = 12,
+        WorkbenchKeyword = 13,
+        Conditions = 14,
+        ConstructibleComponents = 15,
+        RequiredPerks = 16,
+        CreatedObject = 17,
+        AmountProduced = 18,
+        MenuSortOrder = 19,
+        Tier = 20,
+        CraftingSound = 21,
+        PickupSound = 22,
+        DropdownSound = 23,
+        RepairComponents = 24,
+        LearnMethod = 25,
+        Value = 26,
+        MenuArtObject = 27,
+        LearnedFrom = 28,
+        BaseReturnScaleTable = 29,
+        LearnChance = 30,
+        MaxBuildCountGlobal = 31,
+        RecipeFilters = 32,
+        InstantiationFilterKeyword = 33,
+        Flags = 34,
     }
     #endregion
 
@@ -2263,7 +2269,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 26;
 
-        public const ushort FieldCount = 33;
+        public const ushort FieldCount = 35;
 
         public static readonly Type MaskType = typeof(ConstructibleObject.Mask<>);
 
@@ -2822,6 +2828,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (ConstructibleObject_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (ConstructibleObject_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (ConstructibleObject_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (ConstructibleObject_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (ConstructibleObject_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2844,6 +2854,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ConstructibleObject_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (ConstructibleObject_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (ConstructibleObject_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ConstructibleObject_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

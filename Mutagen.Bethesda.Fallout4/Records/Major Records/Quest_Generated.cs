@@ -363,6 +363,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -393,6 +395,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2497,31 +2501,33 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Name = 8,
-        Data = 9,
-        Event = 10,
-        Location = 11,
-        QuestCompletionXp = 12,
-        TextDisplayGlobals = 13,
-        Filter = 14,
-        DialogConditions = 15,
-        UnusedConditions = 16,
-        Stages = 17,
-        Objectives = 18,
-        NextAliasID = 19,
-        Aliases = 20,
-        Description = 21,
-        QuestGroup = 22,
-        SwfFile = 23,
-        Timestamp = 24,
-        Unknown = 25,
-        DialogBranches = 26,
-        DialogTopics = 27,
-        Scenes = 28,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Name = 10,
+        Data = 11,
+        Event = 12,
+        Location = 13,
+        QuestCompletionXp = 14,
+        TextDisplayGlobals = 15,
+        Filter = 16,
+        DialogConditions = 17,
+        UnusedConditions = 18,
+        Stages = 19,
+        Objectives = 20,
+        NextAliasID = 21,
+        Aliases = 22,
+        Description = 23,
+        QuestGroup = 24,
+        SwfFile = 25,
+        Timestamp = 26,
+        Unknown = 27,
+        DialogBranches = 28,
+        DialogTopics = 29,
+        Scenes = 30,
     }
     #endregion
 
@@ -2534,7 +2540,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 22;
 
-        public const ushort FieldCount = 29;
+        public const ushort FieldCount = 31;
 
         public static readonly Type MaskType = typeof(Quest.Mask<>);
 
@@ -3294,6 +3300,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Quest_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Quest_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Quest_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Quest_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Quest_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -3316,6 +3326,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Quest_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Quest_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Quest_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Quest_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

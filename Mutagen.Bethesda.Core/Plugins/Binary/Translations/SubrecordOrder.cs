@@ -28,6 +28,18 @@ internal static class SubrecordOrder
 {
     internal readonly record struct Entry(uint Type, uint Hash, int Field, bool AnyBytes = false);
 
+    /// <summary>
+    /// The field a subrecord no field claims counts as: unknown subrecords are written after every field
+    /// (MajorRecordUnknownSubrecords), so they sort last
+    /// </summary>
+    internal const int UnknownField = int.MaxValue;
+
+    /// <summary>
+    /// How many bytes of unknown subrecords a record being read holds so far (0 for anything that isn't a major record)
+    /// </summary>
+    internal static int UnknownLength(object record) =>
+        (record as Mutagen.Bethesda.Plugins.Records.IMajorRecordGetter)?.UnknownSubrecords?.Length ?? 0;
+
     private static readonly ConditionalWeakTable<object, Entry[]> Orders = new();
 
     // Field starts of the records being read on this thread (a reader appends, and removes its own when done)

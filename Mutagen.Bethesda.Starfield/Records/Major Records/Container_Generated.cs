@@ -411,6 +411,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -441,6 +443,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2178,31 +2182,33 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        ObjectPaletteDefaults = 10,
-        XalgFlags = 11,
-        Transforms = 12,
-        SnapTemplate = 13,
-        SnapBehavior = 14,
-        Components = 15,
-        Name = 16,
-        Model = 17,
-        Items = 18,
-        Destructible = 19,
-        Flags = 20,
-        Keywords = 21,
-        ForcedLocations = 22,
-        NativeTerminal = 23,
-        Properties = 24,
-        AttachParentSlots = 25,
-        OpenSound = 26,
-        CloseSound = 27,
-        ContainsOnlyFilter = 28,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        ObjectPaletteDefaults = 12,
+        XalgFlags = 13,
+        Transforms = 14,
+        SnapTemplate = 15,
+        SnapBehavior = 16,
+        Components = 17,
+        Name = 18,
+        Model = 19,
+        Items = 20,
+        Destructible = 21,
+        Flags = 22,
+        Keywords = 23,
+        ForcedLocations = 24,
+        NativeTerminal = 25,
+        Properties = 26,
+        AttachParentSlots = 27,
+        OpenSound = 28,
+        CloseSound = 29,
+        ContainsOnlyFilter = 30,
     }
     #endregion
 
@@ -2215,7 +2221,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 22;
 
-        public const ushort FieldCount = 29;
+        public const ushort FieldCount = 31;
 
         public static readonly Type MaskType = typeof(Container.Mask<>);
 
@@ -2784,6 +2790,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Container_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Container_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Container_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Container_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Container_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2806,6 +2816,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Container_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Container_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Container_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Container_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

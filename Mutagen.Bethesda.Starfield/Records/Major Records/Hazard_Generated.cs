@@ -331,6 +331,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -363,6 +365,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1840,33 +1844,35 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        ObjectPaletteDefaults = 10,
-        XalgFlags = 11,
-        Components = 12,
-        Name = 13,
-        Model = 14,
-        ImageSpaceModifier = 15,
-        Sound = 16,
-        Effect = 17,
-        Light = 18,
-        ImpactDataSet = 19,
-        Radius = 20,
-        Lifetime = 21,
-        ImageSpaceRadius = 22,
-        TargetInterval = 23,
-        TaperFullEffectRadius = 24,
-        TaperWeight = 25,
-        TaperCurse = 26,
-        Gravity = 27,
-        Limit = 28,
-        Flags = 29,
-        Conditions = 30,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        ObjectPaletteDefaults = 12,
+        XalgFlags = 13,
+        Components = 14,
+        Name = 15,
+        Model = 16,
+        ImageSpaceModifier = 17,
+        Sound = 18,
+        Effect = 19,
+        Light = 20,
+        ImpactDataSet = 21,
+        Radius = 22,
+        Lifetime = 23,
+        ImageSpaceRadius = 24,
+        TargetInterval = 25,
+        TaperFullEffectRadius = 26,
+        TaperWeight = 27,
+        TaperCurse = 28,
+        Gravity = 29,
+        Limit = 30,
+        Flags = 31,
+        Conditions = 32,
     }
     #endregion
 
@@ -1879,7 +1885,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 24;
 
-        public const ushort FieldCount = 31;
+        public const ushort FieldCount = 33;
 
         public static readonly Type MaskType = typeof(Hazard.Mask<>);
 
@@ -2353,6 +2359,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Hazard_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Hazard_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Hazard_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Hazard_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Hazard_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2375,6 +2385,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Hazard_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Hazard_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Hazard_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Hazard_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

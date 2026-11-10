@@ -319,6 +319,8 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem Name,
                 TItem Flags,
@@ -348,6 +350,8 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.Name = Name;
@@ -2134,30 +2138,32 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        OblivionMajorRecordFlags = 4,
-        Name = 5,
-        Flags = 6,
-        Grid = 7,
-        Lighting = 8,
-        Regions = 9,
-        MusicType = 10,
-        WaterHeight = 11,
-        Climate = 12,
-        Water = 13,
-        Owner = 14,
-        FactionRank = 15,
-        GlobalVariable = 16,
-        XTLI = 17,
-        XLRL = 18,
-        PathGrid = 19,
-        Landscape = 20,
-        Timestamp = 21,
-        PersistentTimestamp = 22,
-        Persistent = 23,
-        TemporaryTimestamp = 24,
-        Temporary = 25,
-        VisibleWhenDistantTimestamp = 26,
-        VisibleWhenDistant = 27,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        OblivionMajorRecordFlags = 6,
+        Name = 7,
+        Flags = 8,
+        Grid = 9,
+        Lighting = 10,
+        Regions = 11,
+        MusicType = 12,
+        WaterHeight = 13,
+        Climate = 14,
+        Water = 15,
+        Owner = 16,
+        FactionRank = 17,
+        GlobalVariable = 18,
+        XTLI = 19,
+        XLRL = 20,
+        PathGrid = 21,
+        Landscape = 22,
+        Timestamp = 23,
+        PersistentTimestamp = 24,
+        Persistent = 25,
+        TemporaryTimestamp = 26,
+        Temporary = 27,
+        VisibleWhenDistantTimestamp = 28,
+        VisibleWhenDistant = 29,
     }
     #endregion
 
@@ -2170,7 +2176,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 23;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 30;
 
         public static readonly Type MaskType = typeof(Cell.Mask<>);
 
@@ -2855,6 +2861,10 @@ namespace Mutagen.Bethesda.Oblivion
                     return (Cell_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (Cell_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Cell_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Cell_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (Cell_FieldIndex)((int)index);
                 default:
@@ -2873,6 +2883,10 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Cell_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Cell_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Cell_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Cell_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

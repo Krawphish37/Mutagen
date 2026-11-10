@@ -931,6 +931,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -999,6 +1001,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -6912,69 +6916,71 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        Animatable = 7,
-        Duration = 8,
-        RadialBlurUseTarget = 9,
-        RadialBlurCenter = 10,
-        DepthOfFieldFlags = 11,
-        BlurRadius = 12,
-        DoubleVisionStrength = 13,
-        TintColor = 14,
-        FadeColor = 15,
-        RadialBlurStrength = 16,
-        RadialBlurRampUp = 17,
-        RadialBlurStart = 18,
-        RadialBlurRampDown = 19,
-        RadialBlurDownStart = 20,
-        DepthOfFieldStrength = 21,
-        DepthOfFieldDistance = 22,
-        DepthOfFieldRange = 23,
-        MotionBlurStrength = 24,
-        HdrEyeAdaptSpeedMult = 25,
-        HdrEyeAdaptSpeedAdd = 26,
-        HdrBloomBlurRadiusMult = 27,
-        HdrBloomBlurRadiusAdd = 28,
-        HdrBloomThresholdMult = 29,
-        HdrBloomThresholdAdd = 30,
-        HdrBloomScaleMult = 31,
-        HdrBloomScaleAdd = 32,
-        HdrTargetLumMinMult = 33,
-        HdrTargetLumMinAdd = 34,
-        HdrTargetLumMaxMult = 35,
-        HdrTargetLumMaxAdd = 36,
-        HdrSunlightScaleMult = 37,
-        HdrSunlightScaleAdd = 38,
-        HdrSkyScaleMult = 39,
-        HdrSkyScaleAdd = 40,
-        Unknown08 = 41,
-        Unknown48 = 42,
-        Unknown09 = 43,
-        Unknown49 = 44,
-        Unknown0A = 45,
-        Unknown4A = 46,
-        Unknown0B = 47,
-        Unknown4B = 48,
-        Unknown0C = 49,
-        Unknown4C = 50,
-        Unknown0D = 51,
-        Unknown4D = 52,
-        Unknown0E = 53,
-        Unknown4E = 54,
-        Unknown0F = 55,
-        Unknown4F = 56,
-        Unknown10 = 57,
-        Unknown50 = 58,
-        CinematicSaturationMult = 59,
-        CinematicSaturationAdd = 60,
-        CinematicBrightnessMult = 61,
-        CinematicBrightnessAdd = 62,
-        CinematicContrastMult = 63,
-        CinematicContrastAdd = 64,
-        Unknown14 = 65,
-        Unknown54 = 66,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        Animatable = 9,
+        Duration = 10,
+        RadialBlurUseTarget = 11,
+        RadialBlurCenter = 12,
+        DepthOfFieldFlags = 13,
+        BlurRadius = 14,
+        DoubleVisionStrength = 15,
+        TintColor = 16,
+        FadeColor = 17,
+        RadialBlurStrength = 18,
+        RadialBlurRampUp = 19,
+        RadialBlurStart = 20,
+        RadialBlurRampDown = 21,
+        RadialBlurDownStart = 22,
+        DepthOfFieldStrength = 23,
+        DepthOfFieldDistance = 24,
+        DepthOfFieldRange = 25,
+        MotionBlurStrength = 26,
+        HdrEyeAdaptSpeedMult = 27,
+        HdrEyeAdaptSpeedAdd = 28,
+        HdrBloomBlurRadiusMult = 29,
+        HdrBloomBlurRadiusAdd = 30,
+        HdrBloomThresholdMult = 31,
+        HdrBloomThresholdAdd = 32,
+        HdrBloomScaleMult = 33,
+        HdrBloomScaleAdd = 34,
+        HdrTargetLumMinMult = 35,
+        HdrTargetLumMinAdd = 36,
+        HdrTargetLumMaxMult = 37,
+        HdrTargetLumMaxAdd = 38,
+        HdrSunlightScaleMult = 39,
+        HdrSunlightScaleAdd = 40,
+        HdrSkyScaleMult = 41,
+        HdrSkyScaleAdd = 42,
+        Unknown08 = 43,
+        Unknown48 = 44,
+        Unknown09 = 45,
+        Unknown49 = 46,
+        Unknown0A = 47,
+        Unknown4A = 48,
+        Unknown0B = 49,
+        Unknown4B = 50,
+        Unknown0C = 51,
+        Unknown4C = 52,
+        Unknown0D = 53,
+        Unknown4D = 54,
+        Unknown0E = 55,
+        Unknown4E = 56,
+        Unknown0F = 57,
+        Unknown4F = 58,
+        Unknown10 = 59,
+        Unknown50 = 60,
+        CinematicSaturationMult = 61,
+        CinematicSaturationAdd = 62,
+        CinematicBrightnessMult = 63,
+        CinematicBrightnessAdd = 64,
+        CinematicContrastMult = 65,
+        CinematicContrastAdd = 66,
+        Unknown14 = 67,
+        Unknown54 = 68,
     }
     #endregion
 
@@ -6987,7 +6993,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 60;
 
-        public const ushort FieldCount = 67;
+        public const ushort FieldCount = 69;
 
         public static readonly Type MaskType = typeof(ImageSpaceAdapter.Mask<>);
 
@@ -8397,6 +8403,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (ImageSpaceAdapter_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (ImageSpaceAdapter_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -8419,6 +8429,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (ImageSpaceAdapter_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (ImageSpaceAdapter_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

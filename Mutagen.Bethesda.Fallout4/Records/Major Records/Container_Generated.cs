@@ -343,6 +343,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -368,6 +370,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1730,26 +1734,28 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        PreviewTransform = 9,
-        Name = 10,
-        Model = 11,
-        Items = 12,
-        Destructible = 13,
-        Flags = 14,
-        Weight = 15,
-        Keywords = 16,
-        ForcedLocRefType = 17,
-        Properties = 18,
-        NativeTerminal = 19,
-        OpenSound = 20,
-        CloseSound = 21,
-        TakeAllSound = 22,
-        FilterList = 23,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        PreviewTransform = 11,
+        Name = 12,
+        Model = 13,
+        Items = 14,
+        Destructible = 15,
+        Flags = 16,
+        Weight = 17,
+        Keywords = 18,
+        ForcedLocRefType = 19,
+        Properties = 20,
+        NativeTerminal = 21,
+        OpenSound = 22,
+        CloseSound = 23,
+        TakeAllSound = 24,
+        FilterList = 25,
     }
     #endregion
 
@@ -1762,7 +1768,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 17;
 
-        public const ushort FieldCount = 24;
+        public const ushort FieldCount = 26;
 
         public static readonly Type MaskType = typeof(Container.Mask<>);
 
@@ -2184,6 +2190,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Container_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Container_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Container_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Container_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Container_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2206,6 +2216,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Container_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Container_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Container_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Container_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

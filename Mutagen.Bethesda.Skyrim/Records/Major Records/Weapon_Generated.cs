@@ -503,6 +503,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -542,6 +544,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -2243,40 +2247,42 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        Name = 9,
-        Model = 10,
-        Icons = 11,
-        ObjectEffect = 12,
-        EnchantmentAmount = 13,
-        Destructible = 14,
-        EquipmentType = 15,
-        BlockBashImpact = 16,
-        AlternateBlockMaterial = 17,
-        PickUpSound = 18,
-        PutDownSound = 19,
-        Keywords = 20,
-        Description = 21,
-        ScopeModel = 22,
-        Unused = 23,
-        ImpactDataSet = 24,
-        FirstPersonModel = 25,
-        AttackSound = 26,
-        AttackSound2D = 27,
-        AttackLoopSound = 28,
-        AttackFailSound = 29,
-        IdleSound = 30,
-        EquipSound = 31,
-        UnequipSound = 32,
-        BasicStats = 33,
-        Data = 34,
-        Critical = 35,
-        DetectionSoundLevel = 36,
-        Template = 37,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        Name = 11,
+        Model = 12,
+        Icons = 13,
+        ObjectEffect = 14,
+        EnchantmentAmount = 15,
+        Destructible = 16,
+        EquipmentType = 17,
+        BlockBashImpact = 18,
+        AlternateBlockMaterial = 19,
+        PickUpSound = 20,
+        PutDownSound = 21,
+        Keywords = 22,
+        Description = 23,
+        ScopeModel = 24,
+        Unused = 25,
+        ImpactDataSet = 26,
+        FirstPersonModel = 27,
+        AttackSound = 28,
+        AttackSound2D = 29,
+        AttackLoopSound = 30,
+        AttackFailSound = 31,
+        IdleSound = 32,
+        EquipSound = 33,
+        UnequipSound = 34,
+        BasicStats = 35,
+        Data = 36,
+        Critical = 37,
+        DetectionSoundLevel = 38,
+        Template = 39,
     }
     #endregion
 
@@ -2289,7 +2295,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 31;
 
-        public const ushort FieldCount = 38;
+        public const ushort FieldCount = 40;
 
         public static readonly Type MaskType = typeof(Weapon.Mask<>);
 
@@ -2885,6 +2891,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (Weapon_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (Weapon_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Weapon_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Weapon_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (Weapon_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -2907,6 +2917,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Weapon_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Weapon_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Weapon_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Weapon_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

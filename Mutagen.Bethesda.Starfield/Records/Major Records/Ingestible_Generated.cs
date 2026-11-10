@@ -415,6 +415,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -449,6 +451,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2255,35 +2259,37 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        ObjectPaletteDefaults = 10,
-        Transforms = 11,
-        Components = 12,
-        XalgFlags = 13,
-        Name = 14,
-        Keywords = 15,
-        Model = 16,
-        Destructible = 17,
-        PickupSound = 18,
-        DropdownSound = 19,
-        EquipmentType = 20,
-        CraftingSound = 21,
-        Description = 22,
-        Resources = 23,
-        ComponentDisplayIndices = 24,
-        Weight = 25,
-        Value = 26,
-        Flags = 27,
-        Addiction = 28,
-        AddictionChance = 29,
-        ConsumeSound = 30,
-        AddictionName = 31,
-        Effects = 32,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        ObjectPaletteDefaults = 12,
+        Transforms = 13,
+        Components = 14,
+        XalgFlags = 15,
+        Name = 16,
+        Keywords = 17,
+        Model = 18,
+        Destructible = 19,
+        PickupSound = 20,
+        DropdownSound = 21,
+        EquipmentType = 22,
+        CraftingSound = 23,
+        Description = 24,
+        Resources = 25,
+        ComponentDisplayIndices = 26,
+        Weight = 27,
+        Value = 28,
+        Flags = 29,
+        Addiction = 30,
+        AddictionChance = 31,
+        ConsumeSound = 32,
+        AddictionName = 33,
+        Effects = 34,
     }
     #endregion
 
@@ -2296,7 +2302,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 26;
 
-        public const ushort FieldCount = 33;
+        public const ushort FieldCount = 35;
 
         public static readonly Type MaskType = typeof(Ingestible.Mask<>);
 
@@ -2886,6 +2892,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Ingestible_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Ingestible_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Ingestible_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Ingestible_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Ingestible_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2908,6 +2918,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Ingestible_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Ingestible_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Ingestible_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Ingestible_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -195,6 +195,100 @@ public class ZeroDropsTests
         Has(Write(w => NpcBinaryOverlay.NpcFactory(new OverlayStream(with, meta), new BinaryOverlayFactoryPackage(meta)).WriteToBinary(w)), stop).ShouldBeTrue();
     }
 
+    // Subrecords no field claims are kept as read and written back at the end of the record, but only to the same
+    // plugin with the same master list: FormIDs inside unknown bytes can't be corrected
+    [Fact]
+    public void UnknownSubrecord_IsWrittenBack()
+    {
+        var bytes = Record(
+            "GLOB",
+            0,
+            Subrecord("EDID", Encoding.ASCII.GetBytes("TestGlobal\0")),
+            Subrecord("FLTV", BitConverter.GetBytes(5f)),
+            Subrecord("ZZZZ", 1, 2, 3, 4),
+            Subrecord("ZZZY", 5));
+        foreach (var global in ReadGlobal(bytes))
+        {
+            global.UnknownSubrecords!.Value.Length.ShouldBe(17);
+            Write(w => global.WriteToBinary(w)).ShouldBe(bytes);
+        }
+    }
+
+    // An unknown subrecord between known ones goes back where it was: the record keeps its subrecord order
+    [Fact]
+    public void UnknownSubrecord_InTheMiddle_IsWrittenBackInPlace()
+    {
+        var bytes = Record(
+            "GLOB",
+            0,
+            Subrecord("EDID", Encoding.ASCII.GetBytes("TestGlobal\0")),
+            Subrecord("ZZZZ", 1, 2, 3, 4),
+            Subrecord("FLTV", BitConverter.GetBytes(5f)));
+        foreach (var global in ReadGlobal(bytes))
+        {
+            global.UnknownSubrecords!.Value.Length.ShouldBe(10);
+            Write(w => global.WriteToBinary(w)).ShouldBe(bytes);
+        }
+    }
+
+    [Fact]
+    public void UnknownSubrecord_NotWrittenToAPluginWithOtherMasters()
+    {
+        var bytes = Record(
+            "GLOB",
+            0,
+            Subrecord("EDID", Encoding.ASCII.GetBytes("TestGlobal\0")),
+            Subrecord("FLTV", BitConverter.GetBytes(5f)),
+            Subrecord("ZZZZ", 1, 2, 3, 4));
+        var otherMod = new ModKey("Other", ModType.Plugin);
+        var warnings = new List<string>();
+        var old = MajorRecordUnknownSubrecords.NotWritten;
+        MajorRecordUnknownSubrecords.NotWritten = warnings.Add;
+        try
+        {
+            foreach (var global in ReadGlobal(bytes))
+            {
+                var masters = new MasterReferenceCollection(otherMod, new[] { new MasterReference { Master = TestModKey } });
+                var bundle = new WritingBundle(GameConstants.Starfield)
+                {
+                    MasterReferences = masters,
+                    SeparatedMasterPackage = SeparatedMasterPackage.NotSeparate(masters),
+                };
+                var memStream = new MemoryStream();
+                using (var writer = new MutagenWriter(memStream, bundle, dispose: false))
+                {
+                    global.WriteToBinary(writer);
+                }
+                var written = GameConstants.Starfield.MajorRecord(memStream.ToArray());
+                written.EnumerateSubrecords().Any(x => x.RecordType == new RecordType("ZZZZ")).ShouldBeFalse();
+                written.EnumerateSubrecords().Count().ShouldBe(2);
+            }
+            warnings.Count.ShouldBe(2);
+        }
+        finally
+        {
+            MajorRecordUnknownSubrecords.NotWritten = old;
+        }
+    }
+
+    [Fact]
+    public void UnknownSubrecord_ComesAlongOnACopy_AndIsStillGuarded()
+    {
+        var bytes = Record(
+            "GLOB",
+            0,
+            Subrecord("EDID", Encoding.ASCII.GetBytes("TestGlobal\0")),
+            Subrecord("FLTV", BitConverter.GetBytes(5f)),
+            Subrecord("ZZZZ", 1, 2, 3, 4));
+        foreach (var global in ReadGlobal(bytes))
+        {
+            var copy = (IGlobalGetter)global.DeepCopy();
+            copy.UnknownSubrecords!.Value.Length.ShouldBe(10);
+            copy.UnknownSubrecordsSource.ShouldBe(global.UnknownSubrecordsSource);
+            Write(w => copy.WriteToBinary(w)).ShouldBe(bytes);
+        }
+    }
+
     [Fact]
     public void Model_SecondMaterialSwapList_IsKept()
     {

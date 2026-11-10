@@ -388,6 +388,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -419,6 +421,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2150,32 +2154,34 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        Transforms = 10,
-        SnapTemplate = 11,
-        Components = 12,
-        Menu = 13,
-        Background = 14,
-        Name = 15,
-        Model = 16,
-        Keywords = 17,
-        Properties = 18,
-        ForcedLocations = 19,
-        DefaultPrimitiveColor = 20,
-        Flags = 21,
-        ActivationAngleForPlayer = 22,
-        MarkerFlags = 23,
-        ActivationAngleForSittingActor = 24,
-        WorkbenchData = 25,
-        FurnitureTemplate = 26,
-        MarkerEntryPoints = 27,
-        MarkerModel = 28,
-        MarkerParameters = 29,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        Transforms = 12,
+        SnapTemplate = 13,
+        Components = 14,
+        Menu = 15,
+        Background = 16,
+        Name = 17,
+        Model = 18,
+        Keywords = 19,
+        Properties = 20,
+        ForcedLocations = 21,
+        DefaultPrimitiveColor = 22,
+        Flags = 23,
+        ActivationAngleForPlayer = 24,
+        MarkerFlags = 25,
+        ActivationAngleForSittingActor = 26,
+        WorkbenchData = 27,
+        FurnitureTemplate = 28,
+        MarkerEntryPoints = 29,
+        MarkerModel = 30,
+        MarkerParameters = 31,
     }
     #endregion
 
@@ -2188,7 +2194,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 23;
 
-        public const ushort FieldCount = 30;
+        public const ushort FieldCount = 32;
 
         public static readonly Type MaskType = typeof(Terminal.Mask<>);
 
@@ -2734,6 +2740,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Terminal_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Terminal_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Terminal_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Terminal_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Terminal_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2756,6 +2766,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Terminal_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Terminal_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Terminal_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Terminal_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

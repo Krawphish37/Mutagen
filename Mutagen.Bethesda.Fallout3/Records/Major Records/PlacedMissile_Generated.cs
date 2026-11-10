@@ -301,6 +301,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -332,6 +334,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1772,32 +1776,34 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        Base = 7,
-        EncounterZone = 8,
-        RagdollData = 9,
-        RagdollBipedRotation = 10,
-        Patrol = 11,
-        Owner = 12,
-        FactionRank = 13,
-        Count = 14,
-        Radius = 15,
-        Health = 16,
-        Reflections = 17,
-        LinkedDecals = 18,
-        LinkedReference = 19,
-        LinkedReferenceColor = 20,
-        ActivateParents = 21,
-        ActivationPrompt = 22,
-        EnableParent = 23,
-        EmittanceLight = 24,
-        MultiboundReference = 25,
-        IsIgnoredBySandbox = 26,
-        Scale = 27,
-        Position = 28,
-        Rotation = 29,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        Base = 9,
+        EncounterZone = 10,
+        RagdollData = 11,
+        RagdollBipedRotation = 12,
+        Patrol = 13,
+        Owner = 14,
+        FactionRank = 15,
+        Count = 16,
+        Radius = 17,
+        Health = 18,
+        Reflections = 19,
+        LinkedDecals = 20,
+        LinkedReference = 21,
+        LinkedReferenceColor = 22,
+        ActivateParents = 23,
+        ActivationPrompt = 24,
+        EnableParent = 25,
+        EmittanceLight = 26,
+        MultiboundReference = 27,
+        IsIgnoredBySandbox = 28,
+        Scale = 29,
+        Position = 30,
+        Rotation = 31,
     }
     #endregion
 
@@ -1810,7 +1816,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 23;
 
-        public const ushort FieldCount = 30;
+        public const ushort FieldCount = 32;
 
         public static readonly Type MaskType = typeof(PlacedMissile.Mask<>);
 
@@ -2276,6 +2282,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (PlacedMissile_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (PlacedMissile_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedMissile_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (PlacedMissile_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (PlacedMissile_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2298,6 +2308,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PlacedMissile_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (PlacedMissile_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedMissile_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedMissile_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

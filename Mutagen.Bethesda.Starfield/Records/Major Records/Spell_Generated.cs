@@ -304,6 +304,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -333,6 +335,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1717,30 +1721,32 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        Name = 10,
-        Keywords = 11,
-        EquipmentType = 12,
-        PickupSound = 13,
-        DropdownSound = 14,
-        Description = 15,
-        BaseCost = 16,
-        Flags = 17,
-        Type = 18,
-        ChargeTime = 19,
-        CastType = 20,
-        TargetType = 21,
-        CastDuration = 22,
-        Range = 23,
-        CastingPerk = 24,
-        MAGF = 25,
-        MUID = 26,
-        Effects = 27,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        Name = 12,
+        Keywords = 13,
+        EquipmentType = 14,
+        PickupSound = 15,
+        DropdownSound = 16,
+        Description = 17,
+        BaseCost = 18,
+        Flags = 19,
+        Type = 20,
+        ChargeTime = 21,
+        CastType = 22,
+        TargetType = 23,
+        CastDuration = 24,
+        Range = 25,
+        CastingPerk = 26,
+        MAGF = 27,
+        MUID = 28,
+        Effects = 29,
     }
     #endregion
 
@@ -1753,7 +1759,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 21;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 30;
 
         public static readonly Type MaskType = typeof(Spell.Mask<>);
 
@@ -2179,6 +2185,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Spell_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Spell_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Spell_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Spell_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Spell_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2201,6 +2211,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Spell_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Spell_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Spell_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Spell_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

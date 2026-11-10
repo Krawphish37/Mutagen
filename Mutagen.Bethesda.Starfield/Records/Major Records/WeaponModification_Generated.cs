@@ -103,6 +103,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -129,6 +131,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags,
@@ -797,27 +801,29 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Components = 8,
-        Name = 9,
-        Description = 10,
-        Model = 11,
-        Unknown = 12,
-        MaxRank = 13,
-        LevelTierScaledOffset = 14,
-        AttachPoint = 15,
-        AttachParentSlots = 16,
-        Unknown3 = 17,
-        Includes = 18,
-        TargetOmodKeywords = 19,
-        FilterKeywords = 20,
-        LooseMod = 21,
-        Priority = 22,
-        Filter = 23,
-        Properties = 24,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Components = 10,
+        Name = 11,
+        Description = 12,
+        Model = 13,
+        Unknown = 14,
+        MaxRank = 15,
+        LevelTierScaledOffset = 16,
+        AttachPoint = 17,
+        AttachParentSlots = 18,
+        Unknown3 = 19,
+        Includes = 20,
+        TargetOmodKeywords = 21,
+        FilterKeywords = 22,
+        LooseMod = 23,
+        Priority = 24,
+        Filter = 25,
+        Properties = 26,
     }
     #endregion
 
@@ -830,7 +836,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 25;
+        public const ushort FieldCount = 27;
 
         public static readonly Type MaskType = typeof(WeaponModification.Mask<>);
 
@@ -1086,6 +1092,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (WeaponModification_FieldIndex)((int)index);
                 case AObjectModification_FieldIndex.EditorID:
                     return (WeaponModification_FieldIndex)((int)index);
+                case AObjectModification_FieldIndex.UnknownSubrecords:
+                    return (WeaponModification_FieldIndex)((int)index);
+                case AObjectModification_FieldIndex.UnknownSubrecordsSource:
+                    return (WeaponModification_FieldIndex)((int)index);
                 case AObjectModification_FieldIndex.FormVersion:
                     return (WeaponModification_FieldIndex)((int)index);
                 case AObjectModification_FieldIndex.Version2:
@@ -1143,6 +1153,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (WeaponModification_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (WeaponModification_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (WeaponModification_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (WeaponModification_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (WeaponModification_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1165,6 +1179,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (WeaponModification_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (WeaponModification_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (WeaponModification_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (WeaponModification_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

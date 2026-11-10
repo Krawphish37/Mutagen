@@ -198,6 +198,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -219,6 +221,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1296,22 +1300,24 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        Type = 7,
-        Category = 8,
-        AlternateSoundFor = 9,
-        SoundFiles = 10,
-        OutputModel = 11,
-        String = 12,
-        Conditions = 13,
-        LoopAndRumble = 14,
-        PercentFrequencyShift = 15,
-        PercentFrequencyVariance = 16,
-        Priority = 17,
-        Variance = 18,
-        StaticAttenuation = 19,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        Type = 9,
+        Category = 10,
+        AlternateSoundFor = 11,
+        SoundFiles = 12,
+        OutputModel = 13,
+        String = 14,
+        Conditions = 15,
+        LoopAndRumble = 16,
+        PercentFrequencyShift = 17,
+        PercentFrequencyVariance = 18,
+        Priority = 19,
+        Variance = 20,
+        StaticAttenuation = 21,
     }
     #endregion
 
@@ -1324,7 +1330,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 13;
 
-        public const ushort FieldCount = 20;
+        public const ushort FieldCount = 22;
 
         public static readonly Type MaskType = typeof(SoundDescriptor.Mask<>);
 
@@ -1700,6 +1706,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (SoundDescriptor_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (SoundDescriptor_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (SoundDescriptor_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (SoundDescriptor_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (SoundDescriptor_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1722,6 +1732,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (SoundDescriptor_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (SoundDescriptor_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (SoundDescriptor_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (SoundDescriptor_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

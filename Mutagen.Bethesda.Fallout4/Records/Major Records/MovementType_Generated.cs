@@ -454,6 +454,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -495,6 +497,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -2047,42 +2051,44 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        Name = 7,
-        LeftStanding = 8,
-        LeftWalk = 9,
-        LeftRun = 10,
-        LeftSprint = 11,
-        RightStanding = 12,
-        RightWalk = 13,
-        RightRun = 14,
-        RightSprint = 15,
-        ForwardStanding = 16,
-        ForwardWalk = 17,
-        ForwardRun = 18,
-        ForwardSprint = 19,
-        BackStanding = 20,
-        BackWalk = 21,
-        BackRun = 22,
-        BackSprint = 23,
-        PitchStanding = 24,
-        PitchWalk = 25,
-        PitchRun = 26,
-        PitchSprint = 27,
-        RollStanding = 28,
-        RollWalk = 29,
-        RollRun = 30,
-        RollSprint = 31,
-        YawStanding = 32,
-        YawWalk = 33,
-        YawRun = 34,
-        YawSprint = 35,
-        AnimationChangeThresholds = 36,
-        FloatHeight = 37,
-        FlightAngleGain = 38,
-        SPEDDataTypeState = 39,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        Name = 9,
+        LeftStanding = 10,
+        LeftWalk = 11,
+        LeftRun = 12,
+        LeftSprint = 13,
+        RightStanding = 14,
+        RightWalk = 15,
+        RightRun = 16,
+        RightSprint = 17,
+        ForwardStanding = 18,
+        ForwardWalk = 19,
+        ForwardRun = 20,
+        ForwardSprint = 21,
+        BackStanding = 22,
+        BackWalk = 23,
+        BackRun = 24,
+        BackSprint = 25,
+        PitchStanding = 26,
+        PitchWalk = 27,
+        PitchRun = 28,
+        PitchSprint = 29,
+        RollStanding = 30,
+        RollWalk = 31,
+        RollRun = 32,
+        RollSprint = 33,
+        YawStanding = 34,
+        YawWalk = 35,
+        YawRun = 36,
+        YawSprint = 37,
+        AnimationChangeThresholds = 38,
+        FloatHeight = 39,
+        FlightAngleGain = 40,
+        SPEDDataTypeState = 41,
     }
     #endregion
 
@@ -2095,7 +2101,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 33;
 
-        public const ushort FieldCount = 40;
+        public const ushort FieldCount = 42;
 
         public static readonly Type MaskType = typeof(MovementType.Mask<>);
 
@@ -2530,6 +2536,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (MovementType_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (MovementType_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (MovementType_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (MovementType_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (MovementType_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2552,6 +2562,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (MovementType_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (MovementType_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (MovementType_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (MovementType_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
