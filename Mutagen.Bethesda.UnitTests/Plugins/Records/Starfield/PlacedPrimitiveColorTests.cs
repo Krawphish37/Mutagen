@@ -12,7 +12,7 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield;
 // (NoAlphaFloat), with A in the separate float Unknown, so every channel that isn't exactly n/255 changed on write:
 // 0.8000001 became 0.8 (204/255), 0.5 became 0.50196. Starfield.esm: 10,795 of 23,749 XPRM changed (0.9 on 7,150
 // channels, 0.20000002 on 1,617, 0.8000001 on 1,580 ...). Now Color is a P3Float (R, G, B as X, Y, Z; the same as the
-// fixes chain, cae2b97266) and the 4th float stays Unknown (alpha); all written back as read.
+// fixes chain, cae2b97266) and the 4th float is Alpha; all written back as read.
 public class PlacedPrimitiveColorTests
 {
     // Whole REFR 22920E (Starfield.esm) of ShipModuleTrigger (2C2A47:Starfield.esm): XPRM colour 0.8000001, 0.29803923,
@@ -36,7 +36,7 @@ public class PlacedPrimitiveColorTests
             p.Color.X.ShouldBe(F("CE-CC-4C-3F"));
             p.Color.Y.ShouldBe(F("99-98-98-3E"));
             p.Color.Z.ShouldBe(F("CE-CC-4C-3E"));
-            p.Unknown.ShouldBe(F("9A-99-99-3E"));
+            p.Alpha.ShouldBe(F("9A-99-99-3E"));
             p.Type.ShouldBe(PlacedPrimitive.TypeEnum.Box);
             var written = GameConstants.Starfield.MajorRecord(Write(w => refr.WriteToBinary(w)));
             written.Content.ToArray().ShouldBe(Hex(ShipModuleTrigger));

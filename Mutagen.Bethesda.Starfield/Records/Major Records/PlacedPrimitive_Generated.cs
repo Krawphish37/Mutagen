@@ -57,8 +57,8 @@ namespace Mutagen.Bethesda.Starfield
         #region Color
         public P3Float Color { get; set; } = default(P3Float);
         #endregion
-        #region Unknown
-        public Single Unknown { get; set; } = default(Single);
+        #region Alpha
+        public Single Alpha { get; set; } = default(Single);
         #endregion
         #region Type
         public PlacedPrimitive.TypeEnum Type { get; set; } = default(PlacedPrimitive.TypeEnum);
@@ -104,19 +104,19 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Bounds = initialValue;
                 this.Color = initialValue;
-                this.Unknown = initialValue;
+                this.Alpha = initialValue;
                 this.Type = initialValue;
             }
 
             public Mask(
                 TItem Bounds,
                 TItem Color,
-                TItem Unknown,
+                TItem Alpha,
                 TItem Type)
             {
                 this.Bounds = Bounds;
                 this.Color = Color;
-                this.Unknown = Unknown;
+                this.Alpha = Alpha;
                 this.Type = Type;
             }
 
@@ -131,7 +131,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem Bounds;
             public TItem Color;
-            public TItem Unknown;
+            public TItem Alpha;
             public TItem Type;
             #endregion
 
@@ -147,7 +147,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.Bounds, rhs.Bounds)) return false;
                 if (!object.Equals(this.Color, rhs.Color)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.Alpha, rhs.Alpha)) return false;
                 if (!object.Equals(this.Type, rhs.Type)) return false;
                 return true;
             }
@@ -156,7 +156,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.Bounds);
                 hash.Add(this.Color);
-                hash.Add(this.Unknown);
+                hash.Add(this.Alpha);
                 hash.Add(this.Type);
                 return hash.ToHashCode();
             }
@@ -168,7 +168,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.Bounds)) return false;
                 if (!eval(this.Color)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.Alpha)) return false;
                 if (!eval(this.Type)) return false;
                 return true;
             }
@@ -179,7 +179,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.Bounds)) return true;
                 if (eval(this.Color)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.Alpha)) return true;
                 if (eval(this.Type)) return true;
                 return false;
             }
@@ -197,7 +197,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.Bounds = eval(this.Bounds);
                 obj.Color = eval(this.Color);
-                obj.Unknown = eval(this.Unknown);
+                obj.Alpha = eval(this.Alpha);
                 obj.Type = eval(this.Type);
             }
             #endregion
@@ -225,9 +225,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Color, "Color");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.Alpha ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(Alpha, "Alpha");
                     }
                     if (printMask?.Type ?? true)
                     {
@@ -259,7 +259,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? Bounds;
             public Exception? Color;
-            public Exception? Unknown;
+            public Exception? Alpha;
             public Exception? Type;
             #endregion
 
@@ -273,8 +273,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Bounds;
                     case PlacedPrimitive_FieldIndex.Color:
                         return Color;
-                    case PlacedPrimitive_FieldIndex.Unknown:
-                        return Unknown;
+                    case PlacedPrimitive_FieldIndex.Alpha:
+                        return Alpha;
                     case PlacedPrimitive_FieldIndex.Type:
                         return Type;
                     default:
@@ -293,8 +293,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedPrimitive_FieldIndex.Color:
                         this.Color = ex;
                         break;
-                    case PlacedPrimitive_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case PlacedPrimitive_FieldIndex.Alpha:
+                        this.Alpha = ex;
                         break;
                     case PlacedPrimitive_FieldIndex.Type:
                         this.Type = ex;
@@ -315,8 +315,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedPrimitive_FieldIndex.Color:
                         this.Color = (Exception?)obj;
                         break;
-                    case PlacedPrimitive_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case PlacedPrimitive_FieldIndex.Alpha:
+                        this.Alpha = (Exception?)obj;
                         break;
                     case PlacedPrimitive_FieldIndex.Type:
                         this.Type = (Exception?)obj;
@@ -331,7 +331,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (Bounds != null) return true;
                 if (Color != null) return true;
-                if (Unknown != null) return true;
+                if (Alpha != null) return true;
                 if (Type != null) return true;
                 return false;
             }
@@ -365,7 +365,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Color, "Color");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(Alpha, "Alpha");
                 }
                 {
                     sb.AppendItem(Type, "Type");
@@ -380,7 +380,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.Bounds = this.Bounds.Combine(rhs.Bounds);
                 ret.Color = this.Color.Combine(rhs.Color);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.Alpha = this.Alpha.Combine(rhs.Alpha);
                 ret.Type = this.Type.Combine(rhs.Type);
                 return ret;
             }
@@ -407,7 +407,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool Bounds;
             public bool Color;
-            public bool Unknown;
+            public bool Alpha;
             public bool Type;
             #endregion
 
@@ -420,7 +420,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.Bounds = defaultOn;
                 this.Color = defaultOn;
-                this.Unknown = defaultOn;
+                this.Alpha = defaultOn;
                 this.Type = defaultOn;
             }
 
@@ -439,7 +439,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((Bounds, null));
                 ret.Add((Color, null));
-                ret.Add((Unknown, null));
+                ret.Add((Alpha, null));
                 ret.Add((Type, null));
             }
 
@@ -515,7 +515,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new P3Float Bounds { get; set; }
         new P3Float Color { get; set; }
-        new Single Unknown { get; set; }
+        new Single Alpha { get; set; }
         new PlacedPrimitive.TypeEnum Type { get; set; }
     }
 
@@ -533,7 +533,7 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => PlacedPrimitive_Registration.Instance;
         P3Float Bounds { get; }
         P3Float Color { get; }
-        Single Unknown { get; }
+        Single Alpha { get; }
         PlacedPrimitive.TypeEnum Type { get; }
 
     }
@@ -706,7 +706,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         Bounds = 0,
         Color = 1,
-        Unknown = 2,
+        Alpha = 2,
         Type = 3,
     }
     #endregion
@@ -795,7 +795,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.Bounds = default(P3Float);
             item.Color = default(P3Float);
-            item.Unknown = default(Single);
+            item.Alpha = default(Single);
             item.Type = default(PlacedPrimitive.TypeEnum);
         }
         
@@ -852,7 +852,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.Bounds = item.Bounds.Equals(rhs.Bounds);
             ret.Color = item.Color.Equals(rhs.Color);
-            ret.Unknown = item.Unknown.EqualsWithin(rhs.Unknown);
+            ret.Alpha = item.Alpha.EqualsWithin(rhs.Alpha);
             ret.Type = item.Type == rhs.Type;
         }
         
@@ -906,9 +906,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Color, "Color");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.Alpha ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.Alpha, "Alpha");
             }
             if (printMask?.Type ?? true)
             {
@@ -931,9 +931,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Color.Equals(rhs.Color)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedPrimitive_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedPrimitive_FieldIndex.Alpha) ?? true))
             {
-                if (!lhs.Unknown.EqualsWithin(rhs.Unknown)) return false;
+                if (!lhs.Alpha.EqualsWithin(rhs.Alpha)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedPrimitive_FieldIndex.Type) ?? true))
             {
@@ -947,7 +947,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.Bounds);
             hash.Add(item.Color);
-            hash.Add(item.Unknown);
+            hash.Add(item.Alpha);
             hash.Add(item.Type);
             return hash.ToHashCode();
         }
@@ -989,9 +989,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Color = rhs.Color;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedPrimitive_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedPrimitive_FieldIndex.Alpha) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.Alpha = rhs.Alpha;
             }
             if ((copyMask?.GetShouldTranslate((int)PlacedPrimitive_FieldIndex.Type) ?? true))
             {
@@ -1113,7 +1113,7 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.Color);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown);
+                item: item.Alpha);
             EnumBinaryTranslation<PlacedPrimitive.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Write(
                 writer,
                 item.Type,
@@ -1175,7 +1175,7 @@ namespace Mutagen.Bethesda.Starfield
                 frame: frame,
                 item: item);
             item.Color = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Alpha = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Type = EnumBinaryTranslation<PlacedPrimitive.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
@@ -1253,7 +1253,7 @@ namespace Mutagen.Bethesda.Starfield
         public P3Float Bounds => GetBoundsCustom(location: 0x0);
         #endregion
         public P3Float Color => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0xC, 0xC));
-        public Single Unknown => _structData.Slice(0x18, 0x4).Float();
+        public Single Alpha => _structData.Slice(0x18, 0x4).Float();
         public PlacedPrimitive.TypeEnum Type => (PlacedPrimitive.TypeEnum)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x1C, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
