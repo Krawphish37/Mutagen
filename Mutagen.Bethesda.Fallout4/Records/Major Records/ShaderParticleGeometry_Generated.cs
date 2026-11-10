@@ -97,13 +97,13 @@ namespace Mutagen.Bethesda.Fallout4
         public Single Unknown7 { get; set; } = default(Single);
         #endregion
         #region NumSubtexturesX
-        public Single NumSubtexturesX { get; set; } = default(Single);
+        public UInt32 NumSubtexturesX { get; set; } = default(UInt32);
         #endregion
         #region Unknown8
         public Single Unknown8 { get; set; } = default(Single);
         #endregion
         #region NumSubtexturesY
-        public Single NumSubtexturesY { get; set; } = default(Single);
+        public UInt32 NumSubtexturesY { get; set; } = default(UInt32);
         #endregion
         #region Unknown9
         public Single Unknown9 { get; set; } = default(Single);
@@ -1283,9 +1283,9 @@ namespace Mutagen.Bethesda.Fallout4
         new Single Unknown6 { get; set; }
         new Single InitialRotation { get; set; }
         new Single Unknown7 { get; set; }
-        new Single NumSubtexturesX { get; set; }
+        new UInt32 NumSubtexturesX { get; set; }
         new Single Unknown8 { get; set; }
-        new Single NumSubtexturesY { get; set; }
+        new UInt32 NumSubtexturesY { get; set; }
         new Single Unknown9 { get; set; }
         new ShaderParticleGeometry.ShaderParticleType Type { get; set; }
         new Single Unknown10 { get; set; }
@@ -1325,9 +1325,9 @@ namespace Mutagen.Bethesda.Fallout4
         Single Unknown6 { get; }
         Single InitialRotation { get; }
         Single Unknown7 { get; }
-        Single NumSubtexturesX { get; }
+        UInt32 NumSubtexturesX { get; }
         Single Unknown8 { get; }
-        Single NumSubtexturesY { get; }
+        UInt32 NumSubtexturesY { get; }
         Single Unknown9 { get; }
         ShaderParticleGeometry.ShaderParticleType Type { get; }
         Single Unknown10 { get; }
@@ -1642,9 +1642,9 @@ namespace Mutagen.Bethesda.Fallout4
             item.Unknown6 = default(Single);
             item.InitialRotation = default(Single);
             item.Unknown7 = default(Single);
-            item.NumSubtexturesX = default(Single);
+            item.NumSubtexturesX = default(UInt32);
             item.Unknown8 = default(Single);
-            item.NumSubtexturesY = default(Single);
+            item.NumSubtexturesY = default(UInt32);
             item.Unknown9 = default(Single);
             item.Type = default(ShaderParticleGeometry.ShaderParticleType);
             item.Unknown10 = default(Single);
@@ -1751,9 +1751,9 @@ namespace Mutagen.Bethesda.Fallout4
             ret.Unknown6 = item.Unknown6.EqualsWithin(rhs.Unknown6);
             ret.InitialRotation = item.InitialRotation.EqualsWithin(rhs.InitialRotation);
             ret.Unknown7 = item.Unknown7.EqualsWithin(rhs.Unknown7);
-            ret.NumSubtexturesX = item.NumSubtexturesX.EqualsWithin(rhs.NumSubtexturesX);
+            ret.NumSubtexturesX = item.NumSubtexturesX == rhs.NumSubtexturesX;
             ret.Unknown8 = item.Unknown8.EqualsWithin(rhs.Unknown8);
-            ret.NumSubtexturesY = item.NumSubtexturesY.EqualsWithin(rhs.NumSubtexturesY);
+            ret.NumSubtexturesY = item.NumSubtexturesY == rhs.NumSubtexturesY;
             ret.Unknown9 = item.Unknown9.EqualsWithin(rhs.Unknown9);
             ret.Type = item.Type == rhs.Type;
             ret.Unknown10 = item.Unknown10.EqualsWithin(rhs.Unknown10);
@@ -2020,7 +2020,7 @@ namespace Mutagen.Bethesda.Fallout4
             }
             if ((equalsMask?.GetShouldTranslate((int)ShaderParticleGeometry_FieldIndex.NumSubtexturesX) ?? true))
             {
-                if (!lhs.NumSubtexturesX.EqualsWithin(rhs.NumSubtexturesX)) return false;
+                if (lhs.NumSubtexturesX != rhs.NumSubtexturesX) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)ShaderParticleGeometry_FieldIndex.Unknown8) ?? true))
             {
@@ -2028,7 +2028,7 @@ namespace Mutagen.Bethesda.Fallout4
             }
             if ((equalsMask?.GetShouldTranslate((int)ShaderParticleGeometry_FieldIndex.NumSubtexturesY) ?? true))
             {
-                if (!lhs.NumSubtexturesY.EqualsWithin(rhs.NumSubtexturesY)) return false;
+                if (lhs.NumSubtexturesY != rhs.NumSubtexturesY) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)ShaderParticleGeometry_FieldIndex.Unknown9) ?? true))
             {
@@ -2556,15 +2556,11 @@ namespace Mutagen.Bethesda.Fallout4
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.Unknown7);
-                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                    writer: writer,
-                    item: item.NumSubtexturesX);
+                writer.Write(item.NumSubtexturesX);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.Unknown8);
-                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                    writer: writer,
-                    item: item.NumSubtexturesY);
+                writer.Write(item.NumSubtexturesY);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.Unknown9);
@@ -2692,11 +2688,11 @@ namespace Mutagen.Bethesda.Fallout4
                     if (dataFrame.Remaining < 4) return null;
                     item.Unknown7 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.NumSubtexturesX = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.NumSubtexturesX = dataFrame.ReadUInt32();
                     if (dataFrame.Remaining < 4) return null;
                     item.Unknown8 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.NumSubtexturesY = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.NumSubtexturesY = dataFrame.ReadUInt32();
                     if (dataFrame.Remaining < 4) return null;
                     item.Unknown9 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -2856,7 +2852,7 @@ namespace Mutagen.Bethesda.Fallout4
         #region NumSubtexturesX
         private int _NumSubtexturesXLocation => _DATALocation!.Value.Min + 0x38;
         private bool _NumSubtexturesX_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _NumSubtexturesXLocation + 1 >= 4;
-        public Single NumSubtexturesX => _NumSubtexturesX_IsSet ? _recordData.Slice(_NumSubtexturesXLocation, 4).Float() : default(Single);
+        public UInt32 NumSubtexturesX => _NumSubtexturesX_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_NumSubtexturesXLocation, 4)) : default(UInt32);
         #endregion
         #region Unknown8
         private int _Unknown8Location => _DATALocation!.Value.Min + 0x3C;
@@ -2866,7 +2862,7 @@ namespace Mutagen.Bethesda.Fallout4
         #region NumSubtexturesY
         private int _NumSubtexturesYLocation => _DATALocation!.Value.Min + 0x40;
         private bool _NumSubtexturesY_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _NumSubtexturesYLocation + 1 >= 4;
-        public Single NumSubtexturesY => _NumSubtexturesY_IsSet ? _recordData.Slice(_NumSubtexturesYLocation, 4).Float() : default(Single);
+        public UInt32 NumSubtexturesY => _NumSubtexturesY_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_NumSubtexturesYLocation, 4)) : default(UInt32);
         #endregion
         #region Unknown9
         private int _Unknown9Location => _DATALocation!.Value.Min + 0x44;

@@ -18,9 +18,9 @@
           <Float name="Unknown6" />
           <Float name="InitialRotation" />
           <Float name="Unknown7" />
-          <Float name="NumSubtexturesX" />
+          <UInt32 name="NumSubtexturesX" />
           <Float name="Unknown8" />
-          <Float name="NumSubtexturesY" />
+          <UInt32 name="NumSubtexturesY" />
           <Float name="Unknown9" />
           <Enum name="Type" enumName="ShaderParticleGeometry.ShaderParticleType" byteLength="4" />
           <Float name="Unknown10" />
