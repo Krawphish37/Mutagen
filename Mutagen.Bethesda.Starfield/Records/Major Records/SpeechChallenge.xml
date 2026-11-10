@@ -5,8 +5,8 @@
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
       <Int16 name="QuestStageOnWin" recordType="SPWI" />
       <Int16 name="QuestStageOnLoss" recordType="SPLO" />
-      <Bool name="SRAN" recordType="SRAN" boolAsMarker="True" />
-      <Bool name="SGEN" recordType="SGEN" boolAsMarker="True" />
+      <Bool name="SequentialScenes" recordType="SRAN" boolAsMarker="True" />
+      <Bool name="DontAllowNoKeywordScenes" recordType="SGEN" boolAsMarker="True" />
       <FormLink name="Quest" refName="Quest" recordType="SPQU" />
       <List name="Keywords" counterRecType="KSIZ" recordType="KWDA">
         <FormLink refName="Keyword" />

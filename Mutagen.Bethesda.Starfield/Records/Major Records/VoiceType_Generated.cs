@@ -89,16 +89,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IKeywordGetter> IVoiceTypeGetter.AnimationFaceArchetype => this.AnimationFaceArchetype;
         #endregion
-        #region PNAM
+        #region PronounOverride
+        public VoiceType.Pronoun? PronounOverride { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _PNAM;
-        public MemorySlice<Byte>? PNAM
-        {
-            get => this._PNAM;
-            set => this._PNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IVoiceTypeGetter.PNAM => this.PNAM;
+        VoiceType.Pronoun? IVoiceTypeGetter.PronounOverride => this.PronounOverride;
         #endregion
 
         #region To String
@@ -128,7 +122,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(initialValue, new VirtualMachineAdapter.Mask<TItem>(initialValue));
                 this.Flags = initialValue;
                 this.AnimationFaceArchetype = initialValue;
-                this.PNAM = initialValue;
+                this.PronounOverride = initialValue;
             }
 
             public Mask(
@@ -142,7 +136,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem VirtualMachineAdapter,
                 TItem Flags,
                 TItem AnimationFaceArchetype,
-                TItem PNAM)
+                TItem PronounOverride)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -155,7 +149,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(VirtualMachineAdapter, new VirtualMachineAdapter.Mask<TItem>(VirtualMachineAdapter));
                 this.Flags = Flags;
                 this.AnimationFaceArchetype = AnimationFaceArchetype;
-                this.PNAM = PNAM;
+                this.PronounOverride = PronounOverride;
             }
 
             #pragma warning disable CS8618
@@ -170,7 +164,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
             public TItem Flags;
             public TItem AnimationFaceArchetype;
-            public TItem PNAM;
+            public TItem PronounOverride;
             #endregion
 
             #region Equals
@@ -187,7 +181,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.AnimationFaceArchetype, rhs.AnimationFaceArchetype)) return false;
-                if (!object.Equals(this.PNAM, rhs.PNAM)) return false;
+                if (!object.Equals(this.PronounOverride, rhs.PronounOverride)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -196,7 +190,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.VirtualMachineAdapter);
                 hash.Add(this.Flags);
                 hash.Add(this.AnimationFaceArchetype);
-                hash.Add(this.PNAM);
+                hash.Add(this.PronounOverride);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -214,7 +208,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.Flags)) return false;
                 if (!eval(this.AnimationFaceArchetype)) return false;
-                if (!eval(this.PNAM)) return false;
+                if (!eval(this.PronounOverride)) return false;
                 return true;
             }
             #endregion
@@ -230,7 +224,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.Flags)) return true;
                 if (eval(this.AnimationFaceArchetype)) return true;
-                if (eval(this.PNAM)) return true;
+                if (eval(this.PronounOverride)) return true;
                 return false;
             }
             #endregion
@@ -249,7 +243,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.VirtualMachineAdapter = this.VirtualMachineAdapter == null ? null : new MaskItem<R, VirtualMachineAdapter.Mask<R>?>(eval(this.VirtualMachineAdapter.Overall), this.VirtualMachineAdapter.Specific?.Translate(eval));
                 obj.Flags = eval(this.Flags);
                 obj.AnimationFaceArchetype = eval(this.AnimationFaceArchetype);
-                obj.PNAM = eval(this.PNAM);
+                obj.PronounOverride = eval(this.PronounOverride);
             }
             #endregion
 
@@ -280,9 +274,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(AnimationFaceArchetype, "AnimationFaceArchetype");
                     }
-                    if (printMask?.PNAM ?? true)
+                    if (printMask?.PronounOverride ?? true)
                     {
-                        sb.AppendItem(PNAM, "PNAM");
+                        sb.AppendItem(PronounOverride, "PronounOverride");
                     }
                 }
             }
@@ -298,7 +292,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>? VirtualMachineAdapter;
             public Exception? Flags;
             public Exception? AnimationFaceArchetype;
-            public Exception? PNAM;
+            public Exception? PronounOverride;
             #endregion
 
             #region IErrorMask
@@ -313,8 +307,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Flags;
                     case VoiceType_FieldIndex.AnimationFaceArchetype:
                         return AnimationFaceArchetype;
-                    case VoiceType_FieldIndex.PNAM:
-                        return PNAM;
+                    case VoiceType_FieldIndex.PronounOverride:
+                        return PronounOverride;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -334,8 +328,8 @@ namespace Mutagen.Bethesda.Starfield
                     case VoiceType_FieldIndex.AnimationFaceArchetype:
                         this.AnimationFaceArchetype = ex;
                         break;
-                    case VoiceType_FieldIndex.PNAM:
-                        this.PNAM = ex;
+                    case VoiceType_FieldIndex.PronounOverride:
+                        this.PronounOverride = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -357,8 +351,8 @@ namespace Mutagen.Bethesda.Starfield
                     case VoiceType_FieldIndex.AnimationFaceArchetype:
                         this.AnimationFaceArchetype = (Exception?)obj;
                         break;
-                    case VoiceType_FieldIndex.PNAM:
-                        this.PNAM = (Exception?)obj;
+                    case VoiceType_FieldIndex.PronounOverride:
+                        this.PronounOverride = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -372,7 +366,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (VirtualMachineAdapter != null) return true;
                 if (Flags != null) return true;
                 if (AnimationFaceArchetype != null) return true;
-                if (PNAM != null) return true;
+                if (PronounOverride != null) return true;
                 return false;
             }
             #endregion
@@ -407,7 +401,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(AnimationFaceArchetype, "AnimationFaceArchetype");
                 }
                 {
-                    sb.AppendItem(PNAM, "PNAM");
+                    sb.AppendItem(PronounOverride, "PronounOverride");
                 }
             }
             #endregion
@@ -420,7 +414,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
                 ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.AnimationFaceArchetype = this.AnimationFaceArchetype.Combine(rhs.AnimationFaceArchetype);
-                ret.PNAM = this.PNAM.Combine(rhs.PNAM);
+                ret.PronounOverride = this.PronounOverride.Combine(rhs.PronounOverride);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -446,7 +440,7 @@ namespace Mutagen.Bethesda.Starfield
             public VirtualMachineAdapter.TranslationMask? VirtualMachineAdapter;
             public bool Flags;
             public bool AnimationFaceArchetype;
-            public bool PNAM;
+            public bool PronounOverride;
             #endregion
 
             #region Ctors
@@ -457,7 +451,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Flags = defaultOn;
                 this.AnimationFaceArchetype = defaultOn;
-                this.PNAM = defaultOn;
+                this.PronounOverride = defaultOn;
             }
 
             #endregion
@@ -468,7 +462,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
                 ret.Add((Flags, null));
                 ret.Add((AnimationFaceArchetype, null));
-                ret.Add((PNAM, null));
+                ret.Add((PronounOverride, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -626,7 +620,7 @@ namespace Mutagen.Bethesda.Starfield
         new VirtualMachineAdapter? VirtualMachineAdapter { get; set; }
         new VoiceType.Flag Flags { get; set; }
         new IFormLinkNullable<IKeywordGetter> AnimationFaceArchetype { get; set; }
-        new MemorySlice<Byte>? PNAM { get; set; }
+        new VoiceType.Pronoun? PronounOverride { get; set; }
     }
 
     public partial interface IVoiceTypeInternal :
@@ -657,7 +651,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         VoiceType.Flag Flags { get; }
         IFormLinkNullableGetter<IKeywordGetter> AnimationFaceArchetype { get; }
-        ReadOnlyMemorySlice<Byte>? PNAM { get; }
+        VoiceType.Pronoun? PronounOverride { get; }
 
     }
 
@@ -837,7 +831,7 @@ namespace Mutagen.Bethesda.Starfield
         VirtualMachineAdapter = 7,
         Flags = 8,
         AnimationFaceArchetype = 9,
-        PNAM = 10,
+        PronounOverride = 10,
     }
     #endregion
 
@@ -935,7 +929,7 @@ namespace Mutagen.Bethesda.Starfield
             item.VirtualMachineAdapter = null;
             item.Flags = default(VoiceType.Flag);
             item.AnimationFaceArchetype.Clear();
-            item.PNAM = default;
+            item.PronounOverride = default;
             base.Clear(item);
         }
         
@@ -1029,7 +1023,7 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.Flags = item.Flags == rhs.Flags;
             ret.AnimationFaceArchetype = item.AnimationFaceArchetype.Equals(rhs.AnimationFaceArchetype);
-            ret.PNAM = MemorySliceExt.SequenceEqual(item.PNAM, rhs.PNAM);
+            ret.PronounOverride = item.PronounOverride == rhs.PronounOverride;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1092,10 +1086,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.AnimationFaceArchetype.FormKeyNullable, "AnimationFaceArchetype");
             }
-            if ((printMask?.PNAM ?? true)
-                && item.PNAM is {} PNAMItem)
+            if ((printMask?.PronounOverride ?? true)
+                && item.PronounOverride is {} PronounOverrideItem)
             {
-                sb.AppendLine($"PNAM => {SpanExt.ToHexString(PNAMItem)}");
+                sb.AppendItem(PronounOverrideItem, "PronounOverride");
             }
         }
         
@@ -1163,9 +1157,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.AnimationFaceArchetype.Equals(rhs.AnimationFaceArchetype)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)VoiceType_FieldIndex.PNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)VoiceType_FieldIndex.PronounOverride) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.PNAM, rhs.PNAM)) return false;
+                if (lhs.PronounOverride != rhs.PronounOverride) return false;
             }
             return true;
         }
@@ -1201,9 +1195,9 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.Flags);
             hash.Add(item.AnimationFaceArchetype);
-            if (item.PNAM is {} PNAMItem)
+            if (item.PronounOverride is {} PronounOverrideitem)
             {
-                hash.AddBytes(PNAMItem);
+                hash.Add(PronounOverrideitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1375,16 +1369,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.AnimationFaceArchetype.SetTo(rhs.AnimationFaceArchetype.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)VoiceType_FieldIndex.PNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)VoiceType_FieldIndex.PronounOverride) ?? true))
             {
-                if(rhs.PNAM is {} PNAMrhs)
-                {
-                    item.PNAM = PNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.PNAM = default;
-                }
+                item.PronounOverride = rhs.PronounOverride;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1571,9 +1558,10 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.AnimationFaceArchetype,
                 header: translationParams.ConvertToCustom(RecordTypes.ANAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.PNAM,
+            EnumBinaryTranslation<VoiceType.Pronoun, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.PronounOverride,
+                length: 1,
                 header: translationParams.ConvertToCustom(RecordTypes.PNAM));
         }
 
@@ -1667,8 +1655,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.PNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.PNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)VoiceType_FieldIndex.PNAM;
+                    item.PronounOverride = EnumBinaryTranslation<VoiceType.Pronoun, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)VoiceType_FieldIndex.PronounOverride;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -1748,9 +1738,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _AnimationFaceArchetypeLocation;
         public IFormLinkNullableGetter<IKeywordGetter> AnimationFaceArchetype => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IKeywordGetter>(_package, _recordData, _AnimationFaceArchetypeLocation);
         #endregion
-        #region PNAM
-        private int? _PNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? PNAM => _PNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _PNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region PronounOverride
+        private int? _PronounOverrideLocation;
+        public VoiceType.Pronoun? PronounOverride => EnumBinaryTranslation<VoiceType.Pronoun, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_PronounOverrideLocation, _recordData, _package, 1);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1843,8 +1833,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.PNAM:
                 {
-                    _PNAMLocation = (stream.Position - offset);
-                    return (int)VoiceType_FieldIndex.PNAM;
+                    _PronounOverrideLocation = (stream.Position - offset);
+                    return (int)VoiceType_FieldIndex.PronounOverride;
                 }
                 case RecordTypeInts.XXXX:
                 {

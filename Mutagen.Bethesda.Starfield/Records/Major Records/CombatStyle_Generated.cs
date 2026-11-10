@@ -422,16 +422,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         CombatStyle.Flag? ICombatStyleGetter.Flags => this.Flags;
         #endregion
-        #region FNAM
+        #region DefaultTemplateFlags
+        public CombatStyle.TemplateFlag? DefaultTemplateFlags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _FNAM;
-        public MemorySlice<Byte>? FNAM
-        {
-            get => this._FNAM;
-            set => this._FNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ICombatStyleGetter.FNAM => this.FNAM;
+        CombatStyle.TemplateFlag? ICombatStyleGetter.DefaultTemplateFlags => this.DefaultTemplateFlags;
         #endregion
         #region TemplateDefaultCombatStyle
         private readonly IFormLinkNullable<ICombatStyleGetter> _TemplateDefaultCombatStyle = new FormLinkNullable<ICombatStyleGetter>();
@@ -587,7 +581,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.SpaceDetectionRating2 = initialValue;
                 this.SpaceDetectionRating3 = initialValue;
                 this.Flags = initialValue;
-                this.FNAM = initialValue;
+                this.DefaultTemplateFlags = initialValue;
                 this.TemplateDefaultCombatStyle = initialValue;
                 this.Templates = new MaskItem<TItem, CombatStyleTemplates.Mask<TItem>?>(initialValue, new CombatStyleTemplates.Mask<TItem>(initialValue));
             }
@@ -708,7 +702,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem SpaceDetectionRating2,
                 TItem SpaceDetectionRating3,
                 TItem Flags,
-                TItem FNAM,
+                TItem DefaultTemplateFlags,
                 TItem TemplateDefaultCombatStyle,
                 TItem Templates)
             : base(
@@ -828,7 +822,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.SpaceDetectionRating2 = SpaceDetectionRating2;
                 this.SpaceDetectionRating3 = SpaceDetectionRating3;
                 this.Flags = Flags;
-                this.FNAM = FNAM;
+                this.DefaultTemplateFlags = DefaultTemplateFlags;
                 this.TemplateDefaultCombatStyle = TemplateDefaultCombatStyle;
                 this.Templates = new MaskItem<TItem, CombatStyleTemplates.Mask<TItem>?>(Templates, new CombatStyleTemplates.Mask<TItem>(Templates));
             }
@@ -950,7 +944,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem SpaceDetectionRating2;
             public TItem SpaceDetectionRating3;
             public TItem Flags;
-            public TItem FNAM;
+            public TItem DefaultTemplateFlags;
             public TItem TemplateDefaultCombatStyle;
             public MaskItem<TItem, CombatStyleTemplates.Mask<TItem>?>? Templates { get; set; }
             #endregion
@@ -1074,7 +1068,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.SpaceDetectionRating2, rhs.SpaceDetectionRating2)) return false;
                 if (!object.Equals(this.SpaceDetectionRating3, rhs.SpaceDetectionRating3)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
-                if (!object.Equals(this.FNAM, rhs.FNAM)) return false;
+                if (!object.Equals(this.DefaultTemplateFlags, rhs.DefaultTemplateFlags)) return false;
                 if (!object.Equals(this.TemplateDefaultCombatStyle, rhs.TemplateDefaultCombatStyle)) return false;
                 if (!object.Equals(this.Templates, rhs.Templates)) return false;
                 return true;
@@ -1190,7 +1184,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.SpaceDetectionRating2);
                 hash.Add(this.SpaceDetectionRating3);
                 hash.Add(this.Flags);
-                hash.Add(this.FNAM);
+                hash.Add(this.DefaultTemplateFlags);
                 hash.Add(this.TemplateDefaultCombatStyle);
                 hash.Add(this.Templates);
                 hash.Add(base.GetHashCode());
@@ -1335,7 +1329,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.SpaceDetectionRating2)) return false;
                 if (!eval(this.SpaceDetectionRating3)) return false;
                 if (!eval(this.Flags)) return false;
-                if (!eval(this.FNAM)) return false;
+                if (!eval(this.DefaultTemplateFlags)) return false;
                 if (!eval(this.TemplateDefaultCombatStyle)) return false;
                 if (Templates != null)
                 {
@@ -1482,7 +1476,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.SpaceDetectionRating2)) return true;
                 if (eval(this.SpaceDetectionRating3)) return true;
                 if (eval(this.Flags)) return true;
-                if (eval(this.FNAM)) return true;
+                if (eval(this.DefaultTemplateFlags)) return true;
                 if (eval(this.TemplateDefaultCombatStyle)) return true;
                 if (Templates != null)
                 {
@@ -1612,7 +1606,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.SpaceDetectionRating2 = eval(this.SpaceDetectionRating2);
                 obj.SpaceDetectionRating3 = eval(this.SpaceDetectionRating3);
                 obj.Flags = eval(this.Flags);
-                obj.FNAM = eval(this.FNAM);
+                obj.DefaultTemplateFlags = eval(this.DefaultTemplateFlags);
                 obj.TemplateDefaultCombatStyle = eval(this.TemplateDefaultCombatStyle);
                 obj.Templates = this.Templates == null ? null : new MaskItem<R, CombatStyleTemplates.Mask<R>?>(eval(this.Templates.Overall), this.Templates.Specific?.Translate(eval));
             }
@@ -2065,9 +2059,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.FNAM ?? true)
+                    if (printMask?.DefaultTemplateFlags ?? true)
                     {
-                        sb.AppendItem(FNAM, "FNAM");
+                        sb.AppendItem(DefaultTemplateFlags, "DefaultTemplateFlags");
                     }
                     if (printMask?.TemplateDefaultCombatStyle ?? true)
                     {
@@ -2196,7 +2190,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? SpaceDetectionRating2;
             public Exception? SpaceDetectionRating3;
             public Exception? Flags;
-            public Exception? FNAM;
+            public Exception? DefaultTemplateFlags;
             public Exception? TemplateDefaultCombatStyle;
             public MaskItem<Exception?, CombatStyleTemplates.ErrorMask?>? Templates;
             #endregion
@@ -2423,8 +2417,8 @@ namespace Mutagen.Bethesda.Starfield
                         return SpaceDetectionRating3;
                     case CombatStyle_FieldIndex.Flags:
                         return Flags;
-                    case CombatStyle_FieldIndex.FNAM:
-                        return FNAM;
+                    case CombatStyle_FieldIndex.DefaultTemplateFlags:
+                        return DefaultTemplateFlags;
                     case CombatStyle_FieldIndex.TemplateDefaultCombatStyle:
                         return TemplateDefaultCombatStyle;
                     case CombatStyle_FieldIndex.Templates:
@@ -2763,8 +2757,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CombatStyle_FieldIndex.Flags:
                         this.Flags = ex;
                         break;
-                    case CombatStyle_FieldIndex.FNAM:
-                        this.FNAM = ex;
+                    case CombatStyle_FieldIndex.DefaultTemplateFlags:
+                        this.DefaultTemplateFlags = ex;
                         break;
                     case CombatStyle_FieldIndex.TemplateDefaultCombatStyle:
                         this.TemplateDefaultCombatStyle = ex;
@@ -3107,8 +3101,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CombatStyle_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
                         break;
-                    case CombatStyle_FieldIndex.FNAM:
-                        this.FNAM = (Exception?)obj;
+                    case CombatStyle_FieldIndex.DefaultTemplateFlags:
+                        this.DefaultTemplateFlags = (Exception?)obj;
                         break;
                     case CombatStyle_FieldIndex.TemplateDefaultCombatStyle:
                         this.TemplateDefaultCombatStyle = (Exception?)obj;
@@ -3233,7 +3227,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (SpaceDetectionRating2 != null) return true;
                 if (SpaceDetectionRating3 != null) return true;
                 if (Flags != null) return true;
-                if (FNAM != null) return true;
+                if (DefaultTemplateFlags != null) return true;
                 if (TemplateDefaultCombatStyle != null) return true;
                 if (Templates != null) return true;
                 return false;
@@ -3575,7 +3569,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(FNAM, "FNAM");
+                    sb.AppendItem(DefaultTemplateFlags, "DefaultTemplateFlags");
                 }
                 {
                     sb.AppendItem(TemplateDefaultCombatStyle, "TemplateDefaultCombatStyle");
@@ -3697,7 +3691,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.SpaceDetectionRating2 = this.SpaceDetectionRating2.Combine(rhs.SpaceDetectionRating2);
                 ret.SpaceDetectionRating3 = this.SpaceDetectionRating3.Combine(rhs.SpaceDetectionRating3);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
-                ret.FNAM = this.FNAM.Combine(rhs.FNAM);
+                ret.DefaultTemplateFlags = this.DefaultTemplateFlags.Combine(rhs.DefaultTemplateFlags);
                 ret.TemplateDefaultCombatStyle = this.TemplateDefaultCombatStyle.Combine(rhs.TemplateDefaultCombatStyle);
                 ret.Templates = this.Templates.Combine(rhs.Templates, (l, r) => l.Combine(r));
                 return ret;
@@ -3830,7 +3824,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool SpaceDetectionRating2;
             public bool SpaceDetectionRating3;
             public bool Flags;
-            public bool FNAM;
+            public bool DefaultTemplateFlags;
             public bool TemplateDefaultCombatStyle;
             public CombatStyleTemplates.TranslationMask? Templates;
             #endregion
@@ -3943,7 +3937,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.SpaceDetectionRating2 = defaultOn;
                 this.SpaceDetectionRating3 = defaultOn;
                 this.Flags = defaultOn;
-                this.FNAM = defaultOn;
+                this.DefaultTemplateFlags = defaultOn;
                 this.TemplateDefaultCombatStyle = defaultOn;
             }
 
@@ -4060,7 +4054,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((SpaceDetectionRating2, null));
                 ret.Add((SpaceDetectionRating3, null));
                 ret.Add((Flags, null));
-                ret.Add((FNAM, null));
+                ret.Add((DefaultTemplateFlags, null));
                 ret.Add((TemplateDefaultCombatStyle, null));
                 ret.Add((Templates != null ? Templates.OnOverall : DefaultOn, Templates?.GetCrystal()));
             }
@@ -4323,7 +4317,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single SpaceDetectionRating2 { get; set; }
         new Single SpaceDetectionRating3 { get; set; }
         new CombatStyle.Flag? Flags { get; set; }
-        new MemorySlice<Byte>? FNAM { get; set; }
+        new CombatStyle.TemplateFlag? DefaultTemplateFlags { get; set; }
         new IFormLinkNullable<ICombatStyleGetter> TemplateDefaultCombatStyle { get; set; }
         new CombatStyleTemplates? Templates { get; set; }
         #region Mutagen
@@ -4456,7 +4450,7 @@ namespace Mutagen.Bethesda.Starfield
         Single SpaceDetectionRating2 { get; }
         Single SpaceDetectionRating3 { get; }
         CombatStyle.Flag? Flags { get; }
-        ReadOnlyMemorySlice<Byte>? FNAM { get; }
+        CombatStyle.TemplateFlag? DefaultTemplateFlags { get; }
         IFormLinkNullableGetter<ICombatStyleGetter> TemplateDefaultCombatStyle { get; }
         ICombatStyleTemplatesGetter? Templates { get; }
 
@@ -4747,7 +4741,7 @@ namespace Mutagen.Bethesda.Starfield
         SpaceDetectionRating2 = 112,
         SpaceDetectionRating3 = 113,
         Flags = 114,
-        FNAM = 115,
+        DefaultTemplateFlags = 115,
         TemplateDefaultCombatStyle = 116,
         Templates = 117,
     }
@@ -4964,7 +4958,7 @@ namespace Mutagen.Bethesda.Starfield
             item.SpaceDetectionRating2 = default(Single);
             item.SpaceDetectionRating3 = default(Single);
             item.Flags = default;
-            item.FNAM = default;
+            item.DefaultTemplateFlags = default;
             item.TemplateDefaultCombatStyle.Clear();
             item.Templates = null;
             base.Clear(item);
@@ -5161,7 +5155,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.SpaceDetectionRating2 = item.SpaceDetectionRating2.EqualsWithin(rhs.SpaceDetectionRating2);
             ret.SpaceDetectionRating3 = item.SpaceDetectionRating3.EqualsWithin(rhs.SpaceDetectionRating3);
             ret.Flags = item.Flags == rhs.Flags;
-            ret.FNAM = MemorySliceExt.SequenceEqual(item.FNAM, rhs.FNAM);
+            ret.DefaultTemplateFlags = item.DefaultTemplateFlags == rhs.DefaultTemplateFlags;
             ret.TemplateDefaultCombatStyle = item.TemplateDefaultCombatStyle.Equals(rhs.TemplateDefaultCombatStyle);
             ret.Templates = EqualsMaskHelper.EqualsHelper(
                 item.Templates,
@@ -5650,10 +5644,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(FlagsItem, "Flags");
             }
-            if ((printMask?.FNAM ?? true)
-                && item.FNAM is {} FNAMItem)
+            if ((printMask?.DefaultTemplateFlags ?? true)
+                && item.DefaultTemplateFlags is {} DefaultTemplateFlagsItem)
             {
-                sb.AppendLine($"FNAM => {SpanExt.ToHexString(FNAMItem)}");
+                sb.AppendItem(DefaultTemplateFlagsItem, "DefaultTemplateFlags");
             }
             if (printMask?.TemplateDefaultCombatStyle ?? true)
             {
@@ -6170,9 +6164,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.FNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.DefaultTemplateFlags) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.FNAM, rhs.FNAM)) return false;
+                if (lhs.DefaultTemplateFlags != rhs.DefaultTemplateFlags) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.TemplateDefaultCombatStyle) ?? true))
             {
@@ -6325,9 +6319,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Flagsitem);
             }
-            if (item.FNAM is {} FNAMItem)
+            if (item.DefaultTemplateFlags is {} DefaultTemplateFlagsitem)
             {
-                hash.AddBytes(FNAMItem);
+                hash.Add(DefaultTemplateFlagsitem);
             }
             hash.Add(item.TemplateDefaultCombatStyle);
             if (item.Templates is {} Templatesitem)
@@ -7010,16 +7004,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.FNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.DefaultTemplateFlags) ?? true))
             {
-                if(rhs.FNAM is {} FNAMrhs)
-                {
-                    item.FNAM = FNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.FNAM = default;
-                }
+                item.DefaultTemplateFlags = rhs.DefaultTemplateFlags;
             }
             if ((copyMask?.GetShouldTranslate((int)CombatStyle_FieldIndex.TemplateDefaultCombatStyle) ?? true))
             {
@@ -7589,9 +7576,10 @@ namespace Mutagen.Bethesda.Starfield
                 item.Flags,
                 length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.DATA));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.FNAM,
+            EnumBinaryTranslation<CombatStyle.TemplateFlag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.DefaultTemplateFlags,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.FNAM));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -7975,8 +7963,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)CombatStyle_FieldIndex.FNAM;
+                    item.DefaultTemplateFlags = EnumBinaryTranslation<CombatStyle.TemplateFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)CombatStyle_FieldIndex.DefaultTemplateFlags;
                 }
                 case RecordTypeInts.TNAM:
                 {
@@ -8607,9 +8597,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _FlagsLocation;
         public CombatStyle.Flag? Flags => EnumBinaryTranslation<CombatStyle.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_FlagsLocation, _recordData, _package, 4);
         #endregion
-        #region FNAM
-        private int? _FNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? FNAM => _FNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region DefaultTemplateFlags
+        private int? _DefaultTemplateFlagsLocation;
+        public CombatStyle.TemplateFlag? DefaultTemplateFlags => EnumBinaryTranslation<CombatStyle.TemplateFlag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_DefaultTemplateFlagsLocation, _recordData, _package, 4);
         #endregion
         #region TemplateDefaultCombatStyle
         private int? _TemplateDefaultCombatStyleLocation;
@@ -8760,8 +8750,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FNAM:
                 {
-                    _FNAMLocation = (stream.Position - offset);
-                    return (int)CombatStyle_FieldIndex.FNAM;
+                    _DefaultTemplateFlagsLocation = (stream.Position - offset);
+                    return (int)CombatStyle_FieldIndex.DefaultTemplateFlags;
                 }
                 case RecordTypeInts.TNAM:
                 {
