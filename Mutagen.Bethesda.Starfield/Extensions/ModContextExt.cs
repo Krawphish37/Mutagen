@@ -24,7 +24,9 @@ internal static class ModContextExt
     {
         SubCells = false,
         TopCell = false,
+        // The cell offset and size tables only fit the file they were read from (xEdit drops both on a copy too)
         OffsetData = false,
+        CellSizeData = false,
         SubCellsUnknown = false,
         SubCellsTimestamp = false,
     };
