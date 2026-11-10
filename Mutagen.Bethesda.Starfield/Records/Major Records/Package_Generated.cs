@@ -2220,6 +2220,7 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.FNAM,
                 RecordTypes.PKC2,
                 RecordTypes.PFO2,
+                RecordTypes.UNAM,
                 RecordTypes.POBA,
                 RecordTypes.POEA,
                 RecordTypes.POCA);
@@ -3738,6 +3739,9 @@ namespace Mutagen.Bethesda.Starfield
             PackageBinaryWriteTranslation.WriteBinaryProcedureTree(
                 writer: writer,
                 item: item);
+            PackageBinaryWriteTranslation.WriteBinaryDataInputNames(
+                writer: writer,
+                item: item);
             if (item.OnBegin is {} OnBeginItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.POBA)) { }
@@ -3786,6 +3790,19 @@ namespace Mutagen.Bethesda.Starfield
             IPackageGetter item)
         {
             WriteBinaryProcedureTreeCustom(
+                writer: writer,
+                item: item);
+        }
+
+        public static partial void WriteBinaryDataInputNamesCustom(
+            MutagenWriter writer,
+            IPackageGetter item);
+
+        public static void WriteBinaryDataInputNames(
+            MutagenWriter writer,
+            IPackageGetter item)
+        {
+            WriteBinaryDataInputNamesCustom(
                 writer: writer,
                 item: item);
         }
@@ -3992,6 +4009,13 @@ namespace Mutagen.Bethesda.Starfield
                         lastParsed: lastParsed);
                     return (int)Package_FieldIndex.ProcedureTree;
                 }
+                case RecordTypeInts.UNAM:
+                {
+                    return PackageBinaryCreateTranslation.FillBinaryDataInputNamesCustom(
+                        frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
+                        item: item,
+                        lastParsed: lastParsed);
+                }
                 case RecordTypeInts.POBA:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength + contentLength; // Skip marker
@@ -4039,6 +4063,11 @@ namespace Mutagen.Bethesda.Starfield
             PreviousParse lastParsed);
 
         public static partial void FillBinaryProcedureTreeCustom(
+            MutagenFrame frame,
+            IPackageInternal item,
+            PreviousParse lastParsed);
+
+        public static partial ParseResult FillBinaryDataInputNamesCustom(
             MutagenFrame frame,
             IPackageInternal item,
             PreviousParse lastParsed);
@@ -4204,6 +4233,12 @@ namespace Mutagen.Bethesda.Starfield
             RecordType type,
             PreviousParse lastParsed);
         #endregion
+        #region DataInputNames
+        public partial ParseResult DataInputNamesCustomParse(
+            OverlayStream stream,
+            int offset,
+            PreviousParse lastParsed);
+        #endregion
         public IPackageEventGetter? OnBegin { get; private set; }
         public IPackageEventGetter? OnEnd { get; private set; }
         public IPackageEventGetter? OnChange { get; private set; }
@@ -4365,6 +4400,13 @@ namespace Mutagen.Bethesda.Starfield
                         type: type,
                         lastParsed: lastParsed);
                     return (int)Package_FieldIndex.ProcedureTree;
+                }
+                case RecordTypeInts.UNAM:
+                {
+                    return DataInputNamesCustomParse(
+                        stream,
+                        offset,
+                        lastParsed: lastParsed);
                 }
                 case RecordTypeInts.POBA:
                 {

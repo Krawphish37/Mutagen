@@ -43,6 +43,8 @@
       </Dict>
       <Enum name="PackageGroup" enumName="Package.Group" recordType="XNAM" byteLength="1" nullable="false" />
       <RefList name="ProcedureTree" refName="PackageBranch" recordType="ANAM" binary="Custom" nullable="false" />
+      <!-- Input names and flags (UNAM, BNAM, PNAM) when the procedure tree is empty; ProcedureTree reads and writes them -->
+      <CustomLogic name="DataInputNames" recordType="UNAM" />
       <RefDirect name="OnBegin" refName="PackageEvent" markerType="POBA" />
       <RefDirect name="OnEnd" refName="PackageEvent" markerType="POEA" />
       <RefDirect name="OnChange" refName="PackageEvent" markerType="POCA" />
