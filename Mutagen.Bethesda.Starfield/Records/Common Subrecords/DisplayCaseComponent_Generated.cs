@@ -68,17 +68,17 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region DCED
+        #region Exclusivity
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<UInt32>? _DCED;
-        public ExtendedList<UInt32>? DCED
+        private ExtendedList<DisplayCaseExclusivity>? _Exclusivity;
+        public ExtendedList<DisplayCaseExclusivity>? Exclusivity
         {
-            get => this._DCED;
-            set => this._DCED = value;
+            get => this._Exclusivity;
+            set => this._Exclusivity = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<UInt32>? IDisplayCaseComponentGetter.DCED => _DCED;
+        IReadOnlyList<IDisplayCaseExclusivityGetter>? IDisplayCaseComponentGetter.Exclusivity => _Exclusivity;
         #endregion
 
         #endregion
@@ -124,16 +124,16 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.Items = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, DisplayCaseComponentItem.Mask<TItem>?>>?>(initialValue, []);
-                this.DCED = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
+                this.Exclusivity = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, DisplayCaseExclusivity.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
                 TItem Items,
-                TItem DCED)
+                TItem Exclusivity)
             : base()
             {
                 this.Items = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, DisplayCaseComponentItem.Mask<TItem>?>>?>(Items, []);
-                this.DCED = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(DCED, []);
+                this.Exclusivity = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, DisplayCaseExclusivity.Mask<TItem>?>>?>(Exclusivity, []);
             }
 
             #pragma warning disable CS8618
@@ -146,7 +146,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, DisplayCaseComponentItem.Mask<TItem>?>>?>? Items;
-            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? DCED;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, DisplayCaseExclusivity.Mask<TItem>?>>?>? Exclusivity;
             #endregion
 
             #region Equals
@@ -161,14 +161,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.Items, rhs.Items)) return false;
-                if (!object.Equals(this.DCED, rhs.DCED)) return false;
+                if (!object.Equals(this.Exclusivity, rhs.Exclusivity)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.Items);
-                hash.Add(this.DCED);
+                hash.Add(this.Exclusivity);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -191,14 +191,15 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (this.DCED != null)
+                if (this.Exclusivity != null)
                 {
-                    if (!eval(this.DCED.Overall)) return false;
-                    if (this.DCED.Specific != null)
+                    if (!eval(this.Exclusivity.Overall)) return false;
+                    if (this.Exclusivity.Specific != null)
                     {
-                        foreach (var item in this.DCED.Specific)
+                        foreach (var item in this.Exclusivity.Specific)
                         {
-                            if (!eval(item.Value)) return false;
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
                         }
                     }
                 }
@@ -222,14 +223,15 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (this.DCED != null)
+                if (this.Exclusivity != null)
                 {
-                    if (eval(this.DCED.Overall)) return true;
-                    if (this.DCED.Specific != null)
+                    if (eval(this.Exclusivity.Overall)) return true;
+                    if (this.Exclusivity.Specific != null)
                     {
-                        foreach (var item in this.DCED.Specific)
+                        foreach (var item in this.Exclusivity.Specific)
                         {
-                            if (!eval(item.Value)) return false;
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
                         }
                     }
                 }
@@ -263,17 +265,18 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (DCED != null)
+                if (Exclusivity != null)
                 {
-                    obj.DCED = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.DCED.Overall), []);
-                    if (DCED.Specific != null)
+                    obj.Exclusivity = new MaskItem<R, IEnumerable<MaskItemIndexed<R, DisplayCaseExclusivity.Mask<R>?>>?>(eval(this.Exclusivity.Overall), []);
+                    if (Exclusivity.Specific != null)
                     {
-                        var l = new List<(int Index, R Item)>();
-                        obj.DCED.Specific = l;
-                        foreach (var item in DCED.Specific)
+                        var l = new List<MaskItemIndexed<R, DisplayCaseExclusivity.Mask<R>?>>();
+                        obj.Exclusivity.Specific = l;
+                        foreach (var item in Exclusivity.Specific)
                         {
-                            R mask = eval(item.Value);
-                            l.Add((item.Index, mask));
+                            MaskItemIndexed<R, DisplayCaseExclusivity.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, DisplayCaseExclusivity.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
                         }
                     }
                 }
@@ -314,22 +317,20 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if ((printMask?.DCED?.Overall ?? true)
-                        && DCED is {} DCEDItem)
+                    if ((printMask?.Exclusivity?.Overall ?? true)
+                        && Exclusivity is {} ExclusivityItem)
                     {
-                        sb.AppendLine("DCED =>");
+                        sb.AppendLine("Exclusivity =>");
                         using (sb.Brace())
                         {
-                            sb.AppendItem(DCEDItem.Overall);
-                            if (DCEDItem.Specific != null)
+                            sb.AppendItem(ExclusivityItem.Overall);
+                            if (ExclusivityItem.Specific != null)
                             {
-                                foreach (var subItem in DCEDItem.Specific)
+                                foreach (var subItem in ExclusivityItem.Specific)
                                 {
                                     using (sb.Brace())
                                     {
-                                        {
-                                            sb.AppendItem(subItem);
-                                        }
+                                        subItem?.Print(sb);
                                     }
                                 }
                             }
@@ -347,7 +348,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DisplayCaseComponentItem.ErrorMask?>>?>? Items;
-            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? DCED;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DisplayCaseExclusivity.ErrorMask?>>?>? Exclusivity;
             #endregion
 
             #region IErrorMask
@@ -358,8 +359,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case DisplayCaseComponent_FieldIndex.Items:
                         return Items;
-                    case DisplayCaseComponent_FieldIndex.DCED:
-                        return DCED;
+                    case DisplayCaseComponent_FieldIndex.Exclusivity:
+                        return Exclusivity;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -373,8 +374,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DisplayCaseComponent_FieldIndex.Items:
                         this.Items = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DisplayCaseComponentItem.ErrorMask?>>?>(ex, null);
                         break;
-                    case DisplayCaseComponent_FieldIndex.DCED:
-                        this.DCED = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
+                    case DisplayCaseComponent_FieldIndex.Exclusivity:
+                        this.Exclusivity = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DisplayCaseExclusivity.ErrorMask?>>?>(ex, null);
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -390,8 +391,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DisplayCaseComponent_FieldIndex.Items:
                         this.Items = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DisplayCaseComponentItem.ErrorMask?>>?>)obj;
                         break;
-                    case DisplayCaseComponent_FieldIndex.DCED:
-                        this.DCED = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
+                    case DisplayCaseComponent_FieldIndex.Exclusivity:
+                        this.Exclusivity = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DisplayCaseExclusivity.ErrorMask?>>?>)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -403,7 +404,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Items != null) return true;
-                if (DCED != null) return true;
+                if (Exclusivity != null) return true;
                 return false;
             }
             #endregion
@@ -448,21 +449,19 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (DCED is {} DCEDItem)
+                if (Exclusivity is {} ExclusivityItem)
                 {
-                    sb.AppendLine("DCED =>");
+                    sb.AppendLine("Exclusivity =>");
                     using (sb.Brace())
                     {
-                        sb.AppendItem(DCEDItem.Overall);
-                        if (DCEDItem.Specific != null)
+                        sb.AppendItem(ExclusivityItem.Overall);
+                        if (ExclusivityItem.Specific != null)
                         {
-                            foreach (var subItem in DCEDItem.Specific)
+                            foreach (var subItem in ExclusivityItem.Specific)
                             {
                                 using (sb.Brace())
                                 {
-                                    {
-                                        sb.AppendItem(subItem);
-                                    }
+                                    subItem?.Print(sb);
                                 }
                             }
                         }
@@ -477,7 +476,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Items = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DisplayCaseComponentItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Items?.Overall, rhs.Items?.Overall), Noggog.ExceptionExt.Combine(this.Items?.Specific, rhs.Items?.Specific));
-                ret.DCED = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.DCED?.Overall, rhs.DCED?.Overall), Noggog.ExceptionExt.Combine(this.DCED?.Specific, rhs.DCED?.Specific));
+                ret.Exclusivity = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DisplayCaseExclusivity.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Exclusivity?.Overall, rhs.Exclusivity?.Overall), Noggog.ExceptionExt.Combine(this.Exclusivity?.Specific, rhs.Exclusivity?.Specific));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -501,7 +500,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public DisplayCaseComponentItem.TranslationMask? Items;
-            public bool DCED;
+            public DisplayCaseExclusivity.TranslationMask? Exclusivity;
             #endregion
 
             #region Ctors
@@ -510,7 +509,6 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.DCED = defaultOn;
             }
 
             #endregion
@@ -519,7 +517,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((Items == null ? DefaultOn : !Items.GetCrystal().CopyNothing, Items?.GetCrystal()));
-                ret.Add((DCED, null));
+                ret.Add((Exclusivity == null ? DefaultOn : !Exclusivity.GetCrystal().CopyNothing, Exclusivity?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -598,7 +596,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IDisplayCaseComponent>
     {
         new ExtendedList<DisplayCaseComponentItem>? Items { get; set; }
-        new ExtendedList<UInt32>? DCED { get; set; }
+        new ExtendedList<DisplayCaseExclusivity>? Exclusivity { get; set; }
     }
 
     public partial interface IDisplayCaseComponentGetter :
@@ -609,7 +607,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         static new ILoquiRegistration StaticRegistration => DisplayCaseComponent_Registration.Instance;
         IReadOnlyList<IDisplayCaseComponentItemGetter>? Items { get; }
-        IReadOnlyList<UInt32>? DCED { get; }
+        IReadOnlyList<IDisplayCaseExclusivityGetter>? Exclusivity { get; }
 
     }
 
@@ -755,7 +753,7 @@ namespace Mutagen.Bethesda.Starfield
     internal enum DisplayCaseComponent_FieldIndex
     {
         Items = 0,
-        DCED = 1,
+        Exclusivity = 1,
     }
     #endregion
 
@@ -848,7 +846,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Items = null;
-            item.DCED = null;
+            item.Exclusivity = null;
             base.Clear(item);
         }
         
@@ -921,9 +919,9 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Items,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.DCED = item.DCED.CollectionEqualsHelper(
-                rhs.DCED,
-                (l, r) => l == r,
+            ret.Exclusivity = item.Exclusivity.CollectionEqualsHelper(
+                rhs.Exclusivity,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             base.FillEqualsMask(item, rhs, ret, include);
         }
@@ -989,17 +987,17 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.DCED?.Overall ?? true)
-                && item.DCED is {} DCEDItem)
+            if ((printMask?.Exclusivity?.Overall ?? true)
+                && item.Exclusivity is {} ExclusivityItem)
             {
-                sb.AppendLine("DCED =>");
+                sb.AppendLine("Exclusivity =>");
                 using (sb.Brace())
                 {
-                    foreach (var subItem in DCEDItem)
+                    foreach (var subItem in ExclusivityItem)
                     {
                         using (sb.Brace())
                         {
-                            sb.AppendItem(subItem);
+                            subItem?.Print(sb, "Item");
                         }
                     }
                 }
@@ -1027,9 +1025,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Items.SequenceEqualNullable(rhs.Items, (l, r) => ((DisplayCaseComponentItemCommon)((IDisplayCaseComponentItemGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)DisplayCaseComponent_FieldIndex.Items)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)DisplayCaseComponent_FieldIndex.DCED) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)DisplayCaseComponent_FieldIndex.Exclusivity) ?? true))
             {
-                if (!lhs.DCED.SequenceEqualNullable(rhs.DCED)) return false;
+                if (!lhs.Exclusivity.SequenceEqualNullable(rhs.Exclusivity, (l, r) => ((DisplayCaseExclusivityCommon)((IDisplayCaseExclusivityGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)DisplayCaseComponent_FieldIndex.Exclusivity)))) return false;
             }
             return true;
         }
@@ -1055,9 +1053,9 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
-            if (item.DCED is {} DCEDitem)
+            if (item.Exclusivity is {} Exclusivityitem)
             {
-                foreach (var subItem in DCEDitem)
+                foreach (var subItem in Exclusivityitem)
                 {
                     hash.Add(subItem);
                 }
@@ -1149,20 +1147,26 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)DisplayCaseComponent_FieldIndex.DCED) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)DisplayCaseComponent_FieldIndex.Exclusivity) ?? true))
             {
-                errorMask?.PushIndex((int)DisplayCaseComponent_FieldIndex.DCED);
+                errorMask?.PushIndex((int)DisplayCaseComponent_FieldIndex.Exclusivity);
                 try
                 {
-                    if ((rhs.DCED != null))
+                    if ((rhs.Exclusivity != null))
                     {
-                        item.DCED = 
-                            rhs.DCED
-                            .ToExtendedList<UInt32>();
+                        item.Exclusivity = 
+                            rhs.Exclusivity
+                            .Select(r =>
+                            {
+                                return r.DeepCopy(
+                                    errorMask: errorMask,
+                                    default(TranslationCrystal));
+                            })
+                            .ToExtendedList<DisplayCaseExclusivity>();
                     }
                     else
                     {
-                        item.DCED = null;
+                        item.Exclusivity = null;
                     }
                 }
                 catch (Exception ex)
@@ -1312,11 +1316,18 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt32>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IDisplayCaseExclusivityGetter>.Instance.Write(
                 writer: writer,
-                items: item.DCED,
+                items: item.Exclusivity,
                 recordType: translationParams.ConvertToCustom(RecordTypes.DCED),
-                transl: UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write);
+                transl: (MutagenWriter subWriter, IDisplayCaseExclusivityGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((DisplayCaseExclusivityBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
         }
 
         public void Write(
@@ -1384,12 +1395,12 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DCED:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DCED = 
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt32>.Instance.Parse(
+                    item.Exclusivity = 
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DisplayCaseExclusivity>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
-                            transl: UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
-                        .CastExtendedList<UInt32>();
-                    return (int)DisplayCaseComponent_FieldIndex.DCED;
+                            transl: DisplayCaseExclusivity.TryCreateFromBinary)
+                        .CastExtendedList<DisplayCaseExclusivity>();
+                    return (int)DisplayCaseComponent_FieldIndex.Exclusivity;
                 }
                 default:
                     return AComponentBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1449,7 +1460,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public IReadOnlyList<IDisplayCaseComponentItemGetter>? Items { get; private set; }
-        public IReadOnlyList<UInt32>? DCED { get; private set; }
+        public IReadOnlyList<IDisplayCaseExclusivityGetter>? Exclusivity { get; private set; }
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1525,13 +1536,12 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DCED:
                 {
-                    this.DCED = BinaryOverlayList.FactoryByStartIndexWithTrigger<UInt32>(
+                    this.Exclusivity = BinaryOverlayList.FactoryByLazyParseWithTrigger<IDisplayCaseExclusivityGetter>(
                         stream: stream,
                         package: _package,
                         finalPos: finalPos,
-                        itemLength: 4,
-                        getter: (s, p) => BinaryPrimitives.ReadUInt32LittleEndian(s));
-                    return (int)DisplayCaseComponent_FieldIndex.DCED;
+                        getter: (s, p) => DisplayCaseExclusivityBinaryOverlay.DisplayCaseExclusivityFactory(s, p));
+                    return (int)DisplayCaseComponent_FieldIndex.Exclusivity;
                 }
                 default:
                     return base.FillRecordType(

@@ -128,9 +128,9 @@ public class ComponentFieldNameM2Tests
         {
             var crowd = Component<ICrowdComponentGetter>(gbfm.Components);
             crowd.Density.ShouldNotBeNull().ShouldBe(0.1f, 0.0001f);
-            crowd.PopulationCount.ShouldBe(2u);
-            crowd.Items.Select(i => i.Name).ShouldBe(new[] { "CrowdCompNightTime", "CrowdCompDayTime" });
-            crowd.Items.Select(i => i.PopulationScale ?? -1f).ShouldBe(new[] { 0.5f, 1f });
+            crowd.Items.ShouldNotBeNull().Count.ShouldBe(2);
+            crowd.Items!.Select(i => i.Name).ShouldBe(new[] { "CrowdCompNightTime", "CrowdCompDayTime" });
+            crowd.Items!.Select(i => i.PopulationScale ?? -1f).ShouldBe(new[] { 0.5f, 1f });
             WritesBack(w => gbfm.WriteToBinary(w), Crowd);
         }
     }
