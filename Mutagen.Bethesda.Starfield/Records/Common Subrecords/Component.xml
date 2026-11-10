@@ -361,7 +361,7 @@
           <P3Float name="Color1" />
           <P3Float name="Color2" />
           <P3Float name="Color3" />
-          <Int32 name="Unknown" unknown="true" />
+          <Enum name="ColorsUsed" enumName="BlueprintComponentBODSItem.ColorFlag" byteLength="4" />
         </Fields>
       </Data>
     </Fields>

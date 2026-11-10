@@ -67,8 +67,8 @@ namespace Mutagen.Bethesda.Starfield
         #region Color3
         public P3Float Color3 { get; set; } = default(P3Float);
         #endregion
-        #region Unknown
-        public Int32 Unknown { get; set; } = default(Int32);
+        #region ColorsUsed
+        public BlueprintComponentBODSItem.ColorFlag ColorsUsed { get; set; } = default(BlueprintComponentBODSItem.ColorFlag);
         #endregion
 
         #region To String
@@ -113,7 +113,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Color1 = initialValue;
                 this.Color2 = initialValue;
                 this.Color3 = initialValue;
-                this.Unknown = initialValue;
+                this.ColorsUsed = initialValue;
             }
 
             public Mask(
@@ -121,13 +121,13 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Color1,
                 TItem Color2,
                 TItem Color3,
-                TItem Unknown)
+                TItem ColorsUsed)
             {
                 this.Name = Name;
                 this.Color1 = Color1;
                 this.Color2 = Color2;
                 this.Color3 = Color3;
-                this.Unknown = Unknown;
+                this.ColorsUsed = ColorsUsed;
             }
 
             #pragma warning disable CS8618
@@ -143,7 +143,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Color1;
             public TItem Color2;
             public TItem Color3;
-            public TItem Unknown;
+            public TItem ColorsUsed;
             #endregion
 
             #region Equals
@@ -160,7 +160,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Color1, rhs.Color1)) return false;
                 if (!object.Equals(this.Color2, rhs.Color2)) return false;
                 if (!object.Equals(this.Color3, rhs.Color3)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.ColorsUsed, rhs.ColorsUsed)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -170,7 +170,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Color1);
                 hash.Add(this.Color2);
                 hash.Add(this.Color3);
-                hash.Add(this.Unknown);
+                hash.Add(this.ColorsUsed);
                 return hash.ToHashCode();
             }
 
@@ -183,7 +183,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Color1)) return false;
                 if (!eval(this.Color2)) return false;
                 if (!eval(this.Color3)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.ColorsUsed)) return false;
                 return true;
             }
             #endregion
@@ -195,7 +195,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Color1)) return true;
                 if (eval(this.Color2)) return true;
                 if (eval(this.Color3)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.ColorsUsed)) return true;
                 return false;
             }
             #endregion
@@ -214,7 +214,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Color1 = eval(this.Color1);
                 obj.Color2 = eval(this.Color2);
                 obj.Color3 = eval(this.Color3);
-                obj.Unknown = eval(this.Unknown);
+                obj.ColorsUsed = eval(this.ColorsUsed);
             }
             #endregion
 
@@ -249,9 +249,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Color3, "Color3");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.ColorsUsed ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(ColorsUsed, "ColorsUsed");
                     }
                 }
             }
@@ -281,7 +281,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Color1;
             public Exception? Color2;
             public Exception? Color3;
-            public Exception? Unknown;
+            public Exception? ColorsUsed;
             #endregion
 
             #region IErrorMask
@@ -298,8 +298,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Color2;
                     case BlueprintComponentBODSItem_FieldIndex.Color3:
                         return Color3;
-                    case BlueprintComponentBODSItem_FieldIndex.Unknown:
-                        return Unknown;
+                    case BlueprintComponentBODSItem_FieldIndex.ColorsUsed:
+                        return ColorsUsed;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -322,8 +322,8 @@ namespace Mutagen.Bethesda.Starfield
                     case BlueprintComponentBODSItem_FieldIndex.Color3:
                         this.Color3 = ex;
                         break;
-                    case BlueprintComponentBODSItem_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case BlueprintComponentBODSItem_FieldIndex.ColorsUsed:
+                        this.ColorsUsed = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -347,8 +347,8 @@ namespace Mutagen.Bethesda.Starfield
                     case BlueprintComponentBODSItem_FieldIndex.Color3:
                         this.Color3 = (Exception?)obj;
                         break;
-                    case BlueprintComponentBODSItem_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case BlueprintComponentBODSItem_FieldIndex.ColorsUsed:
+                        this.ColorsUsed = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -362,7 +362,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Color1 != null) return true;
                 if (Color2 != null) return true;
                 if (Color3 != null) return true;
-                if (Unknown != null) return true;
+                if (ColorsUsed != null) return true;
                 return false;
             }
             #endregion
@@ -401,7 +401,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Color3, "Color3");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(ColorsUsed, "ColorsUsed");
                 }
             }
             #endregion
@@ -415,7 +415,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Color1 = this.Color1.Combine(rhs.Color1);
                 ret.Color2 = this.Color2.Combine(rhs.Color2);
                 ret.Color3 = this.Color3.Combine(rhs.Color3);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.ColorsUsed = this.ColorsUsed.Combine(rhs.ColorsUsed);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -443,7 +443,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Color1;
             public bool Color2;
             public bool Color3;
-            public bool Unknown;
+            public bool ColorsUsed;
             #endregion
 
             #region Ctors
@@ -457,7 +457,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Color1 = defaultOn;
                 this.Color2 = defaultOn;
                 this.Color3 = defaultOn;
-                this.Unknown = defaultOn;
+                this.ColorsUsed = defaultOn;
             }
 
             #endregion
@@ -477,7 +477,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Color1, null));
                 ret.Add((Color2, null));
                 ret.Add((Color3, null));
-                ret.Add((Unknown, null));
+                ret.Add((ColorsUsed, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -558,7 +558,7 @@ namespace Mutagen.Bethesda.Starfield
         new P3Float Color1 { get; set; }
         new P3Float Color2 { get; set; }
         new P3Float Color3 { get; set; }
-        new Int32 Unknown { get; set; }
+        new BlueprintComponentBODSItem.ColorFlag ColorsUsed { get; set; }
     }
 
     public partial interface IBlueprintComponentBODSItemGetter :
@@ -583,7 +583,7 @@ namespace Mutagen.Bethesda.Starfield
         P3Float Color1 { get; }
         P3Float Color2 { get; }
         P3Float Color3 { get; }
-        Int32 Unknown { get; }
+        BlueprintComponentBODSItem.ColorFlag ColorsUsed { get; }
 
     }
 
@@ -757,7 +757,7 @@ namespace Mutagen.Bethesda.Starfield
         Color1 = 1,
         Color2 = 2,
         Color3 = 3,
-        Unknown = 4,
+        ColorsUsed = 4,
     }
     #endregion
 
@@ -852,7 +852,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Color1 = default(P3Float);
             item.Color2 = default(P3Float);
             item.Color3 = default(P3Float);
-            item.Unknown = default(Int32);
+            item.ColorsUsed = default(BlueprintComponentBODSItem.ColorFlag);
         }
         
         #region Mutagen
@@ -906,7 +906,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Color1 = item.Color1.Equals(rhs.Color1);
             ret.Color2 = item.Color2.Equals(rhs.Color2);
             ret.Color3 = item.Color3.Equals(rhs.Color3);
-            ret.Unknown = item.Unknown == rhs.Unknown;
+            ret.ColorsUsed = item.ColorsUsed == rhs.ColorsUsed;
         }
         
         public string Print(
@@ -967,9 +967,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Color3, "Color3");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.ColorsUsed ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.ColorsUsed, "ColorsUsed");
             }
         }
         
@@ -996,9 +996,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Color3.Equals(rhs.Color3)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)BlueprintComponentBODSItem_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlueprintComponentBODSItem_FieldIndex.ColorsUsed) ?? true))
             {
-                if (lhs.Unknown != rhs.Unknown) return false;
+                if (lhs.ColorsUsed != rhs.ColorsUsed) return false;
             }
             return true;
         }
@@ -1010,7 +1010,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Color1);
             hash.Add(item.Color2);
             hash.Add(item.Color3);
-            hash.Add(item.Unknown);
+            hash.Add(item.ColorsUsed);
             return hash.ToHashCode();
         }
         
@@ -1059,9 +1059,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Color3 = rhs.Color3;
             }
-            if ((copyMask?.GetShouldTranslate((int)BlueprintComponentBODSItem_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlueprintComponentBODSItem_FieldIndex.ColorsUsed) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.ColorsUsed = rhs.ColorsUsed;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1188,7 +1188,10 @@ namespace Mutagen.Bethesda.Starfield
                 P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.Color3);
-                writer.Write(item.Unknown);
+                EnumBinaryTranslation<BlueprintComponentBODSItem.ColorFlag, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.ColorsUsed,
+                    length: 4);
             }
         }
 
@@ -1253,8 +1256,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 12) return null;
                     item.Color3 = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.Unknown = dataFrame.ReadInt32();
-                    return (int)BlueprintComponentBODSItem_FieldIndex.Unknown;
+                    item.ColorsUsed = EnumBinaryTranslation<BlueprintComponentBODSItem.ColorFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    return (int)BlueprintComponentBODSItem_FieldIndex.ColorsUsed;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1344,10 +1349,10 @@ namespace Mutagen.Bethesda.Starfield
         private bool _Color3_IsSet => _BODVLocation.HasValue && _BODVLocation!.Value.Max - _Color3Location + 1 >= 12;
         public P3Float Color3 => _Color3_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_Color3Location, 12)) : default(P3Float);
         #endregion
-        #region Unknown
-        private int _UnknownLocation => _BODVLocation!.Value.Min + 0x24;
-        private bool _Unknown_IsSet => _BODVLocation.HasValue && _BODVLocation!.Value.Max - _UnknownLocation + 1 >= 4;
-        public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
+        #region ColorsUsed
+        private int _ColorsUsedLocation => _BODVLocation!.Value.Min + 0x24;
+        private bool _ColorsUsed_IsSet => _BODVLocation.HasValue && _BODVLocation!.Value.Max - _ColorsUsedLocation + 1 >= 4;
+        public BlueprintComponentBODSItem.ColorFlag ColorsUsed => _ColorsUsed_IsSet ? (BlueprintComponentBODSItem.ColorFlag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ColorsUsedLocation, 0x4)) : default(BlueprintComponentBODSItem.ColorFlag);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1421,7 +1426,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.BODV:
                 {
                     _BODVLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)BlueprintComponentBODSItem_FieldIndex.Unknown;
+                    return (int)BlueprintComponentBODSItem_FieldIndex.ColorsUsed;
                 }
                 default:
                     return ParseResult.Stop;
