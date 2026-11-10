@@ -160,14 +160,6 @@
       <RefDirect name="MovementData" refName="MovementData" />
     </Fields>
   </Object>
-  <Object name="MovementRotationData" objType="Subrecord">
-    <Fields>
-      <Int32 name="Unused1" />
-      <Float name="Walk" />
-      <Float name="Run" />
-      <Int32 name="Unused2" />
-    </Fields>
-  </Object>
   <Object name="EquipmentSlot" objType="Subrecord">
     <Fields>
       <FormLink name="Slot" recordType="QNAM" refName="EquipType" />

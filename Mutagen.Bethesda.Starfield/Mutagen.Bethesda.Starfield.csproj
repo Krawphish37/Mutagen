@@ -5706,9 +5706,6 @@
     <Compile Include="Records\Major Records\MovementDataOverride_Generated.cs">
       <DependentUpon>Race.xml</DependentUpon>
     </Compile>
-    <Compile Include="Records\Major Records\MovementRotationData_Generated.cs">
-      <DependentUpon>Race.xml</DependentUpon>
-    </Compile>
     <Compile Include="Records\Major Records\FaceDial_Generated.cs">
       <DependentUpon>Race.xml</DependentUpon>
     </Compile>
@@ -5729,9 +5726,6 @@
     </Compile>
     <Compile Include="Records\Major Records\MorphGroup_Generated.cs">
       <DependentUpon>Race.xml</DependentUpon>
-    </Compile>
-    <Compile Include="Records\Major Records\ArmorMorph_Generated.cs">
-      <DependentUpon>Armor.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\Major Records\ArmorAddonModel_Generated.cs">
       <DependentUpon>Armor.xml</DependentUpon>
