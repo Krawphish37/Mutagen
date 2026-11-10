@@ -2,9 +2,13 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="ImageSpace" recordType="IMGS" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
-      <ByteArray name="Reflection" recordType="REFL" overflowRecordType="XXXX" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
       <FormLink name="ReflectionParent" refName="ImageSpace" recordType="RFDP" />
-      <ByteArray name="ReflectionDiff" recordType="RDIF" />
+      <RefDirect name="ReflectionDiff" refName="Reflection" overflowRecordType="XXXX">
+        <RecordTypeOverrides>
+          <Mapping From="REFL" To="RDIF" />
+        </RecordTypeOverrides>
+      </RefDirect>
     </Fields>
   </Object>
 </Loqui>
