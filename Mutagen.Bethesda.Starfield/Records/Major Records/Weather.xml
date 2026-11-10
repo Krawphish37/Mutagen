@@ -5,10 +5,10 @@
       <List name="Keywords" counterRecType="KSIZ" recordType="KWDA">
         <FormLink refName="Keyword" />
       </List>
-      <ByteArray name="LNAM" recordType="LNAM" unknown="true" />
+      <UInt32 name="MaxCloudLayers" recordType="LNAM" />
       <FormLink name="Precipitation" recordType="MNAM" refName="ShaderParticleGeometry" nullable="true" />
       <FormLink name="CameraEffect" recordType="NNAM" refName="ArtObject" nullable="true" />
-      <ByteArray name="CLDC" recordType="CLDC" unknown="true" />
+      <FormLink name="CloudType" recordType="CLDC" refName="Clouds" />
       <Array name="Clouds" fixedSize="32" binary="Custom" recordType="RNAM" nullable="False">
         <RefDirect refName="CloudLayer" />
       </Array>
@@ -100,7 +100,7 @@
           <FormLink name="ImageSpaceLateSunset" refName="ImageSpace" />
         </Fields>
       </Data>
-      <ByteArray name="HNAM" recordType="HNAM" unknown="true" />
+      <RefDirect name="VolumetricLighting" refName="WeatherVolumetricLighting" />
       <RefDirect name="DirectionalAmbientLightingColors" refName="WeatherAmbientColorSet" recordType="DALC" binary="Custom" />
       <RefDirect name="Aurora" refName="Model" />
       <FormLink name="SunGlareLensFlare" recordType="GNAM" refName="LensFlare" />
@@ -141,6 +141,18 @@
       <Float name="LateSunrise" default="1f" />
       <Float name="EarlySunset" default="1f" />
       <Float name="LateSunset" default="1f" />
+    </Fields>
+  </Object>
+  <Object name="WeatherVolumetricLighting" objType="Subrecord" recordType="HNAM">
+    <Fields>
+      <FormLink name="Sunrise" refName="VolumetricLighting" />
+      <FormLink name="Day" refName="VolumetricLighting" />
+      <FormLink name="Sunset" refName="VolumetricLighting" />
+      <FormLink name="Night" refName="VolumetricLighting" />
+      <FormLink name="EarlySunrise" refName="VolumetricLighting" />
+      <FormLink name="LateSunrise" refName="VolumetricLighting" />
+      <FormLink name="EarlySunset" refName="VolumetricLighting" />
+      <FormLink name="LateSunset" refName="VolumetricLighting" />
     </Fields>
   </Object>
   <Object name="WeatherAmbientColorSet" objType="Subrecord">

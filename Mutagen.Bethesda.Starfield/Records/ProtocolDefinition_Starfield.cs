@@ -1384,6 +1384,7 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             WeatherMagic_Registration.Instance,
             WeatherSetting_Registration.Instance,
             WeatherType_Registration.Instance,
+            WeatherVolumetricLighting_Registration.Instance,
             Weight_Registration.Instance,
             WorkshopItemColorComponent_Registration.Instance,
             Worldspace_Registration.Instance,
