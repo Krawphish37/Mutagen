@@ -200,7 +200,8 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
         }
     }
 
-    public void FillSubrecordTypes(
+    /// <returns>Whether a subrecord came before one that Mutagen writes ahead of it (see SubrecordOrder)</returns>
+    public bool FillSubrecordTypes(
         OverlayStream stream,
         int finalPos,
         int offset,
@@ -210,6 +211,8 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
         var lastParsed = new PreviousParse();
         Dictionary<RecordType, int>? recordParseCount = null;
         RecordType? lastParsedType = null;
+        var highestIndex = -1;
+        var outOfOrder = false;
         while (!stream.Complete && stream.Position < finalPos)
         {
             try
@@ -238,6 +241,17 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
                 {
                     stream.Position = minimumFinalPos;
                 }
+                if (parsed.ParsedIndex is { } parsedIndex)
+                {
+                    if (parsedIndex < highestIndex)
+                    {
+                        outOfOrder = true;
+                    }
+                    else
+                    {
+                        highestIndex = parsedIndex;
+                    }
+                }
                 if (parsed.DuplicateParseMarker != null)
                 {
                     if (recordParseCount == null)
@@ -256,6 +270,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
                 throw;
             }
         }
+        return outOfOrder;
     }
 
     public void FillSubrecordTypes(
@@ -268,12 +283,16 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
     {
         try
         {
-            FillSubrecordTypes(
-                stream: stream,
-                finalPos: finalPos,
-                offset: offset,
-                translationParams: translationParams,
-                fill: fill);
+            if (FillSubrecordTypes(
+                    stream: stream,
+                    finalPos: finalPos,
+                    offset: offset,
+                    translationParams: translationParams,
+                    fill: fill)
+                && stream.MetaData.Constants.KeepSubrecordOrder)
+            {
+                SubrecordOrder.RememberOverlay(majorReference);
+            }
         }
         catch (Exception ex)
         {

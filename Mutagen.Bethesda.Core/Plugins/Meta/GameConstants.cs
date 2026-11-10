@@ -72,6 +72,13 @@ public sealed record GameConstants
     /// </summary>
     public bool ExactFloats { get; init; }
 
+    /// <summary>
+    /// Whether a record read from a file is written back with its subrecords in the order the file had them,
+    /// when that differs from the order Mutagen writes its fields in (and the record is unchanged).
+    /// For games whose records hold the same subrecords in more than one order. See SubrecordOrder.
+    /// </summary>
+    public bool KeepSubrecordOrder { get; init; }
+
     public bool UsesStrings => StringsLanguageFormat != null;
     
     public bool SeparateMasterLoadOrders { get; init; }
@@ -554,6 +561,7 @@ public sealed record GameConstants
         encodings: new(NonTranslated: MutagenEncoding._1252, NonLocalized: MutagenEncoding._1252))
     {
         ExactFloats = true,
+        KeepSubrecordOrder = true,
     };
 
     /// <summary> 

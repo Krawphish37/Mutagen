@@ -437,6 +437,7 @@ partial class CellBinaryOverlay
             finalPos: finalPos,
             offset: offset);
         ret.FillSubrecordTypes(
+            majorReference: ret,
             stream: stream,
             finalPos: finalPos,
             offset: offset,
