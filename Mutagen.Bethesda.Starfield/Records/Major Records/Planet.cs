@@ -14,10 +14,12 @@ partial class Planet
     }
 
     [Flags]
-    public enum PlayerKnowledgeFlag
+    public enum PlayerKnowledgeFlag : uint
     {
         InitialScan = 0x0000_0001,
         Visited = 0x0000_0002,
         EnteredSystem = 0x0000_0004,
+        // xEdit: "Unknown 31". Set on 414 of the 932 planets with NNAM in Starfield.esm.
+        Unknown31 = 0x8000_0000,
     }
 }
