@@ -17,7 +17,8 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Binary;
 /// overflowRecordType. (A field without it read the header's 0 in the overlay, so the generator now refuses a parent
 /// overflowRecordType on a typeless object whose variable-length record-typed fields don't declare one, and passes
 /// the override to the overlay factory as the full import already did.)
-/// Here: Starfield's EffectSequenceComponent, a typeless object whose REFL declares overflowRecordType="XXXX".
+/// Here: Starfield's EffectSequenceComponent, a typeless object whose REFL (the Reflection object) declares
+/// overflowRecordType="XXXX".
 /// </summary>
 public class TypelessSubrecordOverflowFieldTests
 {
@@ -51,7 +52,7 @@ public class TypelessSubrecordOverflowFieldTests
         var (bytes, payload) = Data();
         var frame = new MutagenFrame(new MutagenMemoryReadStream(bytes, Meta()));
         var comp = EffectSequenceComponent.CreateFromBinary(frame, TypedParseParams.FromLengthOverride(OverflowLength));
-        comp.REFL!.Value.ToArray().ShouldBe(payload);
+        comp.Reflection!.Data.ToArray().ShouldBe(payload);
         frame.Position.ShouldBe(6 + OverflowLength);
     }
 
@@ -63,6 +64,6 @@ public class TypelessSubrecordOverflowFieldTests
         var stream = new OverlayStream(bytes, meta);
         var comp = EffectSequenceComponentBinaryOverlay.EffectSequenceComponentFactory(
             stream, new BinaryOverlayFactoryPackage(meta), TypedParseParams.FromLengthOverride(OverflowLength));
-        comp.REFL!.Value.ToArray().ShouldBe(payload);
+        comp.Reflection!.Data.ToArray().ShouldBe(payload);
     }
 }
