@@ -1,4 +1,5 @@
 ﻿using System.Buffers.Binary;
+using Loqui.Internal;
 using System.Diagnostics.CodeAnalysis;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
@@ -12,7 +13,7 @@ namespace Mutagen.Bethesda.Starfield;
 partial class Package
 {
     // The order of the names/flags after the procedure tree (UNAM BNAM PNAM) as read; not part of the record's data
-    // (not compared or copied). Starfield.esm mostly holds them by index, but not always.
+    // (copied, not compared). Starfield.esm mostly holds them by index, but not always.
     internal IReadOnlyList<sbyte>? ProcedureTreeDataOrder { get; set; }
 
     public enum Types
@@ -460,6 +461,26 @@ partial class PackageBinaryCreateTranslation
             stream.Position += subRecord.TotalLength;
         }
         return order;
+    }
+}
+
+partial class PackageSetterTranslationCommon
+{
+    // Copies (DeepCopy, DeepCopyIn) keep the read order of the names/flags after the procedure tree (C120)
+    partial void DeepCopyInCustom(
+        IPackage item,
+        IPackageGetter rhs,
+        ErrorMaskBuilder? errorMask,
+        TranslationCrystal? copyMask,
+        bool deepCopy)
+    {
+        if (item is not Package package) return;
+        package.ProcedureTreeDataOrder = rhs switch
+        {
+            Package source => source.ProcedureTreeDataOrder,
+            PackageBinaryOverlay overlay => overlay.ProcedureTreeDataOrder,
+            _ => null
+        };
     }
 }
 
