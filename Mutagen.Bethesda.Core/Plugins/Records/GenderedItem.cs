@@ -12,6 +12,13 @@ namespace Mutagen.Bethesda.Plugins.Records
         Female,
     }
     
+    // Gives the male and female items without the item type, to compare gendered items of different implementations
+    internal interface IGenderedItemEquality
+    {
+        object? MaleItem { get; }
+        object? FemaleItem { get; }
+    }
+
     /// <summary>
     /// An interface for an object exposing readonly Gendered Items
     /// </summary>
@@ -51,7 +58,7 @@ namespace Mutagen.Bethesda.Plugins.Records
     /// <summary>
     /// An object exposing data in a gendered format
     /// </summary>
-    public sealed class GenderedItem<T> : IGenderedItem<T>
+    public sealed class GenderedItem<T> : IGenderedItem<T>, IGenderedItemEquality
     {
         /// <summary>
         /// Male item
@@ -62,6 +69,9 @@ namespace Mutagen.Bethesda.Plugins.Records
         /// Female item
         /// </summary>
         public T Female { get; set; }
+
+        object? IGenderedItemEquality.MaleItem => Male;
+        object? IGenderedItemEquality.FemaleItem => Female;
 
         public T this[MaleFemaleGender gender]
         {
@@ -108,10 +118,45 @@ namespace Mutagen.Bethesda.Plugins.Records
         {
             GenderedItem.Print(this, sb, name);
         }
+
+        /// <summary>
+        /// Equal to another gendered item (of any implementation) whose male and female items are equal
+        /// </summary>
+        public override bool Equals(object? obj) => GenderedItem.ItemsEqual(Male, Female, obj);
+
+        public override int GetHashCode() => GenderedItem.ItemsHash(Male, Female);
     }
 
     internal static class GenderedItem
     {
+        // Record Equals compares gendered fields with object.Equals, so two reads of the same record (full import and
+        // overlay, or two imports, or a copy) must be equal by their male and female items, not by reference.
+        public static bool ItemsEqual(object? male, object? female, object? other)
+        {
+            if (other is not IGenderedItemEquality rhs) return false;
+            return ItemEquals(male, rhs.MaleItem) && ItemEquals(female, rhs.FemaleItem);
+        }
+
+        // A gendered item can hold a list (e.g. bone data modifiers): lists compare by their items
+        private static bool ItemEquals(object? lhs, object? rhs)
+        {
+            if (lhs is null || rhs is null) return lhs is null && rhs is null;
+            if (lhs is string || lhs is not IEnumerable lhsItems || rhs is not IEnumerable rhsItems) return Equals(lhs, rhs);
+            var lhsList = lhsItems.Cast<object?>().ToList();
+            var rhsList = rhsItems.Cast<object?>().ToList();
+            return lhsList.Count == rhsList.Count && lhsList.Zip(rhsList).All(x => ItemEquals(x.First, x.Second));
+        }
+
+        public static int ItemsHash(object? male, object? female) => HashCode.Combine(ItemHash(male), ItemHash(female));
+
+        private static int ItemHash(object? item)
+        {
+            if (item is null || item is string || item is not IEnumerable items) return item?.GetHashCode() ?? 0;
+            var hash = new HashCode();
+            foreach (var x in items) hash.Add(ItemHash(x));
+            return hash.ToHashCode();
+        }
+
         public static void Print<TItem>(IGenderedItemGetter<TItem> item, StructuredStringBuilder sb, string? name)
         {
             sb.AppendLine($"{name} =>");
