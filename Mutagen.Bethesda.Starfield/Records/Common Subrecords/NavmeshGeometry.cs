@@ -115,3 +115,15 @@ partial class NavmeshGeometryBinaryOverlay
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 }
+
+partial class EdgeLink
+{
+    // xEdit's wbNavmeshEdgeLinkEnum
+    public enum EdgeLinkType
+    {
+        Portal = 0,
+        LedgeUp = 1,
+        LedgeDown = 2,
+        EnableDisablePortal = 3,
+    }
+}

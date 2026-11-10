@@ -94,8 +94,18 @@ namespace Mutagen.Bethesda.Starfield
         #region DebrisCount
         public Int32 DebrisCount { get; set; } = default(Int32);
         #endregion
-        #region Unknown
-        public Single Unknown { get; set; } = default(Single);
+        #region ReplacementModelDelay
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Single _ReplacementModelDelay;
+        public Single ReplacementModelDelay
+        {
+            get => this._ReplacementModelDelay;
+            set
+            {
+                this.DSTDDataTypeState &= ~DSTDDataType.Break0;
+                this._ReplacementModelDelay = value;
+            }
+        }
         #endregion
         #region SequenceName
         public String? SequenceName { get; set; }
@@ -124,6 +134,9 @@ namespace Mutagen.Bethesda.Starfield
         public Int32? UnusedMaterialSwap { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Int32? IDestructionStageGetter.UnusedMaterialSwap => this.UnusedMaterialSwap;
+        #endregion
+        #region DSTDDataTypeState
+        public DestructionStage.DSTDDataType DSTDDataTypeState { get; set; } = default(DestructionStage.DSTDDataType);
         #endregion
 
         #region To String
@@ -172,10 +185,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.Explosion = initialValue;
                 this.Debris = initialValue;
                 this.DebrisCount = initialValue;
-                this.Unknown = initialValue;
+                this.ReplacementModelDelay = initialValue;
                 this.SequenceName = initialValue;
                 this.Model = new MaskItem<TItem, Model.Mask<TItem>?>(initialValue, new Model.Mask<TItem>(initialValue));
                 this.UnusedMaterialSwap = initialValue;
+                this.DSTDDataTypeState = initialValue;
             }
 
             public Mask(
@@ -187,10 +201,11 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Explosion,
                 TItem Debris,
                 TItem DebrisCount,
-                TItem Unknown,
+                TItem ReplacementModelDelay,
                 TItem SequenceName,
                 TItem Model,
-                TItem UnusedMaterialSwap)
+                TItem UnusedMaterialSwap,
+                TItem DSTDDataTypeState)
             {
                 this.HealthPercent = HealthPercent;
                 this.Index = Index;
@@ -200,10 +215,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.Explosion = Explosion;
                 this.Debris = Debris;
                 this.DebrisCount = DebrisCount;
-                this.Unknown = Unknown;
+                this.ReplacementModelDelay = ReplacementModelDelay;
                 this.SequenceName = SequenceName;
                 this.Model = new MaskItem<TItem, Model.Mask<TItem>?>(Model, new Model.Mask<TItem>(Model));
                 this.UnusedMaterialSwap = UnusedMaterialSwap;
+                this.DSTDDataTypeState = DSTDDataTypeState;
             }
 
             #pragma warning disable CS8618
@@ -223,10 +239,11 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Explosion;
             public TItem Debris;
             public TItem DebrisCount;
-            public TItem Unknown;
+            public TItem ReplacementModelDelay;
             public TItem SequenceName;
             public MaskItem<TItem, Model.Mask<TItem>?>? Model { get; set; }
             public TItem UnusedMaterialSwap;
+            public TItem DSTDDataTypeState;
             #endregion
 
             #region Equals
@@ -247,10 +264,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Explosion, rhs.Explosion)) return false;
                 if (!object.Equals(this.Debris, rhs.Debris)) return false;
                 if (!object.Equals(this.DebrisCount, rhs.DebrisCount)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.ReplacementModelDelay, rhs.ReplacementModelDelay)) return false;
                 if (!object.Equals(this.SequenceName, rhs.SequenceName)) return false;
                 if (!object.Equals(this.Model, rhs.Model)) return false;
                 if (!object.Equals(this.UnusedMaterialSwap, rhs.UnusedMaterialSwap)) return false;
+                if (!object.Equals(this.DSTDDataTypeState, rhs.DSTDDataTypeState)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -264,10 +282,11 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Explosion);
                 hash.Add(this.Debris);
                 hash.Add(this.DebrisCount);
-                hash.Add(this.Unknown);
+                hash.Add(this.ReplacementModelDelay);
                 hash.Add(this.SequenceName);
                 hash.Add(this.Model);
                 hash.Add(this.UnusedMaterialSwap);
+                hash.Add(this.DSTDDataTypeState);
                 return hash.ToHashCode();
             }
 
@@ -284,7 +303,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Explosion)) return false;
                 if (!eval(this.Debris)) return false;
                 if (!eval(this.DebrisCount)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.ReplacementModelDelay)) return false;
                 if (!eval(this.SequenceName)) return false;
                 if (Model != null)
                 {
@@ -292,6 +311,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.Model.Specific != null && !this.Model.Specific.All(eval)) return false;
                 }
                 if (!eval(this.UnusedMaterialSwap)) return false;
+                if (!eval(this.DSTDDataTypeState)) return false;
                 return true;
             }
             #endregion
@@ -307,7 +327,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Explosion)) return true;
                 if (eval(this.Debris)) return true;
                 if (eval(this.DebrisCount)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.ReplacementModelDelay)) return true;
                 if (eval(this.SequenceName)) return true;
                 if (Model != null)
                 {
@@ -315,6 +335,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.Model.Specific != null && this.Model.Specific.Any(eval)) return true;
                 }
                 if (eval(this.UnusedMaterialSwap)) return true;
+                if (eval(this.DSTDDataTypeState)) return true;
                 return false;
             }
             #endregion
@@ -337,10 +358,11 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Explosion = eval(this.Explosion);
                 obj.Debris = eval(this.Debris);
                 obj.DebrisCount = eval(this.DebrisCount);
-                obj.Unknown = eval(this.Unknown);
+                obj.ReplacementModelDelay = eval(this.ReplacementModelDelay);
                 obj.SequenceName = eval(this.SequenceName);
                 obj.Model = this.Model == null ? null : new MaskItem<R, Model.Mask<R>?>(eval(this.Model.Overall), this.Model.Specific?.Translate(eval));
                 obj.UnusedMaterialSwap = eval(this.UnusedMaterialSwap);
+                obj.DSTDDataTypeState = eval(this.DSTDDataTypeState);
             }
             #endregion
 
@@ -391,9 +413,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(DebrisCount, "DebrisCount");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.ReplacementModelDelay ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(ReplacementModelDelay, "ReplacementModelDelay");
                     }
                     if (printMask?.SequenceName ?? true)
                     {
@@ -406,6 +428,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (printMask?.UnusedMaterialSwap ?? true)
                     {
                         sb.AppendItem(UnusedMaterialSwap, "UnusedMaterialSwap");
+                    }
+                    if (printMask?.DSTDDataTypeState ?? true)
+                    {
+                        sb.AppendItem(DSTDDataTypeState, "DSTDDataTypeState");
                     }
                 }
             }
@@ -439,10 +465,11 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Explosion;
             public Exception? Debris;
             public Exception? DebrisCount;
-            public Exception? Unknown;
+            public Exception? ReplacementModelDelay;
             public Exception? SequenceName;
             public MaskItem<Exception?, Model.ErrorMask?>? Model;
             public Exception? UnusedMaterialSwap;
+            public Exception? DSTDDataTypeState;
             #endregion
 
             #region IErrorMask
@@ -467,14 +494,16 @@ namespace Mutagen.Bethesda.Starfield
                         return Debris;
                     case DestructionStage_FieldIndex.DebrisCount:
                         return DebrisCount;
-                    case DestructionStage_FieldIndex.Unknown:
-                        return Unknown;
+                    case DestructionStage_FieldIndex.ReplacementModelDelay:
+                        return ReplacementModelDelay;
                     case DestructionStage_FieldIndex.SequenceName:
                         return SequenceName;
                     case DestructionStage_FieldIndex.Model:
                         return Model;
                     case DestructionStage_FieldIndex.UnusedMaterialSwap:
                         return UnusedMaterialSwap;
+                    case DestructionStage_FieldIndex.DSTDDataTypeState:
+                        return DSTDDataTypeState;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -509,8 +538,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DestructionStage_FieldIndex.DebrisCount:
                         this.DebrisCount = ex;
                         break;
-                    case DestructionStage_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case DestructionStage_FieldIndex.ReplacementModelDelay:
+                        this.ReplacementModelDelay = ex;
                         break;
                     case DestructionStage_FieldIndex.SequenceName:
                         this.SequenceName = ex;
@@ -520,6 +549,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case DestructionStage_FieldIndex.UnusedMaterialSwap:
                         this.UnusedMaterialSwap = ex;
+                        break;
+                    case DestructionStage_FieldIndex.DSTDDataTypeState:
+                        this.DSTDDataTypeState = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -555,8 +587,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DestructionStage_FieldIndex.DebrisCount:
                         this.DebrisCount = (Exception?)obj;
                         break;
-                    case DestructionStage_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case DestructionStage_FieldIndex.ReplacementModelDelay:
+                        this.ReplacementModelDelay = (Exception?)obj;
                         break;
                     case DestructionStage_FieldIndex.SequenceName:
                         this.SequenceName = (Exception?)obj;
@@ -566,6 +598,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case DestructionStage_FieldIndex.UnusedMaterialSwap:
                         this.UnusedMaterialSwap = (Exception?)obj;
+                        break;
+                    case DestructionStage_FieldIndex.DSTDDataTypeState:
+                        this.DSTDDataTypeState = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -583,10 +618,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (Explosion != null) return true;
                 if (Debris != null) return true;
                 if (DebrisCount != null) return true;
-                if (Unknown != null) return true;
+                if (ReplacementModelDelay != null) return true;
                 if (SequenceName != null) return true;
                 if (Model != null) return true;
                 if (UnusedMaterialSwap != null) return true;
+                if (DSTDDataTypeState != null) return true;
                 return false;
             }
             #endregion
@@ -637,7 +673,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(DebrisCount, "DebrisCount");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(ReplacementModelDelay, "ReplacementModelDelay");
                 }
                 {
                     sb.AppendItem(SequenceName, "SequenceName");
@@ -645,6 +681,9 @@ namespace Mutagen.Bethesda.Starfield
                 Model?.Print(sb);
                 {
                     sb.AppendItem(UnusedMaterialSwap, "UnusedMaterialSwap");
+                }
+                {
+                    sb.AppendItem(DSTDDataTypeState, "DSTDDataTypeState");
                 }
             }
             #endregion
@@ -662,10 +701,11 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Explosion = this.Explosion.Combine(rhs.Explosion);
                 ret.Debris = this.Debris.Combine(rhs.Debris);
                 ret.DebrisCount = this.DebrisCount.Combine(rhs.DebrisCount);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.ReplacementModelDelay = this.ReplacementModelDelay.Combine(rhs.ReplacementModelDelay);
                 ret.SequenceName = this.SequenceName.Combine(rhs.SequenceName);
                 ret.Model = this.Model.Combine(rhs.Model, (l, r) => l.Combine(r));
                 ret.UnusedMaterialSwap = this.UnusedMaterialSwap.Combine(rhs.UnusedMaterialSwap);
+                ret.DSTDDataTypeState = this.DSTDDataTypeState.Combine(rhs.DSTDDataTypeState);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -697,10 +737,11 @@ namespace Mutagen.Bethesda.Starfield
             public bool Explosion;
             public bool Debris;
             public bool DebrisCount;
-            public bool Unknown;
+            public bool ReplacementModelDelay;
             public bool SequenceName;
             public Model.TranslationMask? Model;
             public bool UnusedMaterialSwap;
+            public bool DSTDDataTypeState;
             #endregion
 
             #region Ctors
@@ -718,9 +759,10 @@ namespace Mutagen.Bethesda.Starfield
                 this.Explosion = defaultOn;
                 this.Debris = defaultOn;
                 this.DebrisCount = defaultOn;
-                this.Unknown = defaultOn;
+                this.ReplacementModelDelay = defaultOn;
                 this.SequenceName = defaultOn;
                 this.UnusedMaterialSwap = defaultOn;
+                this.DSTDDataTypeState = defaultOn;
             }
 
             #endregion
@@ -744,10 +786,11 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Explosion, null));
                 ret.Add((Debris, null));
                 ret.Add((DebrisCount, null));
-                ret.Add((Unknown, null));
+                ret.Add((ReplacementModelDelay, null));
                 ret.Add((SequenceName, null));
                 ret.Add((Model != null ? Model.OnOverall : DefaultOn, Model?.GetCrystal()));
                 ret.Add((UnusedMaterialSwap, null));
+                ret.Add((DSTDDataTypeState, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -761,6 +804,11 @@ namespace Mutagen.Bethesda.Starfield
         #region Mutagen
         public IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => DestructionStageCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
         public void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => DestructionStageSetterCommon.Instance.RemapLinks(this, mapping);
+        [Flags]
+        public enum DSTDDataType
+        {
+            Break0 = 1
+        }
         public IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(AssetLinkQuery queryCategories, IAssetLinkCache? linkCache = null, Type? assetType = null, bool iterateNestedRecords = true) => DestructionStageCommon.Instance.EnumerateAssetLinks(this, queryCategories, linkCache, assetType, iterateNestedRecords);
         public IEnumerable<IAssetLink> EnumerateListedAssetLinks(bool iterateNestedRecords = true) => DestructionStageSetterCommon.Instance.EnumerateListedAssetLinks(this, iterateNestedRecords);
         public void RemapAssetLinks(IReadOnlyDictionary<IAssetLinkGetter, string> mapping, AssetLinkQuery queryCategories, IAssetLinkCache? linkCache) => DestructionStageSetterCommon.Instance.RemapAssetLinks(this, mapping, linkCache, queryCategories);
@@ -840,13 +888,14 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<IExplosionGetter> Explosion { get; set; }
         new IFormLink<IDebrisGetter> Debris { get; set; }
         new Int32 DebrisCount { get; set; }
-        new Single Unknown { get; set; }
+        new Single ReplacementModelDelay { get; set; }
         new String? SequenceName { get; set; }
         /// <summary>
         /// Aspects: IModeled
         /// </summary>
         new Model? Model { get; set; }
         new Int32? UnusedMaterialSwap { get; set; }
+        new DestructionStage.DSTDDataType DSTDDataTypeState { get; set; }
     }
 
     public partial interface IDestructionStageGetter :
@@ -872,7 +921,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IExplosionGetter> Explosion { get; }
         IFormLinkGetter<IDebrisGetter> Debris { get; }
         Int32 DebrisCount { get; }
-        Single Unknown { get; }
+        Single ReplacementModelDelay { get; }
         String? SequenceName { get; }
         #region Model
         /// <summary>
@@ -881,6 +930,7 @@ namespace Mutagen.Bethesda.Starfield
         IModelGetter? Model { get; }
         #endregion
         Int32? UnusedMaterialSwap { get; }
+        DestructionStage.DSTDDataType DSTDDataTypeState { get; }
 
     }
 
@@ -1058,10 +1108,11 @@ namespace Mutagen.Bethesda.Starfield
         Explosion = 5,
         Debris = 6,
         DebrisCount = 7,
-        Unknown = 8,
+        ReplacementModelDelay = 8,
         SequenceName = 9,
         Model = 10,
         UnusedMaterialSwap = 11,
+        DSTDDataTypeState = 12,
     }
     #endregion
 
@@ -1072,9 +1123,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 12;
+        public const ushort AdditionalFieldCount = 13;
 
-        public const ushort FieldCount = 12;
+        public const ushort FieldCount = 13;
 
         public static readonly Type MaskType = typeof(DestructionStage.Mask<>);
 
@@ -1178,10 +1229,11 @@ namespace Mutagen.Bethesda.Starfield
             item.Explosion.Clear();
             item.Debris.Clear();
             item.DebrisCount = default(Int32);
-            item.Unknown = default(Single);
+            item.ReplacementModelDelay = default(Single);
             item.SequenceName = default;
             item.Model = null;
             item.UnusedMaterialSwap = default;
+            item.DSTDDataTypeState = default(DestructionStage.DSTDDataType);
         }
         
         #region Mutagen
@@ -1225,6 +1277,7 @@ namespace Mutagen.Bethesda.Starfield
                 record: item,
                 frame: frame,
                 translationParams: translationParams,
+                fillStructs: DestructionStageBinaryCreateTranslation.FillBinaryStructs,
                 fillTyped: DestructionStageBinaryCreateTranslation.FillBinaryRecordTypes);
         }
         
@@ -1263,7 +1316,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Explosion = item.Explosion.Equals(rhs.Explosion);
             ret.Debris = item.Debris.Equals(rhs.Debris);
             ret.DebrisCount = item.DebrisCount == rhs.DebrisCount;
-            ret.Unknown = item.Unknown.EqualsWithin(rhs.Unknown);
+            ret.ReplacementModelDelay = item.ReplacementModelDelay.EqualsWithin(rhs.ReplacementModelDelay);
             ret.SequenceName = string.Equals(item.SequenceName, rhs.SequenceName);
             ret.Model = EqualsMaskHelper.EqualsHelper(
                 item.Model,
@@ -1271,6 +1324,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.UnusedMaterialSwap = item.UnusedMaterialSwap == rhs.UnusedMaterialSwap;
+            ret.DSTDDataTypeState = item.DSTDDataTypeState == rhs.DSTDDataTypeState;
         }
         
         public string Print(
@@ -1347,9 +1401,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.DebrisCount, "DebrisCount");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.ReplacementModelDelay ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.ReplacementModelDelay, "ReplacementModelDelay");
             }
             if ((printMask?.SequenceName ?? true)
                 && item.SequenceName is {} SequenceNameItem)
@@ -1365,6 +1419,10 @@ namespace Mutagen.Bethesda.Starfield
                 && item.UnusedMaterialSwap is {} UnusedMaterialSwapItem)
             {
                 sb.AppendItem(UnusedMaterialSwapItem, "UnusedMaterialSwap");
+            }
+            if (printMask?.DSTDDataTypeState ?? true)
+            {
+                sb.AppendItem(item.DSTDDataTypeState, "DSTDDataTypeState");
             }
         }
         
@@ -1407,9 +1465,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.DebrisCount != rhs.DebrisCount) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)DestructionStage_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)DestructionStage_FieldIndex.ReplacementModelDelay) ?? true))
             {
-                if (!lhs.Unknown.EqualsWithin(rhs.Unknown)) return false;
+                if (!lhs.ReplacementModelDelay.EqualsWithin(rhs.ReplacementModelDelay)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)DestructionStage_FieldIndex.SequenceName) ?? true))
             {
@@ -1427,6 +1485,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.UnusedMaterialSwap != rhs.UnusedMaterialSwap) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)DestructionStage_FieldIndex.DSTDDataTypeState) ?? true))
+            {
+                if (lhs.DSTDDataTypeState != rhs.DSTDDataTypeState) return false;
+            }
             return true;
         }
         
@@ -1441,7 +1503,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Explosion);
             hash.Add(item.Debris);
             hash.Add(item.DebrisCount);
-            hash.Add(item.Unknown);
+            hash.Add(item.ReplacementModelDelay);
             if (item.SequenceName is {} SequenceNameitem)
             {
                 hash.Add(SequenceNameitem);
@@ -1454,6 +1516,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(UnusedMaterialSwapitem);
             }
+            hash.Add(item.DSTDDataTypeState);
             return hash.ToHashCode();
         }
         
@@ -1539,9 +1602,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.DebrisCount = rhs.DebrisCount;
             }
-            if ((copyMask?.GetShouldTranslate((int)DestructionStage_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)DestructionStage_FieldIndex.ReplacementModelDelay) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.ReplacementModelDelay = rhs.ReplacementModelDelay;
             }
             if ((copyMask?.GetShouldTranslate((int)DestructionStage_FieldIndex.SequenceName) ?? true))
             {
@@ -1576,6 +1639,10 @@ namespace Mutagen.Bethesda.Starfield
             if ((copyMask?.GetShouldTranslate((int)DestructionStage_FieldIndex.UnusedMaterialSwap) ?? true))
             {
                 item.UnusedMaterialSwap = rhs.UnusedMaterialSwap;
+            }
+            if ((copyMask?.GetShouldTranslate((int)DestructionStage_FieldIndex.DSTDDataTypeState) ?? true))
+            {
+                item.DSTDDataTypeState = rhs.DSTDDataTypeState;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1681,6 +1748,12 @@ namespace Mutagen.Bethesda.Starfield
     {
         public static readonly DestructionStageBinaryWriteTranslation Instance = new();
 
+        public static void WriteEmbedded(
+            IDestructionStageGetter item,
+            MutagenWriter writer)
+        {
+        }
+
         public static void WriteRecordTypes(
             IDestructionStageGetter item,
             MutagenWriter writer,
@@ -1703,9 +1776,12 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     item: item.Debris);
                 writer.Write(item.DebrisCount);
-                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                    writer: writer,
-                    item: item.Unknown);
+                if (!item.DSTDDataTypeState.HasFlag(DestructionStage.DSTDDataType.Break0))
+                {
+                    FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer: writer,
+                        item: item.ReplacementModelDelay);
+                }
             }
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -1730,6 +1806,9 @@ namespace Mutagen.Bethesda.Starfield
             IDestructionStageGetter item,
             TypedWriteParams translationParams)
         {
+            WriteEmbedded(
+                item: item,
+                writer: writer);
             WriteRecordTypes(
                 item: item,
                 writer: writer,
@@ -1754,6 +1833,12 @@ namespace Mutagen.Bethesda.Starfield
     {
         public static readonly DestructionStageBinaryCreateTranslation Instance = new DestructionStageBinaryCreateTranslation();
 
+        public static void FillBinaryStructs(
+            IDestructionStage item,
+            MutagenFrame frame)
+        {
+        }
+
         public static ParseResult FillBinaryRecordTypes(
             IDestructionStage item,
             MutagenFrame frame,
@@ -1768,7 +1853,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.DSTD:
                 {
-                    if (lastParsed.ShortCircuit((int)DestructionStage_FieldIndex.Unknown, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)DestructionStage_FieldIndex.ReplacementModelDelay, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
@@ -1789,9 +1874,14 @@ namespace Mutagen.Bethesda.Starfield
                     item.Debris.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     if (dataFrame.Remaining < 4) return null;
                     item.DebrisCount = dataFrame.ReadInt32();
+                    if (dataFrame.Complete)
+                    {
+                        item.DSTDDataTypeState |= DestructionStage.DSTDDataType.Break0;
+                        return (int)DestructionStage_FieldIndex.DebrisCount;
+                    }
                     if (dataFrame.Remaining < 4) return null;
-                    item.Unknown = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    return (int)DestructionStage_FieldIndex.Unknown;
+                    item.ReplacementModelDelay = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    return (int)DestructionStage_FieldIndex.ReplacementModelDelay;
                 }
                 case RecordTypeInts.DSTA:
                 {
@@ -1897,6 +1987,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         private RangeInt32? _DSTDLocation;
+        public DestructionStage.DSTDDataType DSTDDataTypeState { get; private set; }
         #region HealthPercent
         private int _HealthPercentLocation => _DSTDLocation!.Value.Min;
         private bool _HealthPercent_IsSet => _DSTDLocation.HasValue && _DSTDLocation!.Value.Max - _HealthPercentLocation + 1 >= 1;
@@ -1937,10 +2028,10 @@ namespace Mutagen.Bethesda.Starfield
         private bool _DebrisCount_IsSet => _DSTDLocation.HasValue && _DSTDLocation!.Value.Max - _DebrisCountLocation + 1 >= 4;
         public Int32 DebrisCount => _DebrisCount_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_DebrisCountLocation, 4)) : default(Int32);
         #endregion
-        #region Unknown
-        private int _UnknownLocation => _DSTDLocation!.Value.Min + 0x14;
-        private bool _Unknown_IsSet => _DSTDLocation.HasValue && _DSTDLocation!.Value.Max - _UnknownLocation + 1 >= 4;
-        public Single Unknown => _Unknown_IsSet ? _recordData.Slice(_UnknownLocation, 4).Float() : default(Single);
+        #region ReplacementModelDelay
+        private int _ReplacementModelDelayLocation => _DSTDLocation!.Value.Min + 0x14;
+        private bool _ReplacementModelDelay_IsSet => _DSTDLocation.HasValue && !DSTDDataTypeState.HasFlag(DestructionStage.DSTDDataType.Break0) && _DSTDLocation!.Value.Max - _ReplacementModelDelayLocation + 1 >= 4;
+        public Single ReplacementModelDelay => _ReplacementModelDelay_IsSet ? _recordData.Slice(_ReplacementModelDelayLocation, 4).Float() : default(Single);
         #endregion
         #region SequenceName
         private int? _SequenceNameLocation;
@@ -2016,9 +2107,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.DSTD:
                 {
-                    if (lastParsed.ShortCircuit((int)DestructionStage_FieldIndex.Unknown, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)DestructionStage_FieldIndex.ReplacementModelDelay, translationParams)) return ParseResult.Stop;
                     _DSTDLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)DestructionStage_FieldIndex.Unknown;
+                    var subLen = _package.MetaData.Constants.SubrecordHeader(_recordData.Slice((stream.Position - offset))).ContentLength;
+                    if (subLen <= 0x14)
+                    {
+                        this.DSTDDataTypeState |= DestructionStage.DSTDDataType.Break0;
+                    }
+                    return (int)DestructionStage_FieldIndex.ReplacementModelDelay;
                 }
                 case RecordTypeInts.DSTA:
                 {
