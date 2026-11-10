@@ -52,13 +52,10 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region Stage
-        public UInt16 Stage { get; set; } = default(UInt16);
-        #endregion
-        #region Unknown
-        public Int16 Unknown { get; set; } = default(Int16);
+        public UInt32 Stage { get; set; } = default(UInt32);
         #endregion
         #region StageIndex
-        public Int32 StageIndex { get; set; } = default(Int32);
+        public UInt32 StageIndex { get; set; } = default(UInt32);
         #endregion
         #region Unknown2
         public SByte Unknown2 { get; set; } = default(SByte);
@@ -109,7 +106,6 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.Stage = initialValue;
-                this.Unknown = initialValue;
                 this.StageIndex = initialValue;
                 this.Unknown2 = initialValue;
                 this.ScriptName = initialValue;
@@ -118,14 +114,12 @@ namespace Mutagen.Bethesda.Starfield
 
             public Mask(
                 TItem Stage,
-                TItem Unknown,
                 TItem StageIndex,
                 TItem Unknown2,
                 TItem ScriptName,
                 TItem FragmentName)
             {
                 this.Stage = Stage;
-                this.Unknown = Unknown;
                 this.StageIndex = StageIndex;
                 this.Unknown2 = Unknown2;
                 this.ScriptName = ScriptName;
@@ -142,7 +136,6 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem Stage;
-            public TItem Unknown;
             public TItem StageIndex;
             public TItem Unknown2;
             public TItem ScriptName;
@@ -160,7 +153,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.Stage, rhs.Stage)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 if (!object.Equals(this.StageIndex, rhs.StageIndex)) return false;
                 if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
                 if (!object.Equals(this.ScriptName, rhs.ScriptName)) return false;
@@ -171,7 +163,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.Stage);
-                hash.Add(this.Unknown);
                 hash.Add(this.StageIndex);
                 hash.Add(this.Unknown2);
                 hash.Add(this.ScriptName);
@@ -185,7 +176,6 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.Stage)) return false;
-                if (!eval(this.Unknown)) return false;
                 if (!eval(this.StageIndex)) return false;
                 if (!eval(this.Unknown2)) return false;
                 if (!eval(this.ScriptName)) return false;
@@ -198,7 +188,6 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.Stage)) return true;
-                if (eval(this.Unknown)) return true;
                 if (eval(this.StageIndex)) return true;
                 if (eval(this.Unknown2)) return true;
                 if (eval(this.ScriptName)) return true;
@@ -218,7 +207,6 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.Stage = eval(this.Stage);
-                obj.Unknown = eval(this.Unknown);
                 obj.StageIndex = eval(this.StageIndex);
                 obj.Unknown2 = eval(this.Unknown2);
                 obj.ScriptName = eval(this.ScriptName);
@@ -244,10 +232,6 @@ namespace Mutagen.Bethesda.Starfield
                     if (printMask?.Stage ?? true)
                     {
                         sb.AppendItem(Stage, "Stage");
-                    }
-                    if (printMask?.Unknown ?? true)
-                    {
-                        sb.AppendItem(Unknown, "Unknown");
                     }
                     if (printMask?.StageIndex ?? true)
                     {
@@ -290,7 +274,6 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? Stage;
-            public Exception? Unknown;
             public Exception? StageIndex;
             public Exception? Unknown2;
             public Exception? ScriptName;
@@ -305,8 +288,6 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case QuestScriptFragment_FieldIndex.Stage:
                         return Stage;
-                    case QuestScriptFragment_FieldIndex.Unknown:
-                        return Unknown;
                     case QuestScriptFragment_FieldIndex.StageIndex:
                         return StageIndex;
                     case QuestScriptFragment_FieldIndex.Unknown2:
@@ -327,9 +308,6 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case QuestScriptFragment_FieldIndex.Stage:
                         this.Stage = ex;
-                        break;
-                    case QuestScriptFragment_FieldIndex.Unknown:
-                        this.Unknown = ex;
                         break;
                     case QuestScriptFragment_FieldIndex.StageIndex:
                         this.StageIndex = ex;
@@ -356,9 +334,6 @@ namespace Mutagen.Bethesda.Starfield
                     case QuestScriptFragment_FieldIndex.Stage:
                         this.Stage = (Exception?)obj;
                         break;
-                    case QuestScriptFragment_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
-                        break;
                     case QuestScriptFragment_FieldIndex.StageIndex:
                         this.StageIndex = (Exception?)obj;
                         break;
@@ -380,7 +355,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Stage != null) return true;
-                if (Unknown != null) return true;
                 if (StageIndex != null) return true;
                 if (Unknown2 != null) return true;
                 if (ScriptName != null) return true;
@@ -414,9 +388,6 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Stage, "Stage");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
-                }
-                {
                     sb.AppendItem(StageIndex, "StageIndex");
                 }
                 {
@@ -437,7 +408,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Stage = this.Stage.Combine(rhs.Stage);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 ret.StageIndex = this.StageIndex.Combine(rhs.StageIndex);
                 ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
                 ret.ScriptName = this.ScriptName.Combine(rhs.ScriptName);
@@ -466,7 +436,6 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool Stage;
-            public bool Unknown;
             public bool StageIndex;
             public bool Unknown2;
             public bool ScriptName;
@@ -481,7 +450,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.Stage = defaultOn;
-                this.Unknown = defaultOn;
                 this.StageIndex = defaultOn;
                 this.Unknown2 = defaultOn;
                 this.ScriptName = defaultOn;
@@ -502,7 +470,6 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((Stage, null));
-                ret.Add((Unknown, null));
                 ret.Add((StageIndex, null));
                 ret.Add((Unknown2, null));
                 ret.Add((ScriptName, null));
@@ -579,9 +546,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IQuestScriptFragment>,
         IQuestScriptFragmentGetter
     {
-        new UInt16 Stage { get; set; }
-        new Int16 Unknown { get; set; }
-        new Int32 StageIndex { get; set; }
+        new UInt32 Stage { get; set; }
+        new UInt32 StageIndex { get; set; }
         new SByte Unknown2 { get; set; }
         new String ScriptName { get; set; }
         new String FragmentName { get; set; }
@@ -599,9 +565,8 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => QuestScriptFragment_Registration.Instance;
-        UInt16 Stage { get; }
-        Int16 Unknown { get; }
-        Int32 StageIndex { get; }
+        UInt32 Stage { get; }
+        UInt32 StageIndex { get; }
         SByte Unknown2 { get; }
         String ScriptName { get; }
         String FragmentName { get; }
@@ -775,11 +740,10 @@ namespace Mutagen.Bethesda.Starfield
     internal enum QuestScriptFragment_FieldIndex
     {
         Stage = 0,
-        Unknown = 1,
-        StageIndex = 2,
-        Unknown2 = 3,
-        ScriptName = 4,
-        FragmentName = 5,
+        StageIndex = 1,
+        Unknown2 = 2,
+        ScriptName = 3,
+        FragmentName = 4,
     }
     #endregion
 
@@ -790,9 +754,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 6;
+        public const ushort AdditionalFieldCount = 5;
 
-        public const ushort FieldCount = 6;
+        public const ushort FieldCount = 5;
 
         public static readonly Type MaskType = typeof(QuestScriptFragment.Mask<>);
 
@@ -858,9 +822,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IQuestScriptFragment item)
         {
             ClearPartial();
-            item.Stage = default(UInt16);
-            item.Unknown = default(Int16);
-            item.StageIndex = default(Int32);
+            item.Stage = default(UInt32);
+            item.StageIndex = default(UInt32);
             item.Unknown2 = default(SByte);
             item.ScriptName = string.Empty;
             item.FragmentName = string.Empty;
@@ -914,7 +877,6 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Stage = item.Stage == rhs.Stage;
-            ret.Unknown = item.Unknown == rhs.Unknown;
             ret.StageIndex = item.StageIndex == rhs.StageIndex;
             ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
             ret.ScriptName = string.Equals(item.ScriptName, rhs.ScriptName);
@@ -967,10 +929,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Stage, "Stage");
             }
-            if (printMask?.Unknown ?? true)
-            {
-                sb.AppendItem(item.Unknown, "Unknown");
-            }
             if (printMask?.StageIndex ?? true)
             {
                 sb.AppendItem(item.StageIndex, "StageIndex");
@@ -1000,10 +958,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Stage != rhs.Stage) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)QuestScriptFragment_FieldIndex.Unknown) ?? true))
-            {
-                if (lhs.Unknown != rhs.Unknown) return false;
-            }
             if ((equalsMask?.GetShouldTranslate((int)QuestScriptFragment_FieldIndex.StageIndex) ?? true))
             {
                 if (lhs.StageIndex != rhs.StageIndex) return false;
@@ -1027,7 +981,6 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Stage);
-            hash.Add(item.Unknown);
             hash.Add(item.StageIndex);
             hash.Add(item.Unknown2);
             hash.Add(item.ScriptName);
@@ -1067,10 +1020,6 @@ namespace Mutagen.Bethesda.Starfield
             if ((copyMask?.GetShouldTranslate((int)QuestScriptFragment_FieldIndex.Stage) ?? true))
             {
                 item.Stage = rhs.Stage;
-            }
-            if ((copyMask?.GetShouldTranslate((int)QuestScriptFragment_FieldIndex.Unknown) ?? true))
-            {
-                item.Unknown = rhs.Unknown;
             }
             if ((copyMask?.GetShouldTranslate((int)QuestScriptFragment_FieldIndex.StageIndex) ?? true))
             {
@@ -1197,7 +1146,6 @@ namespace Mutagen.Bethesda.Starfield
             MutagenWriter writer)
         {
             writer.Write(item.Stage);
-            writer.Write(item.Unknown);
             writer.Write(item.StageIndex);
             writer.Write(item.Unknown2);
             StringBinaryTranslation.Instance.Write(
@@ -1241,9 +1189,8 @@ namespace Mutagen.Bethesda.Starfield
             IQuestScriptFragment item,
             MutagenFrame frame)
         {
-            item.Stage = frame.ReadUInt16();
-            item.Unknown = frame.ReadInt16();
-            item.StageIndex = frame.ReadInt32();
+            item.Stage = frame.ReadUInt32();
+            item.StageIndex = frame.ReadUInt32();
             item.Unknown2 = frame.ReadInt8();
             item.ScriptName = StringBinaryTranslation.Instance.Parse(
                 reader: frame,
@@ -1318,9 +1265,8 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public UInt16 Stage => BinaryPrimitives.ReadUInt16LittleEndian(_structData.Slice(0x0, 0x2));
-        public Int16 Unknown => BinaryPrimitives.ReadInt16LittleEndian(_structData.Slice(0x2, 0x2));
-        public Int32 StageIndex => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x4, 0x4));
+        public UInt32 Stage => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x0, 0x4));
+        public UInt32 StageIndex => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x4, 0x4));
         public SByte Unknown2 => (sbyte)_structData.Slice(0x8, 0x1)[0];
         #region ScriptName
         public String ScriptName => BinaryStringUtility.ParsePrependedString(_structData.Slice(0x9), lengthLength: 2, encoding: _package.MetaData.Encodings.NonTranslated);

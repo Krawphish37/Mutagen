@@ -64,9 +64,9 @@
   </Object>
   <Object name="QuestScriptFragment" objType="Subrecord">
     <Fields>
-      <UInt16 name="Stage" />
-      <Int16 name="Unknown" />
-      <Int32 name="StageIndex" />
+      <!-- xEdit: Quest Stage (u32), Quest Stage Index (u32), Unknown (1 byte, always 1 in Starfield.esm) -->
+      <UInt32 name="Stage" />
+      <UInt32 name="StageIndex" />
       <Int8 name="Unknown2" />
       <String name="ScriptName" binaryType="PrependLengthUShort" />
       <String name="FragmentName" binaryType="PrependLengthUShort" />

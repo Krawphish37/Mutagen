@@ -122,8 +122,8 @@
   </Object>
   <Object name="ScriptFragmentIndexed" objType="Subrecord">
     <Fields>
-      <UInt16 name="FragmentIndex" />
-      <Int16 name="Unknown" />
+      <!-- xEdit: Fragment Index (u32), then Unknown (1 byte, always 1 in Starfield.esm) -->
+      <UInt32 name="FragmentIndex" />
       <Int8 name="Unknown2" />
       <String name="ScriptName" binaryType="PrependLengthUShort" />
       <String name="FragmentName" binaryType="PrependLengthUShort" />
