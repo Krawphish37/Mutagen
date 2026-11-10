@@ -20,12 +20,12 @@
       <RefList name="LnamEntries" refName="LegendaryItemLnamEntry" recordType="LNAM" binary="Custom" />
       <RefList name="IncludeFilters" refName="LegendaryFilter" recordType="CNAM" />
       <RefList name="ExcludeFilters" refName="LegendaryFilter" recordType="DNAM" />
-      <ByteArray name="FNAM" recordType="FNAM" unknown="true" />
-      <ByteArray name="KNAM" recordType="KNAM" unknown="true" />
+      <RefList name="RerollCosts" refName="LegendaryItemRankCost" recordType="FNAM" />
+      <RefList name="PickCosts" refName="LegendaryItemRankCost" recordType="KNAM" />
       <RefList name="GNAM" refName="LegendaryMod" recordType="GNAM" unknown="true" />
       <RefList name="HNAM" refName="LegendaryItemHNAMEntry" recordType="HNAM" unknown="true" />
       <RefList name="INAM" refName="LegendaryItemHNAMEntry" recordType="INAM" unknown="true" />
-      <ByteArray name="JNAM" recordType="JNAM" unknown="true" />
+      <RefList name="QualityUpgradeCosts" refName="LegendaryItemQualityCost" recordType="JNAM" />
     </Fields>
     <LinkInterface>IItem</LinkInterface>
     <LinkInterface>IBaseObject</LinkInterface>
@@ -48,6 +48,24 @@
     <Fields>
       <Enum name="Slot" enumName="LegendaryItem.StarSlot" />
       <FormLink name="ObjectMod" refName="AObjectModification" />
+    </Fields>
+  </Object>
+  <Object name="LegendaryItemRankCost" objType="Subrecord">
+    <Fields>
+      <Enum name="Rank" enumName="LegendaryItem.StarSlot" />
+      <UInt32 name="Count" />
+      <FormLink name="Item">
+        <Interface>IItem</Interface>
+      </FormLink>
+    </Fields>
+  </Object>
+  <Object name="LegendaryItemQualityCost" objType="Subrecord">
+    <Fields>
+      <UInt32 name="Tier" />
+      <UInt32 name="Count" />
+      <FormLink name="Item">
+        <Interface>IItem</Interface>
+      </FormLink>
     </Fields>
   </Object>
   <Object name="LegendaryItemHNAMEntry" objType="Subrecord">
