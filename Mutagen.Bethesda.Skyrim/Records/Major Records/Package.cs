@@ -367,8 +367,9 @@ partial class PackageBinaryWriteTranslation
             writer.Write(item.DataInputVersion);
         }
 
-        HashSet<sbyte> addedKeys = new HashSet<sbyte>();
-        foreach (var kv in data.OrderBy(k => k.Key))
+        // In the order the data inputs are held: a record read from a file keeps the file's order, which need not be by index
+        var addedKeys = new List<sbyte>();
+        foreach (var kv in data)
         {
             var val = kv.Value;
             var typeStr = val switch
@@ -450,7 +451,7 @@ partial class PackageBinaryWriteTranslation
         writer.Write(addedKeys.Count);
         writer.Position = jumpForwardPos;
 
-        foreach (var k in addedKeys.OrderBy(k => k))
+        foreach (var k in addedKeys)
         {
             using (HeaderExport.Subrecord(writer, RecordTypes.UNAM))
             {
