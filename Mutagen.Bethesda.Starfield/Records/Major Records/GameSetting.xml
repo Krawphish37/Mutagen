@@ -2,7 +2,7 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="GameSetting" recordType="GMST" baseClass="StarfieldMajorRecord" objType="Record" abstract="true">
     <Fields>
-      <UInt64 name="XALG" recordType="XALG" unknown="true" />
+      <Enum name="XalgFlags" enumName="XalgFlag" recordType="XALG" byteLength="8" />
     </Fields>
   </Object>
   <Object name="GameSettingInt" recordType="GMST" baseClass="GameSetting" objType="Record">

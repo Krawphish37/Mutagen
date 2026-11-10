@@ -261,7 +261,7 @@ public class ModSubrecordGapTests
                      f => Race.CreateFromBinary(f),
                      (s, p) => RaceBinaryOverlay.RaceFactory(s, p)))
         {
-            race.XALG.ShouldBe(0x400ul);
+            race.XalgFlags.ShouldBe(XalgFlag.ReferencesAreMoveable);
             race.MorphRace.FormKey.ShouldBe(Fk(0x801));
         }
 

@@ -3,7 +3,7 @@
   <Object name="AnimatedObject" recordType="ANIO" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
-      <UInt64 name="XALG" recordType="XALG" unknown="true" />
+      <Enum name="XalgFlags" enumName="XalgFlag" recordType="XALG" byteLength="8" />
       <RefList name="Components" refName="AComponent" />
       <RefDirect name="Model" refName="Model" />
     </Fields>

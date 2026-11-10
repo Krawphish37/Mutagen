@@ -5,7 +5,7 @@
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
       <RefDirect name="ObjectBounds" refName="ObjectBounds" nullable="False" />
       <Float name="DirtinessScale" recordType="ODTY" nullable="False" />
-      <UInt64 name="XALG" recordType="XALG" unknown="true" />
+      <Enum name="XalgFlags" enumName="XalgFlag" recordType="XALG" byteLength="8" />
       <String name="Description" recordType="NNAM" />
       <RefDirect name="ECHL" refName="SoundReference" recordType="ECHL" unknown="true" />
       <RefList name="Markers" refName="EchoMarker" itemMarkerType="ECHO" itemEndMarkerType="ECHE" />

@@ -6,7 +6,7 @@
       <RefDirect name="ObjectBounds" refName="ObjectBounds" nullable="False" />
       <Float name="DirtinessScale" recordType="ODTY" nullable="False" />
       <RefDirect name="ObjectPaletteDefaults" refName="ObjectPaletteDefaults" />
-      <UInt64 name="XALG" recordType="XALG" unknown="true" />
+      <Enum name="XalgFlags" enumName="XalgFlag" recordType="XALG" byteLength="8" />
       <RefDirect name="Transforms" refName="Transforms" />
       <RefList name="Components" refName="AComponent" />
       <List name="Keywords" counterRecType="KSIZ" recordType="KWDA">

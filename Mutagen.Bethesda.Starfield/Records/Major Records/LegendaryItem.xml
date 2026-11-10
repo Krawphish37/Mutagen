@@ -9,7 +9,7 @@
       <String name="Name" recordType="FULL" translated="Normal" />
       <RefDirect name="ObjectPaletteDefaults" refName="ObjectPaletteDefaults" />
       <RefDirect name="Transforms" refName="Transforms" />
-      <UInt64 name="XALG" recordType="XALG" unknown="true" />
+      <Enum name="XalgFlags" enumName="XalgFlag" recordType="XALG" byteLength="8" />
       <RefList name="Components" refName="AComponent" />
       <RefDirect name="Model" refName="Model" />
       <Marker name="DATA" recordType="DATA" />

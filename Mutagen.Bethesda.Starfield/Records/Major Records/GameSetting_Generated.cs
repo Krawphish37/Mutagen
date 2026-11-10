@@ -57,10 +57,10 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region XALG
-        public UInt64? XALG { get; set; }
+        #region XalgFlags
+        public XalgFlag? XalgFlags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt64? IGameSettingGetter.XALG => this.XALG;
+        XalgFlag? IGameSettingGetter.XalgFlags => this.XalgFlags;
         #endregion
 
         #region To String
@@ -87,7 +87,7 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.XALG = initialValue;
+                this.XalgFlags = initialValue;
             }
 
             public Mask(
@@ -98,7 +98,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
-                TItem XALG)
+                TItem XalgFlags)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -108,7 +108,7 @@ namespace Mutagen.Bethesda.Starfield
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
             {
-                this.XALG = XALG;
+                this.XalgFlags = XalgFlags;
             }
 
             #pragma warning disable CS8618
@@ -120,7 +120,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem XALG;
+            public TItem XalgFlags;
             #endregion
 
             #region Equals
@@ -134,13 +134,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.XALG, rhs.XALG)) return false;
+                if (!object.Equals(this.XalgFlags, rhs.XalgFlags)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.XALG);
+                hash.Add(this.XalgFlags);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -151,7 +151,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.XALG)) return false;
+                if (!eval(this.XalgFlags)) return false;
                 return true;
             }
             #endregion
@@ -160,7 +160,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.XALG)) return true;
+                if (eval(this.XalgFlags)) return true;
                 return false;
             }
             #endregion
@@ -176,7 +176,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.XALG = eval(this.XALG);
+                obj.XalgFlags = eval(this.XalgFlags);
             }
             #endregion
 
@@ -195,9 +195,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(GameSetting.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.XALG ?? true)
+                    if (printMask?.XalgFlags ?? true)
                     {
-                        sb.AppendItem(XALG, "XALG");
+                        sb.AppendItem(XalgFlags, "XalgFlags");
                     }
                 }
             }
@@ -210,7 +210,7 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? XALG;
+            public Exception? XalgFlags;
             #endregion
 
             #region IErrorMask
@@ -219,8 +219,8 @@ namespace Mutagen.Bethesda.Starfield
                 GameSetting_FieldIndex enu = (GameSetting_FieldIndex)index;
                 switch (enu)
                 {
-                    case GameSetting_FieldIndex.XALG:
-                        return XALG;
+                    case GameSetting_FieldIndex.XalgFlags:
+                        return XalgFlags;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -231,8 +231,8 @@ namespace Mutagen.Bethesda.Starfield
                 GameSetting_FieldIndex enu = (GameSetting_FieldIndex)index;
                 switch (enu)
                 {
-                    case GameSetting_FieldIndex.XALG:
-                        this.XALG = ex;
+                    case GameSetting_FieldIndex.XalgFlags:
+                        this.XalgFlags = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -245,8 +245,8 @@ namespace Mutagen.Bethesda.Starfield
                 GameSetting_FieldIndex enu = (GameSetting_FieldIndex)index;
                 switch (enu)
                 {
-                    case GameSetting_FieldIndex.XALG:
-                        this.XALG = (Exception?)obj;
+                    case GameSetting_FieldIndex.XalgFlags:
+                        this.XalgFlags = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -257,7 +257,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (XALG != null) return true;
+                if (XalgFlags != null) return true;
                 return false;
             }
             #endregion
@@ -285,7 +285,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(XALG, "XALG");
+                    sb.AppendItem(XalgFlags, "XalgFlags");
                 }
             }
             #endregion
@@ -295,7 +295,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.XALG = this.XALG.Combine(rhs.XALG);
+                ret.XalgFlags = this.XalgFlags.Combine(rhs.XalgFlags);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -318,7 +318,7 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool XALG;
+            public bool XalgFlags;
             #endregion
 
             #region Ctors
@@ -327,7 +327,7 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.XALG = defaultOn;
+                this.XalgFlags = defaultOn;
             }
 
             #endregion
@@ -335,7 +335,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((XALG, null));
+                ret.Add((XalgFlags, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -455,7 +455,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IGameSettingInternal>,
         IStarfieldMajorRecordInternal
     {
-        new UInt64? XALG { get; set; }
+        new XalgFlag? XalgFlags { get; set; }
     }
 
     public partial interface IGameSettingInternal :
@@ -474,7 +474,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IGameSettingGetter>
     {
         static new ILoquiRegistration StaticRegistration => GameSetting_Registration.Instance;
-        UInt64? XALG { get; }
+        XalgFlag? XalgFlags { get; }
 
     }
 
@@ -651,7 +651,7 @@ namespace Mutagen.Bethesda.Starfield
         FormVersion = 4,
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
-        XALG = 7,
+        XalgFlags = 7,
     }
     #endregion
 
@@ -742,7 +742,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual void Clear(IGameSettingInternal item)
         {
             ClearPartial();
-            item.XALG = default;
+            item.XalgFlags = default;
             base.Clear(item);
         }
         
@@ -827,7 +827,7 @@ namespace Mutagen.Bethesda.Starfield
             GameSetting.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.XALG = item.XALG == rhs.XALG;
+            ret.XalgFlags = item.XalgFlags == rhs.XalgFlags;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -877,10 +877,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.XALG ?? true)
-                && item.XALG is {} XALGItem)
+            if ((printMask?.XalgFlags ?? true)
+                && item.XalgFlags is {} XalgFlagsItem)
             {
-                sb.AppendItem(XALGItem, "XALG");
+                sb.AppendItem(XalgFlagsItem, "XalgFlags");
             }
         }
         
@@ -932,9 +932,9 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IStarfieldMajorRecordGetter)lhs, (IStarfieldMajorRecordGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)GameSetting_FieldIndex.XALG) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)GameSetting_FieldIndex.XalgFlags) ?? true))
             {
-                if (lhs.XALG != rhs.XALG) return false;
+                if (lhs.XalgFlags != rhs.XalgFlags) return false;
             }
             return true;
         }
@@ -964,9 +964,9 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IGameSettingGetter item)
         {
             var hash = new HashCode();
-            if (item.XALG is {} XALGitem)
+            if (item.XalgFlags is {} XalgFlagsitem)
             {
-                hash.Add(XALGitem);
+                hash.Add(XalgFlagsitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1091,9 +1091,9 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)GameSetting_FieldIndex.XALG) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)GameSetting_FieldIndex.XalgFlags) ?? true))
             {
-                item.XALG = rhs.XALG;
+                item.XalgFlags = rhs.XalgFlags;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1264,9 +1264,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            UInt64BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.XALG,
+            EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.XalgFlags,
+                length: 8,
                 header: translationParams.ConvertToCustom(RecordTypes.XALG));
         }
 
@@ -1333,8 +1334,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XALG:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.XALG = frame.ReadUInt64();
-                    return (int)GameSetting_FieldIndex.XALG;
+                    item.XalgFlags = EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)GameSetting_FieldIndex.XalgFlags;
                 }
                 default:
                     return StarfieldMajorRecordBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1392,9 +1395,9 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region XALG
-        private int? _XALGLocation;
-        public UInt64? XALG => _XALGLocation.HasValue ? BinaryPrimitives.ReadUInt64LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _XALGLocation.Value, _package.MetaData.Constants)) : default(UInt64?);
+        #region XalgFlags
+        private int? _XalgFlagsLocation;
+        public XalgFlag? XalgFlags => EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_XalgFlagsLocation, _recordData, _package, 8);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1427,8 +1430,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.XALG:
                 {
-                    _XALGLocation = (stream.Position - offset);
-                    return (int)GameSetting_FieldIndex.XALG;
+                    _XalgFlagsLocation = (stream.Position - offset);
+                    return (int)GameSetting_FieldIndex.XalgFlags;
                 }
                 default:
                     return base.FillRecordType(

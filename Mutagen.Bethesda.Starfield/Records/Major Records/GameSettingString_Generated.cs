@@ -96,7 +96,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
-                TItem XALG,
+                TItem XalgFlags,
                 TItem Data)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
@@ -106,7 +106,7 @@ namespace Mutagen.Bethesda.Starfield
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags,
-                XALG: XALG)
+                XalgFlags: XalgFlags)
             {
                 this.Data = Data;
             }
@@ -675,7 +675,7 @@ namespace Mutagen.Bethesda.Starfield
         FormVersion = 4,
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
-        XALG = 7,
+        XalgFlags = 7,
         Data = 8,
     }
     #endregion
@@ -943,7 +943,7 @@ namespace Mutagen.Bethesda.Starfield
                     return (GameSettingString_FieldIndex)((int)index);
                 case GameSetting_FieldIndex.StarfieldMajorRecordFlags:
                     return (GameSettingString_FieldIndex)((int)index);
-                case GameSetting_FieldIndex.XALG:
+                case GameSetting_FieldIndex.XalgFlags:
                     return (GameSettingString_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
