@@ -617,15 +617,15 @@ namespace Mutagen.Bethesda.Starfield
         #region IsLinkedRefTransient
         public Boolean IsLinkedRefTransient { get; set; } = default(Boolean);
         #endregion
-        #region XLIB
-        private readonly IFormLinkNullable<ILeveledItemGetter> _XLIB = new FormLinkNullable<ILeveledItemGetter>();
-        public IFormLinkNullable<ILeveledItemGetter> XLIB
+        #region LeveledItemBaseObject
+        private readonly IFormLinkNullable<ILeveledItemGetter> _LeveledItemBaseObject = new FormLinkNullable<ILeveledItemGetter>();
+        public IFormLinkNullable<ILeveledItemGetter> LeveledItemBaseObject
         {
-            get => _XLIB;
-            set => _XLIB.SetTo(value);
+            get => _LeveledItemBaseObject;
+            set => _LeveledItemBaseObject.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkNullableGetter<ILeveledItemGetter> IPlacedObjectGetter.XLIB => this.XLIB;
+        IFormLinkNullableGetter<ILeveledItemGetter> IPlacedObjectGetter.LeveledItemBaseObject => this.LeveledItemBaseObject;
         #endregion
         #region SnapLinks
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -918,7 +918,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ReferenceGroup = initialValue;
                 this.LinkedReferences = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LinkedReferences.Mask<TItem>?>>?>(initialValue, []);
                 this.IsLinkedRefTransient = initialValue;
-                this.XLIB = initialValue;
+                this.LeveledItemBaseObject = initialValue;
                 this.SnapLinks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SnapLink.Mask<TItem>?>>?>(initialValue, []);
                 this.EncounterZone = initialValue;
                 this.GeometryDirtinessScale = initialValue;
@@ -1013,7 +1013,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ReferenceGroup,
                 TItem LinkedReferences,
                 TItem IsLinkedRefTransient,
-                TItem XLIB,
+                TItem LeveledItemBaseObject,
                 TItem SnapLinks,
                 TItem EncounterZone,
                 TItem GeometryDirtinessScale,
@@ -1107,7 +1107,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ReferenceGroup = ReferenceGroup;
                 this.LinkedReferences = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LinkedReferences.Mask<TItem>?>>?>(LinkedReferences, []);
                 this.IsLinkedRefTransient = IsLinkedRefTransient;
-                this.XLIB = XLIB;
+                this.LeveledItemBaseObject = LeveledItemBaseObject;
                 this.SnapLinks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SnapLink.Mask<TItem>?>>?>(SnapLinks, []);
                 this.EncounterZone = EncounterZone;
                 this.GeometryDirtinessScale = GeometryDirtinessScale;
@@ -1203,7 +1203,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem ReferenceGroup;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LinkedReferences.Mask<TItem>?>>?>? LinkedReferences;
             public TItem IsLinkedRefTransient;
-            public TItem XLIB;
+            public TItem LeveledItemBaseObject;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SnapLink.Mask<TItem>?>>?>? SnapLinks;
             public TItem EncounterZone;
             public TItem GeometryDirtinessScale;
@@ -1301,7 +1301,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ReferenceGroup, rhs.ReferenceGroup)) return false;
                 if (!object.Equals(this.LinkedReferences, rhs.LinkedReferences)) return false;
                 if (!object.Equals(this.IsLinkedRefTransient, rhs.IsLinkedRefTransient)) return false;
-                if (!object.Equals(this.XLIB, rhs.XLIB)) return false;
+                if (!object.Equals(this.LeveledItemBaseObject, rhs.LeveledItemBaseObject)) return false;
                 if (!object.Equals(this.SnapLinks, rhs.SnapLinks)) return false;
                 if (!object.Equals(this.EncounterZone, rhs.EncounterZone)) return false;
                 if (!object.Equals(this.GeometryDirtinessScale, rhs.GeometryDirtinessScale)) return false;
@@ -1391,7 +1391,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ReferenceGroup);
                 hash.Add(this.LinkedReferences);
                 hash.Add(this.IsLinkedRefTransient);
-                hash.Add(this.XLIB);
+                hash.Add(this.LeveledItemBaseObject);
                 hash.Add(this.SnapLinks);
                 hash.Add(this.EncounterZone);
                 hash.Add(this.GeometryDirtinessScale);
@@ -1669,7 +1669,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.IsLinkedRefTransient)) return false;
-                if (!eval(this.XLIB)) return false;
+                if (!eval(this.LeveledItemBaseObject)) return false;
                 if (this.SnapLinks != null)
                 {
                     if (!eval(this.SnapLinks.Overall)) return false;
@@ -2010,7 +2010,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.IsLinkedRefTransient)) return true;
-                if (eval(this.XLIB)) return true;
+                if (eval(this.LeveledItemBaseObject)) return true;
                 if (this.SnapLinks != null)
                 {
                     if (eval(this.SnapLinks.Overall)) return true;
@@ -2312,7 +2312,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.IsLinkedRefTransient = eval(this.IsLinkedRefTransient);
-                obj.XLIB = eval(this.XLIB);
+                obj.LeveledItemBaseObject = eval(this.LeveledItemBaseObject);
                 if (SnapLinks != null)
                 {
                     obj.SnapLinks = new MaskItem<R, IEnumerable<MaskItemIndexed<R, SnapLink.Mask<R>?>>?>(eval(this.SnapLinks.Overall), []);
@@ -2787,9 +2787,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(IsLinkedRefTransient, "IsLinkedRefTransient");
                     }
-                    if (printMask?.XLIB ?? true)
+                    if (printMask?.LeveledItemBaseObject ?? true)
                     {
-                        sb.AppendItem(XLIB, "XLIB");
+                        sb.AppendItem(LeveledItemBaseObject, "LeveledItemBaseObject");
                     }
                     if ((printMask?.SnapLinks?.Overall ?? true)
                         && SnapLinks is {} SnapLinksItem)
@@ -3009,7 +3009,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? ReferenceGroup;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LinkedReferences.ErrorMask?>>?>? LinkedReferences;
             public Exception? IsLinkedRefTransient;
-            public Exception? XLIB;
+            public Exception? LeveledItemBaseObject;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapLink.ErrorMask?>>?>? SnapLinks;
             public Exception? EncounterZone;
             public Exception? GeometryDirtinessScale;
@@ -3160,8 +3160,8 @@ namespace Mutagen.Bethesda.Starfield
                         return LinkedReferences;
                     case PlacedObject_FieldIndex.IsLinkedRefTransient:
                         return IsLinkedRefTransient;
-                    case PlacedObject_FieldIndex.XLIB:
-                        return XLIB;
+                    case PlacedObject_FieldIndex.LeveledItemBaseObject:
+                        return LeveledItemBaseObject;
                     case PlacedObject_FieldIndex.SnapLinks:
                         return SnapLinks;
                     case PlacedObject_FieldIndex.EncounterZone:
@@ -3398,8 +3398,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.IsLinkedRefTransient:
                         this.IsLinkedRefTransient = ex;
                         break;
-                    case PlacedObject_FieldIndex.XLIB:
-                        this.XLIB = ex;
+                    case PlacedObject_FieldIndex.LeveledItemBaseObject:
+                        this.LeveledItemBaseObject = ex;
                         break;
                     case PlacedObject_FieldIndex.SnapLinks:
                         this.SnapLinks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapLink.ErrorMask?>>?>(ex, null);
@@ -3664,8 +3664,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.IsLinkedRefTransient:
                         this.IsLinkedRefTransient = (Exception?)obj;
                         break;
-                    case PlacedObject_FieldIndex.XLIB:
-                        this.XLIB = (Exception?)obj;
+                    case PlacedObject_FieldIndex.LeveledItemBaseObject:
+                        this.LeveledItemBaseObject = (Exception?)obj;
                         break;
                     case PlacedObject_FieldIndex.SnapLinks:
                         this.SnapLinks = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapLink.ErrorMask?>>?>)obj;
@@ -3812,7 +3812,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ReferenceGroup != null) return true;
                 if (LinkedReferences != null) return true;
                 if (IsLinkedRefTransient != null) return true;
-                if (XLIB != null) return true;
+                if (LeveledItemBaseObject != null) return true;
                 if (SnapLinks != null) return true;
                 if (EncounterZone != null) return true;
                 if (GeometryDirtinessScale != null) return true;
@@ -4158,7 +4158,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(IsLinkedRefTransient, "IsLinkedRefTransient");
                 }
                 {
-                    sb.AppendItem(XLIB, "XLIB");
+                    sb.AppendItem(LeveledItemBaseObject, "LeveledItemBaseObject");
                 }
                 if (SnapLinks is {} SnapLinksItem)
                 {
@@ -4333,7 +4333,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ReferenceGroup = this.ReferenceGroup.Combine(rhs.ReferenceGroup);
                 ret.LinkedReferences = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LinkedReferences.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.LinkedReferences?.Overall, rhs.LinkedReferences?.Overall), Noggog.ExceptionExt.Combine(this.LinkedReferences?.Specific, rhs.LinkedReferences?.Specific));
                 ret.IsLinkedRefTransient = this.IsLinkedRefTransient.Combine(rhs.IsLinkedRefTransient);
-                ret.XLIB = this.XLIB.Combine(rhs.XLIB);
+                ret.LeveledItemBaseObject = this.LeveledItemBaseObject.Combine(rhs.LeveledItemBaseObject);
                 ret.SnapLinks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapLink.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.SnapLinks?.Overall, rhs.SnapLinks?.Overall), Noggog.ExceptionExt.Combine(this.SnapLinks?.Specific, rhs.SnapLinks?.Specific));
                 ret.EncounterZone = this.EncounterZone.Combine(rhs.EncounterZone);
                 ret.GeometryDirtinessScale = this.GeometryDirtinessScale.Combine(rhs.GeometryDirtinessScale);
@@ -4440,7 +4440,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool ReferenceGroup;
             public LinkedReferences.TranslationMask? LinkedReferences;
             public bool IsLinkedRefTransient;
-            public bool XLIB;
+            public bool LeveledItemBaseObject;
             public SnapLink.TranslationMask? SnapLinks;
             public bool EncounterZone;
             public bool GeometryDirtinessScale;
@@ -4507,7 +4507,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.XTRI = defaultOn;
                 this.ReferenceGroup = defaultOn;
                 this.IsLinkedRefTransient = defaultOn;
-                this.XLIB = defaultOn;
+                this.LeveledItemBaseObject = defaultOn;
                 this.EncounterZone = defaultOn;
                 this.GeometryDirtinessScale = defaultOn;
                 this.HeadTrackingWeight = defaultOn;
@@ -4588,7 +4588,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ReferenceGroup, null));
                 ret.Add((LinkedReferences == null ? DefaultOn : !LinkedReferences.GetCrystal().CopyNothing, LinkedReferences?.GetCrystal()));
                 ret.Add((IsLinkedRefTransient, null));
-                ret.Add((XLIB, null));
+                ret.Add((LeveledItemBaseObject, null));
                 ret.Add((SnapLinks == null ? DefaultOn : !SnapLinks.GetCrystal().CopyNothing, SnapLinks?.GetCrystal()));
                 ret.Add((EncounterZone, null));
                 ret.Add((GeometryDirtinessScale, null));
@@ -4838,7 +4838,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<IReferenceGroupGetter> ReferenceGroup { get; set; }
         new ExtendedList<LinkedReferences> LinkedReferences { get; }
         new Boolean IsLinkedRefTransient { get; set; }
-        new IFormLinkNullable<ILeveledItemGetter> XLIB { get; set; }
+        new IFormLinkNullable<ILeveledItemGetter> LeveledItemBaseObject { get; set; }
         new ExtendedList<SnapLink>? SnapLinks { get; set; }
         new IFormLinkNullable<ILocationGetter> EncounterZone { get; set; }
         new Single? GeometryDirtinessScale { get; set; }
@@ -4957,7 +4957,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IReferenceGroupGetter> ReferenceGroup { get; }
         IReadOnlyList<ILinkedReferencesGetter> LinkedReferences { get; }
         Boolean IsLinkedRefTransient { get; }
-        IFormLinkNullableGetter<ILeveledItemGetter> XLIB { get; }
+        IFormLinkNullableGetter<ILeveledItemGetter> LeveledItemBaseObject { get; }
         IReadOnlyList<ISnapLinkGetter>? SnapLinks { get; }
         IFormLinkNullableGetter<ILocationGetter> EncounterZone { get; }
         Single? GeometryDirtinessScale { get; }
@@ -5218,7 +5218,7 @@ namespace Mutagen.Bethesda.Starfield
         ReferenceGroup = 62,
         LinkedReferences = 63,
         IsLinkedRefTransient = 64,
-        XLIB = 65,
+        LeveledItemBaseObject = 65,
         SnapLinks = 66,
         EncounterZone = 67,
         GeometryDirtinessScale = 68,
@@ -5484,7 +5484,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ReferenceGroup.Clear();
             item.LinkedReferences.Clear();
             item.IsLinkedRefTransient = default(Boolean);
-            item.XLIB.Clear();
+            item.LeveledItemBaseObject.Clear();
             item.SnapLinks = null;
             item.EncounterZone.Clear();
             item.GeometryDirtinessScale = default;
@@ -5556,7 +5556,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.Location.Relink(mapping);
             obj.ReferenceGroup.Relink(mapping);
             obj.LinkedReferences.RemapLinks(mapping);
-            obj.XLIB.Relink(mapping);
+            obj.LeveledItemBaseObject.Relink(mapping);
             obj.SnapLinks?.RemapLinks(mapping);
             obj.EncounterZone.Relink(mapping);
             obj.Lock?.RemapLinks(mapping);
@@ -5824,7 +5824,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             ret.IsLinkedRefTransient = item.IsLinkedRefTransient == rhs.IsLinkedRefTransient;
-            ret.XLIB = item.XLIB.Equals(rhs.XLIB);
+            ret.LeveledItemBaseObject = item.LeveledItemBaseObject.Equals(rhs.LeveledItemBaseObject);
             ret.SnapLinks = item.SnapLinks.CollectionEqualsHelper(
                 rhs.SnapLinks,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -6312,9 +6312,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.IsLinkedRefTransient, "IsLinkedRefTransient");
             }
-            if (printMask?.XLIB ?? true)
+            if (printMask?.LeveledItemBaseObject ?? true)
             {
-                sb.AppendItem(item.XLIB.FormKeyNullable, "XLIB");
+                sb.AppendItem(item.LeveledItemBaseObject.FormKeyNullable, "LeveledItemBaseObject");
             }
             if ((printMask?.SnapLinks?.Overall ?? true)
                 && item.SnapLinks is {} SnapLinksItem)
@@ -6825,9 +6825,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.IsLinkedRefTransient != rhs.IsLinkedRefTransient) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.XLIB) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.LeveledItemBaseObject) ?? true))
             {
-                if (!lhs.XLIB.Equals(rhs.XLIB)) return false;
+                if (!lhs.LeveledItemBaseObject.Equals(rhs.LeveledItemBaseObject)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.SnapLinks) ?? true))
             {
@@ -7198,7 +7198,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(subItem);
             }
             hash.Add(item.IsLinkedRefTransient);
-            hash.Add(item.XLIB);
+            hash.Add(item.LeveledItemBaseObject);
             if (item.SnapLinks is {} SnapLinksitem)
             {
                 foreach (var subItem in SnapLinksitem)
@@ -7460,9 +7460,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return FormLinkInformation.Factory(item);
             }
-            if (FormLinkInformation.TryFactory(obj.XLIB, out var XLIBInfo))
+            if (FormLinkInformation.TryFactory(obj.LeveledItemBaseObject, out var LeveledItemBaseObjectInfo))
             {
-                yield return XLIBInfo;
+                yield return LeveledItemBaseObjectInfo;
             }
             if (obj.SnapLinks is {} SnapLinksItem)
             {
@@ -8517,9 +8517,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.IsLinkedRefTransient = rhs.IsLinkedRefTransient;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.XLIB) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.LeveledItemBaseObject) ?? true))
             {
-                item.XLIB.SetTo(rhs.XLIB.FormKeyNullable);
+                item.LeveledItemBaseObject.SetTo(rhs.LeveledItemBaseObject.FormKeyNullable);
             }
             if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.SnapLinks) ?? true))
             {
@@ -9438,7 +9438,7 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.XLKT));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.XLIB,
+                item: item.LeveledItemBaseObject,
                 header: translationParams.ConvertToCustom(RecordTypes.XLIB));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ISnapLinkGetter>.Instance.Write(
                 writer: writer,
@@ -10079,8 +10079,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XLIB:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.XLIB.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-                    return (int)PlacedObject_FieldIndex.XLIB;
+                    item.LeveledItemBaseObject.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)PlacedObject_FieldIndex.LeveledItemBaseObject;
                 }
                 case RecordTypeInts.XSL1:
                 {
@@ -10491,9 +10491,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _IsLinkedRefTransientLocation;
         public Boolean IsLinkedRefTransient => _IsLinkedRefTransientLocation.HasValue ? true : default(Boolean);
         #endregion
-        #region XLIB
-        private int? _XLIBLocation;
-        public IFormLinkNullableGetter<ILeveledItemGetter> XLIB => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ILeveledItemGetter>(_package, _recordData, _XLIBLocation);
+        #region LeveledItemBaseObject
+        private int? _LeveledItemBaseObjectLocation;
+        public IFormLinkNullableGetter<ILeveledItemGetter> LeveledItemBaseObject => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ILeveledItemGetter>(_package, _recordData, _LeveledItemBaseObjectLocation);
         #endregion
         public IReadOnlyList<ISnapLinkGetter>? SnapLinks { get; private set; }
         #region EncounterZone
@@ -11045,8 +11045,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.XLIB:
                 {
-                    _XLIBLocation = (stream.Position - offset);
-                    return (int)PlacedObject_FieldIndex.XLIB;
+                    _LeveledItemBaseObjectLocation = (stream.Position - offset);
+                    return (int)PlacedObject_FieldIndex.LeveledItemBaseObject;
                 }
                 case RecordTypeInts.XSL1:
                 {

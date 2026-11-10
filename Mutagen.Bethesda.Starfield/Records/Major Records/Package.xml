@@ -10,9 +10,9 @@
           <Enum name="Type" enumName="Package.Types" byteLength="1" />
           <Enum name="InterruptOverride" enumName="Package.Interrupt" byteLength="1" />
           <Enum name="PreferredSpeed" enumName="Package.Speed" byteLength="1" />
-          <UInt8 name="Unknown" />
+          <ByteArray name="PreferredSpeedUnused" byteLength="1" nullable="False" />
           <Enum name="InterruptFlags" enumName="Package.InterruptFlag" byteLength="2" />
-          <UInt16 name="Unknown2" />
+          <ByteArray name="InterruptFlagsUnused" byteLength="2" nullable="False" />
         </Fields>
       </Data>
       <Data recordType="PSDT">
@@ -22,7 +22,7 @@
           <UInt8 name="ScheduleDate" />
           <Int8 name="ScheduleHour" />
           <Int8 name="ScheduleMinute" />
-          <ByteArray name="Unknown3" byteLength="3" nullable="False" />
+          <ByteArray name="ScheduleMinuteUnused" byteLength="3" nullable="False" />
           <Int32 name="ScheduleDurationInMinutes" />
         </Fields>
       </Data>
@@ -200,7 +200,7 @@
       <Enum name="SetInterruptFlags" enumName="Package.InterruptFlag" byteLength="2" />
       <Enum name="ClearInterruptFlags" enumName="Package.InterruptFlag" byteLength="2" />
       <Enum name="PreferredSpeed" enumName="Package.Speed" byteLength="1" />
-      <ByteArray name="Unknown" byteLength="3" nullable="False" />
+      <ByteArray name="PreferredSpeedUnused" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="PackageRoot" objType="Subrecord">

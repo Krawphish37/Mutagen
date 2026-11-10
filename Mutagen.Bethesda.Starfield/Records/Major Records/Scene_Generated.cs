@@ -262,8 +262,8 @@ namespace Mutagen.Bethesda.Starfield
         #region ChallengeDefault
         public Boolean ChallengeDefault { get; set; } = default(Boolean);
         #endregion
-        #region SPPQ
-        public Boolean SPPQ { get; set; } = default(Boolean);
+        #region ChallengeDataMarker
+        public Boolean ChallengeDataMarker { get; set; } = default(Boolean);
         #endregion
         #region ChallengeAndKeywords
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -359,7 +359,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ChallengeReward = initialValue;
                 this.ChallengeRepeatable = initialValue;
                 this.ChallengeDefault = initialValue;
-                this.SPPQ = initialValue;
+                this.ChallengeDataMarker = initialValue;
                 this.ChallengeAndKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.ChallengePerks = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.ChallengeOrKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
@@ -398,7 +398,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ChallengeReward,
                 TItem ChallengeRepeatable,
                 TItem ChallengeDefault,
-                TItem SPPQ,
+                TItem ChallengeDataMarker,
                 TItem ChallengeAndKeywords,
                 TItem ChallengePerks,
                 TItem ChallengeOrKeywords,
@@ -436,7 +436,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ChallengeReward = ChallengeReward;
                 this.ChallengeRepeatable = ChallengeRepeatable;
                 this.ChallengeDefault = ChallengeDefault;
-                this.SPPQ = SPPQ;
+                this.ChallengeDataMarker = ChallengeDataMarker;
                 this.ChallengeAndKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ChallengeAndKeywords, []);
                 this.ChallengePerks = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ChallengePerks, []);
                 this.ChallengeOrKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ChallengeOrKeywords, []);
@@ -476,7 +476,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem ChallengeReward;
             public TItem ChallengeRepeatable;
             public TItem ChallengeDefault;
-            public TItem SPPQ;
+            public TItem ChallengeDataMarker;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ChallengeAndKeywords;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ChallengePerks;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ChallengeOrKeywords;
@@ -518,7 +518,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ChallengeReward, rhs.ChallengeReward)) return false;
                 if (!object.Equals(this.ChallengeRepeatable, rhs.ChallengeRepeatable)) return false;
                 if (!object.Equals(this.ChallengeDefault, rhs.ChallengeDefault)) return false;
-                if (!object.Equals(this.SPPQ, rhs.SPPQ)) return false;
+                if (!object.Equals(this.ChallengeDataMarker, rhs.ChallengeDataMarker)) return false;
                 if (!object.Equals(this.ChallengeAndKeywords, rhs.ChallengeAndKeywords)) return false;
                 if (!object.Equals(this.ChallengePerks, rhs.ChallengePerks)) return false;
                 if (!object.Equals(this.ChallengeOrKeywords, rhs.ChallengeOrKeywords)) return false;
@@ -552,7 +552,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ChallengeReward);
                 hash.Add(this.ChallengeRepeatable);
                 hash.Add(this.ChallengeDefault);
-                hash.Add(this.SPPQ);
+                hash.Add(this.ChallengeDataMarker);
                 hash.Add(this.ChallengeAndKeywords);
                 hash.Add(this.ChallengePerks);
                 hash.Add(this.ChallengeOrKeywords);
@@ -663,7 +663,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.ChallengeReward)) return false;
                 if (!eval(this.ChallengeRepeatable)) return false;
                 if (!eval(this.ChallengeDefault)) return false;
-                if (!eval(this.SPPQ)) return false;
+                if (!eval(this.ChallengeDataMarker)) return false;
                 if (this.ChallengeAndKeywords != null)
                 {
                     if (!eval(this.ChallengeAndKeywords.Overall)) return false;
@@ -802,7 +802,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.ChallengeReward)) return true;
                 if (eval(this.ChallengeRepeatable)) return true;
                 if (eval(this.ChallengeDefault)) return true;
-                if (eval(this.SPPQ)) return true;
+                if (eval(this.ChallengeDataMarker)) return true;
                 if (this.ChallengeAndKeywords != null)
                 {
                     if (eval(this.ChallengeAndKeywords.Overall)) return true;
@@ -958,7 +958,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.ChallengeReward = eval(this.ChallengeReward);
                 obj.ChallengeRepeatable = eval(this.ChallengeRepeatable);
                 obj.ChallengeDefault = eval(this.ChallengeDefault);
-                obj.SPPQ = eval(this.SPPQ);
+                obj.ChallengeDataMarker = eval(this.ChallengeDataMarker);
                 if (ChallengeAndKeywords != null)
                 {
                     obj.ChallengeAndKeywords = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.ChallengeAndKeywords.Overall), []);
@@ -1210,9 +1210,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ChallengeDefault, "ChallengeDefault");
                     }
-                    if (printMask?.SPPQ ?? true)
+                    if (printMask?.ChallengeDataMarker ?? true)
                     {
-                        sb.AppendItem(SPPQ, "SPPQ");
+                        sb.AppendItem(ChallengeDataMarker, "ChallengeDataMarker");
                     }
                     if ((printMask?.ChallengeAndKeywords?.Overall ?? true)
                         && ChallengeAndKeywords is {} ChallengeAndKeywordsItem)
@@ -1316,7 +1316,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? ChallengeReward;
             public Exception? ChallengeRepeatable;
             public Exception? ChallengeDefault;
-            public Exception? SPPQ;
+            public Exception? ChallengeDataMarker;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ChallengeAndKeywords;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ChallengePerks;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ChallengeOrKeywords;
@@ -1377,8 +1377,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ChallengeRepeatable;
                     case Scene_FieldIndex.ChallengeDefault:
                         return ChallengeDefault;
-                    case Scene_FieldIndex.SPPQ:
-                        return SPPQ;
+                    case Scene_FieldIndex.ChallengeDataMarker:
+                        return ChallengeDataMarker;
                     case Scene_FieldIndex.ChallengeAndKeywords:
                         return ChallengeAndKeywords;
                     case Scene_FieldIndex.ChallengePerks:
@@ -1469,8 +1469,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Scene_FieldIndex.ChallengeDefault:
                         this.ChallengeDefault = ex;
                         break;
-                    case Scene_FieldIndex.SPPQ:
-                        this.SPPQ = ex;
+                    case Scene_FieldIndex.ChallengeDataMarker:
+                        this.ChallengeDataMarker = ex;
                         break;
                     case Scene_FieldIndex.ChallengeAndKeywords:
                         this.ChallengeAndKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
@@ -1567,8 +1567,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Scene_FieldIndex.ChallengeDefault:
                         this.ChallengeDefault = (Exception?)obj;
                         break;
-                    case Scene_FieldIndex.SPPQ:
-                        this.SPPQ = (Exception?)obj;
+                    case Scene_FieldIndex.ChallengeDataMarker:
+                        this.ChallengeDataMarker = (Exception?)obj;
                         break;
                     case Scene_FieldIndex.ChallengeAndKeywords:
                         this.ChallengeAndKeywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
@@ -1615,7 +1615,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ChallengeReward != null) return true;
                 if (ChallengeRepeatable != null) return true;
                 if (ChallengeDefault != null) return true;
-                if (SPPQ != null) return true;
+                if (ChallengeDataMarker != null) return true;
                 if (ChallengeAndKeywords != null) return true;
                 if (ChallengePerks != null) return true;
                 if (ChallengeOrKeywords != null) return true;
@@ -1809,7 +1809,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ChallengeDefault, "ChallengeDefault");
                 }
                 {
-                    sb.AppendItem(SPPQ, "SPPQ");
+                    sb.AppendItem(ChallengeDataMarker, "ChallengeDataMarker");
                 }
                 if (ChallengeAndKeywords is {} ChallengeAndKeywordsItem)
                 {
@@ -1906,7 +1906,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ChallengeReward = this.ChallengeReward.Combine(rhs.ChallengeReward);
                 ret.ChallengeRepeatable = this.ChallengeRepeatable.Combine(rhs.ChallengeRepeatable);
                 ret.ChallengeDefault = this.ChallengeDefault.Combine(rhs.ChallengeDefault);
-                ret.SPPQ = this.SPPQ.Combine(rhs.SPPQ);
+                ret.ChallengeDataMarker = this.ChallengeDataMarker.Combine(rhs.ChallengeDataMarker);
                 ret.ChallengeAndKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ChallengeAndKeywords?.Overall, rhs.ChallengeAndKeywords?.Overall), Noggog.ExceptionExt.Combine(this.ChallengeAndKeywords?.Specific, rhs.ChallengeAndKeywords?.Specific));
                 ret.ChallengePerks = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ChallengePerks?.Overall, rhs.ChallengePerks?.Overall), Noggog.ExceptionExt.Combine(this.ChallengePerks?.Specific, rhs.ChallengePerks?.Specific));
                 ret.ChallengeOrKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ChallengeOrKeywords?.Overall, rhs.ChallengeOrKeywords?.Overall), Noggog.ExceptionExt.Combine(this.ChallengeOrKeywords?.Specific, rhs.ChallengeOrKeywords?.Specific));
@@ -1957,7 +1957,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool ChallengeReward;
             public bool ChallengeRepeatable;
             public bool ChallengeDefault;
-            public bool SPPQ;
+            public bool ChallengeDataMarker;
             public bool ChallengeAndKeywords;
             public bool ChallengePerks;
             public bool ChallengeOrKeywords;
@@ -1988,7 +1988,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ChallengeReward = defaultOn;
                 this.ChallengeRepeatable = defaultOn;
                 this.ChallengeDefault = defaultOn;
-                this.SPPQ = defaultOn;
+                this.ChallengeDataMarker = defaultOn;
                 this.ChallengeAndKeywords = defaultOn;
                 this.ChallengePerks = defaultOn;
                 this.ChallengeOrKeywords = defaultOn;
@@ -2024,7 +2024,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ChallengeReward, null));
                 ret.Add((ChallengeRepeatable, null));
                 ret.Add((ChallengeDefault, null));
-                ret.Add((SPPQ, null));
+                ret.Add((ChallengeDataMarker, null));
                 ret.Add((ChallengeAndKeywords, null));
                 ret.Add((ChallengePerks, null));
                 ret.Add((ChallengeOrKeywords, null));
@@ -2204,7 +2204,7 @@ namespace Mutagen.Bethesda.Starfield
         new UInt32? ChallengeReward { get; set; }
         new Boolean ChallengeRepeatable { get; set; }
         new Boolean ChallengeDefault { get; set; }
-        new Boolean SPPQ { get; set; }
+        new Boolean ChallengeDataMarker { get; set; }
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? ChallengeAndKeywords { get; set; }
         new ExtendedList<IFormLinkGetter<IPerkGetter>>? ChallengePerks { get; set; }
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? ChallengeOrKeywords { get; set; }
@@ -2257,7 +2257,7 @@ namespace Mutagen.Bethesda.Starfield
         UInt32? ChallengeReward { get; }
         Boolean ChallengeRepeatable { get; }
         Boolean ChallengeDefault { get; }
-        Boolean SPPQ { get; }
+        Boolean ChallengeDataMarker { get; }
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? ChallengeAndKeywords { get; }
         IReadOnlyList<IFormLinkGetter<IPerkGetter>>? ChallengePerks { get; }
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? ChallengeOrKeywords { get; }
@@ -2462,7 +2462,7 @@ namespace Mutagen.Bethesda.Starfield
         ChallengeReward = 28,
         ChallengeRepeatable = 29,
         ChallengeDefault = 30,
-        SPPQ = 31,
+        ChallengeDataMarker = 31,
         ChallengeAndKeywords = 32,
         ChallengePerks = 33,
         ChallengeOrKeywords = 34,
@@ -2622,7 +2622,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ChallengeReward = default;
             item.ChallengeRepeatable = default(Boolean);
             item.ChallengeDefault = default(Boolean);
-            item.SPPQ = default(Boolean);
+            item.ChallengeDataMarker = default(Boolean);
             item.ChallengeAndKeywords = null;
             item.ChallengePerks = null;
             item.ChallengeOrKeywords = null;
@@ -2773,7 +2773,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.ChallengeReward = item.ChallengeReward == rhs.ChallengeReward;
             ret.ChallengeRepeatable = item.ChallengeRepeatable == rhs.ChallengeRepeatable;
             ret.ChallengeDefault = item.ChallengeDefault == rhs.ChallengeDefault;
-            ret.SPPQ = item.SPPQ == rhs.SPPQ;
+            ret.ChallengeDataMarker = item.ChallengeDataMarker == rhs.ChallengeDataMarker;
             ret.ChallengeAndKeywords = item.ChallengeAndKeywords.CollectionEqualsHelper(
                 rhs.ChallengeAndKeywords,
                 (l, r) => object.Equals(l, r),
@@ -3006,9 +3006,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ChallengeDefault, "ChallengeDefault");
             }
-            if (printMask?.SPPQ ?? true)
+            if (printMask?.ChallengeDataMarker ?? true)
             {
-                sb.AppendItem(item.SPPQ, "SPPQ");
+                sb.AppendItem(item.ChallengeDataMarker, "ChallengeDataMarker");
             }
             if ((printMask?.ChallengeAndKeywords?.Overall ?? true)
                 && item.ChallengeAndKeywords is {} ChallengeAndKeywordsItem)
@@ -3213,9 +3213,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.ChallengeDefault != rhs.ChallengeDefault) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.SPPQ) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeDataMarker) ?? true))
             {
-                if (lhs.SPPQ != rhs.SPPQ) return false;
+                if (lhs.ChallengeDataMarker != rhs.ChallengeDataMarker) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeAndKeywords) ?? true))
             {
@@ -3345,7 +3345,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.ChallengeRepeatable);
             hash.Add(item.ChallengeDefault);
-            hash.Add(item.SPPQ);
+            hash.Add(item.ChallengeDataMarker);
             if (item.ChallengeAndKeywords is {} ChallengeAndKeywordsitem)
             {
                 foreach (var subItem in ChallengeAndKeywordsitem)
@@ -3844,9 +3844,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ChallengeDefault = rhs.ChallengeDefault;
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.SPPQ) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeDataMarker) ?? true))
             {
-                item.SPPQ = rhs.SPPQ;
+                item.ChallengeDataMarker = rhs.ChallengeDataMarker;
             }
             if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ChallengeAndKeywords) ?? true))
             {
@@ -4242,7 +4242,7 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.SPDF));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.SPPQ,
+                item: item.ChallengeDataMarker,
                 header: translationParams.ConvertToCustom(RecordTypes.SPPQ));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Write(
                 writer: writer,
@@ -4532,8 +4532,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SPPQ:
                 {
-                    item.SPPQ = true;
-                    return (int)Scene_FieldIndex.SPPQ;
+                    item.ChallengeDataMarker = true;
+                    return (int)Scene_FieldIndex.ChallengeDataMarker;
                 }
                 case RecordTypeInts.SPKW:
                 {
@@ -4726,9 +4726,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _ChallengeDefaultLocation;
         public Boolean ChallengeDefault => _ChallengeDefaultLocation.HasValue ? true : default(Boolean);
         #endregion
-        #region SPPQ
-        private int? _SPPQLocation;
-        public Boolean SPPQ => _SPPQLocation.HasValue ? true : default(Boolean);
+        #region ChallengeDataMarker
+        private int? _ChallengeDataMarkerLocation;
+        public Boolean ChallengeDataMarker => _ChallengeDataMarkerLocation.HasValue ? true : default(Boolean);
         #endregion
         public IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? ChallengeAndKeywords { get; private set; }
         public IReadOnlyList<IFormLinkGetter<IPerkGetter>>? ChallengePerks { get; private set; }
@@ -4966,8 +4966,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SPPQ:
                 {
-                    _SPPQLocation = (stream.Position - offset);
-                    return (int)Scene_FieldIndex.SPPQ;
+                    _ChallengeDataMarkerLocation = (stream.Position - offset);
+                    return (int)Scene_FieldIndex.ChallengeDataMarker;
                 }
                 case RecordTypeInts.SPKW:
                 {

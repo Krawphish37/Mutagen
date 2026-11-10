@@ -60,8 +60,19 @@ namespace Mutagen.Bethesda.Starfield
         #region UnknownFloat
         public Single UnknownFloat { get; set; } = default(Single);
         #endregion
-        #region UnknownInt
-        public UInt32 UnknownInt { get; set; } = default(UInt32);
+        #region UnknownByte
+        public Byte UnknownByte { get; set; } = default(Byte);
+        #endregion
+        #region UnknownByteUnused
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private MemorySlice<Byte> _UnknownByteUnused = new byte[3];
+        public MemorySlice<Byte> UnknownByteUnused
+        {
+            get => _UnknownByteUnused;
+            set => this._UnknownByteUnused = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte> IPlacedObjectProjectedDecalGetter.UnknownByteUnused => this.UnknownByteUnused;
         #endregion
 
         #region To String
@@ -105,19 +116,22 @@ namespace Mutagen.Bethesda.Starfield
                 this.WidthScale = initialValue;
                 this.HeightScale = initialValue;
                 this.UnknownFloat = initialValue;
-                this.UnknownInt = initialValue;
+                this.UnknownByte = initialValue;
+                this.UnknownByteUnused = initialValue;
             }
 
             public Mask(
                 TItem WidthScale,
                 TItem HeightScale,
                 TItem UnknownFloat,
-                TItem UnknownInt)
+                TItem UnknownByte,
+                TItem UnknownByteUnused)
             {
                 this.WidthScale = WidthScale;
                 this.HeightScale = HeightScale;
                 this.UnknownFloat = UnknownFloat;
-                this.UnknownInt = UnknownInt;
+                this.UnknownByte = UnknownByte;
+                this.UnknownByteUnused = UnknownByteUnused;
             }
 
             #pragma warning disable CS8618
@@ -132,7 +146,8 @@ namespace Mutagen.Bethesda.Starfield
             public TItem WidthScale;
             public TItem HeightScale;
             public TItem UnknownFloat;
-            public TItem UnknownInt;
+            public TItem UnknownByte;
+            public TItem UnknownByteUnused;
             #endregion
 
             #region Equals
@@ -148,7 +163,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.WidthScale, rhs.WidthScale)) return false;
                 if (!object.Equals(this.HeightScale, rhs.HeightScale)) return false;
                 if (!object.Equals(this.UnknownFloat, rhs.UnknownFloat)) return false;
-                if (!object.Equals(this.UnknownInt, rhs.UnknownInt)) return false;
+                if (!object.Equals(this.UnknownByte, rhs.UnknownByte)) return false;
+                if (!object.Equals(this.UnknownByteUnused, rhs.UnknownByteUnused)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -157,7 +173,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.WidthScale);
                 hash.Add(this.HeightScale);
                 hash.Add(this.UnknownFloat);
-                hash.Add(this.UnknownInt);
+                hash.Add(this.UnknownByte);
+                hash.Add(this.UnknownByteUnused);
                 return hash.ToHashCode();
             }
 
@@ -169,7 +186,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.WidthScale)) return false;
                 if (!eval(this.HeightScale)) return false;
                 if (!eval(this.UnknownFloat)) return false;
-                if (!eval(this.UnknownInt)) return false;
+                if (!eval(this.UnknownByte)) return false;
+                if (!eval(this.UnknownByteUnused)) return false;
                 return true;
             }
             #endregion
@@ -180,7 +198,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.WidthScale)) return true;
                 if (eval(this.HeightScale)) return true;
                 if (eval(this.UnknownFloat)) return true;
-                if (eval(this.UnknownInt)) return true;
+                if (eval(this.UnknownByte)) return true;
+                if (eval(this.UnknownByteUnused)) return true;
                 return false;
             }
             #endregion
@@ -198,7 +217,8 @@ namespace Mutagen.Bethesda.Starfield
                 obj.WidthScale = eval(this.WidthScale);
                 obj.HeightScale = eval(this.HeightScale);
                 obj.UnknownFloat = eval(this.UnknownFloat);
-                obj.UnknownInt = eval(this.UnknownInt);
+                obj.UnknownByte = eval(this.UnknownByte);
+                obj.UnknownByteUnused = eval(this.UnknownByteUnused);
             }
             #endregion
 
@@ -229,9 +249,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(UnknownFloat, "UnknownFloat");
                     }
-                    if (printMask?.UnknownInt ?? true)
+                    if (printMask?.UnknownByte ?? true)
                     {
-                        sb.AppendItem(UnknownInt, "UnknownInt");
+                        sb.AppendItem(UnknownByte, "UnknownByte");
+                    }
+                    if (printMask?.UnknownByteUnused ?? true)
+                    {
+                        sb.AppendItem(UnknownByteUnused, "UnknownByteUnused");
                     }
                 }
             }
@@ -260,7 +284,8 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? WidthScale;
             public Exception? HeightScale;
             public Exception? UnknownFloat;
-            public Exception? UnknownInt;
+            public Exception? UnknownByte;
+            public Exception? UnknownByteUnused;
             #endregion
 
             #region IErrorMask
@@ -275,8 +300,10 @@ namespace Mutagen.Bethesda.Starfield
                         return HeightScale;
                     case PlacedObjectProjectedDecal_FieldIndex.UnknownFloat:
                         return UnknownFloat;
-                    case PlacedObjectProjectedDecal_FieldIndex.UnknownInt:
-                        return UnknownInt;
+                    case PlacedObjectProjectedDecal_FieldIndex.UnknownByte:
+                        return UnknownByte;
+                    case PlacedObjectProjectedDecal_FieldIndex.UnknownByteUnused:
+                        return UnknownByteUnused;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -296,8 +323,11 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObjectProjectedDecal_FieldIndex.UnknownFloat:
                         this.UnknownFloat = ex;
                         break;
-                    case PlacedObjectProjectedDecal_FieldIndex.UnknownInt:
-                        this.UnknownInt = ex;
+                    case PlacedObjectProjectedDecal_FieldIndex.UnknownByte:
+                        this.UnknownByte = ex;
+                        break;
+                    case PlacedObjectProjectedDecal_FieldIndex.UnknownByteUnused:
+                        this.UnknownByteUnused = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -318,8 +348,11 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObjectProjectedDecal_FieldIndex.UnknownFloat:
                         this.UnknownFloat = (Exception?)obj;
                         break;
-                    case PlacedObjectProjectedDecal_FieldIndex.UnknownInt:
-                        this.UnknownInt = (Exception?)obj;
+                    case PlacedObjectProjectedDecal_FieldIndex.UnknownByte:
+                        this.UnknownByte = (Exception?)obj;
+                        break;
+                    case PlacedObjectProjectedDecal_FieldIndex.UnknownByteUnused:
+                        this.UnknownByteUnused = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -332,7 +365,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (WidthScale != null) return true;
                 if (HeightScale != null) return true;
                 if (UnknownFloat != null) return true;
-                if (UnknownInt != null) return true;
+                if (UnknownByte != null) return true;
+                if (UnknownByteUnused != null) return true;
                 return false;
             }
             #endregion
@@ -368,7 +402,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(UnknownFloat, "UnknownFloat");
                 }
                 {
-                    sb.AppendItem(UnknownInt, "UnknownInt");
+                    sb.AppendItem(UnknownByte, "UnknownByte");
+                }
+                {
+                    sb.AppendItem(UnknownByteUnused, "UnknownByteUnused");
                 }
             }
             #endregion
@@ -381,7 +418,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.WidthScale = this.WidthScale.Combine(rhs.WidthScale);
                 ret.HeightScale = this.HeightScale.Combine(rhs.HeightScale);
                 ret.UnknownFloat = this.UnknownFloat.Combine(rhs.UnknownFloat);
-                ret.UnknownInt = this.UnknownInt.Combine(rhs.UnknownInt);
+                ret.UnknownByte = this.UnknownByte.Combine(rhs.UnknownByte);
+                ret.UnknownByteUnused = this.UnknownByteUnused.Combine(rhs.UnknownByteUnused);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -408,7 +446,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool WidthScale;
             public bool HeightScale;
             public bool UnknownFloat;
-            public bool UnknownInt;
+            public bool UnknownByte;
+            public bool UnknownByteUnused;
             #endregion
 
             #region Ctors
@@ -421,7 +460,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.WidthScale = defaultOn;
                 this.HeightScale = defaultOn;
                 this.UnknownFloat = defaultOn;
-                this.UnknownInt = defaultOn;
+                this.UnknownByte = defaultOn;
+                this.UnknownByteUnused = defaultOn;
             }
 
             #endregion
@@ -440,7 +480,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((WidthScale, null));
                 ret.Add((HeightScale, null));
                 ret.Add((UnknownFloat, null));
-                ret.Add((UnknownInt, null));
+                ret.Add((UnknownByte, null));
+                ret.Add((UnknownByteUnused, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -516,7 +557,8 @@ namespace Mutagen.Bethesda.Starfield
         new Single WidthScale { get; set; }
         new Single HeightScale { get; set; }
         new Single UnknownFloat { get; set; }
-        new UInt32 UnknownInt { get; set; }
+        new Byte UnknownByte { get; set; }
+        new MemorySlice<Byte> UnknownByteUnused { get; set; }
     }
 
     public partial interface IPlacedObjectProjectedDecalGetter :
@@ -534,7 +576,8 @@ namespace Mutagen.Bethesda.Starfield
         Single WidthScale { get; }
         Single HeightScale { get; }
         Single UnknownFloat { get; }
-        UInt32 UnknownInt { get; }
+        Byte UnknownByte { get; }
+        ReadOnlyMemorySlice<Byte> UnknownByteUnused { get; }
 
     }
 
@@ -707,7 +750,8 @@ namespace Mutagen.Bethesda.Starfield
         WidthScale = 0,
         HeightScale = 1,
         UnknownFloat = 2,
-        UnknownInt = 3,
+        UnknownByte = 3,
+        UnknownByteUnused = 4,
     }
     #endregion
 
@@ -718,9 +762,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 4;
+        public const ushort AdditionalFieldCount = 5;
 
-        public const ushort FieldCount = 4;
+        public const ushort FieldCount = 5;
 
         public static readonly Type MaskType = typeof(PlacedObjectProjectedDecal.Mask<>);
 
@@ -796,7 +840,8 @@ namespace Mutagen.Bethesda.Starfield
             item.WidthScale = default(Single);
             item.HeightScale = default(Single);
             item.UnknownFloat = default(Single);
-            item.UnknownInt = default(UInt32);
+            item.UnknownByte = default(Byte);
+            item.UnknownByteUnused = new byte[3];
         }
         
         #region Mutagen
@@ -853,7 +898,8 @@ namespace Mutagen.Bethesda.Starfield
             ret.WidthScale = item.WidthScale.EqualsWithin(rhs.WidthScale);
             ret.HeightScale = item.HeightScale.EqualsWithin(rhs.HeightScale);
             ret.UnknownFloat = item.UnknownFloat.EqualsWithin(rhs.UnknownFloat);
-            ret.UnknownInt = item.UnknownInt == rhs.UnknownInt;
+            ret.UnknownByte = item.UnknownByte == rhs.UnknownByte;
+            ret.UnknownByteUnused = MemoryExtensions.SequenceEqual(item.UnknownByteUnused.Span, rhs.UnknownByteUnused.Span);
         }
         
         public string Print(
@@ -910,9 +956,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.UnknownFloat, "UnknownFloat");
             }
-            if (printMask?.UnknownInt ?? true)
+            if (printMask?.UnknownByte ?? true)
             {
-                sb.AppendItem(item.UnknownInt, "UnknownInt");
+                sb.AppendItem(item.UnknownByte, "UnknownByte");
+            }
+            if (printMask?.UnknownByteUnused ?? true)
+            {
+                sb.AppendLine($"UnknownByteUnused => {SpanExt.ToHexString(item.UnknownByteUnused)}");
             }
         }
         
@@ -935,9 +985,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.UnknownFloat.EqualsWithin(rhs.UnknownFloat)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectProjectedDecal_FieldIndex.UnknownInt) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectProjectedDecal_FieldIndex.UnknownByte) ?? true))
             {
-                if (lhs.UnknownInt != rhs.UnknownInt) return false;
+                if (lhs.UnknownByte != rhs.UnknownByte) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectProjectedDecal_FieldIndex.UnknownByteUnused) ?? true))
+            {
+                if (!MemoryExtensions.SequenceEqual(lhs.UnknownByteUnused.Span, rhs.UnknownByteUnused.Span)) return false;
             }
             return true;
         }
@@ -948,7 +1002,8 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.WidthScale);
             hash.Add(item.HeightScale);
             hash.Add(item.UnknownFloat);
-            hash.Add(item.UnknownInt);
+            hash.Add(item.UnknownByte);
+            hash.AddBytes(item.UnknownByteUnused);
             return hash.ToHashCode();
         }
         
@@ -993,9 +1048,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.UnknownFloat = rhs.UnknownFloat;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectProjectedDecal_FieldIndex.UnknownInt) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectProjectedDecal_FieldIndex.UnknownByte) ?? true))
             {
-                item.UnknownInt = rhs.UnknownInt;
+                item.UnknownByte = rhs.UnknownByte;
+            }
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectProjectedDecal_FieldIndex.UnknownByteUnused) ?? true))
+            {
+                item.UnknownByteUnused = rhs.UnknownByteUnused.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1114,7 +1173,10 @@ namespace Mutagen.Bethesda.Starfield
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.UnknownFloat);
-            writer.Write(item.UnknownInt);
+            writer.Write(item.UnknownByte);
+            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.UnknownByteUnused);
         }
 
         public void Write(
@@ -1158,7 +1220,8 @@ namespace Mutagen.Bethesda.Starfield
             item.WidthScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.HeightScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.UnknownFloat = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.UnknownInt = frame.ReadUInt32();
+            item.UnknownByte = frame.ReadUInt8();
+            item.UnknownByteUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
         }
 
     }
@@ -1227,7 +1290,8 @@ namespace Mutagen.Bethesda.Starfield
         public Single WidthScale => _structData.Slice(0x0, 0x4).Float();
         public Single HeightScale => _structData.Slice(0x4, 0x4).Float();
         public Single UnknownFloat => _structData.Slice(0x8, 0x4).Float();
-        public UInt32 UnknownInt => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0xC, 0x4));
+        public Byte UnknownByte => _structData.Span[0xC];
+        public ReadOnlyMemorySlice<Byte> UnknownByteUnused => _structData.Span.Slice(0xD, 0x3).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

@@ -1612,7 +1612,7 @@ internal class MergedWorldspace : IWorldspaceGetter
     public IWorldspaceParentGetter? Parent => _primary.Parent;
     public IFormLinkNullableGetter<IClimateGetter> Climate => _primary.Climate;
     public IFormLinkNullableGetter<IWaterGetter> Water => _primary.Water;
-    public String? NAM7 => _primary.NAM7;
+    public String? WaterMaterial => _primary.WaterMaterial;
     public IFormLinkNullableGetter<IWaterGetter> LodWater => _primary.LodWater;
     public Single? LodWaterHeight => _primary.LodWaterHeight;
     public IWorldspaceLandDefaultsGetter? LandDefaults => _primary.LandDefaults;

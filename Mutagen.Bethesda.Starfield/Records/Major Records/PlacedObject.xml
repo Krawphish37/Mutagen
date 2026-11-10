@@ -72,7 +72,7 @@
       <FormLink name="ReferenceGroup" recordType="XRFG" refName="ReferenceGroup" />
       <RefList name="LinkedReferences" refName="LinkedReferences" />
       <Bool name="IsLinkedRefTransient" boolAsMarker="XLKT" />
-      <FormLink name="XLIB" recordType="XLIB" refName="LeveledItem" unknown="true" />
+      <FormLink name="LeveledItemBaseObject" recordType="XLIB" refName="LeveledItem" />
       <RefList name="SnapLinks" refName="SnapLink" recordType="XSL1" counterLength="4" />
       <FormLink name="EncounterZone" recordType="XEZN" refName="Location" />
       <Float name="GeometryDirtinessScale" recordType="XGDS" />
@@ -207,7 +207,7 @@
       <Float name="NearClipCutOn" />
       <Float name="InnerFov" />
       <Float name="ShadowOffset" />
-      <UInt32 name="Unknown1" />
+      <ByteArray name="ShadowOffsetUnused" byteLength="4" nullable="False" />
       <Break />
       <UInt8 name="Unknown2" />
       <ByteArray name="Unknown2Unused" byteLength="3" nullable="False" />
@@ -239,7 +239,8 @@
       <Float name="WidthScale" />
       <Float name="HeightScale" />
       <Float name="UnknownFloat" />
-      <UInt32 name="UnknownInt" />
+      <UInt8 name="UnknownByte" />
+      <ByteArray name="UnknownByteUnused" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="PlacedObjectCollision" objType="Subrecord" recordType="XCOL" >
