@@ -182,25 +182,25 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<INpcTemplateTargetGetter> ITemplateActorsGetter.KeywordsTemplate => this.KeywordsTemplate;
         #endregion
-        #region Unknown1
-        private readonly IFormLink<INpcTemplateTargetGetter> _Unknown1 = new FormLink<INpcTemplateTargetGetter>();
-        public IFormLink<INpcTemplateTargetGetter> Unknown1
+        #region ReactionRadiusTemplate
+        private readonly IFormLink<INpcTemplateTargetGetter> _ReactionRadiusTemplate = new FormLink<INpcTemplateTargetGetter>();
+        public IFormLink<INpcTemplateTargetGetter> ReactionRadiusTemplate
         {
-            get => _Unknown1;
-            set => _Unknown1.SetTo(value);
+            get => _ReactionRadiusTemplate;
+            set => _ReactionRadiusTemplate.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<INpcTemplateTargetGetter> ITemplateActorsGetter.Unknown1 => this.Unknown1;
+        IFormLinkGetter<INpcTemplateTargetGetter> ITemplateActorsGetter.ReactionRadiusTemplate => this.ReactionRadiusTemplate;
         #endregion
-        #region Unknown2
-        private readonly IFormLink<INpcTemplateTargetGetter> _Unknown2 = new FormLink<INpcTemplateTargetGetter>();
-        public IFormLink<INpcTemplateTargetGetter> Unknown2
+        #region CombatStyleTemplate
+        private readonly IFormLink<INpcTemplateTargetGetter> _CombatStyleTemplate = new FormLink<INpcTemplateTargetGetter>();
+        public IFormLink<INpcTemplateTargetGetter> CombatStyleTemplate
         {
-            get => _Unknown2;
-            set => _Unknown2.SetTo(value);
+            get => _CombatStyleTemplate;
+            set => _CombatStyleTemplate.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<INpcTemplateTargetGetter> ITemplateActorsGetter.Unknown2 => this.Unknown2;
+        IFormLinkGetter<INpcTemplateTargetGetter> ITemplateActorsGetter.CombatStyleTemplate => this.CombatStyleTemplate;
         #endregion
 
         #region To String
@@ -254,8 +254,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefPackListTemplate = initialValue;
                 this.AttackDataTemplate = initialValue;
                 this.KeywordsTemplate = initialValue;
-                this.Unknown1 = initialValue;
-                this.Unknown2 = initialValue;
+                this.ReactionRadiusTemplate = initialValue;
+                this.CombatStyleTemplate = initialValue;
             }
 
             public Mask(
@@ -272,8 +272,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem DefPackListTemplate,
                 TItem AttackDataTemplate,
                 TItem KeywordsTemplate,
-                TItem Unknown1,
-                TItem Unknown2)
+                TItem ReactionRadiusTemplate,
+                TItem CombatStyleTemplate)
             {
                 this.TraitTemplate = TraitTemplate;
                 this.StatsTemplate = StatsTemplate;
@@ -288,8 +288,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefPackListTemplate = DefPackListTemplate;
                 this.AttackDataTemplate = AttackDataTemplate;
                 this.KeywordsTemplate = KeywordsTemplate;
-                this.Unknown1 = Unknown1;
-                this.Unknown2 = Unknown2;
+                this.ReactionRadiusTemplate = ReactionRadiusTemplate;
+                this.CombatStyleTemplate = CombatStyleTemplate;
             }
 
             #pragma warning disable CS8618
@@ -314,8 +314,8 @@ namespace Mutagen.Bethesda.Starfield
             public TItem DefPackListTemplate;
             public TItem AttackDataTemplate;
             public TItem KeywordsTemplate;
-            public TItem Unknown1;
-            public TItem Unknown2;
+            public TItem ReactionRadiusTemplate;
+            public TItem CombatStyleTemplate;
             #endregion
 
             #region Equals
@@ -341,8 +341,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.DefPackListTemplate, rhs.DefPackListTemplate)) return false;
                 if (!object.Equals(this.AttackDataTemplate, rhs.AttackDataTemplate)) return false;
                 if (!object.Equals(this.KeywordsTemplate, rhs.KeywordsTemplate)) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.ReactionRadiusTemplate, rhs.ReactionRadiusTemplate)) return false;
+                if (!object.Equals(this.CombatStyleTemplate, rhs.CombatStyleTemplate)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -361,8 +361,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.DefPackListTemplate);
                 hash.Add(this.AttackDataTemplate);
                 hash.Add(this.KeywordsTemplate);
-                hash.Add(this.Unknown1);
-                hash.Add(this.Unknown2);
+                hash.Add(this.ReactionRadiusTemplate);
+                hash.Add(this.CombatStyleTemplate);
                 return hash.ToHashCode();
             }
 
@@ -384,8 +384,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.DefPackListTemplate)) return false;
                 if (!eval(this.AttackDataTemplate)) return false;
                 if (!eval(this.KeywordsTemplate)) return false;
-                if (!eval(this.Unknown1)) return false;
-                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.ReactionRadiusTemplate)) return false;
+                if (!eval(this.CombatStyleTemplate)) return false;
                 return true;
             }
             #endregion
@@ -406,8 +406,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.DefPackListTemplate)) return true;
                 if (eval(this.AttackDataTemplate)) return true;
                 if (eval(this.KeywordsTemplate)) return true;
-                if (eval(this.Unknown1)) return true;
-                if (eval(this.Unknown2)) return true;
+                if (eval(this.ReactionRadiusTemplate)) return true;
+                if (eval(this.CombatStyleTemplate)) return true;
                 return false;
             }
             #endregion
@@ -435,8 +435,8 @@ namespace Mutagen.Bethesda.Starfield
                 obj.DefPackListTemplate = eval(this.DefPackListTemplate);
                 obj.AttackDataTemplate = eval(this.AttackDataTemplate);
                 obj.KeywordsTemplate = eval(this.KeywordsTemplate);
-                obj.Unknown1 = eval(this.Unknown1);
-                obj.Unknown2 = eval(this.Unknown2);
+                obj.ReactionRadiusTemplate = eval(this.ReactionRadiusTemplate);
+                obj.CombatStyleTemplate = eval(this.CombatStyleTemplate);
             }
             #endregion
 
@@ -507,13 +507,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(KeywordsTemplate, "KeywordsTemplate");
                     }
-                    if (printMask?.Unknown1 ?? true)
+                    if (printMask?.ReactionRadiusTemplate ?? true)
                     {
-                        sb.AppendItem(Unknown1, "Unknown1");
+                        sb.AppendItem(ReactionRadiusTemplate, "ReactionRadiusTemplate");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.CombatStyleTemplate ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(CombatStyleTemplate, "CombatStyleTemplate");
                     }
                 }
             }
@@ -552,8 +552,8 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? DefPackListTemplate;
             public Exception? AttackDataTemplate;
             public Exception? KeywordsTemplate;
-            public Exception? Unknown1;
-            public Exception? Unknown2;
+            public Exception? ReactionRadiusTemplate;
+            public Exception? CombatStyleTemplate;
             #endregion
 
             #region IErrorMask
@@ -588,10 +588,10 @@ namespace Mutagen.Bethesda.Starfield
                         return AttackDataTemplate;
                     case TemplateActors_FieldIndex.KeywordsTemplate:
                         return KeywordsTemplate;
-                    case TemplateActors_FieldIndex.Unknown1:
-                        return Unknown1;
-                    case TemplateActors_FieldIndex.Unknown2:
-                        return Unknown2;
+                    case TemplateActors_FieldIndex.ReactionRadiusTemplate:
+                        return ReactionRadiusTemplate;
+                    case TemplateActors_FieldIndex.CombatStyleTemplate:
+                        return CombatStyleTemplate;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -641,11 +641,11 @@ namespace Mutagen.Bethesda.Starfield
                     case TemplateActors_FieldIndex.KeywordsTemplate:
                         this.KeywordsTemplate = ex;
                         break;
-                    case TemplateActors_FieldIndex.Unknown1:
-                        this.Unknown1 = ex;
+                    case TemplateActors_FieldIndex.ReactionRadiusTemplate:
+                        this.ReactionRadiusTemplate = ex;
                         break;
-                    case TemplateActors_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case TemplateActors_FieldIndex.CombatStyleTemplate:
+                        this.CombatStyleTemplate = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -696,11 +696,11 @@ namespace Mutagen.Bethesda.Starfield
                     case TemplateActors_FieldIndex.KeywordsTemplate:
                         this.KeywordsTemplate = (Exception?)obj;
                         break;
-                    case TemplateActors_FieldIndex.Unknown1:
-                        this.Unknown1 = (Exception?)obj;
+                    case TemplateActors_FieldIndex.ReactionRadiusTemplate:
+                        this.ReactionRadiusTemplate = (Exception?)obj;
                         break;
-                    case TemplateActors_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case TemplateActors_FieldIndex.CombatStyleTemplate:
+                        this.CombatStyleTemplate = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -723,8 +723,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (DefPackListTemplate != null) return true;
                 if (AttackDataTemplate != null) return true;
                 if (KeywordsTemplate != null) return true;
-                if (Unknown1 != null) return true;
-                if (Unknown2 != null) return true;
+                if (ReactionRadiusTemplate != null) return true;
+                if (CombatStyleTemplate != null) return true;
                 return false;
             }
             #endregion
@@ -790,10 +790,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(KeywordsTemplate, "KeywordsTemplate");
                 }
                 {
-                    sb.AppendItem(Unknown1, "Unknown1");
+                    sb.AppendItem(ReactionRadiusTemplate, "ReactionRadiusTemplate");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(CombatStyleTemplate, "CombatStyleTemplate");
                 }
             }
             #endregion
@@ -816,8 +816,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.DefPackListTemplate = this.DefPackListTemplate.Combine(rhs.DefPackListTemplate);
                 ret.AttackDataTemplate = this.AttackDataTemplate.Combine(rhs.AttackDataTemplate);
                 ret.KeywordsTemplate = this.KeywordsTemplate.Combine(rhs.KeywordsTemplate);
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.ReactionRadiusTemplate = this.ReactionRadiusTemplate.Combine(rhs.ReactionRadiusTemplate);
+                ret.CombatStyleTemplate = this.CombatStyleTemplate.Combine(rhs.CombatStyleTemplate);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -854,8 +854,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool DefPackListTemplate;
             public bool AttackDataTemplate;
             public bool KeywordsTemplate;
-            public bool Unknown1;
-            public bool Unknown2;
+            public bool ReactionRadiusTemplate;
+            public bool CombatStyleTemplate;
             #endregion
 
             #region Ctors
@@ -878,8 +878,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefPackListTemplate = defaultOn;
                 this.AttackDataTemplate = defaultOn;
                 this.KeywordsTemplate = defaultOn;
-                this.Unknown1 = defaultOn;
-                this.Unknown2 = defaultOn;
+                this.ReactionRadiusTemplate = defaultOn;
+                this.CombatStyleTemplate = defaultOn;
             }
 
             #endregion
@@ -908,8 +908,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((DefPackListTemplate, null));
                 ret.Add((AttackDataTemplate, null));
                 ret.Add((KeywordsTemplate, null));
-                ret.Add((Unknown1, null));
-                ret.Add((Unknown2, null));
+                ret.Add((ReactionRadiusTemplate, null));
+                ret.Add((CombatStyleTemplate, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -1001,8 +1001,8 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<INpcTemplateTargetGetter> DefPackListTemplate { get; set; }
         new IFormLink<INpcTemplateTargetGetter> AttackDataTemplate { get; set; }
         new IFormLink<INpcTemplateTargetGetter> KeywordsTemplate { get; set; }
-        new IFormLink<INpcTemplateTargetGetter> Unknown1 { get; set; }
-        new IFormLink<INpcTemplateTargetGetter> Unknown2 { get; set; }
+        new IFormLink<INpcTemplateTargetGetter> ReactionRadiusTemplate { get; set; }
+        new IFormLink<INpcTemplateTargetGetter> CombatStyleTemplate { get; set; }
     }
 
     public partial interface ITemplateActorsGetter :
@@ -1031,8 +1031,8 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<INpcTemplateTargetGetter> DefPackListTemplate { get; }
         IFormLinkGetter<INpcTemplateTargetGetter> AttackDataTemplate { get; }
         IFormLinkGetter<INpcTemplateTargetGetter> KeywordsTemplate { get; }
-        IFormLinkGetter<INpcTemplateTargetGetter> Unknown1 { get; }
-        IFormLinkGetter<INpcTemplateTargetGetter> Unknown2 { get; }
+        IFormLinkGetter<INpcTemplateTargetGetter> ReactionRadiusTemplate { get; }
+        IFormLinkGetter<INpcTemplateTargetGetter> CombatStyleTemplate { get; }
 
     }
 
@@ -1215,8 +1215,8 @@ namespace Mutagen.Bethesda.Starfield
         DefPackListTemplate = 10,
         AttackDataTemplate = 11,
         KeywordsTemplate = 12,
-        Unknown1 = 13,
-        Unknown2 = 14,
+        ReactionRadiusTemplate = 13,
+        CombatStyleTemplate = 14,
     }
     #endregion
 
@@ -1315,8 +1315,8 @@ namespace Mutagen.Bethesda.Starfield
             item.DefPackListTemplate.Clear();
             item.AttackDataTemplate.Clear();
             item.KeywordsTemplate.Clear();
-            item.Unknown1.Clear();
-            item.Unknown2.Clear();
+            item.ReactionRadiusTemplate.Clear();
+            item.CombatStyleTemplate.Clear();
         }
         
         #region Mutagen
@@ -1335,8 +1335,8 @@ namespace Mutagen.Bethesda.Starfield
             obj.DefPackListTemplate.Relink(mapping);
             obj.AttackDataTemplate.Relink(mapping);
             obj.KeywordsTemplate.Relink(mapping);
-            obj.Unknown1.Relink(mapping);
-            obj.Unknown2.Relink(mapping);
+            obj.ReactionRadiusTemplate.Relink(mapping);
+            obj.CombatStyleTemplate.Relink(mapping);
         }
         
         #endregion
@@ -1398,8 +1398,8 @@ namespace Mutagen.Bethesda.Starfield
             ret.DefPackListTemplate = item.DefPackListTemplate.Equals(rhs.DefPackListTemplate);
             ret.AttackDataTemplate = item.AttackDataTemplate.Equals(rhs.AttackDataTemplate);
             ret.KeywordsTemplate = item.KeywordsTemplate.Equals(rhs.KeywordsTemplate);
-            ret.Unknown1 = item.Unknown1.Equals(rhs.Unknown1);
-            ret.Unknown2 = item.Unknown2.Equals(rhs.Unknown2);
+            ret.ReactionRadiusTemplate = item.ReactionRadiusTemplate.Equals(rhs.ReactionRadiusTemplate);
+            ret.CombatStyleTemplate = item.CombatStyleTemplate.Equals(rhs.CombatStyleTemplate);
         }
         
         public string Print(
@@ -1496,13 +1496,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.KeywordsTemplate.FormKey, "KeywordsTemplate");
             }
-            if (printMask?.Unknown1 ?? true)
+            if (printMask?.ReactionRadiusTemplate ?? true)
             {
-                sb.AppendItem(item.Unknown1.FormKey, "Unknown1");
+                sb.AppendItem(item.ReactionRadiusTemplate.FormKey, "ReactionRadiusTemplate");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.CombatStyleTemplate ?? true)
             {
-                sb.AppendItem(item.Unknown2.FormKey, "Unknown2");
+                sb.AppendItem(item.CombatStyleTemplate.FormKey, "CombatStyleTemplate");
             }
         }
         
@@ -1565,13 +1565,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.KeywordsTemplate.Equals(rhs.KeywordsTemplate)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TemplateActors_FieldIndex.Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TemplateActors_FieldIndex.ReactionRadiusTemplate) ?? true))
             {
-                if (!lhs.Unknown1.Equals(rhs.Unknown1)) return false;
+                if (!lhs.ReactionRadiusTemplate.Equals(rhs.ReactionRadiusTemplate)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TemplateActors_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TemplateActors_FieldIndex.CombatStyleTemplate) ?? true))
             {
-                if (!lhs.Unknown2.Equals(rhs.Unknown2)) return false;
+                if (!lhs.CombatStyleTemplate.Equals(rhs.CombatStyleTemplate)) return false;
             }
             return true;
         }
@@ -1592,8 +1592,8 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.DefPackListTemplate);
             hash.Add(item.AttackDataTemplate);
             hash.Add(item.KeywordsTemplate);
-            hash.Add(item.Unknown1);
-            hash.Add(item.Unknown2);
+            hash.Add(item.ReactionRadiusTemplate);
+            hash.Add(item.CombatStyleTemplate);
             return hash.ToHashCode();
         }
         
@@ -1621,8 +1621,8 @@ namespace Mutagen.Bethesda.Starfield
             yield return FormLinkInformation.Factory(obj.DefPackListTemplate);
             yield return FormLinkInformation.Factory(obj.AttackDataTemplate);
             yield return FormLinkInformation.Factory(obj.KeywordsTemplate);
-            yield return FormLinkInformation.Factory(obj.Unknown1);
-            yield return FormLinkInformation.Factory(obj.Unknown2);
+            yield return FormLinkInformation.Factory(obj.ReactionRadiusTemplate);
+            yield return FormLinkInformation.Factory(obj.CombatStyleTemplate);
             yield break;
         }
         
@@ -1693,13 +1693,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.KeywordsTemplate.SetTo(rhs.KeywordsTemplate.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)TemplateActors_FieldIndex.Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TemplateActors_FieldIndex.ReactionRadiusTemplate) ?? true))
             {
-                item.Unknown1.SetTo(rhs.Unknown1.FormKey);
+                item.ReactionRadiusTemplate.SetTo(rhs.ReactionRadiusTemplate.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)TemplateActors_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TemplateActors_FieldIndex.CombatStyleTemplate) ?? true))
             {
-                item.Unknown2.SetTo(rhs.Unknown2.FormKey);
+                item.CombatStyleTemplate.SetTo(rhs.CombatStyleTemplate.FormKey);
             }
             DeepCopyInCustom(
                 item: item,
@@ -1850,10 +1850,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.KeywordsTemplate);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.Unknown1);
+                item: item.ReactionRadiusTemplate);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.Unknown2);
+                item: item.CombatStyleTemplate);
         }
 
         public void Write(
@@ -1907,8 +1907,8 @@ namespace Mutagen.Bethesda.Starfield
             item.DefPackListTemplate.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.AttackDataTemplate.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.KeywordsTemplate.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.Unknown1.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.Unknown2.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.ReactionRadiusTemplate.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.CombatStyleTemplate.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
         }
 
     }
@@ -1988,8 +1988,8 @@ namespace Mutagen.Bethesda.Starfield
         public IFormLinkGetter<INpcTemplateTargetGetter> DefPackListTemplate => FormLinkBinaryTranslation.Instance.OverlayFactory<INpcTemplateTargetGetter>(_package, _structData.Span.Slice(0x28, 0x4));
         public IFormLinkGetter<INpcTemplateTargetGetter> AttackDataTemplate => FormLinkBinaryTranslation.Instance.OverlayFactory<INpcTemplateTargetGetter>(_package, _structData.Span.Slice(0x2C, 0x4));
         public IFormLinkGetter<INpcTemplateTargetGetter> KeywordsTemplate => FormLinkBinaryTranslation.Instance.OverlayFactory<INpcTemplateTargetGetter>(_package, _structData.Span.Slice(0x30, 0x4));
-        public IFormLinkGetter<INpcTemplateTargetGetter> Unknown1 => FormLinkBinaryTranslation.Instance.OverlayFactory<INpcTemplateTargetGetter>(_package, _structData.Span.Slice(0x34, 0x4));
-        public IFormLinkGetter<INpcTemplateTargetGetter> Unknown2 => FormLinkBinaryTranslation.Instance.OverlayFactory<INpcTemplateTargetGetter>(_package, _structData.Span.Slice(0x38, 0x4));
+        public IFormLinkGetter<INpcTemplateTargetGetter> ReactionRadiusTemplate => FormLinkBinaryTranslation.Instance.OverlayFactory<INpcTemplateTargetGetter>(_package, _structData.Span.Slice(0x34, 0x4));
+        public IFormLinkGetter<INpcTemplateTargetGetter> CombatStyleTemplate => FormLinkBinaryTranslation.Instance.OverlayFactory<INpcTemplateTargetGetter>(_package, _structData.Span.Slice(0x38, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

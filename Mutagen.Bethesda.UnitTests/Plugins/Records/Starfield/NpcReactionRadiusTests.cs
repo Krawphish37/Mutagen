@@ -27,8 +27,8 @@ public class NpcReactionRadiusTests
     {
         foreach (var npc in ReadNpc())
         {
-            npc.RDSAs!.Count.ShouldBe(2);
-            var first = npc.RDSAs[0];
+            npc.ReactionRadiusBehaviors!.Count.ShouldBe(2);
+            var first = npc.ReactionRadiusBehaviors[0];
             first.ReactionType.ShouldBe(Npc.ReactionTypeOption.WarnAndAlarm);
             first.ReactionTarget.ShouldBe(Npc.ReactionTargetOption.Player);
             first.Flags.ShouldBe(Npc.ReactionRadiusFlag.ReactionCenterOverride | Npc.ReactionRadiusFlag.UseLinkedReference);
@@ -37,7 +37,7 @@ public class NpcReactionRadiusTests
             first.SpecificReference.FormKey.ID.ShouldBe(0x273F5Du);
             first.WarnTimerOnWarnAttack.ShouldBe(1f);
             first.CoolDownTimer.ShouldBe(0f);
-            var second = npc.RDSAs[1];
+            var second = npc.ReactionRadiusBehaviors[1];
             second.ReactionType.ShouldBe(Npc.ReactionTypeOption.Attack);
             second.Flags.HasFlag(Npc.ReactionRadiusFlag.DisallowThreatBackdown).ShouldBeTrue();
             npc.EnumerateFormLinks().Select(l => l.FormKey.ID).ShouldContain(0x273F5Du);
@@ -50,7 +50,7 @@ public class NpcReactionRadiusTests
         foreach (var npc in ReadNpc())
         {
             // A whole NPC needs more subrecords (ACBS) to write, so the entries are written on their own.
-            var bytes = npc.RDSAs!.SelectMany(e => Write(w => e.WriteToBinary(w))).ToArray();
+            var bytes = npc.ReactionRadiusBehaviors!.SelectMany(e => Write(w => e.WriteToBinary(w))).ToArray();
             bytes.ShouldBe(Hex(Rdsa));
         }
     }

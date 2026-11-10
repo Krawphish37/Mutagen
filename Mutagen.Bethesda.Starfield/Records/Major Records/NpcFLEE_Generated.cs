@@ -52,44 +52,44 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region UnknownLink1
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _UnknownLink1 = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> UnknownLink1
+        #region FleeDistanceGlobal
+        private readonly IFormLink<IGlobalGetter> _FleeDistanceGlobal = new FormLink<IGlobalGetter>();
+        public IFormLink<IGlobalGetter> FleeDistanceGlobal
         {
-            get => _UnknownLink1;
-            set => _UnknownLink1.SetTo(value);
+            get => _FleeDistanceGlobal;
+            set => _FleeDistanceGlobal.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> INpcFLEEGetter.UnknownLink1 => this.UnknownLink1;
+        IFormLinkGetter<IGlobalGetter> INpcFLEEGetter.FleeDistanceGlobal => this.FleeDistanceGlobal;
         #endregion
-        #region UnknownLink2
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _UnknownLink2 = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> UnknownLink2
+        #region SafeTimerGlobal
+        private readonly IFormLink<IGlobalGetter> _SafeTimerGlobal = new FormLink<IGlobalGetter>();
+        public IFormLink<IGlobalGetter> SafeTimerGlobal
         {
-            get => _UnknownLink2;
-            set => _UnknownLink2.SetTo(value);
+            get => _SafeTimerGlobal;
+            set => _SafeTimerGlobal.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> INpcFLEEGetter.UnknownLink2 => this.UnknownLink2;
+        IFormLinkGetter<IGlobalGetter> INpcFLEEGetter.SafeTimerGlobal => this.SafeTimerGlobal;
         #endregion
-        #region UnknownLink3
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _UnknownLink3 = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> UnknownLink3
+        #region ChanceOfDiversionAnimationGlobal
+        private readonly IFormLink<IGlobalGetter> _ChanceOfDiversionAnimationGlobal = new FormLink<IGlobalGetter>();
+        public IFormLink<IGlobalGetter> ChanceOfDiversionAnimationGlobal
         {
-            get => _UnknownLink3;
-            set => _UnknownLink3.SetTo(value);
+            get => _ChanceOfDiversionAnimationGlobal;
+            set => _ChanceOfDiversionAnimationGlobal.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> INpcFLEEGetter.UnknownLink3 => this.UnknownLink3;
+        IFormLinkGetter<IGlobalGetter> INpcFLEEGetter.ChanceOfDiversionAnimationGlobal => this.ChanceOfDiversionAnimationGlobal;
         #endregion
-        #region UnknownFloat1
-        public Single UnknownFloat1 { get; set; } = default(Single);
+        #region FleeDistance
+        public Single FleeDistance { get; set; } = default(Single);
         #endregion
-        #region UnknownFloat2
-        public Single UnknownFloat2 { get; set; } = default(Single);
+        #region SafeTimer
+        public Single SafeTimer { get; set; } = default(Single);
         #endregion
-        #region UnknownInt
-        public Int32 UnknownInt { get; set; } = default(Int32);
+        #region ChanceOfDiversionAnimation
+        public Single ChanceOfDiversionAnimation { get; set; } = default(Single);
         #endregion
 
         #region To String
@@ -130,28 +130,28 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.UnknownLink1 = initialValue;
-                this.UnknownLink2 = initialValue;
-                this.UnknownLink3 = initialValue;
-                this.UnknownFloat1 = initialValue;
-                this.UnknownFloat2 = initialValue;
-                this.UnknownInt = initialValue;
+                this.FleeDistanceGlobal = initialValue;
+                this.SafeTimerGlobal = initialValue;
+                this.ChanceOfDiversionAnimationGlobal = initialValue;
+                this.FleeDistance = initialValue;
+                this.SafeTimer = initialValue;
+                this.ChanceOfDiversionAnimation = initialValue;
             }
 
             public Mask(
-                TItem UnknownLink1,
-                TItem UnknownLink2,
-                TItem UnknownLink3,
-                TItem UnknownFloat1,
-                TItem UnknownFloat2,
-                TItem UnknownInt)
+                TItem FleeDistanceGlobal,
+                TItem SafeTimerGlobal,
+                TItem ChanceOfDiversionAnimationGlobal,
+                TItem FleeDistance,
+                TItem SafeTimer,
+                TItem ChanceOfDiversionAnimation)
             {
-                this.UnknownLink1 = UnknownLink1;
-                this.UnknownLink2 = UnknownLink2;
-                this.UnknownLink3 = UnknownLink3;
-                this.UnknownFloat1 = UnknownFloat1;
-                this.UnknownFloat2 = UnknownFloat2;
-                this.UnknownInt = UnknownInt;
+                this.FleeDistanceGlobal = FleeDistanceGlobal;
+                this.SafeTimerGlobal = SafeTimerGlobal;
+                this.ChanceOfDiversionAnimationGlobal = ChanceOfDiversionAnimationGlobal;
+                this.FleeDistance = FleeDistance;
+                this.SafeTimer = SafeTimer;
+                this.ChanceOfDiversionAnimation = ChanceOfDiversionAnimation;
             }
 
             #pragma warning disable CS8618
@@ -163,12 +163,12 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem UnknownLink1;
-            public TItem UnknownLink2;
-            public TItem UnknownLink3;
-            public TItem UnknownFloat1;
-            public TItem UnknownFloat2;
-            public TItem UnknownInt;
+            public TItem FleeDistanceGlobal;
+            public TItem SafeTimerGlobal;
+            public TItem ChanceOfDiversionAnimationGlobal;
+            public TItem FleeDistance;
+            public TItem SafeTimer;
+            public TItem ChanceOfDiversionAnimation;
             #endregion
 
             #region Equals
@@ -181,23 +181,23 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.UnknownLink1, rhs.UnknownLink1)) return false;
-                if (!object.Equals(this.UnknownLink2, rhs.UnknownLink2)) return false;
-                if (!object.Equals(this.UnknownLink3, rhs.UnknownLink3)) return false;
-                if (!object.Equals(this.UnknownFloat1, rhs.UnknownFloat1)) return false;
-                if (!object.Equals(this.UnknownFloat2, rhs.UnknownFloat2)) return false;
-                if (!object.Equals(this.UnknownInt, rhs.UnknownInt)) return false;
+                if (!object.Equals(this.FleeDistanceGlobal, rhs.FleeDistanceGlobal)) return false;
+                if (!object.Equals(this.SafeTimerGlobal, rhs.SafeTimerGlobal)) return false;
+                if (!object.Equals(this.ChanceOfDiversionAnimationGlobal, rhs.ChanceOfDiversionAnimationGlobal)) return false;
+                if (!object.Equals(this.FleeDistance, rhs.FleeDistance)) return false;
+                if (!object.Equals(this.SafeTimer, rhs.SafeTimer)) return false;
+                if (!object.Equals(this.ChanceOfDiversionAnimation, rhs.ChanceOfDiversionAnimation)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.UnknownLink1);
-                hash.Add(this.UnknownLink2);
-                hash.Add(this.UnknownLink3);
-                hash.Add(this.UnknownFloat1);
-                hash.Add(this.UnknownFloat2);
-                hash.Add(this.UnknownInt);
+                hash.Add(this.FleeDistanceGlobal);
+                hash.Add(this.SafeTimerGlobal);
+                hash.Add(this.ChanceOfDiversionAnimationGlobal);
+                hash.Add(this.FleeDistance);
+                hash.Add(this.SafeTimer);
+                hash.Add(this.ChanceOfDiversionAnimation);
                 return hash.ToHashCode();
             }
 
@@ -206,12 +206,12 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.UnknownLink1)) return false;
-                if (!eval(this.UnknownLink2)) return false;
-                if (!eval(this.UnknownLink3)) return false;
-                if (!eval(this.UnknownFloat1)) return false;
-                if (!eval(this.UnknownFloat2)) return false;
-                if (!eval(this.UnknownInt)) return false;
+                if (!eval(this.FleeDistanceGlobal)) return false;
+                if (!eval(this.SafeTimerGlobal)) return false;
+                if (!eval(this.ChanceOfDiversionAnimationGlobal)) return false;
+                if (!eval(this.FleeDistance)) return false;
+                if (!eval(this.SafeTimer)) return false;
+                if (!eval(this.ChanceOfDiversionAnimation)) return false;
                 return true;
             }
             #endregion
@@ -219,12 +219,12 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.UnknownLink1)) return true;
-                if (eval(this.UnknownLink2)) return true;
-                if (eval(this.UnknownLink3)) return true;
-                if (eval(this.UnknownFloat1)) return true;
-                if (eval(this.UnknownFloat2)) return true;
-                if (eval(this.UnknownInt)) return true;
+                if (eval(this.FleeDistanceGlobal)) return true;
+                if (eval(this.SafeTimerGlobal)) return true;
+                if (eval(this.ChanceOfDiversionAnimationGlobal)) return true;
+                if (eval(this.FleeDistance)) return true;
+                if (eval(this.SafeTimer)) return true;
+                if (eval(this.ChanceOfDiversionAnimation)) return true;
                 return false;
             }
             #endregion
@@ -239,12 +239,12 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.UnknownLink1 = eval(this.UnknownLink1);
-                obj.UnknownLink2 = eval(this.UnknownLink2);
-                obj.UnknownLink3 = eval(this.UnknownLink3);
-                obj.UnknownFloat1 = eval(this.UnknownFloat1);
-                obj.UnknownFloat2 = eval(this.UnknownFloat2);
-                obj.UnknownInt = eval(this.UnknownInt);
+                obj.FleeDistanceGlobal = eval(this.FleeDistanceGlobal);
+                obj.SafeTimerGlobal = eval(this.SafeTimerGlobal);
+                obj.ChanceOfDiversionAnimationGlobal = eval(this.ChanceOfDiversionAnimationGlobal);
+                obj.FleeDistance = eval(this.FleeDistance);
+                obj.SafeTimer = eval(this.SafeTimer);
+                obj.ChanceOfDiversionAnimation = eval(this.ChanceOfDiversionAnimation);
             }
             #endregion
 
@@ -263,29 +263,29 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(NpcFLEE.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.UnknownLink1 ?? true)
+                    if (printMask?.FleeDistanceGlobal ?? true)
                     {
-                        sb.AppendItem(UnknownLink1, "UnknownLink1");
+                        sb.AppendItem(FleeDistanceGlobal, "FleeDistanceGlobal");
                     }
-                    if (printMask?.UnknownLink2 ?? true)
+                    if (printMask?.SafeTimerGlobal ?? true)
                     {
-                        sb.AppendItem(UnknownLink2, "UnknownLink2");
+                        sb.AppendItem(SafeTimerGlobal, "SafeTimerGlobal");
                     }
-                    if (printMask?.UnknownLink3 ?? true)
+                    if (printMask?.ChanceOfDiversionAnimationGlobal ?? true)
                     {
-                        sb.AppendItem(UnknownLink3, "UnknownLink3");
+                        sb.AppendItem(ChanceOfDiversionAnimationGlobal, "ChanceOfDiversionAnimationGlobal");
                     }
-                    if (printMask?.UnknownFloat1 ?? true)
+                    if (printMask?.FleeDistance ?? true)
                     {
-                        sb.AppendItem(UnknownFloat1, "UnknownFloat1");
+                        sb.AppendItem(FleeDistance, "FleeDistance");
                     }
-                    if (printMask?.UnknownFloat2 ?? true)
+                    if (printMask?.SafeTimer ?? true)
                     {
-                        sb.AppendItem(UnknownFloat2, "UnknownFloat2");
+                        sb.AppendItem(SafeTimer, "SafeTimer");
                     }
-                    if (printMask?.UnknownInt ?? true)
+                    if (printMask?.ChanceOfDiversionAnimation ?? true)
                     {
-                        sb.AppendItem(UnknownInt, "UnknownInt");
+                        sb.AppendItem(ChanceOfDiversionAnimation, "ChanceOfDiversionAnimation");
                     }
                 }
             }
@@ -311,12 +311,12 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? UnknownLink1;
-            public Exception? UnknownLink2;
-            public Exception? UnknownLink3;
-            public Exception? UnknownFloat1;
-            public Exception? UnknownFloat2;
-            public Exception? UnknownInt;
+            public Exception? FleeDistanceGlobal;
+            public Exception? SafeTimerGlobal;
+            public Exception? ChanceOfDiversionAnimationGlobal;
+            public Exception? FleeDistance;
+            public Exception? SafeTimer;
+            public Exception? ChanceOfDiversionAnimation;
             #endregion
 
             #region IErrorMask
@@ -325,18 +325,18 @@ namespace Mutagen.Bethesda.Starfield
                 NpcFLEE_FieldIndex enu = (NpcFLEE_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcFLEE_FieldIndex.UnknownLink1:
-                        return UnknownLink1;
-                    case NpcFLEE_FieldIndex.UnknownLink2:
-                        return UnknownLink2;
-                    case NpcFLEE_FieldIndex.UnknownLink3:
-                        return UnknownLink3;
-                    case NpcFLEE_FieldIndex.UnknownFloat1:
-                        return UnknownFloat1;
-                    case NpcFLEE_FieldIndex.UnknownFloat2:
-                        return UnknownFloat2;
-                    case NpcFLEE_FieldIndex.UnknownInt:
-                        return UnknownInt;
+                    case NpcFLEE_FieldIndex.FleeDistanceGlobal:
+                        return FleeDistanceGlobal;
+                    case NpcFLEE_FieldIndex.SafeTimerGlobal:
+                        return SafeTimerGlobal;
+                    case NpcFLEE_FieldIndex.ChanceOfDiversionAnimationGlobal:
+                        return ChanceOfDiversionAnimationGlobal;
+                    case NpcFLEE_FieldIndex.FleeDistance:
+                        return FleeDistance;
+                    case NpcFLEE_FieldIndex.SafeTimer:
+                        return SafeTimer;
+                    case NpcFLEE_FieldIndex.ChanceOfDiversionAnimation:
+                        return ChanceOfDiversionAnimation;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -347,23 +347,23 @@ namespace Mutagen.Bethesda.Starfield
                 NpcFLEE_FieldIndex enu = (NpcFLEE_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcFLEE_FieldIndex.UnknownLink1:
-                        this.UnknownLink1 = ex;
+                    case NpcFLEE_FieldIndex.FleeDistanceGlobal:
+                        this.FleeDistanceGlobal = ex;
                         break;
-                    case NpcFLEE_FieldIndex.UnknownLink2:
-                        this.UnknownLink2 = ex;
+                    case NpcFLEE_FieldIndex.SafeTimerGlobal:
+                        this.SafeTimerGlobal = ex;
                         break;
-                    case NpcFLEE_FieldIndex.UnknownLink3:
-                        this.UnknownLink3 = ex;
+                    case NpcFLEE_FieldIndex.ChanceOfDiversionAnimationGlobal:
+                        this.ChanceOfDiversionAnimationGlobal = ex;
                         break;
-                    case NpcFLEE_FieldIndex.UnknownFloat1:
-                        this.UnknownFloat1 = ex;
+                    case NpcFLEE_FieldIndex.FleeDistance:
+                        this.FleeDistance = ex;
                         break;
-                    case NpcFLEE_FieldIndex.UnknownFloat2:
-                        this.UnknownFloat2 = ex;
+                    case NpcFLEE_FieldIndex.SafeTimer:
+                        this.SafeTimer = ex;
                         break;
-                    case NpcFLEE_FieldIndex.UnknownInt:
-                        this.UnknownInt = ex;
+                    case NpcFLEE_FieldIndex.ChanceOfDiversionAnimation:
+                        this.ChanceOfDiversionAnimation = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -375,23 +375,23 @@ namespace Mutagen.Bethesda.Starfield
                 NpcFLEE_FieldIndex enu = (NpcFLEE_FieldIndex)index;
                 switch (enu)
                 {
-                    case NpcFLEE_FieldIndex.UnknownLink1:
-                        this.UnknownLink1 = (Exception?)obj;
+                    case NpcFLEE_FieldIndex.FleeDistanceGlobal:
+                        this.FleeDistanceGlobal = (Exception?)obj;
                         break;
-                    case NpcFLEE_FieldIndex.UnknownLink2:
-                        this.UnknownLink2 = (Exception?)obj;
+                    case NpcFLEE_FieldIndex.SafeTimerGlobal:
+                        this.SafeTimerGlobal = (Exception?)obj;
                         break;
-                    case NpcFLEE_FieldIndex.UnknownLink3:
-                        this.UnknownLink3 = (Exception?)obj;
+                    case NpcFLEE_FieldIndex.ChanceOfDiversionAnimationGlobal:
+                        this.ChanceOfDiversionAnimationGlobal = (Exception?)obj;
                         break;
-                    case NpcFLEE_FieldIndex.UnknownFloat1:
-                        this.UnknownFloat1 = (Exception?)obj;
+                    case NpcFLEE_FieldIndex.FleeDistance:
+                        this.FleeDistance = (Exception?)obj;
                         break;
-                    case NpcFLEE_FieldIndex.UnknownFloat2:
-                        this.UnknownFloat2 = (Exception?)obj;
+                    case NpcFLEE_FieldIndex.SafeTimer:
+                        this.SafeTimer = (Exception?)obj;
                         break;
-                    case NpcFLEE_FieldIndex.UnknownInt:
-                        this.UnknownInt = (Exception?)obj;
+                    case NpcFLEE_FieldIndex.ChanceOfDiversionAnimation:
+                        this.ChanceOfDiversionAnimation = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -401,12 +401,12 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (UnknownLink1 != null) return true;
-                if (UnknownLink2 != null) return true;
-                if (UnknownLink3 != null) return true;
-                if (UnknownFloat1 != null) return true;
-                if (UnknownFloat2 != null) return true;
-                if (UnknownInt != null) return true;
+                if (FleeDistanceGlobal != null) return true;
+                if (SafeTimerGlobal != null) return true;
+                if (ChanceOfDiversionAnimationGlobal != null) return true;
+                if (FleeDistance != null) return true;
+                if (SafeTimer != null) return true;
+                if (ChanceOfDiversionAnimation != null) return true;
                 return false;
             }
             #endregion
@@ -433,22 +433,22 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(UnknownLink1, "UnknownLink1");
+                    sb.AppendItem(FleeDistanceGlobal, "FleeDistanceGlobal");
                 }
                 {
-                    sb.AppendItem(UnknownLink2, "UnknownLink2");
+                    sb.AppendItem(SafeTimerGlobal, "SafeTimerGlobal");
                 }
                 {
-                    sb.AppendItem(UnknownLink3, "UnknownLink3");
+                    sb.AppendItem(ChanceOfDiversionAnimationGlobal, "ChanceOfDiversionAnimationGlobal");
                 }
                 {
-                    sb.AppendItem(UnknownFloat1, "UnknownFloat1");
+                    sb.AppendItem(FleeDistance, "FleeDistance");
                 }
                 {
-                    sb.AppendItem(UnknownFloat2, "UnknownFloat2");
+                    sb.AppendItem(SafeTimer, "SafeTimer");
                 }
                 {
-                    sb.AppendItem(UnknownInt, "UnknownInt");
+                    sb.AppendItem(ChanceOfDiversionAnimation, "ChanceOfDiversionAnimation");
                 }
             }
             #endregion
@@ -458,12 +458,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.UnknownLink1 = this.UnknownLink1.Combine(rhs.UnknownLink1);
-                ret.UnknownLink2 = this.UnknownLink2.Combine(rhs.UnknownLink2);
-                ret.UnknownLink3 = this.UnknownLink3.Combine(rhs.UnknownLink3);
-                ret.UnknownFloat1 = this.UnknownFloat1.Combine(rhs.UnknownFloat1);
-                ret.UnknownFloat2 = this.UnknownFloat2.Combine(rhs.UnknownFloat2);
-                ret.UnknownInt = this.UnknownInt.Combine(rhs.UnknownInt);
+                ret.FleeDistanceGlobal = this.FleeDistanceGlobal.Combine(rhs.FleeDistanceGlobal);
+                ret.SafeTimerGlobal = this.SafeTimerGlobal.Combine(rhs.SafeTimerGlobal);
+                ret.ChanceOfDiversionAnimationGlobal = this.ChanceOfDiversionAnimationGlobal.Combine(rhs.ChanceOfDiversionAnimationGlobal);
+                ret.FleeDistance = this.FleeDistance.Combine(rhs.FleeDistance);
+                ret.SafeTimer = this.SafeTimer.Combine(rhs.SafeTimer);
+                ret.ChanceOfDiversionAnimation = this.ChanceOfDiversionAnimation.Combine(rhs.ChanceOfDiversionAnimation);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -487,12 +487,12 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool UnknownLink1;
-            public bool UnknownLink2;
-            public bool UnknownLink3;
-            public bool UnknownFloat1;
-            public bool UnknownFloat2;
-            public bool UnknownInt;
+            public bool FleeDistanceGlobal;
+            public bool SafeTimerGlobal;
+            public bool ChanceOfDiversionAnimationGlobal;
+            public bool FleeDistance;
+            public bool SafeTimer;
+            public bool ChanceOfDiversionAnimation;
             #endregion
 
             #region Ctors
@@ -502,12 +502,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.UnknownLink1 = defaultOn;
-                this.UnknownLink2 = defaultOn;
-                this.UnknownLink3 = defaultOn;
-                this.UnknownFloat1 = defaultOn;
-                this.UnknownFloat2 = defaultOn;
-                this.UnknownInt = defaultOn;
+                this.FleeDistanceGlobal = defaultOn;
+                this.SafeTimerGlobal = defaultOn;
+                this.ChanceOfDiversionAnimationGlobal = defaultOn;
+                this.FleeDistance = defaultOn;
+                this.SafeTimer = defaultOn;
+                this.ChanceOfDiversionAnimation = defaultOn;
             }
 
             #endregion
@@ -523,12 +523,12 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((UnknownLink1, null));
-                ret.Add((UnknownLink2, null));
-                ret.Add((UnknownLink3, null));
-                ret.Add((UnknownFloat1, null));
-                ret.Add((UnknownFloat2, null));
-                ret.Add((UnknownInt, null));
+                ret.Add((FleeDistanceGlobal, null));
+                ret.Add((SafeTimerGlobal, null));
+                ret.Add((ChanceOfDiversionAnimationGlobal, null));
+                ret.Add((FleeDistance, null));
+                ret.Add((SafeTimer, null));
+                ret.Add((ChanceOfDiversionAnimation, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -607,12 +607,12 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<INpcFLEE>,
         INpcFLEEGetter
     {
-        new IFormLink<IStarfieldMajorRecordGetter> UnknownLink1 { get; set; }
-        new IFormLink<IStarfieldMajorRecordGetter> UnknownLink2 { get; set; }
-        new IFormLink<IStarfieldMajorRecordGetter> UnknownLink3 { get; set; }
-        new Single UnknownFloat1 { get; set; }
-        new Single UnknownFloat2 { get; set; }
-        new Int32 UnknownInt { get; set; }
+        new IFormLink<IGlobalGetter> FleeDistanceGlobal { get; set; }
+        new IFormLink<IGlobalGetter> SafeTimerGlobal { get; set; }
+        new IFormLink<IGlobalGetter> ChanceOfDiversionAnimationGlobal { get; set; }
+        new Single FleeDistance { get; set; }
+        new Single SafeTimer { get; set; }
+        new Single ChanceOfDiversionAnimation { get; set; }
     }
 
     public partial interface INpcFLEEGetter :
@@ -628,12 +628,12 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => NpcFLEE_Registration.Instance;
-        IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink1 { get; }
-        IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink2 { get; }
-        IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink3 { get; }
-        Single UnknownFloat1 { get; }
-        Single UnknownFloat2 { get; }
-        Int32 UnknownInt { get; }
+        IFormLinkGetter<IGlobalGetter> FleeDistanceGlobal { get; }
+        IFormLinkGetter<IGlobalGetter> SafeTimerGlobal { get; }
+        IFormLinkGetter<IGlobalGetter> ChanceOfDiversionAnimationGlobal { get; }
+        Single FleeDistance { get; }
+        Single SafeTimer { get; }
+        Single ChanceOfDiversionAnimation { get; }
 
     }
 
@@ -803,12 +803,12 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum NpcFLEE_FieldIndex
     {
-        UnknownLink1 = 0,
-        UnknownLink2 = 1,
-        UnknownLink3 = 2,
-        UnknownFloat1 = 3,
-        UnknownFloat2 = 4,
-        UnknownInt = 5,
+        FleeDistanceGlobal = 0,
+        SafeTimerGlobal = 1,
+        ChanceOfDiversionAnimationGlobal = 2,
+        FleeDistance = 3,
+        SafeTimer = 4,
+        ChanceOfDiversionAnimation = 5,
     }
     #endregion
 
@@ -894,20 +894,20 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(INpcFLEE item)
         {
             ClearPartial();
-            item.UnknownLink1.Clear();
-            item.UnknownLink2.Clear();
-            item.UnknownLink3.Clear();
-            item.UnknownFloat1 = default(Single);
-            item.UnknownFloat2 = default(Single);
-            item.UnknownInt = default(Int32);
+            item.FleeDistanceGlobal.Clear();
+            item.SafeTimerGlobal.Clear();
+            item.ChanceOfDiversionAnimationGlobal.Clear();
+            item.FleeDistance = default(Single);
+            item.SafeTimer = default(Single);
+            item.ChanceOfDiversionAnimation = default(Single);
         }
         
         #region Mutagen
         public void RemapLinks(INpcFLEE obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
-            obj.UnknownLink1.Relink(mapping);
-            obj.UnknownLink2.Relink(mapping);
-            obj.UnknownLink3.Relink(mapping);
+            obj.FleeDistanceGlobal.Relink(mapping);
+            obj.SafeTimerGlobal.Relink(mapping);
+            obj.ChanceOfDiversionAnimationGlobal.Relink(mapping);
         }
         
         #endregion
@@ -956,12 +956,12 @@ namespace Mutagen.Bethesda.Starfield
             NpcFLEE.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.UnknownLink1 = item.UnknownLink1.Equals(rhs.UnknownLink1);
-            ret.UnknownLink2 = item.UnknownLink2.Equals(rhs.UnknownLink2);
-            ret.UnknownLink3 = item.UnknownLink3.Equals(rhs.UnknownLink3);
-            ret.UnknownFloat1 = item.UnknownFloat1.EqualsWithin(rhs.UnknownFloat1);
-            ret.UnknownFloat2 = item.UnknownFloat2.EqualsWithin(rhs.UnknownFloat2);
-            ret.UnknownInt = item.UnknownInt == rhs.UnknownInt;
+            ret.FleeDistanceGlobal = item.FleeDistanceGlobal.Equals(rhs.FleeDistanceGlobal);
+            ret.SafeTimerGlobal = item.SafeTimerGlobal.Equals(rhs.SafeTimerGlobal);
+            ret.ChanceOfDiversionAnimationGlobal = item.ChanceOfDiversionAnimationGlobal.Equals(rhs.ChanceOfDiversionAnimationGlobal);
+            ret.FleeDistance = item.FleeDistance.EqualsWithin(rhs.FleeDistance);
+            ret.SafeTimer = item.SafeTimer.EqualsWithin(rhs.SafeTimer);
+            ret.ChanceOfDiversionAnimation = item.ChanceOfDiversionAnimation.EqualsWithin(rhs.ChanceOfDiversionAnimation);
         }
         
         public string Print(
@@ -1006,29 +1006,29 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             NpcFLEE.Mask<bool>? printMask = null)
         {
-            if (printMask?.UnknownLink1 ?? true)
+            if (printMask?.FleeDistanceGlobal ?? true)
             {
-                sb.AppendItem(item.UnknownLink1.FormKey, "UnknownLink1");
+                sb.AppendItem(item.FleeDistanceGlobal.FormKey, "FleeDistanceGlobal");
             }
-            if (printMask?.UnknownLink2 ?? true)
+            if (printMask?.SafeTimerGlobal ?? true)
             {
-                sb.AppendItem(item.UnknownLink2.FormKey, "UnknownLink2");
+                sb.AppendItem(item.SafeTimerGlobal.FormKey, "SafeTimerGlobal");
             }
-            if (printMask?.UnknownLink3 ?? true)
+            if (printMask?.ChanceOfDiversionAnimationGlobal ?? true)
             {
-                sb.AppendItem(item.UnknownLink3.FormKey, "UnknownLink3");
+                sb.AppendItem(item.ChanceOfDiversionAnimationGlobal.FormKey, "ChanceOfDiversionAnimationGlobal");
             }
-            if (printMask?.UnknownFloat1 ?? true)
+            if (printMask?.FleeDistance ?? true)
             {
-                sb.AppendItem(item.UnknownFloat1, "UnknownFloat1");
+                sb.AppendItem(item.FleeDistance, "FleeDistance");
             }
-            if (printMask?.UnknownFloat2 ?? true)
+            if (printMask?.SafeTimer ?? true)
             {
-                sb.AppendItem(item.UnknownFloat2, "UnknownFloat2");
+                sb.AppendItem(item.SafeTimer, "SafeTimer");
             }
-            if (printMask?.UnknownInt ?? true)
+            if (printMask?.ChanceOfDiversionAnimation ?? true)
             {
-                sb.AppendItem(item.UnknownInt, "UnknownInt");
+                sb.AppendItem(item.ChanceOfDiversionAnimation, "ChanceOfDiversionAnimation");
             }
         }
         
@@ -1039,29 +1039,29 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.UnknownLink1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.FleeDistanceGlobal) ?? true))
             {
-                if (!lhs.UnknownLink1.Equals(rhs.UnknownLink1)) return false;
+                if (!lhs.FleeDistanceGlobal.Equals(rhs.FleeDistanceGlobal)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.UnknownLink2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.SafeTimerGlobal) ?? true))
             {
-                if (!lhs.UnknownLink2.Equals(rhs.UnknownLink2)) return false;
+                if (!lhs.SafeTimerGlobal.Equals(rhs.SafeTimerGlobal)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.UnknownLink3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.ChanceOfDiversionAnimationGlobal) ?? true))
             {
-                if (!lhs.UnknownLink3.Equals(rhs.UnknownLink3)) return false;
+                if (!lhs.ChanceOfDiversionAnimationGlobal.Equals(rhs.ChanceOfDiversionAnimationGlobal)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.UnknownFloat1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.FleeDistance) ?? true))
             {
-                if (!lhs.UnknownFloat1.EqualsWithin(rhs.UnknownFloat1)) return false;
+                if (!lhs.FleeDistance.EqualsWithin(rhs.FleeDistance)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.UnknownFloat2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.SafeTimer) ?? true))
             {
-                if (!lhs.UnknownFloat2.EqualsWithin(rhs.UnknownFloat2)) return false;
+                if (!lhs.SafeTimer.EqualsWithin(rhs.SafeTimer)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.UnknownInt) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.ChanceOfDiversionAnimation) ?? true))
             {
-                if (lhs.UnknownInt != rhs.UnknownInt) return false;
+                if (!lhs.ChanceOfDiversionAnimation.EqualsWithin(rhs.ChanceOfDiversionAnimation)) return false;
             }
             return true;
         }
@@ -1069,12 +1069,12 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(INpcFLEEGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.UnknownLink1);
-            hash.Add(item.UnknownLink2);
-            hash.Add(item.UnknownLink3);
-            hash.Add(item.UnknownFloat1);
-            hash.Add(item.UnknownFloat2);
-            hash.Add(item.UnknownInt);
+            hash.Add(item.FleeDistanceGlobal);
+            hash.Add(item.SafeTimerGlobal);
+            hash.Add(item.ChanceOfDiversionAnimationGlobal);
+            hash.Add(item.FleeDistance);
+            hash.Add(item.SafeTimer);
+            hash.Add(item.ChanceOfDiversionAnimation);
             return hash.ToHashCode();
         }
         
@@ -1089,9 +1089,9 @@ namespace Mutagen.Bethesda.Starfield
         #region Mutagen
         public IEnumerable<IFormLinkGetter> EnumerateFormLinks(INpcFLEEGetter obj, bool iterateNestedRecords = true)
         {
-            yield return FormLinkInformation.Factory(obj.UnknownLink1);
-            yield return FormLinkInformation.Factory(obj.UnknownLink2);
-            yield return FormLinkInformation.Factory(obj.UnknownLink3);
+            yield return FormLinkInformation.Factory(obj.FleeDistanceGlobal);
+            yield return FormLinkInformation.Factory(obj.SafeTimerGlobal);
+            yield return FormLinkInformation.Factory(obj.ChanceOfDiversionAnimationGlobal);
             yield break;
         }
         
@@ -1110,29 +1110,29 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.UnknownLink1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.FleeDistanceGlobal) ?? true))
             {
-                item.UnknownLink1.SetTo(rhs.UnknownLink1.FormKey);
+                item.FleeDistanceGlobal.SetTo(rhs.FleeDistanceGlobal.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.UnknownLink2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.SafeTimerGlobal) ?? true))
             {
-                item.UnknownLink2.SetTo(rhs.UnknownLink2.FormKey);
+                item.SafeTimerGlobal.SetTo(rhs.SafeTimerGlobal.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.UnknownLink3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.ChanceOfDiversionAnimationGlobal) ?? true))
             {
-                item.UnknownLink3.SetTo(rhs.UnknownLink3.FormKey);
+                item.ChanceOfDiversionAnimationGlobal.SetTo(rhs.ChanceOfDiversionAnimationGlobal.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.UnknownFloat1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.FleeDistance) ?? true))
             {
-                item.UnknownFloat1 = rhs.UnknownFloat1;
+                item.FleeDistance = rhs.FleeDistance;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.UnknownFloat2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.SafeTimer) ?? true))
             {
-                item.UnknownFloat2 = rhs.UnknownFloat2;
+                item.SafeTimer = rhs.SafeTimer;
             }
-            if ((copyMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.UnknownInt) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NpcFLEE_FieldIndex.ChanceOfDiversionAnimation) ?? true))
             {
-                item.UnknownInt = rhs.UnknownInt;
+                item.ChanceOfDiversionAnimation = rhs.ChanceOfDiversionAnimation;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1244,20 +1244,22 @@ namespace Mutagen.Bethesda.Starfield
         {
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownLink1);
+                item: item.FleeDistanceGlobal);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownLink2);
+                item: item.SafeTimerGlobal);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownLink3);
+                item: item.ChanceOfDiversionAnimationGlobal);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.UnknownFloat1);
+                item: item.FleeDistance);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.UnknownFloat2);
-            writer.Write(item.UnknownInt);
+                item: item.SafeTimer);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.ChanceOfDiversionAnimation);
         }
 
         public void Write(
@@ -1298,12 +1300,12 @@ namespace Mutagen.Bethesda.Starfield
             INpcFLEE item,
             MutagenFrame frame)
         {
-            item.UnknownLink1.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownLink2.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownLink3.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.UnknownFloat1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.UnknownFloat2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.UnknownInt = frame.ReadInt32();
+            item.FleeDistanceGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.SafeTimerGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.ChanceOfDiversionAnimationGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.FleeDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.SafeTimer = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.ChanceOfDiversionAnimation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
         }
 
     }
@@ -1370,12 +1372,12 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink1 => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x0, 0x4));
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink2 => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x4, 0x4));
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> UnknownLink3 => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x8, 0x4));
-        public Single UnknownFloat1 => _structData.Slice(0xC, 0x4).Float();
-        public Single UnknownFloat2 => _structData.Slice(0x10, 0x4).Float();
-        public Int32 UnknownInt => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x14, 0x4));
+        public IFormLinkGetter<IGlobalGetter> FleeDistanceGlobal => FormLinkBinaryTranslation.Instance.OverlayFactory<IGlobalGetter>(_package, _structData.Span.Slice(0x0, 0x4));
+        public IFormLinkGetter<IGlobalGetter> SafeTimerGlobal => FormLinkBinaryTranslation.Instance.OverlayFactory<IGlobalGetter>(_package, _structData.Span.Slice(0x4, 0x4));
+        public IFormLinkGetter<IGlobalGetter> ChanceOfDiversionAnimationGlobal => FormLinkBinaryTranslation.Instance.OverlayFactory<IGlobalGetter>(_package, _structData.Span.Slice(0x8, 0x4));
+        public Single FleeDistance => _structData.Slice(0xC, 0x4).Float();
+        public Single SafeTimer => _structData.Slice(0x10, 0x4).Float();
+        public Single ChanceOfDiversionAnimation => _structData.Slice(0x14, 0x4).Float();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
