@@ -23,3 +23,13 @@ partial class Planet
         Unknown31 = 0x8000_0000,
     }
 }
+
+partial class AddedWorldspace
+{
+    // xEdit (PNDT EOVR 'Edited Worldspaces'): 'Type' 0 = Removed, 1 = Added. All 8 entries in the official plugins are 1.
+    public enum ChangeType : byte
+    {
+        Removed = 0,
+        Added = 1,
+    }
+}
