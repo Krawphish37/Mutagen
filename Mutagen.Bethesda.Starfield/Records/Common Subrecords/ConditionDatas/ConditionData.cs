@@ -20,6 +20,56 @@ public static class ConditionDataExtension
         return value is not null;
     }
 
+    /// <summary>
+    /// Parameter #3 as the quest alias the condition runs on, when Run On is Quest Alias (else null).
+    /// </summary>
+    public static int? GetQuestAlias(this IConditionDataGetter conditionData)
+        => conditionData.RunOnType == Condition.RunOnType.QuestAlias ? conditionData.ParameterThree : null;
+
+    /// <summary>
+    /// Parameter #3 as the package data input the condition runs on, when Run On is Package Data (else null).
+    /// </summary>
+    public static int? GetPackageDataInput(this IConditionDataGetter conditionData)
+        => conditionData.RunOnType == Condition.RunOnType.PackageData ? conditionData.ParameterThree : null;
+
+    /// <summary>
+    /// Parameter #3 as the event member the condition runs on, when Run On is Event Data (else null); -1 is None.
+    /// </summary>
+    public static GetEventDataConditionData.EventMember? GetEventDataMember(this IConditionDataGetter conditionData)
+    {
+        if (conditionData.RunOnType != Condition.RunOnType.EventData) return null;
+        return conditionData.ParameterThree == -1
+            ? GetEventDataConditionData.EventMember.None
+            : (GetEventDataConditionData.EventMember)conditionData.ParameterThree;
+    }
+
+    /// <summary>
+    /// Sets Run On to Quest Alias and Parameter #3 to the alias.
+    /// </summary>
+    public static void SetQuestAlias(this IConditionData conditionData, int alias)
+    {
+        conditionData.RunOnType = Condition.RunOnType.QuestAlias;
+        conditionData.ParameterThree = alias;
+    }
+
+    /// <summary>
+    /// Sets Run On to Package Data and Parameter #3 to the input.
+    /// </summary>
+    public static void SetPackageDataInput(this IConditionData conditionData, int input)
+    {
+        conditionData.RunOnType = Condition.RunOnType.PackageData;
+        conditionData.ParameterThree = input;
+    }
+
+    /// <summary>
+    /// Sets Run On to Event Data and Parameter #3 to the member.
+    /// </summary>
+    public static void SetEventDataMember(this IConditionData conditionData, GetEventDataConditionData.EventMember member)
+    {
+        conditionData.RunOnType = Condition.RunOnType.EventData;
+        conditionData.ParameterThree = (int)member;
+    }
+
     public static bool TrySetParameter1(this IConditionParameters conditionData, object? value)
     {
         try
@@ -87,9 +137,9 @@ partial class ConditionDataBinaryOverlay
 {
     public Condition.RunOnType RunOnType => (Condition.RunOnType)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0xC, 0x4));
     public IFormLinkGetter<IStarfieldMajorRecordGetter> Reference => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x10, 0x4));
-    public Int32 Unknown3 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x14, 0x4));
+    public Int32 ParameterThree => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x14, 0x4));
     public IFormLinkGetter<IKeywordGetter> LinkedReferenceKeyword =>
-        RunOnType == Condition.RunOnType.LinkedReference && Unknown3 != 0 && Unknown3 != -1
+        RunOnType == Condition.RunOnType.LinkedReference && ParameterThree != 0 && ParameterThree != -1
             ? FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _structData.Span.Slice(0x14, 0x4))
             : FormLink<IKeywordGetter>.Null;
 }

@@ -31,7 +31,7 @@ public class ConditionLinkedKeywordTests
             var data = rec.Conditions.Single().Data;
             data.RunOnType.ShouldBe(Condition.RunOnType.LinkedReference);
             data.LinkedReferenceKeyword.FormKey.ID.ShouldBe(0x2A6C3Eu);
-            data.Unknown3.ShouldBe(0x2A6C3E);
+            data.ParameterThree.ShouldBe(0x2A6C3E);
             rec.EnumerateFormLinks().Select(l => l.FormKey.ID).ShouldContain(0x2A6C3Eu);
         }
     }
@@ -43,7 +43,7 @@ public class ConditionLinkedKeywordTests
         {
             var data = rec.Conditions.Single().Data;
             data.LinkedReferenceKeyword.IsNull.ShouldBeTrue();
-            data.Unknown3.ShouldBe(3);
+            data.ParameterThree.ShouldBe(3);
             rec.EnumerateFormLinks().Select(l => l.FormKey.ID).ShouldNotContain(3u);
         }
     }
