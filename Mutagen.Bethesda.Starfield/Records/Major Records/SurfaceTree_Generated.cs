@@ -72,26 +72,14 @@ namespace Mutagen.Bethesda.Starfield
 
         #endregion
         #region CNAM
+        public UInt32? CNAM { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _CNAM;
-        public MemorySlice<Byte>? CNAM
-        {
-            get => this._CNAM;
-            set => this._CNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ISurfaceTreeGetter.CNAM => this.CNAM;
+        UInt32? ISurfaceTreeGetter.CNAM => this.CNAM;
         #endregion
-        #region DNAM
+        #region EdgeSize
+        public UInt32? EdgeSize { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _DNAM;
-        public MemorySlice<Byte>? DNAM
-        {
-            get => this._DNAM;
-            set => this._DNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ISurfaceTreeGetter.DNAM => this.DNAM;
+        UInt32? ISurfaceTreeGetter.EdgeSize => this.EdgeSize;
         #endregion
         #region SurfacePatterns
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -175,7 +163,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
                 this.CNAM = initialValue;
-                this.DNAM = initialValue;
+                this.EdgeSize = initialValue;
                 this.SurfacePatterns = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.GNAM = initialValue;
                 this.SurfacePatterns2 = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
@@ -193,7 +181,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem StarfieldMajorRecordFlags,
                 TItem Components,
                 TItem CNAM,
-                TItem DNAM,
+                TItem EdgeSize,
                 TItem SurfacePatterns,
                 TItem GNAM,
                 TItem SurfacePatterns2,
@@ -210,7 +198,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
                 this.CNAM = CNAM;
-                this.DNAM = DNAM;
+                this.EdgeSize = EdgeSize;
                 this.SurfacePatterns = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(SurfacePatterns, []);
                 this.GNAM = GNAM;
                 this.SurfacePatterns2 = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(SurfacePatterns2, []);
@@ -229,7 +217,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
             public TItem CNAM;
-            public TItem DNAM;
+            public TItem EdgeSize;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? SurfacePatterns;
             public TItem GNAM;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? SurfacePatterns2;
@@ -250,7 +238,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.Components, rhs.Components)) return false;
                 if (!object.Equals(this.CNAM, rhs.CNAM)) return false;
-                if (!object.Equals(this.DNAM, rhs.DNAM)) return false;
+                if (!object.Equals(this.EdgeSize, rhs.EdgeSize)) return false;
                 if (!object.Equals(this.SurfacePatterns, rhs.SurfacePatterns)) return false;
                 if (!object.Equals(this.GNAM, rhs.GNAM)) return false;
                 if (!object.Equals(this.SurfacePatterns2, rhs.SurfacePatterns2)) return false;
@@ -263,7 +251,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.Components);
                 hash.Add(this.CNAM);
-                hash.Add(this.DNAM);
+                hash.Add(this.EdgeSize);
                 hash.Add(this.SurfacePatterns);
                 hash.Add(this.GNAM);
                 hash.Add(this.SurfacePatterns2);
@@ -292,7 +280,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.CNAM)) return false;
-                if (!eval(this.DNAM)) return false;
+                if (!eval(this.EdgeSize)) return false;
                 if (this.SurfacePatterns != null)
                 {
                     if (!eval(this.SurfacePatterns.Overall)) return false;
@@ -339,7 +327,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.CNAM)) return true;
-                if (eval(this.DNAM)) return true;
+                if (eval(this.EdgeSize)) return true;
                 if (this.SurfacePatterns != null)
                 {
                     if (eval(this.SurfacePatterns.Overall)) return true;
@@ -396,7 +384,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.CNAM = eval(this.CNAM);
-                obj.DNAM = eval(this.DNAM);
+                obj.EdgeSize = eval(this.EdgeSize);
                 if (SurfacePatterns != null)
                 {
                     obj.SurfacePatterns = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.SurfacePatterns.Overall), []);
@@ -469,9 +457,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(CNAM, "CNAM");
                     }
-                    if (printMask?.DNAM ?? true)
+                    if (printMask?.EdgeSize ?? true)
                     {
-                        sb.AppendItem(DNAM, "DNAM");
+                        sb.AppendItem(EdgeSize, "EdgeSize");
                     }
                     if ((printMask?.SurfacePatterns?.Overall ?? true)
                         && SurfacePatterns is {} SurfacePatternsItem)
@@ -540,7 +528,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
             public Exception? CNAM;
-            public Exception? DNAM;
+            public Exception? EdgeSize;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? SurfacePatterns;
             public Exception? GNAM;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? SurfacePatterns2;
@@ -558,8 +546,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Components;
                     case SurfaceTree_FieldIndex.CNAM:
                         return CNAM;
-                    case SurfaceTree_FieldIndex.DNAM:
-                        return DNAM;
+                    case SurfaceTree_FieldIndex.EdgeSize:
+                        return EdgeSize;
                     case SurfaceTree_FieldIndex.SurfacePatterns:
                         return SurfacePatterns;
                     case SurfaceTree_FieldIndex.GNAM:
@@ -586,8 +574,8 @@ namespace Mutagen.Bethesda.Starfield
                     case SurfaceTree_FieldIndex.CNAM:
                         this.CNAM = ex;
                         break;
-                    case SurfaceTree_FieldIndex.DNAM:
-                        this.DNAM = ex;
+                    case SurfaceTree_FieldIndex.EdgeSize:
+                        this.EdgeSize = ex;
                         break;
                     case SurfaceTree_FieldIndex.SurfacePatterns:
                         this.SurfacePatterns = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
@@ -621,8 +609,8 @@ namespace Mutagen.Bethesda.Starfield
                     case SurfaceTree_FieldIndex.CNAM:
                         this.CNAM = (Exception?)obj;
                         break;
-                    case SurfaceTree_FieldIndex.DNAM:
-                        this.DNAM = (Exception?)obj;
+                    case SurfaceTree_FieldIndex.EdgeSize:
+                        this.EdgeSize = (Exception?)obj;
                         break;
                     case SurfaceTree_FieldIndex.SurfacePatterns:
                         this.SurfacePatterns = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
@@ -650,7 +638,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (Components != null) return true;
                 if (CNAM != null) return true;
-                if (DNAM != null) return true;
+                if (EdgeSize != null) return true;
                 if (SurfacePatterns != null) return true;
                 if (GNAM != null) return true;
                 if (SurfacePatterns2 != null) return true;
@@ -704,7 +692,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(CNAM, "CNAM");
                 }
                 {
-                    sb.AppendItem(DNAM, "DNAM");
+                    sb.AppendItem(EdgeSize, "EdgeSize");
                 }
                 if (SurfacePatterns is {} SurfacePatternsItem)
                 {
@@ -765,7 +753,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
                 ret.CNAM = this.CNAM.Combine(rhs.CNAM);
-                ret.DNAM = this.DNAM.Combine(rhs.DNAM);
+                ret.EdgeSize = this.EdgeSize.Combine(rhs.EdgeSize);
                 ret.SurfacePatterns = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.SurfacePatterns?.Overall, rhs.SurfacePatterns?.Overall), Noggog.ExceptionExt.Combine(this.SurfacePatterns?.Specific, rhs.SurfacePatterns?.Specific));
                 ret.GNAM = this.GNAM.Combine(rhs.GNAM);
                 ret.SurfacePatterns2 = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.SurfacePatterns2?.Overall, rhs.SurfacePatterns2?.Overall), Noggog.ExceptionExt.Combine(this.SurfacePatterns2?.Specific, rhs.SurfacePatterns2?.Specific));
@@ -795,7 +783,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public AComponent.TranslationMask? Components;
             public bool CNAM;
-            public bool DNAM;
+            public bool EdgeSize;
             public bool SurfacePatterns;
             public bool GNAM;
             public bool SurfacePatterns2;
@@ -810,7 +798,7 @@ namespace Mutagen.Bethesda.Starfield
                 : base(defaultOn, onOverall)
             {
                 this.CNAM = defaultOn;
-                this.DNAM = defaultOn;
+                this.EdgeSize = defaultOn;
                 this.SurfacePatterns = defaultOn;
                 this.GNAM = defaultOn;
                 this.SurfacePatterns2 = defaultOn;
@@ -825,7 +813,7 @@ namespace Mutagen.Bethesda.Starfield
                 base.GetCrystal(ret);
                 ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
                 ret.Add((CNAM, null));
-                ret.Add((DNAM, null));
+                ret.Add((EdgeSize, null));
                 ret.Add((SurfacePatterns, null));
                 ret.Add((GNAM, null));
                 ret.Add((SurfacePatterns2, null));
@@ -984,8 +972,8 @@ namespace Mutagen.Bethesda.Starfield
         ISurfaceTreeGetter
     {
         new ExtendedList<AComponent> Components { get; }
-        new MemorySlice<Byte>? CNAM { get; set; }
-        new MemorySlice<Byte>? DNAM { get; set; }
+        new UInt32? CNAM { get; set; }
+        new UInt32? EdgeSize { get; set; }
         new IFormLinkGetter<ISurfacePatternGetter>[]? SurfacePatterns { get; set; }
         new MemorySlice<Byte>? GNAM { get; set; }
         new IFormLinkGetter<ISurfacePatternGetter>[]? SurfacePatterns2 { get; set; }
@@ -1011,8 +999,8 @@ namespace Mutagen.Bethesda.Starfield
     {
         static new ILoquiRegistration StaticRegistration => SurfaceTree_Registration.Instance;
         IReadOnlyList<IAComponentGetter> Components { get; }
-        ReadOnlyMemorySlice<Byte>? CNAM { get; }
-        ReadOnlyMemorySlice<Byte>? DNAM { get; }
+        UInt32? CNAM { get; }
+        UInt32? EdgeSize { get; }
         ReadOnlyMemorySlice<IFormLinkGetter<ISurfacePatternGetter>>? SurfacePatterns { get; }
         ReadOnlyMemorySlice<Byte>? GNAM { get; }
         ReadOnlyMemorySlice<IFormLinkGetter<ISurfacePatternGetter>>? SurfacePatterns2 { get; }
@@ -1196,7 +1184,7 @@ namespace Mutagen.Bethesda.Starfield
         StarfieldMajorRecordFlags = 6,
         Components = 7,
         CNAM = 8,
-        DNAM = 9,
+        EdgeSize = 9,
         SurfacePatterns = 10,
         GNAM = 11,
         SurfacePatterns2 = 12,
@@ -1301,7 +1289,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.Components.Clear();
             item.CNAM = default;
-            item.DNAM = default;
+            item.EdgeSize = default;
             item.SurfacePatterns = null;
             item.GNAM = default;
             item.SurfacePatterns2 = null;
@@ -1422,8 +1410,8 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Components,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.CNAM = MemorySliceExt.SequenceEqual(item.CNAM, rhs.CNAM);
-            ret.DNAM = MemorySliceExt.SequenceEqual(item.DNAM, rhs.DNAM);
+            ret.CNAM = item.CNAM == rhs.CNAM;
+            ret.EdgeSize = item.EdgeSize == rhs.EdgeSize;
             ret.SurfacePatterns = EqualsMaskHelper.SpanEqualsHelper<IFormLinkGetter<ISurfacePatternGetter>>(
                 item.SurfacePatterns,
                 rhs.SurfacePatterns,
@@ -1503,12 +1491,12 @@ namespace Mutagen.Bethesda.Starfield
             if ((printMask?.CNAM ?? true)
                 && item.CNAM is {} CNAMItem)
             {
-                sb.AppendLine($"CNAM => {SpanExt.ToHexString(CNAMItem)}");
+                sb.AppendItem(CNAMItem, "CNAM");
             }
-            if ((printMask?.DNAM ?? true)
-                && item.DNAM is {} DNAMItem)
+            if ((printMask?.EdgeSize ?? true)
+                && item.EdgeSize is {} EdgeSizeItem)
             {
-                sb.AppendLine($"DNAM => {SpanExt.ToHexString(DNAMItem)}");
+                sb.AppendItem(EdgeSizeItem, "EdgeSize");
             }
             if ((printMask?.SurfacePatterns?.Overall ?? true)
                 && item.SurfacePatterns is {} SurfacePatternsItem)
@@ -1611,11 +1599,11 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)SurfaceTree_FieldIndex.CNAM) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.CNAM, rhs.CNAM)) return false;
+                if (lhs.CNAM != rhs.CNAM) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SurfaceTree_FieldIndex.DNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SurfaceTree_FieldIndex.EdgeSize) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.DNAM, rhs.DNAM)) return false;
+                if (lhs.EdgeSize != rhs.EdgeSize) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SurfaceTree_FieldIndex.SurfacePatterns) ?? true))
             {
@@ -1675,13 +1663,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(subItem);
             }
-            if (item.CNAM is {} CNAMItem)
+            if (item.CNAM is {} CNAMitem)
             {
-                hash.AddBytes(CNAMItem);
+                hash.Add(CNAMitem);
             }
-            if (item.DNAM is {} DNAMItem)
+            if (item.EdgeSize is {} EdgeSizeitem)
             {
-                hash.AddBytes(DNAMItem);
+                hash.Add(EdgeSizeitem);
             }
             if (item.SurfacePatterns is {} SurfacePatternsitem)
             {
@@ -1893,25 +1881,11 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((copyMask?.GetShouldTranslate((int)SurfaceTree_FieldIndex.CNAM) ?? true))
             {
-                if(rhs.CNAM is {} CNAMrhs)
-                {
-                    item.CNAM = CNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.CNAM = default;
-                }
+                item.CNAM = rhs.CNAM;
             }
-            if ((copyMask?.GetShouldTranslate((int)SurfaceTree_FieldIndex.DNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SurfaceTree_FieldIndex.EdgeSize) ?? true))
             {
-                if(rhs.DNAM is {} DNAMrhs)
-                {
-                    item.DNAM = DNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.DNAM = default;
-                }
+                item.EdgeSize = rhs.EdgeSize;
             }
             if ((copyMask?.GetShouldTranslate((int)SurfaceTree_FieldIndex.SurfacePatterns) ?? true))
             {
@@ -2127,13 +2101,13 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
                 item: item.CNAM,
                 header: translationParams.ConvertToCustom(RecordTypes.CNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.DNAM,
+                item: item.EdgeSize,
                 header: translationParams.ConvertToCustom(RecordTypes.DNAM));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISurfacePatternGetter>>.Instance.Write(
                 writer: writer,
@@ -2253,19 +2227,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.CNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.CNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    item.CNAM = frame.ReadUInt32();
                     return (int)SurfaceTree_FieldIndex.CNAM;
                 }
                 case RecordTypeInts.DNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)SurfaceTree_FieldIndex.DNAM;
+                    item.EdgeSize = frame.ReadUInt32();
+                    return (int)SurfaceTree_FieldIndex.EdgeSize;
                 }
                 case RecordTypeInts.FNAM:
                 {
                     if (!lastParsed.ParsedIndex.HasValue
-                        || lastParsed.ParsedIndex.Value <= (int)SurfaceTree_FieldIndex.DNAM)
+                        || lastParsed.ParsedIndex.Value <= (int)SurfaceTree_FieldIndex.EdgeSize)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SurfacePatterns = 
@@ -2423,11 +2397,11 @@ namespace Mutagen.Bethesda.Starfield
         public IReadOnlyList<IAComponentGetter> Components { get; private set; } = [];
         #region CNAM
         private int? _CNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? CNAM => _CNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _CNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        public UInt32? CNAM => _CNAMLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _CNAMLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region DNAM
-        private int? _DNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? DNAM => _DNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region EdgeSize
+        private int? _EdgeSizeLocation;
+        public UInt32? EdgeSize => _EdgeSizeLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _EdgeSizeLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
         #region SurfacePatterns
         private int? _SurfacePatternsLengthOverride;
@@ -2546,13 +2520,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DNAM:
                 {
-                    _DNAMLocation = (stream.Position - offset);
-                    return (int)SurfaceTree_FieldIndex.DNAM;
+                    _EdgeSizeLocation = (stream.Position - offset);
+                    return (int)SurfaceTree_FieldIndex.EdgeSize;
                 }
                 case RecordTypeInts.FNAM:
                 {
                     if (!lastParsed.ParsedIndex.HasValue
-                        || lastParsed.ParsedIndex.Value <= (int)SurfaceTree_FieldIndex.DNAM)
+                        || lastParsed.ParsedIndex.Value <= (int)SurfaceTree_FieldIndex.EdgeSize)
                     {
                         _SurfacePatternsLocation = (stream.Position - offset);
                         _SurfacePatternsLengthOverride = lastParsed.LengthOverride;

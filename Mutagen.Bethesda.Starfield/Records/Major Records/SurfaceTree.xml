@@ -6,8 +6,8 @@
       <!-- The two FNAM grids and the two GNAM blocks are told apart only by their order.
            SurfacePatterns2 written without SurfacePatterns reads back as SurfacePatterns,
            and GNAM2 written without SurfacePatterns2 reads back as GNAM. -->
-      <ByteArray name="CNAM" recordType="CNAM" unknown="true" />
-      <ByteArray name="DNAM" recordType="DNAM" unknown="true" />
+      <UInt32 name="CNAM" recordType="CNAM" unknown="true" />
+      <UInt32 name="EdgeSize" recordType="DNAM" />
       <Array name="SurfacePatterns" recordType="FNAM" overflowRecordType="XXXX" fixedSize="65536" >
         <FormLink refName="SurfacePattern" />
       </Array>
