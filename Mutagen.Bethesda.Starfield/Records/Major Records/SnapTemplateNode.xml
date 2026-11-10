@@ -10,9 +10,9 @@
       <List name="Keywords" counterRecType="KSIZ" recordType="KWDA">
         <FormLink refName="Keyword" />
       </List>
-      <Color name="CNAM" recordType="CNAM" unknown="true" binaryType="Alpha" />
-      <UInt32 name="FNAM" recordType="FNAM" unknown="true" />
-      <UInt32 name="SNST" recordType="SNST" unknown="true" />
+      <Color name="Color" recordType="CNAM" binaryType="Alpha" />
+      <Enum name="Flags" enumName="SnapTemplateNode.Flag" byteLength="4" recordType="FNAM" />
+      <Enum name="StairwayType" enumName="SnapTemplateNode.StairwayTypeEnum" byteLength="4" recordType="SNST" />
       <List name="AdjacentSnapNodes" >
         <FormLink recordType="NNAM" refName="SnapTemplateNode" />
       </List>

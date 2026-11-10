@@ -2611,6 +2611,12 @@
     <Compile Include="Records\Major Records\TerminalMenuItem.cs">
       <DependentUpon>TerminalMenu.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\SnapTemplate.cs">
+      <DependentUpon>SnapTemplate.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\SnapTemplateNode.cs">
+      <DependentUpon>SnapTemplateNode.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\VoiceType.cs">
       <DependentUpon>VoiceType.xml</DependentUpon>
     </Compile>

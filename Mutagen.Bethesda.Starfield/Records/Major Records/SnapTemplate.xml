@@ -6,12 +6,12 @@
       <FormLink name="Parent" refName="SnapTemplate" recordType="PNAM" />
       <RefList name="Nodes" refName="SnapNodeEntry" />
       <RefList name="ParentNodes" refName="SnapParentNodeEntry" />
-      <Array name="BNAM" fixedSize="6" unknown="true" recordType="BNAM" >
+      <Array name="BoundOverride" fixedSize="6" recordType="BNAM" >
         <Float />
       </Array>
       <UInt32 name="NextNodeID" recordType="INAM" />
-      <UInt32 name="STPT" recordType="STPT" unknown="true" />
-      <String name="CNAM" recordType="CNAM" unknown="true" />
+      <Enum name="SnapPieceType" enumName="SnapTemplate.SnapPieceTypeEnum" byteLength="4" recordType="STPT" />
+      <String name="TraversalCategoryName" recordType="CNAM" />
       <RefList name="SnapTemplateRnamTraversal" refName="SnapTemplateRnamTraversal" />
     </Fields>
   </Object>
@@ -21,7 +21,8 @@
       <FormLink name="Node" refName="SnapTemplateNode" />
       <P3Float name="Offset" />
       <P3Float name="Rotation" />
-      <UInt64 name="Unknown" />
+      <UInt32 name="DisplayCaseSlot" />
+      <UInt32 name="Unknown" />
     </Fields>
   </Object>
   <Object name="SnapParentNodeEntry" objType="Subrecord">

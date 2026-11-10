@@ -71,8 +71,11 @@ namespace Mutagen.Bethesda.Starfield
         #region Rotation
         public P3Float Rotation { get; set; } = default(P3Float);
         #endregion
+        #region DisplayCaseSlot
+        public UInt32 DisplayCaseSlot { get; set; } = default(UInt32);
+        #endregion
         #region Unknown
-        public UInt64 Unknown { get; set; } = default(UInt64);
+        public UInt32 Unknown { get; set; } = default(UInt32);
         #endregion
 
         #region To String
@@ -117,6 +120,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Node = initialValue;
                 this.Offset = initialValue;
                 this.Rotation = initialValue;
+                this.DisplayCaseSlot = initialValue;
                 this.Unknown = initialValue;
             }
 
@@ -125,12 +129,14 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Node,
                 TItem Offset,
                 TItem Rotation,
+                TItem DisplayCaseSlot,
                 TItem Unknown)
             {
                 this.NodeID = NodeID;
                 this.Node = Node;
                 this.Offset = Offset;
                 this.Rotation = Rotation;
+                this.DisplayCaseSlot = DisplayCaseSlot;
                 this.Unknown = Unknown;
             }
 
@@ -147,6 +153,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Node;
             public TItem Offset;
             public TItem Rotation;
+            public TItem DisplayCaseSlot;
             public TItem Unknown;
             #endregion
 
@@ -164,6 +171,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Node, rhs.Node)) return false;
                 if (!object.Equals(this.Offset, rhs.Offset)) return false;
                 if (!object.Equals(this.Rotation, rhs.Rotation)) return false;
+                if (!object.Equals(this.DisplayCaseSlot, rhs.DisplayCaseSlot)) return false;
                 if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 return true;
             }
@@ -174,6 +182,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Node);
                 hash.Add(this.Offset);
                 hash.Add(this.Rotation);
+                hash.Add(this.DisplayCaseSlot);
                 hash.Add(this.Unknown);
                 return hash.ToHashCode();
             }
@@ -187,6 +196,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Node)) return false;
                 if (!eval(this.Offset)) return false;
                 if (!eval(this.Rotation)) return false;
+                if (!eval(this.DisplayCaseSlot)) return false;
                 if (!eval(this.Unknown)) return false;
                 return true;
             }
@@ -199,6 +209,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Node)) return true;
                 if (eval(this.Offset)) return true;
                 if (eval(this.Rotation)) return true;
+                if (eval(this.DisplayCaseSlot)) return true;
                 if (eval(this.Unknown)) return true;
                 return false;
             }
@@ -218,6 +229,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Node = eval(this.Node);
                 obj.Offset = eval(this.Offset);
                 obj.Rotation = eval(this.Rotation);
+                obj.DisplayCaseSlot = eval(this.DisplayCaseSlot);
                 obj.Unknown = eval(this.Unknown);
             }
             #endregion
@@ -253,6 +265,10 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Rotation, "Rotation");
                     }
+                    if (printMask?.DisplayCaseSlot ?? true)
+                    {
+                        sb.AppendItem(DisplayCaseSlot, "DisplayCaseSlot");
+                    }
                     if (printMask?.Unknown ?? true)
                     {
                         sb.AppendItem(Unknown, "Unknown");
@@ -285,6 +301,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Node;
             public Exception? Offset;
             public Exception? Rotation;
+            public Exception? DisplayCaseSlot;
             public Exception? Unknown;
             #endregion
 
@@ -302,6 +319,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Offset;
                     case SnapNodeEntry_FieldIndex.Rotation:
                         return Rotation;
+                    case SnapNodeEntry_FieldIndex.DisplayCaseSlot:
+                        return DisplayCaseSlot;
                     case SnapNodeEntry_FieldIndex.Unknown:
                         return Unknown;
                     default:
@@ -325,6 +344,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case SnapNodeEntry_FieldIndex.Rotation:
                         this.Rotation = ex;
+                        break;
+                    case SnapNodeEntry_FieldIndex.DisplayCaseSlot:
+                        this.DisplayCaseSlot = ex;
                         break;
                     case SnapNodeEntry_FieldIndex.Unknown:
                         this.Unknown = ex;
@@ -351,6 +373,9 @@ namespace Mutagen.Bethesda.Starfield
                     case SnapNodeEntry_FieldIndex.Rotation:
                         this.Rotation = (Exception?)obj;
                         break;
+                    case SnapNodeEntry_FieldIndex.DisplayCaseSlot:
+                        this.DisplayCaseSlot = (Exception?)obj;
+                        break;
                     case SnapNodeEntry_FieldIndex.Unknown:
                         this.Unknown = (Exception?)obj;
                         break;
@@ -366,6 +391,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Node != null) return true;
                 if (Offset != null) return true;
                 if (Rotation != null) return true;
+                if (DisplayCaseSlot != null) return true;
                 if (Unknown != null) return true;
                 return false;
             }
@@ -405,6 +431,9 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Rotation, "Rotation");
                 }
                 {
+                    sb.AppendItem(DisplayCaseSlot, "DisplayCaseSlot");
+                }
+                {
                     sb.AppendItem(Unknown, "Unknown");
                 }
             }
@@ -419,6 +448,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Node = this.Node.Combine(rhs.Node);
                 ret.Offset = this.Offset.Combine(rhs.Offset);
                 ret.Rotation = this.Rotation.Combine(rhs.Rotation);
+                ret.DisplayCaseSlot = this.DisplayCaseSlot.Combine(rhs.DisplayCaseSlot);
                 ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 return ret;
             }
@@ -447,6 +477,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Node;
             public bool Offset;
             public bool Rotation;
+            public bool DisplayCaseSlot;
             public bool Unknown;
             #endregion
 
@@ -461,6 +492,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Node = defaultOn;
                 this.Offset = defaultOn;
                 this.Rotation = defaultOn;
+                this.DisplayCaseSlot = defaultOn;
                 this.Unknown = defaultOn;
             }
 
@@ -481,6 +513,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Node, null));
                 ret.Add((Offset, null));
                 ret.Add((Rotation, null));
+                ret.Add((DisplayCaseSlot, null));
                 ret.Add((Unknown, null));
             }
 
@@ -564,7 +597,8 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<ISnapTemplateNodeGetter> Node { get; set; }
         new P3Float Offset { get; set; }
         new P3Float Rotation { get; set; }
-        new UInt64 Unknown { get; set; }
+        new UInt32 DisplayCaseSlot { get; set; }
+        new UInt32 Unknown { get; set; }
     }
 
     public partial interface ISnapNodeEntryGetter :
@@ -584,7 +618,8 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<ISnapTemplateNodeGetter> Node { get; }
         P3Float Offset { get; }
         P3Float Rotation { get; }
-        UInt64 Unknown { get; }
+        UInt32 DisplayCaseSlot { get; }
+        UInt32 Unknown { get; }
 
     }
 
@@ -758,7 +793,8 @@ namespace Mutagen.Bethesda.Starfield
         Node = 1,
         Offset = 2,
         Rotation = 3,
-        Unknown = 4,
+        DisplayCaseSlot = 4,
+        Unknown = 5,
     }
     #endregion
 
@@ -769,9 +805,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 5;
+        public const ushort AdditionalFieldCount = 6;
 
-        public const ushort FieldCount = 5;
+        public const ushort FieldCount = 6;
 
         public static readonly Type MaskType = typeof(SnapNodeEntry.Mask<>);
 
@@ -848,7 +884,8 @@ namespace Mutagen.Bethesda.Starfield
             item.Node.Clear();
             item.Offset = default(P3Float);
             item.Rotation = default(P3Float);
-            item.Unknown = default(UInt64);
+            item.DisplayCaseSlot = default(UInt32);
+            item.Unknown = default(UInt32);
         }
         
         #region Mutagen
@@ -907,6 +944,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Node = item.Node.Equals(rhs.Node);
             ret.Offset = item.Offset.Equals(rhs.Offset);
             ret.Rotation = item.Rotation.Equals(rhs.Rotation);
+            ret.DisplayCaseSlot = item.DisplayCaseSlot == rhs.DisplayCaseSlot;
             ret.Unknown = item.Unknown == rhs.Unknown;
         }
         
@@ -968,6 +1006,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Rotation, "Rotation");
             }
+            if (printMask?.DisplayCaseSlot ?? true)
+            {
+                sb.AppendItem(item.DisplayCaseSlot, "DisplayCaseSlot");
+            }
             if (printMask?.Unknown ?? true)
             {
                 sb.AppendItem(item.Unknown, "Unknown");
@@ -997,6 +1039,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Rotation.Equals(rhs.Rotation)) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)SnapNodeEntry_FieldIndex.DisplayCaseSlot) ?? true))
+            {
+                if (lhs.DisplayCaseSlot != rhs.DisplayCaseSlot) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)SnapNodeEntry_FieldIndex.Unknown) ?? true))
             {
                 if (lhs.Unknown != rhs.Unknown) return false;
@@ -1011,6 +1057,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Node);
             hash.Add(item.Offset);
             hash.Add(item.Rotation);
+            hash.Add(item.DisplayCaseSlot);
             hash.Add(item.Unknown);
             return hash.ToHashCode();
         }
@@ -1060,6 +1107,10 @@ namespace Mutagen.Bethesda.Starfield
             if ((copyMask?.GetShouldTranslate((int)SnapNodeEntry_FieldIndex.Rotation) ?? true))
             {
                 item.Rotation = rhs.Rotation;
+            }
+            if ((copyMask?.GetShouldTranslate((int)SnapNodeEntry_FieldIndex.DisplayCaseSlot) ?? true))
+            {
+                item.DisplayCaseSlot = rhs.DisplayCaseSlot;
             }
             if ((copyMask?.GetShouldTranslate((int)SnapNodeEntry_FieldIndex.Unknown) ?? true))
             {
@@ -1183,6 +1234,7 @@ namespace Mutagen.Bethesda.Starfield
             P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.Rotation);
+            writer.Write(item.DisplayCaseSlot);
             writer.Write(item.Unknown);
         }
 
@@ -1228,7 +1280,8 @@ namespace Mutagen.Bethesda.Starfield
             item.Node.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.Offset = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Rotation = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown = frame.ReadUInt64();
+            item.DisplayCaseSlot = frame.ReadUInt32();
+            item.Unknown = frame.ReadUInt32();
         }
 
     }
@@ -1299,7 +1352,8 @@ namespace Mutagen.Bethesda.Starfield
         public IFormLinkGetter<ISnapTemplateNodeGetter> Node => FormLinkBinaryTranslation.Instance.OverlayFactory<ISnapTemplateNodeGetter>(_package, _structData.Span.Slice(0x4, 0x4));
         public P3Float Offset => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x8, 0xC));
         public P3Float Rotation => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x14, 0xC));
-        public UInt64 Unknown => BinaryPrimitives.ReadUInt64LittleEndian(_structData.Slice(0x20, 0x8));
+        public UInt32 DisplayCaseSlot => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x20, 0x4));
+        public UInt32 Unknown => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x24, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

@@ -109,17 +109,17 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region BNAM
+        #region BoundOverride
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Single[]? _BNAM;
-        public Single[]? BNAM
+        private Single[]? _BoundOverride;
+        public Single[]? BoundOverride
         {
-            get => this._BNAM;
-            set => this._BNAM = value;
+            get => this._BoundOverride;
+            set => this._BoundOverride = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Single>? ISnapTemplateGetter.BNAM => _BNAM;
+        ReadOnlyMemorySlice<Single>? ISnapTemplateGetter.BoundOverride => _BoundOverride;
         #endregion
 
         #endregion
@@ -128,15 +128,15 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         UInt32? ISnapTemplateGetter.NextNodeID => this.NextNodeID;
         #endregion
-        #region STPT
-        public UInt32? STPT { get; set; }
+        #region SnapPieceType
+        public SnapTemplate.SnapPieceTypeEnum? SnapPieceType { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? ISnapTemplateGetter.STPT => this.STPT;
+        SnapTemplate.SnapPieceTypeEnum? ISnapTemplateGetter.SnapPieceType => this.SnapPieceType;
         #endregion
-        #region CNAM
-        public String? CNAM { get; set; }
+        #region TraversalCategoryName
+        public String? TraversalCategoryName { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? ISnapTemplateGetter.CNAM => this.CNAM;
+        String? ISnapTemplateGetter.TraversalCategoryName => this.TraversalCategoryName;
         #endregion
         #region SnapTemplateRnamTraversal
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -181,10 +181,10 @@ namespace Mutagen.Bethesda.Starfield
                 this.Parent = initialValue;
                 this.Nodes = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SnapNodeEntry.Mask<TItem>?>>?>(initialValue, []);
                 this.ParentNodes = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SnapParentNodeEntry.Mask<TItem>?>>?>(initialValue, []);
-                this.BNAM = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
+                this.BoundOverride = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.NextNodeID = initialValue;
-                this.STPT = initialValue;
-                this.CNAM = initialValue;
+                this.SnapPieceType = initialValue;
+                this.TraversalCategoryName = initialValue;
                 this.SnapTemplateRnamTraversal = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SnapTemplateRnamTraversal.Mask<TItem>?>>?>(initialValue, []);
             }
 
@@ -200,10 +200,10 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Parent,
                 TItem Nodes,
                 TItem ParentNodes,
-                TItem BNAM,
+                TItem BoundOverride,
                 TItem NextNodeID,
-                TItem STPT,
-                TItem CNAM,
+                TItem SnapPieceType,
+                TItem TraversalCategoryName,
                 TItem SnapTemplateRnamTraversal)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
@@ -218,10 +218,10 @@ namespace Mutagen.Bethesda.Starfield
                 this.Parent = Parent;
                 this.Nodes = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SnapNodeEntry.Mask<TItem>?>>?>(Nodes, []);
                 this.ParentNodes = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SnapParentNodeEntry.Mask<TItem>?>>?>(ParentNodes, []);
-                this.BNAM = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(BNAM, []);
+                this.BoundOverride = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(BoundOverride, []);
                 this.NextNodeID = NextNodeID;
-                this.STPT = STPT;
-                this.CNAM = CNAM;
+                this.SnapPieceType = SnapPieceType;
+                this.TraversalCategoryName = TraversalCategoryName;
                 this.SnapTemplateRnamTraversal = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SnapTemplateRnamTraversal.Mask<TItem>?>>?>(SnapTemplateRnamTraversal, []);
             }
 
@@ -238,10 +238,10 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Parent;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SnapNodeEntry.Mask<TItem>?>>?>? Nodes;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SnapParentNodeEntry.Mask<TItem>?>>?>? ParentNodes;
-            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? BNAM;
+            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? BoundOverride;
             public TItem NextNodeID;
-            public TItem STPT;
-            public TItem CNAM;
+            public TItem SnapPieceType;
+            public TItem TraversalCategoryName;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SnapTemplateRnamTraversal.Mask<TItem>?>>?>? SnapTemplateRnamTraversal;
             #endregion
 
@@ -260,10 +260,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Parent, rhs.Parent)) return false;
                 if (!object.Equals(this.Nodes, rhs.Nodes)) return false;
                 if (!object.Equals(this.ParentNodes, rhs.ParentNodes)) return false;
-                if (!object.Equals(this.BNAM, rhs.BNAM)) return false;
+                if (!object.Equals(this.BoundOverride, rhs.BoundOverride)) return false;
                 if (!object.Equals(this.NextNodeID, rhs.NextNodeID)) return false;
-                if (!object.Equals(this.STPT, rhs.STPT)) return false;
-                if (!object.Equals(this.CNAM, rhs.CNAM)) return false;
+                if (!object.Equals(this.SnapPieceType, rhs.SnapPieceType)) return false;
+                if (!object.Equals(this.TraversalCategoryName, rhs.TraversalCategoryName)) return false;
                 if (!object.Equals(this.SnapTemplateRnamTraversal, rhs.SnapTemplateRnamTraversal)) return false;
                 return true;
             }
@@ -274,10 +274,10 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Parent);
                 hash.Add(this.Nodes);
                 hash.Add(this.ParentNodes);
-                hash.Add(this.BNAM);
+                hash.Add(this.BoundOverride);
                 hash.Add(this.NextNodeID);
-                hash.Add(this.STPT);
-                hash.Add(this.CNAM);
+                hash.Add(this.SnapPieceType);
+                hash.Add(this.TraversalCategoryName);
                 hash.Add(this.SnapTemplateRnamTraversal);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -326,20 +326,20 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (this.BNAM != null)
+                if (this.BoundOverride != null)
                 {
-                    if (!eval(this.BNAM.Overall)) return false;
-                    if (this.BNAM.Specific != null)
+                    if (!eval(this.BoundOverride.Overall)) return false;
+                    if (this.BoundOverride.Specific != null)
                     {
-                        foreach (var item in this.BNAM.Specific)
+                        foreach (var item in this.BoundOverride.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
                     }
                 }
                 if (!eval(this.NextNodeID)) return false;
-                if (!eval(this.STPT)) return false;
-                if (!eval(this.CNAM)) return false;
+                if (!eval(this.SnapPieceType)) return false;
+                if (!eval(this.TraversalCategoryName)) return false;
                 if (this.SnapTemplateRnamTraversal != null)
                 {
                     if (!eval(this.SnapTemplateRnamTraversal.Overall)) return false;
@@ -397,20 +397,20 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (this.BNAM != null)
+                if (this.BoundOverride != null)
                 {
-                    if (eval(this.BNAM.Overall)) return true;
-                    if (this.BNAM.Specific != null)
+                    if (eval(this.BoundOverride.Overall)) return true;
+                    if (this.BoundOverride.Specific != null)
                     {
-                        foreach (var item in this.BNAM.Specific)
+                        foreach (var item in this.BoundOverride.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
                     }
                 }
                 if (eval(this.NextNodeID)) return true;
-                if (eval(this.STPT)) return true;
-                if (eval(this.CNAM)) return true;
+                if (eval(this.SnapPieceType)) return true;
+                if (eval(this.TraversalCategoryName)) return true;
                 if (this.SnapTemplateRnamTraversal != null)
                 {
                     if (eval(this.SnapTemplateRnamTraversal.Overall)) return true;
@@ -484,14 +484,14 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (BNAM != null)
+                if (BoundOverride != null)
                 {
-                    obj.BNAM = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.BNAM.Overall), []);
-                    if (BNAM.Specific != null)
+                    obj.BoundOverride = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.BoundOverride.Overall), []);
+                    if (BoundOverride.Specific != null)
                     {
                         var l = new List<(int Index, R Item)>();
-                        obj.BNAM.Specific = l;
-                        foreach (var item in BNAM.Specific)
+                        obj.BoundOverride.Specific = l;
+                        foreach (var item in BoundOverride.Specific)
                         {
                             R mask = eval(item.Value);
                             l.Add((item.Index, mask));
@@ -499,8 +499,8 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.NextNodeID = eval(this.NextNodeID);
-                obj.STPT = eval(this.STPT);
-                obj.CNAM = eval(this.CNAM);
+                obj.SnapPieceType = eval(this.SnapPieceType);
+                obj.TraversalCategoryName = eval(this.TraversalCategoryName);
                 if (SnapTemplateRnamTraversal != null)
                 {
                     obj.SnapTemplateRnamTraversal = new MaskItem<R, IEnumerable<MaskItemIndexed<R, SnapTemplateRnamTraversal.Mask<R>?>>?>(eval(this.SnapTemplateRnamTraversal.Overall), []);
@@ -595,16 +595,16 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if ((printMask?.BNAM?.Overall ?? true)
-                        && BNAM is {} BNAMItem)
+                    if ((printMask?.BoundOverride?.Overall ?? true)
+                        && BoundOverride is {} BoundOverrideItem)
                     {
-                        sb.AppendLine("BNAM =>");
+                        sb.AppendLine("BoundOverride =>");
                         using (sb.Brace())
                         {
-                            sb.AppendItem(BNAMItem.Overall);
-                            if (BNAMItem.Specific != null)
+                            sb.AppendItem(BoundOverrideItem.Overall);
+                            if (BoundOverrideItem.Specific != null)
                             {
-                                foreach (var subItem in BNAMItem.Specific)
+                                foreach (var subItem in BoundOverrideItem.Specific)
                                 {
                                     using (sb.Brace())
                                     {
@@ -620,13 +620,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(NextNodeID, "NextNodeID");
                     }
-                    if (printMask?.STPT ?? true)
+                    if (printMask?.SnapPieceType ?? true)
                     {
-                        sb.AppendItem(STPT, "STPT");
+                        sb.AppendItem(SnapPieceType, "SnapPieceType");
                     }
-                    if (printMask?.CNAM ?? true)
+                    if (printMask?.TraversalCategoryName ?? true)
                     {
-                        sb.AppendItem(CNAM, "CNAM");
+                        sb.AppendItem(TraversalCategoryName, "TraversalCategoryName");
                     }
                     if ((printMask?.SnapTemplateRnamTraversal?.Overall ?? true)
                         && SnapTemplateRnamTraversal is {} SnapTemplateRnamTraversalItem)
@@ -662,10 +662,10 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Parent;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapNodeEntry.ErrorMask?>>?>? Nodes;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapParentNodeEntry.ErrorMask?>>?>? ParentNodes;
-            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? BNAM;
+            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? BoundOverride;
             public Exception? NextNodeID;
-            public Exception? STPT;
-            public Exception? CNAM;
+            public Exception? SnapPieceType;
+            public Exception? TraversalCategoryName;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapTemplateRnamTraversal.ErrorMask?>>?>? SnapTemplateRnamTraversal;
             #endregion
 
@@ -683,14 +683,14 @@ namespace Mutagen.Bethesda.Starfield
                         return Nodes;
                     case SnapTemplate_FieldIndex.ParentNodes:
                         return ParentNodes;
-                    case SnapTemplate_FieldIndex.BNAM:
-                        return BNAM;
+                    case SnapTemplate_FieldIndex.BoundOverride:
+                        return BoundOverride;
                     case SnapTemplate_FieldIndex.NextNodeID:
                         return NextNodeID;
-                    case SnapTemplate_FieldIndex.STPT:
-                        return STPT;
-                    case SnapTemplate_FieldIndex.CNAM:
-                        return CNAM;
+                    case SnapTemplate_FieldIndex.SnapPieceType:
+                        return SnapPieceType;
+                    case SnapTemplate_FieldIndex.TraversalCategoryName:
+                        return TraversalCategoryName;
                     case SnapTemplate_FieldIndex.SnapTemplateRnamTraversal:
                         return SnapTemplateRnamTraversal;
                     default:
@@ -715,17 +715,17 @@ namespace Mutagen.Bethesda.Starfield
                     case SnapTemplate_FieldIndex.ParentNodes:
                         this.ParentNodes = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapParentNodeEntry.ErrorMask?>>?>(ex, null);
                         break;
-                    case SnapTemplate_FieldIndex.BNAM:
-                        this.BNAM = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
+                    case SnapTemplate_FieldIndex.BoundOverride:
+                        this.BoundOverride = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
                     case SnapTemplate_FieldIndex.NextNodeID:
                         this.NextNodeID = ex;
                         break;
-                    case SnapTemplate_FieldIndex.STPT:
-                        this.STPT = ex;
+                    case SnapTemplate_FieldIndex.SnapPieceType:
+                        this.SnapPieceType = ex;
                         break;
-                    case SnapTemplate_FieldIndex.CNAM:
-                        this.CNAM = ex;
+                    case SnapTemplate_FieldIndex.TraversalCategoryName:
+                        this.TraversalCategoryName = ex;
                         break;
                     case SnapTemplate_FieldIndex.SnapTemplateRnamTraversal:
                         this.SnapTemplateRnamTraversal = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapTemplateRnamTraversal.ErrorMask?>>?>(ex, null);
@@ -753,17 +753,17 @@ namespace Mutagen.Bethesda.Starfield
                     case SnapTemplate_FieldIndex.ParentNodes:
                         this.ParentNodes = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapParentNodeEntry.ErrorMask?>>?>)obj;
                         break;
-                    case SnapTemplate_FieldIndex.BNAM:
-                        this.BNAM = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
+                    case SnapTemplate_FieldIndex.BoundOverride:
+                        this.BoundOverride = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
                     case SnapTemplate_FieldIndex.NextNodeID:
                         this.NextNodeID = (Exception?)obj;
                         break;
-                    case SnapTemplate_FieldIndex.STPT:
-                        this.STPT = (Exception?)obj;
+                    case SnapTemplate_FieldIndex.SnapPieceType:
+                        this.SnapPieceType = (Exception?)obj;
                         break;
-                    case SnapTemplate_FieldIndex.CNAM:
-                        this.CNAM = (Exception?)obj;
+                    case SnapTemplate_FieldIndex.TraversalCategoryName:
+                        this.TraversalCategoryName = (Exception?)obj;
                         break;
                     case SnapTemplate_FieldIndex.SnapTemplateRnamTraversal:
                         this.SnapTemplateRnamTraversal = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapTemplateRnamTraversal.ErrorMask?>>?>)obj;
@@ -781,10 +781,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (Parent != null) return true;
                 if (Nodes != null) return true;
                 if (ParentNodes != null) return true;
-                if (BNAM != null) return true;
+                if (BoundOverride != null) return true;
                 if (NextNodeID != null) return true;
-                if (STPT != null) return true;
-                if (CNAM != null) return true;
+                if (SnapPieceType != null) return true;
+                if (TraversalCategoryName != null) return true;
                 if (SnapTemplateRnamTraversal != null) return true;
                 return false;
             }
@@ -869,15 +869,15 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (BNAM is {} BNAMItem)
+                if (BoundOverride is {} BoundOverrideItem)
                 {
-                    sb.AppendLine("BNAM =>");
+                    sb.AppendLine("BoundOverride =>");
                     using (sb.Brace())
                     {
-                        sb.AppendItem(BNAMItem.Overall);
-                        if (BNAMItem.Specific != null)
+                        sb.AppendItem(BoundOverrideItem.Overall);
+                        if (BoundOverrideItem.Specific != null)
                         {
-                            foreach (var subItem in BNAMItem.Specific)
+                            foreach (var subItem in BoundOverrideItem.Specific)
                             {
                                 using (sb.Brace())
                                 {
@@ -893,10 +893,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(NextNodeID, "NextNodeID");
                 }
                 {
-                    sb.AppendItem(STPT, "STPT");
+                    sb.AppendItem(SnapPieceType, "SnapPieceType");
                 }
                 {
-                    sb.AppendItem(CNAM, "CNAM");
+                    sb.AppendItem(TraversalCategoryName, "TraversalCategoryName");
                 }
                 if (SnapTemplateRnamTraversal is {} SnapTemplateRnamTraversalItem)
                 {
@@ -928,10 +928,10 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Parent = this.Parent.Combine(rhs.Parent);
                 ret.Nodes = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapNodeEntry.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Nodes?.Overall, rhs.Nodes?.Overall), Noggog.ExceptionExt.Combine(this.Nodes?.Specific, rhs.Nodes?.Specific));
                 ret.ParentNodes = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapParentNodeEntry.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.ParentNodes?.Overall, rhs.ParentNodes?.Overall), Noggog.ExceptionExt.Combine(this.ParentNodes?.Specific, rhs.ParentNodes?.Specific));
-                ret.BNAM = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.BNAM?.Overall, rhs.BNAM?.Overall), Noggog.ExceptionExt.Combine(this.BNAM?.Specific, rhs.BNAM?.Specific));
+                ret.BoundOverride = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.BoundOverride?.Overall, rhs.BoundOverride?.Overall), Noggog.ExceptionExt.Combine(this.BoundOverride?.Specific, rhs.BoundOverride?.Specific));
                 ret.NextNodeID = this.NextNodeID.Combine(rhs.NextNodeID);
-                ret.STPT = this.STPT.Combine(rhs.STPT);
-                ret.CNAM = this.CNAM.Combine(rhs.CNAM);
+                ret.SnapPieceType = this.SnapPieceType.Combine(rhs.SnapPieceType);
+                ret.TraversalCategoryName = this.TraversalCategoryName.Combine(rhs.TraversalCategoryName);
                 ret.SnapTemplateRnamTraversal = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SnapTemplateRnamTraversal.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.SnapTemplateRnamTraversal?.Overall, rhs.SnapTemplateRnamTraversal?.Overall), Noggog.ExceptionExt.Combine(this.SnapTemplateRnamTraversal?.Specific, rhs.SnapTemplateRnamTraversal?.Specific));
                 return ret;
             }
@@ -959,10 +959,10 @@ namespace Mutagen.Bethesda.Starfield
             public bool Parent;
             public SnapNodeEntry.TranslationMask? Nodes;
             public SnapParentNodeEntry.TranslationMask? ParentNodes;
-            public bool BNAM;
+            public bool BoundOverride;
             public bool NextNodeID;
-            public bool STPT;
-            public bool CNAM;
+            public bool SnapPieceType;
+            public bool TraversalCategoryName;
             public SnapTemplateRnamTraversal.TranslationMask? SnapTemplateRnamTraversal;
             #endregion
 
@@ -973,10 +973,10 @@ namespace Mutagen.Bethesda.Starfield
                 : base(defaultOn, onOverall)
             {
                 this.Parent = defaultOn;
-                this.BNAM = defaultOn;
+                this.BoundOverride = defaultOn;
                 this.NextNodeID = defaultOn;
-                this.STPT = defaultOn;
-                this.CNAM = defaultOn;
+                this.SnapPieceType = defaultOn;
+                this.TraversalCategoryName = defaultOn;
             }
 
             #endregion
@@ -988,10 +988,10 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Parent, null));
                 ret.Add((Nodes == null ? DefaultOn : !Nodes.GetCrystal().CopyNothing, Nodes?.GetCrystal()));
                 ret.Add((ParentNodes == null ? DefaultOn : !ParentNodes.GetCrystal().CopyNothing, ParentNodes?.GetCrystal()));
-                ret.Add((BNAM, null));
+                ret.Add((BoundOverride, null));
                 ret.Add((NextNodeID, null));
-                ret.Add((STPT, null));
-                ret.Add((CNAM, null));
+                ret.Add((SnapPieceType, null));
+                ret.Add((TraversalCategoryName, null));
                 ret.Add((SnapTemplateRnamTraversal == null ? DefaultOn : !SnapTemplateRnamTraversal.GetCrystal().CopyNothing, SnapTemplateRnamTraversal?.GetCrystal()));
             }
 
@@ -1149,10 +1149,10 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<ISnapTemplateGetter> Parent { get; set; }
         new ExtendedList<SnapNodeEntry> Nodes { get; }
         new ExtendedList<SnapParentNodeEntry> ParentNodes { get; }
-        new Single[]? BNAM { get; set; }
+        new Single[]? BoundOverride { get; set; }
         new UInt32? NextNodeID { get; set; }
-        new UInt32? STPT { get; set; }
-        new String? CNAM { get; set; }
+        new SnapTemplate.SnapPieceTypeEnum? SnapPieceType { get; set; }
+        new String? TraversalCategoryName { get; set; }
         new ExtendedList<SnapTemplateRnamTraversal> SnapTemplateRnamTraversal { get; }
     }
 
@@ -1177,10 +1177,10 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<ISnapTemplateGetter> Parent { get; }
         IReadOnlyList<ISnapNodeEntryGetter> Nodes { get; }
         IReadOnlyList<ISnapParentNodeEntryGetter> ParentNodes { get; }
-        ReadOnlyMemorySlice<Single>? BNAM { get; }
+        ReadOnlyMemorySlice<Single>? BoundOverride { get; }
         UInt32? NextNodeID { get; }
-        UInt32? STPT { get; }
-        String? CNAM { get; }
+        SnapTemplate.SnapPieceTypeEnum? SnapPieceType { get; }
+        String? TraversalCategoryName { get; }
         IReadOnlyList<ISnapTemplateRnamTraversalGetter> SnapTemplateRnamTraversal { get; }
 
     }
@@ -1362,10 +1362,10 @@ namespace Mutagen.Bethesda.Starfield
         Parent = 8,
         Nodes = 9,
         ParentNodes = 10,
-        BNAM = 11,
+        BoundOverride = 11,
         NextNodeID = 12,
-        STPT = 13,
-        CNAM = 14,
+        SnapPieceType = 13,
+        TraversalCategoryName = 14,
         SnapTemplateRnamTraversal = 15,
     }
     #endregion
@@ -1472,10 +1472,10 @@ namespace Mutagen.Bethesda.Starfield
             item.Parent.Clear();
             item.Nodes.Clear();
             item.ParentNodes.Clear();
-            item.BNAM = null;
+            item.BoundOverride = null;
             item.NextNodeID = default;
-            item.STPT = default;
-            item.CNAM = default;
+            item.SnapPieceType = default;
+            item.TraversalCategoryName = default;
             item.SnapTemplateRnamTraversal.Clear();
             base.Clear(item);
         }
@@ -1602,14 +1602,14 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.ParentNodes,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.BNAM = EqualsMaskHelper.SpanEqualsHelper<Single>(
-                item.BNAM,
-                rhs.BNAM,
+            ret.BoundOverride = EqualsMaskHelper.SpanEqualsHelper<Single>(
+                item.BoundOverride,
+                rhs.BoundOverride,
                 (l, r) => l.EqualsWithin(r),
                 include);
             ret.NextNodeID = item.NextNodeID == rhs.NextNodeID;
-            ret.STPT = item.STPT == rhs.STPT;
-            ret.CNAM = string.Equals(item.CNAM, rhs.CNAM);
+            ret.SnapPieceType = item.SnapPieceType == rhs.SnapPieceType;
+            ret.TraversalCategoryName = string.Equals(item.TraversalCategoryName, rhs.TraversalCategoryName);
             ret.SnapTemplateRnamTraversal = item.SnapTemplateRnamTraversal.CollectionEqualsHelper(
                 rhs.SnapTemplateRnamTraversal,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -1709,13 +1709,13 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.BNAM?.Overall ?? true)
-                && item.BNAM is {} BNAMItem)
+            if ((printMask?.BoundOverride?.Overall ?? true)
+                && item.BoundOverride is {} BoundOverrideItem)
             {
-                sb.AppendLine("BNAM =>");
+                sb.AppendLine("BoundOverride =>");
                 using (sb.Brace())
                 {
-                    foreach (var subItem in BNAMItem)
+                    foreach (var subItem in BoundOverrideItem)
                     {
                         using (sb.Brace())
                         {
@@ -1729,15 +1729,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(NextNodeIDItem, "NextNodeID");
             }
-            if ((printMask?.STPT ?? true)
-                && item.STPT is {} STPTItem)
+            if ((printMask?.SnapPieceType ?? true)
+                && item.SnapPieceType is {} SnapPieceTypeItem)
             {
-                sb.AppendItem(STPTItem, "STPT");
+                sb.AppendItem(SnapPieceTypeItem, "SnapPieceType");
             }
-            if ((printMask?.CNAM ?? true)
-                && item.CNAM is {} CNAMItem)
+            if ((printMask?.TraversalCategoryName ?? true)
+                && item.TraversalCategoryName is {} TraversalCategoryNameItem)
             {
-                sb.AppendItem(CNAMItem, "CNAM");
+                sb.AppendItem(TraversalCategoryNameItem, "TraversalCategoryName");
             }
             if (printMask?.SnapTemplateRnamTraversal?.Overall ?? true)
             {
@@ -1819,21 +1819,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ParentNodes.SequenceEqual(rhs.ParentNodes, (l, r) => ((SnapParentNodeEntryCommon)((ISnapParentNodeEntryGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)SnapTemplate_FieldIndex.ParentNodes)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.BNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.BoundOverride) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.BNAM, rhs.BNAM)) return false;
+                if (!MemorySliceExt.SequenceEqual(lhs.BoundOverride, rhs.BoundOverride)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.NextNodeID) ?? true))
             {
                 if (lhs.NextNodeID != rhs.NextNodeID) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.STPT) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.SnapPieceType) ?? true))
             {
-                if (lhs.STPT != rhs.STPT) return false;
+                if (lhs.SnapPieceType != rhs.SnapPieceType) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.CNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.TraversalCategoryName) ?? true))
             {
-                if (!string.Equals(lhs.CNAM, rhs.CNAM)) return false;
+                if (!string.Equals(lhs.TraversalCategoryName, rhs.TraversalCategoryName)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.SnapTemplateRnamTraversal) ?? true))
             {
@@ -1880,9 +1880,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(subItem);
             }
-            if (item.BNAM is {} BNAMitem)
+            if (item.BoundOverride is {} BoundOverrideitem)
             {
-                foreach (var subItem in BNAMitem)
+                foreach (var subItem in BoundOverrideitem)
                 {
                     hash.Add(subItem);
                 }
@@ -1891,13 +1891,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(NextNodeIDitem);
             }
-            if (item.STPT is {} STPTitem)
+            if (item.SnapPieceType is {} SnapPieceTypeitem)
             {
-                hash.Add(STPTitem);
+                hash.Add(SnapPieceTypeitem);
             }
-            if (item.CNAM is {} CNAMitem)
+            if (item.TraversalCategoryName is {} TraversalCategoryNameitem)
             {
-                hash.Add(CNAMitem);
+                hash.Add(TraversalCategoryNameitem);
             }
             foreach (var subItem in item.SnapTemplateRnamTraversal)
             {
@@ -2135,21 +2135,21 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.BNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.BoundOverride) ?? true))
             {
-                item.BNAM = rhs.BNAM?.ToArray();
+                item.BoundOverride = rhs.BoundOverride?.ToArray();
             }
             if ((copyMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.NextNodeID) ?? true))
             {
                 item.NextNodeID = rhs.NextNodeID;
             }
-            if ((copyMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.STPT) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.SnapPieceType) ?? true))
             {
-                item.STPT = rhs.STPT;
+                item.SnapPieceType = rhs.SnapPieceType;
             }
-            if ((copyMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.CNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.TraversalCategoryName) ?? true))
             {
-                item.CNAM = rhs.CNAM;
+                item.TraversalCategoryName = rhs.TraversalCategoryName;
             }
             if ((copyMask?.GetShouldTranslate((int)SnapTemplate_FieldIndex.SnapTemplateRnamTraversal) ?? true))
             {
@@ -2383,20 +2383,21 @@ namespace Mutagen.Bethesda.Starfield
                 });
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Single>.Instance.Write(
                 writer: writer,
-                items: item.BNAM,
+                items: item.BoundOverride,
                 recordType: translationParams.ConvertToCustom(RecordTypes.BNAM),
                 transl: FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write);
             UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
                 item: item.NextNodeID,
                 header: translationParams.ConvertToCustom(RecordTypes.INAM));
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.STPT,
+            EnumBinaryTranslation<SnapTemplate.SnapPieceTypeEnum, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.SnapPieceType,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.STPT));
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.CNAM,
+                item: item.TraversalCategoryName,
                 header: translationParams.ConvertToCustom(RecordTypes.CNAM),
                 binaryType: StringBinaryType.NullTerminate);
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ISnapTemplateRnamTraversalGetter>.Instance.Write(
@@ -2518,8 +2519,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.BNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BNAM = BinaryOverlayArrayHelper.FloatSliceFromFixedSize(frame.ReadBytes(4 * 6), 6).ToArray();
-                    return (int)SnapTemplate_FieldIndex.BNAM;
+                    item.BoundOverride = BinaryOverlayArrayHelper.FloatSliceFromFixedSize(frame.ReadBytes(4 * 6), 6).ToArray();
+                    return (int)SnapTemplate_FieldIndex.BoundOverride;
                 }
                 case RecordTypeInts.INAM:
                 {
@@ -2530,17 +2531,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.STPT:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.STPT = frame.ReadUInt32();
-                    return (int)SnapTemplate_FieldIndex.STPT;
+                    item.SnapPieceType = EnumBinaryTranslation<SnapTemplate.SnapPieceTypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)SnapTemplate_FieldIndex.SnapPieceType;
                 }
                 case RecordTypeInts.CNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.CNAM = StringBinaryTranslation.Instance.Parse(
+                    item.TraversalCategoryName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)SnapTemplate_FieldIndex.CNAM;
+                    return (int)SnapTemplate_FieldIndex.TraversalCategoryName;
                 }
                 case RecordTypeInts.RNAM:
                 case RecordTypeInts.SNAM:
@@ -2620,21 +2623,21 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         public IReadOnlyList<ISnapNodeEntryGetter> Nodes { get; private set; } = [];
         public IReadOnlyList<ISnapParentNodeEntryGetter> ParentNodes { get; private set; } = [];
-        #region BNAM
-        private int? _BNAMLocation;
-        public ReadOnlyMemorySlice<Single>? BNAM => _BNAMLocation.HasValue ? BinaryOverlayArrayHelper.FloatSliceFromFixedSize(HeaderTranslation.ExtractSubrecordMemory(_recordData, _BNAMLocation.Value, _package.MetaData.Constants), amount: 6) : default(ReadOnlyMemorySlice<Single>?);
+        #region BoundOverride
+        private int? _BoundOverrideLocation;
+        public ReadOnlyMemorySlice<Single>? BoundOverride => _BoundOverrideLocation.HasValue ? BinaryOverlayArrayHelper.FloatSliceFromFixedSize(HeaderTranslation.ExtractSubrecordMemory(_recordData, _BoundOverrideLocation.Value, _package.MetaData.Constants), amount: 6) : default(ReadOnlyMemorySlice<Single>?);
         #endregion
         #region NextNodeID
         private int? _NextNodeIDLocation;
         public UInt32? NextNodeID => _NextNodeIDLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NextNodeIDLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region STPT
-        private int? _STPTLocation;
-        public UInt32? STPT => _STPTLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _STPTLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region SnapPieceType
+        private int? _SnapPieceTypeLocation;
+        public SnapTemplate.SnapPieceTypeEnum? SnapPieceType => EnumBinaryTranslation<SnapTemplate.SnapPieceTypeEnum, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_SnapPieceTypeLocation, _recordData, _package, 4);
         #endregion
-        #region CNAM
-        private int? _CNAMLocation;
-        public String? CNAM => _CNAMLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _CNAMLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region TraversalCategoryName
+        private int? _TraversalCategoryNameLocation;
+        public String? TraversalCategoryName => _TraversalCategoryNameLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TraversalCategoryNameLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         public IReadOnlyList<ISnapTemplateRnamTraversalGetter> SnapTemplateRnamTraversal { get; private set; } = [];
         partial void CustomFactoryEnd(
@@ -2747,8 +2750,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BNAM:
                 {
-                    _BNAMLocation = (stream.Position - offset);
-                    return (int)SnapTemplate_FieldIndex.BNAM;
+                    _BoundOverrideLocation = (stream.Position - offset);
+                    return (int)SnapTemplate_FieldIndex.BoundOverride;
                 }
                 case RecordTypeInts.INAM:
                 {
@@ -2757,13 +2760,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.STPT:
                 {
-                    _STPTLocation = (stream.Position - offset);
-                    return (int)SnapTemplate_FieldIndex.STPT;
+                    _SnapPieceTypeLocation = (stream.Position - offset);
+                    return (int)SnapTemplate_FieldIndex.SnapPieceType;
                 }
                 case RecordTypeInts.CNAM:
                 {
-                    _CNAMLocation = (stream.Position - offset);
-                    return (int)SnapTemplate_FieldIndex.CNAM;
+                    _TraversalCategoryNameLocation = (stream.Position - offset);
+                    return (int)SnapTemplate_FieldIndex.TraversalCategoryName;
                 }
                 case RecordTypeInts.RNAM:
                 case RecordTypeInts.SNAM:
