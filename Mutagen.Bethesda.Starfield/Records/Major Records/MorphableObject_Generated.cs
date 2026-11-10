@@ -96,26 +96,29 @@ namespace Mutagen.Bethesda.Starfield
         IModelGetter? IModeledGetter.Model => this.Model;
         #endregion
         #endregion
-        #region TMPP
-        public String? TMPP { get; set; }
+        #region TargetMorphPath
+        public String? TargetMorphPath { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IMorphableObjectGetter.TMPP => this.TMPP;
+        String? IMorphableObjectGetter.TargetMorphPath => this.TargetMorphPath;
         #endregion
-        #region TCMP
-        public String? TCMP { get; set; }
+        #region TargetChargenMorphPath
+        public String? TargetChargenMorphPath { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IMorphableObjectGetter.TCMP => this.TCMP;
+        String? IMorphableObjectGetter.TargetChargenMorphPath => this.TargetChargenMorphPath;
         #endregion
-        #region MOBC
+        #region BaseVertexColor
+        public Byte BaseVertexColor { get; set; } = default(Byte);
+        #endregion
+        #region BaseVertexColorUnused
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _MOBC;
-        public MemorySlice<Byte>? MOBC
+        private MemorySlice<Byte> _BaseVertexColorUnused = new byte[3];
+        public MemorySlice<Byte> BaseVertexColorUnused
         {
-            get => this._MOBC;
-            set => this._MOBC = value;
+            get => _BaseVertexColorUnused;
+            set => this._BaseVertexColorUnused = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IMorphableObjectGetter.MOBC => this.MOBC;
+        ReadOnlyMemorySlice<Byte> IMorphableObjectGetter.BaseVertexColorUnused => this.BaseVertexColorUnused;
         #endregion
 
         #region To String
@@ -144,9 +147,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(initialValue, new VirtualMachineAdapter.Mask<TItem>(initialValue));
                 this.Model = new MaskItem<TItem, Model.Mask<TItem>?>(initialValue, new Model.Mask<TItem>(initialValue));
-                this.TMPP = initialValue;
-                this.TCMP = initialValue;
-                this.MOBC = initialValue;
+                this.TargetMorphPath = initialValue;
+                this.TargetChargenMorphPath = initialValue;
+                this.BaseVertexColor = initialValue;
+                this.BaseVertexColorUnused = initialValue;
             }
 
             public Mask(
@@ -159,9 +163,10 @@ namespace Mutagen.Bethesda.Starfield
                 TItem StarfieldMajorRecordFlags,
                 TItem VirtualMachineAdapter,
                 TItem Model,
-                TItem TMPP,
-                TItem TCMP,
-                TItem MOBC)
+                TItem TargetMorphPath,
+                TItem TargetChargenMorphPath,
+                TItem BaseVertexColor,
+                TItem BaseVertexColorUnused)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -173,9 +178,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(VirtualMachineAdapter, new VirtualMachineAdapter.Mask<TItem>(VirtualMachineAdapter));
                 this.Model = new MaskItem<TItem, Model.Mask<TItem>?>(Model, new Model.Mask<TItem>(Model));
-                this.TMPP = TMPP;
-                this.TCMP = TCMP;
-                this.MOBC = MOBC;
+                this.TargetMorphPath = TargetMorphPath;
+                this.TargetChargenMorphPath = TargetChargenMorphPath;
+                this.BaseVertexColor = BaseVertexColor;
+                this.BaseVertexColorUnused = BaseVertexColorUnused;
             }
 
             #pragma warning disable CS8618
@@ -189,9 +195,10 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
             public MaskItem<TItem, Model.Mask<TItem>?>? Model { get; set; }
-            public TItem TMPP;
-            public TItem TCMP;
-            public TItem MOBC;
+            public TItem TargetMorphPath;
+            public TItem TargetChargenMorphPath;
+            public TItem BaseVertexColor;
+            public TItem BaseVertexColorUnused;
             #endregion
 
             #region Equals
@@ -207,9 +214,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
                 if (!object.Equals(this.Model, rhs.Model)) return false;
-                if (!object.Equals(this.TMPP, rhs.TMPP)) return false;
-                if (!object.Equals(this.TCMP, rhs.TCMP)) return false;
-                if (!object.Equals(this.MOBC, rhs.MOBC)) return false;
+                if (!object.Equals(this.TargetMorphPath, rhs.TargetMorphPath)) return false;
+                if (!object.Equals(this.TargetChargenMorphPath, rhs.TargetChargenMorphPath)) return false;
+                if (!object.Equals(this.BaseVertexColor, rhs.BaseVertexColor)) return false;
+                if (!object.Equals(this.BaseVertexColorUnused, rhs.BaseVertexColorUnused)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -217,9 +225,10 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.VirtualMachineAdapter);
                 hash.Add(this.Model);
-                hash.Add(this.TMPP);
-                hash.Add(this.TCMP);
-                hash.Add(this.MOBC);
+                hash.Add(this.TargetMorphPath);
+                hash.Add(this.TargetChargenMorphPath);
+                hash.Add(this.BaseVertexColor);
+                hash.Add(this.BaseVertexColorUnused);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -240,9 +249,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.Model.Overall)) return false;
                     if (this.Model.Specific != null && !this.Model.Specific.All(eval)) return false;
                 }
-                if (!eval(this.TMPP)) return false;
-                if (!eval(this.TCMP)) return false;
-                if (!eval(this.MOBC)) return false;
+                if (!eval(this.TargetMorphPath)) return false;
+                if (!eval(this.TargetChargenMorphPath)) return false;
+                if (!eval(this.BaseVertexColor)) return false;
+                if (!eval(this.BaseVertexColorUnused)) return false;
                 return true;
             }
             #endregion
@@ -261,9 +271,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.Model.Overall)) return true;
                     if (this.Model.Specific != null && this.Model.Specific.Any(eval)) return true;
                 }
-                if (eval(this.TMPP)) return true;
-                if (eval(this.TCMP)) return true;
-                if (eval(this.MOBC)) return true;
+                if (eval(this.TargetMorphPath)) return true;
+                if (eval(this.TargetChargenMorphPath)) return true;
+                if (eval(this.BaseVertexColor)) return true;
+                if (eval(this.BaseVertexColorUnused)) return true;
                 return false;
             }
             #endregion
@@ -281,9 +292,10 @@ namespace Mutagen.Bethesda.Starfield
                 base.Translate_InternalFill(obj, eval);
                 obj.VirtualMachineAdapter = this.VirtualMachineAdapter == null ? null : new MaskItem<R, VirtualMachineAdapter.Mask<R>?>(eval(this.VirtualMachineAdapter.Overall), this.VirtualMachineAdapter.Specific?.Translate(eval));
                 obj.Model = this.Model == null ? null : new MaskItem<R, Model.Mask<R>?>(eval(this.Model.Overall), this.Model.Specific?.Translate(eval));
-                obj.TMPP = eval(this.TMPP);
-                obj.TCMP = eval(this.TCMP);
-                obj.MOBC = eval(this.MOBC);
+                obj.TargetMorphPath = eval(this.TargetMorphPath);
+                obj.TargetChargenMorphPath = eval(this.TargetChargenMorphPath);
+                obj.BaseVertexColor = eval(this.BaseVertexColor);
+                obj.BaseVertexColorUnused = eval(this.BaseVertexColorUnused);
             }
             #endregion
 
@@ -310,17 +322,21 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         Model?.Print(sb);
                     }
-                    if (printMask?.TMPP ?? true)
+                    if (printMask?.TargetMorphPath ?? true)
                     {
-                        sb.AppendItem(TMPP, "TMPP");
+                        sb.AppendItem(TargetMorphPath, "TargetMorphPath");
                     }
-                    if (printMask?.TCMP ?? true)
+                    if (printMask?.TargetChargenMorphPath ?? true)
                     {
-                        sb.AppendItem(TCMP, "TCMP");
+                        sb.AppendItem(TargetChargenMorphPath, "TargetChargenMorphPath");
                     }
-                    if (printMask?.MOBC ?? true)
+                    if (printMask?.BaseVertexColor ?? true)
                     {
-                        sb.AppendItem(MOBC, "MOBC");
+                        sb.AppendItem(BaseVertexColor, "BaseVertexColor");
+                    }
+                    if (printMask?.BaseVertexColorUnused ?? true)
+                    {
+                        sb.AppendItem(BaseVertexColorUnused, "BaseVertexColorUnused");
                     }
                 }
             }
@@ -335,9 +351,10 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>? VirtualMachineAdapter;
             public MaskItem<Exception?, Model.ErrorMask?>? Model;
-            public Exception? TMPP;
-            public Exception? TCMP;
-            public Exception? MOBC;
+            public Exception? TargetMorphPath;
+            public Exception? TargetChargenMorphPath;
+            public Exception? BaseVertexColor;
+            public Exception? BaseVertexColorUnused;
             #endregion
 
             #region IErrorMask
@@ -350,12 +367,14 @@ namespace Mutagen.Bethesda.Starfield
                         return VirtualMachineAdapter;
                     case MorphableObject_FieldIndex.Model:
                         return Model;
-                    case MorphableObject_FieldIndex.TMPP:
-                        return TMPP;
-                    case MorphableObject_FieldIndex.TCMP:
-                        return TCMP;
-                    case MorphableObject_FieldIndex.MOBC:
-                        return MOBC;
+                    case MorphableObject_FieldIndex.TargetMorphPath:
+                        return TargetMorphPath;
+                    case MorphableObject_FieldIndex.TargetChargenMorphPath:
+                        return TargetChargenMorphPath;
+                    case MorphableObject_FieldIndex.BaseVertexColor:
+                        return BaseVertexColor;
+                    case MorphableObject_FieldIndex.BaseVertexColorUnused:
+                        return BaseVertexColorUnused;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -372,14 +391,17 @@ namespace Mutagen.Bethesda.Starfield
                     case MorphableObject_FieldIndex.Model:
                         this.Model = new MaskItem<Exception?, Model.ErrorMask?>(ex, null);
                         break;
-                    case MorphableObject_FieldIndex.TMPP:
-                        this.TMPP = ex;
+                    case MorphableObject_FieldIndex.TargetMorphPath:
+                        this.TargetMorphPath = ex;
                         break;
-                    case MorphableObject_FieldIndex.TCMP:
-                        this.TCMP = ex;
+                    case MorphableObject_FieldIndex.TargetChargenMorphPath:
+                        this.TargetChargenMorphPath = ex;
                         break;
-                    case MorphableObject_FieldIndex.MOBC:
-                        this.MOBC = ex;
+                    case MorphableObject_FieldIndex.BaseVertexColor:
+                        this.BaseVertexColor = ex;
+                        break;
+                    case MorphableObject_FieldIndex.BaseVertexColorUnused:
+                        this.BaseVertexColorUnused = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -398,14 +420,17 @@ namespace Mutagen.Bethesda.Starfield
                     case MorphableObject_FieldIndex.Model:
                         this.Model = (MaskItem<Exception?, Model.ErrorMask?>?)obj;
                         break;
-                    case MorphableObject_FieldIndex.TMPP:
-                        this.TMPP = (Exception?)obj;
+                    case MorphableObject_FieldIndex.TargetMorphPath:
+                        this.TargetMorphPath = (Exception?)obj;
                         break;
-                    case MorphableObject_FieldIndex.TCMP:
-                        this.TCMP = (Exception?)obj;
+                    case MorphableObject_FieldIndex.TargetChargenMorphPath:
+                        this.TargetChargenMorphPath = (Exception?)obj;
                         break;
-                    case MorphableObject_FieldIndex.MOBC:
-                        this.MOBC = (Exception?)obj;
+                    case MorphableObject_FieldIndex.BaseVertexColor:
+                        this.BaseVertexColor = (Exception?)obj;
+                        break;
+                    case MorphableObject_FieldIndex.BaseVertexColorUnused:
+                        this.BaseVertexColorUnused = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -418,9 +443,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (VirtualMachineAdapter != null) return true;
                 if (Model != null) return true;
-                if (TMPP != null) return true;
-                if (TCMP != null) return true;
-                if (MOBC != null) return true;
+                if (TargetMorphPath != null) return true;
+                if (TargetChargenMorphPath != null) return true;
+                if (BaseVertexColor != null) return true;
+                if (BaseVertexColorUnused != null) return true;
                 return false;
             }
             #endregion
@@ -450,13 +476,16 @@ namespace Mutagen.Bethesda.Starfield
                 VirtualMachineAdapter?.Print(sb);
                 Model?.Print(sb);
                 {
-                    sb.AppendItem(TMPP, "TMPP");
+                    sb.AppendItem(TargetMorphPath, "TargetMorphPath");
                 }
                 {
-                    sb.AppendItem(TCMP, "TCMP");
+                    sb.AppendItem(TargetChargenMorphPath, "TargetChargenMorphPath");
                 }
                 {
-                    sb.AppendItem(MOBC, "MOBC");
+                    sb.AppendItem(BaseVertexColor, "BaseVertexColor");
+                }
+                {
+                    sb.AppendItem(BaseVertexColorUnused, "BaseVertexColorUnused");
                 }
             }
             #endregion
@@ -468,9 +497,10 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
                 ret.Model = this.Model.Combine(rhs.Model, (l, r) => l.Combine(r));
-                ret.TMPP = this.TMPP.Combine(rhs.TMPP);
-                ret.TCMP = this.TCMP.Combine(rhs.TCMP);
-                ret.MOBC = this.MOBC.Combine(rhs.MOBC);
+                ret.TargetMorphPath = this.TargetMorphPath.Combine(rhs.TargetMorphPath);
+                ret.TargetChargenMorphPath = this.TargetChargenMorphPath.Combine(rhs.TargetChargenMorphPath);
+                ret.BaseVertexColor = this.BaseVertexColor.Combine(rhs.BaseVertexColor);
+                ret.BaseVertexColorUnused = this.BaseVertexColorUnused.Combine(rhs.BaseVertexColorUnused);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -495,9 +525,10 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public VirtualMachineAdapter.TranslationMask? VirtualMachineAdapter;
             public Model.TranslationMask? Model;
-            public bool TMPP;
-            public bool TCMP;
-            public bool MOBC;
+            public bool TargetMorphPath;
+            public bool TargetChargenMorphPath;
+            public bool BaseVertexColor;
+            public bool BaseVertexColorUnused;
             #endregion
 
             #region Ctors
@@ -506,9 +537,10 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.TMPP = defaultOn;
-                this.TCMP = defaultOn;
-                this.MOBC = defaultOn;
+                this.TargetMorphPath = defaultOn;
+                this.TargetChargenMorphPath = defaultOn;
+                this.BaseVertexColor = defaultOn;
+                this.BaseVertexColorUnused = defaultOn;
             }
 
             #endregion
@@ -518,9 +550,10 @@ namespace Mutagen.Bethesda.Starfield
                 base.GetCrystal(ret);
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
                 ret.Add((Model != null ? Model.OnOverall : DefaultOn, Model?.GetCrystal()));
-                ret.Add((TMPP, null));
-                ret.Add((TCMP, null));
-                ret.Add((MOBC, null));
+                ret.Add((TargetMorphPath, null));
+                ret.Add((TargetChargenMorphPath, null));
+                ret.Add((BaseVertexColor, null));
+                ret.Add((BaseVertexColorUnused, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -684,9 +717,10 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IModeled
         /// </summary>
         new Model? Model { get; set; }
-        new String? TMPP { get; set; }
-        new String? TCMP { get; set; }
-        new MemorySlice<Byte>? MOBC { get; set; }
+        new String? TargetMorphPath { get; set; }
+        new String? TargetChargenMorphPath { get; set; }
+        new Byte BaseVertexColor { get; set; }
+        new MemorySlice<Byte> BaseVertexColorUnused { get; set; }
     }
 
     public partial interface IMorphableObjectInternal :
@@ -721,9 +755,10 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IModelGetter? Model { get; }
         #endregion
-        String? TMPP { get; }
-        String? TCMP { get; }
-        ReadOnlyMemorySlice<Byte>? MOBC { get; }
+        String? TargetMorphPath { get; }
+        String? TargetChargenMorphPath { get; }
+        Byte BaseVertexColor { get; }
+        ReadOnlyMemorySlice<Byte> BaseVertexColorUnused { get; }
 
     }
 
@@ -902,9 +937,10 @@ namespace Mutagen.Bethesda.Starfield
         StarfieldMajorRecordFlags = 6,
         VirtualMachineAdapter = 7,
         Model = 8,
-        TMPP = 9,
-        TCMP = 10,
-        MOBC = 11,
+        TargetMorphPath = 9,
+        TargetChargenMorphPath = 10,
+        BaseVertexColor = 11,
+        BaseVertexColorUnused = 12,
     }
     #endregion
 
@@ -915,9 +951,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 5;
+        public const ushort AdditionalFieldCount = 6;
 
-        public const ushort FieldCount = 12;
+        public const ushort FieldCount = 13;
 
         public static readonly Type MaskType = typeof(MorphableObject.Mask<>);
 
@@ -1008,9 +1044,10 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.VirtualMachineAdapter = null;
             item.Model = null;
-            item.TMPP = default;
-            item.TCMP = default;
-            item.MOBC = default;
+            item.TargetMorphPath = default;
+            item.TargetChargenMorphPath = default;
+            item.BaseVertexColor = default(Byte);
+            item.BaseVertexColorUnused = new byte[3];
             base.Clear(item);
         }
         
@@ -1133,9 +1170,10 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Model,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.TMPP = string.Equals(item.TMPP, rhs.TMPP);
-            ret.TCMP = string.Equals(item.TCMP, rhs.TCMP);
-            ret.MOBC = MemorySliceExt.SequenceEqual(item.MOBC, rhs.MOBC);
+            ret.TargetMorphPath = string.Equals(item.TargetMorphPath, rhs.TargetMorphPath);
+            ret.TargetChargenMorphPath = string.Equals(item.TargetChargenMorphPath, rhs.TargetChargenMorphPath);
+            ret.BaseVertexColor = item.BaseVertexColor == rhs.BaseVertexColor;
+            ret.BaseVertexColorUnused = MemoryExtensions.SequenceEqual(item.BaseVertexColorUnused.Span, rhs.BaseVertexColorUnused.Span);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1195,20 +1233,23 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ModelItem?.Print(sb, "Model");
             }
-            if ((printMask?.TMPP ?? true)
-                && item.TMPP is {} TMPPItem)
+            if ((printMask?.TargetMorphPath ?? true)
+                && item.TargetMorphPath is {} TargetMorphPathItem)
             {
-                sb.AppendItem(TMPPItem, "TMPP");
+                sb.AppendItem(TargetMorphPathItem, "TargetMorphPath");
             }
-            if ((printMask?.TCMP ?? true)
-                && item.TCMP is {} TCMPItem)
+            if ((printMask?.TargetChargenMorphPath ?? true)
+                && item.TargetChargenMorphPath is {} TargetChargenMorphPathItem)
             {
-                sb.AppendItem(TCMPItem, "TCMP");
+                sb.AppendItem(TargetChargenMorphPathItem, "TargetChargenMorphPath");
             }
-            if ((printMask?.MOBC ?? true)
-                && item.MOBC is {} MOBCItem)
+            if (printMask?.BaseVertexColor ?? true)
             {
-                sb.AppendLine($"MOBC => {SpanExt.ToHexString(MOBCItem)}");
+                sb.AppendItem(item.BaseVertexColor, "BaseVertexColor");
+            }
+            if (printMask?.BaseVertexColorUnused ?? true)
+            {
+                sb.AppendLine($"BaseVertexColorUnused => {SpanExt.ToHexString(item.BaseVertexColorUnused)}");
             }
         }
         
@@ -1276,17 +1317,21 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isModelEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.TMPP) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.TargetMorphPath) ?? true))
             {
-                if (!string.Equals(lhs.TMPP, rhs.TMPP)) return false;
+                if (!string.Equals(lhs.TargetMorphPath, rhs.TargetMorphPath)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.TCMP) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.TargetChargenMorphPath) ?? true))
             {
-                if (!string.Equals(lhs.TCMP, rhs.TCMP)) return false;
+                if (!string.Equals(lhs.TargetChargenMorphPath, rhs.TargetChargenMorphPath)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.MOBC) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.BaseVertexColor) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.MOBC, rhs.MOBC)) return false;
+                if (lhs.BaseVertexColor != rhs.BaseVertexColor) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.BaseVertexColorUnused) ?? true))
+            {
+                if (!MemoryExtensions.SequenceEqual(lhs.BaseVertexColorUnused.Span, rhs.BaseVertexColorUnused.Span)) return false;
             }
             return true;
         }
@@ -1324,18 +1369,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Modelitem);
             }
-            if (item.TMPP is {} TMPPitem)
+            if (item.TargetMorphPath is {} TargetMorphPathitem)
             {
-                hash.Add(TMPPitem);
+                hash.Add(TargetMorphPathitem);
             }
-            if (item.TCMP is {} TCMPitem)
+            if (item.TargetChargenMorphPath is {} TargetChargenMorphPathitem)
             {
-                hash.Add(TCMPitem);
+                hash.Add(TargetChargenMorphPathitem);
             }
-            if (item.MOBC is {} MOBCItem)
-            {
-                hash.AddBytes(MOBCItem);
-            }
+            hash.Add(item.BaseVertexColor);
+            hash.AddBytes(item.BaseVertexColorUnused);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1543,24 +1586,21 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.TMPP) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.TargetMorphPath) ?? true))
             {
-                item.TMPP = rhs.TMPP;
+                item.TargetMorphPath = rhs.TargetMorphPath;
             }
-            if ((copyMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.TCMP) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.TargetChargenMorphPath) ?? true))
             {
-                item.TCMP = rhs.TCMP;
+                item.TargetChargenMorphPath = rhs.TargetChargenMorphPath;
             }
-            if ((copyMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.MOBC) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.BaseVertexColor) ?? true))
             {
-                if(rhs.MOBC is {} MOBCrhs)
-                {
-                    item.MOBC = MOBCrhs.ToArray();
-                }
-                else
-                {
-                    item.MOBC = default;
-                }
+                item.BaseVertexColor = rhs.BaseVertexColor;
+            }
+            if ((copyMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.BaseVertexColorUnused) ?? true))
+            {
+                item.BaseVertexColorUnused = rhs.BaseVertexColorUnused.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1747,18 +1787,21 @@ namespace Mutagen.Bethesda.Starfield
             }
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.TMPP,
+                item: item.TargetMorphPath,
                 header: translationParams.ConvertToCustom(RecordTypes.TMPP),
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.TCMP,
+                item: item.TargetChargenMorphPath,
                 header: translationParams.ConvertToCustom(RecordTypes.TCMP),
                 binaryType: StringBinaryType.NullTerminate);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.MOBC,
-                header: translationParams.ConvertToCustom(RecordTypes.MOBC));
+            using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.MOBC)))
+            {
+                writer.Write(item.BaseVertexColor);
+                ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.BaseVertexColorUnused);
+            }
         }
 
         public void Write(
@@ -1850,26 +1893,29 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.TMPP:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.TMPP = StringBinaryTranslation.Instance.Parse(
+                    item.TargetMorphPath = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)MorphableObject_FieldIndex.TMPP;
+                    return (int)MorphableObject_FieldIndex.TargetMorphPath;
                 }
                 case RecordTypeInts.TCMP:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.TCMP = StringBinaryTranslation.Instance.Parse(
+                    item.TargetChargenMorphPath = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)MorphableObject_FieldIndex.TCMP;
+                    return (int)MorphableObject_FieldIndex.TargetChargenMorphPath;
                 }
                 case RecordTypeInts.MOBC:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.MOBC = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)MorphableObject_FieldIndex.MOBC;
+                    var dataFrame = frame.SpawnWithLength(contentLength);
+                    if (dataFrame.Remaining < 1) return null;
+                    item.BaseVertexColor = dataFrame.ReadUInt8();
+                    item.BaseVertexColorUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(3));
+                    return (int)MorphableObject_FieldIndex.BaseVertexColorUnused;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -1943,17 +1989,24 @@ namespace Mutagen.Bethesda.Starfield
         IAVirtualMachineAdapterGetter? IHaveVirtualMachineAdapterGetter.VirtualMachineAdapter => this.VirtualMachineAdapter;
         #endregion
         public IModelGetter? Model { get; private set; }
-        #region TMPP
-        private int? _TMPPLocation;
-        public String? TMPP => _TMPPLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TMPPLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region TargetMorphPath
+        private int? _TargetMorphPathLocation;
+        public String? TargetMorphPath => _TargetMorphPathLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TargetMorphPathLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region TCMP
-        private int? _TCMPLocation;
-        public String? TCMP => _TCMPLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TCMPLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region TargetChargenMorphPath
+        private int? _TargetChargenMorphPathLocation;
+        public String? TargetChargenMorphPath => _TargetChargenMorphPathLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TargetChargenMorphPathLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region MOBC
-        private int? _MOBCLocation;
-        public ReadOnlyMemorySlice<Byte>? MOBC => _MOBCLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _MOBCLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        private RangeInt32? _MOBCLocation;
+        #region BaseVertexColor
+        private int _BaseVertexColorLocation => _MOBCLocation!.Value.Min;
+        private bool _BaseVertexColor_IsSet => _MOBCLocation.HasValue && _MOBCLocation!.Value.Max - _BaseVertexColorLocation + 1 >= 1;
+        public Byte BaseVertexColor => _BaseVertexColor_IsSet ? _recordData.Span[_BaseVertexColorLocation] : default(Byte);
+        #endregion
+        #region BaseVertexColorUnused
+        private int _BaseVertexColorUnusedLocation => _MOBCLocation!.Value.Min + 0x1;
+        private bool _BaseVertexColorUnused_IsSet => _MOBCLocation.HasValue;
+        public ReadOnlyMemorySlice<Byte> BaseVertexColorUnused => _BaseVertexColorUnused_IsSet ? _recordData.Span.Slice(_BaseVertexColorUnusedLocation, 3).ToArray() : UtilityTranslation.Zeros.Slice(0, 3);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -2050,18 +2103,18 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.TMPP:
                 {
-                    _TMPPLocation = (stream.Position - offset);
-                    return (int)MorphableObject_FieldIndex.TMPP;
+                    _TargetMorphPathLocation = (stream.Position - offset);
+                    return (int)MorphableObject_FieldIndex.TargetMorphPath;
                 }
                 case RecordTypeInts.TCMP:
                 {
-                    _TCMPLocation = (stream.Position - offset);
-                    return (int)MorphableObject_FieldIndex.TCMP;
+                    _TargetChargenMorphPathLocation = (stream.Position - offset);
+                    return (int)MorphableObject_FieldIndex.TargetChargenMorphPath;
                 }
                 case RecordTypeInts.MOBC:
                 {
-                    _MOBCLocation = (stream.Position - offset);
-                    return (int)MorphableObject_FieldIndex.MOBC;
+                    _MOBCLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
+                    return (int)MorphableObject_FieldIndex.BaseVertexColorUnused;
                 }
                 case RecordTypeInts.XXXX:
                 {

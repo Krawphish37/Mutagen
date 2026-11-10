@@ -70,27 +70,15 @@ namespace Mutagen.Bethesda.Starfield
         #region ZoomMax
         public Single ZoomMax { get; set; } = default(Single);
         #endregion
-        #region BNAM
+        #region Basis
+        public Transform.BasisType? Basis { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _BNAM;
-        public MemorySlice<Byte>? BNAM
-        {
-            get => this._BNAM;
-            set => this._BNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ITransformGetter.BNAM => this.BNAM;
+        Transform.BasisType? ITransformGetter.Basis => this.Basis;
         #endregion
-        #region ENAM
+        #region ColorModeFlags
+        public Transform.ColorModeFlag? ColorModeFlags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _ENAM;
-        public MemorySlice<Byte>? ENAM
-        {
-            get => this._ENAM;
-            set => this._ENAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ITransformGetter.ENAM => this.ENAM;
+        Transform.ColorModeFlag? ITransformGetter.ColorModeFlags => this.ColorModeFlags;
         #endregion
 
         #region To String
@@ -122,8 +110,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Scale = initialValue;
                 this.ZoomMin = initialValue;
                 this.ZoomMax = initialValue;
-                this.BNAM = initialValue;
-                this.ENAM = initialValue;
+                this.Basis = initialValue;
+                this.ColorModeFlags = initialValue;
             }
 
             public Mask(
@@ -139,8 +127,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Scale,
                 TItem ZoomMin,
                 TItem ZoomMax,
-                TItem BNAM,
-                TItem ENAM)
+                TItem Basis,
+                TItem ColorModeFlags)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -155,8 +143,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Scale = Scale;
                 this.ZoomMin = ZoomMin;
                 this.ZoomMax = ZoomMax;
-                this.BNAM = BNAM;
-                this.ENAM = ENAM;
+                this.Basis = Basis;
+                this.ColorModeFlags = ColorModeFlags;
             }
 
             #pragma warning disable CS8618
@@ -173,8 +161,8 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Scale;
             public TItem ZoomMin;
             public TItem ZoomMax;
-            public TItem BNAM;
-            public TItem ENAM;
+            public TItem Basis;
+            public TItem ColorModeFlags;
             #endregion
 
             #region Equals
@@ -193,8 +181,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Scale, rhs.Scale)) return false;
                 if (!object.Equals(this.ZoomMin, rhs.ZoomMin)) return false;
                 if (!object.Equals(this.ZoomMax, rhs.ZoomMax)) return false;
-                if (!object.Equals(this.BNAM, rhs.BNAM)) return false;
-                if (!object.Equals(this.ENAM, rhs.ENAM)) return false;
+                if (!object.Equals(this.Basis, rhs.Basis)) return false;
+                if (!object.Equals(this.ColorModeFlags, rhs.ColorModeFlags)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -205,8 +193,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Scale);
                 hash.Add(this.ZoomMin);
                 hash.Add(this.ZoomMax);
-                hash.Add(this.BNAM);
-                hash.Add(this.ENAM);
+                hash.Add(this.Basis);
+                hash.Add(this.ColorModeFlags);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -222,8 +210,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Scale)) return false;
                 if (!eval(this.ZoomMin)) return false;
                 if (!eval(this.ZoomMax)) return false;
-                if (!eval(this.BNAM)) return false;
-                if (!eval(this.ENAM)) return false;
+                if (!eval(this.Basis)) return false;
+                if (!eval(this.ColorModeFlags)) return false;
                 return true;
             }
             #endregion
@@ -237,8 +225,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Scale)) return true;
                 if (eval(this.ZoomMin)) return true;
                 if (eval(this.ZoomMax)) return true;
-                if (eval(this.BNAM)) return true;
-                if (eval(this.ENAM)) return true;
+                if (eval(this.Basis)) return true;
+                if (eval(this.ColorModeFlags)) return true;
                 return false;
             }
             #endregion
@@ -259,8 +247,8 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Scale = eval(this.Scale);
                 obj.ZoomMin = eval(this.ZoomMin);
                 obj.ZoomMax = eval(this.ZoomMax);
-                obj.BNAM = eval(this.BNAM);
-                obj.ENAM = eval(this.ENAM);
+                obj.Basis = eval(this.Basis);
+                obj.ColorModeFlags = eval(this.ColorModeFlags);
             }
             #endregion
 
@@ -299,13 +287,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ZoomMax, "ZoomMax");
                     }
-                    if (printMask?.BNAM ?? true)
+                    if (printMask?.Basis ?? true)
                     {
-                        sb.AppendItem(BNAM, "BNAM");
+                        sb.AppendItem(Basis, "Basis");
                     }
-                    if (printMask?.ENAM ?? true)
+                    if (printMask?.ColorModeFlags ?? true)
                     {
-                        sb.AppendItem(ENAM, "ENAM");
+                        sb.AppendItem(ColorModeFlags, "ColorModeFlags");
                     }
                 }
             }
@@ -323,8 +311,8 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Scale;
             public Exception? ZoomMin;
             public Exception? ZoomMax;
-            public Exception? BNAM;
-            public Exception? ENAM;
+            public Exception? Basis;
+            public Exception? ColorModeFlags;
             #endregion
 
             #region IErrorMask
@@ -343,10 +331,10 @@ namespace Mutagen.Bethesda.Starfield
                         return ZoomMin;
                     case Transform_FieldIndex.ZoomMax:
                         return ZoomMax;
-                    case Transform_FieldIndex.BNAM:
-                        return BNAM;
-                    case Transform_FieldIndex.ENAM:
-                        return ENAM;
+                    case Transform_FieldIndex.Basis:
+                        return Basis;
+                    case Transform_FieldIndex.ColorModeFlags:
+                        return ColorModeFlags;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -372,11 +360,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Transform_FieldIndex.ZoomMax:
                         this.ZoomMax = ex;
                         break;
-                    case Transform_FieldIndex.BNAM:
-                        this.BNAM = ex;
+                    case Transform_FieldIndex.Basis:
+                        this.Basis = ex;
                         break;
-                    case Transform_FieldIndex.ENAM:
-                        this.ENAM = ex;
+                    case Transform_FieldIndex.ColorModeFlags:
+                        this.ColorModeFlags = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -404,11 +392,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Transform_FieldIndex.ZoomMax:
                         this.ZoomMax = (Exception?)obj;
                         break;
-                    case Transform_FieldIndex.BNAM:
-                        this.BNAM = (Exception?)obj;
+                    case Transform_FieldIndex.Basis:
+                        this.Basis = (Exception?)obj;
                         break;
-                    case Transform_FieldIndex.ENAM:
-                        this.ENAM = (Exception?)obj;
+                    case Transform_FieldIndex.ColorModeFlags:
+                        this.ColorModeFlags = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -424,8 +412,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (Scale != null) return true;
                 if (ZoomMin != null) return true;
                 if (ZoomMax != null) return true;
-                if (BNAM != null) return true;
-                if (ENAM != null) return true;
+                if (Basis != null) return true;
+                if (ColorModeFlags != null) return true;
                 return false;
             }
             #endregion
@@ -468,10 +456,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ZoomMax, "ZoomMax");
                 }
                 {
-                    sb.AppendItem(BNAM, "BNAM");
+                    sb.AppendItem(Basis, "Basis");
                 }
                 {
-                    sb.AppendItem(ENAM, "ENAM");
+                    sb.AppendItem(ColorModeFlags, "ColorModeFlags");
                 }
             }
             #endregion
@@ -486,8 +474,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Scale = this.Scale.Combine(rhs.Scale);
                 ret.ZoomMin = this.ZoomMin.Combine(rhs.ZoomMin);
                 ret.ZoomMax = this.ZoomMax.Combine(rhs.ZoomMax);
-                ret.BNAM = this.BNAM.Combine(rhs.BNAM);
-                ret.ENAM = this.ENAM.Combine(rhs.ENAM);
+                ret.Basis = this.Basis.Combine(rhs.Basis);
+                ret.ColorModeFlags = this.ColorModeFlags.Combine(rhs.ColorModeFlags);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -515,8 +503,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool Scale;
             public bool ZoomMin;
             public bool ZoomMax;
-            public bool BNAM;
-            public bool ENAM;
+            public bool Basis;
+            public bool ColorModeFlags;
             #endregion
 
             #region Ctors
@@ -530,8 +518,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.Scale = defaultOn;
                 this.ZoomMin = defaultOn;
                 this.ZoomMax = defaultOn;
-                this.BNAM = defaultOn;
-                this.ENAM = defaultOn;
+                this.Basis = defaultOn;
+                this.ColorModeFlags = defaultOn;
             }
 
             #endregion
@@ -544,8 +532,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Scale, null));
                 ret.Add((ZoomMin, null));
                 ret.Add((ZoomMax, null));
-                ret.Add((BNAM, null));
-                ret.Add((ENAM, null));
+                ret.Add((Basis, null));
+                ret.Add((ColorModeFlags, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -701,8 +689,8 @@ namespace Mutagen.Bethesda.Starfield
         new Single Scale { get; set; }
         new Single ZoomMin { get; set; }
         new Single ZoomMax { get; set; }
-        new MemorySlice<Byte>? BNAM { get; set; }
-        new MemorySlice<Byte>? ENAM { get; set; }
+        new Transform.BasisType? Basis { get; set; }
+        new Transform.ColorModeFlag? ColorModeFlags { get; set; }
         #region Mutagen
         new Transform.MajorFlag MajorFlags { get; set; }
         #endregion
@@ -730,8 +718,8 @@ namespace Mutagen.Bethesda.Starfield
         Single Scale { get; }
         Single ZoomMin { get; }
         Single ZoomMax { get; }
-        ReadOnlyMemorySlice<Byte>? BNAM { get; }
-        ReadOnlyMemorySlice<Byte>? ENAM { get; }
+        Transform.BasisType? Basis { get; }
+        Transform.ColorModeFlag? ColorModeFlags { get; }
 
         #region Mutagen
         Transform.MajorFlag MajorFlags { get; }
@@ -917,8 +905,8 @@ namespace Mutagen.Bethesda.Starfield
         Scale = 9,
         ZoomMin = 10,
         ZoomMax = 11,
-        BNAM = 12,
-        ENAM = 13,
+        Basis = 12,
+        ColorModeFlags = 13,
     }
     #endregion
 
@@ -1016,8 +1004,8 @@ namespace Mutagen.Bethesda.Starfield
             item.Scale = default(Single);
             item.ZoomMin = default(Single);
             item.ZoomMax = default(Single);
-            item.BNAM = default;
-            item.ENAM = default;
+            item.Basis = default;
+            item.ColorModeFlags = default;
             base.Clear(item);
         }
         
@@ -1107,8 +1095,8 @@ namespace Mutagen.Bethesda.Starfield
             ret.Scale = item.Scale.EqualsWithin(rhs.Scale);
             ret.ZoomMin = item.ZoomMin.EqualsWithin(rhs.ZoomMin);
             ret.ZoomMax = item.ZoomMax.EqualsWithin(rhs.ZoomMax);
-            ret.BNAM = MemorySliceExt.SequenceEqual(item.BNAM, rhs.BNAM);
-            ret.ENAM = MemorySliceExt.SequenceEqual(item.ENAM, rhs.ENAM);
+            ret.Basis = item.Basis == rhs.Basis;
+            ret.ColorModeFlags = item.ColorModeFlags == rhs.ColorModeFlags;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1178,15 +1166,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ZoomMax, "ZoomMax");
             }
-            if ((printMask?.BNAM ?? true)
-                && item.BNAM is {} BNAMItem)
+            if ((printMask?.Basis ?? true)
+                && item.Basis is {} BasisItem)
             {
-                sb.AppendLine($"BNAM => {SpanExt.ToHexString(BNAMItem)}");
+                sb.AppendItem(BasisItem, "Basis");
             }
-            if ((printMask?.ENAM ?? true)
-                && item.ENAM is {} ENAMItem)
+            if ((printMask?.ColorModeFlags ?? true)
+                && item.ColorModeFlags is {} ColorModeFlagsItem)
             {
-                sb.AppendLine($"ENAM => {SpanExt.ToHexString(ENAMItem)}");
+                sb.AppendItem(ColorModeFlagsItem, "ColorModeFlags");
             }
         }
         
@@ -1258,13 +1246,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ZoomMax.EqualsWithin(rhs.ZoomMax)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Transform_FieldIndex.BNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Transform_FieldIndex.Basis) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.BNAM, rhs.BNAM)) return false;
+                if (lhs.Basis != rhs.Basis) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Transform_FieldIndex.ENAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Transform_FieldIndex.ColorModeFlags) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.ENAM, rhs.ENAM)) return false;
+                if (lhs.ColorModeFlags != rhs.ColorModeFlags) return false;
             }
             return true;
         }
@@ -1299,13 +1287,13 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Scale);
             hash.Add(item.ZoomMin);
             hash.Add(item.ZoomMax);
-            if (item.BNAM is {} BNAMItem)
+            if (item.Basis is {} Basisitem)
             {
-                hash.AddBytes(BNAMItem);
+                hash.Add(Basisitem);
             }
-            if (item.ENAM is {} ENAMItem)
+            if (item.ColorModeFlags is {} ColorModeFlagsitem)
             {
-                hash.AddBytes(ENAMItem);
+                hash.Add(ColorModeFlagsitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1452,27 +1440,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ZoomMax = rhs.ZoomMax;
             }
-            if ((copyMask?.GetShouldTranslate((int)Transform_FieldIndex.BNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Transform_FieldIndex.Basis) ?? true))
             {
-                if(rhs.BNAM is {} BNAMrhs)
-                {
-                    item.BNAM = BNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.BNAM = default;
-                }
+                item.Basis = rhs.Basis;
             }
-            if ((copyMask?.GetShouldTranslate((int)Transform_FieldIndex.ENAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Transform_FieldIndex.ColorModeFlags) ?? true))
             {
-                if(rhs.ENAM is {} ENAMrhs)
-                {
-                    item.ENAM = ENAMrhs.ToArray();
-                }
-                else
-                {
-                    item.ENAM = default;
-                }
+                item.ColorModeFlags = rhs.ColorModeFlags;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1661,13 +1635,15 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     item: item.ZoomMax);
             }
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.BNAM,
+            EnumBinaryTranslation<Transform.BasisType, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Basis,
+                length: 1,
                 header: translationParams.ConvertToCustom(RecordTypes.BNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.ENAM,
+            EnumBinaryTranslation<Transform.ColorModeFlag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.ColorModeFlags,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.ENAM));
         }
 
@@ -1756,14 +1732,18 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.BNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Transform_FieldIndex.BNAM;
+                    item.Basis = EnumBinaryTranslation<Transform.BasisType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)Transform_FieldIndex.Basis;
                 }
                 case RecordTypeInts.ENAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ENAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Transform_FieldIndex.ENAM;
+                    item.ColorModeFlags = EnumBinaryTranslation<Transform.ColorModeFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)Transform_FieldIndex.ColorModeFlags;
                 }
                 default:
                     return StarfieldMajorRecordBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1850,13 +1830,13 @@ namespace Mutagen.Bethesda.Starfield
         private bool _ZoomMax_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _ZoomMaxLocation + 1 >= 4;
         public Single ZoomMax => _ZoomMax_IsSet ? _recordData.Slice(_ZoomMaxLocation, 4).Float() : default(Single);
         #endregion
-        #region BNAM
-        private int? _BNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? BNAM => _BNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _BNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Basis
+        private int? _BasisLocation;
+        public Transform.BasisType? Basis => EnumBinaryTranslation<Transform.BasisType, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_BasisLocation, _recordData, _package, 1);
         #endregion
-        #region ENAM
-        private int? _ENAMLocation;
-        public ReadOnlyMemorySlice<Byte>? ENAM => _ENAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ENAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region ColorModeFlags
+        private int? _ColorModeFlagsLocation;
+        public Transform.ColorModeFlag? ColorModeFlags => EnumBinaryTranslation<Transform.ColorModeFlag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_ColorModeFlagsLocation, _recordData, _package, 4);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1934,13 +1914,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BNAM:
                 {
-                    _BNAMLocation = (stream.Position - offset);
-                    return (int)Transform_FieldIndex.BNAM;
+                    _BasisLocation = (stream.Position - offset);
+                    return (int)Transform_FieldIndex.Basis;
                 }
                 case RecordTypeInts.ENAM:
                 {
-                    _ENAMLocation = (stream.Position - offset);
-                    return (int)Transform_FieldIndex.ENAM;
+                    _ColorModeFlagsLocation = (stream.Position - offset);
+                    return (int)Transform_FieldIndex.ColorModeFlags;
                 }
                 default:
                     return base.FillRecordType(

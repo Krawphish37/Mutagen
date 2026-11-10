@@ -4,15 +4,15 @@
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
       <RefDirect name="ObjectBounds" refName="ObjectBounds" nullable="False" />
-      <ByteArray name="ODTY" recordType="ODTY" unknown="true" />
-      <String name="TX00" recordType="TX00" />
-      <String name="TX01" recordType="TX01" />
-      <String name="TX08" recordType="TX08" />
-      <String name="TX09" recordType="TX09" />
+      <Float name="DirtinessScale" recordType="ODTY" nullable="False" />
+      <String name="Diffuse" recordType="TX00" />
+      <String name="NormalGloss" recordType="TX01" />
+      <String name="Metal" recordType="TX08" />
+      <String name="Rough" recordType="TX09" />
       <String name="TX15" recordType="TX15" />
-      <String name="TX17" recordType="TX17" />
-      <String name="TX19" recordType="TX19" />
-      <ByteArray name="DODT" recordType="DODT" />
+      <String name="AmbientOcclusion" recordType="TX17" />
+      <String name="Opacity" recordType="TX19" />
+      <RefDirect name="Decal" refName="Decal" />
       <Enum name="Flags" enumName="TextureSet.Flag" byteLength="2" recordType="DNAM" nullable="false" />
       <String name="Material" recordType="MNAM" />
     </Fields>

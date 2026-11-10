@@ -20,9 +20,9 @@
         <FormLink refName="Keyword" />
       </List>
       <RefList name="Properties" refName="ObjectProperty" recordType="PRPS" />
-      <UInt8 name="DATA" recordType="DATA" nullable="False" unknown="true" />
-      <RefDirect name="MSLS" recordType="MSLS" refName="SoundReference" />
-      <Float name="MSMO" recordType="MSMO" unknown="true" />
+      <Enum name="MassOverrideFlags" enumName="MoveableStatic.MassOverrideFlag" byteLength="1" recordType="DATA" nullable="False" />
+      <RefDirect name="LoopingSound" recordType="MSLS" refName="SoundReference" />
+      <Float name="MassOverrideValue" recordType="MSMO" />
     </Fields>
     <LinkInterface>IStaticTarget</LinkInterface>
     <LinkInterface>IItem</LinkInterface>

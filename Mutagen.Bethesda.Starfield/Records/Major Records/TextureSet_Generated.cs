@@ -96,62 +96,54 @@ namespace Mutagen.Bethesda.Starfield
         IObjectBoundsGetter? IObjectBoundedOptionalGetter.ObjectBounds => this.ObjectBounds;
         #endregion
         #endregion
-        #region ODTY
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _ODTY;
-        public MemorySlice<Byte>? ODTY
-        {
-            get => this._ODTY;
-            set => this._ODTY = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ITextureSetGetter.ODTY => this.ODTY;
+        #region DirtinessScale
+        public Single DirtinessScale { get; set; } = default(Single);
         #endregion
-        #region TX00
-        public String? TX00 { get; set; }
+        #region Diffuse
+        public String? Diffuse { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? ITextureSetGetter.TX00 => this.TX00;
+        String? ITextureSetGetter.Diffuse => this.Diffuse;
         #endregion
-        #region TX01
-        public String? TX01 { get; set; }
+        #region NormalGloss
+        public String? NormalGloss { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? ITextureSetGetter.TX01 => this.TX01;
+        String? ITextureSetGetter.NormalGloss => this.NormalGloss;
         #endregion
-        #region TX08
-        public String? TX08 { get; set; }
+        #region Metal
+        public String? Metal { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? ITextureSetGetter.TX08 => this.TX08;
+        String? ITextureSetGetter.Metal => this.Metal;
         #endregion
-        #region TX09
-        public String? TX09 { get; set; }
+        #region Rough
+        public String? Rough { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? ITextureSetGetter.TX09 => this.TX09;
+        String? ITextureSetGetter.Rough => this.Rough;
         #endregion
         #region TX15
         public String? TX15 { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         String? ITextureSetGetter.TX15 => this.TX15;
         #endregion
-        #region TX17
-        public String? TX17 { get; set; }
+        #region AmbientOcclusion
+        public String? AmbientOcclusion { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? ITextureSetGetter.TX17 => this.TX17;
+        String? ITextureSetGetter.AmbientOcclusion => this.AmbientOcclusion;
         #endregion
-        #region TX19
-        public String? TX19 { get; set; }
+        #region Opacity
+        public String? Opacity { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? ITextureSetGetter.TX19 => this.TX19;
+        String? ITextureSetGetter.Opacity => this.Opacity;
         #endregion
-        #region DODT
+        #region Decal
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _DODT;
-        public MemorySlice<Byte>? DODT
+        private Decal? _Decal;
+        public Decal? Decal
         {
-            get => this._DODT;
-            set => this._DODT = value;
+            get => _Decal;
+            set => _Decal = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ITextureSetGetter.DODT => this.DODT;
+        IDecalGetter? ITextureSetGetter.Decal => this.Decal;
         #endregion
         #region Flags
         public TextureSet.Flag Flags { get; set; } = default(TextureSet.Flag);
@@ -188,15 +180,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(initialValue, new VirtualMachineAdapter.Mask<TItem>(initialValue));
                 this.ObjectBounds = new MaskItem<TItem, ObjectBounds.Mask<TItem>?>(initialValue, new ObjectBounds.Mask<TItem>(initialValue));
-                this.ODTY = initialValue;
-                this.TX00 = initialValue;
-                this.TX01 = initialValue;
-                this.TX08 = initialValue;
-                this.TX09 = initialValue;
+                this.DirtinessScale = initialValue;
+                this.Diffuse = initialValue;
+                this.NormalGloss = initialValue;
+                this.Metal = initialValue;
+                this.Rough = initialValue;
                 this.TX15 = initialValue;
-                this.TX17 = initialValue;
-                this.TX19 = initialValue;
-                this.DODT = initialValue;
+                this.AmbientOcclusion = initialValue;
+                this.Opacity = initialValue;
+                this.Decal = new MaskItem<TItem, Decal.Mask<TItem>?>(initialValue, new Decal.Mask<TItem>(initialValue));
                 this.Flags = initialValue;
                 this.Material = initialValue;
             }
@@ -211,15 +203,15 @@ namespace Mutagen.Bethesda.Starfield
                 TItem StarfieldMajorRecordFlags,
                 TItem VirtualMachineAdapter,
                 TItem ObjectBounds,
-                TItem ODTY,
-                TItem TX00,
-                TItem TX01,
-                TItem TX08,
-                TItem TX09,
+                TItem DirtinessScale,
+                TItem Diffuse,
+                TItem NormalGloss,
+                TItem Metal,
+                TItem Rough,
                 TItem TX15,
-                TItem TX17,
-                TItem TX19,
-                TItem DODT,
+                TItem AmbientOcclusion,
+                TItem Opacity,
+                TItem Decal,
                 TItem Flags,
                 TItem Material)
             : base(
@@ -233,15 +225,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(VirtualMachineAdapter, new VirtualMachineAdapter.Mask<TItem>(VirtualMachineAdapter));
                 this.ObjectBounds = new MaskItem<TItem, ObjectBounds.Mask<TItem>?>(ObjectBounds, new ObjectBounds.Mask<TItem>(ObjectBounds));
-                this.ODTY = ODTY;
-                this.TX00 = TX00;
-                this.TX01 = TX01;
-                this.TX08 = TX08;
-                this.TX09 = TX09;
+                this.DirtinessScale = DirtinessScale;
+                this.Diffuse = Diffuse;
+                this.NormalGloss = NormalGloss;
+                this.Metal = Metal;
+                this.Rough = Rough;
                 this.TX15 = TX15;
-                this.TX17 = TX17;
-                this.TX19 = TX19;
-                this.DODT = DODT;
+                this.AmbientOcclusion = AmbientOcclusion;
+                this.Opacity = Opacity;
+                this.Decal = new MaskItem<TItem, Decal.Mask<TItem>?>(Decal, new Decal.Mask<TItem>(Decal));
                 this.Flags = Flags;
                 this.Material = Material;
             }
@@ -257,15 +249,15 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
             public MaskItem<TItem, ObjectBounds.Mask<TItem>?>? ObjectBounds { get; set; }
-            public TItem ODTY;
-            public TItem TX00;
-            public TItem TX01;
-            public TItem TX08;
-            public TItem TX09;
+            public TItem DirtinessScale;
+            public TItem Diffuse;
+            public TItem NormalGloss;
+            public TItem Metal;
+            public TItem Rough;
             public TItem TX15;
-            public TItem TX17;
-            public TItem TX19;
-            public TItem DODT;
+            public TItem AmbientOcclusion;
+            public TItem Opacity;
+            public MaskItem<TItem, Decal.Mask<TItem>?>? Decal { get; set; }
             public TItem Flags;
             public TItem Material;
             #endregion
@@ -283,15 +275,15 @@ namespace Mutagen.Bethesda.Starfield
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
                 if (!object.Equals(this.ObjectBounds, rhs.ObjectBounds)) return false;
-                if (!object.Equals(this.ODTY, rhs.ODTY)) return false;
-                if (!object.Equals(this.TX00, rhs.TX00)) return false;
-                if (!object.Equals(this.TX01, rhs.TX01)) return false;
-                if (!object.Equals(this.TX08, rhs.TX08)) return false;
-                if (!object.Equals(this.TX09, rhs.TX09)) return false;
+                if (!object.Equals(this.DirtinessScale, rhs.DirtinessScale)) return false;
+                if (!object.Equals(this.Diffuse, rhs.Diffuse)) return false;
+                if (!object.Equals(this.NormalGloss, rhs.NormalGloss)) return false;
+                if (!object.Equals(this.Metal, rhs.Metal)) return false;
+                if (!object.Equals(this.Rough, rhs.Rough)) return false;
                 if (!object.Equals(this.TX15, rhs.TX15)) return false;
-                if (!object.Equals(this.TX17, rhs.TX17)) return false;
-                if (!object.Equals(this.TX19, rhs.TX19)) return false;
-                if (!object.Equals(this.DODT, rhs.DODT)) return false;
+                if (!object.Equals(this.AmbientOcclusion, rhs.AmbientOcclusion)) return false;
+                if (!object.Equals(this.Opacity, rhs.Opacity)) return false;
+                if (!object.Equals(this.Decal, rhs.Decal)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.Material, rhs.Material)) return false;
                 return true;
@@ -301,15 +293,15 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.VirtualMachineAdapter);
                 hash.Add(this.ObjectBounds);
-                hash.Add(this.ODTY);
-                hash.Add(this.TX00);
-                hash.Add(this.TX01);
-                hash.Add(this.TX08);
-                hash.Add(this.TX09);
+                hash.Add(this.DirtinessScale);
+                hash.Add(this.Diffuse);
+                hash.Add(this.NormalGloss);
+                hash.Add(this.Metal);
+                hash.Add(this.Rough);
                 hash.Add(this.TX15);
-                hash.Add(this.TX17);
-                hash.Add(this.TX19);
-                hash.Add(this.DODT);
+                hash.Add(this.AmbientOcclusion);
+                hash.Add(this.Opacity);
+                hash.Add(this.Decal);
                 hash.Add(this.Flags);
                 hash.Add(this.Material);
                 hash.Add(base.GetHashCode());
@@ -332,15 +324,19 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.ObjectBounds.Overall)) return false;
                     if (this.ObjectBounds.Specific != null && !this.ObjectBounds.Specific.All(eval)) return false;
                 }
-                if (!eval(this.ODTY)) return false;
-                if (!eval(this.TX00)) return false;
-                if (!eval(this.TX01)) return false;
-                if (!eval(this.TX08)) return false;
-                if (!eval(this.TX09)) return false;
+                if (!eval(this.DirtinessScale)) return false;
+                if (!eval(this.Diffuse)) return false;
+                if (!eval(this.NormalGloss)) return false;
+                if (!eval(this.Metal)) return false;
+                if (!eval(this.Rough)) return false;
                 if (!eval(this.TX15)) return false;
-                if (!eval(this.TX17)) return false;
-                if (!eval(this.TX19)) return false;
-                if (!eval(this.DODT)) return false;
+                if (!eval(this.AmbientOcclusion)) return false;
+                if (!eval(this.Opacity)) return false;
+                if (Decal != null)
+                {
+                    if (!eval(this.Decal.Overall)) return false;
+                    if (this.Decal.Specific != null && !this.Decal.Specific.All(eval)) return false;
+                }
                 if (!eval(this.Flags)) return false;
                 if (!eval(this.Material)) return false;
                 return true;
@@ -361,15 +357,19 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.ObjectBounds.Overall)) return true;
                     if (this.ObjectBounds.Specific != null && this.ObjectBounds.Specific.Any(eval)) return true;
                 }
-                if (eval(this.ODTY)) return true;
-                if (eval(this.TX00)) return true;
-                if (eval(this.TX01)) return true;
-                if (eval(this.TX08)) return true;
-                if (eval(this.TX09)) return true;
+                if (eval(this.DirtinessScale)) return true;
+                if (eval(this.Diffuse)) return true;
+                if (eval(this.NormalGloss)) return true;
+                if (eval(this.Metal)) return true;
+                if (eval(this.Rough)) return true;
                 if (eval(this.TX15)) return true;
-                if (eval(this.TX17)) return true;
-                if (eval(this.TX19)) return true;
-                if (eval(this.DODT)) return true;
+                if (eval(this.AmbientOcclusion)) return true;
+                if (eval(this.Opacity)) return true;
+                if (Decal != null)
+                {
+                    if (eval(this.Decal.Overall)) return true;
+                    if (this.Decal.Specific != null && this.Decal.Specific.Any(eval)) return true;
+                }
                 if (eval(this.Flags)) return true;
                 if (eval(this.Material)) return true;
                 return false;
@@ -389,15 +389,15 @@ namespace Mutagen.Bethesda.Starfield
                 base.Translate_InternalFill(obj, eval);
                 obj.VirtualMachineAdapter = this.VirtualMachineAdapter == null ? null : new MaskItem<R, VirtualMachineAdapter.Mask<R>?>(eval(this.VirtualMachineAdapter.Overall), this.VirtualMachineAdapter.Specific?.Translate(eval));
                 obj.ObjectBounds = this.ObjectBounds == null ? null : new MaskItem<R, ObjectBounds.Mask<R>?>(eval(this.ObjectBounds.Overall), this.ObjectBounds.Specific?.Translate(eval));
-                obj.ODTY = eval(this.ODTY);
-                obj.TX00 = eval(this.TX00);
-                obj.TX01 = eval(this.TX01);
-                obj.TX08 = eval(this.TX08);
-                obj.TX09 = eval(this.TX09);
+                obj.DirtinessScale = eval(this.DirtinessScale);
+                obj.Diffuse = eval(this.Diffuse);
+                obj.NormalGloss = eval(this.NormalGloss);
+                obj.Metal = eval(this.Metal);
+                obj.Rough = eval(this.Rough);
                 obj.TX15 = eval(this.TX15);
-                obj.TX17 = eval(this.TX17);
-                obj.TX19 = eval(this.TX19);
-                obj.DODT = eval(this.DODT);
+                obj.AmbientOcclusion = eval(this.AmbientOcclusion);
+                obj.Opacity = eval(this.Opacity);
+                obj.Decal = this.Decal == null ? null : new MaskItem<R, Decal.Mask<R>?>(eval(this.Decal.Overall), this.Decal.Specific?.Translate(eval));
                 obj.Flags = eval(this.Flags);
                 obj.Material = eval(this.Material);
             }
@@ -426,41 +426,41 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         ObjectBounds?.Print(sb);
                     }
-                    if (printMask?.ODTY ?? true)
+                    if (printMask?.DirtinessScale ?? true)
                     {
-                        sb.AppendItem(ODTY, "ODTY");
+                        sb.AppendItem(DirtinessScale, "DirtinessScale");
                     }
-                    if (printMask?.TX00 ?? true)
+                    if (printMask?.Diffuse ?? true)
                     {
-                        sb.AppendItem(TX00, "TX00");
+                        sb.AppendItem(Diffuse, "Diffuse");
                     }
-                    if (printMask?.TX01 ?? true)
+                    if (printMask?.NormalGloss ?? true)
                     {
-                        sb.AppendItem(TX01, "TX01");
+                        sb.AppendItem(NormalGloss, "NormalGloss");
                     }
-                    if (printMask?.TX08 ?? true)
+                    if (printMask?.Metal ?? true)
                     {
-                        sb.AppendItem(TX08, "TX08");
+                        sb.AppendItem(Metal, "Metal");
                     }
-                    if (printMask?.TX09 ?? true)
+                    if (printMask?.Rough ?? true)
                     {
-                        sb.AppendItem(TX09, "TX09");
+                        sb.AppendItem(Rough, "Rough");
                     }
                     if (printMask?.TX15 ?? true)
                     {
                         sb.AppendItem(TX15, "TX15");
                     }
-                    if (printMask?.TX17 ?? true)
+                    if (printMask?.AmbientOcclusion ?? true)
                     {
-                        sb.AppendItem(TX17, "TX17");
+                        sb.AppendItem(AmbientOcclusion, "AmbientOcclusion");
                     }
-                    if (printMask?.TX19 ?? true)
+                    if (printMask?.Opacity ?? true)
                     {
-                        sb.AppendItem(TX19, "TX19");
+                        sb.AppendItem(Opacity, "Opacity");
                     }
-                    if (printMask?.DODT ?? true)
+                    if (printMask?.Decal?.Overall ?? true)
                     {
-                        sb.AppendItem(DODT, "DODT");
+                        Decal?.Print(sb);
                     }
                     if (printMask?.Flags ?? true)
                     {
@@ -483,15 +483,15 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>? VirtualMachineAdapter;
             public MaskItem<Exception?, ObjectBounds.ErrorMask?>? ObjectBounds;
-            public Exception? ODTY;
-            public Exception? TX00;
-            public Exception? TX01;
-            public Exception? TX08;
-            public Exception? TX09;
+            public Exception? DirtinessScale;
+            public Exception? Diffuse;
+            public Exception? NormalGloss;
+            public Exception? Metal;
+            public Exception? Rough;
             public Exception? TX15;
-            public Exception? TX17;
-            public Exception? TX19;
-            public Exception? DODT;
+            public Exception? AmbientOcclusion;
+            public Exception? Opacity;
+            public MaskItem<Exception?, Decal.ErrorMask?>? Decal;
             public Exception? Flags;
             public Exception? Material;
             #endregion
@@ -506,24 +506,24 @@ namespace Mutagen.Bethesda.Starfield
                         return VirtualMachineAdapter;
                     case TextureSet_FieldIndex.ObjectBounds:
                         return ObjectBounds;
-                    case TextureSet_FieldIndex.ODTY:
-                        return ODTY;
-                    case TextureSet_FieldIndex.TX00:
-                        return TX00;
-                    case TextureSet_FieldIndex.TX01:
-                        return TX01;
-                    case TextureSet_FieldIndex.TX08:
-                        return TX08;
-                    case TextureSet_FieldIndex.TX09:
-                        return TX09;
+                    case TextureSet_FieldIndex.DirtinessScale:
+                        return DirtinessScale;
+                    case TextureSet_FieldIndex.Diffuse:
+                        return Diffuse;
+                    case TextureSet_FieldIndex.NormalGloss:
+                        return NormalGloss;
+                    case TextureSet_FieldIndex.Metal:
+                        return Metal;
+                    case TextureSet_FieldIndex.Rough:
+                        return Rough;
                     case TextureSet_FieldIndex.TX15:
                         return TX15;
-                    case TextureSet_FieldIndex.TX17:
-                        return TX17;
-                    case TextureSet_FieldIndex.TX19:
-                        return TX19;
-                    case TextureSet_FieldIndex.DODT:
-                        return DODT;
+                    case TextureSet_FieldIndex.AmbientOcclusion:
+                        return AmbientOcclusion;
+                    case TextureSet_FieldIndex.Opacity:
+                        return Opacity;
+                    case TextureSet_FieldIndex.Decal:
+                        return Decal;
                     case TextureSet_FieldIndex.Flags:
                         return Flags;
                     case TextureSet_FieldIndex.Material:
@@ -544,32 +544,32 @@ namespace Mutagen.Bethesda.Starfield
                     case TextureSet_FieldIndex.ObjectBounds:
                         this.ObjectBounds = new MaskItem<Exception?, ObjectBounds.ErrorMask?>(ex, null);
                         break;
-                    case TextureSet_FieldIndex.ODTY:
-                        this.ODTY = ex;
+                    case TextureSet_FieldIndex.DirtinessScale:
+                        this.DirtinessScale = ex;
                         break;
-                    case TextureSet_FieldIndex.TX00:
-                        this.TX00 = ex;
+                    case TextureSet_FieldIndex.Diffuse:
+                        this.Diffuse = ex;
                         break;
-                    case TextureSet_FieldIndex.TX01:
-                        this.TX01 = ex;
+                    case TextureSet_FieldIndex.NormalGloss:
+                        this.NormalGloss = ex;
                         break;
-                    case TextureSet_FieldIndex.TX08:
-                        this.TX08 = ex;
+                    case TextureSet_FieldIndex.Metal:
+                        this.Metal = ex;
                         break;
-                    case TextureSet_FieldIndex.TX09:
-                        this.TX09 = ex;
+                    case TextureSet_FieldIndex.Rough:
+                        this.Rough = ex;
                         break;
                     case TextureSet_FieldIndex.TX15:
                         this.TX15 = ex;
                         break;
-                    case TextureSet_FieldIndex.TX17:
-                        this.TX17 = ex;
+                    case TextureSet_FieldIndex.AmbientOcclusion:
+                        this.AmbientOcclusion = ex;
                         break;
-                    case TextureSet_FieldIndex.TX19:
-                        this.TX19 = ex;
+                    case TextureSet_FieldIndex.Opacity:
+                        this.Opacity = ex;
                         break;
-                    case TextureSet_FieldIndex.DODT:
-                        this.DODT = ex;
+                    case TextureSet_FieldIndex.Decal:
+                        this.Decal = new MaskItem<Exception?, Decal.ErrorMask?>(ex, null);
                         break;
                     case TextureSet_FieldIndex.Flags:
                         this.Flags = ex;
@@ -594,32 +594,32 @@ namespace Mutagen.Bethesda.Starfield
                     case TextureSet_FieldIndex.ObjectBounds:
                         this.ObjectBounds = (MaskItem<Exception?, ObjectBounds.ErrorMask?>?)obj;
                         break;
-                    case TextureSet_FieldIndex.ODTY:
-                        this.ODTY = (Exception?)obj;
+                    case TextureSet_FieldIndex.DirtinessScale:
+                        this.DirtinessScale = (Exception?)obj;
                         break;
-                    case TextureSet_FieldIndex.TX00:
-                        this.TX00 = (Exception?)obj;
+                    case TextureSet_FieldIndex.Diffuse:
+                        this.Diffuse = (Exception?)obj;
                         break;
-                    case TextureSet_FieldIndex.TX01:
-                        this.TX01 = (Exception?)obj;
+                    case TextureSet_FieldIndex.NormalGloss:
+                        this.NormalGloss = (Exception?)obj;
                         break;
-                    case TextureSet_FieldIndex.TX08:
-                        this.TX08 = (Exception?)obj;
+                    case TextureSet_FieldIndex.Metal:
+                        this.Metal = (Exception?)obj;
                         break;
-                    case TextureSet_FieldIndex.TX09:
-                        this.TX09 = (Exception?)obj;
+                    case TextureSet_FieldIndex.Rough:
+                        this.Rough = (Exception?)obj;
                         break;
                     case TextureSet_FieldIndex.TX15:
                         this.TX15 = (Exception?)obj;
                         break;
-                    case TextureSet_FieldIndex.TX17:
-                        this.TX17 = (Exception?)obj;
+                    case TextureSet_FieldIndex.AmbientOcclusion:
+                        this.AmbientOcclusion = (Exception?)obj;
                         break;
-                    case TextureSet_FieldIndex.TX19:
-                        this.TX19 = (Exception?)obj;
+                    case TextureSet_FieldIndex.Opacity:
+                        this.Opacity = (Exception?)obj;
                         break;
-                    case TextureSet_FieldIndex.DODT:
-                        this.DODT = (Exception?)obj;
+                    case TextureSet_FieldIndex.Decal:
+                        this.Decal = (MaskItem<Exception?, Decal.ErrorMask?>?)obj;
                         break;
                     case TextureSet_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
@@ -638,15 +638,15 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (VirtualMachineAdapter != null) return true;
                 if (ObjectBounds != null) return true;
-                if (ODTY != null) return true;
-                if (TX00 != null) return true;
-                if (TX01 != null) return true;
-                if (TX08 != null) return true;
-                if (TX09 != null) return true;
+                if (DirtinessScale != null) return true;
+                if (Diffuse != null) return true;
+                if (NormalGloss != null) return true;
+                if (Metal != null) return true;
+                if (Rough != null) return true;
                 if (TX15 != null) return true;
-                if (TX17 != null) return true;
-                if (TX19 != null) return true;
-                if (DODT != null) return true;
+                if (AmbientOcclusion != null) return true;
+                if (Opacity != null) return true;
+                if (Decal != null) return true;
                 if (Flags != null) return true;
                 if (Material != null) return true;
                 return false;
@@ -678,32 +678,30 @@ namespace Mutagen.Bethesda.Starfield
                 VirtualMachineAdapter?.Print(sb);
                 ObjectBounds?.Print(sb);
                 {
-                    sb.AppendItem(ODTY, "ODTY");
+                    sb.AppendItem(DirtinessScale, "DirtinessScale");
                 }
                 {
-                    sb.AppendItem(TX00, "TX00");
+                    sb.AppendItem(Diffuse, "Diffuse");
                 }
                 {
-                    sb.AppendItem(TX01, "TX01");
+                    sb.AppendItem(NormalGloss, "NormalGloss");
                 }
                 {
-                    sb.AppendItem(TX08, "TX08");
+                    sb.AppendItem(Metal, "Metal");
                 }
                 {
-                    sb.AppendItem(TX09, "TX09");
+                    sb.AppendItem(Rough, "Rough");
                 }
                 {
                     sb.AppendItem(TX15, "TX15");
                 }
                 {
-                    sb.AppendItem(TX17, "TX17");
+                    sb.AppendItem(AmbientOcclusion, "AmbientOcclusion");
                 }
                 {
-                    sb.AppendItem(TX19, "TX19");
+                    sb.AppendItem(Opacity, "Opacity");
                 }
-                {
-                    sb.AppendItem(DODT, "DODT");
-                }
+                Decal?.Print(sb);
                 {
                     sb.AppendItem(Flags, "Flags");
                 }
@@ -720,15 +718,15 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
                 ret.ObjectBounds = this.ObjectBounds.Combine(rhs.ObjectBounds, (l, r) => l.Combine(r));
-                ret.ODTY = this.ODTY.Combine(rhs.ODTY);
-                ret.TX00 = this.TX00.Combine(rhs.TX00);
-                ret.TX01 = this.TX01.Combine(rhs.TX01);
-                ret.TX08 = this.TX08.Combine(rhs.TX08);
-                ret.TX09 = this.TX09.Combine(rhs.TX09);
+                ret.DirtinessScale = this.DirtinessScale.Combine(rhs.DirtinessScale);
+                ret.Diffuse = this.Diffuse.Combine(rhs.Diffuse);
+                ret.NormalGloss = this.NormalGloss.Combine(rhs.NormalGloss);
+                ret.Metal = this.Metal.Combine(rhs.Metal);
+                ret.Rough = this.Rough.Combine(rhs.Rough);
                 ret.TX15 = this.TX15.Combine(rhs.TX15);
-                ret.TX17 = this.TX17.Combine(rhs.TX17);
-                ret.TX19 = this.TX19.Combine(rhs.TX19);
-                ret.DODT = this.DODT.Combine(rhs.DODT);
+                ret.AmbientOcclusion = this.AmbientOcclusion.Combine(rhs.AmbientOcclusion);
+                ret.Opacity = this.Opacity.Combine(rhs.Opacity);
+                ret.Decal = this.Decal.Combine(rhs.Decal, (l, r) => l.Combine(r));
                 ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.Material = this.Material.Combine(rhs.Material);
                 return ret;
@@ -755,15 +753,15 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public VirtualMachineAdapter.TranslationMask? VirtualMachineAdapter;
             public ObjectBounds.TranslationMask? ObjectBounds;
-            public bool ODTY;
-            public bool TX00;
-            public bool TX01;
-            public bool TX08;
-            public bool TX09;
+            public bool DirtinessScale;
+            public bool Diffuse;
+            public bool NormalGloss;
+            public bool Metal;
+            public bool Rough;
             public bool TX15;
-            public bool TX17;
-            public bool TX19;
-            public bool DODT;
+            public bool AmbientOcclusion;
+            public bool Opacity;
+            public Decal.TranslationMask? Decal;
             public bool Flags;
             public bool Material;
             #endregion
@@ -774,15 +772,14 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.ODTY = defaultOn;
-                this.TX00 = defaultOn;
-                this.TX01 = defaultOn;
-                this.TX08 = defaultOn;
-                this.TX09 = defaultOn;
+                this.DirtinessScale = defaultOn;
+                this.Diffuse = defaultOn;
+                this.NormalGloss = defaultOn;
+                this.Metal = defaultOn;
+                this.Rough = defaultOn;
                 this.TX15 = defaultOn;
-                this.TX17 = defaultOn;
-                this.TX19 = defaultOn;
-                this.DODT = defaultOn;
+                this.AmbientOcclusion = defaultOn;
+                this.Opacity = defaultOn;
                 this.Flags = defaultOn;
                 this.Material = defaultOn;
             }
@@ -794,15 +791,15 @@ namespace Mutagen.Bethesda.Starfield
                 base.GetCrystal(ret);
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
                 ret.Add((ObjectBounds != null ? ObjectBounds.OnOverall : DefaultOn, ObjectBounds?.GetCrystal()));
-                ret.Add((ODTY, null));
-                ret.Add((TX00, null));
-                ret.Add((TX01, null));
-                ret.Add((TX08, null));
-                ret.Add((TX09, null));
+                ret.Add((DirtinessScale, null));
+                ret.Add((Diffuse, null));
+                ret.Add((NormalGloss, null));
+                ret.Add((Metal, null));
+                ret.Add((Rough, null));
                 ret.Add((TX15, null));
-                ret.Add((TX17, null));
-                ret.Add((TX19, null));
-                ret.Add((DODT, null));
+                ret.Add((AmbientOcclusion, null));
+                ret.Add((Opacity, null));
+                ret.Add((Decal != null ? Decal.OnOverall : DefaultOn, Decal?.GetCrystal()));
                 ret.Add((Flags, null));
                 ret.Add((Material, null));
             }
@@ -968,15 +965,15 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IObjectBounded
         /// </summary>
         new ObjectBounds ObjectBounds { get; set; }
-        new MemorySlice<Byte>? ODTY { get; set; }
-        new String? TX00 { get; set; }
-        new String? TX01 { get; set; }
-        new String? TX08 { get; set; }
-        new String? TX09 { get; set; }
+        new Single DirtinessScale { get; set; }
+        new String? Diffuse { get; set; }
+        new String? NormalGloss { get; set; }
+        new String? Metal { get; set; }
+        new String? Rough { get; set; }
         new String? TX15 { get; set; }
-        new String? TX17 { get; set; }
-        new String? TX19 { get; set; }
-        new MemorySlice<Byte>? DODT { get; set; }
+        new String? AmbientOcclusion { get; set; }
+        new String? Opacity { get; set; }
+        new Decal? Decal { get; set; }
         new TextureSet.Flag Flags { get; set; }
         new String? Material { get; set; }
     }
@@ -1017,15 +1014,15 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IObjectBoundsGetter ObjectBounds { get; }
         #endregion
-        ReadOnlyMemorySlice<Byte>? ODTY { get; }
-        String? TX00 { get; }
-        String? TX01 { get; }
-        String? TX08 { get; }
-        String? TX09 { get; }
+        Single DirtinessScale { get; }
+        String? Diffuse { get; }
+        String? NormalGloss { get; }
+        String? Metal { get; }
+        String? Rough { get; }
         String? TX15 { get; }
-        String? TX17 { get; }
-        String? TX19 { get; }
-        ReadOnlyMemorySlice<Byte>? DODT { get; }
+        String? AmbientOcclusion { get; }
+        String? Opacity { get; }
+        IDecalGetter? Decal { get; }
         TextureSet.Flag Flags { get; }
         String? Material { get; }
 
@@ -1206,15 +1203,15 @@ namespace Mutagen.Bethesda.Starfield
         StarfieldMajorRecordFlags = 6,
         VirtualMachineAdapter = 7,
         ObjectBounds = 8,
-        ODTY = 9,
-        TX00 = 10,
-        TX01 = 11,
-        TX08 = 12,
-        TX09 = 13,
+        DirtinessScale = 9,
+        Diffuse = 10,
+        NormalGloss = 11,
+        Metal = 12,
+        Rough = 13,
         TX15 = 14,
-        TX17 = 15,
-        TX19 = 16,
-        DODT = 17,
+        AmbientOcclusion = 15,
+        Opacity = 16,
+        Decal = 17,
         Flags = 18,
         Material = 19,
     }
@@ -1322,15 +1319,15 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.VirtualMachineAdapter = null;
             item.ObjectBounds.Clear();
-            item.ODTY = default;
-            item.TX00 = default;
-            item.TX01 = default;
-            item.TX08 = default;
-            item.TX09 = default;
+            item.DirtinessScale = default(Single);
+            item.Diffuse = default;
+            item.NormalGloss = default;
+            item.Metal = default;
+            item.Rough = default;
             item.TX15 = default;
-            item.TX17 = default;
-            item.TX19 = default;
-            item.DODT = default;
+            item.AmbientOcclusion = default;
+            item.Opacity = default;
+            item.Decal = null;
             item.Flags = default(TextureSet.Flag);
             item.Material = default;
             base.Clear(item);
@@ -1424,15 +1421,19 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.ObjectBounds = MaskItemExt.Factory(item.ObjectBounds.GetEqualsMask(rhs.ObjectBounds, include), include);
-            ret.ODTY = MemorySliceExt.SequenceEqual(item.ODTY, rhs.ODTY);
-            ret.TX00 = string.Equals(item.TX00, rhs.TX00);
-            ret.TX01 = string.Equals(item.TX01, rhs.TX01);
-            ret.TX08 = string.Equals(item.TX08, rhs.TX08);
-            ret.TX09 = string.Equals(item.TX09, rhs.TX09);
+            ret.DirtinessScale = item.DirtinessScale.EqualsWithin(rhs.DirtinessScale);
+            ret.Diffuse = string.Equals(item.Diffuse, rhs.Diffuse);
+            ret.NormalGloss = string.Equals(item.NormalGloss, rhs.NormalGloss);
+            ret.Metal = string.Equals(item.Metal, rhs.Metal);
+            ret.Rough = string.Equals(item.Rough, rhs.Rough);
             ret.TX15 = string.Equals(item.TX15, rhs.TX15);
-            ret.TX17 = string.Equals(item.TX17, rhs.TX17);
-            ret.TX19 = string.Equals(item.TX19, rhs.TX19);
-            ret.DODT = MemorySliceExt.SequenceEqual(item.DODT, rhs.DODT);
+            ret.AmbientOcclusion = string.Equals(item.AmbientOcclusion, rhs.AmbientOcclusion);
+            ret.Opacity = string.Equals(item.Opacity, rhs.Opacity);
+            ret.Decal = EqualsMaskHelper.EqualsHelper(
+                item.Decal,
+                rhs.Decal,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
             ret.Flags = item.Flags == rhs.Flags;
             ret.Material = string.Equals(item.Material, rhs.Material);
             base.FillEqualsMask(item, rhs, ret, include);
@@ -1493,50 +1494,49 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ObjectBounds?.Print(sb, "ObjectBounds");
             }
-            if ((printMask?.ODTY ?? true)
-                && item.ODTY is {} ODTYItem)
+            if (printMask?.DirtinessScale ?? true)
             {
-                sb.AppendLine($"ODTY => {SpanExt.ToHexString(ODTYItem)}");
+                sb.AppendItem(item.DirtinessScale, "DirtinessScale");
             }
-            if ((printMask?.TX00 ?? true)
-                && item.TX00 is {} TX00Item)
+            if ((printMask?.Diffuse ?? true)
+                && item.Diffuse is {} DiffuseItem)
             {
-                sb.AppendItem(TX00Item, "TX00");
+                sb.AppendItem(DiffuseItem, "Diffuse");
             }
-            if ((printMask?.TX01 ?? true)
-                && item.TX01 is {} TX01Item)
+            if ((printMask?.NormalGloss ?? true)
+                && item.NormalGloss is {} NormalGlossItem)
             {
-                sb.AppendItem(TX01Item, "TX01");
+                sb.AppendItem(NormalGlossItem, "NormalGloss");
             }
-            if ((printMask?.TX08 ?? true)
-                && item.TX08 is {} TX08Item)
+            if ((printMask?.Metal ?? true)
+                && item.Metal is {} MetalItem)
             {
-                sb.AppendItem(TX08Item, "TX08");
+                sb.AppendItem(MetalItem, "Metal");
             }
-            if ((printMask?.TX09 ?? true)
-                && item.TX09 is {} TX09Item)
+            if ((printMask?.Rough ?? true)
+                && item.Rough is {} RoughItem)
             {
-                sb.AppendItem(TX09Item, "TX09");
+                sb.AppendItem(RoughItem, "Rough");
             }
             if ((printMask?.TX15 ?? true)
                 && item.TX15 is {} TX15Item)
             {
                 sb.AppendItem(TX15Item, "TX15");
             }
-            if ((printMask?.TX17 ?? true)
-                && item.TX17 is {} TX17Item)
+            if ((printMask?.AmbientOcclusion ?? true)
+                && item.AmbientOcclusion is {} AmbientOcclusionItem)
             {
-                sb.AppendItem(TX17Item, "TX17");
+                sb.AppendItem(AmbientOcclusionItem, "AmbientOcclusion");
             }
-            if ((printMask?.TX19 ?? true)
-                && item.TX19 is {} TX19Item)
+            if ((printMask?.Opacity ?? true)
+                && item.Opacity is {} OpacityItem)
             {
-                sb.AppendItem(TX19Item, "TX19");
+                sb.AppendItem(OpacityItem, "Opacity");
             }
-            if ((printMask?.DODT ?? true)
-                && item.DODT is {} DODTItem)
+            if ((printMask?.Decal?.Overall ?? true)
+                && item.Decal is {} DecalItem)
             {
-                sb.AppendLine($"DODT => {SpanExt.ToHexString(DODTItem)}");
+                DecalItem?.Print(sb, "Decal");
             }
             if (printMask?.Flags ?? true)
             {
@@ -1613,41 +1613,45 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isObjectBoundsEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.ODTY) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.DirtinessScale) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.ODTY, rhs.ODTY)) return false;
+                if (!lhs.DirtinessScale.EqualsWithin(rhs.DirtinessScale)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX00) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.Diffuse) ?? true))
             {
-                if (!string.Equals(lhs.TX00, rhs.TX00)) return false;
+                if (!string.Equals(lhs.Diffuse, rhs.Diffuse)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX01) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.NormalGloss) ?? true))
             {
-                if (!string.Equals(lhs.TX01, rhs.TX01)) return false;
+                if (!string.Equals(lhs.NormalGloss, rhs.NormalGloss)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX08) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.Metal) ?? true))
             {
-                if (!string.Equals(lhs.TX08, rhs.TX08)) return false;
+                if (!string.Equals(lhs.Metal, rhs.Metal)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX09) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.Rough) ?? true))
             {
-                if (!string.Equals(lhs.TX09, rhs.TX09)) return false;
+                if (!string.Equals(lhs.Rough, rhs.Rough)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX15) ?? true))
             {
                 if (!string.Equals(lhs.TX15, rhs.TX15)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX17) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.AmbientOcclusion) ?? true))
             {
-                if (!string.Equals(lhs.TX17, rhs.TX17)) return false;
+                if (!string.Equals(lhs.AmbientOcclusion, rhs.AmbientOcclusion)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX19) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.Opacity) ?? true))
             {
-                if (!string.Equals(lhs.TX19, rhs.TX19)) return false;
+                if (!string.Equals(lhs.Opacity, rhs.Opacity)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.DODT) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.Decal) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.DODT, rhs.DODT)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.Decal, rhs.Decal, out var lhsDecal, out var rhsDecal, out var isDecalEqual))
+                {
+                    if (!((DecalCommon)((IDecalGetter)lhsDecal).CommonInstance()!).Equals(lhsDecal, rhsDecal, equalsMask?.GetSubCrystal((int)TextureSet_FieldIndex.Decal))) return false;
+                }
+                else if (!isDecalEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)TextureSet_FieldIndex.Flags) ?? true))
             {
@@ -1690,41 +1694,38 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(VirtualMachineAdapteritem);
             }
             hash.Add(item.ObjectBounds);
-            if (item.ODTY is {} ODTYItem)
+            hash.Add(item.DirtinessScale);
+            if (item.Diffuse is {} Diffuseitem)
             {
-                hash.AddBytes(ODTYItem);
+                hash.Add(Diffuseitem);
             }
-            if (item.TX00 is {} TX00item)
+            if (item.NormalGloss is {} NormalGlossitem)
             {
-                hash.Add(TX00item);
+                hash.Add(NormalGlossitem);
             }
-            if (item.TX01 is {} TX01item)
+            if (item.Metal is {} Metalitem)
             {
-                hash.Add(TX01item);
+                hash.Add(Metalitem);
             }
-            if (item.TX08 is {} TX08item)
+            if (item.Rough is {} Roughitem)
             {
-                hash.Add(TX08item);
-            }
-            if (item.TX09 is {} TX09item)
-            {
-                hash.Add(TX09item);
+                hash.Add(Roughitem);
             }
             if (item.TX15 is {} TX15item)
             {
                 hash.Add(TX15item);
             }
-            if (item.TX17 is {} TX17item)
+            if (item.AmbientOcclusion is {} AmbientOcclusionitem)
             {
-                hash.Add(TX17item);
+                hash.Add(AmbientOcclusionitem);
             }
-            if (item.TX19 is {} TX19item)
+            if (item.Opacity is {} Opacityitem)
             {
-                hash.Add(TX19item);
+                hash.Add(Opacityitem);
             }
-            if (item.DODT is {} DODTItem)
+            if (item.Decal is {} Decalitem)
             {
-                hash.AddBytes(DODTItem);
+                hash.Add(Decalitem);
             }
             hash.Add(item.Flags);
             if (item.Material is {} Materialitem)
@@ -1911,54 +1912,62 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.ODTY) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.DirtinessScale) ?? true))
             {
-                if(rhs.ODTY is {} ODTYrhs)
-                {
-                    item.ODTY = ODTYrhs.ToArray();
-                }
-                else
-                {
-                    item.ODTY = default;
-                }
+                item.DirtinessScale = rhs.DirtinessScale;
             }
-            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX00) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.Diffuse) ?? true))
             {
-                item.TX00 = rhs.TX00;
+                item.Diffuse = rhs.Diffuse;
             }
-            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX01) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.NormalGloss) ?? true))
             {
-                item.TX01 = rhs.TX01;
+                item.NormalGloss = rhs.NormalGloss;
             }
-            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX08) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.Metal) ?? true))
             {
-                item.TX08 = rhs.TX08;
+                item.Metal = rhs.Metal;
             }
-            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX09) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.Rough) ?? true))
             {
-                item.TX09 = rhs.TX09;
+                item.Rough = rhs.Rough;
             }
             if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX15) ?? true))
             {
                 item.TX15 = rhs.TX15;
             }
-            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX17) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.AmbientOcclusion) ?? true))
             {
-                item.TX17 = rhs.TX17;
+                item.AmbientOcclusion = rhs.AmbientOcclusion;
             }
-            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.TX19) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.Opacity) ?? true))
             {
-                item.TX19 = rhs.TX19;
+                item.Opacity = rhs.Opacity;
             }
-            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.DODT) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.Decal) ?? true))
             {
-                if(rhs.DODT is {} DODTrhs)
+                errorMask?.PushIndex((int)TextureSet_FieldIndex.Decal);
+                try
                 {
-                    item.DODT = DODTrhs.ToArray();
+                    if(rhs.Decal is {} rhsDecal)
+                    {
+                        item.Decal = rhsDecal.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)TextureSet_FieldIndex.Decal));
+                    }
+                    else
+                    {
+                        item.Decal = default;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.DODT = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             if ((copyMask?.GetShouldTranslate((int)TextureSet_FieldIndex.Flags) ?? true))
@@ -2150,28 +2159,28 @@ namespace Mutagen.Bethesda.Starfield
                 item: ObjectBoundsItem,
                 writer: writer,
                 translationParams: translationParams);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.ODTY,
+                item: item.DirtinessScale,
                 header: translationParams.ConvertToCustom(RecordTypes.ODTY));
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.TX00,
+                item: item.Diffuse,
                 header: translationParams.ConvertToCustom(RecordTypes.TX00),
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.TX01,
+                item: item.NormalGloss,
                 header: translationParams.ConvertToCustom(RecordTypes.TX01),
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.TX08,
+                item: item.Metal,
                 header: translationParams.ConvertToCustom(RecordTypes.TX08),
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.TX09,
+                item: item.Rough,
                 header: translationParams.ConvertToCustom(RecordTypes.TX09),
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
@@ -2181,18 +2190,21 @@ namespace Mutagen.Bethesda.Starfield
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.TX17,
+                item: item.AmbientOcclusion,
                 header: translationParams.ConvertToCustom(RecordTypes.TX17),
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.TX19,
+                item: item.Opacity,
                 header: translationParams.ConvertToCustom(RecordTypes.TX19),
                 binaryType: StringBinaryType.NullTerminate);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.DODT,
-                header: translationParams.ConvertToCustom(RecordTypes.DODT));
+            if (item.Decal is {} DecalItem)
+            {
+                ((DecalBinaryWriteTranslation)((IBinaryItem)DecalItem).BinaryWriteTranslator).Write(
+                    item: DecalItem,
+                    writer: writer,
+                    translationParams: translationParams);
+            }
             EnumBinaryTranslation<TextureSet.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
                 writer,
                 item.Flags,
@@ -2286,44 +2298,44 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ODTY:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ODTY = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)TextureSet_FieldIndex.ODTY;
+                    item.DirtinessScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)TextureSet_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.TX00:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.TX00 = StringBinaryTranslation.Instance.Parse(
+                    item.Diffuse = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)TextureSet_FieldIndex.TX00;
+                    return (int)TextureSet_FieldIndex.Diffuse;
                 }
                 case RecordTypeInts.TX01:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.TX01 = StringBinaryTranslation.Instance.Parse(
+                    item.NormalGloss = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)TextureSet_FieldIndex.TX01;
+                    return (int)TextureSet_FieldIndex.NormalGloss;
                 }
                 case RecordTypeInts.TX08:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.TX08 = StringBinaryTranslation.Instance.Parse(
+                    item.Metal = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)TextureSet_FieldIndex.TX08;
+                    return (int)TextureSet_FieldIndex.Metal;
                 }
                 case RecordTypeInts.TX09:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.TX09 = StringBinaryTranslation.Instance.Parse(
+                    item.Rough = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)TextureSet_FieldIndex.TX09;
+                    return (int)TextureSet_FieldIndex.Rough;
                 }
                 case RecordTypeInts.TX15:
                 {
@@ -2337,26 +2349,25 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.TX17:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.TX17 = StringBinaryTranslation.Instance.Parse(
+                    item.AmbientOcclusion = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)TextureSet_FieldIndex.TX17;
+                    return (int)TextureSet_FieldIndex.AmbientOcclusion;
                 }
                 case RecordTypeInts.TX19:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.TX19 = StringBinaryTranslation.Instance.Parse(
+                    item.Opacity = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)TextureSet_FieldIndex.TX19;
+                    return (int)TextureSet_FieldIndex.Opacity;
                 }
                 case RecordTypeInts.DODT:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DODT = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)TextureSet_FieldIndex.DODT;
+                    item.Decal = Mutagen.Bethesda.Starfield.Decal.CreateFromBinary(frame: frame);
+                    return (int)TextureSet_FieldIndex.Decal;
                 }
                 case RecordTypeInts.DNAM:
                 {
@@ -2450,41 +2461,41 @@ namespace Mutagen.Bethesda.Starfield
         private IObjectBoundsGetter? _ObjectBounds => _ObjectBoundsLocation.HasValue ? ObjectBoundsBinaryOverlay.ObjectBoundsFactory(_recordData.Slice(_ObjectBoundsLocation!.Value.Min), _package) : default;
         public IObjectBoundsGetter ObjectBounds => _ObjectBounds ?? new ObjectBounds();
         #endregion
-        #region ODTY
-        private int? _ODTYLocation;
-        public ReadOnlyMemorySlice<Byte>? ODTY => _ODTYLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ODTYLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region DirtinessScale
+        private int? _DirtinessScaleLocation;
+        public Single DirtinessScale => _DirtinessScaleLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
-        #region TX00
-        private int? _TX00Location;
-        public String? TX00 => _TX00Location.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TX00Location.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region Diffuse
+        private int? _DiffuseLocation;
+        public String? Diffuse => _DiffuseLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DiffuseLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region TX01
-        private int? _TX01Location;
-        public String? TX01 => _TX01Location.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TX01Location.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region NormalGloss
+        private int? _NormalGlossLocation;
+        public String? NormalGloss => _NormalGlossLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NormalGlossLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region TX08
-        private int? _TX08Location;
-        public String? TX08 => _TX08Location.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TX08Location.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region Metal
+        private int? _MetalLocation;
+        public String? Metal => _MetalLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _MetalLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region TX09
-        private int? _TX09Location;
-        public String? TX09 => _TX09Location.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TX09Location.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region Rough
+        private int? _RoughLocation;
+        public String? Rough => _RoughLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _RoughLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         #region TX15
         private int? _TX15Location;
         public String? TX15 => _TX15Location.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TX15Location.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region TX17
-        private int? _TX17Location;
-        public String? TX17 => _TX17Location.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TX17Location.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region AmbientOcclusion
+        private int? _AmbientOcclusionLocation;
+        public String? AmbientOcclusion => _AmbientOcclusionLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _AmbientOcclusionLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region TX19
-        private int? _TX19Location;
-        public String? TX19 => _TX19Location.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TX19Location.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region Opacity
+        private int? _OpacityLocation;
+        public String? Opacity => _OpacityLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _OpacityLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region DODT
-        private int? _DODTLocation;
-        public ReadOnlyMemorySlice<Byte>? DODT => _DODTLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DODTLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Decal
+        private RangeInt32? _DecalLocation;
+        public IDecalGetter? Decal => _DecalLocation.HasValue ? DecalBinaryOverlay.DecalFactory(_recordData.Slice(_DecalLocation!.Value.Min), _package) : default;
         #endregion
         #region Flags
         private int? _FlagsLocation;
@@ -2580,28 +2591,28 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ODTY:
                 {
-                    _ODTYLocation = (stream.Position - offset);
-                    return (int)TextureSet_FieldIndex.ODTY;
+                    _DirtinessScaleLocation = (stream.Position - offset);
+                    return (int)TextureSet_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.TX00:
                 {
-                    _TX00Location = (stream.Position - offset);
-                    return (int)TextureSet_FieldIndex.TX00;
+                    _DiffuseLocation = (stream.Position - offset);
+                    return (int)TextureSet_FieldIndex.Diffuse;
                 }
                 case RecordTypeInts.TX01:
                 {
-                    _TX01Location = (stream.Position - offset);
-                    return (int)TextureSet_FieldIndex.TX01;
+                    _NormalGlossLocation = (stream.Position - offset);
+                    return (int)TextureSet_FieldIndex.NormalGloss;
                 }
                 case RecordTypeInts.TX08:
                 {
-                    _TX08Location = (stream.Position - offset);
-                    return (int)TextureSet_FieldIndex.TX08;
+                    _MetalLocation = (stream.Position - offset);
+                    return (int)TextureSet_FieldIndex.Metal;
                 }
                 case RecordTypeInts.TX09:
                 {
-                    _TX09Location = (stream.Position - offset);
-                    return (int)TextureSet_FieldIndex.TX09;
+                    _RoughLocation = (stream.Position - offset);
+                    return (int)TextureSet_FieldIndex.Rough;
                 }
                 case RecordTypeInts.TX15:
                 {
@@ -2610,18 +2621,18 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.TX17:
                 {
-                    _TX17Location = (stream.Position - offset);
-                    return (int)TextureSet_FieldIndex.TX17;
+                    _AmbientOcclusionLocation = (stream.Position - offset);
+                    return (int)TextureSet_FieldIndex.AmbientOcclusion;
                 }
                 case RecordTypeInts.TX19:
                 {
-                    _TX19Location = (stream.Position - offset);
-                    return (int)TextureSet_FieldIndex.TX19;
+                    _OpacityLocation = (stream.Position - offset);
+                    return (int)TextureSet_FieldIndex.Opacity;
                 }
                 case RecordTypeInts.DODT:
                 {
-                    _DODTLocation = (stream.Position - offset);
-                    return (int)TextureSet_FieldIndex.DODT;
+                    _DecalLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
+                    return (int)TextureSet_FieldIndex.Decal;
                 }
                 case RecordTypeInts.DNAM:
                 {
