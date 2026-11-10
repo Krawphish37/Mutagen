@@ -7,6 +7,7 @@ using Mutagen.Bethesda.Plugins.Binary.Parameters;
 using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Cache.Internals.Implementations;
 using Mutagen.Bethesda.Plugins.Masters;
+using Mutagen.Bethesda.Plugins.Meta;
 using Mutagen.Bethesda.Plugins.Order;
 using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Strings;
@@ -1591,10 +1592,15 @@ internal static class BinaryReadBuilderHelper
                     var modPath = Path.Combine(dataFolder.Value, master.ModKey.FileName);
                     if (fileSystem.File.Exists(modPath))
                     {
+                        var masterPath = new ModPath(master.ModKey, modPath);
                         var overlay = ModFactory<IModGetter>.Importer(
-                            new ModPath(master.ModKey, modPath),
+                            masterPath,
                             p.GameRelease,
-                            loadParams);
+                            loadParams with
+                            {
+                                MasterFlagsLookup = WithMastersOfMaster(
+                                    masterFlagsLookup, masterPath, p.GameRelease, dataFolder.Value, fileSystem)
+                            });
                         modOverlays.Add(overlay);
                     }
                 }
@@ -1620,5 +1626,33 @@ internal static class BinaryReadBuilderHelper
                 LinkCache = linkCache
             }
         };
+    }
+
+    /// <summary>
+    /// A master can have masters of its own that the mod being read doesn't list (in Starfield, a mod on a plugin
+    /// whose masters are medium or small, like Watchtower's).  Reading that master needs their styles too, so they're
+    /// added from the data folder.  One left missing there still fails, naming it.
+    /// </summary>
+    private static IReadOnlyCache<IModMasterStyledGetter, ModKey>? WithMastersOfMaster(
+        LoadOrder<IModMasterStyledGetter>? lookup,
+        ModPath masterPath,
+        GameRelease release,
+        DirectoryPath dataFolder,
+        IFileSystem fileSystem)
+    {
+        if (lookup == null) return null;
+        if (!GameConstants.Get(release).SeparateMasterLoadOrders) return lookup;
+        var header = ModHeaderFrame.FromPath(masterPath, release, fileSystem);
+        List<IModMasterStyledGetter>? added = null;
+        foreach (var masterOfMaster in header.Masters(masterPath.ModKey).Select(x => x.Master))
+        {
+            if (lookup.ContainsKey(masterOfMaster)) continue;
+            var path = Path.Combine(dataFolder, masterOfMaster.FileName);
+            if (!fileSystem.File.Exists(path)) continue;
+            added ??= new List<IModMasterStyledGetter>();
+            added.Add(KeyedMasterStyle.FromPath(new ModPath(masterOfMaster, path), release, fileSystem));
+        }
+        if (added == null) return lookup;
+        return new LoadOrder<IModMasterStyledGetter>(lookup.ListedOrder.Concat(added), disposeItems: false);
     }
 }
