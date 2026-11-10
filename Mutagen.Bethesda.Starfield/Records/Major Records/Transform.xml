@@ -11,8 +11,8 @@
           <Float name="ZoomMax" />
         </Fields>
       </Data>
-      <ByteArray name="BNAM" recordType="BNAM" unknown="true" />
-      <ByteArray name="ENAM" recordType="ENAM" unknown="true" />
+      <Enum name="Basis" enumName="Transform.BasisType" byteLength="1" recordType="BNAM" />
+      <Enum name="ColorModeFlags" enumName="Transform.ColorModeFlag" byteLength="4" recordType="ENAM" />
     </Fields>
   </Object>
 </Loqui>

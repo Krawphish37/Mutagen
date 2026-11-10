@@ -17,4 +17,12 @@ partial class MoveableStatic
         NavMeshGenerationBoundingBox = 0x0800_0000,
         NavMeshGenerationGround = 0x4000_0000,
     }
+
+    // DATA, xEdit's Mass Override Flags
+    [Flags]
+    public enum MassOverrideFlag
+    {
+        UseMassOverride = 0x02,
+        Scale = 0x04,
+    }
 }

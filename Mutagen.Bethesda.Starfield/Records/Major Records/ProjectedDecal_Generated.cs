@@ -183,31 +183,31 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IMaterialPathGetter> IProjectedDecalGetter.Material => this.Material;
         #endregion
-        #region UnknownData1
-        public Single UnknownData1 { get; set; } = default(Single);
+        #region MinWidth
+        public Single MinWidth { get; set; } = default(Single);
         #endregion
-        #region UnknownData2
-        public Single UnknownData2 { get; set; } = default(Single);
+        #region MaxWidth
+        public Single MaxWidth { get; set; } = default(Single);
         #endregion
-        #region UnknownData3
-        public Single UnknownData3 { get; set; } = default(Single);
+        #region MinHeight
+        public Single MinHeight { get; set; } = default(Single);
         #endregion
-        #region UnknownData4
-        public Single UnknownData4 { get; set; } = default(Single);
+        #region MaxHeight
+        public Single MaxHeight { get; set; } = default(Single);
         #endregion
-        #region UnknownData5
-        public Single UnknownData5 { get; set; } = default(Single);
+        #region Depth
+        public Single Depth { get; set; } = default(Single);
         #endregion
-        #region UnknownData6
+        #region CutoffAngle
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Single _UnknownData6;
-        public Single UnknownData6
+        private Single _CutoffAngle;
+        public Single CutoffAngle
         {
-            get => this._UnknownData6;
+            get => this._CutoffAngle;
             set
             {
                 this.DATADataTypeState &= ~DATADataType.Break0;
-                this._UnknownData6 = value;
+                this._CutoffAngle = value;
             }
         }
         #endregion
@@ -250,12 +250,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.PTTA = new MaskItem<TItem, PTTA.Mask<TItem>?>(initialValue, new PTTA.Mask<TItem>(initialValue));
                 this.SnapBehavior = initialValue;
                 this.Material = initialValue;
-                this.UnknownData1 = initialValue;
-                this.UnknownData2 = initialValue;
-                this.UnknownData3 = initialValue;
-                this.UnknownData4 = initialValue;
-                this.UnknownData5 = initialValue;
-                this.UnknownData6 = initialValue;
+                this.MinWidth = initialValue;
+                this.MaxWidth = initialValue;
+                this.MinHeight = initialValue;
+                this.MaxHeight = initialValue;
+                this.Depth = initialValue;
+                this.CutoffAngle = initialValue;
                 this.DATADataTypeState = initialValue;
             }
 
@@ -278,12 +278,12 @@ namespace Mutagen.Bethesda.Starfield
                 TItem PTTA,
                 TItem SnapBehavior,
                 TItem Material,
-                TItem UnknownData1,
-                TItem UnknownData2,
-                TItem UnknownData3,
-                TItem UnknownData4,
-                TItem UnknownData5,
-                TItem UnknownData6,
+                TItem MinWidth,
+                TItem MaxWidth,
+                TItem MinHeight,
+                TItem MaxHeight,
+                TItem Depth,
+                TItem CutoffAngle,
                 TItem DATADataTypeState)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
@@ -305,12 +305,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.PTTA = new MaskItem<TItem, PTTA.Mask<TItem>?>(PTTA, new PTTA.Mask<TItem>(PTTA));
                 this.SnapBehavior = SnapBehavior;
                 this.Material = Material;
-                this.UnknownData1 = UnknownData1;
-                this.UnknownData2 = UnknownData2;
-                this.UnknownData3 = UnknownData3;
-                this.UnknownData4 = UnknownData4;
-                this.UnknownData5 = UnknownData5;
-                this.UnknownData6 = UnknownData6;
+                this.MinWidth = MinWidth;
+                this.MaxWidth = MaxWidth;
+                this.MinHeight = MinHeight;
+                this.MaxHeight = MaxHeight;
+                this.Depth = Depth;
+                this.CutoffAngle = CutoffAngle;
                 this.DATADataTypeState = DATADataTypeState;
             }
 
@@ -334,12 +334,12 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, PTTA.Mask<TItem>?>? PTTA { get; set; }
             public TItem SnapBehavior;
             public TItem Material;
-            public TItem UnknownData1;
-            public TItem UnknownData2;
-            public TItem UnknownData3;
-            public TItem UnknownData4;
-            public TItem UnknownData5;
-            public TItem UnknownData6;
+            public TItem MinWidth;
+            public TItem MaxWidth;
+            public TItem MinHeight;
+            public TItem MaxHeight;
+            public TItem Depth;
+            public TItem CutoffAngle;
             public TItem DATADataTypeState;
             #endregion
 
@@ -365,12 +365,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.PTTA, rhs.PTTA)) return false;
                 if (!object.Equals(this.SnapBehavior, rhs.SnapBehavior)) return false;
                 if (!object.Equals(this.Material, rhs.Material)) return false;
-                if (!object.Equals(this.UnknownData1, rhs.UnknownData1)) return false;
-                if (!object.Equals(this.UnknownData2, rhs.UnknownData2)) return false;
-                if (!object.Equals(this.UnknownData3, rhs.UnknownData3)) return false;
-                if (!object.Equals(this.UnknownData4, rhs.UnknownData4)) return false;
-                if (!object.Equals(this.UnknownData5, rhs.UnknownData5)) return false;
-                if (!object.Equals(this.UnknownData6, rhs.UnknownData6)) return false;
+                if (!object.Equals(this.MinWidth, rhs.MinWidth)) return false;
+                if (!object.Equals(this.MaxWidth, rhs.MaxWidth)) return false;
+                if (!object.Equals(this.MinHeight, rhs.MinHeight)) return false;
+                if (!object.Equals(this.MaxHeight, rhs.MaxHeight)) return false;
+                if (!object.Equals(this.Depth, rhs.Depth)) return false;
+                if (!object.Equals(this.CutoffAngle, rhs.CutoffAngle)) return false;
                 if (!object.Equals(this.DATADataTypeState, rhs.DATADataTypeState)) return false;
                 return true;
             }
@@ -388,12 +388,12 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.PTTA);
                 hash.Add(this.SnapBehavior);
                 hash.Add(this.Material);
-                hash.Add(this.UnknownData1);
-                hash.Add(this.UnknownData2);
-                hash.Add(this.UnknownData3);
-                hash.Add(this.UnknownData4);
-                hash.Add(this.UnknownData5);
-                hash.Add(this.UnknownData6);
+                hash.Add(this.MinWidth);
+                hash.Add(this.MaxWidth);
+                hash.Add(this.MinHeight);
+                hash.Add(this.MaxHeight);
+                hash.Add(this.Depth);
+                hash.Add(this.CutoffAngle);
                 hash.Add(this.DATADataTypeState);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -447,12 +447,12 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.SnapBehavior)) return false;
                 if (!eval(this.Material)) return false;
-                if (!eval(this.UnknownData1)) return false;
-                if (!eval(this.UnknownData2)) return false;
-                if (!eval(this.UnknownData3)) return false;
-                if (!eval(this.UnknownData4)) return false;
-                if (!eval(this.UnknownData5)) return false;
-                if (!eval(this.UnknownData6)) return false;
+                if (!eval(this.MinWidth)) return false;
+                if (!eval(this.MaxWidth)) return false;
+                if (!eval(this.MinHeight)) return false;
+                if (!eval(this.MaxHeight)) return false;
+                if (!eval(this.Depth)) return false;
+                if (!eval(this.CutoffAngle)) return false;
                 if (!eval(this.DATADataTypeState)) return false;
                 return true;
             }
@@ -504,12 +504,12 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.SnapBehavior)) return true;
                 if (eval(this.Material)) return true;
-                if (eval(this.UnknownData1)) return true;
-                if (eval(this.UnknownData2)) return true;
-                if (eval(this.UnknownData3)) return true;
-                if (eval(this.UnknownData4)) return true;
-                if (eval(this.UnknownData5)) return true;
-                if (eval(this.UnknownData6)) return true;
+                if (eval(this.MinWidth)) return true;
+                if (eval(this.MaxWidth)) return true;
+                if (eval(this.MinHeight)) return true;
+                if (eval(this.MaxHeight)) return true;
+                if (eval(this.Depth)) return true;
+                if (eval(this.CutoffAngle)) return true;
                 if (eval(this.DATADataTypeState)) return true;
                 return false;
             }
@@ -551,12 +551,12 @@ namespace Mutagen.Bethesda.Starfield
                 obj.PTTA = this.PTTA == null ? null : new MaskItem<R, PTTA.Mask<R>?>(eval(this.PTTA.Overall), this.PTTA.Specific?.Translate(eval));
                 obj.SnapBehavior = eval(this.SnapBehavior);
                 obj.Material = eval(this.Material);
-                obj.UnknownData1 = eval(this.UnknownData1);
-                obj.UnknownData2 = eval(this.UnknownData2);
-                obj.UnknownData3 = eval(this.UnknownData3);
-                obj.UnknownData4 = eval(this.UnknownData4);
-                obj.UnknownData5 = eval(this.UnknownData5);
-                obj.UnknownData6 = eval(this.UnknownData6);
+                obj.MinWidth = eval(this.MinWidth);
+                obj.MaxWidth = eval(this.MaxWidth);
+                obj.MinHeight = eval(this.MinHeight);
+                obj.MaxHeight = eval(this.MaxHeight);
+                obj.Depth = eval(this.Depth);
+                obj.CutoffAngle = eval(this.CutoffAngle);
                 obj.DATADataTypeState = eval(this.DATADataTypeState);
             }
             #endregion
@@ -635,29 +635,29 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Material, "Material");
                     }
-                    if (printMask?.UnknownData1 ?? true)
+                    if (printMask?.MinWidth ?? true)
                     {
-                        sb.AppendItem(UnknownData1, "UnknownData1");
+                        sb.AppendItem(MinWidth, "MinWidth");
                     }
-                    if (printMask?.UnknownData2 ?? true)
+                    if (printMask?.MaxWidth ?? true)
                     {
-                        sb.AppendItem(UnknownData2, "UnknownData2");
+                        sb.AppendItem(MaxWidth, "MaxWidth");
                     }
-                    if (printMask?.UnknownData3 ?? true)
+                    if (printMask?.MinHeight ?? true)
                     {
-                        sb.AppendItem(UnknownData3, "UnknownData3");
+                        sb.AppendItem(MinHeight, "MinHeight");
                     }
-                    if (printMask?.UnknownData4 ?? true)
+                    if (printMask?.MaxHeight ?? true)
                     {
-                        sb.AppendItem(UnknownData4, "UnknownData4");
+                        sb.AppendItem(MaxHeight, "MaxHeight");
                     }
-                    if (printMask?.UnknownData5 ?? true)
+                    if (printMask?.Depth ?? true)
                     {
-                        sb.AppendItem(UnknownData5, "UnknownData5");
+                        sb.AppendItem(Depth, "Depth");
                     }
-                    if (printMask?.UnknownData6 ?? true)
+                    if (printMask?.CutoffAngle ?? true)
                     {
-                        sb.AppendItem(UnknownData6, "UnknownData6");
+                        sb.AppendItem(CutoffAngle, "CutoffAngle");
                     }
                     if (printMask?.DATADataTypeState ?? true)
                     {
@@ -685,12 +685,12 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, PTTA.ErrorMask?>? PTTA;
             public Exception? SnapBehavior;
             public Exception? Material;
-            public Exception? UnknownData1;
-            public Exception? UnknownData2;
-            public Exception? UnknownData3;
-            public Exception? UnknownData4;
-            public Exception? UnknownData5;
-            public Exception? UnknownData6;
+            public Exception? MinWidth;
+            public Exception? MaxWidth;
+            public Exception? MinHeight;
+            public Exception? MaxHeight;
+            public Exception? Depth;
+            public Exception? CutoffAngle;
             public Exception? DATADataTypeState;
             #endregion
 
@@ -722,18 +722,18 @@ namespace Mutagen.Bethesda.Starfield
                         return SnapBehavior;
                     case ProjectedDecal_FieldIndex.Material:
                         return Material;
-                    case ProjectedDecal_FieldIndex.UnknownData1:
-                        return UnknownData1;
-                    case ProjectedDecal_FieldIndex.UnknownData2:
-                        return UnknownData2;
-                    case ProjectedDecal_FieldIndex.UnknownData3:
-                        return UnknownData3;
-                    case ProjectedDecal_FieldIndex.UnknownData4:
-                        return UnknownData4;
-                    case ProjectedDecal_FieldIndex.UnknownData5:
-                        return UnknownData5;
-                    case ProjectedDecal_FieldIndex.UnknownData6:
-                        return UnknownData6;
+                    case ProjectedDecal_FieldIndex.MinWidth:
+                        return MinWidth;
+                    case ProjectedDecal_FieldIndex.MaxWidth:
+                        return MaxWidth;
+                    case ProjectedDecal_FieldIndex.MinHeight:
+                        return MinHeight;
+                    case ProjectedDecal_FieldIndex.MaxHeight:
+                        return MaxHeight;
+                    case ProjectedDecal_FieldIndex.Depth:
+                        return Depth;
+                    case ProjectedDecal_FieldIndex.CutoffAngle:
+                        return CutoffAngle;
                     case ProjectedDecal_FieldIndex.DATADataTypeState:
                         return DATADataTypeState;
                     default:
@@ -779,23 +779,23 @@ namespace Mutagen.Bethesda.Starfield
                     case ProjectedDecal_FieldIndex.Material:
                         this.Material = ex;
                         break;
-                    case ProjectedDecal_FieldIndex.UnknownData1:
-                        this.UnknownData1 = ex;
+                    case ProjectedDecal_FieldIndex.MinWidth:
+                        this.MinWidth = ex;
                         break;
-                    case ProjectedDecal_FieldIndex.UnknownData2:
-                        this.UnknownData2 = ex;
+                    case ProjectedDecal_FieldIndex.MaxWidth:
+                        this.MaxWidth = ex;
                         break;
-                    case ProjectedDecal_FieldIndex.UnknownData3:
-                        this.UnknownData3 = ex;
+                    case ProjectedDecal_FieldIndex.MinHeight:
+                        this.MinHeight = ex;
                         break;
-                    case ProjectedDecal_FieldIndex.UnknownData4:
-                        this.UnknownData4 = ex;
+                    case ProjectedDecal_FieldIndex.MaxHeight:
+                        this.MaxHeight = ex;
                         break;
-                    case ProjectedDecal_FieldIndex.UnknownData5:
-                        this.UnknownData5 = ex;
+                    case ProjectedDecal_FieldIndex.Depth:
+                        this.Depth = ex;
                         break;
-                    case ProjectedDecal_FieldIndex.UnknownData6:
-                        this.UnknownData6 = ex;
+                    case ProjectedDecal_FieldIndex.CutoffAngle:
+                        this.CutoffAngle = ex;
                         break;
                     case ProjectedDecal_FieldIndex.DATADataTypeState:
                         this.DATADataTypeState = ex;
@@ -844,23 +844,23 @@ namespace Mutagen.Bethesda.Starfield
                     case ProjectedDecal_FieldIndex.Material:
                         this.Material = (Exception?)obj;
                         break;
-                    case ProjectedDecal_FieldIndex.UnknownData1:
-                        this.UnknownData1 = (Exception?)obj;
+                    case ProjectedDecal_FieldIndex.MinWidth:
+                        this.MinWidth = (Exception?)obj;
                         break;
-                    case ProjectedDecal_FieldIndex.UnknownData2:
-                        this.UnknownData2 = (Exception?)obj;
+                    case ProjectedDecal_FieldIndex.MaxWidth:
+                        this.MaxWidth = (Exception?)obj;
                         break;
-                    case ProjectedDecal_FieldIndex.UnknownData3:
-                        this.UnknownData3 = (Exception?)obj;
+                    case ProjectedDecal_FieldIndex.MinHeight:
+                        this.MinHeight = (Exception?)obj;
                         break;
-                    case ProjectedDecal_FieldIndex.UnknownData4:
-                        this.UnknownData4 = (Exception?)obj;
+                    case ProjectedDecal_FieldIndex.MaxHeight:
+                        this.MaxHeight = (Exception?)obj;
                         break;
-                    case ProjectedDecal_FieldIndex.UnknownData5:
-                        this.UnknownData5 = (Exception?)obj;
+                    case ProjectedDecal_FieldIndex.Depth:
+                        this.Depth = (Exception?)obj;
                         break;
-                    case ProjectedDecal_FieldIndex.UnknownData6:
-                        this.UnknownData6 = (Exception?)obj;
+                    case ProjectedDecal_FieldIndex.CutoffAngle:
+                        this.CutoffAngle = (Exception?)obj;
                         break;
                     case ProjectedDecal_FieldIndex.DATADataTypeState:
                         this.DATADataTypeState = (Exception?)obj;
@@ -885,12 +885,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (PTTA != null) return true;
                 if (SnapBehavior != null) return true;
                 if (Material != null) return true;
-                if (UnknownData1 != null) return true;
-                if (UnknownData2 != null) return true;
-                if (UnknownData3 != null) return true;
-                if (UnknownData4 != null) return true;
-                if (UnknownData5 != null) return true;
-                if (UnknownData6 != null) return true;
+                if (MinWidth != null) return true;
+                if (MaxWidth != null) return true;
+                if (MinHeight != null) return true;
+                if (MaxHeight != null) return true;
+                if (Depth != null) return true;
+                if (CutoffAngle != null) return true;
                 if (DATADataTypeState != null) return true;
                 return false;
             }
@@ -957,22 +957,22 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Material, "Material");
                 }
                 {
-                    sb.AppendItem(UnknownData1, "UnknownData1");
+                    sb.AppendItem(MinWidth, "MinWidth");
                 }
                 {
-                    sb.AppendItem(UnknownData2, "UnknownData2");
+                    sb.AppendItem(MaxWidth, "MaxWidth");
                 }
                 {
-                    sb.AppendItem(UnknownData3, "UnknownData3");
+                    sb.AppendItem(MinHeight, "MinHeight");
                 }
                 {
-                    sb.AppendItem(UnknownData4, "UnknownData4");
+                    sb.AppendItem(MaxHeight, "MaxHeight");
                 }
                 {
-                    sb.AppendItem(UnknownData5, "UnknownData5");
+                    sb.AppendItem(Depth, "Depth");
                 }
                 {
-                    sb.AppendItem(UnknownData6, "UnknownData6");
+                    sb.AppendItem(CutoffAngle, "CutoffAngle");
                 }
                 {
                     sb.AppendItem(DATADataTypeState, "DATADataTypeState");
@@ -996,12 +996,12 @@ namespace Mutagen.Bethesda.Starfield
                 ret.PTTA = this.PTTA.Combine(rhs.PTTA, (l, r) => l.Combine(r));
                 ret.SnapBehavior = this.SnapBehavior.Combine(rhs.SnapBehavior);
                 ret.Material = this.Material.Combine(rhs.Material);
-                ret.UnknownData1 = this.UnknownData1.Combine(rhs.UnknownData1);
-                ret.UnknownData2 = this.UnknownData2.Combine(rhs.UnknownData2);
-                ret.UnknownData3 = this.UnknownData3.Combine(rhs.UnknownData3);
-                ret.UnknownData4 = this.UnknownData4.Combine(rhs.UnknownData4);
-                ret.UnknownData5 = this.UnknownData5.Combine(rhs.UnknownData5);
-                ret.UnknownData6 = this.UnknownData6.Combine(rhs.UnknownData6);
+                ret.MinWidth = this.MinWidth.Combine(rhs.MinWidth);
+                ret.MaxWidth = this.MaxWidth.Combine(rhs.MaxWidth);
+                ret.MinHeight = this.MinHeight.Combine(rhs.MinHeight);
+                ret.MaxHeight = this.MaxHeight.Combine(rhs.MaxHeight);
+                ret.Depth = this.Depth.Combine(rhs.Depth);
+                ret.CutoffAngle = this.CutoffAngle.Combine(rhs.CutoffAngle);
                 ret.DATADataTypeState = this.DATADataTypeState.Combine(rhs.DATADataTypeState);
                 return ret;
             }
@@ -1036,12 +1036,12 @@ namespace Mutagen.Bethesda.Starfield
             public PTTA.TranslationMask? PTTA;
             public bool SnapBehavior;
             public bool Material;
-            public bool UnknownData1;
-            public bool UnknownData2;
-            public bool UnknownData3;
-            public bool UnknownData4;
-            public bool UnknownData5;
-            public bool UnknownData6;
+            public bool MinWidth;
+            public bool MaxWidth;
+            public bool MinHeight;
+            public bool MaxHeight;
+            public bool Depth;
+            public bool CutoffAngle;
             public bool DATADataTypeState;
             #endregion
 
@@ -1056,12 +1056,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.XalgFlags = defaultOn;
                 this.SnapBehavior = defaultOn;
                 this.Material = defaultOn;
-                this.UnknownData1 = defaultOn;
-                this.UnknownData2 = defaultOn;
-                this.UnknownData3 = defaultOn;
-                this.UnknownData4 = defaultOn;
-                this.UnknownData5 = defaultOn;
-                this.UnknownData6 = defaultOn;
+                this.MinWidth = defaultOn;
+                this.MaxWidth = defaultOn;
+                this.MinHeight = defaultOn;
+                this.MaxHeight = defaultOn;
+                this.Depth = defaultOn;
+                this.CutoffAngle = defaultOn;
                 this.DATADataTypeState = defaultOn;
             }
 
@@ -1081,12 +1081,12 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((PTTA != null ? PTTA.OnOverall : DefaultOn, PTTA?.GetCrystal()));
                 ret.Add((SnapBehavior, null));
                 ret.Add((Material, null));
-                ret.Add((UnknownData1, null));
-                ret.Add((UnknownData2, null));
-                ret.Add((UnknownData3, null));
-                ret.Add((UnknownData4, null));
-                ret.Add((UnknownData5, null));
-                ret.Add((UnknownData6, null));
+                ret.Add((MinWidth, null));
+                ret.Add((MaxWidth, null));
+                ret.Add((MinHeight, null));
+                ret.Add((MaxHeight, null));
+                ret.Add((Depth, null));
+                ret.Add((CutoffAngle, null));
                 ret.Add((DATADataTypeState, null));
             }
 
@@ -1269,12 +1269,12 @@ namespace Mutagen.Bethesda.Starfield
         new PTTA? PTTA { get; set; }
         new IFormLinkNullable<ISnapTemplateBehaviorGetter> SnapBehavior { get; set; }
         new IFormLinkNullable<IMaterialPathGetter> Material { get; set; }
-        new Single UnknownData1 { get; set; }
-        new Single UnknownData2 { get; set; }
-        new Single UnknownData3 { get; set; }
-        new Single UnknownData4 { get; set; }
-        new Single UnknownData5 { get; set; }
-        new Single UnknownData6 { get; set; }
+        new Single MinWidth { get; set; }
+        new Single MaxWidth { get; set; }
+        new Single MinHeight { get; set; }
+        new Single MaxHeight { get; set; }
+        new Single Depth { get; set; }
+        new Single CutoffAngle { get; set; }
         new ProjectedDecal.DATADataType DATADataTypeState { get; set; }
     }
 
@@ -1323,12 +1323,12 @@ namespace Mutagen.Bethesda.Starfield
         IPTTAGetter? PTTA { get; }
         IFormLinkNullableGetter<ISnapTemplateBehaviorGetter> SnapBehavior { get; }
         IFormLinkNullableGetter<IMaterialPathGetter> Material { get; }
-        Single UnknownData1 { get; }
-        Single UnknownData2 { get; }
-        Single UnknownData3 { get; }
-        Single UnknownData4 { get; }
-        Single UnknownData5 { get; }
-        Single UnknownData6 { get; }
+        Single MinWidth { get; }
+        Single MaxWidth { get; }
+        Single MinHeight { get; }
+        Single MaxHeight { get; }
+        Single Depth { get; }
+        Single CutoffAngle { get; }
         ProjectedDecal.DATADataType DATADataTypeState { get; }
 
     }
@@ -1517,12 +1517,12 @@ namespace Mutagen.Bethesda.Starfield
         PTTA = 15,
         SnapBehavior = 16,
         Material = 17,
-        UnknownData1 = 18,
-        UnknownData2 = 19,
-        UnknownData3 = 20,
-        UnknownData4 = 21,
-        UnknownData5 = 22,
-        UnknownData6 = 23,
+        MinWidth = 18,
+        MaxWidth = 19,
+        MinHeight = 20,
+        MaxHeight = 21,
+        Depth = 22,
+        CutoffAngle = 23,
         DATADataTypeState = 24,
     }
     #endregion
@@ -1638,12 +1638,12 @@ namespace Mutagen.Bethesda.Starfield
             item.PTTA = null;
             item.SnapBehavior.Clear();
             item.Material.Clear();
-            item.UnknownData1 = default(Single);
-            item.UnknownData2 = default(Single);
-            item.UnknownData3 = default(Single);
-            item.UnknownData4 = default(Single);
-            item.UnknownData5 = default(Single);
-            item.UnknownData6 = default(Single);
+            item.MinWidth = default(Single);
+            item.MaxWidth = default(Single);
+            item.MinHeight = default(Single);
+            item.MaxHeight = default(Single);
+            item.Depth = default(Single);
+            item.CutoffAngle = default(Single);
             item.DATADataTypeState = default(ProjectedDecal.DATADataType);
             base.Clear(item);
         }
@@ -1790,12 +1790,12 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.SnapBehavior = item.SnapBehavior.Equals(rhs.SnapBehavior);
             ret.Material = item.Material.Equals(rhs.Material);
-            ret.UnknownData1 = item.UnknownData1.EqualsWithin(rhs.UnknownData1);
-            ret.UnknownData2 = item.UnknownData2.EqualsWithin(rhs.UnknownData2);
-            ret.UnknownData3 = item.UnknownData3.EqualsWithin(rhs.UnknownData3);
-            ret.UnknownData4 = item.UnknownData4.EqualsWithin(rhs.UnknownData4);
-            ret.UnknownData5 = item.UnknownData5.EqualsWithin(rhs.UnknownData5);
-            ret.UnknownData6 = item.UnknownData6.EqualsWithin(rhs.UnknownData6);
+            ret.MinWidth = item.MinWidth.EqualsWithin(rhs.MinWidth);
+            ret.MaxWidth = item.MaxWidth.EqualsWithin(rhs.MaxWidth);
+            ret.MinHeight = item.MinHeight.EqualsWithin(rhs.MinHeight);
+            ret.MaxHeight = item.MaxHeight.EqualsWithin(rhs.MaxHeight);
+            ret.Depth = item.Depth.EqualsWithin(rhs.Depth);
+            ret.CutoffAngle = item.CutoffAngle.EqualsWithin(rhs.CutoffAngle);
             ret.DATADataTypeState = item.DATADataTypeState == rhs.DATADataTypeState;
             base.FillEqualsMask(item, rhs, ret, include);
         }
@@ -1905,29 +1905,29 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Material.FormKeyNullable, "Material");
             }
-            if (printMask?.UnknownData1 ?? true)
+            if (printMask?.MinWidth ?? true)
             {
-                sb.AppendItem(item.UnknownData1, "UnknownData1");
+                sb.AppendItem(item.MinWidth, "MinWidth");
             }
-            if (printMask?.UnknownData2 ?? true)
+            if (printMask?.MaxWidth ?? true)
             {
-                sb.AppendItem(item.UnknownData2, "UnknownData2");
+                sb.AppendItem(item.MaxWidth, "MaxWidth");
             }
-            if (printMask?.UnknownData3 ?? true)
+            if (printMask?.MinHeight ?? true)
             {
-                sb.AppendItem(item.UnknownData3, "UnknownData3");
+                sb.AppendItem(item.MinHeight, "MinHeight");
             }
-            if (printMask?.UnknownData4 ?? true)
+            if (printMask?.MaxHeight ?? true)
             {
-                sb.AppendItem(item.UnknownData4, "UnknownData4");
+                sb.AppendItem(item.MaxHeight, "MaxHeight");
             }
-            if (printMask?.UnknownData5 ?? true)
+            if (printMask?.Depth ?? true)
             {
-                sb.AppendItem(item.UnknownData5, "UnknownData5");
+                sb.AppendItem(item.Depth, "Depth");
             }
-            if (printMask?.UnknownData6 ?? true)
+            if (printMask?.CutoffAngle ?? true)
             {
-                sb.AppendItem(item.UnknownData6, "UnknownData6");
+                sb.AppendItem(item.CutoffAngle, "CutoffAngle");
             }
             if (printMask?.DATADataTypeState ?? true)
             {
@@ -2047,29 +2047,29 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Material.Equals(rhs.Material)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.UnknownData1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.MinWidth) ?? true))
             {
-                if (!lhs.UnknownData1.EqualsWithin(rhs.UnknownData1)) return false;
+                if (!lhs.MinWidth.EqualsWithin(rhs.MinWidth)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.UnknownData2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.MaxWidth) ?? true))
             {
-                if (!lhs.UnknownData2.EqualsWithin(rhs.UnknownData2)) return false;
+                if (!lhs.MaxWidth.EqualsWithin(rhs.MaxWidth)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.UnknownData3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.MinHeight) ?? true))
             {
-                if (!lhs.UnknownData3.EqualsWithin(rhs.UnknownData3)) return false;
+                if (!lhs.MinHeight.EqualsWithin(rhs.MinHeight)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.UnknownData4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.MaxHeight) ?? true))
             {
-                if (!lhs.UnknownData4.EqualsWithin(rhs.UnknownData4)) return false;
+                if (!lhs.MaxHeight.EqualsWithin(rhs.MaxHeight)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.UnknownData5) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.Depth) ?? true))
             {
-                if (!lhs.UnknownData5.EqualsWithin(rhs.UnknownData5)) return false;
+                if (!lhs.Depth.EqualsWithin(rhs.Depth)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.UnknownData6) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.CutoffAngle) ?? true))
             {
-                if (!lhs.UnknownData6.EqualsWithin(rhs.UnknownData6)) return false;
+                if (!lhs.CutoffAngle.EqualsWithin(rhs.CutoffAngle)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.DATADataTypeState) ?? true))
             {
@@ -2132,12 +2132,12 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.SnapBehavior);
             hash.Add(item.Material);
-            hash.Add(item.UnknownData1);
-            hash.Add(item.UnknownData2);
-            hash.Add(item.UnknownData3);
-            hash.Add(item.UnknownData4);
-            hash.Add(item.UnknownData5);
-            hash.Add(item.UnknownData6);
+            hash.Add(item.MinWidth);
+            hash.Add(item.MaxWidth);
+            hash.Add(item.MinHeight);
+            hash.Add(item.MaxHeight);
+            hash.Add(item.Depth);
+            hash.Add(item.CutoffAngle);
             hash.Add(item.DATADataTypeState);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -2486,29 +2486,29 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Material.SetTo(rhs.Material.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.UnknownData1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.MinWidth) ?? true))
             {
-                item.UnknownData1 = rhs.UnknownData1;
+                item.MinWidth = rhs.MinWidth;
             }
-            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.UnknownData2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.MaxWidth) ?? true))
             {
-                item.UnknownData2 = rhs.UnknownData2;
+                item.MaxWidth = rhs.MaxWidth;
             }
-            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.UnknownData3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.MinHeight) ?? true))
             {
-                item.UnknownData3 = rhs.UnknownData3;
+                item.MinHeight = rhs.MinHeight;
             }
-            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.UnknownData4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.MaxHeight) ?? true))
             {
-                item.UnknownData4 = rhs.UnknownData4;
+                item.MaxHeight = rhs.MaxHeight;
             }
-            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.UnknownData5) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.Depth) ?? true))
             {
-                item.UnknownData5 = rhs.UnknownData5;
+                item.Depth = rhs.Depth;
             }
-            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.UnknownData6) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.CutoffAngle) ?? true))
             {
-                item.UnknownData6 = rhs.UnknownData6;
+                item.CutoffAngle = rhs.CutoffAngle;
             }
             if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.DATADataTypeState) ?? true))
             {
@@ -2761,24 +2761,24 @@ namespace Mutagen.Bethesda.Starfield
             {
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UnknownData1);
+                    item: item.MinWidth);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UnknownData2);
+                    item: item.MaxWidth);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UnknownData3);
+                    item: item.MinHeight);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UnknownData4);
+                    item: item.MaxHeight);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UnknownData5);
+                    item: item.Depth);
                 if (!item.DATADataTypeState.HasFlag(ProjectedDecal.DATADataType.Break0))
                 {
                     FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                         writer: writer,
-                        item: item.UnknownData6);
+                        item: item.CutoffAngle);
                 }
             }
         }
@@ -2932,23 +2932,23 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownData1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.MinWidth = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownData2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.MaxWidth = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownData3 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.MinHeight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownData4 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.MaxHeight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownData5 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.Depth = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Complete)
                     {
                         item.DATADataTypeState |= ProjectedDecal.DATADataType.Break0;
-                        return (int)ProjectedDecal_FieldIndex.UnknownData5;
+                        return (int)ProjectedDecal_FieldIndex.Depth;
                     }
                     if (dataFrame.Remaining < 4) return null;
-                    item.UnknownData6 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    return (int)ProjectedDecal_FieldIndex.UnknownData6;
+                    item.CutoffAngle = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    return (int)ProjectedDecal_FieldIndex.CutoffAngle;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -3061,35 +3061,35 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         private RangeInt32? _DATALocation;
         public ProjectedDecal.DATADataType DATADataTypeState { get; private set; }
-        #region UnknownData1
-        private int _UnknownData1Location => _DATALocation!.Value.Min;
-        private bool _UnknownData1_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownData1Location + 1 >= 4;
-        public Single UnknownData1 => _UnknownData1_IsSet ? _recordData.Slice(_UnknownData1Location, 4).Float() : default(Single);
+        #region MinWidth
+        private int _MinWidthLocation => _DATALocation!.Value.Min;
+        private bool _MinWidth_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MinWidthLocation + 1 >= 4;
+        public Single MinWidth => _MinWidth_IsSet ? _recordData.Slice(_MinWidthLocation, 4).Float() : default(Single);
         #endregion
-        #region UnknownData2
-        private int _UnknownData2Location => _DATALocation!.Value.Min + 0x4;
-        private bool _UnknownData2_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownData2Location + 1 >= 4;
-        public Single UnknownData2 => _UnknownData2_IsSet ? _recordData.Slice(_UnknownData2Location, 4).Float() : default(Single);
+        #region MaxWidth
+        private int _MaxWidthLocation => _DATALocation!.Value.Min + 0x4;
+        private bool _MaxWidth_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MaxWidthLocation + 1 >= 4;
+        public Single MaxWidth => _MaxWidth_IsSet ? _recordData.Slice(_MaxWidthLocation, 4).Float() : default(Single);
         #endregion
-        #region UnknownData3
-        private int _UnknownData3Location => _DATALocation!.Value.Min + 0x8;
-        private bool _UnknownData3_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownData3Location + 1 >= 4;
-        public Single UnknownData3 => _UnknownData3_IsSet ? _recordData.Slice(_UnknownData3Location, 4).Float() : default(Single);
+        #region MinHeight
+        private int _MinHeightLocation => _DATALocation!.Value.Min + 0x8;
+        private bool _MinHeight_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MinHeightLocation + 1 >= 4;
+        public Single MinHeight => _MinHeight_IsSet ? _recordData.Slice(_MinHeightLocation, 4).Float() : default(Single);
         #endregion
-        #region UnknownData4
-        private int _UnknownData4Location => _DATALocation!.Value.Min + 0xC;
-        private bool _UnknownData4_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownData4Location + 1 >= 4;
-        public Single UnknownData4 => _UnknownData4_IsSet ? _recordData.Slice(_UnknownData4Location, 4).Float() : default(Single);
+        #region MaxHeight
+        private int _MaxHeightLocation => _DATALocation!.Value.Min + 0xC;
+        private bool _MaxHeight_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _MaxHeightLocation + 1 >= 4;
+        public Single MaxHeight => _MaxHeight_IsSet ? _recordData.Slice(_MaxHeightLocation, 4).Float() : default(Single);
         #endregion
-        #region UnknownData5
-        private int _UnknownData5Location => _DATALocation!.Value.Min + 0x10;
-        private bool _UnknownData5_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _UnknownData5Location + 1 >= 4;
-        public Single UnknownData5 => _UnknownData5_IsSet ? _recordData.Slice(_UnknownData5Location, 4).Float() : default(Single);
+        #region Depth
+        private int _DepthLocation => _DATALocation!.Value.Min + 0x10;
+        private bool _Depth_IsSet => _DATALocation.HasValue && _DATALocation!.Value.Max - _DepthLocation + 1 >= 4;
+        public Single Depth => _Depth_IsSet ? _recordData.Slice(_DepthLocation, 4).Float() : default(Single);
         #endregion
-        #region UnknownData6
-        private int _UnknownData6Location => _DATALocation!.Value.Min + 0x14;
-        private bool _UnknownData6_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(ProjectedDecal.DATADataType.Break0) && _DATALocation!.Value.Max - _UnknownData6Location + 1 >= 4;
-        public Single UnknownData6 => _UnknownData6_IsSet ? _recordData.Slice(_UnknownData6Location, 4).Float() : default(Single);
+        #region CutoffAngle
+        private int _CutoffAngleLocation => _DATALocation!.Value.Min + 0x14;
+        private bool _CutoffAngle_IsSet => _DATALocation.HasValue && !DATADataTypeState.HasFlag(ProjectedDecal.DATADataType.Break0) && _DATALocation!.Value.Max - _CutoffAngleLocation + 1 >= 4;
+        public Single CutoffAngle => _CutoffAngle_IsSet ? _recordData.Slice(_CutoffAngleLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -3232,7 +3232,7 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         this.DATADataTypeState |= ProjectedDecal.DATADataType.Break0;
                     }
-                    return (int)ProjectedDecal_FieldIndex.UnknownData6;
+                    return (int)ProjectedDecal_FieldIndex.CutoffAngle;
                 }
                 case RecordTypeInts.XXXX:
                 {

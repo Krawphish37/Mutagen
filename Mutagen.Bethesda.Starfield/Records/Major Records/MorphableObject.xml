@@ -4,9 +4,14 @@
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
       <RefDirect name="Model" refName="Model" />
-      <String name="TMPP" recordType="TMPP" unknown="true" />
-      <String name="TCMP" recordType="TCMP" unknown="true" />
-      <ByteArray name="MOBC" recordType="MOBC" unknown="true" />
+      <String name="TargetMorphPath" recordType="TMPP" />
+      <String name="TargetChargenMorphPath" recordType="TCMP" />
+      <Data recordType="MOBC">
+        <Fields>
+          <UInt8 name="BaseVertexColor" />
+          <ByteArray name="BaseVertexColorUnused" byteLength="3" nullable="False" />
+        </Fields>
+      </Data>
     </Fields>
   </Object>
 </Loqui>

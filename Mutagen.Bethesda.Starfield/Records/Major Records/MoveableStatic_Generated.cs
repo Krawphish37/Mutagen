@@ -291,24 +291,24 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region DATA
-        public Byte DATA { get; set; } = default(Byte);
+        #region MassOverrideFlags
+        public MoveableStatic.MassOverrideFlag MassOverrideFlags { get; set; } = default(MoveableStatic.MassOverrideFlag);
         #endregion
-        #region MSLS
+        #region LoopingSound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _MSLS;
-        public SoundReference? MSLS
+        private SoundReference? _LoopingSound;
+        public SoundReference? LoopingSound
         {
-            get => _MSLS;
-            set => _MSLS = value;
+            get => _LoopingSound;
+            set => _LoopingSound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? IMoveableStaticGetter.MSLS => this.MSLS;
+        ISoundReferenceGetter? IMoveableStaticGetter.LoopingSound => this.LoopingSound;
         #endregion
-        #region MSMO
-        public Single? MSMO { get; set; }
+        #region MassOverrideValue
+        public Single? MassOverrideValue { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Single? IMoveableStaticGetter.MSMO => this.MSMO;
+        Single? IMoveableStaticGetter.MassOverrideValue => this.MassOverrideValue;
         #endregion
 
         #region To String
@@ -351,9 +351,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.Destructible = new MaskItem<TItem, Destructible.Mask<TItem>?>(initialValue, new Destructible.Mask<TItem>(initialValue));
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>(initialValue, []);
-                this.DATA = initialValue;
-                this.MSLS = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
-                this.MSMO = initialValue;
+                this.MassOverrideFlags = initialValue;
+                this.LoopingSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.MassOverrideValue = initialValue;
             }
 
             public Mask(
@@ -380,9 +380,9 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Destructible,
                 TItem Keywords,
                 TItem Properties,
-                TItem DATA,
-                TItem MSLS,
-                TItem MSMO)
+                TItem MassOverrideFlags,
+                TItem LoopingSound,
+                TItem MassOverrideValue)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -408,9 +408,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.Destructible = new MaskItem<TItem, Destructible.Mask<TItem>?>(Destructible, new Destructible.Mask<TItem>(Destructible));
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
                 this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>(Properties, []);
-                this.DATA = DATA;
-                this.MSLS = new MaskItem<TItem, SoundReference.Mask<TItem>?>(MSLS, new SoundReference.Mask<TItem>(MSLS));
-                this.MSMO = MSMO;
+                this.MassOverrideFlags = MassOverrideFlags;
+                this.LoopingSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(LoopingSound, new SoundReference.Mask<TItem>(LoopingSound));
+                this.MassOverrideValue = MassOverrideValue;
             }
 
             #pragma warning disable CS8618
@@ -438,9 +438,9 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, Destructible.Mask<TItem>?>? Destructible { get; set; }
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>? Properties;
-            public TItem DATA;
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? MSLS { get; set; }
-            public TItem MSMO;
+            public TItem MassOverrideFlags;
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? LoopingSound { get; set; }
+            public TItem MassOverrideValue;
             #endregion
 
             #region Equals
@@ -470,9 +470,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Destructible, rhs.Destructible)) return false;
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
                 if (!object.Equals(this.Properties, rhs.Properties)) return false;
-                if (!object.Equals(this.DATA, rhs.DATA)) return false;
-                if (!object.Equals(this.MSLS, rhs.MSLS)) return false;
-                if (!object.Equals(this.MSMO, rhs.MSMO)) return false;
+                if (!object.Equals(this.MassOverrideFlags, rhs.MassOverrideFlags)) return false;
+                if (!object.Equals(this.LoopingSound, rhs.LoopingSound)) return false;
+                if (!object.Equals(this.MassOverrideValue, rhs.MassOverrideValue)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -494,9 +494,9 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Destructible);
                 hash.Add(this.Keywords);
                 hash.Add(this.Properties);
-                hash.Add(this.DATA);
-                hash.Add(this.MSLS);
-                hash.Add(this.MSMO);
+                hash.Add(this.MassOverrideFlags);
+                hash.Add(this.LoopingSound);
+                hash.Add(this.MassOverrideValue);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -583,13 +583,13 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.DATA)) return false;
-                if (MSLS != null)
+                if (!eval(this.MassOverrideFlags)) return false;
+                if (LoopingSound != null)
                 {
-                    if (!eval(this.MSLS.Overall)) return false;
-                    if (this.MSLS.Specific != null && !this.MSLS.Specific.All(eval)) return false;
+                    if (!eval(this.LoopingSound.Overall)) return false;
+                    if (this.LoopingSound.Specific != null && !this.LoopingSound.Specific.All(eval)) return false;
                 }
-                if (!eval(this.MSMO)) return false;
+                if (!eval(this.MassOverrideValue)) return false;
                 return true;
             }
             #endregion
@@ -674,13 +674,13 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.DATA)) return true;
-                if (MSLS != null)
+                if (eval(this.MassOverrideFlags)) return true;
+                if (LoopingSound != null)
                 {
-                    if (eval(this.MSLS.Overall)) return true;
-                    if (this.MSLS.Specific != null && this.MSLS.Specific.Any(eval)) return true;
+                    if (eval(this.LoopingSound.Overall)) return true;
+                    if (this.LoopingSound.Specific != null && this.LoopingSound.Specific.Any(eval)) return true;
                 }
-                if (eval(this.MSMO)) return true;
+                if (eval(this.MassOverrideValue)) return true;
                 return false;
             }
             #endregion
@@ -753,9 +753,9 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.DATA = eval(this.DATA);
-                obj.MSLS = this.MSLS == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.MSLS.Overall), this.MSLS.Specific?.Translate(eval));
-                obj.MSMO = eval(this.MSMO);
+                obj.MassOverrideFlags = eval(this.MassOverrideFlags);
+                obj.LoopingSound = this.LoopingSound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.LoopingSound.Overall), this.LoopingSound.Specific?.Translate(eval));
+                obj.MassOverrideValue = eval(this.MassOverrideValue);
             }
             #endregion
 
@@ -885,17 +885,17 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.DATA ?? true)
+                    if (printMask?.MassOverrideFlags ?? true)
                     {
-                        sb.AppendItem(DATA, "DATA");
+                        sb.AppendItem(MassOverrideFlags, "MassOverrideFlags");
                     }
-                    if (printMask?.MSLS?.Overall ?? true)
+                    if (printMask?.LoopingSound?.Overall ?? true)
                     {
-                        MSLS?.Print(sb);
+                        LoopingSound?.Print(sb);
                     }
-                    if (printMask?.MSMO ?? true)
+                    if (printMask?.MassOverrideValue ?? true)
                     {
-                        sb.AppendItem(MSMO, "MSMO");
+                        sb.AppendItem(MassOverrideValue, "MassOverrideValue");
                     }
                 }
             }
@@ -924,9 +924,9 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, Destructible.ErrorMask?>? Destructible;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>? Properties;
-            public Exception? DATA;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? MSLS;
-            public Exception? MSMO;
+            public Exception? MassOverrideFlags;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? LoopingSound;
+            public Exception? MassOverrideValue;
             #endregion
 
             #region IErrorMask
@@ -967,12 +967,12 @@ namespace Mutagen.Bethesda.Starfield
                         return Keywords;
                     case MoveableStatic_FieldIndex.Properties:
                         return Properties;
-                    case MoveableStatic_FieldIndex.DATA:
-                        return DATA;
-                    case MoveableStatic_FieldIndex.MSLS:
-                        return MSLS;
-                    case MoveableStatic_FieldIndex.MSMO:
-                        return MSMO;
+                    case MoveableStatic_FieldIndex.MassOverrideFlags:
+                        return MassOverrideFlags;
+                    case MoveableStatic_FieldIndex.LoopingSound:
+                        return LoopingSound;
+                    case MoveableStatic_FieldIndex.MassOverrideValue:
+                        return MassOverrideValue;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -1031,14 +1031,14 @@ namespace Mutagen.Bethesda.Starfield
                     case MoveableStatic_FieldIndex.Properties:
                         this.Properties = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>(ex, null);
                         break;
-                    case MoveableStatic_FieldIndex.DATA:
-                        this.DATA = ex;
+                    case MoveableStatic_FieldIndex.MassOverrideFlags:
+                        this.MassOverrideFlags = ex;
                         break;
-                    case MoveableStatic_FieldIndex.MSLS:
-                        this.MSLS = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case MoveableStatic_FieldIndex.LoopingSound:
+                        this.LoopingSound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
-                    case MoveableStatic_FieldIndex.MSMO:
-                        this.MSMO = ex;
+                    case MoveableStatic_FieldIndex.MassOverrideValue:
+                        this.MassOverrideValue = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -1099,14 +1099,14 @@ namespace Mutagen.Bethesda.Starfield
                     case MoveableStatic_FieldIndex.Properties:
                         this.Properties = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>)obj;
                         break;
-                    case MoveableStatic_FieldIndex.DATA:
-                        this.DATA = (Exception?)obj;
+                    case MoveableStatic_FieldIndex.MassOverrideFlags:
+                        this.MassOverrideFlags = (Exception?)obj;
                         break;
-                    case MoveableStatic_FieldIndex.MSLS:
-                        this.MSLS = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case MoveableStatic_FieldIndex.LoopingSound:
+                        this.LoopingSound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
-                    case MoveableStatic_FieldIndex.MSMO:
-                        this.MSMO = (Exception?)obj;
+                    case MoveableStatic_FieldIndex.MassOverrideValue:
+                        this.MassOverrideValue = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -1133,9 +1133,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (Destructible != null) return true;
                 if (Keywords != null) return true;
                 if (Properties != null) return true;
-                if (DATA != null) return true;
-                if (MSLS != null) return true;
-                if (MSMO != null) return true;
+                if (MassOverrideFlags != null) return true;
+                if (LoopingSound != null) return true;
+                if (MassOverrideValue != null) return true;
                 return false;
             }
             #endregion
@@ -1244,11 +1244,11 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(DATA, "DATA");
+                    sb.AppendItem(MassOverrideFlags, "MassOverrideFlags");
                 }
-                MSLS?.Print(sb);
+                LoopingSound?.Print(sb);
                 {
-                    sb.AppendItem(MSMO, "MSMO");
+                    sb.AppendItem(MassOverrideValue, "MassOverrideValue");
                 }
             }
             #endregion
@@ -1274,9 +1274,9 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Destructible = this.Destructible.Combine(rhs.Destructible, (l, r) => l.Combine(r));
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
                 ret.Properties = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Properties?.Overall, rhs.Properties?.Overall), Noggog.ExceptionExt.Combine(this.Properties?.Specific, rhs.Properties?.Specific));
-                ret.DATA = this.DATA.Combine(rhs.DATA);
-                ret.MSLS = this.MSLS.Combine(rhs.MSLS, (l, r) => l.Combine(r));
-                ret.MSMO = this.MSMO.Combine(rhs.MSMO);
+                ret.MassOverrideFlags = this.MassOverrideFlags.Combine(rhs.MassOverrideFlags);
+                ret.LoopingSound = this.LoopingSound.Combine(rhs.LoopingSound, (l, r) => l.Combine(r));
+                ret.MassOverrideValue = this.MassOverrideValue.Combine(rhs.MassOverrideValue);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -1315,9 +1315,9 @@ namespace Mutagen.Bethesda.Starfield
             public Destructible.TranslationMask? Destructible;
             public bool Keywords;
             public ObjectProperty.TranslationMask? Properties;
-            public bool DATA;
-            public SoundReference.TranslationMask? MSLS;
-            public bool MSMO;
+            public bool MassOverrideFlags;
+            public SoundReference.TranslationMask? LoopingSound;
+            public bool MassOverrideValue;
             #endregion
 
             #region Ctors
@@ -1333,8 +1333,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultLayer = defaultOn;
                 this.Name = defaultOn;
                 this.Keywords = defaultOn;
-                this.DATA = defaultOn;
-                this.MSMO = defaultOn;
+                this.MassOverrideFlags = defaultOn;
+                this.MassOverrideValue = defaultOn;
             }
 
             #endregion
@@ -1358,9 +1358,9 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Destructible != null ? Destructible.OnOverall : DefaultOn, Destructible?.GetCrystal()));
                 ret.Add((Keywords, null));
                 ret.Add((Properties == null ? DefaultOn : !Properties.GetCrystal().CopyNothing, Properties?.GetCrystal()));
-                ret.Add((DATA, null));
-                ret.Add((MSLS != null ? MSLS.OnOverall : DefaultOn, MSLS?.GetCrystal()));
-                ret.Add((MSMO, null));
+                ret.Add((MassOverrideFlags, null));
+                ret.Add((LoopingSound != null ? LoopingSound.OnOverall : DefaultOn, LoopingSound?.GetCrystal()));
+                ret.Add((MassOverrideValue, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -1568,9 +1568,9 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; set; }
         new ExtendedList<ObjectProperty>? Properties { get; set; }
-        new Byte DATA { get; set; }
-        new SoundReference? MSLS { get; set; }
-        new Single? MSMO { get; set; }
+        new MoveableStatic.MassOverrideFlag MassOverrideFlags { get; set; }
+        new SoundReference? LoopingSound { get; set; }
+        new Single? MassOverrideValue { get; set; }
         #region Mutagen
         new MoveableStatic.MajorFlag MajorFlags { get; set; }
         #endregion
@@ -1656,9 +1656,9 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; }
         #endregion
         IReadOnlyList<IObjectPropertyGetter>? Properties { get; }
-        Byte DATA { get; }
-        ISoundReferenceGetter? MSLS { get; }
-        Single? MSMO { get; }
+        MoveableStatic.MassOverrideFlag MassOverrideFlags { get; }
+        ISoundReferenceGetter? LoopingSound { get; }
+        Single? MassOverrideValue { get; }
 
         #region Mutagen
         MoveableStatic.MajorFlag MajorFlags { get; }
@@ -1855,9 +1855,9 @@ namespace Mutagen.Bethesda.Starfield
         Destructible = 20,
         Keywords = 21,
         Properties = 22,
-        DATA = 23,
-        MSLS = 24,
-        MSMO = 25,
+        MassOverrideFlags = 23,
+        LoopingSound = 24,
+        MassOverrideValue = 25,
     }
     #endregion
 
@@ -1993,9 +1993,9 @@ namespace Mutagen.Bethesda.Starfield
             item.Destructible = null;
             item.Keywords = null;
             item.Properties = null;
-            item.DATA = default(Byte);
-            item.MSLS = null;
-            item.MSMO = default;
+            item.MassOverrideFlags = default(MoveableStatic.MassOverrideFlag);
+            item.LoopingSound = null;
+            item.MassOverrideValue = default;
             base.Clear(item);
         }
         
@@ -2024,7 +2024,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.Destructible?.RemapLinks(mapping);
             obj.Keywords?.RemapLinks(mapping);
             obj.Properties?.RemapLinks(mapping);
-            obj.MSLS?.RemapLinks(mapping);
+            obj.LoopingSound?.RemapLinks(mapping);
         }
         
         public IEnumerable<IAssetLink> EnumerateListedAssetLinks(IMoveableStatic obj, bool iterateNestedRecords = true)
@@ -2181,13 +2181,13 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Properties,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.DATA = item.DATA == rhs.DATA;
-            ret.MSLS = EqualsMaskHelper.EqualsHelper(
-                item.MSLS,
-                rhs.MSLS,
+            ret.MassOverrideFlags = item.MassOverrideFlags == rhs.MassOverrideFlags;
+            ret.LoopingSound = EqualsMaskHelper.EqualsHelper(
+                item.LoopingSound,
+                rhs.LoopingSound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.MSMO = item.MSMO.EqualsWithin(rhs.MSMO);
+            ret.MassOverrideValue = item.MassOverrideValue.EqualsWithin(rhs.MassOverrideValue);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -2341,19 +2341,19 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if (printMask?.DATA ?? true)
+            if (printMask?.MassOverrideFlags ?? true)
             {
-                sb.AppendItem(item.DATA, "DATA");
+                sb.AppendItem(item.MassOverrideFlags, "MassOverrideFlags");
             }
-            if ((printMask?.MSLS?.Overall ?? true)
-                && item.MSLS is {} MSLSItem)
+            if ((printMask?.LoopingSound?.Overall ?? true)
+                && item.LoopingSound is {} LoopingSoundItem)
             {
-                MSLSItem?.Print(sb, "MSLS");
+                LoopingSoundItem?.Print(sb, "LoopingSound");
             }
-            if ((printMask?.MSMO ?? true)
-                && item.MSMO is {} MSMOItem)
+            if ((printMask?.MassOverrideValue ?? true)
+                && item.MassOverrideValue is {} MassOverrideValueItem)
             {
-                sb.AppendItem(MSMOItem, "MSMO");
+                sb.AppendItem(MassOverrideValueItem, "MassOverrideValue");
             }
         }
         
@@ -2497,21 +2497,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Properties.SequenceEqualNullable(rhs.Properties, (l, r) => ((ObjectPropertyCommon)((IObjectPropertyGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)MoveableStatic_FieldIndex.Properties)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MoveableStatic_FieldIndex.DATA) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MoveableStatic_FieldIndex.MassOverrideFlags) ?? true))
             {
-                if (lhs.DATA != rhs.DATA) return false;
+                if (lhs.MassOverrideFlags != rhs.MassOverrideFlags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MoveableStatic_FieldIndex.MSLS) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MoveableStatic_FieldIndex.LoopingSound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.MSLS, rhs.MSLS, out var lhsMSLS, out var rhsMSLS, out var isMSLSEqual))
+                if (EqualsMaskHelper.RefEquality(lhs.LoopingSound, rhs.LoopingSound, out var lhsLoopingSound, out var rhsLoopingSound, out var isLoopingSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsMSLS).CommonInstance()!).Equals(lhsMSLS, rhsMSLS, equalsMask?.GetSubCrystal((int)MoveableStatic_FieldIndex.MSLS))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsLoopingSound).CommonInstance()!).Equals(lhsLoopingSound, rhsLoopingSound, equalsMask?.GetSubCrystal((int)MoveableStatic_FieldIndex.LoopingSound))) return false;
                 }
-                else if (!isMSLSEqual) return false;
+                else if (!isLoopingSoundEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MoveableStatic_FieldIndex.MSMO) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MoveableStatic_FieldIndex.MassOverrideValue) ?? true))
             {
-                if (!lhs.MSMO.EqualsWithin(rhs.MSMO)) return false;
+                if (!lhs.MassOverrideValue.EqualsWithin(rhs.MassOverrideValue)) return false;
             }
             return true;
         }
@@ -2596,14 +2596,14 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
-            hash.Add(item.DATA);
-            if (item.MSLS is {} MSLSitem)
+            hash.Add(item.MassOverrideFlags);
+            if (item.LoopingSound is {} LoopingSounditem)
             {
-                hash.Add(MSLSitem);
+                hash.Add(LoopingSounditem);
             }
-            if (item.MSMO is {} MSMOitem)
+            if (item.MassOverrideValue is {} MassOverrideValueitem)
             {
-                hash.Add(MSMOitem);
+                hash.Add(MassOverrideValueitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -2700,9 +2700,9 @@ namespace Mutagen.Bethesda.Starfield
                     yield return FormLinkInformation.Factory(item);
                 }
             }
-            if (obj.MSLS is {} MSLSItems)
+            if (obj.LoopingSound is {} LoopingSoundItems)
             {
-                foreach (var item in MSLSItems.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in LoopingSoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -3116,24 +3116,24 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)MoveableStatic_FieldIndex.DATA) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MoveableStatic_FieldIndex.MassOverrideFlags) ?? true))
             {
-                item.DATA = rhs.DATA;
+                item.MassOverrideFlags = rhs.MassOverrideFlags;
             }
-            if ((copyMask?.GetShouldTranslate((int)MoveableStatic_FieldIndex.MSLS) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MoveableStatic_FieldIndex.LoopingSound) ?? true))
             {
-                errorMask?.PushIndex((int)MoveableStatic_FieldIndex.MSLS);
+                errorMask?.PushIndex((int)MoveableStatic_FieldIndex.LoopingSound);
                 try
                 {
-                    if(rhs.MSLS is {} rhsMSLS)
+                    if(rhs.LoopingSound is {} rhsLoopingSound)
                     {
-                        item.MSLS = rhsMSLS.DeepCopy(
+                        item.LoopingSound = rhsLoopingSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)MoveableStatic_FieldIndex.MSLS));
+                            copyMask?.GetSubCrystal((int)MoveableStatic_FieldIndex.LoopingSound));
                     }
                     else
                     {
-                        item.MSLS = default;
+                        item.LoopingSound = default;
                     }
                 }
                 catch (Exception ex)
@@ -3146,9 +3146,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)MoveableStatic_FieldIndex.MSMO) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MoveableStatic_FieldIndex.MassOverrideValue) ?? true))
             {
-                item.MSMO = rhs.MSMO;
+                item.MassOverrideValue = rhs.MassOverrideValue;
             }
             DeepCopyInCustom(
                 item: item,
@@ -3428,23 +3428,24 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.DATA,
+            EnumBinaryTranslation<MoveableStatic.MassOverrideFlag, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.MassOverrideFlags,
+                length: 1,
                 header: translationParams.ConvertToCustom(RecordTypes.DATA));
-            if (item.MSLS is {} MSLSItem)
+            if (item.LoopingSound is {} LoopingSoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.MSLS))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)MSLSItem).BinaryWriteTranslator).Write(
-                        item: MSLSItem,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)LoopingSoundItem).BinaryWriteTranslator).Write(
+                        item: LoopingSoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
             }
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.MSMO,
+                item: item.MassOverrideValue,
                 header: translationParams.ConvertToCustom(RecordTypes.MSMO));
         }
 
@@ -3661,20 +3662,22 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DATA:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DATA = frame.ReadUInt8();
-                    return (int)MoveableStatic_FieldIndex.DATA;
+                    item.MassOverrideFlags = EnumBinaryTranslation<MoveableStatic.MassOverrideFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)MoveableStatic_FieldIndex.MassOverrideFlags;
                 }
                 case RecordTypeInts.MSLS:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.MSLS = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)MoveableStatic_FieldIndex.MSLS;
+                    item.LoopingSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)MoveableStatic_FieldIndex.LoopingSound;
                 }
                 case RecordTypeInts.MSMO:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.MSMO = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)MoveableStatic_FieldIndex.MSMO;
+                    item.MassOverrideValue = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)MoveableStatic_FieldIndex.MassOverrideValue;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -3805,14 +3808,14 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IFormLinkGetter<IKeywordCommonGetter>>? IKeywordedGetter.Keywords => this.Keywords;
         #endregion
         public IReadOnlyList<IObjectPropertyGetter>? Properties { get; private set; }
-        #region DATA
-        private int? _DATALocation;
-        public Byte DATA => _DATALocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DATALocation.Value, _package.MetaData.Constants)[0] : default(Byte);
+        #region MassOverrideFlags
+        private int? _MassOverrideFlagsLocation;
+        public MoveableStatic.MassOverrideFlag MassOverrideFlags => EnumBinaryTranslation<MoveableStatic.MassOverrideFlag, MutagenFrame, MutagenWriter>.Instance.ParseRecord(_MassOverrideFlagsLocation, _recordData, _package, 1);
         #endregion
-        public ISoundReferenceGetter? MSLS { get; private set; }
-        #region MSMO
-        private int? _MSMOLocation;
-        public Single? MSMO => _MSMOLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _MSMOLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
+        public ISoundReferenceGetter? LoopingSound { get; private set; }
+        #region MassOverrideValue
+        private int? _MassOverrideValueLocation;
+        public Single? MassOverrideValue => _MassOverrideValueLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _MassOverrideValueLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -4024,22 +4027,22 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DATA:
                 {
-                    _DATALocation = (stream.Position - offset);
-                    return (int)MoveableStatic_FieldIndex.DATA;
+                    _MassOverrideFlagsLocation = (stream.Position - offset);
+                    return (int)MoveableStatic_FieldIndex.MassOverrideFlags;
                 }
                 case RecordTypeInts.MSLS:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.MSLS = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.LoopingSound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)MoveableStatic_FieldIndex.MSLS;
+                    return (int)MoveableStatic_FieldIndex.LoopingSound;
                 }
                 case RecordTypeInts.MSMO:
                 {
-                    _MSMOLocation = (stream.Position - offset);
-                    return (int)MoveableStatic_FieldIndex.MSMO;
+                    _MassOverrideValueLocation = (stream.Position - offset);
+                    return (int)MoveableStatic_FieldIndex.MassOverrideValue;
                 }
                 case RecordTypeInts.XXXX:
                 {

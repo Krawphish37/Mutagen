@@ -15,13 +15,13 @@
       <FormLink name="Material" refName="MaterialPath" recordType="DODT" />
       <Data>
         <Fields>
-          <Float name="UnknownData1" />
-          <Float name="UnknownData2" />
-          <Float name="UnknownData3" />
-          <Float name="UnknownData4" />
-          <Float name="UnknownData5" />
+          <Float name="MinWidth" />
+          <Float name="MaxWidth" />
+          <Float name="MinHeight" />
+          <Float name="MaxHeight" />
+          <Float name="Depth" />
           <Break />
-          <Float name="UnknownData6" />
+          <Float name="CutoffAngle" />
         </Fields>
       </Data>
     </Fields>
