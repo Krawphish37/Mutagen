@@ -52,11 +52,11 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Longitude
-        public Double Longitude { get; set; } = default(Double);
-        #endregion
         #region Latitude
         public Double Latitude { get; set; } = default(Double);
+        #endregion
+        #region Longitude
+        public Double Longitude { get; set; } = default(Double);
         #endregion
         #region Worldspace
         private readonly IFormLink<IWorldspaceGetter> _Worldspace = new FormLink<IWorldspaceGetter>();
@@ -110,20 +110,20 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Longitude = initialValue;
                 this.Latitude = initialValue;
+                this.Longitude = initialValue;
                 this.Worldspace = initialValue;
                 this.Unknown = initialValue;
             }
 
             public Mask(
-                TItem Longitude,
                 TItem Latitude,
+                TItem Longitude,
                 TItem Worldspace,
                 TItem Unknown)
             {
-                this.Longitude = Longitude;
                 this.Latitude = Latitude;
+                this.Longitude = Longitude;
                 this.Worldspace = Worldspace;
                 this.Unknown = Unknown;
             }
@@ -137,8 +137,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Longitude;
             public TItem Latitude;
+            public TItem Longitude;
             public TItem Worldspace;
             public TItem Unknown;
             #endregion
@@ -153,8 +153,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Longitude, rhs.Longitude)) return false;
                 if (!object.Equals(this.Latitude, rhs.Latitude)) return false;
+                if (!object.Equals(this.Longitude, rhs.Longitude)) return false;
                 if (!object.Equals(this.Worldspace, rhs.Worldspace)) return false;
                 if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 return true;
@@ -162,8 +162,8 @@ namespace Mutagen.Bethesda.Starfield
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Longitude);
                 hash.Add(this.Latitude);
+                hash.Add(this.Longitude);
                 hash.Add(this.Worldspace);
                 hash.Add(this.Unknown);
                 return hash.ToHashCode();
@@ -174,8 +174,8 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Longitude)) return false;
                 if (!eval(this.Latitude)) return false;
+                if (!eval(this.Longitude)) return false;
                 if (!eval(this.Worldspace)) return false;
                 if (!eval(this.Unknown)) return false;
                 return true;
@@ -185,8 +185,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Longitude)) return true;
                 if (eval(this.Latitude)) return true;
+                if (eval(this.Longitude)) return true;
                 if (eval(this.Worldspace)) return true;
                 if (eval(this.Unknown)) return true;
                 return false;
@@ -203,8 +203,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Longitude = eval(this.Longitude);
                 obj.Latitude = eval(this.Latitude);
+                obj.Longitude = eval(this.Longitude);
                 obj.Worldspace = eval(this.Worldspace);
                 obj.Unknown = eval(this.Unknown);
             }
@@ -225,13 +225,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(AddedWorldspace.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Longitude ?? true)
-                    {
-                        sb.AppendItem(Longitude, "Longitude");
-                    }
                     if (printMask?.Latitude ?? true)
                     {
                         sb.AppendItem(Latitude, "Latitude");
+                    }
+                    if (printMask?.Longitude ?? true)
+                    {
+                        sb.AppendItem(Longitude, "Longitude");
                     }
                     if (printMask?.Worldspace ?? true)
                     {
@@ -265,8 +265,8 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Longitude;
             public Exception? Latitude;
+            public Exception? Longitude;
             public Exception? Worldspace;
             public Exception? Unknown;
             #endregion
@@ -277,10 +277,10 @@ namespace Mutagen.Bethesda.Starfield
                 AddedWorldspace_FieldIndex enu = (AddedWorldspace_FieldIndex)index;
                 switch (enu)
                 {
-                    case AddedWorldspace_FieldIndex.Longitude:
-                        return Longitude;
                     case AddedWorldspace_FieldIndex.Latitude:
                         return Latitude;
+                    case AddedWorldspace_FieldIndex.Longitude:
+                        return Longitude;
                     case AddedWorldspace_FieldIndex.Worldspace:
                         return Worldspace;
                     case AddedWorldspace_FieldIndex.Unknown:
@@ -295,11 +295,11 @@ namespace Mutagen.Bethesda.Starfield
                 AddedWorldspace_FieldIndex enu = (AddedWorldspace_FieldIndex)index;
                 switch (enu)
                 {
-                    case AddedWorldspace_FieldIndex.Longitude:
-                        this.Longitude = ex;
-                        break;
                     case AddedWorldspace_FieldIndex.Latitude:
                         this.Latitude = ex;
+                        break;
+                    case AddedWorldspace_FieldIndex.Longitude:
+                        this.Longitude = ex;
                         break;
                     case AddedWorldspace_FieldIndex.Worldspace:
                         this.Worldspace = ex;
@@ -317,11 +317,11 @@ namespace Mutagen.Bethesda.Starfield
                 AddedWorldspace_FieldIndex enu = (AddedWorldspace_FieldIndex)index;
                 switch (enu)
                 {
-                    case AddedWorldspace_FieldIndex.Longitude:
-                        this.Longitude = (Exception?)obj;
-                        break;
                     case AddedWorldspace_FieldIndex.Latitude:
                         this.Latitude = (Exception?)obj;
+                        break;
+                    case AddedWorldspace_FieldIndex.Longitude:
+                        this.Longitude = (Exception?)obj;
                         break;
                     case AddedWorldspace_FieldIndex.Worldspace:
                         this.Worldspace = (Exception?)obj;
@@ -337,8 +337,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Longitude != null) return true;
                 if (Latitude != null) return true;
+                if (Longitude != null) return true;
                 if (Worldspace != null) return true;
                 if (Unknown != null) return true;
                 return false;
@@ -367,10 +367,10 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Longitude, "Longitude");
+                    sb.AppendItem(Latitude, "Latitude");
                 }
                 {
-                    sb.AppendItem(Latitude, "Latitude");
+                    sb.AppendItem(Longitude, "Longitude");
                 }
                 {
                     sb.AppendItem(Worldspace, "Worldspace");
@@ -386,8 +386,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Longitude = this.Longitude.Combine(rhs.Longitude);
                 ret.Latitude = this.Latitude.Combine(rhs.Latitude);
+                ret.Longitude = this.Longitude.Combine(rhs.Longitude);
                 ret.Worldspace = this.Worldspace.Combine(rhs.Worldspace);
                 ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 return ret;
@@ -413,8 +413,8 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Longitude;
             public bool Latitude;
+            public bool Longitude;
             public bool Worldspace;
             public bool Unknown;
             #endregion
@@ -426,8 +426,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Longitude = defaultOn;
                 this.Latitude = defaultOn;
+                this.Longitude = defaultOn;
                 this.Worldspace = defaultOn;
                 this.Unknown = defaultOn;
             }
@@ -445,8 +445,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Longitude, null));
                 ret.Add((Latitude, null));
+                ret.Add((Longitude, null));
                 ret.Add((Worldspace, null));
                 ret.Add((Unknown, null));
             }
@@ -527,8 +527,8 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkContainer,
         ILoquiObjectSetter<IAddedWorldspace>
     {
-        new Double Longitude { get; set; }
         new Double Latitude { get; set; }
+        new Double Longitude { get; set; }
         new IFormLink<IWorldspaceGetter> Worldspace { get; set; }
         new Byte Unknown { get; set; }
     }
@@ -546,8 +546,8 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => AddedWorldspace_Registration.Instance;
-        Double Longitude { get; }
         Double Latitude { get; }
+        Double Longitude { get; }
         IFormLinkGetter<IWorldspaceGetter> Worldspace { get; }
         Byte Unknown { get; }
 
@@ -719,8 +719,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum AddedWorldspace_FieldIndex
     {
-        Longitude = 0,
-        Latitude = 1,
+        Latitude = 0,
+        Longitude = 1,
         Worldspace = 2,
         Unknown = 3,
     }
@@ -801,8 +801,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IAddedWorldspace item)
         {
             ClearPartial();
-            item.Longitude = default(Double);
             item.Latitude = default(Double);
+            item.Longitude = default(Double);
             item.Worldspace.Clear();
             item.Unknown = default(Byte);
         }
@@ -855,8 +855,8 @@ namespace Mutagen.Bethesda.Starfield
             AddedWorldspace.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Longitude = item.Longitude.EqualsWithin(rhs.Longitude);
             ret.Latitude = item.Latitude.EqualsWithin(rhs.Latitude);
+            ret.Longitude = item.Longitude.EqualsWithin(rhs.Longitude);
             ret.Worldspace = item.Worldspace.Equals(rhs.Worldspace);
             ret.Unknown = item.Unknown == rhs.Unknown;
         }
@@ -903,13 +903,13 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             AddedWorldspace.Mask<bool>? printMask = null)
         {
-            if (printMask?.Longitude ?? true)
-            {
-                sb.AppendItem(item.Longitude, "Longitude");
-            }
             if (printMask?.Latitude ?? true)
             {
                 sb.AppendItem(item.Latitude, "Latitude");
+            }
+            if (printMask?.Longitude ?? true)
+            {
+                sb.AppendItem(item.Longitude, "Longitude");
             }
             if (printMask?.Worldspace ?? true)
             {
@@ -928,13 +928,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)AddedWorldspace_FieldIndex.Longitude) ?? true))
-            {
-                if (!lhs.Longitude.EqualsWithin(rhs.Longitude)) return false;
-            }
             if ((equalsMask?.GetShouldTranslate((int)AddedWorldspace_FieldIndex.Latitude) ?? true))
             {
                 if (!lhs.Latitude.EqualsWithin(rhs.Latitude)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)AddedWorldspace_FieldIndex.Longitude) ?? true))
+            {
+                if (!lhs.Longitude.EqualsWithin(rhs.Longitude)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)AddedWorldspace_FieldIndex.Worldspace) ?? true))
             {
@@ -950,8 +950,8 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IAddedWorldspaceGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Longitude);
             hash.Add(item.Latitude);
+            hash.Add(item.Longitude);
             hash.Add(item.Worldspace);
             hash.Add(item.Unknown);
             return hash.ToHashCode();
@@ -987,13 +987,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)AddedWorldspace_FieldIndex.Longitude) ?? true))
-            {
-                item.Longitude = rhs.Longitude;
-            }
             if ((copyMask?.GetShouldTranslate((int)AddedWorldspace_FieldIndex.Latitude) ?? true))
             {
                 item.Latitude = rhs.Latitude;
+            }
+            if ((copyMask?.GetShouldTranslate((int)AddedWorldspace_FieldIndex.Longitude) ?? true))
+            {
+                item.Longitude = rhs.Longitude;
             }
             if ((copyMask?.GetShouldTranslate((int)AddedWorldspace_FieldIndex.Worldspace) ?? true))
             {
@@ -1111,8 +1111,8 @@ namespace Mutagen.Bethesda.Starfield
             IAddedWorldspaceGetter item,
             MutagenWriter writer)
         {
-            writer.Write(item.Longitude);
             writer.Write(item.Latitude);
+            writer.Write(item.Longitude);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.Worldspace);
@@ -1150,8 +1150,8 @@ namespace Mutagen.Bethesda.Starfield
             IAddedWorldspace item,
             MutagenFrame frame)
         {
-            item.Longitude = frame.ReadDouble();
             item.Latitude = frame.ReadDouble();
+            item.Longitude = frame.ReadDouble();
             item.Worldspace.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.Unknown = frame.ReadUInt8();
         }
@@ -1220,8 +1220,8 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Double Longitude => BinaryPrimitives.ReadDoubleLittleEndian(_structData.Slice(0x0, 0x8));
-        public Double Latitude => BinaryPrimitives.ReadDoubleLittleEndian(_structData.Slice(0x8, 0x8));
+        public Double Latitude => BinaryPrimitives.ReadDoubleLittleEndian(_structData.Slice(0x0, 0x8));
+        public Double Longitude => BinaryPrimitives.ReadDoubleLittleEndian(_structData.Slice(0x8, 0x8));
         public IFormLinkGetter<IWorldspaceGetter> Worldspace => FormLinkBinaryTranslation.Instance.OverlayFactory<IWorldspaceGetter>(_package, _structData.Span.Slice(0x10, 0x4));
         public Byte Unknown => _structData.Span[0x14];
         partial void CustomFactoryEnd(

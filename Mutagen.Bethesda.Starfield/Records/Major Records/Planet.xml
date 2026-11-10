@@ -112,15 +112,18 @@
   </Object>
   <Object name="MasterWorldspace" objType="Subrecord" >
     <Fields>
-      <Double name="Longitude" />
+      <!-- xEdit: Latitude, then Longitude (radians). In Starfield.esm the first is within +-pi/2 on all 72, the second
+           beyond it on 41. -->
       <Double name="Latitude" />
+      <Double name="Longitude" />
       <FormLink name="Worldspace" refName="Worldspace" />
     </Fields>
   </Object>
   <Object name="AddedWorldspace" objType="Subrecord" >
     <Fields>
-      <Double name="Longitude" />
+      <!-- xEdit: Latitude, then Longitude, as in MasterWorldspace (no EOVR in Starfield.esm) -->
       <Double name="Latitude" />
+      <Double name="Longitude" />
       <FormLink name="Worldspace" refName="Worldspace" />
       <UInt8 name="Unknown" />
     </Fields>
