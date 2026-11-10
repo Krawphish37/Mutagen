@@ -125,7 +125,7 @@
       <Double name="Latitude" />
       <Double name="Longitude" />
       <FormLink name="Worldspace" refName="Worldspace" />
-      <UInt8 name="Unknown" />
+      <Enum name="Type" enumName="AddedWorldspace.ChangeType" byteLength="1" />
     </Fields>
   </Object>
   <Object name="SpaceCell" objType="Subrecord" recordType="DNAM" >
