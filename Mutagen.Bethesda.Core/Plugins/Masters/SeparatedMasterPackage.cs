@@ -426,6 +426,14 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
 
         if (index >= loadOrder.Count)
         {
+            // A master index past the list (or the plugin's own FormIDs in a style it isn't listed in) reads as the plugin
+            // itself, but is written back as the plugin's own FormID. Noted for SubrecordOrder, which must not count that
+            // rewrite as a change of the record.
+            if (!TryLookupModKey(CurrentMod, reference: true, out var ownStyle, out var ownIndex)
+                || FormID.Factory(ownStyle, ownIndex, id).Raw != formId.Raw)
+            {
+                Mutagen.Bethesda.Plugins.Binary.Translations.SubrecordOrder.NonCanonicalFormIdRead = true;
+            }
             return new FormKey(
                 CurrentMod,
                 id);

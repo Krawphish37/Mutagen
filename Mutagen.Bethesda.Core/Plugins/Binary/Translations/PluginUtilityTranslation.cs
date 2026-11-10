@@ -101,6 +101,9 @@ internal static class PluginUtilityTranslation
         // Where each field's subrecords start, to note records whose subrecords come in an order Mutagen does not write
         var fieldStarts = frame.MetaData.Constants.KeepSubrecordOrder ? SubrecordOrder.FieldStarts : null;
         var firstField = fieldStarts?.Count ?? 0;
+        // Where the record held FormIDs Mutagen writes differently (matched by type and field only, see SubrecordOrder)
+        var rewritten = fieldStarts != null ? SubrecordOrder.Rewritten : null;
+        var firstRewritten = rewritten?.Count ?? 0;
         try
         {
             MutagenFrame targetFrame = frame;
@@ -122,6 +125,7 @@ internal static class PluginUtilityTranslation
                 ParseResult parsed;
                 try
                 {
+                    if (rewritten != null) SubrecordOrder.NonCanonicalFormIdRead = false;
                     parsed = fillTyped(
                         record: record,
                         frame: targetFrame,
@@ -144,6 +148,10 @@ internal static class PluginUtilityTranslation
                 }
 
                 if (!parsed.KeepParsing) break;
+                if (rewritten != null && SubrecordOrder.NonCanonicalFormIdRead)
+                {
+                    rewritten.Add((checked((int)(subrecordStart - contentStart)), checked((int)(Math.Max(targetFrame.Position, finalPos) - contentStart))));
+                }
                 if (parsed.ParsedIndex is { } parsedIndex)
                 {
                     fieldStarts?.Add((checked((int)(subrecordStart - contentStart)), parsedIndex));
@@ -183,7 +191,9 @@ internal static class PluginUtilityTranslation
                     targetFrame.ReadSpan(checked((int)(targetFrame.FinalLocation - contentStart))),
                     frame.MetaData.Constants,
                     fieldStarts,
-                    firstField);
+                    firstField,
+                    rewritten,
+                    firstRewritten);
             }
 
             frame.SetToFinalPosition();
@@ -198,6 +208,7 @@ internal static class PluginUtilityTranslation
         finally
         {
             fieldStarts?.RemoveRange(firstField, fieldStarts.Count - firstField);
+            rewritten?.RemoveRange(firstRewritten, rewritten.Count - firstRewritten);
         }
     }
 
@@ -668,7 +679,8 @@ internal static class PluginUtilityTranslation
                             }
                         }
                         var written = buffer.GetBuffer().AsSpan(0, checked((int)buffer.Length));
-                        if (!SubrecordOrder.TryWriteInOrder(written, order, writerToUse))
+                        if (!SubrecordOrder.TryWriteInOrder(written, order, writerToUse,
+                                unchangeable: item is Mutagen.Bethesda.Plugins.Binary.Overlay.PluginBinaryOverlay))
                         {
                             writerToUse.Write(written);
                         }
