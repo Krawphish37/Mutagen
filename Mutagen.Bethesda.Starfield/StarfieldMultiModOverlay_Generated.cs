@@ -1620,7 +1620,7 @@ internal class MergedWorldspace : IWorldspaceGetter
     public IWorldspaceWorldMapOffsetGetter? WorldMapOffset => _primary.WorldMapOffset;
     public Single? DistantLodMultiplier => _primary.DistantLodMultiplier;
     public Worldspace.Flag? Flags => _primary.Flags;
-    public ReadOnlyMemorySlice<Byte>? FNAM => _primary.FNAM;
+    public Worldspace.Flag2? Flags2 => _primary.Flags2;
     public P2Float ObjectBoundsMin => _primary.ObjectBoundsMin;
     public P2Float ObjectBoundsMax => _primary.ObjectBoundsMax;
     public IFormLinkNullableGetter<IMusicTypeGetter> Music => _primary.Music;
@@ -1632,7 +1632,7 @@ internal class MergedWorldspace : IWorldspaceGetter
     public IReadOnlyList<IFormLinkGetter<ILandscapeTextureGetter>> LandscapeTextures => _primary.LandscapeTextures;
     public IReadOnlyList<P2Int16>? CellWaterHeightLocations => _primary.CellWaterHeightLocations;
     public IReadOnlyList<Single>? WaterHeights => _primary.WaterHeights;
-    public ReadOnlyMemorySlice<Byte>? HNAM => _primary.HNAM;
+    public Byte? HNAM => _primary.HNAM;
     public ReadOnlyMemorySlice<Byte>? OffsetData => _primary.OffsetData;
     public ReadOnlyMemorySlice<Byte>? CellSizeData => _primary.CellSizeData;
     public ICellGetter? TopCell => _primary.TopCell;

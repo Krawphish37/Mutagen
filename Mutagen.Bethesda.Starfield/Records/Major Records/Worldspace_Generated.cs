@@ -247,16 +247,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Worldspace.Flag? IWorldspaceGetter.Flags => this.Flags;
         #endregion
-        #region FNAM
+        #region Flags2
+        public Worldspace.Flag2? Flags2 { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _FNAM;
-        public MemorySlice<Byte>? FNAM
-        {
-            get => this._FNAM;
-            set => this._FNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWorldspaceGetter.FNAM => this.FNAM;
+        Worldspace.Flag2? IWorldspaceGetter.Flags2 => this.Flags2;
         #endregion
         #region ObjectBoundsMin
         public P2Float ObjectBoundsMin { get; set; } = default(P2Float);
@@ -356,15 +350,9 @@ namespace Mutagen.Bethesda.Starfield
 
         #endregion
         #region HNAM
+        public Byte? HNAM { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _HNAM;
-        public MemorySlice<Byte>? HNAM
-        {
-            get => this._HNAM;
-            set => this._HNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWorldspaceGetter.HNAM => this.HNAM;
+        Byte? IWorldspaceGetter.HNAM => this.HNAM;
         #endregion
         #region OffsetData
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -461,7 +449,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.WorldMapOffset = new MaskItem<TItem, WorldspaceWorldMapOffset.Mask<TItem>?>(initialValue, new WorldspaceWorldMapOffset.Mask<TItem>(initialValue));
                 this.DistantLodMultiplier = initialValue;
                 this.Flags = initialValue;
-                this.FNAM = initialValue;
+                this.Flags2 = initialValue;
                 this.ObjectBoundsMin = initialValue;
                 this.ObjectBoundsMax = initialValue;
                 this.Music = initialValue;
@@ -507,7 +495,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem WorldMapOffset,
                 TItem DistantLodMultiplier,
                 TItem Flags,
-                TItem FNAM,
+                TItem Flags2,
                 TItem ObjectBoundsMin,
                 TItem ObjectBoundsMax,
                 TItem Music,
@@ -552,7 +540,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.WorldMapOffset = new MaskItem<TItem, WorldspaceWorldMapOffset.Mask<TItem>?>(WorldMapOffset, new WorldspaceWorldMapOffset.Mask<TItem>(WorldMapOffset));
                 this.DistantLodMultiplier = DistantLodMultiplier;
                 this.Flags = Flags;
-                this.FNAM = FNAM;
+                this.Flags2 = Flags2;
                 this.ObjectBoundsMin = ObjectBoundsMin;
                 this.ObjectBoundsMax = ObjectBoundsMax;
                 this.Music = Music;
@@ -599,7 +587,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, WorldspaceWorldMapOffset.Mask<TItem>?>? WorldMapOffset { get; set; }
             public TItem DistantLodMultiplier;
             public TItem Flags;
-            public TItem FNAM;
+            public TItem Flags2;
             public TItem ObjectBoundsMin;
             public TItem ObjectBoundsMax;
             public TItem Music;
@@ -648,7 +636,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.WorldMapOffset, rhs.WorldMapOffset)) return false;
                 if (!object.Equals(this.DistantLodMultiplier, rhs.DistantLodMultiplier)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
-                if (!object.Equals(this.FNAM, rhs.FNAM)) return false;
+                if (!object.Equals(this.Flags2, rhs.Flags2)) return false;
                 if (!object.Equals(this.ObjectBoundsMin, rhs.ObjectBoundsMin)) return false;
                 if (!object.Equals(this.ObjectBoundsMax, rhs.ObjectBoundsMax)) return false;
                 if (!object.Equals(this.Music, rhs.Music)) return false;
@@ -689,7 +677,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.WorldMapOffset);
                 hash.Add(this.DistantLodMultiplier);
                 hash.Add(this.Flags);
-                hash.Add(this.FNAM);
+                hash.Add(this.Flags2);
                 hash.Add(this.ObjectBoundsMin);
                 hash.Add(this.ObjectBoundsMax);
                 hash.Add(this.Music);
@@ -773,7 +761,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.DistantLodMultiplier)) return false;
                 if (!eval(this.Flags)) return false;
-                if (!eval(this.FNAM)) return false;
+                if (!eval(this.Flags2)) return false;
                 if (!eval(this.ObjectBoundsMin)) return false;
                 if (!eval(this.ObjectBoundsMax)) return false;
                 if (!eval(this.Music)) return false;
@@ -911,7 +899,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.DistantLodMultiplier)) return true;
                 if (eval(this.Flags)) return true;
-                if (eval(this.FNAM)) return true;
+                if (eval(this.Flags2)) return true;
                 if (eval(this.ObjectBoundsMin)) return true;
                 if (eval(this.ObjectBoundsMax)) return true;
                 if (eval(this.Music)) return true;
@@ -1046,7 +1034,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.WorldMapOffset = this.WorldMapOffset == null ? null : new MaskItem<R, WorldspaceWorldMapOffset.Mask<R>?>(eval(this.WorldMapOffset.Overall), this.WorldMapOffset.Specific?.Translate(eval));
                 obj.DistantLodMultiplier = eval(this.DistantLodMultiplier);
                 obj.Flags = eval(this.Flags);
-                obj.FNAM = eval(this.FNAM);
+                obj.Flags2 = eval(this.Flags2);
                 obj.ObjectBoundsMin = eval(this.ObjectBoundsMin);
                 obj.ObjectBoundsMax = eval(this.ObjectBoundsMax);
                 obj.Music = eval(this.Music);
@@ -1248,9 +1236,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.FNAM ?? true)
+                    if (printMask?.Flags2 ?? true)
                     {
-                        sb.AppendItem(FNAM, "FNAM");
+                        sb.AppendItem(Flags2, "Flags2");
                     }
                     if (printMask?.ObjectBoundsMin ?? true)
                     {
@@ -1433,7 +1421,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, WorldspaceWorldMapOffset.ErrorMask?>? WorldMapOffset;
             public Exception? DistantLodMultiplier;
             public Exception? Flags;
-            public Exception? FNAM;
+            public Exception? Flags2;
             public Exception? ObjectBoundsMin;
             public Exception? ObjectBoundsMax;
             public Exception? Music;
@@ -1494,8 +1482,8 @@ namespace Mutagen.Bethesda.Starfield
                         return DistantLodMultiplier;
                     case Worldspace_FieldIndex.Flags:
                         return Flags;
-                    case Worldspace_FieldIndex.FNAM:
-                        return FNAM;
+                    case Worldspace_FieldIndex.Flags2:
+                        return Flags2;
                     case Worldspace_FieldIndex.ObjectBoundsMin:
                         return ObjectBoundsMin;
                     case Worldspace_FieldIndex.ObjectBoundsMax:
@@ -1593,8 +1581,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Worldspace_FieldIndex.Flags:
                         this.Flags = ex;
                         break;
-                    case Worldspace_FieldIndex.FNAM:
-                        this.FNAM = ex;
+                    case Worldspace_FieldIndex.Flags2:
+                        this.Flags2 = ex;
                         break;
                     case Worldspace_FieldIndex.ObjectBoundsMin:
                         this.ObjectBoundsMin = ex;
@@ -1712,8 +1700,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Worldspace_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
                         break;
-                    case Worldspace_FieldIndex.FNAM:
-                        this.FNAM = (Exception?)obj;
+                    case Worldspace_FieldIndex.Flags2:
+                        this.Flags2 = (Exception?)obj;
                         break;
                     case Worldspace_FieldIndex.ObjectBoundsMin:
                         this.ObjectBoundsMin = (Exception?)obj;
@@ -1795,7 +1783,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (WorldMapOffset != null) return true;
                 if (DistantLodMultiplier != null) return true;
                 if (Flags != null) return true;
-                if (FNAM != null) return true;
+                if (Flags2 != null) return true;
                 if (ObjectBoundsMin != null) return true;
                 if (ObjectBoundsMax != null) return true;
                 if (Music != null) return true;
@@ -1914,7 +1902,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(FNAM, "FNAM");
+                    sb.AppendItem(Flags2, "Flags2");
                 }
                 {
                     sb.AppendItem(ObjectBoundsMin, "ObjectBoundsMin");
@@ -2074,7 +2062,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.WorldMapOffset = this.WorldMapOffset.Combine(rhs.WorldMapOffset, (l, r) => l.Combine(r));
                 ret.DistantLodMultiplier = this.DistantLodMultiplier.Combine(rhs.DistantLodMultiplier);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
-                ret.FNAM = this.FNAM.Combine(rhs.FNAM);
+                ret.Flags2 = this.Flags2.Combine(rhs.Flags2);
                 ret.ObjectBoundsMin = this.ObjectBoundsMin.Combine(rhs.ObjectBoundsMin);
                 ret.ObjectBoundsMax = this.ObjectBoundsMax.Combine(rhs.ObjectBoundsMax);
                 ret.Music = this.Music.Combine(rhs.Music);
@@ -2132,7 +2120,7 @@ namespace Mutagen.Bethesda.Starfield
             public WorldspaceWorldMapOffset.TranslationMask? WorldMapOffset;
             public bool DistantLodMultiplier;
             public bool Flags;
-            public bool FNAM;
+            public bool Flags2;
             public bool ObjectBoundsMin;
             public bool ObjectBoundsMax;
             public bool Music;
@@ -2170,7 +2158,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.LodWaterHeight = defaultOn;
                 this.DistantLodMultiplier = defaultOn;
                 this.Flags = defaultOn;
-                this.FNAM = defaultOn;
+                this.Flags2 = defaultOn;
                 this.ObjectBoundsMin = defaultOn;
                 this.ObjectBoundsMax = defaultOn;
                 this.Music = defaultOn;
@@ -2210,7 +2198,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((WorldMapOffset != null ? WorldMapOffset.OnOverall : DefaultOn, WorldMapOffset?.GetCrystal()));
                 ret.Add((DistantLodMultiplier, null));
                 ret.Add((Flags, null));
-                ret.Add((FNAM, null));
+                ret.Add((Flags2, null));
                 ret.Add((ObjectBoundsMin, null));
                 ret.Add((ObjectBoundsMax, null));
                 ret.Add((Music, null));
@@ -2451,7 +2439,7 @@ namespace Mutagen.Bethesda.Starfield
         new WorldspaceWorldMapOffset? WorldMapOffset { get; set; }
         new Single? DistantLodMultiplier { get; set; }
         new Worldspace.Flag? Flags { get; set; }
-        new MemorySlice<Byte>? FNAM { get; set; }
+        new Worldspace.Flag2? Flags2 { get; set; }
         new P2Float ObjectBoundsMin { get; set; }
         new P2Float ObjectBoundsMax { get; set; }
         new IFormLinkNullable<IMusicTypeGetter> Music { get; set; }
@@ -2463,7 +2451,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<IFormLinkGetter<ILandscapeTextureGetter>> LandscapeTextures { get; }
         new ExtendedList<P2Int16>? CellWaterHeightLocations { get; set; }
         new ExtendedList<Single>? WaterHeights { get; set; }
-        new MemorySlice<Byte>? HNAM { get; set; }
+        new Byte? HNAM { get; set; }
         new MemorySlice<Byte>? OffsetData { get; set; }
         new MemorySlice<Byte>? CellSizeData { get; set; }
         new Cell? TopCell { get; set; }
@@ -2522,7 +2510,7 @@ namespace Mutagen.Bethesda.Starfield
         IWorldspaceWorldMapOffsetGetter? WorldMapOffset { get; }
         Single? DistantLodMultiplier { get; }
         Worldspace.Flag? Flags { get; }
-        ReadOnlyMemorySlice<Byte>? FNAM { get; }
+        Worldspace.Flag2? Flags2 { get; }
         P2Float ObjectBoundsMin { get; }
         P2Float ObjectBoundsMax { get; }
         IFormLinkNullableGetter<IMusicTypeGetter> Music { get; }
@@ -2534,7 +2522,7 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IFormLinkGetter<ILandscapeTextureGetter>> LandscapeTextures { get; }
         IReadOnlyList<P2Int16>? CellWaterHeightLocations { get; }
         IReadOnlyList<Single>? WaterHeights { get; }
-        ReadOnlyMemorySlice<Byte>? HNAM { get; }
+        Byte? HNAM { get; }
         ReadOnlyMemorySlice<Byte>? OffsetData { get; }
         ReadOnlyMemorySlice<Byte>? CellSizeData { get; }
         ICellGetter? TopCell { get; }
@@ -2964,7 +2952,7 @@ namespace Mutagen.Bethesda.Starfield
         WorldMapOffset = 21,
         DistantLodMultiplier = 22,
         Flags = 23,
-        FNAM = 24,
+        Flags2 = 24,
         ObjectBoundsMin = 25,
         ObjectBoundsMax = 26,
         Music = 27,
@@ -3167,7 +3155,7 @@ namespace Mutagen.Bethesda.Starfield
             item.WorldMapOffset = null;
             item.DistantLodMultiplier = default;
             item.Flags = default;
-            item.FNAM = default;
+            item.Flags2 = default;
             item.ObjectBoundsMin = default(P2Float);
             item.ObjectBoundsMax = default(P2Float);
             item.Music.Clear();
@@ -3928,7 +3916,7 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.DistantLodMultiplier = item.DistantLodMultiplier.EqualsWithin(rhs.DistantLodMultiplier);
             ret.Flags = item.Flags == rhs.Flags;
-            ret.FNAM = MemorySliceExt.SequenceEqual(item.FNAM, rhs.FNAM);
+            ret.Flags2 = item.Flags2 == rhs.Flags2;
             ret.ObjectBoundsMin = item.ObjectBoundsMin.Equals(rhs.ObjectBoundsMin);
             ret.ObjectBoundsMax = item.ObjectBoundsMax.Equals(rhs.ObjectBoundsMax);
             ret.Music = item.Music.Equals(rhs.Music);
@@ -3952,7 +3940,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.WaterHeights,
                 (l, r) => l.EqualsWithin(r),
                 include);
-            ret.HNAM = MemorySliceExt.SequenceEqual(item.HNAM, rhs.HNAM);
+            ret.HNAM = item.HNAM == rhs.HNAM;
             ret.OffsetData = MemorySliceExt.SequenceEqual(item.OffsetData, rhs.OffsetData);
             ret.CellSizeData = MemorySliceExt.SequenceEqual(item.CellSizeData, rhs.CellSizeData);
             ret.TopCell = EqualsMaskHelper.EqualsHelper(
@@ -4112,10 +4100,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(FlagsItem, "Flags");
             }
-            if ((printMask?.FNAM ?? true)
-                && item.FNAM is {} FNAMItem)
+            if ((printMask?.Flags2 ?? true)
+                && item.Flags2 is {} Flags2Item)
             {
-                sb.AppendLine($"FNAM => {SpanExt.ToHexString(FNAMItem)}");
+                sb.AppendItem(Flags2Item, "Flags2");
             }
             if (printMask?.ObjectBoundsMin ?? true)
             {
@@ -4209,7 +4197,7 @@ namespace Mutagen.Bethesda.Starfield
             if ((printMask?.HNAM ?? true)
                 && item.HNAM is {} HNAMItem)
             {
-                sb.AppendLine($"HNAM => {SpanExt.ToHexString(HNAMItem)}");
+                sb.AppendItem(HNAMItem, "HNAM");
             }
             if ((printMask?.OffsetData ?? true)
                 && item.OffsetData is {} OffsetDataItem)
@@ -4382,9 +4370,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.FNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.Flags2) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.FNAM, rhs.FNAM)) return false;
+                if (lhs.Flags2 != rhs.Flags2) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.ObjectBoundsMin) ?? true))
             {
@@ -4432,7 +4420,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.HNAM) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.HNAM, rhs.HNAM)) return false;
+                if (lhs.HNAM != rhs.HNAM) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.OffsetData) ?? true))
             {
@@ -4540,9 +4528,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Flagsitem);
             }
-            if (item.FNAM is {} FNAMItem)
+            if (item.Flags2 is {} Flags2item)
             {
-                hash.AddBytes(FNAMItem);
+                hash.Add(Flags2item);
             }
             hash.Add(item.ObjectBoundsMin);
             hash.Add(item.ObjectBoundsMax);
@@ -4582,9 +4570,9 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
-            if (item.HNAM is {} HNAMItem)
+            if (item.HNAM is {} HNAMitem)
             {
-                hash.AddBytes(HNAMItem);
+                hash.Add(HNAMitem);
             }
             if (item.OffsetData is {} OffsetDataItem)
             {
@@ -5682,16 +5670,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.FNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.Flags2) ?? true))
             {
-                if(rhs.FNAM is {} FNAMrhs)
-                {
-                    item.FNAM = FNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.FNAM = default;
-                }
+                item.Flags2 = rhs.Flags2;
             }
             if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.ObjectBoundsMin) ?? true))
             {
@@ -5818,14 +5799,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.HNAM) ?? true))
             {
-                if(rhs.HNAM is {} HNAMrhs)
-                {
-                    item.HNAM = HNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.HNAM = default;
-                }
+                item.HNAM = rhs.HNAM;
             }
             if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.OffsetData) ?? true))
             {
@@ -6183,9 +6157,10 @@ namespace Mutagen.Bethesda.Starfield
                 item.Flags,
                 length: 1,
                 header: translationParams.ConvertToCustom(RecordTypes.DATA));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.FNAM,
+            EnumBinaryTranslation<Worldspace.Flag2, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Flags2,
+                length: 1,
                 header: translationParams.ConvertToCustom(RecordTypes.FNAM));
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.NAM0)))
             {
@@ -6252,7 +6227,7 @@ namespace Mutagen.Bethesda.Starfield
                 items: item.WaterHeights,
                 recordType: translationParams.ConvertToCustom(RecordTypes.WHGT),
                 transl: FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
                 item: item.HNAM,
                 header: translationParams.ConvertToCustom(RecordTypes.HNAM));
@@ -6504,8 +6479,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Worldspace_FieldIndex.FNAM;
+                    item.Flags2 = EnumBinaryTranslation<Worldspace.Flag2, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)Worldspace_FieldIndex.Flags2;
                 }
                 case RecordTypeInts.NAM0:
                 {
@@ -6604,7 +6581,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.HNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.HNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    item.HNAM = frame.ReadUInt8();
                     return (int)Worldspace_FieldIndex.HNAM;
                 }
                 case RecordTypeInts.OFST:
@@ -6777,9 +6754,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _FlagsLocation;
         public Worldspace.Flag? Flags => EnumBinaryTranslation<Worldspace.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_FlagsLocation, _recordData, _package, 1);
         #endregion
-        #region FNAM
-        private int? _FNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? FNAM => _FNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Flags2
+        private int? _Flags2Location;
+        public Worldspace.Flag2? Flags2 => EnumBinaryTranslation<Worldspace.Flag2, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_Flags2Location, _recordData, _package, 1);
         #endregion
         private RangeInt32? _NAM0Location;
         #region ObjectBoundsMin
@@ -6821,7 +6798,7 @@ namespace Mutagen.Bethesda.Starfield
         public IReadOnlyList<Single>? WaterHeights { get; private set; }
         #region HNAM
         private int? _HNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? HNAM => _HNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _HNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        public Byte? HNAM => _HNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _HNAMLocation.Value, _package.MetaData.Constants)[0] : default(Byte?);
         #endregion
         #region OffsetData
         private int? _OffsetDataLocation;
@@ -7023,8 +7000,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FNAM:
                 {
-                    _FNAMLocation = (stream.Position - offset);
-                    return (int)Worldspace_FieldIndex.FNAM;
+                    _Flags2Location = (stream.Position - offset);
+                    return (int)Worldspace_FieldIndex.Flags2;
                 }
                 case RecordTypeInts.NAM0:
                 {
