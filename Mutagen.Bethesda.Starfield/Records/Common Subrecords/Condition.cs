@@ -2438,7 +2438,7 @@ partial class ConditionBinaryCreateTranslation
         }
 
         var functionIndex = frame.ReadUInt16();
-        obj.Unknown2 = frame.ReadUInt16();
+        obj.Unused2 = frame.ReadUInt16();
         obj.Data = CreateDataFromBinary(frame, functionIndex);
     }
 }
@@ -2517,7 +2517,7 @@ partial class ConditionBinaryWriteTranslation
 
         var data = item.Data;
         writer.Write((ushort)data.Function);
-        writer.Write(item.Unknown2);
+        writer.Write(item.Unused2);
         data.WriteToBinary(writer);
 
         EnumBinaryTranslation<RunOnType, MutagenFrame, MutagenWriter>.Instance.Write(writer, data.RunOnType, 4);
@@ -2549,7 +2549,7 @@ abstract partial class ConditionBinaryOverlay
         .SetFlag((Condition.Flag)Condition.UseGlobal, false);
 
     public CompareOperator CompareOperator => ConditionBinaryCreateTranslation.GetCompareOperator(_structData.Span[0]);
-    public ushort Unknown2 => BinaryPrimitives.ReadUInt16LittleEndian(_structData.Span.Slice(10));
+    public ushort Unused2 => BinaryPrimitives.ReadUInt16LittleEndian(_structData.Span.Slice(10));
 
     public static IConditionGetter ConditionFactory(OverlayStream stream, BinaryOverlayFactoryPackage package)
     {

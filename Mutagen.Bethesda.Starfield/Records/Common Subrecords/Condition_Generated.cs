@@ -62,19 +62,19 @@ namespace Mutagen.Bethesda.Starfield
         #region Flags
         public Condition.Flag Flags { get; set; } = default(Condition.Flag);
         #endregion
-        #region Unknown1
+        #region Unused1
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _Unknown1 = new byte[3];
-        public MemorySlice<Byte> Unknown1
+        private MemorySlice<Byte> _Unused1 = new byte[3];
+        public MemorySlice<Byte> Unused1
         {
-            get => _Unknown1;
-            set => this._Unknown1 = value;
+            get => _Unused1;
+            set => this._Unused1 = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IConditionGetter.Unknown1 => this.Unknown1;
+        ReadOnlyMemorySlice<Byte> IConditionGetter.Unused1 => this.Unused1;
         #endregion
-        #region Unknown2
-        public UInt16 Unknown2 { get; set; } = default(UInt16);
+        #region Unused2
+        public UInt16 Unused2 { get; set; } = default(UInt16);
         #endregion
 
         #region To String
@@ -117,22 +117,22 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.CompareOperator = initialValue;
                 this.Flags = initialValue;
-                this.Unknown1 = initialValue;
-                this.Unknown2 = initialValue;
+                this.Unused1 = initialValue;
+                this.Unused2 = initialValue;
                 this.Data = new MaskItem<TItem, ConditionData.Mask<TItem>?>(initialValue, new ConditionData.Mask<TItem>(initialValue));
             }
 
             public Mask(
                 TItem CompareOperator,
                 TItem Flags,
-                TItem Unknown1,
-                TItem Unknown2,
+                TItem Unused1,
+                TItem Unused2,
                 TItem Data)
             {
                 this.CompareOperator = CompareOperator;
                 this.Flags = Flags;
-                this.Unknown1 = Unknown1;
-                this.Unknown2 = Unknown2;
+                this.Unused1 = Unused1;
+                this.Unused2 = Unused2;
                 this.Data = new MaskItem<TItem, ConditionData.Mask<TItem>?>(Data, new ConditionData.Mask<TItem>(Data));
             }
 
@@ -147,8 +147,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem CompareOperator;
             public TItem Flags;
-            public TItem Unknown1;
-            public TItem Unknown2;
+            public TItem Unused1;
+            public TItem Unused2;
             public MaskItem<TItem, ConditionData.Mask<TItem>?>? Data { get; set; }
             #endregion
 
@@ -164,8 +164,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.CompareOperator, rhs.CompareOperator)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.Unused1, rhs.Unused1)) return false;
+                if (!object.Equals(this.Unused2, rhs.Unused2)) return false;
                 if (!object.Equals(this.Data, rhs.Data)) return false;
                 return true;
             }
@@ -174,8 +174,8 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.CompareOperator);
                 hash.Add(this.Flags);
-                hash.Add(this.Unknown1);
-                hash.Add(this.Unknown2);
+                hash.Add(this.Unused1);
+                hash.Add(this.Unused2);
                 hash.Add(this.Data);
                 return hash.ToHashCode();
             }
@@ -187,8 +187,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.CompareOperator)) return false;
                 if (!eval(this.Flags)) return false;
-                if (!eval(this.Unknown1)) return false;
-                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.Unused1)) return false;
+                if (!eval(this.Unused2)) return false;
                 if (Data != null)
                 {
                     if (!eval(this.Data.Overall)) return false;
@@ -203,8 +203,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.CompareOperator)) return true;
                 if (eval(this.Flags)) return true;
-                if (eval(this.Unknown1)) return true;
-                if (eval(this.Unknown2)) return true;
+                if (eval(this.Unused1)) return true;
+                if (eval(this.Unused2)) return true;
                 if (Data != null)
                 {
                     if (eval(this.Data.Overall)) return true;
@@ -226,8 +226,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.CompareOperator = eval(this.CompareOperator);
                 obj.Flags = eval(this.Flags);
-                obj.Unknown1 = eval(this.Unknown1);
-                obj.Unknown2 = eval(this.Unknown2);
+                obj.Unused1 = eval(this.Unused1);
+                obj.Unused2 = eval(this.Unused2);
                 obj.Data = this.Data == null ? null : new MaskItem<R, ConditionData.Mask<R>?>(eval(this.Data.Overall), this.Data.Specific?.Translate(eval));
             }
             #endregion
@@ -255,13 +255,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.Unknown1 ?? true)
+                    if (printMask?.Unused1 ?? true)
                     {
-                        sb.AppendItem(Unknown1, "Unknown1");
+                        sb.AppendItem(Unused1, "Unused1");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.Unused2 ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(Unused2, "Unused2");
                     }
                     if (printMask?.Data?.Overall ?? true)
                     {
@@ -293,8 +293,8 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? CompareOperator;
             public Exception? Flags;
-            public Exception? Unknown1;
-            public Exception? Unknown2;
+            public Exception? Unused1;
+            public Exception? Unused2;
             public MaskItem<Exception?, ConditionData.ErrorMask?>? Data;
             #endregion
 
@@ -308,10 +308,10 @@ namespace Mutagen.Bethesda.Starfield
                         return CompareOperator;
                     case Condition_FieldIndex.Flags:
                         return Flags;
-                    case Condition_FieldIndex.Unknown1:
-                        return Unknown1;
-                    case Condition_FieldIndex.Unknown2:
-                        return Unknown2;
+                    case Condition_FieldIndex.Unused1:
+                        return Unused1;
+                    case Condition_FieldIndex.Unused2:
+                        return Unused2;
                     case Condition_FieldIndex.Data:
                         return Data;
                     default:
@@ -330,11 +330,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Condition_FieldIndex.Flags:
                         this.Flags = ex;
                         break;
-                    case Condition_FieldIndex.Unknown1:
-                        this.Unknown1 = ex;
+                    case Condition_FieldIndex.Unused1:
+                        this.Unused1 = ex;
                         break;
-                    case Condition_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case Condition_FieldIndex.Unused2:
+                        this.Unused2 = ex;
                         break;
                     case Condition_FieldIndex.Data:
                         this.Data = new MaskItem<Exception?, ConditionData.ErrorMask?>(ex, null);
@@ -355,11 +355,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Condition_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
                         break;
-                    case Condition_FieldIndex.Unknown1:
-                        this.Unknown1 = (Exception?)obj;
+                    case Condition_FieldIndex.Unused1:
+                        this.Unused1 = (Exception?)obj;
                         break;
-                    case Condition_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case Condition_FieldIndex.Unused2:
+                        this.Unused2 = (Exception?)obj;
                         break;
                     case Condition_FieldIndex.Data:
                         this.Data = (MaskItem<Exception?, ConditionData.ErrorMask?>?)obj;
@@ -374,8 +374,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (CompareOperator != null) return true;
                 if (Flags != null) return true;
-                if (Unknown1 != null) return true;
-                if (Unknown2 != null) return true;
+                if (Unused1 != null) return true;
+                if (Unused2 != null) return true;
                 if (Data != null) return true;
                 return false;
             }
@@ -409,10 +409,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(Unknown1, "Unknown1");
+                    sb.AppendItem(Unused1, "Unused1");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(Unused2, "Unused2");
                 }
                 Data?.Print(sb);
             }
@@ -425,8 +425,8 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.CompareOperator = this.CompareOperator.Combine(rhs.CompareOperator);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.Unused1 = this.Unused1.Combine(rhs.Unused1);
+                ret.Unused2 = this.Unused2.Combine(rhs.Unused2);
                 ret.Data = this.Data.Combine(rhs.Data, (l, r) => l.Combine(r));
                 return ret;
             }
@@ -453,8 +453,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool CompareOperator;
             public bool Flags;
-            public bool Unknown1;
-            public bool Unknown2;
+            public bool Unused1;
+            public bool Unused2;
             public ConditionData.TranslationMask? Data;
             #endregion
 
@@ -467,8 +467,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.CompareOperator = defaultOn;
                 this.Flags = defaultOn;
-                this.Unknown1 = defaultOn;
-                this.Unknown2 = defaultOn;
+                this.Unused1 = defaultOn;
+                this.Unused2 = defaultOn;
             }
 
             #endregion
@@ -486,8 +486,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((CompareOperator, null));
                 ret.Add((Flags, null));
-                ret.Add((Unknown1, null));
-                ret.Add((Unknown2, null));
+                ret.Add((Unused1, null));
+                ret.Add((Unused2, null));
                 ret.Add((Data != null ? Data.OnOverall : DefaultOn, Data?.GetCrystal()));
             }
 
@@ -546,8 +546,8 @@ namespace Mutagen.Bethesda.Starfield
     {
         new CompareOperator CompareOperator { get; set; }
         new Condition.Flag Flags { get; set; }
-        new MemorySlice<Byte> Unknown1 { get; set; }
-        new UInt16 Unknown2 { get; set; }
+        new MemorySlice<Byte> Unused1 { get; set; }
+        new UInt16 Unused2 { get; set; }
         new ConditionData Data { get; set; }
     }
 
@@ -569,8 +569,8 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => Condition_Registration.Instance;
         CompareOperator CompareOperator { get; }
         Condition.Flag Flags { get; }
-        ReadOnlyMemorySlice<Byte> Unknown1 { get; }
-        UInt16 Unknown2 { get; }
+        ReadOnlyMemorySlice<Byte> Unused1 { get; }
+        UInt16 Unused2 { get; }
         IConditionDataGetter Data { get; }
 
     }
@@ -743,8 +743,8 @@ namespace Mutagen.Bethesda.Starfield
     {
         CompareOperator = 0,
         Flags = 1,
-        Unknown1 = 2,
-        Unknown2 = 3,
+        Unused1 = 2,
+        Unused2 = 3,
         Data = 4,
     }
     #endregion
@@ -840,8 +840,8 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.CompareOperator = default(CompareOperator);
             item.Flags = default(Condition.Flag);
-            item.Unknown1 = new byte[3];
-            item.Unknown2 = default(UInt16);
+            item.Unused1 = new byte[3];
+            item.Unused2 = default(UInt16);
             item.Data.Clear();
         }
         
@@ -899,8 +899,8 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.CompareOperator = item.CompareOperator == rhs.CompareOperator;
             ret.Flags = item.Flags == rhs.Flags;
-            ret.Unknown1 = MemoryExtensions.SequenceEqual(item.Unknown1.Span, rhs.Unknown1.Span);
-            ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
+            ret.Unused1 = MemoryExtensions.SequenceEqual(item.Unused1.Span, rhs.Unused1.Span);
+            ret.Unused2 = item.Unused2 == rhs.Unused2;
             ret.Data = MaskItemExt.Factory(item.Data.GetEqualsMask(rhs.Data, include), include);
         }
         
@@ -954,13 +954,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Flags, "Flags");
             }
-            if (printMask?.Unknown1 ?? true)
+            if (printMask?.Unused1 ?? true)
             {
-                sb.AppendLine($"Unknown1 => {SpanExt.ToHexString(item.Unknown1)}");
+                sb.AppendLine($"Unused1 => {SpanExt.ToHexString(item.Unused1)}");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.Unused2 ?? true)
             {
-                sb.AppendItem(item.Unknown2, "Unknown2");
+                sb.AppendItem(item.Unused2, "Unused2");
             }
             if (printMask?.Data?.Overall ?? true)
             {
@@ -983,13 +983,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Condition_FieldIndex.Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Condition_FieldIndex.Unused1) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.Unknown1.Span, rhs.Unknown1.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.Unused1.Span, rhs.Unused1.Span)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Condition_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Condition_FieldIndex.Unused2) ?? true))
             {
-                if (lhs.Unknown2 != rhs.Unknown2) return false;
+                if (lhs.Unused2 != rhs.Unused2) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Condition_FieldIndex.Data) ?? true))
             {
@@ -1007,8 +1007,8 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.CompareOperator);
             hash.Add(item.Flags);
-            hash.AddBytes(item.Unknown1);
-            hash.Add(item.Unknown2);
+            hash.AddBytes(item.Unused1);
+            hash.Add(item.Unused2);
             hash.Add(item.Data);
             return hash.ToHashCode();
         }
@@ -1054,13 +1054,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)Condition_FieldIndex.Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Condition_FieldIndex.Unused1) ?? true))
             {
-                item.Unknown1 = rhs.Unknown1.ToArray();
+                item.Unused1 = rhs.Unused1.ToArray();
             }
-            if ((copyMask?.GetShouldTranslate((int)Condition_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Condition_FieldIndex.Unused2) ?? true))
             {
-                item.Unknown2 = rhs.Unknown2;
+                item.Unused2 = rhs.Unused2;
             }
             if ((copyMask?.GetShouldTranslate((int)Condition_FieldIndex.Data) ?? true))
             {
@@ -1197,7 +1197,7 @@ namespace Mutagen.Bethesda.Starfield
                 item: item);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown1);
+                item: item.Unused1);
             ConditionBinaryWriteTranslation.WriteBinaryFunctionParse(
                 writer: writer,
                 item: item);
@@ -1270,7 +1270,7 @@ namespace Mutagen.Bethesda.Starfield
             ConditionBinaryCreateTranslation.FillBinaryFlagsCustom(
                 frame: frame,
                 item: item);
-            item.Unknown1 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            item.Unused1 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
             ConditionBinaryCreateTranslation.FillBinaryFunctionParseCustom(
                 frame: frame,
                 item: item);
@@ -1352,7 +1352,7 @@ namespace Mutagen.Bethesda.Starfield
         public partial Condition.Flag GetFlagsCustom(int location);
         public Condition.Flag Flags => GetFlagsCustom(location: 0x0);
         #endregion
-        public ReadOnlyMemorySlice<Byte> Unknown1 => _structData.Span.Slice(0x1, 0x3).ToArray();
+        public ReadOnlyMemorySlice<Byte> Unused1 => _structData.Span.Slice(0x1, 0x3).ToArray();
         #region FunctionParse
         partial void FunctionParseCustomParse(
             OverlayStream stream,

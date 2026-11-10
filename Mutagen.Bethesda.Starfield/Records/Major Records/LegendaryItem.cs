@@ -42,7 +42,7 @@ partial class LegendaryItemBinaryCreateTranslation
 			entries.Add(new LegendaryItemLnamEntry
 			{
 				Slot = (LegendaryItem.StarSlot)frame.Reader.ReadUInt32(),
-				Unknown = frame.Reader.ReadUInt32(),
+				ReferenceMod = frame.Reader.ReadUInt32(),
 			});
 		}
 
@@ -79,7 +79,7 @@ partial class LegendaryItemBinaryWriteTranslation
 			foreach (var entry in entries)
 			{
 				writer.Write((uint)entry.Slot);
-				writer.Write(entry.Unknown);
+				writer.Write(entry.ReferenceMod);
 			}
 		}
 
@@ -121,7 +121,7 @@ partial class LegendaryItemBinaryOverlay
 			entries.Add(new LegendaryItemLnamEntry
 			{
 				Slot = (LegendaryItem.StarSlot)BinaryPrimitives.ReadUInt32LittleEndian(lnamSubrecord.Content.Slice(entryOffset)),
-				Unknown = BinaryPrimitives.ReadUInt32LittleEndian(lnamSubrecord.Content.Slice(entryOffset + 4)),
+				ReferenceMod = BinaryPrimitives.ReadUInt32LittleEndian(lnamSubrecord.Content.Slice(entryOffset + 4)),
 			});
 		}
 
