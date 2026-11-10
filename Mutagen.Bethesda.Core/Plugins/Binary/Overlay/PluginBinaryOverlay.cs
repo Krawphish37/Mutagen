@@ -289,7 +289,9 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
         TypedParseParams translationParams,
         RecordTypeFillWrapper fill)
     {
-        var lastParsed = new PreviousParse();
+        // A parent that read an overflow (XXXX) hands the real length of our first subrecord over in LengthOverride
+        // (that subrecord's own header says 0). Apply it to the first subrecord only, like the parent's own loop does.
+        var lastParsed = new PreviousParse(parsedIndex: null, lengthOverride: translationParams.LengthOverride);
         Dictionary<RecordType, int>? recordParseCount = null;
         while (!stream.Complete && stream.Position < finalPos)
         {
