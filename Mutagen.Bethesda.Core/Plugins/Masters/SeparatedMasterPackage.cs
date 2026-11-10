@@ -44,7 +44,25 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         "SFBGS008.esm",
         "SFBGS00D.esm",
         "SFBGS047.esm",
-        "SFBGS050.esm"
+        "SFBGS050.esm",
+        // The other official Small and Medium plugins: every one of them encodes its own records in its own style
+        // (FE for Small, FD for Medium), like the plugins above (checked on all their record headers)
+        "sfbgs00a_a.esm",
+        "sfbgs00a_d.esm",
+        "sfbgs00a_e.esm",
+        "sfbgs00a_f.esm",
+        "sfbgs00a_g.esm",
+        "sfbgs00a_i.esm",
+        "sfbgs00b.esm",
+        "sfbgs019.esm",
+        "sfbgs021.esm",
+        "sfbgs023.esm",
+        "sfta01.esm",
+        "sfta02.esm",
+        "sfta03.esm",
+        "sfta04.esm",
+        "sfta05.esm",
+        "sfta06.esm",
     };
 
     internal SeparatedMasterPackage()
