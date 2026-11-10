@@ -56,9 +56,9 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region ZNAM
-        public UInt32? ZNAM { get; set; }
+        public Single? ZNAM { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? IPlanetContentManagerContentPropertiesComponentGetter.ZNAM => this.ZNAM;
+        Single? IPlanetContentManagerContentPropertiesComponentGetter.ZNAM => this.ZNAM;
         #endregion
         #region DoAllBeforeRepeating
         public Byte? DoAllBeforeRepeating { get; set; }
@@ -1037,7 +1037,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IPlanetContentManagerContentPropertiesComponent>,
         IPlanetContentManagerContentPropertiesComponentGetter
     {
-        new UInt32? ZNAM { get; set; }
+        new Single? ZNAM { get; set; }
         new Byte? DoAllBeforeRepeating { get; set; }
         new UInt32? NumberOfTimesAllowedGlobal { get; set; }
         new UInt32? NumberOfTimesAllowedPerSystem { get; set; }
@@ -1062,7 +1062,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IPlanetContentManagerContentPropertiesComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => PlanetContentManagerContentPropertiesComponent_Registration.Instance;
-        UInt32? ZNAM { get; }
+        Single? ZNAM { get; }
         Byte? DoAllBeforeRepeating { get; }
         UInt32? NumberOfTimesAllowedGlobal { get; }
         UInt32? NumberOfTimesAllowedPerSystem { get; }
@@ -1435,7 +1435,7 @@ namespace Mutagen.Bethesda.Starfield
             PlanetContentManagerContentPropertiesComponent.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.ZNAM = item.ZNAM == rhs.ZNAM;
+            ret.ZNAM = item.ZNAM.EqualsWithin(rhs.ZNAM);
             ret.DoAllBeforeRepeating = item.DoAllBeforeRepeating == rhs.DoAllBeforeRepeating;
             ret.NumberOfTimesAllowedGlobal = item.NumberOfTimesAllowedGlobal == rhs.NumberOfTimesAllowedGlobal;
             ret.NumberOfTimesAllowedPerSystem = item.NumberOfTimesAllowedPerSystem == rhs.NumberOfTimesAllowedPerSystem;
@@ -1609,7 +1609,7 @@ namespace Mutagen.Bethesda.Starfield
             if (!base.Equals((IAComponentGetter)lhs, (IAComponentGetter)rhs, equalsMask)) return false;
             if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.ZNAM) ?? true))
             {
-                if (lhs.ZNAM != rhs.ZNAM) return false;
+                if (!lhs.ZNAM.EqualsWithin(rhs.ZNAM)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DoAllBeforeRepeating) ?? true))
             {
@@ -2032,7 +2032,7 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
                 item: item.ZNAM,
                 header: translationParams.ConvertToCustom(RecordTypes.ZNAM));
@@ -2162,7 +2162,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ZNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ZNAM = frame.ReadUInt32();
+                    item.ZNAM = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.ZNAM;
                 }
                 case RecordTypeInts.YNAM:
@@ -2322,7 +2322,7 @@ namespace Mutagen.Bethesda.Starfield
 
         #region ZNAM
         private int? _ZNAMLocation;
-        public UInt32? ZNAM => _ZNAMLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ZNAMLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
+        public Single? ZNAM => _ZNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ZNAMLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
         #region DoAllBeforeRepeating
         private int? _DoAllBeforeRepeatingLocation;
