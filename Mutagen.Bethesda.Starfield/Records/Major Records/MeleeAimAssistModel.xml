@@ -4,14 +4,14 @@
     <Fields>
       <Data recordType="SNAM" >
         <Fields>
-          <Float name="OuterConeAngleDegrees" />
           <Float name="InnerConeAngleDegrees" />
+          <Float name="OuterConeAngleDegrees" />
           <Float name="SteeringDegreesPerSec" />
-          <Float name="SnapSteeringMultiplierOuterRing" />
-          <Float name="SnapSteeringMultiplierInnerRing" />
-          <Float name="MaxAimAssistDistance" />
+          <Float name="AccelerationDegreesPerSec" />
+          <Float name="DecelerationDegreesPerSec" />
+          <Float name="ActorTargetFinderMaxDistance" />
           <Bool name="MeleeAimAssistEnabled" byteLength="1" />
-          <Float name="Unknown" />
+          <Float name="MaxCapsuleAngleForVerticalAimingCorrectionDegrees" />
         </Fields>
       </Data>
     </Fields>

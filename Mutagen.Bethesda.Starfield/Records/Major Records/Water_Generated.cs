@@ -120,16 +120,16 @@ namespace Mutagen.Bethesda.Starfield
         #region Flags
         public Water.Flag Flags { get; set; } = default(Water.Flag);
         #endregion
-        #region WASH
+        #region Sound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _WASH;
-        public SoundReference? WASH
+        private SoundReference? _Sound;
+        public SoundReference? Sound
         {
-            get => _WASH;
-            set => _WASH = value;
+            get => _Sound;
+            set => _Sound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? IWaterGetter.WASH => this.WASH;
+        ISoundReferenceGetter? IWaterGetter.Sound => this.Sound;
         #endregion
         #region ConsumeSpell
         private readonly IFormLinkNullable<ISpellGetter> _ConsumeSpell = new FormLinkNullable<ISpellGetter>();
@@ -421,7 +421,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Name = initialValue;
                 this.Opacity = initialValue;
                 this.Flags = initialValue;
-                this.WASH = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.ConsumeSpell = initialValue;
                 this.ContactSpell = initialValue;
                 this.DATA = initialValue;
@@ -492,7 +492,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Name,
                 TItem Opacity,
                 TItem Flags,
-                TItem WASH,
+                TItem Sound,
                 TItem ConsumeSpell,
                 TItem ContactSpell,
                 TItem DATA,
@@ -562,7 +562,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Name = Name;
                 this.Opacity = Opacity;
                 this.Flags = Flags;
-                this.WASH = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WASH, new SoundReference.Mask<TItem>(WASH));
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Sound, new SoundReference.Mask<TItem>(Sound));
                 this.ConsumeSpell = ConsumeSpell;
                 this.ContactSpell = ContactSpell;
                 this.DATA = DATA;
@@ -634,7 +634,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Name;
             public TItem Opacity;
             public TItem Flags;
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? WASH { get; set; }
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? Sound { get; set; }
             public TItem ConsumeSpell;
             public TItem ContactSpell;
             public TItem DATA;
@@ -708,7 +708,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Name, rhs.Name)) return false;
                 if (!object.Equals(this.Opacity, rhs.Opacity)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
-                if (!object.Equals(this.WASH, rhs.WASH)) return false;
+                if (!object.Equals(this.Sound, rhs.Sound)) return false;
                 if (!object.Equals(this.ConsumeSpell, rhs.ConsumeSpell)) return false;
                 if (!object.Equals(this.ContactSpell, rhs.ContactSpell)) return false;
                 if (!object.Equals(this.DATA, rhs.DATA)) return false;
@@ -774,7 +774,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Name);
                 hash.Add(this.Opacity);
                 hash.Add(this.Flags);
-                hash.Add(this.WASH);
+                hash.Add(this.Sound);
                 hash.Add(this.ConsumeSpell);
                 hash.Add(this.ContactSpell);
                 hash.Add(this.DATA);
@@ -849,10 +849,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Name)) return false;
                 if (!eval(this.Opacity)) return false;
                 if (!eval(this.Flags)) return false;
-                if (WASH != null)
+                if (Sound != null)
                 {
-                    if (!eval(this.WASH.Overall)) return false;
-                    if (this.WASH.Specific != null && !this.WASH.Specific.All(eval)) return false;
+                    if (!eval(this.Sound.Overall)) return false;
+                    if (this.Sound.Specific != null && !this.Sound.Specific.All(eval)) return false;
                 }
                 if (!eval(this.ConsumeSpell)) return false;
                 if (!eval(this.ContactSpell)) return false;
@@ -926,10 +926,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Name)) return true;
                 if (eval(this.Opacity)) return true;
                 if (eval(this.Flags)) return true;
-                if (WASH != null)
+                if (Sound != null)
                 {
-                    if (eval(this.WASH.Overall)) return true;
-                    if (this.WASH.Specific != null && this.WASH.Specific.Any(eval)) return true;
+                    if (eval(this.Sound.Overall)) return true;
+                    if (this.Sound.Specific != null && this.Sound.Specific.Any(eval)) return true;
                 }
                 if (eval(this.ConsumeSpell)) return true;
                 if (eval(this.ContactSpell)) return true;
@@ -1006,7 +1006,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Name = eval(this.Name);
                 obj.Opacity = eval(this.Opacity);
                 obj.Flags = eval(this.Flags);
-                obj.WASH = this.WASH == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WASH.Overall), this.WASH.Specific?.Translate(eval));
+                obj.Sound = this.Sound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
                 obj.ConsumeSpell = eval(this.ConsumeSpell);
                 obj.ContactSpell = eval(this.ContactSpell);
                 obj.DATA = eval(this.DATA);
@@ -1097,9 +1097,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.WASH?.Overall ?? true)
+                    if (printMask?.Sound?.Overall ?? true)
                     {
-                        WASH?.Print(sb);
+                        Sound?.Print(sb);
                     }
                     if (printMask?.ConsumeSpell ?? true)
                     {
@@ -1340,7 +1340,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Name;
             public Exception? Opacity;
             public Exception? Flags;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? WASH;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? Sound;
             public Exception? ConsumeSpell;
             public Exception? ContactSpell;
             public Exception? DATA;
@@ -1413,8 +1413,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Opacity;
                     case Water_FieldIndex.Flags:
                         return Flags;
-                    case Water_FieldIndex.WASH:
-                        return WASH;
+                    case Water_FieldIndex.Sound:
+                        return Sound;
                     case Water_FieldIndex.ConsumeSpell:
                         return ConsumeSpell;
                     case Water_FieldIndex.ContactSpell:
@@ -1549,8 +1549,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Water_FieldIndex.Flags:
                         this.Flags = ex;
                         break;
-                    case Water_FieldIndex.WASH:
-                        this.WASH = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case Water_FieldIndex.Sound:
+                        this.Sound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
                     case Water_FieldIndex.ConsumeSpell:
                         this.ConsumeSpell = ex;
@@ -1743,8 +1743,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Water_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
                         break;
-                    case Water_FieldIndex.WASH:
-                        this.WASH = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case Water_FieldIndex.Sound:
+                        this.Sound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
                     case Water_FieldIndex.ConsumeSpell:
                         this.ConsumeSpell = (Exception?)obj;
@@ -1927,7 +1927,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Name != null) return true;
                 if (Opacity != null) return true;
                 if (Flags != null) return true;
-                if (WASH != null) return true;
+                if (Sound != null) return true;
                 if (ConsumeSpell != null) return true;
                 if (ContactSpell != null) return true;
                 if (DATA != null) return true;
@@ -2020,7 +2020,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(Flags, "Flags");
                 }
-                WASH?.Print(sb);
+                Sound?.Print(sb);
                 {
                     sb.AppendItem(ConsumeSpell, "ConsumeSpell");
                 }
@@ -2201,7 +2201,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Name = this.Name.Combine(rhs.Name);
                 ret.Opacity = this.Opacity.Combine(rhs.Opacity);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
-                ret.WASH = this.WASH.Combine(rhs.WASH, (l, r) => l.Combine(r));
+                ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
                 ret.ConsumeSpell = this.ConsumeSpell.Combine(rhs.ConsumeSpell);
                 ret.ContactSpell = this.ContactSpell.Combine(rhs.ContactSpell);
                 ret.DATA = this.DATA.Combine(rhs.DATA);
@@ -2284,7 +2284,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Name;
             public bool Opacity;
             public bool Flags;
-            public SoundReference.TranslationMask? WASH;
+            public SoundReference.TranslationMask? Sound;
             public bool ConsumeSpell;
             public bool ContactSpell;
             public bool DATA;
@@ -2419,7 +2419,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Name, null));
                 ret.Add((Opacity, null));
                 ret.Add((Flags, null));
-                ret.Add((WASH != null ? WASH.OnOverall : DefaultOn, WASH?.GetCrystal()));
+                ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
                 ret.Add((ConsumeSpell, null));
                 ret.Add((ContactSpell, null));
                 ret.Add((DATA, null));
@@ -2642,7 +2642,7 @@ namespace Mutagen.Bethesda.Starfield
         new TranslatedString? Name { get; set; }
         new Byte Opacity { get; set; }
         new Water.Flag Flags { get; set; }
-        new SoundReference? WASH { get; set; }
+        new SoundReference? Sound { get; set; }
         new IFormLinkNullable<ISpellGetter> ConsumeSpell { get; set; }
         new IFormLinkNullable<ISpellGetter> ContactSpell { get; set; }
         new MemorySlice<Byte>? DATA { get; set; }
@@ -2740,7 +2740,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         Byte Opacity { get; }
         Water.Flag Flags { get; }
-        ISoundReferenceGetter? WASH { get; }
+        ISoundReferenceGetter? Sound { get; }
         IFormLinkNullableGetter<ISpellGetter> ConsumeSpell { get; }
         IFormLinkNullableGetter<ISpellGetter> ContactSpell { get; }
         ReadOnlyMemorySlice<Byte>? DATA { get; }
@@ -2977,7 +2977,7 @@ namespace Mutagen.Bethesda.Starfield
         Name = 8,
         Opacity = 9,
         Flags = 10,
-        WASH = 11,
+        Sound = 11,
         ConsumeSpell = 12,
         ContactSpell = 13,
         DATA = 14,
@@ -3152,7 +3152,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Name = default;
             item.Opacity = default(Byte);
             item.Flags = default(Water.Flag);
-            item.WASH = null;
+            item.Sound = null;
             item.ConsumeSpell.Clear();
             item.ContactSpell.Clear();
             item.DATA = default;
@@ -3227,7 +3227,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             base.RemapLinks(obj, mapping);
             obj.VirtualMachineAdapter?.RemapLinks(mapping);
-            obj.WASH?.RemapLinks(mapping);
+            obj.Sound?.RemapLinks(mapping);
             obj.ConsumeSpell.Relink(mapping);
             obj.ContactSpell.Relink(mapping);
             obj.RiverAbsorptionCurve.Relink(mapping);
@@ -3312,9 +3312,9 @@ namespace Mutagen.Bethesda.Starfield
             ret.Name = object.Equals(item.Name, rhs.Name);
             ret.Opacity = item.Opacity == rhs.Opacity;
             ret.Flags = item.Flags == rhs.Flags;
-            ret.WASH = EqualsMaskHelper.EqualsHelper(
-                item.WASH,
-                rhs.WASH,
+            ret.Sound = EqualsMaskHelper.EqualsHelper(
+                item.Sound,
+                rhs.Sound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.ConsumeSpell = item.ConsumeSpell.Equals(rhs.ConsumeSpell);
@@ -3440,10 +3440,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Flags, "Flags");
             }
-            if ((printMask?.WASH?.Overall ?? true)
-                && item.WASH is {} WASHItem)
+            if ((printMask?.Sound?.Overall ?? true)
+                && item.Sound is {} SoundItem)
             {
-                WASHItem?.Print(sb, "WASH");
+                SoundItem?.Print(sb, "Sound");
             }
             if (printMask?.ConsumeSpell ?? true)
             {
@@ -3748,13 +3748,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.WASH) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.Sound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.WASH, rhs.WASH, out var lhsWASH, out var rhsWASH, out var isWASHEqual))
+                if (EqualsMaskHelper.RefEquality(lhs.Sound, rhs.Sound, out var lhsSound, out var rhsSound, out var isSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsWASH).CommonInstance()!).Equals(lhsWASH, rhsWASH, equalsMask?.GetSubCrystal((int)Water_FieldIndex.WASH))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsSound).CommonInstance()!).Equals(lhsSound, rhsSound, equalsMask?.GetSubCrystal((int)Water_FieldIndex.Sound))) return false;
                 }
-                else if (!isWASHEqual) return false;
+                else if (!isSoundEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.ConsumeSpell) ?? true))
             {
@@ -4018,9 +4018,9 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.Opacity);
             hash.Add(item.Flags);
-            if (item.WASH is {} WASHitem)
+            if (item.Sound is {} Sounditem)
             {
-                hash.Add(WASHitem);
+                hash.Add(Sounditem);
             }
             hash.Add(item.ConsumeSpell);
             hash.Add(item.ContactSpell);
@@ -4141,9 +4141,9 @@ namespace Mutagen.Bethesda.Starfield
                     yield return item;
                 }
             }
-            if (obj.WASH is {} WASHItems)
+            if (obj.Sound is {} SoundItems)
             {
-                foreach (var item in WASHItems.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in SoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -4318,20 +4318,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.WASH) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.Sound) ?? true))
             {
-                errorMask?.PushIndex((int)Water_FieldIndex.WASH);
+                errorMask?.PushIndex((int)Water_FieldIndex.Sound);
                 try
                 {
-                    if(rhs.WASH is {} rhsWASH)
+                    if(rhs.Sound is {} rhsSound)
                     {
-                        item.WASH = rhsWASH.DeepCopy(
+                        item.Sound = rhsSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)Water_FieldIndex.WASH));
+                            copyMask?.GetSubCrystal((int)Water_FieldIndex.Sound));
                     }
                     else
                     {
-                        item.WASH = default;
+                        item.Sound = default;
                     }
                 }
                 catch (Exception ex)
@@ -4773,12 +4773,12 @@ namespace Mutagen.Bethesda.Starfield
                 item.Flags,
                 length: 1,
                 header: translationParams.ConvertToCustom(RecordTypes.FNAM));
-            if (item.WASH is {} WASHItem)
+            if (item.Sound is {} SoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.WASH))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)WASHItem).BinaryWriteTranslator).Write(
-                        item: WASHItem,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)SoundItem).BinaryWriteTranslator).Write(
+                        item: SoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -5078,8 +5078,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WASH:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.WASH = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)Water_FieldIndex.WASH;
+                    item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)Water_FieldIndex.Sound;
                 }
                 case RecordTypeInts.XNAM:
                 {
@@ -5370,7 +5370,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _FlagsLocation;
         public Water.Flag Flags => EnumBinaryTranslation<Water.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecord(_FlagsLocation, _recordData, _package, 1);
         #endregion
-        public ISoundReferenceGetter? WASH { get; private set; }
+        public ISoundReferenceGetter? Sound { get; private set; }
         #region ConsumeSpell
         private int? _ConsumeSpellLocation;
         public IFormLinkNullableGetter<ISpellGetter> ConsumeSpell => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ISpellGetter>(_package, _recordData, _ConsumeSpellLocation);
@@ -5731,11 +5731,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WASH:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.WASH = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.Sound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)Water_FieldIndex.WASH;
+                    return (int)Water_FieldIndex.Sound;
                 }
                 case RecordTypeInts.XNAM:
                 {

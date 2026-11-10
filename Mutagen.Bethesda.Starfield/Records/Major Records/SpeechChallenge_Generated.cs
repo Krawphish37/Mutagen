@@ -86,11 +86,11 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Int16? ISpeechChallengeGetter.QuestStageOnLoss => this.QuestStageOnLoss;
         #endregion
-        #region SRAN
-        public Boolean SRAN { get; set; } = default(Boolean);
+        #region SequentialScenes
+        public Boolean SequentialScenes { get; set; } = default(Boolean);
         #endregion
-        #region SGEN
-        public Boolean SGEN { get; set; } = default(Boolean);
+        #region DontAllowNoKeywordScenes
+        public Boolean DontAllowNoKeywordScenes { get; set; } = default(Boolean);
         #endregion
         #region Quest
         private readonly IFormLinkNullable<IQuestGetter> _Quest = new FormLinkNullable<IQuestGetter>();
@@ -170,8 +170,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(initialValue, new VirtualMachineAdapter.Mask<TItem>(initialValue));
                 this.QuestStageOnWin = initialValue;
                 this.QuestStageOnLoss = initialValue;
-                this.SRAN = initialValue;
-                this.SGEN = initialValue;
+                this.SequentialScenes = initialValue;
+                this.DontAllowNoKeywordScenes = initialValue;
                 this.Quest = initialValue;
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.Scenes = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
@@ -189,8 +189,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem VirtualMachineAdapter,
                 TItem QuestStageOnWin,
                 TItem QuestStageOnLoss,
-                TItem SRAN,
-                TItem SGEN,
+                TItem SequentialScenes,
+                TItem DontAllowNoKeywordScenes,
                 TItem Quest,
                 TItem Keywords,
                 TItem Scenes,
@@ -207,8 +207,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(VirtualMachineAdapter, new VirtualMachineAdapter.Mask<TItem>(VirtualMachineAdapter));
                 this.QuestStageOnWin = QuestStageOnWin;
                 this.QuestStageOnLoss = QuestStageOnLoss;
-                this.SRAN = SRAN;
-                this.SGEN = SGEN;
+                this.SequentialScenes = SequentialScenes;
+                this.DontAllowNoKeywordScenes = DontAllowNoKeywordScenes;
                 this.Quest = Quest;
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
                 this.Scenes = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Scenes, []);
@@ -227,8 +227,8 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
             public TItem QuestStageOnWin;
             public TItem QuestStageOnLoss;
-            public TItem SRAN;
-            public TItem SGEN;
+            public TItem SequentialScenes;
+            public TItem DontAllowNoKeywordScenes;
             public TItem Quest;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Scenes;
@@ -249,8 +249,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
                 if (!object.Equals(this.QuestStageOnWin, rhs.QuestStageOnWin)) return false;
                 if (!object.Equals(this.QuestStageOnLoss, rhs.QuestStageOnLoss)) return false;
-                if (!object.Equals(this.SRAN, rhs.SRAN)) return false;
-                if (!object.Equals(this.SGEN, rhs.SGEN)) return false;
+                if (!object.Equals(this.SequentialScenes, rhs.SequentialScenes)) return false;
+                if (!object.Equals(this.DontAllowNoKeywordScenes, rhs.DontAllowNoKeywordScenes)) return false;
                 if (!object.Equals(this.Quest, rhs.Quest)) return false;
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
                 if (!object.Equals(this.Scenes, rhs.Scenes)) return false;
@@ -263,8 +263,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.VirtualMachineAdapter);
                 hash.Add(this.QuestStageOnWin);
                 hash.Add(this.QuestStageOnLoss);
-                hash.Add(this.SRAN);
-                hash.Add(this.SGEN);
+                hash.Add(this.SequentialScenes);
+                hash.Add(this.DontAllowNoKeywordScenes);
                 hash.Add(this.Quest);
                 hash.Add(this.Keywords);
                 hash.Add(this.Scenes);
@@ -286,8 +286,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.QuestStageOnWin)) return false;
                 if (!eval(this.QuestStageOnLoss)) return false;
-                if (!eval(this.SRAN)) return false;
-                if (!eval(this.SGEN)) return false;
+                if (!eval(this.SequentialScenes)) return false;
+                if (!eval(this.DontAllowNoKeywordScenes)) return false;
                 if (!eval(this.Quest)) return false;
                 if (this.Keywords != null)
                 {
@@ -327,8 +327,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.QuestStageOnWin)) return true;
                 if (eval(this.QuestStageOnLoss)) return true;
-                if (eval(this.SRAN)) return true;
-                if (eval(this.SGEN)) return true;
+                if (eval(this.SequentialScenes)) return true;
+                if (eval(this.DontAllowNoKeywordScenes)) return true;
                 if (eval(this.Quest)) return true;
                 if (this.Keywords != null)
                 {
@@ -371,8 +371,8 @@ namespace Mutagen.Bethesda.Starfield
                 obj.VirtualMachineAdapter = this.VirtualMachineAdapter == null ? null : new MaskItem<R, VirtualMachineAdapter.Mask<R>?>(eval(this.VirtualMachineAdapter.Overall), this.VirtualMachineAdapter.Specific?.Translate(eval));
                 obj.QuestStageOnWin = eval(this.QuestStageOnWin);
                 obj.QuestStageOnLoss = eval(this.QuestStageOnLoss);
-                obj.SRAN = eval(this.SRAN);
-                obj.SGEN = eval(this.SGEN);
+                obj.SequentialScenes = eval(this.SequentialScenes);
+                obj.DontAllowNoKeywordScenes = eval(this.DontAllowNoKeywordScenes);
                 obj.Quest = eval(this.Quest);
                 if (Keywords != null)
                 {
@@ -433,13 +433,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(QuestStageOnLoss, "QuestStageOnLoss");
                     }
-                    if (printMask?.SRAN ?? true)
+                    if (printMask?.SequentialScenes ?? true)
                     {
-                        sb.AppendItem(SRAN, "SRAN");
+                        sb.AppendItem(SequentialScenes, "SequentialScenes");
                     }
-                    if (printMask?.SGEN ?? true)
+                    if (printMask?.DontAllowNoKeywordScenes ?? true)
                     {
-                        sb.AppendItem(SGEN, "SGEN");
+                        sb.AppendItem(DontAllowNoKeywordScenes, "DontAllowNoKeywordScenes");
                     }
                     if (printMask?.Quest ?? true)
                     {
@@ -505,8 +505,8 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>? VirtualMachineAdapter;
             public Exception? QuestStageOnWin;
             public Exception? QuestStageOnLoss;
-            public Exception? SRAN;
-            public Exception? SGEN;
+            public Exception? SequentialScenes;
+            public Exception? DontAllowNoKeywordScenes;
             public Exception? Quest;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Scenes;
@@ -525,10 +525,10 @@ namespace Mutagen.Bethesda.Starfield
                         return QuestStageOnWin;
                     case SpeechChallenge_FieldIndex.QuestStageOnLoss:
                         return QuestStageOnLoss;
-                    case SpeechChallenge_FieldIndex.SRAN:
-                        return SRAN;
-                    case SpeechChallenge_FieldIndex.SGEN:
-                        return SGEN;
+                    case SpeechChallenge_FieldIndex.SequentialScenes:
+                        return SequentialScenes;
+                    case SpeechChallenge_FieldIndex.DontAllowNoKeywordScenes:
+                        return DontAllowNoKeywordScenes;
                     case SpeechChallenge_FieldIndex.Quest:
                         return Quest;
                     case SpeechChallenge_FieldIndex.Keywords:
@@ -556,11 +556,11 @@ namespace Mutagen.Bethesda.Starfield
                     case SpeechChallenge_FieldIndex.QuestStageOnLoss:
                         this.QuestStageOnLoss = ex;
                         break;
-                    case SpeechChallenge_FieldIndex.SRAN:
-                        this.SRAN = ex;
+                    case SpeechChallenge_FieldIndex.SequentialScenes:
+                        this.SequentialScenes = ex;
                         break;
-                    case SpeechChallenge_FieldIndex.SGEN:
-                        this.SGEN = ex;
+                    case SpeechChallenge_FieldIndex.DontAllowNoKeywordScenes:
+                        this.DontAllowNoKeywordScenes = ex;
                         break;
                     case SpeechChallenge_FieldIndex.Quest:
                         this.Quest = ex;
@@ -594,11 +594,11 @@ namespace Mutagen.Bethesda.Starfield
                     case SpeechChallenge_FieldIndex.QuestStageOnLoss:
                         this.QuestStageOnLoss = (Exception?)obj;
                         break;
-                    case SpeechChallenge_FieldIndex.SRAN:
-                        this.SRAN = (Exception?)obj;
+                    case SpeechChallenge_FieldIndex.SequentialScenes:
+                        this.SequentialScenes = (Exception?)obj;
                         break;
-                    case SpeechChallenge_FieldIndex.SGEN:
-                        this.SGEN = (Exception?)obj;
+                    case SpeechChallenge_FieldIndex.DontAllowNoKeywordScenes:
+                        this.DontAllowNoKeywordScenes = (Exception?)obj;
                         break;
                     case SpeechChallenge_FieldIndex.Quest:
                         this.Quest = (Exception?)obj;
@@ -624,8 +624,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (VirtualMachineAdapter != null) return true;
                 if (QuestStageOnWin != null) return true;
                 if (QuestStageOnLoss != null) return true;
-                if (SRAN != null) return true;
-                if (SGEN != null) return true;
+                if (SequentialScenes != null) return true;
+                if (DontAllowNoKeywordScenes != null) return true;
                 if (Quest != null) return true;
                 if (Keywords != null) return true;
                 if (Scenes != null) return true;
@@ -664,10 +664,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(QuestStageOnLoss, "QuestStageOnLoss");
                 }
                 {
-                    sb.AppendItem(SRAN, "SRAN");
+                    sb.AppendItem(SequentialScenes, "SequentialScenes");
                 }
                 {
-                    sb.AppendItem(SGEN, "SGEN");
+                    sb.AppendItem(DontAllowNoKeywordScenes, "DontAllowNoKeywordScenes");
                 }
                 {
                     sb.AppendItem(Quest, "Quest");
@@ -726,8 +726,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
                 ret.QuestStageOnWin = this.QuestStageOnWin.Combine(rhs.QuestStageOnWin);
                 ret.QuestStageOnLoss = this.QuestStageOnLoss.Combine(rhs.QuestStageOnLoss);
-                ret.SRAN = this.SRAN.Combine(rhs.SRAN);
-                ret.SGEN = this.SGEN.Combine(rhs.SGEN);
+                ret.SequentialScenes = this.SequentialScenes.Combine(rhs.SequentialScenes);
+                ret.DontAllowNoKeywordScenes = this.DontAllowNoKeywordScenes.Combine(rhs.DontAllowNoKeywordScenes);
                 ret.Quest = this.Quest.Combine(rhs.Quest);
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
                 ret.Scenes = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Scenes?.Overall, rhs.Scenes?.Overall), Noggog.ExceptionExt.Combine(this.Scenes?.Specific, rhs.Scenes?.Specific));
@@ -757,8 +757,8 @@ namespace Mutagen.Bethesda.Starfield
             public VirtualMachineAdapter.TranslationMask? VirtualMachineAdapter;
             public bool QuestStageOnWin;
             public bool QuestStageOnLoss;
-            public bool SRAN;
-            public bool SGEN;
+            public bool SequentialScenes;
+            public bool DontAllowNoKeywordScenes;
             public bool Quest;
             public bool Keywords;
             public bool Scenes;
@@ -773,8 +773,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.QuestStageOnWin = defaultOn;
                 this.QuestStageOnLoss = defaultOn;
-                this.SRAN = defaultOn;
-                this.SGEN = defaultOn;
+                this.SequentialScenes = defaultOn;
+                this.DontAllowNoKeywordScenes = defaultOn;
                 this.Quest = defaultOn;
                 this.Keywords = defaultOn;
                 this.Scenes = defaultOn;
@@ -789,8 +789,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
                 ret.Add((QuestStageOnWin, null));
                 ret.Add((QuestStageOnLoss, null));
-                ret.Add((SRAN, null));
-                ret.Add((SGEN, null));
+                ret.Add((SequentialScenes, null));
+                ret.Add((DontAllowNoKeywordScenes, null));
                 ret.Add((Quest, null));
                 ret.Add((Keywords, null));
                 ret.Add((Scenes, null));
@@ -951,8 +951,8 @@ namespace Mutagen.Bethesda.Starfield
         new VirtualMachineAdapter? VirtualMachineAdapter { get; set; }
         new Int16? QuestStageOnWin { get; set; }
         new Int16? QuestStageOnLoss { get; set; }
-        new Boolean SRAN { get; set; }
-        new Boolean SGEN { get; set; }
+        new Boolean SequentialScenes { get; set; }
+        new Boolean DontAllowNoKeywordScenes { get; set; }
         new IFormLinkNullable<IQuestGetter> Quest { get; set; }
         /// <summary>
         /// Aspects: IKeyworded&lt;IKeywordGetter&gt;
@@ -989,8 +989,8 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         Int16? QuestStageOnWin { get; }
         Int16? QuestStageOnLoss { get; }
-        Boolean SRAN { get; }
-        Boolean SGEN { get; }
+        Boolean SequentialScenes { get; }
+        Boolean DontAllowNoKeywordScenes { get; }
         IFormLinkNullableGetter<IQuestGetter> Quest { get; }
         #region Keywords
         /// <summary>
@@ -1179,8 +1179,8 @@ namespace Mutagen.Bethesda.Starfield
         VirtualMachineAdapter = 7,
         QuestStageOnWin = 8,
         QuestStageOnLoss = 9,
-        SRAN = 10,
-        SGEN = 11,
+        SequentialScenes = 10,
+        DontAllowNoKeywordScenes = 11,
         Quest = 12,
         Keywords = 13,
         Scenes = 14,
@@ -1288,8 +1288,8 @@ namespace Mutagen.Bethesda.Starfield
             item.VirtualMachineAdapter = null;
             item.QuestStageOnWin = default;
             item.QuestStageOnLoss = default;
-            item.SRAN = default(Boolean);
-            item.SGEN = default(Boolean);
+            item.SequentialScenes = default(Boolean);
+            item.DontAllowNoKeywordScenes = default(Boolean);
             item.Quest.Clear();
             item.Keywords = null;
             item.Scenes = null;
@@ -1389,8 +1389,8 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.QuestStageOnWin = item.QuestStageOnWin == rhs.QuestStageOnWin;
             ret.QuestStageOnLoss = item.QuestStageOnLoss == rhs.QuestStageOnLoss;
-            ret.SRAN = item.SRAN == rhs.SRAN;
-            ret.SGEN = item.SGEN == rhs.SGEN;
+            ret.SequentialScenes = item.SequentialScenes == rhs.SequentialScenes;
+            ret.DontAllowNoKeywordScenes = item.DontAllowNoKeywordScenes == rhs.DontAllowNoKeywordScenes;
             ret.Quest = item.Quest.Equals(rhs.Quest);
             ret.Keywords = item.Keywords.CollectionEqualsHelper(
                 rhs.Keywords,
@@ -1465,13 +1465,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(QuestStageOnLossItem, "QuestStageOnLoss");
             }
-            if (printMask?.SRAN ?? true)
+            if (printMask?.SequentialScenes ?? true)
             {
-                sb.AppendItem(item.SRAN, "SRAN");
+                sb.AppendItem(item.SequentialScenes, "SequentialScenes");
             }
-            if (printMask?.SGEN ?? true)
+            if (printMask?.DontAllowNoKeywordScenes ?? true)
             {
-                sb.AppendItem(item.SGEN, "SGEN");
+                sb.AppendItem(item.DontAllowNoKeywordScenes, "DontAllowNoKeywordScenes");
             }
             if (printMask?.Quest ?? true)
             {
@@ -1578,13 +1578,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.QuestStageOnLoss != rhs.QuestStageOnLoss) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.SRAN) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.SequentialScenes) ?? true))
             {
-                if (lhs.SRAN != rhs.SRAN) return false;
+                if (lhs.SequentialScenes != rhs.SequentialScenes) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.SGEN) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.DontAllowNoKeywordScenes) ?? true))
             {
-                if (lhs.SGEN != rhs.SGEN) return false;
+                if (lhs.DontAllowNoKeywordScenes != rhs.DontAllowNoKeywordScenes) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.Quest) ?? true))
             {
@@ -1642,8 +1642,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(QuestStageOnLossitem);
             }
-            hash.Add(item.SRAN);
-            hash.Add(item.SGEN);
+            hash.Add(item.SequentialScenes);
+            hash.Add(item.DontAllowNoKeywordScenes);
             hash.Add(item.Quest);
             if (item.Keywords is {} Keywordsitem)
             {
@@ -1847,13 +1847,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.QuestStageOnLoss = rhs.QuestStageOnLoss;
             }
-            if ((copyMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.SRAN) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.SequentialScenes) ?? true))
             {
-                item.SRAN = rhs.SRAN;
+                item.SequentialScenes = rhs.SequentialScenes;
             }
-            if ((copyMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.SGEN) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.DontAllowNoKeywordScenes) ?? true))
             {
-                item.SGEN = rhs.SGEN;
+                item.DontAllowNoKeywordScenes = rhs.DontAllowNoKeywordScenes;
             }
             if ((copyMask?.GetShouldTranslate((int)SpeechChallenge_FieldIndex.Quest) ?? true))
             {
@@ -2103,11 +2103,11 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.SPLO));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.SRAN,
+                item: item.SequentialScenes,
                 header: translationParams.ConvertToCustom(RecordTypes.SRAN));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.SGEN,
+                item: item.DontAllowNoKeywordScenes,
                 header: translationParams.ConvertToCustom(RecordTypes.SGEN));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -2229,13 +2229,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SRAN:
                 {
-                    item.SRAN = true;
-                    return (int)SpeechChallenge_FieldIndex.SRAN;
+                    item.SequentialScenes = true;
+                    return (int)SpeechChallenge_FieldIndex.SequentialScenes;
                 }
                 case RecordTypeInts.SGEN:
                 {
-                    item.SGEN = true;
-                    return (int)SpeechChallenge_FieldIndex.SGEN;
+                    item.DontAllowNoKeywordScenes = true;
+                    return (int)SpeechChallenge_FieldIndex.DontAllowNoKeywordScenes;
                 }
                 case RecordTypeInts.SPQU:
                 {
@@ -2352,13 +2352,13 @@ namespace Mutagen.Bethesda.Starfield
         private int? _QuestStageOnLossLocation;
         public Int16? QuestStageOnLoss => _QuestStageOnLossLocation.HasValue ? BinaryPrimitives.ReadInt16LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _QuestStageOnLossLocation.Value, _package.MetaData.Constants)) : default(Int16?);
         #endregion
-        #region SRAN
-        private int? _SRANLocation;
-        public Boolean SRAN => _SRANLocation.HasValue ? true : default(Boolean);
+        #region SequentialScenes
+        private int? _SequentialScenesLocation;
+        public Boolean SequentialScenes => _SequentialScenesLocation.HasValue ? true : default(Boolean);
         #endregion
-        #region SGEN
-        private int? _SGENLocation;
-        public Boolean SGEN => _SGENLocation.HasValue ? true : default(Boolean);
+        #region DontAllowNoKeywordScenes
+        private int? _DontAllowNoKeywordScenesLocation;
+        public Boolean DontAllowNoKeywordScenes => _DontAllowNoKeywordScenesLocation.HasValue ? true : default(Boolean);
         #endregion
         #region Quest
         private int? _QuestLocation;
@@ -2464,13 +2464,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SRAN:
                 {
-                    _SRANLocation = (stream.Position - offset);
-                    return (int)SpeechChallenge_FieldIndex.SRAN;
+                    _SequentialScenesLocation = (stream.Position - offset);
+                    return (int)SpeechChallenge_FieldIndex.SequentialScenes;
                 }
                 case RecordTypeInts.SGEN:
                 {
-                    _SGENLocation = (stream.Position - offset);
-                    return (int)SpeechChallenge_FieldIndex.SGEN;
+                    _DontAllowNoKeywordScenesLocation = (stream.Position - offset);
+                    return (int)SpeechChallenge_FieldIndex.DontAllowNoKeywordScenes;
                 }
                 case RecordTypeInts.SPQU:
                 {

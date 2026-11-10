@@ -6,7 +6,7 @@
       <String name="Name" recordType="FULL" translated="Normal" />
       <UInt8 name="Opacity" nullable="False" recordType="ANAM" />
       <Enum name="Flags" enumName="Water.Flag" byteLength="1" recordType="FNAM" nullable="False" />
-      <RefDirect name="WASH" recordType="WASH" refName="SoundReference" />
+      <RefDirect name="Sound" recordType="WASH" refName="SoundReference" />
       <FormLink name="ConsumeSpell" refName="Spell" recordType="XNAM" />
       <FormLink name="ContactSpell" refName="Spell" recordType="YNAM" />
       <ByteArray name="DATA" recordType="DATA" unknown="true" />

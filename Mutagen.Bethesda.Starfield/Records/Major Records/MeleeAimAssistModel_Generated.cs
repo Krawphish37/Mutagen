@@ -54,29 +54,29 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region OuterConeAngleDegrees
-        public Single OuterConeAngleDegrees { get; set; } = default(Single);
-        #endregion
         #region InnerConeAngleDegrees
         public Single InnerConeAngleDegrees { get; set; } = default(Single);
+        #endregion
+        #region OuterConeAngleDegrees
+        public Single OuterConeAngleDegrees { get; set; } = default(Single);
         #endregion
         #region SteeringDegreesPerSec
         public Single SteeringDegreesPerSec { get; set; } = default(Single);
         #endregion
-        #region SnapSteeringMultiplierOuterRing
-        public Single SnapSteeringMultiplierOuterRing { get; set; } = default(Single);
+        #region AccelerationDegreesPerSec
+        public Single AccelerationDegreesPerSec { get; set; } = default(Single);
         #endregion
-        #region SnapSteeringMultiplierInnerRing
-        public Single SnapSteeringMultiplierInnerRing { get; set; } = default(Single);
+        #region DecelerationDegreesPerSec
+        public Single DecelerationDegreesPerSec { get; set; } = default(Single);
         #endregion
-        #region MaxAimAssistDistance
-        public Single MaxAimAssistDistance { get; set; } = default(Single);
+        #region ActorTargetFinderMaxDistance
+        public Single ActorTargetFinderMaxDistance { get; set; } = default(Single);
         #endregion
         #region MeleeAimAssistEnabled
         public Boolean MeleeAimAssistEnabled { get; set; } = default(Boolean);
         #endregion
-        #region Unknown
-        public Single Unknown { get; set; } = default(Single);
+        #region MaxCapsuleAngleForVerticalAimingCorrectionDegrees
+        public Single MaxCapsuleAngleForVerticalAimingCorrectionDegrees { get; set; } = default(Single);
         #endregion
 
         #region To String
@@ -103,14 +103,14 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.OuterConeAngleDegrees = initialValue;
                 this.InnerConeAngleDegrees = initialValue;
+                this.OuterConeAngleDegrees = initialValue;
                 this.SteeringDegreesPerSec = initialValue;
-                this.SnapSteeringMultiplierOuterRing = initialValue;
-                this.SnapSteeringMultiplierInnerRing = initialValue;
-                this.MaxAimAssistDistance = initialValue;
+                this.AccelerationDegreesPerSec = initialValue;
+                this.DecelerationDegreesPerSec = initialValue;
+                this.ActorTargetFinderMaxDistance = initialValue;
                 this.MeleeAimAssistEnabled = initialValue;
-                this.Unknown = initialValue;
+                this.MaxCapsuleAngleForVerticalAimingCorrectionDegrees = initialValue;
             }
 
             public Mask(
@@ -121,14 +121,14 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
-                TItem OuterConeAngleDegrees,
                 TItem InnerConeAngleDegrees,
+                TItem OuterConeAngleDegrees,
                 TItem SteeringDegreesPerSec,
-                TItem SnapSteeringMultiplierOuterRing,
-                TItem SnapSteeringMultiplierInnerRing,
-                TItem MaxAimAssistDistance,
+                TItem AccelerationDegreesPerSec,
+                TItem DecelerationDegreesPerSec,
+                TItem ActorTargetFinderMaxDistance,
                 TItem MeleeAimAssistEnabled,
-                TItem Unknown)
+                TItem MaxCapsuleAngleForVerticalAimingCorrectionDegrees)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -138,14 +138,14 @@ namespace Mutagen.Bethesda.Starfield
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
             {
-                this.OuterConeAngleDegrees = OuterConeAngleDegrees;
                 this.InnerConeAngleDegrees = InnerConeAngleDegrees;
+                this.OuterConeAngleDegrees = OuterConeAngleDegrees;
                 this.SteeringDegreesPerSec = SteeringDegreesPerSec;
-                this.SnapSteeringMultiplierOuterRing = SnapSteeringMultiplierOuterRing;
-                this.SnapSteeringMultiplierInnerRing = SnapSteeringMultiplierInnerRing;
-                this.MaxAimAssistDistance = MaxAimAssistDistance;
+                this.AccelerationDegreesPerSec = AccelerationDegreesPerSec;
+                this.DecelerationDegreesPerSec = DecelerationDegreesPerSec;
+                this.ActorTargetFinderMaxDistance = ActorTargetFinderMaxDistance;
                 this.MeleeAimAssistEnabled = MeleeAimAssistEnabled;
-                this.Unknown = Unknown;
+                this.MaxCapsuleAngleForVerticalAimingCorrectionDegrees = MaxCapsuleAngleForVerticalAimingCorrectionDegrees;
             }
 
             #pragma warning disable CS8618
@@ -157,14 +157,14 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem OuterConeAngleDegrees;
             public TItem InnerConeAngleDegrees;
+            public TItem OuterConeAngleDegrees;
             public TItem SteeringDegreesPerSec;
-            public TItem SnapSteeringMultiplierOuterRing;
-            public TItem SnapSteeringMultiplierInnerRing;
-            public TItem MaxAimAssistDistance;
+            public TItem AccelerationDegreesPerSec;
+            public TItem DecelerationDegreesPerSec;
+            public TItem ActorTargetFinderMaxDistance;
             public TItem MeleeAimAssistEnabled;
-            public TItem Unknown;
+            public TItem MaxCapsuleAngleForVerticalAimingCorrectionDegrees;
             #endregion
 
             #region Equals
@@ -178,27 +178,27 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.OuterConeAngleDegrees, rhs.OuterConeAngleDegrees)) return false;
                 if (!object.Equals(this.InnerConeAngleDegrees, rhs.InnerConeAngleDegrees)) return false;
+                if (!object.Equals(this.OuterConeAngleDegrees, rhs.OuterConeAngleDegrees)) return false;
                 if (!object.Equals(this.SteeringDegreesPerSec, rhs.SteeringDegreesPerSec)) return false;
-                if (!object.Equals(this.SnapSteeringMultiplierOuterRing, rhs.SnapSteeringMultiplierOuterRing)) return false;
-                if (!object.Equals(this.SnapSteeringMultiplierInnerRing, rhs.SnapSteeringMultiplierInnerRing)) return false;
-                if (!object.Equals(this.MaxAimAssistDistance, rhs.MaxAimAssistDistance)) return false;
+                if (!object.Equals(this.AccelerationDegreesPerSec, rhs.AccelerationDegreesPerSec)) return false;
+                if (!object.Equals(this.DecelerationDegreesPerSec, rhs.DecelerationDegreesPerSec)) return false;
+                if (!object.Equals(this.ActorTargetFinderMaxDistance, rhs.ActorTargetFinderMaxDistance)) return false;
                 if (!object.Equals(this.MeleeAimAssistEnabled, rhs.MeleeAimAssistEnabled)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.MaxCapsuleAngleForVerticalAimingCorrectionDegrees, rhs.MaxCapsuleAngleForVerticalAimingCorrectionDegrees)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.OuterConeAngleDegrees);
                 hash.Add(this.InnerConeAngleDegrees);
+                hash.Add(this.OuterConeAngleDegrees);
                 hash.Add(this.SteeringDegreesPerSec);
-                hash.Add(this.SnapSteeringMultiplierOuterRing);
-                hash.Add(this.SnapSteeringMultiplierInnerRing);
-                hash.Add(this.MaxAimAssistDistance);
+                hash.Add(this.AccelerationDegreesPerSec);
+                hash.Add(this.DecelerationDegreesPerSec);
+                hash.Add(this.ActorTargetFinderMaxDistance);
                 hash.Add(this.MeleeAimAssistEnabled);
-                hash.Add(this.Unknown);
+                hash.Add(this.MaxCapsuleAngleForVerticalAimingCorrectionDegrees);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -209,14 +209,14 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.OuterConeAngleDegrees)) return false;
                 if (!eval(this.InnerConeAngleDegrees)) return false;
+                if (!eval(this.OuterConeAngleDegrees)) return false;
                 if (!eval(this.SteeringDegreesPerSec)) return false;
-                if (!eval(this.SnapSteeringMultiplierOuterRing)) return false;
-                if (!eval(this.SnapSteeringMultiplierInnerRing)) return false;
-                if (!eval(this.MaxAimAssistDistance)) return false;
+                if (!eval(this.AccelerationDegreesPerSec)) return false;
+                if (!eval(this.DecelerationDegreesPerSec)) return false;
+                if (!eval(this.ActorTargetFinderMaxDistance)) return false;
                 if (!eval(this.MeleeAimAssistEnabled)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.MaxCapsuleAngleForVerticalAimingCorrectionDegrees)) return false;
                 return true;
             }
             #endregion
@@ -225,14 +225,14 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.OuterConeAngleDegrees)) return true;
                 if (eval(this.InnerConeAngleDegrees)) return true;
+                if (eval(this.OuterConeAngleDegrees)) return true;
                 if (eval(this.SteeringDegreesPerSec)) return true;
-                if (eval(this.SnapSteeringMultiplierOuterRing)) return true;
-                if (eval(this.SnapSteeringMultiplierInnerRing)) return true;
-                if (eval(this.MaxAimAssistDistance)) return true;
+                if (eval(this.AccelerationDegreesPerSec)) return true;
+                if (eval(this.DecelerationDegreesPerSec)) return true;
+                if (eval(this.ActorTargetFinderMaxDistance)) return true;
                 if (eval(this.MeleeAimAssistEnabled)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.MaxCapsuleAngleForVerticalAimingCorrectionDegrees)) return true;
                 return false;
             }
             #endregion
@@ -248,14 +248,14 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.OuterConeAngleDegrees = eval(this.OuterConeAngleDegrees);
                 obj.InnerConeAngleDegrees = eval(this.InnerConeAngleDegrees);
+                obj.OuterConeAngleDegrees = eval(this.OuterConeAngleDegrees);
                 obj.SteeringDegreesPerSec = eval(this.SteeringDegreesPerSec);
-                obj.SnapSteeringMultiplierOuterRing = eval(this.SnapSteeringMultiplierOuterRing);
-                obj.SnapSteeringMultiplierInnerRing = eval(this.SnapSteeringMultiplierInnerRing);
-                obj.MaxAimAssistDistance = eval(this.MaxAimAssistDistance);
+                obj.AccelerationDegreesPerSec = eval(this.AccelerationDegreesPerSec);
+                obj.DecelerationDegreesPerSec = eval(this.DecelerationDegreesPerSec);
+                obj.ActorTargetFinderMaxDistance = eval(this.ActorTargetFinderMaxDistance);
                 obj.MeleeAimAssistEnabled = eval(this.MeleeAimAssistEnabled);
-                obj.Unknown = eval(this.Unknown);
+                obj.MaxCapsuleAngleForVerticalAimingCorrectionDegrees = eval(this.MaxCapsuleAngleForVerticalAimingCorrectionDegrees);
             }
             #endregion
 
@@ -274,37 +274,37 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(MeleeAimAssistModel.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.OuterConeAngleDegrees ?? true)
-                    {
-                        sb.AppendItem(OuterConeAngleDegrees, "OuterConeAngleDegrees");
-                    }
                     if (printMask?.InnerConeAngleDegrees ?? true)
                     {
                         sb.AppendItem(InnerConeAngleDegrees, "InnerConeAngleDegrees");
+                    }
+                    if (printMask?.OuterConeAngleDegrees ?? true)
+                    {
+                        sb.AppendItem(OuterConeAngleDegrees, "OuterConeAngleDegrees");
                     }
                     if (printMask?.SteeringDegreesPerSec ?? true)
                     {
                         sb.AppendItem(SteeringDegreesPerSec, "SteeringDegreesPerSec");
                     }
-                    if (printMask?.SnapSteeringMultiplierOuterRing ?? true)
+                    if (printMask?.AccelerationDegreesPerSec ?? true)
                     {
-                        sb.AppendItem(SnapSteeringMultiplierOuterRing, "SnapSteeringMultiplierOuterRing");
+                        sb.AppendItem(AccelerationDegreesPerSec, "AccelerationDegreesPerSec");
                     }
-                    if (printMask?.SnapSteeringMultiplierInnerRing ?? true)
+                    if (printMask?.DecelerationDegreesPerSec ?? true)
                     {
-                        sb.AppendItem(SnapSteeringMultiplierInnerRing, "SnapSteeringMultiplierInnerRing");
+                        sb.AppendItem(DecelerationDegreesPerSec, "DecelerationDegreesPerSec");
                     }
-                    if (printMask?.MaxAimAssistDistance ?? true)
+                    if (printMask?.ActorTargetFinderMaxDistance ?? true)
                     {
-                        sb.AppendItem(MaxAimAssistDistance, "MaxAimAssistDistance");
+                        sb.AppendItem(ActorTargetFinderMaxDistance, "ActorTargetFinderMaxDistance");
                     }
                     if (printMask?.MeleeAimAssistEnabled ?? true)
                     {
                         sb.AppendItem(MeleeAimAssistEnabled, "MeleeAimAssistEnabled");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.MaxCapsuleAngleForVerticalAimingCorrectionDegrees ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(MaxCapsuleAngleForVerticalAimingCorrectionDegrees, "MaxCapsuleAngleForVerticalAimingCorrectionDegrees");
                     }
                 }
             }
@@ -317,14 +317,14 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? OuterConeAngleDegrees;
             public Exception? InnerConeAngleDegrees;
+            public Exception? OuterConeAngleDegrees;
             public Exception? SteeringDegreesPerSec;
-            public Exception? SnapSteeringMultiplierOuterRing;
-            public Exception? SnapSteeringMultiplierInnerRing;
-            public Exception? MaxAimAssistDistance;
+            public Exception? AccelerationDegreesPerSec;
+            public Exception? DecelerationDegreesPerSec;
+            public Exception? ActorTargetFinderMaxDistance;
             public Exception? MeleeAimAssistEnabled;
-            public Exception? Unknown;
+            public Exception? MaxCapsuleAngleForVerticalAimingCorrectionDegrees;
             #endregion
 
             #region IErrorMask
@@ -333,22 +333,22 @@ namespace Mutagen.Bethesda.Starfield
                 MeleeAimAssistModel_FieldIndex enu = (MeleeAimAssistModel_FieldIndex)index;
                 switch (enu)
                 {
-                    case MeleeAimAssistModel_FieldIndex.OuterConeAngleDegrees:
-                        return OuterConeAngleDegrees;
                     case MeleeAimAssistModel_FieldIndex.InnerConeAngleDegrees:
                         return InnerConeAngleDegrees;
+                    case MeleeAimAssistModel_FieldIndex.OuterConeAngleDegrees:
+                        return OuterConeAngleDegrees;
                     case MeleeAimAssistModel_FieldIndex.SteeringDegreesPerSec:
                         return SteeringDegreesPerSec;
-                    case MeleeAimAssistModel_FieldIndex.SnapSteeringMultiplierOuterRing:
-                        return SnapSteeringMultiplierOuterRing;
-                    case MeleeAimAssistModel_FieldIndex.SnapSteeringMultiplierInnerRing:
-                        return SnapSteeringMultiplierInnerRing;
-                    case MeleeAimAssistModel_FieldIndex.MaxAimAssistDistance:
-                        return MaxAimAssistDistance;
+                    case MeleeAimAssistModel_FieldIndex.AccelerationDegreesPerSec:
+                        return AccelerationDegreesPerSec;
+                    case MeleeAimAssistModel_FieldIndex.DecelerationDegreesPerSec:
+                        return DecelerationDegreesPerSec;
+                    case MeleeAimAssistModel_FieldIndex.ActorTargetFinderMaxDistance:
+                        return ActorTargetFinderMaxDistance;
                     case MeleeAimAssistModel_FieldIndex.MeleeAimAssistEnabled:
                         return MeleeAimAssistEnabled;
-                    case MeleeAimAssistModel_FieldIndex.Unknown:
-                        return Unknown;
+                    case MeleeAimAssistModel_FieldIndex.MaxCapsuleAngleForVerticalAimingCorrectionDegrees:
+                        return MaxCapsuleAngleForVerticalAimingCorrectionDegrees;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -359,29 +359,29 @@ namespace Mutagen.Bethesda.Starfield
                 MeleeAimAssistModel_FieldIndex enu = (MeleeAimAssistModel_FieldIndex)index;
                 switch (enu)
                 {
-                    case MeleeAimAssistModel_FieldIndex.OuterConeAngleDegrees:
-                        this.OuterConeAngleDegrees = ex;
-                        break;
                     case MeleeAimAssistModel_FieldIndex.InnerConeAngleDegrees:
                         this.InnerConeAngleDegrees = ex;
+                        break;
+                    case MeleeAimAssistModel_FieldIndex.OuterConeAngleDegrees:
+                        this.OuterConeAngleDegrees = ex;
                         break;
                     case MeleeAimAssistModel_FieldIndex.SteeringDegreesPerSec:
                         this.SteeringDegreesPerSec = ex;
                         break;
-                    case MeleeAimAssistModel_FieldIndex.SnapSteeringMultiplierOuterRing:
-                        this.SnapSteeringMultiplierOuterRing = ex;
+                    case MeleeAimAssistModel_FieldIndex.AccelerationDegreesPerSec:
+                        this.AccelerationDegreesPerSec = ex;
                         break;
-                    case MeleeAimAssistModel_FieldIndex.SnapSteeringMultiplierInnerRing:
-                        this.SnapSteeringMultiplierInnerRing = ex;
+                    case MeleeAimAssistModel_FieldIndex.DecelerationDegreesPerSec:
+                        this.DecelerationDegreesPerSec = ex;
                         break;
-                    case MeleeAimAssistModel_FieldIndex.MaxAimAssistDistance:
-                        this.MaxAimAssistDistance = ex;
+                    case MeleeAimAssistModel_FieldIndex.ActorTargetFinderMaxDistance:
+                        this.ActorTargetFinderMaxDistance = ex;
                         break;
                     case MeleeAimAssistModel_FieldIndex.MeleeAimAssistEnabled:
                         this.MeleeAimAssistEnabled = ex;
                         break;
-                    case MeleeAimAssistModel_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case MeleeAimAssistModel_FieldIndex.MaxCapsuleAngleForVerticalAimingCorrectionDegrees:
+                        this.MaxCapsuleAngleForVerticalAimingCorrectionDegrees = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -394,29 +394,29 @@ namespace Mutagen.Bethesda.Starfield
                 MeleeAimAssistModel_FieldIndex enu = (MeleeAimAssistModel_FieldIndex)index;
                 switch (enu)
                 {
-                    case MeleeAimAssistModel_FieldIndex.OuterConeAngleDegrees:
-                        this.OuterConeAngleDegrees = (Exception?)obj;
-                        break;
                     case MeleeAimAssistModel_FieldIndex.InnerConeAngleDegrees:
                         this.InnerConeAngleDegrees = (Exception?)obj;
+                        break;
+                    case MeleeAimAssistModel_FieldIndex.OuterConeAngleDegrees:
+                        this.OuterConeAngleDegrees = (Exception?)obj;
                         break;
                     case MeleeAimAssistModel_FieldIndex.SteeringDegreesPerSec:
                         this.SteeringDegreesPerSec = (Exception?)obj;
                         break;
-                    case MeleeAimAssistModel_FieldIndex.SnapSteeringMultiplierOuterRing:
-                        this.SnapSteeringMultiplierOuterRing = (Exception?)obj;
+                    case MeleeAimAssistModel_FieldIndex.AccelerationDegreesPerSec:
+                        this.AccelerationDegreesPerSec = (Exception?)obj;
                         break;
-                    case MeleeAimAssistModel_FieldIndex.SnapSteeringMultiplierInnerRing:
-                        this.SnapSteeringMultiplierInnerRing = (Exception?)obj;
+                    case MeleeAimAssistModel_FieldIndex.DecelerationDegreesPerSec:
+                        this.DecelerationDegreesPerSec = (Exception?)obj;
                         break;
-                    case MeleeAimAssistModel_FieldIndex.MaxAimAssistDistance:
-                        this.MaxAimAssistDistance = (Exception?)obj;
+                    case MeleeAimAssistModel_FieldIndex.ActorTargetFinderMaxDistance:
+                        this.ActorTargetFinderMaxDistance = (Exception?)obj;
                         break;
                     case MeleeAimAssistModel_FieldIndex.MeleeAimAssistEnabled:
                         this.MeleeAimAssistEnabled = (Exception?)obj;
                         break;
-                    case MeleeAimAssistModel_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case MeleeAimAssistModel_FieldIndex.MaxCapsuleAngleForVerticalAimingCorrectionDegrees:
+                        this.MaxCapsuleAngleForVerticalAimingCorrectionDegrees = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -427,14 +427,14 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (OuterConeAngleDegrees != null) return true;
                 if (InnerConeAngleDegrees != null) return true;
+                if (OuterConeAngleDegrees != null) return true;
                 if (SteeringDegreesPerSec != null) return true;
-                if (SnapSteeringMultiplierOuterRing != null) return true;
-                if (SnapSteeringMultiplierInnerRing != null) return true;
-                if (MaxAimAssistDistance != null) return true;
+                if (AccelerationDegreesPerSec != null) return true;
+                if (DecelerationDegreesPerSec != null) return true;
+                if (ActorTargetFinderMaxDistance != null) return true;
                 if (MeleeAimAssistEnabled != null) return true;
-                if (Unknown != null) return true;
+                if (MaxCapsuleAngleForVerticalAimingCorrectionDegrees != null) return true;
                 return false;
             }
             #endregion
@@ -462,28 +462,28 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(OuterConeAngleDegrees, "OuterConeAngleDegrees");
+                    sb.AppendItem(InnerConeAngleDegrees, "InnerConeAngleDegrees");
                 }
                 {
-                    sb.AppendItem(InnerConeAngleDegrees, "InnerConeAngleDegrees");
+                    sb.AppendItem(OuterConeAngleDegrees, "OuterConeAngleDegrees");
                 }
                 {
                     sb.AppendItem(SteeringDegreesPerSec, "SteeringDegreesPerSec");
                 }
                 {
-                    sb.AppendItem(SnapSteeringMultiplierOuterRing, "SnapSteeringMultiplierOuterRing");
+                    sb.AppendItem(AccelerationDegreesPerSec, "AccelerationDegreesPerSec");
                 }
                 {
-                    sb.AppendItem(SnapSteeringMultiplierInnerRing, "SnapSteeringMultiplierInnerRing");
+                    sb.AppendItem(DecelerationDegreesPerSec, "DecelerationDegreesPerSec");
                 }
                 {
-                    sb.AppendItem(MaxAimAssistDistance, "MaxAimAssistDistance");
+                    sb.AppendItem(ActorTargetFinderMaxDistance, "ActorTargetFinderMaxDistance");
                 }
                 {
                     sb.AppendItem(MeleeAimAssistEnabled, "MeleeAimAssistEnabled");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(MaxCapsuleAngleForVerticalAimingCorrectionDegrees, "MaxCapsuleAngleForVerticalAimingCorrectionDegrees");
                 }
             }
             #endregion
@@ -493,14 +493,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.OuterConeAngleDegrees = this.OuterConeAngleDegrees.Combine(rhs.OuterConeAngleDegrees);
                 ret.InnerConeAngleDegrees = this.InnerConeAngleDegrees.Combine(rhs.InnerConeAngleDegrees);
+                ret.OuterConeAngleDegrees = this.OuterConeAngleDegrees.Combine(rhs.OuterConeAngleDegrees);
                 ret.SteeringDegreesPerSec = this.SteeringDegreesPerSec.Combine(rhs.SteeringDegreesPerSec);
-                ret.SnapSteeringMultiplierOuterRing = this.SnapSteeringMultiplierOuterRing.Combine(rhs.SnapSteeringMultiplierOuterRing);
-                ret.SnapSteeringMultiplierInnerRing = this.SnapSteeringMultiplierInnerRing.Combine(rhs.SnapSteeringMultiplierInnerRing);
-                ret.MaxAimAssistDistance = this.MaxAimAssistDistance.Combine(rhs.MaxAimAssistDistance);
+                ret.AccelerationDegreesPerSec = this.AccelerationDegreesPerSec.Combine(rhs.AccelerationDegreesPerSec);
+                ret.DecelerationDegreesPerSec = this.DecelerationDegreesPerSec.Combine(rhs.DecelerationDegreesPerSec);
+                ret.ActorTargetFinderMaxDistance = this.ActorTargetFinderMaxDistance.Combine(rhs.ActorTargetFinderMaxDistance);
                 ret.MeleeAimAssistEnabled = this.MeleeAimAssistEnabled.Combine(rhs.MeleeAimAssistEnabled);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.MaxCapsuleAngleForVerticalAimingCorrectionDegrees = this.MaxCapsuleAngleForVerticalAimingCorrectionDegrees.Combine(rhs.MaxCapsuleAngleForVerticalAimingCorrectionDegrees);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -523,14 +523,14 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool OuterConeAngleDegrees;
             public bool InnerConeAngleDegrees;
+            public bool OuterConeAngleDegrees;
             public bool SteeringDegreesPerSec;
-            public bool SnapSteeringMultiplierOuterRing;
-            public bool SnapSteeringMultiplierInnerRing;
-            public bool MaxAimAssistDistance;
+            public bool AccelerationDegreesPerSec;
+            public bool DecelerationDegreesPerSec;
+            public bool ActorTargetFinderMaxDistance;
             public bool MeleeAimAssistEnabled;
-            public bool Unknown;
+            public bool MaxCapsuleAngleForVerticalAimingCorrectionDegrees;
             #endregion
 
             #region Ctors
@@ -539,14 +539,14 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.OuterConeAngleDegrees = defaultOn;
                 this.InnerConeAngleDegrees = defaultOn;
+                this.OuterConeAngleDegrees = defaultOn;
                 this.SteeringDegreesPerSec = defaultOn;
-                this.SnapSteeringMultiplierOuterRing = defaultOn;
-                this.SnapSteeringMultiplierInnerRing = defaultOn;
-                this.MaxAimAssistDistance = defaultOn;
+                this.AccelerationDegreesPerSec = defaultOn;
+                this.DecelerationDegreesPerSec = defaultOn;
+                this.ActorTargetFinderMaxDistance = defaultOn;
                 this.MeleeAimAssistEnabled = defaultOn;
-                this.Unknown = defaultOn;
+                this.MaxCapsuleAngleForVerticalAimingCorrectionDegrees = defaultOn;
             }
 
             #endregion
@@ -554,14 +554,14 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((OuterConeAngleDegrees, null));
                 ret.Add((InnerConeAngleDegrees, null));
+                ret.Add((OuterConeAngleDegrees, null));
                 ret.Add((SteeringDegreesPerSec, null));
-                ret.Add((SnapSteeringMultiplierOuterRing, null));
-                ret.Add((SnapSteeringMultiplierInnerRing, null));
-                ret.Add((MaxAimAssistDistance, null));
+                ret.Add((AccelerationDegreesPerSec, null));
+                ret.Add((DecelerationDegreesPerSec, null));
+                ret.Add((ActorTargetFinderMaxDistance, null));
                 ret.Add((MeleeAimAssistEnabled, null));
-                ret.Add((Unknown, null));
+                ret.Add((MaxCapsuleAngleForVerticalAimingCorrectionDegrees, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -706,14 +706,14 @@ namespace Mutagen.Bethesda.Starfield
         IMeleeAimAssistModelGetter,
         IStarfieldMajorRecordInternal
     {
-        new Single OuterConeAngleDegrees { get; set; }
         new Single InnerConeAngleDegrees { get; set; }
+        new Single OuterConeAngleDegrees { get; set; }
         new Single SteeringDegreesPerSec { get; set; }
-        new Single SnapSteeringMultiplierOuterRing { get; set; }
-        new Single SnapSteeringMultiplierInnerRing { get; set; }
-        new Single MaxAimAssistDistance { get; set; }
+        new Single AccelerationDegreesPerSec { get; set; }
+        new Single DecelerationDegreesPerSec { get; set; }
+        new Single ActorTargetFinderMaxDistance { get; set; }
         new Boolean MeleeAimAssistEnabled { get; set; }
-        new Single Unknown { get; set; }
+        new Single MaxCapsuleAngleForVerticalAimingCorrectionDegrees { get; set; }
     }
 
     public partial interface IMeleeAimAssistModelInternal :
@@ -731,14 +731,14 @@ namespace Mutagen.Bethesda.Starfield
         IMapsToGetter<IMeleeAimAssistModelGetter>
     {
         static new ILoquiRegistration StaticRegistration => MeleeAimAssistModel_Registration.Instance;
-        Single OuterConeAngleDegrees { get; }
         Single InnerConeAngleDegrees { get; }
+        Single OuterConeAngleDegrees { get; }
         Single SteeringDegreesPerSec { get; }
-        Single SnapSteeringMultiplierOuterRing { get; }
-        Single SnapSteeringMultiplierInnerRing { get; }
-        Single MaxAimAssistDistance { get; }
+        Single AccelerationDegreesPerSec { get; }
+        Single DecelerationDegreesPerSec { get; }
+        Single ActorTargetFinderMaxDistance { get; }
         Boolean MeleeAimAssistEnabled { get; }
-        Single Unknown { get; }
+        Single MaxCapsuleAngleForVerticalAimingCorrectionDegrees { get; }
 
     }
 
@@ -915,14 +915,14 @@ namespace Mutagen.Bethesda.Starfield
         FormVersion = 4,
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
-        OuterConeAngleDegrees = 7,
-        InnerConeAngleDegrees = 8,
+        InnerConeAngleDegrees = 7,
+        OuterConeAngleDegrees = 8,
         SteeringDegreesPerSec = 9,
-        SnapSteeringMultiplierOuterRing = 10,
-        SnapSteeringMultiplierInnerRing = 11,
-        MaxAimAssistDistance = 12,
+        AccelerationDegreesPerSec = 10,
+        DecelerationDegreesPerSec = 11,
+        ActorTargetFinderMaxDistance = 12,
         MeleeAimAssistEnabled = 13,
-        Unknown = 14,
+        MaxCapsuleAngleForVerticalAimingCorrectionDegrees = 14,
     }
     #endregion
 
@@ -1013,14 +1013,14 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IMeleeAimAssistModelInternal item)
         {
             ClearPartial();
-            item.OuterConeAngleDegrees = default(Single);
             item.InnerConeAngleDegrees = default(Single);
+            item.OuterConeAngleDegrees = default(Single);
             item.SteeringDegreesPerSec = default(Single);
-            item.SnapSteeringMultiplierOuterRing = default(Single);
-            item.SnapSteeringMultiplierInnerRing = default(Single);
-            item.MaxAimAssistDistance = default(Single);
+            item.AccelerationDegreesPerSec = default(Single);
+            item.DecelerationDegreesPerSec = default(Single);
+            item.ActorTargetFinderMaxDistance = default(Single);
             item.MeleeAimAssistEnabled = default(Boolean);
-            item.Unknown = default(Single);
+            item.MaxCapsuleAngleForVerticalAimingCorrectionDegrees = default(Single);
             base.Clear(item);
         }
         
@@ -1105,14 +1105,14 @@ namespace Mutagen.Bethesda.Starfield
             MeleeAimAssistModel.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.OuterConeAngleDegrees = item.OuterConeAngleDegrees.EqualsWithin(rhs.OuterConeAngleDegrees);
             ret.InnerConeAngleDegrees = item.InnerConeAngleDegrees.EqualsWithin(rhs.InnerConeAngleDegrees);
+            ret.OuterConeAngleDegrees = item.OuterConeAngleDegrees.EqualsWithin(rhs.OuterConeAngleDegrees);
             ret.SteeringDegreesPerSec = item.SteeringDegreesPerSec.EqualsWithin(rhs.SteeringDegreesPerSec);
-            ret.SnapSteeringMultiplierOuterRing = item.SnapSteeringMultiplierOuterRing.EqualsWithin(rhs.SnapSteeringMultiplierOuterRing);
-            ret.SnapSteeringMultiplierInnerRing = item.SnapSteeringMultiplierInnerRing.EqualsWithin(rhs.SnapSteeringMultiplierInnerRing);
-            ret.MaxAimAssistDistance = item.MaxAimAssistDistance.EqualsWithin(rhs.MaxAimAssistDistance);
+            ret.AccelerationDegreesPerSec = item.AccelerationDegreesPerSec.EqualsWithin(rhs.AccelerationDegreesPerSec);
+            ret.DecelerationDegreesPerSec = item.DecelerationDegreesPerSec.EqualsWithin(rhs.DecelerationDegreesPerSec);
+            ret.ActorTargetFinderMaxDistance = item.ActorTargetFinderMaxDistance.EqualsWithin(rhs.ActorTargetFinderMaxDistance);
             ret.MeleeAimAssistEnabled = item.MeleeAimAssistEnabled == rhs.MeleeAimAssistEnabled;
-            ret.Unknown = item.Unknown.EqualsWithin(rhs.Unknown);
+            ret.MaxCapsuleAngleForVerticalAimingCorrectionDegrees = item.MaxCapsuleAngleForVerticalAimingCorrectionDegrees.EqualsWithin(rhs.MaxCapsuleAngleForVerticalAimingCorrectionDegrees);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1162,37 +1162,37 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if (printMask?.OuterConeAngleDegrees ?? true)
-            {
-                sb.AppendItem(item.OuterConeAngleDegrees, "OuterConeAngleDegrees");
-            }
             if (printMask?.InnerConeAngleDegrees ?? true)
             {
                 sb.AppendItem(item.InnerConeAngleDegrees, "InnerConeAngleDegrees");
+            }
+            if (printMask?.OuterConeAngleDegrees ?? true)
+            {
+                sb.AppendItem(item.OuterConeAngleDegrees, "OuterConeAngleDegrees");
             }
             if (printMask?.SteeringDegreesPerSec ?? true)
             {
                 sb.AppendItem(item.SteeringDegreesPerSec, "SteeringDegreesPerSec");
             }
-            if (printMask?.SnapSteeringMultiplierOuterRing ?? true)
+            if (printMask?.AccelerationDegreesPerSec ?? true)
             {
-                sb.AppendItem(item.SnapSteeringMultiplierOuterRing, "SnapSteeringMultiplierOuterRing");
+                sb.AppendItem(item.AccelerationDegreesPerSec, "AccelerationDegreesPerSec");
             }
-            if (printMask?.SnapSteeringMultiplierInnerRing ?? true)
+            if (printMask?.DecelerationDegreesPerSec ?? true)
             {
-                sb.AppendItem(item.SnapSteeringMultiplierInnerRing, "SnapSteeringMultiplierInnerRing");
+                sb.AppendItem(item.DecelerationDegreesPerSec, "DecelerationDegreesPerSec");
             }
-            if (printMask?.MaxAimAssistDistance ?? true)
+            if (printMask?.ActorTargetFinderMaxDistance ?? true)
             {
-                sb.AppendItem(item.MaxAimAssistDistance, "MaxAimAssistDistance");
+                sb.AppendItem(item.ActorTargetFinderMaxDistance, "ActorTargetFinderMaxDistance");
             }
             if (printMask?.MeleeAimAssistEnabled ?? true)
             {
                 sb.AppendItem(item.MeleeAimAssistEnabled, "MeleeAimAssistEnabled");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.MaxCapsuleAngleForVerticalAimingCorrectionDegrees ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.MaxCapsuleAngleForVerticalAimingCorrectionDegrees, "MaxCapsuleAngleForVerticalAimingCorrectionDegrees");
             }
         }
         
@@ -1244,37 +1244,37 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IStarfieldMajorRecordGetter)lhs, (IStarfieldMajorRecordGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.OuterConeAngleDegrees) ?? true))
-            {
-                if (!lhs.OuterConeAngleDegrees.EqualsWithin(rhs.OuterConeAngleDegrees)) return false;
-            }
             if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.InnerConeAngleDegrees) ?? true))
             {
                 if (!lhs.InnerConeAngleDegrees.EqualsWithin(rhs.InnerConeAngleDegrees)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.OuterConeAngleDegrees) ?? true))
+            {
+                if (!lhs.OuterConeAngleDegrees.EqualsWithin(rhs.OuterConeAngleDegrees)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.SteeringDegreesPerSec) ?? true))
             {
                 if (!lhs.SteeringDegreesPerSec.EqualsWithin(rhs.SteeringDegreesPerSec)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.SnapSteeringMultiplierOuterRing) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.AccelerationDegreesPerSec) ?? true))
             {
-                if (!lhs.SnapSteeringMultiplierOuterRing.EqualsWithin(rhs.SnapSteeringMultiplierOuterRing)) return false;
+                if (!lhs.AccelerationDegreesPerSec.EqualsWithin(rhs.AccelerationDegreesPerSec)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.SnapSteeringMultiplierInnerRing) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.DecelerationDegreesPerSec) ?? true))
             {
-                if (!lhs.SnapSteeringMultiplierInnerRing.EqualsWithin(rhs.SnapSteeringMultiplierInnerRing)) return false;
+                if (!lhs.DecelerationDegreesPerSec.EqualsWithin(rhs.DecelerationDegreesPerSec)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.MaxAimAssistDistance) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.ActorTargetFinderMaxDistance) ?? true))
             {
-                if (!lhs.MaxAimAssistDistance.EqualsWithin(rhs.MaxAimAssistDistance)) return false;
+                if (!lhs.ActorTargetFinderMaxDistance.EqualsWithin(rhs.ActorTargetFinderMaxDistance)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.MeleeAimAssistEnabled) ?? true))
             {
                 if (lhs.MeleeAimAssistEnabled != rhs.MeleeAimAssistEnabled) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.MaxCapsuleAngleForVerticalAimingCorrectionDegrees) ?? true))
             {
-                if (!lhs.Unknown.EqualsWithin(rhs.Unknown)) return false;
+                if (!lhs.MaxCapsuleAngleForVerticalAimingCorrectionDegrees.EqualsWithin(rhs.MaxCapsuleAngleForVerticalAimingCorrectionDegrees)) return false;
             }
             return true;
         }
@@ -1304,14 +1304,14 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IMeleeAimAssistModelGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.OuterConeAngleDegrees);
             hash.Add(item.InnerConeAngleDegrees);
+            hash.Add(item.OuterConeAngleDegrees);
             hash.Add(item.SteeringDegreesPerSec);
-            hash.Add(item.SnapSteeringMultiplierOuterRing);
-            hash.Add(item.SnapSteeringMultiplierInnerRing);
-            hash.Add(item.MaxAimAssistDistance);
+            hash.Add(item.AccelerationDegreesPerSec);
+            hash.Add(item.DecelerationDegreesPerSec);
+            hash.Add(item.ActorTargetFinderMaxDistance);
             hash.Add(item.MeleeAimAssistEnabled);
-            hash.Add(item.Unknown);
+            hash.Add(item.MaxCapsuleAngleForVerticalAimingCorrectionDegrees);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1437,37 +1437,37 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.OuterConeAngleDegrees) ?? true))
-            {
-                item.OuterConeAngleDegrees = rhs.OuterConeAngleDegrees;
-            }
             if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.InnerConeAngleDegrees) ?? true))
             {
                 item.InnerConeAngleDegrees = rhs.InnerConeAngleDegrees;
+            }
+            if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.OuterConeAngleDegrees) ?? true))
+            {
+                item.OuterConeAngleDegrees = rhs.OuterConeAngleDegrees;
             }
             if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.SteeringDegreesPerSec) ?? true))
             {
                 item.SteeringDegreesPerSec = rhs.SteeringDegreesPerSec;
             }
-            if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.SnapSteeringMultiplierOuterRing) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.AccelerationDegreesPerSec) ?? true))
             {
-                item.SnapSteeringMultiplierOuterRing = rhs.SnapSteeringMultiplierOuterRing;
+                item.AccelerationDegreesPerSec = rhs.AccelerationDegreesPerSec;
             }
-            if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.SnapSteeringMultiplierInnerRing) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.DecelerationDegreesPerSec) ?? true))
             {
-                item.SnapSteeringMultiplierInnerRing = rhs.SnapSteeringMultiplierInnerRing;
+                item.DecelerationDegreesPerSec = rhs.DecelerationDegreesPerSec;
             }
-            if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.MaxAimAssistDistance) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.ActorTargetFinderMaxDistance) ?? true))
             {
-                item.MaxAimAssistDistance = rhs.MaxAimAssistDistance;
+                item.ActorTargetFinderMaxDistance = rhs.ActorTargetFinderMaxDistance;
             }
             if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.MeleeAimAssistEnabled) ?? true))
             {
                 item.MeleeAimAssistEnabled = rhs.MeleeAimAssistEnabled;
             }
-            if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MeleeAimAssistModel_FieldIndex.MaxCapsuleAngleForVerticalAimingCorrectionDegrees) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.MaxCapsuleAngleForVerticalAimingCorrectionDegrees = rhs.MaxCapsuleAngleForVerticalAimingCorrectionDegrees;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1642,26 +1642,26 @@ namespace Mutagen.Bethesda.Starfield
             {
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.OuterConeAngleDegrees);
+                    item: item.InnerConeAngleDegrees);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.InnerConeAngleDegrees);
+                    item: item.OuterConeAngleDegrees);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.SteeringDegreesPerSec);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SnapSteeringMultiplierOuterRing);
+                    item: item.AccelerationDegreesPerSec);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.SnapSteeringMultiplierInnerRing);
+                    item: item.DecelerationDegreesPerSec);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.MaxAimAssistDistance);
+                    item: item.ActorTargetFinderMaxDistance);
                 writer.Write(item.MeleeAimAssistEnabled);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.Unknown);
+                    item: item.MaxCapsuleAngleForVerticalAimingCorrectionDegrees);
             }
         }
 
@@ -1736,22 +1736,22 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.OuterConeAngleDegrees = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    if (dataFrame.Remaining < 4) return null;
                     item.InnerConeAngleDegrees = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.OuterConeAngleDegrees = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.SteeringDegreesPerSec = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SnapSteeringMultiplierOuterRing = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.AccelerationDegreesPerSec = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.SnapSteeringMultiplierInnerRing = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.DecelerationDegreesPerSec = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    item.MaxAimAssistDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    item.ActorTargetFinderMaxDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 1) return null;
                     item.MeleeAimAssistEnabled = dataFrame.ReadBoolean();
                     if (dataFrame.Remaining < 4) return null;
-                    item.Unknown = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    return (int)MeleeAimAssistModel_FieldIndex.Unknown;
+                    item.MaxCapsuleAngleForVerticalAimingCorrectionDegrees = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    return (int)MeleeAimAssistModel_FieldIndex.MaxCapsuleAngleForVerticalAimingCorrectionDegrees;
                 }
                 default:
                     return StarfieldMajorRecordBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1812,45 +1812,45 @@ namespace Mutagen.Bethesda.Starfield
 
 
         private RangeInt32? _SNAMLocation;
-        #region OuterConeAngleDegrees
-        private int _OuterConeAngleDegreesLocation => _SNAMLocation!.Value.Min;
-        private bool _OuterConeAngleDegrees_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _OuterConeAngleDegreesLocation + 1 >= 4;
-        public Single OuterConeAngleDegrees => _OuterConeAngleDegrees_IsSet ? _recordData.Slice(_OuterConeAngleDegreesLocation, 4).Float() : default(Single);
-        #endregion
         #region InnerConeAngleDegrees
-        private int _InnerConeAngleDegreesLocation => _SNAMLocation!.Value.Min + 0x4;
+        private int _InnerConeAngleDegreesLocation => _SNAMLocation!.Value.Min;
         private bool _InnerConeAngleDegrees_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _InnerConeAngleDegreesLocation + 1 >= 4;
         public Single InnerConeAngleDegrees => _InnerConeAngleDegrees_IsSet ? _recordData.Slice(_InnerConeAngleDegreesLocation, 4).Float() : default(Single);
+        #endregion
+        #region OuterConeAngleDegrees
+        private int _OuterConeAngleDegreesLocation => _SNAMLocation!.Value.Min + 0x4;
+        private bool _OuterConeAngleDegrees_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _OuterConeAngleDegreesLocation + 1 >= 4;
+        public Single OuterConeAngleDegrees => _OuterConeAngleDegrees_IsSet ? _recordData.Slice(_OuterConeAngleDegreesLocation, 4).Float() : default(Single);
         #endregion
         #region SteeringDegreesPerSec
         private int _SteeringDegreesPerSecLocation => _SNAMLocation!.Value.Min + 0x8;
         private bool _SteeringDegreesPerSec_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _SteeringDegreesPerSecLocation + 1 >= 4;
         public Single SteeringDegreesPerSec => _SteeringDegreesPerSec_IsSet ? _recordData.Slice(_SteeringDegreesPerSecLocation, 4).Float() : default(Single);
         #endregion
-        #region SnapSteeringMultiplierOuterRing
-        private int _SnapSteeringMultiplierOuterRingLocation => _SNAMLocation!.Value.Min + 0xC;
-        private bool _SnapSteeringMultiplierOuterRing_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _SnapSteeringMultiplierOuterRingLocation + 1 >= 4;
-        public Single SnapSteeringMultiplierOuterRing => _SnapSteeringMultiplierOuterRing_IsSet ? _recordData.Slice(_SnapSteeringMultiplierOuterRingLocation, 4).Float() : default(Single);
+        #region AccelerationDegreesPerSec
+        private int _AccelerationDegreesPerSecLocation => _SNAMLocation!.Value.Min + 0xC;
+        private bool _AccelerationDegreesPerSec_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _AccelerationDegreesPerSecLocation + 1 >= 4;
+        public Single AccelerationDegreesPerSec => _AccelerationDegreesPerSec_IsSet ? _recordData.Slice(_AccelerationDegreesPerSecLocation, 4).Float() : default(Single);
         #endregion
-        #region SnapSteeringMultiplierInnerRing
-        private int _SnapSteeringMultiplierInnerRingLocation => _SNAMLocation!.Value.Min + 0x10;
-        private bool _SnapSteeringMultiplierInnerRing_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _SnapSteeringMultiplierInnerRingLocation + 1 >= 4;
-        public Single SnapSteeringMultiplierInnerRing => _SnapSteeringMultiplierInnerRing_IsSet ? _recordData.Slice(_SnapSteeringMultiplierInnerRingLocation, 4).Float() : default(Single);
+        #region DecelerationDegreesPerSec
+        private int _DecelerationDegreesPerSecLocation => _SNAMLocation!.Value.Min + 0x10;
+        private bool _DecelerationDegreesPerSec_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _DecelerationDegreesPerSecLocation + 1 >= 4;
+        public Single DecelerationDegreesPerSec => _DecelerationDegreesPerSec_IsSet ? _recordData.Slice(_DecelerationDegreesPerSecLocation, 4).Float() : default(Single);
         #endregion
-        #region MaxAimAssistDistance
-        private int _MaxAimAssistDistanceLocation => _SNAMLocation!.Value.Min + 0x14;
-        private bool _MaxAimAssistDistance_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _MaxAimAssistDistanceLocation + 1 >= 4;
-        public Single MaxAimAssistDistance => _MaxAimAssistDistance_IsSet ? _recordData.Slice(_MaxAimAssistDistanceLocation, 4).Float() : default(Single);
+        #region ActorTargetFinderMaxDistance
+        private int _ActorTargetFinderMaxDistanceLocation => _SNAMLocation!.Value.Min + 0x14;
+        private bool _ActorTargetFinderMaxDistance_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _ActorTargetFinderMaxDistanceLocation + 1 >= 4;
+        public Single ActorTargetFinderMaxDistance => _ActorTargetFinderMaxDistance_IsSet ? _recordData.Slice(_ActorTargetFinderMaxDistanceLocation, 4).Float() : default(Single);
         #endregion
         #region MeleeAimAssistEnabled
         private int _MeleeAimAssistEnabledLocation => _SNAMLocation!.Value.Min + 0x18;
         private bool _MeleeAimAssistEnabled_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _MeleeAimAssistEnabledLocation + 1 >= 1;
         public Boolean MeleeAimAssistEnabled => _MeleeAimAssistEnabled_IsSet ? _recordData.Slice(_MeleeAimAssistEnabledLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region Unknown
-        private int _UnknownLocation => _SNAMLocation!.Value.Min + 0x19;
-        private bool _Unknown_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _UnknownLocation + 1 >= 4;
-        public Single Unknown => _Unknown_IsSet ? _recordData.Slice(_UnknownLocation, 4).Float() : default(Single);
+        #region MaxCapsuleAngleForVerticalAimingCorrectionDegrees
+        private int _MaxCapsuleAngleForVerticalAimingCorrectionDegreesLocation => _SNAMLocation!.Value.Min + 0x19;
+        private bool _MaxCapsuleAngleForVerticalAimingCorrectionDegrees_IsSet => _SNAMLocation.HasValue && _SNAMLocation!.Value.Max - _MaxCapsuleAngleForVerticalAimingCorrectionDegreesLocation + 1 >= 4;
+        public Single MaxCapsuleAngleForVerticalAimingCorrectionDegrees => _MaxCapsuleAngleForVerticalAimingCorrectionDegrees_IsSet ? _recordData.Slice(_MaxCapsuleAngleForVerticalAimingCorrectionDegreesLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1924,7 +1924,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.SNAM:
                 {
                     _SNAMLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)MeleeAimAssistModel_FieldIndex.Unknown;
+                    return (int)MeleeAimAssistModel_FieldIndex.MaxCapsuleAngleForVerticalAimingCorrectionDegrees;
                 }
                 default:
                     return base.FillRecordType(

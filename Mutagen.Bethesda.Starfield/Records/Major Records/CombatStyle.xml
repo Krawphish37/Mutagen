@@ -162,7 +162,7 @@
         </Fields>
       </Data>
       <Enum name="Flags" enumName="CombatStyle.Flag" recordType="DATA" />
-      <ByteArray name="FNAM" recordType="FNAM" unknown="true" />
+      <Enum name="DefaultTemplateFlags" enumName="CombatStyle.TemplateFlag" byteLength="4" recordType="FNAM" />
       <FormLink name="TemplateDefaultCombatStyle" refName="CombatStyle" recordType="TNAM" />
       <RefDirect name="Templates" refName="CombatStyleTemplates" />
     </Fields>
