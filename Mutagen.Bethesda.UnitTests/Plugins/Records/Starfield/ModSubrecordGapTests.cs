@@ -293,9 +293,9 @@ public class ModSubrecordGapTests
                      f => SoundEchoMarker.CreateFromBinary(f),
                      (s, p) => SoundEchoMarkerBinaryOverlay.SoundEchoMarkerFactory(s, p)))
         {
-            sech.ECHL.ShouldNotBeNull();
-            sech.ECHL.Start.ShouldBe(new Guid(echl.AsSpan(0, 16)));
-            sech.ECHL.Stop.ShouldBe(new Guid(echl.AsSpan(16, 16)));
+            sech.LoopingSound.ShouldNotBeNull();
+            sech.LoopingSound.Start.ShouldBe(new Guid(echl.AsSpan(0, 16)));
+            sech.LoopingSound.Stop.ShouldBe(new Guid(echl.AsSpan(16, 16)));
             sech.DefaultStartMarker.ShouldNotBeNull();
             sech.DefaultStartMarker.Conditions.Count.ShouldBe(1);
             var data = sech.DefaultStartMarker.Conditions[0].Data.ShouldBeAssignableTo<IGetStageDoneConditionDataGetter>()!;
