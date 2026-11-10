@@ -118,6 +118,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -134,6 +136,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -912,17 +916,19 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        InnerConeAngleDegrees = 7,
-        OuterConeAngleDegrees = 8,
-        SteeringDegreesPerSec = 9,
-        AccelerationDegreesPerSec = 10,
-        DecelerationDegreesPerSec = 11,
-        ActorTargetFinderMaxDistance = 12,
-        MeleeAimAssistEnabled = 13,
-        MaxCapsuleAngleForVerticalAimingCorrectionDegrees = 14,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        InnerConeAngleDegrees = 9,
+        OuterConeAngleDegrees = 10,
+        SteeringDegreesPerSec = 11,
+        AccelerationDegreesPerSec = 12,
+        DecelerationDegreesPerSec = 13,
+        ActorTargetFinderMaxDistance = 14,
+        MeleeAimAssistEnabled = 15,
+        MaxCapsuleAngleForVerticalAimingCorrectionDegrees = 16,
     }
     #endregion
 
@@ -935,7 +941,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 8;
 
-        public const ushort FieldCount = 15;
+        public const ushort FieldCount = 17;
 
         public static readonly Type MaskType = typeof(MeleeAimAssistModel.Mask<>);
 
@@ -1208,6 +1214,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (MeleeAimAssistModel_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (MeleeAimAssistModel_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (MeleeAimAssistModel_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (MeleeAimAssistModel_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (MeleeAimAssistModel_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -1230,6 +1240,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (MeleeAimAssistModel_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (MeleeAimAssistModel_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (MeleeAimAssistModel_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (MeleeAimAssistModel_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

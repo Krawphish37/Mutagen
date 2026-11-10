@@ -1016,6 +1016,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -1089,6 +1091,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -7152,74 +7156,76 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        Animatable = 7,
-        Duration = 8,
-        RadialBlurUseTarget = 9,
-        RadialBlurCenter = 10,
-        DepthOfFieldUseTarget = 11,
-        DepthOfFieldFlags = 12,
-        Unused = 13,
-        BlurRadius = 14,
-        DoubleVisionStrength = 15,
-        TintColor = 16,
-        FadeColor = 17,
-        RadialBlurStrength = 18,
-        RadialBlurRampUp = 19,
-        RadialBlurStart = 20,
-        RadialBlurRampDown = 21,
-        RadialBlurDownStart = 22,
-        DepthOfFieldStrength = 23,
-        DepthOfFieldDistance = 24,
-        DepthOfFieldRange = 25,
-        MotionBlurStrength = 26,
-        HdrEyeAdaptSpeedMult = 27,
-        HdrEyeAdaptSpeedAdd = 28,
-        HdrBlurRadiusMult = 29,
-        HdrBlurRadiusAdd = 30,
-        HdrSkinDimmerMult = 31,
-        HdrSkinDimmerAdd = 32,
-        HdrEmissiveMultMult = 33,
-        HdrEmissiveMultAdd = 34,
-        HdrTargetLumMult = 35,
-        HdrTargetLumAdd = 36,
-        HdrUpperLumClampMult = 37,
-        HdrUpperLumClampAdd = 38,
-        HdrBrightScaleMult = 39,
-        HdrBrightScaleAdd = 40,
-        HdrBrightClampMult = 41,
-        HdrBrightClampAdd = 42,
-        HdrLumRampNoTexMult = 43,
-        HdrLumRampNoTexAdd = 44,
-        HdrLumRampMinMult = 45,
-        HdrLumRampMinAdd = 46,
-        HdrLumRampMaxMult = 47,
-        HdrLumRampMaxAdd = 48,
-        HdrSunlightDimmerMult = 49,
-        HdrSunlightDimmerAdd = 50,
-        HdrGrassDimmerMult = 51,
-        HdrGrassDimmerAdd = 52,
-        HdrTreeDimmerMult = 53,
-        HdrTreeDimmerAdd = 54,
-        BloomBlurRadiusMult = 55,
-        BloomBlurRadiusAdd = 56,
-        BloomAlphaMultInteriorMult = 57,
-        BloomAlphaMultInteriorAdd = 58,
-        BloomAlphaMultExteriorMult = 59,
-        BloomAlphaMultExteriorAdd = 60,
-        CinematicSaturationMult = 61,
-        CinematicSaturationAdd = 62,
-        CinematicContrastMult = 63,
-        CinematicContrastAdd = 64,
-        CinematicContrastAvgLumMult = 65,
-        CinematicContrastAvgLumAdd = 66,
-        CinematicBrightnessMult = 67,
-        CinematicBrightnessAdd = 68,
-        SoundIntro = 69,
-        SoundOutro = 70,
-        DNAMDataTypeState = 71,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        Animatable = 9,
+        Duration = 10,
+        RadialBlurUseTarget = 11,
+        RadialBlurCenter = 12,
+        DepthOfFieldUseTarget = 13,
+        DepthOfFieldFlags = 14,
+        Unused = 15,
+        BlurRadius = 16,
+        DoubleVisionStrength = 17,
+        TintColor = 18,
+        FadeColor = 19,
+        RadialBlurStrength = 20,
+        RadialBlurRampUp = 21,
+        RadialBlurStart = 22,
+        RadialBlurRampDown = 23,
+        RadialBlurDownStart = 24,
+        DepthOfFieldStrength = 25,
+        DepthOfFieldDistance = 26,
+        DepthOfFieldRange = 27,
+        MotionBlurStrength = 28,
+        HdrEyeAdaptSpeedMult = 29,
+        HdrEyeAdaptSpeedAdd = 30,
+        HdrBlurRadiusMult = 31,
+        HdrBlurRadiusAdd = 32,
+        HdrSkinDimmerMult = 33,
+        HdrSkinDimmerAdd = 34,
+        HdrEmissiveMultMult = 35,
+        HdrEmissiveMultAdd = 36,
+        HdrTargetLumMult = 37,
+        HdrTargetLumAdd = 38,
+        HdrUpperLumClampMult = 39,
+        HdrUpperLumClampAdd = 40,
+        HdrBrightScaleMult = 41,
+        HdrBrightScaleAdd = 42,
+        HdrBrightClampMult = 43,
+        HdrBrightClampAdd = 44,
+        HdrLumRampNoTexMult = 45,
+        HdrLumRampNoTexAdd = 46,
+        HdrLumRampMinMult = 47,
+        HdrLumRampMinAdd = 48,
+        HdrLumRampMaxMult = 49,
+        HdrLumRampMaxAdd = 50,
+        HdrSunlightDimmerMult = 51,
+        HdrSunlightDimmerAdd = 52,
+        HdrGrassDimmerMult = 53,
+        HdrGrassDimmerAdd = 54,
+        HdrTreeDimmerMult = 55,
+        HdrTreeDimmerAdd = 56,
+        BloomBlurRadiusMult = 57,
+        BloomBlurRadiusAdd = 58,
+        BloomAlphaMultInteriorMult = 59,
+        BloomAlphaMultInteriorAdd = 60,
+        BloomAlphaMultExteriorMult = 61,
+        BloomAlphaMultExteriorAdd = 62,
+        CinematicSaturationMult = 63,
+        CinematicSaturationAdd = 64,
+        CinematicContrastMult = 65,
+        CinematicContrastAdd = 66,
+        CinematicContrastAvgLumMult = 67,
+        CinematicContrastAvgLumAdd = 68,
+        CinematicBrightnessMult = 69,
+        CinematicBrightnessAdd = 70,
+        SoundIntro = 71,
+        SoundOutro = 72,
+        DNAMDataTypeState = 73,
     }
     #endregion
 
@@ -7232,7 +7238,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 65;
 
-        public const ushort FieldCount = 72;
+        public const ushort FieldCount = 74;
 
         public static readonly Type MaskType = typeof(ImageSpaceAdapter.Mask<>);
 
@@ -8676,6 +8682,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (ImageSpaceAdapter_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (ImageSpaceAdapter_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -8698,6 +8708,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (ImageSpaceAdapter_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (ImageSpaceAdapter_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (ImageSpaceAdapter_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

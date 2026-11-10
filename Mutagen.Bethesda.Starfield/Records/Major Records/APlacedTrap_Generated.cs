@@ -297,6 +297,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -326,6 +328,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1789,30 +1793,32 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Components = 8,
-        Emittance = 9,
-        LocationRefTypes = 10,
-        RagdollData = 11,
-        Layer = 12,
-        ReferenceGroup = 13,
-        SourcePackIn = 14,
-        IgnoredBySandbox = 15,
-        OwnerFactionRank = 16,
-        LinkedReferences = 17,
-        IsLinkedRefTransient = 18,
-        Ownership = 19,
-        EncounterLocation = 20,
-        HeadTrackingWeight = 21,
-        EnableParent = 22,
-        ActivationPoint = 23,
-        Scale = 24,
-        Position = 25,
-        Rotation = 26,
-        Comments = 27,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Components = 10,
+        Emittance = 11,
+        LocationRefTypes = 12,
+        RagdollData = 13,
+        Layer = 14,
+        ReferenceGroup = 15,
+        SourcePackIn = 16,
+        IgnoredBySandbox = 17,
+        OwnerFactionRank = 18,
+        LinkedReferences = 19,
+        IsLinkedRefTransient = 20,
+        Ownership = 21,
+        EncounterLocation = 22,
+        HeadTrackingWeight = 23,
+        EnableParent = 24,
+        ActivationPoint = 25,
+        Scale = 26,
+        Position = 27,
+        Rotation = 28,
+        Comments = 29,
     }
     #endregion
 
@@ -1825,7 +1831,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 21;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 30;
 
         public static readonly Type MaskType = typeof(APlacedTrap.Mask<>);
 
@@ -2340,6 +2346,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (APlacedTrap_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (APlacedTrap_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (APlacedTrap_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (APlacedTrap_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (APlacedTrap_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2362,6 +2372,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (APlacedTrap_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (APlacedTrap_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (APlacedTrap_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (APlacedTrap_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

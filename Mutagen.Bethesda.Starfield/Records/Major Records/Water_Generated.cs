@@ -485,6 +485,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -554,6 +556,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2970,70 +2974,72 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Name = 8,
-        Opacity = 9,
-        Flags = 10,
-        Sound = 11,
-        ConsumeSpell = 12,
-        ContactSpell = 13,
-        DATA = 14,
-        DepthAmount = 15,
-        AbsorptionRangeRed = 16,
-        AbsorptionRangeGreen = 17,
-        AbsorptionRangeBlue = 18,
-        Phytoplankton = 19,
-        Sediment = 20,
-        YellowMatter = 21,
-        Oceanness = 22,
-        FogUnderwaterColor = 23,
-        FogUnderwaterAmount = 24,
-        FogUnderwaterNear = 25,
-        FogUnderwaterFar = 26,
-        PhysicalNormalMagnitude = 27,
-        PhysicalShallowNormalFalloff = 28,
-        PhysicalDeepNormalFalloff = 29,
-        PhysicalSurfaceEffectFalloff = 30,
-        PhysicalDisplacementSimulatorForce = 31,
-        PhysicalDisplacementSimulatorVelocity = 32,
-        PhysicalDisplacementSimulatorFalloff = 33,
-        PhysicalDisplacementSimulatorDampener = 34,
-        PhysicalDisplacementSimulatorStartingSize = 35,
-        NoiseLayerOneWindDirection = 36,
-        NoiseLayerTwoWindDirection = 37,
-        NoiseLayerThreeWindDirection = 38,
-        NoiseLayerOneWindSpeed = 39,
-        NoiseLayerTwoWindSpeed = 40,
-        NoiseLayerThreeWindSpeed = 41,
-        NoiseLayerOneAmplitudeScale = 42,
-        NoiseLayerTwoAmplitudeScale = 43,
-        NoiseLayerThreeAmplitudeScale = 44,
-        NoiseLayerOneUvScale = 45,
-        NoiseLayerTwoUvScale = 46,
-        NoiseLayerThreeUvScale = 47,
-        NoiseLayerOneNoiseFalloff = 48,
-        NoiseLayerTwoNoiseFalloff = 49,
-        NoiseLayerThreeNoiseFalloff = 50,
-        FlowmapScale = 51,
-        Roughness = 52,
-        GNAM = 53,
-        LinearVelocity = 54,
-        AngularVelocity = 55,
-        NAM2 = 56,
-        NAM3 = 57,
-        NAM4 = 58,
-        NAM5 = 59,
-        NAM6 = 60,
-        RiverAbsorptionCurve = 61,
-        OceanAbsorptionCurve = 62,
-        RiverScatteringCurve = 63,
-        OceanScatteringCurve = 64,
-        PhytoplanktonCurve = 65,
-        SedimentCurve = 66,
-        YelowMatterCurve = 67,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Name = 10,
+        Opacity = 11,
+        Flags = 12,
+        Sound = 13,
+        ConsumeSpell = 14,
+        ContactSpell = 15,
+        DATA = 16,
+        DepthAmount = 17,
+        AbsorptionRangeRed = 18,
+        AbsorptionRangeGreen = 19,
+        AbsorptionRangeBlue = 20,
+        Phytoplankton = 21,
+        Sediment = 22,
+        YellowMatter = 23,
+        Oceanness = 24,
+        FogUnderwaterColor = 25,
+        FogUnderwaterAmount = 26,
+        FogUnderwaterNear = 27,
+        FogUnderwaterFar = 28,
+        PhysicalNormalMagnitude = 29,
+        PhysicalShallowNormalFalloff = 30,
+        PhysicalDeepNormalFalloff = 31,
+        PhysicalSurfaceEffectFalloff = 32,
+        PhysicalDisplacementSimulatorForce = 33,
+        PhysicalDisplacementSimulatorVelocity = 34,
+        PhysicalDisplacementSimulatorFalloff = 35,
+        PhysicalDisplacementSimulatorDampener = 36,
+        PhysicalDisplacementSimulatorStartingSize = 37,
+        NoiseLayerOneWindDirection = 38,
+        NoiseLayerTwoWindDirection = 39,
+        NoiseLayerThreeWindDirection = 40,
+        NoiseLayerOneWindSpeed = 41,
+        NoiseLayerTwoWindSpeed = 42,
+        NoiseLayerThreeWindSpeed = 43,
+        NoiseLayerOneAmplitudeScale = 44,
+        NoiseLayerTwoAmplitudeScale = 45,
+        NoiseLayerThreeAmplitudeScale = 46,
+        NoiseLayerOneUvScale = 47,
+        NoiseLayerTwoUvScale = 48,
+        NoiseLayerThreeUvScale = 49,
+        NoiseLayerOneNoiseFalloff = 50,
+        NoiseLayerTwoNoiseFalloff = 51,
+        NoiseLayerThreeNoiseFalloff = 52,
+        FlowmapScale = 53,
+        Roughness = 54,
+        GNAM = 55,
+        LinearVelocity = 56,
+        AngularVelocity = 57,
+        NAM2 = 58,
+        NAM3 = 59,
+        NAM4 = 60,
+        NAM5 = 61,
+        NAM6 = 62,
+        RiverAbsorptionCurve = 63,
+        OceanAbsorptionCurve = 64,
+        RiverScatteringCurve = 65,
+        OceanScatteringCurve = 66,
+        PhytoplanktonCurve = 67,
+        SedimentCurve = 68,
+        YelowMatterCurve = 69,
     }
     #endregion
 
@@ -3046,7 +3052,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 61;
 
-        public const ushort FieldCount = 68;
+        public const ushort FieldCount = 70;
 
         public static readonly Type MaskType = typeof(Water.Mask<>);
 
@@ -3692,6 +3698,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Water_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Water_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Water_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Water_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Water_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -3714,6 +3724,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Water_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Water_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Water_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Water_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

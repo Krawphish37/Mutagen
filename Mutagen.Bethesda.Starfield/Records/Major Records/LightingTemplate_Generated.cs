@@ -329,6 +329,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -366,6 +368,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1784,38 +1788,40 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        AmbientColor = 7,
-        DirectionalColor = 8,
-        FogNearColor = 9,
-        FogNear = 10,
-        FogFar = 11,
-        DirectionalRotationXY = 12,
-        DirectionalRotationZ = 13,
-        DirectionalFade = 14,
-        FogClipDistance = 15,
-        FogPower = 16,
-        FogFarColor = 17,
-        FogMax = 18,
-        LightFadeStartDistance = 19,
-        LightFadeEndDistance = 20,
-        Unknown = 21,
-        NearHeightMid = 22,
-        NearHeightRange = 23,
-        FogColorHighNear = 24,
-        FogColorHighFar = 25,
-        HighDensityScale = 26,
-        FogNearScale = 27,
-        FogFarScale = 28,
-        HighNearScale = 29,
-        HighFarScale = 30,
-        FarHeightMid = 31,
-        FarHeightRange = 32,
-        Unknown2 = 33,
-        DirectionalAmbientColors = 34,
-        DATADataTypeState = 35,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        AmbientColor = 9,
+        DirectionalColor = 10,
+        FogNearColor = 11,
+        FogNear = 12,
+        FogFar = 13,
+        DirectionalRotationXY = 14,
+        DirectionalRotationZ = 15,
+        DirectionalFade = 16,
+        FogClipDistance = 17,
+        FogPower = 18,
+        FogFarColor = 19,
+        FogMax = 20,
+        LightFadeStartDistance = 21,
+        LightFadeEndDistance = 22,
+        Unknown = 23,
+        NearHeightMid = 24,
+        NearHeightRange = 25,
+        FogColorHighNear = 26,
+        FogColorHighFar = 27,
+        HighDensityScale = 28,
+        FogNearScale = 29,
+        FogFarScale = 30,
+        HighNearScale = 31,
+        HighFarScale = 32,
+        FarHeightMid = 33,
+        FarHeightRange = 34,
+        Unknown2 = 35,
+        DirectionalAmbientColors = 36,
+        DATADataTypeState = 37,
     }
     #endregion
 
@@ -1828,7 +1834,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 29;
 
-        public const ushort FieldCount = 36;
+        public const ushort FieldCount = 38;
 
         public static readonly Type MaskType = typeof(LightingTemplate.Mask<>);
 
@@ -2233,6 +2239,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (LightingTemplate_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (LightingTemplate_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (LightingTemplate_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (LightingTemplate_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (LightingTemplate_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2255,6 +2265,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (LightingTemplate_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (LightingTemplate_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (LightingTemplate_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (LightingTemplate_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

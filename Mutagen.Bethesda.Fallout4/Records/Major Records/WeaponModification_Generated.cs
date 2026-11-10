@@ -103,6 +103,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -127,6 +129,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags,
@@ -789,25 +793,27 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        Name = 7,
-        Description = 8,
-        Model = 9,
-        Unknown = 10,
-        MaxRank = 11,
-        LevelTierScaledOffset = 12,
-        AttachPoint = 13,
-        AttachParentSlots = 14,
-        Items = 15,
-        Includes = 16,
-        TargetOmodKeywords = 17,
-        FilterKeywords = 18,
-        LooseMod = 19,
-        Priority = 20,
-        Filter = 21,
-        Properties = 22,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        Name = 9,
+        Description = 10,
+        Model = 11,
+        Unknown = 12,
+        MaxRank = 13,
+        LevelTierScaledOffset = 14,
+        AttachPoint = 15,
+        AttachParentSlots = 16,
+        Items = 17,
+        Includes = 18,
+        TargetOmodKeywords = 19,
+        FilterKeywords = 20,
+        LooseMod = 21,
+        Priority = 22,
+        Filter = 23,
+        Properties = 24,
     }
     #endregion
 
@@ -820,7 +826,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 23;
+        public const ushort FieldCount = 25;
 
         public static readonly Type MaskType = typeof(WeaponModification.Mask<>);
 
@@ -1076,6 +1082,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (WeaponModification_FieldIndex)((int)index);
                 case AObjectModification_FieldIndex.EditorID:
                     return (WeaponModification_FieldIndex)((int)index);
+                case AObjectModification_FieldIndex.UnknownSubrecords:
+                    return (WeaponModification_FieldIndex)((int)index);
+                case AObjectModification_FieldIndex.UnknownSubrecordsSource:
+                    return (WeaponModification_FieldIndex)((int)index);
                 case AObjectModification_FieldIndex.FormVersion:
                     return (WeaponModification_FieldIndex)((int)index);
                 case AObjectModification_FieldIndex.Version2:
@@ -1129,6 +1139,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (WeaponModification_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (WeaponModification_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (WeaponModification_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (WeaponModification_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (WeaponModification_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -1151,6 +1165,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (WeaponModification_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (WeaponModification_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (WeaponModification_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (WeaponModification_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

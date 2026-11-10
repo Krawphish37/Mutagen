@@ -299,6 +299,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -323,6 +325,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1579,25 +1583,27 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        Name = 7,
-        Relations = 8,
-        Flags = 9,
-        ExteriorJailMarker = 10,
-        FollowerWaitMarker = 11,
-        StolenGoodsContainer = 12,
-        PlayerInventoryContainer = 13,
-        SharedCrimeFactionList = 14,
-        JailOutfit = 15,
-        CrimeValues = 16,
-        Ranks = 17,
-        VendorBuySellList = 18,
-        MerchantContainer = 19,
-        VendorValues = 20,
-        VendorLocation = 21,
-        Conditions = 22,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        Name = 9,
+        Relations = 10,
+        Flags = 11,
+        ExteriorJailMarker = 12,
+        FollowerWaitMarker = 13,
+        StolenGoodsContainer = 14,
+        PlayerInventoryContainer = 15,
+        SharedCrimeFactionList = 16,
+        JailOutfit = 17,
+        CrimeValues = 18,
+        Ranks = 19,
+        VendorBuySellList = 20,
+        MerchantContainer = 21,
+        VendorValues = 22,
+        VendorLocation = 23,
+        Conditions = 24,
     }
     #endregion
 
@@ -1610,7 +1616,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 16;
 
-        public const ushort FieldCount = 23;
+        public const ushort FieldCount = 25;
 
         public static readonly Type MaskType = typeof(Faction.Mask<>);
 
@@ -2019,6 +2025,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Faction_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Faction_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Faction_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Faction_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Faction_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2041,6 +2051,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Faction_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Faction_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Faction_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Faction_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

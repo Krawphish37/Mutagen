@@ -346,6 +346,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -374,6 +376,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1769,29 +1773,31 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        ObjectBounds = 7,
-        PreviewTransform = 8,
-        Name = 9,
-        Keywords = 10,
-        Model = 11,
-        Icons = 12,
-        PickUpSound = 13,
-        PutDownSound = 14,
-        EquipmentType = 15,
-        CraftingSound = 16,
-        Destructible = 17,
-        Description = 18,
-        Weight = 19,
-        Value = 20,
-        Flags = 21,
-        Addiction = 22,
-        AddictionChance = 23,
-        ConsumeSound = 24,
-        AddictionName = 25,
-        Effects = 26,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        ObjectBounds = 9,
+        PreviewTransform = 10,
+        Name = 11,
+        Keywords = 12,
+        Model = 13,
+        Icons = 14,
+        PickUpSound = 15,
+        PutDownSound = 16,
+        EquipmentType = 17,
+        CraftingSound = 18,
+        Destructible = 19,
+        Description = 20,
+        Weight = 21,
+        Value = 22,
+        Flags = 23,
+        Addiction = 24,
+        AddictionChance = 25,
+        ConsumeSound = 26,
+        AddictionName = 27,
+        Effects = 28,
     }
     #endregion
 
@@ -1804,7 +1810,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 20;
 
-        public const ushort FieldCount = 27;
+        public const ushort FieldCount = 29;
 
         public static readonly Type MaskType = typeof(Ingestible.Mask<>);
 
@@ -2231,6 +2237,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Ingestible_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Ingestible_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Ingestible_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Ingestible_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Ingestible_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2253,6 +2263,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Ingestible_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Ingestible_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Ingestible_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Ingestible_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

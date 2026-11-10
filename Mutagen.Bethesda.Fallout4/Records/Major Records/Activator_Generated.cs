@@ -389,6 +389,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -418,6 +420,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1910,30 +1914,32 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        PreviewTransform = 9,
-        AnimationSound = 10,
-        Name = 11,
-        Model = 12,
-        Destructible = 13,
-        Keywords = 14,
-        Properties = 15,
-        NativeTerminal = 16,
-        ForcedLocRefType = 17,
-        MarkerColor = 18,
-        LoopingSound = 19,
-        ActivationSound = 20,
-        WaterType = 21,
-        ActivateTextOverride = 22,
-        Flags = 23,
-        InteractionKeyword = 24,
-        RadioReceiver = 25,
-        Conditions = 26,
-        NavmeshGeometry = 27,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        PreviewTransform = 11,
+        AnimationSound = 12,
+        Name = 13,
+        Model = 14,
+        Destructible = 15,
+        Keywords = 16,
+        Properties = 17,
+        NativeTerminal = 18,
+        ForcedLocRefType = 19,
+        MarkerColor = 20,
+        LoopingSound = 21,
+        ActivationSound = 22,
+        WaterType = 23,
+        ActivateTextOverride = 24,
+        Flags = 25,
+        InteractionKeyword = 26,
+        RadioReceiver = 27,
+        Conditions = 28,
+        NavmeshGeometry = 29,
     }
     #endregion
 
@@ -1946,7 +1952,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 21;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 30;
 
         public static readonly Type MaskType = typeof(Activator.Mask<>);
 
@@ -2414,6 +2420,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Activator_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Activator_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Activator_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Activator_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Activator_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2436,6 +2446,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Activator_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Activator_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Activator_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Activator_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

@@ -268,6 +268,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -297,6 +299,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1557,30 +1561,32 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        Name = 7,
-        Description = 8,
-        Icon = 9,
-        Model = 10,
-        Flags = 11,
-        BaseCost = 12,
-        Unused = 13,
-        Resistance = 14,
-        CounterEffectCount = 15,
-        Light = 16,
-        ProjectileSpeed = 17,
-        EffectShader = 18,
-        ObjectDisplayShader = 19,
-        EffectSound = 20,
-        BoltSound = 21,
-        HitSound = 22,
-        AreaSound = 23,
-        ConstantEffectEnchantmentFactor = 24,
-        ConstantEffectBarterFactor = 25,
-        Archetype = 26,
-        CounterEffects = 27,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        Name = 9,
+        Description = 10,
+        Icon = 11,
+        Model = 12,
+        Flags = 13,
+        BaseCost = 14,
+        Unused = 15,
+        Resistance = 16,
+        CounterEffectCount = 17,
+        Light = 18,
+        ProjectileSpeed = 19,
+        EffectShader = 20,
+        ObjectDisplayShader = 21,
+        EffectSound = 22,
+        BoltSound = 23,
+        HitSound = 24,
+        AreaSound = 25,
+        ConstantEffectEnchantmentFactor = 26,
+        ConstantEffectBarterFactor = 27,
+        Archetype = 28,
+        CounterEffects = 29,
     }
     #endregion
 
@@ -1593,7 +1599,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 21;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 30;
 
         public static readonly Type MaskType = typeof(MagicEffect.Mask<>);
 
@@ -1984,6 +1990,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (MagicEffect_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (MagicEffect_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (MagicEffect_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (MagicEffect_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (MagicEffect_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -2006,6 +2016,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (MagicEffect_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (MagicEffect_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (MagicEffect_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (MagicEffect_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

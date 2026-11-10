@@ -185,6 +185,8 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem TextureLowerLayer,
                 TItem TextureUpperLayer,
@@ -199,6 +201,8 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.TextureLowerLayer = TextureLowerLayer;
@@ -1128,15 +1132,17 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        OblivionMajorRecordFlags = 4,
-        TextureLowerLayer = 5,
-        TextureUpperLayer = 6,
-        Model = 7,
-        Colors = 8,
-        FogDistance = 9,
-        HDRData = 10,
-        Data = 11,
-        Sounds = 12,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        OblivionMajorRecordFlags = 6,
+        TextureLowerLayer = 7,
+        TextureUpperLayer = 8,
+        Model = 9,
+        Colors = 10,
+        FogDistance = 11,
+        HDRData = 12,
+        Data = 13,
+        Sounds = 14,
     }
     #endregion
 
@@ -1149,7 +1155,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 8;
 
-        public const ushort FieldCount = 13;
+        public const ushort FieldCount = 15;
 
         public static readonly Type MaskType = typeof(Weather.Mask<>);
 
@@ -1479,6 +1485,10 @@ namespace Mutagen.Bethesda.Oblivion
                     return (Weather_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (Weather_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Weather_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Weather_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (Weather_FieldIndex)((int)index);
                 default:
@@ -1497,6 +1507,10 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Weather_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Weather_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Weather_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Weather_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

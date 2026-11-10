@@ -254,6 +254,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -278,6 +280,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -1491,25 +1495,27 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        ObjectBounds = 7,
-        Name = 8,
-        Keywords = 9,
-        MenuDisplayObject = 10,
-        EquipmentType = 11,
-        Description = 12,
-        BaseCost = 13,
-        Flags = 14,
-        Type = 15,
-        ChargeTime = 16,
-        CastType = 17,
-        TargetType = 18,
-        CastDuration = 19,
-        Range = 20,
-        HalfCostPerk = 21,
-        Effects = 22,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        ObjectBounds = 9,
+        Name = 10,
+        Keywords = 11,
+        MenuDisplayObject = 12,
+        EquipmentType = 13,
+        Description = 14,
+        BaseCost = 15,
+        Flags = 16,
+        Type = 17,
+        ChargeTime = 18,
+        CastType = 19,
+        TargetType = 20,
+        CastDuration = 21,
+        Range = 22,
+        HalfCostPerk = 23,
+        Effects = 24,
     }
     #endregion
 
@@ -1522,7 +1528,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 16;
 
-        public const ushort FieldCount = 23;
+        public const ushort FieldCount = 25;
 
         public static readonly Type MaskType = typeof(Spell.Mask<>);
 
@@ -1888,6 +1894,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (Spell_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (Spell_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Spell_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Spell_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (Spell_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -1910,6 +1920,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Spell_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Spell_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Spell_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Spell_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

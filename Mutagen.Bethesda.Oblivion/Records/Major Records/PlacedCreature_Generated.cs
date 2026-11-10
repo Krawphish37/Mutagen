@@ -180,6 +180,8 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem Base,
                 TItem Owner,
@@ -195,6 +197,8 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.Base = Base;
@@ -1011,16 +1015,18 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        OblivionMajorRecordFlags = 4,
-        Base = 5,
-        Owner = 6,
-        FactionRank = 7,
-        GlobalVariable = 8,
-        DistantLODData = 9,
-        EnableParent = 10,
-        RagdollData = 11,
-        Scale = 12,
-        Location = 13,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        OblivionMajorRecordFlags = 6,
+        Base = 7,
+        Owner = 8,
+        FactionRank = 9,
+        GlobalVariable = 10,
+        DistantLODData = 11,
+        EnableParent = 12,
+        RagdollData = 13,
+        Scale = 14,
+        Location = 15,
     }
     #endregion
 
@@ -1033,7 +1039,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 9;
 
-        public const ushort FieldCount = 14;
+        public const ushort FieldCount = 16;
 
         public static readonly Type MaskType = typeof(PlacedCreature.Mask<>);
 
@@ -1342,6 +1348,10 @@ namespace Mutagen.Bethesda.Oblivion
                     return (PlacedCreature_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (PlacedCreature_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedCreature_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (PlacedCreature_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (PlacedCreature_FieldIndex)((int)index);
                 default:
@@ -1360,6 +1370,10 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (PlacedCreature_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (PlacedCreature_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (PlacedCreature_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (PlacedCreature_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

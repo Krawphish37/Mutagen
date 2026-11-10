@@ -219,6 +219,8 @@ namespace Mutagen.Bethesda.Oblivion
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem OblivionMajorRecordFlags,
                 TItem Name,
                 TItem Script,
@@ -237,6 +239,8 @@ namespace Mutagen.Bethesda.Oblivion
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 OblivionMajorRecordFlags: OblivionMajorRecordFlags)
             {
                 this.Name = Name;
@@ -1170,19 +1174,21 @@ namespace Mutagen.Bethesda.Oblivion
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        OblivionMajorRecordFlags = 4,
-        Name = 5,
-        Script = 6,
-        Enchantment = 7,
-        EnchantmentPoints = 8,
-        ClothingFlags = 9,
-        MaleBipedModel = 10,
-        MaleWorldModel = 11,
-        MaleIcon = 12,
-        FemaleBipedModel = 13,
-        FemaleWorldModel = 14,
-        FemaleIcon = 15,
-        Data = 16,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        OblivionMajorRecordFlags = 6,
+        Name = 7,
+        Script = 8,
+        Enchantment = 9,
+        EnchantmentPoints = 10,
+        ClothingFlags = 11,
+        MaleBipedModel = 12,
+        MaleWorldModel = 13,
+        MaleIcon = 14,
+        FemaleBipedModel = 15,
+        FemaleWorldModel = 16,
+        FemaleIcon = 17,
+        Data = 18,
     }
     #endregion
 
@@ -1195,7 +1201,7 @@ namespace Mutagen.Bethesda.Oblivion
 
         public const ushort AdditionalFieldCount = 12;
 
-        public const ushort FieldCount = 17;
+        public const ushort FieldCount = 19;
 
         public static readonly Type MaskType = typeof(Armor.Mask<>);
 
@@ -1575,6 +1581,10 @@ namespace Mutagen.Bethesda.Oblivion
                     return (Armor_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.EditorID:
                     return (Armor_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Armor_FieldIndex)((int)index);
+                case OblivionMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Armor_FieldIndex)((int)index);
                 case OblivionMajorRecord_FieldIndex.OblivionMajorRecordFlags:
                     return (Armor_FieldIndex)((int)index);
                 default:
@@ -1593,6 +1603,10 @@ namespace Mutagen.Bethesda.Oblivion
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Armor_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Armor_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Armor_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Armor_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

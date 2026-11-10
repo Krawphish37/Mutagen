@@ -425,6 +425,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -456,6 +458,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2490,32 +2494,34 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        LightLayer = 10,
-        Name = 11,
-        ObjectPaletteDefaults = 12,
-        Transforms = 13,
-        XalgFlags = 14,
-        Components = 15,
-        Model = 16,
-        BaseObjectList = 17,
-        RankTemplate = 18,
-        AddIntoLegendary = 19,
-        LegendaryMods = 20,
-        LnamEntries = 21,
-        IncludeFilters = 22,
-        ExcludeFilters = 23,
-        RerollCosts = 24,
-        PickCosts = 25,
-        QualityMods = 26,
-        QualityAllowedKeywords = 27,
-        QualityDisallowedKeywords = 28,
-        QualityUpgradeCosts = 29,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        LightLayer = 12,
+        Name = 13,
+        ObjectPaletteDefaults = 14,
+        Transforms = 15,
+        XalgFlags = 16,
+        Components = 17,
+        Model = 18,
+        BaseObjectList = 19,
+        RankTemplate = 20,
+        AddIntoLegendary = 21,
+        LegendaryMods = 22,
+        LnamEntries = 23,
+        IncludeFilters = 24,
+        ExcludeFilters = 25,
+        RerollCosts = 26,
+        PickCosts = 27,
+        QualityMods = 28,
+        QualityAllowedKeywords = 29,
+        QualityDisallowedKeywords = 30,
+        QualityUpgradeCosts = 31,
     }
     #endregion
 
@@ -2528,7 +2534,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 23;
 
-        public const ushort FieldCount = 30;
+        public const ushort FieldCount = 32;
 
         public static readonly Type MaskType = typeof(LegendaryItem.Mask<>);
 
@@ -3155,6 +3161,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (LegendaryItem_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (LegendaryItem_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (LegendaryItem_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (LegendaryItem_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (LegendaryItem_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -3177,6 +3187,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (LegendaryItem_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (LegendaryItem_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (LegendaryItem_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (LegendaryItem_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

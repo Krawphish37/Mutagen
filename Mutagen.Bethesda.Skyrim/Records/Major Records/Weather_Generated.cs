@@ -533,6 +533,8 @@ namespace Mutagen.Bethesda.Skyrim
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem SkyrimMajorRecordFlags,
@@ -602,6 +604,8 @@ namespace Mutagen.Bethesda.Skyrim
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 SkyrimMajorRecordFlags: SkyrimMajorRecordFlags)
@@ -3355,70 +3359,72 @@ namespace Mutagen.Bethesda.Skyrim
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        SkyrimMajorRecordFlags = 6,
-        CloudTextures = 7,
-        DNAM = 8,
-        CNAM = 9,
-        ANAM = 10,
-        BNAM = 11,
-        LNAM = 12,
-        Precipitation = 13,
-        VisualEffect = 14,
-        ONAM = 15,
-        Clouds = 16,
-        SkyUpperColor = 17,
-        FogNearColor = 18,
-        UnknownColor = 19,
-        AmbientColor = 20,
-        SunlightColor = 21,
-        SunColor = 22,
-        StarsColor = 23,
-        SkyLowerColor = 24,
-        HorizonColor = 25,
-        EffectLightingColor = 26,
-        CloudLodDiffuseColor = 27,
-        CloudLodAmbientColor = 28,
-        FogFarColor = 29,
-        SkyStaticsColor = 30,
-        WaterMultiplierColor = 31,
-        SunGlareColor = 32,
-        MoonGlareColor = 33,
-        FogDistanceDayNear = 34,
-        FogDistanceDayFar = 35,
-        FogDistanceNightNear = 36,
-        FogDistanceNightFar = 37,
-        FogDistanceDayPower = 38,
-        FogDistanceNightPower = 39,
-        FogDistanceDayMax = 40,
-        FogDistanceNightMax = 41,
-        WindSpeed = 42,
-        Unknown = 43,
-        TransDelta = 44,
-        SunGlare = 45,
-        SunDamage = 46,
-        PrecipitationBeginFadeIn = 47,
-        PrecipitationEndFadeOut = 48,
-        ThunderLightningBeginFadeIn = 49,
-        ThunderLightningEndFadeOut = 50,
-        ThunderLightningFrequency = 51,
-        Flags = 52,
-        LightningColor = 53,
-        VisualEffectBegin = 54,
-        VisualEffectEnd = 55,
-        WindDirection = 56,
-        WindDirectionRange = 57,
-        Sounds = 58,
-        SkyStatics = 59,
-        ImageSpaces = 60,
-        VolumetricLighting = 61,
-        DirectionalAmbientLightingColors = 62,
-        NAM2 = 63,
-        NAM3 = 64,
-        Aurora = 65,
-        SunGlareLensFlare = 66,
-        NAM0DataTypeState = 67,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        SkyrimMajorRecordFlags = 8,
+        CloudTextures = 9,
+        DNAM = 10,
+        CNAM = 11,
+        ANAM = 12,
+        BNAM = 13,
+        LNAM = 14,
+        Precipitation = 15,
+        VisualEffect = 16,
+        ONAM = 17,
+        Clouds = 18,
+        SkyUpperColor = 19,
+        FogNearColor = 20,
+        UnknownColor = 21,
+        AmbientColor = 22,
+        SunlightColor = 23,
+        SunColor = 24,
+        StarsColor = 25,
+        SkyLowerColor = 26,
+        HorizonColor = 27,
+        EffectLightingColor = 28,
+        CloudLodDiffuseColor = 29,
+        CloudLodAmbientColor = 30,
+        FogFarColor = 31,
+        SkyStaticsColor = 32,
+        WaterMultiplierColor = 33,
+        SunGlareColor = 34,
+        MoonGlareColor = 35,
+        FogDistanceDayNear = 36,
+        FogDistanceDayFar = 37,
+        FogDistanceNightNear = 38,
+        FogDistanceNightFar = 39,
+        FogDistanceDayPower = 40,
+        FogDistanceNightPower = 41,
+        FogDistanceDayMax = 42,
+        FogDistanceNightMax = 43,
+        WindSpeed = 44,
+        Unknown = 45,
+        TransDelta = 46,
+        SunGlare = 47,
+        SunDamage = 48,
+        PrecipitationBeginFadeIn = 49,
+        PrecipitationEndFadeOut = 50,
+        ThunderLightningBeginFadeIn = 51,
+        ThunderLightningEndFadeOut = 52,
+        ThunderLightningFrequency = 53,
+        Flags = 54,
+        LightningColor = 55,
+        VisualEffectBegin = 56,
+        VisualEffectEnd = 57,
+        WindDirection = 58,
+        WindDirectionRange = 59,
+        Sounds = 60,
+        SkyStatics = 61,
+        ImageSpaces = 62,
+        VolumetricLighting = 63,
+        DirectionalAmbientLightingColors = 64,
+        NAM2 = 65,
+        NAM3 = 66,
+        Aurora = 67,
+        SunGlareLensFlare = 68,
+        NAM0DataTypeState = 69,
     }
     #endregion
 
@@ -3431,7 +3437,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 61;
 
-        public const ushort FieldCount = 68;
+        public const ushort FieldCount = 70;
 
         public static readonly Type MaskType = typeof(Weather.Mask<>);
 
@@ -4168,6 +4174,10 @@ namespace Mutagen.Bethesda.Skyrim
                     return (Weather_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.EditorID:
                     return (Weather_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Weather_FieldIndex)((int)index);
+                case SkyrimMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Weather_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.FormVersion:
                     return (Weather_FieldIndex)((int)index);
                 case SkyrimMajorRecord_FieldIndex.Version2:
@@ -4190,6 +4200,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Weather_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Weather_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Weather_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Weather_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

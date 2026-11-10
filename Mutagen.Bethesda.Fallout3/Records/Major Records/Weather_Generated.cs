@@ -288,6 +288,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -315,6 +317,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -1521,28 +1525,30 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        ImageSpaceSunrise = 7,
-        ImageSpaceDay = 8,
-        ImageSpaceSunset = 9,
-        ImageSpaceNight = 10,
-        ImageSpaceHighNoon = 11,
-        ImageSpaceMidnight = 12,
-        CloudTextureLayer0 = 13,
-        CloudTextureLayer1 = 14,
-        CloudTextureLayer2 = 15,
-        CloudTextureLayer3 = 16,
-        Model = 17,
-        LNAM = 18,
-        CloudSpeeds = 19,
-        CloudLayerColors = 20,
-        Colors = 21,
-        FogDistance = 22,
-        INAM = 23,
-        Data = 24,
-        Sounds = 25,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        ImageSpaceSunrise = 9,
+        ImageSpaceDay = 10,
+        ImageSpaceSunset = 11,
+        ImageSpaceNight = 12,
+        ImageSpaceHighNoon = 13,
+        ImageSpaceMidnight = 14,
+        CloudTextureLayer0 = 15,
+        CloudTextureLayer1 = 16,
+        CloudTextureLayer2 = 17,
+        CloudTextureLayer3 = 18,
+        Model = 19,
+        LNAM = 20,
+        CloudSpeeds = 21,
+        CloudLayerColors = 22,
+        Colors = 23,
+        FogDistance = 24,
+        INAM = 25,
+        Data = 26,
+        Sounds = 27,
     }
     #endregion
 
@@ -1555,7 +1561,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 19;
 
-        public const ushort FieldCount = 26;
+        public const ushort FieldCount = 28;
 
         public static readonly Type MaskType = typeof(Weather.Mask<>);
 
@@ -1972,6 +1978,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Weather_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Weather_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Weather_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Weather_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Weather_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -1994,6 +2004,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Weather_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Weather_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Weather_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Weather_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

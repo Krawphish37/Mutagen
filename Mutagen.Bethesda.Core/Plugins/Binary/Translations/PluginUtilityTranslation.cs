@@ -676,6 +676,8 @@ internal static class PluginUtilityTranslation
                         using (var bufferWriter = new MutagenWriter(buffer, writerToUse.MetaData, dispose: false))
                         {
                             writeRecordTypes(item, bufferWriter, translationParams);
+                            // Subrecords no field claimed, kept from the read (written only to the same plugin and master list)
+                            MajorRecordUnknownSubrecords.Write(item, writer, bufferWriter);
                             if (endMarker != null)
                             {
                                 using (HeaderExport.Subrecord(bufferWriter, endMarker.Value)) {}
@@ -691,6 +693,7 @@ internal static class PluginUtilityTranslation
                     else
                     {
                         writeRecordTypes(item, writerToUse, translationParams);
+                        MajorRecordUnknownSubrecords.Write(item, writer, writerToUse);
                         if (endMarker != null)
                         {
                             using (HeaderExport.Subrecord(writerToUse, endMarker.Value)) {}

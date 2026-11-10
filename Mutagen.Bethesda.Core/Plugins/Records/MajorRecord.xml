@@ -6,6 +6,8 @@
       <FormKey name="FormKey" setPermission="Protected" nullable="False" internalSetInterface="true" copy="DeepCopyOnly" alwaysCopy="true" generateInterfaceMembers="false" />
       <UInt32 name="VersionControl" nullable="False" />
       <String name="EditorID" recordType="EDID" generateClassMembers="false" />
+      <ByteArray name="UnknownSubrecords" nullable="True" binary="NoGeneration" />
+      <String name="UnknownSubrecordsSource" nullable="True" binary="NoGeneration" />
     </Fields>
   </Object>
 </Loqui>

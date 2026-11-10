@@ -404,6 +404,8 @@ namespace Mutagen.Bethesda.Fallout3
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout3MajorRecordFlags,
@@ -445,6 +447,8 @@ namespace Mutagen.Bethesda.Fallout3
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout3MajorRecordFlags: Fallout3MajorRecordFlags)
@@ -2618,42 +2622,44 @@ namespace Mutagen.Bethesda.Fallout3
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout3MajorRecordFlags = 6,
-        Name = 7,
-        Flags = 8,
-        Grid = 9,
-        Lighting = 10,
-        FootstepMaterials = 11,
-        LightTemplate = 12,
-        LightInheritFlags = 13,
-        WaterHeight = 14,
-        WaterNoiseTexture = 15,
-        Regions = 16,
-        ImageSpace = 17,
-        XCET = 18,
-        EncounterZone = 19,
-        Climate = 20,
-        Water = 21,
-        Owner = 22,
-        FactionRank = 23,
-        AcousticSpace = 24,
-        XCMT = 25,
-        MusicType = 26,
-        Landscape = 27,
-        NavigationMeshes = 28,
-        Timestamp = 29,
-        UnknownGroupData = 30,
-        PersistentTimestamp = 31,
-        PersistentUnknownGroupData = 32,
-        Persistent = 33,
-        TemporaryTimestamp = 34,
-        TemporaryUnknownGroupData = 35,
-        Temporary = 36,
-        VisibleWhenDistantTimestamp = 37,
-        VisibleWhenDistantUnknownGroupData = 38,
-        VisibleWhenDistant = 39,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout3MajorRecordFlags = 8,
+        Name = 9,
+        Flags = 10,
+        Grid = 11,
+        Lighting = 12,
+        FootstepMaterials = 13,
+        LightTemplate = 14,
+        LightInheritFlags = 15,
+        WaterHeight = 16,
+        WaterNoiseTexture = 17,
+        Regions = 18,
+        ImageSpace = 19,
+        XCET = 20,
+        EncounterZone = 21,
+        Climate = 22,
+        Water = 23,
+        Owner = 24,
+        FactionRank = 25,
+        AcousticSpace = 26,
+        XCMT = 27,
+        MusicType = 28,
+        Landscape = 29,
+        NavigationMeshes = 30,
+        Timestamp = 31,
+        UnknownGroupData = 32,
+        PersistentTimestamp = 33,
+        PersistentUnknownGroupData = 34,
+        Persistent = 35,
+        TemporaryTimestamp = 36,
+        TemporaryUnknownGroupData = 37,
+        Temporary = 38,
+        VisibleWhenDistantTimestamp = 39,
+        VisibleWhenDistantUnknownGroupData = 40,
+        VisibleWhenDistant = 41,
     }
     #endregion
 
@@ -2666,7 +2672,7 @@ namespace Mutagen.Bethesda.Fallout3
 
         public const ushort AdditionalFieldCount = 33;
 
-        public const ushort FieldCount = 40;
+        public const ushort FieldCount = 42;
 
         public static readonly Type MaskType = typeof(Cell.Mask<>);
 
@@ -3446,6 +3452,10 @@ namespace Mutagen.Bethesda.Fallout3
                     return (Cell_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.EditorID:
                     return (Cell_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Cell_FieldIndex)((int)index);
+                case Fallout3MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Cell_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.FormVersion:
                     return (Cell_FieldIndex)((int)index);
                 case Fallout3MajorRecord_FieldIndex.Version2:
@@ -3468,6 +3478,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Cell_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Cell_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Cell_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Cell_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

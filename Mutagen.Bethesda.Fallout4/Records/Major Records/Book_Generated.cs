@@ -345,6 +345,8 @@ namespace Mutagen.Bethesda.Fallout4
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem Fallout4MajorRecordFlags,
@@ -373,6 +375,8 @@ namespace Mutagen.Bethesda.Fallout4
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 Fallout4MajorRecordFlags: Fallout4MajorRecordFlags)
@@ -1710,29 +1714,31 @@ namespace Mutagen.Bethesda.Fallout4
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        Fallout4MajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        PreviewTransform = 9,
-        Name = 10,
-        Model = 11,
-        Icons = 12,
-        BookText = 13,
-        Destructible = 14,
-        PickUpSound = 15,
-        PutDownSound = 16,
-        Keywords = 17,
-        FeaturedItemMessage = 18,
-        Value = 19,
-        Weight = 20,
-        Flags = 21,
-        Teaches = 22,
-        TextOffsetX = 23,
-        TextOffsetY = 24,
-        Description = 25,
-        InventoryArt = 26,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        Fallout4MajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        PreviewTransform = 11,
+        Name = 12,
+        Model = 13,
+        Icons = 14,
+        BookText = 15,
+        Destructible = 16,
+        PickUpSound = 17,
+        PutDownSound = 18,
+        Keywords = 19,
+        FeaturedItemMessage = 20,
+        Value = 21,
+        Weight = 22,
+        Flags = 23,
+        Teaches = 24,
+        TextOffsetX = 25,
+        TextOffsetY = 26,
+        Description = 27,
+        InventoryArt = 28,
     }
     #endregion
 
@@ -1745,7 +1751,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 20;
 
-        public const ushort FieldCount = 27;
+        public const ushort FieldCount = 29;
 
         public static readonly Type MaskType = typeof(Book.Mask<>);
 
@@ -2164,6 +2170,10 @@ namespace Mutagen.Bethesda.Fallout4
                     return (Book_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.EditorID:
                     return (Book_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Book_FieldIndex)((int)index);
+                case Fallout4MajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Book_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.FormVersion:
                     return (Book_FieldIndex)((int)index);
                 case Fallout4MajorRecord_FieldIndex.Version2:
@@ -2186,6 +2196,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Book_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Book_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Book_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Book_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

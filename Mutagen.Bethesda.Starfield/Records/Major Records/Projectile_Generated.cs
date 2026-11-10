@@ -501,6 +501,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -557,6 +559,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2714,57 +2718,59 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        ObjectPaletteDefaults = 10,
-        XalgFlags = 11,
-        Components = 12,
-        Name = 13,
-        Model = 14,
-        Destructible = 15,
-        Unused = 16,
-        Flags = 17,
-        Gravity = 18,
-        Speed = 19,
-        Range = 20,
-        Light = 21,
-        MuzzleFlash = 22,
-        ExplosionAltTriggerProximity = 23,
-        ExplosionAltTriggerTimer = 24,
-        Explosion = 25,
-        MuzzleFlashDuration = 26,
-        FadeDuration = 27,
-        ImpactForce = 28,
-        DefaultWeaponSource = 29,
-        ConeSpread = 30,
-        CollisionRadius = 31,
-        Lifetime = 32,
-        RelaunchInterval = 33,
-        DecalData = 34,
-        CollisionLayer = 35,
-        TracerFrequency = 36,
-        VatsProjectile = 37,
-        MuzzleFlashParticleDefine = 38,
-        SeekStrength = 39,
-        SoundActivationCondition = 40,
-        Type = 41,
-        ParticleDefine = 42,
-        TracerSpeed = 43,
-        ZeroGRecoilStrength = 44,
-        ZeroGRecoilLength = 45,
-        ExplosionDelayBeforeRemoval = 46,
-        MuzzleFlashModel = 47,
-        TextureFilesHashes = 48,
-        MuzzleFlashLightLayer = 49,
-        ActiveSound = 50,
-        CountdownEndSound = 51,
-        DisableSound = 52,
-        SoundLevel = 53,
-        CurveTable = 54,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        ObjectPaletteDefaults = 12,
+        XalgFlags = 13,
+        Components = 14,
+        Name = 15,
+        Model = 16,
+        Destructible = 17,
+        Unused = 18,
+        Flags = 19,
+        Gravity = 20,
+        Speed = 21,
+        Range = 22,
+        Light = 23,
+        MuzzleFlash = 24,
+        ExplosionAltTriggerProximity = 25,
+        ExplosionAltTriggerTimer = 26,
+        Explosion = 27,
+        MuzzleFlashDuration = 28,
+        FadeDuration = 29,
+        ImpactForce = 30,
+        DefaultWeaponSource = 31,
+        ConeSpread = 32,
+        CollisionRadius = 33,
+        Lifetime = 34,
+        RelaunchInterval = 35,
+        DecalData = 36,
+        CollisionLayer = 37,
+        TracerFrequency = 38,
+        VatsProjectile = 39,
+        MuzzleFlashParticleDefine = 40,
+        SeekStrength = 41,
+        SoundActivationCondition = 42,
+        Type = 43,
+        ParticleDefine = 44,
+        TracerSpeed = 45,
+        ZeroGRecoilStrength = 46,
+        ZeroGRecoilLength = 47,
+        ExplosionDelayBeforeRemoval = 48,
+        MuzzleFlashModel = 49,
+        TextureFilesHashes = 50,
+        MuzzleFlashLightLayer = 51,
+        ActiveSound = 52,
+        CountdownEndSound = 53,
+        DisableSound = 54,
+        SoundLevel = 55,
+        CurveTable = 56,
     }
     #endregion
 
@@ -2777,7 +2783,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 48;
 
-        public const ushort FieldCount = 55;
+        public const ushort FieldCount = 57;
 
         public static readonly Type MaskType = typeof(Projectile.Mask<>);
 
@@ -3427,6 +3433,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Projectile_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Projectile_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Projectile_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Projectile_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Projectile_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -3449,6 +3459,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Projectile_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Projectile_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Projectile_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Projectile_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

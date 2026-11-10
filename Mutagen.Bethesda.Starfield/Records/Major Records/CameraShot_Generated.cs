@@ -246,6 +246,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -275,6 +277,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -1627,30 +1631,32 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        Model = 8,
-        Keywords = 9,
-        ContextNotes = 10,
-        Conditions = 11,
-        Action = 12,
-        Location = 13,
-        Target = 14,
-        Flags = 15,
-        TimeMultiplierPlayer = 16,
-        TimeMultiplierTarget = 17,
-        TimeMultiplierGlobal = 18,
-        MaxTime = 19,
-        MinTime = 20,
-        TargetPercentBetweenActors = 21,
-        NearTargetDistance = 22,
-        LocationSpring = 23,
-        TargetSpring = 24,
-        RotationOffset = 25,
-        ImageSpaceModifier = 26,
-        Animation = 27,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        Model = 10,
+        Keywords = 11,
+        ContextNotes = 12,
+        Conditions = 13,
+        Action = 14,
+        Location = 15,
+        Target = 16,
+        Flags = 17,
+        TimeMultiplierPlayer = 18,
+        TimeMultiplierTarget = 19,
+        TimeMultiplierGlobal = 20,
+        MaxTime = 21,
+        MinTime = 22,
+        TargetPercentBetweenActors = 23,
+        NearTargetDistance = 24,
+        LocationSpring = 25,
+        TargetSpring = 26,
+        RotationOffset = 27,
+        ImageSpaceModifier = 28,
+        Animation = 29,
     }
     #endregion
 
@@ -1663,7 +1669,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 21;
 
-        public const ushort FieldCount = 28;
+        public const ushort FieldCount = 30;
 
         public static readonly Type MaskType = typeof(CameraShot.Mask<>);
 
@@ -2102,6 +2108,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (CameraShot_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (CameraShot_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (CameraShot_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (CameraShot_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (CameraShot_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2124,6 +2134,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (CameraShot_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (CameraShot_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (CameraShot_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (CameraShot_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

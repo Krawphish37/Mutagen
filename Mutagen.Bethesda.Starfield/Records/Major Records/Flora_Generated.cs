@@ -446,6 +446,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -482,6 +484,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2322,37 +2326,39 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        VirtualMachineAdapter = 7,
-        ObjectBounds = 8,
-        DirtinessScale = 9,
-        ObjectPaletteDefaults = 10,
-        Transforms = 11,
-        Components = 12,
-        Name = 13,
-        Model = 14,
-        Destructible = 15,
-        Keywords = 16,
-        Properties = 17,
-        MarkerColor = 18,
-        ActivateTextOverride = 19,
-        Flags = 20,
-        ActivationAngleForPlayer = 21,
-        Ingredient = 22,
-        HarvestSound = 23,
-        Production = 24,
-        AttachParentSlots = 25,
-        ObjectTemplates = 26,
-        ActionKeyword = 27,
-        DamageRequiredToHarvest = 28,
-        MaxHarvestCount = 29,
-        MinHarvestCount = 30,
-        MaxGlobal = 31,
-        MinGlobal = 32,
-        Explosion = 33,
-        HarvestLoopingSound = 34,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        VirtualMachineAdapter = 9,
+        ObjectBounds = 10,
+        DirtinessScale = 11,
+        ObjectPaletteDefaults = 12,
+        Transforms = 13,
+        Components = 14,
+        Name = 15,
+        Model = 16,
+        Destructible = 17,
+        Keywords = 18,
+        Properties = 19,
+        MarkerColor = 20,
+        ActivateTextOverride = 21,
+        Flags = 22,
+        ActivationAngleForPlayer = 23,
+        Ingredient = 24,
+        HarvestSound = 25,
+        Production = 26,
+        AttachParentSlots = 27,
+        ObjectTemplates = 28,
+        ActionKeyword = 29,
+        DamageRequiredToHarvest = 30,
+        MaxHarvestCount = 31,
+        MinHarvestCount = 32,
+        MaxGlobal = 33,
+        MinGlobal = 34,
+        Explosion = 35,
+        HarvestLoopingSound = 36,
     }
     #endregion
 
@@ -2365,7 +2371,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 28;
 
-        public const ushort FieldCount = 35;
+        public const ushort FieldCount = 37;
 
         public static readonly Type MaskType = typeof(Flora.Mask<>);
 
@@ -2970,6 +2976,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Flora_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Flora_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Flora_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Flora_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Flora_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -2992,6 +3002,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Flora_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Flora_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Flora_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Flora_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");

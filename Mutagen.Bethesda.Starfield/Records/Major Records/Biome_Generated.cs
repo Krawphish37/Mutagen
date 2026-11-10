@@ -427,6 +427,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormKey,
                 TItem VersionControl,
                 TItem EditorID,
+                TItem UnknownSubrecords,
+                TItem UnknownSubrecordsSource,
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
@@ -467,6 +469,8 @@ namespace Mutagen.Bethesda.Starfield
                 FormKey: FormKey,
                 VersionControl: VersionControl,
                 EditorID: EditorID,
+                UnknownSubrecords: UnknownSubrecords,
+                UnknownSubrecordsSource: UnknownSubrecordsSource,
                 FormVersion: FormVersion,
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
@@ -2540,41 +2544,43 @@ namespace Mutagen.Bethesda.Starfield
         FormKey = 1,
         VersionControl = 2,
         EditorID = 3,
-        FormVersion = 4,
-        Version2 = 5,
-        StarfieldMajorRecordFlags = 6,
-        Name = 7,
-        Keywords = 8,
-        FilterString = 9,
-        Flora = 10,
-        ResourceGeneration = 11,
-        ProceduralObjectGeneration = 12,
-        ObjectSwaps = 13,
-        MaterialSwaps = 14,
-        Climate = 15,
-        Water = 16,
-        BlockDensityMult = 17,
-        CellDensityMult = 18,
-        ScanWorldspaceMult = 19,
-        Child = 20,
-        AmbienceSet = 21,
-        MusicType = 22,
-        TimeOfDay = 23,
-        PatternStyle = 24,
-        Color = 25,
-        SurfaceColor1 = 26,
-        SurfaceColor2 = 27,
-        RockTint = 28,
-        Type = 29,
-        MarkerObjectKeywords = 30,
-        Terrain = 31,
-        GroundLayerNormal = 32,
-        TerrainSettings = 33,
-        DistantView = 34,
-        GlobalLayerMaterial = 35,
-        BlockDensityMultGlobal = 36,
-        CellDensityMultGlobal = 37,
-        ScanWorldspaceMultGlobal = 38,
+        UnknownSubrecords = 4,
+        UnknownSubrecordsSource = 5,
+        FormVersion = 6,
+        Version2 = 7,
+        StarfieldMajorRecordFlags = 8,
+        Name = 9,
+        Keywords = 10,
+        FilterString = 11,
+        Flora = 12,
+        ResourceGeneration = 13,
+        ProceduralObjectGeneration = 14,
+        ObjectSwaps = 15,
+        MaterialSwaps = 16,
+        Climate = 17,
+        Water = 18,
+        BlockDensityMult = 19,
+        CellDensityMult = 20,
+        ScanWorldspaceMult = 21,
+        Child = 22,
+        AmbienceSet = 23,
+        MusicType = 24,
+        TimeOfDay = 25,
+        PatternStyle = 26,
+        Color = 27,
+        SurfaceColor1 = 28,
+        SurfaceColor2 = 29,
+        RockTint = 30,
+        Type = 31,
+        MarkerObjectKeywords = 32,
+        Terrain = 33,
+        GroundLayerNormal = 34,
+        TerrainSettings = 35,
+        DistantView = 36,
+        GlobalLayerMaterial = 37,
+        BlockDensityMultGlobal = 38,
+        CellDensityMultGlobal = 39,
+        ScanWorldspaceMultGlobal = 40,
     }
     #endregion
 
@@ -2587,7 +2593,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public const ushort AdditionalFieldCount = 32;
 
-        public const ushort FieldCount = 39;
+        public const ushort FieldCount = 41;
 
         public static readonly Type MaskType = typeof(Biome.Mask<>);
 
@@ -3179,6 +3185,10 @@ namespace Mutagen.Bethesda.Starfield
                     return (Biome_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
                     return (Biome_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Biome_FieldIndex)((int)index);
+                case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
+                    return (Biome_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
                     return (Biome_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
@@ -3201,6 +3211,10 @@ namespace Mutagen.Bethesda.Starfield
                 case MajorRecord_FieldIndex.VersionControl:
                     return (Biome_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
+                    return (Biome_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecords:
+                    return (Biome_FieldIndex)((int)index);
+                case MajorRecord_FieldIndex.UnknownSubrecordsSource:
                     return (Biome_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
