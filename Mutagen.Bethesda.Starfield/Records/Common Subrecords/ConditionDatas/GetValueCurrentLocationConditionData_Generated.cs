@@ -127,7 +127,7 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(
                 TItem RunOnType,
                 TItem Reference,
-                TItem Unknown3,
+                TItem ParameterThree,
                 TItem LinkedReferenceKeyword,
                 TItem UseAliases,
                 TItem UsePackageData,
@@ -138,7 +138,7 @@ namespace Mutagen.Bethesda.Starfield
             : base(
                 RunOnType: RunOnType,
                 Reference: Reference,
-                Unknown3: Unknown3,
+                ParameterThree: ParameterThree,
                 LinkedReferenceKeyword: LinkedReferenceKeyword,
                 UseAliases: UseAliases,
                 UsePackageData: UsePackageData)
@@ -721,7 +721,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         RunOnType = 0,
         Reference = 1,
-        Unknown3 = 2,
+        ParameterThree = 2,
         LinkedReferenceKeyword = 3,
         UseAliases = 4,
         UsePackageData = 5,
@@ -960,7 +960,7 @@ namespace Mutagen.Bethesda.Starfield
                     return (GetValueCurrentLocationConditionData_FieldIndex)((int)index);
                 case ConditionData_FieldIndex.Reference:
                     return (GetValueCurrentLocationConditionData_FieldIndex)((int)index);
-                case ConditionData_FieldIndex.Unknown3:
+                case ConditionData_FieldIndex.ParameterThree:
                     return (GetValueCurrentLocationConditionData_FieldIndex)((int)index);
                 case ConditionData_FieldIndex.LinkedReferenceKeyword:
                     return (GetValueCurrentLocationConditionData_FieldIndex)((int)index);

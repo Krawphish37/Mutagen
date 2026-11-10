@@ -68,9 +68,9 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<IStarfieldMajorRecordGetter> IConditionDataGetter.Reference => this.Reference;
         #endregion
-        #region Unknown3
-        public static readonly Int32 Unknown3Default = -1;
-        public Int32 Unknown3 { get; set; } = Unknown3Default;
+        #region ParameterThree
+        public static readonly Int32 ParameterThreeDefault = -1;
+        public Int32 ParameterThree { get; set; } = ParameterThreeDefault;
         #endregion
         #region LinkedReferenceKeyword
         private readonly IFormLink<IKeywordGetter> _LinkedReferenceKeyword = new FormLink<IKeywordGetter>();
@@ -129,7 +129,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.RunOnType = initialValue;
                 this.Reference = initialValue;
-                this.Unknown3 = initialValue;
+                this.ParameterThree = initialValue;
                 this.LinkedReferenceKeyword = initialValue;
                 this.UseAliases = initialValue;
                 this.UsePackageData = initialValue;
@@ -138,14 +138,14 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(
                 TItem RunOnType,
                 TItem Reference,
-                TItem Unknown3,
+                TItem ParameterThree,
                 TItem LinkedReferenceKeyword,
                 TItem UseAliases,
                 TItem UsePackageData)
             {
                 this.RunOnType = RunOnType;
                 this.Reference = Reference;
-                this.Unknown3 = Unknown3;
+                this.ParameterThree = ParameterThree;
                 this.LinkedReferenceKeyword = LinkedReferenceKeyword;
                 this.UseAliases = UseAliases;
                 this.UsePackageData = UsePackageData;
@@ -162,7 +162,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem RunOnType;
             public TItem Reference;
-            public TItem Unknown3;
+            public TItem ParameterThree;
             public TItem LinkedReferenceKeyword;
             public TItem UseAliases;
             public TItem UsePackageData;
@@ -180,7 +180,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.RunOnType, rhs.RunOnType)) return false;
                 if (!object.Equals(this.Reference, rhs.Reference)) return false;
-                if (!object.Equals(this.Unknown3, rhs.Unknown3)) return false;
+                if (!object.Equals(this.ParameterThree, rhs.ParameterThree)) return false;
                 if (!object.Equals(this.LinkedReferenceKeyword, rhs.LinkedReferenceKeyword)) return false;
                 if (!object.Equals(this.UseAliases, rhs.UseAliases)) return false;
                 if (!object.Equals(this.UsePackageData, rhs.UsePackageData)) return false;
@@ -191,7 +191,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.RunOnType);
                 hash.Add(this.Reference);
-                hash.Add(this.Unknown3);
+                hash.Add(this.ParameterThree);
                 hash.Add(this.LinkedReferenceKeyword);
                 hash.Add(this.UseAliases);
                 hash.Add(this.UsePackageData);
@@ -205,7 +205,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.RunOnType)) return false;
                 if (!eval(this.Reference)) return false;
-                if (!eval(this.Unknown3)) return false;
+                if (!eval(this.ParameterThree)) return false;
                 if (!eval(this.LinkedReferenceKeyword)) return false;
                 if (!eval(this.UseAliases)) return false;
                 if (!eval(this.UsePackageData)) return false;
@@ -218,7 +218,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.RunOnType)) return true;
                 if (eval(this.Reference)) return true;
-                if (eval(this.Unknown3)) return true;
+                if (eval(this.ParameterThree)) return true;
                 if (eval(this.LinkedReferenceKeyword)) return true;
                 if (eval(this.UseAliases)) return true;
                 if (eval(this.UsePackageData)) return true;
@@ -238,7 +238,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.RunOnType = eval(this.RunOnType);
                 obj.Reference = eval(this.Reference);
-                obj.Unknown3 = eval(this.Unknown3);
+                obj.ParameterThree = eval(this.ParameterThree);
                 obj.LinkedReferenceKeyword = eval(this.LinkedReferenceKeyword);
                 obj.UseAliases = eval(this.UseAliases);
                 obj.UsePackageData = eval(this.UsePackageData);
@@ -268,9 +268,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Reference, "Reference");
                     }
-                    if (printMask?.Unknown3 ?? true)
+                    if (printMask?.ParameterThree ?? true)
                     {
-                        sb.AppendItem(Unknown3, "Unknown3");
+                        sb.AppendItem(ParameterThree, "ParameterThree");
                     }
                     if (printMask?.LinkedReferenceKeyword ?? true)
                     {
@@ -310,7 +310,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? RunOnType;
             public Exception? Reference;
-            public Exception? Unknown3;
+            public Exception? ParameterThree;
             public Exception? LinkedReferenceKeyword;
             public Exception? UseAliases;
             public Exception? UsePackageData;
@@ -326,8 +326,8 @@ namespace Mutagen.Bethesda.Starfield
                         return RunOnType;
                     case ConditionData_FieldIndex.Reference:
                         return Reference;
-                    case ConditionData_FieldIndex.Unknown3:
-                        return Unknown3;
+                    case ConditionData_FieldIndex.ParameterThree:
+                        return ParameterThree;
                     case ConditionData_FieldIndex.LinkedReferenceKeyword:
                         return LinkedReferenceKeyword;
                     case ConditionData_FieldIndex.UseAliases:
@@ -350,8 +350,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ConditionData_FieldIndex.Reference:
                         this.Reference = ex;
                         break;
-                    case ConditionData_FieldIndex.Unknown3:
-                        this.Unknown3 = ex;
+                    case ConditionData_FieldIndex.ParameterThree:
+                        this.ParameterThree = ex;
                         break;
                     case ConditionData_FieldIndex.LinkedReferenceKeyword:
                         this.LinkedReferenceKeyword = ex;
@@ -378,8 +378,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ConditionData_FieldIndex.Reference:
                         this.Reference = (Exception?)obj;
                         break;
-                    case ConditionData_FieldIndex.Unknown3:
-                        this.Unknown3 = (Exception?)obj;
+                    case ConditionData_FieldIndex.ParameterThree:
+                        this.ParameterThree = (Exception?)obj;
                         break;
                     case ConditionData_FieldIndex.LinkedReferenceKeyword:
                         this.LinkedReferenceKeyword = (Exception?)obj;
@@ -400,7 +400,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (RunOnType != null) return true;
                 if (Reference != null) return true;
-                if (Unknown3 != null) return true;
+                if (ParameterThree != null) return true;
                 if (LinkedReferenceKeyword != null) return true;
                 if (UseAliases != null) return true;
                 if (UsePackageData != null) return true;
@@ -436,7 +436,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Reference, "Reference");
                 }
                 {
-                    sb.AppendItem(Unknown3, "Unknown3");
+                    sb.AppendItem(ParameterThree, "ParameterThree");
                 }
                 {
                     sb.AppendItem(LinkedReferenceKeyword, "LinkedReferenceKeyword");
@@ -457,7 +457,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.RunOnType = this.RunOnType.Combine(rhs.RunOnType);
                 ret.Reference = this.Reference.Combine(rhs.Reference);
-                ret.Unknown3 = this.Unknown3.Combine(rhs.Unknown3);
+                ret.ParameterThree = this.ParameterThree.Combine(rhs.ParameterThree);
                 ret.LinkedReferenceKeyword = this.LinkedReferenceKeyword.Combine(rhs.LinkedReferenceKeyword);
                 ret.UseAliases = this.UseAliases.Combine(rhs.UseAliases);
                 ret.UsePackageData = this.UsePackageData.Combine(rhs.UsePackageData);
@@ -486,7 +486,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool RunOnType;
             public bool Reference;
-            public bool Unknown3;
+            public bool ParameterThree;
             public bool LinkedReferenceKeyword;
             public bool UseAliases;
             public bool UsePackageData;
@@ -501,7 +501,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.RunOnType = defaultOn;
                 this.Reference = defaultOn;
-                this.Unknown3 = defaultOn;
+                this.ParameterThree = defaultOn;
                 this.LinkedReferenceKeyword = defaultOn;
                 this.UseAliases = defaultOn;
                 this.UsePackageData = defaultOn;
@@ -522,7 +522,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((RunOnType, null));
                 ret.Add((Reference, null));
-                ret.Add((Unknown3, null));
+                ret.Add((ParameterThree, null));
                 ret.Add((LinkedReferenceKeyword, null));
                 ret.Add((UseAliases, null));
                 ret.Add((UsePackageData, null));
@@ -583,7 +583,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new Condition.RunOnType RunOnType { get; set; }
         new IFormLink<IStarfieldMajorRecordGetter> Reference { get; set; }
-        new Int32 Unknown3 { get; set; }
+        new Int32 ParameterThree { get; set; }
         new IFormLink<IKeywordGetter> LinkedReferenceKeyword { get; set; }
         new Boolean UseAliases { get; set; }
         new Boolean UsePackageData { get; set; }
@@ -607,7 +607,7 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => ConditionData_Registration.Instance;
         Condition.RunOnType RunOnType { get; }
         IFormLinkGetter<IStarfieldMajorRecordGetter> Reference { get; }
-        Int32 Unknown3 { get; }
+        Int32 ParameterThree { get; }
         IFormLinkGetter<IKeywordGetter> LinkedReferenceKeyword { get; }
         Boolean UseAliases { get; }
         Boolean UsePackageData { get; }
@@ -782,7 +782,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         RunOnType = 0,
         Reference = 1,
-        Unknown3 = 2,
+        ParameterThree = 2,
         LinkedReferenceKeyword = 3,
         UseAliases = 4,
         UsePackageData = 5,
@@ -866,7 +866,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.RunOnType = default(Condition.RunOnType);
             item.Reference.Clear();
-            item.Unknown3 = ConditionData.Unknown3Default;
+            item.ParameterThree = ConditionData.ParameterThreeDefault;
             item.LinkedReferenceKeyword.Clear();
             item.UseAliases = default(Boolean);
             item.UsePackageData = default(Boolean);
@@ -923,7 +923,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.RunOnType = item.RunOnType == rhs.RunOnType;
             ret.Reference = item.Reference.Equals(rhs.Reference);
-            ret.Unknown3 = item.Unknown3 == rhs.Unknown3;
+            ret.ParameterThree = item.ParameterThree == rhs.ParameterThree;
             ret.LinkedReferenceKeyword = item.LinkedReferenceKeyword.Equals(rhs.LinkedReferenceKeyword);
             ret.UseAliases = item.UseAliases == rhs.UseAliases;
             ret.UsePackageData = item.UsePackageData == rhs.UsePackageData;
@@ -979,9 +979,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Reference.FormKey, "Reference");
             }
-            if (printMask?.Unknown3 ?? true)
+            if (printMask?.ParameterThree ?? true)
             {
-                sb.AppendItem(item.Unknown3, "Unknown3");
+                sb.AppendItem(item.ParameterThree, "ParameterThree");
             }
             if (printMask?.LinkedReferenceKeyword ?? true)
             {
@@ -1012,9 +1012,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Reference.Equals(rhs.Reference)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ConditionData_FieldIndex.Unknown3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ConditionData_FieldIndex.ParameterThree) ?? true))
             {
-                if (lhs.Unknown3 != rhs.Unknown3) return false;
+                if (lhs.ParameterThree != rhs.ParameterThree) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)ConditionData_FieldIndex.LinkedReferenceKeyword) ?? true))
             {
@@ -1036,7 +1036,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.RunOnType);
             hash.Add(item.Reference);
-            hash.Add(item.Unknown3);
+            hash.Add(item.ParameterThree);
             hash.Add(item.LinkedReferenceKeyword);
             hash.Add(item.UseAliases);
             hash.Add(item.UsePackageData);
@@ -1082,9 +1082,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Reference.SetTo(rhs.Reference.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)ConditionData_FieldIndex.Unknown3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ConditionData_FieldIndex.ParameterThree) ?? true))
             {
-                item.Unknown3 = rhs.Unknown3;
+                item.ParameterThree = rhs.ParameterThree;
             }
             if ((copyMask?.GetShouldTranslate((int)ConditionData_FieldIndex.LinkedReferenceKeyword) ?? true))
             {

@@ -4,8 +4,9 @@
     <Fields>
       <Enum name="RunOnType" enumName="Condition.RunOnType" byteLength="4" binary="NoGeneration"/>
       <FormLink name="Reference" refName="StarfieldMajorRecord" binary="NoGeneration"/>
-      <Int32 name="Unknown3" default="-1" binary="NoGeneration"/>
-      <!-- Parameter 3 as a keyword when RunOnType is LinkedReference (xEdit "Linked Keyword"). Read from and written to the same 4 bytes as Unknown3, see Condition.cs. -->
+      <!-- xEdit "Parameter #3": a keyword for Linked Reference (also LinkedReferenceKeyword), the alias for Quest Alias, the package data input for Package Data, an event member for Event Data (see ConditionData.cs); -1 otherwise -->
+      <Int32 name="ParameterThree" default="-1" binary="NoGeneration"/>
+      <!-- Parameter 3 as a keyword when RunOnType is LinkedReference (xEdit "Linked Keyword"). Read from and written to the same 4 bytes as ParameterThree, see Condition.cs. -->
       <FormLink name="LinkedReferenceKeyword" refName="Keyword" binary="NoGeneration"/>
       <Bool name="UseAliases" binary="NoGeneration"/>
       <Bool name="UsePackageData" binary="NoGeneration"/>
