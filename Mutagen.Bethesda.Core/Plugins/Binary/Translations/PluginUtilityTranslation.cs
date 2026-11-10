@@ -98,6 +98,9 @@ internal static class PluginUtilityTranslation
         fillStructs(
             record: record,
             frame: frame);
+        // Where each field's subrecords start, to note records whose subrecords come in an order Mutagen does not write
+        var fieldStarts = frame.MetaData.Constants.KeepSubrecordOrder ? SubrecordOrder.FieldStarts : null;
+        var firstField = fieldStarts?.Count ?? 0;
         try
         {
             MutagenFrame targetFrame = frame;
@@ -108,7 +111,6 @@ internal static class PluginUtilityTranslation
 
             Dictionary<RecordType, int>? recordParseCount = null;
             var lastParsed = new PreviousParse();
-            // To note records whose subrecords come in an order Mutagen does not write (see SubrecordOrder)
             var contentStart = targetFrame.Position;
             var highestIndex = -1;
             var outOfOrder = false;
@@ -116,6 +118,7 @@ internal static class PluginUtilityTranslation
             {
                 var subMeta = targetFrame.GetSubrecordHeader();
                 var finalPos = targetFrame.Position + subMeta.TotalLength;
+                var subrecordStart = targetFrame.Position;
                 ParseResult parsed;
                 try
                 {
@@ -143,6 +146,7 @@ internal static class PluginUtilityTranslation
                 if (!parsed.KeepParsing) break;
                 if (parsed.ParsedIndex is { } parsedIndex)
                 {
+                    fieldStarts?.Add((checked((int)(subrecordStart - contentStart)), parsedIndex));
                     if (parsedIndex < highestIndex)
                     {
                         outOfOrder = true;
@@ -171,13 +175,15 @@ internal static class PluginUtilityTranslation
                 lastParsed = parsed;
             }
 
-            if (outOfOrder && frame.MetaData.Constants.KeepSubrecordOrder)
+            if (outOfOrder && fieldStarts != null)
             {
                 targetFrame.Position = contentStart;
                 SubrecordOrder.Remember(
                     record,
                     targetFrame.ReadSpan(checked((int)(targetFrame.FinalLocation - contentStart))),
-                    frame.MetaData.Constants);
+                    frame.MetaData.Constants,
+                    fieldStarts,
+                    firstField);
             }
 
             frame.SetToFinalPosition();
@@ -188,6 +194,10 @@ internal static class PluginUtilityTranslation
         {
             RecordException.EnrichAndThrow(ex, record);
             throw;
+        }
+        finally
+        {
+            fieldStarts?.RemoveRange(firstField, fieldStarts.Count - firstField);
         }
     }
 
@@ -645,7 +655,7 @@ internal static class PluginUtilityTranslation
                 using (CompressionExport.Compression(item.IsCompressed, writer, out var writerToUse))
                 {
                     if (writer.MetaData.Constants.KeepSubrecordOrder
-                        && SubrecordOrder.TryGet(item, writer.MetaData.Constants, out var order))
+                        && SubrecordOrder.TryGet(item, out var order))
                     {
                         // Written as usual into a buffer, then in the order the record was read in, if it is unchanged
                         using var buffer = new MemoryStream();
