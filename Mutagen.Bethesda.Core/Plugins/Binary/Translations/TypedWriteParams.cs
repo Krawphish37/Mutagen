@@ -49,6 +49,14 @@ public static class TypedWriteParamsExt
     }
 
     [DebuggerStepThrough]
+    public static TypedWriteParams With(this TypedWriteParams converter, RecordTypeConverter conv, RecordType overflow)
+    {
+        return new TypedWriteParams(
+            recordTypeConverter: conv,
+            overflowRecordType: overflow);
+    }
+
+    [DebuggerStepThrough]
     public static RecordType ConvertToStandard(this TypedWriteParams converter, RecordType rec)
     {
         return converter.RecordTypeConverter.ConvertToStandard(rec);

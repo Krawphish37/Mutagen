@@ -2046,6 +2046,12 @@
     <Compile Include="Records\Common Subrecords\TraversalReference.cs">
       <DependentUpon>TraversalReference.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Common Subrecords\Reflection.cs">
+      <DependentUpon>Reflection.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Common Subrecords\ReflectionData.cs">
+      <DependentUpon>Reflection.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Common Subrecords\VirtualMachineAdapterIndexed.cs">
       <DependentUpon>VirtualMachineAdapter.xml</DependentUpon>
     </Compile>
@@ -7017,6 +7023,8 @@
     </Compile>
     <Compile Include="Records\Major Records\ResourceGenerationCellTier_Generated.cs">
       <DependentUpon>ResourceGenerationData.xml</DependentUpon>
+    <Compile Include="Records\Common Subrecords\Reflection_Generated.cs">
+      <DependentUpon>Reflection.xml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
