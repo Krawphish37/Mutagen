@@ -1,5 +1,6 @@
 using ICSharpCode.SharpZipLib.Zip.Compression;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
+using K4os.Compression.LZ4;
 using Noggog;
 using Noggog.Streams;
 using System.Diagnostics.CodeAnalysis;
@@ -22,6 +23,34 @@ class Ba2Reader : IArchiveReader
     public bool HasNameTable => _nameTableOffset > 0;
     
     public uint Version { get; }
+
+    /// <summary>
+    /// Starfield version 3 archives name their chunk compression: 0 is zlib, 3 is LZ4 (raw blocks)
+    /// </summary>
+    internal uint Compression { get; }
+
+    internal const uint Lz4Compression = 3;
+
+    /// <summary>
+    /// Starfield's archives (versions 2 and 3) keep Fallout 4's file and texture records, with a longer header
+    /// </summary>
+    internal static bool IsStarfieldVersion(uint version) => version is 2 or 3;
+
+    internal static void Decompress(Ba2Reader archive, byte[] compressed, byte[] full)
+    {
+        if (archive.Compression == Lz4Compression)
+        {
+            var written = LZ4Codec.Decode(compressed, full);
+            if (written != full.Length)
+            {
+                throw new InvalidDataException($"LZ4 chunk unpacked to {written} bytes, expected {full.Length}");
+            }
+            return;
+        }
+        var inflater = new Inflater();
+        inflater.SetInput(compressed);
+        inflater.Inflate(full);
+    }
 
     public Ba2Reader(FilePath filename, IFileSystem? fileSystem = null)
         : this(() => fileSystem.GetOrDefault().File.Open(filename.Path, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -50,7 +79,17 @@ class Ba2Reader : IArchiveReader
         _numFiles = reader.ReadUInt32();
         _nameTableOffset = reader.ReadUInt64();
 
-        if (Version > 1 && Version <= 7)
+        if (IsStarfieldVersion(Version))
+        {
+            // Starfield: two more uints (1 and 0 in every archive seen), and in version 3 the compression method
+            reader.ReadUInt32();
+            reader.ReadUInt32();
+            if (Version == 3)
+            {
+                Compression = reader.ReadUInt32();
+            }
+        }
+        else if (Version > 1 && Version <= 7)
         {
             var unknown = reader.ReadUInt32();
         }
@@ -184,7 +223,8 @@ class BA2DX10Entry : IArchiveFile
         _bsa = ba2Reader;
         _nameHash = reader.ReadUInt32();
         Path = _nameHash.ToString("X");
-        if (version > 1)
+        var starfield = Ba2Reader.IsStarfieldVersion(version);
+        if (version > 1 && !starfield)
         {
             var unknown = reader.ReadUInt32();
         }
@@ -199,7 +239,7 @@ class BA2DX10Entry : IArchiveFile
         _format = reader.ReadByte();
         _unk16 = reader.ReadUInt16();
         _index = idx;
-        if (version > 1)
+        if (version > 1 && !starfield)
         {
             var unknown = reader.ReadUInt32();
         }
@@ -249,9 +289,7 @@ class BA2DX10Entry : IArchiveFile
             {
                 byte[] compressed = new byte[chunk._packSz];
                 br.BaseStream.ReadExactly(compressed);
-                var inflater = new Inflater();
-                inflater.SetInput(compressed);
-                inflater.Inflate(full);
+                Ba2Reader.Decompress(_bsa, compressed, full);
             }
 
             bw.BaseStream.Write(full, 0, full.Length);
@@ -399,9 +437,9 @@ class BA2TextureChunk
         _offset = rdr.ReadUInt64();
         _packSz = rdr.ReadUInt32();
         _fullSz = rdr.ReadUInt32();
-        if (version <= 1)
+        // Starfield (versions 2 and 3) has all of these too: 24 bytes per chunk, ending in 0xBAADF00D
+        if (version <= 1 || Ba2Reader.IsStarfieldVersion(version))
         {
-            // Unsure if these are actually the fields that are missing in v2, just a guess
             _startMip = rdr.ReadUInt16();
             _endMip = rdr.ReadUInt16();
             _align = rdr.ReadUInt32();
@@ -432,7 +470,8 @@ class BA2FileEntry : IArchiveFile
         _version = version;
         _nameHash = reader.ReadUInt32();
         Path = _nameHash.ToString("X");
-        if (version > 1 && version <= 7)
+        var starfield = Ba2Reader.IsStarfieldVersion(version);
+        if (version > 1 && version <= 7 && !starfield)
         {
             var unknown = reader.ReadUInt32();
         }
@@ -447,7 +486,7 @@ class BA2FileEntry : IArchiveFile
         }
         _size = reader.ReadUInt32();
         _realSize = reader.ReadUInt32();
-        if (version <= 1)
+        if (version <= 1 || starfield)
         {
             _align = reader.ReadUInt32();
         }
@@ -475,6 +514,17 @@ class BA2FileEntry : IArchiveFile
         if (!Compressed)
         {
             return new FramedStream(fs, _realSize);
+        }
+        else if (_bsa.Compression == Ba2Reader.Lz4Compression)
+        {
+            using (fs)
+            {
+                var compressed = new byte[_size];
+                fs.ReadExactly(compressed);
+                var full = new byte[_realSize];
+                Ba2Reader.Decompress(_bsa, compressed, full);
+                return new MemoryStream(full, writable: false);
+            }
         }
         else
         {
