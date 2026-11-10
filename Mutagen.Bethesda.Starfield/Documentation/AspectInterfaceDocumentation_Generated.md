@@ -272,6 +272,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - ConstructibleObject
 - Container
 - ContainerModification
+- CrowdComponentItem
 - DamageType
 - DialogTopic
 - DialogueSceneAction
@@ -713,6 +714,8 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IModeled
 - INamed
 - IScripted
+### CrowdComponentItem
+- INamed
 ### DamageType
 - IHaveVirtualMachineAdapter
 - INamed

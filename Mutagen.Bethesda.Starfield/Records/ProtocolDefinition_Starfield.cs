@@ -25,6 +25,7 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             ActorValueModulation_Registration.Instance,
             ActorValueModulationEntry_Registration.Instance,
             AdaptiveTriggerDataComponent_Registration.Instance,
+            AdaptiveTriggerEffect_Registration.Instance,
             AddedWorldspace_Registration.Instance,
             AddonNode_Registration.Instance,
             AddToInventoryOnDestroyComponent_Registration.Instance,

@@ -53,27 +53,27 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region WFIR
+        #region FireEffect
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _WFIR;
-        public MemorySlice<Byte>? WFIR
+        private AdaptiveTriggerEffect? _FireEffect;
+        public AdaptiveTriggerEffect? FireEffect
         {
-            get => this._WFIR;
-            set => this._WFIR = value;
+            get => _FireEffect;
+            set => _FireEffect = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IAdaptiveTriggerDataComponentGetter.WFIR => this.WFIR;
+        IAdaptiveTriggerEffectGetter? IAdaptiveTriggerDataComponentGetter.FireEffect => this.FireEffect;
         #endregion
-        #region WAIM
+        #region AdsEffect
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _WAIM;
-        public MemorySlice<Byte>? WAIM
+        private AdaptiveTriggerEffect? _AdsEffect;
+        public AdaptiveTriggerEffect? AdsEffect
         {
-            get => this._WAIM;
-            set => this._WAIM = value;
+            get => _AdsEffect;
+            set => _AdsEffect = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IAdaptiveTriggerDataComponentGetter.WAIM => this.WAIM;
+        IAdaptiveTriggerEffectGetter? IAdaptiveTriggerDataComponentGetter.AdsEffect => this.AdsEffect;
         #endregion
 
         #region To String
@@ -116,17 +116,17 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.WFIR = initialValue;
-                this.WAIM = initialValue;
+                this.FireEffect = new MaskItem<TItem, AdaptiveTriggerEffect.Mask<TItem>?>(initialValue, new AdaptiveTriggerEffect.Mask<TItem>(initialValue));
+                this.AdsEffect = new MaskItem<TItem, AdaptiveTriggerEffect.Mask<TItem>?>(initialValue, new AdaptiveTriggerEffect.Mask<TItem>(initialValue));
             }
 
             public Mask(
-                TItem WFIR,
-                TItem WAIM)
+                TItem FireEffect,
+                TItem AdsEffect)
             : base()
             {
-                this.WFIR = WFIR;
-                this.WAIM = WAIM;
+                this.FireEffect = new MaskItem<TItem, AdaptiveTriggerEffect.Mask<TItem>?>(FireEffect, new AdaptiveTriggerEffect.Mask<TItem>(FireEffect));
+                this.AdsEffect = new MaskItem<TItem, AdaptiveTriggerEffect.Mask<TItem>?>(AdsEffect, new AdaptiveTriggerEffect.Mask<TItem>(AdsEffect));
             }
 
             #pragma warning disable CS8618
@@ -138,8 +138,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem WFIR;
-            public TItem WAIM;
+            public MaskItem<TItem, AdaptiveTriggerEffect.Mask<TItem>?>? FireEffect { get; set; }
+            public MaskItem<TItem, AdaptiveTriggerEffect.Mask<TItem>?>? AdsEffect { get; set; }
             #endregion
 
             #region Equals
@@ -153,15 +153,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.WFIR, rhs.WFIR)) return false;
-                if (!object.Equals(this.WAIM, rhs.WAIM)) return false;
+                if (!object.Equals(this.FireEffect, rhs.FireEffect)) return false;
+                if (!object.Equals(this.AdsEffect, rhs.AdsEffect)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.WFIR);
-                hash.Add(this.WAIM);
+                hash.Add(this.FireEffect);
+                hash.Add(this.AdsEffect);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -172,8 +172,16 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.WFIR)) return false;
-                if (!eval(this.WAIM)) return false;
+                if (FireEffect != null)
+                {
+                    if (!eval(this.FireEffect.Overall)) return false;
+                    if (this.FireEffect.Specific != null && !this.FireEffect.Specific.All(eval)) return false;
+                }
+                if (AdsEffect != null)
+                {
+                    if (!eval(this.AdsEffect.Overall)) return false;
+                    if (this.AdsEffect.Specific != null && !this.AdsEffect.Specific.All(eval)) return false;
+                }
                 return true;
             }
             #endregion
@@ -182,8 +190,16 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.WFIR)) return true;
-                if (eval(this.WAIM)) return true;
+                if (FireEffect != null)
+                {
+                    if (eval(this.FireEffect.Overall)) return true;
+                    if (this.FireEffect.Specific != null && this.FireEffect.Specific.Any(eval)) return true;
+                }
+                if (AdsEffect != null)
+                {
+                    if (eval(this.AdsEffect.Overall)) return true;
+                    if (this.AdsEffect.Specific != null && this.AdsEffect.Specific.Any(eval)) return true;
+                }
                 return false;
             }
             #endregion
@@ -199,8 +215,8 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.WFIR = eval(this.WFIR);
-                obj.WAIM = eval(this.WAIM);
+                obj.FireEffect = this.FireEffect == null ? null : new MaskItem<R, AdaptiveTriggerEffect.Mask<R>?>(eval(this.FireEffect.Overall), this.FireEffect.Specific?.Translate(eval));
+                obj.AdsEffect = this.AdsEffect == null ? null : new MaskItem<R, AdaptiveTriggerEffect.Mask<R>?>(eval(this.AdsEffect.Overall), this.AdsEffect.Specific?.Translate(eval));
             }
             #endregion
 
@@ -219,13 +235,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(AdaptiveTriggerDataComponent.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.WFIR ?? true)
+                    if (printMask?.FireEffect?.Overall ?? true)
                     {
-                        sb.AppendItem(WFIR, "WFIR");
+                        FireEffect?.Print(sb);
                     }
-                    if (printMask?.WAIM ?? true)
+                    if (printMask?.AdsEffect?.Overall ?? true)
                     {
-                        sb.AppendItem(WAIM, "WAIM");
+                        AdsEffect?.Print(sb);
                     }
                 }
             }
@@ -238,8 +254,8 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? WFIR;
-            public Exception? WAIM;
+            public MaskItem<Exception?, AdaptiveTriggerEffect.ErrorMask?>? FireEffect;
+            public MaskItem<Exception?, AdaptiveTriggerEffect.ErrorMask?>? AdsEffect;
             #endregion
 
             #region IErrorMask
@@ -248,10 +264,10 @@ namespace Mutagen.Bethesda.Starfield
                 AdaptiveTriggerDataComponent_FieldIndex enu = (AdaptiveTriggerDataComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case AdaptiveTriggerDataComponent_FieldIndex.WFIR:
-                        return WFIR;
-                    case AdaptiveTriggerDataComponent_FieldIndex.WAIM:
-                        return WAIM;
+                    case AdaptiveTriggerDataComponent_FieldIndex.FireEffect:
+                        return FireEffect;
+                    case AdaptiveTriggerDataComponent_FieldIndex.AdsEffect:
+                        return AdsEffect;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -262,11 +278,11 @@ namespace Mutagen.Bethesda.Starfield
                 AdaptiveTriggerDataComponent_FieldIndex enu = (AdaptiveTriggerDataComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case AdaptiveTriggerDataComponent_FieldIndex.WFIR:
-                        this.WFIR = ex;
+                    case AdaptiveTriggerDataComponent_FieldIndex.FireEffect:
+                        this.FireEffect = new MaskItem<Exception?, AdaptiveTriggerEffect.ErrorMask?>(ex, null);
                         break;
-                    case AdaptiveTriggerDataComponent_FieldIndex.WAIM:
-                        this.WAIM = ex;
+                    case AdaptiveTriggerDataComponent_FieldIndex.AdsEffect:
+                        this.AdsEffect = new MaskItem<Exception?, AdaptiveTriggerEffect.ErrorMask?>(ex, null);
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -279,11 +295,11 @@ namespace Mutagen.Bethesda.Starfield
                 AdaptiveTriggerDataComponent_FieldIndex enu = (AdaptiveTriggerDataComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case AdaptiveTriggerDataComponent_FieldIndex.WFIR:
-                        this.WFIR = (Exception?)obj;
+                    case AdaptiveTriggerDataComponent_FieldIndex.FireEffect:
+                        this.FireEffect = (MaskItem<Exception?, AdaptiveTriggerEffect.ErrorMask?>?)obj;
                         break;
-                    case AdaptiveTriggerDataComponent_FieldIndex.WAIM:
-                        this.WAIM = (Exception?)obj;
+                    case AdaptiveTriggerDataComponent_FieldIndex.AdsEffect:
+                        this.AdsEffect = (MaskItem<Exception?, AdaptiveTriggerEffect.ErrorMask?>?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -294,8 +310,8 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (WFIR != null) return true;
-                if (WAIM != null) return true;
+                if (FireEffect != null) return true;
+                if (AdsEffect != null) return true;
                 return false;
             }
             #endregion
@@ -322,12 +338,8 @@ namespace Mutagen.Bethesda.Starfield
             protected override void PrintFillInternal(StructuredStringBuilder sb)
             {
                 base.PrintFillInternal(sb);
-                {
-                    sb.AppendItem(WFIR, "WFIR");
-                }
-                {
-                    sb.AppendItem(WAIM, "WAIM");
-                }
+                FireEffect?.Print(sb);
+                AdsEffect?.Print(sb);
             }
             #endregion
 
@@ -336,8 +348,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.WFIR = this.WFIR.Combine(rhs.WFIR);
-                ret.WAIM = this.WAIM.Combine(rhs.WAIM);
+                ret.FireEffect = this.FireEffect.Combine(rhs.FireEffect, (l, r) => l.Combine(r));
+                ret.AdsEffect = this.AdsEffect.Combine(rhs.AdsEffect, (l, r) => l.Combine(r));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -360,8 +372,8 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool WFIR;
-            public bool WAIM;
+            public AdaptiveTriggerEffect.TranslationMask? FireEffect;
+            public AdaptiveTriggerEffect.TranslationMask? AdsEffect;
             #endregion
 
             #region Ctors
@@ -370,8 +382,6 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.WFIR = defaultOn;
-                this.WAIM = defaultOn;
             }
 
             #endregion
@@ -379,8 +389,8 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((WFIR, null));
-                ret.Add((WAIM, null));
+                ret.Add((FireEffect != null ? FireEffect.OnOverall : DefaultOn, FireEffect?.GetCrystal()));
+                ret.Add((AdsEffect != null ? AdsEffect.OnOverall : DefaultOn, AdsEffect?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -452,8 +462,8 @@ namespace Mutagen.Bethesda.Starfield
         IAdaptiveTriggerDataComponentGetter,
         ILoquiObjectSetter<IAdaptiveTriggerDataComponent>
     {
-        new MemorySlice<Byte>? WFIR { get; set; }
-        new MemorySlice<Byte>? WAIM { get; set; }
+        new AdaptiveTriggerEffect? FireEffect { get; set; }
+        new AdaptiveTriggerEffect? AdsEffect { get; set; }
     }
 
     public partial interface IAdaptiveTriggerDataComponentGetter :
@@ -462,8 +472,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IAdaptiveTriggerDataComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => AdaptiveTriggerDataComponent_Registration.Instance;
-        ReadOnlyMemorySlice<Byte>? WFIR { get; }
-        ReadOnlyMemorySlice<Byte>? WAIM { get; }
+        IAdaptiveTriggerEffectGetter? FireEffect { get; }
+        IAdaptiveTriggerEffectGetter? AdsEffect { get; }
 
     }
 
@@ -608,8 +618,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum AdaptiveTriggerDataComponent_FieldIndex
     {
-        WFIR = 0,
-        WAIM = 1,
+        FireEffect = 0,
+        AdsEffect = 1,
     }
     #endregion
 
@@ -701,8 +711,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IAdaptiveTriggerDataComponent item)
         {
             ClearPartial();
-            item.WFIR = default;
-            item.WAIM = default;
+            item.FireEffect = null;
+            item.AdsEffect = null;
             base.Clear(item);
         }
         
@@ -770,8 +780,16 @@ namespace Mutagen.Bethesda.Starfield
             AdaptiveTriggerDataComponent.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.WFIR = MemorySliceExt.SequenceEqual(item.WFIR, rhs.WFIR);
-            ret.WAIM = MemorySliceExt.SequenceEqual(item.WAIM, rhs.WAIM);
+            ret.FireEffect = EqualsMaskHelper.EqualsHelper(
+                item.FireEffect,
+                rhs.FireEffect,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
+            ret.AdsEffect = EqualsMaskHelper.EqualsHelper(
+                item.AdsEffect,
+                rhs.AdsEffect,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -821,15 +839,15 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.WFIR ?? true)
-                && item.WFIR is {} WFIRItem)
+            if ((printMask?.FireEffect?.Overall ?? true)
+                && item.FireEffect is {} FireEffectItem)
             {
-                sb.AppendLine($"WFIR => {SpanExt.ToHexString(WFIRItem)}");
+                FireEffectItem?.Print(sb, "FireEffect");
             }
-            if ((printMask?.WAIM ?? true)
-                && item.WAIM is {} WAIMItem)
+            if ((printMask?.AdsEffect?.Overall ?? true)
+                && item.AdsEffect is {} AdsEffectItem)
             {
-                sb.AppendLine($"WAIM => {SpanExt.ToHexString(WAIMItem)}");
+                AdsEffectItem?.Print(sb, "AdsEffect");
             }
         }
         
@@ -850,13 +868,21 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IAComponentGetter)lhs, (IAComponentGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)AdaptiveTriggerDataComponent_FieldIndex.WFIR) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)AdaptiveTriggerDataComponent_FieldIndex.FireEffect) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.WFIR, rhs.WFIR)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.FireEffect, rhs.FireEffect, out var lhsFireEffect, out var rhsFireEffect, out var isFireEffectEqual))
+                {
+                    if (!((AdaptiveTriggerEffectCommon)((IAdaptiveTriggerEffectGetter)lhsFireEffect).CommonInstance()!).Equals(lhsFireEffect, rhsFireEffect, equalsMask?.GetSubCrystal((int)AdaptiveTriggerDataComponent_FieldIndex.FireEffect))) return false;
+                }
+                else if (!isFireEffectEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)AdaptiveTriggerDataComponent_FieldIndex.WAIM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)AdaptiveTriggerDataComponent_FieldIndex.AdsEffect) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.WAIM, rhs.WAIM)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.AdsEffect, rhs.AdsEffect, out var lhsAdsEffect, out var rhsAdsEffect, out var isAdsEffectEqual))
+                {
+                    if (!((AdaptiveTriggerEffectCommon)((IAdaptiveTriggerEffectGetter)lhsAdsEffect).CommonInstance()!).Equals(lhsAdsEffect, rhsAdsEffect, equalsMask?.GetSubCrystal((int)AdaptiveTriggerDataComponent_FieldIndex.AdsEffect))) return false;
+                }
+                else if (!isAdsEffectEqual) return false;
             }
             return true;
         }
@@ -875,13 +901,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IAdaptiveTriggerDataComponentGetter item)
         {
             var hash = new HashCode();
-            if (item.WFIR is {} WFIRItem)
+            if (item.FireEffect is {} FireEffectitem)
             {
-                hash.AddBytes(WFIRItem);
+                hash.Add(FireEffectitem);
             }
-            if (item.WAIM is {} WAIMItem)
+            if (item.AdsEffect is {} AdsEffectitem)
             {
-                hash.AddBytes(WAIMItem);
+                hash.Add(AdsEffectitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -931,26 +957,56 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)AdaptiveTriggerDataComponent_FieldIndex.WFIR) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)AdaptiveTriggerDataComponent_FieldIndex.FireEffect) ?? true))
             {
-                if(rhs.WFIR is {} WFIRrhs)
+                errorMask?.PushIndex((int)AdaptiveTriggerDataComponent_FieldIndex.FireEffect);
+                try
                 {
-                    item.WFIR = WFIRrhs.ToArray();
+                    if(rhs.FireEffect is {} rhsFireEffect)
+                    {
+                        item.FireEffect = rhsFireEffect.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)AdaptiveTriggerDataComponent_FieldIndex.FireEffect));
+                    }
+                    else
+                    {
+                        item.FireEffect = default;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.WFIR = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)AdaptiveTriggerDataComponent_FieldIndex.WAIM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)AdaptiveTriggerDataComponent_FieldIndex.AdsEffect) ?? true))
             {
-                if(rhs.WAIM is {} WAIMrhs)
+                errorMask?.PushIndex((int)AdaptiveTriggerDataComponent_FieldIndex.AdsEffect);
+                try
                 {
-                    item.WAIM = WAIMrhs.ToArray();
+                    if(rhs.AdsEffect is {} rhsAdsEffect)
+                    {
+                        item.AdsEffect = rhsAdsEffect.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)AdaptiveTriggerDataComponent_FieldIndex.AdsEffect));
+                    }
+                    else
+                    {
+                        item.AdsEffect = default;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.WAIM = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             DeepCopyInCustom(
@@ -1078,14 +1134,26 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.WFIR,
-                header: translationParams.ConvertToCustom(RecordTypes.WFIR));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.WAIM,
-                header: translationParams.ConvertToCustom(RecordTypes.WAIM));
+            if (item.FireEffect is {} FireEffectItem)
+            {
+                using (HeaderExport.Subrecord(writer, RecordTypes.WFIR))
+                {
+                    ((AdaptiveTriggerEffectBinaryWriteTranslation)((IBinaryItem)FireEffectItem).BinaryWriteTranslator).Write(
+                        item: FireEffectItem,
+                        writer: writer,
+                        translationParams: translationParams);
+                }
+            }
+            if (item.AdsEffect is {} AdsEffectItem)
+            {
+                using (HeaderExport.Subrecord(writer, RecordTypes.WAIM))
+                {
+                    ((AdaptiveTriggerEffectBinaryWriteTranslation)((IBinaryItem)AdsEffectItem).BinaryWriteTranslator).Write(
+                        item: AdsEffectItem,
+                        writer: writer,
+                        translationParams: translationParams);
+                }
+            }
         }
 
         public void Write(
@@ -1142,15 +1210,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.WFIR:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.WFIR = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)AdaptiveTriggerDataComponent_FieldIndex.WFIR;
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
+                    item.FireEffect = Mutagen.Bethesda.Starfield.AdaptiveTriggerEffect.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)AdaptiveTriggerDataComponent_FieldIndex.FireEffect;
                 }
                 case RecordTypeInts.WAIM:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.WAIM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)AdaptiveTriggerDataComponent_FieldIndex.WAIM;
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
+                    item.AdsEffect = Mutagen.Bethesda.Starfield.AdaptiveTriggerEffect.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)AdaptiveTriggerDataComponent_FieldIndex.AdsEffect;
                 }
                 default:
                     return AComponentBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1208,14 +1276,8 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region WFIR
-        private int? _WFIRLocation;
-        public ReadOnlyMemorySlice<Byte>? WFIR => _WFIRLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _WFIRLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
-        #endregion
-        #region WAIM
-        private int? _WAIMLocation;
-        public ReadOnlyMemorySlice<Byte>? WAIM => _WAIMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _WAIMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
-        #endregion
+        public IAdaptiveTriggerEffectGetter? FireEffect { get; private set; }
+        public IAdaptiveTriggerEffectGetter? AdsEffect { get; private set; }
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1281,13 +1343,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.WFIR:
                 {
-                    _WFIRLocation = (stream.Position - offset);
-                    return (int)AdaptiveTriggerDataComponent_FieldIndex.WFIR;
+                    stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
+                    this.FireEffect = AdaptiveTriggerEffectBinaryOverlay.AdaptiveTriggerEffectFactory(
+                        stream: stream,
+                        package: _package,
+                        translationParams: translationParams.DoNotShortCircuit());
+                    return (int)AdaptiveTriggerDataComponent_FieldIndex.FireEffect;
                 }
                 case RecordTypeInts.WAIM:
                 {
-                    _WAIMLocation = (stream.Position - offset);
-                    return (int)AdaptiveTriggerDataComponent_FieldIndex.WAIM;
+                    stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
+                    this.AdsEffect = AdaptiveTriggerEffectBinaryOverlay.AdaptiveTriggerEffectFactory(
+                        stream: stream,
+                        package: _package,
+                        translationParams: translationParams.DoNotShortCircuit());
+                    return (int)AdaptiveTriggerDataComponent_FieldIndex.AdsEffect;
                 }
                 default:
                     return base.FillRecordType(

@@ -62,14 +62,21 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<IFormListGetter> IDisplayCaseComponentItemGetter.DisplayFilter => this.DisplayFilter;
         #endregion
-        #region Unknown1
-        public UInt32 Unknown1 { get; set; } = default(UInt32);
+        #region ExclusionFilterKeyword
+        private readonly IFormLink<IStarfieldMajorRecordGetter> _ExclusionFilterKeyword = new FormLink<IStarfieldMajorRecordGetter>();
+        public IFormLink<IStarfieldMajorRecordGetter> ExclusionFilterKeyword
+        {
+            get => _ExclusionFilterKeyword;
+            set => _ExclusionFilterKeyword.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkGetter<IStarfieldMajorRecordGetter> IDisplayCaseComponentItemGetter.ExclusionFilterKeyword => this.ExclusionFilterKeyword;
         #endregion
         #region Index
         public UInt32 Index { get; set; } = default(UInt32);
         #endregion
-        #region Unknown2
-        public UInt32 Unknown2 { get; set; } = default(UInt32);
+        #region Number
+        public UInt32 Number { get; set; } = default(UInt32);
         #endregion
 
         #region To String
@@ -111,21 +118,21 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.DisplayFilter = initialValue;
-                this.Unknown1 = initialValue;
+                this.ExclusionFilterKeyword = initialValue;
                 this.Index = initialValue;
-                this.Unknown2 = initialValue;
+                this.Number = initialValue;
             }
 
             public Mask(
                 TItem DisplayFilter,
-                TItem Unknown1,
+                TItem ExclusionFilterKeyword,
                 TItem Index,
-                TItem Unknown2)
+                TItem Number)
             {
                 this.DisplayFilter = DisplayFilter;
-                this.Unknown1 = Unknown1;
+                this.ExclusionFilterKeyword = ExclusionFilterKeyword;
                 this.Index = Index;
-                this.Unknown2 = Unknown2;
+                this.Number = Number;
             }
 
             #pragma warning disable CS8618
@@ -138,9 +145,9 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem DisplayFilter;
-            public TItem Unknown1;
+            public TItem ExclusionFilterKeyword;
             public TItem Index;
-            public TItem Unknown2;
+            public TItem Number;
             #endregion
 
             #region Equals
@@ -154,18 +161,18 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.DisplayFilter, rhs.DisplayFilter)) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
+                if (!object.Equals(this.ExclusionFilterKeyword, rhs.ExclusionFilterKeyword)) return false;
                 if (!object.Equals(this.Index, rhs.Index)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.Number, rhs.Number)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.DisplayFilter);
-                hash.Add(this.Unknown1);
+                hash.Add(this.ExclusionFilterKeyword);
                 hash.Add(this.Index);
-                hash.Add(this.Unknown2);
+                hash.Add(this.Number);
                 return hash.ToHashCode();
             }
 
@@ -175,9 +182,9 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.DisplayFilter)) return false;
-                if (!eval(this.Unknown1)) return false;
+                if (!eval(this.ExclusionFilterKeyword)) return false;
                 if (!eval(this.Index)) return false;
-                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.Number)) return false;
                 return true;
             }
             #endregion
@@ -186,9 +193,9 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.DisplayFilter)) return true;
-                if (eval(this.Unknown1)) return true;
+                if (eval(this.ExclusionFilterKeyword)) return true;
                 if (eval(this.Index)) return true;
-                if (eval(this.Unknown2)) return true;
+                if (eval(this.Number)) return true;
                 return false;
             }
             #endregion
@@ -204,9 +211,9 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.DisplayFilter = eval(this.DisplayFilter);
-                obj.Unknown1 = eval(this.Unknown1);
+                obj.ExclusionFilterKeyword = eval(this.ExclusionFilterKeyword);
                 obj.Index = eval(this.Index);
-                obj.Unknown2 = eval(this.Unknown2);
+                obj.Number = eval(this.Number);
             }
             #endregion
 
@@ -229,17 +236,17 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(DisplayFilter, "DisplayFilter");
                     }
-                    if (printMask?.Unknown1 ?? true)
+                    if (printMask?.ExclusionFilterKeyword ?? true)
                     {
-                        sb.AppendItem(Unknown1, "Unknown1");
+                        sb.AppendItem(ExclusionFilterKeyword, "ExclusionFilterKeyword");
                     }
                     if (printMask?.Index ?? true)
                     {
                         sb.AppendItem(Index, "Index");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.Number ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(Number, "Number");
                     }
                 }
             }
@@ -266,9 +273,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? DisplayFilter;
-            public Exception? Unknown1;
+            public Exception? ExclusionFilterKeyword;
             public Exception? Index;
-            public Exception? Unknown2;
+            public Exception? Number;
             #endregion
 
             #region IErrorMask
@@ -279,12 +286,12 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case DisplayCaseComponentItem_FieldIndex.DisplayFilter:
                         return DisplayFilter;
-                    case DisplayCaseComponentItem_FieldIndex.Unknown1:
-                        return Unknown1;
+                    case DisplayCaseComponentItem_FieldIndex.ExclusionFilterKeyword:
+                        return ExclusionFilterKeyword;
                     case DisplayCaseComponentItem_FieldIndex.Index:
                         return Index;
-                    case DisplayCaseComponentItem_FieldIndex.Unknown2:
-                        return Unknown2;
+                    case DisplayCaseComponentItem_FieldIndex.Number:
+                        return Number;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -298,14 +305,14 @@ namespace Mutagen.Bethesda.Starfield
                     case DisplayCaseComponentItem_FieldIndex.DisplayFilter:
                         this.DisplayFilter = ex;
                         break;
-                    case DisplayCaseComponentItem_FieldIndex.Unknown1:
-                        this.Unknown1 = ex;
+                    case DisplayCaseComponentItem_FieldIndex.ExclusionFilterKeyword:
+                        this.ExclusionFilterKeyword = ex;
                         break;
                     case DisplayCaseComponentItem_FieldIndex.Index:
                         this.Index = ex;
                         break;
-                    case DisplayCaseComponentItem_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case DisplayCaseComponentItem_FieldIndex.Number:
+                        this.Number = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -320,14 +327,14 @@ namespace Mutagen.Bethesda.Starfield
                     case DisplayCaseComponentItem_FieldIndex.DisplayFilter:
                         this.DisplayFilter = (Exception?)obj;
                         break;
-                    case DisplayCaseComponentItem_FieldIndex.Unknown1:
-                        this.Unknown1 = (Exception?)obj;
+                    case DisplayCaseComponentItem_FieldIndex.ExclusionFilterKeyword:
+                        this.ExclusionFilterKeyword = (Exception?)obj;
                         break;
                     case DisplayCaseComponentItem_FieldIndex.Index:
                         this.Index = (Exception?)obj;
                         break;
-                    case DisplayCaseComponentItem_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case DisplayCaseComponentItem_FieldIndex.Number:
+                        this.Number = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -338,9 +345,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (DisplayFilter != null) return true;
-                if (Unknown1 != null) return true;
+                if (ExclusionFilterKeyword != null) return true;
                 if (Index != null) return true;
-                if (Unknown2 != null) return true;
+                if (Number != null) return true;
                 return false;
             }
             #endregion
@@ -370,13 +377,13 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(DisplayFilter, "DisplayFilter");
                 }
                 {
-                    sb.AppendItem(Unknown1, "Unknown1");
+                    sb.AppendItem(ExclusionFilterKeyword, "ExclusionFilterKeyword");
                 }
                 {
                     sb.AppendItem(Index, "Index");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(Number, "Number");
                 }
             }
             #endregion
@@ -387,9 +394,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.DisplayFilter = this.DisplayFilter.Combine(rhs.DisplayFilter);
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
+                ret.ExclusionFilterKeyword = this.ExclusionFilterKeyword.Combine(rhs.ExclusionFilterKeyword);
                 ret.Index = this.Index.Combine(rhs.Index);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.Number = this.Number.Combine(rhs.Number);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -414,9 +421,9 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool DisplayFilter;
-            public bool Unknown1;
+            public bool ExclusionFilterKeyword;
             public bool Index;
-            public bool Unknown2;
+            public bool Number;
             #endregion
 
             #region Ctors
@@ -427,9 +434,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.DisplayFilter = defaultOn;
-                this.Unknown1 = defaultOn;
+                this.ExclusionFilterKeyword = defaultOn;
                 this.Index = defaultOn;
-                this.Unknown2 = defaultOn;
+                this.Number = defaultOn;
             }
 
             #endregion
@@ -446,9 +453,9 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((DisplayFilter, null));
-                ret.Add((Unknown1, null));
+                ret.Add((ExclusionFilterKeyword, null));
                 ret.Add((Index, null));
-                ret.Add((Unknown2, null));
+                ret.Add((Number, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -528,9 +535,9 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IDisplayCaseComponentItem>
     {
         new IFormLink<IFormListGetter> DisplayFilter { get; set; }
-        new UInt32 Unknown1 { get; set; }
+        new IFormLink<IStarfieldMajorRecordGetter> ExclusionFilterKeyword { get; set; }
         new UInt32 Index { get; set; }
-        new UInt32 Unknown2 { get; set; }
+        new UInt32 Number { get; set; }
     }
 
     public partial interface IDisplayCaseComponentItemGetter :
@@ -547,9 +554,9 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => DisplayCaseComponentItem_Registration.Instance;
         IFormLinkGetter<IFormListGetter> DisplayFilter { get; }
-        UInt32 Unknown1 { get; }
+        IFormLinkGetter<IStarfieldMajorRecordGetter> ExclusionFilterKeyword { get; }
         UInt32 Index { get; }
-        UInt32 Unknown2 { get; }
+        UInt32 Number { get; }
 
     }
 
@@ -720,9 +727,9 @@ namespace Mutagen.Bethesda.Starfield
     internal enum DisplayCaseComponentItem_FieldIndex
     {
         DisplayFilter = 0,
-        Unknown1 = 1,
+        ExclusionFilterKeyword = 1,
         Index = 2,
-        Unknown2 = 3,
+        Number = 3,
     }
     #endregion
 
@@ -802,15 +809,16 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.DisplayFilter.Clear();
-            item.Unknown1 = default(UInt32);
+            item.ExclusionFilterKeyword.Clear();
             item.Index = default(UInt32);
-            item.Unknown2 = default(UInt32);
+            item.Number = default(UInt32);
         }
         
         #region Mutagen
         public void RemapLinks(IDisplayCaseComponentItem obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             obj.DisplayFilter.Relink(mapping);
+            obj.ExclusionFilterKeyword.Relink(mapping);
         }
         
         #endregion
@@ -856,9 +864,9 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.DisplayFilter = item.DisplayFilter.Equals(rhs.DisplayFilter);
-            ret.Unknown1 = item.Unknown1 == rhs.Unknown1;
+            ret.ExclusionFilterKeyword = item.ExclusionFilterKeyword.Equals(rhs.ExclusionFilterKeyword);
             ret.Index = item.Index == rhs.Index;
-            ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
+            ret.Number = item.Number == rhs.Number;
         }
         
         public string Print(
@@ -907,17 +915,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.DisplayFilter.FormKey, "DisplayFilter");
             }
-            if (printMask?.Unknown1 ?? true)
+            if (printMask?.ExclusionFilterKeyword ?? true)
             {
-                sb.AppendItem(item.Unknown1, "Unknown1");
+                sb.AppendItem(item.ExclusionFilterKeyword.FormKey, "ExclusionFilterKeyword");
             }
             if (printMask?.Index ?? true)
             {
                 sb.AppendItem(item.Index, "Index");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.Number ?? true)
             {
-                sb.AppendItem(item.Unknown2, "Unknown2");
+                sb.AppendItem(item.Number, "Number");
             }
         }
         
@@ -932,17 +940,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.DisplayFilter.Equals(rhs.DisplayFilter)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)DisplayCaseComponentItem_FieldIndex.Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)DisplayCaseComponentItem_FieldIndex.ExclusionFilterKeyword) ?? true))
             {
-                if (lhs.Unknown1 != rhs.Unknown1) return false;
+                if (!lhs.ExclusionFilterKeyword.Equals(rhs.ExclusionFilterKeyword)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)DisplayCaseComponentItem_FieldIndex.Index) ?? true))
             {
                 if (lhs.Index != rhs.Index) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)DisplayCaseComponentItem_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)DisplayCaseComponentItem_FieldIndex.Number) ?? true))
             {
-                if (lhs.Unknown2 != rhs.Unknown2) return false;
+                if (lhs.Number != rhs.Number) return false;
             }
             return true;
         }
@@ -951,9 +959,9 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.DisplayFilter);
-            hash.Add(item.Unknown1);
+            hash.Add(item.ExclusionFilterKeyword);
             hash.Add(item.Index);
-            hash.Add(item.Unknown2);
+            hash.Add(item.Number);
             return hash.ToHashCode();
         }
         
@@ -969,6 +977,7 @@ namespace Mutagen.Bethesda.Starfield
         public IEnumerable<IFormLinkGetter> EnumerateFormLinks(IDisplayCaseComponentItemGetter obj, bool iterateNestedRecords = true)
         {
             yield return FormLinkInformation.Factory(obj.DisplayFilter);
+            yield return FormLinkInformation.Factory(obj.ExclusionFilterKeyword);
             yield break;
         }
         
@@ -991,17 +1000,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.DisplayFilter.SetTo(rhs.DisplayFilter.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)DisplayCaseComponentItem_FieldIndex.Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)DisplayCaseComponentItem_FieldIndex.ExclusionFilterKeyword) ?? true))
             {
-                item.Unknown1 = rhs.Unknown1;
+                item.ExclusionFilterKeyword.SetTo(rhs.ExclusionFilterKeyword.FormKey);
             }
             if ((copyMask?.GetShouldTranslate((int)DisplayCaseComponentItem_FieldIndex.Index) ?? true))
             {
                 item.Index = rhs.Index;
             }
-            if ((copyMask?.GetShouldTranslate((int)DisplayCaseComponentItem_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)DisplayCaseComponentItem_FieldIndex.Number) ?? true))
             {
-                item.Unknown2 = rhs.Unknown2;
+                item.Number = rhs.Number;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1114,9 +1123,11 @@ namespace Mutagen.Bethesda.Starfield
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.DisplayFilter);
-            writer.Write(item.Unknown1);
+            FormLinkBinaryTranslation.Instance.Write(
+                writer: writer,
+                item: item.ExclusionFilterKeyword);
             writer.Write(item.Index);
-            writer.Write(item.Unknown2);
+            writer.Write(item.Number);
         }
 
         public void Write(
@@ -1151,9 +1162,9 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.DisplayFilter.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.Unknown1 = frame.ReadUInt32();
+            item.ExclusionFilterKeyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.Index = frame.ReadUInt32();
-            item.Unknown2 = frame.ReadUInt32();
+            item.Number = frame.ReadUInt32();
         }
 
     }
@@ -1221,9 +1232,9 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public IFormLinkGetter<IFormListGetter> DisplayFilter => FormLinkBinaryTranslation.Instance.OverlayFactory<IFormListGetter>(_package, _structData.Span.Slice(0x0, 0x4));
-        public UInt32 Unknown1 => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x4, 0x4));
+        public IFormLinkGetter<IStarfieldMajorRecordGetter> ExclusionFilterKeyword => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x4, 0x4));
         public UInt32 Index => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x8, 0x4));
-        public UInt32 Unknown2 => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0xC, 0x4));
+        public UInt32 Number => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0xC, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

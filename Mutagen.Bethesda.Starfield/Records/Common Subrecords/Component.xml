@@ -11,7 +11,7 @@
       <String name="RigFile" recordType="BNAM" nullable="true" />
       <String name="AnimationsPath" recordType="CNAM" nullable="true" />
       <String name="ResponseFile" recordType="DNAM" nullable="true" />
-      <String name="ENAM" recordType="ENAM" nullable="true" binaryType="NullTerminateIfNotEmpty" />
+      <Bool name="ControlsBaseSkeleton" recordType="ENAM" boolAsMarker="True" />
     </Fields>
   </Object>
   <Object name="AttachParentArrayComponent" objType="Subrecord" baseClass="AComponent">
@@ -39,8 +39,9 @@
   </Object>
   <Object name="ObjectWindowFilterComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="INTV" recordType="INTV" unknown="true" />
-      <String name="FLTR" recordType="FLTR" unknown="true" />
+      <List name="Filters" counterRecType="INTV" allowNoCounter="false" nullable="false" >
+        <String recordType="FLTR" />
+      </List>
     </Fields>
   </Object>
   <Object name="ContactShadowComponent" objType="Subrecord" baseClass="AComponent">
@@ -156,9 +157,9 @@
   <Object name="DisplayCaseComponentItem" objType="Subrecord" >
     <Fields>
       <FormLink name="DisplayFilter" refName="FormList" />
-      <UInt32 name="Unknown1" />
+      <FormLink name="ExclusionFilterKeyword" refName="StarfieldMajorRecord" />
       <UInt32 name="Index" />
-      <UInt32 name="Unknown2" />
+      <UInt32 name="Number" />
     </Fields>
   </Object>
   <Object name="ObjectPaletteDefaultsComponent" objType="Subrecord" baseClass="AComponent">
@@ -300,7 +301,7 @@
   </Object>
   <Object name="SpaceshipEquipmentComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="ESSF" recordType="ESSF" />
+      <Bool name="Essential" recordType="ESSF" byteLength="4" />
     </Fields>
   </Object>
   <Object name="SpaceshipWeaponBindingsComponent" objType="Subrecord" baseClass="AComponent">
@@ -352,9 +353,9 @@
       <String name="Name" recordType="BODS" nullable="false" />
       <Data recordType="BODV" >
         <Fields>
-          <P3Float name="Color1" unknown="true" />
-          <P3Float name="Color2" unknown="true" />
-          <P3Float name="Color3" unknown="true" />
+          <P3Float name="Color1" />
+          <P3Float name="Color2" />
+          <P3Float name="Color3" />
           <Int32 name="Unknown" unknown="true" />
         </Fields>
       </Data>
@@ -398,8 +399,8 @@
   </Object>
   <Object name="CrowdComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <Float name="CDND" recordType="CDND" unknown="true" />
-      <ByteArray name="CDNS" recordType="CDNS" unknown="true" />
+      <Float name="Density" recordType="CDND" />
+      <UInt32 name="PopulationCount" recordType="CDNS" />
       <RefList name="Items" refName="CrowdComponentItem" />
     </Fields>
   </Object>
@@ -407,8 +408,8 @@
     <Fields>
       <RefList name="Properties" refName="CrowdComponentProperty" recordType="PRPS" />
       <RefList name="Conditions" refName="Condition" counterRecType="CITC" />
-      <String name="STRV" recordType="STRV" unknown="true" />
-      <Float name="FLTV" recordType="FLTV" unknown="true" />
+      <String name="Name" recordType="STRV" />
+      <Float name="PopulationScale" recordType="FLTV" />
     </Fields>
   </Object>
   <Object name="CrowdComponentProperty" objType="Subrecord">
@@ -640,8 +641,16 @@
   </Object>
   <Object name="AdaptiveTriggerDataComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="WFIR" recordType="WFIR" unknown="true" />
-      <ByteArray name="WAIM" recordType="WAIM" unknown="true" />
+      <RefDirect name="FireEffect" refName="AdaptiveTriggerEffect" recordType="WFIR" />
+      <RefDirect name="AdsEffect" refName="AdaptiveTriggerEffect" recordType="WAIM" />
+    </Fields>
+  </Object>
+  <Object name="AdaptiveTriggerEffect" objType="Subrecord">
+    <Fields>
+      <UInt8 name="Unused" />
+      <UInt8 name="StartPosition" />
+      <UInt8 name="EndPosition" />
+      <UInt8 name="Strength" />
     </Fields>
   </Object>
   <Object name="QualityUpgradeComponent" objType="Subrecord" baseClass="AComponent">
