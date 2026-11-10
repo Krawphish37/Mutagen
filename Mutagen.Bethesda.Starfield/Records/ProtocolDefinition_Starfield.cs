@@ -1186,6 +1186,7 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             RankPlacement_Registration.Instance,
             ReferenceAliasLocation_Registration.Instance,
             ReferenceGroup_Registration.Instance,
+            Reflection_Registration.Instance,
             ReflectionProbesComponent_Registration.Instance,
             Region_Registration.Instance,
             RegionArea_Registration.Instance,

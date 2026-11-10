@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
+  <Object name="Reflection" objType="Subrecord" recordType="REFL" customBinaryEnd="Normal">
+    <Fields>
+      <ByteArray name="Data" nullable="False" />
+      <List name="FormLinks" binary="NoGeneration">
+        <FormLink refName="StarfieldMajorRecord" />
+      </List>
+    </Fields>
+  </Object>
+</Loqui>
