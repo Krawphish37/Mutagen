@@ -77,11 +77,4 @@
     <LinkInterface>IPlaceableObject</LinkInterface>
     <LinkInterface>IExplodeSpawn</LinkInterface>
   </Object>
-  <Object name="WaterNoiseProperties" objType="Subrecord">
-    <Fields>
-      <Float name="WindDirection" binary="NoGeneration" />
-      <Float name="WindSpeed" binary="NoGeneration" />
-      <String name="Texture" nullable="True" binary="NoGeneration" />
-    </Fields>
-  </Object>
 </Loqui>

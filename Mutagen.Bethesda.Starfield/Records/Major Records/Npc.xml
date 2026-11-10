@@ -101,7 +101,8 @@
           <UInt16 name="CalculatedActionPoints" />
           <UInt16 name="FarAwayModelDistance" />
           <UInt8 name="GearedUpWeapons" />
-          <UInt8 name="Unused" />
+          <!-- Not padding: 37 values in Starfield.esm, following the race (0x2B on HumanRace NPCs); meaning unknown -->
+          <UInt8 name="Unknown" />
         </Fields>
       </Data>
       <Int32 name="HCLR" recordType="HCLR" unknown="true" />

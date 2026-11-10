@@ -90,7 +90,8 @@
         <Interface>IPlaced</Interface>
       </FormLink>
       <P3Float name="RagdollBipedRotation" recordType="XRGB" />
-      <Percent name="HealthPercent" recordType="XHLT" />
+      <!-- Health %, an integer percent as in xEdit (itU32) -->
+      <UInt32 name="HealthPercent" recordType="XHLT" />
       <FormLink name="TimeOfDay" refName="TimeOfDayRecord" recordType="TODD" />
       <RefDirect name="EnableParent" refName="EnableParent" />
       <RefDirect name="LightFlicker" refName="PlacedObjectLightFlicker" />

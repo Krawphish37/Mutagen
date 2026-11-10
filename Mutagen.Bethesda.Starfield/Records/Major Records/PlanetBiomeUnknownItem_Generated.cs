@@ -51,11 +51,11 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Unknown1
-        public Double Unknown1 { get; set; } = default(Double);
+        #region Longitude
+        public Double Longitude { get; set; } = default(Double);
         #endregion
-        #region Unknown2
-        public Double Unknown2 { get; set; } = default(Double);
+        #region Latitude
+        public Double Latitude { get; set; } = default(Double);
         #endregion
 
         #region To String
@@ -96,16 +96,16 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Unknown1 = initialValue;
-                this.Unknown2 = initialValue;
+                this.Longitude = initialValue;
+                this.Latitude = initialValue;
             }
 
             public Mask(
-                TItem Unknown1,
-                TItem Unknown2)
+                TItem Longitude,
+                TItem Latitude)
             {
-                this.Unknown1 = Unknown1;
-                this.Unknown2 = Unknown2;
+                this.Longitude = Longitude;
+                this.Latitude = Latitude;
             }
 
             #pragma warning disable CS8618
@@ -117,8 +117,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Unknown1;
-            public TItem Unknown2;
+            public TItem Longitude;
+            public TItem Latitude;
             #endregion
 
             #region Equals
@@ -131,15 +131,15 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.Longitude, rhs.Longitude)) return false;
+                if (!object.Equals(this.Latitude, rhs.Latitude)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Unknown1);
-                hash.Add(this.Unknown2);
+                hash.Add(this.Longitude);
+                hash.Add(this.Latitude);
                 return hash.ToHashCode();
             }
 
@@ -148,8 +148,8 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Unknown1)) return false;
-                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.Longitude)) return false;
+                if (!eval(this.Latitude)) return false;
                 return true;
             }
             #endregion
@@ -157,8 +157,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Unknown1)) return true;
-                if (eval(this.Unknown2)) return true;
+                if (eval(this.Longitude)) return true;
+                if (eval(this.Latitude)) return true;
                 return false;
             }
             #endregion
@@ -173,8 +173,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Unknown1 = eval(this.Unknown1);
-                obj.Unknown2 = eval(this.Unknown2);
+                obj.Longitude = eval(this.Longitude);
+                obj.Latitude = eval(this.Latitude);
             }
             #endregion
 
@@ -193,13 +193,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(PlanetBiomeUnknownItem.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Unknown1 ?? true)
+                    if (printMask?.Longitude ?? true)
                     {
-                        sb.AppendItem(Unknown1, "Unknown1");
+                        sb.AppendItem(Longitude, "Longitude");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.Latitude ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(Latitude, "Latitude");
                     }
                 }
             }
@@ -225,8 +225,8 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Unknown1;
-            public Exception? Unknown2;
+            public Exception? Longitude;
+            public Exception? Latitude;
             #endregion
 
             #region IErrorMask
@@ -235,10 +235,10 @@ namespace Mutagen.Bethesda.Starfield
                 PlanetBiomeUnknownItem_FieldIndex enu = (PlanetBiomeUnknownItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlanetBiomeUnknownItem_FieldIndex.Unknown1:
-                        return Unknown1;
-                    case PlanetBiomeUnknownItem_FieldIndex.Unknown2:
-                        return Unknown2;
+                    case PlanetBiomeUnknownItem_FieldIndex.Longitude:
+                        return Longitude;
+                    case PlanetBiomeUnknownItem_FieldIndex.Latitude:
+                        return Latitude;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -249,11 +249,11 @@ namespace Mutagen.Bethesda.Starfield
                 PlanetBiomeUnknownItem_FieldIndex enu = (PlanetBiomeUnknownItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlanetBiomeUnknownItem_FieldIndex.Unknown1:
-                        this.Unknown1 = ex;
+                    case PlanetBiomeUnknownItem_FieldIndex.Longitude:
+                        this.Longitude = ex;
                         break;
-                    case PlanetBiomeUnknownItem_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case PlanetBiomeUnknownItem_FieldIndex.Latitude:
+                        this.Latitude = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -265,11 +265,11 @@ namespace Mutagen.Bethesda.Starfield
                 PlanetBiomeUnknownItem_FieldIndex enu = (PlanetBiomeUnknownItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlanetBiomeUnknownItem_FieldIndex.Unknown1:
-                        this.Unknown1 = (Exception?)obj;
+                    case PlanetBiomeUnknownItem_FieldIndex.Longitude:
+                        this.Longitude = (Exception?)obj;
                         break;
-                    case PlanetBiomeUnknownItem_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case PlanetBiomeUnknownItem_FieldIndex.Latitude:
+                        this.Latitude = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -279,8 +279,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Unknown1 != null) return true;
-                if (Unknown2 != null) return true;
+                if (Longitude != null) return true;
+                if (Latitude != null) return true;
                 return false;
             }
             #endregion
@@ -307,10 +307,10 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Unknown1, "Unknown1");
+                    sb.AppendItem(Longitude, "Longitude");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(Latitude, "Latitude");
                 }
             }
             #endregion
@@ -320,8 +320,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.Longitude = this.Longitude.Combine(rhs.Longitude);
+                ret.Latitude = this.Latitude.Combine(rhs.Latitude);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -345,8 +345,8 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Unknown1;
-            public bool Unknown2;
+            public bool Longitude;
+            public bool Latitude;
             #endregion
 
             #region Ctors
@@ -356,8 +356,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Unknown1 = defaultOn;
-                this.Unknown2 = defaultOn;
+                this.Longitude = defaultOn;
+                this.Latitude = defaultOn;
             }
 
             #endregion
@@ -373,8 +373,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Unknown1, null));
-                ret.Add((Unknown2, null));
+                ret.Add((Longitude, null));
+                ret.Add((Latitude, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -447,8 +447,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IPlanetBiomeUnknownItem>,
         IPlanetBiomeUnknownItemGetter
     {
-        new Double Unknown1 { get; set; }
-        new Double Unknown2 { get; set; }
+        new Double Longitude { get; set; }
+        new Double Latitude { get; set; }
     }
 
     public partial interface IPlanetBiomeUnknownItemGetter :
@@ -463,8 +463,8 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => PlanetBiomeUnknownItem_Registration.Instance;
-        Double Unknown1 { get; }
-        Double Unknown2 { get; }
+        Double Longitude { get; }
+        Double Latitude { get; }
 
     }
 
@@ -634,8 +634,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum PlanetBiomeUnknownItem_FieldIndex
     {
-        Unknown1 = 0,
-        Unknown2 = 1,
+        Longitude = 0,
+        Latitude = 1,
     }
     #endregion
 
@@ -714,8 +714,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IPlanetBiomeUnknownItem item)
         {
             ClearPartial();
-            item.Unknown1 = default(Double);
-            item.Unknown2 = default(Double);
+            item.Longitude = default(Double);
+            item.Latitude = default(Double);
         }
         
         #region Mutagen
@@ -765,8 +765,8 @@ namespace Mutagen.Bethesda.Starfield
             PlanetBiomeUnknownItem.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Unknown1 = item.Unknown1.EqualsWithin(rhs.Unknown1);
-            ret.Unknown2 = item.Unknown2.EqualsWithin(rhs.Unknown2);
+            ret.Longitude = item.Longitude.EqualsWithin(rhs.Longitude);
+            ret.Latitude = item.Latitude.EqualsWithin(rhs.Latitude);
         }
         
         public string Print(
@@ -811,13 +811,13 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             PlanetBiomeUnknownItem.Mask<bool>? printMask = null)
         {
-            if (printMask?.Unknown1 ?? true)
+            if (printMask?.Longitude ?? true)
             {
-                sb.AppendItem(item.Unknown1, "Unknown1");
+                sb.AppendItem(item.Longitude, "Longitude");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.Latitude ?? true)
             {
-                sb.AppendItem(item.Unknown2, "Unknown2");
+                sb.AppendItem(item.Latitude, "Latitude");
             }
         }
         
@@ -828,13 +828,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Longitude) ?? true))
             {
-                if (!lhs.Unknown1.EqualsWithin(rhs.Unknown1)) return false;
+                if (!lhs.Longitude.EqualsWithin(rhs.Longitude)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Latitude) ?? true))
             {
-                if (!lhs.Unknown2.EqualsWithin(rhs.Unknown2)) return false;
+                if (!lhs.Latitude.EqualsWithin(rhs.Latitude)) return false;
             }
             return true;
         }
@@ -842,8 +842,8 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IPlanetBiomeUnknownItemGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Unknown1);
-            hash.Add(item.Unknown2);
+            hash.Add(item.Longitude);
+            hash.Add(item.Latitude);
             return hash.ToHashCode();
         }
         
@@ -876,13 +876,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Longitude) ?? true))
             {
-                item.Unknown1 = rhs.Unknown1;
+                item.Longitude = rhs.Longitude;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Latitude) ?? true))
             {
-                item.Unknown2 = rhs.Unknown2;
+                item.Latitude = rhs.Latitude;
             }
             DeepCopyInCustom(
                 item: item,
@@ -992,8 +992,8 @@ namespace Mutagen.Bethesda.Starfield
             IPlanetBiomeUnknownItemGetter item,
             MutagenWriter writer)
         {
-            writer.Write(item.Unknown1);
-            writer.Write(item.Unknown2);
+            writer.Write(item.Longitude);
+            writer.Write(item.Latitude);
         }
 
         public void Write(
@@ -1027,8 +1027,8 @@ namespace Mutagen.Bethesda.Starfield
             IPlanetBiomeUnknownItem item,
             MutagenFrame frame)
         {
-            item.Unknown1 = frame.ReadDouble();
-            item.Unknown2 = frame.ReadDouble();
+            item.Longitude = frame.ReadDouble();
+            item.Latitude = frame.ReadDouble();
         }
 
     }
@@ -1094,8 +1094,8 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Double Unknown1 => BinaryPrimitives.ReadDoubleLittleEndian(_structData.Slice(0x0, 0x8));
-        public Double Unknown2 => BinaryPrimitives.ReadDoubleLittleEndian(_structData.Slice(0x8, 0x8));
+        public Double Longitude => BinaryPrimitives.ReadDoubleLittleEndian(_structData.Slice(0x0, 0x8));
+        public Double Latitude => BinaryPrimitives.ReadDoubleLittleEndian(_structData.Slice(0x8, 0x8));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

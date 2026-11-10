@@ -1382,7 +1382,6 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             VolumetricLighting_Registration.Instance,
             Water_Registration.Instance,
             WaterCurrentVelocity_Registration.Instance,
-            WaterNoiseProperties_Registration.Instance,
             Weapon_Registration.Instance,
             WeaponBarrelModel_Registration.Instance,
             WeaponDamageType_Registration.Instance,

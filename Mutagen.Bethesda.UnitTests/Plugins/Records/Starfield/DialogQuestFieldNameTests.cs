@@ -45,7 +45,7 @@ public class DialogQuestFieldNameTests
             var trot = info.Responses.Single().TROTs.Single();
             // GenericFemale02 (27CBC5:Starfield.esm)
             trot.VoiceType.FormKey.ID.ShouldBe(0x27CBC5u);
-            trot.EmotionOut.ShouldBe(4.366f, 0.001f);
+            trot.Duration.ShouldBe(4.366f, 0.001f);
             var written = GameConstants.Starfield.MajorRecord(Write(w => info.WriteToBinary(w)));
             Without(written.Content, new RecordType("NAM1")).ShouldBe(Without(Hex(Info), new RecordType("NAM1")));
         }

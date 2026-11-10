@@ -648,8 +648,8 @@ namespace Mutagen.Bethesda.Starfield
         #region GearedUpWeapons
         public Byte GearedUpWeapons { get; set; } = default(Byte);
         #endregion
-        #region Unused
-        public Byte Unused { get; set; } = default(Byte);
+        #region Unknown
+        public Byte Unknown { get; set; } = default(Byte);
         #endregion
         #region HCLR
         public Int32? HCLR { get; set; }
@@ -1023,7 +1023,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.CalculatedActionPoints = initialValue;
                 this.FarAwayModelDistance = initialValue;
                 this.GearedUpWeapons = initialValue;
-                this.Unused = initialValue;
+                this.Unknown = initialValue;
                 this.HCLR = initialValue;
                 this.BCLR = initialValue;
                 this.HeadParts = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
@@ -1130,7 +1130,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem CalculatedActionPoints,
                 TItem FarAwayModelDistance,
                 TItem GearedUpWeapons,
-                TItem Unused,
+                TItem Unknown,
                 TItem HCLR,
                 TItem BCLR,
                 TItem HeadParts,
@@ -1236,7 +1236,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.CalculatedActionPoints = CalculatedActionPoints;
                 this.FarAwayModelDistance = FarAwayModelDistance;
                 this.GearedUpWeapons = GearedUpWeapons;
-                this.Unused = Unused;
+                this.Unknown = Unknown;
                 this.HCLR = HCLR;
                 this.BCLR = BCLR;
                 this.HeadParts = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(HeadParts, []);
@@ -1344,7 +1344,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem CalculatedActionPoints;
             public TItem FarAwayModelDistance;
             public TItem GearedUpWeapons;
-            public TItem Unused;
+            public TItem Unknown;
             public TItem HCLR;
             public TItem BCLR;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? HeadParts;
@@ -1454,7 +1454,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.CalculatedActionPoints, rhs.CalculatedActionPoints)) return false;
                 if (!object.Equals(this.FarAwayModelDistance, rhs.FarAwayModelDistance)) return false;
                 if (!object.Equals(this.GearedUpWeapons, rhs.GearedUpWeapons)) return false;
-                if (!object.Equals(this.Unused, rhs.Unused)) return false;
+                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 if (!object.Equals(this.HCLR, rhs.HCLR)) return false;
                 if (!object.Equals(this.BCLR, rhs.BCLR)) return false;
                 if (!object.Equals(this.HeadParts, rhs.HeadParts)) return false;
@@ -1556,7 +1556,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.CalculatedActionPoints);
                 hash.Add(this.FarAwayModelDistance);
                 hash.Add(this.GearedUpWeapons);
-                hash.Add(this.Unused);
+                hash.Add(this.Unknown);
                 hash.Add(this.HCLR);
                 hash.Add(this.BCLR);
                 hash.Add(this.HeadParts);
@@ -1833,7 +1833,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.CalculatedActionPoints)) return false;
                 if (!eval(this.FarAwayModelDistance)) return false;
                 if (!eval(this.GearedUpWeapons)) return false;
-                if (!eval(this.Unused)) return false;
+                if (!eval(this.Unknown)) return false;
                 if (!eval(this.HCLR)) return false;
                 if (!eval(this.BCLR)) return false;
                 if (this.HeadParts != null)
@@ -2185,7 +2185,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.CalculatedActionPoints)) return true;
                 if (eval(this.FarAwayModelDistance)) return true;
                 if (eval(this.GearedUpWeapons)) return true;
-                if (eval(this.Unused)) return true;
+                if (eval(this.Unknown)) return true;
                 if (eval(this.HCLR)) return true;
                 if (eval(this.BCLR)) return true;
                 if (this.HeadParts != null)
@@ -2551,7 +2551,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.CalculatedActionPoints = eval(this.CalculatedActionPoints);
                 obj.FarAwayModelDistance = eval(this.FarAwayModelDistance);
                 obj.GearedUpWeapons = eval(this.GearedUpWeapons);
-                obj.Unused = eval(this.Unused);
+                obj.Unknown = eval(this.Unknown);
                 obj.HCLR = eval(this.HCLR);
                 obj.BCLR = eval(this.BCLR);
                 if (HeadParts != null)
@@ -3143,9 +3143,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(GearedUpWeapons, "GearedUpWeapons");
                     }
-                    if (printMask?.Unused ?? true)
+                    if (printMask?.Unknown ?? true)
                     {
-                        sb.AppendItem(Unused, "Unused");
+                        sb.AppendItem(Unknown, "Unknown");
                     }
                     if (printMask?.HCLR ?? true)
                     {
@@ -3445,7 +3445,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? CalculatedActionPoints;
             public Exception? FarAwayModelDistance;
             public Exception? GearedUpWeapons;
-            public Exception? Unused;
+            public Exception? Unknown;
             public Exception? HCLR;
             public Exception? BCLR;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? HeadParts;
@@ -3613,8 +3613,8 @@ namespace Mutagen.Bethesda.Starfield
                         return FarAwayModelDistance;
                     case Npc_FieldIndex.GearedUpWeapons:
                         return GearedUpWeapons;
-                    case Npc_FieldIndex.Unused:
-                        return Unused;
+                    case Npc_FieldIndex.Unknown:
+                        return Unknown;
                     case Npc_FieldIndex.HCLR:
                         return HCLR;
                     case Npc_FieldIndex.BCLR:
@@ -3880,8 +3880,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Npc_FieldIndex.GearedUpWeapons:
                         this.GearedUpWeapons = ex;
                         break;
-                    case Npc_FieldIndex.Unused:
-                        this.Unused = ex;
+                    case Npc_FieldIndex.Unknown:
+                        this.Unknown = ex;
                         break;
                     case Npc_FieldIndex.HCLR:
                         this.HCLR = ex;
@@ -4182,8 +4182,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Npc_FieldIndex.GearedUpWeapons:
                         this.GearedUpWeapons = (Exception?)obj;
                         break;
-                    case Npc_FieldIndex.Unused:
-                        this.Unused = (Exception?)obj;
+                    case Npc_FieldIndex.Unknown:
+                        this.Unknown = (Exception?)obj;
                         break;
                     case Npc_FieldIndex.HCLR:
                         this.HCLR = (Exception?)obj;
@@ -4356,7 +4356,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (CalculatedActionPoints != null) return true;
                 if (FarAwayModelDistance != null) return true;
                 if (GearedUpWeapons != null) return true;
-                if (Unused != null) return true;
+                if (Unknown != null) return true;
                 if (HCLR != null) return true;
                 if (BCLR != null) return true;
                 if (HeadParts != null) return true;
@@ -4795,7 +4795,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(GearedUpWeapons, "GearedUpWeapons");
                 }
                 {
-                    sb.AppendItem(Unused, "Unused");
+                    sb.AppendItem(Unknown, "Unknown");
                 }
                 {
                     sb.AppendItem(HCLR, "HCLR");
@@ -5053,7 +5053,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.CalculatedActionPoints = this.CalculatedActionPoints.Combine(rhs.CalculatedActionPoints);
                 ret.FarAwayModelDistance = this.FarAwayModelDistance.Combine(rhs.FarAwayModelDistance);
                 ret.GearedUpWeapons = this.GearedUpWeapons.Combine(rhs.GearedUpWeapons);
-                ret.Unused = this.Unused.Combine(rhs.Unused);
+                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 ret.HCLR = this.HCLR.Combine(rhs.HCLR);
                 ret.BCLR = this.BCLR.Combine(rhs.BCLR);
                 ret.HeadParts = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.HeadParts?.Overall, rhs.HeadParts?.Overall), Noggog.ExceptionExt.Combine(this.HeadParts?.Specific, rhs.HeadParts?.Specific));
@@ -5172,7 +5172,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool CalculatedActionPoints;
             public bool FarAwayModelDistance;
             public bool GearedUpWeapons;
-            public bool Unused;
+            public bool Unknown;
             public bool HCLR;
             public bool BCLR;
             public bool HeadParts;
@@ -5261,7 +5261,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.CalculatedActionPoints = defaultOn;
                 this.FarAwayModelDistance = defaultOn;
                 this.GearedUpWeapons = defaultOn;
-                this.Unused = defaultOn;
+                this.Unknown = defaultOn;
                 this.HCLR = defaultOn;
                 this.BCLR = defaultOn;
                 this.HeadParts = defaultOn;
@@ -5357,7 +5357,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((CalculatedActionPoints, null));
                 ret.Add((FarAwayModelDistance, null));
                 ret.Add((GearedUpWeapons, null));
-                ret.Add((Unused, null));
+                ret.Add((Unknown, null));
                 ret.Add((HCLR, null));
                 ret.Add((BCLR, null));
                 ret.Add((HeadParts, null));
@@ -5645,7 +5645,7 @@ namespace Mutagen.Bethesda.Starfield
         new UInt16 CalculatedActionPoints { get; set; }
         new UInt16 FarAwayModelDistance { get; set; }
         new Byte GearedUpWeapons { get; set; }
-        new Byte Unused { get; set; }
+        new Byte Unknown { get; set; }
         new Int32? HCLR { get; set; }
         new Int32? BCLR { get; set; }
         new ExtendedList<IFormLinkGetter<IHeadPartGetter>> HeadParts { get; }
@@ -5809,7 +5809,7 @@ namespace Mutagen.Bethesda.Starfield
         UInt16 CalculatedActionPoints { get; }
         UInt16 FarAwayModelDistance { get; }
         Byte GearedUpWeapons { get; }
-        Byte Unused { get; }
+        Byte Unknown { get; }
         Int32? HCLR { get; }
         Int32? BCLR { get; }
         IReadOnlyList<IFormLinkGetter<IHeadPartGetter>> HeadParts { get; }
@@ -6086,7 +6086,7 @@ namespace Mutagen.Bethesda.Starfield
         CalculatedActionPoints = 67,
         FarAwayModelDistance = 68,
         GearedUpWeapons = 69,
-        Unused = 70,
+        Unknown = 70,
         HCLR = 71,
         BCLR = 72,
         HeadParts = 73,
@@ -6381,7 +6381,7 @@ namespace Mutagen.Bethesda.Starfield
             item.CalculatedActionPoints = default(UInt16);
             item.FarAwayModelDistance = default(UInt16);
             item.GearedUpWeapons = default(Byte);
-            item.Unused = default(Byte);
+            item.Unknown = default(Byte);
             item.HCLR = default;
             item.BCLR = default;
             item.HeadParts.Clear();
@@ -6706,7 +6706,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.CalculatedActionPoints = item.CalculatedActionPoints == rhs.CalculatedActionPoints;
             ret.FarAwayModelDistance = item.FarAwayModelDistance == rhs.FarAwayModelDistance;
             ret.GearedUpWeapons = item.GearedUpWeapons == rhs.GearedUpWeapons;
-            ret.Unused = item.Unused == rhs.Unused;
+            ret.Unknown = item.Unknown == rhs.Unknown;
             ret.HCLR = item.HCLR == rhs.HCLR;
             ret.BCLR = item.BCLR == rhs.BCLR;
             ret.HeadParts = item.HeadParts.CollectionEqualsHelper(
@@ -7219,9 +7219,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.GearedUpWeapons, "GearedUpWeapons");
             }
-            if (printMask?.Unused ?? true)
+            if (printMask?.Unknown ?? true)
             {
-                sb.AppendItem(item.Unused, "Unused");
+                sb.AppendItem(item.Unknown, "Unknown");
             }
             if ((printMask?.HCLR ?? true)
                 && item.HCLR is {} HCLRItem)
@@ -7767,9 +7767,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.GearedUpWeapons != rhs.GearedUpWeapons) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.Unused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.Unknown) ?? true))
             {
-                if (lhs.Unused != rhs.Unused) return false;
+                if (lhs.Unknown != rhs.Unknown) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.HCLR) ?? true))
             {
@@ -8099,7 +8099,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.CalculatedActionPoints);
             hash.Add(item.FarAwayModelDistance);
             hash.Add(item.GearedUpWeapons);
-            hash.Add(item.Unused);
+            hash.Add(item.Unknown);
             if (item.HCLR is {} HCLRitem)
             {
                 hash.Add(HCLRitem);
@@ -9310,9 +9310,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.GearedUpWeapons = rhs.GearedUpWeapons;
             }
-            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.Unused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.Unknown) ?? true))
             {
-                item.Unused = rhs.Unused;
+                item.Unknown = rhs.Unknown;
             }
             if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.HCLR) ?? true))
             {
@@ -10170,7 +10170,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer.Write(item.CalculatedActionPoints);
                 writer.Write(item.FarAwayModelDistance);
                 writer.Write(item.GearedUpWeapons);
-                writer.Write(item.Unused);
+                writer.Write(item.Unknown);
             }
             Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
@@ -10891,8 +10891,8 @@ namespace Mutagen.Bethesda.Starfield
                     if (dataFrame.Remaining < 1) return null;
                     item.GearedUpWeapons = dataFrame.ReadUInt8();
                     if (dataFrame.Remaining < 1) return null;
-                    item.Unused = dataFrame.ReadUInt8();
-                    return (int)Npc_FieldIndex.Unused;
+                    item.Unknown = dataFrame.ReadUInt8();
+                    return (int)Npc_FieldIndex.Unknown;
                 }
                 case RecordTypeInts.HCLR:
                 {
@@ -11463,10 +11463,10 @@ namespace Mutagen.Bethesda.Starfield
         private bool _GearedUpWeapons_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _GearedUpWeaponsLocation + 1 >= 1;
         public Byte GearedUpWeapons => _GearedUpWeapons_IsSet ? _recordData.Span[_GearedUpWeaponsLocation] : default(Byte);
         #endregion
-        #region Unused
-        private int _UnusedLocation => _DNAMLocation!.Value.Min + 0x7;
-        private bool _Unused_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _UnusedLocation + 1 >= 1;
-        public Byte Unused => _Unused_IsSet ? _recordData.Span[_UnusedLocation] : default(Byte);
+        #region Unknown
+        private int _UnknownLocation => _DNAMLocation!.Value.Min + 0x7;
+        private bool _Unknown_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _UnknownLocation + 1 >= 1;
+        public Byte Unknown => _Unknown_IsSet ? _recordData.Span[_UnknownLocation] : default(Byte);
         #endregion
         #region HCLR
         private int? _HCLRLocation;
@@ -11996,7 +11996,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DNAM:
                 {
                     _DNAMLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)Npc_FieldIndex.Unused;
+                    return (int)Npc_FieldIndex.Unknown;
                 }
                 case RecordTypeInts.HCLR:
                 {
