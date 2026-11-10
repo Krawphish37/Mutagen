@@ -1197,22 +1197,19 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.Density,
                 header: translationParams.ConvertToCustom(RecordTypes.CDND));
-            CrowdComponentBinaryWriteTranslation.WriteBinaryItems(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ICrowdComponentItemGetter>.Instance.WriteWithCounter(
                 writer: writer,
-                item: item);
-        }
-
-        public static partial void WriteBinaryItemsCustom(
-            MutagenWriter writer,
-            ICrowdComponentGetter item);
-
-        public static void WriteBinaryItems(
-            MutagenWriter writer,
-            ICrowdComponentGetter item)
-        {
-            WriteBinaryItemsCustom(
-                writer: writer,
-                item: item);
+                items: item.Items,
+                counterType: RecordTypes.CDNS,
+                counterLength: 4,
+                transl: (MutagenWriter subWriter, ICrowdComponentItemGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((CrowdComponentItemBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
         }
 
         public void Write(
@@ -1280,10 +1277,15 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FLTV:
                 case RecordTypeInts.CDNS:
                 {
-                    CrowdComponentBinaryCreateTranslation.FillBinaryItemsCustom(
-                        frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
-                        item: item,
-                        lastParsed: lastParsed);
+                    item.Items = 
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<CrowdComponentItem>.Instance.ParsePerItem(
+                            reader: frame,
+                            countLengthLength: 4,
+                            countRecord: RecordTypes.CDNS,
+                            triggeringRecord: CrowdComponentItem_Registration.TriggerSpecs,
+                            translationParams: translationParams,
+                            transl: CrowdComponentItem.TryCreateFromBinary)
+                        .CastExtendedList<CrowdComponentItem>();
                     return (int)CrowdComponent_FieldIndex.Items;
                 }
                 default:
@@ -1297,11 +1299,6 @@ namespace Mutagen.Bethesda.Starfield
                         translationParams: translationParams.WithNoConverter());
             }
         }
-
-        public static partial void FillBinaryItemsCustom(
-            MutagenFrame frame,
-            ICrowdComponent item,
-            PreviousParse lastParsed);
 
     }
 
@@ -1352,14 +1349,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _DensityLocation;
         public Single? Density => _DensityLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DensityLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
-        #region Items
-        partial void ItemsCustomParse(
-            OverlayStream stream,
-            int finalPos,
-            int offset,
-            RecordType type,
-            PreviousParse lastParsed);
-        #endregion
+        public IReadOnlyList<ICrowdComponentItemGetter>? Items { get; private set; }
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1435,12 +1425,15 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FLTV:
                 case RecordTypeInts.CDNS:
                 {
-                    ItemsCustomParse(
+                    this.Items = BinaryOverlayList.FactoryByCountPerItem<ICrowdComponentItemGetter>(
                         stream: stream,
-                        finalPos: finalPos,
-                        offset: offset,
-                        type: type,
-                        lastParsed: lastParsed);
+                        package: _package,
+                        countLength: 4,
+                        trigger: CrowdComponentItem_Registration.TriggerSpecs,
+                        countType: RecordTypes.CDNS,
+                        translationParams: translationParams,
+                        getter: (s, p, recConv) => CrowdComponentItemBinaryOverlay.CrowdComponentItemFactory(new OverlayStream(s, p), p, recConv),
+                        skipHeader: false);
                     return (int)CrowdComponent_FieldIndex.Items;
                 }
                 default:

@@ -254,6 +254,11 @@ internal abstract class BinaryOverlayList
                 _ => throw new NotImplementedException(),
             };
             stream.Position += initialHeader.TotalLength;
+            if (endMarker == null
+                && TryParseEntriesInPlace(stream, package, count, trigger, translationParams, getter) is { } entries)
+            {
+                return entries;
+            }
             return FactoryByArray(
                 mem: stream.RemainingMemory,
                 package: package,
@@ -269,6 +274,12 @@ internal abstract class BinaryOverlayList
         }
         else
         {
+            if (endMarker == null
+                && !skipHeader
+                && TryParseEntriesInPlace(stream, package, null, trigger, translationParams, getter) is { } entries)
+            {
+                return entries;
+            }
             return FactoryByArray(
                 mem: stream.RemainingMemory,
                 package: package,
@@ -282,6 +293,58 @@ internal abstract class BinaryOverlayList
                     translationParams: translationParams.RecordTypeConverter,
                     endMarker: endMarker));
         }
+    }
+
+    /// <summary>
+    /// Reads typeless entries (objects of several subrecords with no header of their own) one after another, each
+    /// reading as far as its own fields go, like the full import's ListBinaryTranslation.ParsePerItem does.
+    /// Finding the entries by subrecord type order alone (ParseRecordLocationsByCount) splits an entry that holds a
+    /// repeated subrecord, or a list's items after its counter (CITC then CTDA, CTDA ...), into several entries.
+    /// Returns null, leaving the stream where it was, when an entry's reader doesn't report how far it read.
+    /// </summary>
+    private static IReadOnlyList<T>? TryParseEntriesInPlace<T>(
+        OverlayStream stream,
+        BinaryOverlayFactoryPackage package,
+        uint? count,
+        RecordTriggerSpecs trigger,
+        TypedParseParams translationParams,
+        PluginBinaryOverlay.SpanRecordFactory<T> getter)
+    {
+        var start = stream.Position;
+        var ret = new List<T>();
+        // The same parameters the lazily read entries got
+        TypedParseParams entryParams = translationParams.RecordTypeConverter;
+        // Like the full import: plugins can count fewer entries than follow, and a list whose entries open with one
+        // subrecord type reads on past the count
+        var readPastCount = trigger.TriggeringRecordTypes.Count == 1;
+        while ((count == null || ret.Count < count || readPastCount) && !stream.Complete)
+        {
+            var header = stream.GetSubrecordHeader();
+            if (!trigger.TriggeringRecordTypes.Contains(translationParams.ConvertToStandard(header.RecordType))) break;
+            var mem = stream.RemainingMemory;
+            PluginBinaryOverlay.LastTypelessEnd = null;
+            T entry;
+            try
+            {
+                entry = getter(mem, package, entryParams);
+            }
+            catch (Exception)
+            {
+                // Leave it to the lazy reader, which fails only when that entry is read, as before
+                stream.Position = start;
+                return null;
+            }
+            var used = PluginBinaryOverlay.LastTypelessEnd;
+            PluginBinaryOverlay.LastTypelessEnd = null;
+            if (used is not { } length || length <= 0 || length > mem.Length)
+            {
+                stream.Position = start;
+                return null;
+            }
+            ret.Add(entry);
+            stream.Position += length;
+        }
+        return ret;
     }
 
     public static IReadOnlyList<T> FactoryByCountPerItem<T>(
