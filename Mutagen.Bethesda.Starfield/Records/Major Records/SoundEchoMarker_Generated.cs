@@ -109,16 +109,16 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         String? ISoundEchoMarkerGetter.Description => this.Description;
         #endregion
-        #region ECHL
+        #region LoopingSound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _ECHL;
-        public SoundReference? ECHL
+        private SoundReference? _LoopingSound;
+        public SoundReference? LoopingSound
         {
-            get => _ECHL;
-            set => _ECHL = value;
+            get => _LoopingSound;
+            set => _LoopingSound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? ISoundEchoMarkerGetter.ECHL => this.ECHL;
+        ISoundReferenceGetter? ISoundEchoMarkerGetter.LoopingSound => this.LoopingSound;
         #endregion
         #region Markers
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -175,7 +175,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirtinessScale = initialValue;
                 this.XalgFlags = initialValue;
                 this.Description = initialValue;
-                this.ECHL = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.LoopingSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.Markers = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, EchoMarker.Mask<TItem>?>>?>(initialValue, []);
                 this.DefaultStartMarker = new MaskItem<TItem, EchoMarker.Mask<TItem>?>(initialValue, new EchoMarker.Mask<TItem>(initialValue));
             }
@@ -193,7 +193,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem DirtinessScale,
                 TItem XalgFlags,
                 TItem Description,
-                TItem ECHL,
+                TItem LoopingSound,
                 TItem Markers,
                 TItem DefaultStartMarker)
             : base(
@@ -210,7 +210,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirtinessScale = DirtinessScale;
                 this.XalgFlags = XalgFlags;
                 this.Description = Description;
-                this.ECHL = new MaskItem<TItem, SoundReference.Mask<TItem>?>(ECHL, new SoundReference.Mask<TItem>(ECHL));
+                this.LoopingSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(LoopingSound, new SoundReference.Mask<TItem>(LoopingSound));
                 this.Markers = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, EchoMarker.Mask<TItem>?>>?>(Markers, []);
                 this.DefaultStartMarker = new MaskItem<TItem, EchoMarker.Mask<TItem>?>(DefaultStartMarker, new EchoMarker.Mask<TItem>(DefaultStartMarker));
             }
@@ -229,7 +229,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem DirtinessScale;
             public TItem XalgFlags;
             public TItem Description;
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? ECHL { get; set; }
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? LoopingSound { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, EchoMarker.Mask<TItem>?>>?>? Markers;
             public MaskItem<TItem, EchoMarker.Mask<TItem>?>? DefaultStartMarker { get; set; }
             #endregion
@@ -250,7 +250,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.DirtinessScale, rhs.DirtinessScale)) return false;
                 if (!object.Equals(this.XalgFlags, rhs.XalgFlags)) return false;
                 if (!object.Equals(this.Description, rhs.Description)) return false;
-                if (!object.Equals(this.ECHL, rhs.ECHL)) return false;
+                if (!object.Equals(this.LoopingSound, rhs.LoopingSound)) return false;
                 if (!object.Equals(this.Markers, rhs.Markers)) return false;
                 if (!object.Equals(this.DefaultStartMarker, rhs.DefaultStartMarker)) return false;
                 return true;
@@ -263,7 +263,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.DirtinessScale);
                 hash.Add(this.XalgFlags);
                 hash.Add(this.Description);
-                hash.Add(this.ECHL);
+                hash.Add(this.LoopingSound);
                 hash.Add(this.Markers);
                 hash.Add(this.DefaultStartMarker);
                 hash.Add(base.GetHashCode());
@@ -289,10 +289,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.DirtinessScale)) return false;
                 if (!eval(this.XalgFlags)) return false;
                 if (!eval(this.Description)) return false;
-                if (ECHL != null)
+                if (LoopingSound != null)
                 {
-                    if (!eval(this.ECHL.Overall)) return false;
-                    if (this.ECHL.Specific != null && !this.ECHL.Specific.All(eval)) return false;
+                    if (!eval(this.LoopingSound.Overall)) return false;
+                    if (this.LoopingSound.Specific != null && !this.LoopingSound.Specific.All(eval)) return false;
                 }
                 if (this.Markers != null)
                 {
@@ -332,10 +332,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.DirtinessScale)) return true;
                 if (eval(this.XalgFlags)) return true;
                 if (eval(this.Description)) return true;
-                if (ECHL != null)
+                if (LoopingSound != null)
                 {
-                    if (eval(this.ECHL.Overall)) return true;
-                    if (this.ECHL.Specific != null && this.ECHL.Specific.Any(eval)) return true;
+                    if (eval(this.LoopingSound.Overall)) return true;
+                    if (this.LoopingSound.Specific != null && this.LoopingSound.Specific.Any(eval)) return true;
                 }
                 if (this.Markers != null)
                 {
@@ -374,7 +374,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.DirtinessScale = eval(this.DirtinessScale);
                 obj.XalgFlags = eval(this.XalgFlags);
                 obj.Description = eval(this.Description);
-                obj.ECHL = this.ECHL == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.ECHL.Overall), this.ECHL.Specific?.Translate(eval));
+                obj.LoopingSound = this.LoopingSound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.LoopingSound.Overall), this.LoopingSound.Specific?.Translate(eval));
                 if (Markers != null)
                 {
                     obj.Markers = new MaskItem<R, IEnumerable<MaskItemIndexed<R, EchoMarker.Mask<R>?>>?>(eval(this.Markers.Overall), []);
@@ -429,9 +429,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Description, "Description");
                     }
-                    if (printMask?.ECHL?.Overall ?? true)
+                    if (printMask?.LoopingSound?.Overall ?? true)
                     {
-                        ECHL?.Print(sb);
+                        LoopingSound?.Print(sb);
                     }
                     if ((printMask?.Markers?.Overall ?? true)
                         && Markers is {} MarkersItem)
@@ -472,7 +472,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? DirtinessScale;
             public Exception? XalgFlags;
             public Exception? Description;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? ECHL;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? LoopingSound;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, EchoMarker.ErrorMask?>>?>? Markers;
             public MaskItem<Exception?, EchoMarker.ErrorMask?>? DefaultStartMarker;
             #endregion
@@ -493,8 +493,8 @@ namespace Mutagen.Bethesda.Starfield
                         return XalgFlags;
                     case SoundEchoMarker_FieldIndex.Description:
                         return Description;
-                    case SoundEchoMarker_FieldIndex.ECHL:
-                        return ECHL;
+                    case SoundEchoMarker_FieldIndex.LoopingSound:
+                        return LoopingSound;
                     case SoundEchoMarker_FieldIndex.Markers:
                         return Markers;
                     case SoundEchoMarker_FieldIndex.DefaultStartMarker:
@@ -524,8 +524,8 @@ namespace Mutagen.Bethesda.Starfield
                     case SoundEchoMarker_FieldIndex.Description:
                         this.Description = ex;
                         break;
-                    case SoundEchoMarker_FieldIndex.ECHL:
-                        this.ECHL = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case SoundEchoMarker_FieldIndex.LoopingSound:
+                        this.LoopingSound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
                     case SoundEchoMarker_FieldIndex.Markers:
                         this.Markers = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, EchoMarker.ErrorMask?>>?>(ex, null);
@@ -559,8 +559,8 @@ namespace Mutagen.Bethesda.Starfield
                     case SoundEchoMarker_FieldIndex.Description:
                         this.Description = (Exception?)obj;
                         break;
-                    case SoundEchoMarker_FieldIndex.ECHL:
-                        this.ECHL = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case SoundEchoMarker_FieldIndex.LoopingSound:
+                        this.LoopingSound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
                     case SoundEchoMarker_FieldIndex.Markers:
                         this.Markers = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, EchoMarker.ErrorMask?>>?>)obj;
@@ -582,7 +582,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (DirtinessScale != null) return true;
                 if (XalgFlags != null) return true;
                 if (Description != null) return true;
-                if (ECHL != null) return true;
+                if (LoopingSound != null) return true;
                 if (Markers != null) return true;
                 if (DefaultStartMarker != null) return true;
                 return false;
@@ -622,7 +622,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(Description, "Description");
                 }
-                ECHL?.Print(sb);
+                LoopingSound?.Print(sb);
                 if (Markers is {} MarkersItem)
                 {
                     sb.AppendLine("Markers =>");
@@ -655,7 +655,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.DirtinessScale = this.DirtinessScale.Combine(rhs.DirtinessScale);
                 ret.XalgFlags = this.XalgFlags.Combine(rhs.XalgFlags);
                 ret.Description = this.Description.Combine(rhs.Description);
-                ret.ECHL = this.ECHL.Combine(rhs.ECHL, (l, r) => l.Combine(r));
+                ret.LoopingSound = this.LoopingSound.Combine(rhs.LoopingSound, (l, r) => l.Combine(r));
                 ret.Markers = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, EchoMarker.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Markers?.Overall, rhs.Markers?.Overall), Noggog.ExceptionExt.Combine(this.Markers?.Specific, rhs.Markers?.Specific));
                 ret.DefaultStartMarker = this.DefaultStartMarker.Combine(rhs.DefaultStartMarker, (l, r) => l.Combine(r));
                 return ret;
@@ -685,7 +685,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool DirtinessScale;
             public bool XalgFlags;
             public bool Description;
-            public SoundReference.TranslationMask? ECHL;
+            public SoundReference.TranslationMask? LoopingSound;
             public EchoMarker.TranslationMask? Markers;
             public EchoMarker.TranslationMask? DefaultStartMarker;
             #endregion
@@ -711,7 +711,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((DirtinessScale, null));
                 ret.Add((XalgFlags, null));
                 ret.Add((Description, null));
-                ret.Add((ECHL != null ? ECHL.OnOverall : DefaultOn, ECHL?.GetCrystal()));
+                ret.Add((LoopingSound != null ? LoopingSound.OnOverall : DefaultOn, LoopingSound?.GetCrystal()));
                 ret.Add((Markers == null ? DefaultOn : !Markers.GetCrystal().CopyNothing, Markers?.GetCrystal()));
                 ret.Add((DefaultStartMarker != null ? DefaultStartMarker.OnOverall : DefaultOn, DefaultStartMarker?.GetCrystal()));
             }
@@ -878,7 +878,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single DirtinessScale { get; set; }
         new XalgFlag? XalgFlags { get; set; }
         new String? Description { get; set; }
-        new SoundReference? ECHL { get; set; }
+        new SoundReference? LoopingSound { get; set; }
         new ExtendedList<EchoMarker> Markers { get; }
         new EchoMarker? DefaultStartMarker { get; set; }
     }
@@ -920,7 +920,7 @@ namespace Mutagen.Bethesda.Starfield
         Single DirtinessScale { get; }
         XalgFlag? XalgFlags { get; }
         String? Description { get; }
-        ISoundReferenceGetter? ECHL { get; }
+        ISoundReferenceGetter? LoopingSound { get; }
         IReadOnlyList<IEchoMarkerGetter> Markers { get; }
         IEchoMarkerGetter? DefaultStartMarker { get; }
 
@@ -1104,7 +1104,7 @@ namespace Mutagen.Bethesda.Starfield
         DirtinessScale = 9,
         XalgFlags = 10,
         Description = 11,
-        ECHL = 12,
+        LoopingSound = 12,
         Markers = 13,
         DefaultStartMarker = 14,
     }
@@ -1222,7 +1222,7 @@ namespace Mutagen.Bethesda.Starfield
             item.DirtinessScale = default(Single);
             item.XalgFlags = default;
             item.Description = default;
-            item.ECHL = null;
+            item.LoopingSound = null;
             item.Markers.Clear();
             item.DefaultStartMarker = null;
             base.Clear(item);
@@ -1243,7 +1243,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             base.RemapLinks(obj, mapping);
             obj.VirtualMachineAdapter?.RemapLinks(mapping);
-            obj.ECHL?.RemapLinks(mapping);
+            obj.LoopingSound?.RemapLinks(mapping);
             obj.Markers.RemapLinks(mapping);
             obj.DefaultStartMarker?.RemapLinks(mapping);
         }
@@ -1322,9 +1322,9 @@ namespace Mutagen.Bethesda.Starfield
             ret.DirtinessScale = item.DirtinessScale.EqualsWithin(rhs.DirtinessScale);
             ret.XalgFlags = item.XalgFlags == rhs.XalgFlags;
             ret.Description = string.Equals(item.Description, rhs.Description);
-            ret.ECHL = EqualsMaskHelper.EqualsHelper(
-                item.ECHL,
-                rhs.ECHL,
+            ret.LoopingSound = EqualsMaskHelper.EqualsHelper(
+                item.LoopingSound,
+                rhs.LoopingSound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.Markers = item.Markers.CollectionEqualsHelper(
@@ -1408,10 +1408,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(DescriptionItem, "Description");
             }
-            if ((printMask?.ECHL?.Overall ?? true)
-                && item.ECHL is {} ECHLItem)
+            if ((printMask?.LoopingSound?.Overall ?? true)
+                && item.LoopingSound is {} LoopingSoundItem)
             {
-                ECHLItem?.Print(sb, "ECHL");
+                LoopingSoundItem?.Print(sb, "LoopingSound");
             }
             if (printMask?.Markers?.Overall ?? true)
             {
@@ -1510,13 +1510,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!string.Equals(lhs.Description, rhs.Description)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.ECHL) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.LoopingSound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.ECHL, rhs.ECHL, out var lhsECHL, out var rhsECHL, out var isECHLEqual))
+                if (EqualsMaskHelper.RefEquality(lhs.LoopingSound, rhs.LoopingSound, out var lhsLoopingSound, out var rhsLoopingSound, out var isLoopingSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsECHL).CommonInstance()!).Equals(lhsECHL, rhsECHL, equalsMask?.GetSubCrystal((int)SoundEchoMarker_FieldIndex.ECHL))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsLoopingSound).CommonInstance()!).Equals(lhsLoopingSound, rhsLoopingSound, equalsMask?.GetSubCrystal((int)SoundEchoMarker_FieldIndex.LoopingSound))) return false;
                 }
-                else if (!isECHLEqual) return false;
+                else if (!isLoopingSoundEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.Markers) ?? true))
             {
@@ -1572,9 +1572,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Descriptionitem);
             }
-            if (item.ECHL is {} ECHLitem)
+            if (item.LoopingSound is {} LoopingSounditem)
             {
-                hash.Add(ECHLitem);
+                hash.Add(LoopingSounditem);
             }
             foreach (var subItem in item.Markers)
             {
@@ -1620,9 +1620,9 @@ namespace Mutagen.Bethesda.Starfield
                     yield return item;
                 }
             }
-            if (obj.ECHL is {} ECHLItems)
+            if (obj.LoopingSound is {} LoopingSoundItems)
             {
-                foreach (var item in ECHLItems.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in LoopingSoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -1794,20 +1794,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Description = rhs.Description;
             }
-            if ((copyMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.ECHL) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.LoopingSound) ?? true))
             {
-                errorMask?.PushIndex((int)SoundEchoMarker_FieldIndex.ECHL);
+                errorMask?.PushIndex((int)SoundEchoMarker_FieldIndex.LoopingSound);
                 try
                 {
-                    if(rhs.ECHL is {} rhsECHL)
+                    if(rhs.LoopingSound is {} rhsLoopingSound)
                     {
-                        item.ECHL = rhsECHL.DeepCopy(
+                        item.LoopingSound = rhsLoopingSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)SoundEchoMarker_FieldIndex.ECHL));
+                            copyMask?.GetSubCrystal((int)SoundEchoMarker_FieldIndex.LoopingSound));
                     }
                     else
                     {
-                        item.ECHL = default;
+                        item.LoopingSound = default;
                     }
                 }
                 catch (Exception ex)
@@ -2065,12 +2065,12 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.Description,
                 header: translationParams.ConvertToCustom(RecordTypes.NNAM),
                 binaryType: StringBinaryType.NullTerminate);
-            if (item.ECHL is {} ECHLItem)
+            if (item.LoopingSound is {} LoopingSoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.ECHL))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)ECHLItem).BinaryWriteTranslator).Write(
-                        item: ECHLItem,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)LoopingSoundItem).BinaryWriteTranslator).Write(
+                        item: LoopingSoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -2203,8 +2203,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ECHL:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.ECHL = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)SoundEchoMarker_FieldIndex.ECHL;
+                    item.LoopingSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)SoundEchoMarker_FieldIndex.LoopingSound;
                 }
                 case RecordTypeInts.ECHO:
                 case RecordTypeInts.ECHE:
@@ -2314,7 +2314,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _DescriptionLocation;
         public String? Description => _DescriptionLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DescriptionLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        public ISoundReferenceGetter? ECHL { get; private set; }
+        public ISoundReferenceGetter? LoopingSound { get; private set; }
         public IReadOnlyList<IEchoMarkerGetter> Markers { get; private set; } = [];
         public IEchoMarkerGetter? DefaultStartMarker { get; private set; }
         partial void CustomFactoryEnd(
@@ -2419,11 +2419,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ECHL:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.ECHL = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.LoopingSound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)SoundEchoMarker_FieldIndex.ECHL;
+                    return (int)SoundEchoMarker_FieldIndex.LoopingSound;
                 }
                 case RecordTypeInts.ECHO:
                 case RecordTypeInts.ECHE:
