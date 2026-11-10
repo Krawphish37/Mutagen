@@ -9,7 +9,11 @@
       <RefDirect name="Model" refName="Model" />
       <UInt32 name="NodeIndex" recordType="DATA" nullable="False" />
       <FormLink name="Light" refName="Light" recordType="LNAM" />
-      <ByteArray name="Reflection" recordType="PSDF" unknown="true" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX">
+        <RecordTypeOverrides>
+          <Mapping From="REFL" To="PSDF" />
+        </RecordTypeOverrides>
+      </RefDirect>
       <Data recordType="DNAM">
         <Fields>
           <UInt16 name="MasterParticleSystemCap" />
