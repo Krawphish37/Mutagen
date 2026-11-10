@@ -35,6 +35,7 @@ using RecordTypes = Mutagen.Bethesda.Starfield.Internals.RecordTypes;
 using System.Buffers.Binary;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 #endregion
@@ -161,16 +162,119 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ReadOnlyMemorySlice<Byte>? IWaterGetter.DATA => this.DATA;
         #endregion
-        #region DNAM
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _DNAM;
-        public MemorySlice<Byte>? DNAM
-        {
-            get => this._DNAM;
-            set => this._DNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWaterGetter.DNAM => this.DNAM;
+        #region DepthAmount
+        public Single DepthAmount { get; set; } = default(Single);
+        #endregion
+        #region AbsorptionRangeRed
+        public Single AbsorptionRangeRed { get; set; } = default(Single);
+        #endregion
+        #region AbsorptionRangeGreen
+        public Single AbsorptionRangeGreen { get; set; } = default(Single);
+        #endregion
+        #region AbsorptionRangeBlue
+        public Single AbsorptionRangeBlue { get; set; } = default(Single);
+        #endregion
+        #region Phytoplankton
+        public Single Phytoplankton { get; set; } = default(Single);
+        #endregion
+        #region Sediment
+        public Single Sediment { get; set; } = default(Single);
+        #endregion
+        #region YellowMatter
+        public Single YellowMatter { get; set; } = default(Single);
+        #endregion
+        #region Oceanness
+        public Single Oceanness { get; set; } = default(Single);
+        #endregion
+        #region FogUnderwaterColor
+        public Color FogUnderwaterColor { get; set; } = default(Color);
+        #endregion
+        #region FogUnderwaterAmount
+        public Single FogUnderwaterAmount { get; set; } = default(Single);
+        #endregion
+        #region FogUnderwaterNear
+        public Single FogUnderwaterNear { get; set; } = default(Single);
+        #endregion
+        #region FogUnderwaterFar
+        public Single FogUnderwaterFar { get; set; } = default(Single);
+        #endregion
+        #region PhysicalNormalMagnitude
+        public Single PhysicalNormalMagnitude { get; set; } = default(Single);
+        #endregion
+        #region PhysicalShallowNormalFalloff
+        public Single PhysicalShallowNormalFalloff { get; set; } = default(Single);
+        #endregion
+        #region PhysicalDeepNormalFalloff
+        public Single PhysicalDeepNormalFalloff { get; set; } = default(Single);
+        #endregion
+        #region PhysicalSurfaceEffectFalloff
+        public Single PhysicalSurfaceEffectFalloff { get; set; } = default(Single);
+        #endregion
+        #region PhysicalDisplacementSimulatorForce
+        public Single PhysicalDisplacementSimulatorForce { get; set; } = default(Single);
+        #endregion
+        #region PhysicalDisplacementSimulatorVelocity
+        public Single PhysicalDisplacementSimulatorVelocity { get; set; } = default(Single);
+        #endregion
+        #region PhysicalDisplacementSimulatorFalloff
+        public Single PhysicalDisplacementSimulatorFalloff { get; set; } = default(Single);
+        #endregion
+        #region PhysicalDisplacementSimulatorDampener
+        public Single PhysicalDisplacementSimulatorDampener { get; set; } = default(Single);
+        #endregion
+        #region PhysicalDisplacementSimulatorStartingSize
+        public Single PhysicalDisplacementSimulatorStartingSize { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerOneWindDirection
+        public Single NoiseLayerOneWindDirection { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerTwoWindDirection
+        public Single NoiseLayerTwoWindDirection { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerThreeWindDirection
+        public Single NoiseLayerThreeWindDirection { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerOneWindSpeed
+        public Single NoiseLayerOneWindSpeed { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerTwoWindSpeed
+        public Single NoiseLayerTwoWindSpeed { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerThreeWindSpeed
+        public Single NoiseLayerThreeWindSpeed { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerOneAmplitudeScale
+        public Single NoiseLayerOneAmplitudeScale { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerTwoAmplitudeScale
+        public Single NoiseLayerTwoAmplitudeScale { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerThreeAmplitudeScale
+        public Single NoiseLayerThreeAmplitudeScale { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerOneUvScale
+        public Single NoiseLayerOneUvScale { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerTwoUvScale
+        public Single NoiseLayerTwoUvScale { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerThreeUvScale
+        public Single NoiseLayerThreeUvScale { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerOneNoiseFalloff
+        public Single NoiseLayerOneNoiseFalloff { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerTwoNoiseFalloff
+        public Single NoiseLayerTwoNoiseFalloff { get; set; } = default(Single);
+        #endregion
+        #region NoiseLayerThreeNoiseFalloff
+        public Single NoiseLayerThreeNoiseFalloff { get; set; } = default(Single);
+        #endregion
+        #region FlowmapScale
+        public Single FlowmapScale { get; set; } = default(Single);
+        #endregion
+        #region Roughness
+        public Single Roughness { get; set; } = default(Single);
         #endregion
         #region GNAM
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -321,7 +425,44 @@ namespace Mutagen.Bethesda.Starfield
                 this.ConsumeSpell = initialValue;
                 this.ContactSpell = initialValue;
                 this.DATA = initialValue;
-                this.DNAM = initialValue;
+                this.DepthAmount = initialValue;
+                this.AbsorptionRangeRed = initialValue;
+                this.AbsorptionRangeGreen = initialValue;
+                this.AbsorptionRangeBlue = initialValue;
+                this.Phytoplankton = initialValue;
+                this.Sediment = initialValue;
+                this.YellowMatter = initialValue;
+                this.Oceanness = initialValue;
+                this.FogUnderwaterColor = initialValue;
+                this.FogUnderwaterAmount = initialValue;
+                this.FogUnderwaterNear = initialValue;
+                this.FogUnderwaterFar = initialValue;
+                this.PhysicalNormalMagnitude = initialValue;
+                this.PhysicalShallowNormalFalloff = initialValue;
+                this.PhysicalDeepNormalFalloff = initialValue;
+                this.PhysicalSurfaceEffectFalloff = initialValue;
+                this.PhysicalDisplacementSimulatorForce = initialValue;
+                this.PhysicalDisplacementSimulatorVelocity = initialValue;
+                this.PhysicalDisplacementSimulatorFalloff = initialValue;
+                this.PhysicalDisplacementSimulatorDampener = initialValue;
+                this.PhysicalDisplacementSimulatorStartingSize = initialValue;
+                this.NoiseLayerOneWindDirection = initialValue;
+                this.NoiseLayerTwoWindDirection = initialValue;
+                this.NoiseLayerThreeWindDirection = initialValue;
+                this.NoiseLayerOneWindSpeed = initialValue;
+                this.NoiseLayerTwoWindSpeed = initialValue;
+                this.NoiseLayerThreeWindSpeed = initialValue;
+                this.NoiseLayerOneAmplitudeScale = initialValue;
+                this.NoiseLayerTwoAmplitudeScale = initialValue;
+                this.NoiseLayerThreeAmplitudeScale = initialValue;
+                this.NoiseLayerOneUvScale = initialValue;
+                this.NoiseLayerTwoUvScale = initialValue;
+                this.NoiseLayerThreeUvScale = initialValue;
+                this.NoiseLayerOneNoiseFalloff = initialValue;
+                this.NoiseLayerTwoNoiseFalloff = initialValue;
+                this.NoiseLayerThreeNoiseFalloff = initialValue;
+                this.FlowmapScale = initialValue;
+                this.Roughness = initialValue;
                 this.GNAM = initialValue;
                 this.LinearVelocity = initialValue;
                 this.AngularVelocity = initialValue;
@@ -355,7 +496,44 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ConsumeSpell,
                 TItem ContactSpell,
                 TItem DATA,
-                TItem DNAM,
+                TItem DepthAmount,
+                TItem AbsorptionRangeRed,
+                TItem AbsorptionRangeGreen,
+                TItem AbsorptionRangeBlue,
+                TItem Phytoplankton,
+                TItem Sediment,
+                TItem YellowMatter,
+                TItem Oceanness,
+                TItem FogUnderwaterColor,
+                TItem FogUnderwaterAmount,
+                TItem FogUnderwaterNear,
+                TItem FogUnderwaterFar,
+                TItem PhysicalNormalMagnitude,
+                TItem PhysicalShallowNormalFalloff,
+                TItem PhysicalDeepNormalFalloff,
+                TItem PhysicalSurfaceEffectFalloff,
+                TItem PhysicalDisplacementSimulatorForce,
+                TItem PhysicalDisplacementSimulatorVelocity,
+                TItem PhysicalDisplacementSimulatorFalloff,
+                TItem PhysicalDisplacementSimulatorDampener,
+                TItem PhysicalDisplacementSimulatorStartingSize,
+                TItem NoiseLayerOneWindDirection,
+                TItem NoiseLayerTwoWindDirection,
+                TItem NoiseLayerThreeWindDirection,
+                TItem NoiseLayerOneWindSpeed,
+                TItem NoiseLayerTwoWindSpeed,
+                TItem NoiseLayerThreeWindSpeed,
+                TItem NoiseLayerOneAmplitudeScale,
+                TItem NoiseLayerTwoAmplitudeScale,
+                TItem NoiseLayerThreeAmplitudeScale,
+                TItem NoiseLayerOneUvScale,
+                TItem NoiseLayerTwoUvScale,
+                TItem NoiseLayerThreeUvScale,
+                TItem NoiseLayerOneNoiseFalloff,
+                TItem NoiseLayerTwoNoiseFalloff,
+                TItem NoiseLayerThreeNoiseFalloff,
+                TItem FlowmapScale,
+                TItem Roughness,
                 TItem GNAM,
                 TItem LinearVelocity,
                 TItem AngularVelocity,
@@ -388,7 +566,44 @@ namespace Mutagen.Bethesda.Starfield
                 this.ConsumeSpell = ConsumeSpell;
                 this.ContactSpell = ContactSpell;
                 this.DATA = DATA;
-                this.DNAM = DNAM;
+                this.DepthAmount = DepthAmount;
+                this.AbsorptionRangeRed = AbsorptionRangeRed;
+                this.AbsorptionRangeGreen = AbsorptionRangeGreen;
+                this.AbsorptionRangeBlue = AbsorptionRangeBlue;
+                this.Phytoplankton = Phytoplankton;
+                this.Sediment = Sediment;
+                this.YellowMatter = YellowMatter;
+                this.Oceanness = Oceanness;
+                this.FogUnderwaterColor = FogUnderwaterColor;
+                this.FogUnderwaterAmount = FogUnderwaterAmount;
+                this.FogUnderwaterNear = FogUnderwaterNear;
+                this.FogUnderwaterFar = FogUnderwaterFar;
+                this.PhysicalNormalMagnitude = PhysicalNormalMagnitude;
+                this.PhysicalShallowNormalFalloff = PhysicalShallowNormalFalloff;
+                this.PhysicalDeepNormalFalloff = PhysicalDeepNormalFalloff;
+                this.PhysicalSurfaceEffectFalloff = PhysicalSurfaceEffectFalloff;
+                this.PhysicalDisplacementSimulatorForce = PhysicalDisplacementSimulatorForce;
+                this.PhysicalDisplacementSimulatorVelocity = PhysicalDisplacementSimulatorVelocity;
+                this.PhysicalDisplacementSimulatorFalloff = PhysicalDisplacementSimulatorFalloff;
+                this.PhysicalDisplacementSimulatorDampener = PhysicalDisplacementSimulatorDampener;
+                this.PhysicalDisplacementSimulatorStartingSize = PhysicalDisplacementSimulatorStartingSize;
+                this.NoiseLayerOneWindDirection = NoiseLayerOneWindDirection;
+                this.NoiseLayerTwoWindDirection = NoiseLayerTwoWindDirection;
+                this.NoiseLayerThreeWindDirection = NoiseLayerThreeWindDirection;
+                this.NoiseLayerOneWindSpeed = NoiseLayerOneWindSpeed;
+                this.NoiseLayerTwoWindSpeed = NoiseLayerTwoWindSpeed;
+                this.NoiseLayerThreeWindSpeed = NoiseLayerThreeWindSpeed;
+                this.NoiseLayerOneAmplitudeScale = NoiseLayerOneAmplitudeScale;
+                this.NoiseLayerTwoAmplitudeScale = NoiseLayerTwoAmplitudeScale;
+                this.NoiseLayerThreeAmplitudeScale = NoiseLayerThreeAmplitudeScale;
+                this.NoiseLayerOneUvScale = NoiseLayerOneUvScale;
+                this.NoiseLayerTwoUvScale = NoiseLayerTwoUvScale;
+                this.NoiseLayerThreeUvScale = NoiseLayerThreeUvScale;
+                this.NoiseLayerOneNoiseFalloff = NoiseLayerOneNoiseFalloff;
+                this.NoiseLayerTwoNoiseFalloff = NoiseLayerTwoNoiseFalloff;
+                this.NoiseLayerThreeNoiseFalloff = NoiseLayerThreeNoiseFalloff;
+                this.FlowmapScale = FlowmapScale;
+                this.Roughness = Roughness;
                 this.GNAM = GNAM;
                 this.LinearVelocity = LinearVelocity;
                 this.AngularVelocity = AngularVelocity;
@@ -423,7 +638,44 @@ namespace Mutagen.Bethesda.Starfield
             public TItem ConsumeSpell;
             public TItem ContactSpell;
             public TItem DATA;
-            public TItem DNAM;
+            public TItem DepthAmount;
+            public TItem AbsorptionRangeRed;
+            public TItem AbsorptionRangeGreen;
+            public TItem AbsorptionRangeBlue;
+            public TItem Phytoplankton;
+            public TItem Sediment;
+            public TItem YellowMatter;
+            public TItem Oceanness;
+            public TItem FogUnderwaterColor;
+            public TItem FogUnderwaterAmount;
+            public TItem FogUnderwaterNear;
+            public TItem FogUnderwaterFar;
+            public TItem PhysicalNormalMagnitude;
+            public TItem PhysicalShallowNormalFalloff;
+            public TItem PhysicalDeepNormalFalloff;
+            public TItem PhysicalSurfaceEffectFalloff;
+            public TItem PhysicalDisplacementSimulatorForce;
+            public TItem PhysicalDisplacementSimulatorVelocity;
+            public TItem PhysicalDisplacementSimulatorFalloff;
+            public TItem PhysicalDisplacementSimulatorDampener;
+            public TItem PhysicalDisplacementSimulatorStartingSize;
+            public TItem NoiseLayerOneWindDirection;
+            public TItem NoiseLayerTwoWindDirection;
+            public TItem NoiseLayerThreeWindDirection;
+            public TItem NoiseLayerOneWindSpeed;
+            public TItem NoiseLayerTwoWindSpeed;
+            public TItem NoiseLayerThreeWindSpeed;
+            public TItem NoiseLayerOneAmplitudeScale;
+            public TItem NoiseLayerTwoAmplitudeScale;
+            public TItem NoiseLayerThreeAmplitudeScale;
+            public TItem NoiseLayerOneUvScale;
+            public TItem NoiseLayerTwoUvScale;
+            public TItem NoiseLayerThreeUvScale;
+            public TItem NoiseLayerOneNoiseFalloff;
+            public TItem NoiseLayerTwoNoiseFalloff;
+            public TItem NoiseLayerThreeNoiseFalloff;
+            public TItem FlowmapScale;
+            public TItem Roughness;
             public TItem GNAM;
             public TItem LinearVelocity;
             public TItem AngularVelocity;
@@ -460,7 +712,44 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ConsumeSpell, rhs.ConsumeSpell)) return false;
                 if (!object.Equals(this.ContactSpell, rhs.ContactSpell)) return false;
                 if (!object.Equals(this.DATA, rhs.DATA)) return false;
-                if (!object.Equals(this.DNAM, rhs.DNAM)) return false;
+                if (!object.Equals(this.DepthAmount, rhs.DepthAmount)) return false;
+                if (!object.Equals(this.AbsorptionRangeRed, rhs.AbsorptionRangeRed)) return false;
+                if (!object.Equals(this.AbsorptionRangeGreen, rhs.AbsorptionRangeGreen)) return false;
+                if (!object.Equals(this.AbsorptionRangeBlue, rhs.AbsorptionRangeBlue)) return false;
+                if (!object.Equals(this.Phytoplankton, rhs.Phytoplankton)) return false;
+                if (!object.Equals(this.Sediment, rhs.Sediment)) return false;
+                if (!object.Equals(this.YellowMatter, rhs.YellowMatter)) return false;
+                if (!object.Equals(this.Oceanness, rhs.Oceanness)) return false;
+                if (!object.Equals(this.FogUnderwaterColor, rhs.FogUnderwaterColor)) return false;
+                if (!object.Equals(this.FogUnderwaterAmount, rhs.FogUnderwaterAmount)) return false;
+                if (!object.Equals(this.FogUnderwaterNear, rhs.FogUnderwaterNear)) return false;
+                if (!object.Equals(this.FogUnderwaterFar, rhs.FogUnderwaterFar)) return false;
+                if (!object.Equals(this.PhysicalNormalMagnitude, rhs.PhysicalNormalMagnitude)) return false;
+                if (!object.Equals(this.PhysicalShallowNormalFalloff, rhs.PhysicalShallowNormalFalloff)) return false;
+                if (!object.Equals(this.PhysicalDeepNormalFalloff, rhs.PhysicalDeepNormalFalloff)) return false;
+                if (!object.Equals(this.PhysicalSurfaceEffectFalloff, rhs.PhysicalSurfaceEffectFalloff)) return false;
+                if (!object.Equals(this.PhysicalDisplacementSimulatorForce, rhs.PhysicalDisplacementSimulatorForce)) return false;
+                if (!object.Equals(this.PhysicalDisplacementSimulatorVelocity, rhs.PhysicalDisplacementSimulatorVelocity)) return false;
+                if (!object.Equals(this.PhysicalDisplacementSimulatorFalloff, rhs.PhysicalDisplacementSimulatorFalloff)) return false;
+                if (!object.Equals(this.PhysicalDisplacementSimulatorDampener, rhs.PhysicalDisplacementSimulatorDampener)) return false;
+                if (!object.Equals(this.PhysicalDisplacementSimulatorStartingSize, rhs.PhysicalDisplacementSimulatorStartingSize)) return false;
+                if (!object.Equals(this.NoiseLayerOneWindDirection, rhs.NoiseLayerOneWindDirection)) return false;
+                if (!object.Equals(this.NoiseLayerTwoWindDirection, rhs.NoiseLayerTwoWindDirection)) return false;
+                if (!object.Equals(this.NoiseLayerThreeWindDirection, rhs.NoiseLayerThreeWindDirection)) return false;
+                if (!object.Equals(this.NoiseLayerOneWindSpeed, rhs.NoiseLayerOneWindSpeed)) return false;
+                if (!object.Equals(this.NoiseLayerTwoWindSpeed, rhs.NoiseLayerTwoWindSpeed)) return false;
+                if (!object.Equals(this.NoiseLayerThreeWindSpeed, rhs.NoiseLayerThreeWindSpeed)) return false;
+                if (!object.Equals(this.NoiseLayerOneAmplitudeScale, rhs.NoiseLayerOneAmplitudeScale)) return false;
+                if (!object.Equals(this.NoiseLayerTwoAmplitudeScale, rhs.NoiseLayerTwoAmplitudeScale)) return false;
+                if (!object.Equals(this.NoiseLayerThreeAmplitudeScale, rhs.NoiseLayerThreeAmplitudeScale)) return false;
+                if (!object.Equals(this.NoiseLayerOneUvScale, rhs.NoiseLayerOneUvScale)) return false;
+                if (!object.Equals(this.NoiseLayerTwoUvScale, rhs.NoiseLayerTwoUvScale)) return false;
+                if (!object.Equals(this.NoiseLayerThreeUvScale, rhs.NoiseLayerThreeUvScale)) return false;
+                if (!object.Equals(this.NoiseLayerOneNoiseFalloff, rhs.NoiseLayerOneNoiseFalloff)) return false;
+                if (!object.Equals(this.NoiseLayerTwoNoiseFalloff, rhs.NoiseLayerTwoNoiseFalloff)) return false;
+                if (!object.Equals(this.NoiseLayerThreeNoiseFalloff, rhs.NoiseLayerThreeNoiseFalloff)) return false;
+                if (!object.Equals(this.FlowmapScale, rhs.FlowmapScale)) return false;
+                if (!object.Equals(this.Roughness, rhs.Roughness)) return false;
                 if (!object.Equals(this.GNAM, rhs.GNAM)) return false;
                 if (!object.Equals(this.LinearVelocity, rhs.LinearVelocity)) return false;
                 if (!object.Equals(this.AngularVelocity, rhs.AngularVelocity)) return false;
@@ -489,7 +778,44 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ConsumeSpell);
                 hash.Add(this.ContactSpell);
                 hash.Add(this.DATA);
-                hash.Add(this.DNAM);
+                hash.Add(this.DepthAmount);
+                hash.Add(this.AbsorptionRangeRed);
+                hash.Add(this.AbsorptionRangeGreen);
+                hash.Add(this.AbsorptionRangeBlue);
+                hash.Add(this.Phytoplankton);
+                hash.Add(this.Sediment);
+                hash.Add(this.YellowMatter);
+                hash.Add(this.Oceanness);
+                hash.Add(this.FogUnderwaterColor);
+                hash.Add(this.FogUnderwaterAmount);
+                hash.Add(this.FogUnderwaterNear);
+                hash.Add(this.FogUnderwaterFar);
+                hash.Add(this.PhysicalNormalMagnitude);
+                hash.Add(this.PhysicalShallowNormalFalloff);
+                hash.Add(this.PhysicalDeepNormalFalloff);
+                hash.Add(this.PhysicalSurfaceEffectFalloff);
+                hash.Add(this.PhysicalDisplacementSimulatorForce);
+                hash.Add(this.PhysicalDisplacementSimulatorVelocity);
+                hash.Add(this.PhysicalDisplacementSimulatorFalloff);
+                hash.Add(this.PhysicalDisplacementSimulatorDampener);
+                hash.Add(this.PhysicalDisplacementSimulatorStartingSize);
+                hash.Add(this.NoiseLayerOneWindDirection);
+                hash.Add(this.NoiseLayerTwoWindDirection);
+                hash.Add(this.NoiseLayerThreeWindDirection);
+                hash.Add(this.NoiseLayerOneWindSpeed);
+                hash.Add(this.NoiseLayerTwoWindSpeed);
+                hash.Add(this.NoiseLayerThreeWindSpeed);
+                hash.Add(this.NoiseLayerOneAmplitudeScale);
+                hash.Add(this.NoiseLayerTwoAmplitudeScale);
+                hash.Add(this.NoiseLayerThreeAmplitudeScale);
+                hash.Add(this.NoiseLayerOneUvScale);
+                hash.Add(this.NoiseLayerTwoUvScale);
+                hash.Add(this.NoiseLayerThreeUvScale);
+                hash.Add(this.NoiseLayerOneNoiseFalloff);
+                hash.Add(this.NoiseLayerTwoNoiseFalloff);
+                hash.Add(this.NoiseLayerThreeNoiseFalloff);
+                hash.Add(this.FlowmapScale);
+                hash.Add(this.Roughness);
                 hash.Add(this.GNAM);
                 hash.Add(this.LinearVelocity);
                 hash.Add(this.AngularVelocity);
@@ -531,7 +857,44 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.ConsumeSpell)) return false;
                 if (!eval(this.ContactSpell)) return false;
                 if (!eval(this.DATA)) return false;
-                if (!eval(this.DNAM)) return false;
+                if (!eval(this.DepthAmount)) return false;
+                if (!eval(this.AbsorptionRangeRed)) return false;
+                if (!eval(this.AbsorptionRangeGreen)) return false;
+                if (!eval(this.AbsorptionRangeBlue)) return false;
+                if (!eval(this.Phytoplankton)) return false;
+                if (!eval(this.Sediment)) return false;
+                if (!eval(this.YellowMatter)) return false;
+                if (!eval(this.Oceanness)) return false;
+                if (!eval(this.FogUnderwaterColor)) return false;
+                if (!eval(this.FogUnderwaterAmount)) return false;
+                if (!eval(this.FogUnderwaterNear)) return false;
+                if (!eval(this.FogUnderwaterFar)) return false;
+                if (!eval(this.PhysicalNormalMagnitude)) return false;
+                if (!eval(this.PhysicalShallowNormalFalloff)) return false;
+                if (!eval(this.PhysicalDeepNormalFalloff)) return false;
+                if (!eval(this.PhysicalSurfaceEffectFalloff)) return false;
+                if (!eval(this.PhysicalDisplacementSimulatorForce)) return false;
+                if (!eval(this.PhysicalDisplacementSimulatorVelocity)) return false;
+                if (!eval(this.PhysicalDisplacementSimulatorFalloff)) return false;
+                if (!eval(this.PhysicalDisplacementSimulatorDampener)) return false;
+                if (!eval(this.PhysicalDisplacementSimulatorStartingSize)) return false;
+                if (!eval(this.NoiseLayerOneWindDirection)) return false;
+                if (!eval(this.NoiseLayerTwoWindDirection)) return false;
+                if (!eval(this.NoiseLayerThreeWindDirection)) return false;
+                if (!eval(this.NoiseLayerOneWindSpeed)) return false;
+                if (!eval(this.NoiseLayerTwoWindSpeed)) return false;
+                if (!eval(this.NoiseLayerThreeWindSpeed)) return false;
+                if (!eval(this.NoiseLayerOneAmplitudeScale)) return false;
+                if (!eval(this.NoiseLayerTwoAmplitudeScale)) return false;
+                if (!eval(this.NoiseLayerThreeAmplitudeScale)) return false;
+                if (!eval(this.NoiseLayerOneUvScale)) return false;
+                if (!eval(this.NoiseLayerTwoUvScale)) return false;
+                if (!eval(this.NoiseLayerThreeUvScale)) return false;
+                if (!eval(this.NoiseLayerOneNoiseFalloff)) return false;
+                if (!eval(this.NoiseLayerTwoNoiseFalloff)) return false;
+                if (!eval(this.NoiseLayerThreeNoiseFalloff)) return false;
+                if (!eval(this.FlowmapScale)) return false;
+                if (!eval(this.Roughness)) return false;
                 if (!eval(this.GNAM)) return false;
                 if (!eval(this.LinearVelocity)) return false;
                 if (!eval(this.AngularVelocity)) return false;
@@ -571,7 +934,44 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.ConsumeSpell)) return true;
                 if (eval(this.ContactSpell)) return true;
                 if (eval(this.DATA)) return true;
-                if (eval(this.DNAM)) return true;
+                if (eval(this.DepthAmount)) return true;
+                if (eval(this.AbsorptionRangeRed)) return true;
+                if (eval(this.AbsorptionRangeGreen)) return true;
+                if (eval(this.AbsorptionRangeBlue)) return true;
+                if (eval(this.Phytoplankton)) return true;
+                if (eval(this.Sediment)) return true;
+                if (eval(this.YellowMatter)) return true;
+                if (eval(this.Oceanness)) return true;
+                if (eval(this.FogUnderwaterColor)) return true;
+                if (eval(this.FogUnderwaterAmount)) return true;
+                if (eval(this.FogUnderwaterNear)) return true;
+                if (eval(this.FogUnderwaterFar)) return true;
+                if (eval(this.PhysicalNormalMagnitude)) return true;
+                if (eval(this.PhysicalShallowNormalFalloff)) return true;
+                if (eval(this.PhysicalDeepNormalFalloff)) return true;
+                if (eval(this.PhysicalSurfaceEffectFalloff)) return true;
+                if (eval(this.PhysicalDisplacementSimulatorForce)) return true;
+                if (eval(this.PhysicalDisplacementSimulatorVelocity)) return true;
+                if (eval(this.PhysicalDisplacementSimulatorFalloff)) return true;
+                if (eval(this.PhysicalDisplacementSimulatorDampener)) return true;
+                if (eval(this.PhysicalDisplacementSimulatorStartingSize)) return true;
+                if (eval(this.NoiseLayerOneWindDirection)) return true;
+                if (eval(this.NoiseLayerTwoWindDirection)) return true;
+                if (eval(this.NoiseLayerThreeWindDirection)) return true;
+                if (eval(this.NoiseLayerOneWindSpeed)) return true;
+                if (eval(this.NoiseLayerTwoWindSpeed)) return true;
+                if (eval(this.NoiseLayerThreeWindSpeed)) return true;
+                if (eval(this.NoiseLayerOneAmplitudeScale)) return true;
+                if (eval(this.NoiseLayerTwoAmplitudeScale)) return true;
+                if (eval(this.NoiseLayerThreeAmplitudeScale)) return true;
+                if (eval(this.NoiseLayerOneUvScale)) return true;
+                if (eval(this.NoiseLayerTwoUvScale)) return true;
+                if (eval(this.NoiseLayerThreeUvScale)) return true;
+                if (eval(this.NoiseLayerOneNoiseFalloff)) return true;
+                if (eval(this.NoiseLayerTwoNoiseFalloff)) return true;
+                if (eval(this.NoiseLayerThreeNoiseFalloff)) return true;
+                if (eval(this.FlowmapScale)) return true;
+                if (eval(this.Roughness)) return true;
                 if (eval(this.GNAM)) return true;
                 if (eval(this.LinearVelocity)) return true;
                 if (eval(this.AngularVelocity)) return true;
@@ -610,7 +1010,44 @@ namespace Mutagen.Bethesda.Starfield
                 obj.ConsumeSpell = eval(this.ConsumeSpell);
                 obj.ContactSpell = eval(this.ContactSpell);
                 obj.DATA = eval(this.DATA);
-                obj.DNAM = eval(this.DNAM);
+                obj.DepthAmount = eval(this.DepthAmount);
+                obj.AbsorptionRangeRed = eval(this.AbsorptionRangeRed);
+                obj.AbsorptionRangeGreen = eval(this.AbsorptionRangeGreen);
+                obj.AbsorptionRangeBlue = eval(this.AbsorptionRangeBlue);
+                obj.Phytoplankton = eval(this.Phytoplankton);
+                obj.Sediment = eval(this.Sediment);
+                obj.YellowMatter = eval(this.YellowMatter);
+                obj.Oceanness = eval(this.Oceanness);
+                obj.FogUnderwaterColor = eval(this.FogUnderwaterColor);
+                obj.FogUnderwaterAmount = eval(this.FogUnderwaterAmount);
+                obj.FogUnderwaterNear = eval(this.FogUnderwaterNear);
+                obj.FogUnderwaterFar = eval(this.FogUnderwaterFar);
+                obj.PhysicalNormalMagnitude = eval(this.PhysicalNormalMagnitude);
+                obj.PhysicalShallowNormalFalloff = eval(this.PhysicalShallowNormalFalloff);
+                obj.PhysicalDeepNormalFalloff = eval(this.PhysicalDeepNormalFalloff);
+                obj.PhysicalSurfaceEffectFalloff = eval(this.PhysicalSurfaceEffectFalloff);
+                obj.PhysicalDisplacementSimulatorForce = eval(this.PhysicalDisplacementSimulatorForce);
+                obj.PhysicalDisplacementSimulatorVelocity = eval(this.PhysicalDisplacementSimulatorVelocity);
+                obj.PhysicalDisplacementSimulatorFalloff = eval(this.PhysicalDisplacementSimulatorFalloff);
+                obj.PhysicalDisplacementSimulatorDampener = eval(this.PhysicalDisplacementSimulatorDampener);
+                obj.PhysicalDisplacementSimulatorStartingSize = eval(this.PhysicalDisplacementSimulatorStartingSize);
+                obj.NoiseLayerOneWindDirection = eval(this.NoiseLayerOneWindDirection);
+                obj.NoiseLayerTwoWindDirection = eval(this.NoiseLayerTwoWindDirection);
+                obj.NoiseLayerThreeWindDirection = eval(this.NoiseLayerThreeWindDirection);
+                obj.NoiseLayerOneWindSpeed = eval(this.NoiseLayerOneWindSpeed);
+                obj.NoiseLayerTwoWindSpeed = eval(this.NoiseLayerTwoWindSpeed);
+                obj.NoiseLayerThreeWindSpeed = eval(this.NoiseLayerThreeWindSpeed);
+                obj.NoiseLayerOneAmplitudeScale = eval(this.NoiseLayerOneAmplitudeScale);
+                obj.NoiseLayerTwoAmplitudeScale = eval(this.NoiseLayerTwoAmplitudeScale);
+                obj.NoiseLayerThreeAmplitudeScale = eval(this.NoiseLayerThreeAmplitudeScale);
+                obj.NoiseLayerOneUvScale = eval(this.NoiseLayerOneUvScale);
+                obj.NoiseLayerTwoUvScale = eval(this.NoiseLayerTwoUvScale);
+                obj.NoiseLayerThreeUvScale = eval(this.NoiseLayerThreeUvScale);
+                obj.NoiseLayerOneNoiseFalloff = eval(this.NoiseLayerOneNoiseFalloff);
+                obj.NoiseLayerTwoNoiseFalloff = eval(this.NoiseLayerTwoNoiseFalloff);
+                obj.NoiseLayerThreeNoiseFalloff = eval(this.NoiseLayerThreeNoiseFalloff);
+                obj.FlowmapScale = eval(this.FlowmapScale);
+                obj.Roughness = eval(this.Roughness);
                 obj.GNAM = eval(this.GNAM);
                 obj.LinearVelocity = eval(this.LinearVelocity);
                 obj.AngularVelocity = eval(this.AngularVelocity);
@@ -676,9 +1113,157 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(DATA, "DATA");
                     }
-                    if (printMask?.DNAM ?? true)
+                    if (printMask?.DepthAmount ?? true)
                     {
-                        sb.AppendItem(DNAM, "DNAM");
+                        sb.AppendItem(DepthAmount, "DepthAmount");
+                    }
+                    if (printMask?.AbsorptionRangeRed ?? true)
+                    {
+                        sb.AppendItem(AbsorptionRangeRed, "AbsorptionRangeRed");
+                    }
+                    if (printMask?.AbsorptionRangeGreen ?? true)
+                    {
+                        sb.AppendItem(AbsorptionRangeGreen, "AbsorptionRangeGreen");
+                    }
+                    if (printMask?.AbsorptionRangeBlue ?? true)
+                    {
+                        sb.AppendItem(AbsorptionRangeBlue, "AbsorptionRangeBlue");
+                    }
+                    if (printMask?.Phytoplankton ?? true)
+                    {
+                        sb.AppendItem(Phytoplankton, "Phytoplankton");
+                    }
+                    if (printMask?.Sediment ?? true)
+                    {
+                        sb.AppendItem(Sediment, "Sediment");
+                    }
+                    if (printMask?.YellowMatter ?? true)
+                    {
+                        sb.AppendItem(YellowMatter, "YellowMatter");
+                    }
+                    if (printMask?.Oceanness ?? true)
+                    {
+                        sb.AppendItem(Oceanness, "Oceanness");
+                    }
+                    if (printMask?.FogUnderwaterColor ?? true)
+                    {
+                        sb.AppendItem(FogUnderwaterColor, "FogUnderwaterColor");
+                    }
+                    if (printMask?.FogUnderwaterAmount ?? true)
+                    {
+                        sb.AppendItem(FogUnderwaterAmount, "FogUnderwaterAmount");
+                    }
+                    if (printMask?.FogUnderwaterNear ?? true)
+                    {
+                        sb.AppendItem(FogUnderwaterNear, "FogUnderwaterNear");
+                    }
+                    if (printMask?.FogUnderwaterFar ?? true)
+                    {
+                        sb.AppendItem(FogUnderwaterFar, "FogUnderwaterFar");
+                    }
+                    if (printMask?.PhysicalNormalMagnitude ?? true)
+                    {
+                        sb.AppendItem(PhysicalNormalMagnitude, "PhysicalNormalMagnitude");
+                    }
+                    if (printMask?.PhysicalShallowNormalFalloff ?? true)
+                    {
+                        sb.AppendItem(PhysicalShallowNormalFalloff, "PhysicalShallowNormalFalloff");
+                    }
+                    if (printMask?.PhysicalDeepNormalFalloff ?? true)
+                    {
+                        sb.AppendItem(PhysicalDeepNormalFalloff, "PhysicalDeepNormalFalloff");
+                    }
+                    if (printMask?.PhysicalSurfaceEffectFalloff ?? true)
+                    {
+                        sb.AppendItem(PhysicalSurfaceEffectFalloff, "PhysicalSurfaceEffectFalloff");
+                    }
+                    if (printMask?.PhysicalDisplacementSimulatorForce ?? true)
+                    {
+                        sb.AppendItem(PhysicalDisplacementSimulatorForce, "PhysicalDisplacementSimulatorForce");
+                    }
+                    if (printMask?.PhysicalDisplacementSimulatorVelocity ?? true)
+                    {
+                        sb.AppendItem(PhysicalDisplacementSimulatorVelocity, "PhysicalDisplacementSimulatorVelocity");
+                    }
+                    if (printMask?.PhysicalDisplacementSimulatorFalloff ?? true)
+                    {
+                        sb.AppendItem(PhysicalDisplacementSimulatorFalloff, "PhysicalDisplacementSimulatorFalloff");
+                    }
+                    if (printMask?.PhysicalDisplacementSimulatorDampener ?? true)
+                    {
+                        sb.AppendItem(PhysicalDisplacementSimulatorDampener, "PhysicalDisplacementSimulatorDampener");
+                    }
+                    if (printMask?.PhysicalDisplacementSimulatorStartingSize ?? true)
+                    {
+                        sb.AppendItem(PhysicalDisplacementSimulatorStartingSize, "PhysicalDisplacementSimulatorStartingSize");
+                    }
+                    if (printMask?.NoiseLayerOneWindDirection ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerOneWindDirection, "NoiseLayerOneWindDirection");
+                    }
+                    if (printMask?.NoiseLayerTwoWindDirection ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerTwoWindDirection, "NoiseLayerTwoWindDirection");
+                    }
+                    if (printMask?.NoiseLayerThreeWindDirection ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerThreeWindDirection, "NoiseLayerThreeWindDirection");
+                    }
+                    if (printMask?.NoiseLayerOneWindSpeed ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerOneWindSpeed, "NoiseLayerOneWindSpeed");
+                    }
+                    if (printMask?.NoiseLayerTwoWindSpeed ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerTwoWindSpeed, "NoiseLayerTwoWindSpeed");
+                    }
+                    if (printMask?.NoiseLayerThreeWindSpeed ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerThreeWindSpeed, "NoiseLayerThreeWindSpeed");
+                    }
+                    if (printMask?.NoiseLayerOneAmplitudeScale ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerOneAmplitudeScale, "NoiseLayerOneAmplitudeScale");
+                    }
+                    if (printMask?.NoiseLayerTwoAmplitudeScale ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerTwoAmplitudeScale, "NoiseLayerTwoAmplitudeScale");
+                    }
+                    if (printMask?.NoiseLayerThreeAmplitudeScale ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerThreeAmplitudeScale, "NoiseLayerThreeAmplitudeScale");
+                    }
+                    if (printMask?.NoiseLayerOneUvScale ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerOneUvScale, "NoiseLayerOneUvScale");
+                    }
+                    if (printMask?.NoiseLayerTwoUvScale ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerTwoUvScale, "NoiseLayerTwoUvScale");
+                    }
+                    if (printMask?.NoiseLayerThreeUvScale ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerThreeUvScale, "NoiseLayerThreeUvScale");
+                    }
+                    if (printMask?.NoiseLayerOneNoiseFalloff ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerOneNoiseFalloff, "NoiseLayerOneNoiseFalloff");
+                    }
+                    if (printMask?.NoiseLayerTwoNoiseFalloff ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerTwoNoiseFalloff, "NoiseLayerTwoNoiseFalloff");
+                    }
+                    if (printMask?.NoiseLayerThreeNoiseFalloff ?? true)
+                    {
+                        sb.AppendItem(NoiseLayerThreeNoiseFalloff, "NoiseLayerThreeNoiseFalloff");
+                    }
+                    if (printMask?.FlowmapScale ?? true)
+                    {
+                        sb.AppendItem(FlowmapScale, "FlowmapScale");
+                    }
+                    if (printMask?.Roughness ?? true)
+                    {
+                        sb.AppendItem(Roughness, "Roughness");
                     }
                     if (printMask?.GNAM ?? true)
                     {
@@ -759,7 +1344,44 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? ConsumeSpell;
             public Exception? ContactSpell;
             public Exception? DATA;
-            public Exception? DNAM;
+            public Exception? DepthAmount;
+            public Exception? AbsorptionRangeRed;
+            public Exception? AbsorptionRangeGreen;
+            public Exception? AbsorptionRangeBlue;
+            public Exception? Phytoplankton;
+            public Exception? Sediment;
+            public Exception? YellowMatter;
+            public Exception? Oceanness;
+            public Exception? FogUnderwaterColor;
+            public Exception? FogUnderwaterAmount;
+            public Exception? FogUnderwaterNear;
+            public Exception? FogUnderwaterFar;
+            public Exception? PhysicalNormalMagnitude;
+            public Exception? PhysicalShallowNormalFalloff;
+            public Exception? PhysicalDeepNormalFalloff;
+            public Exception? PhysicalSurfaceEffectFalloff;
+            public Exception? PhysicalDisplacementSimulatorForce;
+            public Exception? PhysicalDisplacementSimulatorVelocity;
+            public Exception? PhysicalDisplacementSimulatorFalloff;
+            public Exception? PhysicalDisplacementSimulatorDampener;
+            public Exception? PhysicalDisplacementSimulatorStartingSize;
+            public Exception? NoiseLayerOneWindDirection;
+            public Exception? NoiseLayerTwoWindDirection;
+            public Exception? NoiseLayerThreeWindDirection;
+            public Exception? NoiseLayerOneWindSpeed;
+            public Exception? NoiseLayerTwoWindSpeed;
+            public Exception? NoiseLayerThreeWindSpeed;
+            public Exception? NoiseLayerOneAmplitudeScale;
+            public Exception? NoiseLayerTwoAmplitudeScale;
+            public Exception? NoiseLayerThreeAmplitudeScale;
+            public Exception? NoiseLayerOneUvScale;
+            public Exception? NoiseLayerTwoUvScale;
+            public Exception? NoiseLayerThreeUvScale;
+            public Exception? NoiseLayerOneNoiseFalloff;
+            public Exception? NoiseLayerTwoNoiseFalloff;
+            public Exception? NoiseLayerThreeNoiseFalloff;
+            public Exception? FlowmapScale;
+            public Exception? Roughness;
             public Exception? GNAM;
             public Exception? LinearVelocity;
             public Exception? AngularVelocity;
@@ -799,8 +1421,82 @@ namespace Mutagen.Bethesda.Starfield
                         return ContactSpell;
                     case Water_FieldIndex.DATA:
                         return DATA;
-                    case Water_FieldIndex.DNAM:
-                        return DNAM;
+                    case Water_FieldIndex.DepthAmount:
+                        return DepthAmount;
+                    case Water_FieldIndex.AbsorptionRangeRed:
+                        return AbsorptionRangeRed;
+                    case Water_FieldIndex.AbsorptionRangeGreen:
+                        return AbsorptionRangeGreen;
+                    case Water_FieldIndex.AbsorptionRangeBlue:
+                        return AbsorptionRangeBlue;
+                    case Water_FieldIndex.Phytoplankton:
+                        return Phytoplankton;
+                    case Water_FieldIndex.Sediment:
+                        return Sediment;
+                    case Water_FieldIndex.YellowMatter:
+                        return YellowMatter;
+                    case Water_FieldIndex.Oceanness:
+                        return Oceanness;
+                    case Water_FieldIndex.FogUnderwaterColor:
+                        return FogUnderwaterColor;
+                    case Water_FieldIndex.FogUnderwaterAmount:
+                        return FogUnderwaterAmount;
+                    case Water_FieldIndex.FogUnderwaterNear:
+                        return FogUnderwaterNear;
+                    case Water_FieldIndex.FogUnderwaterFar:
+                        return FogUnderwaterFar;
+                    case Water_FieldIndex.PhysicalNormalMagnitude:
+                        return PhysicalNormalMagnitude;
+                    case Water_FieldIndex.PhysicalShallowNormalFalloff:
+                        return PhysicalShallowNormalFalloff;
+                    case Water_FieldIndex.PhysicalDeepNormalFalloff:
+                        return PhysicalDeepNormalFalloff;
+                    case Water_FieldIndex.PhysicalSurfaceEffectFalloff:
+                        return PhysicalSurfaceEffectFalloff;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorForce:
+                        return PhysicalDisplacementSimulatorForce;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorVelocity:
+                        return PhysicalDisplacementSimulatorVelocity;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorFalloff:
+                        return PhysicalDisplacementSimulatorFalloff;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorDampener:
+                        return PhysicalDisplacementSimulatorDampener;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorStartingSize:
+                        return PhysicalDisplacementSimulatorStartingSize;
+                    case Water_FieldIndex.NoiseLayerOneWindDirection:
+                        return NoiseLayerOneWindDirection;
+                    case Water_FieldIndex.NoiseLayerTwoWindDirection:
+                        return NoiseLayerTwoWindDirection;
+                    case Water_FieldIndex.NoiseLayerThreeWindDirection:
+                        return NoiseLayerThreeWindDirection;
+                    case Water_FieldIndex.NoiseLayerOneWindSpeed:
+                        return NoiseLayerOneWindSpeed;
+                    case Water_FieldIndex.NoiseLayerTwoWindSpeed:
+                        return NoiseLayerTwoWindSpeed;
+                    case Water_FieldIndex.NoiseLayerThreeWindSpeed:
+                        return NoiseLayerThreeWindSpeed;
+                    case Water_FieldIndex.NoiseLayerOneAmplitudeScale:
+                        return NoiseLayerOneAmplitudeScale;
+                    case Water_FieldIndex.NoiseLayerTwoAmplitudeScale:
+                        return NoiseLayerTwoAmplitudeScale;
+                    case Water_FieldIndex.NoiseLayerThreeAmplitudeScale:
+                        return NoiseLayerThreeAmplitudeScale;
+                    case Water_FieldIndex.NoiseLayerOneUvScale:
+                        return NoiseLayerOneUvScale;
+                    case Water_FieldIndex.NoiseLayerTwoUvScale:
+                        return NoiseLayerTwoUvScale;
+                    case Water_FieldIndex.NoiseLayerThreeUvScale:
+                        return NoiseLayerThreeUvScale;
+                    case Water_FieldIndex.NoiseLayerOneNoiseFalloff:
+                        return NoiseLayerOneNoiseFalloff;
+                    case Water_FieldIndex.NoiseLayerTwoNoiseFalloff:
+                        return NoiseLayerTwoNoiseFalloff;
+                    case Water_FieldIndex.NoiseLayerThreeNoiseFalloff:
+                        return NoiseLayerThreeNoiseFalloff;
+                    case Water_FieldIndex.FlowmapScale:
+                        return FlowmapScale;
+                    case Water_FieldIndex.Roughness:
+                        return Roughness;
                     case Water_FieldIndex.GNAM:
                         return GNAM;
                     case Water_FieldIndex.LinearVelocity:
@@ -865,8 +1561,119 @@ namespace Mutagen.Bethesda.Starfield
                     case Water_FieldIndex.DATA:
                         this.DATA = ex;
                         break;
-                    case Water_FieldIndex.DNAM:
-                        this.DNAM = ex;
+                    case Water_FieldIndex.DepthAmount:
+                        this.DepthAmount = ex;
+                        break;
+                    case Water_FieldIndex.AbsorptionRangeRed:
+                        this.AbsorptionRangeRed = ex;
+                        break;
+                    case Water_FieldIndex.AbsorptionRangeGreen:
+                        this.AbsorptionRangeGreen = ex;
+                        break;
+                    case Water_FieldIndex.AbsorptionRangeBlue:
+                        this.AbsorptionRangeBlue = ex;
+                        break;
+                    case Water_FieldIndex.Phytoplankton:
+                        this.Phytoplankton = ex;
+                        break;
+                    case Water_FieldIndex.Sediment:
+                        this.Sediment = ex;
+                        break;
+                    case Water_FieldIndex.YellowMatter:
+                        this.YellowMatter = ex;
+                        break;
+                    case Water_FieldIndex.Oceanness:
+                        this.Oceanness = ex;
+                        break;
+                    case Water_FieldIndex.FogUnderwaterColor:
+                        this.FogUnderwaterColor = ex;
+                        break;
+                    case Water_FieldIndex.FogUnderwaterAmount:
+                        this.FogUnderwaterAmount = ex;
+                        break;
+                    case Water_FieldIndex.FogUnderwaterNear:
+                        this.FogUnderwaterNear = ex;
+                        break;
+                    case Water_FieldIndex.FogUnderwaterFar:
+                        this.FogUnderwaterFar = ex;
+                        break;
+                    case Water_FieldIndex.PhysicalNormalMagnitude:
+                        this.PhysicalNormalMagnitude = ex;
+                        break;
+                    case Water_FieldIndex.PhysicalShallowNormalFalloff:
+                        this.PhysicalShallowNormalFalloff = ex;
+                        break;
+                    case Water_FieldIndex.PhysicalDeepNormalFalloff:
+                        this.PhysicalDeepNormalFalloff = ex;
+                        break;
+                    case Water_FieldIndex.PhysicalSurfaceEffectFalloff:
+                        this.PhysicalSurfaceEffectFalloff = ex;
+                        break;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorForce:
+                        this.PhysicalDisplacementSimulatorForce = ex;
+                        break;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorVelocity:
+                        this.PhysicalDisplacementSimulatorVelocity = ex;
+                        break;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorFalloff:
+                        this.PhysicalDisplacementSimulatorFalloff = ex;
+                        break;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorDampener:
+                        this.PhysicalDisplacementSimulatorDampener = ex;
+                        break;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorStartingSize:
+                        this.PhysicalDisplacementSimulatorStartingSize = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerOneWindDirection:
+                        this.NoiseLayerOneWindDirection = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerTwoWindDirection:
+                        this.NoiseLayerTwoWindDirection = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerThreeWindDirection:
+                        this.NoiseLayerThreeWindDirection = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerOneWindSpeed:
+                        this.NoiseLayerOneWindSpeed = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerTwoWindSpeed:
+                        this.NoiseLayerTwoWindSpeed = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerThreeWindSpeed:
+                        this.NoiseLayerThreeWindSpeed = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerOneAmplitudeScale:
+                        this.NoiseLayerOneAmplitudeScale = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerTwoAmplitudeScale:
+                        this.NoiseLayerTwoAmplitudeScale = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerThreeAmplitudeScale:
+                        this.NoiseLayerThreeAmplitudeScale = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerOneUvScale:
+                        this.NoiseLayerOneUvScale = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerTwoUvScale:
+                        this.NoiseLayerTwoUvScale = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerThreeUvScale:
+                        this.NoiseLayerThreeUvScale = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerOneNoiseFalloff:
+                        this.NoiseLayerOneNoiseFalloff = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerTwoNoiseFalloff:
+                        this.NoiseLayerTwoNoiseFalloff = ex;
+                        break;
+                    case Water_FieldIndex.NoiseLayerThreeNoiseFalloff:
+                        this.NoiseLayerThreeNoiseFalloff = ex;
+                        break;
+                    case Water_FieldIndex.FlowmapScale:
+                        this.FlowmapScale = ex;
+                        break;
+                    case Water_FieldIndex.Roughness:
+                        this.Roughness = ex;
                         break;
                     case Water_FieldIndex.GNAM:
                         this.GNAM = ex;
@@ -948,8 +1755,119 @@ namespace Mutagen.Bethesda.Starfield
                     case Water_FieldIndex.DATA:
                         this.DATA = (Exception?)obj;
                         break;
-                    case Water_FieldIndex.DNAM:
-                        this.DNAM = (Exception?)obj;
+                    case Water_FieldIndex.DepthAmount:
+                        this.DepthAmount = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.AbsorptionRangeRed:
+                        this.AbsorptionRangeRed = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.AbsorptionRangeGreen:
+                        this.AbsorptionRangeGreen = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.AbsorptionRangeBlue:
+                        this.AbsorptionRangeBlue = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.Phytoplankton:
+                        this.Phytoplankton = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.Sediment:
+                        this.Sediment = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.YellowMatter:
+                        this.YellowMatter = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.Oceanness:
+                        this.Oceanness = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.FogUnderwaterColor:
+                        this.FogUnderwaterColor = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.FogUnderwaterAmount:
+                        this.FogUnderwaterAmount = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.FogUnderwaterNear:
+                        this.FogUnderwaterNear = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.FogUnderwaterFar:
+                        this.FogUnderwaterFar = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.PhysicalNormalMagnitude:
+                        this.PhysicalNormalMagnitude = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.PhysicalShallowNormalFalloff:
+                        this.PhysicalShallowNormalFalloff = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.PhysicalDeepNormalFalloff:
+                        this.PhysicalDeepNormalFalloff = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.PhysicalSurfaceEffectFalloff:
+                        this.PhysicalSurfaceEffectFalloff = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorForce:
+                        this.PhysicalDisplacementSimulatorForce = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorVelocity:
+                        this.PhysicalDisplacementSimulatorVelocity = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorFalloff:
+                        this.PhysicalDisplacementSimulatorFalloff = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorDampener:
+                        this.PhysicalDisplacementSimulatorDampener = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.PhysicalDisplacementSimulatorStartingSize:
+                        this.PhysicalDisplacementSimulatorStartingSize = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerOneWindDirection:
+                        this.NoiseLayerOneWindDirection = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerTwoWindDirection:
+                        this.NoiseLayerTwoWindDirection = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerThreeWindDirection:
+                        this.NoiseLayerThreeWindDirection = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerOneWindSpeed:
+                        this.NoiseLayerOneWindSpeed = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerTwoWindSpeed:
+                        this.NoiseLayerTwoWindSpeed = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerThreeWindSpeed:
+                        this.NoiseLayerThreeWindSpeed = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerOneAmplitudeScale:
+                        this.NoiseLayerOneAmplitudeScale = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerTwoAmplitudeScale:
+                        this.NoiseLayerTwoAmplitudeScale = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerThreeAmplitudeScale:
+                        this.NoiseLayerThreeAmplitudeScale = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerOneUvScale:
+                        this.NoiseLayerOneUvScale = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerTwoUvScale:
+                        this.NoiseLayerTwoUvScale = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerThreeUvScale:
+                        this.NoiseLayerThreeUvScale = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerOneNoiseFalloff:
+                        this.NoiseLayerOneNoiseFalloff = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerTwoNoiseFalloff:
+                        this.NoiseLayerTwoNoiseFalloff = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.NoiseLayerThreeNoiseFalloff:
+                        this.NoiseLayerThreeNoiseFalloff = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.FlowmapScale:
+                        this.FlowmapScale = (Exception?)obj;
+                        break;
+                    case Water_FieldIndex.Roughness:
+                        this.Roughness = (Exception?)obj;
                         break;
                     case Water_FieldIndex.GNAM:
                         this.GNAM = (Exception?)obj;
@@ -1013,7 +1931,44 @@ namespace Mutagen.Bethesda.Starfield
                 if (ConsumeSpell != null) return true;
                 if (ContactSpell != null) return true;
                 if (DATA != null) return true;
-                if (DNAM != null) return true;
+                if (DepthAmount != null) return true;
+                if (AbsorptionRangeRed != null) return true;
+                if (AbsorptionRangeGreen != null) return true;
+                if (AbsorptionRangeBlue != null) return true;
+                if (Phytoplankton != null) return true;
+                if (Sediment != null) return true;
+                if (YellowMatter != null) return true;
+                if (Oceanness != null) return true;
+                if (FogUnderwaterColor != null) return true;
+                if (FogUnderwaterAmount != null) return true;
+                if (FogUnderwaterNear != null) return true;
+                if (FogUnderwaterFar != null) return true;
+                if (PhysicalNormalMagnitude != null) return true;
+                if (PhysicalShallowNormalFalloff != null) return true;
+                if (PhysicalDeepNormalFalloff != null) return true;
+                if (PhysicalSurfaceEffectFalloff != null) return true;
+                if (PhysicalDisplacementSimulatorForce != null) return true;
+                if (PhysicalDisplacementSimulatorVelocity != null) return true;
+                if (PhysicalDisplacementSimulatorFalloff != null) return true;
+                if (PhysicalDisplacementSimulatorDampener != null) return true;
+                if (PhysicalDisplacementSimulatorStartingSize != null) return true;
+                if (NoiseLayerOneWindDirection != null) return true;
+                if (NoiseLayerTwoWindDirection != null) return true;
+                if (NoiseLayerThreeWindDirection != null) return true;
+                if (NoiseLayerOneWindSpeed != null) return true;
+                if (NoiseLayerTwoWindSpeed != null) return true;
+                if (NoiseLayerThreeWindSpeed != null) return true;
+                if (NoiseLayerOneAmplitudeScale != null) return true;
+                if (NoiseLayerTwoAmplitudeScale != null) return true;
+                if (NoiseLayerThreeAmplitudeScale != null) return true;
+                if (NoiseLayerOneUvScale != null) return true;
+                if (NoiseLayerTwoUvScale != null) return true;
+                if (NoiseLayerThreeUvScale != null) return true;
+                if (NoiseLayerOneNoiseFalloff != null) return true;
+                if (NoiseLayerTwoNoiseFalloff != null) return true;
+                if (NoiseLayerThreeNoiseFalloff != null) return true;
+                if (FlowmapScale != null) return true;
+                if (Roughness != null) return true;
                 if (GNAM != null) return true;
                 if (LinearVelocity != null) return true;
                 if (AngularVelocity != null) return true;
@@ -1076,7 +2031,118 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(DATA, "DATA");
                 }
                 {
-                    sb.AppendItem(DNAM, "DNAM");
+                    sb.AppendItem(DepthAmount, "DepthAmount");
+                }
+                {
+                    sb.AppendItem(AbsorptionRangeRed, "AbsorptionRangeRed");
+                }
+                {
+                    sb.AppendItem(AbsorptionRangeGreen, "AbsorptionRangeGreen");
+                }
+                {
+                    sb.AppendItem(AbsorptionRangeBlue, "AbsorptionRangeBlue");
+                }
+                {
+                    sb.AppendItem(Phytoplankton, "Phytoplankton");
+                }
+                {
+                    sb.AppendItem(Sediment, "Sediment");
+                }
+                {
+                    sb.AppendItem(YellowMatter, "YellowMatter");
+                }
+                {
+                    sb.AppendItem(Oceanness, "Oceanness");
+                }
+                {
+                    sb.AppendItem(FogUnderwaterColor, "FogUnderwaterColor");
+                }
+                {
+                    sb.AppendItem(FogUnderwaterAmount, "FogUnderwaterAmount");
+                }
+                {
+                    sb.AppendItem(FogUnderwaterNear, "FogUnderwaterNear");
+                }
+                {
+                    sb.AppendItem(FogUnderwaterFar, "FogUnderwaterFar");
+                }
+                {
+                    sb.AppendItem(PhysicalNormalMagnitude, "PhysicalNormalMagnitude");
+                }
+                {
+                    sb.AppendItem(PhysicalShallowNormalFalloff, "PhysicalShallowNormalFalloff");
+                }
+                {
+                    sb.AppendItem(PhysicalDeepNormalFalloff, "PhysicalDeepNormalFalloff");
+                }
+                {
+                    sb.AppendItem(PhysicalSurfaceEffectFalloff, "PhysicalSurfaceEffectFalloff");
+                }
+                {
+                    sb.AppendItem(PhysicalDisplacementSimulatorForce, "PhysicalDisplacementSimulatorForce");
+                }
+                {
+                    sb.AppendItem(PhysicalDisplacementSimulatorVelocity, "PhysicalDisplacementSimulatorVelocity");
+                }
+                {
+                    sb.AppendItem(PhysicalDisplacementSimulatorFalloff, "PhysicalDisplacementSimulatorFalloff");
+                }
+                {
+                    sb.AppendItem(PhysicalDisplacementSimulatorDampener, "PhysicalDisplacementSimulatorDampener");
+                }
+                {
+                    sb.AppendItem(PhysicalDisplacementSimulatorStartingSize, "PhysicalDisplacementSimulatorStartingSize");
+                }
+                {
+                    sb.AppendItem(NoiseLayerOneWindDirection, "NoiseLayerOneWindDirection");
+                }
+                {
+                    sb.AppendItem(NoiseLayerTwoWindDirection, "NoiseLayerTwoWindDirection");
+                }
+                {
+                    sb.AppendItem(NoiseLayerThreeWindDirection, "NoiseLayerThreeWindDirection");
+                }
+                {
+                    sb.AppendItem(NoiseLayerOneWindSpeed, "NoiseLayerOneWindSpeed");
+                }
+                {
+                    sb.AppendItem(NoiseLayerTwoWindSpeed, "NoiseLayerTwoWindSpeed");
+                }
+                {
+                    sb.AppendItem(NoiseLayerThreeWindSpeed, "NoiseLayerThreeWindSpeed");
+                }
+                {
+                    sb.AppendItem(NoiseLayerOneAmplitudeScale, "NoiseLayerOneAmplitudeScale");
+                }
+                {
+                    sb.AppendItem(NoiseLayerTwoAmplitudeScale, "NoiseLayerTwoAmplitudeScale");
+                }
+                {
+                    sb.AppendItem(NoiseLayerThreeAmplitudeScale, "NoiseLayerThreeAmplitudeScale");
+                }
+                {
+                    sb.AppendItem(NoiseLayerOneUvScale, "NoiseLayerOneUvScale");
+                }
+                {
+                    sb.AppendItem(NoiseLayerTwoUvScale, "NoiseLayerTwoUvScale");
+                }
+                {
+                    sb.AppendItem(NoiseLayerThreeUvScale, "NoiseLayerThreeUvScale");
+                }
+                {
+                    sb.AppendItem(NoiseLayerOneNoiseFalloff, "NoiseLayerOneNoiseFalloff");
+                }
+                {
+                    sb.AppendItem(NoiseLayerTwoNoiseFalloff, "NoiseLayerTwoNoiseFalloff");
+                }
+                {
+                    sb.AppendItem(NoiseLayerThreeNoiseFalloff, "NoiseLayerThreeNoiseFalloff");
+                }
+                {
+                    sb.AppendItem(FlowmapScale, "FlowmapScale");
+                }
+                {
+                    sb.AppendItem(Roughness, "Roughness");
                 }
                 {
                     sb.AppendItem(GNAM, "GNAM");
@@ -1139,7 +2205,44 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ConsumeSpell = this.ConsumeSpell.Combine(rhs.ConsumeSpell);
                 ret.ContactSpell = this.ContactSpell.Combine(rhs.ContactSpell);
                 ret.DATA = this.DATA.Combine(rhs.DATA);
-                ret.DNAM = this.DNAM.Combine(rhs.DNAM);
+                ret.DepthAmount = this.DepthAmount.Combine(rhs.DepthAmount);
+                ret.AbsorptionRangeRed = this.AbsorptionRangeRed.Combine(rhs.AbsorptionRangeRed);
+                ret.AbsorptionRangeGreen = this.AbsorptionRangeGreen.Combine(rhs.AbsorptionRangeGreen);
+                ret.AbsorptionRangeBlue = this.AbsorptionRangeBlue.Combine(rhs.AbsorptionRangeBlue);
+                ret.Phytoplankton = this.Phytoplankton.Combine(rhs.Phytoplankton);
+                ret.Sediment = this.Sediment.Combine(rhs.Sediment);
+                ret.YellowMatter = this.YellowMatter.Combine(rhs.YellowMatter);
+                ret.Oceanness = this.Oceanness.Combine(rhs.Oceanness);
+                ret.FogUnderwaterColor = this.FogUnderwaterColor.Combine(rhs.FogUnderwaterColor);
+                ret.FogUnderwaterAmount = this.FogUnderwaterAmount.Combine(rhs.FogUnderwaterAmount);
+                ret.FogUnderwaterNear = this.FogUnderwaterNear.Combine(rhs.FogUnderwaterNear);
+                ret.FogUnderwaterFar = this.FogUnderwaterFar.Combine(rhs.FogUnderwaterFar);
+                ret.PhysicalNormalMagnitude = this.PhysicalNormalMagnitude.Combine(rhs.PhysicalNormalMagnitude);
+                ret.PhysicalShallowNormalFalloff = this.PhysicalShallowNormalFalloff.Combine(rhs.PhysicalShallowNormalFalloff);
+                ret.PhysicalDeepNormalFalloff = this.PhysicalDeepNormalFalloff.Combine(rhs.PhysicalDeepNormalFalloff);
+                ret.PhysicalSurfaceEffectFalloff = this.PhysicalSurfaceEffectFalloff.Combine(rhs.PhysicalSurfaceEffectFalloff);
+                ret.PhysicalDisplacementSimulatorForce = this.PhysicalDisplacementSimulatorForce.Combine(rhs.PhysicalDisplacementSimulatorForce);
+                ret.PhysicalDisplacementSimulatorVelocity = this.PhysicalDisplacementSimulatorVelocity.Combine(rhs.PhysicalDisplacementSimulatorVelocity);
+                ret.PhysicalDisplacementSimulatorFalloff = this.PhysicalDisplacementSimulatorFalloff.Combine(rhs.PhysicalDisplacementSimulatorFalloff);
+                ret.PhysicalDisplacementSimulatorDampener = this.PhysicalDisplacementSimulatorDampener.Combine(rhs.PhysicalDisplacementSimulatorDampener);
+                ret.PhysicalDisplacementSimulatorStartingSize = this.PhysicalDisplacementSimulatorStartingSize.Combine(rhs.PhysicalDisplacementSimulatorStartingSize);
+                ret.NoiseLayerOneWindDirection = this.NoiseLayerOneWindDirection.Combine(rhs.NoiseLayerOneWindDirection);
+                ret.NoiseLayerTwoWindDirection = this.NoiseLayerTwoWindDirection.Combine(rhs.NoiseLayerTwoWindDirection);
+                ret.NoiseLayerThreeWindDirection = this.NoiseLayerThreeWindDirection.Combine(rhs.NoiseLayerThreeWindDirection);
+                ret.NoiseLayerOneWindSpeed = this.NoiseLayerOneWindSpeed.Combine(rhs.NoiseLayerOneWindSpeed);
+                ret.NoiseLayerTwoWindSpeed = this.NoiseLayerTwoWindSpeed.Combine(rhs.NoiseLayerTwoWindSpeed);
+                ret.NoiseLayerThreeWindSpeed = this.NoiseLayerThreeWindSpeed.Combine(rhs.NoiseLayerThreeWindSpeed);
+                ret.NoiseLayerOneAmplitudeScale = this.NoiseLayerOneAmplitudeScale.Combine(rhs.NoiseLayerOneAmplitudeScale);
+                ret.NoiseLayerTwoAmplitudeScale = this.NoiseLayerTwoAmplitudeScale.Combine(rhs.NoiseLayerTwoAmplitudeScale);
+                ret.NoiseLayerThreeAmplitudeScale = this.NoiseLayerThreeAmplitudeScale.Combine(rhs.NoiseLayerThreeAmplitudeScale);
+                ret.NoiseLayerOneUvScale = this.NoiseLayerOneUvScale.Combine(rhs.NoiseLayerOneUvScale);
+                ret.NoiseLayerTwoUvScale = this.NoiseLayerTwoUvScale.Combine(rhs.NoiseLayerTwoUvScale);
+                ret.NoiseLayerThreeUvScale = this.NoiseLayerThreeUvScale.Combine(rhs.NoiseLayerThreeUvScale);
+                ret.NoiseLayerOneNoiseFalloff = this.NoiseLayerOneNoiseFalloff.Combine(rhs.NoiseLayerOneNoiseFalloff);
+                ret.NoiseLayerTwoNoiseFalloff = this.NoiseLayerTwoNoiseFalloff.Combine(rhs.NoiseLayerTwoNoiseFalloff);
+                ret.NoiseLayerThreeNoiseFalloff = this.NoiseLayerThreeNoiseFalloff.Combine(rhs.NoiseLayerThreeNoiseFalloff);
+                ret.FlowmapScale = this.FlowmapScale.Combine(rhs.FlowmapScale);
+                ret.Roughness = this.Roughness.Combine(rhs.Roughness);
                 ret.GNAM = this.GNAM.Combine(rhs.GNAM);
                 ret.LinearVelocity = this.LinearVelocity.Combine(rhs.LinearVelocity);
                 ret.AngularVelocity = this.AngularVelocity.Combine(rhs.AngularVelocity);
@@ -1185,7 +2288,44 @@ namespace Mutagen.Bethesda.Starfield
             public bool ConsumeSpell;
             public bool ContactSpell;
             public bool DATA;
-            public bool DNAM;
+            public bool DepthAmount;
+            public bool AbsorptionRangeRed;
+            public bool AbsorptionRangeGreen;
+            public bool AbsorptionRangeBlue;
+            public bool Phytoplankton;
+            public bool Sediment;
+            public bool YellowMatter;
+            public bool Oceanness;
+            public bool FogUnderwaterColor;
+            public bool FogUnderwaterAmount;
+            public bool FogUnderwaterNear;
+            public bool FogUnderwaterFar;
+            public bool PhysicalNormalMagnitude;
+            public bool PhysicalShallowNormalFalloff;
+            public bool PhysicalDeepNormalFalloff;
+            public bool PhysicalSurfaceEffectFalloff;
+            public bool PhysicalDisplacementSimulatorForce;
+            public bool PhysicalDisplacementSimulatorVelocity;
+            public bool PhysicalDisplacementSimulatorFalloff;
+            public bool PhysicalDisplacementSimulatorDampener;
+            public bool PhysicalDisplacementSimulatorStartingSize;
+            public bool NoiseLayerOneWindDirection;
+            public bool NoiseLayerTwoWindDirection;
+            public bool NoiseLayerThreeWindDirection;
+            public bool NoiseLayerOneWindSpeed;
+            public bool NoiseLayerTwoWindSpeed;
+            public bool NoiseLayerThreeWindSpeed;
+            public bool NoiseLayerOneAmplitudeScale;
+            public bool NoiseLayerTwoAmplitudeScale;
+            public bool NoiseLayerThreeAmplitudeScale;
+            public bool NoiseLayerOneUvScale;
+            public bool NoiseLayerTwoUvScale;
+            public bool NoiseLayerThreeUvScale;
+            public bool NoiseLayerOneNoiseFalloff;
+            public bool NoiseLayerTwoNoiseFalloff;
+            public bool NoiseLayerThreeNoiseFalloff;
+            public bool FlowmapScale;
+            public bool Roughness;
             public bool GNAM;
             public bool LinearVelocity;
             public bool AngularVelocity;
@@ -1215,7 +2355,44 @@ namespace Mutagen.Bethesda.Starfield
                 this.ConsumeSpell = defaultOn;
                 this.ContactSpell = defaultOn;
                 this.DATA = defaultOn;
-                this.DNAM = defaultOn;
+                this.DepthAmount = defaultOn;
+                this.AbsorptionRangeRed = defaultOn;
+                this.AbsorptionRangeGreen = defaultOn;
+                this.AbsorptionRangeBlue = defaultOn;
+                this.Phytoplankton = defaultOn;
+                this.Sediment = defaultOn;
+                this.YellowMatter = defaultOn;
+                this.Oceanness = defaultOn;
+                this.FogUnderwaterColor = defaultOn;
+                this.FogUnderwaterAmount = defaultOn;
+                this.FogUnderwaterNear = defaultOn;
+                this.FogUnderwaterFar = defaultOn;
+                this.PhysicalNormalMagnitude = defaultOn;
+                this.PhysicalShallowNormalFalloff = defaultOn;
+                this.PhysicalDeepNormalFalloff = defaultOn;
+                this.PhysicalSurfaceEffectFalloff = defaultOn;
+                this.PhysicalDisplacementSimulatorForce = defaultOn;
+                this.PhysicalDisplacementSimulatorVelocity = defaultOn;
+                this.PhysicalDisplacementSimulatorFalloff = defaultOn;
+                this.PhysicalDisplacementSimulatorDampener = defaultOn;
+                this.PhysicalDisplacementSimulatorStartingSize = defaultOn;
+                this.NoiseLayerOneWindDirection = defaultOn;
+                this.NoiseLayerTwoWindDirection = defaultOn;
+                this.NoiseLayerThreeWindDirection = defaultOn;
+                this.NoiseLayerOneWindSpeed = defaultOn;
+                this.NoiseLayerTwoWindSpeed = defaultOn;
+                this.NoiseLayerThreeWindSpeed = defaultOn;
+                this.NoiseLayerOneAmplitudeScale = defaultOn;
+                this.NoiseLayerTwoAmplitudeScale = defaultOn;
+                this.NoiseLayerThreeAmplitudeScale = defaultOn;
+                this.NoiseLayerOneUvScale = defaultOn;
+                this.NoiseLayerTwoUvScale = defaultOn;
+                this.NoiseLayerThreeUvScale = defaultOn;
+                this.NoiseLayerOneNoiseFalloff = defaultOn;
+                this.NoiseLayerTwoNoiseFalloff = defaultOn;
+                this.NoiseLayerThreeNoiseFalloff = defaultOn;
+                this.FlowmapScale = defaultOn;
+                this.Roughness = defaultOn;
                 this.GNAM = defaultOn;
                 this.LinearVelocity = defaultOn;
                 this.AngularVelocity = defaultOn;
@@ -1246,7 +2423,44 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ConsumeSpell, null));
                 ret.Add((ContactSpell, null));
                 ret.Add((DATA, null));
-                ret.Add((DNAM, null));
+                ret.Add((DepthAmount, null));
+                ret.Add((AbsorptionRangeRed, null));
+                ret.Add((AbsorptionRangeGreen, null));
+                ret.Add((AbsorptionRangeBlue, null));
+                ret.Add((Phytoplankton, null));
+                ret.Add((Sediment, null));
+                ret.Add((YellowMatter, null));
+                ret.Add((Oceanness, null));
+                ret.Add((FogUnderwaterColor, null));
+                ret.Add((FogUnderwaterAmount, null));
+                ret.Add((FogUnderwaterNear, null));
+                ret.Add((FogUnderwaterFar, null));
+                ret.Add((PhysicalNormalMagnitude, null));
+                ret.Add((PhysicalShallowNormalFalloff, null));
+                ret.Add((PhysicalDeepNormalFalloff, null));
+                ret.Add((PhysicalSurfaceEffectFalloff, null));
+                ret.Add((PhysicalDisplacementSimulatorForce, null));
+                ret.Add((PhysicalDisplacementSimulatorVelocity, null));
+                ret.Add((PhysicalDisplacementSimulatorFalloff, null));
+                ret.Add((PhysicalDisplacementSimulatorDampener, null));
+                ret.Add((PhysicalDisplacementSimulatorStartingSize, null));
+                ret.Add((NoiseLayerOneWindDirection, null));
+                ret.Add((NoiseLayerTwoWindDirection, null));
+                ret.Add((NoiseLayerThreeWindDirection, null));
+                ret.Add((NoiseLayerOneWindSpeed, null));
+                ret.Add((NoiseLayerTwoWindSpeed, null));
+                ret.Add((NoiseLayerThreeWindSpeed, null));
+                ret.Add((NoiseLayerOneAmplitudeScale, null));
+                ret.Add((NoiseLayerTwoAmplitudeScale, null));
+                ret.Add((NoiseLayerThreeAmplitudeScale, null));
+                ret.Add((NoiseLayerOneUvScale, null));
+                ret.Add((NoiseLayerTwoUvScale, null));
+                ret.Add((NoiseLayerThreeUvScale, null));
+                ret.Add((NoiseLayerOneNoiseFalloff, null));
+                ret.Add((NoiseLayerTwoNoiseFalloff, null));
+                ret.Add((NoiseLayerThreeNoiseFalloff, null));
+                ret.Add((FlowmapScale, null));
+                ret.Add((Roughness, null));
                 ret.Add((GNAM, null));
                 ret.Add((LinearVelocity, null));
                 ret.Add((AngularVelocity, null));
@@ -1432,7 +2646,44 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<ISpellGetter> ConsumeSpell { get; set; }
         new IFormLinkNullable<ISpellGetter> ContactSpell { get; set; }
         new MemorySlice<Byte>? DATA { get; set; }
-        new MemorySlice<Byte>? DNAM { get; set; }
+        new Single DepthAmount { get; set; }
+        new Single AbsorptionRangeRed { get; set; }
+        new Single AbsorptionRangeGreen { get; set; }
+        new Single AbsorptionRangeBlue { get; set; }
+        new Single Phytoplankton { get; set; }
+        new Single Sediment { get; set; }
+        new Single YellowMatter { get; set; }
+        new Single Oceanness { get; set; }
+        new Color FogUnderwaterColor { get; set; }
+        new Single FogUnderwaterAmount { get; set; }
+        new Single FogUnderwaterNear { get; set; }
+        new Single FogUnderwaterFar { get; set; }
+        new Single PhysicalNormalMagnitude { get; set; }
+        new Single PhysicalShallowNormalFalloff { get; set; }
+        new Single PhysicalDeepNormalFalloff { get; set; }
+        new Single PhysicalSurfaceEffectFalloff { get; set; }
+        new Single PhysicalDisplacementSimulatorForce { get; set; }
+        new Single PhysicalDisplacementSimulatorVelocity { get; set; }
+        new Single PhysicalDisplacementSimulatorFalloff { get; set; }
+        new Single PhysicalDisplacementSimulatorDampener { get; set; }
+        new Single PhysicalDisplacementSimulatorStartingSize { get; set; }
+        new Single NoiseLayerOneWindDirection { get; set; }
+        new Single NoiseLayerTwoWindDirection { get; set; }
+        new Single NoiseLayerThreeWindDirection { get; set; }
+        new Single NoiseLayerOneWindSpeed { get; set; }
+        new Single NoiseLayerTwoWindSpeed { get; set; }
+        new Single NoiseLayerThreeWindSpeed { get; set; }
+        new Single NoiseLayerOneAmplitudeScale { get; set; }
+        new Single NoiseLayerTwoAmplitudeScale { get; set; }
+        new Single NoiseLayerThreeAmplitudeScale { get; set; }
+        new Single NoiseLayerOneUvScale { get; set; }
+        new Single NoiseLayerTwoUvScale { get; set; }
+        new Single NoiseLayerThreeUvScale { get; set; }
+        new Single NoiseLayerOneNoiseFalloff { get; set; }
+        new Single NoiseLayerTwoNoiseFalloff { get; set; }
+        new Single NoiseLayerThreeNoiseFalloff { get; set; }
+        new Single FlowmapScale { get; set; }
+        new Single Roughness { get; set; }
         new MemorySlice<Byte>? GNAM { get; set; }
         new P3Float? LinearVelocity { get; set; }
         new P3Float? AngularVelocity { get; set; }
@@ -1493,7 +2744,44 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<ISpellGetter> ConsumeSpell { get; }
         IFormLinkNullableGetter<ISpellGetter> ContactSpell { get; }
         ReadOnlyMemorySlice<Byte>? DATA { get; }
-        ReadOnlyMemorySlice<Byte>? DNAM { get; }
+        Single DepthAmount { get; }
+        Single AbsorptionRangeRed { get; }
+        Single AbsorptionRangeGreen { get; }
+        Single AbsorptionRangeBlue { get; }
+        Single Phytoplankton { get; }
+        Single Sediment { get; }
+        Single YellowMatter { get; }
+        Single Oceanness { get; }
+        Color FogUnderwaterColor { get; }
+        Single FogUnderwaterAmount { get; }
+        Single FogUnderwaterNear { get; }
+        Single FogUnderwaterFar { get; }
+        Single PhysicalNormalMagnitude { get; }
+        Single PhysicalShallowNormalFalloff { get; }
+        Single PhysicalDeepNormalFalloff { get; }
+        Single PhysicalSurfaceEffectFalloff { get; }
+        Single PhysicalDisplacementSimulatorForce { get; }
+        Single PhysicalDisplacementSimulatorVelocity { get; }
+        Single PhysicalDisplacementSimulatorFalloff { get; }
+        Single PhysicalDisplacementSimulatorDampener { get; }
+        Single PhysicalDisplacementSimulatorStartingSize { get; }
+        Single NoiseLayerOneWindDirection { get; }
+        Single NoiseLayerTwoWindDirection { get; }
+        Single NoiseLayerThreeWindDirection { get; }
+        Single NoiseLayerOneWindSpeed { get; }
+        Single NoiseLayerTwoWindSpeed { get; }
+        Single NoiseLayerThreeWindSpeed { get; }
+        Single NoiseLayerOneAmplitudeScale { get; }
+        Single NoiseLayerTwoAmplitudeScale { get; }
+        Single NoiseLayerThreeAmplitudeScale { get; }
+        Single NoiseLayerOneUvScale { get; }
+        Single NoiseLayerTwoUvScale { get; }
+        Single NoiseLayerThreeUvScale { get; }
+        Single NoiseLayerOneNoiseFalloff { get; }
+        Single NoiseLayerTwoNoiseFalloff { get; }
+        Single NoiseLayerThreeNoiseFalloff { get; }
+        Single FlowmapScale { get; }
+        Single Roughness { get; }
         ReadOnlyMemorySlice<Byte>? GNAM { get; }
         P3Float? LinearVelocity { get; }
         P3Float? AngularVelocity { get; }
@@ -1693,22 +2981,59 @@ namespace Mutagen.Bethesda.Starfield
         ConsumeSpell = 12,
         ContactSpell = 13,
         DATA = 14,
-        DNAM = 15,
-        GNAM = 16,
-        LinearVelocity = 17,
-        AngularVelocity = 18,
-        NAM2 = 19,
-        NAM3 = 20,
-        NAM4 = 21,
-        NAM5 = 22,
-        NAM6 = 23,
-        RiverAbsorptionCurve = 24,
-        OceanAbsorptionCurve = 25,
-        RiverScatteringCurve = 26,
-        OceanScatteringCurve = 27,
-        PhytoplanktonCurve = 28,
-        SedimentCurve = 29,
-        YelowMatterCurve = 30,
+        DepthAmount = 15,
+        AbsorptionRangeRed = 16,
+        AbsorptionRangeGreen = 17,
+        AbsorptionRangeBlue = 18,
+        Phytoplankton = 19,
+        Sediment = 20,
+        YellowMatter = 21,
+        Oceanness = 22,
+        FogUnderwaterColor = 23,
+        FogUnderwaterAmount = 24,
+        FogUnderwaterNear = 25,
+        FogUnderwaterFar = 26,
+        PhysicalNormalMagnitude = 27,
+        PhysicalShallowNormalFalloff = 28,
+        PhysicalDeepNormalFalloff = 29,
+        PhysicalSurfaceEffectFalloff = 30,
+        PhysicalDisplacementSimulatorForce = 31,
+        PhysicalDisplacementSimulatorVelocity = 32,
+        PhysicalDisplacementSimulatorFalloff = 33,
+        PhysicalDisplacementSimulatorDampener = 34,
+        PhysicalDisplacementSimulatorStartingSize = 35,
+        NoiseLayerOneWindDirection = 36,
+        NoiseLayerTwoWindDirection = 37,
+        NoiseLayerThreeWindDirection = 38,
+        NoiseLayerOneWindSpeed = 39,
+        NoiseLayerTwoWindSpeed = 40,
+        NoiseLayerThreeWindSpeed = 41,
+        NoiseLayerOneAmplitudeScale = 42,
+        NoiseLayerTwoAmplitudeScale = 43,
+        NoiseLayerThreeAmplitudeScale = 44,
+        NoiseLayerOneUvScale = 45,
+        NoiseLayerTwoUvScale = 46,
+        NoiseLayerThreeUvScale = 47,
+        NoiseLayerOneNoiseFalloff = 48,
+        NoiseLayerTwoNoiseFalloff = 49,
+        NoiseLayerThreeNoiseFalloff = 50,
+        FlowmapScale = 51,
+        Roughness = 52,
+        GNAM = 53,
+        LinearVelocity = 54,
+        AngularVelocity = 55,
+        NAM2 = 56,
+        NAM3 = 57,
+        NAM4 = 58,
+        NAM5 = 59,
+        NAM6 = 60,
+        RiverAbsorptionCurve = 61,
+        OceanAbsorptionCurve = 62,
+        RiverScatteringCurve = 63,
+        OceanScatteringCurve = 64,
+        PhytoplanktonCurve = 65,
+        SedimentCurve = 66,
+        YelowMatterCurve = 67,
     }
     #endregion
 
@@ -1719,9 +3044,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 24;
+        public const ushort AdditionalFieldCount = 61;
 
-        public const ushort FieldCount = 31;
+        public const ushort FieldCount = 68;
 
         public static readonly Type MaskType = typeof(Water.Mask<>);
 
@@ -1831,7 +3156,44 @@ namespace Mutagen.Bethesda.Starfield
             item.ConsumeSpell.Clear();
             item.ContactSpell.Clear();
             item.DATA = default;
-            item.DNAM = default;
+            item.DepthAmount = default(Single);
+            item.AbsorptionRangeRed = default(Single);
+            item.AbsorptionRangeGreen = default(Single);
+            item.AbsorptionRangeBlue = default(Single);
+            item.Phytoplankton = default(Single);
+            item.Sediment = default(Single);
+            item.YellowMatter = default(Single);
+            item.Oceanness = default(Single);
+            item.FogUnderwaterColor = default(Color);
+            item.FogUnderwaterAmount = default(Single);
+            item.FogUnderwaterNear = default(Single);
+            item.FogUnderwaterFar = default(Single);
+            item.PhysicalNormalMagnitude = default(Single);
+            item.PhysicalShallowNormalFalloff = default(Single);
+            item.PhysicalDeepNormalFalloff = default(Single);
+            item.PhysicalSurfaceEffectFalloff = default(Single);
+            item.PhysicalDisplacementSimulatorForce = default(Single);
+            item.PhysicalDisplacementSimulatorVelocity = default(Single);
+            item.PhysicalDisplacementSimulatorFalloff = default(Single);
+            item.PhysicalDisplacementSimulatorDampener = default(Single);
+            item.PhysicalDisplacementSimulatorStartingSize = default(Single);
+            item.NoiseLayerOneWindDirection = default(Single);
+            item.NoiseLayerTwoWindDirection = default(Single);
+            item.NoiseLayerThreeWindDirection = default(Single);
+            item.NoiseLayerOneWindSpeed = default(Single);
+            item.NoiseLayerTwoWindSpeed = default(Single);
+            item.NoiseLayerThreeWindSpeed = default(Single);
+            item.NoiseLayerOneAmplitudeScale = default(Single);
+            item.NoiseLayerTwoAmplitudeScale = default(Single);
+            item.NoiseLayerThreeAmplitudeScale = default(Single);
+            item.NoiseLayerOneUvScale = default(Single);
+            item.NoiseLayerTwoUvScale = default(Single);
+            item.NoiseLayerThreeUvScale = default(Single);
+            item.NoiseLayerOneNoiseFalloff = default(Single);
+            item.NoiseLayerTwoNoiseFalloff = default(Single);
+            item.NoiseLayerThreeNoiseFalloff = default(Single);
+            item.FlowmapScale = default(Single);
+            item.Roughness = default(Single);
             item.GNAM = default;
             item.LinearVelocity = default;
             item.AngularVelocity = default;
@@ -1958,7 +3320,44 @@ namespace Mutagen.Bethesda.Starfield
             ret.ConsumeSpell = item.ConsumeSpell.Equals(rhs.ConsumeSpell);
             ret.ContactSpell = item.ContactSpell.Equals(rhs.ContactSpell);
             ret.DATA = MemorySliceExt.SequenceEqual(item.DATA, rhs.DATA);
-            ret.DNAM = MemorySliceExt.SequenceEqual(item.DNAM, rhs.DNAM);
+            ret.DepthAmount = item.DepthAmount.EqualsWithin(rhs.DepthAmount);
+            ret.AbsorptionRangeRed = item.AbsorptionRangeRed.EqualsWithin(rhs.AbsorptionRangeRed);
+            ret.AbsorptionRangeGreen = item.AbsorptionRangeGreen.EqualsWithin(rhs.AbsorptionRangeGreen);
+            ret.AbsorptionRangeBlue = item.AbsorptionRangeBlue.EqualsWithin(rhs.AbsorptionRangeBlue);
+            ret.Phytoplankton = item.Phytoplankton.EqualsWithin(rhs.Phytoplankton);
+            ret.Sediment = item.Sediment.EqualsWithin(rhs.Sediment);
+            ret.YellowMatter = item.YellowMatter.EqualsWithin(rhs.YellowMatter);
+            ret.Oceanness = item.Oceanness.EqualsWithin(rhs.Oceanness);
+            ret.FogUnderwaterColor = item.FogUnderwaterColor.ColorOnlyEquals(rhs.FogUnderwaterColor);
+            ret.FogUnderwaterAmount = item.FogUnderwaterAmount.EqualsWithin(rhs.FogUnderwaterAmount);
+            ret.FogUnderwaterNear = item.FogUnderwaterNear.EqualsWithin(rhs.FogUnderwaterNear);
+            ret.FogUnderwaterFar = item.FogUnderwaterFar.EqualsWithin(rhs.FogUnderwaterFar);
+            ret.PhysicalNormalMagnitude = item.PhysicalNormalMagnitude.EqualsWithin(rhs.PhysicalNormalMagnitude);
+            ret.PhysicalShallowNormalFalloff = item.PhysicalShallowNormalFalloff.EqualsWithin(rhs.PhysicalShallowNormalFalloff);
+            ret.PhysicalDeepNormalFalloff = item.PhysicalDeepNormalFalloff.EqualsWithin(rhs.PhysicalDeepNormalFalloff);
+            ret.PhysicalSurfaceEffectFalloff = item.PhysicalSurfaceEffectFalloff.EqualsWithin(rhs.PhysicalSurfaceEffectFalloff);
+            ret.PhysicalDisplacementSimulatorForce = item.PhysicalDisplacementSimulatorForce.EqualsWithin(rhs.PhysicalDisplacementSimulatorForce);
+            ret.PhysicalDisplacementSimulatorVelocity = item.PhysicalDisplacementSimulatorVelocity.EqualsWithin(rhs.PhysicalDisplacementSimulatorVelocity);
+            ret.PhysicalDisplacementSimulatorFalloff = item.PhysicalDisplacementSimulatorFalloff.EqualsWithin(rhs.PhysicalDisplacementSimulatorFalloff);
+            ret.PhysicalDisplacementSimulatorDampener = item.PhysicalDisplacementSimulatorDampener.EqualsWithin(rhs.PhysicalDisplacementSimulatorDampener);
+            ret.PhysicalDisplacementSimulatorStartingSize = item.PhysicalDisplacementSimulatorStartingSize.EqualsWithin(rhs.PhysicalDisplacementSimulatorStartingSize);
+            ret.NoiseLayerOneWindDirection = item.NoiseLayerOneWindDirection.EqualsWithin(rhs.NoiseLayerOneWindDirection);
+            ret.NoiseLayerTwoWindDirection = item.NoiseLayerTwoWindDirection.EqualsWithin(rhs.NoiseLayerTwoWindDirection);
+            ret.NoiseLayerThreeWindDirection = item.NoiseLayerThreeWindDirection.EqualsWithin(rhs.NoiseLayerThreeWindDirection);
+            ret.NoiseLayerOneWindSpeed = item.NoiseLayerOneWindSpeed.EqualsWithin(rhs.NoiseLayerOneWindSpeed);
+            ret.NoiseLayerTwoWindSpeed = item.NoiseLayerTwoWindSpeed.EqualsWithin(rhs.NoiseLayerTwoWindSpeed);
+            ret.NoiseLayerThreeWindSpeed = item.NoiseLayerThreeWindSpeed.EqualsWithin(rhs.NoiseLayerThreeWindSpeed);
+            ret.NoiseLayerOneAmplitudeScale = item.NoiseLayerOneAmplitudeScale.EqualsWithin(rhs.NoiseLayerOneAmplitudeScale);
+            ret.NoiseLayerTwoAmplitudeScale = item.NoiseLayerTwoAmplitudeScale.EqualsWithin(rhs.NoiseLayerTwoAmplitudeScale);
+            ret.NoiseLayerThreeAmplitudeScale = item.NoiseLayerThreeAmplitudeScale.EqualsWithin(rhs.NoiseLayerThreeAmplitudeScale);
+            ret.NoiseLayerOneUvScale = item.NoiseLayerOneUvScale.EqualsWithin(rhs.NoiseLayerOneUvScale);
+            ret.NoiseLayerTwoUvScale = item.NoiseLayerTwoUvScale.EqualsWithin(rhs.NoiseLayerTwoUvScale);
+            ret.NoiseLayerThreeUvScale = item.NoiseLayerThreeUvScale.EqualsWithin(rhs.NoiseLayerThreeUvScale);
+            ret.NoiseLayerOneNoiseFalloff = item.NoiseLayerOneNoiseFalloff.EqualsWithin(rhs.NoiseLayerOneNoiseFalloff);
+            ret.NoiseLayerTwoNoiseFalloff = item.NoiseLayerTwoNoiseFalloff.EqualsWithin(rhs.NoiseLayerTwoNoiseFalloff);
+            ret.NoiseLayerThreeNoiseFalloff = item.NoiseLayerThreeNoiseFalloff.EqualsWithin(rhs.NoiseLayerThreeNoiseFalloff);
+            ret.FlowmapScale = item.FlowmapScale.EqualsWithin(rhs.FlowmapScale);
+            ret.Roughness = item.Roughness.EqualsWithin(rhs.Roughness);
             ret.GNAM = MemorySliceExt.SequenceEqual(item.GNAM, rhs.GNAM);
             ret.LinearVelocity = item.LinearVelocity.Equals(rhs.LinearVelocity);
             ret.AngularVelocity = item.AngularVelocity.Equals(rhs.AngularVelocity);
@@ -2059,10 +3458,157 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendLine($"DATA => {SpanExt.ToHexString(DATAItem)}");
             }
-            if ((printMask?.DNAM ?? true)
-                && item.DNAM is {} DNAMItem)
+            if (printMask?.DepthAmount ?? true)
             {
-                sb.AppendLine($"DNAM => {SpanExt.ToHexString(DNAMItem)}");
+                sb.AppendItem(item.DepthAmount, "DepthAmount");
+            }
+            if (printMask?.AbsorptionRangeRed ?? true)
+            {
+                sb.AppendItem(item.AbsorptionRangeRed, "AbsorptionRangeRed");
+            }
+            if (printMask?.AbsorptionRangeGreen ?? true)
+            {
+                sb.AppendItem(item.AbsorptionRangeGreen, "AbsorptionRangeGreen");
+            }
+            if (printMask?.AbsorptionRangeBlue ?? true)
+            {
+                sb.AppendItem(item.AbsorptionRangeBlue, "AbsorptionRangeBlue");
+            }
+            if (printMask?.Phytoplankton ?? true)
+            {
+                sb.AppendItem(item.Phytoplankton, "Phytoplankton");
+            }
+            if (printMask?.Sediment ?? true)
+            {
+                sb.AppendItem(item.Sediment, "Sediment");
+            }
+            if (printMask?.YellowMatter ?? true)
+            {
+                sb.AppendItem(item.YellowMatter, "YellowMatter");
+            }
+            if (printMask?.Oceanness ?? true)
+            {
+                sb.AppendItem(item.Oceanness, "Oceanness");
+            }
+            if (printMask?.FogUnderwaterColor ?? true)
+            {
+                sb.AppendItem(item.FogUnderwaterColor, "FogUnderwaterColor");
+            }
+            if (printMask?.FogUnderwaterAmount ?? true)
+            {
+                sb.AppendItem(item.FogUnderwaterAmount, "FogUnderwaterAmount");
+            }
+            if (printMask?.FogUnderwaterNear ?? true)
+            {
+                sb.AppendItem(item.FogUnderwaterNear, "FogUnderwaterNear");
+            }
+            if (printMask?.FogUnderwaterFar ?? true)
+            {
+                sb.AppendItem(item.FogUnderwaterFar, "FogUnderwaterFar");
+            }
+            if (printMask?.PhysicalNormalMagnitude ?? true)
+            {
+                sb.AppendItem(item.PhysicalNormalMagnitude, "PhysicalNormalMagnitude");
+            }
+            if (printMask?.PhysicalShallowNormalFalloff ?? true)
+            {
+                sb.AppendItem(item.PhysicalShallowNormalFalloff, "PhysicalShallowNormalFalloff");
+            }
+            if (printMask?.PhysicalDeepNormalFalloff ?? true)
+            {
+                sb.AppendItem(item.PhysicalDeepNormalFalloff, "PhysicalDeepNormalFalloff");
+            }
+            if (printMask?.PhysicalSurfaceEffectFalloff ?? true)
+            {
+                sb.AppendItem(item.PhysicalSurfaceEffectFalloff, "PhysicalSurfaceEffectFalloff");
+            }
+            if (printMask?.PhysicalDisplacementSimulatorForce ?? true)
+            {
+                sb.AppendItem(item.PhysicalDisplacementSimulatorForce, "PhysicalDisplacementSimulatorForce");
+            }
+            if (printMask?.PhysicalDisplacementSimulatorVelocity ?? true)
+            {
+                sb.AppendItem(item.PhysicalDisplacementSimulatorVelocity, "PhysicalDisplacementSimulatorVelocity");
+            }
+            if (printMask?.PhysicalDisplacementSimulatorFalloff ?? true)
+            {
+                sb.AppendItem(item.PhysicalDisplacementSimulatorFalloff, "PhysicalDisplacementSimulatorFalloff");
+            }
+            if (printMask?.PhysicalDisplacementSimulatorDampener ?? true)
+            {
+                sb.AppendItem(item.PhysicalDisplacementSimulatorDampener, "PhysicalDisplacementSimulatorDampener");
+            }
+            if (printMask?.PhysicalDisplacementSimulatorStartingSize ?? true)
+            {
+                sb.AppendItem(item.PhysicalDisplacementSimulatorStartingSize, "PhysicalDisplacementSimulatorStartingSize");
+            }
+            if (printMask?.NoiseLayerOneWindDirection ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerOneWindDirection, "NoiseLayerOneWindDirection");
+            }
+            if (printMask?.NoiseLayerTwoWindDirection ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerTwoWindDirection, "NoiseLayerTwoWindDirection");
+            }
+            if (printMask?.NoiseLayerThreeWindDirection ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerThreeWindDirection, "NoiseLayerThreeWindDirection");
+            }
+            if (printMask?.NoiseLayerOneWindSpeed ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerOneWindSpeed, "NoiseLayerOneWindSpeed");
+            }
+            if (printMask?.NoiseLayerTwoWindSpeed ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerTwoWindSpeed, "NoiseLayerTwoWindSpeed");
+            }
+            if (printMask?.NoiseLayerThreeWindSpeed ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerThreeWindSpeed, "NoiseLayerThreeWindSpeed");
+            }
+            if (printMask?.NoiseLayerOneAmplitudeScale ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerOneAmplitudeScale, "NoiseLayerOneAmplitudeScale");
+            }
+            if (printMask?.NoiseLayerTwoAmplitudeScale ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerTwoAmplitudeScale, "NoiseLayerTwoAmplitudeScale");
+            }
+            if (printMask?.NoiseLayerThreeAmplitudeScale ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerThreeAmplitudeScale, "NoiseLayerThreeAmplitudeScale");
+            }
+            if (printMask?.NoiseLayerOneUvScale ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerOneUvScale, "NoiseLayerOneUvScale");
+            }
+            if (printMask?.NoiseLayerTwoUvScale ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerTwoUvScale, "NoiseLayerTwoUvScale");
+            }
+            if (printMask?.NoiseLayerThreeUvScale ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerThreeUvScale, "NoiseLayerThreeUvScale");
+            }
+            if (printMask?.NoiseLayerOneNoiseFalloff ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerOneNoiseFalloff, "NoiseLayerOneNoiseFalloff");
+            }
+            if (printMask?.NoiseLayerTwoNoiseFalloff ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerTwoNoiseFalloff, "NoiseLayerTwoNoiseFalloff");
+            }
+            if (printMask?.NoiseLayerThreeNoiseFalloff ?? true)
+            {
+                sb.AppendItem(item.NoiseLayerThreeNoiseFalloff, "NoiseLayerThreeNoiseFalloff");
+            }
+            if (printMask?.FlowmapScale ?? true)
+            {
+                sb.AppendItem(item.FlowmapScale, "FlowmapScale");
+            }
+            if (printMask?.Roughness ?? true)
+            {
+                sb.AppendItem(item.Roughness, "Roughness");
             }
             if ((printMask?.GNAM ?? true)
                 && item.GNAM is {} GNAMItem)
@@ -2222,9 +3768,157 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!MemorySliceExt.SequenceEqual(lhs.DATA, rhs.DATA)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.DNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.DepthAmount) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.DNAM, rhs.DNAM)) return false;
+                if (!lhs.DepthAmount.EqualsWithin(rhs.DepthAmount)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.AbsorptionRangeRed) ?? true))
+            {
+                if (!lhs.AbsorptionRangeRed.EqualsWithin(rhs.AbsorptionRangeRed)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.AbsorptionRangeGreen) ?? true))
+            {
+                if (!lhs.AbsorptionRangeGreen.EqualsWithin(rhs.AbsorptionRangeGreen)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.AbsorptionRangeBlue) ?? true))
+            {
+                if (!lhs.AbsorptionRangeBlue.EqualsWithin(rhs.AbsorptionRangeBlue)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.Phytoplankton) ?? true))
+            {
+                if (!lhs.Phytoplankton.EqualsWithin(rhs.Phytoplankton)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.Sediment) ?? true))
+            {
+                if (!lhs.Sediment.EqualsWithin(rhs.Sediment)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.YellowMatter) ?? true))
+            {
+                if (!lhs.YellowMatter.EqualsWithin(rhs.YellowMatter)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.Oceanness) ?? true))
+            {
+                if (!lhs.Oceanness.EqualsWithin(rhs.Oceanness)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.FogUnderwaterColor) ?? true))
+            {
+                if (!lhs.FogUnderwaterColor.ColorOnlyEquals(rhs.FogUnderwaterColor)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.FogUnderwaterAmount) ?? true))
+            {
+                if (!lhs.FogUnderwaterAmount.EqualsWithin(rhs.FogUnderwaterAmount)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.FogUnderwaterNear) ?? true))
+            {
+                if (!lhs.FogUnderwaterNear.EqualsWithin(rhs.FogUnderwaterNear)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.FogUnderwaterFar) ?? true))
+            {
+                if (!lhs.FogUnderwaterFar.EqualsWithin(rhs.FogUnderwaterFar)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalNormalMagnitude) ?? true))
+            {
+                if (!lhs.PhysicalNormalMagnitude.EqualsWithin(rhs.PhysicalNormalMagnitude)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalShallowNormalFalloff) ?? true))
+            {
+                if (!lhs.PhysicalShallowNormalFalloff.EqualsWithin(rhs.PhysicalShallowNormalFalloff)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalDeepNormalFalloff) ?? true))
+            {
+                if (!lhs.PhysicalDeepNormalFalloff.EqualsWithin(rhs.PhysicalDeepNormalFalloff)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalSurfaceEffectFalloff) ?? true))
+            {
+                if (!lhs.PhysicalSurfaceEffectFalloff.EqualsWithin(rhs.PhysicalSurfaceEffectFalloff)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalDisplacementSimulatorForce) ?? true))
+            {
+                if (!lhs.PhysicalDisplacementSimulatorForce.EqualsWithin(rhs.PhysicalDisplacementSimulatorForce)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalDisplacementSimulatorVelocity) ?? true))
+            {
+                if (!lhs.PhysicalDisplacementSimulatorVelocity.EqualsWithin(rhs.PhysicalDisplacementSimulatorVelocity)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalDisplacementSimulatorFalloff) ?? true))
+            {
+                if (!lhs.PhysicalDisplacementSimulatorFalloff.EqualsWithin(rhs.PhysicalDisplacementSimulatorFalloff)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalDisplacementSimulatorDampener) ?? true))
+            {
+                if (!lhs.PhysicalDisplacementSimulatorDampener.EqualsWithin(rhs.PhysicalDisplacementSimulatorDampener)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalDisplacementSimulatorStartingSize) ?? true))
+            {
+                if (!lhs.PhysicalDisplacementSimulatorStartingSize.EqualsWithin(rhs.PhysicalDisplacementSimulatorStartingSize)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerOneWindDirection) ?? true))
+            {
+                if (!lhs.NoiseLayerOneWindDirection.EqualsWithin(rhs.NoiseLayerOneWindDirection)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerTwoWindDirection) ?? true))
+            {
+                if (!lhs.NoiseLayerTwoWindDirection.EqualsWithin(rhs.NoiseLayerTwoWindDirection)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerThreeWindDirection) ?? true))
+            {
+                if (!lhs.NoiseLayerThreeWindDirection.EqualsWithin(rhs.NoiseLayerThreeWindDirection)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerOneWindSpeed) ?? true))
+            {
+                if (!lhs.NoiseLayerOneWindSpeed.EqualsWithin(rhs.NoiseLayerOneWindSpeed)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerTwoWindSpeed) ?? true))
+            {
+                if (!lhs.NoiseLayerTwoWindSpeed.EqualsWithin(rhs.NoiseLayerTwoWindSpeed)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerThreeWindSpeed) ?? true))
+            {
+                if (!lhs.NoiseLayerThreeWindSpeed.EqualsWithin(rhs.NoiseLayerThreeWindSpeed)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerOneAmplitudeScale) ?? true))
+            {
+                if (!lhs.NoiseLayerOneAmplitudeScale.EqualsWithin(rhs.NoiseLayerOneAmplitudeScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerTwoAmplitudeScale) ?? true))
+            {
+                if (!lhs.NoiseLayerTwoAmplitudeScale.EqualsWithin(rhs.NoiseLayerTwoAmplitudeScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerThreeAmplitudeScale) ?? true))
+            {
+                if (!lhs.NoiseLayerThreeAmplitudeScale.EqualsWithin(rhs.NoiseLayerThreeAmplitudeScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerOneUvScale) ?? true))
+            {
+                if (!lhs.NoiseLayerOneUvScale.EqualsWithin(rhs.NoiseLayerOneUvScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerTwoUvScale) ?? true))
+            {
+                if (!lhs.NoiseLayerTwoUvScale.EqualsWithin(rhs.NoiseLayerTwoUvScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerThreeUvScale) ?? true))
+            {
+                if (!lhs.NoiseLayerThreeUvScale.EqualsWithin(rhs.NoiseLayerThreeUvScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerOneNoiseFalloff) ?? true))
+            {
+                if (!lhs.NoiseLayerOneNoiseFalloff.EqualsWithin(rhs.NoiseLayerOneNoiseFalloff)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerTwoNoiseFalloff) ?? true))
+            {
+                if (!lhs.NoiseLayerTwoNoiseFalloff.EqualsWithin(rhs.NoiseLayerTwoNoiseFalloff)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerThreeNoiseFalloff) ?? true))
+            {
+                if (!lhs.NoiseLayerThreeNoiseFalloff.EqualsWithin(rhs.NoiseLayerThreeNoiseFalloff)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.FlowmapScale) ?? true))
+            {
+                if (!lhs.FlowmapScale.EqualsWithin(rhs.FlowmapScale)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.Roughness) ?? true))
+            {
+                if (!lhs.Roughness.EqualsWithin(rhs.Roughness)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Water_FieldIndex.GNAM) ?? true))
             {
@@ -2334,10 +4028,44 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.AddBytes(DATAItem);
             }
-            if (item.DNAM is {} DNAMItem)
-            {
-                hash.AddBytes(DNAMItem);
-            }
+            hash.Add(item.DepthAmount);
+            hash.Add(item.AbsorptionRangeRed);
+            hash.Add(item.AbsorptionRangeGreen);
+            hash.Add(item.AbsorptionRangeBlue);
+            hash.Add(item.Phytoplankton);
+            hash.Add(item.Sediment);
+            hash.Add(item.YellowMatter);
+            hash.Add(item.Oceanness);
+            hash.Add(item.FogUnderwaterColor.ToArgb());
+            hash.Add(item.FogUnderwaterAmount);
+            hash.Add(item.FogUnderwaterNear);
+            hash.Add(item.FogUnderwaterFar);
+            hash.Add(item.PhysicalNormalMagnitude);
+            hash.Add(item.PhysicalShallowNormalFalloff);
+            hash.Add(item.PhysicalDeepNormalFalloff);
+            hash.Add(item.PhysicalSurfaceEffectFalloff);
+            hash.Add(item.PhysicalDisplacementSimulatorForce);
+            hash.Add(item.PhysicalDisplacementSimulatorVelocity);
+            hash.Add(item.PhysicalDisplacementSimulatorFalloff);
+            hash.Add(item.PhysicalDisplacementSimulatorDampener);
+            hash.Add(item.PhysicalDisplacementSimulatorStartingSize);
+            hash.Add(item.NoiseLayerOneWindDirection);
+            hash.Add(item.NoiseLayerTwoWindDirection);
+            hash.Add(item.NoiseLayerThreeWindDirection);
+            hash.Add(item.NoiseLayerOneWindSpeed);
+            hash.Add(item.NoiseLayerTwoWindSpeed);
+            hash.Add(item.NoiseLayerThreeWindSpeed);
+            hash.Add(item.NoiseLayerOneAmplitudeScale);
+            hash.Add(item.NoiseLayerTwoAmplitudeScale);
+            hash.Add(item.NoiseLayerThreeAmplitudeScale);
+            hash.Add(item.NoiseLayerOneUvScale);
+            hash.Add(item.NoiseLayerTwoUvScale);
+            hash.Add(item.NoiseLayerThreeUvScale);
+            hash.Add(item.NoiseLayerOneNoiseFalloff);
+            hash.Add(item.NoiseLayerTwoNoiseFalloff);
+            hash.Add(item.NoiseLayerThreeNoiseFalloff);
+            hash.Add(item.FlowmapScale);
+            hash.Add(item.Roughness);
             if (item.GNAM is {} GNAMItem)
             {
                 hash.AddBytes(GNAMItem);
@@ -2635,16 +4363,157 @@ namespace Mutagen.Bethesda.Starfield
                     item.DATA = default;
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.DNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.DepthAmount) ?? true))
             {
-                if(rhs.DNAM is {} DNAMrhs)
-                {
-                    item.DNAM = DNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.DNAM = default;
-                }
+                item.DepthAmount = rhs.DepthAmount;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.AbsorptionRangeRed) ?? true))
+            {
+                item.AbsorptionRangeRed = rhs.AbsorptionRangeRed;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.AbsorptionRangeGreen) ?? true))
+            {
+                item.AbsorptionRangeGreen = rhs.AbsorptionRangeGreen;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.AbsorptionRangeBlue) ?? true))
+            {
+                item.AbsorptionRangeBlue = rhs.AbsorptionRangeBlue;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.Phytoplankton) ?? true))
+            {
+                item.Phytoplankton = rhs.Phytoplankton;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.Sediment) ?? true))
+            {
+                item.Sediment = rhs.Sediment;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.YellowMatter) ?? true))
+            {
+                item.YellowMatter = rhs.YellowMatter;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.Oceanness) ?? true))
+            {
+                item.Oceanness = rhs.Oceanness;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.FogUnderwaterColor) ?? true))
+            {
+                item.FogUnderwaterColor = rhs.FogUnderwaterColor;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.FogUnderwaterAmount) ?? true))
+            {
+                item.FogUnderwaterAmount = rhs.FogUnderwaterAmount;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.FogUnderwaterNear) ?? true))
+            {
+                item.FogUnderwaterNear = rhs.FogUnderwaterNear;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.FogUnderwaterFar) ?? true))
+            {
+                item.FogUnderwaterFar = rhs.FogUnderwaterFar;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalNormalMagnitude) ?? true))
+            {
+                item.PhysicalNormalMagnitude = rhs.PhysicalNormalMagnitude;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalShallowNormalFalloff) ?? true))
+            {
+                item.PhysicalShallowNormalFalloff = rhs.PhysicalShallowNormalFalloff;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalDeepNormalFalloff) ?? true))
+            {
+                item.PhysicalDeepNormalFalloff = rhs.PhysicalDeepNormalFalloff;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalSurfaceEffectFalloff) ?? true))
+            {
+                item.PhysicalSurfaceEffectFalloff = rhs.PhysicalSurfaceEffectFalloff;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalDisplacementSimulatorForce) ?? true))
+            {
+                item.PhysicalDisplacementSimulatorForce = rhs.PhysicalDisplacementSimulatorForce;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalDisplacementSimulatorVelocity) ?? true))
+            {
+                item.PhysicalDisplacementSimulatorVelocity = rhs.PhysicalDisplacementSimulatorVelocity;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalDisplacementSimulatorFalloff) ?? true))
+            {
+                item.PhysicalDisplacementSimulatorFalloff = rhs.PhysicalDisplacementSimulatorFalloff;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalDisplacementSimulatorDampener) ?? true))
+            {
+                item.PhysicalDisplacementSimulatorDampener = rhs.PhysicalDisplacementSimulatorDampener;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.PhysicalDisplacementSimulatorStartingSize) ?? true))
+            {
+                item.PhysicalDisplacementSimulatorStartingSize = rhs.PhysicalDisplacementSimulatorStartingSize;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerOneWindDirection) ?? true))
+            {
+                item.NoiseLayerOneWindDirection = rhs.NoiseLayerOneWindDirection;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerTwoWindDirection) ?? true))
+            {
+                item.NoiseLayerTwoWindDirection = rhs.NoiseLayerTwoWindDirection;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerThreeWindDirection) ?? true))
+            {
+                item.NoiseLayerThreeWindDirection = rhs.NoiseLayerThreeWindDirection;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerOneWindSpeed) ?? true))
+            {
+                item.NoiseLayerOneWindSpeed = rhs.NoiseLayerOneWindSpeed;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerTwoWindSpeed) ?? true))
+            {
+                item.NoiseLayerTwoWindSpeed = rhs.NoiseLayerTwoWindSpeed;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerThreeWindSpeed) ?? true))
+            {
+                item.NoiseLayerThreeWindSpeed = rhs.NoiseLayerThreeWindSpeed;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerOneAmplitudeScale) ?? true))
+            {
+                item.NoiseLayerOneAmplitudeScale = rhs.NoiseLayerOneAmplitudeScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerTwoAmplitudeScale) ?? true))
+            {
+                item.NoiseLayerTwoAmplitudeScale = rhs.NoiseLayerTwoAmplitudeScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerThreeAmplitudeScale) ?? true))
+            {
+                item.NoiseLayerThreeAmplitudeScale = rhs.NoiseLayerThreeAmplitudeScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerOneUvScale) ?? true))
+            {
+                item.NoiseLayerOneUvScale = rhs.NoiseLayerOneUvScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerTwoUvScale) ?? true))
+            {
+                item.NoiseLayerTwoUvScale = rhs.NoiseLayerTwoUvScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerThreeUvScale) ?? true))
+            {
+                item.NoiseLayerThreeUvScale = rhs.NoiseLayerThreeUvScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerOneNoiseFalloff) ?? true))
+            {
+                item.NoiseLayerOneNoiseFalloff = rhs.NoiseLayerOneNoiseFalloff;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerTwoNoiseFalloff) ?? true))
+            {
+                item.NoiseLayerTwoNoiseFalloff = rhs.NoiseLayerTwoNoiseFalloff;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.NoiseLayerThreeNoiseFalloff) ?? true))
+            {
+                item.NoiseLayerThreeNoiseFalloff = rhs.NoiseLayerThreeNoiseFalloff;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.FlowmapScale) ?? true))
+            {
+                item.FlowmapScale = rhs.FlowmapScale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.Roughness) ?? true))
+            {
+                item.Roughness = rhs.Roughness;
             }
             if ((copyMask?.GetShouldTranslate((int)Water_FieldIndex.GNAM) ?? true))
             {
@@ -2926,10 +4795,123 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.DATA,
                 header: translationParams.ConvertToCustom(RecordTypes.DATA));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.DNAM,
-                header: translationParams.ConvertToCustom(RecordTypes.DNAM));
+            using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.DNAM)))
+            {
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.DepthAmount);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.AbsorptionRangeRed);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.AbsorptionRangeGreen);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.AbsorptionRangeBlue);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.Phytoplankton);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.Sediment);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.YellowMatter);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.Oceanness);
+                ColorBinaryTranslation.Instance.Write(
+                    writer: writer,
+                    item: item.FogUnderwaterColor);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.FogUnderwaterAmount);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.FogUnderwaterNear);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.FogUnderwaterFar);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.PhysicalNormalMagnitude);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.PhysicalShallowNormalFalloff);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.PhysicalDeepNormalFalloff);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.PhysicalSurfaceEffectFalloff);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.PhysicalDisplacementSimulatorForce);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.PhysicalDisplacementSimulatorVelocity);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.PhysicalDisplacementSimulatorFalloff);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.PhysicalDisplacementSimulatorDampener);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.PhysicalDisplacementSimulatorStartingSize);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerOneWindDirection);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerTwoWindDirection);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerThreeWindDirection);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerOneWindSpeed);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerTwoWindSpeed);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerThreeWindSpeed);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerOneAmplitudeScale);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerTwoAmplitudeScale);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerThreeAmplitudeScale);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerOneUvScale);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerTwoUvScale);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerThreeUvScale);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerOneNoiseFalloff);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerTwoNoiseFalloff);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.NoiseLayerThreeNoiseFalloff);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.FlowmapScale);
+                FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.Roughness);
+            }
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.GNAM,
@@ -3120,8 +5102,84 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Water_FieldIndex.DNAM;
+                    var dataFrame = frame.SpawnWithLength(contentLength);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.DepthAmount = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.AbsorptionRangeRed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.AbsorptionRangeGreen = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.AbsorptionRangeBlue = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.Phytoplankton = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.Sediment = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.YellowMatter = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.Oceanness = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.FogUnderwaterColor = dataFrame.ReadColor(ColorBinaryType.Alpha);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.FogUnderwaterAmount = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.FogUnderwaterNear = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.FogUnderwaterFar = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.PhysicalNormalMagnitude = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.PhysicalShallowNormalFalloff = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.PhysicalDeepNormalFalloff = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.PhysicalSurfaceEffectFalloff = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.PhysicalDisplacementSimulatorForce = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.PhysicalDisplacementSimulatorVelocity = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.PhysicalDisplacementSimulatorFalloff = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.PhysicalDisplacementSimulatorDampener = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.PhysicalDisplacementSimulatorStartingSize = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerOneWindDirection = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerTwoWindDirection = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerThreeWindDirection = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerOneWindSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerTwoWindSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerThreeWindSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerOneAmplitudeScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerTwoAmplitudeScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerThreeAmplitudeScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerOneUvScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerTwoUvScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerThreeUvScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerOneNoiseFalloff = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerTwoNoiseFalloff = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.NoiseLayerThreeNoiseFalloff = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.FlowmapScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.Roughness = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    return (int)Water_FieldIndex.Roughness;
                 }
                 case RecordTypeInts.GNAM:
                 {
@@ -3325,9 +5383,196 @@ namespace Mutagen.Bethesda.Starfield
         private int? _DATALocation;
         public ReadOnlyMemorySlice<Byte>? DATA => _DATALocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DATALocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
         #endregion
-        #region DNAM
-        private int? _DNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? DNAM => _DNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        private RangeInt32? _DNAMLocation;
+        #region DepthAmount
+        private int _DepthAmountLocation => _DNAMLocation!.Value.Min;
+        private bool _DepthAmount_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _DepthAmountLocation + 1 >= 4;
+        public Single DepthAmount => _DepthAmount_IsSet ? _recordData.Slice(_DepthAmountLocation, 4).Float() : default(Single);
+        #endregion
+        #region AbsorptionRangeRed
+        private int _AbsorptionRangeRedLocation => _DNAMLocation!.Value.Min + 0x4;
+        private bool _AbsorptionRangeRed_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AbsorptionRangeRedLocation + 1 >= 4;
+        public Single AbsorptionRangeRed => _AbsorptionRangeRed_IsSet ? _recordData.Slice(_AbsorptionRangeRedLocation, 4).Float() : default(Single);
+        #endregion
+        #region AbsorptionRangeGreen
+        private int _AbsorptionRangeGreenLocation => _DNAMLocation!.Value.Min + 0x8;
+        private bool _AbsorptionRangeGreen_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AbsorptionRangeGreenLocation + 1 >= 4;
+        public Single AbsorptionRangeGreen => _AbsorptionRangeGreen_IsSet ? _recordData.Slice(_AbsorptionRangeGreenLocation, 4).Float() : default(Single);
+        #endregion
+        #region AbsorptionRangeBlue
+        private int _AbsorptionRangeBlueLocation => _DNAMLocation!.Value.Min + 0xC;
+        private bool _AbsorptionRangeBlue_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _AbsorptionRangeBlueLocation + 1 >= 4;
+        public Single AbsorptionRangeBlue => _AbsorptionRangeBlue_IsSet ? _recordData.Slice(_AbsorptionRangeBlueLocation, 4).Float() : default(Single);
+        #endregion
+        #region Phytoplankton
+        private int _PhytoplanktonLocation => _DNAMLocation!.Value.Min + 0x10;
+        private bool _Phytoplankton_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _PhytoplanktonLocation + 1 >= 4;
+        public Single Phytoplankton => _Phytoplankton_IsSet ? _recordData.Slice(_PhytoplanktonLocation, 4).Float() : default(Single);
+        #endregion
+        #region Sediment
+        private int _SedimentLocation => _DNAMLocation!.Value.Min + 0x14;
+        private bool _Sediment_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _SedimentLocation + 1 >= 4;
+        public Single Sediment => _Sediment_IsSet ? _recordData.Slice(_SedimentLocation, 4).Float() : default(Single);
+        #endregion
+        #region YellowMatter
+        private int _YellowMatterLocation => _DNAMLocation!.Value.Min + 0x18;
+        private bool _YellowMatter_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _YellowMatterLocation + 1 >= 4;
+        public Single YellowMatter => _YellowMatter_IsSet ? _recordData.Slice(_YellowMatterLocation, 4).Float() : default(Single);
+        #endregion
+        #region Oceanness
+        private int _OceannessLocation => _DNAMLocation!.Value.Min + 0x1C;
+        private bool _Oceanness_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _OceannessLocation + 1 >= 4;
+        public Single Oceanness => _Oceanness_IsSet ? _recordData.Slice(_OceannessLocation, 4).Float() : default(Single);
+        #endregion
+        #region FogUnderwaterColor
+        private int _FogUnderwaterColorLocation => _DNAMLocation!.Value.Min + 0x20;
+        private bool _FogUnderwaterColor_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FogUnderwaterColorLocation + 1 >= 4;
+        public Color FogUnderwaterColor => _FogUnderwaterColor_IsSet ? _recordData.Slice(_FogUnderwaterColorLocation, 4).ReadColor(ColorBinaryType.Alpha) : default(Color);
+        #endregion
+        #region FogUnderwaterAmount
+        private int _FogUnderwaterAmountLocation => _DNAMLocation!.Value.Min + 0x24;
+        private bool _FogUnderwaterAmount_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FogUnderwaterAmountLocation + 1 >= 4;
+        public Single FogUnderwaterAmount => _FogUnderwaterAmount_IsSet ? _recordData.Slice(_FogUnderwaterAmountLocation, 4).Float() : default(Single);
+        #endregion
+        #region FogUnderwaterNear
+        private int _FogUnderwaterNearLocation => _DNAMLocation!.Value.Min + 0x28;
+        private bool _FogUnderwaterNear_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FogUnderwaterNearLocation + 1 >= 4;
+        public Single FogUnderwaterNear => _FogUnderwaterNear_IsSet ? _recordData.Slice(_FogUnderwaterNearLocation, 4).Float() : default(Single);
+        #endregion
+        #region FogUnderwaterFar
+        private int _FogUnderwaterFarLocation => _DNAMLocation!.Value.Min + 0x2C;
+        private bool _FogUnderwaterFar_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FogUnderwaterFarLocation + 1 >= 4;
+        public Single FogUnderwaterFar => _FogUnderwaterFar_IsSet ? _recordData.Slice(_FogUnderwaterFarLocation, 4).Float() : default(Single);
+        #endregion
+        #region PhysicalNormalMagnitude
+        private int _PhysicalNormalMagnitudeLocation => _DNAMLocation!.Value.Min + 0x30;
+        private bool _PhysicalNormalMagnitude_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _PhysicalNormalMagnitudeLocation + 1 >= 4;
+        public Single PhysicalNormalMagnitude => _PhysicalNormalMagnitude_IsSet ? _recordData.Slice(_PhysicalNormalMagnitudeLocation, 4).Float() : default(Single);
+        #endregion
+        #region PhysicalShallowNormalFalloff
+        private int _PhysicalShallowNormalFalloffLocation => _DNAMLocation!.Value.Min + 0x34;
+        private bool _PhysicalShallowNormalFalloff_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _PhysicalShallowNormalFalloffLocation + 1 >= 4;
+        public Single PhysicalShallowNormalFalloff => _PhysicalShallowNormalFalloff_IsSet ? _recordData.Slice(_PhysicalShallowNormalFalloffLocation, 4).Float() : default(Single);
+        #endregion
+        #region PhysicalDeepNormalFalloff
+        private int _PhysicalDeepNormalFalloffLocation => _DNAMLocation!.Value.Min + 0x38;
+        private bool _PhysicalDeepNormalFalloff_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _PhysicalDeepNormalFalloffLocation + 1 >= 4;
+        public Single PhysicalDeepNormalFalloff => _PhysicalDeepNormalFalloff_IsSet ? _recordData.Slice(_PhysicalDeepNormalFalloffLocation, 4).Float() : default(Single);
+        #endregion
+        #region PhysicalSurfaceEffectFalloff
+        private int _PhysicalSurfaceEffectFalloffLocation => _DNAMLocation!.Value.Min + 0x3C;
+        private bool _PhysicalSurfaceEffectFalloff_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _PhysicalSurfaceEffectFalloffLocation + 1 >= 4;
+        public Single PhysicalSurfaceEffectFalloff => _PhysicalSurfaceEffectFalloff_IsSet ? _recordData.Slice(_PhysicalSurfaceEffectFalloffLocation, 4).Float() : default(Single);
+        #endregion
+        #region PhysicalDisplacementSimulatorForce
+        private int _PhysicalDisplacementSimulatorForceLocation => _DNAMLocation!.Value.Min + 0x40;
+        private bool _PhysicalDisplacementSimulatorForce_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _PhysicalDisplacementSimulatorForceLocation + 1 >= 4;
+        public Single PhysicalDisplacementSimulatorForce => _PhysicalDisplacementSimulatorForce_IsSet ? _recordData.Slice(_PhysicalDisplacementSimulatorForceLocation, 4).Float() : default(Single);
+        #endregion
+        #region PhysicalDisplacementSimulatorVelocity
+        private int _PhysicalDisplacementSimulatorVelocityLocation => _DNAMLocation!.Value.Min + 0x44;
+        private bool _PhysicalDisplacementSimulatorVelocity_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _PhysicalDisplacementSimulatorVelocityLocation + 1 >= 4;
+        public Single PhysicalDisplacementSimulatorVelocity => _PhysicalDisplacementSimulatorVelocity_IsSet ? _recordData.Slice(_PhysicalDisplacementSimulatorVelocityLocation, 4).Float() : default(Single);
+        #endregion
+        #region PhysicalDisplacementSimulatorFalloff
+        private int _PhysicalDisplacementSimulatorFalloffLocation => _DNAMLocation!.Value.Min + 0x48;
+        private bool _PhysicalDisplacementSimulatorFalloff_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _PhysicalDisplacementSimulatorFalloffLocation + 1 >= 4;
+        public Single PhysicalDisplacementSimulatorFalloff => _PhysicalDisplacementSimulatorFalloff_IsSet ? _recordData.Slice(_PhysicalDisplacementSimulatorFalloffLocation, 4).Float() : default(Single);
+        #endregion
+        #region PhysicalDisplacementSimulatorDampener
+        private int _PhysicalDisplacementSimulatorDampenerLocation => _DNAMLocation!.Value.Min + 0x4C;
+        private bool _PhysicalDisplacementSimulatorDampener_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _PhysicalDisplacementSimulatorDampenerLocation + 1 >= 4;
+        public Single PhysicalDisplacementSimulatorDampener => _PhysicalDisplacementSimulatorDampener_IsSet ? _recordData.Slice(_PhysicalDisplacementSimulatorDampenerLocation, 4).Float() : default(Single);
+        #endregion
+        #region PhysicalDisplacementSimulatorStartingSize
+        private int _PhysicalDisplacementSimulatorStartingSizeLocation => _DNAMLocation!.Value.Min + 0x50;
+        private bool _PhysicalDisplacementSimulatorStartingSize_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _PhysicalDisplacementSimulatorStartingSizeLocation + 1 >= 4;
+        public Single PhysicalDisplacementSimulatorStartingSize => _PhysicalDisplacementSimulatorStartingSize_IsSet ? _recordData.Slice(_PhysicalDisplacementSimulatorStartingSizeLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerOneWindDirection
+        private int _NoiseLayerOneWindDirectionLocation => _DNAMLocation!.Value.Min + 0x54;
+        private bool _NoiseLayerOneWindDirection_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerOneWindDirectionLocation + 1 >= 4;
+        public Single NoiseLayerOneWindDirection => _NoiseLayerOneWindDirection_IsSet ? _recordData.Slice(_NoiseLayerOneWindDirectionLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerTwoWindDirection
+        private int _NoiseLayerTwoWindDirectionLocation => _DNAMLocation!.Value.Min + 0x58;
+        private bool _NoiseLayerTwoWindDirection_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerTwoWindDirectionLocation + 1 >= 4;
+        public Single NoiseLayerTwoWindDirection => _NoiseLayerTwoWindDirection_IsSet ? _recordData.Slice(_NoiseLayerTwoWindDirectionLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerThreeWindDirection
+        private int _NoiseLayerThreeWindDirectionLocation => _DNAMLocation!.Value.Min + 0x5C;
+        private bool _NoiseLayerThreeWindDirection_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerThreeWindDirectionLocation + 1 >= 4;
+        public Single NoiseLayerThreeWindDirection => _NoiseLayerThreeWindDirection_IsSet ? _recordData.Slice(_NoiseLayerThreeWindDirectionLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerOneWindSpeed
+        private int _NoiseLayerOneWindSpeedLocation => _DNAMLocation!.Value.Min + 0x60;
+        private bool _NoiseLayerOneWindSpeed_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerOneWindSpeedLocation + 1 >= 4;
+        public Single NoiseLayerOneWindSpeed => _NoiseLayerOneWindSpeed_IsSet ? _recordData.Slice(_NoiseLayerOneWindSpeedLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerTwoWindSpeed
+        private int _NoiseLayerTwoWindSpeedLocation => _DNAMLocation!.Value.Min + 0x64;
+        private bool _NoiseLayerTwoWindSpeed_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerTwoWindSpeedLocation + 1 >= 4;
+        public Single NoiseLayerTwoWindSpeed => _NoiseLayerTwoWindSpeed_IsSet ? _recordData.Slice(_NoiseLayerTwoWindSpeedLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerThreeWindSpeed
+        private int _NoiseLayerThreeWindSpeedLocation => _DNAMLocation!.Value.Min + 0x68;
+        private bool _NoiseLayerThreeWindSpeed_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerThreeWindSpeedLocation + 1 >= 4;
+        public Single NoiseLayerThreeWindSpeed => _NoiseLayerThreeWindSpeed_IsSet ? _recordData.Slice(_NoiseLayerThreeWindSpeedLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerOneAmplitudeScale
+        private int _NoiseLayerOneAmplitudeScaleLocation => _DNAMLocation!.Value.Min + 0x6C;
+        private bool _NoiseLayerOneAmplitudeScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerOneAmplitudeScaleLocation + 1 >= 4;
+        public Single NoiseLayerOneAmplitudeScale => _NoiseLayerOneAmplitudeScale_IsSet ? _recordData.Slice(_NoiseLayerOneAmplitudeScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerTwoAmplitudeScale
+        private int _NoiseLayerTwoAmplitudeScaleLocation => _DNAMLocation!.Value.Min + 0x70;
+        private bool _NoiseLayerTwoAmplitudeScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerTwoAmplitudeScaleLocation + 1 >= 4;
+        public Single NoiseLayerTwoAmplitudeScale => _NoiseLayerTwoAmplitudeScale_IsSet ? _recordData.Slice(_NoiseLayerTwoAmplitudeScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerThreeAmplitudeScale
+        private int _NoiseLayerThreeAmplitudeScaleLocation => _DNAMLocation!.Value.Min + 0x74;
+        private bool _NoiseLayerThreeAmplitudeScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerThreeAmplitudeScaleLocation + 1 >= 4;
+        public Single NoiseLayerThreeAmplitudeScale => _NoiseLayerThreeAmplitudeScale_IsSet ? _recordData.Slice(_NoiseLayerThreeAmplitudeScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerOneUvScale
+        private int _NoiseLayerOneUvScaleLocation => _DNAMLocation!.Value.Min + 0x78;
+        private bool _NoiseLayerOneUvScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerOneUvScaleLocation + 1 >= 4;
+        public Single NoiseLayerOneUvScale => _NoiseLayerOneUvScale_IsSet ? _recordData.Slice(_NoiseLayerOneUvScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerTwoUvScale
+        private int _NoiseLayerTwoUvScaleLocation => _DNAMLocation!.Value.Min + 0x7C;
+        private bool _NoiseLayerTwoUvScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerTwoUvScaleLocation + 1 >= 4;
+        public Single NoiseLayerTwoUvScale => _NoiseLayerTwoUvScale_IsSet ? _recordData.Slice(_NoiseLayerTwoUvScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerThreeUvScale
+        private int _NoiseLayerThreeUvScaleLocation => _DNAMLocation!.Value.Min + 0x80;
+        private bool _NoiseLayerThreeUvScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerThreeUvScaleLocation + 1 >= 4;
+        public Single NoiseLayerThreeUvScale => _NoiseLayerThreeUvScale_IsSet ? _recordData.Slice(_NoiseLayerThreeUvScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerOneNoiseFalloff
+        private int _NoiseLayerOneNoiseFalloffLocation => _DNAMLocation!.Value.Min + 0x84;
+        private bool _NoiseLayerOneNoiseFalloff_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerOneNoiseFalloffLocation + 1 >= 4;
+        public Single NoiseLayerOneNoiseFalloff => _NoiseLayerOneNoiseFalloff_IsSet ? _recordData.Slice(_NoiseLayerOneNoiseFalloffLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerTwoNoiseFalloff
+        private int _NoiseLayerTwoNoiseFalloffLocation => _DNAMLocation!.Value.Min + 0x88;
+        private bool _NoiseLayerTwoNoiseFalloff_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerTwoNoiseFalloffLocation + 1 >= 4;
+        public Single NoiseLayerTwoNoiseFalloff => _NoiseLayerTwoNoiseFalloff_IsSet ? _recordData.Slice(_NoiseLayerTwoNoiseFalloffLocation, 4).Float() : default(Single);
+        #endregion
+        #region NoiseLayerThreeNoiseFalloff
+        private int _NoiseLayerThreeNoiseFalloffLocation => _DNAMLocation!.Value.Min + 0x8C;
+        private bool _NoiseLayerThreeNoiseFalloff_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _NoiseLayerThreeNoiseFalloffLocation + 1 >= 4;
+        public Single NoiseLayerThreeNoiseFalloff => _NoiseLayerThreeNoiseFalloff_IsSet ? _recordData.Slice(_NoiseLayerThreeNoiseFalloffLocation, 4).Float() : default(Single);
+        #endregion
+        #region FlowmapScale
+        private int _FlowmapScaleLocation => _DNAMLocation!.Value.Min + 0x90;
+        private bool _FlowmapScale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FlowmapScaleLocation + 1 >= 4;
+        public Single FlowmapScale => _FlowmapScale_IsSet ? _recordData.Slice(_FlowmapScaleLocation, 4).Float() : default(Single);
+        #endregion
+        #region Roughness
+        private int _RoughnessLocation => _DNAMLocation!.Value.Min + 0x94;
+        private bool _Roughness_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _RoughnessLocation + 1 >= 4;
+        public Single Roughness => _Roughness_IsSet ? _recordData.Slice(_RoughnessLocation, 4).Float() : default(Single);
         #endregion
         #region GNAM
         private int? _GNAMLocation;
@@ -3509,8 +5754,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DNAM:
                 {
-                    _DNAMLocation = (stream.Position - offset);
-                    return (int)Water_FieldIndex.DNAM;
+                    _DNAMLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
+                    return (int)Water_FieldIndex.Roughness;
                 }
                 case RecordTypeInts.GNAM:
                 {

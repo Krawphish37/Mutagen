@@ -14,6 +14,8 @@ partial class Water
     {
         Dangerous = 0x01,
         DirectionalSound = 0x04,
+        EnableFlowmap = 0x08,
+        BlendNormals = 0x10,
     }
 }
 

@@ -10,52 +10,48 @@
       <FormLink name="ConsumeSpell" refName="Spell" recordType="XNAM" />
       <FormLink name="ContactSpell" refName="Spell" recordType="YNAM" />
       <ByteArray name="DATA" recordType="DATA" unknown="true" />
-      <ByteArray name="DNAM" recordType="DNAM" unknown="true" />
-<!--      <Data recordType="DNAM">-->
-<!--        <Fields>-->
-<!--          <Float name="FogDepthAmount" />-->
-<!--          <Color name="FogShallowColor" binaryType="Alpha" />-->
-<!--          <Color name="FogDeepColor" binaryType="Alpha" />-->
-<!--          <Float name="FogColorShallowRange" />-->
-<!--          <Float name="FogColorDeepRange" />-->
-<!--          <Float name="FogShallowAlpha" />-->
-<!--          <Float name="FogDeepAlpha" />-->
-<!--          <Float name="FogAlphaShallowRange" />-->
-<!--          <Float name="FogAlphaDeepRange" />-->
-<!--          <Color name="FogUnderwaterColor" binaryType="Alpha" />-->
-<!--          <Float name="FogUnderwaterAmount" />-->
-<!--          <Float name="FogUnderwaterNear" />-->
-<!--          <Float name="FogUnderwaterFar" />-->
-<!--          <Float name="PhysicalNormalMagnitude" />-->
-<!--          <Float name="PhysicalShallowNormalFalloff" />-->
-<!--          <Float name="PhysicalDeepNormalFalloff" />-->
-<!--          <Float name="PhysicalReflectivityAmount" />-->
-<!--          <Float name="PhysicalFresnelAmount" />-->
-<!--          <Float name="PhysicalSurfaceEffectFalloff" />-->
-<!--          <Float name="PhysicalDisplacementSimulatorForce" />-->
-<!--          <Float name="PhysicalDisplacementSimulatorVelocity" />-->
-<!--          <Float name="PhysicalDisplacementSimulatorFalloff" />-->
-<!--          <Float name="PhysicalDisplacementSimulatorDampener" />-->
-<!--          <Float name="PhysicalDisplacementSimulatorStartingSize" />-->
-<!--          <Color name="PhysicalReflectionColor" binaryType="Alpha" />-->
-<!--          <Float name="SpecularSunSpecularPower" />-->
-<!--          <Float name="SpecularSunSpecularMagnitude" />-->
-<!--          <Float name="SpecularSunSparklePower" />-->
-<!--          <Float name="SpecularSunSparkleMagnitude" />-->
-<!--          <Float name="SpecularInteriorSpecularRadius" />-->
-<!--          <Float name="SpecularInteriorSpecularBrightness" />-->
-<!--          <Float name="SpecularInteriorSpecularPower" />-->
-<!--          <CustomLogic name="NoiseLayerParsing" byteLength="24" />-->
-<!--          <Break />-->
-<!--          <Float name="SiltAmount" />-->
-<!--          <Color name="SiltLightColor" binaryType="Alpha" />-->
-<!--          <Color name="SiltDarkColor" binaryType="Alpha" />-->
-<!--          <Bool name="ScreenSpaceReflections" byteLength="1" />-->
-<!--        </Fields>-->
-<!--      </Data>-->
-<!--      <RefDirect name="NoiseLayerOne" refName="WaterNoiseProperties" binary="NoGeneration" />-->
-<!--      <RefDirect name="NoiseLayerTwo" refName="WaterNoiseProperties" binary="NoGeneration" />-->
-<!--      <RefDirect name="NoiseLayerThree" refName="WaterNoiseProperties" binary="NoGeneration" />-->
+      <Data recordType="DNAM">
+        <Fields>
+          <Float name="DepthAmount" />
+          <Float name="AbsorptionRangeRed" />
+          <Float name="AbsorptionRangeGreen" />
+          <Float name="AbsorptionRangeBlue" />
+          <Float name="Phytoplankton" />
+          <Float name="Sediment" />
+          <Float name="YellowMatter" />
+          <Float name="Oceanness" />
+          <Color name="FogUnderwaterColor" binaryType="Alpha" />
+          <Float name="FogUnderwaterAmount" />
+          <Float name="FogUnderwaterNear" />
+          <Float name="FogUnderwaterFar" />
+          <Float name="PhysicalNormalMagnitude" />
+          <Float name="PhysicalShallowNormalFalloff" />
+          <Float name="PhysicalDeepNormalFalloff" />
+          <Float name="PhysicalSurfaceEffectFalloff" />
+          <Float name="PhysicalDisplacementSimulatorForce" />
+          <Float name="PhysicalDisplacementSimulatorVelocity" />
+          <Float name="PhysicalDisplacementSimulatorFalloff" />
+          <Float name="PhysicalDisplacementSimulatorDampener" />
+          <Float name="PhysicalDisplacementSimulatorStartingSize" />
+          <Float name="NoiseLayerOneWindDirection" />
+          <Float name="NoiseLayerTwoWindDirection" />
+          <Float name="NoiseLayerThreeWindDirection" />
+          <Float name="NoiseLayerOneWindSpeed" />
+          <Float name="NoiseLayerTwoWindSpeed" />
+          <Float name="NoiseLayerThreeWindSpeed" />
+          <Float name="NoiseLayerOneAmplitudeScale" />
+          <Float name="NoiseLayerTwoAmplitudeScale" />
+          <Float name="NoiseLayerThreeAmplitudeScale" />
+          <Float name="NoiseLayerOneUvScale" />
+          <Float name="NoiseLayerTwoUvScale" />
+          <Float name="NoiseLayerThreeUvScale" />
+          <Float name="NoiseLayerOneNoiseFalloff" />
+          <Float name="NoiseLayerTwoNoiseFalloff" />
+          <Float name="NoiseLayerThreeNoiseFalloff" />
+          <Float name="FlowmapScale" />
+          <Float name="Roughness" />
+        </Fields>
+      </Data>
       <ByteArray name="GNAM" recordType="GNAM" unknown="true" />
       <P3Float name="LinearVelocity" recordType="NAM0" />
       <P3Float name="AngularVelocity" recordType="NAM1" />
