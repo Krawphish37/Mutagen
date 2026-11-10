@@ -81,7 +81,11 @@
       <RefDirect name="ExternalEmittance" refName="ExternalEmittance" />
       <Float name="HeadTrackingWeight" recordType="XHTW" />
       <RefDirect name="Spline" refName="PlacedObjectSpline" />
-      <ByteArray name="XNSE" recordType="XNSE" unknown="true" />
+      <RefDirect name="NavMeshSplineExtraData" refName="Reflection" overflowRecordType="XXXX">
+        <RecordTypeOverrides>
+          <Mapping From="REFL" To="XNSE" />
+        </RecordTypeOverrides>
+      </RefDirect>
       <FormLink name="AttachRef" recordType="XATR">
         <Interface>IPlaced</Interface>
       </FormLink>
