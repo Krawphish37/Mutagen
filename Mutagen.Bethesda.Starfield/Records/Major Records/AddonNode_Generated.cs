@@ -148,14 +148,14 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region Reflection
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _Reflection;
-        public MemorySlice<Byte>? Reflection
+        private Reflection? _Reflection;
+        public Reflection? Reflection
         {
-            get => this._Reflection;
-            set => this._Reflection = value;
+            get => _Reflection;
+            set => _Reflection = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IAddonNodeGetter.Reflection => this.Reflection;
+        IReflectionGetter? IAddonNodeGetter.Reflection => this.Reflection;
         #endregion
         #region MasterParticleSystemCap
         public UInt16 MasterParticleSystemCap { get; set; } = default(UInt16);
@@ -195,7 +195,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Model = new MaskItem<TItem, Model.Mask<TItem>?>(initialValue, new Model.Mask<TItem>(initialValue));
                 this.NodeIndex = initialValue;
                 this.Light = initialValue;
-                this.Reflection = initialValue;
+                this.Reflection = new MaskItem<TItem, Reflection.Mask<TItem>?>(initialValue, new Reflection.Mask<TItem>(initialValue));
                 this.MasterParticleSystemCap = initialValue;
                 this.Flags = initialValue;
             }
@@ -234,7 +234,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Model = new MaskItem<TItem, Model.Mask<TItem>?>(Model, new Model.Mask<TItem>(Model));
                 this.NodeIndex = NodeIndex;
                 this.Light = Light;
-                this.Reflection = Reflection;
+                this.Reflection = new MaskItem<TItem, Reflection.Mask<TItem>?>(Reflection, new Reflection.Mask<TItem>(Reflection));
                 this.MasterParticleSystemCap = MasterParticleSystemCap;
                 this.Flags = Flags;
             }
@@ -255,7 +255,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, Model.Mask<TItem>?>? Model { get; set; }
             public TItem NodeIndex;
             public TItem Light;
-            public TItem Reflection;
+            public MaskItem<TItem, Reflection.Mask<TItem>?>? Reflection { get; set; }
             public TItem MasterParticleSystemCap;
             public TItem Flags;
             #endregion
@@ -336,7 +336,11 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.NodeIndex)) return false;
                 if (!eval(this.Light)) return false;
-                if (!eval(this.Reflection)) return false;
+                if (Reflection != null)
+                {
+                    if (!eval(this.Reflection.Overall)) return false;
+                    if (this.Reflection.Specific != null && !this.Reflection.Specific.All(eval)) return false;
+                }
                 if (!eval(this.MasterParticleSystemCap)) return false;
                 if (!eval(this.Flags)) return false;
                 return true;
@@ -377,7 +381,11 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.NodeIndex)) return true;
                 if (eval(this.Light)) return true;
-                if (eval(this.Reflection)) return true;
+                if (Reflection != null)
+                {
+                    if (eval(this.Reflection.Overall)) return true;
+                    if (this.Reflection.Specific != null && this.Reflection.Specific.Any(eval)) return true;
+                }
                 if (eval(this.MasterParticleSystemCap)) return true;
                 if (eval(this.Flags)) return true;
                 return false;
@@ -416,7 +424,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Model = this.Model == null ? null : new MaskItem<R, Model.Mask<R>?>(eval(this.Model.Overall), this.Model.Specific?.Translate(eval));
                 obj.NodeIndex = eval(this.NodeIndex);
                 obj.Light = eval(this.Light);
-                obj.Reflection = eval(this.Reflection);
+                obj.Reflection = this.Reflection == null ? null : new MaskItem<R, Reflection.Mask<R>?>(eval(this.Reflection.Overall), this.Reflection.Specific?.Translate(eval));
                 obj.MasterParticleSystemCap = eval(this.MasterParticleSystemCap);
                 obj.Flags = eval(this.Flags);
             }
@@ -480,9 +488,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Light, "Light");
                     }
-                    if (printMask?.Reflection ?? true)
+                    if (printMask?.Reflection?.Overall ?? true)
                     {
-                        sb.AppendItem(Reflection, "Reflection");
+                        Reflection?.Print(sb);
                     }
                     if (printMask?.MasterParticleSystemCap ?? true)
                     {
@@ -510,7 +518,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, Model.ErrorMask?>? Model;
             public Exception? NodeIndex;
             public Exception? Light;
-            public Exception? Reflection;
+            public MaskItem<Exception?, Reflection.ErrorMask?>? Reflection;
             public Exception? MasterParticleSystemCap;
             public Exception? Flags;
             #endregion
@@ -573,7 +581,7 @@ namespace Mutagen.Bethesda.Starfield
                         this.Light = ex;
                         break;
                     case AddonNode_FieldIndex.Reflection:
-                        this.Reflection = ex;
+                        this.Reflection = new MaskItem<Exception?, Reflection.ErrorMask?>(ex, null);
                         break;
                     case AddonNode_FieldIndex.MasterParticleSystemCap:
                         this.MasterParticleSystemCap = ex;
@@ -614,7 +622,7 @@ namespace Mutagen.Bethesda.Starfield
                         this.Light = (Exception?)obj;
                         break;
                     case AddonNode_FieldIndex.Reflection:
-                        this.Reflection = (Exception?)obj;
+                        this.Reflection = (MaskItem<Exception?, Reflection.ErrorMask?>?)obj;
                         break;
                     case AddonNode_FieldIndex.MasterParticleSystemCap:
                         this.MasterParticleSystemCap = (Exception?)obj;
@@ -697,9 +705,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(Light, "Light");
                 }
-                {
-                    sb.AppendItem(Reflection, "Reflection");
-                }
+                Reflection?.Print(sb);
                 {
                     sb.AppendItem(MasterParticleSystemCap, "MasterParticleSystemCap");
                 }
@@ -721,7 +727,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Model = this.Model.Combine(rhs.Model, (l, r) => l.Combine(r));
                 ret.NodeIndex = this.NodeIndex.Combine(rhs.NodeIndex);
                 ret.Light = this.Light.Combine(rhs.Light);
-                ret.Reflection = this.Reflection.Combine(rhs.Reflection);
+                ret.Reflection = this.Reflection.Combine(rhs.Reflection, (l, r) => l.Combine(r));
                 ret.MasterParticleSystemCap = this.MasterParticleSystemCap.Combine(rhs.MasterParticleSystemCap);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
                 return ret;
@@ -753,7 +759,7 @@ namespace Mutagen.Bethesda.Starfield
             public Model.TranslationMask? Model;
             public bool NodeIndex;
             public bool Light;
-            public bool Reflection;
+            public Reflection.TranslationMask? Reflection;
             public bool MasterParticleSystemCap;
             public bool Flags;
             #endregion
@@ -767,7 +773,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirtinessScale = defaultOn;
                 this.NodeIndex = defaultOn;
                 this.Light = defaultOn;
-                this.Reflection = defaultOn;
                 this.MasterParticleSystemCap = defaultOn;
                 this.Flags = defaultOn;
             }
@@ -784,7 +789,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Model != null ? Model.OnOverall : DefaultOn, Model?.GetCrystal()));
                 ret.Add((NodeIndex, null));
                 ret.Add((Light, null));
-                ret.Add((Reflection, null));
+                ret.Add((Reflection != null ? Reflection.OnOverall : DefaultOn, Reflection?.GetCrystal()));
                 ret.Add((MasterParticleSystemCap, null));
                 ret.Add((Flags, null));
             }
@@ -962,7 +967,7 @@ namespace Mutagen.Bethesda.Starfield
         new Model? Model { get; set; }
         new UInt32 NodeIndex { get; set; }
         new IFormLinkNullable<ILightGetter> Light { get; set; }
-        new MemorySlice<Byte>? Reflection { get; set; }
+        new Reflection? Reflection { get; set; }
         new UInt16 MasterParticleSystemCap { get; set; }
         new AddonNode.Flag Flags { get; set; }
     }
@@ -1013,7 +1018,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         UInt32 NodeIndex { get; }
         IFormLinkNullableGetter<ILightGetter> Light { get; }
-        ReadOnlyMemorySlice<Byte>? Reflection { get; }
+        IReflectionGetter? Reflection { get; }
         UInt16 MasterParticleSystemCap { get; }
         AddonNode.Flag Flags { get; }
 
@@ -1263,11 +1268,16 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.DATA,
                 RecordTypes.LNAM,
                 RecordTypes.PSDF,
+                RecordTypes.REFL,
                 RecordTypes.DNAM);
             return new RecordTriggerSpecs(
                 allRecordTypes: all,
                 triggeringRecordTypes: triggers);
         });
+        public static RecordTypeConverter ReflectionConverter = new RecordTypeConverter(
+            new KeyValuePair<RecordType, RecordType>(
+                RecordTypes.REFL,
+                RecordTypes.PSDF));
         public static readonly Type BinaryWriteTranslation = typeof(AddonNodeBinaryWriteTranslation);
         #region Interface
         ProtocolKey ILoquiRegistration.ProtocolKey => ProtocolKey;
@@ -1315,7 +1325,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Model = null;
             item.NodeIndex = default(UInt32);
             item.Light.Clear();
-            item.Reflection = default;
+            item.Reflection = null;
             item.MasterParticleSystemCap = default(UInt16);
             item.Flags = default(AddonNode.Flag);
             base.Clear(item);
@@ -1339,6 +1349,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.Components.RemapLinks(mapping);
             obj.Model?.RemapLinks(mapping);
             obj.Light.Relink(mapping);
+            obj.Reflection?.RemapLinks(mapping);
         }
         
         public IEnumerable<IAssetLink> EnumerateListedAssetLinks(IAddonNode obj, bool iterateNestedRecords = true)
@@ -1456,7 +1467,11 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.NodeIndex = item.NodeIndex == rhs.NodeIndex;
             ret.Light = item.Light.Equals(rhs.Light);
-            ret.Reflection = MemorySliceExt.SequenceEqual(item.Reflection, rhs.Reflection);
+            ret.Reflection = EqualsMaskHelper.EqualsHelper(
+                item.Reflection,
+                rhs.Reflection,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
             ret.MasterParticleSystemCap = item.MasterParticleSystemCap == rhs.MasterParticleSystemCap;
             ret.Flags = item.Flags == rhs.Flags;
             base.FillEqualsMask(item, rhs, ret, include);
@@ -1548,10 +1563,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Light.FormKeyNullable, "Light");
             }
-            if ((printMask?.Reflection ?? true)
+            if ((printMask?.Reflection?.Overall ?? true)
                 && item.Reflection is {} ReflectionItem)
             {
-                sb.AppendLine($"Reflection => {SpanExt.ToHexString(ReflectionItem)}");
+                ReflectionItem?.Print(sb, "Reflection");
             }
             if (printMask?.MasterParticleSystemCap ?? true)
             {
@@ -1653,7 +1668,11 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)AddonNode_FieldIndex.Reflection) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.Reflection, rhs.Reflection)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.Reflection, rhs.Reflection, out var lhsReflection, out var rhsReflection, out var isReflectionEqual))
+                {
+                    if (!((ReflectionCommon)((IReflectionGetter)lhsReflection).CommonInstance()!).Equals(lhsReflection, rhsReflection, equalsMask?.GetSubCrystal((int)AddonNode_FieldIndex.Reflection))) return false;
+                }
+                else if (!isReflectionEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)AddonNode_FieldIndex.MasterParticleSystemCap) ?? true))
             {
@@ -1707,9 +1726,9 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.NodeIndex);
             hash.Add(item.Light);
-            if (item.Reflection is {} ReflectionItem)
+            if (item.Reflection is {} Reflectionitem)
             {
-                hash.AddBytes(ReflectionItem);
+                hash.Add(Reflectionitem);
             }
             hash.Add(item.MasterParticleSystemCap);
             hash.Add(item.Flags);
@@ -1764,6 +1783,13 @@ namespace Mutagen.Bethesda.Starfield
             if (FormLinkInformation.TryFactory(obj.Light, out var LightInfo))
             {
                 yield return LightInfo;
+            }
+            if (obj.Reflection is {} ReflectionItems)
+            {
+                foreach (var item in ReflectionItems.EnumerateFormLinks(iterateNestedRecords))
+                {
+                    yield return item;
+                }
             }
             yield break;
         }
@@ -1994,13 +2020,28 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((copyMask?.GetShouldTranslate((int)AddonNode_FieldIndex.Reflection) ?? true))
             {
-                if(rhs.Reflection is {} Reflectionrhs)
+                errorMask?.PushIndex((int)AddonNode_FieldIndex.Reflection);
+                try
                 {
-                    item.Reflection = Reflectionrhs.ToArray();
+                    if(rhs.Reflection is {} rhsReflection)
+                    {
+                        item.Reflection = rhsReflection.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)AddonNode_FieldIndex.Reflection));
+                    }
+                    else
+                    {
+                        item.Reflection = default;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.Reflection = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             if ((copyMask?.GetShouldTranslate((int)AddonNode_FieldIndex.MasterParticleSystemCap) ?? true))
@@ -2222,10 +2263,13 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.Light,
                 header: translationParams.ConvertToCustom(RecordTypes.LNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.Reflection,
-                header: translationParams.ConvertToCustom(RecordTypes.PSDF));
+            if (item.Reflection is {} ReflectionItem)
+            {
+                ((ReflectionBinaryWriteTranslation)((IBinaryItem)ReflectionItem).BinaryWriteTranslator).Write(
+                    item: ReflectionItem,
+                    writer: writer,
+                    translationParams: translationParams.With(AddonNode_Registration.ReflectionConverter, RecordTypes.XXXX));
+            }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.DNAM)))
             {
                 writer.Write(item.MasterParticleSystemCap);
@@ -2356,9 +2400,11 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)AddonNode_FieldIndex.Light;
                 }
                 case RecordTypeInts.PSDF:
+                case RecordTypeInts.REFL:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.Reflection = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    item.Reflection = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
+                        frame: frame,
+                        translationParams: translationParams.With(AddonNode_Registration.ReflectionConverter, lastParsed.LengthOverride).DoNotShortCircuit());
                     return (int)AddonNode_FieldIndex.Reflection;
                 }
                 case RecordTypeInts.DNAM:
@@ -2464,8 +2510,9 @@ namespace Mutagen.Bethesda.Starfield
         public IFormLinkNullableGetter<ILightGetter> Light => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ILightGetter>(_package, _recordData, _LightLocation);
         #endregion
         #region Reflection
-        private int? _ReflectionLocation;
-        public ReadOnlyMemorySlice<Byte>? Reflection => _ReflectionLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ReflectionLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        private int? _ReflectionLengthOverride;
+        private RangeInt32? _ReflectionLocation;
+        public IReflectionGetter? Reflection => _ReflectionLocation.HasValue ? ReflectionBinaryOverlay.ReflectionFactory(_recordData.Slice(_ReflectionLocation!.Value.Min), _package, TypedParseParams.FromLengthOverride(_ReflectionLengthOverride).With(AddonNode_Registration.ReflectionConverter)) : default;
         #endregion
         private RangeInt32? _DNAMLocation;
         #region MasterParticleSystemCap
@@ -2601,8 +2648,14 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)AddonNode_FieldIndex.Light;
                 }
                 case RecordTypeInts.PSDF:
+                case RecordTypeInts.REFL:
                 {
-                    _ReflectionLocation = (stream.Position - offset);
+                    _ReflectionLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
+                    _ReflectionLengthOverride = lastParsed.LengthOverride;
+                    if (lastParsed.LengthOverride.HasValue)
+                    {
+                        stream.Position += lastParsed.LengthOverride.Value;
+                    }
                     return (int)AddonNode_FieldIndex.Reflection;
                 }
                 case RecordTypeInts.DNAM:
