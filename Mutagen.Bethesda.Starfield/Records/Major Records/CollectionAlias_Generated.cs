@@ -61,10 +61,10 @@ namespace Mutagen.Bethesda.Starfield
         #region MaxInitialFillCount
         public Byte MaxInitialFillCount { get; set; } = default(Byte);
         #endregion
-        #region ALAM
-        public Int32? ALAM { get; set; }
+        #region OrbitAltitudeMult
+        public Single? OrbitAltitudeMult { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Int32? ICollectionAliasGetter.ALAM => this.ALAM;
+        Single? ICollectionAliasGetter.OrbitAltitudeMult => this.OrbitAltitudeMult;
         #endregion
         #region ReferenceAlias
         public QuestReferenceAlias ReferenceAlias { get; set; } = new QuestReferenceAlias();
@@ -112,19 +112,19 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.ID = initialValue;
                 this.MaxInitialFillCount = initialValue;
-                this.ALAM = initialValue;
+                this.OrbitAltitudeMult = initialValue;
                 this.ReferenceAlias = new MaskItem<TItem, QuestReferenceAlias.Mask<TItem>?>(initialValue, new QuestReferenceAlias.Mask<TItem>(initialValue));
             }
 
             public Mask(
                 TItem ID,
                 TItem MaxInitialFillCount,
-                TItem ALAM,
+                TItem OrbitAltitudeMult,
                 TItem ReferenceAlias)
             {
                 this.ID = ID;
                 this.MaxInitialFillCount = MaxInitialFillCount;
-                this.ALAM = ALAM;
+                this.OrbitAltitudeMult = OrbitAltitudeMult;
                 this.ReferenceAlias = new MaskItem<TItem, QuestReferenceAlias.Mask<TItem>?>(ReferenceAlias, new QuestReferenceAlias.Mask<TItem>(ReferenceAlias));
             }
 
@@ -139,7 +139,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem ID;
             public TItem MaxInitialFillCount;
-            public TItem ALAM;
+            public TItem OrbitAltitudeMult;
             public MaskItem<TItem, QuestReferenceAlias.Mask<TItem>?>? ReferenceAlias { get; set; }
             #endregion
 
@@ -155,7 +155,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.ID, rhs.ID)) return false;
                 if (!object.Equals(this.MaxInitialFillCount, rhs.MaxInitialFillCount)) return false;
-                if (!object.Equals(this.ALAM, rhs.ALAM)) return false;
+                if (!object.Equals(this.OrbitAltitudeMult, rhs.OrbitAltitudeMult)) return false;
                 if (!object.Equals(this.ReferenceAlias, rhs.ReferenceAlias)) return false;
                 return true;
             }
@@ -164,7 +164,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.ID);
                 hash.Add(this.MaxInitialFillCount);
-                hash.Add(this.ALAM);
+                hash.Add(this.OrbitAltitudeMult);
                 hash.Add(this.ReferenceAlias);
                 return hash.ToHashCode();
             }
@@ -176,7 +176,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.ID)) return false;
                 if (!eval(this.MaxInitialFillCount)) return false;
-                if (!eval(this.ALAM)) return false;
+                if (!eval(this.OrbitAltitudeMult)) return false;
                 if (ReferenceAlias != null)
                 {
                     if (!eval(this.ReferenceAlias.Overall)) return false;
@@ -191,7 +191,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.ID)) return true;
                 if (eval(this.MaxInitialFillCount)) return true;
-                if (eval(this.ALAM)) return true;
+                if (eval(this.OrbitAltitudeMult)) return true;
                 if (ReferenceAlias != null)
                 {
                     if (eval(this.ReferenceAlias.Overall)) return true;
@@ -213,7 +213,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.ID = eval(this.ID);
                 obj.MaxInitialFillCount = eval(this.MaxInitialFillCount);
-                obj.ALAM = eval(this.ALAM);
+                obj.OrbitAltitudeMult = eval(this.OrbitAltitudeMult);
                 obj.ReferenceAlias = this.ReferenceAlias == null ? null : new MaskItem<R, QuestReferenceAlias.Mask<R>?>(eval(this.ReferenceAlias.Overall), this.ReferenceAlias.Specific?.Translate(eval));
             }
             #endregion
@@ -241,9 +241,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(MaxInitialFillCount, "MaxInitialFillCount");
                     }
-                    if (printMask?.ALAM ?? true)
+                    if (printMask?.OrbitAltitudeMult ?? true)
                     {
-                        sb.AppendItem(ALAM, "ALAM");
+                        sb.AppendItem(OrbitAltitudeMult, "OrbitAltitudeMult");
                     }
                     if (printMask?.ReferenceAlias?.Overall ?? true)
                     {
@@ -275,7 +275,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? ID;
             public Exception? MaxInitialFillCount;
-            public Exception? ALAM;
+            public Exception? OrbitAltitudeMult;
             public MaskItem<Exception?, QuestReferenceAlias.ErrorMask?>? ReferenceAlias;
             #endregion
 
@@ -289,8 +289,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ID;
                     case CollectionAlias_FieldIndex.MaxInitialFillCount:
                         return MaxInitialFillCount;
-                    case CollectionAlias_FieldIndex.ALAM:
-                        return ALAM;
+                    case CollectionAlias_FieldIndex.OrbitAltitudeMult:
+                        return OrbitAltitudeMult;
                     case CollectionAlias_FieldIndex.ReferenceAlias:
                         return ReferenceAlias;
                     default:
@@ -309,8 +309,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CollectionAlias_FieldIndex.MaxInitialFillCount:
                         this.MaxInitialFillCount = ex;
                         break;
-                    case CollectionAlias_FieldIndex.ALAM:
-                        this.ALAM = ex;
+                    case CollectionAlias_FieldIndex.OrbitAltitudeMult:
+                        this.OrbitAltitudeMult = ex;
                         break;
                     case CollectionAlias_FieldIndex.ReferenceAlias:
                         this.ReferenceAlias = new MaskItem<Exception?, QuestReferenceAlias.ErrorMask?>(ex, null);
@@ -331,8 +331,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CollectionAlias_FieldIndex.MaxInitialFillCount:
                         this.MaxInitialFillCount = (Exception?)obj;
                         break;
-                    case CollectionAlias_FieldIndex.ALAM:
-                        this.ALAM = (Exception?)obj;
+                    case CollectionAlias_FieldIndex.OrbitAltitudeMult:
+                        this.OrbitAltitudeMult = (Exception?)obj;
                         break;
                     case CollectionAlias_FieldIndex.ReferenceAlias:
                         this.ReferenceAlias = (MaskItem<Exception?, QuestReferenceAlias.ErrorMask?>?)obj;
@@ -347,7 +347,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (ID != null) return true;
                 if (MaxInitialFillCount != null) return true;
-                if (ALAM != null) return true;
+                if (OrbitAltitudeMult != null) return true;
                 if (ReferenceAlias != null) return true;
                 return false;
             }
@@ -381,7 +381,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(MaxInitialFillCount, "MaxInitialFillCount");
                 }
                 {
-                    sb.AppendItem(ALAM, "ALAM");
+                    sb.AppendItem(OrbitAltitudeMult, "OrbitAltitudeMult");
                 }
                 ReferenceAlias?.Print(sb);
             }
@@ -394,7 +394,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.ID = this.ID.Combine(rhs.ID);
                 ret.MaxInitialFillCount = this.MaxInitialFillCount.Combine(rhs.MaxInitialFillCount);
-                ret.ALAM = this.ALAM.Combine(rhs.ALAM);
+                ret.OrbitAltitudeMult = this.OrbitAltitudeMult.Combine(rhs.OrbitAltitudeMult);
                 ret.ReferenceAlias = this.ReferenceAlias.Combine(rhs.ReferenceAlias, (l, r) => l.Combine(r));
                 return ret;
             }
@@ -421,7 +421,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool ID;
             public bool MaxInitialFillCount;
-            public bool ALAM;
+            public bool OrbitAltitudeMult;
             public QuestReferenceAlias.TranslationMask? ReferenceAlias;
             #endregion
 
@@ -434,7 +434,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.ID = defaultOn;
                 this.MaxInitialFillCount = defaultOn;
-                this.ALAM = defaultOn;
+                this.OrbitAltitudeMult = defaultOn;
             }
 
             #endregion
@@ -452,7 +452,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((ID, null));
                 ret.Add((MaxInitialFillCount, null));
-                ret.Add((ALAM, null));
+                ret.Add((OrbitAltitudeMult, null));
                 ret.Add((ReferenceAlias != null ? ReferenceAlias.OnOverall : DefaultOn, ReferenceAlias?.GetCrystal()));
             }
 
@@ -534,7 +534,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new UInt32? ID { get; set; }
         new Byte MaxInitialFillCount { get; set; }
-        new Int32? ALAM { get; set; }
+        new Single? OrbitAltitudeMult { get; set; }
         new QuestReferenceAlias ReferenceAlias { get; set; }
     }
 
@@ -553,7 +553,7 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => CollectionAlias_Registration.Instance;
         UInt32? ID { get; }
         Byte MaxInitialFillCount { get; }
-        Int32? ALAM { get; }
+        Single? OrbitAltitudeMult { get; }
         IQuestReferenceAliasGetter ReferenceAlias { get; }
 
     }
@@ -726,7 +726,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         ID = 0,
         MaxInitialFillCount = 1,
-        ALAM = 2,
+        OrbitAltitudeMult = 2,
         ReferenceAlias = 3,
     }
     #endregion
@@ -823,7 +823,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.ID = default;
             item.MaxInitialFillCount = default(Byte);
-            item.ALAM = default;
+            item.OrbitAltitudeMult = default;
             item.ReferenceAlias.Clear();
         }
         
@@ -877,7 +877,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.ID = item.ID == rhs.ID;
             ret.MaxInitialFillCount = item.MaxInitialFillCount == rhs.MaxInitialFillCount;
-            ret.ALAM = item.ALAM == rhs.ALAM;
+            ret.OrbitAltitudeMult = item.OrbitAltitudeMult.EqualsWithin(rhs.OrbitAltitudeMult);
             ret.ReferenceAlias = MaskItemExt.Factory(item.ReferenceAlias.GetEqualsMask(rhs.ReferenceAlias, include), include);
         }
         
@@ -932,10 +932,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.MaxInitialFillCount, "MaxInitialFillCount");
             }
-            if ((printMask?.ALAM ?? true)
-                && item.ALAM is {} ALAMItem)
+            if ((printMask?.OrbitAltitudeMult ?? true)
+                && item.OrbitAltitudeMult is {} OrbitAltitudeMultItem)
             {
-                sb.AppendItem(ALAMItem, "ALAM");
+                sb.AppendItem(OrbitAltitudeMultItem, "OrbitAltitudeMult");
             }
             if (printMask?.ReferenceAlias?.Overall ?? true)
             {
@@ -958,9 +958,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.MaxInitialFillCount != rhs.MaxInitialFillCount) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CollectionAlias_FieldIndex.ALAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CollectionAlias_FieldIndex.OrbitAltitudeMult) ?? true))
             {
-                if (lhs.ALAM != rhs.ALAM) return false;
+                if (!lhs.OrbitAltitudeMult.EqualsWithin(rhs.OrbitAltitudeMult)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CollectionAlias_FieldIndex.ReferenceAlias) ?? true))
             {
@@ -981,9 +981,9 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(IDitem);
             }
             hash.Add(item.MaxInitialFillCount);
-            if (item.ALAM is {} ALAMitem)
+            if (item.OrbitAltitudeMult is {} OrbitAltitudeMultitem)
             {
-                hash.Add(ALAMitem);
+                hash.Add(OrbitAltitudeMultitem);
             }
             hash.Add(item.ReferenceAlias);
             return hash.ToHashCode();
@@ -1030,9 +1030,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.MaxInitialFillCount = rhs.MaxInitialFillCount;
             }
-            if ((copyMask?.GetShouldTranslate((int)CollectionAlias_FieldIndex.ALAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CollectionAlias_FieldIndex.OrbitAltitudeMult) ?? true))
             {
-                item.ALAM = rhs.ALAM;
+                item.OrbitAltitudeMult = rhs.OrbitAltitudeMult;
             }
             if ((copyMask?.GetShouldTranslate((int)CollectionAlias_FieldIndex.ReferenceAlias) ?? true))
             {
@@ -1173,9 +1173,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.MaxInitialFillCount,
                 header: translationParams.ConvertToCustom(RecordTypes.ALMI));
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.ALAM,
+                item: item.OrbitAltitudeMult,
                 header: translationParams.ConvertToCustom(RecordTypes.ALAM));
             var ReferenceAliasItem = item.ReferenceAlias;
             ((QuestReferenceAliasBinaryWriteTranslation)((IBinaryItem)ReferenceAliasItem).BinaryWriteTranslator).Write(
@@ -1241,8 +1241,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ALAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ALAM = frame.ReadInt32();
-                    return (int)CollectionAlias_FieldIndex.ALAM;
+                    item.OrbitAltitudeMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)CollectionAlias_FieldIndex.OrbitAltitudeMult;
                 }
                 case RecordTypeInts.ALST:
                 {
@@ -1328,9 +1328,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _MaxInitialFillCountLocation;
         public Byte MaxInitialFillCount => _MaxInitialFillCountLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _MaxInitialFillCountLocation.Value, _package.MetaData.Constants)[0] : default(Byte);
         #endregion
-        #region ALAM
-        private int? _ALAMLocation;
-        public Int32? ALAM => _ALAMLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ALAMLocation.Value, _package.MetaData.Constants)) : default(Int32?);
+        #region OrbitAltitudeMult
+        private int? _OrbitAltitudeMultLocation;
+        public Single? OrbitAltitudeMult => _OrbitAltitudeMultLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _OrbitAltitudeMultLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
         #region ReferenceAlias
         private IQuestReferenceAliasGetter? _ReferenceAlias;
@@ -1413,8 +1413,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ALAM:
                 {
-                    _ALAMLocation = (stream.Position - offset);
-                    return (int)CollectionAlias_FieldIndex.ALAM;
+                    _OrbitAltitudeMultLocation = (stream.Position - offset);
+                    return (int)CollectionAlias_FieldIndex.OrbitAltitudeMult;
                 }
                 case RecordTypeInts.ALST:
                 {

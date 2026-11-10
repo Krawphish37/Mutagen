@@ -91,6 +91,34 @@ public class CreationKitNameTests
         }
     }
 
+    // SFFL_SE_EC01 (040703:SFBGS00D.esm): the ref collection alias SpaceCellObjectRefs (ALCS .. ALED), ALAM 2.0 = the
+    // CK's "Orbit Altitude Mult" on the Fill Type tab. Its only FormID (ALCO 1D8555) is a Starfield.esm one (index 00).
+    private const string SpaceCellObjectRefsAlias =
+        "414C435304000000000041" + "4C4D49010001" +
+        "414C414D040000000040" +
+        "414C535404000000000041" + "4C494414005370616365436" + "56C6C4F626A6563745265667300" +
+        "464E414D040008000800" +
+        "414C4647040000000000" +
+        "414C434F040055851D00" +
+        "414C434104006300000041" + "4C434C040000000000" +
+        "5654434B040000000000" +
+        "414C45440000";
+
+    [Fact]
+    public void CollectionAlias_OrbitAltitudeMult()
+    {
+        var alias = Hex(SpaceCellObjectRefsAlias);
+        var bytes = Record("QUST", Subrecord("EDID", System.Text.Encoding.ASCII.GetBytes("SFFL_SE_EC01\0")), alias);
+        foreach (var qust in ReadBoth<IQuestGetter>(bytes, f => Quest.CreateFromBinary(f), (s, p) => QuestBinaryOverlay.QuestFactory(s, p)))
+        {
+            var collection = qust.Aliases!.OfType<IQuestCollectionAliasGetter>().Single().Collection.Single();
+            collection.OrbitAltitudeMult.ShouldBe(2.0f);
+            collection.ReferenceAlias.Name.ShouldBe("SpaceCellObjectRefs");
+            var written = GameConstants.Starfield.MajorRecord(Write(w => qust.WriteToBinary(w)));
+            Contains(written.Content.ToArray(), alias).ShouldBeTrue();
+        }
+    }
+
     // SCEN VNAM: the five "Set all" overrides of Edit Actor Behavior (Death, Combat, Player Dialogue, Observe Combat,
     // Reaction Radius). 3 = not set.
     // - MQ101_012_VascoShipScene (0058BD:Starfield.esm): 3,3,3,3,0 (the CK shows only Reaction Radius checked, Normal);

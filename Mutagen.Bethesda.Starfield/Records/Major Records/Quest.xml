@@ -245,7 +245,8 @@
     <Fields>
       <UInt32 name="ID" recordType="ALCS" />
       <UInt8 name="MaxInitialFillCount" recordType="ALMI" nullable="False" />
-      <Int32 name="ALAM" recordType="ALAM" unknown="true" />
+      <!-- CK 1.16.244.0: "Orbit Altitude Mult" on the collection alias Fill Type tab (Create Ref to Object ... Create At an orbit location) -->
+      <Float name="OrbitAltitudeMult" recordType="ALAM" />
       <RefDirect name="ReferenceAlias" refName="QuestReferenceAlias" nullable="false" />
     </Fields>
   </Object>
