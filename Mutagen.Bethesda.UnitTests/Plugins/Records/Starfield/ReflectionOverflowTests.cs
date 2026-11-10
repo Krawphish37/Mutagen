@@ -207,11 +207,11 @@ public class ReflectionOverflowTests
         };
         activator.Components.Add(new EffectSequenceComponent()
         {
-            REFL = payload
+            Reflection = new Reflection { Data = payload }
         });
         activator.Components.Add(new LodOwnerComponent()
         {
-            REFL = new byte[] { 4, 5, 6 }
+            Reflection = new Reflection { Data = new byte[] { 4, 5, 6 } }
         });
 
         var bytes = Write(activator);
@@ -220,9 +220,9 @@ public class ReflectionOverflowTests
         {
             reread.Components.Count.ShouldBe(2);
             var effectSequence = reread.Components[0].ShouldBeAssignableTo<IEffectSequenceComponentGetter>()!;
-            effectSequence.REFL!.Value.ToArray().ShouldBe(payload);
+            effectSequence.Reflection!.Data.ToArray().ShouldBe(payload);
             var lodOwner = reread.Components[1].ShouldBeAssignableTo<ILodOwnerComponentGetter>()!;
-            lodOwner.REFL!.Value.ToArray().ShouldBe(new byte[] { 4, 5, 6 });
+            lodOwner.Reflection!.Data.ToArray().ShouldBe(new byte[] { 4, 5, 6 });
         }
     }
 }
