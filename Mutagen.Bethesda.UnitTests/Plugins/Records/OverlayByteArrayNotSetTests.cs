@@ -156,9 +156,10 @@ public class OverlayByteArrayNotSetTests
         ShouldBeZeros(overlay.Unknown2, 36);
     }
 
-    // Typed subrecord that is missing
+    // Typed subrecord that is missing. RSGD DNAM was a fixed byte array; it is now the decoded
+    // GenerationData struct, which must read as all zeros in both readers when DNAM is absent.
     [Fact]
-    public void StarfieldResourceGenerationDataItemFloatsMissing()
+    public void StarfieldResourceGenerationDataItemGenerationDataMissing()
     {
         var bytes = MajorRecord("RSGD", 581,
             Subrecord("EDID", Encoding.ASCII.GetBytes("TestResourceGenerationData\0")),
@@ -170,8 +171,9 @@ public class OverlayByteArrayNotSetTests
 
         direct.Items.Count.ShouldBe(1);
         overlay.Items.Count.ShouldBe(1);
-        ShouldBeZeros(direct.Items[0].Floats, 140);
-        ShouldBeZeros(overlay.Items[0].Floats, 140);
+        direct.Items[0].GenerationData.Biome.Common.VeinNodesMin.ShouldBe(0f);
+        overlay.Items[0].GenerationData.Biome.Common.VeinNodesMin.ShouldBe(0f);
+        overlay.Items[0].GenerationData.Cell.Everywhere.Blobbiness.ShouldBe(0f);
         direct.Equals(overlay).ShouldBeTrue();
     }
 }

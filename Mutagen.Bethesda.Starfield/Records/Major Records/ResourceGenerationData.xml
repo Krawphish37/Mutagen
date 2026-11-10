@@ -8,7 +8,77 @@
   <Object name="ResourceGenerationDataItem" objType="Subrecord" >
     <Fields>
       <FormLink name="Resource" recordType="RNAM" refName="Resource" nullable="false" />
-      <ByteArray name="Floats" byteLength="140" recordType="DNAM" nullable="false" />
+      <RefDirect name="GenerationData" refName="ResourceGenerationDataValues" nullable="False" />
+    </Fields>
+  </Object>
+  <Object name="ResourceGenerationDataValues" objType="Subrecord" recordType="DNAM" >
+    <Fields>
+      <RefDirect name="Biome" refName="ResourceGenerationBiomeData" nullable="False" />
+      <RefDirect name="Cell" refName="ResourceGenerationCellData" nullable="False" />
+    </Fields>
+  </Object>
+  <Object name="ResourceGenerationBiomeData" objType="Subrecord" >
+    <Fields>
+      <RefDirect name="Common" refName="ResourceGenerationBiomeCommonTier" nullable="False" />
+      <RefDirect name="Uncommon" refName="ResourceGenerationBiomeTier" nullable="False" />
+      <RefDirect name="Rare" refName="ResourceGenerationBiomeTier" nullable="False" />
+      <RefDirect name="Exotic" refName="ResourceGenerationBiomeTier" nullable="False" />
+      <RefDirect name="Unique" refName="ResourceGenerationBiomeTier" nullable="False" />
+      <RefDirect name="Special" refName="ResourceGenerationBiomeTier" nullable="False" />
+      <RefDirect name="Everywhere" refName="ResourceGenerationBiomeTier" nullable="False" />
+    </Fields>
+  </Object>
+  <Object name="ResourceGenerationBiomeCommonTier" objType="Subrecord" >
+    <Fields>
+      <Float name="VeinNodesMin" />
+      <Float name="VeinNodesMax" />
+      <Float name="NodeSizeMin" />
+      <Float name="NodeSizeMax" />
+      <Float name="Unknown1" />
+      <Float name="Unknown2" />
+      <Float name="MaxAngleOffset" />
+      <Float name="ChanceToAppear" />
+      <Float name="Unknown3" />
+      <Float name="Unknown4" />
+    </Fields>
+  </Object>
+  <Object name="ResourceGenerationBiomeTier" objType="Subrecord" >
+    <Fields>
+      <Float name="VeinNodesMin" />
+      <Float name="VeinNodesMax" />
+      <Float name="NodeSizeMin" />
+      <Float name="NodeSizeMax" />
+      <Float name="Unknown1" />
+      <Float name="Unknown2" />
+      <Float name="MaxNodeOffset" />
+      <Float name="ChancePerNode" />
+      <Float name="Unknown3" />
+      <Float name="Unknown4" />
+    </Fields>
+  </Object>
+  <Object name="ResourceGenerationCellData" objType="Subrecord" >
+    <Fields>
+      <RefDirect name="Common" refName="ResourceGenerationCellTier" nullable="False" />
+      <RefDirect name="Uncommon" refName="ResourceGenerationCellTier" nullable="False" />
+      <RefDirect name="Rare" refName="ResourceGenerationCellTier" nullable="False" />
+      <RefDirect name="Exotic" refName="ResourceGenerationCellTier" nullable="False" />
+      <RefDirect name="Unique" refName="ResourceGenerationCellTier" nullable="False" />
+      <RefDirect name="Special" refName="ResourceGenerationCellTier" nullable="False" />
+      <RefDirect name="Everywhere" refName="ResourceGenerationCellTier" nullable="False" />
+    </Fields>
+  </Object>
+  <Object name="ResourceGenerationCellTier" objType="Subrecord" >
+    <Fields>
+      <Float name="VeinNodesMin" />
+      <Float name="VeinNodesMax" />
+      <Float name="NodeSizeMin" />
+      <Float name="NodeSizeMax" />
+      <Float name="SegmentLengthMin" />
+      <Float name="SegmentLengthMax" />
+      <Float name="MaxAngleOffset" />
+      <Float name="ChanceToAppear" />
+      <Float name="SurfaceItemChanceNone" />
+      <Float name="Blobbiness" />
     </Fields>
   </Object>
 </Loqui>

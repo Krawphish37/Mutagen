@@ -21,6 +21,7 @@ using Mutagen.Bethesda.Plugins.Meta;
 using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Plugins.Records.Internals;
 using Mutagen.Bethesda.Plugins.Records.Mapping;
+using Mutagen.Bethesda.Starfield;
 using Mutagen.Bethesda.Starfield.Internals;
 using Mutagen.Bethesda.Translations.Binary;
 using Noggog;
@@ -62,16 +63,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<IResourceGetter> IResourceGenerationDataItemGetter.Resource => this.Resource;
         #endregion
-        #region Floats
+        #region GenerationData
+        public ResourceGenerationDataValues GenerationData { get; set; } = new ResourceGenerationDataValues();
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _Floats = new byte[140];
-        public MemorySlice<Byte> Floats
-        {
-            get => _Floats;
-            set => this._Floats = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IResourceGenerationDataItemGetter.Floats => this.Floats;
+        IResourceGenerationDataValuesGetter IResourceGenerationDataItemGetter.GenerationData => GenerationData;
         #endregion
 
         #region To String
@@ -113,15 +108,15 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.Resource = initialValue;
-                this.Floats = initialValue;
+                this.GenerationData = new MaskItem<TItem, ResourceGenerationDataValues.Mask<TItem>?>(initialValue, new ResourceGenerationDataValues.Mask<TItem>(initialValue));
             }
 
             public Mask(
                 TItem Resource,
-                TItem Floats)
+                TItem GenerationData)
             {
                 this.Resource = Resource;
-                this.Floats = Floats;
+                this.GenerationData = new MaskItem<TItem, ResourceGenerationDataValues.Mask<TItem>?>(GenerationData, new ResourceGenerationDataValues.Mask<TItem>(GenerationData));
             }
 
             #pragma warning disable CS8618
@@ -134,7 +129,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem Resource;
-            public TItem Floats;
+            public MaskItem<TItem, ResourceGenerationDataValues.Mask<TItem>?>? GenerationData { get; set; }
             #endregion
 
             #region Equals
@@ -148,14 +143,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.Resource, rhs.Resource)) return false;
-                if (!object.Equals(this.Floats, rhs.Floats)) return false;
+                if (!object.Equals(this.GenerationData, rhs.GenerationData)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.Resource);
-                hash.Add(this.Floats);
+                hash.Add(this.GenerationData);
                 return hash.ToHashCode();
             }
 
@@ -165,7 +160,11 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.Resource)) return false;
-                if (!eval(this.Floats)) return false;
+                if (GenerationData != null)
+                {
+                    if (!eval(this.GenerationData.Overall)) return false;
+                    if (this.GenerationData.Specific != null && !this.GenerationData.Specific.All(eval)) return false;
+                }
                 return true;
             }
             #endregion
@@ -174,7 +173,11 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.Resource)) return true;
-                if (eval(this.Floats)) return true;
+                if (GenerationData != null)
+                {
+                    if (eval(this.GenerationData.Overall)) return true;
+                    if (this.GenerationData.Specific != null && this.GenerationData.Specific.Any(eval)) return true;
+                }
                 return false;
             }
             #endregion
@@ -190,7 +193,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.Resource = eval(this.Resource);
-                obj.Floats = eval(this.Floats);
+                obj.GenerationData = this.GenerationData == null ? null : new MaskItem<R, ResourceGenerationDataValues.Mask<R>?>(eval(this.GenerationData.Overall), this.GenerationData.Specific?.Translate(eval));
             }
             #endregion
 
@@ -213,9 +216,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Resource, "Resource");
                     }
-                    if (printMask?.Floats ?? true)
+                    if (printMask?.GenerationData?.Overall ?? true)
                     {
-                        sb.AppendItem(Floats, "Floats");
+                        GenerationData?.Print(sb);
                     }
                 }
             }
@@ -242,7 +245,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? Resource;
-            public Exception? Floats;
+            public MaskItem<Exception?, ResourceGenerationDataValues.ErrorMask?>? GenerationData;
             #endregion
 
             #region IErrorMask
@@ -253,8 +256,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case ResourceGenerationDataItem_FieldIndex.Resource:
                         return Resource;
-                    case ResourceGenerationDataItem_FieldIndex.Floats:
-                        return Floats;
+                    case ResourceGenerationDataItem_FieldIndex.GenerationData:
+                        return GenerationData;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -268,8 +271,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ResourceGenerationDataItem_FieldIndex.Resource:
                         this.Resource = ex;
                         break;
-                    case ResourceGenerationDataItem_FieldIndex.Floats:
-                        this.Floats = ex;
+                    case ResourceGenerationDataItem_FieldIndex.GenerationData:
+                        this.GenerationData = new MaskItem<Exception?, ResourceGenerationDataValues.ErrorMask?>(ex, null);
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -284,8 +287,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ResourceGenerationDataItem_FieldIndex.Resource:
                         this.Resource = (Exception?)obj;
                         break;
-                    case ResourceGenerationDataItem_FieldIndex.Floats:
-                        this.Floats = (Exception?)obj;
+                    case ResourceGenerationDataItem_FieldIndex.GenerationData:
+                        this.GenerationData = (MaskItem<Exception?, ResourceGenerationDataValues.ErrorMask?>?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -296,7 +299,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Resource != null) return true;
-                if (Floats != null) return true;
+                if (GenerationData != null) return true;
                 return false;
             }
             #endregion
@@ -325,9 +328,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(Resource, "Resource");
                 }
-                {
-                    sb.AppendItem(Floats, "Floats");
-                }
+                GenerationData?.Print(sb);
             }
             #endregion
 
@@ -337,7 +338,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Resource = this.Resource.Combine(rhs.Resource);
-                ret.Floats = this.Floats.Combine(rhs.Floats);
+                ret.GenerationData = this.GenerationData.Combine(rhs.GenerationData, (l, r) => l.Combine(r));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -362,7 +363,7 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool Resource;
-            public bool Floats;
+            public ResourceGenerationDataValues.TranslationMask? GenerationData;
             #endregion
 
             #region Ctors
@@ -373,7 +374,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.Resource = defaultOn;
-                this.Floats = defaultOn;
             }
 
             #endregion
@@ -390,7 +390,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((Resource, null));
-                ret.Add((Floats, null));
+                ret.Add((GenerationData != null ? GenerationData.OnOverall : DefaultOn, GenerationData?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -470,7 +470,7 @@ namespace Mutagen.Bethesda.Starfield
         IResourceGenerationDataItemGetter
     {
         new IFormLink<IResourceGetter> Resource { get; set; }
-        new MemorySlice<Byte> Floats { get; set; }
+        new ResourceGenerationDataValues GenerationData { get; set; }
     }
 
     public partial interface IResourceGenerationDataItemGetter :
@@ -487,7 +487,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => ResourceGenerationDataItem_Registration.Instance;
         IFormLinkGetter<IResourceGetter> Resource { get; }
-        ReadOnlyMemorySlice<Byte> Floats { get; }
+        IResourceGenerationDataValuesGetter GenerationData { get; }
 
     }
 
@@ -658,7 +658,7 @@ namespace Mutagen.Bethesda.Starfield
     internal enum ResourceGenerationDataItem_FieldIndex
     {
         Resource = 0,
-        Floats = 1,
+        GenerationData = 1,
     }
     #endregion
 
@@ -750,7 +750,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Resource.Clear();
-            item.Floats = new byte[140];
+            item.GenerationData.Clear();
         }
         
         #region Mutagen
@@ -802,7 +802,7 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Resource = item.Resource.Equals(rhs.Resource);
-            ret.Floats = MemoryExtensions.SequenceEqual(item.Floats.Span, rhs.Floats.Span);
+            ret.GenerationData = MaskItemExt.Factory(item.GenerationData.GetEqualsMask(rhs.GenerationData, include), include);
         }
         
         public string Print(
@@ -851,9 +851,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Resource.FormKey, "Resource");
             }
-            if (printMask?.Floats ?? true)
+            if (printMask?.GenerationData?.Overall ?? true)
             {
-                sb.AppendLine($"Floats => {SpanExt.ToHexString(item.Floats)}");
+                item.GenerationData?.Print(sb, "GenerationData");
             }
         }
         
@@ -868,9 +868,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Resource.Equals(rhs.Resource)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ResourceGenerationDataItem_FieldIndex.Floats) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ResourceGenerationDataItem_FieldIndex.GenerationData) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.Floats.Span, rhs.Floats.Span)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.GenerationData, rhs.GenerationData, out var lhsGenerationData, out var rhsGenerationData, out var isGenerationDataEqual))
+                {
+                    if (!((ResourceGenerationDataValuesCommon)((IResourceGenerationDataValuesGetter)lhsGenerationData).CommonInstance()!).Equals(lhsGenerationData, rhsGenerationData, equalsMask?.GetSubCrystal((int)ResourceGenerationDataItem_FieldIndex.GenerationData))) return false;
+                }
+                else if (!isGenerationDataEqual) return false;
             }
             return true;
         }
@@ -879,7 +883,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Resource);
-            hash.AddBytes(item.Floats);
+            hash.Add(item.GenerationData);
             return hash.ToHashCode();
         }
         
@@ -917,9 +921,27 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Resource.SetTo(rhs.Resource.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)ResourceGenerationDataItem_FieldIndex.Floats) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ResourceGenerationDataItem_FieldIndex.GenerationData) ?? true))
             {
-                item.Floats = rhs.Floats.ToArray();
+                errorMask?.PushIndex((int)ResourceGenerationDataItem_FieldIndex.GenerationData);
+                try
+                {
+                    if ((copyMask?.GetShouldTranslate((int)ResourceGenerationDataItem_FieldIndex.GenerationData) ?? true))
+                    {
+                        item.GenerationData = rhs.GenerationData.DeepCopy(
+                            copyMask: copyMask?.GetSubCrystal((int)ResourceGenerationDataItem_FieldIndex.GenerationData),
+                            errorMask: errorMask);
+                    }
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
             }
             DeepCopyInCustom(
                 item: item,
@@ -1034,10 +1056,11 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.Resource,
                 header: translationParams.ConvertToCustom(RecordTypes.RNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            var GenerationDataItem = item.GenerationData;
+            ((ResourceGenerationDataValuesBinaryWriteTranslation)((IBinaryItem)GenerationDataItem).BinaryWriteTranslator).Write(
+                item: GenerationDataItem,
                 writer: writer,
-                item: item.Floats,
-                header: translationParams.ConvertToCustom(RecordTypes.DNAM));
+                translationParams: translationParams);
         }
 
         public void Write(
@@ -1089,9 +1112,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DNAM:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.Floats = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)ResourceGenerationDataItem_FieldIndex.Floats;
+                    item.GenerationData = Mutagen.Bethesda.Starfield.ResourceGenerationDataValues.CreateFromBinary(frame: frame);
+                    return (int)ResourceGenerationDataItem_FieldIndex.GenerationData;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1166,9 +1188,10 @@ namespace Mutagen.Bethesda.Starfield
         private int? _ResourceLocation;
         public IFormLinkGetter<IResourceGetter> Resource => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IResourceGetter>(_package, _recordData, _ResourceLocation);
         #endregion
-        #region Floats
-        private int? _FloatsLocation;
-        public ReadOnlyMemorySlice<Byte> Floats => _FloatsLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FloatsLocation.Value, _package.MetaData.Constants) : new byte[140];
+        #region GenerationData
+        private RangeInt32? _GenerationDataLocation;
+        private IResourceGenerationDataValuesGetter? _GenerationData => _GenerationDataLocation.HasValue ? ResourceGenerationDataValuesBinaryOverlay.ResourceGenerationDataValuesFactory(_recordData.Slice(_GenerationDataLocation!.Value.Min), _package) : default;
+        public IResourceGenerationDataValuesGetter GenerationData => _GenerationData ?? new ResourceGenerationDataValues();
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1241,8 +1264,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DNAM:
                 {
-                    _FloatsLocation = (stream.Position - offset);
-                    return (int)ResourceGenerationDataItem_FieldIndex.Floats;
+                    _GenerationDataLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
+                    return (int)ResourceGenerationDataItem_FieldIndex.GenerationData;
                 }
                 default:
                     return ParseResult.Stop;

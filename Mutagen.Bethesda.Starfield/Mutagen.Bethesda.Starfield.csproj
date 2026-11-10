@@ -7004,5 +7004,23 @@
     <Compile Include="Records\Major Records\NpcRaceOverrideElectromagneticShock_Generated.cs">
       <DependentUpon>Npc.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\ResourceGenerationDataValues_Generated.cs">
+      <DependentUpon>ResourceGenerationData.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\ResourceGenerationBiomeData_Generated.cs">
+      <DependentUpon>ResourceGenerationData.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\ResourceGenerationBiomeCommonTier_Generated.cs">
+      <DependentUpon>ResourceGenerationData.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\ResourceGenerationBiomeTier_Generated.cs">
+      <DependentUpon>ResourceGenerationData.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\ResourceGenerationCellData_Generated.cs">
+      <DependentUpon>ResourceGenerationData.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\ResourceGenerationCellTier_Generated.cs">
+      <DependentUpon>ResourceGenerationData.xml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
