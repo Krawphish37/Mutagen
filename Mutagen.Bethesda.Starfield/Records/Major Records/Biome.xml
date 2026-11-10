@@ -38,8 +38,8 @@
       <RefList name="MarkerObjectKeywords" refName="BiomeMarkerType" />
       <RefList name="Terrain" refName="BiomeTerrain" />
       <String name="GroundLayerNormal" recordType="TX16" />
-      <ByteArray name="BTPS" recordType="BTPS" refName="BiomeBTPS" unknown="true" />
-      <ByteArray name="DistantView" recordType="BDFS" refName="BiomeDistantView" nullable="False" />
+      <RefDirect name="TerrainSettings" recordType="BTPS" refName="BiomeBTPS" nullable="False" />
+      <RefDirect name="DistantView" recordType="BDFS" refName="BiomeDistantView" nullable="False" />
       <String name="GlobalLayerMaterial" recordType="EFSD" />
       <FormLink name="BlockDensityMultGlobal" recordType="NAM2" refName="Global" />
       <FormLink name="CellDensityMultGlobal" recordType="NAM3" refName="Global" />
