@@ -76,7 +76,7 @@ public class DictionaryEqualityTests
             FileSystem = fileSystem
         });
 
-        // The writer orders the entries by key, so the reimport has them in a different order than the original
+        // The writer keeps the entries in their order (as Starfield.esm holds them, not sorted by key), so the reimport has the original's order
         var reimport = SF.StarfieldMod.Create(SF.StarfieldRelease.Starfield)
             .FromPath(modPath)
             .WithLoadOrderFromHeaderMasters()
@@ -85,7 +85,7 @@ public class DictionaryEqualityTests
             .Mutable()
             .Construct();
         var reimportPackage = reimport.Packages.First();
-        reimportPackage.Data.Keys.ShouldBe(new sbyte[] { 0, 2 });
+        reimportPackage.Data.Keys.ShouldBe(new sbyte[] { 2, 0 });
         package.Equals(reimportPackage).ShouldBeTrue();
 
         using var overlay = SF.StarfieldMod.Create(SF.StarfieldRelease.Starfield)

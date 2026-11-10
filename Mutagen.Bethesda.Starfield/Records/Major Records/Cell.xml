@@ -30,25 +30,25 @@
       <Float name="WaterHeight" recordType="XCLW" />
       <Float name="XILS" recordType="XILS" unknown="true" />
       <RefList name="XCLAs" refName="CellXCLAItem" />
+      <FormLink name="ImageSpace" refName="ImageSpace" recordType="XCIM" />
       <FormLink name="CellSkyRegion" refName="Region" recordType="XCCM" />
-      <RefDirect name="Ownership" refName="Ownership" />
       <FormLink name="Location" refName="Location" recordType="XLCN" />
       <FormLink name="Water" refName="Water" recordType="XCWT" />
       <String name="WaterType" recordType="XCWM" />
       <RefList name="ShipBlueprintSnapLinks" refName="CellShipBlueprintSnapLink" recordType="XBPS" />
       <RefList name="WaterCurrentVelocities" refName="WaterCurrentVelocity" recordType="XWCU" counterRecType="XWCN" />
-      <FormLink name="AcousticSpace" refName="AcousticSpace" recordType="XCAS" />
-      <FormLink name="ImageSpace" refName="ImageSpace" recordType="XCIM" />
       <String name="WaterEnvironmentMap" recordType="XWEM" />
       <FormLink name="LockList" recordType="XILL" refName="FormList" />
       <FormLink name="Music" refName="MusicType" recordType="XCMO" />
+      <FormLink name="AcousticSpace" refName="AcousticSpace" recordType="XCAS" />
+      <RefDirect name="Ownership" refName="Ownership" />
       <String name="GlobalDirtLayerMaterial" recordType="XCGD" />
       <Bool name="GlobalDirtLayerInheritBiomeLayer" recordType="XCIB" byteLength="1" />
       <FormLink name="TimeOfDay" refName="TimeOfDayRecord" recordType="TODD" />
       <RefList name="LinkedReferences" refName="LinkedReferences" />
       <Bool name="IsLinkedRefTransient" boolAsMarker="XLKT" />
-      <String name="EnvironmentMap" recordType="XEMP" />
       <RefList name="Traversals" refName="TraversalReference" recordType="XTV2" overflowRecordType="XXXX" binary="Custom" />
+      <String name="EnvironmentMap" recordType="XEMP" />
       <UInt32 name="NumTraversalFluffBytes" binary="NoGeneration" />
       <RefList name="NavigationMeshes" binary="NoGeneration" refName="NavigationMesh" />
       <Int32 name="Timestamp" binary="NoGeneration" />

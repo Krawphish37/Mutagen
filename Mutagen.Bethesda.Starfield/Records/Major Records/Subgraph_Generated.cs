@@ -76,6 +76,20 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
+        #region TargetKeywords
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private ExtendedList<IFormLinkGetter<IKeywordGetter>> _TargetKeywords = new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
+        public ExtendedList<IFormLinkGetter<IKeywordGetter>> TargetKeywords
+        {
+            get => this._TargetKeywords;
+            init => this._TargetKeywords = value;
+        }
+        #region Interface Members
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IReadOnlyList<IFormLinkGetter<IKeywordGetter>> ISubgraphGetter.TargetKeywords => _TargetKeywords;
+        #endregion
+
+        #endregion
         #region BehaviorGraph
         public String? BehaviorGraph { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -92,20 +106,6 @@ namespace Mutagen.Bethesda.Starfield
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IReadOnlyList<String> ISubgraphGetter.AnimationPaths => _AnimationPaths;
-        #endregion
-
-        #endregion
-        #region TargetKeywords
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<IFormLinkGetter<IKeywordGetter>> _TargetKeywords = new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
-        public ExtendedList<IFormLinkGetter<IKeywordGetter>> TargetKeywords
-        {
-            get => this._TargetKeywords;
-            init => this._TargetKeywords = value;
-        }
-        #region Interface Members
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<IFormLinkGetter<IKeywordGetter>> ISubgraphGetter.TargetKeywords => _TargetKeywords;
         #endregion
 
         #endregion
@@ -156,9 +156,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Race = initialValue;
                 this.ActorKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
+                this.TargetKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.BehaviorGraph = initialValue;
                 this.AnimationPaths = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.TargetKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.Role = initialValue;
                 this.Perspective = initialValue;
             }
@@ -166,17 +166,17 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(
                 TItem Race,
                 TItem ActorKeywords,
+                TItem TargetKeywords,
                 TItem BehaviorGraph,
                 TItem AnimationPaths,
-                TItem TargetKeywords,
                 TItem Role,
                 TItem Perspective)
             {
                 this.Race = Race;
                 this.ActorKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ActorKeywords, []);
+                this.TargetKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(TargetKeywords, []);
                 this.BehaviorGraph = BehaviorGraph;
                 this.AnimationPaths = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(AnimationPaths, []);
-                this.TargetKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(TargetKeywords, []);
                 this.Role = Role;
                 this.Perspective = Perspective;
             }
@@ -192,9 +192,9 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem Race;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ActorKeywords;
+            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? TargetKeywords;
             public TItem BehaviorGraph;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? AnimationPaths;
-            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? TargetKeywords;
             public TItem Role;
             public TItem Perspective;
             #endregion
@@ -211,9 +211,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.Race, rhs.Race)) return false;
                 if (!object.Equals(this.ActorKeywords, rhs.ActorKeywords)) return false;
+                if (!object.Equals(this.TargetKeywords, rhs.TargetKeywords)) return false;
                 if (!object.Equals(this.BehaviorGraph, rhs.BehaviorGraph)) return false;
                 if (!object.Equals(this.AnimationPaths, rhs.AnimationPaths)) return false;
-                if (!object.Equals(this.TargetKeywords, rhs.TargetKeywords)) return false;
                 if (!object.Equals(this.Role, rhs.Role)) return false;
                 if (!object.Equals(this.Perspective, rhs.Perspective)) return false;
                 return true;
@@ -223,9 +223,9 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.Race);
                 hash.Add(this.ActorKeywords);
+                hash.Add(this.TargetKeywords);
                 hash.Add(this.BehaviorGraph);
                 hash.Add(this.AnimationPaths);
-                hash.Add(this.TargetKeywords);
                 hash.Add(this.Role);
                 hash.Add(this.Perspective);
                 return hash.ToHashCode();
@@ -248,6 +248,17 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (this.TargetKeywords != null)
+                {
+                    if (!eval(this.TargetKeywords.Overall)) return false;
+                    if (this.TargetKeywords.Specific != null)
+                    {
+                        foreach (var item in this.TargetKeywords.Specific)
+                        {
+                            if (!eval(item.Value)) return false;
+                        }
+                    }
+                }
                 if (!eval(this.BehaviorGraph)) return false;
                 if (this.AnimationPaths != null)
                 {
@@ -255,17 +266,6 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.AnimationPaths.Specific != null)
                     {
                         foreach (var item in this.AnimationPaths.Specific)
-                        {
-                            if (!eval(item.Value)) return false;
-                        }
-                    }
-                }
-                if (this.TargetKeywords != null)
-                {
-                    if (!eval(this.TargetKeywords.Overall)) return false;
-                    if (this.TargetKeywords.Specific != null)
-                    {
-                        foreach (var item in this.TargetKeywords.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
@@ -292,6 +292,17 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (this.TargetKeywords != null)
+                {
+                    if (eval(this.TargetKeywords.Overall)) return true;
+                    if (this.TargetKeywords.Specific != null)
+                    {
+                        foreach (var item in this.TargetKeywords.Specific)
+                        {
+                            if (!eval(item.Value)) return false;
+                        }
+                    }
+                }
                 if (eval(this.BehaviorGraph)) return true;
                 if (this.AnimationPaths != null)
                 {
@@ -299,17 +310,6 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.AnimationPaths.Specific != null)
                     {
                         foreach (var item in this.AnimationPaths.Specific)
-                        {
-                            if (!eval(item.Value)) return false;
-                        }
-                    }
-                }
-                if (this.TargetKeywords != null)
-                {
-                    if (eval(this.TargetKeywords.Overall)) return true;
-                    if (this.TargetKeywords.Specific != null)
-                    {
-                        foreach (var item in this.TargetKeywords.Specific)
                         {
                             if (!eval(item.Value)) return false;
                         }
@@ -346,6 +346,20 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (TargetKeywords != null)
+                {
+                    obj.TargetKeywords = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.TargetKeywords.Overall), []);
+                    if (TargetKeywords.Specific != null)
+                    {
+                        var l = new List<(int Index, R Item)>();
+                        obj.TargetKeywords.Specific = l;
+                        foreach (var item in TargetKeywords.Specific)
+                        {
+                            R mask = eval(item.Value);
+                            l.Add((item.Index, mask));
+                        }
+                    }
+                }
                 obj.BehaviorGraph = eval(this.BehaviorGraph);
                 if (AnimationPaths != null)
                 {
@@ -355,20 +369,6 @@ namespace Mutagen.Bethesda.Starfield
                         var l = new List<(int Index, R Item)>();
                         obj.AnimationPaths.Specific = l;
                         foreach (var item in AnimationPaths.Specific)
-                        {
-                            R mask = eval(item.Value);
-                            l.Add((item.Index, mask));
-                        }
-                    }
-                }
-                if (TargetKeywords != null)
-                {
-                    obj.TargetKeywords = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.TargetKeywords.Overall), []);
-                    if (TargetKeywords.Specific != null)
-                    {
-                        var l = new List<(int Index, R Item)>();
-                        obj.TargetKeywords.Specific = l;
-                        foreach (var item in TargetKeywords.Specific)
                         {
                             R mask = eval(item.Value);
                             l.Add((item.Index, mask));
@@ -420,6 +420,27 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
+                    if ((printMask?.TargetKeywords?.Overall ?? true)
+                        && TargetKeywords is {} TargetKeywordsItem)
+                    {
+                        sb.AppendLine("TargetKeywords =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(TargetKeywordsItem.Overall);
+                            if (TargetKeywordsItem.Specific != null)
+                            {
+                                foreach (var subItem in TargetKeywordsItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        {
+                                            sb.AppendItem(subItem);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     if (printMask?.BehaviorGraph ?? true)
                     {
                         sb.AppendItem(BehaviorGraph, "BehaviorGraph");
@@ -434,27 +455,6 @@ namespace Mutagen.Bethesda.Starfield
                             if (AnimationPathsItem.Specific != null)
                             {
                                 foreach (var subItem in AnimationPathsItem.Specific)
-                                {
-                                    using (sb.Brace())
-                                    {
-                                        {
-                                            sb.AppendItem(subItem);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if ((printMask?.TargetKeywords?.Overall ?? true)
-                        && TargetKeywords is {} TargetKeywordsItem)
-                    {
-                        sb.AppendLine("TargetKeywords =>");
-                        using (sb.Brace())
-                        {
-                            sb.AppendItem(TargetKeywordsItem.Overall);
-                            if (TargetKeywordsItem.Specific != null)
-                            {
-                                foreach (var subItem in TargetKeywordsItem.Specific)
                                 {
                                     using (sb.Brace())
                                     {
@@ -500,9 +500,9 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? Race;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ActorKeywords;
+            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? TargetKeywords;
             public Exception? BehaviorGraph;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? AnimationPaths;
-            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? TargetKeywords;
             public Exception? Role;
             public Exception? Perspective;
             #endregion
@@ -517,12 +517,12 @@ namespace Mutagen.Bethesda.Starfield
                         return Race;
                     case Subgraph_FieldIndex.ActorKeywords:
                         return ActorKeywords;
+                    case Subgraph_FieldIndex.TargetKeywords:
+                        return TargetKeywords;
                     case Subgraph_FieldIndex.BehaviorGraph:
                         return BehaviorGraph;
                     case Subgraph_FieldIndex.AnimationPaths:
                         return AnimationPaths;
-                    case Subgraph_FieldIndex.TargetKeywords:
-                        return TargetKeywords;
                     case Subgraph_FieldIndex.Role:
                         return Role;
                     case Subgraph_FieldIndex.Perspective:
@@ -543,14 +543,14 @@ namespace Mutagen.Bethesda.Starfield
                     case Subgraph_FieldIndex.ActorKeywords:
                         this.ActorKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
+                    case Subgraph_FieldIndex.TargetKeywords:
+                        this.TargetKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
+                        break;
                     case Subgraph_FieldIndex.BehaviorGraph:
                         this.BehaviorGraph = ex;
                         break;
                     case Subgraph_FieldIndex.AnimationPaths:
                         this.AnimationPaths = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
-                        break;
-                    case Subgraph_FieldIndex.TargetKeywords:
-                        this.TargetKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
                     case Subgraph_FieldIndex.Role:
                         this.Role = ex;
@@ -574,14 +574,14 @@ namespace Mutagen.Bethesda.Starfield
                     case Subgraph_FieldIndex.ActorKeywords:
                         this.ActorKeywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
+                    case Subgraph_FieldIndex.TargetKeywords:
+                        this.TargetKeywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
+                        break;
                     case Subgraph_FieldIndex.BehaviorGraph:
                         this.BehaviorGraph = (Exception?)obj;
                         break;
                     case Subgraph_FieldIndex.AnimationPaths:
                         this.AnimationPaths = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
-                        break;
-                    case Subgraph_FieldIndex.TargetKeywords:
-                        this.TargetKeywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
                     case Subgraph_FieldIndex.Role:
                         this.Role = (Exception?)obj;
@@ -599,9 +599,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (Race != null) return true;
                 if (ActorKeywords != null) return true;
+                if (TargetKeywords != null) return true;
                 if (BehaviorGraph != null) return true;
                 if (AnimationPaths != null) return true;
-                if (TargetKeywords != null) return true;
                 if (Role != null) return true;
                 if (Perspective != null) return true;
                 return false;
@@ -652,6 +652,26 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (TargetKeywords is {} TargetKeywordsItem)
+                {
+                    sb.AppendLine("TargetKeywords =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(TargetKeywordsItem.Overall);
+                        if (TargetKeywordsItem.Specific != null)
+                        {
+                            foreach (var subItem in TargetKeywordsItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    {
+                                        sb.AppendItem(subItem);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 {
                     sb.AppendItem(BehaviorGraph, "BehaviorGraph");
                 }
@@ -664,26 +684,6 @@ namespace Mutagen.Bethesda.Starfield
                         if (AnimationPathsItem.Specific != null)
                         {
                             foreach (var subItem in AnimationPathsItem.Specific)
-                            {
-                                using (sb.Brace())
-                                {
-                                    {
-                                        sb.AppendItem(subItem);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                if (TargetKeywords is {} TargetKeywordsItem)
-                {
-                    sb.AppendLine("TargetKeywords =>");
-                    using (sb.Brace())
-                    {
-                        sb.AppendItem(TargetKeywordsItem.Overall);
-                        if (TargetKeywordsItem.Specific != null)
-                        {
-                            foreach (var subItem in TargetKeywordsItem.Specific)
                             {
                                 using (sb.Brace())
                                 {
@@ -711,9 +711,9 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.Race = this.Race.Combine(rhs.Race);
                 ret.ActorKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ActorKeywords?.Overall, rhs.ActorKeywords?.Overall), Noggog.ExceptionExt.Combine(this.ActorKeywords?.Specific, rhs.ActorKeywords?.Specific));
+                ret.TargetKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.TargetKeywords?.Overall, rhs.TargetKeywords?.Overall), Noggog.ExceptionExt.Combine(this.TargetKeywords?.Specific, rhs.TargetKeywords?.Specific));
                 ret.BehaviorGraph = this.BehaviorGraph.Combine(rhs.BehaviorGraph);
                 ret.AnimationPaths = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.AnimationPaths?.Overall, rhs.AnimationPaths?.Overall), Noggog.ExceptionExt.Combine(this.AnimationPaths?.Specific, rhs.AnimationPaths?.Specific));
-                ret.TargetKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.TargetKeywords?.Overall, rhs.TargetKeywords?.Overall), Noggog.ExceptionExt.Combine(this.TargetKeywords?.Specific, rhs.TargetKeywords?.Specific));
                 ret.Role = this.Role.Combine(rhs.Role);
                 ret.Perspective = this.Perspective.Combine(rhs.Perspective);
                 return ret;
@@ -741,9 +741,9 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool Race;
             public bool ActorKeywords;
+            public bool TargetKeywords;
             public bool BehaviorGraph;
             public bool AnimationPaths;
-            public bool TargetKeywords;
             public bool Role;
             public bool Perspective;
             #endregion
@@ -757,9 +757,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.Race = defaultOn;
                 this.ActorKeywords = defaultOn;
+                this.TargetKeywords = defaultOn;
                 this.BehaviorGraph = defaultOn;
                 this.AnimationPaths = defaultOn;
-                this.TargetKeywords = defaultOn;
                 this.Role = defaultOn;
                 this.Perspective = defaultOn;
             }
@@ -779,9 +779,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((Race, null));
                 ret.Add((ActorKeywords, null));
+                ret.Add((TargetKeywords, null));
                 ret.Add((BehaviorGraph, null));
                 ret.Add((AnimationPaths, null));
-                ret.Add((TargetKeywords, null));
                 ret.Add((Role, null));
                 ret.Add((Perspective, null));
             }
@@ -864,9 +864,9 @@ namespace Mutagen.Bethesda.Starfield
     {
         new IFormLinkNullable<IRaceGetter> Race { get; set; }
         new ExtendedList<IFormLinkGetter<IKeywordGetter>> ActorKeywords { get; }
+        new ExtendedList<IFormLinkGetter<IKeywordGetter>> TargetKeywords { get; }
         new String? BehaviorGraph { get; set; }
         new ExtendedList<String> AnimationPaths { get; }
-        new ExtendedList<IFormLinkGetter<IKeywordGetter>> TargetKeywords { get; }
         new Subgraph.SubgraphRole Role { get; set; }
         new Perspective Perspective { get; set; }
     }
@@ -886,9 +886,9 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => Subgraph_Registration.Instance;
         IFormLinkNullableGetter<IRaceGetter> Race { get; }
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>> ActorKeywords { get; }
+        IReadOnlyList<IFormLinkGetter<IKeywordGetter>> TargetKeywords { get; }
         String? BehaviorGraph { get; }
         IReadOnlyList<String> AnimationPaths { get; }
-        IReadOnlyList<IFormLinkGetter<IKeywordGetter>> TargetKeywords { get; }
         Subgraph.SubgraphRole Role { get; }
         Perspective Perspective { get; }
 
@@ -1062,9 +1062,9 @@ namespace Mutagen.Bethesda.Starfield
     {
         Race = 0,
         ActorKeywords = 1,
-        BehaviorGraph = 2,
-        AnimationPaths = 3,
-        TargetKeywords = 4,
+        TargetKeywords = 2,
+        BehaviorGraph = 3,
+        AnimationPaths = 4,
         Role = 5,
         Perspective = 6,
     }
@@ -1111,9 +1111,9 @@ namespace Mutagen.Bethesda.Starfield
             var all = RecordCollection.Factory(
                 RecordTypes.SADD,
                 RecordTypes.SAKD,
+                RecordTypes.STKD,
                 RecordTypes.SGNM,
                 RecordTypes.SAPT,
-                RecordTypes.STKD,
                 RecordTypes.SRAF);
             return new RecordTriggerSpecs(allRecordTypes: all);
         });
@@ -1159,9 +1159,9 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.Race.Clear();
             item.ActorKeywords.Clear();
+            item.TargetKeywords.Clear();
             item.BehaviorGraph = default;
             item.AnimationPaths.Clear();
-            item.TargetKeywords.Clear();
             item.Role = default(Subgraph.SubgraphRole);
             item.Perspective = default(Perspective);
         }
@@ -1222,14 +1222,14 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.ActorKeywords,
                 (l, r) => object.Equals(l, r),
                 include);
+            ret.TargetKeywords = item.TargetKeywords.CollectionEqualsHelper(
+                rhs.TargetKeywords,
+                (l, r) => object.Equals(l, r),
+                include);
             ret.BehaviorGraph = string.Equals(item.BehaviorGraph, rhs.BehaviorGraph);
             ret.AnimationPaths = item.AnimationPaths.CollectionEqualsHelper(
                 rhs.AnimationPaths,
                 (l, r) => string.Equals(l, r),
-                include);
-            ret.TargetKeywords = item.TargetKeywords.CollectionEqualsHelper(
-                rhs.TargetKeywords,
-                (l, r) => object.Equals(l, r),
                 include);
             ret.Role = item.Role == rhs.Role;
             ret.Perspective = item.Perspective == rhs.Perspective;
@@ -1295,6 +1295,20 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
+            if (printMask?.TargetKeywords?.Overall ?? true)
+            {
+                sb.AppendLine("TargetKeywords =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in item.TargetKeywords)
+                    {
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(subItem.FormKey);
+                        }
+                    }
+                }
+            }
             if ((printMask?.BehaviorGraph ?? true)
                 && item.BehaviorGraph is {} BehaviorGraphItem)
             {
@@ -1310,20 +1324,6 @@ namespace Mutagen.Bethesda.Starfield
                         using (sb.Brace())
                         {
                             sb.AppendItem(subItem);
-                        }
-                    }
-                }
-            }
-            if (printMask?.TargetKeywords?.Overall ?? true)
-            {
-                sb.AppendLine("TargetKeywords =>");
-                using (sb.Brace())
-                {
-                    foreach (var subItem in item.TargetKeywords)
-                    {
-                        using (sb.Brace())
-                        {
-                            sb.AppendItem(subItem.FormKey);
                         }
                     }
                 }
@@ -1353,6 +1353,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ActorKeywords.SequenceEqualNullable(rhs.ActorKeywords)) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)Subgraph_FieldIndex.TargetKeywords) ?? true))
+            {
+                if (!lhs.TargetKeywords.SequenceEqualNullable(rhs.TargetKeywords)) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)Subgraph_FieldIndex.BehaviorGraph) ?? true))
             {
                 if (!string.Equals(lhs.BehaviorGraph, rhs.BehaviorGraph)) return false;
@@ -1360,10 +1364,6 @@ namespace Mutagen.Bethesda.Starfield
             if ((equalsMask?.GetShouldTranslate((int)Subgraph_FieldIndex.AnimationPaths) ?? true))
             {
                 if (!lhs.AnimationPaths.SequenceEqualNullable(rhs.AnimationPaths)) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)Subgraph_FieldIndex.TargetKeywords) ?? true))
-            {
-                if (!lhs.TargetKeywords.SequenceEqualNullable(rhs.TargetKeywords)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Subgraph_FieldIndex.Role) ?? true))
             {
@@ -1384,15 +1384,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(subItem);
             }
+            foreach (var subItem in item.TargetKeywords)
+            {
+                hash.Add(subItem);
+            }
             if (item.BehaviorGraph is {} BehaviorGraphitem)
             {
                 hash.Add(BehaviorGraphitem);
             }
             foreach (var subItem in item.AnimationPaths)
-            {
-                hash.Add(subItem);
-            }
-            foreach (var subItem in item.TargetKeywords)
             {
                 hash.Add(subItem);
             }
@@ -1465,16 +1465,14 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Subgraph_FieldIndex.BehaviorGraph) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Subgraph_FieldIndex.TargetKeywords) ?? true))
             {
-                item.BehaviorGraph = rhs.BehaviorGraph;
-            }
-            if ((copyMask?.GetShouldTranslate((int)Subgraph_FieldIndex.AnimationPaths) ?? true))
-            {
-                errorMask?.PushIndex((int)Subgraph_FieldIndex.AnimationPaths);
+                errorMask?.PushIndex((int)Subgraph_FieldIndex.TargetKeywords);
                 try
                 {
-                    item.AnimationPaths.SetTo(rhs.AnimationPaths);
+                    item.TargetKeywords.SetTo(
+                        rhs.TargetKeywords
+                            .Select(b => (IFormLinkGetter<IKeywordGetter>)new FormLink<IKeywordGetter>(b.FormKey)));
                 }
                 catch (Exception ex)
                 when (errorMask != null)
@@ -1486,14 +1484,16 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Subgraph_FieldIndex.TargetKeywords) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Subgraph_FieldIndex.BehaviorGraph) ?? true))
             {
-                errorMask?.PushIndex((int)Subgraph_FieldIndex.TargetKeywords);
+                item.BehaviorGraph = rhs.BehaviorGraph;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Subgraph_FieldIndex.AnimationPaths) ?? true))
+            {
+                errorMask?.PushIndex((int)Subgraph_FieldIndex.AnimationPaths);
                 try
                 {
-                    item.TargetKeywords.SetTo(
-                        rhs.TargetKeywords
-                            .Select(b => (IFormLinkGetter<IKeywordGetter>)new FormLink<IKeywordGetter>(b.FormKey)));
+                    item.AnimationPaths.SetTo(rhs.AnimationPaths);
                 }
                 catch (Exception ex)
                 when (errorMask != null)
@@ -1642,16 +1642,6 @@ namespace Mutagen.Bethesda.Starfield
                         item: subItem,
                         header: translationParams.ConvertToCustom(RecordTypes.SAKD));
                 });
-            StringBinaryTranslation.Instance.WriteNullable(
-                writer: writer,
-                item: item.BehaviorGraph,
-                header: translationParams.ConvertToCustom(RecordTypes.SGNM),
-                binaryType: StringBinaryType.NullTerminate);
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.WritePerItem(
-                writer: writer,
-                items: item.AnimationPaths,
-                recordType: translationParams.ConvertToCustom(RecordTypes.SAPT),
-                transl: StringBinaryTranslation.Instance.Write);
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Write(
                 writer: writer,
                 items: item.TargetKeywords,
@@ -1662,6 +1652,16 @@ namespace Mutagen.Bethesda.Starfield
                         item: subItem,
                         header: translationParams.ConvertToCustom(RecordTypes.STKD));
                 });
+            StringBinaryTranslation.Instance.WriteNullable(
+                writer: writer,
+                item: item.BehaviorGraph,
+                header: translationParams.ConvertToCustom(RecordTypes.SGNM),
+                binaryType: StringBinaryType.NullTerminate);
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.WritePerItem(
+                writer: writer,
+                items: item.AnimationPaths,
+                recordType: translationParams.ConvertToCustom(RecordTypes.SAPT),
+                transl: StringBinaryTranslation.Instance.Write);
             SubgraphBinaryWriteTranslation.WriteBinaryRole(
                 writer: writer,
                 item: item);
@@ -1746,6 +1746,16 @@ namespace Mutagen.Bethesda.Starfield
                             transl: FormLinkBinaryTranslation.Instance.Parse));
                     return (int)Subgraph_FieldIndex.ActorKeywords;
                 }
+                case RecordTypeInts.STKD:
+                {
+                    if (lastParsed.ShortCircuit((int)Subgraph_FieldIndex.Role, translationParams)) return ParseResult.Stop;
+                    item.TargetKeywords.SetTo(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
+                            reader: frame,
+                            triggeringRecord: translationParams.ConvertToCustom(RecordTypes.STKD),
+                            transl: FormLinkBinaryTranslation.Instance.Parse));
+                    return (int)Subgraph_FieldIndex.TargetKeywords;
+                }
                 case RecordTypeInts.SGNM:
                 {
                     if (lastParsed.ShortCircuit((int)Subgraph_FieldIndex.Role, translationParams)) return ParseResult.Stop;
@@ -1765,16 +1775,6 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.SAPT),
                             transl: StringBinaryTranslation.Instance.Parse));
                     return (int)Subgraph_FieldIndex.AnimationPaths;
-                }
-                case RecordTypeInts.STKD:
-                {
-                    if (lastParsed.ShortCircuit((int)Subgraph_FieldIndex.Role, translationParams)) return ParseResult.Stop;
-                    item.TargetKeywords.SetTo(
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
-                            reader: frame,
-                            triggeringRecord: translationParams.ConvertToCustom(RecordTypes.STKD),
-                            transl: FormLinkBinaryTranslation.Instance.Parse));
-                    return (int)Subgraph_FieldIndex.TargetKeywords;
                 }
                 case RecordTypeInts.SRAF:
                 {
@@ -1864,12 +1864,12 @@ namespace Mutagen.Bethesda.Starfield
         public IFormLinkNullableGetter<IRaceGetter> Race => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IRaceGetter>(_package, _recordData, _RaceLocation);
         #endregion
         public IReadOnlyList<IFormLinkGetter<IKeywordGetter>> ActorKeywords { get; private set; } = [];
+        public IReadOnlyList<IFormLinkGetter<IKeywordGetter>> TargetKeywords { get; private set; } = [];
         #region BehaviorGraph
         private int? _BehaviorGraphLocation;
         public String? BehaviorGraph => _BehaviorGraphLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _BehaviorGraphLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         public IReadOnlyList<String> AnimationPaths { get; private set; } = [];
-        public IReadOnlyList<IFormLinkGetter<IKeywordGetter>> TargetKeywords { get; private set; } = [];
         #region Role
         partial void RoleCustomParse(
             OverlayStream stream,
@@ -1962,6 +1962,21 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams));
                     return (int)Subgraph_FieldIndex.ActorKeywords;
                 }
+                case RecordTypeInts.STKD:
+                {
+                    if (lastParsed.ShortCircuit((int)Subgraph_FieldIndex.Role, translationParams)) return ParseResult.Stop;
+                    this.TargetKeywords = BinaryOverlayList.FactoryByArray<IFormLinkGetter<IKeywordGetter>>(
+                        mem: stream.RemainingMemory,
+                        package: _package,
+                        getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(p, s),
+                        locs: ParseRecordLocations(
+                            stream: stream,
+                            constants: _package.MetaData.Constants.SubConstants,
+                            trigger: RecordTypes.STKD,
+                            skipHeader: true,
+                            translationParams: translationParams));
+                    return (int)Subgraph_FieldIndex.TargetKeywords;
+                }
                 case RecordTypeInts.SGNM:
                 {
                     if (lastParsed.ShortCircuit((int)Subgraph_FieldIndex.Role, translationParams)) return ParseResult.Stop;
@@ -1982,21 +1997,6 @@ namespace Mutagen.Bethesda.Starfield
                             skipHeader: false,
                             translationParams: translationParams));
                     return (int)Subgraph_FieldIndex.AnimationPaths;
-                }
-                case RecordTypeInts.STKD:
-                {
-                    if (lastParsed.ShortCircuit((int)Subgraph_FieldIndex.Role, translationParams)) return ParseResult.Stop;
-                    this.TargetKeywords = BinaryOverlayList.FactoryByArray<IFormLinkGetter<IKeywordGetter>>(
-                        mem: stream.RemainingMemory,
-                        package: _package,
-                        getter: (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(p, s),
-                        locs: ParseRecordLocations(
-                            stream: stream,
-                            constants: _package.MetaData.Constants.SubConstants,
-                            trigger: RecordTypes.STKD,
-                            skipHeader: true,
-                            translationParams: translationParams));
-                    return (int)Subgraph_FieldIndex.TargetKeywords;
                 }
                 case RecordTypeInts.SRAF:
                 {

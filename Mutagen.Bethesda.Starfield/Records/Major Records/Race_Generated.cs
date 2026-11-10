@@ -5051,9 +5051,9 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.SRAC,
                 RecordTypes.SADD,
                 RecordTypes.SAKD,
+                RecordTypes.STKD,
                 RecordTypes.SGNM,
                 RecordTypes.SAPT,
-                RecordTypes.STKD,
                 RecordTypes.SRAF,
                 RecordTypes.PTOP,
                 RecordTypes.NTOP,
@@ -8901,9 +8901,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SADD:
                 case RecordTypeInts.SAKD:
+                case RecordTypeInts.STKD:
                 case RecordTypeInts.SGNM:
                 case RecordTypeInts.SAPT:
-                case RecordTypeInts.STKD:
                 case RecordTypeInts.SRAF:
                 {
                     item.Subgraphs.SetTo(
@@ -9906,9 +9906,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SADD:
                 case RecordTypeInts.SAKD:
+                case RecordTypeInts.STKD:
                 case RecordTypeInts.SGNM:
                 case RecordTypeInts.SAPT:
-                case RecordTypeInts.STKD:
                 case RecordTypeInts.SRAF:
                 {
                     this.Subgraphs = this.ParseRepeatedTypelessSubrecord<ISubgraphGetter>(
