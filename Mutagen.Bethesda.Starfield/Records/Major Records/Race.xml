@@ -102,8 +102,8 @@
       <FormLink name="AimAssistPose" recordType="ENAM" refName="AimAssistPose" />
       <CustomLogic name="NAM3" recordType="NAM3" />
       <FormLink name="ImpactMaterialType" recordType="NAM4" refName="MaterialType" />
-      <RefDirect name="WED0" recordType="WED0" unknown="true" refName="SoundReference" />
-      <RefDirect name="WED1" recordType="WED1" unknown="true" refName="SoundReference" />
+      <RefDirect name="OpenCorpseSound" recordType="WED0" refName="SoundReference" />
+      <RefDirect name="CloseCorpseSound" recordType="WED1" refName="SoundReference" />
       <Dict name="BipedObjects" binary="Custom" recordType="NAME">
         <Key>
           <Enum enumName="BipedObject" />
@@ -232,7 +232,7 @@
       <RefDirect name="Chargen" refName="Chargen" />
       <String name="BodySkinTones" recordType="BSTT" />
       <String name="HandSkinTones" recordType="HSTT" />
-      <String name="FCTP" recordType="FCTP" />
+      <String name="FaceCustomTexturesBasePath" recordType="FCTP" />
       <String name="FaceSkinTones" recordType="FSTT" />
     </Fields>
   </Object>
