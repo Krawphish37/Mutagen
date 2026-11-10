@@ -10688,6 +10688,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             obj.ModHeader.RemapLinks(mapping);
             obj.Keywords.RemapLinks(mapping);
+            obj.FormFolderKeywordLists.RemapLinks(mapping);
             obj.LocationReferenceTypes.RemapLinks(mapping);
             obj.Actions.RemapLinks(mapping);
             obj.TextureSets.RemapLinks(mapping);
@@ -17889,6 +17890,10 @@ namespace Mutagen.Bethesda.Starfield
                 yield return item;
             }
             foreach (var item in obj.Keywords.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
+            foreach (var item in obj.FormFolderKeywordLists.EnumerateFormLinks(iterateNestedRecords))
             {
                 yield return item;
             }
