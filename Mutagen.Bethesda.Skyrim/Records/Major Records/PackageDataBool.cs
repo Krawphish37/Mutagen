@@ -9,4 +9,6 @@ partial class PackageDataBoolBinaryOverlay
     string INamedRequiredGetter.Name => this.Name ?? string.Empty;
 
     public bool Data => throw new NotImplementedException();
+
+    public byte? RawValue => throw new NotImplementedException();
 }
