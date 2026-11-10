@@ -53,21 +53,21 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region RSMC
-        public UInt32? RSMC { get; set; }
+        #region Class
+        public SoundKeywordMapping.ReverbClass? Class { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? ISoundKeywordMappingItemGetter.RSMC => this.RSMC;
+        SoundKeywordMapping.ReverbClass? ISoundKeywordMappingItemGetter.Class => this.Class;
         #endregion
-        #region RSMH
+        #region Sound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _RSMH;
-        public SoundReference? RSMH
+        private SoundReference? _Sound;
+        public SoundReference? Sound
         {
-            get => _RSMH;
-            set => _RSMH = value;
+            get => _Sound;
+            set => _Sound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? ISoundKeywordMappingItemGetter.RSMH => this.RSMH;
+        ISoundReferenceGetter? ISoundKeywordMappingItemGetter.Sound => this.Sound;
         #endregion
 
         #region To String
@@ -108,16 +108,16 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.RSMC = initialValue;
-                this.RSMH = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.Class = initialValue;
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
             }
 
             public Mask(
-                TItem RSMC,
-                TItem RSMH)
+                TItem Class,
+                TItem Sound)
             {
-                this.RSMC = RSMC;
-                this.RSMH = new MaskItem<TItem, SoundReference.Mask<TItem>?>(RSMH, new SoundReference.Mask<TItem>(RSMH));
+                this.Class = Class;
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Sound, new SoundReference.Mask<TItem>(Sound));
             }
 
             #pragma warning disable CS8618
@@ -129,8 +129,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem RSMC;
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? RSMH { get; set; }
+            public TItem Class;
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? Sound { get; set; }
             #endregion
 
             #region Equals
@@ -143,15 +143,15 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.RSMC, rhs.RSMC)) return false;
-                if (!object.Equals(this.RSMH, rhs.RSMH)) return false;
+                if (!object.Equals(this.Class, rhs.Class)) return false;
+                if (!object.Equals(this.Sound, rhs.Sound)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.RSMC);
-                hash.Add(this.RSMH);
+                hash.Add(this.Class);
+                hash.Add(this.Sound);
                 return hash.ToHashCode();
             }
 
@@ -160,11 +160,11 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.RSMC)) return false;
-                if (RSMH != null)
+                if (!eval(this.Class)) return false;
+                if (Sound != null)
                 {
-                    if (!eval(this.RSMH.Overall)) return false;
-                    if (this.RSMH.Specific != null && !this.RSMH.Specific.All(eval)) return false;
+                    if (!eval(this.Sound.Overall)) return false;
+                    if (this.Sound.Specific != null && !this.Sound.Specific.All(eval)) return false;
                 }
                 return true;
             }
@@ -173,11 +173,11 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.RSMC)) return true;
-                if (RSMH != null)
+                if (eval(this.Class)) return true;
+                if (Sound != null)
                 {
-                    if (eval(this.RSMH.Overall)) return true;
-                    if (this.RSMH.Specific != null && this.RSMH.Specific.Any(eval)) return true;
+                    if (eval(this.Sound.Overall)) return true;
+                    if (this.Sound.Specific != null && this.Sound.Specific.Any(eval)) return true;
                 }
                 return false;
             }
@@ -193,8 +193,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.RSMC = eval(this.RSMC);
-                obj.RSMH = this.RSMH == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.RSMH.Overall), this.RSMH.Specific?.Translate(eval));
+                obj.Class = eval(this.Class);
+                obj.Sound = this.Sound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
             }
             #endregion
 
@@ -213,13 +213,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(SoundKeywordMappingItem.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.RSMC ?? true)
+                    if (printMask?.Class ?? true)
                     {
-                        sb.AppendItem(RSMC, "RSMC");
+                        sb.AppendItem(Class, "Class");
                     }
-                    if (printMask?.RSMH?.Overall ?? true)
+                    if (printMask?.Sound?.Overall ?? true)
                     {
-                        RSMH?.Print(sb);
+                        Sound?.Print(sb);
                     }
                 }
             }
@@ -245,8 +245,8 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? RSMC;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? RSMH;
+            public Exception? Class;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? Sound;
             #endregion
 
             #region IErrorMask
@@ -255,10 +255,10 @@ namespace Mutagen.Bethesda.Starfield
                 SoundKeywordMappingItem_FieldIndex enu = (SoundKeywordMappingItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case SoundKeywordMappingItem_FieldIndex.RSMC:
-                        return RSMC;
-                    case SoundKeywordMappingItem_FieldIndex.RSMH:
-                        return RSMH;
+                    case SoundKeywordMappingItem_FieldIndex.Class:
+                        return Class;
+                    case SoundKeywordMappingItem_FieldIndex.Sound:
+                        return Sound;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -269,11 +269,11 @@ namespace Mutagen.Bethesda.Starfield
                 SoundKeywordMappingItem_FieldIndex enu = (SoundKeywordMappingItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case SoundKeywordMappingItem_FieldIndex.RSMC:
-                        this.RSMC = ex;
+                    case SoundKeywordMappingItem_FieldIndex.Class:
+                        this.Class = ex;
                         break;
-                    case SoundKeywordMappingItem_FieldIndex.RSMH:
-                        this.RSMH = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case SoundKeywordMappingItem_FieldIndex.Sound:
+                        this.Sound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -285,11 +285,11 @@ namespace Mutagen.Bethesda.Starfield
                 SoundKeywordMappingItem_FieldIndex enu = (SoundKeywordMappingItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case SoundKeywordMappingItem_FieldIndex.RSMC:
-                        this.RSMC = (Exception?)obj;
+                    case SoundKeywordMappingItem_FieldIndex.Class:
+                        this.Class = (Exception?)obj;
                         break;
-                    case SoundKeywordMappingItem_FieldIndex.RSMH:
-                        this.RSMH = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case SoundKeywordMappingItem_FieldIndex.Sound:
+                        this.Sound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -299,8 +299,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (RSMC != null) return true;
-                if (RSMH != null) return true;
+                if (Class != null) return true;
+                if (Sound != null) return true;
                 return false;
             }
             #endregion
@@ -327,9 +327,9 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(RSMC, "RSMC");
+                    sb.AppendItem(Class, "Class");
                 }
-                RSMH?.Print(sb);
+                Sound?.Print(sb);
             }
             #endregion
 
@@ -338,8 +338,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.RSMC = this.RSMC.Combine(rhs.RSMC);
-                ret.RSMH = this.RSMH.Combine(rhs.RSMH, (l, r) => l.Combine(r));
+                ret.Class = this.Class.Combine(rhs.Class);
+                ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -363,8 +363,8 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool RSMC;
-            public SoundReference.TranslationMask? RSMH;
+            public bool Class;
+            public SoundReference.TranslationMask? Sound;
             #endregion
 
             #region Ctors
@@ -374,7 +374,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.RSMC = defaultOn;
+                this.Class = defaultOn;
             }
 
             #endregion
@@ -390,8 +390,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((RSMC, null));
-                ret.Add((RSMH != null ? RSMH.OnOverall : DefaultOn, RSMH?.GetCrystal()));
+                ret.Add((Class, null));
+                ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -470,8 +470,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<ISoundKeywordMappingItem>,
         ISoundKeywordMappingItemGetter
     {
-        new UInt32? RSMC { get; set; }
-        new SoundReference? RSMH { get; set; }
+        new SoundKeywordMapping.ReverbClass? Class { get; set; }
+        new SoundReference? Sound { get; set; }
     }
 
     public partial interface ISoundKeywordMappingItemGetter :
@@ -487,8 +487,8 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => SoundKeywordMappingItem_Registration.Instance;
-        UInt32? RSMC { get; }
-        ISoundReferenceGetter? RSMH { get; }
+        SoundKeywordMapping.ReverbClass? Class { get; }
+        ISoundReferenceGetter? Sound { get; }
 
     }
 
@@ -658,8 +658,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum SoundKeywordMappingItem_FieldIndex
     {
-        RSMC = 0,
-        RSMH = 1,
+        Class = 0,
+        Sound = 1,
     }
     #endregion
 
@@ -746,14 +746,14 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ISoundKeywordMappingItem item)
         {
             ClearPartial();
-            item.RSMC = default;
-            item.RSMH = null;
+            item.Class = default;
+            item.Sound = null;
         }
         
         #region Mutagen
         public void RemapLinks(ISoundKeywordMappingItem obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
-            obj.RSMH?.RemapLinks(mapping);
+            obj.Sound?.RemapLinks(mapping);
         }
         
         #endregion
@@ -798,10 +798,10 @@ namespace Mutagen.Bethesda.Starfield
             SoundKeywordMappingItem.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.RSMC = item.RSMC == rhs.RSMC;
-            ret.RSMH = EqualsMaskHelper.EqualsHelper(
-                item.RSMH,
-                rhs.RSMH,
+            ret.Class = item.Class == rhs.Class;
+            ret.Sound = EqualsMaskHelper.EqualsHelper(
+                item.Sound,
+                rhs.Sound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
         }
@@ -848,15 +848,15 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             SoundKeywordMappingItem.Mask<bool>? printMask = null)
         {
-            if ((printMask?.RSMC ?? true)
-                && item.RSMC is {} RSMCItem)
+            if ((printMask?.Class ?? true)
+                && item.Class is {} ClassItem)
             {
-                sb.AppendItem(RSMCItem, "RSMC");
+                sb.AppendItem(ClassItem, "Class");
             }
-            if ((printMask?.RSMH?.Overall ?? true)
-                && item.RSMH is {} RSMHItem)
+            if ((printMask?.Sound?.Overall ?? true)
+                && item.Sound is {} SoundItem)
             {
-                RSMHItem?.Print(sb, "RSMH");
+                SoundItem?.Print(sb, "Sound");
             }
         }
         
@@ -867,17 +867,17 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)SoundKeywordMappingItem_FieldIndex.RSMC) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundKeywordMappingItem_FieldIndex.Class) ?? true))
             {
-                if (lhs.RSMC != rhs.RSMC) return false;
+                if (lhs.Class != rhs.Class) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SoundKeywordMappingItem_FieldIndex.RSMH) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundKeywordMappingItem_FieldIndex.Sound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.RSMH, rhs.RSMH, out var lhsRSMH, out var rhsRSMH, out var isRSMHEqual))
+                if (EqualsMaskHelper.RefEquality(lhs.Sound, rhs.Sound, out var lhsSound, out var rhsSound, out var isSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsRSMH).CommonInstance()!).Equals(lhsRSMH, rhsRSMH, equalsMask?.GetSubCrystal((int)SoundKeywordMappingItem_FieldIndex.RSMH))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsSound).CommonInstance()!).Equals(lhsSound, rhsSound, equalsMask?.GetSubCrystal((int)SoundKeywordMappingItem_FieldIndex.Sound))) return false;
                 }
-                else if (!isRSMHEqual) return false;
+                else if (!isSoundEqual) return false;
             }
             return true;
         }
@@ -885,13 +885,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ISoundKeywordMappingItemGetter item)
         {
             var hash = new HashCode();
-            if (item.RSMC is {} RSMCitem)
+            if (item.Class is {} Classitem)
             {
-                hash.Add(RSMCitem);
+                hash.Add(Classitem);
             }
-            if (item.RSMH is {} RSMHitem)
+            if (item.Sound is {} Sounditem)
             {
-                hash.Add(RSMHitem);
+                hash.Add(Sounditem);
             }
             return hash.ToHashCode();
         }
@@ -907,9 +907,9 @@ namespace Mutagen.Bethesda.Starfield
         #region Mutagen
         public IEnumerable<IFormLinkGetter> EnumerateFormLinks(ISoundKeywordMappingItemGetter obj, bool iterateNestedRecords = true)
         {
-            if (obj.RSMH is {} RSMHItems)
+            if (obj.Sound is {} SoundItems)
             {
-                foreach (var item in RSMHItems.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in SoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -932,24 +932,24 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)SoundKeywordMappingItem_FieldIndex.RSMC) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundKeywordMappingItem_FieldIndex.Class) ?? true))
             {
-                item.RSMC = rhs.RSMC;
+                item.Class = rhs.Class;
             }
-            if ((copyMask?.GetShouldTranslate((int)SoundKeywordMappingItem_FieldIndex.RSMH) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundKeywordMappingItem_FieldIndex.Sound) ?? true))
             {
-                errorMask?.PushIndex((int)SoundKeywordMappingItem_FieldIndex.RSMH);
+                errorMask?.PushIndex((int)SoundKeywordMappingItem_FieldIndex.Sound);
                 try
                 {
-                    if(rhs.RSMH is {} rhsRSMH)
+                    if(rhs.Sound is {} rhsSound)
                     {
-                        item.RSMH = rhsRSMH.DeepCopy(
+                        item.Sound = rhsSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)SoundKeywordMappingItem_FieldIndex.RSMH));
+                            copyMask?.GetSubCrystal((int)SoundKeywordMappingItem_FieldIndex.Sound));
                     }
                     else
                     {
-                        item.RSMH = default;
+                        item.Sound = default;
                     }
                 }
                 catch (Exception ex)
@@ -1071,16 +1071,17 @@ namespace Mutagen.Bethesda.Starfield
             MutagenWriter writer,
             TypedWriteParams translationParams)
         {
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.RSMC,
+            EnumBinaryTranslation<SoundKeywordMapping.ReverbClass, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Class,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.RSMC));
-            if (item.RSMH is {} RSMHItem)
+            if (item.Sound is {} SoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.RSMH))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)RSMHItem).BinaryWriteTranslator).Write(
-                        item: RSMHItem,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)SoundItem).BinaryWriteTranslator).Write(
+                        item: SoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -1129,17 +1130,19 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.RSMC:
                 {
-                    if (lastParsed.ShortCircuit((int)SoundKeywordMappingItem_FieldIndex.RSMC, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)SoundKeywordMappingItem_FieldIndex.Class, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.RSMC = frame.ReadUInt32();
-                    return (int)SoundKeywordMappingItem_FieldIndex.RSMC;
+                    item.Class = EnumBinaryTranslation<SoundKeywordMapping.ReverbClass, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)SoundKeywordMappingItem_FieldIndex.Class;
                 }
                 case RecordTypeInts.RSMH:
                 {
-                    if (lastParsed.ShortCircuit((int)SoundKeywordMappingItem_FieldIndex.RSMH, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)SoundKeywordMappingItem_FieldIndex.Sound, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.RSMH = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)SoundKeywordMappingItem_FieldIndex.RSMH;
+                    item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)SoundKeywordMappingItem_FieldIndex.Sound;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1210,11 +1213,11 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region RSMC
-        private int? _RSMCLocation;
-        public UInt32? RSMC => _RSMCLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _RSMCLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region Class
+        private int? _ClassLocation;
+        public SoundKeywordMapping.ReverbClass? Class => EnumBinaryTranslation<SoundKeywordMapping.ReverbClass, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_ClassLocation, _recordData, _package, 4);
         #endregion
-        public ISoundReferenceGetter? RSMH { get; private set; }
+        public ISoundReferenceGetter? Sound { get; private set; }
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1280,19 +1283,19 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.RSMC:
                 {
-                    if (lastParsed.ShortCircuit((int)SoundKeywordMappingItem_FieldIndex.RSMC, translationParams)) return ParseResult.Stop;
-                    _RSMCLocation = (stream.Position - offset);
-                    return (int)SoundKeywordMappingItem_FieldIndex.RSMC;
+                    if (lastParsed.ShortCircuit((int)SoundKeywordMappingItem_FieldIndex.Class, translationParams)) return ParseResult.Stop;
+                    _ClassLocation = (stream.Position - offset);
+                    return (int)SoundKeywordMappingItem_FieldIndex.Class;
                 }
                 case RecordTypeInts.RSMH:
                 {
-                    if (lastParsed.ShortCircuit((int)SoundKeywordMappingItem_FieldIndex.RSMH, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)SoundKeywordMappingItem_FieldIndex.Sound, translationParams)) return ParseResult.Stop;
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.RSMH = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.Sound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)SoundKeywordMappingItem_FieldIndex.RSMH;
+                    return (int)SoundKeywordMappingItem_FieldIndex.Sound;
                 }
                 default:
                     return ParseResult.Stop;

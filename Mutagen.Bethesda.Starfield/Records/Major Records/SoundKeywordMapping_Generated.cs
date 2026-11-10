@@ -56,16 +56,16 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region WED0
+        #region Sound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _WED0;
-        public SoundReference? WED0
+        private SoundReference? _Sound;
+        public SoundReference? Sound
         {
-            get => _WED0;
-            set => _WED0 = value;
+            get => _Sound;
+            set => _Sound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? ISoundKeywordMappingGetter.WED0 => this.WED0;
+        ISoundReferenceGetter? ISoundKeywordMappingGetter.Sound => this.Sound;
         #endregion
         #region Keywords
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -93,17 +93,17 @@ namespace Mutagen.Bethesda.Starfield
         }
         #endregion
         #endregion
-        #region Items
+        #region ReverbSounds
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<SoundKeywordMappingItem> _Items = new ExtendedList<SoundKeywordMappingItem>();
-        public ExtendedList<SoundKeywordMappingItem> Items
+        private ExtendedList<SoundKeywordMappingItem> _ReverbSounds = new ExtendedList<SoundKeywordMappingItem>();
+        public ExtendedList<SoundKeywordMappingItem> ReverbSounds
         {
-            get => this._Items;
-            init => this._Items = value;
+            get => this._ReverbSounds;
+            init => this._ReverbSounds = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<ISoundKeywordMappingItemGetter> ISoundKeywordMappingGetter.Items => _Items;
+        IReadOnlyList<ISoundKeywordMappingItemGetter> ISoundKeywordMappingGetter.ReverbSounds => _ReverbSounds;
         #endregion
 
         #endregion
@@ -132,9 +132,9 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.Items = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SoundKeywordMappingItem.Mask<TItem>?>>?>(initialValue, []);
+                this.ReverbSounds = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SoundKeywordMappingItem.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
@@ -145,9 +145,9 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
-                TItem WED0,
+                TItem Sound,
                 TItem Keywords,
-                TItem Items)
+                TItem ReverbSounds)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -157,9 +157,9 @@ namespace Mutagen.Bethesda.Starfield
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
             {
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WED0, new SoundReference.Mask<TItem>(WED0));
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Sound, new SoundReference.Mask<TItem>(Sound));
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
-                this.Items = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SoundKeywordMappingItem.Mask<TItem>?>>?>(Items, []);
+                this.ReverbSounds = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SoundKeywordMappingItem.Mask<TItem>?>>?>(ReverbSounds, []);
             }
 
             #pragma warning disable CS8618
@@ -171,9 +171,9 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? WED0 { get; set; }
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? Sound { get; set; }
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
-            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SoundKeywordMappingItem.Mask<TItem>?>>?>? Items;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, SoundKeywordMappingItem.Mask<TItem>?>>?>? ReverbSounds;
             #endregion
 
             #region Equals
@@ -187,17 +187,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.WED0, rhs.WED0)) return false;
+                if (!object.Equals(this.Sound, rhs.Sound)) return false;
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
-                if (!object.Equals(this.Items, rhs.Items)) return false;
+                if (!object.Equals(this.ReverbSounds, rhs.ReverbSounds)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.WED0);
+                hash.Add(this.Sound);
                 hash.Add(this.Keywords);
-                hash.Add(this.Items);
+                hash.Add(this.ReverbSounds);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -208,10 +208,10 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (WED0 != null)
+                if (Sound != null)
                 {
-                    if (!eval(this.WED0.Overall)) return false;
-                    if (this.WED0.Specific != null && !this.WED0.Specific.All(eval)) return false;
+                    if (!eval(this.Sound.Overall)) return false;
+                    if (this.Sound.Specific != null && !this.Sound.Specific.All(eval)) return false;
                 }
                 if (this.Keywords != null)
                 {
@@ -224,12 +224,12 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (this.Items != null)
+                if (this.ReverbSounds != null)
                 {
-                    if (!eval(this.Items.Overall)) return false;
-                    if (this.Items.Specific != null)
+                    if (!eval(this.ReverbSounds.Overall)) return false;
+                    if (this.ReverbSounds.Specific != null)
                     {
-                        foreach (var item in this.Items.Specific)
+                        foreach (var item in this.ReverbSounds.Specific)
                         {
                             if (!eval(item.Overall)) return false;
                             if (item.Specific != null && !item.Specific.All(eval)) return false;
@@ -244,10 +244,10 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (WED0 != null)
+                if (Sound != null)
                 {
-                    if (eval(this.WED0.Overall)) return true;
-                    if (this.WED0.Specific != null && this.WED0.Specific.Any(eval)) return true;
+                    if (eval(this.Sound.Overall)) return true;
+                    if (this.Sound.Specific != null && this.Sound.Specific.Any(eval)) return true;
                 }
                 if (this.Keywords != null)
                 {
@@ -260,12 +260,12 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (this.Items != null)
+                if (this.ReverbSounds != null)
                 {
-                    if (eval(this.Items.Overall)) return true;
-                    if (this.Items.Specific != null)
+                    if (eval(this.ReverbSounds.Overall)) return true;
+                    if (this.ReverbSounds.Specific != null)
                     {
-                        foreach (var item in this.Items.Specific)
+                        foreach (var item in this.ReverbSounds.Specific)
                         {
                             if (!eval(item.Overall)) return false;
                             if (item.Specific != null && !item.Specific.All(eval)) return false;
@@ -287,7 +287,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.WED0 = this.WED0 == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WED0.Overall), this.WED0.Specific?.Translate(eval));
+                obj.Sound = this.Sound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
                 if (Keywords != null)
                 {
                     obj.Keywords = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.Keywords.Overall), []);
@@ -302,14 +302,14 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (Items != null)
+                if (ReverbSounds != null)
                 {
-                    obj.Items = new MaskItem<R, IEnumerable<MaskItemIndexed<R, SoundKeywordMappingItem.Mask<R>?>>?>(eval(this.Items.Overall), []);
-                    if (Items.Specific != null)
+                    obj.ReverbSounds = new MaskItem<R, IEnumerable<MaskItemIndexed<R, SoundKeywordMappingItem.Mask<R>?>>?>(eval(this.ReverbSounds.Overall), []);
+                    if (ReverbSounds.Specific != null)
                     {
                         var l = new List<MaskItemIndexed<R, SoundKeywordMappingItem.Mask<R>?>>();
-                        obj.Items.Specific = l;
-                        foreach (var item in Items.Specific)
+                        obj.ReverbSounds.Specific = l;
+                        foreach (var item in ReverbSounds.Specific)
                         {
                             MaskItemIndexed<R, SoundKeywordMappingItem.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, SoundKeywordMappingItem.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
                             if (mask == null) continue;
@@ -335,9 +335,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(SoundKeywordMapping.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.WED0?.Overall ?? true)
+                    if (printMask?.Sound?.Overall ?? true)
                     {
-                        WED0?.Print(sb);
+                        Sound?.Print(sb);
                     }
                     if ((printMask?.Keywords?.Overall ?? true)
                         && Keywords is {} KeywordsItem)
@@ -360,16 +360,16 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if ((printMask?.Items?.Overall ?? true)
-                        && Items is {} ItemsItem)
+                    if ((printMask?.ReverbSounds?.Overall ?? true)
+                        && ReverbSounds is {} ReverbSoundsItem)
                     {
-                        sb.AppendLine("Items =>");
+                        sb.AppendLine("ReverbSounds =>");
                         using (sb.Brace())
                         {
-                            sb.AppendItem(ItemsItem.Overall);
-                            if (ItemsItem.Specific != null)
+                            sb.AppendItem(ReverbSoundsItem.Overall);
+                            if (ReverbSoundsItem.Specific != null)
                             {
-                                foreach (var subItem in ItemsItem.Specific)
+                                foreach (var subItem in ReverbSoundsItem.Specific)
                                 {
                                     using (sb.Brace())
                                     {
@@ -390,9 +390,9 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? WED0;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? Sound;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
-            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SoundKeywordMappingItem.ErrorMask?>>?>? Items;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SoundKeywordMappingItem.ErrorMask?>>?>? ReverbSounds;
             #endregion
 
             #region IErrorMask
@@ -401,12 +401,12 @@ namespace Mutagen.Bethesda.Starfield
                 SoundKeywordMapping_FieldIndex enu = (SoundKeywordMapping_FieldIndex)index;
                 switch (enu)
                 {
-                    case SoundKeywordMapping_FieldIndex.WED0:
-                        return WED0;
+                    case SoundKeywordMapping_FieldIndex.Sound:
+                        return Sound;
                     case SoundKeywordMapping_FieldIndex.Keywords:
                         return Keywords;
-                    case SoundKeywordMapping_FieldIndex.Items:
-                        return Items;
+                    case SoundKeywordMapping_FieldIndex.ReverbSounds:
+                        return ReverbSounds;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -417,14 +417,14 @@ namespace Mutagen.Bethesda.Starfield
                 SoundKeywordMapping_FieldIndex enu = (SoundKeywordMapping_FieldIndex)index;
                 switch (enu)
                 {
-                    case SoundKeywordMapping_FieldIndex.WED0:
-                        this.WED0 = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case SoundKeywordMapping_FieldIndex.Sound:
+                        this.Sound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
                     case SoundKeywordMapping_FieldIndex.Keywords:
                         this.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case SoundKeywordMapping_FieldIndex.Items:
-                        this.Items = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SoundKeywordMappingItem.ErrorMask?>>?>(ex, null);
+                    case SoundKeywordMapping_FieldIndex.ReverbSounds:
+                        this.ReverbSounds = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SoundKeywordMappingItem.ErrorMask?>>?>(ex, null);
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -437,14 +437,14 @@ namespace Mutagen.Bethesda.Starfield
                 SoundKeywordMapping_FieldIndex enu = (SoundKeywordMapping_FieldIndex)index;
                 switch (enu)
                 {
-                    case SoundKeywordMapping_FieldIndex.WED0:
-                        this.WED0 = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case SoundKeywordMapping_FieldIndex.Sound:
+                        this.Sound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
                     case SoundKeywordMapping_FieldIndex.Keywords:
                         this.Keywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case SoundKeywordMapping_FieldIndex.Items:
-                        this.Items = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SoundKeywordMappingItem.ErrorMask?>>?>)obj;
+                    case SoundKeywordMapping_FieldIndex.ReverbSounds:
+                        this.ReverbSounds = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SoundKeywordMappingItem.ErrorMask?>>?>)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -455,9 +455,9 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (WED0 != null) return true;
+                if (Sound != null) return true;
                 if (Keywords != null) return true;
-                if (Items != null) return true;
+                if (ReverbSounds != null) return true;
                 return false;
             }
             #endregion
@@ -484,7 +484,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void PrintFillInternal(StructuredStringBuilder sb)
             {
                 base.PrintFillInternal(sb);
-                WED0?.Print(sb);
+                Sound?.Print(sb);
                 if (Keywords is {} KeywordsItem)
                 {
                     sb.AppendLine("Keywords =>");
@@ -505,15 +505,15 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (Items is {} ItemsItem)
+                if (ReverbSounds is {} ReverbSoundsItem)
                 {
-                    sb.AppendLine("Items =>");
+                    sb.AppendLine("ReverbSounds =>");
                     using (sb.Brace())
                     {
-                        sb.AppendItem(ItemsItem.Overall);
-                        if (ItemsItem.Specific != null)
+                        sb.AppendItem(ReverbSoundsItem.Overall);
+                        if (ReverbSoundsItem.Specific != null)
                         {
-                            foreach (var subItem in ItemsItem.Specific)
+                            foreach (var subItem in ReverbSoundsItem.Specific)
                             {
                                 using (sb.Brace())
                                 {
@@ -531,9 +531,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.WED0 = this.WED0.Combine(rhs.WED0, (l, r) => l.Combine(r));
+                ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
-                ret.Items = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SoundKeywordMappingItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Items?.Overall, rhs.Items?.Overall), Noggog.ExceptionExt.Combine(this.Items?.Specific, rhs.Items?.Specific));
+                ret.ReverbSounds = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, SoundKeywordMappingItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.ReverbSounds?.Overall, rhs.ReverbSounds?.Overall), Noggog.ExceptionExt.Combine(this.ReverbSounds?.Specific, rhs.ReverbSounds?.Specific));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -556,9 +556,9 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public SoundReference.TranslationMask? WED0;
+            public SoundReference.TranslationMask? Sound;
             public bool Keywords;
-            public SoundKeywordMappingItem.TranslationMask? Items;
+            public SoundKeywordMappingItem.TranslationMask? ReverbSounds;
             #endregion
 
             #region Ctors
@@ -575,9 +575,9 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((WED0 != null ? WED0.OnOverall : DefaultOn, WED0?.GetCrystal()));
+                ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
                 ret.Add((Keywords, null));
-                ret.Add((Items == null ? DefaultOn : !Items.GetCrystal().CopyNothing, Items?.GetCrystal()));
+                ret.Add((ReverbSounds == null ? DefaultOn : !ReverbSounds.GetCrystal().CopyNothing, ReverbSounds?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -726,12 +726,12 @@ namespace Mutagen.Bethesda.Starfield
         ISoundKeywordMappingGetter,
         IStarfieldMajorRecordInternal
     {
-        new SoundReference? WED0 { get; set; }
+        new SoundReference? Sound { get; set; }
         /// <summary>
         /// Aspects: IKeyworded&lt;IKeywordGetter&gt;
         /// </summary>
         new ExtendedList<IFormLinkGetter<IKeywordGetter>> Keywords { get; }
-        new ExtendedList<SoundKeywordMappingItem> Items { get; }
+        new ExtendedList<SoundKeywordMappingItem> ReverbSounds { get; }
     }
 
     public partial interface ISoundKeywordMappingInternal :
@@ -751,14 +751,14 @@ namespace Mutagen.Bethesda.Starfield
         IMapsToGetter<ISoundKeywordMappingGetter>
     {
         static new ILoquiRegistration StaticRegistration => SoundKeywordMapping_Registration.Instance;
-        ISoundReferenceGetter? WED0 { get; }
+        ISoundReferenceGetter? Sound { get; }
         #region Keywords
         /// <summary>
         /// Aspects: IKeywordedGetter&lt;IKeywordGetter&gt;
         /// </summary>
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>> Keywords { get; }
         #endregion
-        IReadOnlyList<ISoundKeywordMappingItemGetter> Items { get; }
+        IReadOnlyList<ISoundKeywordMappingItemGetter> ReverbSounds { get; }
 
     }
 
@@ -935,9 +935,9 @@ namespace Mutagen.Bethesda.Starfield
         FormVersion = 4,
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
-        WED0 = 7,
+        Sound = 7,
         Keywords = 8,
-        Items = 9,
+        ReverbSounds = 9,
     }
     #endregion
 
@@ -1031,9 +1031,9 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ISoundKeywordMappingInternal item)
         {
             ClearPartial();
-            item.WED0 = null;
+            item.Sound = null;
             item.Keywords.Clear();
-            item.Items.Clear();
+            item.ReverbSounds.Clear();
             base.Clear(item);
         }
         
@@ -1051,9 +1051,9 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(ISoundKeywordMapping obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             base.RemapLinks(obj, mapping);
-            obj.WED0?.RemapLinks(mapping);
+            obj.Sound?.RemapLinks(mapping);
             obj.Keywords.RemapLinks(mapping);
-            obj.Items.RemapLinks(mapping);
+            obj.ReverbSounds.RemapLinks(mapping);
         }
         
         #endregion
@@ -1121,17 +1121,17 @@ namespace Mutagen.Bethesda.Starfield
             SoundKeywordMapping.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.WED0 = EqualsMaskHelper.EqualsHelper(
-                item.WED0,
-                rhs.WED0,
+            ret.Sound = EqualsMaskHelper.EqualsHelper(
+                item.Sound,
+                rhs.Sound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.Keywords = item.Keywords.CollectionEqualsHelper(
                 rhs.Keywords,
                 (l, r) => object.Equals(l, r),
                 include);
-            ret.Items = item.Items.CollectionEqualsHelper(
-                rhs.Items,
+            ret.ReverbSounds = item.ReverbSounds.CollectionEqualsHelper(
+                rhs.ReverbSounds,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             base.FillEqualsMask(item, rhs, ret, include);
@@ -1183,10 +1183,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.WED0?.Overall ?? true)
-                && item.WED0 is {} WED0Item)
+            if ((printMask?.Sound?.Overall ?? true)
+                && item.Sound is {} SoundItem)
             {
-                WED0Item?.Print(sb, "WED0");
+                SoundItem?.Print(sb, "Sound");
             }
             if (printMask?.Keywords?.Overall ?? true)
             {
@@ -1202,12 +1202,12 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if (printMask?.Items?.Overall ?? true)
+            if (printMask?.ReverbSounds?.Overall ?? true)
             {
-                sb.AppendLine("Items =>");
+                sb.AppendLine("ReverbSounds =>");
                 using (sb.Brace())
                 {
-                    foreach (var subItem in item.Items)
+                    foreach (var subItem in item.ReverbSounds)
                     {
                         using (sb.Brace())
                         {
@@ -1266,21 +1266,21 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IStarfieldMajorRecordGetter)lhs, (IStarfieldMajorRecordGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)SoundKeywordMapping_FieldIndex.WED0) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundKeywordMapping_FieldIndex.Sound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.WED0, rhs.WED0, out var lhsWED0, out var rhsWED0, out var isWED0Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.Sound, rhs.Sound, out var lhsSound, out var rhsSound, out var isSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsWED0).CommonInstance()!).Equals(lhsWED0, rhsWED0, equalsMask?.GetSubCrystal((int)SoundKeywordMapping_FieldIndex.WED0))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsSound).CommonInstance()!).Equals(lhsSound, rhsSound, equalsMask?.GetSubCrystal((int)SoundKeywordMapping_FieldIndex.Sound))) return false;
                 }
-                else if (!isWED0Equal) return false;
+                else if (!isSoundEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SoundKeywordMapping_FieldIndex.Keywords) ?? true))
             {
                 if (!lhs.Keywords.SequenceEqualNullable(rhs.Keywords)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SoundKeywordMapping_FieldIndex.Items) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundKeywordMapping_FieldIndex.ReverbSounds) ?? true))
             {
-                if (!lhs.Items.SequenceEqual(rhs.Items, (l, r) => ((SoundKeywordMappingItemCommon)((ISoundKeywordMappingItemGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)SoundKeywordMapping_FieldIndex.Items)))) return false;
+                if (!lhs.ReverbSounds.SequenceEqual(rhs.ReverbSounds, (l, r) => ((SoundKeywordMappingItemCommon)((ISoundKeywordMappingItemGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)SoundKeywordMapping_FieldIndex.ReverbSounds)))) return false;
             }
             return true;
         }
@@ -1310,15 +1310,15 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ISoundKeywordMappingGetter item)
         {
             var hash = new HashCode();
-            if (item.WED0 is {} WED0item)
+            if (item.Sound is {} Sounditem)
             {
-                hash.Add(WED0item);
+                hash.Add(Sounditem);
             }
             foreach (var subItem in item.Keywords)
             {
                 hash.Add(subItem);
             }
-            foreach (var subItem in item.Items)
+            foreach (var subItem in item.ReverbSounds)
             {
                 hash.Add(subItem);
             }
@@ -1351,9 +1351,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
-            if (obj.WED0 is {} WED0Items)
+            if (obj.Sound is {} SoundItems)
             {
-                foreach (var item in WED0Items.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in SoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -1362,7 +1362,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return FormLinkInformation.Factory(item);
             }
-            foreach (var item in obj.Items.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+            foreach (var item in obj.ReverbSounds.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
             {
                 yield return FormLinkInformation.Factory(item);
             }
@@ -1462,20 +1462,20 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)SoundKeywordMapping_FieldIndex.WED0) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundKeywordMapping_FieldIndex.Sound) ?? true))
             {
-                errorMask?.PushIndex((int)SoundKeywordMapping_FieldIndex.WED0);
+                errorMask?.PushIndex((int)SoundKeywordMapping_FieldIndex.Sound);
                 try
                 {
-                    if(rhs.WED0 is {} rhsWED0)
+                    if(rhs.Sound is {} rhsSound)
                     {
-                        item.WED0 = rhsWED0.DeepCopy(
+                        item.Sound = rhsSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)SoundKeywordMapping_FieldIndex.WED0));
+                            copyMask?.GetSubCrystal((int)SoundKeywordMapping_FieldIndex.Sound));
                     }
                     else
                     {
-                        item.WED0 = default;
+                        item.Sound = default;
                     }
                 }
                 catch (Exception ex)
@@ -1507,13 +1507,13 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)SoundKeywordMapping_FieldIndex.Items) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundKeywordMapping_FieldIndex.ReverbSounds) ?? true))
             {
-                errorMask?.PushIndex((int)SoundKeywordMapping_FieldIndex.Items);
+                errorMask?.PushIndex((int)SoundKeywordMapping_FieldIndex.ReverbSounds);
                 try
                 {
-                    item.Items.SetTo(
-                        rhs.Items
+                    item.ReverbSounds.SetTo(
+                        rhs.ReverbSounds
                         .Select(r =>
                         {
                             return r.DeepCopy(
@@ -1700,12 +1700,12 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            if (item.WED0 is {} WED0Item)
+            if (item.Sound is {} SoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.WED0))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)WED0Item).BinaryWriteTranslator).Write(
-                        item: WED0Item,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)SoundItem).BinaryWriteTranslator).Write(
+                        item: SoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -1720,9 +1720,11 @@ namespace Mutagen.Bethesda.Starfield
                         item: subItem,
                         header: translationParams.ConvertToCustom(RecordTypes.KNAM));
                 });
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ISoundKeywordMappingItemGetter>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ISoundKeywordMappingItemGetter>.Instance.WriteWithCounter(
                 writer: writer,
-                items: item.Items,
+                items: item.ReverbSounds,
+                counterType: RecordTypes.RSMC,
+                counterLength: 4,
                 transl: (MutagenWriter subWriter, ISoundKeywordMappingItemGetter subItem, TypedWriteParams conv) =>
                 {
                     var Item = subItem;
@@ -1802,8 +1804,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WED0:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.WED0 = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)SoundKeywordMapping_FieldIndex.WED0;
+                    item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)SoundKeywordMapping_FieldIndex.Sound;
                 }
                 case RecordTypeInts.KNAM:
                 {
@@ -1815,15 +1817,16 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)SoundKeywordMapping_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.RSMC:
-                case RecordTypeInts.RSMH:
                 {
-                    item.Items.SetTo(
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SoundKeywordMappingItem>.Instance.Parse(
+                    item.ReverbSounds.SetTo(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SoundKeywordMappingItem>.Instance.ParsePerItem(
                             reader: frame,
+                            countLengthLength: 4,
+                            countRecord: RecordTypes.RSMC,
                             triggeringRecord: SoundKeywordMappingItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: SoundKeywordMappingItem.TryCreateFromBinary));
-                    return (int)SoundKeywordMapping_FieldIndex.Items;
+                    return (int)SoundKeywordMapping_FieldIndex.ReverbSounds;
                 }
                 default:
                     return StarfieldMajorRecordBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1884,12 +1887,12 @@ namespace Mutagen.Bethesda.Starfield
         protected override Type LinkType => typeof(ISoundKeywordMappingGetter);
 
 
-        public ISoundReferenceGetter? WED0 { get; private set; }
+        public ISoundReferenceGetter? Sound { get; private set; }
         #region Keywords
         public IReadOnlyList<IFormLinkGetter<IKeywordGetter>> Keywords { get; private set; } = [];
         IReadOnlyList<IFormLinkGetter<IKeywordCommonGetter>>? IKeywordedGetter.Keywords => this.Keywords;
         #endregion
-        public IReadOnlyList<ISoundKeywordMappingItemGetter> Items { get; private set; } = [];
+        public IReadOnlyList<ISoundKeywordMappingItemGetter> ReverbSounds { get; private set; } = [];
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1962,11 +1965,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WED0:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.WED0 = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.Sound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)SoundKeywordMapping_FieldIndex.WED0;
+                    return (int)SoundKeywordMapping_FieldIndex.Sound;
                 }
                 case RecordTypeInts.KNAM:
                 {
@@ -1983,14 +1986,17 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)SoundKeywordMapping_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.RSMC:
-                case RecordTypeInts.RSMH:
                 {
-                    this.Items = this.ParseRepeatedTypelessSubrecord<ISoundKeywordMappingItemGetter>(
+                    this.ReverbSounds = BinaryOverlayList.FactoryByCountPerItem<ISoundKeywordMappingItemGetter>(
                         stream: stream,
-                        translationParams: translationParams,
+                        package: _package,
+                        countLength: 4,
                         trigger: SoundKeywordMappingItem_Registration.TriggerSpecs,
-                        factory: SoundKeywordMappingItemBinaryOverlay.SoundKeywordMappingItemFactory);
-                    return (int)SoundKeywordMapping_FieldIndex.Items;
+                        countType: RecordTypes.RSMC,
+                        translationParams: translationParams,
+                        getter: (s, p, recConv) => SoundKeywordMappingItemBinaryOverlay.SoundKeywordMappingItemFactory(new OverlayStream(s, p), p, recConv),
+                        skipHeader: false);
+                    return (int)SoundKeywordMapping_FieldIndex.ReverbSounds;
                 }
                 default:
                     return base.FillRecordType(

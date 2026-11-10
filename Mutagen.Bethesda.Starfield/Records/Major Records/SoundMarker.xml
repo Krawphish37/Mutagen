@@ -9,11 +9,11 @@
       <List name="Keywords" counterRecType="KSIZ" recordType="KWDA">
         <FormLink refName="Keyword" />
       </List>
-      <RefDirect name="SMLS" recordType="SMLS" unknown="true" refName="SoundReference" />
+      <RefDirect name="Sound" recordType="SMLS" refName="SoundReference" />
       <Data recordType="DEVT">
         <Fields>
-          <Int32 name="Unknown" unknown="true" />
-          <Float name="Unknown2" unknown="true" />
+          <Enum name="Level" enumName="SoundLevel" byteLength="4" />
+          <Float name="Radius" />
         </Fields>
       </Data>
     </Fields>
