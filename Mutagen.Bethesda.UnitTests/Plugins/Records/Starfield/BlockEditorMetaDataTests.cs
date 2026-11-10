@@ -15,6 +15,10 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield;
 // then Longitude and Latitude as doubles (optional: Breaks). Mutagen read the items as Int32s, so every field after them was shifted by
 // the item count (Location X = 1 read as 256 on 410 of 471 SFBK). In Starfield.esm 470 blocks end with the 2 doubles
 // and one (2990F9, an old record) has only 8 bytes after the 4 Int32s.
+// Each item's 4 bytes are the FormID of the source block (xEdit has the link commented out as "Source Block"): 328 of the
+// 475 items in Starfield.esm point at an SFBK (the one named by SourceEditorID in every case looked at); the rest are
+// stale IDs (117 REFR, 4 ACHR, 4 RFGP,
+// 22 missing), as xEdit notes. It is a FormLink now, so it gets remapped like any other FormID.
 public class BlockEditorMetaDataTests
 {
     private const string ComponentName = "BGSBlockEditorMetaData_Component";
@@ -52,7 +56,10 @@ public class BlockEditorMetaDataTests
             meta.SourceType.ShouldBe(BlockEditorMetaDataComponent.SourceTypeOption.Block);
             meta.SourceEditorID.ShouldBe("OverlayHillsRockySmall03");
             meta.UnknownItems.Count.ShouldBe(1);
-            meta.UnknownItems[0].Unknown.ShouldBe(0x00298550u);
+            // The item holds the source block: OverlayHillsRockySmall03 (298550:Starfield.esm), the SFBK named by SourceEditorID
+            meta.UnknownItems[0].SourceBlock.FormKey.ID.ShouldBe(0x298550u);
+            meta.UnknownItems[0].SourceBlock.FormKey.ModKey.ShouldBe(TestModKey);
+            meta.EnumerateFormLinks().Select(l => l.FormKey.ID).ShouldContain(0x298550u);
             meta.UnknownItems[0].Unknown2.ShouldBe((byte)0);
             meta.LocationX.ShouldBe(1);
             meta.LocationY.ShouldBe(1);
@@ -69,7 +76,7 @@ public class BlockEditorMetaDataTests
     {
         foreach (var meta in Read(TwoItems))
         {
-            meta.UnknownItems.Select(i => i.Unknown).ShouldBe(new[] { 0x002E3829u, 0x002E3829u });
+            meta.UnknownItems.Select(i => i.SourceBlock.FormKey.ID).ShouldBe(new[] { 0x002E3829u, 0x002E3829u });
             meta.LocationX.ShouldBe(8);
             meta.LocationY.ShouldBe(7);
             meta.SourceEditorID.ShouldBe("MountainsTerracedMedium1K06");

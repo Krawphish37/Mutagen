@@ -14,6 +14,7 @@ using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Exceptions;
 using Mutagen.Bethesda.Plugins.Internals;
 using Mutagen.Bethesda.Plugins.Meta;
@@ -51,8 +52,15 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Unknown
-        public UInt32 Unknown { get; set; } = default(UInt32);
+        #region SourceBlock
+        private readonly IFormLink<ISurfaceBlockGetter> _SourceBlock = new FormLink<ISurfaceBlockGetter>();
+        public IFormLink<ISurfaceBlockGetter> SourceBlock
+        {
+            get => _SourceBlock;
+            set => _SourceBlock.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkGetter<ISurfaceBlockGetter> IBlockEditorMetaDataItemGetter.SourceBlock => this.SourceBlock;
         #endregion
         #region Unknown2
         public Byte Unknown2 { get; set; } = default(Byte);
@@ -96,15 +104,15 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Unknown = initialValue;
+                this.SourceBlock = initialValue;
                 this.Unknown2 = initialValue;
             }
 
             public Mask(
-                TItem Unknown,
+                TItem SourceBlock,
                 TItem Unknown2)
             {
-                this.Unknown = Unknown;
+                this.SourceBlock = SourceBlock;
                 this.Unknown2 = Unknown2;
             }
 
@@ -117,7 +125,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Unknown;
+            public TItem SourceBlock;
             public TItem Unknown2;
             #endregion
 
@@ -131,14 +139,14 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.SourceBlock, rhs.SourceBlock)) return false;
                 if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Unknown);
+                hash.Add(this.SourceBlock);
                 hash.Add(this.Unknown2);
                 return hash.ToHashCode();
             }
@@ -148,7 +156,7 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.SourceBlock)) return false;
                 if (!eval(this.Unknown2)) return false;
                 return true;
             }
@@ -157,7 +165,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Unknown)) return true;
+                if (eval(this.SourceBlock)) return true;
                 if (eval(this.Unknown2)) return true;
                 return false;
             }
@@ -173,7 +181,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Unknown = eval(this.Unknown);
+                obj.SourceBlock = eval(this.SourceBlock);
                 obj.Unknown2 = eval(this.Unknown2);
             }
             #endregion
@@ -193,9 +201,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(BlockEditorMetaDataItem.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.SourceBlock ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(SourceBlock, "SourceBlock");
                     }
                     if (printMask?.Unknown2 ?? true)
                     {
@@ -225,7 +233,7 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Unknown;
+            public Exception? SourceBlock;
             public Exception? Unknown2;
             #endregion
 
@@ -235,8 +243,8 @@ namespace Mutagen.Bethesda.Starfield
                 BlockEditorMetaDataItem_FieldIndex enu = (BlockEditorMetaDataItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case BlockEditorMetaDataItem_FieldIndex.Unknown:
-                        return Unknown;
+                    case BlockEditorMetaDataItem_FieldIndex.SourceBlock:
+                        return SourceBlock;
                     case BlockEditorMetaDataItem_FieldIndex.Unknown2:
                         return Unknown2;
                     default:
@@ -249,8 +257,8 @@ namespace Mutagen.Bethesda.Starfield
                 BlockEditorMetaDataItem_FieldIndex enu = (BlockEditorMetaDataItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case BlockEditorMetaDataItem_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case BlockEditorMetaDataItem_FieldIndex.SourceBlock:
+                        this.SourceBlock = ex;
                         break;
                     case BlockEditorMetaDataItem_FieldIndex.Unknown2:
                         this.Unknown2 = ex;
@@ -265,8 +273,8 @@ namespace Mutagen.Bethesda.Starfield
                 BlockEditorMetaDataItem_FieldIndex enu = (BlockEditorMetaDataItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case BlockEditorMetaDataItem_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case BlockEditorMetaDataItem_FieldIndex.SourceBlock:
+                        this.SourceBlock = (Exception?)obj;
                         break;
                     case BlockEditorMetaDataItem_FieldIndex.Unknown2:
                         this.Unknown2 = (Exception?)obj;
@@ -279,7 +287,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Unknown != null) return true;
+                if (SourceBlock != null) return true;
                 if (Unknown2 != null) return true;
                 return false;
             }
@@ -307,7 +315,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(SourceBlock, "SourceBlock");
                 }
                 {
                     sb.AppendItem(Unknown2, "Unknown2");
@@ -320,7 +328,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.SourceBlock = this.SourceBlock.Combine(rhs.SourceBlock);
                 ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
                 return ret;
             }
@@ -345,7 +353,7 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Unknown;
+            public bool SourceBlock;
             public bool Unknown2;
             #endregion
 
@@ -356,7 +364,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Unknown = defaultOn;
+                this.SourceBlock = defaultOn;
                 this.Unknown2 = defaultOn;
             }
 
@@ -373,7 +381,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Unknown, null));
+                ret.Add((SourceBlock, null));
                 ret.Add((Unknown2, null));
             }
 
@@ -383,6 +391,11 @@ namespace Mutagen.Bethesda.Starfield
             }
 
         }
+        #endregion
+
+        #region Mutagen
+        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => BlockEditorMetaDataItemCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
+        public void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => BlockEditorMetaDataItemSetterCommon.Instance.RemapLinks(this, mapping);
         #endregion
 
         #region Binary Translation
@@ -445,15 +458,17 @@ namespace Mutagen.Bethesda.Starfield
     #region Interface
     public partial interface IBlockEditorMetaDataItem :
         IBlockEditorMetaDataItemGetter,
+        IFormLinkContainer,
         ILoquiObjectSetter<IBlockEditorMetaDataItem>
     {
-        new UInt32 Unknown { get; set; }
+        new IFormLink<ISurfaceBlockGetter> SourceBlock { get; set; }
         new Byte Unknown2 { get; set; }
     }
 
     public partial interface IBlockEditorMetaDataItemGetter :
         ILoquiObject,
         IBinaryItem,
+        IFormLinkContainerGetter,
         ILoquiObject<IBlockEditorMetaDataItemGetter>
     {
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
@@ -463,7 +478,7 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => BlockEditorMetaDataItem_Registration.Instance;
-        UInt32 Unknown { get; }
+        IFormLinkGetter<ISurfaceBlockGetter> SourceBlock { get; }
         Byte Unknown2 { get; }
 
     }
@@ -634,7 +649,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum BlockEditorMetaDataItem_FieldIndex
     {
-        Unknown = 0,
+        SourceBlock = 0,
         Unknown2 = 1,
     }
     #endregion
@@ -714,13 +729,14 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IBlockEditorMetaDataItem item)
         {
             ClearPartial();
-            item.Unknown = default(UInt32);
+            item.SourceBlock.Clear();
             item.Unknown2 = default(Byte);
         }
         
         #region Mutagen
         public void RemapLinks(IBlockEditorMetaDataItem obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
+            obj.SourceBlock.Relink(mapping);
         }
         
         #endregion
@@ -765,7 +781,7 @@ namespace Mutagen.Bethesda.Starfield
             BlockEditorMetaDataItem.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Unknown = item.Unknown == rhs.Unknown;
+            ret.SourceBlock = item.SourceBlock.Equals(rhs.SourceBlock);
             ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
         }
         
@@ -811,9 +827,9 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             BlockEditorMetaDataItem.Mask<bool>? printMask = null)
         {
-            if (printMask?.Unknown ?? true)
+            if (printMask?.SourceBlock ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.SourceBlock.FormKey, "SourceBlock");
             }
             if (printMask?.Unknown2 ?? true)
             {
@@ -828,9 +844,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataItem_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataItem_FieldIndex.SourceBlock) ?? true))
             {
-                if (lhs.Unknown != rhs.Unknown) return false;
+                if (!lhs.SourceBlock.Equals(rhs.SourceBlock)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)BlockEditorMetaDataItem_FieldIndex.Unknown2) ?? true))
             {
@@ -842,7 +858,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IBlockEditorMetaDataItemGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Unknown);
+            hash.Add(item.SourceBlock);
             hash.Add(item.Unknown2);
             return hash.ToHashCode();
         }
@@ -858,6 +874,7 @@ namespace Mutagen.Bethesda.Starfield
         #region Mutagen
         public IEnumerable<IFormLinkGetter> EnumerateFormLinks(IBlockEditorMetaDataItemGetter obj, bool iterateNestedRecords = true)
         {
+            yield return FormLinkInformation.Factory(obj.SourceBlock);
             yield break;
         }
         
@@ -876,9 +893,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataItem_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataItem_FieldIndex.SourceBlock) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.SourceBlock.SetTo(rhs.SourceBlock.FormKey);
             }
             if ((copyMask?.GetShouldTranslate((int)BlockEditorMetaDataItem_FieldIndex.Unknown2) ?? true))
             {
@@ -992,7 +1009,9 @@ namespace Mutagen.Bethesda.Starfield
             IBlockEditorMetaDataItemGetter item,
             MutagenWriter writer)
         {
-            writer.Write(item.Unknown);
+            FormLinkBinaryTranslation.Instance.Write(
+                writer: writer,
+                item: item.SourceBlock);
             writer.Write(item.Unknown2);
         }
 
@@ -1027,7 +1046,7 @@ namespace Mutagen.Bethesda.Starfield
             IBlockEditorMetaDataItem item,
             MutagenFrame frame)
         {
-            item.Unknown = frame.ReadUInt32();
+            item.SourceBlock.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.Unknown2 = frame.ReadUInt8();
         }
 
@@ -1080,6 +1099,7 @@ namespace Mutagen.Bethesda.Starfield
 
         void IPrintable.Print(StructuredStringBuilder sb, string? name) => this.Print(sb, name);
 
+        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => BlockEditorMetaDataItemCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected object BinaryWriteTranslator => BlockEditorMetaDataItemBinaryWriteTranslation.Instance;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -1094,7 +1114,7 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public UInt32 Unknown => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x0, 0x4));
+        public IFormLinkGetter<ISurfaceBlockGetter> SourceBlock => FormLinkBinaryTranslation.Instance.OverlayFactory<ISurfaceBlockGetter>(_package, _structData.Span.Slice(0x0, 0x4));
         public Byte Unknown2 => _structData.Span[0x4];
         partial void CustomFactoryEnd(
             OverlayStream stream,

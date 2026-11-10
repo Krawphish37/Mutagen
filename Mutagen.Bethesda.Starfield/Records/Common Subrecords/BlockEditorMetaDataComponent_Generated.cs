@@ -14,6 +14,7 @@ using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Exceptions;
 using Mutagen.Bethesda.Plugins.Internals;
 using Mutagen.Bethesda.Plugins.Meta;
@@ -844,6 +845,8 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region Mutagen
+        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => BlockEditorMetaDataComponentCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
+        public override void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => BlockEditorMetaDataComponentSetterCommon.Instance.RemapLinks(this, mapping);
         [Flags]
         public enum DAT2DataType
         {
@@ -911,6 +914,7 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IBlockEditorMetaDataComponent :
         IAComponent,
         IBlockEditorMetaDataComponentGetter,
+        IFormLinkContainer,
         ILoquiObjectSetter<IBlockEditorMetaDataComponent>
     {
         new String CreatedTime { get; set; }
@@ -931,6 +935,7 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IBlockEditorMetaDataComponentGetter :
         IAComponentGetter,
         IBinaryItem,
+        IFormLinkContainerGetter,
         ILoquiObject<IBlockEditorMetaDataComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => BlockEditorMetaDataComponent_Registration.Instance;
@@ -1219,6 +1224,7 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IBlockEditorMetaDataComponent obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             base.RemapLinks(obj, mapping);
+            obj.UnknownItems.RemapLinks(mapping);
         }
         
         #endregion
@@ -1529,6 +1535,10 @@ namespace Mutagen.Bethesda.Starfield
             foreach (var item in base.EnumerateFormLinks(obj, iterateNestedRecords))
             {
                 yield return item;
+            }
+            foreach (var item in obj.UnknownItems.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+            {
+                yield return FormLinkInformation.Factory(item);
             }
             yield break;
         }
@@ -1967,6 +1977,7 @@ namespace Mutagen.Bethesda.Starfield
 
         void IPrintable.Print(StructuredStringBuilder sb, string? name) => this.Print(sb, name);
 
+        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => BlockEditorMetaDataComponentCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected override object BinaryWriteTranslator => BlockEditorMetaDataComponentBinaryWriteTranslation.Instance;
         void IBinaryItem.WriteToBinary(
