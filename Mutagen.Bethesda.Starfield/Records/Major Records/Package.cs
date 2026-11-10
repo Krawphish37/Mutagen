@@ -416,6 +416,13 @@ partial class PackageBinaryCreateTranslation
         AbsorbPackageData(frame.Reader, item.Data);
     }
 
+    // With an empty procedure tree the input names and flags (UNAM, BNAM, PNAM) follow XNAM directly
+    public static partial ParseResult FillBinaryDataInputNamesCustom(MutagenFrame frame, IPackageInternal item, PreviousParse lastParsed)
+    {
+        AbsorbPackageData(frame.Reader, item.Data);
+        return (int)Package_FieldIndex.ProcedureTree;
+    }
+
     public static void AbsorbPackageData(IMutagenReadStream stream, IDictionary<sbyte, APackageData> dict)
     {
         APackageData? lastPackage = null;
@@ -596,6 +603,11 @@ partial class PackageBinaryWriteTranslation
             }
         }
     }
+
+    // Written by WriteBinaryProcedureTreeCustom, after the tree
+    public static partial void WriteBinaryDataInputNamesCustom(MutagenWriter writer, IPackageGetter item)
+    {
+    }
 }
 
 partial class PackageBinaryOverlay
@@ -638,5 +650,15 @@ partial class PackageBinaryOverlay
             factory: PackageBranchBinaryOverlay.PackageBranchFactory);
         PackageBinaryCreateTranslation.AbsorbPackageData(
             new MutagenInterfaceReadStream(stream, _package.MetaData), _packageData);
+    }
+
+    public partial ParseResult DataInputNamesCustomParse(
+        OverlayStream stream,
+        int offset,
+        PreviousParse lastParsed)
+    {
+        PackageBinaryCreateTranslation.AbsorbPackageData(
+            new MutagenInterfaceReadStream(stream, _package.MetaData), _packageData);
+        return (int)Package_FieldIndex.ProcedureTree;
     }
 }
