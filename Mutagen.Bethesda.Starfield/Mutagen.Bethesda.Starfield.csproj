@@ -7004,8 +7004,9 @@
     <Compile Include="Records\Major Records\NpcRaceOverrideElectromagneticShock_Generated.cs">
       <DependentUpon>Npc.xml</DependentUpon>
     </Compile>
-    <Compile Include="Records\Major Records\WeatherVolumetricLighting_Generated.cs">
-      <DependentUpon>Weather.xml</DependentUpon>
+    <Compile Include="Records\Common Subrecords\Reflection_Generated.cs">
+      <DependentUpon>Reflection.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\ResourceGenerationDataValues_Generated.cs">
       <DependentUpon>ResourceGenerationData.xml</DependentUpon>
     </Compile>
@@ -7023,8 +7024,9 @@
     </Compile>
     <Compile Include="Records\Major Records\ResourceGenerationCellTier_Generated.cs">
       <DependentUpon>ResourceGenerationData.xml</DependentUpon>
-    <Compile Include="Records\Common Subrecords\Reflection_Generated.cs">
-      <DependentUpon>Reflection.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\WeatherVolumetricLighting_Generated.cs">
+      <DependentUpon>Weather.xml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
