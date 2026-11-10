@@ -4,7 +4,7 @@
     <Fields>
       <RefDirect name="Data" refName="DestructableData" />
       <RefList name="Resistances" refName="ResistanceDestructible" recordType="DAMC" />
-      <ByteArray name="DSDL" recordType="DSDL" unknown="true" refName="SecondaryDamageList" />
+      <FormLink name="SecondaryDamageList" recordType="DSDL" refName="SecondaryDamageList" />
       <RefList name="Stages" refName="DestructionStage" />
     </Fields>
   </Object>

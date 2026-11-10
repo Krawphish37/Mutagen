@@ -80,16 +80,15 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region DSDL
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _DSDL;
-        public MemorySlice<Byte>? DSDL
+        #region SecondaryDamageList
+        private readonly IFormLinkNullable<ISecondaryDamageListGetter> _SecondaryDamageList = new FormLinkNullable<ISecondaryDamageListGetter>();
+        public IFormLinkNullable<ISecondaryDamageListGetter> SecondaryDamageList
         {
-            get => this._DSDL;
-            set => this._DSDL = value;
+            get => _SecondaryDamageList;
+            set => _SecondaryDamageList.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IDestructibleGetter.DSDL => this.DSDL;
+        IFormLinkNullableGetter<ISecondaryDamageListGetter> IDestructibleGetter.SecondaryDamageList => this.SecondaryDamageList;
         #endregion
         #region Stages
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -146,19 +145,19 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Data = new MaskItem<TItem, DestructableData.Mask<TItem>?>(initialValue, new DestructableData.Mask<TItem>(initialValue));
                 this.Resistances = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ResistanceDestructible.Mask<TItem>?>>?>(initialValue, []);
-                this.DSDL = initialValue;
+                this.SecondaryDamageList = initialValue;
                 this.Stages = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, DestructionStage.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
                 TItem Data,
                 TItem Resistances,
-                TItem DSDL,
+                TItem SecondaryDamageList,
                 TItem Stages)
             {
                 this.Data = new MaskItem<TItem, DestructableData.Mask<TItem>?>(Data, new DestructableData.Mask<TItem>(Data));
                 this.Resistances = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ResistanceDestructible.Mask<TItem>?>>?>(Resistances, []);
-                this.DSDL = DSDL;
+                this.SecondaryDamageList = SecondaryDamageList;
                 this.Stages = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, DestructionStage.Mask<TItem>?>>?>(Stages, []);
             }
 
@@ -173,7 +172,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public MaskItem<TItem, DestructableData.Mask<TItem>?>? Data { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ResistanceDestructible.Mask<TItem>?>>?>? Resistances;
-            public TItem DSDL;
+            public TItem SecondaryDamageList;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, DestructionStage.Mask<TItem>?>>?>? Stages;
             #endregion
 
@@ -189,7 +188,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.Data, rhs.Data)) return false;
                 if (!object.Equals(this.Resistances, rhs.Resistances)) return false;
-                if (!object.Equals(this.DSDL, rhs.DSDL)) return false;
+                if (!object.Equals(this.SecondaryDamageList, rhs.SecondaryDamageList)) return false;
                 if (!object.Equals(this.Stages, rhs.Stages)) return false;
                 return true;
             }
@@ -198,7 +197,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.Data);
                 hash.Add(this.Resistances);
-                hash.Add(this.DSDL);
+                hash.Add(this.SecondaryDamageList);
                 hash.Add(this.Stages);
                 return hash.ToHashCode();
             }
@@ -225,7 +224,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.DSDL)) return false;
+                if (!eval(this.SecondaryDamageList)) return false;
                 if (this.Stages != null)
                 {
                     if (!eval(this.Stages.Overall)) return false;
@@ -262,7 +261,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.DSDL)) return true;
+                if (eval(this.SecondaryDamageList)) return true;
                 if (this.Stages != null)
                 {
                     if (eval(this.Stages.Overall)) return true;
@@ -305,7 +304,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.DSDL = eval(this.DSDL);
+                obj.SecondaryDamageList = eval(this.SecondaryDamageList);
                 if (Stages != null)
                 {
                     obj.Stages = new MaskItem<R, IEnumerable<MaskItemIndexed<R, DestructionStage.Mask<R>?>>?>(eval(this.Stages.Overall), []);
@@ -362,9 +361,9 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.DSDL ?? true)
+                    if (printMask?.SecondaryDamageList ?? true)
                     {
-                        sb.AppendItem(DSDL, "DSDL");
+                        sb.AppendItem(SecondaryDamageList, "SecondaryDamageList");
                     }
                     if ((printMask?.Stages?.Overall ?? true)
                         && Stages is {} StagesItem)
@@ -411,7 +410,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             public MaskItem<Exception?, DestructableData.ErrorMask?>? Data;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ResistanceDestructible.ErrorMask?>>?>? Resistances;
-            public Exception? DSDL;
+            public Exception? SecondaryDamageList;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DestructionStage.ErrorMask?>>?>? Stages;
             #endregion
 
@@ -425,8 +424,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Data;
                     case Destructible_FieldIndex.Resistances:
                         return Resistances;
-                    case Destructible_FieldIndex.DSDL:
-                        return DSDL;
+                    case Destructible_FieldIndex.SecondaryDamageList:
+                        return SecondaryDamageList;
                     case Destructible_FieldIndex.Stages:
                         return Stages;
                     default:
@@ -445,8 +444,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Destructible_FieldIndex.Resistances:
                         this.Resistances = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ResistanceDestructible.ErrorMask?>>?>(ex, null);
                         break;
-                    case Destructible_FieldIndex.DSDL:
-                        this.DSDL = ex;
+                    case Destructible_FieldIndex.SecondaryDamageList:
+                        this.SecondaryDamageList = ex;
                         break;
                     case Destructible_FieldIndex.Stages:
                         this.Stages = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DestructionStage.ErrorMask?>>?>(ex, null);
@@ -467,8 +466,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Destructible_FieldIndex.Resistances:
                         this.Resistances = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ResistanceDestructible.ErrorMask?>>?>)obj;
                         break;
-                    case Destructible_FieldIndex.DSDL:
-                        this.DSDL = (Exception?)obj;
+                    case Destructible_FieldIndex.SecondaryDamageList:
+                        this.SecondaryDamageList = (Exception?)obj;
                         break;
                     case Destructible_FieldIndex.Stages:
                         this.Stages = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DestructionStage.ErrorMask?>>?>)obj;
@@ -483,7 +482,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (Data != null) return true;
                 if (Resistances != null) return true;
-                if (DSDL != null) return true;
+                if (SecondaryDamageList != null) return true;
                 if (Stages != null) return true;
                 return false;
             }
@@ -530,7 +529,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(DSDL, "DSDL");
+                    sb.AppendItem(SecondaryDamageList, "SecondaryDamageList");
                 }
                 if (Stages is {} StagesItem)
                 {
@@ -560,7 +559,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.Data = this.Data.Combine(rhs.Data, (l, r) => l.Combine(r));
                 ret.Resistances = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ResistanceDestructible.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Resistances?.Overall, rhs.Resistances?.Overall), Noggog.ExceptionExt.Combine(this.Resistances?.Specific, rhs.Resistances?.Specific));
-                ret.DSDL = this.DSDL.Combine(rhs.DSDL);
+                ret.SecondaryDamageList = this.SecondaryDamageList.Combine(rhs.SecondaryDamageList);
                 ret.Stages = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, DestructionStage.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Stages?.Overall, rhs.Stages?.Overall), Noggog.ExceptionExt.Combine(this.Stages?.Specific, rhs.Stages?.Specific));
                 return ret;
             }
@@ -587,7 +586,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public DestructableData.TranslationMask? Data;
             public ResistanceDestructible.TranslationMask? Resistances;
-            public bool DSDL;
+            public bool SecondaryDamageList;
             public DestructionStage.TranslationMask? Stages;
             #endregion
 
@@ -598,7 +597,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.DSDL = defaultOn;
+                this.SecondaryDamageList = defaultOn;
             }
 
             #endregion
@@ -616,7 +615,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((Data != null ? Data.OnOverall : DefaultOn, Data?.GetCrystal()));
                 ret.Add((Resistances == null ? DefaultOn : !Resistances.GetCrystal().CopyNothing, Resistances?.GetCrystal()));
-                ret.Add((DSDL, null));
+                ret.Add((SecondaryDamageList, null));
                 ret.Add((Stages == null ? DefaultOn : !Stages.GetCrystal().CopyNothing, Stages?.GetCrystal()));
             }
 
@@ -703,7 +702,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new DestructableData? Data { get; set; }
         new ExtendedList<ResistanceDestructible>? Resistances { get; set; }
-        new MemorySlice<Byte>? DSDL { get; set; }
+        new IFormLinkNullable<ISecondaryDamageListGetter> SecondaryDamageList { get; set; }
         new ExtendedList<DestructionStage> Stages { get; }
     }
 
@@ -723,7 +722,7 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => Destructible_Registration.Instance;
         IDestructableDataGetter? Data { get; }
         IReadOnlyList<IResistanceDestructibleGetter>? Resistances { get; }
-        ReadOnlyMemorySlice<Byte>? DSDL { get; }
+        IFormLinkNullableGetter<ISecondaryDamageListGetter> SecondaryDamageList { get; }
         IReadOnlyList<IDestructionStageGetter> Stages { get; }
 
     }
@@ -896,7 +895,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         Data = 0,
         Resistances = 1,
-        DSDL = 2,
+        SecondaryDamageList = 2,
         Stages = 3,
     }
     #endregion
@@ -1005,7 +1004,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.Data = null;
             item.Resistances = null;
-            item.DSDL = default;
+            item.SecondaryDamageList.Clear();
             item.Stages.Clear();
         }
         
@@ -1013,6 +1012,7 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IDestructible obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             obj.Resistances?.RemapLinks(mapping);
+            obj.SecondaryDamageList.Relink(mapping);
             obj.Stages.RemapLinks(mapping);
         }
         
@@ -1085,7 +1085,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Resistances,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.DSDL = MemorySliceExt.SequenceEqual(item.DSDL, rhs.DSDL);
+            ret.SecondaryDamageList = item.SecondaryDamageList.Equals(rhs.SecondaryDamageList);
             ret.Stages = item.Stages.CollectionEqualsHelper(
                 rhs.Stages,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -1154,10 +1154,9 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.DSDL ?? true)
-                && item.DSDL is {} DSDLItem)
+            if (printMask?.SecondaryDamageList ?? true)
             {
-                sb.AppendLine($"DSDL => {SpanExt.ToHexString(DSDLItem)}");
+                sb.AppendItem(item.SecondaryDamageList.FormKeyNullable, "SecondaryDamageList");
             }
             if (printMask?.Stages?.Overall ?? true)
             {
@@ -1194,9 +1193,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Resistances.SequenceEqualNullable(rhs.Resistances, (l, r) => ((ResistanceDestructibleCommon)((IResistanceDestructibleGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Destructible_FieldIndex.Resistances)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Destructible_FieldIndex.DSDL) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Destructible_FieldIndex.SecondaryDamageList) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.DSDL, rhs.DSDL)) return false;
+                if (!lhs.SecondaryDamageList.Equals(rhs.SecondaryDamageList)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Destructible_FieldIndex.Stages) ?? true))
             {
@@ -1219,10 +1218,7 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
-            if (item.DSDL is {} DSDLItem)
-            {
-                hash.AddBytes(DSDLItem);
-            }
+            hash.Add(item.SecondaryDamageList);
             foreach (var subItem in item.Stages)
             {
                 hash.Add(subItem);
@@ -1247,6 +1243,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     yield return FormLinkInformation.Factory(item);
                 }
+            }
+            if (FormLinkInformation.TryFactory(obj.SecondaryDamageList, out var SecondaryDamageListInfo))
+            {
+                yield return SecondaryDamageListInfo;
             }
             foreach (var item in obj.Stages.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
             {
@@ -1337,16 +1337,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Destructible_FieldIndex.DSDL) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Destructible_FieldIndex.SecondaryDamageList) ?? true))
             {
-                if(rhs.DSDL is {} DSDLrhs)
-                {
-                    item.DSDL = DSDLrhs.ToArray();
-                }
-                else
-                {
-                    item.DSDL = default;
-                }
+                item.SecondaryDamageList.SetTo(rhs.SecondaryDamageList.FormKeyNullable);
             }
             if ((copyMask?.GetShouldTranslate((int)Destructible_FieldIndex.Stages) ?? true))
             {
@@ -1500,9 +1493,9 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.DSDL,
+                item: item.SecondaryDamageList,
                 header: translationParams.ConvertToCustom(RecordTypes.DSDL));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IDestructionStageGetter>.Instance.Write(
                 writer: writer,
@@ -1576,10 +1569,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DSDL:
                 {
-                    if (lastParsed.ShortCircuit((int)Destructible_FieldIndex.DSDL, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)Destructible_FieldIndex.SecondaryDamageList, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DSDL = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Destructible_FieldIndex.DSDL;
+                    item.SecondaryDamageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)Destructible_FieldIndex.SecondaryDamageList;
                 }
                 case RecordTypeInts.DSTD:
                 {
@@ -1667,9 +1660,9 @@ namespace Mutagen.Bethesda.Starfield
         public IDestructableDataGetter? Data => _DataLocation.HasValue ? DestructableDataBinaryOverlay.DestructableDataFactory(_recordData.Slice(_DataLocation!.Value.Min), _package) : default;
         #endregion
         public IReadOnlyList<IResistanceDestructibleGetter>? Resistances { get; private set; }
-        #region DSDL
-        private int? _DSDLLocation;
-        public ReadOnlyMemorySlice<Byte>? DSDL => _DSDLLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DSDLLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region SecondaryDamageList
+        private int? _SecondaryDamageListLocation;
+        public IFormLinkNullableGetter<ISecondaryDamageListGetter> SecondaryDamageList => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ISecondaryDamageListGetter>(_package, _recordData, _SecondaryDamageListLocation);
         #endregion
         public IReadOnlyList<IDestructionStageGetter> Stages { get; private set; } = [];
         partial void CustomFactoryEnd(
@@ -1754,9 +1747,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.DSDL:
                 {
-                    if (lastParsed.ShortCircuit((int)Destructible_FieldIndex.DSDL, translationParams)) return ParseResult.Stop;
-                    _DSDLLocation = (stream.Position - offset);
-                    return (int)Destructible_FieldIndex.DSDL;
+                    if (lastParsed.ShortCircuit((int)Destructible_FieldIndex.SecondaryDamageList, translationParams)) return ParseResult.Stop;
+                    _SecondaryDamageListLocation = (stream.Position - offset);
+                    return (int)Destructible_FieldIndex.SecondaryDamageList;
                 }
                 case RecordTypeInts.DSTD:
                 {
