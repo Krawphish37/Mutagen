@@ -116,7 +116,7 @@
     <Fields>
       <P3Float name="Bounds" binary="Custom" byteLength="12" />
       <P3Float name="Color" />
-      <Float name="Unknown" />
+      <Float name="Alpha" />
       <Enum name="Type" enumName="PlacedPrimitive.TypeEnum" byteLength="4" />
     </Fields>
   </Object>
@@ -291,7 +291,7 @@
   </Object>
   <Object name="PlacedObjectLightColor" objType="Subrecord" recordType="XLCD">
     <Fields>
-      <Color name="UnknownColor" />
+      <Color name="Color" />
       <Int64 name="Unknown" />
     </Fields>
   </Object>

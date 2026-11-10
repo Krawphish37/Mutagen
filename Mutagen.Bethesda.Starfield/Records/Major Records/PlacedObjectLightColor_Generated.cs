@@ -52,8 +52,8 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region UnknownColor
-        public Color UnknownColor { get; set; } = default(Color);
+        #region Color
+        public Color Color { get; set; } = default(Color);
         #endregion
         #region Unknown
         public Int64 Unknown { get; set; } = default(Int64);
@@ -97,15 +97,15 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.UnknownColor = initialValue;
+                this.Color = initialValue;
                 this.Unknown = initialValue;
             }
 
             public Mask(
-                TItem UnknownColor,
+                TItem Color,
                 TItem Unknown)
             {
-                this.UnknownColor = UnknownColor;
+                this.Color = Color;
                 this.Unknown = Unknown;
             }
 
@@ -118,7 +118,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem UnknownColor;
+            public TItem Color;
             public TItem Unknown;
             #endregion
 
@@ -132,14 +132,14 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.UnknownColor, rhs.UnknownColor)) return false;
+                if (!object.Equals(this.Color, rhs.Color)) return false;
                 if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.UnknownColor);
+                hash.Add(this.Color);
                 hash.Add(this.Unknown);
                 return hash.ToHashCode();
             }
@@ -149,7 +149,7 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.UnknownColor)) return false;
+                if (!eval(this.Color)) return false;
                 if (!eval(this.Unknown)) return false;
                 return true;
             }
@@ -158,7 +158,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.UnknownColor)) return true;
+                if (eval(this.Color)) return true;
                 if (eval(this.Unknown)) return true;
                 return false;
             }
@@ -174,7 +174,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.UnknownColor = eval(this.UnknownColor);
+                obj.Color = eval(this.Color);
                 obj.Unknown = eval(this.Unknown);
             }
             #endregion
@@ -194,9 +194,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(PlacedObjectLightColor.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.UnknownColor ?? true)
+                    if (printMask?.Color ?? true)
                     {
-                        sb.AppendItem(UnknownColor, "UnknownColor");
+                        sb.AppendItem(Color, "Color");
                     }
                     if (printMask?.Unknown ?? true)
                     {
@@ -226,7 +226,7 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? UnknownColor;
+            public Exception? Color;
             public Exception? Unknown;
             #endregion
 
@@ -236,8 +236,8 @@ namespace Mutagen.Bethesda.Starfield
                 PlacedObjectLightColor_FieldIndex enu = (PlacedObjectLightColor_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlacedObjectLightColor_FieldIndex.UnknownColor:
-                        return UnknownColor;
+                    case PlacedObjectLightColor_FieldIndex.Color:
+                        return Color;
                     case PlacedObjectLightColor_FieldIndex.Unknown:
                         return Unknown;
                     default:
@@ -250,8 +250,8 @@ namespace Mutagen.Bethesda.Starfield
                 PlacedObjectLightColor_FieldIndex enu = (PlacedObjectLightColor_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlacedObjectLightColor_FieldIndex.UnknownColor:
-                        this.UnknownColor = ex;
+                    case PlacedObjectLightColor_FieldIndex.Color:
+                        this.Color = ex;
                         break;
                     case PlacedObjectLightColor_FieldIndex.Unknown:
                         this.Unknown = ex;
@@ -266,8 +266,8 @@ namespace Mutagen.Bethesda.Starfield
                 PlacedObjectLightColor_FieldIndex enu = (PlacedObjectLightColor_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlacedObjectLightColor_FieldIndex.UnknownColor:
-                        this.UnknownColor = (Exception?)obj;
+                    case PlacedObjectLightColor_FieldIndex.Color:
+                        this.Color = (Exception?)obj;
                         break;
                     case PlacedObjectLightColor_FieldIndex.Unknown:
                         this.Unknown = (Exception?)obj;
@@ -280,7 +280,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (UnknownColor != null) return true;
+                if (Color != null) return true;
                 if (Unknown != null) return true;
                 return false;
             }
@@ -308,7 +308,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(UnknownColor, "UnknownColor");
+                    sb.AppendItem(Color, "Color");
                 }
                 {
                     sb.AppendItem(Unknown, "Unknown");
@@ -321,7 +321,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.UnknownColor = this.UnknownColor.Combine(rhs.UnknownColor);
+                ret.Color = this.Color.Combine(rhs.Color);
                 ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 return ret;
             }
@@ -346,7 +346,7 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool UnknownColor;
+            public bool Color;
             public bool Unknown;
             #endregion
 
@@ -357,7 +357,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.UnknownColor = defaultOn;
+                this.Color = defaultOn;
                 this.Unknown = defaultOn;
             }
 
@@ -374,7 +374,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((UnknownColor, null));
+                ret.Add((Color, null));
                 ret.Add((Unknown, null));
             }
 
@@ -448,7 +448,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IPlacedObjectLightColor>,
         IPlacedObjectLightColorGetter
     {
-        new Color UnknownColor { get; set; }
+        new Color Color { get; set; }
         new Int64 Unknown { get; set; }
     }
 
@@ -464,7 +464,7 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => PlacedObjectLightColor_Registration.Instance;
-        Color UnknownColor { get; }
+        Color Color { get; }
         Int64 Unknown { get; }
 
     }
@@ -635,7 +635,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum PlacedObjectLightColor_FieldIndex
     {
-        UnknownColor = 0,
+        Color = 0,
         Unknown = 1,
     }
     #endregion
@@ -722,7 +722,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IPlacedObjectLightColor item)
         {
             ClearPartial();
-            item.UnknownColor = default(Color);
+            item.Color = default(Color);
             item.Unknown = default(Int64);
         }
         
@@ -777,7 +777,7 @@ namespace Mutagen.Bethesda.Starfield
             PlacedObjectLightColor.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.UnknownColor = item.UnknownColor.ColorOnlyEquals(rhs.UnknownColor);
+            ret.Color = item.Color.ColorOnlyEquals(rhs.Color);
             ret.Unknown = item.Unknown == rhs.Unknown;
         }
         
@@ -823,9 +823,9 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             PlacedObjectLightColor.Mask<bool>? printMask = null)
         {
-            if (printMask?.UnknownColor ?? true)
+            if (printMask?.Color ?? true)
             {
-                sb.AppendItem(item.UnknownColor, "UnknownColor");
+                sb.AppendItem(item.Color, "Color");
             }
             if (printMask?.Unknown ?? true)
             {
@@ -840,9 +840,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectLightColor_FieldIndex.UnknownColor) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectLightColor_FieldIndex.Color) ?? true))
             {
-                if (!lhs.UnknownColor.ColorOnlyEquals(rhs.UnknownColor)) return false;
+                if (!lhs.Color.ColorOnlyEquals(rhs.Color)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObjectLightColor_FieldIndex.Unknown) ?? true))
             {
@@ -854,7 +854,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IPlacedObjectLightColorGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.UnknownColor.ToArgb());
+            hash.Add(item.Color.ToArgb());
             hash.Add(item.Unknown);
             return hash.ToHashCode();
         }
@@ -888,9 +888,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectLightColor_FieldIndex.UnknownColor) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectLightColor_FieldIndex.Color) ?? true))
             {
-                item.UnknownColor = rhs.UnknownColor;
+                item.Color = rhs.Color;
             }
             if ((copyMask?.GetShouldTranslate((int)PlacedObjectLightColor_FieldIndex.Unknown) ?? true))
             {
@@ -1006,7 +1006,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ColorBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.UnknownColor);
+                item: item.Color);
             writer.Write(item.Unknown);
         }
 
@@ -1048,7 +1048,7 @@ namespace Mutagen.Bethesda.Starfield
             IPlacedObjectLightColor item,
             MutagenFrame frame)
         {
-            item.UnknownColor = frame.ReadColor(ColorBinaryType.Alpha);
+            item.Color = frame.ReadColor(ColorBinaryType.Alpha);
             item.Unknown = frame.ReadInt64();
         }
 
@@ -1115,7 +1115,7 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Color UnknownColor => _structData.Slice(0x0, 0x4).ReadColor(ColorBinaryType.Alpha);
+        public Color Color => _structData.Slice(0x0, 0x4).ReadColor(ColorBinaryType.Alpha);
         public Int64 Unknown => BinaryPrimitives.ReadInt64LittleEndian(_structData.Slice(0x4, 0x8));
         partial void CustomFactoryEnd(
             OverlayStream stream,
