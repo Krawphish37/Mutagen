@@ -9,7 +9,9 @@ public partial class Resource
         Rare,
         Exotic,
         Unique,
-        UniqueToHe3,
-        UniqueToH20,
+        // xEdit: Special and Everywhere. In Starfield.esm 5 is only on Helium-3; 6 is on Water and on four
+        // manufactured primers (Small Primer, Large Primer, Charged Diodes, Magnetic Diodes), so it is not "H2O only"
+        Special,
+        Everywhere,
     }
 }
