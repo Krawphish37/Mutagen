@@ -222,9 +222,9 @@ public class ModSubrecordGapTests
                      f => LegendaryItem.CreateFromBinary(f),
                      (s, p) => LegendaryItemBinaryOverlay.LegendaryItemFactory(s, p)))
         {
-            lgdi.HNAM.Select(x => x.Keyword.FormKey).ShouldBe(new[] { Fk(0x801) });
-            lgdi.INAM.Select(x => x.Keyword.FormKey).ShouldBe(new[] { Fk(0x802), Fk(0x803) });
-            lgdi.INAM.Select(x => x.Unknown2).ShouldBe(new[] { 0u, 1u });
+            lgdi.QualityAllowedKeywords!.Select(x => x.Keyword.FormKey).ShouldBe(new[] { Fk(0x801) });
+            lgdi.QualityDisallowedKeywords!.Select(x => x.Keyword.FormKey).ShouldBe(new[] { Fk(0x802), Fk(0x803) });
+            lgdi.QualityDisallowedKeywords!.Select(x => x.ReferencedModIndex).ShouldBe(new[] { 0u, 1u });
 
             ShouldKeep(bytes, Write(lgdi), "HNAM", "INAM");
         }

@@ -15,16 +15,16 @@
       <Marker name="DATA" recordType="DATA" />
       <FormLink name="BaseObjectList" refName="LeveledItem" recordType="ANAM" />
       <FormLink name="RankTemplate" refName="LegendaryItem" recordType="ENAM" />
-      <FormLink name="MNAM" refName="LegendaryItem" recordType="MNAM" unknown="true" />
+      <FormLink name="AddIntoLegendary" refName="LegendaryItem" recordType="MNAM" />
       <RefList name="LegendaryMods" refName="LegendaryMod" recordType="BNAM" />
       <RefList name="LnamEntries" refName="LegendaryItemLnamEntry" recordType="LNAM" binary="Custom" />
       <RefList name="IncludeFilters" refName="LegendaryFilter" recordType="CNAM" />
       <RefList name="ExcludeFilters" refName="LegendaryFilter" recordType="DNAM" />
       <ByteArray name="FNAM" recordType="FNAM" unknown="true" />
       <ByteArray name="KNAM" recordType="KNAM" unknown="true" />
-      <RefList name="GNAM" refName="LegendaryMod" recordType="GNAM" unknown="true" />
-      <RefList name="HNAM" refName="LegendaryItemHNAMEntry" recordType="HNAM" unknown="true" />
-      <RefList name="INAM" refName="LegendaryItemHNAMEntry" recordType="INAM" unknown="true" />
+      <RefList name="QualityMods" refName="LegendaryMod" recordType="GNAM" />
+      <RefList name="QualityAllowedKeywords" refName="LegendaryItemHNAMEntry" recordType="HNAM" />
+      <RefList name="QualityDisallowedKeywords" refName="LegendaryItemHNAMEntry" recordType="INAM" />
       <ByteArray name="JNAM" recordType="JNAM" unknown="true" />
     </Fields>
     <LinkInterface>IItem</LinkInterface>
@@ -40,7 +40,7 @@
   <Object name="LegendaryItemLnamEntry" objType="Subrecord">
     <Fields>
       <Enum name="Slot" enumName="LegendaryItem.StarSlot" />
-      <UInt32 name="Unknown" unknown="true" />
+      <UInt32 name="ReferenceMod" />
       <RefList name="Conditions" refName="Condition" counterRecType="CITC" />
     </Fields>
   </Object>
@@ -52,8 +52,8 @@
   </Object>
   <Object name="LegendaryItemHNAMEntry" objType="Subrecord">
     <Fields>
-      <UInt32 name="Unknown1" unknown="true" />
-      <UInt32 name="Unknown2" unknown="true" />
+      <UInt32 name="Tier" />
+      <UInt32 name="ReferencedModIndex" />
       <FormLink name="Keyword" refName="Keyword" />
     </Fields>
   </Object>

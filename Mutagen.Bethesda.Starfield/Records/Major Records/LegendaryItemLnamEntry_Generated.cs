@@ -56,8 +56,8 @@ namespace Mutagen.Bethesda.Starfield
         #region Slot
         public LegendaryItem.StarSlot Slot { get; set; } = default(LegendaryItem.StarSlot);
         #endregion
-        #region Unknown
-        public UInt32 Unknown { get; set; } = default(UInt32);
+        #region ReferenceMod
+        public UInt32 ReferenceMod { get; set; } = default(UInt32);
         #endregion
         #region Conditions
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -113,17 +113,17 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.Slot = initialValue;
-                this.Unknown = initialValue;
+                this.ReferenceMod = initialValue;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
                 TItem Slot,
-                TItem Unknown,
+                TItem ReferenceMod,
                 TItem Conditions)
             {
                 this.Slot = Slot;
-                this.Unknown = Unknown;
+                this.ReferenceMod = ReferenceMod;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
             }
 
@@ -137,7 +137,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem Slot;
-            public TItem Unknown;
+            public TItem ReferenceMod;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
             #endregion
 
@@ -152,7 +152,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.Slot, rhs.Slot)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.ReferenceMod, rhs.ReferenceMod)) return false;
                 if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
                 return true;
             }
@@ -160,7 +160,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.Slot);
-                hash.Add(this.Unknown);
+                hash.Add(this.ReferenceMod);
                 hash.Add(this.Conditions);
                 return hash.ToHashCode();
             }
@@ -171,7 +171,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.Slot)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.ReferenceMod)) return false;
                 if (this.Conditions != null)
                 {
                     if (!eval(this.Conditions.Overall)) return false;
@@ -192,7 +192,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.Slot)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.ReferenceMod)) return true;
                 if (this.Conditions != null)
                 {
                     if (eval(this.Conditions.Overall)) return true;
@@ -220,7 +220,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.Slot = eval(this.Slot);
-                obj.Unknown = eval(this.Unknown);
+                obj.ReferenceMod = eval(this.ReferenceMod);
                 if (Conditions != null)
                 {
                     obj.Conditions = new MaskItem<R, IEnumerable<MaskItemIndexed<R, Condition.Mask<R>?>>?>(eval(this.Conditions.Overall), []);
@@ -258,9 +258,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Slot, "Slot");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.ReferenceMod ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(ReferenceMod, "ReferenceMod");
                     }
                     if ((printMask?.Conditions?.Overall ?? true)
                         && Conditions is {} ConditionsItem)
@@ -306,7 +306,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? Slot;
-            public Exception? Unknown;
+            public Exception? ReferenceMod;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
             #endregion
 
@@ -318,8 +318,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case LegendaryItemLnamEntry_FieldIndex.Slot:
                         return Slot;
-                    case LegendaryItemLnamEntry_FieldIndex.Unknown:
-                        return Unknown;
+                    case LegendaryItemLnamEntry_FieldIndex.ReferenceMod:
+                        return ReferenceMod;
                     case LegendaryItemLnamEntry_FieldIndex.Conditions:
                         return Conditions;
                     default:
@@ -335,8 +335,8 @@ namespace Mutagen.Bethesda.Starfield
                     case LegendaryItemLnamEntry_FieldIndex.Slot:
                         this.Slot = ex;
                         break;
-                    case LegendaryItemLnamEntry_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case LegendaryItemLnamEntry_FieldIndex.ReferenceMod:
+                        this.ReferenceMod = ex;
                         break;
                     case LegendaryItemLnamEntry_FieldIndex.Conditions:
                         this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
@@ -354,8 +354,8 @@ namespace Mutagen.Bethesda.Starfield
                     case LegendaryItemLnamEntry_FieldIndex.Slot:
                         this.Slot = (Exception?)obj;
                         break;
-                    case LegendaryItemLnamEntry_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case LegendaryItemLnamEntry_FieldIndex.ReferenceMod:
+                        this.ReferenceMod = (Exception?)obj;
                         break;
                     case LegendaryItemLnamEntry_FieldIndex.Conditions:
                         this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
@@ -369,7 +369,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Slot != null) return true;
-                if (Unknown != null) return true;
+                if (ReferenceMod != null) return true;
                 if (Conditions != null) return true;
                 return false;
             }
@@ -400,7 +400,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Slot, "Slot");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(ReferenceMod, "ReferenceMod");
                 }
                 if (Conditions is {} ConditionsItem)
                 {
@@ -429,7 +429,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Slot = this.Slot.Combine(rhs.Slot);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.ReferenceMod = this.ReferenceMod.Combine(rhs.ReferenceMod);
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
                 return ret;
             }
@@ -455,7 +455,7 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool Slot;
-            public bool Unknown;
+            public bool ReferenceMod;
             public Condition.TranslationMask? Conditions;
             #endregion
 
@@ -467,7 +467,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.Slot = defaultOn;
-                this.Unknown = defaultOn;
+                this.ReferenceMod = defaultOn;
             }
 
             #endregion
@@ -484,7 +484,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((Slot, null));
-                ret.Add((Unknown, null));
+                ret.Add((ReferenceMod, null));
                 ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
             }
 
@@ -565,7 +565,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<ILegendaryItemLnamEntry>
     {
         new LegendaryItem.StarSlot Slot { get; set; }
-        new UInt32 Unknown { get; set; }
+        new UInt32 ReferenceMod { get; set; }
         new ExtendedList<Condition>? Conditions { get; set; }
     }
 
@@ -583,7 +583,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => LegendaryItemLnamEntry_Registration.Instance;
         LegendaryItem.StarSlot Slot { get; }
-        UInt32 Unknown { get; }
+        UInt32 ReferenceMod { get; }
         IReadOnlyList<IConditionGetter>? Conditions { get; }
 
     }
@@ -755,7 +755,7 @@ namespace Mutagen.Bethesda.Starfield
     internal enum LegendaryItemLnamEntry_FieldIndex
     {
         Slot = 0,
-        Unknown = 1,
+        ReferenceMod = 1,
         Conditions = 2,
     }
     #endregion
@@ -849,7 +849,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Slot = default(LegendaryItem.StarSlot);
-            item.Unknown = default(UInt32);
+            item.ReferenceMod = default(UInt32);
             item.Conditions = null;
         }
         
@@ -903,7 +903,7 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Slot = item.Slot == rhs.Slot;
-            ret.Unknown = item.Unknown == rhs.Unknown;
+            ret.ReferenceMod = item.ReferenceMod == rhs.ReferenceMod;
             ret.Conditions = item.Conditions.CollectionEqualsHelper(
                 rhs.Conditions,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -956,9 +956,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Slot, "Slot");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.ReferenceMod ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.ReferenceMod, "ReferenceMod");
             }
             if ((printMask?.Conditions?.Overall ?? true)
                 && item.Conditions is {} ConditionsItem)
@@ -988,9 +988,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Slot != rhs.Slot) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)LegendaryItemLnamEntry_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)LegendaryItemLnamEntry_FieldIndex.ReferenceMod) ?? true))
             {
-                if (lhs.Unknown != rhs.Unknown) return false;
+                if (lhs.ReferenceMod != rhs.ReferenceMod) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)LegendaryItemLnamEntry_FieldIndex.Conditions) ?? true))
             {
@@ -1003,7 +1003,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Slot);
-            hash.Add(item.Unknown);
+            hash.Add(item.ReferenceMod);
             if (item.Conditions is {} Conditionsitem)
             {
                 foreach (var subItem in Conditionsitem)
@@ -1054,9 +1054,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Slot = rhs.Slot;
             }
-            if ((copyMask?.GetShouldTranslate((int)LegendaryItemLnamEntry_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)LegendaryItemLnamEntry_FieldIndex.ReferenceMod) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.ReferenceMod = rhs.ReferenceMod;
             }
             if ((copyMask?.GetShouldTranslate((int)LegendaryItemLnamEntry_FieldIndex.Conditions) ?? true))
             {
@@ -1202,7 +1202,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer,
                 item.Slot,
                 length: 4);
-            writer.Write(item.Unknown);
+            writer.Write(item.ReferenceMod);
         }
 
         public static void WriteRecordTypes(
@@ -1263,7 +1263,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Slot = EnumBinaryTranslation<LegendaryItem.StarSlot, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
-            item.Unknown = frame.ReadUInt32();
+            item.ReferenceMod = frame.ReadUInt32();
         }
 
         public static ParseResult FillBinaryRecordTypes(
@@ -1362,7 +1362,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public LegendaryItem.StarSlot Slot => (LegendaryItem.StarSlot)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x0, 0x4));
-        public UInt32 Unknown => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x4, 0x4));
+        public UInt32 ReferenceMod => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x4, 0x4));
         public IReadOnlyList<IConditionGetter>? Conditions { get; private set; }
         partial void CustomFactoryEnd(
             OverlayStream stream,

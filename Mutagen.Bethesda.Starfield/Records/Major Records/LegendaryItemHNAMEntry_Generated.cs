@@ -52,11 +52,11 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Unknown1
-        public UInt32 Unknown1 { get; set; } = default(UInt32);
+        #region Tier
+        public UInt32 Tier { get; set; } = default(UInt32);
         #endregion
-        #region Unknown2
-        public UInt32 Unknown2 { get; set; } = default(UInt32);
+        #region ReferencedModIndex
+        public UInt32 ReferencedModIndex { get; set; } = default(UInt32);
         #endregion
         #region Keyword
         private readonly IFormLink<IKeywordGetter> _Keyword = new FormLink<IKeywordGetter>();
@@ -107,18 +107,18 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Unknown1 = initialValue;
-                this.Unknown2 = initialValue;
+                this.Tier = initialValue;
+                this.ReferencedModIndex = initialValue;
                 this.Keyword = initialValue;
             }
 
             public Mask(
-                TItem Unknown1,
-                TItem Unknown2,
+                TItem Tier,
+                TItem ReferencedModIndex,
                 TItem Keyword)
             {
-                this.Unknown1 = Unknown1;
-                this.Unknown2 = Unknown2;
+                this.Tier = Tier;
+                this.ReferencedModIndex = ReferencedModIndex;
                 this.Keyword = Keyword;
             }
 
@@ -131,8 +131,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Unknown1;
-            public TItem Unknown2;
+            public TItem Tier;
+            public TItem ReferencedModIndex;
             public TItem Keyword;
             #endregion
 
@@ -146,16 +146,16 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.Tier, rhs.Tier)) return false;
+                if (!object.Equals(this.ReferencedModIndex, rhs.ReferencedModIndex)) return false;
                 if (!object.Equals(this.Keyword, rhs.Keyword)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Unknown1);
-                hash.Add(this.Unknown2);
+                hash.Add(this.Tier);
+                hash.Add(this.ReferencedModIndex);
                 hash.Add(this.Keyword);
                 return hash.ToHashCode();
             }
@@ -165,8 +165,8 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Unknown1)) return false;
-                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.Tier)) return false;
+                if (!eval(this.ReferencedModIndex)) return false;
                 if (!eval(this.Keyword)) return false;
                 return true;
             }
@@ -175,8 +175,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Unknown1)) return true;
-                if (eval(this.Unknown2)) return true;
+                if (eval(this.Tier)) return true;
+                if (eval(this.ReferencedModIndex)) return true;
                 if (eval(this.Keyword)) return true;
                 return false;
             }
@@ -192,8 +192,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Unknown1 = eval(this.Unknown1);
-                obj.Unknown2 = eval(this.Unknown2);
+                obj.Tier = eval(this.Tier);
+                obj.ReferencedModIndex = eval(this.ReferencedModIndex);
                 obj.Keyword = eval(this.Keyword);
             }
             #endregion
@@ -213,13 +213,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(LegendaryItemHNAMEntry.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Unknown1 ?? true)
+                    if (printMask?.Tier ?? true)
                     {
-                        sb.AppendItem(Unknown1, "Unknown1");
+                        sb.AppendItem(Tier, "Tier");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.ReferencedModIndex ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(ReferencedModIndex, "ReferencedModIndex");
                     }
                     if (printMask?.Keyword ?? true)
                     {
@@ -249,8 +249,8 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Unknown1;
-            public Exception? Unknown2;
+            public Exception? Tier;
+            public Exception? ReferencedModIndex;
             public Exception? Keyword;
             #endregion
 
@@ -260,10 +260,10 @@ namespace Mutagen.Bethesda.Starfield
                 LegendaryItemHNAMEntry_FieldIndex enu = (LegendaryItemHNAMEntry_FieldIndex)index;
                 switch (enu)
                 {
-                    case LegendaryItemHNAMEntry_FieldIndex.Unknown1:
-                        return Unknown1;
-                    case LegendaryItemHNAMEntry_FieldIndex.Unknown2:
-                        return Unknown2;
+                    case LegendaryItemHNAMEntry_FieldIndex.Tier:
+                        return Tier;
+                    case LegendaryItemHNAMEntry_FieldIndex.ReferencedModIndex:
+                        return ReferencedModIndex;
                     case LegendaryItemHNAMEntry_FieldIndex.Keyword:
                         return Keyword;
                     default:
@@ -276,11 +276,11 @@ namespace Mutagen.Bethesda.Starfield
                 LegendaryItemHNAMEntry_FieldIndex enu = (LegendaryItemHNAMEntry_FieldIndex)index;
                 switch (enu)
                 {
-                    case LegendaryItemHNAMEntry_FieldIndex.Unknown1:
-                        this.Unknown1 = ex;
+                    case LegendaryItemHNAMEntry_FieldIndex.Tier:
+                        this.Tier = ex;
                         break;
-                    case LegendaryItemHNAMEntry_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case LegendaryItemHNAMEntry_FieldIndex.ReferencedModIndex:
+                        this.ReferencedModIndex = ex;
                         break;
                     case LegendaryItemHNAMEntry_FieldIndex.Keyword:
                         this.Keyword = ex;
@@ -295,11 +295,11 @@ namespace Mutagen.Bethesda.Starfield
                 LegendaryItemHNAMEntry_FieldIndex enu = (LegendaryItemHNAMEntry_FieldIndex)index;
                 switch (enu)
                 {
-                    case LegendaryItemHNAMEntry_FieldIndex.Unknown1:
-                        this.Unknown1 = (Exception?)obj;
+                    case LegendaryItemHNAMEntry_FieldIndex.Tier:
+                        this.Tier = (Exception?)obj;
                         break;
-                    case LegendaryItemHNAMEntry_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case LegendaryItemHNAMEntry_FieldIndex.ReferencedModIndex:
+                        this.ReferencedModIndex = (Exception?)obj;
                         break;
                     case LegendaryItemHNAMEntry_FieldIndex.Keyword:
                         this.Keyword = (Exception?)obj;
@@ -312,8 +312,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Unknown1 != null) return true;
-                if (Unknown2 != null) return true;
+                if (Tier != null) return true;
+                if (ReferencedModIndex != null) return true;
                 if (Keyword != null) return true;
                 return false;
             }
@@ -341,10 +341,10 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Unknown1, "Unknown1");
+                    sb.AppendItem(Tier, "Tier");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(ReferencedModIndex, "ReferencedModIndex");
                 }
                 {
                     sb.AppendItem(Keyword, "Keyword");
@@ -357,8 +357,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.Tier = this.Tier.Combine(rhs.Tier);
+                ret.ReferencedModIndex = this.ReferencedModIndex.Combine(rhs.ReferencedModIndex);
                 ret.Keyword = this.Keyword.Combine(rhs.Keyword);
                 return ret;
             }
@@ -383,8 +383,8 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Unknown1;
-            public bool Unknown2;
+            public bool Tier;
+            public bool ReferencedModIndex;
             public bool Keyword;
             #endregion
 
@@ -395,8 +395,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Unknown1 = defaultOn;
-                this.Unknown2 = defaultOn;
+                this.Tier = defaultOn;
+                this.ReferencedModIndex = defaultOn;
                 this.Keyword = defaultOn;
             }
 
@@ -413,8 +413,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Unknown1, null));
-                ret.Add((Unknown2, null));
+                ret.Add((Tier, null));
+                ret.Add((ReferencedModIndex, null));
                 ret.Add((Keyword, null));
             }
 
@@ -494,8 +494,8 @@ namespace Mutagen.Bethesda.Starfield
         ILegendaryItemHNAMEntryGetter,
         ILoquiObjectSetter<ILegendaryItemHNAMEntry>
     {
-        new UInt32 Unknown1 { get; set; }
-        new UInt32 Unknown2 { get; set; }
+        new UInt32 Tier { get; set; }
+        new UInt32 ReferencedModIndex { get; set; }
         new IFormLink<IKeywordGetter> Keyword { get; set; }
     }
 
@@ -512,8 +512,8 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => LegendaryItemHNAMEntry_Registration.Instance;
-        UInt32 Unknown1 { get; }
-        UInt32 Unknown2 { get; }
+        UInt32 Tier { get; }
+        UInt32 ReferencedModIndex { get; }
         IFormLinkGetter<IKeywordGetter> Keyword { get; }
 
     }
@@ -684,8 +684,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum LegendaryItemHNAMEntry_FieldIndex
     {
-        Unknown1 = 0,
-        Unknown2 = 1,
+        Tier = 0,
+        ReferencedModIndex = 1,
         Keyword = 2,
     }
     #endregion
@@ -765,8 +765,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ILegendaryItemHNAMEntry item)
         {
             ClearPartial();
-            item.Unknown1 = default(UInt32);
-            item.Unknown2 = default(UInt32);
+            item.Tier = default(UInt32);
+            item.ReferencedModIndex = default(UInt32);
             item.Keyword.Clear();
         }
         
@@ -818,8 +818,8 @@ namespace Mutagen.Bethesda.Starfield
             LegendaryItemHNAMEntry.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Unknown1 = item.Unknown1 == rhs.Unknown1;
-            ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
+            ret.Tier = item.Tier == rhs.Tier;
+            ret.ReferencedModIndex = item.ReferencedModIndex == rhs.ReferencedModIndex;
             ret.Keyword = item.Keyword.Equals(rhs.Keyword);
         }
         
@@ -865,13 +865,13 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             LegendaryItemHNAMEntry.Mask<bool>? printMask = null)
         {
-            if (printMask?.Unknown1 ?? true)
+            if (printMask?.Tier ?? true)
             {
-                sb.AppendItem(item.Unknown1, "Unknown1");
+                sb.AppendItem(item.Tier, "Tier");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.ReferencedModIndex ?? true)
             {
-                sb.AppendItem(item.Unknown2, "Unknown2");
+                sb.AppendItem(item.ReferencedModIndex, "ReferencedModIndex");
             }
             if (printMask?.Keyword ?? true)
             {
@@ -886,13 +886,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)LegendaryItemHNAMEntry_FieldIndex.Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)LegendaryItemHNAMEntry_FieldIndex.Tier) ?? true))
             {
-                if (lhs.Unknown1 != rhs.Unknown1) return false;
+                if (lhs.Tier != rhs.Tier) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)LegendaryItemHNAMEntry_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)LegendaryItemHNAMEntry_FieldIndex.ReferencedModIndex) ?? true))
             {
-                if (lhs.Unknown2 != rhs.Unknown2) return false;
+                if (lhs.ReferencedModIndex != rhs.ReferencedModIndex) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)LegendaryItemHNAMEntry_FieldIndex.Keyword) ?? true))
             {
@@ -904,8 +904,8 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ILegendaryItemHNAMEntryGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Unknown1);
-            hash.Add(item.Unknown2);
+            hash.Add(item.Tier);
+            hash.Add(item.ReferencedModIndex);
             hash.Add(item.Keyword);
             return hash.ToHashCode();
         }
@@ -940,13 +940,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)LegendaryItemHNAMEntry_FieldIndex.Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)LegendaryItemHNAMEntry_FieldIndex.Tier) ?? true))
             {
-                item.Unknown1 = rhs.Unknown1;
+                item.Tier = rhs.Tier;
             }
-            if ((copyMask?.GetShouldTranslate((int)LegendaryItemHNAMEntry_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)LegendaryItemHNAMEntry_FieldIndex.ReferencedModIndex) ?? true))
             {
-                item.Unknown2 = rhs.Unknown2;
+                item.ReferencedModIndex = rhs.ReferencedModIndex;
             }
             if ((copyMask?.GetShouldTranslate((int)LegendaryItemHNAMEntry_FieldIndex.Keyword) ?? true))
             {
@@ -1060,8 +1060,8 @@ namespace Mutagen.Bethesda.Starfield
             ILegendaryItemHNAMEntryGetter item,
             MutagenWriter writer)
         {
-            writer.Write(item.Unknown1);
-            writer.Write(item.Unknown2);
+            writer.Write(item.Tier);
+            writer.Write(item.ReferencedModIndex);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.Keyword);
@@ -1098,8 +1098,8 @@ namespace Mutagen.Bethesda.Starfield
             ILegendaryItemHNAMEntry item,
             MutagenFrame frame)
         {
-            item.Unknown1 = frame.ReadUInt32();
-            item.Unknown2 = frame.ReadUInt32();
+            item.Tier = frame.ReadUInt32();
+            item.ReferencedModIndex = frame.ReadUInt32();
             item.Keyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
         }
 
@@ -1167,8 +1167,8 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public UInt32 Unknown1 => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x0, 0x4));
-        public UInt32 Unknown2 => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x4, 0x4));
+        public UInt32 Tier => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x0, 0x4));
+        public UInt32 ReferencedModIndex => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x4, 0x4));
         public IFormLinkGetter<IKeywordGetter> Keyword => FormLinkBinaryTranslation.Instance.OverlayFactory<IKeywordGetter>(_package, _structData.Span.Slice(0x8, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,

@@ -38,7 +38,7 @@ public class ConditionFunctionTests
         content.Write(new byte[3]);
         content.Write(BitConverter.GetBytes(1f)); // Comparison value
         content.Write(BitConverter.GetBytes(function));
-        content.Write(BitConverter.GetBytes((ushort)0)); // Unknown2
+        content.Write(BitConverter.GetBytes((ushort)0)); // Unused2
         content.Write(BitConverter.GetBytes(parameterOne));
         content.Write(BitConverter.GetBytes(parameterTwo));
         content.Write(BitConverter.GetBytes((int)Condition.RunOnType.Subject));

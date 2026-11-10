@@ -4,9 +4,9 @@
     <Fields>
       <Enum name="CompareOperator" enumName="CompareOperator" binary="NoGeneration" />
       <Enum name="Flags" enumName="Condition.Flag" binary="Custom" byteLength="1" />
-      <ByteArray name="Unknown1" byteLength="3" nullable="False" />
+      <ByteArray name="Unused1" byteLength="3" nullable="False" />
       <CustomLogic name="FunctionParse" />
-      <UInt16 name="Unknown2" binary="NoGeneration" />
+      <UInt16 name="Unused2" binary="NoGeneration" />
       <RefDirect name="Data" binary="NoGeneration" refName="ConditionData" generateClassMembers="false" />
     </Fields>
     <AdditionalContainedRecordType>CITC</AdditionalContainedRecordType>
