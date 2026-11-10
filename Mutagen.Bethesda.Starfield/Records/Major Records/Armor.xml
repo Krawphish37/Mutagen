@@ -81,12 +81,6 @@
     <LinkInterface>IExplodeSpawn</LinkInterface>
     <LinkInterface>IResearchResourceTarget</LinkInterface>
   </Object>
-  <Object name="ArmorMorph" objType="Subrecord" >
-    <Fields>
-      <FormLink name="WorldMorph" recordType="NAM4" refName="MorphableObject" />
-      <FormLink name="FirstPersonMorph" recordType="NAM5" refName="MorphableObject" />
-    </Fields>
-  </Object>
   <Object name="ArmorAddonModel" objType="Subrecord">
     <Fields>
       <UInt16 name="AddonIndex" recordType="INDX" nullable="False" />
