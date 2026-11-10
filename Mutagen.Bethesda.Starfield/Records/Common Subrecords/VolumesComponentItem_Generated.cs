@@ -52,25 +52,25 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Matrix1
-        public VolumesMatrix Matrix1 { get; set; } = new VolumesMatrix();
+        #region Row0
+        public VolumesMatrix Row0 { get; set; } = new VolumesMatrix();
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IVolumesMatrixGetter IVolumesComponentItemGetter.Matrix1 => Matrix1;
+        IVolumesMatrixGetter IVolumesComponentItemGetter.Row0 => Row0;
         #endregion
-        #region Matrix2
-        public VolumesMatrix Matrix2 { get; set; } = new VolumesMatrix();
+        #region Row1
+        public VolumesMatrix Row1 { get; set; } = new VolumesMatrix();
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IVolumesMatrixGetter IVolumesComponentItemGetter.Matrix2 => Matrix2;
+        IVolumesMatrixGetter IVolumesComponentItemGetter.Row1 => Row1;
         #endregion
-        #region Matrix3
-        public VolumesMatrix Matrix3 { get; set; } = new VolumesMatrix();
+        #region Row2
+        public VolumesMatrix Row2 { get; set; } = new VolumesMatrix();
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IVolumesMatrixGetter IVolumesComponentItemGetter.Matrix3 => Matrix3;
+        IVolumesMatrixGetter IVolumesComponentItemGetter.Row2 => Row2;
         #endregion
-        #region Matrix4
-        public VolumesMatrix Matrix4 { get; set; } = new VolumesMatrix();
+        #region Translation
+        public VolumesMatrix Translation { get; set; } = new VolumesMatrix();
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IVolumesMatrixGetter IVolumesComponentItemGetter.Matrix4 => Matrix4;
+        IVolumesMatrixGetter IVolumesComponentItemGetter.Translation => Translation;
         #endregion
         #region Unknown1
         public Single Unknown1 { get; set; } = default(Single);
@@ -125,10 +125,10 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Matrix1 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(initialValue, new VolumesMatrix.Mask<TItem>(initialValue));
-                this.Matrix2 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(initialValue, new VolumesMatrix.Mask<TItem>(initialValue));
-                this.Matrix3 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(initialValue, new VolumesMatrix.Mask<TItem>(initialValue));
-                this.Matrix4 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(initialValue, new VolumesMatrix.Mask<TItem>(initialValue));
+                this.Row0 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(initialValue, new VolumesMatrix.Mask<TItem>(initialValue));
+                this.Row1 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(initialValue, new VolumesMatrix.Mask<TItem>(initialValue));
+                this.Row2 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(initialValue, new VolumesMatrix.Mask<TItem>(initialValue));
+                this.Translation = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(initialValue, new VolumesMatrix.Mask<TItem>(initialValue));
                 this.Unknown1 = initialValue;
                 this.Unknown2 = initialValue;
                 this.Unknown3 = initialValue;
@@ -136,19 +136,19 @@ namespace Mutagen.Bethesda.Starfield
             }
 
             public Mask(
-                TItem Matrix1,
-                TItem Matrix2,
-                TItem Matrix3,
-                TItem Matrix4,
+                TItem Row0,
+                TItem Row1,
+                TItem Row2,
+                TItem Translation,
                 TItem Unknown1,
                 TItem Unknown2,
                 TItem Unknown3,
                 TItem Ender)
             {
-                this.Matrix1 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(Matrix1, new VolumesMatrix.Mask<TItem>(Matrix1));
-                this.Matrix2 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(Matrix2, new VolumesMatrix.Mask<TItem>(Matrix2));
-                this.Matrix3 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(Matrix3, new VolumesMatrix.Mask<TItem>(Matrix3));
-                this.Matrix4 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(Matrix4, new VolumesMatrix.Mask<TItem>(Matrix4));
+                this.Row0 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(Row0, new VolumesMatrix.Mask<TItem>(Row0));
+                this.Row1 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(Row1, new VolumesMatrix.Mask<TItem>(Row1));
+                this.Row2 = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(Row2, new VolumesMatrix.Mask<TItem>(Row2));
+                this.Translation = new MaskItem<TItem, VolumesMatrix.Mask<TItem>?>(Translation, new VolumesMatrix.Mask<TItem>(Translation));
                 this.Unknown1 = Unknown1;
                 this.Unknown2 = Unknown2;
                 this.Unknown3 = Unknown3;
@@ -164,10 +164,10 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public MaskItem<TItem, VolumesMatrix.Mask<TItem>?>? Matrix1 { get; set; }
-            public MaskItem<TItem, VolumesMatrix.Mask<TItem>?>? Matrix2 { get; set; }
-            public MaskItem<TItem, VolumesMatrix.Mask<TItem>?>? Matrix3 { get; set; }
-            public MaskItem<TItem, VolumesMatrix.Mask<TItem>?>? Matrix4 { get; set; }
+            public MaskItem<TItem, VolumesMatrix.Mask<TItem>?>? Row0 { get; set; }
+            public MaskItem<TItem, VolumesMatrix.Mask<TItem>?>? Row1 { get; set; }
+            public MaskItem<TItem, VolumesMatrix.Mask<TItem>?>? Row2 { get; set; }
+            public MaskItem<TItem, VolumesMatrix.Mask<TItem>?>? Translation { get; set; }
             public TItem Unknown1;
             public TItem Unknown2;
             public TItem Unknown3;
@@ -184,10 +184,10 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Matrix1, rhs.Matrix1)) return false;
-                if (!object.Equals(this.Matrix2, rhs.Matrix2)) return false;
-                if (!object.Equals(this.Matrix3, rhs.Matrix3)) return false;
-                if (!object.Equals(this.Matrix4, rhs.Matrix4)) return false;
+                if (!object.Equals(this.Row0, rhs.Row0)) return false;
+                if (!object.Equals(this.Row1, rhs.Row1)) return false;
+                if (!object.Equals(this.Row2, rhs.Row2)) return false;
+                if (!object.Equals(this.Translation, rhs.Translation)) return false;
                 if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
                 if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
                 if (!object.Equals(this.Unknown3, rhs.Unknown3)) return false;
@@ -197,10 +197,10 @@ namespace Mutagen.Bethesda.Starfield
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Matrix1);
-                hash.Add(this.Matrix2);
-                hash.Add(this.Matrix3);
-                hash.Add(this.Matrix4);
+                hash.Add(this.Row0);
+                hash.Add(this.Row1);
+                hash.Add(this.Row2);
+                hash.Add(this.Translation);
                 hash.Add(this.Unknown1);
                 hash.Add(this.Unknown2);
                 hash.Add(this.Unknown3);
@@ -213,25 +213,25 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (Matrix1 != null)
+                if (Row0 != null)
                 {
-                    if (!eval(this.Matrix1.Overall)) return false;
-                    if (this.Matrix1.Specific != null && !this.Matrix1.Specific.All(eval)) return false;
+                    if (!eval(this.Row0.Overall)) return false;
+                    if (this.Row0.Specific != null && !this.Row0.Specific.All(eval)) return false;
                 }
-                if (Matrix2 != null)
+                if (Row1 != null)
                 {
-                    if (!eval(this.Matrix2.Overall)) return false;
-                    if (this.Matrix2.Specific != null && !this.Matrix2.Specific.All(eval)) return false;
+                    if (!eval(this.Row1.Overall)) return false;
+                    if (this.Row1.Specific != null && !this.Row1.Specific.All(eval)) return false;
                 }
-                if (Matrix3 != null)
+                if (Row2 != null)
                 {
-                    if (!eval(this.Matrix3.Overall)) return false;
-                    if (this.Matrix3.Specific != null && !this.Matrix3.Specific.All(eval)) return false;
+                    if (!eval(this.Row2.Overall)) return false;
+                    if (this.Row2.Specific != null && !this.Row2.Specific.All(eval)) return false;
                 }
-                if (Matrix4 != null)
+                if (Translation != null)
                 {
-                    if (!eval(this.Matrix4.Overall)) return false;
-                    if (this.Matrix4.Specific != null && !this.Matrix4.Specific.All(eval)) return false;
+                    if (!eval(this.Translation.Overall)) return false;
+                    if (this.Translation.Specific != null && !this.Translation.Specific.All(eval)) return false;
                 }
                 if (!eval(this.Unknown1)) return false;
                 if (!eval(this.Unknown2)) return false;
@@ -248,25 +248,25 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (Matrix1 != null)
+                if (Row0 != null)
                 {
-                    if (eval(this.Matrix1.Overall)) return true;
-                    if (this.Matrix1.Specific != null && this.Matrix1.Specific.Any(eval)) return true;
+                    if (eval(this.Row0.Overall)) return true;
+                    if (this.Row0.Specific != null && this.Row0.Specific.Any(eval)) return true;
                 }
-                if (Matrix2 != null)
+                if (Row1 != null)
                 {
-                    if (eval(this.Matrix2.Overall)) return true;
-                    if (this.Matrix2.Specific != null && this.Matrix2.Specific.Any(eval)) return true;
+                    if (eval(this.Row1.Overall)) return true;
+                    if (this.Row1.Specific != null && this.Row1.Specific.Any(eval)) return true;
                 }
-                if (Matrix3 != null)
+                if (Row2 != null)
                 {
-                    if (eval(this.Matrix3.Overall)) return true;
-                    if (this.Matrix3.Specific != null && this.Matrix3.Specific.Any(eval)) return true;
+                    if (eval(this.Row2.Overall)) return true;
+                    if (this.Row2.Specific != null && this.Row2.Specific.Any(eval)) return true;
                 }
-                if (Matrix4 != null)
+                if (Translation != null)
                 {
-                    if (eval(this.Matrix4.Overall)) return true;
-                    if (this.Matrix4.Specific != null && this.Matrix4.Specific.Any(eval)) return true;
+                    if (eval(this.Translation.Overall)) return true;
+                    if (this.Translation.Specific != null && this.Translation.Specific.Any(eval)) return true;
                 }
                 if (eval(this.Unknown1)) return true;
                 if (eval(this.Unknown2)) return true;
@@ -290,10 +290,10 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Matrix1 = this.Matrix1 == null ? null : new MaskItem<R, VolumesMatrix.Mask<R>?>(eval(this.Matrix1.Overall), this.Matrix1.Specific?.Translate(eval));
-                obj.Matrix2 = this.Matrix2 == null ? null : new MaskItem<R, VolumesMatrix.Mask<R>?>(eval(this.Matrix2.Overall), this.Matrix2.Specific?.Translate(eval));
-                obj.Matrix3 = this.Matrix3 == null ? null : new MaskItem<R, VolumesMatrix.Mask<R>?>(eval(this.Matrix3.Overall), this.Matrix3.Specific?.Translate(eval));
-                obj.Matrix4 = this.Matrix4 == null ? null : new MaskItem<R, VolumesMatrix.Mask<R>?>(eval(this.Matrix4.Overall), this.Matrix4.Specific?.Translate(eval));
+                obj.Row0 = this.Row0 == null ? null : new MaskItem<R, VolumesMatrix.Mask<R>?>(eval(this.Row0.Overall), this.Row0.Specific?.Translate(eval));
+                obj.Row1 = this.Row1 == null ? null : new MaskItem<R, VolumesMatrix.Mask<R>?>(eval(this.Row1.Overall), this.Row1.Specific?.Translate(eval));
+                obj.Row2 = this.Row2 == null ? null : new MaskItem<R, VolumesMatrix.Mask<R>?>(eval(this.Row2.Overall), this.Row2.Specific?.Translate(eval));
+                obj.Translation = this.Translation == null ? null : new MaskItem<R, VolumesMatrix.Mask<R>?>(eval(this.Translation.Overall), this.Translation.Specific?.Translate(eval));
                 obj.Unknown1 = eval(this.Unknown1);
                 obj.Unknown2 = eval(this.Unknown2);
                 obj.Unknown3 = eval(this.Unknown3);
@@ -316,21 +316,21 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(VolumesComponentItem.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Matrix1?.Overall ?? true)
+                    if (printMask?.Row0?.Overall ?? true)
                     {
-                        Matrix1?.Print(sb);
+                        Row0?.Print(sb);
                     }
-                    if (printMask?.Matrix2?.Overall ?? true)
+                    if (printMask?.Row1?.Overall ?? true)
                     {
-                        Matrix2?.Print(sb);
+                        Row1?.Print(sb);
                     }
-                    if (printMask?.Matrix3?.Overall ?? true)
+                    if (printMask?.Row2?.Overall ?? true)
                     {
-                        Matrix3?.Print(sb);
+                        Row2?.Print(sb);
                     }
-                    if (printMask?.Matrix4?.Overall ?? true)
+                    if (printMask?.Translation?.Overall ?? true)
                     {
-                        Matrix4?.Print(sb);
+                        Translation?.Print(sb);
                     }
                     if (printMask?.Unknown1 ?? true)
                     {
@@ -372,10 +372,10 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public MaskItem<Exception?, VolumesMatrix.ErrorMask?>? Matrix1;
-            public MaskItem<Exception?, VolumesMatrix.ErrorMask?>? Matrix2;
-            public MaskItem<Exception?, VolumesMatrix.ErrorMask?>? Matrix3;
-            public MaskItem<Exception?, VolumesMatrix.ErrorMask?>? Matrix4;
+            public MaskItem<Exception?, VolumesMatrix.ErrorMask?>? Row0;
+            public MaskItem<Exception?, VolumesMatrix.ErrorMask?>? Row1;
+            public MaskItem<Exception?, VolumesMatrix.ErrorMask?>? Row2;
+            public MaskItem<Exception?, VolumesMatrix.ErrorMask?>? Translation;
             public Exception? Unknown1;
             public Exception? Unknown2;
             public Exception? Unknown3;
@@ -388,14 +388,14 @@ namespace Mutagen.Bethesda.Starfield
                 VolumesComponentItem_FieldIndex enu = (VolumesComponentItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case VolumesComponentItem_FieldIndex.Matrix1:
-                        return Matrix1;
-                    case VolumesComponentItem_FieldIndex.Matrix2:
-                        return Matrix2;
-                    case VolumesComponentItem_FieldIndex.Matrix3:
-                        return Matrix3;
-                    case VolumesComponentItem_FieldIndex.Matrix4:
-                        return Matrix4;
+                    case VolumesComponentItem_FieldIndex.Row0:
+                        return Row0;
+                    case VolumesComponentItem_FieldIndex.Row1:
+                        return Row1;
+                    case VolumesComponentItem_FieldIndex.Row2:
+                        return Row2;
+                    case VolumesComponentItem_FieldIndex.Translation:
+                        return Translation;
                     case VolumesComponentItem_FieldIndex.Unknown1:
                         return Unknown1;
                     case VolumesComponentItem_FieldIndex.Unknown2:
@@ -414,17 +414,17 @@ namespace Mutagen.Bethesda.Starfield
                 VolumesComponentItem_FieldIndex enu = (VolumesComponentItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case VolumesComponentItem_FieldIndex.Matrix1:
-                        this.Matrix1 = new MaskItem<Exception?, VolumesMatrix.ErrorMask?>(ex, null);
+                    case VolumesComponentItem_FieldIndex.Row0:
+                        this.Row0 = new MaskItem<Exception?, VolumesMatrix.ErrorMask?>(ex, null);
                         break;
-                    case VolumesComponentItem_FieldIndex.Matrix2:
-                        this.Matrix2 = new MaskItem<Exception?, VolumesMatrix.ErrorMask?>(ex, null);
+                    case VolumesComponentItem_FieldIndex.Row1:
+                        this.Row1 = new MaskItem<Exception?, VolumesMatrix.ErrorMask?>(ex, null);
                         break;
-                    case VolumesComponentItem_FieldIndex.Matrix3:
-                        this.Matrix3 = new MaskItem<Exception?, VolumesMatrix.ErrorMask?>(ex, null);
+                    case VolumesComponentItem_FieldIndex.Row2:
+                        this.Row2 = new MaskItem<Exception?, VolumesMatrix.ErrorMask?>(ex, null);
                         break;
-                    case VolumesComponentItem_FieldIndex.Matrix4:
-                        this.Matrix4 = new MaskItem<Exception?, VolumesMatrix.ErrorMask?>(ex, null);
+                    case VolumesComponentItem_FieldIndex.Translation:
+                        this.Translation = new MaskItem<Exception?, VolumesMatrix.ErrorMask?>(ex, null);
                         break;
                     case VolumesComponentItem_FieldIndex.Unknown1:
                         this.Unknown1 = ex;
@@ -448,17 +448,17 @@ namespace Mutagen.Bethesda.Starfield
                 VolumesComponentItem_FieldIndex enu = (VolumesComponentItem_FieldIndex)index;
                 switch (enu)
                 {
-                    case VolumesComponentItem_FieldIndex.Matrix1:
-                        this.Matrix1 = (MaskItem<Exception?, VolumesMatrix.ErrorMask?>?)obj;
+                    case VolumesComponentItem_FieldIndex.Row0:
+                        this.Row0 = (MaskItem<Exception?, VolumesMatrix.ErrorMask?>?)obj;
                         break;
-                    case VolumesComponentItem_FieldIndex.Matrix2:
-                        this.Matrix2 = (MaskItem<Exception?, VolumesMatrix.ErrorMask?>?)obj;
+                    case VolumesComponentItem_FieldIndex.Row1:
+                        this.Row1 = (MaskItem<Exception?, VolumesMatrix.ErrorMask?>?)obj;
                         break;
-                    case VolumesComponentItem_FieldIndex.Matrix3:
-                        this.Matrix3 = (MaskItem<Exception?, VolumesMatrix.ErrorMask?>?)obj;
+                    case VolumesComponentItem_FieldIndex.Row2:
+                        this.Row2 = (MaskItem<Exception?, VolumesMatrix.ErrorMask?>?)obj;
                         break;
-                    case VolumesComponentItem_FieldIndex.Matrix4:
-                        this.Matrix4 = (MaskItem<Exception?, VolumesMatrix.ErrorMask?>?)obj;
+                    case VolumesComponentItem_FieldIndex.Translation:
+                        this.Translation = (MaskItem<Exception?, VolumesMatrix.ErrorMask?>?)obj;
                         break;
                     case VolumesComponentItem_FieldIndex.Unknown1:
                         this.Unknown1 = (Exception?)obj;
@@ -480,10 +480,10 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Matrix1 != null) return true;
-                if (Matrix2 != null) return true;
-                if (Matrix3 != null) return true;
-                if (Matrix4 != null) return true;
+                if (Row0 != null) return true;
+                if (Row1 != null) return true;
+                if (Row2 != null) return true;
+                if (Translation != null) return true;
                 if (Unknown1 != null) return true;
                 if (Unknown2 != null) return true;
                 if (Unknown3 != null) return true;
@@ -513,10 +513,10 @@ namespace Mutagen.Bethesda.Starfield
             }
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
-                Matrix1?.Print(sb);
-                Matrix2?.Print(sb);
-                Matrix3?.Print(sb);
-                Matrix4?.Print(sb);
+                Row0?.Print(sb);
+                Row1?.Print(sb);
+                Row2?.Print(sb);
+                Translation?.Print(sb);
                 {
                     sb.AppendItem(Unknown1, "Unknown1");
                 }
@@ -535,10 +535,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Matrix1 = this.Matrix1.Combine(rhs.Matrix1, (l, r) => l.Combine(r));
-                ret.Matrix2 = this.Matrix2.Combine(rhs.Matrix2, (l, r) => l.Combine(r));
-                ret.Matrix3 = this.Matrix3.Combine(rhs.Matrix3, (l, r) => l.Combine(r));
-                ret.Matrix4 = this.Matrix4.Combine(rhs.Matrix4, (l, r) => l.Combine(r));
+                ret.Row0 = this.Row0.Combine(rhs.Row0, (l, r) => l.Combine(r));
+                ret.Row1 = this.Row1.Combine(rhs.Row1, (l, r) => l.Combine(r));
+                ret.Row2 = this.Row2.Combine(rhs.Row2, (l, r) => l.Combine(r));
+                ret.Translation = this.Translation.Combine(rhs.Translation, (l, r) => l.Combine(r));
                 ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
                 ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
                 ret.Unknown3 = this.Unknown3.Combine(rhs.Unknown3);
@@ -566,10 +566,10 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public VolumesMatrix.TranslationMask? Matrix1;
-            public VolumesMatrix.TranslationMask? Matrix2;
-            public VolumesMatrix.TranslationMask? Matrix3;
-            public VolumesMatrix.TranslationMask? Matrix4;
+            public VolumesMatrix.TranslationMask? Row0;
+            public VolumesMatrix.TranslationMask? Row1;
+            public VolumesMatrix.TranslationMask? Row2;
+            public VolumesMatrix.TranslationMask? Translation;
             public bool Unknown1;
             public bool Unknown2;
             public bool Unknown3;
@@ -601,10 +601,10 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Matrix1 != null ? Matrix1.OnOverall : DefaultOn, Matrix1?.GetCrystal()));
-                ret.Add((Matrix2 != null ? Matrix2.OnOverall : DefaultOn, Matrix2?.GetCrystal()));
-                ret.Add((Matrix3 != null ? Matrix3.OnOverall : DefaultOn, Matrix3?.GetCrystal()));
-                ret.Add((Matrix4 != null ? Matrix4.OnOverall : DefaultOn, Matrix4?.GetCrystal()));
+                ret.Add((Row0 != null ? Row0.OnOverall : DefaultOn, Row0?.GetCrystal()));
+                ret.Add((Row1 != null ? Row1.OnOverall : DefaultOn, Row1?.GetCrystal()));
+                ret.Add((Row2 != null ? Row2.OnOverall : DefaultOn, Row2?.GetCrystal()));
+                ret.Add((Translation != null ? Translation.OnOverall : DefaultOn, Translation?.GetCrystal()));
                 ret.Add((Unknown1, null));
                 ret.Add((Unknown2, null));
                 ret.Add((Unknown3, null));
@@ -681,10 +681,10 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IVolumesComponentItem>,
         IVolumesComponentItemGetter
     {
-        new VolumesMatrix Matrix1 { get; set; }
-        new VolumesMatrix Matrix2 { get; set; }
-        new VolumesMatrix Matrix3 { get; set; }
-        new VolumesMatrix Matrix4 { get; set; }
+        new VolumesMatrix Row0 { get; set; }
+        new VolumesMatrix Row1 { get; set; }
+        new VolumesMatrix Row2 { get; set; }
+        new VolumesMatrix Translation { get; set; }
         new Single Unknown1 { get; set; }
         new Single Unknown2 { get; set; }
         new Single Unknown3 { get; set; }
@@ -703,10 +703,10 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => VolumesComponentItem_Registration.Instance;
-        IVolumesMatrixGetter Matrix1 { get; }
-        IVolumesMatrixGetter Matrix2 { get; }
-        IVolumesMatrixGetter Matrix3 { get; }
-        IVolumesMatrixGetter Matrix4 { get; }
+        IVolumesMatrixGetter Row0 { get; }
+        IVolumesMatrixGetter Row1 { get; }
+        IVolumesMatrixGetter Row2 { get; }
+        IVolumesMatrixGetter Translation { get; }
         Single Unknown1 { get; }
         Single Unknown2 { get; }
         Single Unknown3 { get; }
@@ -880,10 +880,10 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum VolumesComponentItem_FieldIndex
     {
-        Matrix1 = 0,
-        Matrix2 = 1,
-        Matrix3 = 2,
-        Matrix4 = 3,
+        Row0 = 0,
+        Row1 = 1,
+        Row2 = 2,
+        Translation = 3,
         Unknown1 = 4,
         Unknown2 = 5,
         Unknown3 = 6,
@@ -966,10 +966,10 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IVolumesComponentItem item)
         {
             ClearPartial();
-            item.Matrix1.Clear();
-            item.Matrix2.Clear();
-            item.Matrix3.Clear();
-            item.Matrix4.Clear();
+            item.Row0.Clear();
+            item.Row1.Clear();
+            item.Row2.Clear();
+            item.Translation.Clear();
             item.Unknown1 = default(Single);
             item.Unknown2 = default(Single);
             item.Unknown3 = default(Single);
@@ -1023,10 +1023,10 @@ namespace Mutagen.Bethesda.Starfield
             VolumesComponentItem.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Matrix1 = MaskItemExt.Factory(item.Matrix1.GetEqualsMask(rhs.Matrix1, include), include);
-            ret.Matrix2 = MaskItemExt.Factory(item.Matrix2.GetEqualsMask(rhs.Matrix2, include), include);
-            ret.Matrix3 = MaskItemExt.Factory(item.Matrix3.GetEqualsMask(rhs.Matrix3, include), include);
-            ret.Matrix4 = MaskItemExt.Factory(item.Matrix4.GetEqualsMask(rhs.Matrix4, include), include);
+            ret.Row0 = MaskItemExt.Factory(item.Row0.GetEqualsMask(rhs.Row0, include), include);
+            ret.Row1 = MaskItemExt.Factory(item.Row1.GetEqualsMask(rhs.Row1, include), include);
+            ret.Row2 = MaskItemExt.Factory(item.Row2.GetEqualsMask(rhs.Row2, include), include);
+            ret.Translation = MaskItemExt.Factory(item.Translation.GetEqualsMask(rhs.Translation, include), include);
             ret.Unknown1 = item.Unknown1.EqualsWithin(rhs.Unknown1);
             ret.Unknown2 = item.Unknown2.EqualsWithin(rhs.Unknown2);
             ret.Unknown3 = item.Unknown3.EqualsWithin(rhs.Unknown3);
@@ -1075,21 +1075,21 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             VolumesComponentItem.Mask<bool>? printMask = null)
         {
-            if (printMask?.Matrix1?.Overall ?? true)
+            if (printMask?.Row0?.Overall ?? true)
             {
-                item.Matrix1?.Print(sb, "Matrix1");
+                item.Row0?.Print(sb, "Row0");
             }
-            if (printMask?.Matrix2?.Overall ?? true)
+            if (printMask?.Row1?.Overall ?? true)
             {
-                item.Matrix2?.Print(sb, "Matrix2");
+                item.Row1?.Print(sb, "Row1");
             }
-            if (printMask?.Matrix3?.Overall ?? true)
+            if (printMask?.Row2?.Overall ?? true)
             {
-                item.Matrix3?.Print(sb, "Matrix3");
+                item.Row2?.Print(sb, "Row2");
             }
-            if (printMask?.Matrix4?.Overall ?? true)
+            if (printMask?.Translation?.Overall ?? true)
             {
-                item.Matrix4?.Print(sb, "Matrix4");
+                item.Translation?.Print(sb, "Translation");
             }
             if (printMask?.Unknown1 ?? true)
             {
@@ -1116,37 +1116,37 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Matrix1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Row0) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.Matrix1, rhs.Matrix1, out var lhsMatrix1, out var rhsMatrix1, out var isMatrix1Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.Row0, rhs.Row0, out var lhsRow0, out var rhsRow0, out var isRow0Equal))
                 {
-                    if (!((VolumesMatrixCommon)((IVolumesMatrixGetter)lhsMatrix1).CommonInstance()!).Equals(lhsMatrix1, rhsMatrix1, equalsMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Matrix1))) return false;
+                    if (!((VolumesMatrixCommon)((IVolumesMatrixGetter)lhsRow0).CommonInstance()!).Equals(lhsRow0, rhsRow0, equalsMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Row0))) return false;
                 }
-                else if (!isMatrix1Equal) return false;
+                else if (!isRow0Equal) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Matrix2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Row1) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.Matrix2, rhs.Matrix2, out var lhsMatrix2, out var rhsMatrix2, out var isMatrix2Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.Row1, rhs.Row1, out var lhsRow1, out var rhsRow1, out var isRow1Equal))
                 {
-                    if (!((VolumesMatrixCommon)((IVolumesMatrixGetter)lhsMatrix2).CommonInstance()!).Equals(lhsMatrix2, rhsMatrix2, equalsMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Matrix2))) return false;
+                    if (!((VolumesMatrixCommon)((IVolumesMatrixGetter)lhsRow1).CommonInstance()!).Equals(lhsRow1, rhsRow1, equalsMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Row1))) return false;
                 }
-                else if (!isMatrix2Equal) return false;
+                else if (!isRow1Equal) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Matrix3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Row2) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.Matrix3, rhs.Matrix3, out var lhsMatrix3, out var rhsMatrix3, out var isMatrix3Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.Row2, rhs.Row2, out var lhsRow2, out var rhsRow2, out var isRow2Equal))
                 {
-                    if (!((VolumesMatrixCommon)((IVolumesMatrixGetter)lhsMatrix3).CommonInstance()!).Equals(lhsMatrix3, rhsMatrix3, equalsMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Matrix3))) return false;
+                    if (!((VolumesMatrixCommon)((IVolumesMatrixGetter)lhsRow2).CommonInstance()!).Equals(lhsRow2, rhsRow2, equalsMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Row2))) return false;
                 }
-                else if (!isMatrix3Equal) return false;
+                else if (!isRow2Equal) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Matrix4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Translation) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.Matrix4, rhs.Matrix4, out var lhsMatrix4, out var rhsMatrix4, out var isMatrix4Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.Translation, rhs.Translation, out var lhsTranslation, out var rhsTranslation, out var isTranslationEqual))
                 {
-                    if (!((VolumesMatrixCommon)((IVolumesMatrixGetter)lhsMatrix4).CommonInstance()!).Equals(lhsMatrix4, rhsMatrix4, equalsMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Matrix4))) return false;
+                    if (!((VolumesMatrixCommon)((IVolumesMatrixGetter)lhsTranslation).CommonInstance()!).Equals(lhsTranslation, rhsTranslation, equalsMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Translation))) return false;
                 }
-                else if (!isMatrix4Equal) return false;
+                else if (!isTranslationEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Unknown1) ?? true))
             {
@@ -1174,10 +1174,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IVolumesComponentItemGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Matrix1);
-            hash.Add(item.Matrix2);
-            hash.Add(item.Matrix3);
-            hash.Add(item.Matrix4);
+            hash.Add(item.Row0);
+            hash.Add(item.Row1);
+            hash.Add(item.Row2);
+            hash.Add(item.Translation);
             hash.Add(item.Unknown1);
             hash.Add(item.Unknown2);
             hash.Add(item.Unknown3);
@@ -1214,15 +1214,15 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Matrix1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Row0) ?? true))
             {
-                errorMask?.PushIndex((int)VolumesComponentItem_FieldIndex.Matrix1);
+                errorMask?.PushIndex((int)VolumesComponentItem_FieldIndex.Row0);
                 try
                 {
-                    if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Matrix1) ?? true))
+                    if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Row0) ?? true))
                     {
-                        item.Matrix1 = rhs.Matrix1.DeepCopy(
-                            copyMask: copyMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Matrix1),
+                        item.Row0 = rhs.Row0.DeepCopy(
+                            copyMask: copyMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Row0),
                             errorMask: errorMask);
                     }
                 }
@@ -1236,15 +1236,15 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Matrix2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Row1) ?? true))
             {
-                errorMask?.PushIndex((int)VolumesComponentItem_FieldIndex.Matrix2);
+                errorMask?.PushIndex((int)VolumesComponentItem_FieldIndex.Row1);
                 try
                 {
-                    if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Matrix2) ?? true))
+                    if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Row1) ?? true))
                     {
-                        item.Matrix2 = rhs.Matrix2.DeepCopy(
-                            copyMask: copyMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Matrix2),
+                        item.Row1 = rhs.Row1.DeepCopy(
+                            copyMask: copyMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Row1),
                             errorMask: errorMask);
                     }
                 }
@@ -1258,15 +1258,15 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Matrix3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Row2) ?? true))
             {
-                errorMask?.PushIndex((int)VolumesComponentItem_FieldIndex.Matrix3);
+                errorMask?.PushIndex((int)VolumesComponentItem_FieldIndex.Row2);
                 try
                 {
-                    if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Matrix3) ?? true))
+                    if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Row2) ?? true))
                     {
-                        item.Matrix3 = rhs.Matrix3.DeepCopy(
-                            copyMask: copyMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Matrix3),
+                        item.Row2 = rhs.Row2.DeepCopy(
+                            copyMask: copyMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Row2),
                             errorMask: errorMask);
                     }
                 }
@@ -1280,15 +1280,15 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Matrix4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Translation) ?? true))
             {
-                errorMask?.PushIndex((int)VolumesComponentItem_FieldIndex.Matrix4);
+                errorMask?.PushIndex((int)VolumesComponentItem_FieldIndex.Translation);
                 try
                 {
-                    if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Matrix4) ?? true))
+                    if ((copyMask?.GetShouldTranslate((int)VolumesComponentItem_FieldIndex.Translation) ?? true))
                     {
-                        item.Matrix4 = rhs.Matrix4.DeepCopy(
-                            copyMask: copyMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Matrix4),
+                        item.Translation = rhs.Translation.DeepCopy(
+                            copyMask: copyMask?.GetSubCrystal((int)VolumesComponentItem_FieldIndex.Translation),
                             errorMask: errorMask);
                     }
                 }
@@ -1447,21 +1447,21 @@ namespace Mutagen.Bethesda.Starfield
             VolumesComponentItemBinaryWriteTranslation.WriteBinaryTypeParse(
                 writer: writer,
                 item: item);
-            var Matrix1Item = item.Matrix1;
-            ((VolumesMatrixBinaryWriteTranslation)((IBinaryItem)Matrix1Item).BinaryWriteTranslator).Write(
-                item: Matrix1Item,
+            var Row0Item = item.Row0;
+            ((VolumesMatrixBinaryWriteTranslation)((IBinaryItem)Row0Item).BinaryWriteTranslator).Write(
+                item: Row0Item,
                 writer: writer);
-            var Matrix2Item = item.Matrix2;
-            ((VolumesMatrixBinaryWriteTranslation)((IBinaryItem)Matrix2Item).BinaryWriteTranslator).Write(
-                item: Matrix2Item,
+            var Row1Item = item.Row1;
+            ((VolumesMatrixBinaryWriteTranslation)((IBinaryItem)Row1Item).BinaryWriteTranslator).Write(
+                item: Row1Item,
                 writer: writer);
-            var Matrix3Item = item.Matrix3;
-            ((VolumesMatrixBinaryWriteTranslation)((IBinaryItem)Matrix3Item).BinaryWriteTranslator).Write(
-                item: Matrix3Item,
+            var Row2Item = item.Row2;
+            ((VolumesMatrixBinaryWriteTranslation)((IBinaryItem)Row2Item).BinaryWriteTranslator).Write(
+                item: Row2Item,
                 writer: writer);
-            var Matrix4Item = item.Matrix4;
-            ((VolumesMatrixBinaryWriteTranslation)((IBinaryItem)Matrix4Item).BinaryWriteTranslator).Write(
-                item: Matrix4Item,
+            var TranslationItem = item.Translation;
+            ((VolumesMatrixBinaryWriteTranslation)((IBinaryItem)TranslationItem).BinaryWriteTranslator).Write(
+                item: TranslationItem,
                 writer: writer);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
@@ -1537,10 +1537,10 @@ namespace Mutagen.Bethesda.Starfield
             VolumesComponentItemBinaryCreateTranslation.FillBinaryTypeParseCustom(
                 frame: frame,
                 item: item);
-            item.Matrix1 = Mutagen.Bethesda.Starfield.VolumesMatrix.CreateFromBinary(frame: frame);
-            item.Matrix2 = Mutagen.Bethesda.Starfield.VolumesMatrix.CreateFromBinary(frame: frame);
-            item.Matrix3 = Mutagen.Bethesda.Starfield.VolumesMatrix.CreateFromBinary(frame: frame);
-            item.Matrix4 = Mutagen.Bethesda.Starfield.VolumesMatrix.CreateFromBinary(frame: frame);
+            item.Row0 = Mutagen.Bethesda.Starfield.VolumesMatrix.CreateFromBinary(frame: frame);
+            item.Row1 = Mutagen.Bethesda.Starfield.VolumesMatrix.CreateFromBinary(frame: frame);
+            item.Row2 = Mutagen.Bethesda.Starfield.VolumesMatrix.CreateFromBinary(frame: frame);
+            item.Translation = Mutagen.Bethesda.Starfield.VolumesMatrix.CreateFromBinary(frame: frame);
             item.Unknown1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Unknown2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Unknown3 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
@@ -1625,10 +1625,10 @@ namespace Mutagen.Bethesda.Starfield
             OverlayStream stream,
             int offset);
         #endregion
-        public IVolumesMatrixGetter Matrix1 => VolumesMatrixBinaryOverlay.VolumesMatrixFactory(_structData.Slice(0x4), _package, default(TypedParseParams));
-        public IVolumesMatrixGetter Matrix2 => VolumesMatrixBinaryOverlay.VolumesMatrixFactory(_structData.Slice(0x14), _package, default(TypedParseParams));
-        public IVolumesMatrixGetter Matrix3 => VolumesMatrixBinaryOverlay.VolumesMatrixFactory(_structData.Slice(0x24), _package, default(TypedParseParams));
-        public IVolumesMatrixGetter Matrix4 => VolumesMatrixBinaryOverlay.VolumesMatrixFactory(_structData.Slice(0x34), _package, default(TypedParseParams));
+        public IVolumesMatrixGetter Row0 => VolumesMatrixBinaryOverlay.VolumesMatrixFactory(_structData.Slice(0x4), _package, default(TypedParseParams));
+        public IVolumesMatrixGetter Row1 => VolumesMatrixBinaryOverlay.VolumesMatrixFactory(_structData.Slice(0x14), _package, default(TypedParseParams));
+        public IVolumesMatrixGetter Row2 => VolumesMatrixBinaryOverlay.VolumesMatrixFactory(_structData.Slice(0x24), _package, default(TypedParseParams));
+        public IVolumesMatrixGetter Translation => VolumesMatrixBinaryOverlay.VolumesMatrixFactory(_structData.Slice(0x34), _package, default(TypedParseParams));
         public Single Unknown1 => _structData.Slice(0x44, 0x4).Float();
         public Single Unknown2 => _structData.Slice(0x48, 0x4).Float();
         public Single Unknown3 => _structData.Slice(0x4C, 0x4).Float();
