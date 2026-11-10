@@ -172,7 +172,9 @@ public sealed class ParsingMeta
         var header = ModHeaderFrame.FromPath(modPath, release, fileSystem: param.FileSystem);
         var rawMasters = param.MasterOverrides
             ?? MasterReferenceCollection.FromModHeader(modPath.ModKey, header);
-        var masters = SeparatedMasterPackage.Factory(release, modPath, header.MasterStyle, rawMasters, param.MasterFlagsLookup);
+        // Decided from the file: how the mod stores its own FormIDs (OwnFormIdStyle)
+        var masters = SeparatedMasterPackage.FactoryDetecting(release, modPath.ModKey, header.MasterStyle, rawMasters,
+            param.MasterFlagsLookup, () => param.FileSystem.GetOrDefault().File.OpenRead(modPath.Path));
         var meta = new ParsingMeta(GameConstants.Get(release), modPath.ModKey, masters);
         meta.ReadModHeaderVersion(header);
         meta.Absorb(param);
@@ -189,7 +191,9 @@ public sealed class ParsingMeta
         var rawMasters = param.MasterOverrides
             ?? MasterReferenceCollection.FromModHeader(modKey, header);
         stream.Position = 0;
-        var masters = SeparatedMasterPackage.Factory(release, modKey, header.MasterStyle, rawMasters, param.MasterFlagsLookup);
+        // Decided from the file: how the mod stores its own FormIDs (OwnFormIdStyle)
+        var masters = SeparatedMasterPackage.FactoryDetecting(release, modKey, header.MasterStyle, rawMasters,
+            param.MasterFlagsLookup, () => stream, disposeStream: false);
         var meta = new ParsingMeta(GameConstants.Get(release), modKey, masters);
         meta.ReadModHeaderVersion(header);
         meta.Absorb(param);

@@ -27,12 +27,20 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
     public ModKey CurrentMod { get; private set; }
     public IReadOnlyMasterReferenceCollection Raw { get; private set; } = null!;
 
+    /// <summary>
+    /// Whether the current mod's own FormIDs are in its own style (true) or a full index (false), when that was decided
+    /// from its file (OwnFormIdStyle) rather than by default
+    /// </summary>
+    internal bool? OwnFormIdsStyled { get; private set; }
+
     private IReadOnlyDictionary<ModKey, MasterStyleIndex> _lookup = null!;
 
     internal static readonly IReadOnlySeparatedMasterPackage EmptyNull =
         NotSeparate(new MasterReferenceCollection(ModKey.Null));
 
-    // Hack until this is better understood
+    // Official plugins that store their own FormIDs in their own style (the game's locked set). Only the default now:
+    // a plugin read from a file is written the way its own records were read (OwnFormIdStyle); this list applies to a
+    // plugin with no records of its own, one mixing both encodings, and mods not read from a file.
     private static HashSet<ModKey> _starfieldMasters = new()
     {
         "OldMars.esm", 
@@ -58,10 +66,22 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         IReadOnlyMasterReferenceCollection masters,
         IReadOnlyCache<IModMasterStyledGetter, ModKey>? masterFlagLookup)
     {
+        return Factory(release, currentModKey, style, masters, masterFlagLookup, ownFormIdsStyled: null);
+    }
+
+    /// <param name="ownFormIdsStyled">How the mod stores its own FormIDs, if known from its file (OwnFormIdStyle)</param>
+    internal static IReadOnlySeparatedMasterPackage Factory(
+        GameRelease release,
+        ModKey currentModKey,
+        MasterStyle style,
+        IReadOnlyMasterReferenceCollection masters,
+        IReadOnlyCache<IModMasterStyledGetter, ModKey>? masterFlagLookup,
+        bool? ownFormIdsStyled)
+    {
         var constants = GameConstants.Get(release);
         if (constants.SeparateMasterLoadOrders)
         {
-            return SeparatedMasterPackage.Separate(currentModKey, style, masters, masterFlagLookup);
+            return SeparatedMasterPackage.Separate(currentModKey, style, masters, masterFlagLookup, ownFormIdsStyled);
         }
         else
         {
@@ -77,7 +97,45 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
     {
         var header = ModHeaderFrame.FromPath(modPath, release, fileSystem: fileSystem);
         var masters = MasterReferenceCollection.FromModHeader(modPath.ModKey, header);
-        return Factory(release, modPath.ModKey, header.MasterStyle, masters, masterFlagLookup);
+        return FactoryDetecting(release, modPath.ModKey, header.MasterStyle, masters, masterFlagLookup,
+            () => fileSystem.GetOrDefault().File.OpenRead(modPath.Path));
+    }
+
+    /// <summary>
+    /// Builds the package for reading a mod from its file, deciding from the file how it stores its own FormIDs
+    /// </summary>
+    internal static IReadOnlySeparatedMasterPackage FactoryDetecting(
+        GameRelease release,
+        ModKey currentModKey,
+        MasterStyle style,
+        IReadOnlyMasterReferenceCollection masters,
+        IReadOnlyCache<IModMasterStyledGetter, ModKey>? masterFlagLookup,
+        Func<Stream> openFile,
+        bool disposeStream = true)
+    {
+        var package = Factory(release, currentModKey, style, masters, masterFlagLookup);
+        if (style == MasterStyle.Full
+            || package is not SeparatedMasterPackage separated)
+        {
+            return package;
+        }
+        bool? detected;
+        var stream = openFile();
+        try
+        {
+            detected = OwnFormIdStyle.Detect(
+                stream,
+                GameConstants.Get(release),
+                style,
+                fullMasters: separated.Full.Count(m => m != currentModKey),
+                mediumMasters: separated.Medium.Count(m => m != currentModKey),
+                smallMasters: separated.Small.Count(m => m != currentModKey));
+        }
+        finally
+        {
+            if (disposeStream) stream.Dispose();
+        }
+        return detected == null ? package : Factory(release, currentModKey, style, masters, masterFlagLookup, detected);
     }
 
     internal class NotSeparatedMasterPackage : IReadOnlySeparatedMasterPackage
@@ -170,7 +228,8 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         ModKey currentModKey,
         MasterStyle style,
         IReadOnlyMasterReferenceCollection masters,
-        IReadOnlyCache<IModMasterStyledGetter, ModKey>? masterFlagLookup)
+        IReadOnlyCache<IModMasterStyledGetter, ModKey>? masterFlagLookup,
+        bool? ownFormIdsStyled = null)
     {
         var normal = new List<ModKey>();
         var medium = new List<ModKey>();
@@ -234,7 +293,7 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         CheckMasterCount(currentModKey, MasterStyle.Medium, medium);
         CheckMasterCount(currentModKey, MasterStyle.Small, small);
 
-        if (_starfieldMasters.Contains(currentModKey))
+        if (ownFormIdsStyled ?? _starfieldMasters.Contains(currentModKey))
         {
             AddToListViaStyle(style, currentModKey);
         }
@@ -250,6 +309,7 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
             Small = small,
             Raw = masters,
             CurrentMod = masters.CurrentMod,
+            OwnFormIdsStyled = ownFormIdsStyled,
         };
         var lookup = new Dictionary<ModKey, MasterStyleIndex>();
         FillLookup(ret.Full, lookup, MasterStyle.Full);

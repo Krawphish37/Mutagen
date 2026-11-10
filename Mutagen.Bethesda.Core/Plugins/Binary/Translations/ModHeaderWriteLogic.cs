@@ -174,7 +174,9 @@ internal sealed class ModHeaderWriteLogic
             mod.ModKey,
             mod.GetMasterStyle(),
             writer.MetaData.MasterReferences,
-            masterFlagLookup);
+            masterFlagLookup,
+            // A mod read from a file stores its own FormIDs as it did there
+            OwnFormIdStyle.Get(mod));
 
         if (_usesOwnFormKeys
             && writer.MetaData.SeparatedMasterPackage is SeparatedMasterPackage separated)
