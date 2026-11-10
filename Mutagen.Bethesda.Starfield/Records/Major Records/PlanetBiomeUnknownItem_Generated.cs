@@ -52,16 +52,10 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region Unknown1
-        public Int32 Unknown1 { get; set; } = default(Int32);
+        public Double Unknown1 { get; set; } = default(Double);
         #endregion
         #region Unknown2
-        public Int32 Unknown2 { get; set; } = default(Int32);
-        #endregion
-        #region Unknown3
-        public Int32 Unknown3 { get; set; } = default(Int32);
-        #endregion
-        #region Unknown4
-        public Int32 Unknown4 { get; set; } = default(Int32);
+        public Double Unknown2 { get; set; } = default(Double);
         #endregion
 
         #region To String
@@ -104,20 +98,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Unknown1 = initialValue;
                 this.Unknown2 = initialValue;
-                this.Unknown3 = initialValue;
-                this.Unknown4 = initialValue;
             }
 
             public Mask(
                 TItem Unknown1,
-                TItem Unknown2,
-                TItem Unknown3,
-                TItem Unknown4)
+                TItem Unknown2)
             {
                 this.Unknown1 = Unknown1;
                 this.Unknown2 = Unknown2;
-                this.Unknown3 = Unknown3;
-                this.Unknown4 = Unknown4;
             }
 
             #pragma warning disable CS8618
@@ -131,8 +119,6 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem Unknown1;
             public TItem Unknown2;
-            public TItem Unknown3;
-            public TItem Unknown4;
             #endregion
 
             #region Equals
@@ -147,8 +133,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
                 if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
-                if (!object.Equals(this.Unknown3, rhs.Unknown3)) return false;
-                if (!object.Equals(this.Unknown4, rhs.Unknown4)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -156,8 +140,6 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.Unknown1);
                 hash.Add(this.Unknown2);
-                hash.Add(this.Unknown3);
-                hash.Add(this.Unknown4);
                 return hash.ToHashCode();
             }
 
@@ -168,8 +150,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.Unknown1)) return false;
                 if (!eval(this.Unknown2)) return false;
-                if (!eval(this.Unknown3)) return false;
-                if (!eval(this.Unknown4)) return false;
                 return true;
             }
             #endregion
@@ -179,8 +159,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.Unknown1)) return true;
                 if (eval(this.Unknown2)) return true;
-                if (eval(this.Unknown3)) return true;
-                if (eval(this.Unknown4)) return true;
                 return false;
             }
             #endregion
@@ -197,8 +175,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.Unknown1 = eval(this.Unknown1);
                 obj.Unknown2 = eval(this.Unknown2);
-                obj.Unknown3 = eval(this.Unknown3);
-                obj.Unknown4 = eval(this.Unknown4);
             }
             #endregion
 
@@ -224,14 +200,6 @@ namespace Mutagen.Bethesda.Starfield
                     if (printMask?.Unknown2 ?? true)
                     {
                         sb.AppendItem(Unknown2, "Unknown2");
-                    }
-                    if (printMask?.Unknown3 ?? true)
-                    {
-                        sb.AppendItem(Unknown3, "Unknown3");
-                    }
-                    if (printMask?.Unknown4 ?? true)
-                    {
-                        sb.AppendItem(Unknown4, "Unknown4");
                     }
                 }
             }
@@ -259,8 +227,6 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? Unknown1;
             public Exception? Unknown2;
-            public Exception? Unknown3;
-            public Exception? Unknown4;
             #endregion
 
             #region IErrorMask
@@ -273,10 +239,6 @@ namespace Mutagen.Bethesda.Starfield
                         return Unknown1;
                     case PlanetBiomeUnknownItem_FieldIndex.Unknown2:
                         return Unknown2;
-                    case PlanetBiomeUnknownItem_FieldIndex.Unknown3:
-                        return Unknown3;
-                    case PlanetBiomeUnknownItem_FieldIndex.Unknown4:
-                        return Unknown4;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -292,12 +254,6 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case PlanetBiomeUnknownItem_FieldIndex.Unknown2:
                         this.Unknown2 = ex;
-                        break;
-                    case PlanetBiomeUnknownItem_FieldIndex.Unknown3:
-                        this.Unknown3 = ex;
-                        break;
-                    case PlanetBiomeUnknownItem_FieldIndex.Unknown4:
-                        this.Unknown4 = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -315,12 +271,6 @@ namespace Mutagen.Bethesda.Starfield
                     case PlanetBiomeUnknownItem_FieldIndex.Unknown2:
                         this.Unknown2 = (Exception?)obj;
                         break;
-                    case PlanetBiomeUnknownItem_FieldIndex.Unknown3:
-                        this.Unknown3 = (Exception?)obj;
-                        break;
-                    case PlanetBiomeUnknownItem_FieldIndex.Unknown4:
-                        this.Unknown4 = (Exception?)obj;
-                        break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -331,8 +281,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (Unknown1 != null) return true;
                 if (Unknown2 != null) return true;
-                if (Unknown3 != null) return true;
-                if (Unknown4 != null) return true;
                 return false;
             }
             #endregion
@@ -364,12 +312,6 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(Unknown2, "Unknown2");
                 }
-                {
-                    sb.AppendItem(Unknown3, "Unknown3");
-                }
-                {
-                    sb.AppendItem(Unknown4, "Unknown4");
-                }
             }
             #endregion
 
@@ -380,8 +322,6 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
                 ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
-                ret.Unknown3 = this.Unknown3.Combine(rhs.Unknown3);
-                ret.Unknown4 = this.Unknown4.Combine(rhs.Unknown4);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -407,8 +347,6 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool Unknown1;
             public bool Unknown2;
-            public bool Unknown3;
-            public bool Unknown4;
             #endregion
 
             #region Ctors
@@ -420,8 +358,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.Unknown1 = defaultOn;
                 this.Unknown2 = defaultOn;
-                this.Unknown3 = defaultOn;
-                this.Unknown4 = defaultOn;
             }
 
             #endregion
@@ -439,8 +375,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((Unknown1, null));
                 ret.Add((Unknown2, null));
-                ret.Add((Unknown3, null));
-                ret.Add((Unknown4, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -513,10 +447,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IPlanetBiomeUnknownItem>,
         IPlanetBiomeUnknownItemGetter
     {
-        new Int32 Unknown1 { get; set; }
-        new Int32 Unknown2 { get; set; }
-        new Int32 Unknown3 { get; set; }
-        new Int32 Unknown4 { get; set; }
+        new Double Unknown1 { get; set; }
+        new Double Unknown2 { get; set; }
     }
 
     public partial interface IPlanetBiomeUnknownItemGetter :
@@ -531,10 +463,8 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => PlanetBiomeUnknownItem_Registration.Instance;
-        Int32 Unknown1 { get; }
-        Int32 Unknown2 { get; }
-        Int32 Unknown3 { get; }
-        Int32 Unknown4 { get; }
+        Double Unknown1 { get; }
+        Double Unknown2 { get; }
 
     }
 
@@ -706,8 +636,6 @@ namespace Mutagen.Bethesda.Starfield
     {
         Unknown1 = 0,
         Unknown2 = 1,
-        Unknown3 = 2,
-        Unknown4 = 3,
     }
     #endregion
 
@@ -718,9 +646,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 4;
+        public const ushort AdditionalFieldCount = 2;
 
-        public const ushort FieldCount = 4;
+        public const ushort FieldCount = 2;
 
         public static readonly Type MaskType = typeof(PlanetBiomeUnknownItem.Mask<>);
 
@@ -786,10 +714,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IPlanetBiomeUnknownItem item)
         {
             ClearPartial();
-            item.Unknown1 = default(Int32);
-            item.Unknown2 = default(Int32);
-            item.Unknown3 = default(Int32);
-            item.Unknown4 = default(Int32);
+            item.Unknown1 = default(Double);
+            item.Unknown2 = default(Double);
         }
         
         #region Mutagen
@@ -839,10 +765,8 @@ namespace Mutagen.Bethesda.Starfield
             PlanetBiomeUnknownItem.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Unknown1 = item.Unknown1 == rhs.Unknown1;
-            ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
-            ret.Unknown3 = item.Unknown3 == rhs.Unknown3;
-            ret.Unknown4 = item.Unknown4 == rhs.Unknown4;
+            ret.Unknown1 = item.Unknown1.EqualsWithin(rhs.Unknown1);
+            ret.Unknown2 = item.Unknown2.EqualsWithin(rhs.Unknown2);
         }
         
         public string Print(
@@ -895,14 +819,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Unknown2, "Unknown2");
             }
-            if (printMask?.Unknown3 ?? true)
-            {
-                sb.AppendItem(item.Unknown3, "Unknown3");
-            }
-            if (printMask?.Unknown4 ?? true)
-            {
-                sb.AppendItem(item.Unknown4, "Unknown4");
-            }
         }
         
         #region Equals and Hash
@@ -914,19 +830,11 @@ namespace Mutagen.Bethesda.Starfield
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if ((equalsMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Unknown1) ?? true))
             {
-                if (lhs.Unknown1 != rhs.Unknown1) return false;
+                if (!lhs.Unknown1.EqualsWithin(rhs.Unknown1)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Unknown2) ?? true))
             {
-                if (lhs.Unknown2 != rhs.Unknown2) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Unknown3) ?? true))
-            {
-                if (lhs.Unknown3 != rhs.Unknown3) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Unknown4) ?? true))
-            {
-                if (lhs.Unknown4 != rhs.Unknown4) return false;
+                if (!lhs.Unknown2.EqualsWithin(rhs.Unknown2)) return false;
             }
             return true;
         }
@@ -936,8 +844,6 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.Unknown1);
             hash.Add(item.Unknown2);
-            hash.Add(item.Unknown3);
-            hash.Add(item.Unknown4);
             return hash.ToHashCode();
         }
         
@@ -977,14 +883,6 @@ namespace Mutagen.Bethesda.Starfield
             if ((copyMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Unknown2) ?? true))
             {
                 item.Unknown2 = rhs.Unknown2;
-            }
-            if ((copyMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Unknown3) ?? true))
-            {
-                item.Unknown3 = rhs.Unknown3;
-            }
-            if ((copyMask?.GetShouldTranslate((int)PlanetBiomeUnknownItem_FieldIndex.Unknown4) ?? true))
-            {
-                item.Unknown4 = rhs.Unknown4;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1096,8 +994,6 @@ namespace Mutagen.Bethesda.Starfield
         {
             writer.Write(item.Unknown1);
             writer.Write(item.Unknown2);
-            writer.Write(item.Unknown3);
-            writer.Write(item.Unknown4);
         }
 
         public void Write(
@@ -1131,10 +1027,8 @@ namespace Mutagen.Bethesda.Starfield
             IPlanetBiomeUnknownItem item,
             MutagenFrame frame)
         {
-            item.Unknown1 = frame.ReadInt32();
-            item.Unknown2 = frame.ReadInt32();
-            item.Unknown3 = frame.ReadInt32();
-            item.Unknown4 = frame.ReadInt32();
+            item.Unknown1 = frame.ReadDouble();
+            item.Unknown2 = frame.ReadDouble();
         }
 
     }
@@ -1200,10 +1094,8 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Int32 Unknown1 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x0, 0x4));
-        public Int32 Unknown2 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x4, 0x4));
-        public Int32 Unknown3 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x8, 0x4));
-        public Int32 Unknown4 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0xC, 0x4));
+        public Double Unknown1 => BinaryPrimitives.ReadDoubleLittleEndian(_structData.Slice(0x0, 0x8));
+        public Double Unknown2 => BinaryPrimitives.ReadDoubleLittleEndian(_structData.Slice(0x8, 0x8));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

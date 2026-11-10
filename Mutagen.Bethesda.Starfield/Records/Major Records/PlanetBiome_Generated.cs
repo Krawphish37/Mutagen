@@ -71,14 +71,14 @@ namespace Mutagen.Bethesda.Starfield
         public Int32 Unknown2 { get; set; } = default(Int32);
         #endregion
         #region ResourceGeneration
-        private readonly IFormLink<IStarfieldMajorRecordGetter> _ResourceGeneration = new FormLink<IStarfieldMajorRecordGetter>();
-        public IFormLink<IStarfieldMajorRecordGetter> ResourceGeneration
+        private readonly IFormLink<IResourceGenerationDataGetter> _ResourceGeneration = new FormLink<IResourceGenerationDataGetter>();
+        public IFormLink<IResourceGenerationDataGetter> ResourceGeneration
         {
             get => _ResourceGeneration;
             set => _ResourceGeneration.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IStarfieldMajorRecordGetter> IPlanetBiomeGetter.ResourceGeneration => this.ResourceGeneration;
+        IFormLinkGetter<IResourceGenerationDataGetter> IPlanetBiomeGetter.ResourceGeneration => this.ResourceGeneration;
         #endregion
         #region Fauna
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -992,7 +992,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<IBiomeGetter> Biome { get; set; }
         new Single Chance { get; set; }
         new Int32 Unknown2 { get; set; }
-        new IFormLink<IStarfieldMajorRecordGetter> ResourceGeneration { get; set; }
+        new IFormLink<IResourceGenerationDataGetter> ResourceGeneration { get; set; }
         new ExtendedList<IFormLinkGetter<INpcGetter>> Fauna { get; }
         /// <summary>
         /// Aspects: IKeyworded&lt;IKeywordGetter&gt;
@@ -1019,7 +1019,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IBiomeGetter> Biome { get; }
         Single Chance { get; }
         Int32 Unknown2 { get; }
-        IFormLinkGetter<IStarfieldMajorRecordGetter> ResourceGeneration { get; }
+        IFormLinkGetter<IResourceGenerationDataGetter> ResourceGeneration { get; }
         IReadOnlyList<IFormLinkGetter<INpcGetter>> Fauna { get; }
         #region Keywords
         /// <summary>
@@ -2007,7 +2007,7 @@ namespace Mutagen.Bethesda.Starfield
         public IFormLinkGetter<IBiomeGetter> Biome => FormLinkBinaryTranslation.Instance.OverlayFactory<IBiomeGetter>(_package, _structData.Span.Slice(0x0, 0x4));
         public Single Chance => _structData.Slice(0x4, 0x4).Float();
         public Int32 Unknown2 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x8, 0x4));
-        public IFormLinkGetter<IStarfieldMajorRecordGetter> ResourceGeneration => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0xC, 0x4));
+        public IFormLinkGetter<IResourceGenerationDataGetter> ResourceGeneration => FormLinkBinaryTranslation.Instance.OverlayFactory<IResourceGenerationDataGetter>(_package, _structData.Span.Slice(0xC, 0x4));
         #region Fauna
         public IReadOnlyList<IFormLinkGetter<INpcGetter>> Fauna => BinaryOverlayList.FactoryByCountLength<IFormLinkGetter<INpcGetter>>(_structData.Slice(0x10), _package, 4, countLength: 4, (s, p) => FormLinkBinaryTranslation.Instance.OverlayFactory<INpcGetter>(p, s));
         protected int FaunaEndingPos;
