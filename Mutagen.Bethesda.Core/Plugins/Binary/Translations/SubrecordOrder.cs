@@ -18,17 +18,28 @@ namespace Mutagen.Bethesda.Plugins.Binary.Translations;
 /// subrecords sorted by field (keeping the file's order within a field) predict what an unchanged record writes.
 /// When the written subrecords are exactly that (same types and bytes, place by place), they are written in the
 /// file's order. If anything differs (the record was changed), Mutagen's order is kept.<br/>
-/// A copy (DeepCopy, DeepCopyIn) takes over the noted order of the record it copies.
+/// A copy (DeepCopy, DeepCopyIn) takes over the noted order of the record it copies.<br/>
+/// Two things Mutagen rewrites in an unchanged record are not counted as changes: an overlay can't be changed at all, so
+/// its subrecords only have to match by type and field; and in a full import, a subrecord whose read held a FormID
+/// Mutagen writes differently (a master index past the master list, or the plugin's own FormIDs in another style) is
+/// matched by type and field only. Official plugins hold such FormIDs (ShatteredSpace.esm, SFBGS050.esm REFR XPLK).
 /// </summary>
 internal static class SubrecordOrder
 {
-    internal readonly record struct Entry(uint Type, uint Hash, int Field);
+    internal readonly record struct Entry(uint Type, uint Hash, int Field, bool AnyBytes = false);
 
     private static readonly ConditionalWeakTable<object, Entry[]> Orders = new();
 
     // Field starts of the records being read on this thread (a reader appends, and removes its own when done)
     [ThreadStatic] private static List<(int Offset, int Field)>? _fieldStarts;
     internal static List<(int Offset, int Field)> FieldStarts => _fieldStarts ??= new();
+
+    // Set by FormID reads (SeparatedMasterPackage.GetFormKey) when the FormID read is one Mutagen writes differently
+    [ThreadStatic] internal static bool NonCanonicalFormIdRead;
+
+    // Ranges of a record being read (from, to) whose subrecords held such a FormID
+    [ThreadStatic] private static List<(int From, int To)>? _rewritten;
+    internal static List<(int From, int To)> Rewritten => _rewritten ??= new();
 
     /// <summary>
     /// Notes a record whose subrecords were read out of Mutagen's order
@@ -39,12 +50,16 @@ internal static class SubrecordOrder
     /// <param name="fieldStarts">Where in content each field's subrecords started, with the field's index, in read order,
     /// from index <paramref name="first"/> on</param>
     /// <param name="first">Where this record's entries start in fieldStarts</param>
+    /// <param name="rewritten">Ranges of content whose subrecords held a FormID Mutagen writes differently</param>
+    /// <param name="firstRewritten">Where this record's ranges start in rewritten</param>
     public static void Remember(
         object record,
         ReadOnlySpan<byte> content,
         GameConstants constants,
         List<(int Offset, int Field)> fieldStarts,
-        int first)
+        int first,
+        List<(int From, int To)>? rewritten = null,
+        int firstRewritten = 0)
     {
         var units = Units(content, constants);
         var entries = new Entry[units.Count];
@@ -55,7 +70,19 @@ internal static class SubrecordOrder
             {
                 call++;
             }
-            entries[i] = new Entry(units[i].Type, units[i].Hash, call < first ? -1 : fieldStarts[call].Field);
+            var anyBytes = false;
+            if (rewritten != null)
+            {
+                for (int r = firstRewritten; r < rewritten.Count; r++)
+                {
+                    if (units[i].SubrecordStart >= rewritten[r].From && units[i].SubrecordStart < rewritten[r].To)
+                    {
+                        anyBytes = true;
+                        break;
+                    }
+                }
+            }
+            entries[i] = new Entry(units[i].Type, units[i].Hash, call < first ? -1 : fieldStarts[call].Field, anyBytes);
         }
         Orders.AddOrUpdate(record, entries);
     }
@@ -82,7 +109,8 @@ internal static class SubrecordOrder
     /// Writes <paramref name="written"/> (a record's subrecords in Mutagen's order) in the order of <paramref name="order"/>
     /// when they are the record's subrecords unchanged. Returns false, writing nothing, when they aren't.
     /// </summary>
-    public static bool TryWriteInOrder(ReadOnlySpan<byte> written, Entry[] order, MutagenWriter writer)
+    /// <param name="unchangeable">The record can't have been changed (an overlay): match subrecords by type and field only</param>
+    public static bool TryWriteInOrder(ReadOnlySpan<byte> written, Entry[] order, MutagenWriter writer, bool unchangeable = false)
     {
         var units = Units(written, writer.MetaData.Constants);
         if (units.Count != order.Length) return false;
@@ -92,7 +120,8 @@ internal static class SubrecordOrder
         for (int k = 0; k < predicted.Length; k++)
         {
             var expected = order[predicted[k]];
-            if (units[k].Type != expected.Type || units[k].Hash != expected.Hash) return false;
+            if (units[k].Type != expected.Type) return false;
+            if (!unchangeable && !expected.AnyBytes && units[k].Hash != expected.Hash) return false;
             place[predicted[k]] = k;
         }
         foreach (var k in place)
