@@ -143,8 +143,8 @@ public class ReflectionOverflowTests
         foreach (var effectSequence in ReadEffectSequence(bytes))
         {
             effectSequence.EditorID.ShouldBe("TestEffectSequence");
-            effectSequence.REFL.ShouldNotBeNull();
-            effectSequence.REFL!.Value.ToArray().ShouldBe(payload);
+            effectSequence.Reflection.ShouldNotBeNull();
+            effectSequence.Reflection!.Data.ToArray().ShouldBe(payload);
         }
     }
 
@@ -177,7 +177,7 @@ public class ReflectionOverflowTests
         var effectSequence = new EffectSequence(new FormKey(TestModKey, 0x800), StarfieldRelease.Starfield)
         {
             EditorID = "TestEffectSequence",
-            REFL = payload
+            Reflection = new Reflection { Data = payload }
         };
 
         var bytes = Write(effectSequence);
@@ -192,8 +192,8 @@ public class ReflectionOverflowTests
 
         foreach (var reread in ReadEffectSequence(bytes))
         {
-            reread.REFL.ShouldNotBeNull();
-            reread.REFL!.Value.ToArray().ShouldBe(payload);
+            reread.Reflection.ShouldNotBeNull();
+            reread.Reflection!.Data.ToArray().ShouldBe(payload);
         }
     }
 

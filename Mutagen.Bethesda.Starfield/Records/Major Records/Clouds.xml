@@ -2,7 +2,7 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="Clouds" recordType="CLDF" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
-      <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
 </Loqui>
