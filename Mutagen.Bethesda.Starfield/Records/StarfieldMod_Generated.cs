@@ -10756,6 +10756,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.EffectShaders.RemapLinks(mapping);
             obj.Explosions.RemapLinks(mapping);
             obj.ImageSpaces.RemapLinks(mapping);
+            obj.ImageSpaceAdapters.RemapLinks(mapping);
             obj.FormLists.RemapLinks(mapping);
             obj.Perks.RemapLinks(mapping);
             obj.BodyParts.RemapLinks(mapping);
@@ -18197,6 +18198,10 @@ namespace Mutagen.Bethesda.Starfield
                 yield return item;
             }
             foreach (var item in obj.ImageSpaces.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
+            foreach (var item in obj.ImageSpaceAdapters.EnumerateFormLinks(iterateNestedRecords))
             {
                 yield return item;
             }
