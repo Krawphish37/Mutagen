@@ -7050,5 +7050,8 @@
     <Compile Include="Records\Major Records\WeatherVolumetricLighting_Generated.cs">
       <DependentUpon>Weather.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\LegendaryItemQualityMod_Generated.cs">
+      <DependentUpon>LegendaryItem.xml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

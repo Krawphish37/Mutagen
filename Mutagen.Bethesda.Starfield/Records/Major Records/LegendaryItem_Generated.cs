@@ -310,15 +310,15 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region QualityMods
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<LegendaryMod>? _QualityMods;
-        public ExtendedList<LegendaryMod>? QualityMods
+        private ExtendedList<LegendaryItemQualityMod>? _QualityMods;
+        public ExtendedList<LegendaryItemQualityMod>? QualityMods
         {
             get => this._QualityMods;
             set => this._QualityMods = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<ILegendaryModGetter>? ILegendaryItemGetter.QualityMods => _QualityMods;
+        IReadOnlyList<ILegendaryItemQualityModGetter>? ILegendaryItemGetter.QualityMods => _QualityMods;
         #endregion
 
         #endregion
@@ -405,7 +405,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ExcludeFilters = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryFilter.Mask<TItem>?>>?>(initialValue, []);
                 this.FNAM = initialValue;
                 this.KNAM = initialValue;
-                this.QualityMods = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryMod.Mask<TItem>?>>?>(initialValue, []);
+                this.QualityMods = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemQualityMod.Mask<TItem>?>>?>(initialValue, []);
                 this.QualityAllowedKeywords = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemHNAMEntry.Mask<TItem>?>>?>(initialValue, []);
                 this.QualityDisallowedKeywords = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemHNAMEntry.Mask<TItem>?>>?>(initialValue, []);
                 this.JNAM = initialValue;
@@ -470,7 +470,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ExcludeFilters = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryFilter.Mask<TItem>?>>?>(ExcludeFilters, []);
                 this.FNAM = FNAM;
                 this.KNAM = KNAM;
-                this.QualityMods = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryMod.Mask<TItem>?>>?>(QualityMods, []);
+                this.QualityMods = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemQualityMod.Mask<TItem>?>>?>(QualityMods, []);
                 this.QualityAllowedKeywords = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemHNAMEntry.Mask<TItem>?>>?>(QualityAllowedKeywords, []);
                 this.QualityDisallowedKeywords = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemHNAMEntry.Mask<TItem>?>>?>(QualityDisallowedKeywords, []);
                 this.JNAM = JNAM;
@@ -504,7 +504,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryFilter.Mask<TItem>?>>?>? ExcludeFilters;
             public TItem FNAM;
             public TItem KNAM;
-            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryMod.Mask<TItem>?>>?>? QualityMods;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemQualityMod.Mask<TItem>?>>?>? QualityMods;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemHNAMEntry.Mask<TItem>?>>?>? QualityAllowedKeywords;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemHNAMEntry.Mask<TItem>?>>?>? QualityDisallowedKeywords;
             public TItem JNAM;
@@ -958,14 +958,14 @@ namespace Mutagen.Bethesda.Starfield
                 obj.KNAM = eval(this.KNAM);
                 if (QualityMods != null)
                 {
-                    obj.QualityMods = new MaskItem<R, IEnumerable<MaskItemIndexed<R, LegendaryMod.Mask<R>?>>?>(eval(this.QualityMods.Overall), []);
+                    obj.QualityMods = new MaskItem<R, IEnumerable<MaskItemIndexed<R, LegendaryItemQualityMod.Mask<R>?>>?>(eval(this.QualityMods.Overall), []);
                     if (QualityMods.Specific != null)
                     {
-                        var l = new List<MaskItemIndexed<R, LegendaryMod.Mask<R>?>>();
+                        var l = new List<MaskItemIndexed<R, LegendaryItemQualityMod.Mask<R>?>>();
                         obj.QualityMods.Specific = l;
                         foreach (var item in QualityMods.Specific)
                         {
-                            MaskItemIndexed<R, LegendaryMod.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, LegendaryMod.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            MaskItemIndexed<R, LegendaryItemQualityMod.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, LegendaryItemQualityMod.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
                             if (mask == null) continue;
                             l.Add(mask);
                         }
@@ -1262,7 +1262,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryFilter.ErrorMask?>>?>? ExcludeFilters;
             public Exception? FNAM;
             public Exception? KNAM;
-            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryMod.ErrorMask?>>?>? QualityMods;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemQualityMod.ErrorMask?>>?>? QualityMods;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemHNAMEntry.ErrorMask?>>?>? QualityAllowedKeywords;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemHNAMEntry.ErrorMask?>>?>? QualityDisallowedKeywords;
             public Exception? JNAM;
@@ -1388,7 +1388,7 @@ namespace Mutagen.Bethesda.Starfield
                         this.KNAM = ex;
                         break;
                     case LegendaryItem_FieldIndex.QualityMods:
-                        this.QualityMods = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryMod.ErrorMask?>>?>(ex, null);
+                        this.QualityMods = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemQualityMod.ErrorMask?>>?>(ex, null);
                         break;
                     case LegendaryItem_FieldIndex.QualityAllowedKeywords:
                         this.QualityAllowedKeywords = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemHNAMEntry.ErrorMask?>>?>(ex, null);
@@ -1468,7 +1468,7 @@ namespace Mutagen.Bethesda.Starfield
                         this.KNAM = (Exception?)obj;
                         break;
                     case LegendaryItem_FieldIndex.QualityMods:
-                        this.QualityMods = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryMod.ErrorMask?>>?>)obj;
+                        this.QualityMods = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemQualityMod.ErrorMask?>>?>)obj;
                         break;
                     case LegendaryItem_FieldIndex.QualityAllowedKeywords:
                         this.QualityAllowedKeywords = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemHNAMEntry.ErrorMask?>>?>)obj;
@@ -1743,7 +1743,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ExcludeFilters = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryFilter.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.ExcludeFilters?.Overall, rhs.ExcludeFilters?.Overall), Noggog.ExceptionExt.Combine(this.ExcludeFilters?.Specific, rhs.ExcludeFilters?.Specific));
                 ret.FNAM = this.FNAM.Combine(rhs.FNAM);
                 ret.KNAM = this.KNAM.Combine(rhs.KNAM);
-                ret.QualityMods = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryMod.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.QualityMods?.Overall, rhs.QualityMods?.Overall), Noggog.ExceptionExt.Combine(this.QualityMods?.Specific, rhs.QualityMods?.Specific));
+                ret.QualityMods = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemQualityMod.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.QualityMods?.Overall, rhs.QualityMods?.Overall), Noggog.ExceptionExt.Combine(this.QualityMods?.Specific, rhs.QualityMods?.Specific));
                 ret.QualityAllowedKeywords = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemHNAMEntry.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.QualityAllowedKeywords?.Overall, rhs.QualityAllowedKeywords?.Overall), Noggog.ExceptionExt.Combine(this.QualityAllowedKeywords?.Specific, rhs.QualityAllowedKeywords?.Specific));
                 ret.QualityDisallowedKeywords = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemHNAMEntry.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.QualityDisallowedKeywords?.Overall, rhs.QualityDisallowedKeywords?.Overall), Noggog.ExceptionExt.Combine(this.QualityDisallowedKeywords?.Specific, rhs.QualityDisallowedKeywords?.Specific));
                 ret.JNAM = this.JNAM.Combine(rhs.JNAM);
@@ -1788,7 +1788,7 @@ namespace Mutagen.Bethesda.Starfield
             public LegendaryFilter.TranslationMask? ExcludeFilters;
             public bool FNAM;
             public bool KNAM;
-            public LegendaryMod.TranslationMask? QualityMods;
+            public LegendaryItemQualityMod.TranslationMask? QualityMods;
             public LegendaryItemHNAMEntry.TranslationMask? QualityAllowedKeywords;
             public LegendaryItemHNAMEntry.TranslationMask? QualityDisallowedKeywords;
             public bool JNAM;
@@ -2035,7 +2035,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<LegendaryFilter>? ExcludeFilters { get; set; }
         new MemorySlice<Byte>? FNAM { get; set; }
         new MemorySlice<Byte>? KNAM { get; set; }
-        new ExtendedList<LegendaryMod>? QualityMods { get; set; }
+        new ExtendedList<LegendaryItemQualityMod>? QualityMods { get; set; }
         new ExtendedList<LegendaryItemHNAMEntry>? QualityAllowedKeywords { get; set; }
         new ExtendedList<LegendaryItemHNAMEntry>? QualityDisallowedKeywords { get; set; }
         new MemorySlice<Byte>? JNAM { get; set; }
@@ -2109,7 +2109,7 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<ILegendaryFilterGetter>? ExcludeFilters { get; }
         ReadOnlyMemorySlice<Byte>? FNAM { get; }
         ReadOnlyMemorySlice<Byte>? KNAM { get; }
-        IReadOnlyList<ILegendaryModGetter>? QualityMods { get; }
+        IReadOnlyList<ILegendaryItemQualityModGetter>? QualityMods { get; }
         IReadOnlyList<ILegendaryItemHNAMEntryGetter>? QualityAllowedKeywords { get; }
         IReadOnlyList<ILegendaryItemHNAMEntryGetter>? QualityDisallowedKeywords { get; }
         ReadOnlyMemorySlice<Byte>? JNAM { get; }
@@ -3043,7 +3043,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.QualityMods) ?? true))
             {
-                if (!lhs.QualityMods.SequenceEqualNullable(rhs.QualityMods, (l, r) => ((LegendaryModCommon)((ILegendaryModGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)LegendaryItem_FieldIndex.QualityMods)))) return false;
+                if (!lhs.QualityMods.SequenceEqualNullable(rhs.QualityMods, (l, r) => ((LegendaryItemQualityModCommon)((ILegendaryItemQualityModGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)LegendaryItem_FieldIndex.QualityMods)))) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.QualityAllowedKeywords) ?? true))
             {
@@ -3766,7 +3766,7 @@ namespace Mutagen.Bethesda.Starfield
                                     errorMask: errorMask,
                                     default(TranslationCrystal));
                             })
-                            .ToExtendedList<LegendaryMod>();
+                            .ToExtendedList<LegendaryItemQualityMod>();
                     }
                     else
                     {
@@ -4153,14 +4153,14 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.KNAM,
                 header: translationParams.ConvertToCustom(RecordTypes.KNAM));
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ILegendaryModGetter>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ILegendaryItemQualityModGetter>.Instance.Write(
                 writer: writer,
                 items: item.QualityMods,
                 recordType: translationParams.ConvertToCustom(RecordTypes.GNAM),
-                transl: (MutagenWriter subWriter, ILegendaryModGetter subItem, TypedWriteParams conv) =>
+                transl: (MutagenWriter subWriter, ILegendaryItemQualityModGetter subItem, TypedWriteParams conv) =>
                 {
                     var Item = subItem;
-                    ((LegendaryModBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                    ((LegendaryItemQualityModBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
                         item: Item,
                         writer: subWriter,
                         translationParams: conv);
@@ -4458,10 +4458,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QualityMods = 
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LegendaryMod>.Instance.Parse(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LegendaryItemQualityMod>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
-                            transl: LegendaryMod.TryCreateFromBinary)
-                        .CastExtendedList<LegendaryMod>();
+                            transl: LegendaryItemQualityMod.TryCreateFromBinary)
+                        .CastExtendedList<LegendaryItemQualityMod>();
                     return (int)LegendaryItem_FieldIndex.QualityMods;
                 }
                 case RecordTypeInts.HNAM:
@@ -4635,7 +4635,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _KNAMLocation;
         public ReadOnlyMemorySlice<Byte>? KNAM => _KNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _KNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
         #endregion
-        public IReadOnlyList<ILegendaryModGetter>? QualityMods { get; private set; }
+        public IReadOnlyList<ILegendaryItemQualityModGetter>? QualityMods { get; private set; }
         public IReadOnlyList<ILegendaryItemHNAMEntryGetter>? QualityAllowedKeywords { get; private set; }
         public IReadOnlyList<ILegendaryItemHNAMEntryGetter>? QualityDisallowedKeywords { get; private set; }
         #region JNAM
@@ -4883,12 +4883,12 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.GNAM:
                 {
-                    this.QualityMods = BinaryOverlayList.FactoryByStartIndexWithTrigger<ILegendaryModGetter>(
+                    this.QualityMods = BinaryOverlayList.FactoryByStartIndexWithTrigger<ILegendaryItemQualityModGetter>(
                         stream: stream,
                         package: _package,
                         finalPos: finalPos,
                         itemLength: 8,
-                        getter: (s, p) => LegendaryModBinaryOverlay.LegendaryModFactory(s, p));
+                        getter: (s, p) => LegendaryItemQualityModBinaryOverlay.LegendaryItemQualityModFactory(s, p));
                     return (int)LegendaryItem_FieldIndex.QualityMods;
                 }
                 case RecordTypeInts.HNAM:

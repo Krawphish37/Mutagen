@@ -874,6 +874,7 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             LegendaryItem_Registration.Instance,
             LegendaryItemHNAMEntry_Registration.Instance,
             LegendaryItemLnamEntry_Registration.Instance,
+            LegendaryItemQualityMod_Registration.Instance,
             LegendaryMod_Registration.Instance,
             LensFlare_Registration.Instance,
             LensFlareAttachmentFormComponent_Registration.Instance,

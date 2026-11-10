@@ -113,7 +113,7 @@ public class LegendaryItemNamingTests
         {
             item.AddIntoLegendary.FormKey.ShouldBe(new FormKey(StarfieldKey, 0x15E76A));
             item.QualityMods.ShouldNotBeNull();
-            item.QualityMods.Select(m => ((uint)m.Slot, m.ObjectMod.FormKey.ID)).ShouldBe(new[]
+            item.QualityMods.Select(m => (m.Tier, m.ObjectMod.FormKey.ID)).ShouldBe(new[]
             {
                 (1u, 0x278Cu), (2u, 0x278Du), (3u, 0x278Eu), (4u, 0x2794u), (5u, 0x2795u),
             });
@@ -137,6 +137,43 @@ public class LegendaryItemNamingTests
                 Enumerable.Range(0, 3).SelectMany(r => Enumerable.Range(1, 4).Select(m => ((uint)r, (uint)m))));
             item.LnamEntries.ShouldAllBe(e => e.Conditions!.Count == 2);
             Write(item, Sfbgs00dKey).ShouldBe(bytes);
+        }
+    }
+
+    // GNAM of DefaultLegendaryArmor (1336C3:Starfield.esm) as overridden in SFBGS00D.esm: 12 {tier, OMOD} entries,
+    // tiers 1-4, every OMOD in Starfield.esm (e.g. mod_Armor_Spacesuit_Quality_02 (11E2BC:Starfield.esm)).
+    // xEdit: wbStruct('Quality Mod', [wbLGDIQualityTier, wbFormIDCk('Object Modification', [OMOD])]).
+    private const string ArmorGnam =
+        "01000000BCE21100 0100000034AE1C00 01000000B6E21100 0200000035AE1C00 02000000B7E21100 02000000BAE21100 " +
+        "0300000036AE1C00 03000000B8E21100 03000000B9E21100 040000007FAF0300 0400000080AF0300 040000007DAF0300";
+
+    [Fact]
+    public void QualityMods_TierAndObjectModLinks()
+    {
+        var bytes = Record(0x001336C3, "DefaultLegendaryArmor", Sub("GNAM", Hex(ArmorGnam)));
+        var spacesuit02 = new FormKey(StarfieldKey, 0x11E2BC);
+        var replacement = new FormKey(Sfbgs00dKey, 0x000900);
+        foreach (var item in ReadBoth(bytes, Sfbgs00dKey))
+        {
+            item.QualityMods.ShouldNotBeNull();
+            item.QualityMods.Select(m => m.Tier).ShouldBe(new[] { 1u, 1u, 1u, 2u, 2u, 2u, 3u, 3u, 3u, 4u, 4u, 4u });
+            item.QualityMods[0].ObjectMod.FormKey.ShouldBe(spacesuit02);
+            item.QualityMods.ShouldAllBe(m => m.ObjectMod.FormKey.ModKey == StarfieldKey);
+            Write(item, Sfbgs00dKey).ShouldBe(bytes);
+
+            var links = item.EnumerateFormLinks().ToArray();
+            links.Length.ShouldBe(12);
+            links.ShouldAllBe(l => l.Type == typeof(IAObjectModificationGetter));
+
+            var copy = (LegendaryItem)item.DeepCopy();
+            copy.RemapLinks(new Dictionary<FormKey, FormKey> { { spacesuit02, replacement } });
+            copy.QualityMods![0].ObjectMod.FormKey.ShouldBe(replacement);
+            copy.QualityMods[0].Tier.ShouldBe(1u);
+            copy.QualityMods.Skip(1).ShouldAllBe(m => m.ObjectMod.FormKey != replacement);
+            var written = Write(copy, Sfbgs00dKey);
+            var gnam = written.AsSpan().IndexOf(Encoding.ASCII.GetBytes("GNAM"));
+            BitConverter.ToUInt32(written, gnam + 6).ShouldBe(1u);
+            BitConverter.ToUInt32(written, gnam + 6 + 4).ShouldBe(0x01000900u);
         }
     }
 }
