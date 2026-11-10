@@ -434,6 +434,9 @@ internal static class PluginUtilityTranslation
     {
         record.Clear();
         var modHeader = frame.Reader.GetModHeader();
+        // How the mod stores its own FormIDs, if read from its file, to write it back the same way
+        Mutagen.Bethesda.Plugins.Masters.OwnFormIdStyle.Set(record,
+            (frame.MetaData.MasterReferences as Mutagen.Bethesda.Plugins.Masters.SeparatedMasterPackage)?.OwnFormIdsStyled);
         fillTyped(
             record: record,
             frame: frame,

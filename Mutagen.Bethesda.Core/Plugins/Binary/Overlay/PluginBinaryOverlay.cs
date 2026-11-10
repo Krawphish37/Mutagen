@@ -72,6 +72,13 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
     {
         var lastParsed = new PreviousParse();
         ModHeader headerMeta = stream.GetModHeader(package);
+        // How the mod stores its own FormIDs, if read from its file, to write it back the same way.
+        // The fill is the mod overlay's own method, so its target is the mod.
+        if (fill.Target is { } mod)
+        {
+            Mutagen.Bethesda.Plugins.Masters.OwnFormIdStyle.Set(mod,
+                (package.MetaData.MasterReferences as Mutagen.Bethesda.Plugins.Masters.SeparatedMasterPackage)?.OwnFormIdsStyled);
+        }
         var minimumFinalPos = checked((int)(stream.Position + headerMeta.TotalLength));
         fill(
             stream: stream,

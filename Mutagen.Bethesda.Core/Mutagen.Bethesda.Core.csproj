@@ -357,6 +357,7 @@
         <Compile Include="Plugins\Masters\DI\TransitiveMasterLocator.cs" />
         <Compile Include="Plugins\Masters\MasterStyle.cs" />
         <Compile Include="Plugins\Masters\SeparatedMasterPackage.cs" />
+        <Compile Include="Plugins\Masters\OwnFormIdStyle.cs" />
         <Compile Include="Plugins\Masters\MasterReferenceCollection.cs" />
         <Compile Include="Plugins\Meta\ObjectType.cs">
             <CodeLanguage>cs</CodeLanguage>
