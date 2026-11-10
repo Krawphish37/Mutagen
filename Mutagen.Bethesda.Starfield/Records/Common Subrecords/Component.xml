@@ -105,7 +105,7 @@
   <Object name="SkinFormComponent" objType="Subrecord" baseClass="AComponent" />
   <Object name="BodyPartInfoComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="GNAM" recordType="GNAM" unknown="true" />
+      <FormLink name="BodyPartData" recordType="GNAM" refName="BodyPartData" />
     </Fields>
   </Object>
   <Object name="EffectSequenceComponent" objType="Subrecord" baseClass="AComponent">
@@ -180,10 +180,11 @@
   <Object name="VolumesComponentItem" objType="Subrecord" >
     <Fields>
       <CustomLogic name="TypeParse" byteLength="4" />
-      <RefDirect name="Matrix1" refName="VolumesMatrix" />
-      <RefDirect name="Matrix2" refName="VolumesMatrix" />
-      <RefDirect name="Matrix3" refName="VolumesMatrix" />
-      <RefDirect name="Matrix4" refName="VolumesMatrix" />
+      <!-- A 4x4 transform by rows; column W is 0, 0, 0, 1 and the last row holds the translation (Starfield.esm, 18,884 volumes) -->
+      <RefDirect name="Row0" refName="VolumesMatrix" />
+      <RefDirect name="Row1" refName="VolumesMatrix" />
+      <RefDirect name="Row2" refName="VolumesMatrix" />
+      <RefDirect name="Translation" refName="VolumesMatrix" />
       <Float name="Unknown1" />
       <Float name="Unknown2" />
       <Float name="Unknown3" />
@@ -192,10 +193,10 @@
   </Object>
   <Object name="VolumesMatrix" objType="Subrecord" >
     <Fields>
-      <Float name="Unknown1" />
-      <Float name="Unknown2" />
-      <Float name="Unknown3" />
-      <Float name="Unknown4" />
+      <Float name="X" />
+      <Float name="Y" />
+      <Float name="Z" />
+      <Float name="W" />
     </Fields>
   </Object>
   <Object name="AVolumesUnknownEnder" abstract="true" objType="Subrecord" >
@@ -613,7 +614,12 @@
   </Object>
   <Object name="CityMapsUsageComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="MOD2" recordType="MOD2" unknown="true" />
+      <!-- xEdit: Model Path, a 260-byte zero-padded string (SFBGS008.esm) -->
+      <Data recordType="MOD2">
+        <Fields>
+          <String name="ModelPath" binaryType="NullPaddedFixedLength" byteLength="260" />
+        </Fields>
+      </Data>
     </Fields>
   </Object>
   <Object name="VehicleManagementComponent" objType="Subrecord" baseClass="AComponent">

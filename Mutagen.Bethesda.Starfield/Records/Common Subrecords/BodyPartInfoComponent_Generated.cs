@@ -14,6 +14,7 @@ using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Exceptions;
 using Mutagen.Bethesda.Plugins.Internals;
 using Mutagen.Bethesda.Plugins.Meta;
@@ -53,16 +54,15 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region GNAM
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _GNAM;
-        public MemorySlice<Byte>? GNAM
+        #region BodyPartData
+        private readonly IFormLinkNullable<IBodyPartDataGetter> _BodyPartData = new FormLinkNullable<IBodyPartDataGetter>();
+        public IFormLinkNullable<IBodyPartDataGetter> BodyPartData
         {
-            get => this._GNAM;
-            set => this._GNAM = value;
+            get => _BodyPartData;
+            set => _BodyPartData.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IBodyPartInfoComponentGetter.GNAM => this.GNAM;
+        IFormLinkNullableGetter<IBodyPartDataGetter> IBodyPartInfoComponentGetter.BodyPartData => this.BodyPartData;
         #endregion
 
         #region To String
@@ -102,10 +102,10 @@ namespace Mutagen.Bethesda.Starfield
             IMask<TItem>
         {
             #region Ctors
-            public Mask(TItem GNAM)
+            public Mask(TItem BodyPartData)
             : base()
             {
-                this.GNAM = GNAM;
+                this.BodyPartData = BodyPartData;
             }
 
             #pragma warning disable CS8618
@@ -117,7 +117,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem GNAM;
+            public TItem BodyPartData;
             #endregion
 
             #region Equals
@@ -131,13 +131,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.GNAM, rhs.GNAM)) return false;
+                if (!object.Equals(this.BodyPartData, rhs.BodyPartData)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.GNAM);
+                hash.Add(this.BodyPartData);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -148,7 +148,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.GNAM)) return false;
+                if (!eval(this.BodyPartData)) return false;
                 return true;
             }
             #endregion
@@ -157,7 +157,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.GNAM)) return true;
+                if (eval(this.BodyPartData)) return true;
                 return false;
             }
             #endregion
@@ -173,7 +173,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.GNAM = eval(this.GNAM);
+                obj.BodyPartData = eval(this.BodyPartData);
             }
             #endregion
 
@@ -192,9 +192,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(BodyPartInfoComponent.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.GNAM ?? true)
+                    if (printMask?.BodyPartData ?? true)
                     {
-                        sb.AppendItem(GNAM, "GNAM");
+                        sb.AppendItem(BodyPartData, "BodyPartData");
                     }
                 }
             }
@@ -207,7 +207,7 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? GNAM;
+            public Exception? BodyPartData;
             #endregion
 
             #region IErrorMask
@@ -216,8 +216,8 @@ namespace Mutagen.Bethesda.Starfield
                 BodyPartInfoComponent_FieldIndex enu = (BodyPartInfoComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case BodyPartInfoComponent_FieldIndex.GNAM:
-                        return GNAM;
+                    case BodyPartInfoComponent_FieldIndex.BodyPartData:
+                        return BodyPartData;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -228,8 +228,8 @@ namespace Mutagen.Bethesda.Starfield
                 BodyPartInfoComponent_FieldIndex enu = (BodyPartInfoComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case BodyPartInfoComponent_FieldIndex.GNAM:
-                        this.GNAM = ex;
+                    case BodyPartInfoComponent_FieldIndex.BodyPartData:
+                        this.BodyPartData = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -242,8 +242,8 @@ namespace Mutagen.Bethesda.Starfield
                 BodyPartInfoComponent_FieldIndex enu = (BodyPartInfoComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case BodyPartInfoComponent_FieldIndex.GNAM:
-                        this.GNAM = (Exception?)obj;
+                    case BodyPartInfoComponent_FieldIndex.BodyPartData:
+                        this.BodyPartData = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -254,7 +254,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (GNAM != null) return true;
+                if (BodyPartData != null) return true;
                 return false;
             }
             #endregion
@@ -282,7 +282,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(GNAM, "GNAM");
+                    sb.AppendItem(BodyPartData, "BodyPartData");
                 }
             }
             #endregion
@@ -292,7 +292,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.GNAM = this.GNAM.Combine(rhs.GNAM);
+                ret.BodyPartData = this.BodyPartData.Combine(rhs.BodyPartData);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -315,7 +315,7 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool GNAM;
+            public bool BodyPartData;
             #endregion
 
             #region Ctors
@@ -324,7 +324,7 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.GNAM = defaultOn;
+                this.BodyPartData = defaultOn;
             }
 
             #endregion
@@ -332,7 +332,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((GNAM, null));
+                ret.Add((BodyPartData, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -341,6 +341,11 @@ namespace Mutagen.Bethesda.Starfield
             }
 
         }
+        #endregion
+
+        #region Mutagen
+        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => BodyPartInfoComponentCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
+        public override void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => BodyPartInfoComponentSetterCommon.Instance.RemapLinks(this, mapping);
         #endregion
 
         #region Binary Translation
@@ -402,18 +407,20 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IBodyPartInfoComponent :
         IAComponent,
         IBodyPartInfoComponentGetter,
+        IFormLinkContainer,
         ILoquiObjectSetter<IBodyPartInfoComponent>
     {
-        new MemorySlice<Byte>? GNAM { get; set; }
+        new IFormLinkNullable<IBodyPartDataGetter> BodyPartData { get; set; }
     }
 
     public partial interface IBodyPartInfoComponentGetter :
         IAComponentGetter,
         IBinaryItem,
+        IFormLinkContainerGetter,
         ILoquiObject<IBodyPartInfoComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => BodyPartInfoComponent_Registration.Instance;
-        ReadOnlyMemorySlice<Byte>? GNAM { get; }
+        IFormLinkNullableGetter<IBodyPartDataGetter> BodyPartData { get; }
 
     }
 
@@ -558,7 +565,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum BodyPartInfoComponent_FieldIndex
     {
-        GNAM = 0,
+        BodyPartData = 0,
     }
     #endregion
 
@@ -649,7 +656,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IBodyPartInfoComponent item)
         {
             ClearPartial();
-            item.GNAM = default;
+            item.BodyPartData.Clear();
             base.Clear(item);
         }
         
@@ -662,6 +669,7 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IBodyPartInfoComponent obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             base.RemapLinks(obj, mapping);
+            obj.BodyPartData.Relink(mapping);
         }
         
         #endregion
@@ -717,7 +725,7 @@ namespace Mutagen.Bethesda.Starfield
             BodyPartInfoComponent.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.GNAM = MemorySliceExt.SequenceEqual(item.GNAM, rhs.GNAM);
+            ret.BodyPartData = item.BodyPartData.Equals(rhs.BodyPartData);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -767,10 +775,9 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.GNAM ?? true)
-                && item.GNAM is {} GNAMItem)
+            if (printMask?.BodyPartData ?? true)
             {
-                sb.AppendLine($"GNAM => {SpanExt.ToHexString(GNAMItem)}");
+                sb.AppendItem(item.BodyPartData.FormKeyNullable, "BodyPartData");
             }
         }
         
@@ -791,9 +798,9 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IAComponentGetter)lhs, (IAComponentGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)BodyPartInfoComponent_FieldIndex.GNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BodyPartInfoComponent_FieldIndex.BodyPartData) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.GNAM, rhs.GNAM)) return false;
+                if (!lhs.BodyPartData.Equals(rhs.BodyPartData)) return false;
             }
             return true;
         }
@@ -812,10 +819,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IBodyPartInfoComponentGetter item)
         {
             var hash = new HashCode();
-            if (item.GNAM is {} GNAMItem)
-            {
-                hash.AddBytes(GNAMItem);
-            }
+            hash.Add(item.BodyPartData);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -839,6 +843,10 @@ namespace Mutagen.Bethesda.Starfield
             foreach (var item in base.EnumerateFormLinks(obj, iterateNestedRecords))
             {
                 yield return item;
+            }
+            if (FormLinkInformation.TryFactory(obj.BodyPartData, out var BodyPartDataInfo))
+            {
+                yield return BodyPartDataInfo;
             }
             yield break;
         }
@@ -864,16 +872,9 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)BodyPartInfoComponent_FieldIndex.GNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BodyPartInfoComponent_FieldIndex.BodyPartData) ?? true))
             {
-                if(rhs.GNAM is {} GNAMrhs)
-                {
-                    item.GNAM = GNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.GNAM = default;
-                }
+                item.BodyPartData.SetTo(rhs.BodyPartData.FormKeyNullable);
             }
             DeepCopyInCustom(
                 item: item,
@@ -1000,9 +1001,9 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.GNAM,
+                item: item.BodyPartData,
                 header: translationParams.ConvertToCustom(RecordTypes.GNAM));
         }
 
@@ -1061,8 +1062,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.GNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.GNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)BodyPartInfoComponent_FieldIndex.GNAM;
+                    item.BodyPartData.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)BodyPartInfoComponent_FieldIndex.BodyPartData;
                 }
                 default:
                     return AComponentBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1108,6 +1109,7 @@ namespace Mutagen.Bethesda.Starfield
 
         void IPrintable.Print(StructuredStringBuilder sb, string? name) => this.Print(sb, name);
 
+        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => BodyPartInfoComponentCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected override object BinaryWriteTranslator => BodyPartInfoComponentBinaryWriteTranslation.Instance;
         void IBinaryItem.WriteToBinary(
@@ -1120,9 +1122,9 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region GNAM
-        private int? _GNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? GNAM => _GNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _GNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region BodyPartData
+        private int? _BodyPartDataLocation;
+        public IFormLinkNullableGetter<IBodyPartDataGetter> BodyPartData => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IBodyPartDataGetter>(_package, _recordData, _BodyPartDataLocation);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1189,8 +1191,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.GNAM:
                 {
-                    _GNAMLocation = (stream.Position - offset);
-                    return (int)BodyPartInfoComponent_FieldIndex.GNAM;
+                    _BodyPartDataLocation = (stream.Position - offset);
+                    return (int)BodyPartInfoComponent_FieldIndex.BodyPartData;
                 }
                 default:
                     return base.FillRecordType(

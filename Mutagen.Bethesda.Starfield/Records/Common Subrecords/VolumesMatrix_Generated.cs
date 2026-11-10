@@ -51,17 +51,17 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Unknown1
-        public Single Unknown1 { get; set; } = default(Single);
+        #region X
+        public Single X { get; set; } = default(Single);
         #endregion
-        #region Unknown2
-        public Single Unknown2 { get; set; } = default(Single);
+        #region Y
+        public Single Y { get; set; } = default(Single);
         #endregion
-        #region Unknown3
-        public Single Unknown3 { get; set; } = default(Single);
+        #region Z
+        public Single Z { get; set; } = default(Single);
         #endregion
-        #region Unknown4
-        public Single Unknown4 { get; set; } = default(Single);
+        #region W
+        public Single W { get; set; } = default(Single);
         #endregion
 
         #region To String
@@ -102,22 +102,22 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Unknown1 = initialValue;
-                this.Unknown2 = initialValue;
-                this.Unknown3 = initialValue;
-                this.Unknown4 = initialValue;
+                this.X = initialValue;
+                this.Y = initialValue;
+                this.Z = initialValue;
+                this.W = initialValue;
             }
 
             public Mask(
-                TItem Unknown1,
-                TItem Unknown2,
-                TItem Unknown3,
-                TItem Unknown4)
+                TItem X,
+                TItem Y,
+                TItem Z,
+                TItem W)
             {
-                this.Unknown1 = Unknown1;
-                this.Unknown2 = Unknown2;
-                this.Unknown3 = Unknown3;
-                this.Unknown4 = Unknown4;
+                this.X = X;
+                this.Y = Y;
+                this.Z = Z;
+                this.W = W;
             }
 
             #pragma warning disable CS8618
@@ -129,10 +129,10 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Unknown1;
-            public TItem Unknown2;
-            public TItem Unknown3;
-            public TItem Unknown4;
+            public TItem X;
+            public TItem Y;
+            public TItem Z;
+            public TItem W;
             #endregion
 
             #region Equals
@@ -145,19 +145,19 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
-                if (!object.Equals(this.Unknown3, rhs.Unknown3)) return false;
-                if (!object.Equals(this.Unknown4, rhs.Unknown4)) return false;
+                if (!object.Equals(this.X, rhs.X)) return false;
+                if (!object.Equals(this.Y, rhs.Y)) return false;
+                if (!object.Equals(this.Z, rhs.Z)) return false;
+                if (!object.Equals(this.W, rhs.W)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Unknown1);
-                hash.Add(this.Unknown2);
-                hash.Add(this.Unknown3);
-                hash.Add(this.Unknown4);
+                hash.Add(this.X);
+                hash.Add(this.Y);
+                hash.Add(this.Z);
+                hash.Add(this.W);
                 return hash.ToHashCode();
             }
 
@@ -166,10 +166,10 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Unknown1)) return false;
-                if (!eval(this.Unknown2)) return false;
-                if (!eval(this.Unknown3)) return false;
-                if (!eval(this.Unknown4)) return false;
+                if (!eval(this.X)) return false;
+                if (!eval(this.Y)) return false;
+                if (!eval(this.Z)) return false;
+                if (!eval(this.W)) return false;
                 return true;
             }
             #endregion
@@ -177,10 +177,10 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Unknown1)) return true;
-                if (eval(this.Unknown2)) return true;
-                if (eval(this.Unknown3)) return true;
-                if (eval(this.Unknown4)) return true;
+                if (eval(this.X)) return true;
+                if (eval(this.Y)) return true;
+                if (eval(this.Z)) return true;
+                if (eval(this.W)) return true;
                 return false;
             }
             #endregion
@@ -195,10 +195,10 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Unknown1 = eval(this.Unknown1);
-                obj.Unknown2 = eval(this.Unknown2);
-                obj.Unknown3 = eval(this.Unknown3);
-                obj.Unknown4 = eval(this.Unknown4);
+                obj.X = eval(this.X);
+                obj.Y = eval(this.Y);
+                obj.Z = eval(this.Z);
+                obj.W = eval(this.W);
             }
             #endregion
 
@@ -217,21 +217,21 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(VolumesMatrix.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Unknown1 ?? true)
+                    if (printMask?.X ?? true)
                     {
-                        sb.AppendItem(Unknown1, "Unknown1");
+                        sb.AppendItem(X, "X");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.Y ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(Y, "Y");
                     }
-                    if (printMask?.Unknown3 ?? true)
+                    if (printMask?.Z ?? true)
                     {
-                        sb.AppendItem(Unknown3, "Unknown3");
+                        sb.AppendItem(Z, "Z");
                     }
-                    if (printMask?.Unknown4 ?? true)
+                    if (printMask?.W ?? true)
                     {
-                        sb.AppendItem(Unknown4, "Unknown4");
+                        sb.AppendItem(W, "W");
                     }
                 }
             }
@@ -257,10 +257,10 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Unknown1;
-            public Exception? Unknown2;
-            public Exception? Unknown3;
-            public Exception? Unknown4;
+            public Exception? X;
+            public Exception? Y;
+            public Exception? Z;
+            public Exception? W;
             #endregion
 
             #region IErrorMask
@@ -269,14 +269,14 @@ namespace Mutagen.Bethesda.Starfield
                 VolumesMatrix_FieldIndex enu = (VolumesMatrix_FieldIndex)index;
                 switch (enu)
                 {
-                    case VolumesMatrix_FieldIndex.Unknown1:
-                        return Unknown1;
-                    case VolumesMatrix_FieldIndex.Unknown2:
-                        return Unknown2;
-                    case VolumesMatrix_FieldIndex.Unknown3:
-                        return Unknown3;
-                    case VolumesMatrix_FieldIndex.Unknown4:
-                        return Unknown4;
+                    case VolumesMatrix_FieldIndex.X:
+                        return X;
+                    case VolumesMatrix_FieldIndex.Y:
+                        return Y;
+                    case VolumesMatrix_FieldIndex.Z:
+                        return Z;
+                    case VolumesMatrix_FieldIndex.W:
+                        return W;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -287,17 +287,17 @@ namespace Mutagen.Bethesda.Starfield
                 VolumesMatrix_FieldIndex enu = (VolumesMatrix_FieldIndex)index;
                 switch (enu)
                 {
-                    case VolumesMatrix_FieldIndex.Unknown1:
-                        this.Unknown1 = ex;
+                    case VolumesMatrix_FieldIndex.X:
+                        this.X = ex;
                         break;
-                    case VolumesMatrix_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case VolumesMatrix_FieldIndex.Y:
+                        this.Y = ex;
                         break;
-                    case VolumesMatrix_FieldIndex.Unknown3:
-                        this.Unknown3 = ex;
+                    case VolumesMatrix_FieldIndex.Z:
+                        this.Z = ex;
                         break;
-                    case VolumesMatrix_FieldIndex.Unknown4:
-                        this.Unknown4 = ex;
+                    case VolumesMatrix_FieldIndex.W:
+                        this.W = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -309,17 +309,17 @@ namespace Mutagen.Bethesda.Starfield
                 VolumesMatrix_FieldIndex enu = (VolumesMatrix_FieldIndex)index;
                 switch (enu)
                 {
-                    case VolumesMatrix_FieldIndex.Unknown1:
-                        this.Unknown1 = (Exception?)obj;
+                    case VolumesMatrix_FieldIndex.X:
+                        this.X = (Exception?)obj;
                         break;
-                    case VolumesMatrix_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case VolumesMatrix_FieldIndex.Y:
+                        this.Y = (Exception?)obj;
                         break;
-                    case VolumesMatrix_FieldIndex.Unknown3:
-                        this.Unknown3 = (Exception?)obj;
+                    case VolumesMatrix_FieldIndex.Z:
+                        this.Z = (Exception?)obj;
                         break;
-                    case VolumesMatrix_FieldIndex.Unknown4:
-                        this.Unknown4 = (Exception?)obj;
+                    case VolumesMatrix_FieldIndex.W:
+                        this.W = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -329,10 +329,10 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Unknown1 != null) return true;
-                if (Unknown2 != null) return true;
-                if (Unknown3 != null) return true;
-                if (Unknown4 != null) return true;
+                if (X != null) return true;
+                if (Y != null) return true;
+                if (Z != null) return true;
+                if (W != null) return true;
                 return false;
             }
             #endregion
@@ -359,16 +359,16 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Unknown1, "Unknown1");
+                    sb.AppendItem(X, "X");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(Y, "Y");
                 }
                 {
-                    sb.AppendItem(Unknown3, "Unknown3");
+                    sb.AppendItem(Z, "Z");
                 }
                 {
-                    sb.AppendItem(Unknown4, "Unknown4");
+                    sb.AppendItem(W, "W");
                 }
             }
             #endregion
@@ -378,10 +378,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
-                ret.Unknown3 = this.Unknown3.Combine(rhs.Unknown3);
-                ret.Unknown4 = this.Unknown4.Combine(rhs.Unknown4);
+                ret.X = this.X.Combine(rhs.X);
+                ret.Y = this.Y.Combine(rhs.Y);
+                ret.Z = this.Z.Combine(rhs.Z);
+                ret.W = this.W.Combine(rhs.W);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -405,10 +405,10 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Unknown1;
-            public bool Unknown2;
-            public bool Unknown3;
-            public bool Unknown4;
+            public bool X;
+            public bool Y;
+            public bool Z;
+            public bool W;
             #endregion
 
             #region Ctors
@@ -418,10 +418,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Unknown1 = defaultOn;
-                this.Unknown2 = defaultOn;
-                this.Unknown3 = defaultOn;
-                this.Unknown4 = defaultOn;
+                this.X = defaultOn;
+                this.Y = defaultOn;
+                this.Z = defaultOn;
+                this.W = defaultOn;
             }
 
             #endregion
@@ -437,10 +437,10 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Unknown1, null));
-                ret.Add((Unknown2, null));
-                ret.Add((Unknown3, null));
-                ret.Add((Unknown4, null));
+                ret.Add((X, null));
+                ret.Add((Y, null));
+                ret.Add((Z, null));
+                ret.Add((W, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -513,10 +513,10 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IVolumesMatrix>,
         IVolumesMatrixGetter
     {
-        new Single Unknown1 { get; set; }
-        new Single Unknown2 { get; set; }
-        new Single Unknown3 { get; set; }
-        new Single Unknown4 { get; set; }
+        new Single X { get; set; }
+        new Single Y { get; set; }
+        new Single Z { get; set; }
+        new Single W { get; set; }
     }
 
     public partial interface IVolumesMatrixGetter :
@@ -531,10 +531,10 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => VolumesMatrix_Registration.Instance;
-        Single Unknown1 { get; }
-        Single Unknown2 { get; }
-        Single Unknown3 { get; }
-        Single Unknown4 { get; }
+        Single X { get; }
+        Single Y { get; }
+        Single Z { get; }
+        Single W { get; }
 
     }
 
@@ -704,10 +704,10 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum VolumesMatrix_FieldIndex
     {
-        Unknown1 = 0,
-        Unknown2 = 1,
-        Unknown3 = 2,
-        Unknown4 = 3,
+        X = 0,
+        Y = 1,
+        Z = 2,
+        W = 3,
     }
     #endregion
 
@@ -786,10 +786,10 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IVolumesMatrix item)
         {
             ClearPartial();
-            item.Unknown1 = default(Single);
-            item.Unknown2 = default(Single);
-            item.Unknown3 = default(Single);
-            item.Unknown4 = default(Single);
+            item.X = default(Single);
+            item.Y = default(Single);
+            item.Z = default(Single);
+            item.W = default(Single);
         }
         
         #region Mutagen
@@ -839,10 +839,10 @@ namespace Mutagen.Bethesda.Starfield
             VolumesMatrix.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Unknown1 = item.Unknown1.EqualsWithin(rhs.Unknown1);
-            ret.Unknown2 = item.Unknown2.EqualsWithin(rhs.Unknown2);
-            ret.Unknown3 = item.Unknown3.EqualsWithin(rhs.Unknown3);
-            ret.Unknown4 = item.Unknown4.EqualsWithin(rhs.Unknown4);
+            ret.X = item.X.EqualsWithin(rhs.X);
+            ret.Y = item.Y.EqualsWithin(rhs.Y);
+            ret.Z = item.Z.EqualsWithin(rhs.Z);
+            ret.W = item.W.EqualsWithin(rhs.W);
         }
         
         public string Print(
@@ -887,21 +887,21 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             VolumesMatrix.Mask<bool>? printMask = null)
         {
-            if (printMask?.Unknown1 ?? true)
+            if (printMask?.X ?? true)
             {
-                sb.AppendItem(item.Unknown1, "Unknown1");
+                sb.AppendItem(item.X, "X");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.Y ?? true)
             {
-                sb.AppendItem(item.Unknown2, "Unknown2");
+                sb.AppendItem(item.Y, "Y");
             }
-            if (printMask?.Unknown3 ?? true)
+            if (printMask?.Z ?? true)
             {
-                sb.AppendItem(item.Unknown3, "Unknown3");
+                sb.AppendItem(item.Z, "Z");
             }
-            if (printMask?.Unknown4 ?? true)
+            if (printMask?.W ?? true)
             {
-                sb.AppendItem(item.Unknown4, "Unknown4");
+                sb.AppendItem(item.W, "W");
             }
         }
         
@@ -912,21 +912,21 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.X) ?? true))
             {
-                if (!lhs.Unknown1.EqualsWithin(rhs.Unknown1)) return false;
+                if (!lhs.X.EqualsWithin(rhs.X)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.Y) ?? true))
             {
-                if (!lhs.Unknown2.EqualsWithin(rhs.Unknown2)) return false;
+                if (!lhs.Y.EqualsWithin(rhs.Y)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.Unknown3) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.Z) ?? true))
             {
-                if (!lhs.Unknown3.EqualsWithin(rhs.Unknown3)) return false;
+                if (!lhs.Z.EqualsWithin(rhs.Z)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.Unknown4) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.W) ?? true))
             {
-                if (!lhs.Unknown4.EqualsWithin(rhs.Unknown4)) return false;
+                if (!lhs.W.EqualsWithin(rhs.W)) return false;
             }
             return true;
         }
@@ -934,10 +934,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IVolumesMatrixGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Unknown1);
-            hash.Add(item.Unknown2);
-            hash.Add(item.Unknown3);
-            hash.Add(item.Unknown4);
+            hash.Add(item.X);
+            hash.Add(item.Y);
+            hash.Add(item.Z);
+            hash.Add(item.W);
             return hash.ToHashCode();
         }
         
@@ -970,21 +970,21 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.X) ?? true))
             {
-                item.Unknown1 = rhs.Unknown1;
+                item.X = rhs.X;
             }
-            if ((copyMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.Y) ?? true))
             {
-                item.Unknown2 = rhs.Unknown2;
+                item.Y = rhs.Y;
             }
-            if ((copyMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.Unknown3) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.Z) ?? true))
             {
-                item.Unknown3 = rhs.Unknown3;
+                item.Z = rhs.Z;
             }
-            if ((copyMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.Unknown4) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)VolumesMatrix_FieldIndex.W) ?? true))
             {
-                item.Unknown4 = rhs.Unknown4;
+                item.W = rhs.W;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1096,16 +1096,16 @@ namespace Mutagen.Bethesda.Starfield
         {
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown1);
+                item: item.X);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown2);
+                item: item.Y);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown3);
+                item: item.Z);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown4);
+                item: item.W);
         }
 
         public void Write(
@@ -1139,10 +1139,10 @@ namespace Mutagen.Bethesda.Starfield
             IVolumesMatrix item,
             MutagenFrame frame)
         {
-            item.Unknown1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown3 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown4 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.X = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Y = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Z = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.W = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
         }
 
     }
@@ -1208,10 +1208,10 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Single Unknown1 => _structData.Slice(0x0, 0x4).Float();
-        public Single Unknown2 => _structData.Slice(0x4, 0x4).Float();
-        public Single Unknown3 => _structData.Slice(0x8, 0x4).Float();
-        public Single Unknown4 => _structData.Slice(0xC, 0x4).Float();
+        public Single X => _structData.Slice(0x0, 0x4).Float();
+        public Single Y => _structData.Slice(0x4, 0x4).Float();
+        public Single Z => _structData.Slice(0x8, 0x4).Float();
+        public Single W => _structData.Slice(0xC, 0x4).Float();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
