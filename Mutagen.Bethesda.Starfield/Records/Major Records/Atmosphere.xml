@@ -2,7 +2,7 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="Atmosphere" recordType="ATMO" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
-      <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
       <FormLink name="ReflectionParent" recordType="RFDP" refName="Atmosphere" />
       <RefDirect name="ReflectionDiff" refName="Reflection" overflowRecordType="XXXX">
         <RecordTypeOverrides>

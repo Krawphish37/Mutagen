@@ -163,8 +163,8 @@ public class ReflectionOverflowTests
         foreach (var atmosphere in ReadAtmosphere(bytes))
         {
             atmosphere.EditorID.ShouldBe("TestAtmosphere");
-            atmosphere.REFL.ShouldNotBeNull();
-            atmosphere.REFL!.Value.ToArray().ShouldBe(payload);
+            atmosphere.Reflection.ShouldNotBeNull();
+            atmosphere.Reflection!.Data.ToArray().ShouldBe(payload);
             atmosphere.ReflectionParent.FormKey.ShouldBe(new FormKey(TestModKey, 0x801));
             atmosphere.ReflectionDiff!.Data.ToArray().ShouldBe(new byte[] { 1, 2, 3 });
         }
