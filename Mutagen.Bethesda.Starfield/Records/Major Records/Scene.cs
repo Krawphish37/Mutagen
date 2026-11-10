@@ -10,6 +10,19 @@ namespace Mutagen.Bethesda.Starfield;
 
 public partial class Scene
 {
+    /// <summary>
+    /// A "Set all" actor-behaviour override of the scene (VNAM; Creation Kit 1.16.244.0, Scene > Edit Actor Behavior).
+    /// NotSet = the check box is off. Pause and End follow from the CK's options (Death offers only End and Normal, and
+    /// Death stores 2 in the data). Other values are kept as stored.
+    /// </summary>
+    public enum ActorBehaviorSetting
+    {
+        Normal = 0,
+        Pause = 1,
+        End = 2,
+        NotSet = 3,
+    }
+
     // Starfield's scene flags (FNAM), as in xEdit's Starfield definitions; the list was Fallout 4's from bit 2 up
     [Flags]
     public enum Flag

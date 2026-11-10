@@ -69,10 +69,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         AQuestAlias.Flag? IQuestLocationAliasGetter.Flags => this.Flags;
         #endregion
-        #region ALFG
-        public Int32? ALFG { get; set; }
+        #region ExtraFlags
+        public QuestLocationAlias.ExtraFlag? ExtraFlags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Int32? IQuestLocationAliasGetter.ALFG => this.ALFG;
+        QuestLocationAlias.ExtraFlag? IQuestLocationAliasGetter.ExtraFlags => this.ExtraFlags;
         #endregion
         #region AliasIDToForceIntoWhenFilled
         public Int32? AliasIDToForceIntoWhenFilled { get; set; }
@@ -226,7 +226,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ID = initialValue;
                 this.Name = initialValue;
                 this.Flags = initialValue;
-                this.ALFG = initialValue;
+                this.ExtraFlags = initialValue;
                 this.AliasIDToForceIntoWhenFilled = initialValue;
                 this.SpecificLocation = initialValue;
                 this.ReferenceAliasLocation = new MaskItem<TItem, ReferenceAliasLocation.Mask<TItem>?>(initialValue, new ReferenceAliasLocation.Mask<TItem>(initialValue));
@@ -245,7 +245,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ID,
                 TItem Name,
                 TItem Flags,
-                TItem ALFG,
+                TItem ExtraFlags,
                 TItem AliasIDToForceIntoWhenFilled,
                 TItem SpecificLocation,
                 TItem ReferenceAliasLocation,
@@ -263,7 +263,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ID = ID;
                 this.Name = Name;
                 this.Flags = Flags;
-                this.ALFG = ALFG;
+                this.ExtraFlags = ExtraFlags;
                 this.AliasIDToForceIntoWhenFilled = AliasIDToForceIntoWhenFilled;
                 this.SpecificLocation = SpecificLocation;
                 this.ReferenceAliasLocation = new MaskItem<TItem, ReferenceAliasLocation.Mask<TItem>?>(ReferenceAliasLocation, new ReferenceAliasLocation.Mask<TItem>(ReferenceAliasLocation));
@@ -290,7 +290,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem ID;
             public TItem Name;
             public TItem Flags;
-            public TItem ALFG;
+            public TItem ExtraFlags;
             public TItem AliasIDToForceIntoWhenFilled;
             public TItem SpecificLocation;
             public MaskItem<TItem, ReferenceAliasLocation.Mask<TItem>?>? ReferenceAliasLocation { get; set; }
@@ -319,7 +319,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ID, rhs.ID)) return false;
                 if (!object.Equals(this.Name, rhs.Name)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
-                if (!object.Equals(this.ALFG, rhs.ALFG)) return false;
+                if (!object.Equals(this.ExtraFlags, rhs.ExtraFlags)) return false;
                 if (!object.Equals(this.AliasIDToForceIntoWhenFilled, rhs.AliasIDToForceIntoWhenFilled)) return false;
                 if (!object.Equals(this.SpecificLocation, rhs.SpecificLocation)) return false;
                 if (!object.Equals(this.ReferenceAliasLocation, rhs.ReferenceAliasLocation)) return false;
@@ -340,7 +340,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ID);
                 hash.Add(this.Name);
                 hash.Add(this.Flags);
-                hash.Add(this.ALFG);
+                hash.Add(this.ExtraFlags);
                 hash.Add(this.AliasIDToForceIntoWhenFilled);
                 hash.Add(this.SpecificLocation);
                 hash.Add(this.ReferenceAliasLocation);
@@ -366,7 +366,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.ID)) return false;
                 if (!eval(this.Name)) return false;
                 if (!eval(this.Flags)) return false;
-                if (!eval(this.ALFG)) return false;
+                if (!eval(this.ExtraFlags)) return false;
                 if (!eval(this.AliasIDToForceIntoWhenFilled)) return false;
                 if (!eval(this.SpecificLocation)) return false;
                 if (ReferenceAliasLocation != null)
@@ -417,7 +417,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.ID)) return true;
                 if (eval(this.Name)) return true;
                 if (eval(this.Flags)) return true;
-                if (eval(this.ALFG)) return true;
+                if (eval(this.ExtraFlags)) return true;
                 if (eval(this.AliasIDToForceIntoWhenFilled)) return true;
                 if (eval(this.SpecificLocation)) return true;
                 if (ReferenceAliasLocation != null)
@@ -475,7 +475,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.ID = eval(this.ID);
                 obj.Name = eval(this.Name);
                 obj.Flags = eval(this.Flags);
-                obj.ALFG = eval(this.ALFG);
+                obj.ExtraFlags = eval(this.ExtraFlags);
                 obj.AliasIDToForceIntoWhenFilled = eval(this.AliasIDToForceIntoWhenFilled);
                 obj.SpecificLocation = eval(this.SpecificLocation);
                 obj.ReferenceAliasLocation = this.ReferenceAliasLocation == null ? null : new MaskItem<R, ReferenceAliasLocation.Mask<R>?>(eval(this.ReferenceAliasLocation.Overall), this.ReferenceAliasLocation.Specific?.Translate(eval));
@@ -532,9 +532,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.ALFG ?? true)
+                    if (printMask?.ExtraFlags ?? true)
                     {
-                        sb.AppendItem(ALFG, "ALFG");
+                        sb.AppendItem(ExtraFlags, "ExtraFlags");
                     }
                     if (printMask?.AliasIDToForceIntoWhenFilled ?? true)
                     {
@@ -613,7 +613,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? ID;
             public Exception? Name;
             public Exception? Flags;
-            public Exception? ALFG;
+            public Exception? ExtraFlags;
             public Exception? AliasIDToForceIntoWhenFilled;
             public Exception? SpecificLocation;
             public MaskItem<Exception?, ReferenceAliasLocation.ErrorMask?>? ReferenceAliasLocation;
@@ -640,8 +640,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Name;
                     case QuestLocationAlias_FieldIndex.Flags:
                         return Flags;
-                    case QuestLocationAlias_FieldIndex.ALFG:
-                        return ALFG;
+                    case QuestLocationAlias_FieldIndex.ExtraFlags:
+                        return ExtraFlags;
                     case QuestLocationAlias_FieldIndex.AliasIDToForceIntoWhenFilled:
                         return AliasIDToForceIntoWhenFilled;
                     case QuestLocationAlias_FieldIndex.SpecificLocation:
@@ -685,8 +685,8 @@ namespace Mutagen.Bethesda.Starfield
                     case QuestLocationAlias_FieldIndex.Flags:
                         this.Flags = ex;
                         break;
-                    case QuestLocationAlias_FieldIndex.ALFG:
-                        this.ALFG = ex;
+                    case QuestLocationAlias_FieldIndex.ExtraFlags:
+                        this.ExtraFlags = ex;
                         break;
                     case QuestLocationAlias_FieldIndex.AliasIDToForceIntoWhenFilled:
                         this.AliasIDToForceIntoWhenFilled = ex;
@@ -744,8 +744,8 @@ namespace Mutagen.Bethesda.Starfield
                     case QuestLocationAlias_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
                         break;
-                    case QuestLocationAlias_FieldIndex.ALFG:
-                        this.ALFG = (Exception?)obj;
+                    case QuestLocationAlias_FieldIndex.ExtraFlags:
+                        this.ExtraFlags = (Exception?)obj;
                         break;
                     case QuestLocationAlias_FieldIndex.AliasIDToForceIntoWhenFilled:
                         this.AliasIDToForceIntoWhenFilled = (Exception?)obj;
@@ -795,7 +795,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ID != null) return true;
                 if (Name != null) return true;
                 if (Flags != null) return true;
-                if (ALFG != null) return true;
+                if (ExtraFlags != null) return true;
                 if (AliasIDToForceIntoWhenFilled != null) return true;
                 if (SpecificLocation != null) return true;
                 if (ReferenceAliasLocation != null) return true;
@@ -844,7 +844,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(ALFG, "ALFG");
+                    sb.AppendItem(ExtraFlags, "ExtraFlags");
                 }
                 {
                     sb.AppendItem(AliasIDToForceIntoWhenFilled, "AliasIDToForceIntoWhenFilled");
@@ -900,7 +900,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ID = this.ID.Combine(rhs.ID);
                 ret.Name = this.Name.Combine(rhs.Name);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
-                ret.ALFG = this.ALFG.Combine(rhs.ALFG);
+                ret.ExtraFlags = this.ExtraFlags.Combine(rhs.ExtraFlags);
                 ret.AliasIDToForceIntoWhenFilled = this.AliasIDToForceIntoWhenFilled.Combine(rhs.AliasIDToForceIntoWhenFilled);
                 ret.SpecificLocation = this.SpecificLocation.Combine(rhs.SpecificLocation);
                 ret.ReferenceAliasLocation = this.ReferenceAliasLocation.Combine(rhs.ReferenceAliasLocation, (l, r) => l.Combine(r));
@@ -938,7 +938,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool ID;
             public bool Name;
             public bool Flags;
-            public bool ALFG;
+            public bool ExtraFlags;
             public bool AliasIDToForceIntoWhenFilled;
             public bool SpecificLocation;
             public ReferenceAliasLocation.TranslationMask? ReferenceAliasLocation;
@@ -962,7 +962,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ID = defaultOn;
                 this.Name = defaultOn;
                 this.Flags = defaultOn;
-                this.ALFG = defaultOn;
+                this.ExtraFlags = defaultOn;
                 this.AliasIDToForceIntoWhenFilled = defaultOn;
                 this.SpecificLocation = defaultOn;
                 this.ClosestToAlias = defaultOn;
@@ -980,7 +980,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ID, null));
                 ret.Add((Name, null));
                 ret.Add((Flags, null));
-                ret.Add((ALFG, null));
+                ret.Add((ExtraFlags, null));
                 ret.Add((AliasIDToForceIntoWhenFilled, null));
                 ret.Add((SpecificLocation, null));
                 ret.Add((ReferenceAliasLocation != null ? ReferenceAliasLocation.OnOverall : DefaultOn, ReferenceAliasLocation?.GetCrystal()));
@@ -1077,7 +1077,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         new String Name { get; set; }
         new AQuestAlias.Flag? Flags { get; set; }
-        new Int32? ALFG { get; set; }
+        new QuestLocationAlias.ExtraFlag? ExtraFlags { get; set; }
         new Int32? AliasIDToForceIntoWhenFilled { get; set; }
         new IFormLinkNullable<ILocationGetter> SpecificLocation { get; set; }
         new ReferenceAliasLocation? ReferenceAliasLocation { get; set; }
@@ -1108,7 +1108,7 @@ namespace Mutagen.Bethesda.Starfield
         String Name { get; }
         #endregion
         AQuestAlias.Flag? Flags { get; }
-        Int32? ALFG { get; }
+        QuestLocationAlias.ExtraFlag? ExtraFlags { get; }
         Int32? AliasIDToForceIntoWhenFilled { get; }
         IFormLinkNullableGetter<ILocationGetter> SpecificLocation { get; }
         IReferenceAliasLocationGetter? ReferenceAliasLocation { get; }
@@ -1268,7 +1268,7 @@ namespace Mutagen.Bethesda.Starfield
         ID = 0,
         Name = 1,
         Flags = 2,
-        ALFG = 3,
+        ExtraFlags = 3,
         AliasIDToForceIntoWhenFilled = 4,
         SpecificLocation = 5,
         ReferenceAliasLocation = 6,
@@ -1394,7 +1394,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ID = default(UInt32);
             item.Name = string.Empty;
             item.Flags = default;
-            item.ALFG = default;
+            item.ExtraFlags = default;
             item.AliasIDToForceIntoWhenFilled = default;
             item.SpecificLocation.Clear();
             item.ReferenceAliasLocation = null;
@@ -1484,7 +1484,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.ID = item.ID == rhs.ID;
             ret.Name = string.Equals(item.Name, rhs.Name);
             ret.Flags = item.Flags == rhs.Flags;
-            ret.ALFG = item.ALFG == rhs.ALFG;
+            ret.ExtraFlags = item.ExtraFlags == rhs.ExtraFlags;
             ret.AliasIDToForceIntoWhenFilled = item.AliasIDToForceIntoWhenFilled == rhs.AliasIDToForceIntoWhenFilled;
             ret.SpecificLocation = item.SpecificLocation.Equals(rhs.SpecificLocation);
             ret.ReferenceAliasLocation = EqualsMaskHelper.EqualsHelper(
@@ -1578,10 +1578,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(FlagsItem, "Flags");
             }
-            if ((printMask?.ALFG ?? true)
-                && item.ALFG is {} ALFGItem)
+            if ((printMask?.ExtraFlags ?? true)
+                && item.ExtraFlags is {} ExtraFlagsItem)
             {
-                sb.AppendItem(ALFGItem, "ALFG");
+                sb.AppendItem(ExtraFlagsItem, "ExtraFlags");
             }
             if ((printMask?.AliasIDToForceIntoWhenFilled ?? true)
                 && item.AliasIDToForceIntoWhenFilled is {} AliasIDToForceIntoWhenFilledItem)
@@ -1680,9 +1680,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)QuestLocationAlias_FieldIndex.ALFG) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)QuestLocationAlias_FieldIndex.ExtraFlags) ?? true))
             {
-                if (lhs.ALFG != rhs.ALFG) return false;
+                if (lhs.ExtraFlags != rhs.ExtraFlags) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)QuestLocationAlias_FieldIndex.AliasIDToForceIntoWhenFilled) ?? true))
             {
@@ -1771,9 +1771,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Flagsitem);
             }
-            if (item.ALFG is {} ALFGitem)
+            if (item.ExtraFlags is {} ExtraFlagsitem)
             {
-                hash.Add(ALFGitem);
+                hash.Add(ExtraFlagsitem);
             }
             if (item.AliasIDToForceIntoWhenFilled is {} AliasIDToForceIntoWhenFilleditem)
             {
@@ -1911,9 +1911,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)QuestLocationAlias_FieldIndex.ALFG) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)QuestLocationAlias_FieldIndex.ExtraFlags) ?? true))
             {
-                item.ALFG = rhs.ALFG;
+                item.ExtraFlags = rhs.ExtraFlags;
             }
             if ((copyMask?.GetShouldTranslate((int)QuestLocationAlias_FieldIndex.AliasIDToForceIntoWhenFilled) ?? true))
             {
@@ -2206,9 +2206,10 @@ namespace Mutagen.Bethesda.Starfield
                 item.Flags,
                 length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.FNAM));
-            Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.ALFG,
+            EnumBinaryTranslation<QuestLocationAlias.ExtraFlag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.ExtraFlags,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.ALFG));
             Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
@@ -2357,8 +2358,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ALFG:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ALFG = frame.ReadInt32();
-                    return (int)QuestLocationAlias_FieldIndex.ALFG;
+                    item.ExtraFlags = EnumBinaryTranslation<QuestLocationAlias.ExtraFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)QuestLocationAlias_FieldIndex.ExtraFlags;
                 }
                 case RecordTypeInts.ALFI:
                 {
@@ -2505,9 +2508,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _FlagsLocation;
         public AQuestAlias.Flag? Flags => EnumBinaryTranslation<AQuestAlias.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_FlagsLocation, _recordData, _package, 4);
         #endregion
-        #region ALFG
-        private int? _ALFGLocation;
-        public Int32? ALFG => _ALFGLocation.HasValue ? BinaryPrimitives.ReadInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ALFGLocation.Value, _package.MetaData.Constants)) : default(Int32?);
+        #region ExtraFlags
+        private int? _ExtraFlagsLocation;
+        public QuestLocationAlias.ExtraFlag? ExtraFlags => EnumBinaryTranslation<QuestLocationAlias.ExtraFlag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_ExtraFlagsLocation, _recordData, _package, 4);
         #endregion
         #region AliasIDToForceIntoWhenFilled
         private int? _AliasIDToForceIntoWhenFilledLocation;
@@ -2623,8 +2626,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ALFG:
                 {
-                    _ALFGLocation = (stream.Position - offset);
-                    return (int)QuestLocationAlias_FieldIndex.ALFG;
+                    _ExtraFlagsLocation = (stream.Position - offset);
+                    return (int)QuestLocationAlias_FieldIndex.ExtraFlags;
                 }
                 case RecordTypeInts.ALFI:
                 {

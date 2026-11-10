@@ -9,7 +9,18 @@
       <RefList name="Actions" refName="ASceneAction" recordType="ANAM" binary="Custom" />
       <FormLink name="Quest" refName="Quest" recordType="PNAM" />
       <UInt32 name="LastActionIndex" recordType="INAM" />
-      <ByteArray name="VNAM" recordType="VNAM" unknown="true" />
+      <!-- CK 1.16.244.0, Scene > Edit Actor Behavior: the five scene-wide "Set all" overrides (Fallout 4 has the first four).
+           3 = not set (check box off); 0 Normal, 1 Pause, 2 End. 5 scenes in the official files store an empty VNAM. -->
+      <Data recordType="VNAM">
+        <Fields>
+          <Break />
+          <Enum name="DeathBehavior" enumName="Scene.ActorBehaviorSetting" byteLength="4" />
+          <Enum name="CombatBehavior" enumName="Scene.ActorBehaviorSetting" byteLength="4" />
+          <Enum name="PlayerDialogueBehavior" enumName="Scene.ActorBehaviorSetting" byteLength="4" />
+          <Enum name="ObserveCombatBehavior" enumName="Scene.ActorBehaviorSetting" byteLength="4" />
+          <Enum name="ReactionRadiusBehavior" enumName="Scene.ActorBehaviorSetting" byteLength="4" />
+        </Fields>
+      </Data>
       <RefList name="Conditions" refName="Condition" />
       <RefDirect name="SetParentQuestStage" refName="SceneSetParentQuestStage" />
       <String name="Notes" recordType="NNAM" />

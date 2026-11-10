@@ -265,7 +265,8 @@
       <List name="EXASs" counterRecType="EXAC" allowNoCounter="false" nullable="false" >
         <String recordType="EXAS" />
       </List>
-      <String name="EXBS" recordType="EXBS" nullable="false" />
+      <!-- CK (1.16.244.0): Data Templates tab, Templated Values, column "Template Subdata" (e.g. "UC CITIZEN" on the Ship Modules row) -->
+      <String name="TemplateSubdata" recordType="EXBS" nullable="false" />
     </Fields>
   </Object>
   <Object name="ExternalDataSource" objType="Subrecord" >

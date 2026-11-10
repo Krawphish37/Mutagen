@@ -7,7 +7,10 @@
       <Color name="Color" recordType="CNAM" binaryType="Alpha" />
       <String name="Notes" recordType="DNAM" />
       <Enum name="Type" enumName="Keyword.TypeEnum" byteLength="4" recordType="TNAM" />
-      <ByteArray name="FNAM" recordType="FNAM" unknown="true" />
+      <!-- CK: the greyed drop-down under Type when Type = Form Link (0 = NONE). Only Form Link keywords set it: 0 on the
+           6 in Starfield.esm, 47 in SFBGS004.esm, 27 in SFBGS00D.esm. The values are engine form-type numbers (not confirmed
+           which numbering, so no enum). Checked in the Creation Kit 1.16.244.0. -->
+      <UInt32 name="FormLinkTargetType" recordType="FNAM" />
       <String name="FlashLinkageName" recordType="ENAM" />
       <FormLink name="AttractionRule" refName="AttractionRule" recordType="DATA" />
       <String name="Name" recordType="FULL" translated="Normal" />

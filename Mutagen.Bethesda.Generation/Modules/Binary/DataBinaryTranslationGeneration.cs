@@ -217,7 +217,8 @@ public class DataBinaryTranslationGeneration : BinaryTranslationGeneration
                     generatedStart = true;
                     sb.AppendLine($"var subLen = _package.{nameof(BinaryOverlayFactoryPackage.MetaData)}.{nameof(ParsingMeta.Constants)}.SubrecordHeader(_recordData.Slice({locationAccessor})).ContentLength;");
                 }
-                sb.AppendLine($"if (subLen <= {length.PassedAccessor})");
+                // A break before the first field: nothing has been passed yet, so the limit is 0
+                sb.AppendLine($"if (subLen <= {(string.IsNullOrWhiteSpace(length.PassedAccessor) ? "0" : length.PassedAccessor)})");
                 using (sb.CurlyBrace())
                 {
                     sb.AppendLine($"this.{dataType.StateName} |= {objGen.ObjectName}.{dataType.EnumName}.Break{item.BreakIndex};");
@@ -450,6 +451,7 @@ public class DataBinaryTranslationGeneration : BinaryTranslationGeneration
                 var limit = length.PassedType == BinaryTranslationModule.PassedType.Relative
                     ? $"{length.PassedAccessor} - {locationName}!.Value.{nameof(RangeInt32.Min)}"
                     : length.PassedAccessor;
+                if (string.IsNullOrWhiteSpace(limit)) limit = "0"; // a break before the first field
                 sb.AppendLine($"if (subLen <= {limit})");
                 using (sb.CurlyBrace())
                 {

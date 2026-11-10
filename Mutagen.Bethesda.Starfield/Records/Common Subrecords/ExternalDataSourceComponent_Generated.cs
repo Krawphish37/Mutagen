@@ -92,8 +92,8 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region EXBS
-        public String EXBS { get; set; } = string.Empty;
+        #region TemplateSubdata
+        public String TemplateSubdata { get; set; } = string.Empty;
         #endregion
 
         #region To String
@@ -139,20 +139,20 @@ namespace Mutagen.Bethesda.Starfield
                 this.ExternalBaseTemplate = initialValue;
                 this.Sources = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ExternalDataSource.Mask<TItem>?>>?>(initialValue, []);
                 this.EXASs = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.EXBS = initialValue;
+                this.TemplateSubdata = initialValue;
             }
 
             public Mask(
                 TItem ExternalBaseTemplate,
                 TItem Sources,
                 TItem EXASs,
-                TItem EXBS)
+                TItem TemplateSubdata)
             : base()
             {
                 this.ExternalBaseTemplate = ExternalBaseTemplate;
                 this.Sources = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ExternalDataSource.Mask<TItem>?>>?>(Sources, []);
                 this.EXASs = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(EXASs, []);
-                this.EXBS = EXBS;
+                this.TemplateSubdata = TemplateSubdata;
             }
 
             #pragma warning disable CS8618
@@ -167,7 +167,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem ExternalBaseTemplate;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ExternalDataSource.Mask<TItem>?>>?>? Sources;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? EXASs;
-            public TItem EXBS;
+            public TItem TemplateSubdata;
             #endregion
 
             #region Equals
@@ -184,7 +184,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ExternalBaseTemplate, rhs.ExternalBaseTemplate)) return false;
                 if (!object.Equals(this.Sources, rhs.Sources)) return false;
                 if (!object.Equals(this.EXASs, rhs.EXASs)) return false;
-                if (!object.Equals(this.EXBS, rhs.EXBS)) return false;
+                if (!object.Equals(this.TemplateSubdata, rhs.TemplateSubdata)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -193,7 +193,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ExternalBaseTemplate);
                 hash.Add(this.Sources);
                 hash.Add(this.EXASs);
-                hash.Add(this.EXBS);
+                hash.Add(this.TemplateSubdata);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -228,7 +228,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.EXBS)) return false;
+                if (!eval(this.TemplateSubdata)) return false;
                 return true;
             }
             #endregion
@@ -261,7 +261,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.EXBS)) return true;
+                if (eval(this.TemplateSubdata)) return true;
                 return false;
             }
             #endregion
@@ -307,7 +307,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.EXBS = eval(this.EXBS);
+                obj.TemplateSubdata = eval(this.TemplateSubdata);
             }
             #endregion
 
@@ -370,9 +370,9 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.EXBS ?? true)
+                    if (printMask?.TemplateSubdata ?? true)
                     {
-                        sb.AppendItem(EXBS, "EXBS");
+                        sb.AppendItem(TemplateSubdata, "TemplateSubdata");
                     }
                 }
             }
@@ -388,7 +388,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? ExternalBaseTemplate;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ExternalDataSource.ErrorMask?>>?>? Sources;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? EXASs;
-            public Exception? EXBS;
+            public Exception? TemplateSubdata;
             #endregion
 
             #region IErrorMask
@@ -403,8 +403,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Sources;
                     case ExternalDataSourceComponent_FieldIndex.EXASs:
                         return EXASs;
-                    case ExternalDataSourceComponent_FieldIndex.EXBS:
-                        return EXBS;
+                    case ExternalDataSourceComponent_FieldIndex.TemplateSubdata:
+                        return TemplateSubdata;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -424,8 +424,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ExternalDataSourceComponent_FieldIndex.EXASs:
                         this.EXASs = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case ExternalDataSourceComponent_FieldIndex.EXBS:
-                        this.EXBS = ex;
+                    case ExternalDataSourceComponent_FieldIndex.TemplateSubdata:
+                        this.TemplateSubdata = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -447,8 +447,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ExternalDataSourceComponent_FieldIndex.EXASs:
                         this.EXASs = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case ExternalDataSourceComponent_FieldIndex.EXBS:
-                        this.EXBS = (Exception?)obj;
+                    case ExternalDataSourceComponent_FieldIndex.TemplateSubdata:
+                        this.TemplateSubdata = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -462,7 +462,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ExternalBaseTemplate != null) return true;
                 if (Sources != null) return true;
                 if (EXASs != null) return true;
-                if (EXBS != null) return true;
+                if (TemplateSubdata != null) return true;
                 return false;
             }
             #endregion
@@ -531,7 +531,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(EXBS, "EXBS");
+                    sb.AppendItem(TemplateSubdata, "TemplateSubdata");
                 }
             }
             #endregion
@@ -544,7 +544,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ExternalBaseTemplate = this.ExternalBaseTemplate.Combine(rhs.ExternalBaseTemplate);
                 ret.Sources = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ExternalDataSource.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Sources?.Overall, rhs.Sources?.Overall), Noggog.ExceptionExt.Combine(this.Sources?.Specific, rhs.Sources?.Specific));
                 ret.EXASs = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.EXASs?.Overall, rhs.EXASs?.Overall), Noggog.ExceptionExt.Combine(this.EXASs?.Specific, rhs.EXASs?.Specific));
-                ret.EXBS = this.EXBS.Combine(rhs.EXBS);
+                ret.TemplateSubdata = this.TemplateSubdata.Combine(rhs.TemplateSubdata);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -570,7 +570,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool ExternalBaseTemplate;
             public ExternalDataSource.TranslationMask? Sources;
             public bool EXASs;
-            public bool EXBS;
+            public bool TemplateSubdata;
             #endregion
 
             #region Ctors
@@ -581,7 +581,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.ExternalBaseTemplate = defaultOn;
                 this.EXASs = defaultOn;
-                this.EXBS = defaultOn;
+                this.TemplateSubdata = defaultOn;
             }
 
             #endregion
@@ -592,7 +592,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ExternalBaseTemplate, null));
                 ret.Add((Sources == null ? DefaultOn : !Sources.GetCrystal().CopyNothing, Sources?.GetCrystal()));
                 ret.Add((EXASs, null));
-                ret.Add((EXBS, null));
+                ret.Add((TemplateSubdata, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -673,7 +673,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<IExternalBaseTemplateGetter> ExternalBaseTemplate { get; set; }
         new ExtendedList<ExternalDataSource> Sources { get; }
         new ExtendedList<String>? EXASs { get; set; }
-        new String EXBS { get; set; }
+        new String TemplateSubdata { get; set; }
     }
 
     public partial interface IExternalDataSourceComponentGetter :
@@ -686,7 +686,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IExternalBaseTemplateGetter> ExternalBaseTemplate { get; }
         IReadOnlyList<IExternalDataSourceGetter> Sources { get; }
         IReadOnlyList<String>? EXASs { get; }
-        String EXBS { get; }
+        String TemplateSubdata { get; }
 
     }
 
@@ -834,7 +834,7 @@ namespace Mutagen.Bethesda.Starfield
         ExternalBaseTemplate = 0,
         Sources = 1,
         EXASs = 2,
-        EXBS = 3,
+        TemplateSubdata = 3,
     }
     #endregion
 
@@ -934,7 +934,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ExternalBaseTemplate.Clear();
             item.Sources.Clear();
             item.EXASs = null;
-            item.EXBS = string.Empty;
+            item.TemplateSubdata = string.Empty;
             base.Clear(item);
         }
         
@@ -1013,7 +1013,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.EXASs,
                 (l, r) => string.Equals(l, r),
                 include);
-            ret.EXBS = string.Equals(item.EXBS, rhs.EXBS);
+            ret.TemplateSubdata = string.Equals(item.TemplateSubdata, rhs.TemplateSubdata);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1096,9 +1096,9 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if (printMask?.EXBS ?? true)
+            if (printMask?.TemplateSubdata ?? true)
             {
-                sb.AppendItem(item.EXBS, "EXBS");
+                sb.AppendItem(item.TemplateSubdata, "TemplateSubdata");
             }
         }
         
@@ -1131,9 +1131,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.EXASs.SequenceEqualNullable(rhs.EXASs)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ExternalDataSourceComponent_FieldIndex.EXBS) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ExternalDataSourceComponent_FieldIndex.TemplateSubdata) ?? true))
             {
-                if (!string.Equals(lhs.EXBS, rhs.EXBS)) return false;
+                if (!string.Equals(lhs.TemplateSubdata, rhs.TemplateSubdata)) return false;
             }
             return true;
         }
@@ -1164,7 +1164,7 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
-            hash.Add(item.EXBS);
+            hash.Add(item.TemplateSubdata);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1275,9 +1275,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)ExternalDataSourceComponent_FieldIndex.EXBS) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ExternalDataSourceComponent_FieldIndex.TemplateSubdata) ?? true))
             {
-                item.EXBS = rhs.EXBS;
+                item.TemplateSubdata = rhs.TemplateSubdata;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1431,7 +1431,7 @@ namespace Mutagen.Bethesda.Starfield
                 transl: StringBinaryTranslation.Instance.Write);
             StringBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.EXBS,
+                item: item.TemplateSubdata,
                 header: translationParams.ConvertToCustom(RecordTypes.EXBS),
                 binaryType: StringBinaryType.NullTerminate);
         }
@@ -1521,11 +1521,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.EXBS:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.EXBS = StringBinaryTranslation.Instance.Parse(
+                    item.TemplateSubdata = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)ExternalDataSourceComponent_FieldIndex.EXBS;
+                    return (int)ExternalDataSourceComponent_FieldIndex.TemplateSubdata;
                 }
                 default:
                     return AComponentBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1590,9 +1590,9 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         public IReadOnlyList<IExternalDataSourceGetter> Sources { get; private set; } = [];
         public IReadOnlyList<String>? EXASs { get; private set; }
-        #region EXBS
-        private int? _EXBSLocation;
-        public String EXBS => _EXBSLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _EXBSLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
+        #region TemplateSubdata
+        private int? _TemplateSubdataLocation;
+        public String TemplateSubdata => _TemplateSubdataLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _TemplateSubdataLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1689,8 +1689,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.EXBS:
                 {
-                    _EXBSLocation = (stream.Position - offset);
-                    return (int)ExternalDataSourceComponent_FieldIndex.EXBS;
+                    _TemplateSubdataLocation = (stream.Position - offset);
+                    return (int)ExternalDataSourceComponent_FieldIndex.TemplateSubdata;
                 }
                 default:
                     return base.FillRecordType(

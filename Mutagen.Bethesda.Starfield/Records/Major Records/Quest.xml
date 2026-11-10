@@ -214,7 +214,8 @@
       <UInt32 name="ID" recordType="ALLS" nullable="false" />
       <String name="Name" recordType="ALID" nullable="false" />
       <Enum name="Flags" enumName="AQuestAlias.Flag" byteLength="4" recordType="FNAM" />
-      <Int32 name="ALFG" recordType="ALFG" unknown="true" />
+      <!-- CK (1.16.244.0): 2 = "Force to Player location in Cruise Mode" (on the 89 "OrbitLocation" aliases). xEdit: "Orbit Altitude Mult" (float). -->
+      <Enum name="ExtraFlags" enumName="QuestLocationAlias.ExtraFlag" byteLength="4" recordType="ALFG" />
       <Int32 name="AliasIDToForceIntoWhenFilled" recordType="ALFI" />
       <FormLink name="SpecificLocation" refName="Location" recordType="ALFL" />
       <RefDirect name="ReferenceAliasLocation" refName="ReferenceAliasLocation" />

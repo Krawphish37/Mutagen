@@ -506,3 +506,16 @@ partial class QuestBinaryOverlay
         }
     }
 }
+public partial class QuestLocationAlias
+{
+    /// <summary>
+    /// Location alias ALFG. Creation Kit 1.16.244.0: 2 is the check box "Force to Player location in Cruise Mode"
+    /// (set on the 89 "OrbitLocation" aliases of the space encounter quests, e.g. SE_AG01 (0013DD:Starfield.esm)).
+    /// Other bits are kept as stored.
+    /// </summary>
+    [Flags]
+    public enum ExtraFlag
+    {
+        ForceToPlayerLocationInCruiseMode = 0x2,
+    }
+}

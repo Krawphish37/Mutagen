@@ -136,16 +136,70 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         UInt32? ISceneGetter.LastActionIndex => this.LastActionIndex;
         #endregion
-        #region VNAM
+        #region DeathBehavior
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _VNAM;
-        public MemorySlice<Byte>? VNAM
+        private Scene.ActorBehaviorSetting _DeathBehavior;
+        public Scene.ActorBehaviorSetting DeathBehavior
         {
-            get => this._VNAM;
-            set => this._VNAM = value;
+            get => this._DeathBehavior;
+            set
+            {
+                this.VNAMDataTypeState &= ~VNAMDataType.Break0;
+                this._DeathBehavior = value;
+            }
         }
+        #endregion
+        #region CombatBehavior
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ISceneGetter.VNAM => this.VNAM;
+        private Scene.ActorBehaviorSetting _CombatBehavior;
+        public Scene.ActorBehaviorSetting CombatBehavior
+        {
+            get => this._CombatBehavior;
+            set
+            {
+                this.VNAMDataTypeState &= ~VNAMDataType.Break0;
+                this._CombatBehavior = value;
+            }
+        }
+        #endregion
+        #region PlayerDialogueBehavior
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Scene.ActorBehaviorSetting _PlayerDialogueBehavior;
+        public Scene.ActorBehaviorSetting PlayerDialogueBehavior
+        {
+            get => this._PlayerDialogueBehavior;
+            set
+            {
+                this.VNAMDataTypeState &= ~VNAMDataType.Break0;
+                this._PlayerDialogueBehavior = value;
+            }
+        }
+        #endregion
+        #region ObserveCombatBehavior
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Scene.ActorBehaviorSetting _ObserveCombatBehavior;
+        public Scene.ActorBehaviorSetting ObserveCombatBehavior
+        {
+            get => this._ObserveCombatBehavior;
+            set
+            {
+                this.VNAMDataTypeState &= ~VNAMDataType.Break0;
+                this._ObserveCombatBehavior = value;
+            }
+        }
+        #endregion
+        #region ReactionRadiusBehavior
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Scene.ActorBehaviorSetting _ReactionRadiusBehavior;
+        public Scene.ActorBehaviorSetting ReactionRadiusBehavior
+        {
+            get => this._ReactionRadiusBehavior;
+            set
+            {
+                this.VNAMDataTypeState &= ~VNAMDataType.Break0;
+                this._ReactionRadiusBehavior = value;
+            }
+        }
         #endregion
         #region Conditions
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -310,6 +364,9 @@ namespace Mutagen.Bethesda.Starfield
         #region ShowOneDialogueTrack
         public Boolean ShowOneDialogueTrack { get; set; } = default(Boolean);
         #endregion
+        #region VNAMDataTypeState
+        public Scene.VNAMDataType VNAMDataTypeState { get; set; } = default(Scene.VNAMDataType);
+        #endregion
 
         #region To String
 
@@ -342,7 +399,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.Actions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ASceneAction.Mask<TItem>?>>?>(initialValue, []);
                 this.Quest = initialValue;
                 this.LastActionIndex = initialValue;
-                this.VNAM = initialValue;
+                this.DeathBehavior = initialValue;
+                this.CombatBehavior = initialValue;
+                this.PlayerDialogueBehavior = initialValue;
+                this.ObserveCombatBehavior = initialValue;
+                this.ReactionRadiusBehavior = initialValue;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
                 this.SetParentQuestStage = new MaskItem<TItem, SceneSetParentQuestStage.Mask<TItem>?>(initialValue, new SceneSetParentQuestStage.Mask<TItem>(initialValue));
                 this.Notes = initialValue;
@@ -364,6 +425,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ChallengePerks = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.ChallengeOrKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.ShowOneDialogueTrack = initialValue;
+                this.VNAMDataTypeState = initialValue;
             }
 
             public Mask(
@@ -381,7 +443,11 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Actions,
                 TItem Quest,
                 TItem LastActionIndex,
-                TItem VNAM,
+                TItem DeathBehavior,
+                TItem CombatBehavior,
+                TItem PlayerDialogueBehavior,
+                TItem ObserveCombatBehavior,
+                TItem ReactionRadiusBehavior,
                 TItem Conditions,
                 TItem SetParentQuestStage,
                 TItem Notes,
@@ -402,7 +468,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ChallengeAndKeywords,
                 TItem ChallengePerks,
                 TItem ChallengeOrKeywords,
-                TItem ShowOneDialogueTrack)
+                TItem ShowOneDialogueTrack,
+                TItem VNAMDataTypeState)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -419,7 +486,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.Actions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ASceneAction.Mask<TItem>?>>?>(Actions, []);
                 this.Quest = Quest;
                 this.LastActionIndex = LastActionIndex;
-                this.VNAM = VNAM;
+                this.DeathBehavior = DeathBehavior;
+                this.CombatBehavior = CombatBehavior;
+                this.PlayerDialogueBehavior = PlayerDialogueBehavior;
+                this.ObserveCombatBehavior = ObserveCombatBehavior;
+                this.ReactionRadiusBehavior = ReactionRadiusBehavior;
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
                 this.SetParentQuestStage = new MaskItem<TItem, SceneSetParentQuestStage.Mask<TItem>?>(SetParentQuestStage, new SceneSetParentQuestStage.Mask<TItem>(SetParentQuestStage));
                 this.Notes = Notes;
@@ -441,6 +512,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ChallengePerks = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ChallengePerks, []);
                 this.ChallengeOrKeywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ChallengeOrKeywords, []);
                 this.ShowOneDialogueTrack = ShowOneDialogueTrack;
+                this.VNAMDataTypeState = VNAMDataTypeState;
             }
 
             #pragma warning disable CS8618
@@ -459,7 +531,11 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ASceneAction.Mask<TItem>?>>?>? Actions;
             public TItem Quest;
             public TItem LastActionIndex;
-            public TItem VNAM;
+            public TItem DeathBehavior;
+            public TItem CombatBehavior;
+            public TItem PlayerDialogueBehavior;
+            public TItem ObserveCombatBehavior;
+            public TItem ReactionRadiusBehavior;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
             public MaskItem<TItem, SceneSetParentQuestStage.Mask<TItem>?>? SetParentQuestStage { get; set; }
             public TItem Notes;
@@ -481,6 +557,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ChallengePerks;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ChallengeOrKeywords;
             public TItem ShowOneDialogueTrack;
+            public TItem VNAMDataTypeState;
             #endregion
 
             #region Equals
@@ -501,7 +578,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Actions, rhs.Actions)) return false;
                 if (!object.Equals(this.Quest, rhs.Quest)) return false;
                 if (!object.Equals(this.LastActionIndex, rhs.LastActionIndex)) return false;
-                if (!object.Equals(this.VNAM, rhs.VNAM)) return false;
+                if (!object.Equals(this.DeathBehavior, rhs.DeathBehavior)) return false;
+                if (!object.Equals(this.CombatBehavior, rhs.CombatBehavior)) return false;
+                if (!object.Equals(this.PlayerDialogueBehavior, rhs.PlayerDialogueBehavior)) return false;
+                if (!object.Equals(this.ObserveCombatBehavior, rhs.ObserveCombatBehavior)) return false;
+                if (!object.Equals(this.ReactionRadiusBehavior, rhs.ReactionRadiusBehavior)) return false;
                 if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
                 if (!object.Equals(this.SetParentQuestStage, rhs.SetParentQuestStage)) return false;
                 if (!object.Equals(this.Notes, rhs.Notes)) return false;
@@ -523,6 +604,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ChallengePerks, rhs.ChallengePerks)) return false;
                 if (!object.Equals(this.ChallengeOrKeywords, rhs.ChallengeOrKeywords)) return false;
                 if (!object.Equals(this.ShowOneDialogueTrack, rhs.ShowOneDialogueTrack)) return false;
+                if (!object.Equals(this.VNAMDataTypeState, rhs.VNAMDataTypeState)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -535,7 +617,11 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Actions);
                 hash.Add(this.Quest);
                 hash.Add(this.LastActionIndex);
-                hash.Add(this.VNAM);
+                hash.Add(this.DeathBehavior);
+                hash.Add(this.CombatBehavior);
+                hash.Add(this.PlayerDialogueBehavior);
+                hash.Add(this.ObserveCombatBehavior);
+                hash.Add(this.ReactionRadiusBehavior);
                 hash.Add(this.Conditions);
                 hash.Add(this.SetParentQuestStage);
                 hash.Add(this.Notes);
@@ -557,6 +643,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ChallengePerks);
                 hash.Add(this.ChallengeOrKeywords);
                 hash.Add(this.ShowOneDialogueTrack);
+                hash.Add(this.VNAMDataTypeState);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -611,7 +698,11 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.Quest)) return false;
                 if (!eval(this.LastActionIndex)) return false;
-                if (!eval(this.VNAM)) return false;
+                if (!eval(this.DeathBehavior)) return false;
+                if (!eval(this.CombatBehavior)) return false;
+                if (!eval(this.PlayerDialogueBehavior)) return false;
+                if (!eval(this.ObserveCombatBehavior)) return false;
+                if (!eval(this.ReactionRadiusBehavior)) return false;
                 if (this.Conditions != null)
                 {
                     if (!eval(this.Conditions.Overall)) return false;
@@ -698,6 +789,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.ShowOneDialogueTrack)) return false;
+                if (!eval(this.VNAMDataTypeState)) return false;
                 return true;
             }
             #endregion
@@ -750,7 +842,11 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.Quest)) return true;
                 if (eval(this.LastActionIndex)) return true;
-                if (eval(this.VNAM)) return true;
+                if (eval(this.DeathBehavior)) return true;
+                if (eval(this.CombatBehavior)) return true;
+                if (eval(this.PlayerDialogueBehavior)) return true;
+                if (eval(this.ObserveCombatBehavior)) return true;
+                if (eval(this.ReactionRadiusBehavior)) return true;
                 if (this.Conditions != null)
                 {
                     if (eval(this.Conditions.Overall)) return true;
@@ -837,6 +933,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.ShowOneDialogueTrack)) return true;
+                if (eval(this.VNAMDataTypeState)) return true;
                 return false;
             }
             #endregion
@@ -901,7 +998,11 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 obj.Quest = eval(this.Quest);
                 obj.LastActionIndex = eval(this.LastActionIndex);
-                obj.VNAM = eval(this.VNAM);
+                obj.DeathBehavior = eval(this.DeathBehavior);
+                obj.CombatBehavior = eval(this.CombatBehavior);
+                obj.PlayerDialogueBehavior = eval(this.PlayerDialogueBehavior);
+                obj.ObserveCombatBehavior = eval(this.ObserveCombatBehavior);
+                obj.ReactionRadiusBehavior = eval(this.ReactionRadiusBehavior);
                 if (Conditions != null)
                 {
                     obj.Conditions = new MaskItem<R, IEnumerable<MaskItemIndexed<R, Condition.Mask<R>?>>?>(eval(this.Conditions.Overall), []);
@@ -1002,6 +1103,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.ShowOneDialogueTrack = eval(this.ShowOneDialogueTrack);
+                obj.VNAMDataTypeState = eval(this.VNAMDataTypeState);
             }
             #endregion
 
@@ -1093,9 +1195,25 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(LastActionIndex, "LastActionIndex");
                     }
-                    if (printMask?.VNAM ?? true)
+                    if (printMask?.DeathBehavior ?? true)
                     {
-                        sb.AppendItem(VNAM, "VNAM");
+                        sb.AppendItem(DeathBehavior, "DeathBehavior");
+                    }
+                    if (printMask?.CombatBehavior ?? true)
+                    {
+                        sb.AppendItem(CombatBehavior, "CombatBehavior");
+                    }
+                    if (printMask?.PlayerDialogueBehavior ?? true)
+                    {
+                        sb.AppendItem(PlayerDialogueBehavior, "PlayerDialogueBehavior");
+                    }
+                    if (printMask?.ObserveCombatBehavior ?? true)
+                    {
+                        sb.AppendItem(ObserveCombatBehavior, "ObserveCombatBehavior");
+                    }
+                    if (printMask?.ReactionRadiusBehavior ?? true)
+                    {
+                        sb.AppendItem(ReactionRadiusBehavior, "ReactionRadiusBehavior");
                     }
                     if ((printMask?.Conditions?.Overall ?? true)
                         && Conditions is {} ConditionsItem)
@@ -1281,6 +1399,10 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ShowOneDialogueTrack, "ShowOneDialogueTrack");
                     }
+                    if (printMask?.VNAMDataTypeState ?? true)
+                    {
+                        sb.AppendItem(VNAMDataTypeState, "VNAMDataTypeState");
+                    }
                 }
             }
             #endregion
@@ -1299,7 +1421,11 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ASceneAction.ErrorMask?>>?>? Actions;
             public Exception? Quest;
             public Exception? LastActionIndex;
-            public Exception? VNAM;
+            public Exception? DeathBehavior;
+            public Exception? CombatBehavior;
+            public Exception? PlayerDialogueBehavior;
+            public Exception? ObserveCombatBehavior;
+            public Exception? ReactionRadiusBehavior;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
             public MaskItem<Exception?, SceneSetParentQuestStage.ErrorMask?>? SetParentQuestStage;
             public Exception? Notes;
@@ -1321,6 +1447,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ChallengePerks;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ChallengeOrKeywords;
             public Exception? ShowOneDialogueTrack;
+            public Exception? VNAMDataTypeState;
             #endregion
 
             #region IErrorMask
@@ -1343,8 +1470,16 @@ namespace Mutagen.Bethesda.Starfield
                         return Quest;
                     case Scene_FieldIndex.LastActionIndex:
                         return LastActionIndex;
-                    case Scene_FieldIndex.VNAM:
-                        return VNAM;
+                    case Scene_FieldIndex.DeathBehavior:
+                        return DeathBehavior;
+                    case Scene_FieldIndex.CombatBehavior:
+                        return CombatBehavior;
+                    case Scene_FieldIndex.PlayerDialogueBehavior:
+                        return PlayerDialogueBehavior;
+                    case Scene_FieldIndex.ObserveCombatBehavior:
+                        return ObserveCombatBehavior;
+                    case Scene_FieldIndex.ReactionRadiusBehavior:
+                        return ReactionRadiusBehavior;
                     case Scene_FieldIndex.Conditions:
                         return Conditions;
                     case Scene_FieldIndex.SetParentQuestStage:
@@ -1387,6 +1522,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ChallengeOrKeywords;
                     case Scene_FieldIndex.ShowOneDialogueTrack:
                         return ShowOneDialogueTrack;
+                    case Scene_FieldIndex.VNAMDataTypeState:
+                        return VNAMDataTypeState;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -1418,8 +1555,20 @@ namespace Mutagen.Bethesda.Starfield
                     case Scene_FieldIndex.LastActionIndex:
                         this.LastActionIndex = ex;
                         break;
-                    case Scene_FieldIndex.VNAM:
-                        this.VNAM = ex;
+                    case Scene_FieldIndex.DeathBehavior:
+                        this.DeathBehavior = ex;
+                        break;
+                    case Scene_FieldIndex.CombatBehavior:
+                        this.CombatBehavior = ex;
+                        break;
+                    case Scene_FieldIndex.PlayerDialogueBehavior:
+                        this.PlayerDialogueBehavior = ex;
+                        break;
+                    case Scene_FieldIndex.ObserveCombatBehavior:
+                        this.ObserveCombatBehavior = ex;
+                        break;
+                    case Scene_FieldIndex.ReactionRadiusBehavior:
+                        this.ReactionRadiusBehavior = ex;
                         break;
                     case Scene_FieldIndex.Conditions:
                         this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
@@ -1484,6 +1633,9 @@ namespace Mutagen.Bethesda.Starfield
                     case Scene_FieldIndex.ShowOneDialogueTrack:
                         this.ShowOneDialogueTrack = ex;
                         break;
+                    case Scene_FieldIndex.VNAMDataTypeState:
+                        this.VNAMDataTypeState = ex;
+                        break;
                     default:
                         base.SetNthException(index, ex);
                         break;
@@ -1516,8 +1668,20 @@ namespace Mutagen.Bethesda.Starfield
                     case Scene_FieldIndex.LastActionIndex:
                         this.LastActionIndex = (Exception?)obj;
                         break;
-                    case Scene_FieldIndex.VNAM:
-                        this.VNAM = (Exception?)obj;
+                    case Scene_FieldIndex.DeathBehavior:
+                        this.DeathBehavior = (Exception?)obj;
+                        break;
+                    case Scene_FieldIndex.CombatBehavior:
+                        this.CombatBehavior = (Exception?)obj;
+                        break;
+                    case Scene_FieldIndex.PlayerDialogueBehavior:
+                        this.PlayerDialogueBehavior = (Exception?)obj;
+                        break;
+                    case Scene_FieldIndex.ObserveCombatBehavior:
+                        this.ObserveCombatBehavior = (Exception?)obj;
+                        break;
+                    case Scene_FieldIndex.ReactionRadiusBehavior:
+                        this.ReactionRadiusBehavior = (Exception?)obj;
                         break;
                     case Scene_FieldIndex.Conditions:
                         this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
@@ -1582,6 +1746,9 @@ namespace Mutagen.Bethesda.Starfield
                     case Scene_FieldIndex.ShowOneDialogueTrack:
                         this.ShowOneDialogueTrack = (Exception?)obj;
                         break;
+                    case Scene_FieldIndex.VNAMDataTypeState:
+                        this.VNAMDataTypeState = (Exception?)obj;
+                        break;
                     default:
                         base.SetNthMask(index, obj);
                         break;
@@ -1598,7 +1765,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (Actions != null) return true;
                 if (Quest != null) return true;
                 if (LastActionIndex != null) return true;
-                if (VNAM != null) return true;
+                if (DeathBehavior != null) return true;
+                if (CombatBehavior != null) return true;
+                if (PlayerDialogueBehavior != null) return true;
+                if (ObserveCombatBehavior != null) return true;
+                if (ReactionRadiusBehavior != null) return true;
                 if (Conditions != null) return true;
                 if (SetParentQuestStage != null) return true;
                 if (Notes != null) return true;
@@ -1620,6 +1791,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ChallengePerks != null) return true;
                 if (ChallengeOrKeywords != null) return true;
                 if (ShowOneDialogueTrack != null) return true;
+                if (VNAMDataTypeState != null) return true;
                 return false;
             }
             #endregion
@@ -1711,7 +1883,19 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(LastActionIndex, "LastActionIndex");
                 }
                 {
-                    sb.AppendItem(VNAM, "VNAM");
+                    sb.AppendItem(DeathBehavior, "DeathBehavior");
+                }
+                {
+                    sb.AppendItem(CombatBehavior, "CombatBehavior");
+                }
+                {
+                    sb.AppendItem(PlayerDialogueBehavior, "PlayerDialogueBehavior");
+                }
+                {
+                    sb.AppendItem(ObserveCombatBehavior, "ObserveCombatBehavior");
+                }
+                {
+                    sb.AppendItem(ReactionRadiusBehavior, "ReactionRadiusBehavior");
                 }
                 if (Conditions is {} ConditionsItem)
                 {
@@ -1874,6 +2058,9 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(ShowOneDialogueTrack, "ShowOneDialogueTrack");
                 }
+                {
+                    sb.AppendItem(VNAMDataTypeState, "VNAMDataTypeState");
+                }
             }
             #endregion
 
@@ -1889,7 +2076,11 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Actions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ASceneAction.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Actions?.Overall, rhs.Actions?.Overall), Noggog.ExceptionExt.Combine(this.Actions?.Specific, rhs.Actions?.Specific));
                 ret.Quest = this.Quest.Combine(rhs.Quest);
                 ret.LastActionIndex = this.LastActionIndex.Combine(rhs.LastActionIndex);
-                ret.VNAM = this.VNAM.Combine(rhs.VNAM);
+                ret.DeathBehavior = this.DeathBehavior.Combine(rhs.DeathBehavior);
+                ret.CombatBehavior = this.CombatBehavior.Combine(rhs.CombatBehavior);
+                ret.PlayerDialogueBehavior = this.PlayerDialogueBehavior.Combine(rhs.PlayerDialogueBehavior);
+                ret.ObserveCombatBehavior = this.ObserveCombatBehavior.Combine(rhs.ObserveCombatBehavior);
+                ret.ReactionRadiusBehavior = this.ReactionRadiusBehavior.Combine(rhs.ReactionRadiusBehavior);
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
                 ret.SetParentQuestStage = this.SetParentQuestStage.Combine(rhs.SetParentQuestStage, (l, r) => l.Combine(r));
                 ret.Notes = this.Notes.Combine(rhs.Notes);
@@ -1911,6 +2102,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ChallengePerks = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ChallengePerks?.Overall, rhs.ChallengePerks?.Overall), Noggog.ExceptionExt.Combine(this.ChallengePerks?.Specific, rhs.ChallengePerks?.Specific));
                 ret.ChallengeOrKeywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ChallengeOrKeywords?.Overall, rhs.ChallengeOrKeywords?.Overall), Noggog.ExceptionExt.Combine(this.ChallengeOrKeywords?.Specific, rhs.ChallengeOrKeywords?.Specific));
                 ret.ShowOneDialogueTrack = this.ShowOneDialogueTrack.Combine(rhs.ShowOneDialogueTrack);
+                ret.VNAMDataTypeState = this.VNAMDataTypeState.Combine(rhs.VNAMDataTypeState);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -1940,7 +2132,11 @@ namespace Mutagen.Bethesda.Starfield
             public ASceneAction.TranslationMask? Actions;
             public bool Quest;
             public bool LastActionIndex;
-            public bool VNAM;
+            public bool DeathBehavior;
+            public bool CombatBehavior;
+            public bool PlayerDialogueBehavior;
+            public bool ObserveCombatBehavior;
+            public bool ReactionRadiusBehavior;
             public Condition.TranslationMask? Conditions;
             public SceneSetParentQuestStage.TranslationMask? SetParentQuestStage;
             public bool Notes;
@@ -1962,6 +2158,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool ChallengePerks;
             public bool ChallengeOrKeywords;
             public bool ShowOneDialogueTrack;
+            public bool VNAMDataTypeState;
             #endregion
 
             #region Ctors
@@ -1973,7 +2170,11 @@ namespace Mutagen.Bethesda.Starfield
                 this.Flags = defaultOn;
                 this.Quest = defaultOn;
                 this.LastActionIndex = defaultOn;
-                this.VNAM = defaultOn;
+                this.DeathBehavior = defaultOn;
+                this.CombatBehavior = defaultOn;
+                this.PlayerDialogueBehavior = defaultOn;
+                this.ObserveCombatBehavior = defaultOn;
+                this.ReactionRadiusBehavior = defaultOn;
                 this.Notes = defaultOn;
                 this.Template = defaultOn;
                 this.BOLV = defaultOn;
@@ -1993,6 +2194,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ChallengePerks = defaultOn;
                 this.ChallengeOrKeywords = defaultOn;
                 this.ShowOneDialogueTrack = defaultOn;
+                this.VNAMDataTypeState = defaultOn;
             }
 
             #endregion
@@ -2007,7 +2209,11 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Actions == null ? DefaultOn : !Actions.GetCrystal().CopyNothing, Actions?.GetCrystal()));
                 ret.Add((Quest, null));
                 ret.Add((LastActionIndex, null));
-                ret.Add((VNAM, null));
+                ret.Add((DeathBehavior, null));
+                ret.Add((CombatBehavior, null));
+                ret.Add((PlayerDialogueBehavior, null));
+                ret.Add((ObserveCombatBehavior, null));
+                ret.Add((ReactionRadiusBehavior, null));
                 ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
                 ret.Add((SetParentQuestStage != null ? SetParentQuestStage.OnOverall : DefaultOn, SetParentQuestStage?.GetCrystal()));
                 ret.Add((Notes, null));
@@ -2029,6 +2235,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ChallengePerks, null));
                 ret.Add((ChallengeOrKeywords, null));
                 ret.Add((ShowOneDialogueTrack, null));
+                ret.Add((VNAMDataTypeState, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -2092,6 +2299,11 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(IScene);
 
+        [Flags]
+        public enum VNAMDataType
+        {
+            Break0 = 1
+        }
         #region Equals and Hash
         public override bool Equals(object? obj)
         {
@@ -2187,7 +2399,11 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<ASceneAction>? Actions { get; set; }
         new IFormLinkNullable<IQuestGetter> Quest { get; set; }
         new UInt32? LastActionIndex { get; set; }
-        new MemorySlice<Byte>? VNAM { get; set; }
+        new Scene.ActorBehaviorSetting DeathBehavior { get; set; }
+        new Scene.ActorBehaviorSetting CombatBehavior { get; set; }
+        new Scene.ActorBehaviorSetting PlayerDialogueBehavior { get; set; }
+        new Scene.ActorBehaviorSetting ObserveCombatBehavior { get; set; }
+        new Scene.ActorBehaviorSetting ReactionRadiusBehavior { get; set; }
         new ExtendedList<Condition> Conditions { get; }
         new SceneSetParentQuestStage? SetParentQuestStage { get; set; }
         new String? Notes { get; set; }
@@ -2209,6 +2425,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<IFormLinkGetter<IPerkGetter>>? ChallengePerks { get; set; }
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? ChallengeOrKeywords { get; set; }
         new Boolean ShowOneDialogueTrack { get; set; }
+        new Scene.VNAMDataType VNAMDataTypeState { get; set; }
     }
 
     public partial interface ISceneInternal :
@@ -2240,7 +2457,11 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IASceneActionGetter>? Actions { get; }
         IFormLinkNullableGetter<IQuestGetter> Quest { get; }
         UInt32? LastActionIndex { get; }
-        ReadOnlyMemorySlice<Byte>? VNAM { get; }
+        Scene.ActorBehaviorSetting DeathBehavior { get; }
+        Scene.ActorBehaviorSetting CombatBehavior { get; }
+        Scene.ActorBehaviorSetting PlayerDialogueBehavior { get; }
+        Scene.ActorBehaviorSetting ObserveCombatBehavior { get; }
+        Scene.ActorBehaviorSetting ReactionRadiusBehavior { get; }
         IReadOnlyList<IConditionGetter> Conditions { get; }
         ISceneSetParentQuestStageGetter? SetParentQuestStage { get; }
         String? Notes { get; }
@@ -2262,6 +2483,7 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IFormLinkGetter<IPerkGetter>>? ChallengePerks { get; }
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? ChallengeOrKeywords { get; }
         Boolean ShowOneDialogueTrack { get; }
+        Scene.VNAMDataType VNAMDataTypeState { get; }
 
     }
 
@@ -2445,28 +2667,33 @@ namespace Mutagen.Bethesda.Starfield
         Actions = 11,
         Quest = 12,
         LastActionIndex = 13,
-        VNAM = 14,
-        Conditions = 15,
-        SetParentQuestStage = 16,
-        Notes = 17,
-        Template = 18,
-        BOLV = 19,
-        Index = 20,
-        Priority = 21,
-        OverrideSubtitlePriority = 22,
-        SCPP = 23,
-        IsSpeechChallenge = 24,
-        MandatoryNextChallenges = 25,
-        ExcludedChallenges = 26,
-        ChallengeRisk = 27,
-        ChallengeReward = 28,
-        ChallengeRepeatable = 29,
-        ChallengeDefault = 30,
-        ChallengeDataMarker = 31,
-        ChallengeAndKeywords = 32,
-        ChallengePerks = 33,
-        ChallengeOrKeywords = 34,
-        ShowOneDialogueTrack = 35,
+        DeathBehavior = 14,
+        CombatBehavior = 15,
+        PlayerDialogueBehavior = 16,
+        ObserveCombatBehavior = 17,
+        ReactionRadiusBehavior = 18,
+        Conditions = 19,
+        SetParentQuestStage = 20,
+        Notes = 21,
+        Template = 22,
+        BOLV = 23,
+        Index = 24,
+        Priority = 25,
+        OverrideSubtitlePriority = 26,
+        SCPP = 27,
+        IsSpeechChallenge = 28,
+        MandatoryNextChallenges = 29,
+        ExcludedChallenges = 30,
+        ChallengeRisk = 31,
+        ChallengeReward = 32,
+        ChallengeRepeatable = 33,
+        ChallengeDefault = 34,
+        ChallengeDataMarker = 35,
+        ChallengeAndKeywords = 36,
+        ChallengePerks = 37,
+        ChallengeOrKeywords = 38,
+        ShowOneDialogueTrack = 39,
+        VNAMDataTypeState = 40,
     }
     #endregion
 
@@ -2477,9 +2704,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 29;
+        public const ushort AdditionalFieldCount = 34;
 
-        public const ushort FieldCount = 36;
+        public const ushort FieldCount = 41;
 
         public static readonly Type MaskType = typeof(Scene.Mask<>);
 
@@ -2605,7 +2832,11 @@ namespace Mutagen.Bethesda.Starfield
             item.Actions = null;
             item.Quest.Clear();
             item.LastActionIndex = default;
-            item.VNAM = default;
+            item.DeathBehavior = default(Scene.ActorBehaviorSetting);
+            item.CombatBehavior = default(Scene.ActorBehaviorSetting);
+            item.PlayerDialogueBehavior = default(Scene.ActorBehaviorSetting);
+            item.ObserveCombatBehavior = default(Scene.ActorBehaviorSetting);
+            item.ReactionRadiusBehavior = default(Scene.ActorBehaviorSetting);
             item.Conditions.Clear();
             item.SetParentQuestStage = null;
             item.Notes = default;
@@ -2627,6 +2858,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ChallengePerks = null;
             item.ChallengeOrKeywords = null;
             item.ShowOneDialogueTrack = default(Boolean);
+            item.VNAMDataTypeState = default(Scene.VNAMDataType);
             base.Clear(item);
         }
         
@@ -2743,7 +2975,11 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.Quest = item.Quest.Equals(rhs.Quest);
             ret.LastActionIndex = item.LastActionIndex == rhs.LastActionIndex;
-            ret.VNAM = MemorySliceExt.SequenceEqual(item.VNAM, rhs.VNAM);
+            ret.DeathBehavior = item.DeathBehavior == rhs.DeathBehavior;
+            ret.CombatBehavior = item.CombatBehavior == rhs.CombatBehavior;
+            ret.PlayerDialogueBehavior = item.PlayerDialogueBehavior == rhs.PlayerDialogueBehavior;
+            ret.ObserveCombatBehavior = item.ObserveCombatBehavior == rhs.ObserveCombatBehavior;
+            ret.ReactionRadiusBehavior = item.ReactionRadiusBehavior == rhs.ReactionRadiusBehavior;
             ret.Conditions = item.Conditions.CollectionEqualsHelper(
                 rhs.Conditions,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -2787,6 +3023,7 @@ namespace Mutagen.Bethesda.Starfield
                 (l, r) => object.Equals(l, r),
                 include);
             ret.ShowOneDialogueTrack = item.ShowOneDialogueTrack == rhs.ShowOneDialogueTrack;
+            ret.VNAMDataTypeState = item.VNAMDataTypeState == rhs.VNAMDataTypeState;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -2898,10 +3135,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(LastActionIndexItem, "LastActionIndex");
             }
-            if ((printMask?.VNAM ?? true)
-                && item.VNAM is {} VNAMItem)
+            if (printMask?.DeathBehavior ?? true)
             {
-                sb.AppendLine($"VNAM => {SpanExt.ToHexString(VNAMItem)}");
+                sb.AppendItem(item.DeathBehavior, "DeathBehavior");
+            }
+            if (printMask?.CombatBehavior ?? true)
+            {
+                sb.AppendItem(item.CombatBehavior, "CombatBehavior");
+            }
+            if (printMask?.PlayerDialogueBehavior ?? true)
+            {
+                sb.AppendItem(item.PlayerDialogueBehavior, "PlayerDialogueBehavior");
+            }
+            if (printMask?.ObserveCombatBehavior ?? true)
+            {
+                sb.AppendItem(item.ObserveCombatBehavior, "ObserveCombatBehavior");
+            }
+            if (printMask?.ReactionRadiusBehavior ?? true)
+            {
+                sb.AppendItem(item.ReactionRadiusBehavior, "ReactionRadiusBehavior");
             }
             if (printMask?.Conditions?.Overall ?? true)
             {
@@ -3059,6 +3311,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ShowOneDialogueTrack, "ShowOneDialogueTrack");
             }
+            if (printMask?.VNAMDataTypeState ?? true)
+            {
+                sb.AppendItem(item.VNAMDataTypeState, "VNAMDataTypeState");
+            }
         }
         
         public static Scene_FieldIndex ConvertFieldIndex(StarfieldMajorRecord_FieldIndex index)
@@ -3141,9 +3397,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.LastActionIndex != rhs.LastActionIndex) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.VNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.DeathBehavior) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.VNAM, rhs.VNAM)) return false;
+                if (lhs.DeathBehavior != rhs.DeathBehavior) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.CombatBehavior) ?? true))
+            {
+                if (lhs.CombatBehavior != rhs.CombatBehavior) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.PlayerDialogueBehavior) ?? true))
+            {
+                if (lhs.PlayerDialogueBehavior != rhs.PlayerDialogueBehavior) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ObserveCombatBehavior) ?? true))
+            {
+                if (lhs.ObserveCombatBehavior != rhs.ObserveCombatBehavior) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.ReactionRadiusBehavior) ?? true))
+            {
+                if (lhs.ReactionRadiusBehavior != rhs.ReactionRadiusBehavior) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.Conditions) ?? true))
             {
@@ -3233,6 +3505,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.ShowOneDialogueTrack != rhs.ShowOneDialogueTrack) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)Scene_FieldIndex.VNAMDataTypeState) ?? true))
+            {
+                if (lhs.VNAMDataTypeState != rhs.VNAMDataTypeState) return false;
+            }
             return true;
         }
         
@@ -3289,10 +3565,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(LastActionIndexitem);
             }
-            if (item.VNAM is {} VNAMItem)
-            {
-                hash.AddBytes(VNAMItem);
-            }
+            hash.Add(item.DeathBehavior);
+            hash.Add(item.CombatBehavior);
+            hash.Add(item.PlayerDialogueBehavior);
+            hash.Add(item.ObserveCombatBehavior);
+            hash.Add(item.ReactionRadiusBehavior);
             foreach (var subItem in item.Conditions)
             {
                 hash.Add(subItem);
@@ -3368,6 +3645,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             hash.Add(item.ShowOneDialogueTrack);
+            hash.Add(item.VNAMDataTypeState);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -3681,16 +3959,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.LastActionIndex = rhs.LastActionIndex;
             }
-            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.VNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.DeathBehavior) ?? true))
             {
-                if(rhs.VNAM is {} VNAMrhs)
-                {
-                    item.VNAM = VNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.VNAM = default;
-                }
+                item.DeathBehavior = rhs.DeathBehavior;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.CombatBehavior) ?? true))
+            {
+                item.CombatBehavior = rhs.CombatBehavior;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.PlayerDialogueBehavior) ?? true))
+            {
+                item.PlayerDialogueBehavior = rhs.PlayerDialogueBehavior;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ObserveCombatBehavior) ?? true))
+            {
+                item.ObserveCombatBehavior = rhs.ObserveCombatBehavior;
+            }
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.ReactionRadiusBehavior) ?? true))
+            {
+                item.ReactionRadiusBehavior = rhs.ReactionRadiusBehavior;
             }
             if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.Conditions) ?? true))
             {
@@ -3933,6 +4220,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ShowOneDialogueTrack = rhs.ShowOneDialogueTrack;
             }
+            if ((copyMask?.GetShouldTranslate((int)Scene_FieldIndex.VNAMDataTypeState) ?? true))
+            {
+                item.VNAMDataTypeState = rhs.VNAMDataTypeState;
+            }
             DeepCopyInCustom(
                 item: item,
                 rhs: rhs,
@@ -4093,6 +4384,15 @@ namespace Mutagen.Bethesda.Starfield
     {
         public new static readonly SceneBinaryWriteTranslation Instance = new();
 
+        public static void WriteEmbedded(
+            ISceneGetter item,
+            MutagenWriter writer)
+        {
+            StarfieldMajorRecordBinaryWriteTranslation.WriteEmbedded(
+                item: item,
+                writer: writer);
+        }
+
         public static void WriteRecordTypes(
             ISceneGetter item,
             MutagenWriter writer,
@@ -4147,10 +4447,32 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.LastActionIndex,
                 header: translationParams.ConvertToCustom(RecordTypes.INAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.VNAM,
-                header: translationParams.ConvertToCustom(RecordTypes.VNAM));
+            using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.VNAM)))
+            {
+                if (!item.VNAMDataTypeState.HasFlag(Scene.VNAMDataType.Break0))
+                {
+                    EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer,
+                        item.DeathBehavior,
+                        length: 4);
+                    EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer,
+                        item.CombatBehavior,
+                        length: 4);
+                    EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer,
+                        item.PlayerDialogueBehavior,
+                        length: 4);
+                    EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer,
+                        item.ObserveCombatBehavior,
+                        length: 4);
+                    EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer,
+                        item.ReactionRadiusBehavior,
+                        length: 4);
+                }
+            }
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IConditionGetter>.Instance.Write(
                 writer: writer,
                 items: item.Conditions,
@@ -4347,6 +4669,15 @@ namespace Mutagen.Bethesda.Starfield
         public new static readonly SceneBinaryCreateTranslation Instance = new SceneBinaryCreateTranslation();
 
         public override RecordType RecordType => RecordTypes.SCEN;
+        public static void FillBinaryStructs(
+            ISceneInternal item,
+            MutagenFrame frame)
+        {
+            StarfieldMajorRecordBinaryCreateTranslation.FillBinaryStructs(
+                item: item,
+                frame: frame);
+        }
+
         public static ParseResult FillBinaryRecordTypes(
             ISceneInternal item,
             MutagenFrame frame,
@@ -4417,8 +4748,33 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.VNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.VNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Scene_FieldIndex.VNAM;
+                    var dataFrame = frame.SpawnWithLength(contentLength);
+                    if (dataFrame.Complete)
+                    {
+                        item.VNAMDataTypeState |= Scene.VNAMDataType.Break0;
+                        return default(int?);
+                    }
+                    if (dataFrame.Remaining < 4) return null;
+                    item.DeathBehavior = EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.CombatBehavior = EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.PlayerDialogueBehavior = EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.ObserveCombatBehavior = EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    if (dataFrame.Remaining < 4) return null;
+                    item.ReactionRadiusBehavior = EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
+                    return (int)Scene_FieldIndex.ReactionRadiusBehavior;
                 }
                 case RecordTypeInts.CTDA:
                 {
@@ -4667,9 +5023,32 @@ namespace Mutagen.Bethesda.Starfield
         private int? _LastActionIndexLocation;
         public UInt32? LastActionIndex => _LastActionIndexLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _LastActionIndexLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
-        #region VNAM
-        private int? _VNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? VNAM => _VNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _VNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        private RangeInt32? _VNAMLocation;
+        public Scene.VNAMDataType VNAMDataTypeState { get; private set; }
+        #region DeathBehavior
+        private int _DeathBehaviorLocation => _VNAMLocation!.Value.Min;
+        private bool _DeathBehavior_IsSet => _VNAMLocation.HasValue && !VNAMDataTypeState.HasFlag(Scene.VNAMDataType.Break0) && _VNAMLocation!.Value.Max - _DeathBehaviorLocation + 1 >= 4;
+        public Scene.ActorBehaviorSetting DeathBehavior => _DeathBehavior_IsSet ? (Scene.ActorBehaviorSetting)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_DeathBehaviorLocation, 0x4)) : default(Scene.ActorBehaviorSetting);
+        #endregion
+        #region CombatBehavior
+        private int _CombatBehaviorLocation => _VNAMLocation!.Value.Min + 0x4;
+        private bool _CombatBehavior_IsSet => _VNAMLocation.HasValue && !VNAMDataTypeState.HasFlag(Scene.VNAMDataType.Break0) && _VNAMLocation!.Value.Max - _CombatBehaviorLocation + 1 >= 4;
+        public Scene.ActorBehaviorSetting CombatBehavior => _CombatBehavior_IsSet ? (Scene.ActorBehaviorSetting)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_CombatBehaviorLocation, 0x4)) : default(Scene.ActorBehaviorSetting);
+        #endregion
+        #region PlayerDialogueBehavior
+        private int _PlayerDialogueBehaviorLocation => _VNAMLocation!.Value.Min + 0x8;
+        private bool _PlayerDialogueBehavior_IsSet => _VNAMLocation.HasValue && !VNAMDataTypeState.HasFlag(Scene.VNAMDataType.Break0) && _VNAMLocation!.Value.Max - _PlayerDialogueBehaviorLocation + 1 >= 4;
+        public Scene.ActorBehaviorSetting PlayerDialogueBehavior => _PlayerDialogueBehavior_IsSet ? (Scene.ActorBehaviorSetting)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_PlayerDialogueBehaviorLocation, 0x4)) : default(Scene.ActorBehaviorSetting);
+        #endregion
+        #region ObserveCombatBehavior
+        private int _ObserveCombatBehaviorLocation => _VNAMLocation!.Value.Min + 0xC;
+        private bool _ObserveCombatBehavior_IsSet => _VNAMLocation.HasValue && !VNAMDataTypeState.HasFlag(Scene.VNAMDataType.Break0) && _VNAMLocation!.Value.Max - _ObserveCombatBehaviorLocation + 1 >= 4;
+        public Scene.ActorBehaviorSetting ObserveCombatBehavior => _ObserveCombatBehavior_IsSet ? (Scene.ActorBehaviorSetting)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ObserveCombatBehaviorLocation, 0x4)) : default(Scene.ActorBehaviorSetting);
+        #endregion
+        #region ReactionRadiusBehavior
+        private int _ReactionRadiusBehaviorLocation => _VNAMLocation!.Value.Min + 0x10;
+        private bool _ReactionRadiusBehavior_IsSet => _VNAMLocation.HasValue && !VNAMDataTypeState.HasFlag(Scene.VNAMDataType.Break0) && _VNAMLocation!.Value.Max - _ReactionRadiusBehaviorLocation + 1 >= 4;
+        public Scene.ActorBehaviorSetting ReactionRadiusBehavior => _ReactionRadiusBehavior_IsSet ? (Scene.ActorBehaviorSetting)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ReactionRadiusBehaviorLocation, 0x4)) : default(Scene.ActorBehaviorSetting);
         #endregion
         public IReadOnlyList<IConditionGetter> Conditions { get; private set; } = [];
         #region SetParentQuestStage
@@ -4861,8 +5240,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.VNAM:
                 {
-                    _VNAMLocation = (stream.Position - offset);
-                    return (int)Scene_FieldIndex.VNAM;
+                    _VNAMLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
+                    var subLen = _package.MetaData.Constants.SubrecordHeader(_recordData.Slice((stream.Position - offset))).ContentLength;
+                    if (subLen <= 0)
+                    {
+                        this.VNAMDataTypeState |= Scene.VNAMDataType.Break0;
+                    }
+                    return (int)Scene_FieldIndex.ReactionRadiusBehavior;
                 }
                 case RecordTypeInts.CTDA:
                 {
