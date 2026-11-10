@@ -490,7 +490,7 @@
   </Object>
   <Object name="BlockEditorMetaDataItem" objType="Subrecord">
     <Fields>
-      <UInt32 name="Unknown" />
+      <FormLink name="SourceBlock" refName="SurfaceBlock" />
       <UInt8 name="Unknown2" />
     </Fields>
   </Object>
