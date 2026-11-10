@@ -2,9 +2,13 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="WeatherSetting" recordType="WTHS" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
-      <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
       <FormLink name="ReflectionParent" refName="WeatherSetting" recordType="RFDP" />
-      <ByteArray name="ReflectionDiff" recordType="RDIF" unknown="true" />
+      <RefDirect name="ReflectionDiff" refName="Reflection" overflowRecordType="XXXX">
+        <RecordTypeOverrides>
+          <Mapping From="REFL" To="RDIF" />
+        </RecordTypeOverrides>
+      </RefDirect>
       <RefList name="Conditions" refName="Condition" />
     </Fields>
   </Object>
