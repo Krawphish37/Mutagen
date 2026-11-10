@@ -386,6 +386,7 @@ public partial class RecordTypeInts
     public const int FBDS = 0x53444246;
     public const int FBOL = 0x4C4F4246;
     public const int FBUR = 0x52554246;
+    public const int FCPL = 0x4C504346;
     public const int FCTF = 0x46544346;
     public const int FCTP = 0x50544346;
     public const int FDSI = 0x49534446;

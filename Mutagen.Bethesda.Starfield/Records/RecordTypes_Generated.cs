@@ -388,6 +388,7 @@ public partial class RecordTypes
     public static readonly RecordType FBDS = new(0x53444246);
     public static readonly RecordType FBOL = new(0x4C4F4246);
     public static readonly RecordType FBUR = new(0x52554246);
+    public static readonly RecordType FCPL = new(0x4C504346);
     public static readonly RecordType FCTF = new(0x46544346);
     public static readonly RecordType FCTP = new(0x50544346);
     public static readonly RecordType FDSI = new(0x49534446);
