@@ -318,27 +318,15 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         String? IBiomeGetter.GroundLayerNormal => this.GroundLayerNormal;
         #endregion
-        #region BTPS
+        #region TerrainSettings
+        public BiomeBTPS TerrainSettings { get; set; } = new BiomeBTPS();
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _BTPS;
-        public MemorySlice<Byte>? BTPS
-        {
-            get => this._BTPS;
-            set => this._BTPS = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IBiomeGetter.BTPS => this.BTPS;
+        IBiomeBTPSGetter IBiomeGetter.TerrainSettings => TerrainSettings;
         #endregion
         #region DistantView
+        public BiomeDistantView DistantView { get; set; } = new BiomeDistantView();
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _DistantView = new byte[0];
-        public MemorySlice<Byte> DistantView
-        {
-            get => _DistantView;
-            set => this._DistantView = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IBiomeGetter.DistantView => this.DistantView;
+        IBiomeDistantViewGetter IBiomeGetter.DistantView => DistantView;
         #endregion
         #region GlobalLayerMaterial
         public String? GlobalLayerMaterial { get; set; }
@@ -426,8 +414,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.MarkerObjectKeywords = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, BiomeMarkerType.Mask<TItem>?>>?>(initialValue, []);
                 this.Terrain = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, BiomeTerrain.Mask<TItem>?>>?>(initialValue, []);
                 this.GroundLayerNormal = initialValue;
-                this.BTPS = initialValue;
-                this.DistantView = initialValue;
+                this.TerrainSettings = new MaskItem<TItem, BiomeBTPS.Mask<TItem>?>(initialValue, new BiomeBTPS.Mask<TItem>(initialValue));
+                this.DistantView = new MaskItem<TItem, BiomeDistantView.Mask<TItem>?>(initialValue, new BiomeDistantView.Mask<TItem>(initialValue));
                 this.GlobalLayerMaterial = initialValue;
                 this.BlockDensityMultGlobal = initialValue;
                 this.CellDensityMultGlobal = initialValue;
@@ -468,7 +456,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem MarkerObjectKeywords,
                 TItem Terrain,
                 TItem GroundLayerNormal,
-                TItem BTPS,
+                TItem TerrainSettings,
                 TItem DistantView,
                 TItem GlobalLayerMaterial,
                 TItem BlockDensityMultGlobal,
@@ -509,8 +497,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.MarkerObjectKeywords = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, BiomeMarkerType.Mask<TItem>?>>?>(MarkerObjectKeywords, []);
                 this.Terrain = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, BiomeTerrain.Mask<TItem>?>>?>(Terrain, []);
                 this.GroundLayerNormal = GroundLayerNormal;
-                this.BTPS = BTPS;
-                this.DistantView = DistantView;
+                this.TerrainSettings = new MaskItem<TItem, BiomeBTPS.Mask<TItem>?>(TerrainSettings, new BiomeBTPS.Mask<TItem>(TerrainSettings));
+                this.DistantView = new MaskItem<TItem, BiomeDistantView.Mask<TItem>?>(DistantView, new BiomeDistantView.Mask<TItem>(DistantView));
                 this.GlobalLayerMaterial = GlobalLayerMaterial;
                 this.BlockDensityMultGlobal = BlockDensityMultGlobal;
                 this.CellDensityMultGlobal = CellDensityMultGlobal;
@@ -552,8 +540,8 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, BiomeMarkerType.Mask<TItem>?>>?>? MarkerObjectKeywords;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, BiomeTerrain.Mask<TItem>?>>?>? Terrain;
             public TItem GroundLayerNormal;
-            public TItem BTPS;
-            public TItem DistantView;
+            public MaskItem<TItem, BiomeBTPS.Mask<TItem>?>? TerrainSettings { get; set; }
+            public MaskItem<TItem, BiomeDistantView.Mask<TItem>?>? DistantView { get; set; }
             public TItem GlobalLayerMaterial;
             public TItem BlockDensityMultGlobal;
             public TItem CellDensityMultGlobal;
@@ -597,7 +585,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.MarkerObjectKeywords, rhs.MarkerObjectKeywords)) return false;
                 if (!object.Equals(this.Terrain, rhs.Terrain)) return false;
                 if (!object.Equals(this.GroundLayerNormal, rhs.GroundLayerNormal)) return false;
-                if (!object.Equals(this.BTPS, rhs.BTPS)) return false;
+                if (!object.Equals(this.TerrainSettings, rhs.TerrainSettings)) return false;
                 if (!object.Equals(this.DistantView, rhs.DistantView)) return false;
                 if (!object.Equals(this.GlobalLayerMaterial, rhs.GlobalLayerMaterial)) return false;
                 if (!object.Equals(this.BlockDensityMultGlobal, rhs.BlockDensityMultGlobal)) return false;
@@ -634,7 +622,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.MarkerObjectKeywords);
                 hash.Add(this.Terrain);
                 hash.Add(this.GroundLayerNormal);
-                hash.Add(this.BTPS);
+                hash.Add(this.TerrainSettings);
                 hash.Add(this.DistantView);
                 hash.Add(this.GlobalLayerMaterial);
                 hash.Add(this.BlockDensityMultGlobal);
@@ -763,8 +751,16 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.GroundLayerNormal)) return false;
-                if (!eval(this.BTPS)) return false;
-                if (!eval(this.DistantView)) return false;
+                if (TerrainSettings != null)
+                {
+                    if (!eval(this.TerrainSettings.Overall)) return false;
+                    if (this.TerrainSettings.Specific != null && !this.TerrainSettings.Specific.All(eval)) return false;
+                }
+                if (DistantView != null)
+                {
+                    if (!eval(this.DistantView.Overall)) return false;
+                    if (this.DistantView.Specific != null && !this.DistantView.Specific.All(eval)) return false;
+                }
                 if (!eval(this.GlobalLayerMaterial)) return false;
                 if (!eval(this.BlockDensityMultGlobal)) return false;
                 if (!eval(this.CellDensityMultGlobal)) return false;
@@ -890,8 +886,16 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.GroundLayerNormal)) return true;
-                if (eval(this.BTPS)) return true;
-                if (eval(this.DistantView)) return true;
+                if (TerrainSettings != null)
+                {
+                    if (eval(this.TerrainSettings.Overall)) return true;
+                    if (this.TerrainSettings.Specific != null && this.TerrainSettings.Specific.Any(eval)) return true;
+                }
+                if (DistantView != null)
+                {
+                    if (eval(this.DistantView.Overall)) return true;
+                    if (this.DistantView.Specific != null && this.DistantView.Specific.Any(eval)) return true;
+                }
                 if (eval(this.GlobalLayerMaterial)) return true;
                 if (eval(this.BlockDensityMultGlobal)) return true;
                 if (eval(this.CellDensityMultGlobal)) return true;
@@ -1044,8 +1048,8 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.GroundLayerNormal = eval(this.GroundLayerNormal);
-                obj.BTPS = eval(this.BTPS);
-                obj.DistantView = eval(this.DistantView);
+                obj.TerrainSettings = this.TerrainSettings == null ? null : new MaskItem<R, BiomeBTPS.Mask<R>?>(eval(this.TerrainSettings.Overall), this.TerrainSettings.Specific?.Translate(eval));
+                obj.DistantView = this.DistantView == null ? null : new MaskItem<R, BiomeDistantView.Mask<R>?>(eval(this.DistantView.Overall), this.DistantView.Specific?.Translate(eval));
                 obj.GlobalLayerMaterial = eval(this.GlobalLayerMaterial);
                 obj.BlockDensityMultGlobal = eval(this.BlockDensityMultGlobal);
                 obj.CellDensityMultGlobal = eval(this.CellDensityMultGlobal);
@@ -1302,13 +1306,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(GroundLayerNormal, "GroundLayerNormal");
                     }
-                    if (printMask?.BTPS ?? true)
+                    if (printMask?.TerrainSettings?.Overall ?? true)
                     {
-                        sb.AppendItem(BTPS, "BTPS");
+                        TerrainSettings?.Print(sb);
                     }
-                    if (printMask?.DistantView ?? true)
+                    if (printMask?.DistantView?.Overall ?? true)
                     {
-                        sb.AppendItem(DistantView, "DistantView");
+                        DistantView?.Print(sb);
                     }
                     if (printMask?.GlobalLayerMaterial ?? true)
                     {
@@ -1363,8 +1367,8 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, BiomeMarkerType.ErrorMask?>>?>? MarkerObjectKeywords;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, BiomeTerrain.ErrorMask?>>?>? Terrain;
             public Exception? GroundLayerNormal;
-            public Exception? BTPS;
-            public Exception? DistantView;
+            public MaskItem<Exception?, BiomeBTPS.ErrorMask?>? TerrainSettings;
+            public MaskItem<Exception?, BiomeDistantView.ErrorMask?>? DistantView;
             public Exception? GlobalLayerMaterial;
             public Exception? BlockDensityMultGlobal;
             public Exception? CellDensityMultGlobal;
@@ -1429,8 +1433,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Terrain;
                     case Biome_FieldIndex.GroundLayerNormal:
                         return GroundLayerNormal;
-                    case Biome_FieldIndex.BTPS:
-                        return BTPS;
+                    case Biome_FieldIndex.TerrainSettings:
+                        return TerrainSettings;
                     case Biome_FieldIndex.DistantView:
                         return DistantView;
                     case Biome_FieldIndex.GlobalLayerMaterial:
@@ -1529,11 +1533,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Biome_FieldIndex.GroundLayerNormal:
                         this.GroundLayerNormal = ex;
                         break;
-                    case Biome_FieldIndex.BTPS:
-                        this.BTPS = ex;
+                    case Biome_FieldIndex.TerrainSettings:
+                        this.TerrainSettings = new MaskItem<Exception?, BiomeBTPS.ErrorMask?>(ex, null);
                         break;
                     case Biome_FieldIndex.DistantView:
-                        this.DistantView = ex;
+                        this.DistantView = new MaskItem<Exception?, BiomeDistantView.ErrorMask?>(ex, null);
                         break;
                     case Biome_FieldIndex.GlobalLayerMaterial:
                         this.GlobalLayerMaterial = ex;
@@ -1636,11 +1640,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Biome_FieldIndex.GroundLayerNormal:
                         this.GroundLayerNormal = (Exception?)obj;
                         break;
-                    case Biome_FieldIndex.BTPS:
-                        this.BTPS = (Exception?)obj;
+                    case Biome_FieldIndex.TerrainSettings:
+                        this.TerrainSettings = (MaskItem<Exception?, BiomeBTPS.ErrorMask?>?)obj;
                         break;
                     case Biome_FieldIndex.DistantView:
-                        this.DistantView = (Exception?)obj;
+                        this.DistantView = (MaskItem<Exception?, BiomeDistantView.ErrorMask?>?)obj;
                         break;
                     case Biome_FieldIndex.GlobalLayerMaterial:
                         this.GlobalLayerMaterial = (Exception?)obj;
@@ -1689,7 +1693,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (MarkerObjectKeywords != null) return true;
                 if (Terrain != null) return true;
                 if (GroundLayerNormal != null) return true;
-                if (BTPS != null) return true;
+                if (TerrainSettings != null) return true;
                 if (DistantView != null) return true;
                 if (GlobalLayerMaterial != null) return true;
                 if (BlockDensityMultGlobal != null) return true;
@@ -1927,12 +1931,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(GroundLayerNormal, "GroundLayerNormal");
                 }
-                {
-                    sb.AppendItem(BTPS, "BTPS");
-                }
-                {
-                    sb.AppendItem(DistantView, "DistantView");
-                }
+                TerrainSettings?.Print(sb);
+                DistantView?.Print(sb);
                 {
                     sb.AppendItem(GlobalLayerMaterial, "GlobalLayerMaterial");
                 }
@@ -1979,8 +1979,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.MarkerObjectKeywords = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, BiomeMarkerType.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.MarkerObjectKeywords?.Overall, rhs.MarkerObjectKeywords?.Overall), Noggog.ExceptionExt.Combine(this.MarkerObjectKeywords?.Specific, rhs.MarkerObjectKeywords?.Specific));
                 ret.Terrain = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, BiomeTerrain.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Terrain?.Overall, rhs.Terrain?.Overall), Noggog.ExceptionExt.Combine(this.Terrain?.Specific, rhs.Terrain?.Specific));
                 ret.GroundLayerNormal = this.GroundLayerNormal.Combine(rhs.GroundLayerNormal);
-                ret.BTPS = this.BTPS.Combine(rhs.BTPS);
-                ret.DistantView = this.DistantView.Combine(rhs.DistantView);
+                ret.TerrainSettings = this.TerrainSettings.Combine(rhs.TerrainSettings, (l, r) => l.Combine(r));
+                ret.DistantView = this.DistantView.Combine(rhs.DistantView, (l, r) => l.Combine(r));
                 ret.GlobalLayerMaterial = this.GlobalLayerMaterial.Combine(rhs.GlobalLayerMaterial);
                 ret.BlockDensityMultGlobal = this.BlockDensityMultGlobal.Combine(rhs.BlockDensityMultGlobal);
                 ret.CellDensityMultGlobal = this.CellDensityMultGlobal.Combine(rhs.CellDensityMultGlobal);
@@ -2033,8 +2033,8 @@ namespace Mutagen.Bethesda.Starfield
             public BiomeMarkerType.TranslationMask? MarkerObjectKeywords;
             public BiomeTerrain.TranslationMask? Terrain;
             public bool GroundLayerNormal;
-            public bool BTPS;
-            public bool DistantView;
+            public BiomeBTPS.TranslationMask? TerrainSettings;
+            public BiomeDistantView.TranslationMask? DistantView;
             public bool GlobalLayerMaterial;
             public bool BlockDensityMultGlobal;
             public bool CellDensityMultGlobal;
@@ -2069,8 +2069,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.RockTint = defaultOn;
                 this.Type = defaultOn;
                 this.GroundLayerNormal = defaultOn;
-                this.BTPS = defaultOn;
-                this.DistantView = defaultOn;
                 this.GlobalLayerMaterial = defaultOn;
                 this.BlockDensityMultGlobal = defaultOn;
                 this.CellDensityMultGlobal = defaultOn;
@@ -2108,8 +2106,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((MarkerObjectKeywords == null ? DefaultOn : !MarkerObjectKeywords.GetCrystal().CopyNothing, MarkerObjectKeywords?.GetCrystal()));
                 ret.Add((Terrain == null ? DefaultOn : !Terrain.GetCrystal().CopyNothing, Terrain?.GetCrystal()));
                 ret.Add((GroundLayerNormal, null));
-                ret.Add((BTPS, null));
-                ret.Add((DistantView, null));
+                ret.Add((TerrainSettings != null ? TerrainSettings.OnOverall : DefaultOn, TerrainSettings?.GetCrystal()));
+                ret.Add((DistantView != null ? DistantView.OnOverall : DefaultOn, DistantView?.GetCrystal()));
                 ret.Add((GlobalLayerMaterial, null));
                 ret.Add((BlockDensityMultGlobal, null));
                 ret.Add((CellDensityMultGlobal, null));
@@ -2298,8 +2296,8 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<BiomeMarkerType> MarkerObjectKeywords { get; }
         new ExtendedList<BiomeTerrain> Terrain { get; }
         new String? GroundLayerNormal { get; set; }
-        new MemorySlice<Byte>? BTPS { get; set; }
-        new MemorySlice<Byte> DistantView { get; set; }
+        new BiomeBTPS TerrainSettings { get; set; }
+        new BiomeDistantView DistantView { get; set; }
         new String? GlobalLayerMaterial { get; set; }
         new IFormLinkNullable<IGlobalGetter> BlockDensityMultGlobal { get; set; }
         new IFormLinkNullable<IGlobalGetter> CellDensityMultGlobal { get; set; }
@@ -2363,8 +2361,8 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IBiomeMarkerTypeGetter> MarkerObjectKeywords { get; }
         IReadOnlyList<IBiomeTerrainGetter> Terrain { get; }
         String? GroundLayerNormal { get; }
-        ReadOnlyMemorySlice<Byte>? BTPS { get; }
-        ReadOnlyMemorySlice<Byte> DistantView { get; }
+        IBiomeBTPSGetter TerrainSettings { get; }
+        IBiomeDistantViewGetter DistantView { get; }
         String? GlobalLayerMaterial { get; }
         IFormLinkNullableGetter<IGlobalGetter> BlockDensityMultGlobal { get; }
         IFormLinkNullableGetter<IGlobalGetter> CellDensityMultGlobal { get; }
@@ -2571,7 +2569,7 @@ namespace Mutagen.Bethesda.Starfield
         MarkerObjectKeywords = 30,
         Terrain = 31,
         GroundLayerNormal = 32,
-        BTPS = 33,
+        TerrainSettings = 33,
         DistantView = 34,
         GlobalLayerMaterial = 35,
         BlockDensityMultGlobal = 36,
@@ -2737,8 +2735,8 @@ namespace Mutagen.Bethesda.Starfield
             item.MarkerObjectKeywords.Clear();
             item.Terrain.Clear();
             item.GroundLayerNormal = default;
-            item.BTPS = default;
-            item.DistantView = [];
+            item.TerrainSettings.Clear();
+            item.DistantView.Clear();
             item.GlobalLayerMaterial = default;
             item.BlockDensityMultGlobal.Clear();
             item.CellDensityMultGlobal.Clear();
@@ -2895,8 +2893,8 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             ret.GroundLayerNormal = string.Equals(item.GroundLayerNormal, rhs.GroundLayerNormal);
-            ret.BTPS = MemorySliceExt.SequenceEqual(item.BTPS, rhs.BTPS);
-            ret.DistantView = MemoryExtensions.SequenceEqual(item.DistantView.Span, rhs.DistantView.Span);
+            ret.TerrainSettings = MaskItemExt.Factory(item.TerrainSettings.GetEqualsMask(rhs.TerrainSettings, include), include);
+            ret.DistantView = MaskItemExt.Factory(item.DistantView.GetEqualsMask(rhs.DistantView, include), include);
             ret.GlobalLayerMaterial = string.Equals(item.GlobalLayerMaterial, rhs.GlobalLayerMaterial);
             ret.BlockDensityMultGlobal = item.BlockDensityMultGlobal.Equals(rhs.BlockDensityMultGlobal);
             ret.CellDensityMultGlobal = item.CellDensityMultGlobal.Equals(rhs.CellDensityMultGlobal);
@@ -3142,14 +3140,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(GroundLayerNormalItem, "GroundLayerNormal");
             }
-            if ((printMask?.BTPS ?? true)
-                && item.BTPS is {} BTPSItem)
+            if (printMask?.TerrainSettings?.Overall ?? true)
             {
-                sb.AppendLine($"BTPS => {SpanExt.ToHexString(BTPSItem)}");
+                item.TerrainSettings?.Print(sb, "TerrainSettings");
             }
-            if (printMask?.DistantView ?? true)
+            if (printMask?.DistantView?.Overall ?? true)
             {
-                sb.AppendLine($"DistantView => {SpanExt.ToHexString(item.DistantView)}");
+                item.DistantView?.Print(sb, "DistantView");
             }
             if ((printMask?.GlobalLayerMaterial ?? true)
                 && item.GlobalLayerMaterial is {} GlobalLayerMaterialItem)
@@ -3326,13 +3323,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!string.Equals(lhs.GroundLayerNormal, rhs.GroundLayerNormal)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Biome_FieldIndex.BTPS) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Biome_FieldIndex.TerrainSettings) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.BTPS, rhs.BTPS)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.TerrainSettings, rhs.TerrainSettings, out var lhsTerrainSettings, out var rhsTerrainSettings, out var isTerrainSettingsEqual))
+                {
+                    if (!((BiomeBTPSCommon)((IBiomeBTPSGetter)lhsTerrainSettings).CommonInstance()!).Equals(lhsTerrainSettings, rhsTerrainSettings, equalsMask?.GetSubCrystal((int)Biome_FieldIndex.TerrainSettings))) return false;
+                }
+                else if (!isTerrainSettingsEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Biome_FieldIndex.DistantView) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.DistantView.Span, rhs.DistantView.Span)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.DistantView, rhs.DistantView, out var lhsDistantView, out var rhsDistantView, out var isDistantViewEqual))
+                {
+                    if (!((BiomeDistantViewCommon)((IBiomeDistantViewGetter)lhsDistantView).CommonInstance()!).Equals(lhsDistantView, rhsDistantView, equalsMask?.GetSubCrystal((int)Biome_FieldIndex.DistantView))) return false;
+                }
+                else if (!isDistantViewEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Biome_FieldIndex.GlobalLayerMaterial) ?? true))
             {
@@ -3452,11 +3457,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(GroundLayerNormalitem);
             }
-            if (item.BTPS is {} BTPSItem)
-            {
-                hash.AddBytes(BTPSItem);
-            }
-            hash.AddBytes(item.DistantView);
+            hash.Add(item.TerrainSettings);
+            hash.Add(item.DistantView);
             if (item.GlobalLayerMaterial is {} GlobalLayerMaterialitem)
             {
                 hash.Add(GlobalLayerMaterialitem);
@@ -3940,20 +3942,49 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.GroundLayerNormal = rhs.GroundLayerNormal;
             }
-            if ((copyMask?.GetShouldTranslate((int)Biome_FieldIndex.BTPS) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Biome_FieldIndex.TerrainSettings) ?? true))
             {
-                if(rhs.BTPS is {} BTPSrhs)
+                errorMask?.PushIndex((int)Biome_FieldIndex.TerrainSettings);
+                try
                 {
-                    item.BTPS = BTPSrhs.ToArray();
+                    if ((copyMask?.GetShouldTranslate((int)Biome_FieldIndex.TerrainSettings) ?? true))
+                    {
+                        item.TerrainSettings = rhs.TerrainSettings.DeepCopy(
+                            copyMask: copyMask?.GetSubCrystal((int)Biome_FieldIndex.TerrainSettings),
+                            errorMask: errorMask);
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.BTPS = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             if ((copyMask?.GetShouldTranslate((int)Biome_FieldIndex.DistantView) ?? true))
             {
-                item.DistantView = rhs.DistantView.ToArray();
+                errorMask?.PushIndex((int)Biome_FieldIndex.DistantView);
+                try
+                {
+                    if ((copyMask?.GetShouldTranslate((int)Biome_FieldIndex.DistantView) ?? true))
+                    {
+                        item.DistantView = rhs.DistantView.DeepCopy(
+                            copyMask: copyMask?.GetSubCrystal((int)Biome_FieldIndex.DistantView),
+                            errorMask: errorMask);
+                    }
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Biome_FieldIndex.GlobalLayerMaterial) ?? true))
             {
@@ -4303,14 +4334,22 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.GroundLayerNormal,
                 header: translationParams.ConvertToCustom(RecordTypes.TX16),
                 binaryType: StringBinaryType.NullTerminate);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.BTPS,
-                header: translationParams.ConvertToCustom(RecordTypes.BTPS));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.DistantView,
-                header: translationParams.ConvertToCustom(RecordTypes.BDFS));
+            var TerrainSettingsItem = item.TerrainSettings;
+            using (HeaderExport.Subrecord(writer, RecordTypes.BTPS))
+            {
+                ((BiomeBTPSBinaryWriteTranslation)((IBinaryItem)TerrainSettingsItem).BinaryWriteTranslator).Write(
+                    item: TerrainSettingsItem,
+                    writer: writer,
+                    translationParams: translationParams);
+            }
+            var DistantViewItem = item.DistantView;
+            using (HeaderExport.Subrecord(writer, RecordTypes.BDFS))
+            {
+                ((BiomeDistantViewBinaryWriteTranslation)((IBinaryItem)DistantViewItem).BinaryWriteTranslator).Write(
+                    item: DistantViewItem,
+                    writer: writer,
+                    translationParams: translationParams);
+            }
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.GlobalLayerMaterial,
@@ -4652,14 +4691,14 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BTPS:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BTPS = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Biome_FieldIndex.BTPS;
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
+                    item.TerrainSettings = Mutagen.Bethesda.Starfield.BiomeBTPS.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)Biome_FieldIndex.TerrainSettings;
                 }
                 case RecordTypeInts.BDFS:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.DistantView = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
+                    item.DistantView = Mutagen.Bethesda.Starfield.BiomeDistantView.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
                     return (int)Biome_FieldIndex.DistantView;
                 }
                 case RecordTypeInts.EFSD:
@@ -4839,13 +4878,13 @@ namespace Mutagen.Bethesda.Starfield
         private int? _GroundLayerNormalLocation;
         public String? GroundLayerNormal => _GroundLayerNormalLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _GroundLayerNormalLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region BTPS
-        private int? _BTPSLocation;
-        public ReadOnlyMemorySlice<Byte>? BTPS => _BTPSLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _BTPSLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region TerrainSettings
+        private IBiomeBTPSGetter? _TerrainSettings;
+        public IBiomeBTPSGetter TerrainSettings => _TerrainSettings ?? new BiomeBTPS();
         #endregion
         #region DistantView
-        private int? _DistantViewLocation;
-        public ReadOnlyMemorySlice<Byte> DistantView => _DistantViewLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DistantViewLocation.Value, _package.MetaData.Constants) : ReadOnlyMemorySlice<byte>.Empty;
+        private IBiomeDistantViewGetter? _DistantView;
+        public IBiomeDistantViewGetter DistantView => _DistantView ?? new BiomeDistantView();
         #endregion
         #region GlobalLayerMaterial
         private int? _GlobalLayerMaterialLocation;
@@ -5173,12 +5212,20 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BTPS:
                 {
-                    _BTPSLocation = (stream.Position - offset);
-                    return (int)Biome_FieldIndex.BTPS;
+                    stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
+                    this._TerrainSettings = BiomeBTPSBinaryOverlay.BiomeBTPSFactory(
+                        stream: stream,
+                        package: _package,
+                        translationParams: translationParams.DoNotShortCircuit());
+                    return (int)Biome_FieldIndex.TerrainSettings;
                 }
                 case RecordTypeInts.BDFS:
                 {
-                    _DistantViewLocation = (stream.Position - offset);
+                    stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
+                    this._DistantView = BiomeDistantViewBinaryOverlay.BiomeDistantViewFactory(
+                        stream: stream,
+                        package: _package,
+                        translationParams: translationParams.DoNotShortCircuit());
                     return (int)Biome_FieldIndex.DistantView;
                 }
                 case RecordTypeInts.EFSD:
