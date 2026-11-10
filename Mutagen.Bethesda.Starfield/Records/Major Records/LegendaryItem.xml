@@ -22,7 +22,7 @@
       <RefList name="ExcludeFilters" refName="LegendaryFilter" recordType="DNAM" />
       <RefList name="RerollCosts" refName="LegendaryItemRankCost" recordType="FNAM" />
       <RefList name="PickCosts" refName="LegendaryItemRankCost" recordType="KNAM" />
-      <RefList name="QualityMods" refName="LegendaryMod" recordType="GNAM" />
+      <RefList name="QualityMods" refName="LegendaryItemQualityMod" recordType="GNAM" />
       <RefList name="QualityAllowedKeywords" refName="LegendaryItemHNAMEntry" recordType="HNAM" />
       <RefList name="QualityDisallowedKeywords" refName="LegendaryItemHNAMEntry" recordType="INAM" />
       <RefList name="QualityUpgradeCosts" refName="LegendaryItemQualityCost" recordType="JNAM" />
@@ -47,6 +47,12 @@
   <Object name="LegendaryMod" objType="Subrecord">
     <Fields>
       <Enum name="Slot" enumName="LegendaryItem.StarSlot" />
+      <FormLink name="ObjectMod" refName="AObjectModification" />
+    </Fields>
+  </Object>
+  <Object name="LegendaryItemQualityMod" objType="Subrecord">
+    <Fields>
+      <UInt32 name="Tier" />
       <FormLink name="ObjectMod" refName="AObjectModification" />
     </Fields>
   </Object>
