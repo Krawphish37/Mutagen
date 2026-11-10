@@ -128,6 +128,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - SnapTemplateNode
 - SoundEchoMarker
 - SoundMarker
+- SpaceshipModification
 - SpeechChallenge
 - Spell
 - Static
@@ -238,6 +239,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - Projectile
 - SkeletalModel
 - SnapTemplateNode
+- SpaceshipModification
 - Static
 - StaticCollection
 - TalkingActivator
@@ -355,6 +357,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - ScriptStructProperty
 - ScriptVariableListProperty
 - ScriptVariableProperty
+- SpaceshipModification
 - Spell
 - Star
 - StartSceneAction
@@ -528,6 +531,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - SnapTemplateNode
 - SoundEchoMarker
 - SoundMarker
+- SpaceshipModification
 - SpeechChallenge
 - Spell
 - Static
@@ -1191,6 +1195,11 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IHaveVirtualMachineAdapter
 - IKeyworded
 - IObjectBounded
+- IScripted
+### SpaceshipModification
+- IHaveVirtualMachineAdapter
+- IModeled
+- INamed
 - IScripted
 ### SpeechChallenge
 - IHaveVirtualMachineAdapter

@@ -11262,6 +11262,10 @@ namespace Mutagen.Bethesda.Starfield
                 case "IContainerModificationGetter":
                 case "IContainerModification":
                 case "IContainerModificationInternal":
+                case "SpaceshipModification":
+                case "ISpaceshipModificationGetter":
+                case "ISpaceshipModification":
+                case "ISpaceshipModificationInternal":
                 case "ObjectModification":
                 case "IObjectModificationGetter":
                 case "IObjectModification":
@@ -17147,6 +17151,10 @@ namespace Mutagen.Bethesda.Starfield
                 case "IContainerModificationGetter":
                 case "IContainerModification":
                 case "IContainerModificationInternal":
+                case "SpaceshipModification":
+                case "ISpaceshipModificationGetter":
+                case "ISpaceshipModification":
+                case "ISpaceshipModificationInternal":
                 case "ObjectModification":
                 case "IObjectModificationGetter":
                 case "IObjectModification":
@@ -19572,6 +19580,7 @@ namespace Mutagen.Bethesda.Starfield
                 case "FloraModification":
                 case "NpcModification":
                 case "ContainerModification":
+                case "SpaceshipModification":
                 case "ObjectModification":
                 case "UnknownObjectModification":
                     foreach (var item in obj.ObjectModifications.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
@@ -23060,6 +23069,7 @@ namespace Mutagen.Bethesda.Starfield
                 case "FloraModification":
                 case "NpcModification":
                 case "ContainerModification":
+                case "SpaceshipModification":
                 case "ObjectModification":
                 case "UnknownObjectModification":
                     foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<IStarfieldMod, IStarfieldModGetter, AObjectModification, IAObjectModificationGetter>(

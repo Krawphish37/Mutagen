@@ -1276,6 +1276,7 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             SpaceshipAIActorComponent_Registration.Instance,
             SpaceshipEquipmentComponent_Registration.Instance,
             SpaceshipHullCodeComponent_Registration.Instance,
+            SpaceshipModification_Registration.Instance,
             SpaceshipWeaponBindingsComponent_Registration.Instance,
             SpawnOnDestroyComponent_Registration.Instance,
             SpeechChallenge_Registration.Instance,

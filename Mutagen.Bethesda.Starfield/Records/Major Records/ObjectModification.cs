@@ -22,7 +22,6 @@ partial class AObjectModification
     {
     }
 
-    internal const string StarshipObjectModificationName = "Spaceship_InstanceData";
     internal const string NoneObjectModificationName = " NONE";
 
     public static AObjectModification CreateFromBinary(
@@ -54,6 +53,8 @@ partial class AObjectModification
                     return FloraModification.CreateFromBinary(frame);
                 case Container.ObjectModificationName:
                     return ContainerModification.CreateFromBinary(frame);
+                case SpaceshipModification.ObjectModificationName:
+                    return SpaceshipModification.CreateFromBinary(frame);
                 case AObjectModification.NoneObjectModificationName:
                     return ObjectModification.CreateFromBinary(frame);
                 default:
@@ -72,6 +73,23 @@ partial class AObjectModification
                 typeof(AObjectModification));
             throw;
         }
+    }
+}
+
+partial class SpaceshipModification
+{
+    public const string ObjectModificationName = "Spaceship_InstanceData";
+
+    // xEdit wbObjectModPropertiesEnum, the Spaceship entries
+    public enum Property
+    {
+        ActorValue = RecordTypeInts.SPAV,
+        SystemDamage = RecordTypeInts.SDMG,
+        Enchantment = RecordTypeInts.SENC,
+        Inventory = RecordTypeInts.SINV,
+        Keyword = RecordTypeInts.SKEY,
+        LayeredMaterialSwap = RecordTypeInts.SMLS,
+        ColorRemappingIndex = RecordTypeInts.SCRI,
     }
 }
 
@@ -122,6 +140,10 @@ partial class AObjectModificationBinaryCreateTranslation
             case IContainerModificationInternal containerMod:
                 containerMod.Properties.SetTo(
                     ObjectTemplateBinaryCreateTranslation<Container.Property>.ReadProperties(frame, propertyCount));
+                break;
+            case ISpaceshipModificationInternal spaceshipMod:
+                spaceshipMod.Properties.SetTo(
+                    ObjectTemplateBinaryCreateTranslation<SpaceshipModification.Property>.ReadProperties(frame, propertyCount));
                 break;
             case IObjectModificationInternal objMod:
                 objMod.Properties.SetTo(
@@ -193,6 +215,14 @@ partial class AObjectModificationBinaryWriteTranslation
                         writer,
                         (IAObjectModPropertyGetter<Container.Property>)item);
                 dataName = Container.ObjectModificationName;
+                break;
+            case ISpaceshipModificationGetter spaceshipMod:
+                properties = spaceshipMod.Properties;
+                export = (subFrame, item, _) =>
+                    ObjectTemplateBinaryWriteTranslation.WriteProperty<SpaceshipModification.Property>(
+                        writer,
+                        (IAObjectModPropertyGetter<SpaceshipModification.Property>)item);
+                dataName = SpaceshipModification.ObjectModificationName;
                 break;
             case IObjectModificationGetter objMod:
                 properties = objMod.Properties;
@@ -341,6 +371,14 @@ partial class AObjectModificationBinaryOverlay
                     count: propertyCount,
                     getter: (s, p) => ObjectTemplateBinaryCreateTranslation<Container.Property>.ReadProperty(stream.MetaData, s));
                 break;
+            case SpaceshipModificationBinaryOverlay spaceship:
+                spaceship.Properties = BinaryOverlayList.FactoryByCount(
+                    _dataBytes.Slice(includesEndingPos, checked((int)(24 * propertyCount))),
+                    _package,
+                    itemLength: 24,
+                    count: propertyCount,
+                    getter: (s, p) => ObjectTemplateBinaryCreateTranslation<SpaceshipModification.Property>.ReadProperty(stream.MetaData, s));
+                break;
             case ObjectModificationBinaryOverlay obj:
                 obj.Properties = BinaryOverlayList.FactoryByCount(
                     _dataBytes.Slice(includesEndingPos, checked((int)(24 * propertyCount))),
@@ -391,6 +429,8 @@ partial class AObjectModificationBinaryOverlay
                 return FloraModificationBinaryOverlay.FloraModificationFactory(stream, package);
             case Container.ObjectModificationName:
                 return ContainerModificationBinaryOverlay.ContainerModificationFactory(stream, package);
+            case SpaceshipModification.ObjectModificationName:
+                return SpaceshipModificationBinaryOverlay.SpaceshipModificationFactory(stream, package);
             case AObjectModification.NoneObjectModificationName:
                 return ObjectModificationBinaryOverlay.ObjectModificationFactory(stream, package);
             default:
@@ -426,6 +466,11 @@ partial class FloraModificationBinaryOverlay
 partial class ContainerModificationBinaryOverlay
 {
     public IReadOnlyList<IAObjectModPropertyGetter<Container.Property>> Properties { get; internal set; } = Array.Empty<IAObjectModPropertyGetter<Container.Property>>();
+}
+
+partial class SpaceshipModificationBinaryOverlay
+{
+    public IReadOnlyList<IAObjectModPropertyGetter<SpaceshipModification.Property>> Properties { get; internal set; } = Array.Empty<IAObjectModPropertyGetter<SpaceshipModification.Property>>();
 }
 
 partial class ObjectModificationBinaryOverlay

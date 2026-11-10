@@ -7005,6 +7005,9 @@
     <Compile Include="Records\Major Records\NpcRaceOverrideElectromagneticShock_Generated.cs">
       <DependentUpon>Npc.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\SpaceshipModification_Generated.cs">
+      <DependentUpon>ObjectModification.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Common Subrecords\Reflection_Generated.cs">
       <DependentUpon>Reflection.xml</DependentUpon>
     </Compile>

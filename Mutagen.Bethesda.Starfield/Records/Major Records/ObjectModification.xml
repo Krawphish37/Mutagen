@@ -271,6 +271,17 @@
       </List>
     </Fields>
   </Object>
+  <Object name="SpaceshipModification" recordType="OMOD" objType="Record" baseClass="AObjectModification">
+    <Fields>
+      <List name="Properties" binary="NoGeneration">
+        <Ref>
+          <Direct refName="AObjectModProperty">
+            <GenericSpecification Definition="SpaceshipModification.Property" TypeToSpecify="T" />
+          </Direct>
+        </Ref>
+      </List>
+    </Fields>
+  </Object>
   <Object name="ObjectModification" recordType="OMOD" objType="Record" baseClass="AObjectModification">
     <Fields>
       <List name="Properties" binary="NoGeneration">
