@@ -163,6 +163,35 @@ public class LoquiBinaryTranslationGeneration : BinaryTranslationGeneration
         return false;
     }
 
+    /// <summary>
+    /// A Loqui field with an overflowRecordType hands the length it read from XXXX to the object it creates
+    /// (TypedParseParams.LengthOverride). An object with its own record type applies it to its one subrecord. A
+    /// typeless subrecord object (its fields carry the record types) applies it to its first subrecord, but only a
+    /// field that declares an overflowRecordType reads its value with the override (in the overlay the others read
+    /// the length from their header, which says 0 after an XXXX). So every record-typed field of such an object has to
+    /// declare the overflow too; without it the overlay would silently read an empty value.
+    /// </summary>
+    internal static void CheckOverflowTarget(ObjectGeneration objGen, LoquiType loqui, MutagenFieldData data)
+    {
+        if (!data.OverflowRecordType.HasValue) return;
+        var target = loqui.TargetObjectGeneration;
+        if (target == null || !target.IsTypelessStruct()) return;
+        var missing = target.IterateFields(expandSets: SetMarkerType.ExpandSets.FalseAndInclude, nonIntegrated: true)
+            .Where(f => f.GetFieldData() is { RecordType: not null, OverflowRecordType: null } fd
+                        && fd.BinaryOverlayFallback != BinaryGenerationType.NoGeneration
+                        // only variable-length content can pass 64 KB
+                        && (f is Loqui.Generation.StringType
+                            || f is ByteArrayType { Length: null }
+                            || f is WrapperType))
+            .Select(f => f.Name)
+            .ToArray();
+        if (missing.Length == 0) return;
+        throw new ArgumentException(
+            $"{objGen.Name}.{loqui.Name} has overflowRecordType=\"{data.OverflowRecordType}\" and creates the typeless subrecord object {target.Name}, "
+            + $"whose record-typed fields {string.Join(", ", missing)} don't declare overflowRecordType: after an XXXX the overlay would read them with "
+            + "the 0 length of their own header. Give those fields overflowRecordType too.");
+    }
+
     public override bool ShouldGenerateCopyIn(TypeGeneration typeGen)
     {
         var loquiGen = typeGen as LoquiType;
@@ -220,6 +249,7 @@ public class LoquiBinaryTranslationGeneration : BinaryTranslationGeneration
 
                     if (data.OverflowRecordType.HasValue)
                     {
+                        CheckOverflowTarget(objGen, loqui, data);
                         trans.Add($"lastParsed.{nameof(PreviousParse.LengthOverride)}");
                     }
  
@@ -708,7 +738,9 @@ public class LoquiBinaryTranslationGeneration : BinaryTranslationGeneration
                 {
                     args.AddPassArg($"finalPos");
                 }
-                args.Add($"translationParams: {converterAccessor}{(data.ShortCircuit ? null : ".DoNotShortCircuit()")}");
+                // Like the full import: after an XXXX, the object gets the real length of its first subrecord
+                CheckOverflowTarget(objGen, loqui, data);
+                args.Add($"translationParams: {converterAccessor}{(data.OverflowRecordType.HasValue ? $".With(lastParsed.{nameof(PreviousParse.LengthOverride)})" : null)}{(data.ShortCircuit ? null : ".DoNotShortCircuit()")}");
             }
         }
         if (data.EndMarkerType.HasValue)
