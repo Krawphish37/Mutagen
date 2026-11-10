@@ -74,10 +74,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         String? IChargenAndSkintonesGetter.HandSkinTones => this.HandSkinTones;
         #endregion
-        #region FCTP
-        public String? FCTP { get; set; }
+        #region FaceCustomTexturesBasePath
+        public String? FaceCustomTexturesBasePath { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IChargenAndSkintonesGetter.FCTP => this.FCTP;
+        String? IChargenAndSkintonesGetter.FaceCustomTexturesBasePath => this.FaceCustomTexturesBasePath;
         #endregion
         #region FaceSkinTones
         public String? FaceSkinTones { get; set; }
@@ -126,7 +126,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Chargen = new MaskItem<TItem, Chargen.Mask<TItem>?>(initialValue, new Chargen.Mask<TItem>(initialValue));
                 this.BodySkinTones = initialValue;
                 this.HandSkinTones = initialValue;
-                this.FCTP = initialValue;
+                this.FaceCustomTexturesBasePath = initialValue;
                 this.FaceSkinTones = initialValue;
             }
 
@@ -134,13 +134,13 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Chargen,
                 TItem BodySkinTones,
                 TItem HandSkinTones,
-                TItem FCTP,
+                TItem FaceCustomTexturesBasePath,
                 TItem FaceSkinTones)
             {
                 this.Chargen = new MaskItem<TItem, Chargen.Mask<TItem>?>(Chargen, new Chargen.Mask<TItem>(Chargen));
                 this.BodySkinTones = BodySkinTones;
                 this.HandSkinTones = HandSkinTones;
-                this.FCTP = FCTP;
+                this.FaceCustomTexturesBasePath = FaceCustomTexturesBasePath;
                 this.FaceSkinTones = FaceSkinTones;
             }
 
@@ -156,7 +156,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, Chargen.Mask<TItem>?>? Chargen { get; set; }
             public TItem BodySkinTones;
             public TItem HandSkinTones;
-            public TItem FCTP;
+            public TItem FaceCustomTexturesBasePath;
             public TItem FaceSkinTones;
             #endregion
 
@@ -173,7 +173,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Chargen, rhs.Chargen)) return false;
                 if (!object.Equals(this.BodySkinTones, rhs.BodySkinTones)) return false;
                 if (!object.Equals(this.HandSkinTones, rhs.HandSkinTones)) return false;
-                if (!object.Equals(this.FCTP, rhs.FCTP)) return false;
+                if (!object.Equals(this.FaceCustomTexturesBasePath, rhs.FaceCustomTexturesBasePath)) return false;
                 if (!object.Equals(this.FaceSkinTones, rhs.FaceSkinTones)) return false;
                 return true;
             }
@@ -183,7 +183,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Chargen);
                 hash.Add(this.BodySkinTones);
                 hash.Add(this.HandSkinTones);
-                hash.Add(this.FCTP);
+                hash.Add(this.FaceCustomTexturesBasePath);
                 hash.Add(this.FaceSkinTones);
                 return hash.ToHashCode();
             }
@@ -200,7 +200,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.BodySkinTones)) return false;
                 if (!eval(this.HandSkinTones)) return false;
-                if (!eval(this.FCTP)) return false;
+                if (!eval(this.FaceCustomTexturesBasePath)) return false;
                 if (!eval(this.FaceSkinTones)) return false;
                 return true;
             }
@@ -216,7 +216,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.BodySkinTones)) return true;
                 if (eval(this.HandSkinTones)) return true;
-                if (eval(this.FCTP)) return true;
+                if (eval(this.FaceCustomTexturesBasePath)) return true;
                 if (eval(this.FaceSkinTones)) return true;
                 return false;
             }
@@ -235,7 +235,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Chargen = this.Chargen == null ? null : new MaskItem<R, Chargen.Mask<R>?>(eval(this.Chargen.Overall), this.Chargen.Specific?.Translate(eval));
                 obj.BodySkinTones = eval(this.BodySkinTones);
                 obj.HandSkinTones = eval(this.HandSkinTones);
-                obj.FCTP = eval(this.FCTP);
+                obj.FaceCustomTexturesBasePath = eval(this.FaceCustomTexturesBasePath);
                 obj.FaceSkinTones = eval(this.FaceSkinTones);
             }
             #endregion
@@ -267,9 +267,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(HandSkinTones, "HandSkinTones");
                     }
-                    if (printMask?.FCTP ?? true)
+                    if (printMask?.FaceCustomTexturesBasePath ?? true)
                     {
-                        sb.AppendItem(FCTP, "FCTP");
+                        sb.AppendItem(FaceCustomTexturesBasePath, "FaceCustomTexturesBasePath");
                     }
                     if (printMask?.FaceSkinTones ?? true)
                     {
@@ -302,7 +302,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, Chargen.ErrorMask?>? Chargen;
             public Exception? BodySkinTones;
             public Exception? HandSkinTones;
-            public Exception? FCTP;
+            public Exception? FaceCustomTexturesBasePath;
             public Exception? FaceSkinTones;
             #endregion
 
@@ -318,8 +318,8 @@ namespace Mutagen.Bethesda.Starfield
                         return BodySkinTones;
                     case ChargenAndSkintones_FieldIndex.HandSkinTones:
                         return HandSkinTones;
-                    case ChargenAndSkintones_FieldIndex.FCTP:
-                        return FCTP;
+                    case ChargenAndSkintones_FieldIndex.FaceCustomTexturesBasePath:
+                        return FaceCustomTexturesBasePath;
                     case ChargenAndSkintones_FieldIndex.FaceSkinTones:
                         return FaceSkinTones;
                     default:
@@ -341,8 +341,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ChargenAndSkintones_FieldIndex.HandSkinTones:
                         this.HandSkinTones = ex;
                         break;
-                    case ChargenAndSkintones_FieldIndex.FCTP:
-                        this.FCTP = ex;
+                    case ChargenAndSkintones_FieldIndex.FaceCustomTexturesBasePath:
+                        this.FaceCustomTexturesBasePath = ex;
                         break;
                     case ChargenAndSkintones_FieldIndex.FaceSkinTones:
                         this.FaceSkinTones = ex;
@@ -366,8 +366,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ChargenAndSkintones_FieldIndex.HandSkinTones:
                         this.HandSkinTones = (Exception?)obj;
                         break;
-                    case ChargenAndSkintones_FieldIndex.FCTP:
-                        this.FCTP = (Exception?)obj;
+                    case ChargenAndSkintones_FieldIndex.FaceCustomTexturesBasePath:
+                        this.FaceCustomTexturesBasePath = (Exception?)obj;
                         break;
                     case ChargenAndSkintones_FieldIndex.FaceSkinTones:
                         this.FaceSkinTones = (Exception?)obj;
@@ -383,7 +383,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Chargen != null) return true;
                 if (BodySkinTones != null) return true;
                 if (HandSkinTones != null) return true;
-                if (FCTP != null) return true;
+                if (FaceCustomTexturesBasePath != null) return true;
                 if (FaceSkinTones != null) return true;
                 return false;
             }
@@ -418,7 +418,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(HandSkinTones, "HandSkinTones");
                 }
                 {
-                    sb.AppendItem(FCTP, "FCTP");
+                    sb.AppendItem(FaceCustomTexturesBasePath, "FaceCustomTexturesBasePath");
                 }
                 {
                     sb.AppendItem(FaceSkinTones, "FaceSkinTones");
@@ -434,7 +434,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Chargen = this.Chargen.Combine(rhs.Chargen, (l, r) => l.Combine(r));
                 ret.BodySkinTones = this.BodySkinTones.Combine(rhs.BodySkinTones);
                 ret.HandSkinTones = this.HandSkinTones.Combine(rhs.HandSkinTones);
-                ret.FCTP = this.FCTP.Combine(rhs.FCTP);
+                ret.FaceCustomTexturesBasePath = this.FaceCustomTexturesBasePath.Combine(rhs.FaceCustomTexturesBasePath);
                 ret.FaceSkinTones = this.FaceSkinTones.Combine(rhs.FaceSkinTones);
                 return ret;
             }
@@ -462,7 +462,7 @@ namespace Mutagen.Bethesda.Starfield
             public Chargen.TranslationMask? Chargen;
             public bool BodySkinTones;
             public bool HandSkinTones;
-            public bool FCTP;
+            public bool FaceCustomTexturesBasePath;
             public bool FaceSkinTones;
             #endregion
 
@@ -475,7 +475,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.BodySkinTones = defaultOn;
                 this.HandSkinTones = defaultOn;
-                this.FCTP = defaultOn;
+                this.FaceCustomTexturesBasePath = defaultOn;
                 this.FaceSkinTones = defaultOn;
             }
 
@@ -495,7 +495,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Chargen != null ? Chargen.OnOverall : DefaultOn, Chargen?.GetCrystal()));
                 ret.Add((BodySkinTones, null));
                 ret.Add((HandSkinTones, null));
-                ret.Add((FCTP, null));
+                ret.Add((FaceCustomTexturesBasePath, null));
                 ret.Add((FaceSkinTones, null));
             }
 
@@ -578,7 +578,7 @@ namespace Mutagen.Bethesda.Starfield
         new Chargen? Chargen { get; set; }
         new String? BodySkinTones { get; set; }
         new String? HandSkinTones { get; set; }
-        new String? FCTP { get; set; }
+        new String? FaceCustomTexturesBasePath { get; set; }
         new String? FaceSkinTones { get; set; }
     }
 
@@ -598,7 +598,7 @@ namespace Mutagen.Bethesda.Starfield
         IChargenGetter? Chargen { get; }
         String? BodySkinTones { get; }
         String? HandSkinTones { get; }
-        String? FCTP { get; }
+        String? FaceCustomTexturesBasePath { get; }
         String? FaceSkinTones { get; }
 
     }
@@ -772,7 +772,7 @@ namespace Mutagen.Bethesda.Starfield
         Chargen = 0,
         BodySkinTones = 1,
         HandSkinTones = 2,
-        FCTP = 3,
+        FaceCustomTexturesBasePath = 3,
         FaceSkinTones = 4,
     }
     #endregion
@@ -866,7 +866,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Chargen = null;
             item.BodySkinTones = default;
             item.HandSkinTones = default;
-            item.FCTP = default;
+            item.FaceCustomTexturesBasePath = default;
             item.FaceSkinTones = default;
         }
         
@@ -925,7 +925,7 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.BodySkinTones = string.Equals(item.BodySkinTones, rhs.BodySkinTones);
             ret.HandSkinTones = string.Equals(item.HandSkinTones, rhs.HandSkinTones);
-            ret.FCTP = string.Equals(item.FCTP, rhs.FCTP);
+            ret.FaceCustomTexturesBasePath = string.Equals(item.FaceCustomTexturesBasePath, rhs.FaceCustomTexturesBasePath);
             ret.FaceSkinTones = string.Equals(item.FaceSkinTones, rhs.FaceSkinTones);
         }
         
@@ -986,10 +986,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(HandSkinTonesItem, "HandSkinTones");
             }
-            if ((printMask?.FCTP ?? true)
-                && item.FCTP is {} FCTPItem)
+            if ((printMask?.FaceCustomTexturesBasePath ?? true)
+                && item.FaceCustomTexturesBasePath is {} FaceCustomTexturesBasePathItem)
             {
-                sb.AppendItem(FCTPItem, "FCTP");
+                sb.AppendItem(FaceCustomTexturesBasePathItem, "FaceCustomTexturesBasePath");
             }
             if ((printMask?.FaceSkinTones ?? true)
                 && item.FaceSkinTones is {} FaceSkinTonesItem)
@@ -1021,9 +1021,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!string.Equals(lhs.HandSkinTones, rhs.HandSkinTones)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ChargenAndSkintones_FieldIndex.FCTP) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ChargenAndSkintones_FieldIndex.FaceCustomTexturesBasePath) ?? true))
             {
-                if (!string.Equals(lhs.FCTP, rhs.FCTP)) return false;
+                if (!string.Equals(lhs.FaceCustomTexturesBasePath, rhs.FaceCustomTexturesBasePath)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)ChargenAndSkintones_FieldIndex.FaceSkinTones) ?? true))
             {
@@ -1047,9 +1047,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(HandSkinTonesitem);
             }
-            if (item.FCTP is {} FCTPitem)
+            if (item.FaceCustomTexturesBasePath is {} FaceCustomTexturesBasePathitem)
             {
-                hash.Add(FCTPitem);
+                hash.Add(FaceCustomTexturesBasePathitem);
             }
             if (item.FaceSkinTones is {} FaceSkinTonesitem)
             {
@@ -1128,9 +1128,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.HandSkinTones = rhs.HandSkinTones;
             }
-            if ((copyMask?.GetShouldTranslate((int)ChargenAndSkintones_FieldIndex.FCTP) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ChargenAndSkintones_FieldIndex.FaceCustomTexturesBasePath) ?? true))
             {
-                item.FCTP = rhs.FCTP;
+                item.FaceCustomTexturesBasePath = rhs.FaceCustomTexturesBasePath;
             }
             if ((copyMask?.GetShouldTranslate((int)ChargenAndSkintones_FieldIndex.FaceSkinTones) ?? true))
             {
@@ -1264,7 +1264,7 @@ namespace Mutagen.Bethesda.Starfield
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.FCTP,
+                item: item.FaceCustomTexturesBasePath,
                 header: translationParams.ConvertToCustom(RecordTypes.FCTP),
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
@@ -1344,13 +1344,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FCTP:
                 {
-                    if (lastParsed.ShortCircuit((int)ChargenAndSkintones_FieldIndex.FCTP, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)ChargenAndSkintones_FieldIndex.FaceCustomTexturesBasePath, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FCTP = StringBinaryTranslation.Instance.Parse(
+                    item.FaceCustomTexturesBasePath = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)ChargenAndSkintones_FieldIndex.FCTP;
+                    return (int)ChargenAndSkintones_FieldIndex.FaceCustomTexturesBasePath;
                 }
                 case RecordTypeInts.FSTT:
                 {
@@ -1440,9 +1440,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _HandSkinTonesLocation;
         public String? HandSkinTones => _HandSkinTonesLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _HandSkinTonesLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region FCTP
-        private int? _FCTPLocation;
-        public String? FCTP => _FCTPLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _FCTPLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region FaceCustomTexturesBasePath
+        private int? _FaceCustomTexturesBasePathLocation;
+        public String? FaceCustomTexturesBasePath => _FaceCustomTexturesBasePathLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _FaceCustomTexturesBasePathLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         #region FaceSkinTones
         private int? _FaceSkinTonesLocation;
@@ -1534,9 +1534,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FCTP:
                 {
-                    if (lastParsed.ShortCircuit((int)ChargenAndSkintones_FieldIndex.FCTP, translationParams)) return ParseResult.Stop;
-                    _FCTPLocation = (stream.Position - offset);
-                    return (int)ChargenAndSkintones_FieldIndex.FCTP;
+                    if (lastParsed.ShortCircuit((int)ChargenAndSkintones_FieldIndex.FaceCustomTexturesBasePath, translationParams)) return ParseResult.Stop;
+                    _FaceCustomTexturesBasePathLocation = (stream.Position - offset);
+                    return (int)ChargenAndSkintones_FieldIndex.FaceCustomTexturesBasePath;
                 }
                 case RecordTypeInts.FSTT:
                 {

@@ -458,27 +458,27 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IMaterialTypeGetter> IRaceGetter.ImpactMaterialType => this.ImpactMaterialType;
         #endregion
-        #region WED0
+        #region OpenCorpseSound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _WED0;
-        public SoundReference? WED0
+        private SoundReference? _OpenCorpseSound;
+        public SoundReference? OpenCorpseSound
         {
-            get => _WED0;
-            set => _WED0 = value;
+            get => _OpenCorpseSound;
+            set => _OpenCorpseSound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? IRaceGetter.WED0 => this.WED0;
+        ISoundReferenceGetter? IRaceGetter.OpenCorpseSound => this.OpenCorpseSound;
         #endregion
-        #region WED1
+        #region CloseCorpseSound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _WED1;
-        public SoundReference? WED1
+        private SoundReference? _CloseCorpseSound;
+        public SoundReference? CloseCorpseSound
         {
-            get => _WED1;
-            set => _WED1 = value;
+            get => _CloseCorpseSound;
+            set => _CloseCorpseSound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? IRaceGetter.WED1 => this.WED1;
+        ISoundReferenceGetter? IRaceGetter.CloseCorpseSound => this.CloseCorpseSound;
         #endregion
         #region BipedObjects
         private readonly Dictionary<BipedObject, BipedObjectData> _BipedObjects = new Dictionary<BipedObject, BipedObjectData>();
@@ -743,8 +743,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.BodyData = new MaskItem<TItem, GenderedItem<MaskItem<TItem, BodyData.Mask<TItem>?>?>?>(initialValue, default);
                 this.AimAssistPose = initialValue;
                 this.ImpactMaterialType = initialValue;
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
-                this.WED1 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.OpenCorpseSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.CloseCorpseSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.BipedObjects = new MaskItem<TItem, IEnumerable<MaskItemIndexed<BipedObject, TItem, BipedObjectData.Mask<TItem>?>>?>(initialValue, null);
                 this.MovementDataOverrides = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, MovementDataOverride.Mask<TItem>?>>?>(initialValue, []);
                 this.EquipmentFlags = initialValue;
@@ -839,8 +839,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem BodyData,
                 TItem AimAssistPose,
                 TItem ImpactMaterialType,
-                TItem WED0,
-                TItem WED1,
+                TItem OpenCorpseSound,
+                TItem CloseCorpseSound,
                 TItem BipedObjects,
                 TItem MovementDataOverrides,
                 TItem EquipmentFlags,
@@ -934,8 +934,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.BodyData = new MaskItem<TItem, GenderedItem<MaskItem<TItem, BodyData.Mask<TItem>?>?>?>(BodyData, default);
                 this.AimAssistPose = AimAssistPose;
                 this.ImpactMaterialType = ImpactMaterialType;
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WED0, new SoundReference.Mask<TItem>(WED0));
-                this.WED1 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WED1, new SoundReference.Mask<TItem>(WED1));
+                this.OpenCorpseSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(OpenCorpseSound, new SoundReference.Mask<TItem>(OpenCorpseSound));
+                this.CloseCorpseSound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(CloseCorpseSound, new SoundReference.Mask<TItem>(CloseCorpseSound));
                 this.BipedObjects = new MaskItem<TItem, IEnumerable<MaskItemIndexed<BipedObject, TItem, BipedObjectData.Mask<TItem>?>>?>(BipedObjects, null);
                 this.MovementDataOverrides = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, MovementDataOverride.Mask<TItem>?>>?>(MovementDataOverrides, []);
                 this.EquipmentFlags = EquipmentFlags;
@@ -1031,8 +1031,8 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, GenderedItem<MaskItem<TItem, BodyData.Mask<TItem>?>?>?>? BodyData;
             public TItem AimAssistPose;
             public TItem ImpactMaterialType;
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? WED0 { get; set; }
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? WED1 { get; set; }
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? OpenCorpseSound { get; set; }
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? CloseCorpseSound { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<BipedObject, TItem, BipedObjectData.Mask<TItem>?>>?>? BipedObjects;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, MovementDataOverride.Mask<TItem>?>>?>? MovementDataOverrides;
             public TItem EquipmentFlags;
@@ -1130,8 +1130,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.BodyData, rhs.BodyData)) return false;
                 if (!object.Equals(this.AimAssistPose, rhs.AimAssistPose)) return false;
                 if (!object.Equals(this.ImpactMaterialType, rhs.ImpactMaterialType)) return false;
-                if (!object.Equals(this.WED0, rhs.WED0)) return false;
-                if (!object.Equals(this.WED1, rhs.WED1)) return false;
+                if (!object.Equals(this.OpenCorpseSound, rhs.OpenCorpseSound)) return false;
+                if (!object.Equals(this.CloseCorpseSound, rhs.CloseCorpseSound)) return false;
                 if (!object.Equals(this.BipedObjects, rhs.BipedObjects)) return false;
                 if (!object.Equals(this.MovementDataOverrides, rhs.MovementDataOverrides)) return false;
                 if (!object.Equals(this.EquipmentFlags, rhs.EquipmentFlags)) return false;
@@ -1221,8 +1221,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.BodyData);
                 hash.Add(this.AimAssistPose);
                 hash.Add(this.ImpactMaterialType);
-                hash.Add(this.WED0);
-                hash.Add(this.WED1);
+                hash.Add(this.OpenCorpseSound);
+                hash.Add(this.CloseCorpseSound);
                 hash.Add(this.BipedObjects);
                 hash.Add(this.MovementDataOverrides);
                 hash.Add(this.EquipmentFlags);
@@ -1390,15 +1390,15 @@ namespace Mutagen.Bethesda.Starfield
                     eval: eval)) return false;
                 if (!eval(this.AimAssistPose)) return false;
                 if (!eval(this.ImpactMaterialType)) return false;
-                if (WED0 != null)
+                if (OpenCorpseSound != null)
                 {
-                    if (!eval(this.WED0.Overall)) return false;
-                    if (this.WED0.Specific != null && !this.WED0.Specific.All(eval)) return false;
+                    if (!eval(this.OpenCorpseSound.Overall)) return false;
+                    if (this.OpenCorpseSound.Specific != null && !this.OpenCorpseSound.Specific.All(eval)) return false;
                 }
-                if (WED1 != null)
+                if (CloseCorpseSound != null)
                 {
-                    if (!eval(this.WED1.Overall)) return false;
-                    if (this.WED1.Specific != null && !this.WED1.Specific.All(eval)) return false;
+                    if (!eval(this.CloseCorpseSound.Overall)) return false;
+                    if (this.CloseCorpseSound.Specific != null && !this.CloseCorpseSound.Specific.All(eval)) return false;
                 }
                 if (this.BipedObjects != null)
                 {
@@ -1627,15 +1627,15 @@ namespace Mutagen.Bethesda.Starfield
                     eval: eval)) return true;
                 if (eval(this.AimAssistPose)) return true;
                 if (eval(this.ImpactMaterialType)) return true;
-                if (WED0 != null)
+                if (OpenCorpseSound != null)
                 {
-                    if (eval(this.WED0.Overall)) return true;
-                    if (this.WED0.Specific != null && this.WED0.Specific.Any(eval)) return true;
+                    if (eval(this.OpenCorpseSound.Overall)) return true;
+                    if (this.OpenCorpseSound.Specific != null && this.OpenCorpseSound.Specific.Any(eval)) return true;
                 }
-                if (WED1 != null)
+                if (CloseCorpseSound != null)
                 {
-                    if (eval(this.WED1.Overall)) return true;
-                    if (this.WED1.Specific != null && this.WED1.Specific.Any(eval)) return true;
+                    if (eval(this.CloseCorpseSound.Overall)) return true;
+                    if (this.CloseCorpseSound.Specific != null && this.CloseCorpseSound.Specific.Any(eval)) return true;
                 }
                 if (this.BipedObjects != null)
                 {
@@ -1892,8 +1892,8 @@ namespace Mutagen.Bethesda.Starfield
                     (m, e) => m?.Translate(e));
                 obj.AimAssistPose = eval(this.AimAssistPose);
                 obj.ImpactMaterialType = eval(this.ImpactMaterialType);
-                obj.WED0 = this.WED0 == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WED0.Overall), this.WED0.Specific?.Translate(eval));
-                obj.WED1 = this.WED1 == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WED1.Overall), this.WED1.Specific?.Translate(eval));
+                obj.OpenCorpseSound = this.OpenCorpseSound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.OpenCorpseSound.Overall), this.OpenCorpseSound.Specific?.Translate(eval));
+                obj.CloseCorpseSound = this.CloseCorpseSound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.CloseCorpseSound.Overall), this.CloseCorpseSound.Specific?.Translate(eval));
                 if (BipedObjects != null)
                 {
                     obj.BipedObjects = new MaskItem<R, IEnumerable<MaskItemIndexed<BipedObject, R, BipedObjectData.Mask<R>?>>?>(eval(this.BipedObjects.Overall), default);
@@ -2362,13 +2362,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ImpactMaterialType, "ImpactMaterialType");
                     }
-                    if (printMask?.WED0?.Overall ?? true)
+                    if (printMask?.OpenCorpseSound?.Overall ?? true)
                     {
-                        WED0?.Print(sb);
+                        OpenCorpseSound?.Print(sb);
                     }
-                    if (printMask?.WED1?.Overall ?? true)
+                    if (printMask?.CloseCorpseSound?.Overall ?? true)
                     {
-                        WED1?.Print(sb);
+                        CloseCorpseSound?.Print(sb);
                     }
                     if (printMask?.BipedObjects?.Overall ?? true)
                     {
@@ -2617,8 +2617,8 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, GenderedItem<Exception?>?>? BodyData;
             public Exception? AimAssistPose;
             public Exception? ImpactMaterialType;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? WED0;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? WED1;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? OpenCorpseSound;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? CloseCorpseSound;
             public MaskItem<Exception?, IEnumerable<MaskItemIndexed<BipedObject, Exception?, BipedObjectData.ErrorMask?>>?>? BipedObjects;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, MovementDataOverride.ErrorMask?>>?>? MovementDataOverrides;
             public Exception? EquipmentFlags;
@@ -2776,10 +2776,10 @@ namespace Mutagen.Bethesda.Starfield
                         return AimAssistPose;
                     case Race_FieldIndex.ImpactMaterialType:
                         return ImpactMaterialType;
-                    case Race_FieldIndex.WED0:
-                        return WED0;
-                    case Race_FieldIndex.WED1:
-                        return WED1;
+                    case Race_FieldIndex.OpenCorpseSound:
+                        return OpenCorpseSound;
+                    case Race_FieldIndex.CloseCorpseSound:
+                        return CloseCorpseSound;
                     case Race_FieldIndex.BipedObjects:
                         return BipedObjects;
                     case Race_FieldIndex.MovementDataOverrides:
@@ -3023,11 +3023,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Race_FieldIndex.ImpactMaterialType:
                         this.ImpactMaterialType = ex;
                         break;
-                    case Race_FieldIndex.WED0:
-                        this.WED0 = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case Race_FieldIndex.OpenCorpseSound:
+                        this.OpenCorpseSound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
-                    case Race_FieldIndex.WED1:
-                        this.WED1 = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case Race_FieldIndex.CloseCorpseSound:
+                        this.CloseCorpseSound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
                     case Race_FieldIndex.BipedObjects:
                         this.BipedObjects = new MaskItem<Exception?, IEnumerable<MaskItemIndexed<BipedObject, Exception?, BipedObjectData.ErrorMask?>>?>(ex, null);
@@ -3292,11 +3292,11 @@ namespace Mutagen.Bethesda.Starfield
                     case Race_FieldIndex.ImpactMaterialType:
                         this.ImpactMaterialType = (Exception?)obj;
                         break;
-                    case Race_FieldIndex.WED0:
-                        this.WED0 = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case Race_FieldIndex.OpenCorpseSound:
+                        this.OpenCorpseSound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
-                    case Race_FieldIndex.WED1:
-                        this.WED1 = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case Race_FieldIndex.CloseCorpseSound:
+                        this.CloseCorpseSound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
                     case Race_FieldIndex.BipedObjects:
                         this.BipedObjects = (MaskItem<Exception?, IEnumerable<MaskItemIndexed<BipedObject, Exception?, BipedObjectData.ErrorMask?>>?>)obj;
@@ -3429,8 +3429,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (BodyData != null) return true;
                 if (AimAssistPose != null) return true;
                 if (ImpactMaterialType != null) return true;
-                if (WED0 != null) return true;
-                if (WED1 != null) return true;
+                if (OpenCorpseSound != null) return true;
+                if (CloseCorpseSound != null) return true;
                 if (BipedObjects != null) return true;
                 if (MovementDataOverrides != null) return true;
                 if (EquipmentFlags != null) return true;
@@ -3766,8 +3766,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(ImpactMaterialType, "ImpactMaterialType");
                 }
-                WED0?.Print(sb);
-                WED1?.Print(sb);
+                OpenCorpseSound?.Print(sb);
+                CloseCorpseSound?.Print(sb);
                 {
                     sb.AppendLine("BipedObjects =>");
                     using (sb.Brace())
@@ -3993,8 +3993,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.BodyData = new MaskItem<Exception?, GenderedItem<Exception?>?>(Noggog.ExceptionExt.Combine(this.BodyData?.Overall, rhs.BodyData?.Overall), GenderedItem.Combine(this.BodyData?.Specific, rhs.BodyData?.Specific));
                 ret.AimAssistPose = this.AimAssistPose.Combine(rhs.AimAssistPose);
                 ret.ImpactMaterialType = this.ImpactMaterialType.Combine(rhs.ImpactMaterialType);
-                ret.WED0 = this.WED0.Combine(rhs.WED0, (l, r) => l.Combine(r));
-                ret.WED1 = this.WED1.Combine(rhs.WED1, (l, r) => l.Combine(r));
+                ret.OpenCorpseSound = this.OpenCorpseSound.Combine(rhs.OpenCorpseSound, (l, r) => l.Combine(r));
+                ret.CloseCorpseSound = this.CloseCorpseSound.Combine(rhs.CloseCorpseSound, (l, r) => l.Combine(r));
                 ret.BipedObjects = new MaskItem<Exception?, IEnumerable<MaskItemIndexed<BipedObject, Exception?, BipedObjectData.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.BipedObjects?.Overall, rhs.BipedObjects?.Overall), Noggog.ExceptionExt.Combine(this.BipedObjects?.Specific, rhs.BipedObjects?.Specific));
                 ret.MovementDataOverrides = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, MovementDataOverride.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.MovementDataOverrides?.Overall, rhs.MovementDataOverrides?.Overall), Noggog.ExceptionExt.Combine(this.MovementDataOverrides?.Specific, rhs.MovementDataOverrides?.Specific));
                 ret.EquipmentFlags = this.EquipmentFlags.Combine(rhs.EquipmentFlags);
@@ -4101,8 +4101,8 @@ namespace Mutagen.Bethesda.Starfield
             public GenderedItem<BodyData.TranslationMask>? BodyData;
             public bool AimAssistPose;
             public bool ImpactMaterialType;
-            public SoundReference.TranslationMask? WED0;
-            public SoundReference.TranslationMask? WED1;
+            public SoundReference.TranslationMask? OpenCorpseSound;
+            public SoundReference.TranslationMask? CloseCorpseSound;
             public BipedObjectData.TranslationMask? BipedObjects;
             public MovementDataOverride.TranslationMask? MovementDataOverrides;
             public bool EquipmentFlags;
@@ -4270,8 +4270,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add(GenderedItem.GetCrystalMask(BodyData, DefaultOn, m => m.OnOverall));
                 ret.Add((AimAssistPose, null));
                 ret.Add((ImpactMaterialType, null));
-                ret.Add((WED0 != null ? WED0.OnOverall : DefaultOn, WED0?.GetCrystal()));
-                ret.Add((WED1 != null ? WED1.OnOverall : DefaultOn, WED1?.GetCrystal()));
+                ret.Add((OpenCorpseSound != null ? OpenCorpseSound.OnOverall : DefaultOn, OpenCorpseSound?.GetCrystal()));
+                ret.Add((CloseCorpseSound != null ? CloseCorpseSound.OnOverall : DefaultOn, CloseCorpseSound?.GetCrystal()));
                 ret.Add((BipedObjects != null || DefaultOn, BipedObjects?.GetCrystal()));
                 ret.Add((MovementDataOverrides == null ? DefaultOn : !MovementDataOverrides.GetCrystal().CopyNothing, MovementDataOverrides?.GetCrystal()));
                 ret.Add((EquipmentFlags, null));
@@ -4525,8 +4525,8 @@ namespace Mutagen.Bethesda.Starfield
         new IGenderedItem<BodyData?> BodyData { get; set; }
         new IFormLinkNullable<IAimAssistPoseGetter> AimAssistPose { get; set; }
         new IFormLinkNullable<IMaterialTypeGetter> ImpactMaterialType { get; set; }
-        new SoundReference? WED0 { get; set; }
-        new SoundReference? WED1 { get; set; }
+        new SoundReference? OpenCorpseSound { get; set; }
+        new SoundReference? CloseCorpseSound { get; set; }
         new IDictionary<BipedObject, BipedObjectData> BipedObjects { get; }
         new ExtendedList<MovementDataOverride> MovementDataOverrides { get; }
         new EquipTypeFlag? EquipmentFlags { get; set; }
@@ -4661,8 +4661,8 @@ namespace Mutagen.Bethesda.Starfield
         IGenderedItemGetter<IBodyDataGetter?> BodyData { get; }
         IFormLinkNullableGetter<IAimAssistPoseGetter> AimAssistPose { get; }
         IFormLinkNullableGetter<IMaterialTypeGetter> ImpactMaterialType { get; }
-        ISoundReferenceGetter? WED0 { get; }
-        ISoundReferenceGetter? WED1 { get; }
+        ISoundReferenceGetter? OpenCorpseSound { get; }
+        ISoundReferenceGetter? CloseCorpseSound { get; }
         IReadOnlyDictionary<BipedObject, IBipedObjectDataGetter> BipedObjects { get; }
         IReadOnlyList<IMovementDataOverrideGetter> MovementDataOverrides { get; }
         EquipTypeFlag? EquipmentFlags { get; }
@@ -4923,8 +4923,8 @@ namespace Mutagen.Bethesda.Starfield
         BodyData = 69,
         AimAssistPose = 70,
         ImpactMaterialType = 71,
-        WED0 = 72,
-        WED1 = 73,
+        OpenCorpseSound = 72,
+        CloseCorpseSound = 73,
         BipedObjects = 74,
         MovementDataOverrides = 75,
         EquipmentFlags = 76,
@@ -5179,8 +5179,8 @@ namespace Mutagen.Bethesda.Starfield
             item.BodyData.Female = null;
             item.AimAssistPose.Clear();
             item.ImpactMaterialType.Clear();
-            item.WED0 = null;
-            item.WED1 = null;
+            item.OpenCorpseSound = null;
+            item.CloseCorpseSound = null;
             item.BipedObjects.Clear();
             item.MovementDataOverrides.Clear();
             item.EquipmentFlags = default;
@@ -5233,8 +5233,8 @@ namespace Mutagen.Bethesda.Starfield
             obj.BodyData.RemapLinks(mapping);
             obj.AimAssistPose.Relink(mapping);
             obj.ImpactMaterialType.Relink(mapping);
-            obj.WED0?.RemapLinks(mapping);
-            obj.WED1?.RemapLinks(mapping);
+            obj.OpenCorpseSound?.RemapLinks(mapping);
+            obj.CloseCorpseSound?.RemapLinks(mapping);
             obj.BipedObjects?.RemapLinks(mapping);
             obj.MovementDataOverrides.RemapLinks(mapping);
             obj.EquipmentSlots.RemapLinks(mapping);
@@ -5457,14 +5457,14 @@ namespace Mutagen.Bethesda.Starfield
                 include: include);
             ret.AimAssistPose = item.AimAssistPose.Equals(rhs.AimAssistPose);
             ret.ImpactMaterialType = item.ImpactMaterialType.Equals(rhs.ImpactMaterialType);
-            ret.WED0 = EqualsMaskHelper.EqualsHelper(
-                item.WED0,
-                rhs.WED0,
+            ret.OpenCorpseSound = EqualsMaskHelper.EqualsHelper(
+                item.OpenCorpseSound,
+                rhs.OpenCorpseSound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.WED1 = EqualsMaskHelper.EqualsHelper(
-                item.WED1,
-                rhs.WED1,
+            ret.CloseCorpseSound = EqualsMaskHelper.EqualsHelper(
+                item.CloseCorpseSound,
+                rhs.CloseCorpseSound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.BipedObjects = EqualsMaskHelper.DictEqualsHelper(
@@ -5886,15 +5886,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ImpactMaterialType.FormKeyNullable, "ImpactMaterialType");
             }
-            if ((printMask?.WED0?.Overall ?? true)
-                && item.WED0 is {} WED0Item)
+            if ((printMask?.OpenCorpseSound?.Overall ?? true)
+                && item.OpenCorpseSound is {} OpenCorpseSoundItem)
             {
-                WED0Item?.Print(sb, "WED0");
+                OpenCorpseSoundItem?.Print(sb, "OpenCorpseSound");
             }
-            if ((printMask?.WED1?.Overall ?? true)
-                && item.WED1 is {} WED1Item)
+            if ((printMask?.CloseCorpseSound?.Overall ?? true)
+                && item.CloseCorpseSound is {} CloseCorpseSoundItem)
             {
-                WED1Item?.Print(sb, "WED1");
+                CloseCorpseSoundItem?.Print(sb, "CloseCorpseSound");
             }
             if ((printMask?.BipedObjects?.Overall ?? true)
                 && item.BipedObjects is {} BipedObjectsItem)
@@ -6344,21 +6344,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ImpactMaterialType.Equals(rhs.ImpactMaterialType)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.WED0) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.OpenCorpseSound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.WED0, rhs.WED0, out var lhsWED0, out var rhsWED0, out var isWED0Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.OpenCorpseSound, rhs.OpenCorpseSound, out var lhsOpenCorpseSound, out var rhsOpenCorpseSound, out var isOpenCorpseSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsWED0).CommonInstance()!).Equals(lhsWED0, rhsWED0, equalsMask?.GetSubCrystal((int)Race_FieldIndex.WED0))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsOpenCorpseSound).CommonInstance()!).Equals(lhsOpenCorpseSound, rhsOpenCorpseSound, equalsMask?.GetSubCrystal((int)Race_FieldIndex.OpenCorpseSound))) return false;
                 }
-                else if (!isWED0Equal) return false;
+                else if (!isOpenCorpseSoundEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.WED1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.CloseCorpseSound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.WED1, rhs.WED1, out var lhsWED1, out var rhsWED1, out var isWED1Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.CloseCorpseSound, rhs.CloseCorpseSound, out var lhsCloseCorpseSound, out var rhsCloseCorpseSound, out var isCloseCorpseSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsWED1).CommonInstance()!).Equals(lhsWED1, rhsWED1, equalsMask?.GetSubCrystal((int)Race_FieldIndex.WED1))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsCloseCorpseSound).CommonInstance()!).Equals(lhsCloseCorpseSound, rhsCloseCorpseSound, equalsMask?.GetSubCrystal((int)Race_FieldIndex.CloseCorpseSound))) return false;
                 }
-                else if (!isWED1Equal) return false;
+                else if (!isCloseCorpseSoundEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.BipedObjects) ?? true))
             {
@@ -6568,13 +6568,13 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(HashCode.Combine(item.BodyData.Male, item.BodyData.Female));
             hash.Add(item.AimAssistPose);
             hash.Add(item.ImpactMaterialType);
-            if (item.WED0 is {} WED0item)
+            if (item.OpenCorpseSound is {} OpenCorpseSounditem)
             {
-                hash.Add(WED0item);
+                hash.Add(OpenCorpseSounditem);
             }
-            if (item.WED1 is {} WED1item)
+            if (item.CloseCorpseSound is {} CloseCorpseSounditem)
             {
-                hash.Add(WED1item);
+                hash.Add(CloseCorpseSounditem);
             }
             if (item.BipedObjects is {} BipedObjectsitem)
             {
@@ -6730,16 +6730,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return ImpactMaterialTypeInfo;
             }
-            if (obj.WED0 is {} WED0Items)
+            if (obj.OpenCorpseSound is {} OpenCorpseSoundItems)
             {
-                foreach (var item in WED0Items.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in OpenCorpseSoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
             }
-            if (obj.WED1 is {} WED1Items)
+            if (obj.CloseCorpseSound is {} CloseCorpseSoundItems)
             {
-                foreach (var item in WED1Items.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in CloseCorpseSoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -7386,20 +7386,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ImpactMaterialType.SetTo(rhs.ImpactMaterialType.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.WED0) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.OpenCorpseSound) ?? true))
             {
-                errorMask?.PushIndex((int)Race_FieldIndex.WED0);
+                errorMask?.PushIndex((int)Race_FieldIndex.OpenCorpseSound);
                 try
                 {
-                    if(rhs.WED0 is {} rhsWED0)
+                    if(rhs.OpenCorpseSound is {} rhsOpenCorpseSound)
                     {
-                        item.WED0 = rhsWED0.DeepCopy(
+                        item.OpenCorpseSound = rhsOpenCorpseSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)Race_FieldIndex.WED0));
+                            copyMask?.GetSubCrystal((int)Race_FieldIndex.OpenCorpseSound));
                     }
                     else
                     {
-                        item.WED0 = default;
+                        item.OpenCorpseSound = default;
                     }
                 }
                 catch (Exception ex)
@@ -7412,20 +7412,20 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.WED1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.CloseCorpseSound) ?? true))
             {
-                errorMask?.PushIndex((int)Race_FieldIndex.WED1);
+                errorMask?.PushIndex((int)Race_FieldIndex.CloseCorpseSound);
                 try
                 {
-                    if(rhs.WED1 is {} rhsWED1)
+                    if(rhs.CloseCorpseSound is {} rhsCloseCorpseSound)
                     {
-                        item.WED1 = rhsWED1.DeepCopy(
+                        item.CloseCorpseSound = rhsCloseCorpseSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)Race_FieldIndex.WED1));
+                            copyMask?.GetSubCrystal((int)Race_FieldIndex.CloseCorpseSound));
                     }
                     else
                     {
-                        item.WED1 = default;
+                        item.CloseCorpseSound = default;
                     }
                 }
                 catch (Exception ex)
@@ -8113,22 +8113,22 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.ImpactMaterialType,
                 header: translationParams.ConvertToCustom(RecordTypes.NAM4));
-            if (item.WED0 is {} WED0Item)
+            if (item.OpenCorpseSound is {} OpenCorpseSoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.WED0))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)WED0Item).BinaryWriteTranslator).Write(
-                        item: WED0Item,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)OpenCorpseSoundItem).BinaryWriteTranslator).Write(
+                        item: OpenCorpseSoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
             }
-            if (item.WED1 is {} WED1Item)
+            if (item.CloseCorpseSound is {} CloseCorpseSoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.WED1))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)WED1Item).BinaryWriteTranslator).Write(
-                        item: WED1Item,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)CloseCorpseSoundItem).BinaryWriteTranslator).Write(
+                        item: CloseCorpseSoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -8810,14 +8810,14 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WED0:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.WED0 = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)Race_FieldIndex.WED0;
+                    item.OpenCorpseSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)Race_FieldIndex.OpenCorpseSound;
                 }
                 case RecordTypeInts.WED1:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.WED1 = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)Race_FieldIndex.WED1;
+                    item.CloseCorpseSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)Race_FieldIndex.CloseCorpseSound;
                 }
                 case RecordTypeInts.NAME:
                 {
@@ -9385,8 +9385,8 @@ namespace Mutagen.Bethesda.Starfield
         private int? _ImpactMaterialTypeLocation;
         public IFormLinkNullableGetter<IMaterialTypeGetter> ImpactMaterialType => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IMaterialTypeGetter>(_package, _recordData, _ImpactMaterialTypeLocation);
         #endregion
-        public ISoundReferenceGetter? WED0 { get; private set; }
-        public ISoundReferenceGetter? WED1 { get; private set; }
+        public ISoundReferenceGetter? OpenCorpseSound { get; private set; }
+        public ISoundReferenceGetter? CloseCorpseSound { get; private set; }
         public IReadOnlyList<IMovementDataOverrideGetter> MovementDataOverrides { get; private set; } = [];
         #region EquipmentFlags
         private int? _EquipmentFlagsLocation;
@@ -9821,20 +9821,20 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WED0:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.WED0 = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.OpenCorpseSound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)Race_FieldIndex.WED0;
+                    return (int)Race_FieldIndex.OpenCorpseSound;
                 }
                 case RecordTypeInts.WED1:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.WED1 = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.CloseCorpseSound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)Race_FieldIndex.WED1;
+                    return (int)Race_FieldIndex.CloseCorpseSound;
                 }
                 case RecordTypeInts.NAME:
                 {
