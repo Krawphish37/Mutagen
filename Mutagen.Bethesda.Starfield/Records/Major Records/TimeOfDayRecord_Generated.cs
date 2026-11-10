@@ -71,16 +71,16 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region REFL
+        #region Reflection
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _REFL;
-        public MemorySlice<Byte>? REFL
+        private Reflection? _Reflection;
+        public Reflection? Reflection
         {
-            get => this._REFL;
-            set => this._REFL = value;
+            get => _Reflection;
+            set => _Reflection = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ITimeOfDayRecordGetter.REFL => this.REFL;
+        IReflectionGetter? ITimeOfDayRecordGetter.Reflection => this.Reflection;
         #endregion
 
         #region To String
@@ -108,7 +108,7 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
-                this.REFL = initialValue;
+                this.Reflection = new MaskItem<TItem, Reflection.Mask<TItem>?>(initialValue, new Reflection.Mask<TItem>(initialValue));
             }
 
             public Mask(
@@ -120,7 +120,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
                 TItem Components,
-                TItem REFL)
+                TItem Reflection)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -131,7 +131,7 @@ namespace Mutagen.Bethesda.Starfield
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
             {
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
-                this.REFL = REFL;
+                this.Reflection = new MaskItem<TItem, Reflection.Mask<TItem>?>(Reflection, new Reflection.Mask<TItem>(Reflection));
             }
 
             #pragma warning disable CS8618
@@ -144,7 +144,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
-            public TItem REFL;
+            public MaskItem<TItem, Reflection.Mask<TItem>?>? Reflection { get; set; }
             #endregion
 
             #region Equals
@@ -159,14 +159,14 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.Components, rhs.Components)) return false;
-                if (!object.Equals(this.REFL, rhs.REFL)) return false;
+                if (!object.Equals(this.Reflection, rhs.Reflection)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.Components);
-                hash.Add(this.REFL);
+                hash.Add(this.Reflection);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -189,7 +189,11 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.REFL)) return false;
+                if (Reflection != null)
+                {
+                    if (!eval(this.Reflection.Overall)) return false;
+                    if (this.Reflection.Specific != null && !this.Reflection.Specific.All(eval)) return false;
+                }
                 return true;
             }
             #endregion
@@ -210,7 +214,11 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.REFL)) return true;
+                if (Reflection != null)
+                {
+                    if (eval(this.Reflection.Overall)) return true;
+                    if (this.Reflection.Specific != null && this.Reflection.Specific.Any(eval)) return true;
+                }
                 return false;
             }
             #endregion
@@ -241,7 +249,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.REFL = eval(this.REFL);
+                obj.Reflection = this.Reflection == null ? null : new MaskItem<R, Reflection.Mask<R>?>(eval(this.Reflection.Overall), this.Reflection.Specific?.Translate(eval));
             }
             #endregion
 
@@ -279,9 +287,9 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.REFL ?? true)
+                    if (printMask?.Reflection?.Overall ?? true)
                     {
-                        sb.AppendItem(REFL, "REFL");
+                        Reflection?.Print(sb);
                     }
                 }
             }
@@ -295,7 +303,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
-            public Exception? REFL;
+            public MaskItem<Exception?, Reflection.ErrorMask?>? Reflection;
             #endregion
 
             #region IErrorMask
@@ -306,8 +314,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case TimeOfDayRecord_FieldIndex.Components:
                         return Components;
-                    case TimeOfDayRecord_FieldIndex.REFL:
-                        return REFL;
+                    case TimeOfDayRecord_FieldIndex.Reflection:
+                        return Reflection;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -321,8 +329,8 @@ namespace Mutagen.Bethesda.Starfield
                     case TimeOfDayRecord_FieldIndex.Components:
                         this.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(ex, null);
                         break;
-                    case TimeOfDayRecord_FieldIndex.REFL:
-                        this.REFL = ex;
+                    case TimeOfDayRecord_FieldIndex.Reflection:
+                        this.Reflection = new MaskItem<Exception?, Reflection.ErrorMask?>(ex, null);
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -338,8 +346,8 @@ namespace Mutagen.Bethesda.Starfield
                     case TimeOfDayRecord_FieldIndex.Components:
                         this.Components = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>)obj;
                         break;
-                    case TimeOfDayRecord_FieldIndex.REFL:
-                        this.REFL = (Exception?)obj;
+                    case TimeOfDayRecord_FieldIndex.Reflection:
+                        this.Reflection = (MaskItem<Exception?, Reflection.ErrorMask?>?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -351,7 +359,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Components != null) return true;
-                if (REFL != null) return true;
+                if (Reflection != null) return true;
                 return false;
             }
             #endregion
@@ -396,9 +404,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                {
-                    sb.AppendItem(REFL, "REFL");
-                }
+                Reflection?.Print(sb);
             }
             #endregion
 
@@ -408,7 +414,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
-                ret.REFL = this.REFL.Combine(rhs.REFL);
+                ret.Reflection = this.Reflection.Combine(rhs.Reflection, (l, r) => l.Combine(r));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -432,7 +438,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public AComponent.TranslationMask? Components;
-            public bool REFL;
+            public Reflection.TranslationMask? Reflection;
             #endregion
 
             #region Ctors
@@ -441,7 +447,6 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.REFL = defaultOn;
             }
 
             #endregion
@@ -450,7 +455,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
-                ret.Add((REFL, null));
+                ret.Add((Reflection != null ? Reflection.OnOverall : DefaultOn, Reflection?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -604,7 +609,7 @@ namespace Mutagen.Bethesda.Starfield
         ITimeOfDayRecordGetter
     {
         new ExtendedList<AComponent> Components { get; }
-        new MemorySlice<Byte>? REFL { get; set; }
+        new Reflection? Reflection { get; set; }
     }
 
     public partial interface ITimeOfDayRecordInternal :
@@ -625,7 +630,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         static new ILoquiRegistration StaticRegistration => TimeOfDayRecord_Registration.Instance;
         IReadOnlyList<IAComponentGetter> Components { get; }
-        ReadOnlyMemorySlice<Byte>? REFL { get; }
+        IReflectionGetter? Reflection { get; }
 
     }
 
@@ -803,7 +808,7 @@ namespace Mutagen.Bethesda.Starfield
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
         Components = 7,
-        REFL = 8,
+        Reflection = 8,
     }
     #endregion
 
@@ -898,7 +903,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Components.Clear();
-            item.REFL = default;
+            item.Reflection = null;
             base.Clear(item);
         }
         
@@ -917,6 +922,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             base.RemapLinks(obj, mapping);
             obj.Components.RemapLinks(mapping);
+            obj.Reflection?.RemapLinks(mapping);
         }
         
         public IEnumerable<IAssetLink> EnumerateListedAssetLinks(ITimeOfDayRecord obj, bool iterateNestedRecords = true)
@@ -1012,7 +1018,11 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Components,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.REFL = MemorySliceExt.SequenceEqual(item.REFL, rhs.REFL);
+            ret.Reflection = EqualsMaskHelper.EqualsHelper(
+                item.Reflection,
+                rhs.Reflection,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1076,10 +1086,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.REFL ?? true)
-                && item.REFL is {} REFLItem)
+            if ((printMask?.Reflection?.Overall ?? true)
+                && item.Reflection is {} ReflectionItem)
             {
-                sb.AppendLine($"REFL => {SpanExt.ToHexString(REFLItem)}");
+                ReflectionItem?.Print(sb, "Reflection");
             }
         }
         
@@ -1135,9 +1145,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Components.SequenceEqual(rhs.Components, (l, r) => ((AComponentCommon)((IAComponentGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)TimeOfDayRecord_FieldIndex.Components)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)TimeOfDayRecord_FieldIndex.REFL) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)TimeOfDayRecord_FieldIndex.Reflection) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.REFL, rhs.REFL)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.Reflection, rhs.Reflection, out var lhsReflection, out var rhsReflection, out var isReflectionEqual))
+                {
+                    if (!((ReflectionCommon)((IReflectionGetter)lhsReflection).CommonInstance()!).Equals(lhsReflection, rhsReflection, equalsMask?.GetSubCrystal((int)TimeOfDayRecord_FieldIndex.Reflection))) return false;
+                }
+                else if (!isReflectionEqual) return false;
             }
             return true;
         }
@@ -1171,9 +1185,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(subItem);
             }
-            if (item.REFL is {} REFLItem)
+            if (item.Reflection is {} Reflectionitem)
             {
-                hash.AddBytes(REFLItem);
+                hash.Add(Reflectionitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1208,6 +1222,13 @@ namespace Mutagen.Bethesda.Starfield
                 .SelectMany((f) => f.EnumerateFormLinks(iterateNestedRecords)))
             {
                 yield return FormLinkInformation.Factory(item);
+            }
+            if (obj.Reflection is {} ReflectionItems)
+            {
+                foreach (var item in ReflectionItems.EnumerateFormLinks(iterateNestedRecords))
+                {
+                    yield return item;
+                }
             }
             yield break;
         }
@@ -1343,15 +1364,30 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)TimeOfDayRecord_FieldIndex.REFL) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)TimeOfDayRecord_FieldIndex.Reflection) ?? true))
             {
-                if(rhs.REFL is {} REFLrhs)
+                errorMask?.PushIndex((int)TimeOfDayRecord_FieldIndex.Reflection);
+                try
                 {
-                    item.REFL = REFLrhs.ToArray();
+                    if(rhs.Reflection is {} rhsReflection)
+                    {
+                        item.Reflection = rhsReflection.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)TimeOfDayRecord_FieldIndex.Reflection));
+                    }
+                    else
+                    {
+                        item.Reflection = default;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.REFL = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             DeepCopyInCustom(
@@ -1534,11 +1570,13 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.REFL,
-                header: translationParams.ConvertToCustom(RecordTypes.REFL),
-                overflowRecord: RecordTypes.XXXX);
+            if (item.Reflection is {} ReflectionItem)
+            {
+                ((ReflectionBinaryWriteTranslation)((IBinaryItem)ReflectionItem).BinaryWriteTranslator).Write(
+                    item: ReflectionItem,
+                    writer: writer,
+                    translationParams: translationParams.With(RecordTypes.XXXX));
+            }
         }
 
         public void Write(
@@ -1619,9 +1657,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.REFL:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.REFL = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)TimeOfDayRecord_FieldIndex.REFL;
+                    item.Reflection = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
+                        frame: frame,
+                        translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    return (int)TimeOfDayRecord_FieldIndex.Reflection;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -1689,14 +1728,10 @@ namespace Mutagen.Bethesda.Starfield
 
 
         public IReadOnlyList<IAComponentGetter> Components { get; private set; } = [];
-        #region REFL
-        private int? _REFLLocation;
-        private int? _REFLLengthOverride;
-        public ReadOnlyMemorySlice<Byte>? REFL => PluginUtilityTranslation.ReadByteArrayWithOverflow(
-            _recordData,
-            _package.MetaData.Constants,
-            _REFLLocation,
-            _REFLLengthOverride);
+        #region Reflection
+        private int? _ReflectionLengthOverride;
+        private RangeInt32? _ReflectionLocation;
+        public IReflectionGetter? Reflection => _ReflectionLocation.HasValue ? ReflectionBinaryOverlay.ReflectionFactory(_recordData.Slice(_ReflectionLocation!.Value.Min), _package, TypedParseParams.FromLengthOverride(_ReflectionLengthOverride)) : default;
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1778,13 +1813,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.REFL:
                 {
-                    _REFLLocation = (stream.Position - offset);
-                    _REFLLengthOverride = lastParsed.LengthOverride;
+                    _ReflectionLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
+                    _ReflectionLengthOverride = lastParsed.LengthOverride;
                     if (lastParsed.LengthOverride.HasValue)
                     {
                         stream.Position += lastParsed.LengthOverride.Value;
                     }
-                    return (int)TimeOfDayRecord_FieldIndex.REFL;
+                    return (int)TimeOfDayRecord_FieldIndex.Reflection;
                 }
                 case RecordTypeInts.XXXX:
                 {

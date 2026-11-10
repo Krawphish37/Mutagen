@@ -10709,6 +10709,8 @@ namespace Mutagen.Bethesda.Starfield
             obj.Spells.RemapLinks(mapping);
             obj.Activators.RemapLinks(mapping);
             obj.TalkingActivators.RemapLinks(mapping);
+            obj.CurveTables.RemapLinks(mapping);
+            obj.Curve3Ds.RemapLinks(mapping);
             obj.Armors.RemapLinks(mapping);
             obj.Books.RemapLinks(mapping);
             obj.Containers.RemapLinks(mapping);
@@ -10812,6 +10814,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.Atmospheres.RemapLinks(mapping);
             obj.LeveledSpaceCells.RemapLinks(mapping);
             obj.SpeechChallenges.RemapLinks(mapping);
+            obj.VolumetricLightings.RemapLinks(mapping);
             obj.SurfaceBlocks.RemapLinks(mapping);
             obj.SurfacePatternConfigs.RemapLinks(mapping);
             obj.SurfacePatterns.RemapLinks(mapping);
@@ -10829,10 +10832,16 @@ namespace Mutagen.Bethesda.Starfield
             obj.AimOpticalSightMarkers.RemapLinks(mapping);
             obj.AmbienceSets.RemapLinks(mapping);
             obj.LayeredMaterialSwaps.RemapLinks(mapping);
+            obj.ForceDatas.RemapLinks(mapping);
             obj.TerminalMenus.RemapLinks(mapping);
+            obj.EffectSequences.RemapLinks(mapping);
             obj.SecondaryDamageLists.RemapLinks(mapping);
+            obj.MaterialPaths.RemapLinks(mapping);
+            obj.Clouds.RemapLinks(mapping);
+            obj.FogVolumes.RemapLinks(mapping);
             obj.WWiseKeywordMappings.RemapLinks(mapping);
             obj.LegendaryItems.RemapLinks(mapping);
+            obj.ParticleSystemDefineCollisions.RemapLinks(mapping);
             obj.SunPresets.RemapLinks(mapping);
             obj.PhotoModeFeatures.RemapLinks(mapping);
             obj.GameplayOptions.RemapLinks(mapping);
@@ -10841,6 +10850,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.ActorValueModulations.RemapLinks(mapping);
             obj.Challenges.RemapLinks(mapping);
             obj.PERS.RemapLinks(mapping);
+            obj.GravityWielderEffectDatas.RemapLinks(mapping);
         }
         
         public IEnumerable<IMajorRecord> EnumerateMajorRecords(IStarfieldMod obj)
@@ -17996,6 +18006,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
+            foreach (var item in obj.CurveTables.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
+            foreach (var item in obj.Curve3Ds.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
             foreach (var item in obj.Armors.EnumerateFormLinks(iterateNestedRecords))
             {
                 yield return item;
@@ -18459,6 +18477,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
+            foreach (var item in obj.VolumetricLightings.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
             foreach (var item in obj.SurfaceBlocks.EnumerateFormLinks(iterateNestedRecords))
             {
                 yield return item;
@@ -18536,6 +18558,10 @@ namespace Mutagen.Bethesda.Starfield
                     yield return item;
                 }
             }
+            foreach (var item in obj.ForceDatas.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
             if (obj.TerminalMenus is IFormLinkContainerGetter TerminalMenuslinkCont)
             {
                 foreach (var item in TerminalMenuslinkCont.EnumerateFormLinks(iterateNestedRecords))
@@ -18543,7 +18569,23 @@ namespace Mutagen.Bethesda.Starfield
                     yield return item;
                 }
             }
+            foreach (var item in obj.EffectSequences.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
             foreach (var item in obj.SecondaryDamageLists.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
+            foreach (var item in obj.MaterialPaths.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
+            foreach (var item in obj.Clouds.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
+            foreach (var item in obj.FogVolumes.EnumerateFormLinks(iterateNestedRecords))
             {
                 yield return item;
             }
@@ -18552,6 +18594,10 @@ namespace Mutagen.Bethesda.Starfield
                 yield return item;
             }
             foreach (var item in obj.LegendaryItems.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
+            foreach (var item in obj.ParticleSystemDefineCollisions.EnumerateFormLinks(iterateNestedRecords))
             {
                 yield return item;
             }
@@ -18593,6 +18639,10 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             foreach (var item in obj.PERS.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
+            foreach (var item in obj.GravityWielderEffectDatas.EnumerateFormLinks(iterateNestedRecords))
             {
                 yield return item;
             }

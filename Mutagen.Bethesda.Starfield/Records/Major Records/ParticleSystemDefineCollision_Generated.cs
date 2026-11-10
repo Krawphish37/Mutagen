@@ -14,6 +14,7 @@ using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Exceptions;
 using Mutagen.Bethesda.Plugins.Internals;
 using Mutagen.Bethesda.Plugins.Meta;
@@ -54,16 +55,16 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region REFL
+        #region Reflection
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _REFL;
-        public MemorySlice<Byte>? REFL
+        private Reflection? _Reflection;
+        public Reflection? Reflection
         {
-            get => this._REFL;
-            set => this._REFL = value;
+            get => _Reflection;
+            set => _Reflection = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IParticleSystemDefineCollisionGetter.REFL => this.REFL;
+        IReflectionGetter? IParticleSystemDefineCollisionGetter.Reflection => this.Reflection;
         #endregion
 
         #region To String
@@ -90,7 +91,7 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.REFL = initialValue;
+                this.Reflection = new MaskItem<TItem, Reflection.Mask<TItem>?>(initialValue, new Reflection.Mask<TItem>(initialValue));
             }
 
             public Mask(
@@ -101,7 +102,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
-                TItem REFL)
+                TItem Reflection)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -111,7 +112,7 @@ namespace Mutagen.Bethesda.Starfield
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
             {
-                this.REFL = REFL;
+                this.Reflection = new MaskItem<TItem, Reflection.Mask<TItem>?>(Reflection, new Reflection.Mask<TItem>(Reflection));
             }
 
             #pragma warning disable CS8618
@@ -123,7 +124,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem REFL;
+            public MaskItem<TItem, Reflection.Mask<TItem>?>? Reflection { get; set; }
             #endregion
 
             #region Equals
@@ -137,13 +138,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.REFL, rhs.REFL)) return false;
+                if (!object.Equals(this.Reflection, rhs.Reflection)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.REFL);
+                hash.Add(this.Reflection);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -154,7 +155,11 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.REFL)) return false;
+                if (Reflection != null)
+                {
+                    if (!eval(this.Reflection.Overall)) return false;
+                    if (this.Reflection.Specific != null && !this.Reflection.Specific.All(eval)) return false;
+                }
                 return true;
             }
             #endregion
@@ -163,7 +168,11 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.REFL)) return true;
+                if (Reflection != null)
+                {
+                    if (eval(this.Reflection.Overall)) return true;
+                    if (this.Reflection.Specific != null && this.Reflection.Specific.Any(eval)) return true;
+                }
                 return false;
             }
             #endregion
@@ -179,7 +188,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.REFL = eval(this.REFL);
+                obj.Reflection = this.Reflection == null ? null : new MaskItem<R, Reflection.Mask<R>?>(eval(this.Reflection.Overall), this.Reflection.Specific?.Translate(eval));
             }
             #endregion
 
@@ -198,9 +207,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(ParticleSystemDefineCollision.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.REFL ?? true)
+                    if (printMask?.Reflection?.Overall ?? true)
                     {
-                        sb.AppendItem(REFL, "REFL");
+                        Reflection?.Print(sb);
                     }
                 }
             }
@@ -213,7 +222,7 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? REFL;
+            public MaskItem<Exception?, Reflection.ErrorMask?>? Reflection;
             #endregion
 
             #region IErrorMask
@@ -222,8 +231,8 @@ namespace Mutagen.Bethesda.Starfield
                 ParticleSystemDefineCollision_FieldIndex enu = (ParticleSystemDefineCollision_FieldIndex)index;
                 switch (enu)
                 {
-                    case ParticleSystemDefineCollision_FieldIndex.REFL:
-                        return REFL;
+                    case ParticleSystemDefineCollision_FieldIndex.Reflection:
+                        return Reflection;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -234,8 +243,8 @@ namespace Mutagen.Bethesda.Starfield
                 ParticleSystemDefineCollision_FieldIndex enu = (ParticleSystemDefineCollision_FieldIndex)index;
                 switch (enu)
                 {
-                    case ParticleSystemDefineCollision_FieldIndex.REFL:
-                        this.REFL = ex;
+                    case ParticleSystemDefineCollision_FieldIndex.Reflection:
+                        this.Reflection = new MaskItem<Exception?, Reflection.ErrorMask?>(ex, null);
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -248,8 +257,8 @@ namespace Mutagen.Bethesda.Starfield
                 ParticleSystemDefineCollision_FieldIndex enu = (ParticleSystemDefineCollision_FieldIndex)index;
                 switch (enu)
                 {
-                    case ParticleSystemDefineCollision_FieldIndex.REFL:
-                        this.REFL = (Exception?)obj;
+                    case ParticleSystemDefineCollision_FieldIndex.Reflection:
+                        this.Reflection = (MaskItem<Exception?, Reflection.ErrorMask?>?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -260,7 +269,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (REFL != null) return true;
+                if (Reflection != null) return true;
                 return false;
             }
             #endregion
@@ -287,9 +296,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void PrintFillInternal(StructuredStringBuilder sb)
             {
                 base.PrintFillInternal(sb);
-                {
-                    sb.AppendItem(REFL, "REFL");
-                }
+                Reflection?.Print(sb);
             }
             #endregion
 
@@ -298,7 +305,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.REFL = this.REFL.Combine(rhs.REFL);
+                ret.Reflection = this.Reflection.Combine(rhs.Reflection, (l, r) => l.Combine(r));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -321,7 +328,7 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool REFL;
+            public Reflection.TranslationMask? Reflection;
             #endregion
 
             #region Ctors
@@ -330,7 +337,6 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.REFL = defaultOn;
             }
 
             #endregion
@@ -338,7 +344,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((REFL, null));
+                ret.Add((Reflection != null ? Reflection.OnOverall : DefaultOn, Reflection?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -351,6 +357,8 @@ namespace Mutagen.Bethesda.Starfield
 
         #region Mutagen
         public static readonly RecordType GrupRecordType = ParticleSystemDefineCollision_Registration.TriggeringRecordType;
+        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => ParticleSystemDefineCollisionCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
+        public override void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => ParticleSystemDefineCollisionSetterCommon.Instance.RemapLinks(this, mapping);
         public ParticleSystemDefineCollision(
             FormKey formKey,
             StarfieldRelease gameRelease)
@@ -479,11 +487,12 @@ namespace Mutagen.Bethesda.Starfield
 
     #region Interface
     public partial interface IParticleSystemDefineCollision :
+        IFormLinkContainer,
         ILoquiObjectSetter<IParticleSystemDefineCollisionInternal>,
         IParticleSystemDefineCollisionGetter,
         IStarfieldMajorRecordInternal
     {
-        new MemorySlice<Byte>? REFL { get; set; }
+        new Reflection? Reflection { get; set; }
     }
 
     public partial interface IParticleSystemDefineCollisionInternal :
@@ -497,11 +506,12 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IParticleSystemDefineCollisionGetter :
         IStarfieldMajorRecordGetter,
         IBinaryItem,
+        IFormLinkContainerGetter,
         ILoquiObject<IParticleSystemDefineCollisionGetter>,
         IMapsToGetter<IParticleSystemDefineCollisionGetter>
     {
         static new ILoquiRegistration StaticRegistration => ParticleSystemDefineCollision_Registration.Instance;
-        ReadOnlyMemorySlice<Byte>? REFL { get; }
+        IReflectionGetter? Reflection { get; }
 
     }
 
@@ -678,7 +688,7 @@ namespace Mutagen.Bethesda.Starfield
         FormVersion = 4,
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
-        REFL = 7,
+        Reflection = 7,
     }
     #endregion
 
@@ -770,7 +780,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IParticleSystemDefineCollisionInternal item)
         {
             ClearPartial();
-            item.REFL = default;
+            item.Reflection = null;
             base.Clear(item);
         }
         
@@ -788,6 +798,7 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IParticleSystemDefineCollision obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             base.RemapLinks(obj, mapping);
+            obj.Reflection?.RemapLinks(mapping);
         }
         
         #endregion
@@ -855,7 +866,11 @@ namespace Mutagen.Bethesda.Starfield
             ParticleSystemDefineCollision.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.REFL = MemorySliceExt.SequenceEqual(item.REFL, rhs.REFL);
+            ret.Reflection = EqualsMaskHelper.EqualsHelper(
+                item.Reflection,
+                rhs.Reflection,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -905,10 +920,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.REFL ?? true)
-                && item.REFL is {} REFLItem)
+            if ((printMask?.Reflection?.Overall ?? true)
+                && item.Reflection is {} ReflectionItem)
             {
-                sb.AppendLine($"REFL => {SpanExt.ToHexString(REFLItem)}");
+                ReflectionItem?.Print(sb, "Reflection");
             }
         }
         
@@ -960,9 +975,13 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IStarfieldMajorRecordGetter)lhs, (IStarfieldMajorRecordGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)ParticleSystemDefineCollision_FieldIndex.REFL) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ParticleSystemDefineCollision_FieldIndex.Reflection) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.REFL, rhs.REFL)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.Reflection, rhs.Reflection, out var lhsReflection, out var rhsReflection, out var isReflectionEqual))
+                {
+                    if (!((ReflectionCommon)((IReflectionGetter)lhsReflection).CommonInstance()!).Equals(lhsReflection, rhsReflection, equalsMask?.GetSubCrystal((int)ParticleSystemDefineCollision_FieldIndex.Reflection))) return false;
+                }
+                else if (!isReflectionEqual) return false;
             }
             return true;
         }
@@ -992,9 +1011,9 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IParticleSystemDefineCollisionGetter item)
         {
             var hash = new HashCode();
-            if (item.REFL is {} REFLItem)
+            if (item.Reflection is {} Reflectionitem)
             {
-                hash.AddBytes(REFLItem);
+                hash.Add(Reflectionitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1024,6 +1043,13 @@ namespace Mutagen.Bethesda.Starfield
             foreach (var item in base.EnumerateFormLinks(obj, iterateNestedRecords))
             {
                 yield return item;
+            }
+            if (obj.Reflection is {} ReflectionItems)
+            {
+                foreach (var item in ReflectionItems.EnumerateFormLinks(iterateNestedRecords))
+                {
+                    yield return item;
+                }
             }
             yield break;
         }
@@ -1121,15 +1147,30 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)ParticleSystemDefineCollision_FieldIndex.REFL) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ParticleSystemDefineCollision_FieldIndex.Reflection) ?? true))
             {
-                if(rhs.REFL is {} REFLrhs)
+                errorMask?.PushIndex((int)ParticleSystemDefineCollision_FieldIndex.Reflection);
+                try
                 {
-                    item.REFL = REFLrhs.ToArray();
+                    if(rhs.Reflection is {} rhsReflection)
+                    {
+                        item.Reflection = rhsReflection.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)ParticleSystemDefineCollision_FieldIndex.Reflection));
+                    }
+                    else
+                    {
+                        item.Reflection = default;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.REFL = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             DeepCopyInCustom(
@@ -1301,11 +1342,13 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.REFL,
-                header: translationParams.ConvertToCustom(RecordTypes.REFL),
-                overflowRecord: RecordTypes.XXXX);
+            if (item.Reflection is {} ReflectionItem)
+            {
+                ((ReflectionBinaryWriteTranslation)((IBinaryItem)ReflectionItem).BinaryWriteTranslator).Write(
+                    item: ReflectionItem,
+                    writer: writer,
+                    translationParams: translationParams.With(RecordTypes.XXXX));
+            }
         }
 
         public void Write(
@@ -1376,9 +1419,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.REFL:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.REFL = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)ParticleSystemDefineCollision_FieldIndex.REFL;
+                    item.Reflection = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
+                        frame: frame,
+                        translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    return (int)ParticleSystemDefineCollision_FieldIndex.Reflection;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -1429,6 +1473,7 @@ namespace Mutagen.Bethesda.Starfield
 
         void IPrintable.Print(StructuredStringBuilder sb, string? name) => this.Print(sb, name);
 
+        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => ParticleSystemDefineCollisionCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected override object BinaryWriteTranslator => ParticleSystemDefineCollisionBinaryWriteTranslation.Instance;
         void IBinaryItem.WriteToBinary(
@@ -1443,14 +1488,10 @@ namespace Mutagen.Bethesda.Starfield
         protected override Type LinkType => typeof(IParticleSystemDefineCollisionGetter);
 
 
-        #region REFL
-        private int? _REFLLocation;
-        private int? _REFLLengthOverride;
-        public ReadOnlyMemorySlice<Byte>? REFL => PluginUtilityTranslation.ReadByteArrayWithOverflow(
-            _recordData,
-            _package.MetaData.Constants,
-            _REFLLocation,
-            _REFLLengthOverride);
+        #region Reflection
+        private int? _ReflectionLengthOverride;
+        private RangeInt32? _ReflectionLocation;
+        public IReflectionGetter? Reflection => _ReflectionLocation.HasValue ? ReflectionBinaryOverlay.ReflectionFactory(_recordData.Slice(_ReflectionLocation!.Value.Min), _package, TypedParseParams.FromLengthOverride(_ReflectionLengthOverride)) : default;
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1523,13 +1564,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.REFL:
                 {
-                    _REFLLocation = (stream.Position - offset);
-                    _REFLLengthOverride = lastParsed.LengthOverride;
+                    _ReflectionLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
+                    _ReflectionLengthOverride = lastParsed.LengthOverride;
                     if (lastParsed.LengthOverride.HasValue)
                     {
                         stream.Position += lastParsed.LengthOverride.Value;
                     }
-                    return (int)ParticleSystemDefineCollision_FieldIndex.REFL;
+                    return (int)ParticleSystemDefineCollision_FieldIndex.Reflection;
                 }
                 case RecordTypeInts.XXXX:
                 {
