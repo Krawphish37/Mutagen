@@ -123,6 +123,7 @@ internal static class PluginUtilityTranslation
                 var finalPos = targetFrame.Position + subMeta.TotalLength;
                 var subrecordStart = targetFrame.Position;
                 ParseResult parsed;
+                var unknownBefore = fieldStarts != null ? SubrecordOrder.UnknownLength(record) : 0;
                 try
                 {
                     if (rewritten != null) SubrecordOrder.NonCanonicalFormIdRead = false;
@@ -163,6 +164,12 @@ internal static class PluginUtilityTranslation
                     {
                         highestIndex = parsedIndex;
                     }
+                }
+                else if (fieldStarts != null && SubrecordOrder.UnknownLength(record) > unknownBefore)
+                {
+                    // A subrecord no field claims, kept as unknown: it is written after every field
+                    fieldStarts.Add((checked((int)(subrecordStart - contentStart)), SubrecordOrder.UnknownField));
+                    highestIndex = SubrecordOrder.UnknownField;
                 }
                 if (parsed.DuplicateParseMarker != null)
                 {

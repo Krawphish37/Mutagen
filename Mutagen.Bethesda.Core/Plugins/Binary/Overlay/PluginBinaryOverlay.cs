@@ -237,6 +237,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
                     minimumFinalPos += subMeta.TotalLength;
                 }
                 var subrecordStart = stream.Position;
+                var unknownBefore = fieldStarts != null ? SubrecordOrder.UnknownLength(this) : 0;
                 var parsed = fill(
                     stream: stream,
                     finalPos: minimumFinalPos,
@@ -261,6 +262,12 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
                     {
                         highestIndex = parsedIndex;
                     }
+                }
+                else if (fieldStarts != null && SubrecordOrder.UnknownLength(this) > unknownBefore)
+                {
+                    // A subrecord no field claims, kept as unknown: it is written after every field
+                    fieldStarts.Add((subrecordStart - offset, SubrecordOrder.UnknownField));
+                    highestIndex = SubrecordOrder.UnknownField;
                 }
                 if (parsed.DuplicateParseMarker != null)
                 {

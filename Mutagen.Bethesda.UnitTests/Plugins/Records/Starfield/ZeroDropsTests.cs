@@ -214,6 +214,23 @@ public class ZeroDropsTests
         }
     }
 
+    // An unknown subrecord between known ones goes back where it was: the record keeps its subrecord order
+    [Fact]
+    public void UnknownSubrecord_InTheMiddle_IsWrittenBackInPlace()
+    {
+        var bytes = Record(
+            "GLOB",
+            0,
+            Subrecord("EDID", Encoding.ASCII.GetBytes("TestGlobal\0")),
+            Subrecord("ZZZZ", 1, 2, 3, 4),
+            Subrecord("FLTV", BitConverter.GetBytes(5f)));
+        foreach (var global in ReadGlobal(bytes))
+        {
+            global.UnknownSubrecords!.Value.Length.ShouldBe(10);
+            Write(w => global.WriteToBinary(w)).ShouldBe(bytes);
+        }
+    }
+
     [Fact]
     public void UnknownSubrecord_NotWrittenToAPluginWithOtherMasters()
     {
