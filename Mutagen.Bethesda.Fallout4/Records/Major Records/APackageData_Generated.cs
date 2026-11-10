@@ -79,6 +79,11 @@ namespace Mutagen.Bethesda.Fallout4
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         APackageData.Flag? IAPackageDataGetter.Flags => this.Flags;
         #endregion
+        #region NameListPosition
+        public Int32? NameListPosition { get; set; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        Int32? IAPackageDataGetter.NameListPosition => this.NameListPosition;
+        #endregion
 
         #region To String
 
@@ -120,14 +125,17 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 this.Name = initialValue;
                 this.Flags = initialValue;
+                this.NameListPosition = initialValue;
             }
 
             public Mask(
                 TItem Name,
-                TItem Flags)
+                TItem Flags,
+                TItem NameListPosition)
             {
                 this.Name = Name;
                 this.Flags = Flags;
+                this.NameListPosition = NameListPosition;
             }
 
             #pragma warning disable CS8618
@@ -141,6 +149,7 @@ namespace Mutagen.Bethesda.Fallout4
             #region Members
             public TItem Name;
             public TItem Flags;
+            public TItem NameListPosition;
             #endregion
 
             #region Equals
@@ -155,6 +164,7 @@ namespace Mutagen.Bethesda.Fallout4
                 if (rhs == null) return false;
                 if (!object.Equals(this.Name, rhs.Name)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
+                if (!object.Equals(this.NameListPosition, rhs.NameListPosition)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -162,6 +172,7 @@ namespace Mutagen.Bethesda.Fallout4
                 var hash = new HashCode();
                 hash.Add(this.Name);
                 hash.Add(this.Flags);
+                hash.Add(this.NameListPosition);
                 return hash.ToHashCode();
             }
 
@@ -172,6 +183,7 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 if (!eval(this.Name)) return false;
                 if (!eval(this.Flags)) return false;
+                if (!eval(this.NameListPosition)) return false;
                 return true;
             }
             #endregion
@@ -181,6 +193,7 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 if (eval(this.Name)) return true;
                 if (eval(this.Flags)) return true;
+                if (eval(this.NameListPosition)) return true;
                 return false;
             }
             #endregion
@@ -197,6 +210,7 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 obj.Name = eval(this.Name);
                 obj.Flags = eval(this.Flags);
+                obj.NameListPosition = eval(this.NameListPosition);
             }
             #endregion
 
@@ -222,6 +236,10 @@ namespace Mutagen.Bethesda.Fallout4
                     if (printMask?.Flags ?? true)
                     {
                         sb.AppendItem(Flags, "Flags");
+                    }
+                    if (printMask?.NameListPosition ?? true)
+                    {
+                        sb.AppendItem(NameListPosition, "NameListPosition");
                     }
                 }
             }
@@ -249,6 +267,7 @@ namespace Mutagen.Bethesda.Fallout4
             }
             public Exception? Name;
             public Exception? Flags;
+            public Exception? NameListPosition;
             #endregion
 
             #region IErrorMask
@@ -261,6 +280,8 @@ namespace Mutagen.Bethesda.Fallout4
                         return Name;
                     case APackageData_FieldIndex.Flags:
                         return Flags;
+                    case APackageData_FieldIndex.NameListPosition:
+                        return NameListPosition;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -276,6 +297,9 @@ namespace Mutagen.Bethesda.Fallout4
                         break;
                     case APackageData_FieldIndex.Flags:
                         this.Flags = ex;
+                        break;
+                    case APackageData_FieldIndex.NameListPosition:
+                        this.NameListPosition = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -293,6 +317,9 @@ namespace Mutagen.Bethesda.Fallout4
                     case APackageData_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
                         break;
+                    case APackageData_FieldIndex.NameListPosition:
+                        this.NameListPosition = (Exception?)obj;
+                        break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -303,6 +330,7 @@ namespace Mutagen.Bethesda.Fallout4
                 if (Overall != null) return true;
                 if (Name != null) return true;
                 if (Flags != null) return true;
+                if (NameListPosition != null) return true;
                 return false;
             }
             #endregion
@@ -334,6 +362,9 @@ namespace Mutagen.Bethesda.Fallout4
                 {
                     sb.AppendItem(Flags, "Flags");
                 }
+                {
+                    sb.AppendItem(NameListPosition, "NameListPosition");
+                }
             }
             #endregion
 
@@ -344,6 +375,7 @@ namespace Mutagen.Bethesda.Fallout4
                 var ret = new ErrorMask();
                 ret.Name = this.Name.Combine(rhs.Name);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
+                ret.NameListPosition = this.NameListPosition.Combine(rhs.NameListPosition);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -369,6 +401,7 @@ namespace Mutagen.Bethesda.Fallout4
             public bool OnOverall;
             public bool Name;
             public bool Flags;
+            public bool NameListPosition;
             #endregion
 
             #region Ctors
@@ -380,6 +413,7 @@ namespace Mutagen.Bethesda.Fallout4
                 this.OnOverall = onOverall;
                 this.Name = defaultOn;
                 this.Flags = defaultOn;
+                this.NameListPosition = defaultOn;
             }
 
             #endregion
@@ -397,6 +431,7 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 ret.Add((Name, null));
                 ret.Add((Flags, null));
+                ret.Add((NameListPosition, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -485,6 +520,7 @@ namespace Mutagen.Bethesda.Fallout4
         /// </summary>
         new String? Name { get; set; }
         new APackageData.Flag? Flags { get; set; }
+        new Int32? NameListPosition { get; set; }
     }
 
     /// <summary>
@@ -512,6 +548,7 @@ namespace Mutagen.Bethesda.Fallout4
         String? Name { get; }
         #endregion
         APackageData.Flag? Flags { get; }
+        Int32? NameListPosition { get; }
 
     }
 
@@ -683,6 +720,7 @@ namespace Mutagen.Bethesda.Fallout4
     {
         Name = 0,
         Flags = 1,
+        NameListPosition = 2,
     }
     #endregion
 
@@ -693,9 +731,9 @@ namespace Mutagen.Bethesda.Fallout4
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Fallout4.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 2;
+        public const ushort AdditionalFieldCount = 3;
 
-        public const ushort FieldCount = 2;
+        public const ushort FieldCount = 3;
 
         public static readonly Type MaskType = typeof(APackageData.Mask<>);
 
@@ -771,6 +809,7 @@ namespace Mutagen.Bethesda.Fallout4
             ClearPartial();
             item.Name = default;
             item.Flags = default;
+            item.NameListPosition = default;
         }
         
         #region Mutagen
@@ -790,6 +829,7 @@ namespace Mutagen.Bethesda.Fallout4
                 record: item,
                 frame: frame,
                 translationParams: translationParams,
+                fillStructs: APackageDataBinaryCreateTranslation.FillBinaryStructs,
                 fillTyped: APackageDataBinaryCreateTranslation.FillBinaryRecordTypes);
         }
         
@@ -822,6 +862,7 @@ namespace Mutagen.Bethesda.Fallout4
         {
             ret.Name = string.Equals(item.Name, rhs.Name);
             ret.Flags = item.Flags == rhs.Flags;
+            ret.NameListPosition = item.NameListPosition == rhs.NameListPosition;
         }
         
         public string Print(
@@ -876,6 +917,11 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 sb.AppendItem(FlagsItem, "Flags");
             }
+            if ((printMask?.NameListPosition ?? true)
+                && item.NameListPosition is {} NameListPositionItem)
+            {
+                sb.AppendItem(NameListPositionItem, "NameListPosition");
+            }
         }
         
         #region Equals and Hash
@@ -893,6 +939,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 if (lhs.Flags != rhs.Flags) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)APackageData_FieldIndex.NameListPosition) ?? true))
+            {
+                if (lhs.NameListPosition != rhs.NameListPosition) return false;
+            }
             return true;
         }
         
@@ -906,6 +956,10 @@ namespace Mutagen.Bethesda.Fallout4
             if (item.Flags is {} Flagsitem)
             {
                 hash.Add(Flagsitem);
+            }
+            if (item.NameListPosition is {} NameListPositionitem)
+            {
+                hash.Add(NameListPositionitem);
             }
             return hash.ToHashCode();
         }
@@ -946,6 +1000,10 @@ namespace Mutagen.Bethesda.Fallout4
             if ((copyMask?.GetShouldTranslate((int)APackageData_FieldIndex.Flags) ?? true))
             {
                 item.Flags = rhs.Flags;
+            }
+            if ((copyMask?.GetShouldTranslate((int)APackageData_FieldIndex.NameListPosition) ?? true))
+            {
+                item.NameListPosition = rhs.NameListPosition;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1051,6 +1109,12 @@ namespace Mutagen.Bethesda.Fallout4
     {
         public static readonly APackageDataBinaryWriteTranslation Instance = new();
 
+        public static void WriteEmbedded(
+            IAPackageDataGetter item,
+            MutagenWriter writer)
+        {
+        }
+
         public static void WriteRecordTypes(
             IAPackageDataGetter item,
             MutagenWriter writer,
@@ -1063,6 +1127,9 @@ namespace Mutagen.Bethesda.Fallout4
             IAPackageDataGetter item,
             TypedWriteParams translationParams)
         {
+            WriteEmbedded(
+                item: item,
+                writer: writer);
             WriteRecordTypes(
                 item: item,
                 writer: writer,
@@ -1085,6 +1152,12 @@ namespace Mutagen.Bethesda.Fallout4
     internal partial class APackageDataBinaryCreateTranslation
     {
         public static readonly APackageDataBinaryCreateTranslation Instance = new APackageDataBinaryCreateTranslation();
+
+        public static void FillBinaryStructs(
+            IAPackageData item,
+            MutagenFrame frame)
+        {
+        }
 
         public static ParseResult FillBinaryRecordTypes(
             IAPackageData item,

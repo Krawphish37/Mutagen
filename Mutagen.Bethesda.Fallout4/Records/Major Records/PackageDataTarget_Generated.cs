@@ -106,11 +106,13 @@ namespace Mutagen.Bethesda.Fallout4
             public Mask(
                 TItem Name,
                 TItem Flags,
+                TItem NameListPosition,
                 TItem Type,
                 TItem Target)
             : base(
                 Name: Name,
-                Flags: Flags)
+                Flags: Flags,
+                NameListPosition: NameListPosition)
             {
                 this.Type = Type;
                 this.Target = new MaskItem<TItem, APackageTarget.Mask<TItem>?>(Target, new APackageTarget.Mask<TItem>(Target));
@@ -613,8 +615,9 @@ namespace Mutagen.Bethesda.Fallout4
     {
         Name = 0,
         Flags = 1,
-        Type = 2,
-        Target = 3,
+        NameListPosition = 2,
+        Type = 3,
+        Target = 4,
     }
     #endregion
 
@@ -627,7 +630,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 2;
 
-        public const ushort FieldCount = 4;
+        public const ushort FieldCount = 5;
 
         public static readonly Type MaskType = typeof(PackageDataTarget.Mask<>);
 
@@ -846,6 +849,8 @@ namespace Mutagen.Bethesda.Fallout4
                 case APackageData_FieldIndex.Name:
                     return (PackageDataTarget_FieldIndex)((int)index);
                 case APackageData_FieldIndex.Flags:
+                    return (PackageDataTarget_FieldIndex)((int)index);
+                case APackageData_FieldIndex.NameListPosition:
                     return (PackageDataTarget_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
@@ -1092,6 +1097,9 @@ namespace Mutagen.Bethesda.Fallout4
             IPackageDataTargetGetter item,
             MutagenWriter writer)
         {
+            APackageDataBinaryWriteTranslation.WriteEmbedded(
+                item: item,
+                writer: writer);
         }
 
         public static void WriteRecordTypes(
@@ -1151,6 +1159,9 @@ namespace Mutagen.Bethesda.Fallout4
             IPackageDataTarget item,
             MutagenFrame frame)
         {
+            APackageDataBinaryCreateTranslation.FillBinaryStructs(
+                item: item,
+                frame: frame);
         }
 
         public static ParseResult FillBinaryRecordTypes(

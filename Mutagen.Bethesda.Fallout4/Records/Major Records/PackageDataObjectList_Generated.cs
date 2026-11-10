@@ -106,10 +106,12 @@ namespace Mutagen.Bethesda.Fallout4
             public Mask(
                 TItem Name,
                 TItem Flags,
+                TItem NameListPosition,
                 TItem Data)
             : base(
                 Name: Name,
-                Flags: Flags)
+                Flags: Flags,
+                NameListPosition: NameListPosition)
             {
                 this.Data = Data;
             }
@@ -570,7 +572,8 @@ namespace Mutagen.Bethesda.Fallout4
     {
         Name = 0,
         Flags = 1,
-        Data = 2,
+        NameListPosition = 2,
+        Data = 3,
     }
     #endregion
 
@@ -583,7 +586,7 @@ namespace Mutagen.Bethesda.Fallout4
 
         public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 3;
+        public const ushort FieldCount = 4;
 
         public static readonly Type MaskType = typeof(PackageDataObjectList.Mask<>);
 
@@ -790,6 +793,8 @@ namespace Mutagen.Bethesda.Fallout4
                 case APackageData_FieldIndex.Name:
                     return (PackageDataObjectList_FieldIndex)((int)index);
                 case APackageData_FieldIndex.Flags:
+                    return (PackageDataObjectList_FieldIndex)((int)index);
+                case APackageData_FieldIndex.NameListPosition:
                     return (PackageDataObjectList_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
@@ -1001,6 +1006,9 @@ namespace Mutagen.Bethesda.Fallout4
             IPackageDataObjectListGetter item,
             MutagenWriter writer)
         {
+            APackageDataBinaryWriteTranslation.WriteEmbedded(
+                item: item,
+                writer: writer);
         }
 
         public void Write(
@@ -1049,6 +1057,9 @@ namespace Mutagen.Bethesda.Fallout4
             IPackageDataObjectList item,
             MutagenFrame frame)
         {
+            APackageDataBinaryCreateTranslation.FillBinaryStructs(
+                item: item,
+                frame: frame);
         }
 
     }

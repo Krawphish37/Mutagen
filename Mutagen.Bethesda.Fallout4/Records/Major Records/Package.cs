@@ -326,12 +326,16 @@ partial class PackageBinaryCreateTranslation
     public static void AbsorbPackageData(IMutagenReadStream stream, IDictionary<sbyte, APackageData> dict)
     {
         APackageData? lastPackage = null;
+        // Records need not hold this list by index, nor in the data inputs' order (Skyrim.esm MQ304AlduinFlightGrabTemplate:
+        // data inputs 05 0D 0E 0F 10 15, names 05 08 06 0A 0C 0D ...): remember each entry's place for the writer
+        int position = 0;
         while (stream.TryGetSubrecord(out var subRecord))
         {
             switch (subRecord.RecordTypeInt)
             {
                 case RecordTypeInts.UNAM:
                     lastPackage = dict.GetOrAdd((sbyte)subRecord.Content[0], () => new APackageData());
+                    lastPackage.NameListPosition = position++;
                     break;
                 case RecordTypeInts.BNAM:
                     lastPackage!.Name = BinaryStringUtility.ProcessWholeToZString(subRecord.Content, stream.MetaData.Encodings.NonTranslated);
@@ -469,7 +473,8 @@ partial class PackageBinaryWriteTranslation
         }
 
         var data = item.Data;
-        foreach (var val in data.OrderBy(k => k.Key))
+        // In the order the record held them (NameListPosition), then entries added since by index
+        foreach (var val in data.OrderBy(k => k.Value.NameListPosition ?? int.MaxValue).ThenBy(k => k.Key))
         {
             var name = val.Value.Name;
             var flags = val.Value.Flags;
