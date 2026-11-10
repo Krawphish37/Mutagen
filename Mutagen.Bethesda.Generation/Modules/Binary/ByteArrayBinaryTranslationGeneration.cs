@@ -185,8 +185,11 @@ public class ByteArrayBinaryTranslationGeneration : PrimitiveBinaryTranslationGe
             if (data.OverflowRecordType.HasValue)
             {
                 OverflowGenerationHelper.GenerateWrapperOverflowMember(sb, typeGen);
+                // ReadByteArrayWithOverflow returns null when the subrecord is absent; a non-nullable field falls back
+                // to the same not-set value as the non-overflow getter
                 using (var args = sb.Call(
-                           $"public {typeGen.TypeName(getter: true)}{(typeGen.Nullable ? "?" : null)} {typeGen.Name} => {nameof(PluginUtilityTranslation)}.{nameof(PluginUtilityTranslation.ReadByteArrayWithOverflow)}"))
+                           $"public {typeGen.TypeName(getter: true)}{(typeGen.Nullable ? "?" : null)} {typeGen.Name} => {nameof(PluginUtilityTranslation)}.{nameof(PluginUtilityTranslation.ReadByteArrayWithOverflow)}",
+                           suffixLine: typeGen.Nullable ? null : $" ?? {GetWrapperNotSetValue(typeGen)}"))
                 {
                     args.Add(recordDataAccessor.ToString());
                     args.Add($"_package.{nameof(BinaryOverlayFactoryPackage.MetaData)}.{nameof(ParsingMeta.Constants)}");
