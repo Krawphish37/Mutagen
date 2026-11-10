@@ -33,11 +33,11 @@ public class PlanetBiomeFieldTests
             biome.ResourceGeneration.FormKey.ID.ShouldBe(0x18CE03u);
             biome.ResourceGeneration.ShouldBeAssignableTo<IFormLinkGetter<IResourceGenerationDataGetter>>();
             biome.UnknownItems.Count.ShouldBe(10);
-            biome.UnknownItems[0].Unknown1.ShouldBe(1.9931812040478318);
-            biome.UnknownItems[0].Unknown2.ShouldBe(-0.5658875531036978);
-            biome.UnknownItems[9].Unknown1.ShouldBe(0.0843984772406546);
-            biome.UnknownItems[9].Unknown2.ShouldBe(-1.4273848101885036);
-            biome.UnknownItems.ShouldAllBe(i => Math.Abs(i.Unknown1) <= Math.PI && Math.Abs(i.Unknown2) <= Math.PI / 2);
+            biome.UnknownItems[0].Longitude.ShouldBe(1.9931812040478318);
+            biome.UnknownItems[0].Latitude.ShouldBe(-0.5658875531036978);
+            biome.UnknownItems[9].Longitude.ShouldBe(0.0843984772406546);
+            biome.UnknownItems[9].Latitude.ShouldBe(-1.4273848101885036);
+            biome.UnknownItems.ShouldAllBe(i => Math.Abs(i.Longitude) <= Math.PI && Math.Abs(i.Latitude) <= Math.PI / 2);
             var written = GameConstants.Starfield.MajorRecord(Write(w => planet.WriteToBinary(w)));
             written.FindSubrecord(new RecordType("PPBD")).Content.ToArray().ShouldBe(Hex(Ppbd));
         }

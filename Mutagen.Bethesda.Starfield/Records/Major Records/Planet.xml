@@ -45,10 +45,10 @@
   </Object>
   <Object name="PlanetBiomeUnknownItem" objType="Subrecord" >
     <Fields>
-      <!-- Two doubles (xEdit: four unknown 4-byte fields). On the only biome with items in Starfield.esm the first is
-           always within +-pi and the second within +-pi/2, like a longitude and latitude in radians. -->
-      <Double name="Unknown1" unknown="true" />
-      <Double name="Unknown2" unknown="true" />
+      <!-- Two doubles (xEdit: four unknown 4-byte fields), in radians. On the only biome with items in Starfield.esm the
+           first is always within +-pi and the second within +-pi/2: a longitude and a latitude. -->
+      <Double name="Longitude" />
+      <Double name="Latitude" />
     </Fields>
   </Object>
   <Object name="PlanetFlora" objType="Subrecord">

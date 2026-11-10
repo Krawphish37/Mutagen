@@ -39,7 +39,7 @@ public class WorldQuestUnknownFieldTests
             r.GetCreationTimeUtc().ShouldBe(new DateTime(2020, 11, 9, 21, 32, 6, 623, DateTimeKind.Utc));
             var trot = r.TROTs.ShouldHaveSingleItem();
             trot.VoiceType.FormKey.ShouldBe(new FormKey(TestModKey, 0x013AD2));
-            trot.EmotionOut.ShouldBe(BitConverter.ToSingle(Hex("BD-BB-7B-40")));
+            trot.Duration.ShouldBe(BitConverter.ToSingle(Hex("BD-BB-7B-40")));
             info.EnumerateFormLinks().Select(l => l.FormKey).ShouldContain(new FormKey(TestModKey, 0x013AD2));
             GameConstants.Starfield.MajorRecord(WriteBack(info)).Content.ToArray().ShouldBe(Hex(Info));
         }

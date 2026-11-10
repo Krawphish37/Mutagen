@@ -63,7 +63,8 @@
   <Object name="DialogResponseTROT" objType="Subrecord" recordType="TROT" >
     <Fields>
       <FormLink name="VoiceType" refName="VoiceType" />
-      <Float name="EmotionOut" />
+      <!-- The line's length for this voice type, in seconds (all 135,407 values are steps of 1/30 s); xEdit "Emotion Out" -->
+      <Float name="Duration" />
     </Fields>
   </Object>
   <Object name="DialogSetParentQuestStage" objType="Subrecord" recordType="TIQS">

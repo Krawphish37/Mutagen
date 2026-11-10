@@ -735,9 +735,9 @@ namespace Mutagen.Bethesda.Starfield
         P3Float? IPlacedObjectGetter.RagdollBipedRotation => this.RagdollBipedRotation;
         #endregion
         #region HealthPercent
-        public Percent? HealthPercent { get; set; }
+        public UInt32? HealthPercent { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Percent? IPlacedObjectGetter.HealthPercent => this.HealthPercent;
+        UInt32? IPlacedObjectGetter.HealthPercent => this.HealthPercent;
         #endregion
         #region TimeOfDay
         private readonly IFormLinkNullable<ITimeOfDayRecordGetter> _TimeOfDay = new FormLinkNullable<ITimeOfDayRecordGetter>();
@@ -4850,7 +4850,7 @@ namespace Mutagen.Bethesda.Starfield
         new Reflection? NavMeshSplineExtraData { get; set; }
         new IFormLinkNullable<IPlacedGetter> AttachRef { get; set; }
         new P3Float? RagdollBipedRotation { get; set; }
-        new Percent? HealthPercent { get; set; }
+        new UInt32? HealthPercent { get; set; }
         new IFormLinkNullable<ITimeOfDayRecordGetter> TimeOfDay { get; set; }
         new EnableParent? EnableParent { get; set; }
         new PlacedObjectLightFlicker? LightFlicker { get; set; }
@@ -4969,7 +4969,7 @@ namespace Mutagen.Bethesda.Starfield
         IReflectionGetter? NavMeshSplineExtraData { get; }
         IFormLinkNullableGetter<IPlacedGetter> AttachRef { get; }
         P3Float? RagdollBipedRotation { get; }
-        Percent? HealthPercent { get; }
+        UInt32? HealthPercent { get; }
         IFormLinkNullableGetter<ITimeOfDayRecordGetter> TimeOfDay { get; }
         IEnableParentGetter? EnableParent { get; }
         IPlacedObjectLightFlickerGetter? LightFlicker { get; }
@@ -5858,7 +5858,7 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.AttachRef = item.AttachRef.Equals(rhs.AttachRef);
             ret.RagdollBipedRotation = item.RagdollBipedRotation.Equals(rhs.RagdollBipedRotation);
-            ret.HealthPercent = item.HealthPercent.Equals(rhs.HealthPercent);
+            ret.HealthPercent = item.HealthPercent == rhs.HealthPercent;
             ret.TimeOfDay = item.TimeOfDay.Equals(rhs.TimeOfDay);
             ret.EnableParent = EqualsMaskHelper.EqualsHelper(
                 item.EnableParent,
@@ -6891,7 +6891,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.HealthPercent) ?? true))
             {
-                if (!lhs.HealthPercent.Equals(rhs.HealthPercent)) return false;
+                if (lhs.HealthPercent != rhs.HealthPercent) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.TimeOfDay) ?? true))
             {
@@ -9513,10 +9513,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.RagdollBipedRotation,
                 header: translationParams.ConvertToCustom(RecordTypes.XRGB));
-            PercentBinaryTranslation.Write(
+            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
                 item: item.HealthPercent,
-                integerType: FloatIntegerType.UInt,
                 header: translationParams.ConvertToCustom(RecordTypes.XHLT));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -10159,9 +10158,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XHLT:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.HealthPercent = PercentBinaryTranslation.Parse(
-                        reader: frame,
-                        integerType: FloatIntegerType.UInt);
+                    item.HealthPercent = frame.ReadUInt32();
                     return (int)PlacedObject_FieldIndex.HealthPercent;
                 }
                 case RecordTypeInts.TODD:
@@ -10536,7 +10533,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region HealthPercent
         private int? _HealthPercentLocation;
-        public Percent? HealthPercent => _HealthPercentLocation.HasValue ? PercentBinaryTranslation.GetPercent(HeaderTranslation.ExtractSubrecordMemory(_recordData, _HealthPercentLocation.Value, _package.MetaData.Constants), FloatIntegerType.UInt) : default(Percent?);
+        public UInt32? HealthPercent => _HealthPercentLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _HealthPercentLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
         #region TimeOfDay
         private int? _TimeOfDayLocation;

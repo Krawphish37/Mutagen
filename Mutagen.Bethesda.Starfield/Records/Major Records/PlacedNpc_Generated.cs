@@ -343,9 +343,9 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IPlacedGetter> IPlacedNpcGetter.AttachRef => this.AttachRef;
         #endregion
         #region Health
-        public Percent? Health { get; set; }
+        public UInt32? Health { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Percent? IPlacedNpcGetter.Health => this.Health;
+        UInt32? IPlacedNpcGetter.Health => this.Health;
         #endregion
         #region IsActivationPoint
         public Boolean IsActivationPoint { get; set; } = default(Boolean);
@@ -2339,7 +2339,7 @@ namespace Mutagen.Bethesda.Starfield
         new Boolean IsIgnoredBySandbox { get; set; }
         new ExtendedList<IFormLinkGetter<ILayeredMaterialSwapGetter>>? LayeredMaterialSwaps { get; set; }
         new IFormLinkNullable<IPlacedGetter> AttachRef { get; set; }
-        new Percent? Health { get; set; }
+        new UInt32? Health { get; set; }
         new Boolean IsActivationPoint { get; set; }
         new Single? Scale { get; set; }
         new P3Float Position { get; set; }
@@ -2411,7 +2411,7 @@ namespace Mutagen.Bethesda.Starfield
         Boolean IsIgnoredBySandbox { get; }
         IReadOnlyList<IFormLinkGetter<ILayeredMaterialSwapGetter>>? LayeredMaterialSwaps { get; }
         IFormLinkNullableGetter<IPlacedGetter> AttachRef { get; }
-        Percent? Health { get; }
+        UInt32? Health { get; }
         Boolean IsActivationPoint { get; }
         Single? Scale { get; }
         P3Float Position { get; }
@@ -2992,7 +2992,7 @@ namespace Mutagen.Bethesda.Starfield
                 (l, r) => object.Equals(l, r),
                 include);
             ret.AttachRef = item.AttachRef.Equals(rhs.AttachRef);
-            ret.Health = item.Health.Equals(rhs.Health);
+            ret.Health = item.Health == rhs.Health;
             ret.IsActivationPoint = item.IsActivationPoint == rhs.IsActivationPoint;
             ret.Scale = item.Scale.EqualsWithin(rhs.Scale);
             ret.Position = item.Position.Equals(rhs.Position);
@@ -3467,7 +3467,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedNpc_FieldIndex.Health) ?? true))
             {
-                if (!lhs.Health.Equals(rhs.Health)) return false;
+                if (lhs.Health != rhs.Health) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedNpc_FieldIndex.IsActivationPoint) ?? true))
             {
@@ -4608,10 +4608,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.AttachRef,
                 header: translationParams.ConvertToCustom(RecordTypes.XATR));
-            PercentBinaryTranslation.Write(
+            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
                 item: item.Health,
-                integerType: FloatIntegerType.UInt,
                 header: translationParams.ConvertToCustom(RecordTypes.XHLT));
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
@@ -4927,9 +4926,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XHLT:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.Health = PercentBinaryTranslation.Parse(
-                        reader: frame,
-                        integerType: FloatIntegerType.UInt);
+                    item.Health = frame.ReadUInt32();
                     return (int)PlacedNpc_FieldIndex.Health;
                 }
                 case RecordTypeInts.XATP:
@@ -5130,7 +5127,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region Health
         private int? _HealthLocation;
-        public Percent? Health => _HealthLocation.HasValue ? PercentBinaryTranslation.GetPercent(HeaderTranslation.ExtractSubrecordMemory(_recordData, _HealthLocation.Value, _package.MetaData.Constants), FloatIntegerType.UInt) : default(Percent?);
+        public UInt32? Health => _HealthLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _HealthLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
         #region IsActivationPoint
         private int? _IsActivationPointLocation;

@@ -40,7 +40,8 @@
       <FormLink name="AttachRef" recordType="XATR">
         <Interface>IPlaced</Interface>
       </FormLink>
-      <Percent name="Health" recordType="XHLT" />
+      <!-- Health %, an integer percent as in xEdit (itU32) -->
+      <UInt32 name="Health" recordType="XHLT" />
       <Bool name="IsActivationPoint" boolAsMarker="XATP" />
       <Float name="Scale" recordType="XSCL" />
       <CustomLogic name="PlacementParse" recordType="DATA" />

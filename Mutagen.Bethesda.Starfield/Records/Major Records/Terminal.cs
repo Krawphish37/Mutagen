@@ -19,6 +19,10 @@ partial class Terminal
         SlaytonAerospace,
         UnitedColonies,
         CrimsonFleet,
+        // xEdit's art theme list (8 is unused there too). No plugin we have uses 9-11 yet.
+        HouseVaruun = 9,
+        ShipUpgrade = 10,
+        TerranArmada = 11,
     }
 
     [Flags]

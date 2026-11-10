@@ -82,6 +82,8 @@
   <Object name="NavmeshVertex" objType="Subrecord">
     <Fields>
       <P3Float name="Point" />
+      <!-- 0 or 1 (form version 493+). 99.99% of the vertices with 1 lie on a triangle edge with no neighbour, but only
+           98.6% of such boundary vertices carry 1, so "boundary vertex" is unconfirmed; left unnamed. -->
       <Int32 name="Unknown">
         <Versioning formVersion="493" action="Add" />
       </Int32>

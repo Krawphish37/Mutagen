@@ -2636,11 +2636,11 @@
     <Compile Include="Records\Major Records\Water.cs">
       <DependentUpon>Water.xml</DependentUpon>
     </Compile>
-    <Compile Include="Records\Major Records\WaterNoiseProperties.cs">
-      <DependentUpon>Water.xml</DependentUpon>
-    </Compile>
     <Compile Include="Records\Major Records\Weapon.cs">
       <DependentUpon>Weapon.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Common Subrecords\SoundReference.cs">
+      <DependentUpon>SoundReference.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\Major Records\Weather.cs">
       <DependentUpon>Weather.xml</DependentUpon>
@@ -6347,9 +6347,6 @@
     </Compile>
     <Compile Include="Records\Major Records\PackageEvent_Generated.cs">
       <DependentUpon>Package.xml</DependentUpon>
-    </Compile>
-    <Compile Include="Records\Major Records\WaterNoiseProperties_Generated.cs">
-      <DependentUpon>Water.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\Major Records\SnapNodeEntry_Generated.cs">
       <DependentUpon>SnapTemplate.xml</DependentUpon>
