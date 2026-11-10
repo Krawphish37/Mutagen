@@ -80,16 +80,10 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IFormLinkGetter<IKeywordCommonGetter>>? IKeywordedGetter.Keywords => this.Keywords;
         #endregion
         #endregion
-        #region LNAM
+        #region MaxCloudLayers
+        public UInt32? MaxCloudLayers { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _LNAM;
-        public MemorySlice<Byte>? LNAM
-        {
-            get => this._LNAM;
-            set => this._LNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWeatherGetter.LNAM => this.LNAM;
+        UInt32? IWeatherGetter.MaxCloudLayers => this.MaxCloudLayers;
         #endregion
         #region Precipitation
         private readonly IFormLinkNullable<IShaderParticleGeometryGetter> _Precipitation = new FormLinkNullable<IShaderParticleGeometryGetter>();
@@ -111,16 +105,15 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IArtObjectGetter> IWeatherGetter.CameraEffect => this.CameraEffect;
         #endregion
-        #region CLDC
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _CLDC;
-        public MemorySlice<Byte>? CLDC
+        #region CloudType
+        private readonly IFormLinkNullable<ICloudsGetter> _CloudType = new FormLinkNullable<ICloudsGetter>();
+        public IFormLinkNullable<ICloudsGetter> CloudType
         {
-            get => this._CLDC;
-            set => this._CLDC = value;
+            get => _CloudType;
+            set => _CloudType.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWeatherGetter.CLDC => this.CLDC;
+        IFormLinkNullableGetter<ICloudsGetter> IWeatherGetter.CloudType => this.CloudType;
         #endregion
         #region Clouds
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -457,16 +450,16 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<IImageSpaceGetter> IWeatherGetter.ImageSpaceLateSunset => this.ImageSpaceLateSunset;
         #endregion
-        #region HNAM
+        #region VolumetricLighting
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _HNAM;
-        public MemorySlice<Byte>? HNAM
+        private WeatherVolumetricLighting? _VolumetricLighting;
+        public WeatherVolumetricLighting? VolumetricLighting
         {
-            get => this._HNAM;
-            set => this._HNAM = value;
+            get => _VolumetricLighting;
+            set => _VolumetricLighting = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWeatherGetter.HNAM => this.HNAM;
+        IWeatherVolumetricLightingGetter? IWeatherGetter.VolumetricLighting => this.VolumetricLighting;
         #endregion
         #region DirectionalAmbientLightingColors
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -547,10 +540,10 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.LNAM = initialValue;
+                this.MaxCloudLayers = initialValue;
                 this.Precipitation = initialValue;
                 this.CameraEffect = initialValue;
-                this.CLDC = initialValue;
+                this.CloudType = initialValue;
                 this.Clouds = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CloudLayer.Mask<TItem>?>>?>(initialValue, []);
                 this.SkyUpperColor = new MaskItem<TItem, WeatherColor.Mask<TItem>?>(initialValue, new WeatherColor.Mask<TItem>(initialValue));
                 this.FogNearColor = new MaskItem<TItem, WeatherColor.Mask<TItem>?>(initialValue, new WeatherColor.Mask<TItem>(initialValue));
@@ -616,7 +609,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ImageSpaceLateSunrise = initialValue;
                 this.ImageSpaceEarlySunset = initialValue;
                 this.ImageSpaceLateSunset = initialValue;
-                this.HNAM = initialValue;
+                this.VolumetricLighting = new MaskItem<TItem, WeatherVolumetricLighting.Mask<TItem>?>(initialValue, new WeatherVolumetricLighting.Mask<TItem>(initialValue));
                 this.DirectionalAmbientLightingColors = new MaskItem<TItem, WeatherAmbientColorSet.Mask<TItem>?>(initialValue, new WeatherAmbientColorSet.Mask<TItem>(initialValue));
                 this.Aurora = new MaskItem<TItem, Model.Mask<TItem>?>(initialValue, new Model.Mask<TItem>(initialValue));
                 this.SunGlareLensFlare = initialValue;
@@ -634,10 +627,10 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
                 TItem Keywords,
-                TItem LNAM,
+                TItem MaxCloudLayers,
                 TItem Precipitation,
                 TItem CameraEffect,
-                TItem CLDC,
+                TItem CloudType,
                 TItem Clouds,
                 TItem SkyUpperColor,
                 TItem FogNearColor,
@@ -703,7 +696,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ImageSpaceLateSunrise,
                 TItem ImageSpaceEarlySunset,
                 TItem ImageSpaceLateSunset,
-                TItem HNAM,
+                TItem VolumetricLighting,
                 TItem DirectionalAmbientLightingColors,
                 TItem Aurora,
                 TItem SunGlareLensFlare,
@@ -720,10 +713,10 @@ namespace Mutagen.Bethesda.Starfield
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
             {
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
-                this.LNAM = LNAM;
+                this.MaxCloudLayers = MaxCloudLayers;
                 this.Precipitation = Precipitation;
                 this.CameraEffect = CameraEffect;
-                this.CLDC = CLDC;
+                this.CloudType = CloudType;
                 this.Clouds = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CloudLayer.Mask<TItem>?>>?>(Clouds, []);
                 this.SkyUpperColor = new MaskItem<TItem, WeatherColor.Mask<TItem>?>(SkyUpperColor, new WeatherColor.Mask<TItem>(SkyUpperColor));
                 this.FogNearColor = new MaskItem<TItem, WeatherColor.Mask<TItem>?>(FogNearColor, new WeatherColor.Mask<TItem>(FogNearColor));
@@ -789,7 +782,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ImageSpaceLateSunrise = ImageSpaceLateSunrise;
                 this.ImageSpaceEarlySunset = ImageSpaceEarlySunset;
                 this.ImageSpaceLateSunset = ImageSpaceLateSunset;
-                this.HNAM = HNAM;
+                this.VolumetricLighting = new MaskItem<TItem, WeatherVolumetricLighting.Mask<TItem>?>(VolumetricLighting, new WeatherVolumetricLighting.Mask<TItem>(VolumetricLighting));
                 this.DirectionalAmbientLightingColors = new MaskItem<TItem, WeatherAmbientColorSet.Mask<TItem>?>(DirectionalAmbientLightingColors, new WeatherAmbientColorSet.Mask<TItem>(DirectionalAmbientLightingColors));
                 this.Aurora = new MaskItem<TItem, Model.Mask<TItem>?>(Aurora, new Model.Mask<TItem>(Aurora));
                 this.SunGlareLensFlare = SunGlareLensFlare;
@@ -808,10 +801,10 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
-            public TItem LNAM;
+            public TItem MaxCloudLayers;
             public TItem Precipitation;
             public TItem CameraEffect;
-            public TItem CLDC;
+            public TItem CloudType;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CloudLayer.Mask<TItem>?>>?>? Clouds;
             public MaskItem<TItem, WeatherColor.Mask<TItem>?>? SkyUpperColor { get; set; }
             public MaskItem<TItem, WeatherColor.Mask<TItem>?>? FogNearColor { get; set; }
@@ -877,7 +870,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem ImageSpaceLateSunrise;
             public TItem ImageSpaceEarlySunset;
             public TItem ImageSpaceLateSunset;
-            public TItem HNAM;
+            public MaskItem<TItem, WeatherVolumetricLighting.Mask<TItem>?>? VolumetricLighting { get; set; }
             public MaskItem<TItem, WeatherAmbientColorSet.Mask<TItem>?>? DirectionalAmbientLightingColors { get; set; }
             public MaskItem<TItem, Model.Mask<TItem>?>? Aurora { get; set; }
             public TItem SunGlareLensFlare;
@@ -898,10 +891,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
-                if (!object.Equals(this.LNAM, rhs.LNAM)) return false;
+                if (!object.Equals(this.MaxCloudLayers, rhs.MaxCloudLayers)) return false;
                 if (!object.Equals(this.Precipitation, rhs.Precipitation)) return false;
                 if (!object.Equals(this.CameraEffect, rhs.CameraEffect)) return false;
-                if (!object.Equals(this.CLDC, rhs.CLDC)) return false;
+                if (!object.Equals(this.CloudType, rhs.CloudType)) return false;
                 if (!object.Equals(this.Clouds, rhs.Clouds)) return false;
                 if (!object.Equals(this.SkyUpperColor, rhs.SkyUpperColor)) return false;
                 if (!object.Equals(this.FogNearColor, rhs.FogNearColor)) return false;
@@ -967,7 +960,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ImageSpaceLateSunrise, rhs.ImageSpaceLateSunrise)) return false;
                 if (!object.Equals(this.ImageSpaceEarlySunset, rhs.ImageSpaceEarlySunset)) return false;
                 if (!object.Equals(this.ImageSpaceLateSunset, rhs.ImageSpaceLateSunset)) return false;
-                if (!object.Equals(this.HNAM, rhs.HNAM)) return false;
+                if (!object.Equals(this.VolumetricLighting, rhs.VolumetricLighting)) return false;
                 if (!object.Equals(this.DirectionalAmbientLightingColors, rhs.DirectionalAmbientLightingColors)) return false;
                 if (!object.Equals(this.Aurora, rhs.Aurora)) return false;
                 if (!object.Equals(this.SunGlareLensFlare, rhs.SunGlareLensFlare)) return false;
@@ -980,10 +973,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.Keywords);
-                hash.Add(this.LNAM);
+                hash.Add(this.MaxCloudLayers);
                 hash.Add(this.Precipitation);
                 hash.Add(this.CameraEffect);
-                hash.Add(this.CLDC);
+                hash.Add(this.CloudType);
                 hash.Add(this.Clouds);
                 hash.Add(this.SkyUpperColor);
                 hash.Add(this.FogNearColor);
@@ -1049,7 +1042,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ImageSpaceLateSunrise);
                 hash.Add(this.ImageSpaceEarlySunset);
                 hash.Add(this.ImageSpaceLateSunset);
-                hash.Add(this.HNAM);
+                hash.Add(this.VolumetricLighting);
                 hash.Add(this.DirectionalAmbientLightingColors);
                 hash.Add(this.Aurora);
                 hash.Add(this.SunGlareLensFlare);
@@ -1077,10 +1070,10 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.LNAM)) return false;
+                if (!eval(this.MaxCloudLayers)) return false;
                 if (!eval(this.Precipitation)) return false;
                 if (!eval(this.CameraEffect)) return false;
-                if (!eval(this.CLDC)) return false;
+                if (!eval(this.CloudType)) return false;
                 if (this.Clouds != null)
                 {
                     if (!eval(this.Clouds.Overall)) return false;
@@ -1253,7 +1246,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.ImageSpaceLateSunrise)) return false;
                 if (!eval(this.ImageSpaceEarlySunset)) return false;
                 if (!eval(this.ImageSpaceLateSunset)) return false;
-                if (!eval(this.HNAM)) return false;
+                if (VolumetricLighting != null)
+                {
+                    if (!eval(this.VolumetricLighting.Overall)) return false;
+                    if (this.VolumetricLighting.Specific != null && !this.VolumetricLighting.Specific.All(eval)) return false;
+                }
                 if (DirectionalAmbientLightingColors != null)
                 {
                     if (!eval(this.DirectionalAmbientLightingColors.Overall)) return false;
@@ -1291,10 +1288,10 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.LNAM)) return true;
+                if (eval(this.MaxCloudLayers)) return true;
                 if (eval(this.Precipitation)) return true;
                 if (eval(this.CameraEffect)) return true;
-                if (eval(this.CLDC)) return true;
+                if (eval(this.CloudType)) return true;
                 if (this.Clouds != null)
                 {
                     if (eval(this.Clouds.Overall)) return true;
@@ -1467,7 +1464,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.ImageSpaceLateSunrise)) return true;
                 if (eval(this.ImageSpaceEarlySunset)) return true;
                 if (eval(this.ImageSpaceLateSunset)) return true;
-                if (eval(this.HNAM)) return true;
+                if (VolumetricLighting != null)
+                {
+                    if (eval(this.VolumetricLighting.Overall)) return true;
+                    if (this.VolumetricLighting.Specific != null && this.VolumetricLighting.Specific.Any(eval)) return true;
+                }
                 if (DirectionalAmbientLightingColors != null)
                 {
                     if (eval(this.DirectionalAmbientLightingColors.Overall)) return true;
@@ -1515,10 +1516,10 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.LNAM = eval(this.LNAM);
+                obj.MaxCloudLayers = eval(this.MaxCloudLayers);
                 obj.Precipitation = eval(this.Precipitation);
                 obj.CameraEffect = eval(this.CameraEffect);
-                obj.CLDC = eval(this.CLDC);
+                obj.CloudType = eval(this.CloudType);
                 if (Clouds != null)
                 {
                     obj.Clouds = new MaskItem<R, IEnumerable<MaskItemIndexed<R, CloudLayer.Mask<R>?>>?>(eval(this.Clouds.Overall), []);
@@ -1624,7 +1625,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.ImageSpaceLateSunrise = eval(this.ImageSpaceLateSunrise);
                 obj.ImageSpaceEarlySunset = eval(this.ImageSpaceEarlySunset);
                 obj.ImageSpaceLateSunset = eval(this.ImageSpaceLateSunset);
-                obj.HNAM = eval(this.HNAM);
+                obj.VolumetricLighting = this.VolumetricLighting == null ? null : new MaskItem<R, WeatherVolumetricLighting.Mask<R>?>(eval(this.VolumetricLighting.Overall), this.VolumetricLighting.Specific?.Translate(eval));
                 obj.DirectionalAmbientLightingColors = this.DirectionalAmbientLightingColors == null ? null : new MaskItem<R, WeatherAmbientColorSet.Mask<R>?>(eval(this.DirectionalAmbientLightingColors.Overall), this.DirectionalAmbientLightingColors.Specific?.Translate(eval));
                 obj.Aurora = this.Aurora == null ? null : new MaskItem<R, Model.Mask<R>?>(eval(this.Aurora.Overall), this.Aurora.Specific?.Translate(eval));
                 obj.SunGlareLensFlare = eval(this.SunGlareLensFlare);
@@ -1670,9 +1671,9 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.LNAM ?? true)
+                    if (printMask?.MaxCloudLayers ?? true)
                     {
-                        sb.AppendItem(LNAM, "LNAM");
+                        sb.AppendItem(MaxCloudLayers, "MaxCloudLayers");
                     }
                     if (printMask?.Precipitation ?? true)
                     {
@@ -1682,9 +1683,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(CameraEffect, "CameraEffect");
                     }
-                    if (printMask?.CLDC ?? true)
+                    if (printMask?.CloudType ?? true)
                     {
-                        sb.AppendItem(CLDC, "CLDC");
+                        sb.AppendItem(CloudType, "CloudType");
                     }
                     if ((printMask?.Clouds?.Overall ?? true)
                         && Clouds is {} CloudsItem)
@@ -1995,9 +1996,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ImageSpaceLateSunset, "ImageSpaceLateSunset");
                     }
-                    if (printMask?.HNAM ?? true)
+                    if (printMask?.VolumetricLighting?.Overall ?? true)
                     {
-                        sb.AppendItem(HNAM, "HNAM");
+                        VolumetricLighting?.Print(sb);
                     }
                     if (printMask?.DirectionalAmbientLightingColors?.Overall ?? true)
                     {
@@ -2035,10 +2036,10 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
-            public Exception? LNAM;
+            public Exception? MaxCloudLayers;
             public Exception? Precipitation;
             public Exception? CameraEffect;
-            public Exception? CLDC;
+            public Exception? CloudType;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CloudLayer.ErrorMask?>>?>? Clouds;
             public MaskItem<Exception?, WeatherColor.ErrorMask?>? SkyUpperColor;
             public MaskItem<Exception?, WeatherColor.ErrorMask?>? FogNearColor;
@@ -2104,7 +2105,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? ImageSpaceLateSunrise;
             public Exception? ImageSpaceEarlySunset;
             public Exception? ImageSpaceLateSunset;
-            public Exception? HNAM;
+            public MaskItem<Exception?, WeatherVolumetricLighting.ErrorMask?>? VolumetricLighting;
             public MaskItem<Exception?, WeatherAmbientColorSet.ErrorMask?>? DirectionalAmbientLightingColors;
             public MaskItem<Exception?, Model.ErrorMask?>? Aurora;
             public Exception? SunGlareLensFlare;
@@ -2121,14 +2122,14 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case Weather_FieldIndex.Keywords:
                         return Keywords;
-                    case Weather_FieldIndex.LNAM:
-                        return LNAM;
+                    case Weather_FieldIndex.MaxCloudLayers:
+                        return MaxCloudLayers;
                     case Weather_FieldIndex.Precipitation:
                         return Precipitation;
                     case Weather_FieldIndex.CameraEffect:
                         return CameraEffect;
-                    case Weather_FieldIndex.CLDC:
-                        return CLDC;
+                    case Weather_FieldIndex.CloudType:
+                        return CloudType;
                     case Weather_FieldIndex.Clouds:
                         return Clouds;
                     case Weather_FieldIndex.SkyUpperColor:
@@ -2259,8 +2260,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ImageSpaceEarlySunset;
                     case Weather_FieldIndex.ImageSpaceLateSunset:
                         return ImageSpaceLateSunset;
-                    case Weather_FieldIndex.HNAM:
-                        return HNAM;
+                    case Weather_FieldIndex.VolumetricLighting:
+                        return VolumetricLighting;
                     case Weather_FieldIndex.DirectionalAmbientLightingColors:
                         return DirectionalAmbientLightingColors;
                     case Weather_FieldIndex.Aurora:
@@ -2286,8 +2287,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weather_FieldIndex.Keywords:
                         this.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case Weather_FieldIndex.LNAM:
-                        this.LNAM = ex;
+                    case Weather_FieldIndex.MaxCloudLayers:
+                        this.MaxCloudLayers = ex;
                         break;
                     case Weather_FieldIndex.Precipitation:
                         this.Precipitation = ex;
@@ -2295,8 +2296,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weather_FieldIndex.CameraEffect:
                         this.CameraEffect = ex;
                         break;
-                    case Weather_FieldIndex.CLDC:
-                        this.CLDC = ex;
+                    case Weather_FieldIndex.CloudType:
+                        this.CloudType = ex;
                         break;
                     case Weather_FieldIndex.Clouds:
                         this.Clouds = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CloudLayer.ErrorMask?>>?>(ex, null);
@@ -2493,8 +2494,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weather_FieldIndex.ImageSpaceLateSunset:
                         this.ImageSpaceLateSunset = ex;
                         break;
-                    case Weather_FieldIndex.HNAM:
-                        this.HNAM = ex;
+                    case Weather_FieldIndex.VolumetricLighting:
+                        this.VolumetricLighting = new MaskItem<Exception?, WeatherVolumetricLighting.ErrorMask?>(ex, null);
                         break;
                     case Weather_FieldIndex.DirectionalAmbientLightingColors:
                         this.DirectionalAmbientLightingColors = new MaskItem<Exception?, WeatherAmbientColorSet.ErrorMask?>(ex, null);
@@ -2528,8 +2529,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weather_FieldIndex.Keywords:
                         this.Keywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case Weather_FieldIndex.LNAM:
-                        this.LNAM = (Exception?)obj;
+                    case Weather_FieldIndex.MaxCloudLayers:
+                        this.MaxCloudLayers = (Exception?)obj;
                         break;
                     case Weather_FieldIndex.Precipitation:
                         this.Precipitation = (Exception?)obj;
@@ -2537,8 +2538,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weather_FieldIndex.CameraEffect:
                         this.CameraEffect = (Exception?)obj;
                         break;
-                    case Weather_FieldIndex.CLDC:
-                        this.CLDC = (Exception?)obj;
+                    case Weather_FieldIndex.CloudType:
+                        this.CloudType = (Exception?)obj;
                         break;
                     case Weather_FieldIndex.Clouds:
                         this.Clouds = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CloudLayer.ErrorMask?>>?>)obj;
@@ -2735,8 +2736,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weather_FieldIndex.ImageSpaceLateSunset:
                         this.ImageSpaceLateSunset = (Exception?)obj;
                         break;
-                    case Weather_FieldIndex.HNAM:
-                        this.HNAM = (Exception?)obj;
+                    case Weather_FieldIndex.VolumetricLighting:
+                        this.VolumetricLighting = (MaskItem<Exception?, WeatherVolumetricLighting.ErrorMask?>?)obj;
                         break;
                     case Weather_FieldIndex.DirectionalAmbientLightingColors:
                         this.DirectionalAmbientLightingColors = (MaskItem<Exception?, WeatherAmbientColorSet.ErrorMask?>?)obj;
@@ -2766,10 +2767,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Keywords != null) return true;
-                if (LNAM != null) return true;
+                if (MaxCloudLayers != null) return true;
                 if (Precipitation != null) return true;
                 if (CameraEffect != null) return true;
-                if (CLDC != null) return true;
+                if (CloudType != null) return true;
                 if (Clouds != null) return true;
                 if (SkyUpperColor != null) return true;
                 if (FogNearColor != null) return true;
@@ -2835,7 +2836,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ImageSpaceLateSunrise != null) return true;
                 if (ImageSpaceEarlySunset != null) return true;
                 if (ImageSpaceLateSunset != null) return true;
-                if (HNAM != null) return true;
+                if (VolumetricLighting != null) return true;
                 if (DirectionalAmbientLightingColors != null) return true;
                 if (Aurora != null) return true;
                 if (SunGlareLensFlare != null) return true;
@@ -2889,7 +2890,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(LNAM, "LNAM");
+                    sb.AppendItem(MaxCloudLayers, "MaxCloudLayers");
                 }
                 {
                     sb.AppendItem(Precipitation, "Precipitation");
@@ -2898,7 +2899,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(CameraEffect, "CameraEffect");
                 }
                 {
-                    sb.AppendItem(CLDC, "CLDC");
+                    sb.AppendItem(CloudType, "CloudType");
                 }
                 if (Clouds is {} CloudsItem)
                 {
@@ -3106,9 +3107,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(ImageSpaceLateSunset, "ImageSpaceLateSunset");
                 }
-                {
-                    sb.AppendItem(HNAM, "HNAM");
-                }
+                VolumetricLighting?.Print(sb);
                 DirectionalAmbientLightingColors?.Print(sb);
                 Aurora?.Print(sb);
                 {
@@ -3130,10 +3129,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
-                ret.LNAM = this.LNAM.Combine(rhs.LNAM);
+                ret.MaxCloudLayers = this.MaxCloudLayers.Combine(rhs.MaxCloudLayers);
                 ret.Precipitation = this.Precipitation.Combine(rhs.Precipitation);
                 ret.CameraEffect = this.CameraEffect.Combine(rhs.CameraEffect);
-                ret.CLDC = this.CLDC.Combine(rhs.CLDC);
+                ret.CloudType = this.CloudType.Combine(rhs.CloudType);
                 ret.Clouds = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CloudLayer.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Clouds?.Overall, rhs.Clouds?.Overall), Noggog.ExceptionExt.Combine(this.Clouds?.Specific, rhs.Clouds?.Specific));
                 ret.SkyUpperColor = this.SkyUpperColor.Combine(rhs.SkyUpperColor, (l, r) => l.Combine(r));
                 ret.FogNearColor = this.FogNearColor.Combine(rhs.FogNearColor, (l, r) => l.Combine(r));
@@ -3199,7 +3198,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ImageSpaceLateSunrise = this.ImageSpaceLateSunrise.Combine(rhs.ImageSpaceLateSunrise);
                 ret.ImageSpaceEarlySunset = this.ImageSpaceEarlySunset.Combine(rhs.ImageSpaceEarlySunset);
                 ret.ImageSpaceLateSunset = this.ImageSpaceLateSunset.Combine(rhs.ImageSpaceLateSunset);
-                ret.HNAM = this.HNAM.Combine(rhs.HNAM);
+                ret.VolumetricLighting = this.VolumetricLighting.Combine(rhs.VolumetricLighting, (l, r) => l.Combine(r));
                 ret.DirectionalAmbientLightingColors = this.DirectionalAmbientLightingColors.Combine(rhs.DirectionalAmbientLightingColors, (l, r) => l.Combine(r));
                 ret.Aurora = this.Aurora.Combine(rhs.Aurora, (l, r) => l.Combine(r));
                 ret.SunGlareLensFlare = this.SunGlareLensFlare.Combine(rhs.SunGlareLensFlare);
@@ -3229,10 +3228,10 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public bool Keywords;
-            public bool LNAM;
+            public bool MaxCloudLayers;
             public bool Precipitation;
             public bool CameraEffect;
-            public bool CLDC;
+            public bool CloudType;
             public CloudLayer.TranslationMask? Clouds;
             public WeatherColor.TranslationMask? SkyUpperColor;
             public WeatherColor.TranslationMask? FogNearColor;
@@ -3298,7 +3297,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool ImageSpaceLateSunrise;
             public bool ImageSpaceEarlySunset;
             public bool ImageSpaceLateSunset;
-            public bool HNAM;
+            public WeatherVolumetricLighting.TranslationMask? VolumetricLighting;
             public WeatherAmbientColorSet.TranslationMask? DirectionalAmbientLightingColors;
             public Model.TranslationMask? Aurora;
             public bool SunGlareLensFlare;
@@ -3314,10 +3313,10 @@ namespace Mutagen.Bethesda.Starfield
                 : base(defaultOn, onOverall)
             {
                 this.Keywords = defaultOn;
-                this.LNAM = defaultOn;
+                this.MaxCloudLayers = defaultOn;
                 this.Precipitation = defaultOn;
                 this.CameraEffect = defaultOn;
-                this.CLDC = defaultOn;
+                this.CloudType = defaultOn;
                 this.NAM4 = defaultOn;
                 this.FogDistanceDayNear = defaultOn;
                 this.FogDistanceDayFar = defaultOn;
@@ -3363,7 +3362,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.ImageSpaceLateSunrise = defaultOn;
                 this.ImageSpaceEarlySunset = defaultOn;
                 this.ImageSpaceLateSunset = defaultOn;
-                this.HNAM = defaultOn;
                 this.SunGlareLensFlare = defaultOn;
                 this.VolatilityMult = defaultOn;
                 this.VisibilityMult = defaultOn;
@@ -3375,10 +3373,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((Keywords, null));
-                ret.Add((LNAM, null));
+                ret.Add((MaxCloudLayers, null));
                 ret.Add((Precipitation, null));
                 ret.Add((CameraEffect, null));
-                ret.Add((CLDC, null));
+                ret.Add((CloudType, null));
                 ret.Add((Clouds == null ? DefaultOn : !Clouds.GetCrystal().CopyNothing, Clouds?.GetCrystal()));
                 ret.Add((SkyUpperColor != null ? SkyUpperColor.OnOverall : DefaultOn, SkyUpperColor?.GetCrystal()));
                 ret.Add((FogNearColor != null ? FogNearColor.OnOverall : DefaultOn, FogNearColor?.GetCrystal()));
@@ -3444,7 +3442,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ImageSpaceLateSunrise, null));
                 ret.Add((ImageSpaceEarlySunset, null));
                 ret.Add((ImageSpaceLateSunset, null));
-                ret.Add((HNAM, null));
+                ret.Add((VolumetricLighting != null ? VolumetricLighting.OnOverall : DefaultOn, VolumetricLighting?.GetCrystal()));
                 ret.Add((DirectionalAmbientLightingColors != null ? DirectionalAmbientLightingColors.OnOverall : DefaultOn, DirectionalAmbientLightingColors?.GetCrystal()));
                 ret.Add((Aurora != null ? Aurora.OnOverall : DefaultOn, Aurora?.GetCrystal()));
                 ret.Add((SunGlareLensFlare, null));
@@ -3608,10 +3606,10 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IKeyworded&lt;IKeywordGetter&gt;
         /// </summary>
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; set; }
-        new MemorySlice<Byte>? LNAM { get; set; }
+        new UInt32? MaxCloudLayers { get; set; }
         new IFormLinkNullable<IShaderParticleGeometryGetter> Precipitation { get; set; }
         new IFormLinkNullable<IArtObjectGetter> CameraEffect { get; set; }
-        new MemorySlice<Byte>? CLDC { get; set; }
+        new IFormLinkNullable<ICloudsGetter> CloudType { get; set; }
         new CloudLayer[] Clouds { get; }
         new WeatherColor SkyUpperColor { get; set; }
         new WeatherColor FogNearColor { get; set; }
@@ -3677,7 +3675,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<IImageSpaceGetter> ImageSpaceLateSunrise { get; set; }
         new IFormLink<IImageSpaceGetter> ImageSpaceEarlySunset { get; set; }
         new IFormLink<IImageSpaceGetter> ImageSpaceLateSunset { get; set; }
-        new MemorySlice<Byte>? HNAM { get; set; }
+        new WeatherVolumetricLighting? VolumetricLighting { get; set; }
         new WeatherAmbientColorSet? DirectionalAmbientLightingColors { get; set; }
         new Model? Aurora { get; set; }
         new IFormLinkNullable<ILensFlareGetter> SunGlareLensFlare { get; set; }
@@ -3710,10 +3708,10 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; }
         #endregion
-        ReadOnlyMemorySlice<Byte>? LNAM { get; }
+        UInt32? MaxCloudLayers { get; }
         IFormLinkNullableGetter<IShaderParticleGeometryGetter> Precipitation { get; }
         IFormLinkNullableGetter<IArtObjectGetter> CameraEffect { get; }
-        ReadOnlyMemorySlice<Byte>? CLDC { get; }
+        IFormLinkNullableGetter<ICloudsGetter> CloudType { get; }
         IReadOnlyList<ICloudLayerGetter> Clouds { get; }
         IWeatherColorGetter SkyUpperColor { get; }
         IWeatherColorGetter FogNearColor { get; }
@@ -3779,7 +3777,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IImageSpaceGetter> ImageSpaceLateSunrise { get; }
         IFormLinkGetter<IImageSpaceGetter> ImageSpaceEarlySunset { get; }
         IFormLinkGetter<IImageSpaceGetter> ImageSpaceLateSunset { get; }
-        ReadOnlyMemorySlice<Byte>? HNAM { get; }
+        IWeatherVolumetricLightingGetter? VolumetricLighting { get; }
         IWeatherAmbientColorSetGetter? DirectionalAmbientLightingColors { get; }
         IModelGetter? Aurora { get; }
         IFormLinkNullableGetter<ILensFlareGetter> SunGlareLensFlare { get; }
@@ -3963,10 +3961,10 @@ namespace Mutagen.Bethesda.Starfield
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
         Keywords = 7,
-        LNAM = 8,
+        MaxCloudLayers = 8,
         Precipitation = 9,
         CameraEffect = 10,
-        CLDC = 11,
+        CloudType = 11,
         Clouds = 12,
         SkyUpperColor = 13,
         FogNearColor = 14,
@@ -4032,7 +4030,7 @@ namespace Mutagen.Bethesda.Starfield
         ImageSpaceLateSunrise = 74,
         ImageSpaceEarlySunset = 75,
         ImageSpaceLateSunset = 76,
-        HNAM = 77,
+        VolumetricLighting = 77,
         DirectionalAmbientLightingColors = 78,
         Aurora = 79,
         SunGlareLensFlare = 80,
@@ -4159,10 +4157,10 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Keywords = null;
-            item.LNAM = default;
+            item.MaxCloudLayers = default;
             item.Precipitation.Clear();
             item.CameraEffect.Clear();
-            item.CLDC = default;
+            item.CloudType.Clear();
             item.Clouds.Fill(() => new CloudLayer());
             item.SkyUpperColor.Clear();
             item.FogNearColor.Clear();
@@ -4228,7 +4226,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ImageSpaceLateSunrise.Clear();
             item.ImageSpaceEarlySunset.Clear();
             item.ImageSpaceLateSunset.Clear();
-            item.HNAM = default;
+            item.VolumetricLighting = null;
             item.DirectionalAmbientLightingColors = null;
             item.Aurora = null;
             item.SunGlareLensFlare.Clear();
@@ -4255,6 +4253,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.Keywords?.RemapLinks(mapping);
             obj.Precipitation.Relink(mapping);
             obj.CameraEffect.Relink(mapping);
+            obj.CloudType.Relink(mapping);
             obj.SkyStatics.RemapLinks(mapping);
             obj.ImageSpaceSunrise.Relink(mapping);
             obj.ImageSpaceDay.Relink(mapping);
@@ -4264,6 +4263,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.ImageSpaceLateSunrise.Relink(mapping);
             obj.ImageSpaceEarlySunset.Relink(mapping);
             obj.ImageSpaceLateSunset.Relink(mapping);
+            obj.VolumetricLighting?.RemapLinks(mapping);
             obj.Aurora?.RemapLinks(mapping);
             obj.SunGlareLensFlare.Relink(mapping);
             obj.Magic?.RemapLinks(mapping);
@@ -4364,10 +4364,10 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Keywords,
                 (l, r) => object.Equals(l, r),
                 include);
-            ret.LNAM = MemorySliceExt.SequenceEqual(item.LNAM, rhs.LNAM);
+            ret.MaxCloudLayers = item.MaxCloudLayers == rhs.MaxCloudLayers;
             ret.Precipitation = item.Precipitation.Equals(rhs.Precipitation);
             ret.CameraEffect = item.CameraEffect.Equals(rhs.CameraEffect);
-            ret.CLDC = MemorySliceExt.SequenceEqual(item.CLDC, rhs.CLDC);
+            ret.CloudType = item.CloudType.Equals(rhs.CloudType);
             ret.Clouds = item.Clouds.CollectionEqualsHelper(
                 rhs.Clouds,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -4443,7 +4443,11 @@ namespace Mutagen.Bethesda.Starfield
             ret.ImageSpaceLateSunrise = item.ImageSpaceLateSunrise.Equals(rhs.ImageSpaceLateSunrise);
             ret.ImageSpaceEarlySunset = item.ImageSpaceEarlySunset.Equals(rhs.ImageSpaceEarlySunset);
             ret.ImageSpaceLateSunset = item.ImageSpaceLateSunset.Equals(rhs.ImageSpaceLateSunset);
-            ret.HNAM = MemorySliceExt.SequenceEqual(item.HNAM, rhs.HNAM);
+            ret.VolumetricLighting = EqualsMaskHelper.EqualsHelper(
+                item.VolumetricLighting,
+                rhs.VolumetricLighting,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
             ret.DirectionalAmbientLightingColors = EqualsMaskHelper.EqualsHelper(
                 item.DirectionalAmbientLightingColors,
                 rhs.DirectionalAmbientLightingColors,
@@ -4526,10 +4530,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.LNAM ?? true)
-                && item.LNAM is {} LNAMItem)
+            if ((printMask?.MaxCloudLayers ?? true)
+                && item.MaxCloudLayers is {} MaxCloudLayersItem)
             {
-                sb.AppendLine($"LNAM => {SpanExt.ToHexString(LNAMItem)}");
+                sb.AppendItem(MaxCloudLayersItem, "MaxCloudLayers");
             }
             if (printMask?.Precipitation ?? true)
             {
@@ -4539,10 +4543,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.CameraEffect.FormKeyNullable, "CameraEffect");
             }
-            if ((printMask?.CLDC ?? true)
-                && item.CLDC is {} CLDCItem)
+            if (printMask?.CloudType ?? true)
             {
-                sb.AppendLine($"CLDC => {SpanExt.ToHexString(CLDCItem)}");
+                sb.AppendItem(item.CloudType.FormKeyNullable, "CloudType");
             }
             if (printMask?.Clouds?.Overall ?? true)
             {
@@ -4835,10 +4838,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ImageSpaceLateSunset.FormKey, "ImageSpaceLateSunset");
             }
-            if ((printMask?.HNAM ?? true)
-                && item.HNAM is {} HNAMItem)
+            if ((printMask?.VolumetricLighting?.Overall ?? true)
+                && item.VolumetricLighting is {} VolumetricLightingItem)
             {
-                sb.AppendLine($"HNAM => {SpanExt.ToHexString(HNAMItem)}");
+                VolumetricLightingItem?.Print(sb, "VolumetricLighting");
             }
             if ((printMask?.DirectionalAmbientLightingColors?.Overall ?? true)
                 && item.DirectionalAmbientLightingColors is {} DirectionalAmbientLightingColorsItem)
@@ -4923,9 +4926,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Keywords.SequenceEqualNullable(rhs.Keywords)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weather_FieldIndex.LNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weather_FieldIndex.MaxCloudLayers) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.LNAM, rhs.LNAM)) return false;
+                if (lhs.MaxCloudLayers != rhs.MaxCloudLayers) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weather_FieldIndex.Precipitation) ?? true))
             {
@@ -4935,9 +4938,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.CameraEffect.Equals(rhs.CameraEffect)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weather_FieldIndex.CLDC) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weather_FieldIndex.CloudType) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.CLDC, rhs.CLDC)) return false;
+                if (!lhs.CloudType.Equals(rhs.CloudType)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weather_FieldIndex.Clouds) ?? true))
             {
@@ -5275,9 +5278,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ImageSpaceLateSunset.Equals(rhs.ImageSpaceLateSunset)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weather_FieldIndex.HNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weather_FieldIndex.VolumetricLighting) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.HNAM, rhs.HNAM)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.VolumetricLighting, rhs.VolumetricLighting, out var lhsVolumetricLighting, out var rhsVolumetricLighting, out var isVolumetricLightingEqual))
+                {
+                    if (!((WeatherVolumetricLightingCommon)((IWeatherVolumetricLightingGetter)lhsVolumetricLighting).CommonInstance()!).Equals(lhsVolumetricLighting, rhsVolumetricLighting, equalsMask?.GetSubCrystal((int)Weather_FieldIndex.VolumetricLighting))) return false;
+                }
+                else if (!isVolumetricLightingEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weather_FieldIndex.DirectionalAmbientLightingColors) ?? true))
             {
@@ -5350,16 +5357,13 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
-            if (item.LNAM is {} LNAMItem)
+            if (item.MaxCloudLayers is {} MaxCloudLayersitem)
             {
-                hash.AddBytes(LNAMItem);
+                hash.Add(MaxCloudLayersitem);
             }
             hash.Add(item.Precipitation);
             hash.Add(item.CameraEffect);
-            if (item.CLDC is {} CLDCItem)
-            {
-                hash.AddBytes(CLDCItem);
-            }
+            hash.Add(item.CloudType);
             foreach (var subItem in item.Clouds)
             {
                 hash.Add(subItem);
@@ -5437,9 +5441,9 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ImageSpaceLateSunrise);
             hash.Add(item.ImageSpaceEarlySunset);
             hash.Add(item.ImageSpaceLateSunset);
-            if (item.HNAM is {} HNAMItem)
+            if (item.VolumetricLighting is {} VolumetricLightingitem)
             {
-                hash.AddBytes(HNAMItem);
+                hash.Add(VolumetricLightingitem);
             }
             if (item.DirectionalAmbientLightingColors is {} DirectionalAmbientLightingColorsitem)
             {
@@ -5506,6 +5510,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return CameraEffectInfo;
             }
+            if (FormLinkInformation.TryFactory(obj.CloudType, out var CloudTypeInfo))
+            {
+                yield return CloudTypeInfo;
+            }
             foreach (var item in obj.SkyStatics)
             {
                 yield return FormLinkInformation.Factory(item);
@@ -5518,6 +5526,13 @@ namespace Mutagen.Bethesda.Starfield
             yield return FormLinkInformation.Factory(obj.ImageSpaceLateSunrise);
             yield return FormLinkInformation.Factory(obj.ImageSpaceEarlySunset);
             yield return FormLinkInformation.Factory(obj.ImageSpaceLateSunset);
+            if (obj.VolumetricLighting is {} VolumetricLightingItems)
+            {
+                foreach (var item in VolumetricLightingItems.EnumerateFormLinks(iterateNestedRecords))
+                {
+                    yield return item;
+                }
+            }
             if (obj.Aurora is {} AuroraItems)
             {
                 foreach (var item in AuroraItems.EnumerateFormLinks(iterateNestedRecords))
@@ -5675,16 +5690,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Weather_FieldIndex.LNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weather_FieldIndex.MaxCloudLayers) ?? true))
             {
-                if(rhs.LNAM is {} LNAMrhs)
-                {
-                    item.LNAM = LNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.LNAM = default;
-                }
+                item.MaxCloudLayers = rhs.MaxCloudLayers;
             }
             if ((copyMask?.GetShouldTranslate((int)Weather_FieldIndex.Precipitation) ?? true))
             {
@@ -5694,16 +5702,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.CameraEffect.SetTo(rhs.CameraEffect.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)Weather_FieldIndex.CLDC) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weather_FieldIndex.CloudType) ?? true))
             {
-                if(rhs.CLDC is {} CLDCrhs)
-                {
-                    item.CLDC = CLDCrhs.ToArray();
-                }
-                else
-                {
-                    item.CLDC = default;
-                }
+                item.CloudType.SetTo(rhs.CloudType.FormKeyNullable);
             }
             if ((copyMask?.GetShouldTranslate((int)Weather_FieldIndex.Clouds) ?? true))
             {
@@ -6329,15 +6330,30 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ImageSpaceLateSunset.SetTo(rhs.ImageSpaceLateSunset.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)Weather_FieldIndex.HNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weather_FieldIndex.VolumetricLighting) ?? true))
             {
-                if(rhs.HNAM is {} HNAMrhs)
+                errorMask?.PushIndex((int)Weather_FieldIndex.VolumetricLighting);
+                try
                 {
-                    item.HNAM = HNAMrhs.ToArray();
+                    if(rhs.VolumetricLighting is {} rhsVolumetricLighting)
+                    {
+                        item.VolumetricLighting = rhsVolumetricLighting.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)Weather_FieldIndex.VolumetricLighting));
+                    }
+                    else
+                    {
+                        item.VolumetricLighting = default;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.HNAM = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             if ((copyMask?.GetShouldTranslate((int)Weather_FieldIndex.DirectionalAmbientLightingColors) ?? true))
@@ -6611,9 +6627,9 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         item: subItem);
                 });
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.LNAM,
+                item: item.MaxCloudLayers,
                 header: translationParams.ConvertToCustom(RecordTypes.LNAM));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -6623,9 +6639,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.CameraEffect,
                 header: translationParams.ConvertToCustom(RecordTypes.NNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.CLDC,
+                item: item.CloudType,
                 header: translationParams.ConvertToCustom(RecordTypes.CLDC));
             WeatherBinaryWriteTranslation.WriteBinaryClouds(
                 writer: writer,
@@ -6913,10 +6929,13 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     item: item.ImageSpaceLateSunset);
             }
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.HNAM,
-                header: translationParams.ConvertToCustom(RecordTypes.HNAM));
+            if (item.VolumetricLighting is {} VolumetricLightingItem)
+            {
+                ((WeatherVolumetricLightingBinaryWriteTranslation)((IBinaryItem)VolumetricLightingItem).BinaryWriteTranslator).Write(
+                    item: VolumetricLightingItem,
+                    writer: writer,
+                    translationParams: translationParams);
+            }
             WeatherBinaryWriteTranslation.WriteBinaryDirectionalAmbientLightingColors(
                 writer: writer,
                 item: item);
@@ -7108,8 +7127,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.LNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.LNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Weather_FieldIndex.LNAM;
+                    item.MaxCloudLayers = frame.ReadUInt32();
+                    return (int)Weather_FieldIndex.MaxCloudLayers;
                 }
                 case RecordTypeInts.MNAM:
                 {
@@ -7126,8 +7145,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.CLDC:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.CLDC = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Weather_FieldIndex.CLDC;
+                    item.CloudType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)Weather_FieldIndex.CloudType;
                 }
                 case RecordTypeInts.RNAM:
                 {
@@ -7366,9 +7385,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.HNAM:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.HNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Weather_FieldIndex.HNAM;
+                    item.VolumetricLighting = Mutagen.Bethesda.Starfield.WeatherVolumetricLighting.CreateFromBinary(frame: frame);
+                    return (int)Weather_FieldIndex.VolumetricLighting;
                 }
                 case RecordTypeInts.DALC:
                 {
@@ -7508,9 +7526,9 @@ namespace Mutagen.Bethesda.Starfield
         public IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; private set; }
         IReadOnlyList<IFormLinkGetter<IKeywordCommonGetter>>? IKeywordedGetter.Keywords => this.Keywords;
         #endregion
-        #region LNAM
-        private int? _LNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? LNAM => _LNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _LNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region MaxCloudLayers
+        private int? _MaxCloudLayersLocation;
+        public UInt32? MaxCloudLayers => _MaxCloudLayersLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _MaxCloudLayersLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
         #region Precipitation
         private int? _PrecipitationLocation;
@@ -7520,9 +7538,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _CameraEffectLocation;
         public IFormLinkNullableGetter<IArtObjectGetter> CameraEffect => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IArtObjectGetter>(_package, _recordData, _CameraEffectLocation);
         #endregion
-        #region CLDC
-        private int? _CLDCLocation;
-        public ReadOnlyMemorySlice<Byte>? CLDC => _CLDCLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _CLDCLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region CloudType
+        private int? _CloudTypeLocation;
+        public IFormLinkNullableGetter<ICloudsGetter> CloudType => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ICloudsGetter>(_package, _recordData, _CloudTypeLocation);
         #endregion
         #region Clouds
         partial void CloudsCustomParse(
@@ -7894,9 +7912,9 @@ namespace Mutagen.Bethesda.Starfield
         private bool _ImageSpaceLateSunset_IsSet => _IMSPLocation.HasValue && _IMSPLocation!.Value.Max - _ImageSpaceLateSunsetLocation + 1 >= 4;
         public IFormLinkGetter<IImageSpaceGetter> ImageSpaceLateSunset => _ImageSpaceLateSunset_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImageSpaceGetter>(_package, _recordData.Span.Slice(_ImageSpaceLateSunsetLocation, 0x4), isSet: _ImageSpaceLateSunset_IsSet) : FormLink<IImageSpaceGetter>.Null;
         #endregion
-        #region HNAM
-        private int? _HNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? HNAM => _HNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _HNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region VolumetricLighting
+        private RangeInt32? _VolumetricLightingLocation;
+        public IWeatherVolumetricLightingGetter? VolumetricLighting => _VolumetricLightingLocation.HasValue ? WeatherVolumetricLightingBinaryOverlay.WeatherVolumetricLightingFactory(_recordData.Slice(_VolumetricLightingLocation!.Value.Min), _package) : default;
         #endregion
         #region DirectionalAmbientLightingColors
         partial void DirectionalAmbientLightingColorsCustomParse(
@@ -8007,8 +8025,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.LNAM:
                 {
-                    _LNAMLocation = (stream.Position - offset);
-                    return (int)Weather_FieldIndex.LNAM;
+                    _MaxCloudLayersLocation = (stream.Position - offset);
+                    return (int)Weather_FieldIndex.MaxCloudLayers;
                 }
                 case RecordTypeInts.MNAM:
                 {
@@ -8022,8 +8040,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.CLDC:
                 {
-                    _CLDCLocation = (stream.Position - offset);
-                    return (int)Weather_FieldIndex.CLDC;
+                    _CloudTypeLocation = (stream.Position - offset);
+                    return (int)Weather_FieldIndex.CloudType;
                 }
                 case RecordTypeInts.RNAM:
                 {
@@ -8104,8 +8122,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.HNAM:
                 {
-                    _HNAMLocation = (stream.Position - offset);
-                    return (int)Weather_FieldIndex.HNAM;
+                    _VolumetricLightingLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
+                    return (int)Weather_FieldIndex.VolumetricLighting;
                 }
                 case RecordTypeInts.DALC:
                 {
