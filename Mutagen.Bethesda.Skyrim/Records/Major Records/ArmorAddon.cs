@@ -16,7 +16,7 @@ public partial class ArmorAddon
     IGenderedItemGetter<Boolean> IArmorAddonGetter.WeightSliderEnabled => this.WeightSliderEnabled;
 }
 
-internal class ArmorAddonWeightSliderContainer : IGenderedItem<bool>
+internal class ArmorAddonWeightSliderContainer : IGenderedItem<bool>, IGenderedItemEquality
 {
     internal byte _male;
     public bool Male 
@@ -64,6 +64,14 @@ internal class ArmorAddonWeightSliderContainer : IGenderedItem<bool>
     {
         GenderedItem.Print(this, fg, name);
     }
+
+    // Equal, like GenderedItem, by the male and female values (C118): the overlay gives these as a GenderedItem<bool>
+    object? IGenderedItemEquality.MaleItem => Male;
+    object? IGenderedItemEquality.FemaleItem => Female;
+
+    public override bool Equals(object? obj) => GenderedItem.ItemsEqual(Male, Female, obj);
+
+    public override int GetHashCode() => GenderedItem.ItemsHash(Male, Female);
 
     IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 }
