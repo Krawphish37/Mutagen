@@ -62,16 +62,58 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkGetter<IBiomeObjectPackInTargetGetter> IBiomeObjectGetter.PackIn => this.PackIn;
         #endregion
-        #region Unknown
+        #region Unknown1
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _Unknown = new byte[0];
-        public MemorySlice<Byte> Unknown
+        private MemorySlice<Byte> _Unknown1 = new byte[16];
+        public MemorySlice<Byte> Unknown1
         {
-            get => _Unknown;
-            set => this._Unknown = value;
+            get => _Unknown1;
+            set => this._Unknown1 = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IBiomeObjectGetter.Unknown => this.Unknown;
+        ReadOnlyMemorySlice<Byte> IBiomeObjectGetter.Unknown1 => this.Unknown1;
+        #endregion
+        #region Unknown2
+        public Single Unknown2 { get; set; } = default(Single);
+        #endregion
+        #region Unknown3
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private MemorySlice<Byte> _Unknown3 = new byte[28];
+        public MemorySlice<Byte> Unknown3
+        {
+            get => _Unknown3;
+            set => this._Unknown3 = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte> IBiomeObjectGetter.Unknown3 => this.Unknown3;
+        #endregion
+        #region Unknown4
+        public Single Unknown4 { get; set; } = default(Single);
+        #endregion
+        #region Unknown5
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private MemorySlice<Byte> _Unknown5 = new byte[4];
+        public MemorySlice<Byte> Unknown5
+        {
+            get => _Unknown5;
+            set => this._Unknown5 = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte> IBiomeObjectGetter.Unknown5 => this.Unknown5;
+        #endregion
+        #region ObjectDensity
+        public Single ObjectDensity { get; set; } = default(Single);
+        #endregion
+        #region Unknown6
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private MemorySlice<Byte> _Unknown6 = new byte[20];
+        public MemorySlice<Byte> Unknown6
+        {
+            get => _Unknown6;
+            set => this._Unknown6 = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte> IBiomeObjectGetter.Unknown6 => this.Unknown6;
         #endregion
 
         #region To String
@@ -113,15 +155,33 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.PackIn = initialValue;
-                this.Unknown = initialValue;
+                this.Unknown1 = initialValue;
+                this.Unknown2 = initialValue;
+                this.Unknown3 = initialValue;
+                this.Unknown4 = initialValue;
+                this.Unknown5 = initialValue;
+                this.ObjectDensity = initialValue;
+                this.Unknown6 = initialValue;
             }
 
             public Mask(
                 TItem PackIn,
-                TItem Unknown)
+                TItem Unknown1,
+                TItem Unknown2,
+                TItem Unknown3,
+                TItem Unknown4,
+                TItem Unknown5,
+                TItem ObjectDensity,
+                TItem Unknown6)
             {
                 this.PackIn = PackIn;
-                this.Unknown = Unknown;
+                this.Unknown1 = Unknown1;
+                this.Unknown2 = Unknown2;
+                this.Unknown3 = Unknown3;
+                this.Unknown4 = Unknown4;
+                this.Unknown5 = Unknown5;
+                this.ObjectDensity = ObjectDensity;
+                this.Unknown6 = Unknown6;
             }
 
             #pragma warning disable CS8618
@@ -134,7 +194,13 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem PackIn;
-            public TItem Unknown;
+            public TItem Unknown1;
+            public TItem Unknown2;
+            public TItem Unknown3;
+            public TItem Unknown4;
+            public TItem Unknown5;
+            public TItem ObjectDensity;
+            public TItem Unknown6;
             #endregion
 
             #region Equals
@@ -148,14 +214,26 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.PackIn, rhs.PackIn)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
+                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.Unknown3, rhs.Unknown3)) return false;
+                if (!object.Equals(this.Unknown4, rhs.Unknown4)) return false;
+                if (!object.Equals(this.Unknown5, rhs.Unknown5)) return false;
+                if (!object.Equals(this.ObjectDensity, rhs.ObjectDensity)) return false;
+                if (!object.Equals(this.Unknown6, rhs.Unknown6)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
                 hash.Add(this.PackIn);
-                hash.Add(this.Unknown);
+                hash.Add(this.Unknown1);
+                hash.Add(this.Unknown2);
+                hash.Add(this.Unknown3);
+                hash.Add(this.Unknown4);
+                hash.Add(this.Unknown5);
+                hash.Add(this.ObjectDensity);
+                hash.Add(this.Unknown6);
                 return hash.ToHashCode();
             }
 
@@ -165,7 +243,13 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.PackIn)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.Unknown1)) return false;
+                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.Unknown3)) return false;
+                if (!eval(this.Unknown4)) return false;
+                if (!eval(this.Unknown5)) return false;
+                if (!eval(this.ObjectDensity)) return false;
+                if (!eval(this.Unknown6)) return false;
                 return true;
             }
             #endregion
@@ -174,7 +258,13 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.PackIn)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.Unknown1)) return true;
+                if (eval(this.Unknown2)) return true;
+                if (eval(this.Unknown3)) return true;
+                if (eval(this.Unknown4)) return true;
+                if (eval(this.Unknown5)) return true;
+                if (eval(this.ObjectDensity)) return true;
+                if (eval(this.Unknown6)) return true;
                 return false;
             }
             #endregion
@@ -190,7 +280,13 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.PackIn = eval(this.PackIn);
-                obj.Unknown = eval(this.Unknown);
+                obj.Unknown1 = eval(this.Unknown1);
+                obj.Unknown2 = eval(this.Unknown2);
+                obj.Unknown3 = eval(this.Unknown3);
+                obj.Unknown4 = eval(this.Unknown4);
+                obj.Unknown5 = eval(this.Unknown5);
+                obj.ObjectDensity = eval(this.ObjectDensity);
+                obj.Unknown6 = eval(this.Unknown6);
             }
             #endregion
 
@@ -213,9 +309,33 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(PackIn, "PackIn");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.Unknown1 ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(Unknown1, "Unknown1");
+                    }
+                    if (printMask?.Unknown2 ?? true)
+                    {
+                        sb.AppendItem(Unknown2, "Unknown2");
+                    }
+                    if (printMask?.Unknown3 ?? true)
+                    {
+                        sb.AppendItem(Unknown3, "Unknown3");
+                    }
+                    if (printMask?.Unknown4 ?? true)
+                    {
+                        sb.AppendItem(Unknown4, "Unknown4");
+                    }
+                    if (printMask?.Unknown5 ?? true)
+                    {
+                        sb.AppendItem(Unknown5, "Unknown5");
+                    }
+                    if (printMask?.ObjectDensity ?? true)
+                    {
+                        sb.AppendItem(ObjectDensity, "ObjectDensity");
+                    }
+                    if (printMask?.Unknown6 ?? true)
+                    {
+                        sb.AppendItem(Unknown6, "Unknown6");
                     }
                 }
             }
@@ -242,7 +362,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? PackIn;
-            public Exception? Unknown;
+            public Exception? Unknown1;
+            public Exception? Unknown2;
+            public Exception? Unknown3;
+            public Exception? Unknown4;
+            public Exception? Unknown5;
+            public Exception? ObjectDensity;
+            public Exception? Unknown6;
             #endregion
 
             #region IErrorMask
@@ -253,8 +379,20 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case BiomeObject_FieldIndex.PackIn:
                         return PackIn;
-                    case BiomeObject_FieldIndex.Unknown:
-                        return Unknown;
+                    case BiomeObject_FieldIndex.Unknown1:
+                        return Unknown1;
+                    case BiomeObject_FieldIndex.Unknown2:
+                        return Unknown2;
+                    case BiomeObject_FieldIndex.Unknown3:
+                        return Unknown3;
+                    case BiomeObject_FieldIndex.Unknown4:
+                        return Unknown4;
+                    case BiomeObject_FieldIndex.Unknown5:
+                        return Unknown5;
+                    case BiomeObject_FieldIndex.ObjectDensity:
+                        return ObjectDensity;
+                    case BiomeObject_FieldIndex.Unknown6:
+                        return Unknown6;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -268,8 +406,26 @@ namespace Mutagen.Bethesda.Starfield
                     case BiomeObject_FieldIndex.PackIn:
                         this.PackIn = ex;
                         break;
-                    case BiomeObject_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case BiomeObject_FieldIndex.Unknown1:
+                        this.Unknown1 = ex;
+                        break;
+                    case BiomeObject_FieldIndex.Unknown2:
+                        this.Unknown2 = ex;
+                        break;
+                    case BiomeObject_FieldIndex.Unknown3:
+                        this.Unknown3 = ex;
+                        break;
+                    case BiomeObject_FieldIndex.Unknown4:
+                        this.Unknown4 = ex;
+                        break;
+                    case BiomeObject_FieldIndex.Unknown5:
+                        this.Unknown5 = ex;
+                        break;
+                    case BiomeObject_FieldIndex.ObjectDensity:
+                        this.ObjectDensity = ex;
+                        break;
+                    case BiomeObject_FieldIndex.Unknown6:
+                        this.Unknown6 = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -284,8 +440,26 @@ namespace Mutagen.Bethesda.Starfield
                     case BiomeObject_FieldIndex.PackIn:
                         this.PackIn = (Exception?)obj;
                         break;
-                    case BiomeObject_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case BiomeObject_FieldIndex.Unknown1:
+                        this.Unknown1 = (Exception?)obj;
+                        break;
+                    case BiomeObject_FieldIndex.Unknown2:
+                        this.Unknown2 = (Exception?)obj;
+                        break;
+                    case BiomeObject_FieldIndex.Unknown3:
+                        this.Unknown3 = (Exception?)obj;
+                        break;
+                    case BiomeObject_FieldIndex.Unknown4:
+                        this.Unknown4 = (Exception?)obj;
+                        break;
+                    case BiomeObject_FieldIndex.Unknown5:
+                        this.Unknown5 = (Exception?)obj;
+                        break;
+                    case BiomeObject_FieldIndex.ObjectDensity:
+                        this.ObjectDensity = (Exception?)obj;
+                        break;
+                    case BiomeObject_FieldIndex.Unknown6:
+                        this.Unknown6 = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -296,7 +470,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (PackIn != null) return true;
-                if (Unknown != null) return true;
+                if (Unknown1 != null) return true;
+                if (Unknown2 != null) return true;
+                if (Unknown3 != null) return true;
+                if (Unknown4 != null) return true;
+                if (Unknown5 != null) return true;
+                if (ObjectDensity != null) return true;
+                if (Unknown6 != null) return true;
                 return false;
             }
             #endregion
@@ -326,7 +506,25 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(PackIn, "PackIn");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(Unknown1, "Unknown1");
+                }
+                {
+                    sb.AppendItem(Unknown2, "Unknown2");
+                }
+                {
+                    sb.AppendItem(Unknown3, "Unknown3");
+                }
+                {
+                    sb.AppendItem(Unknown4, "Unknown4");
+                }
+                {
+                    sb.AppendItem(Unknown5, "Unknown5");
+                }
+                {
+                    sb.AppendItem(ObjectDensity, "ObjectDensity");
+                }
+                {
+                    sb.AppendItem(Unknown6, "Unknown6");
                 }
             }
             #endregion
@@ -337,7 +535,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.PackIn = this.PackIn.Combine(rhs.PackIn);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
+                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.Unknown3 = this.Unknown3.Combine(rhs.Unknown3);
+                ret.Unknown4 = this.Unknown4.Combine(rhs.Unknown4);
+                ret.Unknown5 = this.Unknown5.Combine(rhs.Unknown5);
+                ret.ObjectDensity = this.ObjectDensity.Combine(rhs.ObjectDensity);
+                ret.Unknown6 = this.Unknown6.Combine(rhs.Unknown6);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -362,7 +566,13 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool PackIn;
-            public bool Unknown;
+            public bool Unknown1;
+            public bool Unknown2;
+            public bool Unknown3;
+            public bool Unknown4;
+            public bool Unknown5;
+            public bool ObjectDensity;
+            public bool Unknown6;
             #endregion
 
             #region Ctors
@@ -373,7 +583,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.PackIn = defaultOn;
-                this.Unknown = defaultOn;
+                this.Unknown1 = defaultOn;
+                this.Unknown2 = defaultOn;
+                this.Unknown3 = defaultOn;
+                this.Unknown4 = defaultOn;
+                this.Unknown5 = defaultOn;
+                this.ObjectDensity = defaultOn;
+                this.Unknown6 = defaultOn;
             }
 
             #endregion
@@ -390,7 +606,13 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((PackIn, null));
-                ret.Add((Unknown, null));
+                ret.Add((Unknown1, null));
+                ret.Add((Unknown2, null));
+                ret.Add((Unknown3, null));
+                ret.Add((Unknown4, null));
+                ret.Add((Unknown5, null));
+                ret.Add((ObjectDensity, null));
+                ret.Add((Unknown6, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -470,7 +692,13 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IBiomeObject>
     {
         new IFormLink<IBiomeObjectPackInTargetGetter> PackIn { get; set; }
-        new MemorySlice<Byte> Unknown { get; set; }
+        new MemorySlice<Byte> Unknown1 { get; set; }
+        new Single Unknown2 { get; set; }
+        new MemorySlice<Byte> Unknown3 { get; set; }
+        new Single Unknown4 { get; set; }
+        new MemorySlice<Byte> Unknown5 { get; set; }
+        new Single ObjectDensity { get; set; }
+        new MemorySlice<Byte> Unknown6 { get; set; }
     }
 
     public partial interface IBiomeObjectGetter :
@@ -487,7 +715,13 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => BiomeObject_Registration.Instance;
         IFormLinkGetter<IBiomeObjectPackInTargetGetter> PackIn { get; }
-        ReadOnlyMemorySlice<Byte> Unknown { get; }
+        ReadOnlyMemorySlice<Byte> Unknown1 { get; }
+        Single Unknown2 { get; }
+        ReadOnlyMemorySlice<Byte> Unknown3 { get; }
+        Single Unknown4 { get; }
+        ReadOnlyMemorySlice<Byte> Unknown5 { get; }
+        Single ObjectDensity { get; }
+        ReadOnlyMemorySlice<Byte> Unknown6 { get; }
 
     }
 
@@ -658,7 +892,13 @@ namespace Mutagen.Bethesda.Starfield
     internal enum BiomeObject_FieldIndex
     {
         PackIn = 0,
-        Unknown = 1,
+        Unknown1 = 1,
+        Unknown2 = 2,
+        Unknown3 = 3,
+        Unknown4 = 4,
+        Unknown5 = 5,
+        ObjectDensity = 6,
+        Unknown6 = 7,
     }
     #endregion
 
@@ -669,9 +909,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 2;
+        public const ushort AdditionalFieldCount = 8;
 
-        public const ushort FieldCount = 2;
+        public const ushort FieldCount = 8;
 
         public static readonly Type MaskType = typeof(BiomeObject.Mask<>);
 
@@ -745,7 +985,13 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.PackIn.Clear();
-            item.Unknown = [];
+            item.Unknown1 = new byte[16];
+            item.Unknown2 = default(Single);
+            item.Unknown3 = new byte[28];
+            item.Unknown4 = default(Single);
+            item.Unknown5 = new byte[4];
+            item.ObjectDensity = default(Single);
+            item.Unknown6 = new byte[20];
         }
         
         #region Mutagen
@@ -801,7 +1047,13 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.PackIn = item.PackIn.Equals(rhs.PackIn);
-            ret.Unknown = MemoryExtensions.SequenceEqual(item.Unknown.Span, rhs.Unknown.Span);
+            ret.Unknown1 = MemoryExtensions.SequenceEqual(item.Unknown1.Span, rhs.Unknown1.Span);
+            ret.Unknown2 = item.Unknown2.EqualsWithin(rhs.Unknown2);
+            ret.Unknown3 = MemoryExtensions.SequenceEqual(item.Unknown3.Span, rhs.Unknown3.Span);
+            ret.Unknown4 = item.Unknown4.EqualsWithin(rhs.Unknown4);
+            ret.Unknown5 = MemoryExtensions.SequenceEqual(item.Unknown5.Span, rhs.Unknown5.Span);
+            ret.ObjectDensity = item.ObjectDensity.EqualsWithin(rhs.ObjectDensity);
+            ret.Unknown6 = MemoryExtensions.SequenceEqual(item.Unknown6.Span, rhs.Unknown6.Span);
         }
         
         public string Print(
@@ -850,9 +1102,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.PackIn.FormKey, "PackIn");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.Unknown1 ?? true)
             {
-                sb.AppendLine($"Unknown => {SpanExt.ToHexString(item.Unknown)}");
+                sb.AppendLine($"Unknown1 => {SpanExt.ToHexString(item.Unknown1)}");
+            }
+            if (printMask?.Unknown2 ?? true)
+            {
+                sb.AppendItem(item.Unknown2, "Unknown2");
+            }
+            if (printMask?.Unknown3 ?? true)
+            {
+                sb.AppendLine($"Unknown3 => {SpanExt.ToHexString(item.Unknown3)}");
+            }
+            if (printMask?.Unknown4 ?? true)
+            {
+                sb.AppendItem(item.Unknown4, "Unknown4");
+            }
+            if (printMask?.Unknown5 ?? true)
+            {
+                sb.AppendLine($"Unknown5 => {SpanExt.ToHexString(item.Unknown5)}");
+            }
+            if (printMask?.ObjectDensity ?? true)
+            {
+                sb.AppendItem(item.ObjectDensity, "ObjectDensity");
+            }
+            if (printMask?.Unknown6 ?? true)
+            {
+                sb.AppendLine($"Unknown6 => {SpanExt.ToHexString(item.Unknown6)}");
             }
         }
         
@@ -867,9 +1143,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.PackIn.Equals(rhs.PackIn)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown1) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.Unknown.Span, rhs.Unknown.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.Unknown1.Span, rhs.Unknown1.Span)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown2) ?? true))
+            {
+                if (!lhs.Unknown2.EqualsWithin(rhs.Unknown2)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown3) ?? true))
+            {
+                if (!MemoryExtensions.SequenceEqual(lhs.Unknown3.Span, rhs.Unknown3.Span)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown4) ?? true))
+            {
+                if (!lhs.Unknown4.EqualsWithin(rhs.Unknown4)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown5) ?? true))
+            {
+                if (!MemoryExtensions.SequenceEqual(lhs.Unknown5.Span, rhs.Unknown5.Span)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.ObjectDensity) ?? true))
+            {
+                if (!lhs.ObjectDensity.EqualsWithin(rhs.ObjectDensity)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown6) ?? true))
+            {
+                if (!MemoryExtensions.SequenceEqual(lhs.Unknown6.Span, rhs.Unknown6.Span)) return false;
             }
             return true;
         }
@@ -878,7 +1178,13 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.PackIn);
-            hash.AddBytes(item.Unknown);
+            hash.AddBytes(item.Unknown1);
+            hash.Add(item.Unknown2);
+            hash.AddBytes(item.Unknown3);
+            hash.Add(item.Unknown4);
+            hash.AddBytes(item.Unknown5);
+            hash.Add(item.ObjectDensity);
+            hash.AddBytes(item.Unknown6);
             return hash.ToHashCode();
         }
         
@@ -916,9 +1222,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.PackIn.SetTo(rhs.PackIn.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown1) ?? true))
             {
-                item.Unknown = rhs.Unknown.ToArray();
+                item.Unknown1 = rhs.Unknown1.ToArray();
+            }
+            if ((copyMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown2) ?? true))
+            {
+                item.Unknown2 = rhs.Unknown2;
+            }
+            if ((copyMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown3) ?? true))
+            {
+                item.Unknown3 = rhs.Unknown3.ToArray();
+            }
+            if ((copyMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown4) ?? true))
+            {
+                item.Unknown4 = rhs.Unknown4;
+            }
+            if ((copyMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown5) ?? true))
+            {
+                item.Unknown5 = rhs.Unknown5.ToArray();
+            }
+            if ((copyMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.ObjectDensity) ?? true))
+            {
+                item.ObjectDensity = rhs.ObjectDensity;
+            }
+            if ((copyMask?.GetShouldTranslate((int)BiomeObject_FieldIndex.Unknown6) ?? true))
+            {
+                item.Unknown6 = rhs.Unknown6.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1033,7 +1363,25 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.PackIn);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown);
+                item: item.Unknown1);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.Unknown2);
+            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.Unknown3);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.Unknown4);
+            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.Unknown5);
+            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.ObjectDensity);
+            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                writer: writer,
+                item: item.Unknown6);
         }
 
         public void Write(
@@ -1075,7 +1423,13 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.PackIn.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.Unknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Unknown1 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(16));
+            item.Unknown2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Unknown3 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(28));
+            item.Unknown4 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Unknown5 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(4));
+            item.ObjectDensity = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Unknown6 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(20));
         }
 
     }
@@ -1143,10 +1497,13 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public IFormLinkGetter<IBiomeObjectPackInTargetGetter> PackIn => FormLinkBinaryTranslation.Instance.OverlayFactory<IBiomeObjectPackInTargetGetter>(_package, _structData.Span.Slice(0x0, 0x4));
-        #region Unknown
-        public ReadOnlyMemorySlice<Byte> Unknown => _structData.Span.Slice(0x4).ToArray();
-        protected int UnknownEndingPos;
-        #endregion
+        public ReadOnlyMemorySlice<Byte> Unknown1 => _structData.Span.Slice(0x4, 0x10).ToArray();
+        public Single Unknown2 => _structData.Slice(0x14, 0x4).Float();
+        public ReadOnlyMemorySlice<Byte> Unknown3 => _structData.Span.Slice(0x18, 0x1C).ToArray();
+        public Single Unknown4 => _structData.Slice(0x34, 0x4).Float();
+        public ReadOnlyMemorySlice<Byte> Unknown5 => _structData.Span.Slice(0x38, 0x4).ToArray();
+        public Single ObjectDensity => _structData.Slice(0x3C, 0x4).Float();
+        public ReadOnlyMemorySlice<Byte> Unknown6 => _structData.Span.Slice(0x40, 0x14).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1172,12 +1529,13 @@ namespace Mutagen.Bethesda.Starfield
                 stream: stream,
                 meta: package.MetaData.Constants,
                 translationParams: translationParams,
+                length: 0x54,
                 memoryPair: out var memoryPair,
-                offset: out var offset,
-                finalPos: out var finalPos);
+                offset: out var offset);
             var ret = new BiomeObjectBinaryOverlay(
                 memoryPair: memoryPair,
                 package: package);
+            stream.Position += 0x54 + package.MetaData.Constants.SubConstants.HeaderLength;
             ret.CustomFactoryEnd(
                 stream: stream,
                 finalPos: stream.Length,
