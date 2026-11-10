@@ -225,6 +225,7 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             DialogueSceneAction_Registration.Instance,
             DisplayCaseComponent_Registration.Instance,
             DisplayCaseComponentItem_Registration.Instance,
+            DisplayCaseExclusivity_Registration.Instance,
             DoesNotExistConditionData_Registration.Instance,
             Door_Registration.Instance,
             DoorTriangle_Registration.Instance,

@@ -2059,6 +2059,9 @@
     <Compile Include="Records\Common Subrecords\VolumesComponent.cs">
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Common Subrecords\CrowdComponent.cs">
+      <DependentUpon>Component.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Common Subrecords\VolumesComponentItem.cs">
       <DependentUpon>Component.xml</DependentUpon>
     </Compile>
@@ -7022,6 +7025,9 @@
     </Compile>
     <Compile Include="Records\Common Subrecords\Reflection_Generated.cs">
       <DependentUpon>Reflection.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Common Subrecords\DisplayCaseExclusivity_Generated.cs">
+      <DependentUpon>Component.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\Major Records\ResourceGenerationDataValues_Generated.cs">
       <DependentUpon>ResourceGenerationData.xml</DependentUpon>

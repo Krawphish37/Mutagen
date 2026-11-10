@@ -149,7 +149,12 @@
   <Object name="DisplayCaseComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
       <RefList name="Items" recordType="DCSD" refName="DisplayCaseComponentItem" />
-      <List name="DCED" recordType="DCED" >
+      <RefList name="Exclusivity" recordType="DCED" refName="DisplayCaseExclusivity" />
+    </Fields>
+  </Object>
+  <Object name="DisplayCaseExclusivity" objType="Subrecord">
+    <Fields>
+      <List name="ExclusiveDisplaySlots" counterLength="4">
         <UInt32 />
       </List>
     </Fields>
@@ -400,8 +405,7 @@
   <Object name="CrowdComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
       <Float name="Density" recordType="CDND" />
-      <UInt32 name="PopulationCount" recordType="CDNS" />
-      <RefList name="Items" refName="CrowdComponentItem" />
+      <RefList name="Items" refName="CrowdComponentItem" counterRecType="CDNS" binary="Custom" />
     </Fields>
   </Object>
   <Object name="CrowdComponentItem" objType="Subrecord" >

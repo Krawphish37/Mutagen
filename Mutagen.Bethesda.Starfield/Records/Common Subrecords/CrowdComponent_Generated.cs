@@ -59,22 +59,17 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Single? ICrowdComponentGetter.Density => this.Density;
         #endregion
-        #region PopulationCount
-        public UInt32? PopulationCount { get; set; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? ICrowdComponentGetter.PopulationCount => this.PopulationCount;
-        #endregion
         #region Items
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<CrowdComponentItem> _Items = new ExtendedList<CrowdComponentItem>();
-        public ExtendedList<CrowdComponentItem> Items
+        private ExtendedList<CrowdComponentItem>? _Items;
+        public ExtendedList<CrowdComponentItem>? Items
         {
             get => this._Items;
-            init => this._Items = value;
+            set => this._Items = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<ICrowdComponentItemGetter> ICrowdComponentGetter.Items => _Items;
+        IReadOnlyList<ICrowdComponentItemGetter>? ICrowdComponentGetter.Items => _Items;
         #endregion
 
         #endregion
@@ -120,18 +115,15 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.Density = initialValue;
-                this.PopulationCount = initialValue;
                 this.Items = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CrowdComponentItem.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
                 TItem Density,
-                TItem PopulationCount,
                 TItem Items)
             : base()
             {
                 this.Density = Density;
-                this.PopulationCount = PopulationCount;
                 this.Items = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CrowdComponentItem.Mask<TItem>?>>?>(Items, []);
             }
 
@@ -145,7 +137,6 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem Density;
-            public TItem PopulationCount;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CrowdComponentItem.Mask<TItem>?>>?>? Items;
             #endregion
 
@@ -161,7 +152,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.Density, rhs.Density)) return false;
-                if (!object.Equals(this.PopulationCount, rhs.PopulationCount)) return false;
                 if (!object.Equals(this.Items, rhs.Items)) return false;
                 return true;
             }
@@ -169,7 +159,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.Density);
-                hash.Add(this.PopulationCount);
                 hash.Add(this.Items);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -182,7 +171,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!base.All(eval)) return false;
                 if (!eval(this.Density)) return false;
-                if (!eval(this.PopulationCount)) return false;
                 if (this.Items != null)
                 {
                     if (!eval(this.Items.Overall)) return false;
@@ -204,7 +192,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (base.Any(eval)) return true;
                 if (eval(this.Density)) return true;
-                if (eval(this.PopulationCount)) return true;
                 if (this.Items != null)
                 {
                     if (eval(this.Items.Overall)) return true;
@@ -233,7 +220,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.Translate_InternalFill(obj, eval);
                 obj.Density = eval(this.Density);
-                obj.PopulationCount = eval(this.PopulationCount);
                 if (Items != null)
                 {
                     obj.Items = new MaskItem<R, IEnumerable<MaskItemIndexed<R, CrowdComponentItem.Mask<R>?>>?>(eval(this.Items.Overall), []);
@@ -271,10 +257,6 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Density, "Density");
                     }
-                    if (printMask?.PopulationCount ?? true)
-                    {
-                        sb.AppendItem(PopulationCount, "PopulationCount");
-                    }
                     if ((printMask?.Items?.Overall ?? true)
                         && Items is {} ItemsItem)
                     {
@@ -306,7 +288,6 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public Exception? Density;
-            public Exception? PopulationCount;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentItem.ErrorMask?>>?>? Items;
             #endregion
 
@@ -318,8 +299,6 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case CrowdComponent_FieldIndex.Density:
                         return Density;
-                    case CrowdComponent_FieldIndex.PopulationCount:
-                        return PopulationCount;
                     case CrowdComponent_FieldIndex.Items:
                         return Items;
                     default:
@@ -334,9 +313,6 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case CrowdComponent_FieldIndex.Density:
                         this.Density = ex;
-                        break;
-                    case CrowdComponent_FieldIndex.PopulationCount:
-                        this.PopulationCount = ex;
                         break;
                     case CrowdComponent_FieldIndex.Items:
                         this.Items = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentItem.ErrorMask?>>?>(ex, null);
@@ -355,9 +331,6 @@ namespace Mutagen.Bethesda.Starfield
                     case CrowdComponent_FieldIndex.Density:
                         this.Density = (Exception?)obj;
                         break;
-                    case CrowdComponent_FieldIndex.PopulationCount:
-                        this.PopulationCount = (Exception?)obj;
-                        break;
                     case CrowdComponent_FieldIndex.Items:
                         this.Items = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentItem.ErrorMask?>>?>)obj;
                         break;
@@ -371,7 +344,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Density != null) return true;
-                if (PopulationCount != null) return true;
                 if (Items != null) return true;
                 return false;
             }
@@ -402,9 +374,6 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(Density, "Density");
                 }
-                {
-                    sb.AppendItem(PopulationCount, "PopulationCount");
-                }
                 if (Items is {} ItemsItem)
                 {
                     sb.AppendLine("Items =>");
@@ -432,7 +401,6 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Density = this.Density.Combine(rhs.Density);
-                ret.PopulationCount = this.PopulationCount.Combine(rhs.PopulationCount);
                 ret.Items = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Items?.Overall, rhs.Items?.Overall), Noggog.ExceptionExt.Combine(this.Items?.Specific, rhs.Items?.Specific));
                 return ret;
             }
@@ -457,7 +425,6 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public bool Density;
-            public bool PopulationCount;
             public CrowdComponentItem.TranslationMask? Items;
             #endregion
 
@@ -468,7 +435,6 @@ namespace Mutagen.Bethesda.Starfield
                 : base(defaultOn, onOverall)
             {
                 this.Density = defaultOn;
-                this.PopulationCount = defaultOn;
             }
 
             #endregion
@@ -477,7 +443,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((Density, null));
-                ret.Add((PopulationCount, null));
                 ret.Add((Items == null ? DefaultOn : !Items.GetCrystal().CopyNothing, Items?.GetCrystal()));
             }
 
@@ -557,8 +522,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<ICrowdComponent>
     {
         new Single? Density { get; set; }
-        new UInt32? PopulationCount { get; set; }
-        new ExtendedList<CrowdComponentItem> Items { get; }
+        new ExtendedList<CrowdComponentItem>? Items { get; set; }
     }
 
     public partial interface ICrowdComponentGetter :
@@ -569,8 +533,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         static new ILoquiRegistration StaticRegistration => CrowdComponent_Registration.Instance;
         Single? Density { get; }
-        UInt32? PopulationCount { get; }
-        IReadOnlyList<ICrowdComponentItemGetter> Items { get; }
+        IReadOnlyList<ICrowdComponentItemGetter>? Items { get; }
 
     }
 
@@ -716,8 +679,7 @@ namespace Mutagen.Bethesda.Starfield
     internal enum CrowdComponent_FieldIndex
     {
         Density = 0,
-        PopulationCount = 1,
-        Items = 2,
+        Items = 1,
     }
     #endregion
 
@@ -728,9 +690,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 3;
+        public const ushort AdditionalFieldCount = 2;
 
-        public const ushort FieldCount = 3;
+        public const ushort FieldCount = 2;
 
         public static readonly Type MaskType = typeof(CrowdComponent.Mask<>);
 
@@ -764,12 +726,12 @@ namespace Mutagen.Bethesda.Starfield
             var all = RecordCollection.Factory(
                 RecordTypes.BFCB,
                 RecordTypes.CDND,
-                RecordTypes.CDNS,
                 RecordTypes.PRPS,
                 RecordTypes.CTDA,
                 RecordTypes.CITC,
                 RecordTypes.STRV,
                 RecordTypes.FLTV,
+                RecordTypes.CDNS,
                 RecordTypes.CIS1,
                 RecordTypes.CIS2);
             return new RecordTriggerSpecs(
@@ -817,8 +779,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Density = default;
-            item.PopulationCount = default;
-            item.Items.Clear();
+            item.Items = null;
             base.Clear(item);
         }
         
@@ -831,7 +792,7 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(ICrowdComponent obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             base.RemapLinks(obj, mapping);
-            obj.Items.RemapLinks(mapping);
+            obj.Items?.RemapLinks(mapping);
         }
         
         #endregion
@@ -888,7 +849,6 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Density = item.Density.EqualsWithin(rhs.Density);
-            ret.PopulationCount = item.PopulationCount == rhs.PopulationCount;
             ret.Items = item.Items.CollectionEqualsHelper(
                 rhs.Items,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -947,17 +907,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(DensityItem, "Density");
             }
-            if ((printMask?.PopulationCount ?? true)
-                && item.PopulationCount is {} PopulationCountItem)
-            {
-                sb.AppendItem(PopulationCountItem, "PopulationCount");
-            }
-            if (printMask?.Items?.Overall ?? true)
+            if ((printMask?.Items?.Overall ?? true)
+                && item.Items is {} ItemsItem)
             {
                 sb.AppendLine("Items =>");
                 using (sb.Brace())
                 {
-                    foreach (var subItem in item.Items)
+                    foreach (var subItem in ItemsItem)
                     {
                         using (sb.Brace())
                         {
@@ -989,13 +945,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Density.EqualsWithin(rhs.Density)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.PopulationCount) ?? true))
-            {
-                if (lhs.PopulationCount != rhs.PopulationCount) return false;
-            }
             if ((equalsMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.Items) ?? true))
             {
-                if (!lhs.Items.SequenceEqual(rhs.Items, (l, r) => ((CrowdComponentItemCommon)((ICrowdComponentItemGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)CrowdComponent_FieldIndex.Items)))) return false;
+                if (!lhs.Items.SequenceEqualNullable(rhs.Items, (l, r) => ((CrowdComponentItemCommon)((ICrowdComponentItemGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)CrowdComponent_FieldIndex.Items)))) return false;
             }
             return true;
         }
@@ -1018,13 +970,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Densityitem);
             }
-            if (item.PopulationCount is {} PopulationCountitem)
+            if (item.Items is {} Itemsitem)
             {
-                hash.Add(PopulationCountitem);
-            }
-            foreach (var subItem in item.Items)
-            {
-                hash.Add(subItem);
+                foreach (var subItem in Itemsitem)
+                {
+                    hash.Add(subItem);
+                }
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1050,9 +1001,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
-            foreach (var item in obj.Items.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+            if (obj.Items is {} ItemsItem)
             {
-                yield return FormLinkInformation.Factory(item);
+                foreach (var item in ItemsItem.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+                {
+                    yield return FormLinkInformation.Factory(item);
+                }
             }
             yield break;
         }
@@ -1082,23 +1036,27 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Density = rhs.Density;
             }
-            if ((copyMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.PopulationCount) ?? true))
-            {
-                item.PopulationCount = rhs.PopulationCount;
-            }
             if ((copyMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.Items) ?? true))
             {
                 errorMask?.PushIndex((int)CrowdComponent_FieldIndex.Items);
                 try
                 {
-                    item.Items.SetTo(
-                        rhs.Items
-                        .Select(r =>
-                        {
-                            return r.DeepCopy(
-                                errorMask: errorMask,
-                                default(TranslationCrystal));
-                        }));
+                    if ((rhs.Items != null))
+                    {
+                        item.Items = 
+                            rhs.Items
+                            .Select(r =>
+                            {
+                                return r.DeepCopy(
+                                    errorMask: errorMask,
+                                    default(TranslationCrystal));
+                            })
+                            .ToExtendedList<CrowdComponentItem>();
+                    }
+                    else
+                    {
+                        item.Items = null;
+                    }
                 }
                 catch (Exception ex)
                 when (errorMask != null)
@@ -1239,21 +1197,22 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.Density,
                 header: translationParams.ConvertToCustom(RecordTypes.CDND));
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+            CrowdComponentBinaryWriteTranslation.WriteBinaryItems(
                 writer: writer,
-                item: item.PopulationCount,
-                header: translationParams.ConvertToCustom(RecordTypes.CDNS));
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ICrowdComponentItemGetter>.Instance.Write(
+                item: item);
+        }
+
+        public static partial void WriteBinaryItemsCustom(
+            MutagenWriter writer,
+            ICrowdComponentGetter item);
+
+        public static void WriteBinaryItems(
+            MutagenWriter writer,
+            ICrowdComponentGetter item)
+        {
+            WriteBinaryItemsCustom(
                 writer: writer,
-                items: item.Items,
-                transl: (MutagenWriter subWriter, ICrowdComponentItemGetter subItem, TypedWriteParams conv) =>
-                {
-                    var Item = subItem;
-                    ((CrowdComponentItemBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
-                        item: Item,
-                        writer: subWriter,
-                        translationParams: conv);
-                });
+                item: item);
         }
 
         public void Write(
@@ -1314,24 +1273,17 @@ namespace Mutagen.Bethesda.Starfield
                     item.Density = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
                     return (int)CrowdComponent_FieldIndex.Density;
                 }
-                case RecordTypeInts.CDNS:
-                {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.PopulationCount = frame.ReadUInt32();
-                    return (int)CrowdComponent_FieldIndex.PopulationCount;
-                }
                 case RecordTypeInts.PRPS:
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 case RecordTypeInts.STRV:
                 case RecordTypeInts.FLTV:
+                case RecordTypeInts.CDNS:
                 {
-                    item.Items.SetTo(
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<CrowdComponentItem>.Instance.Parse(
-                            reader: frame,
-                            triggeringRecord: CrowdComponentItem_Registration.TriggerSpecs,
-                            translationParams: translationParams,
-                            transl: CrowdComponentItem.TryCreateFromBinary));
+                    CrowdComponentBinaryCreateTranslation.FillBinaryItemsCustom(
+                        frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
+                        item: item,
+                        lastParsed: lastParsed);
                     return (int)CrowdComponent_FieldIndex.Items;
                 }
                 default:
@@ -1345,6 +1297,11 @@ namespace Mutagen.Bethesda.Starfield
                         translationParams: translationParams.WithNoConverter());
             }
         }
+
+        public static partial void FillBinaryItemsCustom(
+            MutagenFrame frame,
+            ICrowdComponent item,
+            PreviousParse lastParsed);
 
     }
 
@@ -1395,11 +1352,14 @@ namespace Mutagen.Bethesda.Starfield
         private int? _DensityLocation;
         public Single? Density => _DensityLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DensityLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
-        #region PopulationCount
-        private int? _PopulationCountLocation;
-        public UInt32? PopulationCount => _PopulationCountLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _PopulationCountLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region Items
+        partial void ItemsCustomParse(
+            OverlayStream stream,
+            int finalPos,
+            int offset,
+            RecordType type,
+            PreviousParse lastParsed);
         #endregion
-        public IReadOnlyList<ICrowdComponentItemGetter> Items { get; private set; } = [];
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1468,22 +1428,19 @@ namespace Mutagen.Bethesda.Starfield
                     _DensityLocation = (stream.Position - offset);
                     return (int)CrowdComponent_FieldIndex.Density;
                 }
-                case RecordTypeInts.CDNS:
-                {
-                    _PopulationCountLocation = (stream.Position - offset);
-                    return (int)CrowdComponent_FieldIndex.PopulationCount;
-                }
                 case RecordTypeInts.PRPS:
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 case RecordTypeInts.STRV:
                 case RecordTypeInts.FLTV:
+                case RecordTypeInts.CDNS:
                 {
-                    this.Items = this.ParseRepeatedTypelessSubrecord<ICrowdComponentItemGetter>(
+                    ItemsCustomParse(
                         stream: stream,
-                        translationParams: translationParams,
-                        trigger: CrowdComponentItem_Registration.TriggerSpecs,
-                        factory: CrowdComponentItemBinaryOverlay.CrowdComponentItemFactory);
+                        finalPos: finalPos,
+                        offset: offset,
+                        type: type,
+                        lastParsed: lastParsed);
                     return (int)CrowdComponent_FieldIndex.Items;
                 }
                 default:
