@@ -356,25 +356,31 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region OffsetData
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _OffsetData;
-        public MemorySlice<Byte>? OffsetData
+        private ExtendedList<UInt32>? _OffsetData;
+        public ExtendedList<UInt32>? OffsetData
         {
             get => this._OffsetData;
             set => this._OffsetData = value;
         }
+        #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWorldspaceGetter.OffsetData => this.OffsetData;
+        IReadOnlyList<UInt32>? IWorldspaceGetter.OffsetData => _OffsetData;
+        #endregion
+
         #endregion
         #region CellSizeData
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _CellSizeData;
-        public MemorySlice<Byte>? CellSizeData
+        private ExtendedList<UInt32>? _CellSizeData;
+        public ExtendedList<UInt32>? CellSizeData
         {
             get => this._CellSizeData;
             set => this._CellSizeData = value;
         }
+        #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWorldspaceGetter.CellSizeData => this.CellSizeData;
+        IReadOnlyList<UInt32>? IWorldspaceGetter.CellSizeData => _CellSizeData;
+        #endregion
+
         #endregion
         #region TopCell
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -462,8 +468,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.CellWaterHeightLocations = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.WaterHeights = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.HNAM = initialValue;
-                this.OffsetData = initialValue;
-                this.CellSizeData = initialValue;
+                this.OffsetData = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
+                this.CellSizeData = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.TopCell = new MaskItem<TItem, Cell.Mask<TItem>?>(initialValue, new Cell.Mask<TItem>(initialValue));
                 this.SubCellsTimestamp = initialValue;
                 this.SubCellsUnknown = initialValue;
@@ -553,8 +559,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.CellWaterHeightLocations = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(CellWaterHeightLocations, []);
                 this.WaterHeights = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(WaterHeights, []);
                 this.HNAM = HNAM;
-                this.OffsetData = OffsetData;
-                this.CellSizeData = CellSizeData;
+                this.OffsetData = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(OffsetData, []);
+                this.CellSizeData = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(CellSizeData, []);
                 this.TopCell = new MaskItem<TItem, Cell.Mask<TItem>?>(TopCell, new Cell.Mask<TItem>(TopCell));
                 this.SubCellsTimestamp = SubCellsTimestamp;
                 this.SubCellsUnknown = SubCellsUnknown;
@@ -600,8 +606,8 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? CellWaterHeightLocations;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? WaterHeights;
             public TItem HNAM;
-            public TItem OffsetData;
-            public TItem CellSizeData;
+            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? OffsetData;
+            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? CellSizeData;
             public MaskItem<TItem, Cell.Mask<TItem>?>? TopCell { get; set; }
             public TItem SubCellsTimestamp;
             public TItem SubCellsUnknown;
@@ -815,8 +821,28 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.HNAM)) return false;
-                if (!eval(this.OffsetData)) return false;
-                if (!eval(this.CellSizeData)) return false;
+                if (this.OffsetData != null)
+                {
+                    if (!eval(this.OffsetData.Overall)) return false;
+                    if (this.OffsetData.Specific != null)
+                    {
+                        foreach (var item in this.OffsetData.Specific)
+                        {
+                            if (!eval(item.Value)) return false;
+                        }
+                    }
+                }
+                if (this.CellSizeData != null)
+                {
+                    if (!eval(this.CellSizeData.Overall)) return false;
+                    if (this.CellSizeData.Specific != null)
+                    {
+                        foreach (var item in this.CellSizeData.Specific)
+                        {
+                            if (!eval(item.Value)) return false;
+                        }
+                    }
+                }
                 if (TopCell != null)
                 {
                     if (!eval(this.TopCell.Overall)) return false;
@@ -953,8 +979,28 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.HNAM)) return true;
-                if (eval(this.OffsetData)) return true;
-                if (eval(this.CellSizeData)) return true;
+                if (this.OffsetData != null)
+                {
+                    if (eval(this.OffsetData.Overall)) return true;
+                    if (this.OffsetData.Specific != null)
+                    {
+                        foreach (var item in this.OffsetData.Specific)
+                        {
+                            if (!eval(item.Value)) return false;
+                        }
+                    }
+                }
+                if (this.CellSizeData != null)
+                {
+                    if (eval(this.CellSizeData.Overall)) return true;
+                    if (this.CellSizeData.Specific != null)
+                    {
+                        foreach (var item in this.CellSizeData.Specific)
+                        {
+                            if (!eval(item.Value)) return false;
+                        }
+                    }
+                }
                 if (TopCell != null)
                 {
                     if (eval(this.TopCell.Overall)) return true;
@@ -1100,8 +1146,34 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.HNAM = eval(this.HNAM);
-                obj.OffsetData = eval(this.OffsetData);
-                obj.CellSizeData = eval(this.CellSizeData);
+                if (OffsetData != null)
+                {
+                    obj.OffsetData = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.OffsetData.Overall), []);
+                    if (OffsetData.Specific != null)
+                    {
+                        var l = new List<(int Index, R Item)>();
+                        obj.OffsetData.Specific = l;
+                        foreach (var item in OffsetData.Specific)
+                        {
+                            R mask = eval(item.Value);
+                            l.Add((item.Index, mask));
+                        }
+                    }
+                }
+                if (CellSizeData != null)
+                {
+                    obj.CellSizeData = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.CellSizeData.Overall), []);
+                    if (CellSizeData.Specific != null)
+                    {
+                        var l = new List<(int Index, R Item)>();
+                        obj.CellSizeData.Specific = l;
+                        foreach (var item in CellSizeData.Specific)
+                        {
+                            R mask = eval(item.Value);
+                            l.Add((item.Index, mask));
+                        }
+                    }
+                }
                 obj.TopCell = this.TopCell == null ? null : new MaskItem<R, Cell.Mask<R>?>(eval(this.TopCell.Overall), this.TopCell.Specific?.Translate(eval));
                 obj.SubCellsTimestamp = eval(this.SubCellsTimestamp);
                 obj.SubCellsUnknown = eval(this.SubCellsUnknown);
@@ -1354,13 +1426,47 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(HNAM, "HNAM");
                     }
-                    if (printMask?.OffsetData ?? true)
+                    if ((printMask?.OffsetData?.Overall ?? true)
+                        && OffsetData is {} OffsetDataItem)
                     {
-                        sb.AppendItem(OffsetData, "OffsetData");
+                        sb.AppendLine("OffsetData =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(OffsetDataItem.Overall);
+                            if (OffsetDataItem.Specific != null)
+                            {
+                                foreach (var subItem in OffsetDataItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        {
+                                            sb.AppendItem(subItem);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                    if (printMask?.CellSizeData ?? true)
+                    if ((printMask?.CellSizeData?.Overall ?? true)
+                        && CellSizeData is {} CellSizeDataItem)
                     {
-                        sb.AppendItem(CellSizeData, "CellSizeData");
+                        sb.AppendLine("CellSizeData =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(CellSizeDataItem.Overall);
+                            if (CellSizeDataItem.Specific != null)
+                            {
+                                foreach (var subItem in CellSizeDataItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        {
+                                            sb.AppendItem(subItem);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     if (printMask?.TopCell?.Overall ?? true)
                     {
@@ -1434,8 +1540,8 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? CellWaterHeightLocations;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? WaterHeights;
             public Exception? HNAM;
-            public Exception? OffsetData;
-            public Exception? CellSizeData;
+            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? OffsetData;
+            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? CellSizeData;
             public MaskItem<Exception?, Cell.ErrorMask?>? TopCell;
             public Exception? SubCellsTimestamp;
             public Exception? SubCellsUnknown;
@@ -1621,10 +1727,10 @@ namespace Mutagen.Bethesda.Starfield
                         this.HNAM = ex;
                         break;
                     case Worldspace_FieldIndex.OffsetData:
-                        this.OffsetData = ex;
+                        this.OffsetData = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
                     case Worldspace_FieldIndex.CellSizeData:
-                        this.CellSizeData = ex;
+                        this.CellSizeData = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
                     case Worldspace_FieldIndex.TopCell:
                         this.TopCell = new MaskItem<Exception?, Cell.ErrorMask?>(ex, null);
@@ -1740,10 +1846,10 @@ namespace Mutagen.Bethesda.Starfield
                         this.HNAM = (Exception?)obj;
                         break;
                     case Worldspace_FieldIndex.OffsetData:
-                        this.OffsetData = (Exception?)obj;
+                        this.OffsetData = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
                     case Worldspace_FieldIndex.CellSizeData:
-                        this.CellSizeData = (Exception?)obj;
+                        this.CellSizeData = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
                     case Worldspace_FieldIndex.TopCell:
                         this.TopCell = (MaskItem<Exception?, Cell.ErrorMask?>?)obj;
@@ -2006,11 +2112,45 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(HNAM, "HNAM");
                 }
+                if (OffsetData is {} OffsetDataItem)
                 {
-                    sb.AppendItem(OffsetData, "OffsetData");
+                    sb.AppendLine("OffsetData =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(OffsetDataItem.Overall);
+                        if (OffsetDataItem.Specific != null)
+                        {
+                            foreach (var subItem in OffsetDataItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    {
+                                        sb.AppendItem(subItem);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
+                if (CellSizeData is {} CellSizeDataItem)
                 {
-                    sb.AppendItem(CellSizeData, "CellSizeData");
+                    sb.AppendLine("CellSizeData =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(CellSizeDataItem.Overall);
+                        if (CellSizeDataItem.Specific != null)
+                        {
+                            foreach (var subItem in CellSizeDataItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    {
+                                        sb.AppendItem(subItem);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 TopCell?.Print(sb);
                 {
@@ -2075,8 +2215,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.CellWaterHeightLocations = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.CellWaterHeightLocations?.Overall, rhs.CellWaterHeightLocations?.Overall), Noggog.ExceptionExt.Combine(this.CellWaterHeightLocations?.Specific, rhs.CellWaterHeightLocations?.Specific));
                 ret.WaterHeights = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.WaterHeights?.Overall, rhs.WaterHeights?.Overall), Noggog.ExceptionExt.Combine(this.WaterHeights?.Specific, rhs.WaterHeights?.Specific));
                 ret.HNAM = this.HNAM.Combine(rhs.HNAM);
-                ret.OffsetData = this.OffsetData.Combine(rhs.OffsetData);
-                ret.CellSizeData = this.CellSizeData.Combine(rhs.CellSizeData);
+                ret.OffsetData = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.OffsetData?.Overall, rhs.OffsetData?.Overall), Noggog.ExceptionExt.Combine(this.OffsetData?.Specific, rhs.OffsetData?.Specific));
+                ret.CellSizeData = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.CellSizeData?.Overall, rhs.CellSizeData?.Overall), Noggog.ExceptionExt.Combine(this.CellSizeData?.Specific, rhs.CellSizeData?.Specific));
                 ret.TopCell = this.TopCell.Combine(rhs.TopCell, (l, r) => l.Combine(r));
                 ret.SubCellsTimestamp = this.SubCellsTimestamp.Combine(rhs.SubCellsTimestamp);
                 ret.SubCellsUnknown = this.SubCellsUnknown.Combine(rhs.SubCellsUnknown);
@@ -2452,8 +2592,8 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<P2Int16>? CellWaterHeightLocations { get; set; }
         new ExtendedList<Single>? WaterHeights { get; set; }
         new Byte? HNAM { get; set; }
-        new MemorySlice<Byte>? OffsetData { get; set; }
-        new MemorySlice<Byte>? CellSizeData { get; set; }
+        new ExtendedList<UInt32>? OffsetData { get; set; }
+        new ExtendedList<UInt32>? CellSizeData { get; set; }
         new Cell? TopCell { get; set; }
         new Int32 SubCellsTimestamp { get; set; }
         new Int32 SubCellsUnknown { get; set; }
@@ -2523,8 +2663,8 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<P2Int16>? CellWaterHeightLocations { get; }
         IReadOnlyList<Single>? WaterHeights { get; }
         Byte? HNAM { get; }
-        ReadOnlyMemorySlice<Byte>? OffsetData { get; }
-        ReadOnlyMemorySlice<Byte>? CellSizeData { get; }
+        IReadOnlyList<UInt32>? OffsetData { get; }
+        IReadOnlyList<UInt32>? CellSizeData { get; }
         ICellGetter? TopCell { get; }
         Int32 SubCellsTimestamp { get; }
         Int32 SubCellsUnknown { get; }
@@ -3168,8 +3308,8 @@ namespace Mutagen.Bethesda.Starfield
             item.CellWaterHeightLocations = null;
             item.WaterHeights = null;
             item.HNAM = default;
-            item.OffsetData = default;
-            item.CellSizeData = default;
+            item.OffsetData = null;
+            item.CellSizeData = null;
             item.TopCell = null;
             item.SubCellsTimestamp = default(Int32);
             item.SubCellsUnknown = default(Int32);
@@ -3941,8 +4081,14 @@ namespace Mutagen.Bethesda.Starfield
                 (l, r) => l.EqualsWithin(r),
                 include);
             ret.HNAM = item.HNAM == rhs.HNAM;
-            ret.OffsetData = MemorySliceExt.SequenceEqual(item.OffsetData, rhs.OffsetData);
-            ret.CellSizeData = MemorySliceExt.SequenceEqual(item.CellSizeData, rhs.CellSizeData);
+            ret.OffsetData = item.OffsetData.CollectionEqualsHelper(
+                rhs.OffsetData,
+                (l, r) => l == r,
+                include);
+            ret.CellSizeData = item.CellSizeData.CollectionEqualsHelper(
+                rhs.CellSizeData,
+                (l, r) => l == r,
+                include);
             ret.TopCell = EqualsMaskHelper.EqualsHelper(
                 item.TopCell,
                 rhs.TopCell,
@@ -4199,15 +4345,35 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(HNAMItem, "HNAM");
             }
-            if ((printMask?.OffsetData ?? true)
+            if ((printMask?.OffsetData?.Overall ?? true)
                 && item.OffsetData is {} OffsetDataItem)
             {
-                sb.AppendLine($"OffsetData => {SpanExt.ToHexString(OffsetDataItem)}");
+                sb.AppendLine("OffsetData =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in OffsetDataItem)
+                    {
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(subItem);
+                        }
+                    }
+                }
             }
-            if ((printMask?.CellSizeData ?? true)
+            if ((printMask?.CellSizeData?.Overall ?? true)
                 && item.CellSizeData is {} CellSizeDataItem)
             {
-                sb.AppendLine($"CellSizeData => {SpanExt.ToHexString(CellSizeDataItem)}");
+                sb.AppendLine("CellSizeData =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in CellSizeDataItem)
+                    {
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(subItem);
+                        }
+                    }
+                }
             }
             if ((printMask?.TopCell?.Overall ?? true)
                 && item.TopCell is {} TopCellItem)
@@ -4424,11 +4590,11 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.OffsetData) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.OffsetData, rhs.OffsetData)) return false;
+                if (!lhs.OffsetData.SequenceEqualNullable(rhs.OffsetData)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.CellSizeData) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.CellSizeData, rhs.CellSizeData)) return false;
+                if (!lhs.CellSizeData.SequenceEqualNullable(rhs.CellSizeData)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Worldspace_FieldIndex.TopCell) ?? true))
             {
@@ -4574,13 +4740,19 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(HNAMitem);
             }
-            if (item.OffsetData is {} OffsetDataItem)
+            if (item.OffsetData is {} OffsetDataitem)
             {
-                hash.AddBytes(OffsetDataItem);
+                foreach (var subItem in OffsetDataitem)
+                {
+                    hash.Add(subItem);
+                }
             }
-            if (item.CellSizeData is {} CellSizeDataItem)
+            if (item.CellSizeData is {} CellSizeDataitem)
             {
-                hash.AddBytes(CellSizeDataItem);
+                foreach (var subItem in CellSizeDataitem)
+                {
+                    hash.Add(subItem);
+                }
             }
             if (item.TopCell is {} TopCellitem)
             {
@@ -5803,24 +5975,54 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.OffsetData) ?? true))
             {
-                if(rhs.OffsetData is {} OffsetDatarhs)
+                errorMask?.PushIndex((int)Worldspace_FieldIndex.OffsetData);
+                try
                 {
-                    item.OffsetData = OffsetDatarhs.ToArray();
+                    if ((rhs.OffsetData != null))
+                    {
+                        item.OffsetData = 
+                            rhs.OffsetData
+                            .ToExtendedList<UInt32>();
+                    }
+                    else
+                    {
+                        item.OffsetData = null;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.OffsetData = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.CellSizeData) ?? true))
             {
-                if(rhs.CellSizeData is {} CellSizeDatarhs)
+                errorMask?.PushIndex((int)Worldspace_FieldIndex.CellSizeData);
+                try
                 {
-                    item.CellSizeData = CellSizeDatarhs.ToArray();
+                    if ((rhs.CellSizeData != null))
+                    {
+                        item.CellSizeData = 
+                            rhs.CellSizeData
+                            .ToExtendedList<UInt32>();
+                    }
+                    else
+                    {
+                        item.CellSizeData = null;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.CellSizeData = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             if ((copyMask?.GetShouldTranslate((int)Worldspace_FieldIndex.TopCell) ?? true))
@@ -6231,16 +6433,18 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.HNAM,
                 header: translationParams.ConvertToCustom(RecordTypes.HNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt32>.Instance.Write(
                 writer: writer,
-                item: item.OffsetData,
-                header: translationParams.ConvertToCustom(RecordTypes.OFST),
-                overflowRecord: RecordTypes.XXXX);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                items: item.OffsetData,
+                recordType: translationParams.ConvertToCustom(RecordTypes.OFST),
+                overflowRecord: RecordTypes.XXXX,
+                transl: UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write);
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt32>.Instance.Write(
                 writer: writer,
-                item: item.CellSizeData,
-                header: translationParams.ConvertToCustom(RecordTypes.CLSZ),
-                overflowRecord: RecordTypes.XXXX);
+                items: item.CellSizeData,
+                recordType: translationParams.ConvertToCustom(RecordTypes.CLSZ),
+                overflowRecord: RecordTypes.XXXX,
+                transl: UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write);
         }
 
         public static partial void WriteBinaryObjectBoundsMinCustom(
@@ -6587,13 +6791,21 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.OFST:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.OffsetData = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    item.OffsetData = 
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt32>.Instance.Parse(
+                            reader: frame.SpawnWithLength(contentLength),
+                            transl: UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
+                        .CastExtendedList<UInt32>();
                     return (int)Worldspace_FieldIndex.OffsetData;
                 }
                 case RecordTypeInts.CLSZ:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.CellSizeData = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    item.CellSizeData = 
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt32>.Instance.Parse(
+                            reader: frame.SpawnWithLength(contentLength),
+                            transl: UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
+                        .CastExtendedList<UInt32>();
                     return (int)Worldspace_FieldIndex.CellSizeData;
                 }
                 case RecordTypeInts.XXXX:
@@ -6800,24 +7012,8 @@ namespace Mutagen.Bethesda.Starfield
         private int? _HNAMLocation;
         public Byte? HNAM => _HNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _HNAMLocation.Value, _package.MetaData.Constants)[0] : default(Byte?);
         #endregion
-        #region OffsetData
-        private int? _OffsetDataLocation;
-        private int? _OffsetDataLengthOverride;
-        public ReadOnlyMemorySlice<Byte>? OffsetData => PluginUtilityTranslation.ReadByteArrayWithOverflow(
-            _recordData,
-            _package.MetaData.Constants,
-            _OffsetDataLocation,
-            _OffsetDataLengthOverride);
-        #endregion
-        #region CellSizeData
-        private int? _CellSizeDataLocation;
-        private int? _CellSizeDataLengthOverride;
-        public ReadOnlyMemorySlice<Byte>? CellSizeData => PluginUtilityTranslation.ReadByteArrayWithOverflow(
-            _recordData,
-            _package.MetaData.Constants,
-            _CellSizeDataLocation,
-            _CellSizeDataLengthOverride);
-        #endregion
+        public IReadOnlyList<UInt32>? OffsetData { get; private set; }
+        public IReadOnlyList<UInt32>? CellSizeData { get; private set; }
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -7089,22 +7285,22 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.OFST:
                 {
-                    _OffsetDataLocation = (stream.Position - offset);
-                    _OffsetDataLengthOverride = lastParsed.LengthOverride;
-                    if (lastParsed.LengthOverride.HasValue)
-                    {
-                        stream.Position += lastParsed.LengthOverride.Value;
-                    }
+                    this.OffsetData = BinaryOverlayList.FactoryByStartIndexWithTrigger<UInt32>(
+                        stream: stream,
+                        package: _package,
+                        finalPos: finalPos,
+                        itemLength: 4,
+                        getter: (s, p) => BinaryPrimitives.ReadUInt32LittleEndian(s));
                     return (int)Worldspace_FieldIndex.OffsetData;
                 }
                 case RecordTypeInts.CLSZ:
                 {
-                    _CellSizeDataLocation = (stream.Position - offset);
-                    _CellSizeDataLengthOverride = lastParsed.LengthOverride;
-                    if (lastParsed.LengthOverride.HasValue)
-                    {
-                        stream.Position += lastParsed.LengthOverride.Value;
-                    }
+                    this.CellSizeData = BinaryOverlayList.FactoryByStartIndexWithTrigger<UInt32>(
+                        stream: stream,
+                        package: _package,
+                        finalPos: finalPos,
+                        itemLength: 4,
+                        getter: (s, p) => BinaryPrimitives.ReadUInt32LittleEndian(s));
                     return (int)Worldspace_FieldIndex.CellSizeData;
                 }
                 case RecordTypeInts.XXXX:

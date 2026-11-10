@@ -1633,8 +1633,8 @@ internal class MergedWorldspace : IWorldspaceGetter
     public IReadOnlyList<P2Int16>? CellWaterHeightLocations => _primary.CellWaterHeightLocations;
     public IReadOnlyList<Single>? WaterHeights => _primary.WaterHeights;
     public Byte? HNAM => _primary.HNAM;
-    public ReadOnlyMemorySlice<Byte>? OffsetData => _primary.OffsetData;
-    public ReadOnlyMemorySlice<Byte>? CellSizeData => _primary.CellSizeData;
+    public IReadOnlyList<UInt32>? OffsetData => _primary.OffsetData;
+    public IReadOnlyList<UInt32>? CellSizeData => _primary.CellSizeData;
     public ICellGetter? TopCell => _primary.TopCell;
     public Int32 SubCellsTimestamp => _primary.SubCellsTimestamp;
     public Int32 SubCellsUnknown => _primary.SubCellsUnknown;
