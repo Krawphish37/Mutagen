@@ -8,7 +8,7 @@ using Noggog.StructuredStrings;
 
 namespace Mutagen.Bethesda.Plugins.Binary.Overlay;
 
-internal sealed class GenderedItemBinaryOverlay<T> : IGenderedItemGetter<T>
+internal sealed class GenderedItemBinaryOverlay<T> : IGenderedItemGetter<T>, IGenderedItemEquality
 {
     private readonly ReadOnlyMemorySlice<byte> _recordData;
     private readonly BinaryOverlayFactoryPackage _package;
@@ -45,6 +45,13 @@ internal sealed class GenderedItemBinaryOverlay<T> : IGenderedItemGetter<T>
     }
 
     public void Print(StructuredStringBuilder fg, string? name) => GenderedItem.Print(this, fg, name);
+
+    object? IGenderedItemEquality.MaleItem => Male;
+    object? IGenderedItemEquality.FemaleItem => Female;
+
+    public override bool Equals(object? obj) => GenderedItem.ItemsEqual(Male, Female, obj);
+
+    public override int GetHashCode() => GenderedItem.ItemsHash(Male, Female);
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
