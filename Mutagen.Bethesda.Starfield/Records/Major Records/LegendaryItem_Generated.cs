@@ -286,27 +286,33 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region FNAM
+        #region RerollCosts
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _FNAM;
-        public MemorySlice<Byte>? FNAM
+        private ExtendedList<LegendaryItemRankCost>? _RerollCosts;
+        public ExtendedList<LegendaryItemRankCost>? RerollCosts
         {
-            get => this._FNAM;
-            set => this._FNAM = value;
+            get => this._RerollCosts;
+            set => this._RerollCosts = value;
         }
+        #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ILegendaryItemGetter.FNAM => this.FNAM;
+        IReadOnlyList<ILegendaryItemRankCostGetter>? ILegendaryItemGetter.RerollCosts => _RerollCosts;
         #endregion
-        #region KNAM
+
+        #endregion
+        #region PickCosts
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _KNAM;
-        public MemorySlice<Byte>? KNAM
+        private ExtendedList<LegendaryItemRankCost>? _PickCosts;
+        public ExtendedList<LegendaryItemRankCost>? PickCosts
         {
-            get => this._KNAM;
-            set => this._KNAM = value;
+            get => this._PickCosts;
+            set => this._PickCosts = value;
         }
+        #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ILegendaryItemGetter.KNAM => this.KNAM;
+        IReadOnlyList<ILegendaryItemRankCostGetter>? ILegendaryItemGetter.PickCosts => _PickCosts;
+        #endregion
+
         #endregion
         #region GNAM
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -350,16 +356,19 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region JNAM
+        #region QualityUpgradeCosts
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _JNAM;
-        public MemorySlice<Byte>? JNAM
+        private ExtendedList<LegendaryItemQualityCost>? _QualityUpgradeCosts;
+        public ExtendedList<LegendaryItemQualityCost>? QualityUpgradeCosts
         {
-            get => this._JNAM;
-            set => this._JNAM = value;
+            get => this._QualityUpgradeCosts;
+            set => this._QualityUpgradeCosts = value;
         }
+        #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ILegendaryItemGetter.JNAM => this.JNAM;
+        IReadOnlyList<ILegendaryItemQualityCostGetter>? ILegendaryItemGetter.QualityUpgradeCosts => _QualityUpgradeCosts;
+        #endregion
+
         #endregion
 
         #region To String
@@ -403,12 +412,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.LnamEntries = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemLnamEntry.Mask<TItem>?>>?>(initialValue, []);
                 this.IncludeFilters = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryFilter.Mask<TItem>?>>?>(initialValue, []);
                 this.ExcludeFilters = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryFilter.Mask<TItem>?>>?>(initialValue, []);
-                this.FNAM = initialValue;
-                this.KNAM = initialValue;
+                this.RerollCosts = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemRankCost.Mask<TItem>?>>?>(initialValue, []);
+                this.PickCosts = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemRankCost.Mask<TItem>?>>?>(initialValue, []);
                 this.GNAM = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryMod.Mask<TItem>?>>?>(initialValue, []);
                 this.HNAM = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemHNAMEntry.Mask<TItem>?>>?>(initialValue, []);
                 this.INAM = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemHNAMEntry.Mask<TItem>?>>?>(initialValue, []);
-                this.JNAM = initialValue;
+                this.QualityUpgradeCosts = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemQualityCost.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
@@ -436,12 +445,12 @@ namespace Mutagen.Bethesda.Starfield
                 TItem LnamEntries,
                 TItem IncludeFilters,
                 TItem ExcludeFilters,
-                TItem FNAM,
-                TItem KNAM,
+                TItem RerollCosts,
+                TItem PickCosts,
                 TItem GNAM,
                 TItem HNAM,
                 TItem INAM,
-                TItem JNAM)
+                TItem QualityUpgradeCosts)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -468,12 +477,12 @@ namespace Mutagen.Bethesda.Starfield
                 this.LnamEntries = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemLnamEntry.Mask<TItem>?>>?>(LnamEntries, []);
                 this.IncludeFilters = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryFilter.Mask<TItem>?>>?>(IncludeFilters, []);
                 this.ExcludeFilters = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryFilter.Mask<TItem>?>>?>(ExcludeFilters, []);
-                this.FNAM = FNAM;
-                this.KNAM = KNAM;
+                this.RerollCosts = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemRankCost.Mask<TItem>?>>?>(RerollCosts, []);
+                this.PickCosts = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemRankCost.Mask<TItem>?>>?>(PickCosts, []);
                 this.GNAM = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryMod.Mask<TItem>?>>?>(GNAM, []);
                 this.HNAM = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemHNAMEntry.Mask<TItem>?>>?>(HNAM, []);
                 this.INAM = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemHNAMEntry.Mask<TItem>?>>?>(INAM, []);
-                this.JNAM = JNAM;
+                this.QualityUpgradeCosts = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemQualityCost.Mask<TItem>?>>?>(QualityUpgradeCosts, []);
             }
 
             #pragma warning disable CS8618
@@ -502,12 +511,12 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemLnamEntry.Mask<TItem>?>>?>? LnamEntries;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryFilter.Mask<TItem>?>>?>? IncludeFilters;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryFilter.Mask<TItem>?>>?>? ExcludeFilters;
-            public TItem FNAM;
-            public TItem KNAM;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemRankCost.Mask<TItem>?>>?>? RerollCosts;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemRankCost.Mask<TItem>?>>?>? PickCosts;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryMod.Mask<TItem>?>>?>? GNAM;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemHNAMEntry.Mask<TItem>?>>?>? HNAM;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemHNAMEntry.Mask<TItem>?>>?>? INAM;
-            public TItem JNAM;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, LegendaryItemQualityCost.Mask<TItem>?>>?>? QualityUpgradeCosts;
             #endregion
 
             #region Equals
@@ -538,12 +547,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.LnamEntries, rhs.LnamEntries)) return false;
                 if (!object.Equals(this.IncludeFilters, rhs.IncludeFilters)) return false;
                 if (!object.Equals(this.ExcludeFilters, rhs.ExcludeFilters)) return false;
-                if (!object.Equals(this.FNAM, rhs.FNAM)) return false;
-                if (!object.Equals(this.KNAM, rhs.KNAM)) return false;
+                if (!object.Equals(this.RerollCosts, rhs.RerollCosts)) return false;
+                if (!object.Equals(this.PickCosts, rhs.PickCosts)) return false;
                 if (!object.Equals(this.GNAM, rhs.GNAM)) return false;
                 if (!object.Equals(this.HNAM, rhs.HNAM)) return false;
                 if (!object.Equals(this.INAM, rhs.INAM)) return false;
-                if (!object.Equals(this.JNAM, rhs.JNAM)) return false;
+                if (!object.Equals(this.QualityUpgradeCosts, rhs.QualityUpgradeCosts)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -566,12 +575,12 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.LnamEntries);
                 hash.Add(this.IncludeFilters);
                 hash.Add(this.ExcludeFilters);
-                hash.Add(this.FNAM);
-                hash.Add(this.KNAM);
+                hash.Add(this.RerollCosts);
+                hash.Add(this.PickCosts);
                 hash.Add(this.GNAM);
                 hash.Add(this.HNAM);
                 hash.Add(this.INAM);
-                hash.Add(this.JNAM);
+                hash.Add(this.QualityUpgradeCosts);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -674,8 +683,30 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.FNAM)) return false;
-                if (!eval(this.KNAM)) return false;
+                if (this.RerollCosts != null)
+                {
+                    if (!eval(this.RerollCosts.Overall)) return false;
+                    if (this.RerollCosts.Specific != null)
+                    {
+                        foreach (var item in this.RerollCosts.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
+                if (this.PickCosts != null)
+                {
+                    if (!eval(this.PickCosts.Overall)) return false;
+                    if (this.PickCosts.Specific != null)
+                    {
+                        foreach (var item in this.PickCosts.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (this.GNAM != null)
                 {
                     if (!eval(this.GNAM.Overall)) return false;
@@ -712,7 +743,18 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.JNAM)) return false;
+                if (this.QualityUpgradeCosts != null)
+                {
+                    if (!eval(this.QualityUpgradeCosts.Overall)) return false;
+                    if (this.QualityUpgradeCosts.Specific != null)
+                    {
+                        foreach (var item in this.QualityUpgradeCosts.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 return true;
             }
             #endregion
@@ -813,8 +855,30 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.FNAM)) return true;
-                if (eval(this.KNAM)) return true;
+                if (this.RerollCosts != null)
+                {
+                    if (eval(this.RerollCosts.Overall)) return true;
+                    if (this.RerollCosts.Specific != null)
+                    {
+                        foreach (var item in this.RerollCosts.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
+                if (this.PickCosts != null)
+                {
+                    if (eval(this.PickCosts.Overall)) return true;
+                    if (this.PickCosts.Specific != null)
+                    {
+                        foreach (var item in this.PickCosts.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (this.GNAM != null)
                 {
                     if (eval(this.GNAM.Overall)) return true;
@@ -851,7 +915,18 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.JNAM)) return true;
+                if (this.QualityUpgradeCosts != null)
+                {
+                    if (eval(this.QualityUpgradeCosts.Overall)) return true;
+                    if (this.QualityUpgradeCosts.Specific != null)
+                    {
+                        foreach (var item in this.QualityUpgradeCosts.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 return false;
             }
             #endregion
@@ -954,8 +1029,36 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.FNAM = eval(this.FNAM);
-                obj.KNAM = eval(this.KNAM);
+                if (RerollCosts != null)
+                {
+                    obj.RerollCosts = new MaskItem<R, IEnumerable<MaskItemIndexed<R, LegendaryItemRankCost.Mask<R>?>>?>(eval(this.RerollCosts.Overall), []);
+                    if (RerollCosts.Specific != null)
+                    {
+                        var l = new List<MaskItemIndexed<R, LegendaryItemRankCost.Mask<R>?>>();
+                        obj.RerollCosts.Specific = l;
+                        foreach (var item in RerollCosts.Specific)
+                        {
+                            MaskItemIndexed<R, LegendaryItemRankCost.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, LegendaryItemRankCost.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
+                        }
+                    }
+                }
+                if (PickCosts != null)
+                {
+                    obj.PickCosts = new MaskItem<R, IEnumerable<MaskItemIndexed<R, LegendaryItemRankCost.Mask<R>?>>?>(eval(this.PickCosts.Overall), []);
+                    if (PickCosts.Specific != null)
+                    {
+                        var l = new List<MaskItemIndexed<R, LegendaryItemRankCost.Mask<R>?>>();
+                        obj.PickCosts.Specific = l;
+                        foreach (var item in PickCosts.Specific)
+                        {
+                            MaskItemIndexed<R, LegendaryItemRankCost.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, LegendaryItemRankCost.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
+                        }
+                    }
+                }
                 if (GNAM != null)
                 {
                     obj.GNAM = new MaskItem<R, IEnumerable<MaskItemIndexed<R, LegendaryMod.Mask<R>?>>?>(eval(this.GNAM.Overall), []);
@@ -1001,7 +1104,21 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.JNAM = eval(this.JNAM);
+                if (QualityUpgradeCosts != null)
+                {
+                    obj.QualityUpgradeCosts = new MaskItem<R, IEnumerable<MaskItemIndexed<R, LegendaryItemQualityCost.Mask<R>?>>?>(eval(this.QualityUpgradeCosts.Overall), []);
+                    if (QualityUpgradeCosts.Specific != null)
+                    {
+                        var l = new List<MaskItemIndexed<R, LegendaryItemQualityCost.Mask<R>?>>();
+                        obj.QualityUpgradeCosts.Specific = l;
+                        foreach (var item in QualityUpgradeCosts.Specific)
+                        {
+                            MaskItemIndexed<R, LegendaryItemQualityCost.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, LegendaryItemQualityCost.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
+                        }
+                    }
+                }
             }
             #endregion
 
@@ -1163,13 +1280,43 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.FNAM ?? true)
+                    if ((printMask?.RerollCosts?.Overall ?? true)
+                        && RerollCosts is {} RerollCostsItem)
                     {
-                        sb.AppendItem(FNAM, "FNAM");
+                        sb.AppendLine("RerollCosts =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(RerollCostsItem.Overall);
+                            if (RerollCostsItem.Specific != null)
+                            {
+                                foreach (var subItem in RerollCostsItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        subItem?.Print(sb);
+                                    }
+                                }
+                            }
+                        }
                     }
-                    if (printMask?.KNAM ?? true)
+                    if ((printMask?.PickCosts?.Overall ?? true)
+                        && PickCosts is {} PickCostsItem)
                     {
-                        sb.AppendItem(KNAM, "KNAM");
+                        sb.AppendLine("PickCosts =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(PickCostsItem.Overall);
+                            if (PickCostsItem.Specific != null)
+                            {
+                                foreach (var subItem in PickCostsItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        subItem?.Print(sb);
+                                    }
+                                }
+                            }
+                        }
                     }
                     if ((printMask?.GNAM?.Overall ?? true)
                         && GNAM is {} GNAMItem)
@@ -1228,9 +1375,24 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.JNAM ?? true)
+                    if ((printMask?.QualityUpgradeCosts?.Overall ?? true)
+                        && QualityUpgradeCosts is {} QualityUpgradeCostsItem)
                     {
-                        sb.AppendItem(JNAM, "JNAM");
+                        sb.AppendLine("QualityUpgradeCosts =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(QualityUpgradeCostsItem.Overall);
+                            if (QualityUpgradeCostsItem.Specific != null)
+                            {
+                                foreach (var subItem in QualityUpgradeCostsItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        subItem?.Print(sb);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1260,12 +1422,12 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemLnamEntry.ErrorMask?>>?>? LnamEntries;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryFilter.ErrorMask?>>?>? IncludeFilters;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryFilter.ErrorMask?>>?>? ExcludeFilters;
-            public Exception? FNAM;
-            public Exception? KNAM;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemRankCost.ErrorMask?>>?>? RerollCosts;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemRankCost.ErrorMask?>>?>? PickCosts;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryMod.ErrorMask?>>?>? GNAM;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemHNAMEntry.ErrorMask?>>?>? HNAM;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemHNAMEntry.ErrorMask?>>?>? INAM;
-            public Exception? JNAM;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemQualityCost.ErrorMask?>>?>? QualityUpgradeCosts;
             #endregion
 
             #region IErrorMask
@@ -1308,18 +1470,18 @@ namespace Mutagen.Bethesda.Starfield
                         return IncludeFilters;
                     case LegendaryItem_FieldIndex.ExcludeFilters:
                         return ExcludeFilters;
-                    case LegendaryItem_FieldIndex.FNAM:
-                        return FNAM;
-                    case LegendaryItem_FieldIndex.KNAM:
-                        return KNAM;
+                    case LegendaryItem_FieldIndex.RerollCosts:
+                        return RerollCosts;
+                    case LegendaryItem_FieldIndex.PickCosts:
+                        return PickCosts;
                     case LegendaryItem_FieldIndex.GNAM:
                         return GNAM;
                     case LegendaryItem_FieldIndex.HNAM:
                         return HNAM;
                     case LegendaryItem_FieldIndex.INAM:
                         return INAM;
-                    case LegendaryItem_FieldIndex.JNAM:
-                        return JNAM;
+                    case LegendaryItem_FieldIndex.QualityUpgradeCosts:
+                        return QualityUpgradeCosts;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -1381,11 +1543,11 @@ namespace Mutagen.Bethesda.Starfield
                     case LegendaryItem_FieldIndex.ExcludeFilters:
                         this.ExcludeFilters = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryFilter.ErrorMask?>>?>(ex, null);
                         break;
-                    case LegendaryItem_FieldIndex.FNAM:
-                        this.FNAM = ex;
+                    case LegendaryItem_FieldIndex.RerollCosts:
+                        this.RerollCosts = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemRankCost.ErrorMask?>>?>(ex, null);
                         break;
-                    case LegendaryItem_FieldIndex.KNAM:
-                        this.KNAM = ex;
+                    case LegendaryItem_FieldIndex.PickCosts:
+                        this.PickCosts = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemRankCost.ErrorMask?>>?>(ex, null);
                         break;
                     case LegendaryItem_FieldIndex.GNAM:
                         this.GNAM = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryMod.ErrorMask?>>?>(ex, null);
@@ -1396,8 +1558,8 @@ namespace Mutagen.Bethesda.Starfield
                     case LegendaryItem_FieldIndex.INAM:
                         this.INAM = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemHNAMEntry.ErrorMask?>>?>(ex, null);
                         break;
-                    case LegendaryItem_FieldIndex.JNAM:
-                        this.JNAM = ex;
+                    case LegendaryItem_FieldIndex.QualityUpgradeCosts:
+                        this.QualityUpgradeCosts = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemQualityCost.ErrorMask?>>?>(ex, null);
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -1461,11 +1623,11 @@ namespace Mutagen.Bethesda.Starfield
                     case LegendaryItem_FieldIndex.ExcludeFilters:
                         this.ExcludeFilters = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryFilter.ErrorMask?>>?>)obj;
                         break;
-                    case LegendaryItem_FieldIndex.FNAM:
-                        this.FNAM = (Exception?)obj;
+                    case LegendaryItem_FieldIndex.RerollCosts:
+                        this.RerollCosts = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemRankCost.ErrorMask?>>?>)obj;
                         break;
-                    case LegendaryItem_FieldIndex.KNAM:
-                        this.KNAM = (Exception?)obj;
+                    case LegendaryItem_FieldIndex.PickCosts:
+                        this.PickCosts = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemRankCost.ErrorMask?>>?>)obj;
                         break;
                     case LegendaryItem_FieldIndex.GNAM:
                         this.GNAM = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryMod.ErrorMask?>>?>)obj;
@@ -1476,8 +1638,8 @@ namespace Mutagen.Bethesda.Starfield
                     case LegendaryItem_FieldIndex.INAM:
                         this.INAM = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemHNAMEntry.ErrorMask?>>?>)obj;
                         break;
-                    case LegendaryItem_FieldIndex.JNAM:
-                        this.JNAM = (Exception?)obj;
+                    case LegendaryItem_FieldIndex.QualityUpgradeCosts:
+                        this.QualityUpgradeCosts = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemQualityCost.ErrorMask?>>?>)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -1505,12 +1667,12 @@ namespace Mutagen.Bethesda.Starfield
                 if (LnamEntries != null) return true;
                 if (IncludeFilters != null) return true;
                 if (ExcludeFilters != null) return true;
-                if (FNAM != null) return true;
-                if (KNAM != null) return true;
+                if (RerollCosts != null) return true;
+                if (PickCosts != null) return true;
                 if (GNAM != null) return true;
                 if (HNAM != null) return true;
                 if (INAM != null) return true;
-                if (JNAM != null) return true;
+                if (QualityUpgradeCosts != null) return true;
                 return false;
             }
             #endregion
@@ -1653,11 +1815,41 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (RerollCosts is {} RerollCostsItem)
                 {
-                    sb.AppendItem(FNAM, "FNAM");
+                    sb.AppendLine("RerollCosts =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(RerollCostsItem.Overall);
+                        if (RerollCostsItem.Specific != null)
+                        {
+                            foreach (var subItem in RerollCostsItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    subItem?.Print(sb);
+                                }
+                            }
+                        }
+                    }
                 }
+                if (PickCosts is {} PickCostsItem)
                 {
-                    sb.AppendItem(KNAM, "KNAM");
+                    sb.AppendLine("PickCosts =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(PickCostsItem.Overall);
+                        if (PickCostsItem.Specific != null)
+                        {
+                            foreach (var subItem in PickCostsItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    subItem?.Print(sb);
+                                }
+                            }
+                        }
+                    }
                 }
                 if (GNAM is {} GNAMItem)
                 {
@@ -1713,8 +1905,23 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
+                if (QualityUpgradeCosts is {} QualityUpgradeCostsItem)
                 {
-                    sb.AppendItem(JNAM, "JNAM");
+                    sb.AppendLine("QualityUpgradeCosts =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(QualityUpgradeCostsItem.Overall);
+                        if (QualityUpgradeCostsItem.Specific != null)
+                        {
+                            foreach (var subItem in QualityUpgradeCostsItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    subItem?.Print(sb);
+                                }
+                            }
+                        }
+                    }
                 }
             }
             #endregion
@@ -1741,12 +1948,12 @@ namespace Mutagen.Bethesda.Starfield
                 ret.LnamEntries = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemLnamEntry.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.LnamEntries?.Overall, rhs.LnamEntries?.Overall), Noggog.ExceptionExt.Combine(this.LnamEntries?.Specific, rhs.LnamEntries?.Specific));
                 ret.IncludeFilters = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryFilter.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.IncludeFilters?.Overall, rhs.IncludeFilters?.Overall), Noggog.ExceptionExt.Combine(this.IncludeFilters?.Specific, rhs.IncludeFilters?.Specific));
                 ret.ExcludeFilters = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryFilter.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.ExcludeFilters?.Overall, rhs.ExcludeFilters?.Overall), Noggog.ExceptionExt.Combine(this.ExcludeFilters?.Specific, rhs.ExcludeFilters?.Specific));
-                ret.FNAM = this.FNAM.Combine(rhs.FNAM);
-                ret.KNAM = this.KNAM.Combine(rhs.KNAM);
+                ret.RerollCosts = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemRankCost.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.RerollCosts?.Overall, rhs.RerollCosts?.Overall), Noggog.ExceptionExt.Combine(this.RerollCosts?.Specific, rhs.RerollCosts?.Specific));
+                ret.PickCosts = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemRankCost.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.PickCosts?.Overall, rhs.PickCosts?.Overall), Noggog.ExceptionExt.Combine(this.PickCosts?.Specific, rhs.PickCosts?.Specific));
                 ret.GNAM = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryMod.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.GNAM?.Overall, rhs.GNAM?.Overall), Noggog.ExceptionExt.Combine(this.GNAM?.Specific, rhs.GNAM?.Specific));
                 ret.HNAM = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemHNAMEntry.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.HNAM?.Overall, rhs.HNAM?.Overall), Noggog.ExceptionExt.Combine(this.HNAM?.Specific, rhs.HNAM?.Specific));
                 ret.INAM = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemHNAMEntry.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.INAM?.Overall, rhs.INAM?.Overall), Noggog.ExceptionExt.Combine(this.INAM?.Specific, rhs.INAM?.Specific));
-                ret.JNAM = this.JNAM.Combine(rhs.JNAM);
+                ret.QualityUpgradeCosts = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, LegendaryItemQualityCost.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.QualityUpgradeCosts?.Overall, rhs.QualityUpgradeCosts?.Overall), Noggog.ExceptionExt.Combine(this.QualityUpgradeCosts?.Specific, rhs.QualityUpgradeCosts?.Specific));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -1786,12 +1993,12 @@ namespace Mutagen.Bethesda.Starfield
             public LegendaryItemLnamEntry.TranslationMask? LnamEntries;
             public LegendaryFilter.TranslationMask? IncludeFilters;
             public LegendaryFilter.TranslationMask? ExcludeFilters;
-            public bool FNAM;
-            public bool KNAM;
+            public LegendaryItemRankCost.TranslationMask? RerollCosts;
+            public LegendaryItemRankCost.TranslationMask? PickCosts;
             public LegendaryMod.TranslationMask? GNAM;
             public LegendaryItemHNAMEntry.TranslationMask? HNAM;
             public LegendaryItemHNAMEntry.TranslationMask? INAM;
-            public bool JNAM;
+            public LegendaryItemQualityCost.TranslationMask? QualityUpgradeCosts;
             #endregion
 
             #region Ctors
@@ -1807,9 +2014,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.BaseObjectList = defaultOn;
                 this.RankTemplate = defaultOn;
                 this.MNAM = defaultOn;
-                this.FNAM = defaultOn;
-                this.KNAM = defaultOn;
-                this.JNAM = defaultOn;
             }
 
             #endregion
@@ -1834,12 +2038,12 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((LnamEntries == null ? DefaultOn : !LnamEntries.GetCrystal().CopyNothing, LnamEntries?.GetCrystal()));
                 ret.Add((IncludeFilters == null ? DefaultOn : !IncludeFilters.GetCrystal().CopyNothing, IncludeFilters?.GetCrystal()));
                 ret.Add((ExcludeFilters == null ? DefaultOn : !ExcludeFilters.GetCrystal().CopyNothing, ExcludeFilters?.GetCrystal()));
-                ret.Add((FNAM, null));
-                ret.Add((KNAM, null));
+                ret.Add((RerollCosts == null ? DefaultOn : !RerollCosts.GetCrystal().CopyNothing, RerollCosts?.GetCrystal()));
+                ret.Add((PickCosts == null ? DefaultOn : !PickCosts.GetCrystal().CopyNothing, PickCosts?.GetCrystal()));
                 ret.Add((GNAM == null ? DefaultOn : !GNAM.GetCrystal().CopyNothing, GNAM?.GetCrystal()));
                 ret.Add((HNAM == null ? DefaultOn : !HNAM.GetCrystal().CopyNothing, HNAM?.GetCrystal()));
                 ret.Add((INAM == null ? DefaultOn : !INAM.GetCrystal().CopyNothing, INAM?.GetCrystal()));
-                ret.Add((JNAM, null));
+                ret.Add((QualityUpgradeCosts == null ? DefaultOn : !QualityUpgradeCosts.GetCrystal().CopyNothing, QualityUpgradeCosts?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -2033,12 +2237,12 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<LegendaryItemLnamEntry>? LnamEntries { get; set; }
         new ExtendedList<LegendaryFilter>? IncludeFilters { get; set; }
         new ExtendedList<LegendaryFilter>? ExcludeFilters { get; set; }
-        new MemorySlice<Byte>? FNAM { get; set; }
-        new MemorySlice<Byte>? KNAM { get; set; }
+        new ExtendedList<LegendaryItemRankCost>? RerollCosts { get; set; }
+        new ExtendedList<LegendaryItemRankCost>? PickCosts { get; set; }
         new ExtendedList<LegendaryMod>? GNAM { get; set; }
         new ExtendedList<LegendaryItemHNAMEntry>? HNAM { get; set; }
         new ExtendedList<LegendaryItemHNAMEntry>? INAM { get; set; }
-        new MemorySlice<Byte>? JNAM { get; set; }
+        new ExtendedList<LegendaryItemQualityCost>? QualityUpgradeCosts { get; set; }
     }
 
     public partial interface ILegendaryItemInternal :
@@ -2107,12 +2311,12 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<ILegendaryItemLnamEntryGetter>? LnamEntries { get; }
         IReadOnlyList<ILegendaryFilterGetter>? IncludeFilters { get; }
         IReadOnlyList<ILegendaryFilterGetter>? ExcludeFilters { get; }
-        ReadOnlyMemorySlice<Byte>? FNAM { get; }
-        ReadOnlyMemorySlice<Byte>? KNAM { get; }
+        IReadOnlyList<ILegendaryItemRankCostGetter>? RerollCosts { get; }
+        IReadOnlyList<ILegendaryItemRankCostGetter>? PickCosts { get; }
         IReadOnlyList<ILegendaryModGetter>? GNAM { get; }
         IReadOnlyList<ILegendaryItemHNAMEntryGetter>? HNAM { get; }
         IReadOnlyList<ILegendaryItemHNAMEntryGetter>? INAM { get; }
-        ReadOnlyMemorySlice<Byte>? JNAM { get; }
+        IReadOnlyList<ILegendaryItemQualityCostGetter>? QualityUpgradeCosts { get; }
 
     }
 
@@ -2306,12 +2510,12 @@ namespace Mutagen.Bethesda.Starfield
         LnamEntries = 21,
         IncludeFilters = 22,
         ExcludeFilters = 23,
-        FNAM = 24,
-        KNAM = 25,
+        RerollCosts = 24,
+        PickCosts = 25,
         GNAM = 26,
         HNAM = 27,
         INAM = 28,
-        JNAM = 29,
+        QualityUpgradeCosts = 29,
     }
     #endregion
 
@@ -2453,12 +2657,12 @@ namespace Mutagen.Bethesda.Starfield
             item.LnamEntries = null;
             item.IncludeFilters = null;
             item.ExcludeFilters = null;
-            item.FNAM = default;
-            item.KNAM = default;
+            item.RerollCosts = null;
+            item.PickCosts = null;
             item.GNAM = null;
             item.HNAM = null;
             item.INAM = null;
-            item.JNAM = default;
+            item.QualityUpgradeCosts = null;
             base.Clear(item);
         }
         
@@ -2487,9 +2691,12 @@ namespace Mutagen.Bethesda.Starfield
             obj.LnamEntries?.RemapLinks(mapping);
             obj.IncludeFilters?.RemapLinks(mapping);
             obj.ExcludeFilters?.RemapLinks(mapping);
+            obj.RerollCosts?.RemapLinks(mapping);
+            obj.PickCosts?.RemapLinks(mapping);
             obj.GNAM?.RemapLinks(mapping);
             obj.HNAM?.RemapLinks(mapping);
             obj.INAM?.RemapLinks(mapping);
+            obj.QualityUpgradeCosts?.RemapLinks(mapping);
         }
         
         public IEnumerable<IAssetLink> EnumerateListedAssetLinks(ILegendaryItem obj, bool iterateNestedRecords = true)
@@ -2641,8 +2848,14 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.ExcludeFilters,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.FNAM = MemorySliceExt.SequenceEqual(item.FNAM, rhs.FNAM);
-            ret.KNAM = MemorySliceExt.SequenceEqual(item.KNAM, rhs.KNAM);
+            ret.RerollCosts = item.RerollCosts.CollectionEqualsHelper(
+                rhs.RerollCosts,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
+                include);
+            ret.PickCosts = item.PickCosts.CollectionEqualsHelper(
+                rhs.PickCosts,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
+                include);
             ret.GNAM = item.GNAM.CollectionEqualsHelper(
                 rhs.GNAM,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -2655,7 +2868,10 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.INAM,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.JNAM = MemorySliceExt.SequenceEqual(item.JNAM, rhs.JNAM);
+            ret.QualityUpgradeCosts = item.QualityUpgradeCosts.CollectionEqualsHelper(
+                rhs.QualityUpgradeCosts,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
+                include);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -2835,15 +3051,35 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.FNAM ?? true)
-                && item.FNAM is {} FNAMItem)
+            if ((printMask?.RerollCosts?.Overall ?? true)
+                && item.RerollCosts is {} RerollCostsItem)
             {
-                sb.AppendLine($"FNAM => {SpanExt.ToHexString(FNAMItem)}");
+                sb.AppendLine("RerollCosts =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in RerollCostsItem)
+                    {
+                        using (sb.Brace())
+                        {
+                            subItem?.Print(sb, "Item");
+                        }
+                    }
+                }
             }
-            if ((printMask?.KNAM ?? true)
-                && item.KNAM is {} KNAMItem)
+            if ((printMask?.PickCosts?.Overall ?? true)
+                && item.PickCosts is {} PickCostsItem)
             {
-                sb.AppendLine($"KNAM => {SpanExt.ToHexString(KNAMItem)}");
+                sb.AppendLine("PickCosts =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in PickCostsItem)
+                    {
+                        using (sb.Brace())
+                        {
+                            subItem?.Print(sb, "Item");
+                        }
+                    }
+                }
             }
             if ((printMask?.GNAM?.Overall ?? true)
                 && item.GNAM is {} GNAMItem)
@@ -2890,10 +3126,20 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.JNAM ?? true)
-                && item.JNAM is {} JNAMItem)
+            if ((printMask?.QualityUpgradeCosts?.Overall ?? true)
+                && item.QualityUpgradeCosts is {} QualityUpgradeCostsItem)
             {
-                sb.AppendLine($"JNAM => {SpanExt.ToHexString(JNAMItem)}");
+                sb.AppendLine("QualityUpgradeCosts =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in QualityUpgradeCostsItem)
+                    {
+                        using (sb.Brace())
+                        {
+                            subItem?.Print(sb, "Item");
+                        }
+                    }
+                }
             }
         }
         
@@ -3033,13 +3279,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ExcludeFilters.SequenceEqualNullable(rhs.ExcludeFilters, (l, r) => ((LegendaryFilterCommon)((ILegendaryFilterGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)LegendaryItem_FieldIndex.ExcludeFilters)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.FNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.RerollCosts) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.FNAM, rhs.FNAM)) return false;
+                if (!lhs.RerollCosts.SequenceEqualNullable(rhs.RerollCosts, (l, r) => ((LegendaryItemRankCostCommon)((ILegendaryItemRankCostGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)LegendaryItem_FieldIndex.RerollCosts)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.KNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.PickCosts) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.KNAM, rhs.KNAM)) return false;
+                if (!lhs.PickCosts.SequenceEqualNullable(rhs.PickCosts, (l, r) => ((LegendaryItemRankCostCommon)((ILegendaryItemRankCostGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)LegendaryItem_FieldIndex.PickCosts)))) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.GNAM) ?? true))
             {
@@ -3053,9 +3299,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.INAM.SequenceEqualNullable(rhs.INAM, (l, r) => ((LegendaryItemHNAMEntryCommon)((ILegendaryItemHNAMEntryGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)LegendaryItem_FieldIndex.INAM)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.JNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.QualityUpgradeCosts) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.JNAM, rhs.JNAM)) return false;
+                if (!lhs.QualityUpgradeCosts.SequenceEqualNullable(rhs.QualityUpgradeCosts, (l, r) => ((LegendaryItemQualityCostCommon)((ILegendaryItemQualityCostGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)LegendaryItem_FieldIndex.QualityUpgradeCosts)))) return false;
             }
             return true;
         }
@@ -3153,13 +3399,19 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
-            if (item.FNAM is {} FNAMItem)
+            if (item.RerollCosts is {} RerollCostsitem)
             {
-                hash.AddBytes(FNAMItem);
+                foreach (var subItem in RerollCostsitem)
+                {
+                    hash.Add(subItem);
+                }
             }
-            if (item.KNAM is {} KNAMItem)
+            if (item.PickCosts is {} PickCostsitem)
             {
-                hash.AddBytes(KNAMItem);
+                foreach (var subItem in PickCostsitem)
+                {
+                    hash.Add(subItem);
+                }
             }
             if (item.GNAM is {} GNAMitem)
             {
@@ -3182,9 +3434,12 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
-            if (item.JNAM is {} JNAMItem)
+            if (item.QualityUpgradeCosts is {} QualityUpgradeCostsitem)
             {
-                hash.AddBytes(JNAMItem);
+                foreach (var subItem in QualityUpgradeCostsitem)
+                {
+                    hash.Add(subItem);
+                }
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -3281,6 +3536,20 @@ namespace Mutagen.Bethesda.Starfield
                     yield return FormLinkInformation.Factory(item);
                 }
             }
+            if (obj.RerollCosts is {} RerollCostsItem)
+            {
+                foreach (var item in RerollCostsItem.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+                {
+                    yield return FormLinkInformation.Factory(item);
+                }
+            }
+            if (obj.PickCosts is {} PickCostsItem)
+            {
+                foreach (var item in PickCostsItem.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+                {
+                    yield return FormLinkInformation.Factory(item);
+                }
+            }
             if (obj.GNAM is {} GNAMItem)
             {
                 foreach (var item in GNAMItem.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
@@ -3298,6 +3567,13 @@ namespace Mutagen.Bethesda.Starfield
             if (obj.INAM is {} INAMItem)
             {
                 foreach (var item in INAMItem.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+                {
+                    yield return FormLinkInformation.Factory(item);
+                }
+            }
+            if (obj.QualityUpgradeCosts is {} QualityUpgradeCostsItem)
+            {
+                foreach (var item in QualityUpgradeCostsItem.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
                 {
                     yield return FormLinkInformation.Factory(item);
                 }
@@ -3729,26 +4005,68 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.FNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.RerollCosts) ?? true))
             {
-                if(rhs.FNAM is {} FNAMrhs)
+                errorMask?.PushIndex((int)LegendaryItem_FieldIndex.RerollCosts);
+                try
                 {
-                    item.FNAM = FNAMrhs.ToArray();
+                    if ((rhs.RerollCosts != null))
+                    {
+                        item.RerollCosts = 
+                            rhs.RerollCosts
+                            .Select(r =>
+                            {
+                                return r.DeepCopy(
+                                    errorMask: errorMask,
+                                    default(TranslationCrystal));
+                            })
+                            .ToExtendedList<LegendaryItemRankCost>();
+                    }
+                    else
+                    {
+                        item.RerollCosts = null;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.FNAM = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.KNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.PickCosts) ?? true))
             {
-                if(rhs.KNAM is {} KNAMrhs)
+                errorMask?.PushIndex((int)LegendaryItem_FieldIndex.PickCosts);
+                try
                 {
-                    item.KNAM = KNAMrhs.ToArray();
+                    if ((rhs.PickCosts != null))
+                    {
+                        item.PickCosts = 
+                            rhs.PickCosts
+                            .Select(r =>
+                            {
+                                return r.DeepCopy(
+                                    errorMask: errorMask,
+                                    default(TranslationCrystal));
+                            })
+                            .ToExtendedList<LegendaryItemRankCost>();
+                    }
+                    else
+                    {
+                        item.PickCosts = null;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.KNAM = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             if ((copyMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.GNAM) ?? true))
@@ -3847,15 +4165,36 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.JNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)LegendaryItem_FieldIndex.QualityUpgradeCosts) ?? true))
             {
-                if(rhs.JNAM is {} JNAMrhs)
+                errorMask?.PushIndex((int)LegendaryItem_FieldIndex.QualityUpgradeCosts);
+                try
                 {
-                    item.JNAM = JNAMrhs.ToArray();
+                    if ((rhs.QualityUpgradeCosts != null))
+                    {
+                        item.QualityUpgradeCosts = 
+                            rhs.QualityUpgradeCosts
+                            .Select(r =>
+                            {
+                                return r.DeepCopy(
+                                    errorMask: errorMask,
+                                    default(TranslationCrystal));
+                            })
+                            .ToExtendedList<LegendaryItemQualityCost>();
+                    }
+                    else
+                    {
+                        item.QualityUpgradeCosts = null;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.JNAM = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             DeepCopyInCustom(
@@ -4145,14 +4484,30 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ILegendaryItemRankCostGetter>.Instance.Write(
                 writer: writer,
-                item: item.FNAM,
-                header: translationParams.ConvertToCustom(RecordTypes.FNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                items: item.RerollCosts,
+                recordType: translationParams.ConvertToCustom(RecordTypes.FNAM),
+                transl: (MutagenWriter subWriter, ILegendaryItemRankCostGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((LegendaryItemRankCostBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ILegendaryItemRankCostGetter>.Instance.Write(
                 writer: writer,
-                item: item.KNAM,
-                header: translationParams.ConvertToCustom(RecordTypes.KNAM));
+                items: item.PickCosts,
+                recordType: translationParams.ConvertToCustom(RecordTypes.KNAM),
+                transl: (MutagenWriter subWriter, ILegendaryItemRankCostGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((LegendaryItemRankCostBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ILegendaryModGetter>.Instance.Write(
                 writer: writer,
                 items: item.GNAM,
@@ -4189,10 +4544,18 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ILegendaryItemQualityCostGetter>.Instance.Write(
                 writer: writer,
-                item: item.JNAM,
-                header: translationParams.ConvertToCustom(RecordTypes.JNAM));
+                items: item.QualityUpgradeCosts,
+                recordType: translationParams.ConvertToCustom(RecordTypes.JNAM),
+                transl: (MutagenWriter subWriter, ILegendaryItemQualityCostGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((LegendaryItemQualityCostBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
         }
 
         public static partial void WriteBinaryLnamEntriesCustom(
@@ -4445,14 +4808,22 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)LegendaryItem_FieldIndex.FNAM;
+                    item.RerollCosts = 
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LegendaryItemRankCost>.Instance.Parse(
+                            reader: frame.SpawnWithLength(contentLength),
+                            transl: LegendaryItemRankCost.TryCreateFromBinary)
+                        .CastExtendedList<LegendaryItemRankCost>();
+                    return (int)LegendaryItem_FieldIndex.RerollCosts;
                 }
                 case RecordTypeInts.KNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.KNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)LegendaryItem_FieldIndex.KNAM;
+                    item.PickCosts = 
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LegendaryItemRankCost>.Instance.Parse(
+                            reader: frame.SpawnWithLength(contentLength),
+                            transl: LegendaryItemRankCost.TryCreateFromBinary)
+                        .CastExtendedList<LegendaryItemRankCost>();
+                    return (int)LegendaryItem_FieldIndex.PickCosts;
                 }
                 case RecordTypeInts.GNAM:
                 {
@@ -4487,8 +4858,12 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.JNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.JNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)LegendaryItem_FieldIndex.JNAM;
+                    item.QualityUpgradeCosts = 
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LegendaryItemQualityCost>.Instance.Parse(
+                            reader: frame.SpawnWithLength(contentLength),
+                            transl: LegendaryItemQualityCost.TryCreateFromBinary)
+                        .CastExtendedList<LegendaryItemQualityCost>();
+                    return (int)LegendaryItem_FieldIndex.QualityUpgradeCosts;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -4627,21 +5002,12 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         public IReadOnlyList<ILegendaryFilterGetter>? IncludeFilters { get; private set; }
         public IReadOnlyList<ILegendaryFilterGetter>? ExcludeFilters { get; private set; }
-        #region FNAM
-        private int? _FNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? FNAM => _FNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
-        #endregion
-        #region KNAM
-        private int? _KNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? KNAM => _KNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _KNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
-        #endregion
+        public IReadOnlyList<ILegendaryItemRankCostGetter>? RerollCosts { get; private set; }
+        public IReadOnlyList<ILegendaryItemRankCostGetter>? PickCosts { get; private set; }
         public IReadOnlyList<ILegendaryModGetter>? GNAM { get; private set; }
         public IReadOnlyList<ILegendaryItemHNAMEntryGetter>? HNAM { get; private set; }
         public IReadOnlyList<ILegendaryItemHNAMEntryGetter>? INAM { get; private set; }
-        #region JNAM
-        private int? _JNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? JNAM => _JNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _JNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
-        #endregion
+        public IReadOnlyList<ILegendaryItemQualityCostGetter>? QualityUpgradeCosts { get; private set; }
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -4873,13 +5239,23 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FNAM:
                 {
-                    _FNAMLocation = (stream.Position - offset);
-                    return (int)LegendaryItem_FieldIndex.FNAM;
+                    this.RerollCosts = BinaryOverlayList.FactoryByStartIndexWithTrigger<ILegendaryItemRankCostGetter>(
+                        stream: stream,
+                        package: _package,
+                        finalPos: finalPos,
+                        itemLength: 12,
+                        getter: (s, p) => LegendaryItemRankCostBinaryOverlay.LegendaryItemRankCostFactory(s, p));
+                    return (int)LegendaryItem_FieldIndex.RerollCosts;
                 }
                 case RecordTypeInts.KNAM:
                 {
-                    _KNAMLocation = (stream.Position - offset);
-                    return (int)LegendaryItem_FieldIndex.KNAM;
+                    this.PickCosts = BinaryOverlayList.FactoryByStartIndexWithTrigger<ILegendaryItemRankCostGetter>(
+                        stream: stream,
+                        package: _package,
+                        finalPos: finalPos,
+                        itemLength: 12,
+                        getter: (s, p) => LegendaryItemRankCostBinaryOverlay.LegendaryItemRankCostFactory(s, p));
+                    return (int)LegendaryItem_FieldIndex.PickCosts;
                 }
                 case RecordTypeInts.GNAM:
                 {
@@ -4913,8 +5289,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.JNAM:
                 {
-                    _JNAMLocation = (stream.Position - offset);
-                    return (int)LegendaryItem_FieldIndex.JNAM;
+                    this.QualityUpgradeCosts = BinaryOverlayList.FactoryByStartIndexWithTrigger<ILegendaryItemQualityCostGetter>(
+                        stream: stream,
+                        package: _package,
+                        finalPos: finalPos,
+                        itemLength: 12,
+                        getter: (s, p) => LegendaryItemQualityCostBinaryOverlay.LegendaryItemQualityCostFactory(s, p));
+                    return (int)LegendaryItem_FieldIndex.QualityUpgradeCosts;
                 }
                 case RecordTypeInts.XXXX:
                 {

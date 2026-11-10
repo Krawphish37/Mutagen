@@ -7047,5 +7047,11 @@
     <Compile Include="Records\Major Records\WeatherVolumetricLighting_Generated.cs">
       <DependentUpon>Weather.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\LegendaryItemRankCost_Generated.cs">
+      <DependentUpon>LegendaryItem.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\LegendaryItemQualityCost_Generated.cs">
+      <DependentUpon>LegendaryItem.xml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
