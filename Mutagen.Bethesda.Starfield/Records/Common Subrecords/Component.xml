@@ -94,7 +94,11 @@
   </Object>
   <Object name="HoudiniDataComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="PCCC" recordType="PCCC" unknown="true" overflowRecordType="XXXX" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX">
+        <RecordTypeOverrides>
+          <Mapping From="REFL" To="PCCC" />
+        </RecordTypeOverrides>
+      </RefDirect>
     </Fields>
   </Object>
   <Object name="SkinFormComponent" objType="Subrecord" baseClass="AComponent" />
@@ -105,27 +109,35 @@
   </Object>
   <Object name="EffectSequenceComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
   <Object name="LightAttachmentFormComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
   <Object name="LightAnimFormComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="PTCL" recordType="PTCL" unknown="true" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX">
+        <RecordTypeOverrides>
+          <Mapping From="REFL" To="PTCL" />
+        </RecordTypeOverrides>
+      </RefDirect>
     </Fields>
   </Object>
   <Object name="ParticleSystemComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="PTCL" recordType="PTCL" unknown="true" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX">
+        <RecordTypeOverrides>
+          <Mapping From="REFL" To="PTCL" />
+        </RecordTypeOverrides>
+      </RefDirect>
     </Fields>
   </Object>
   <Object name="LodOwnerComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
   <Object name="SoundTagComponent" objType="Subrecord" baseClass="AComponent">
@@ -433,7 +445,7 @@
   </Object>
   <Object name="ReflectionProbesComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
   <Object name="ImageSpaceModifiableFormComponent" objType="Subrecord" baseClass="AComponent">
@@ -443,12 +455,12 @@
   </Object>
   <Object name="LensFlareAttachmentFormComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
   <Object name="MaterialPropertyComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
   <Object name="WorkshopItemColorComponent" objType="Subrecord" baseClass="AComponent">
@@ -457,7 +469,7 @@
   </Object>
   <Object name="SpacePhysicsComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
+      <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
   <Object name="BlockEditorMetaDataComponent" objType="Subrecord" baseClass="AComponent">

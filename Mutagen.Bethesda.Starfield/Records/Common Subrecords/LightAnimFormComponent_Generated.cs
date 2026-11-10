@@ -14,6 +14,7 @@ using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Exceptions;
 using Mutagen.Bethesda.Plugins.Internals;
 using Mutagen.Bethesda.Plugins.Meta;
@@ -53,16 +54,16 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region PTCL
+        #region Reflection
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _PTCL;
-        public MemorySlice<Byte>? PTCL
+        private Reflection? _Reflection;
+        public Reflection? Reflection
         {
-            get => this._PTCL;
-            set => this._PTCL = value;
+            get => _Reflection;
+            set => _Reflection = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ILightAnimFormComponentGetter.PTCL => this.PTCL;
+        IReflectionGetter? ILightAnimFormComponentGetter.Reflection => this.Reflection;
         #endregion
 
         #region To String
@@ -102,10 +103,10 @@ namespace Mutagen.Bethesda.Starfield
             IMask<TItem>
         {
             #region Ctors
-            public Mask(TItem PTCL)
+            public Mask(TItem Reflection)
             : base()
             {
-                this.PTCL = PTCL;
+                this.Reflection = new MaskItem<TItem, Reflection.Mask<TItem>?>(Reflection, new Reflection.Mask<TItem>(Reflection));
             }
 
             #pragma warning disable CS8618
@@ -117,7 +118,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem PTCL;
+            public MaskItem<TItem, Reflection.Mask<TItem>?>? Reflection { get; set; }
             #endregion
 
             #region Equals
@@ -131,13 +132,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.PTCL, rhs.PTCL)) return false;
+                if (!object.Equals(this.Reflection, rhs.Reflection)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.PTCL);
+                hash.Add(this.Reflection);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -148,7 +149,11 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.PTCL)) return false;
+                if (Reflection != null)
+                {
+                    if (!eval(this.Reflection.Overall)) return false;
+                    if (this.Reflection.Specific != null && !this.Reflection.Specific.All(eval)) return false;
+                }
                 return true;
             }
             #endregion
@@ -157,7 +162,11 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.PTCL)) return true;
+                if (Reflection != null)
+                {
+                    if (eval(this.Reflection.Overall)) return true;
+                    if (this.Reflection.Specific != null && this.Reflection.Specific.Any(eval)) return true;
+                }
                 return false;
             }
             #endregion
@@ -173,7 +182,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.PTCL = eval(this.PTCL);
+                obj.Reflection = this.Reflection == null ? null : new MaskItem<R, Reflection.Mask<R>?>(eval(this.Reflection.Overall), this.Reflection.Specific?.Translate(eval));
             }
             #endregion
 
@@ -192,9 +201,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(LightAnimFormComponent.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.PTCL ?? true)
+                    if (printMask?.Reflection?.Overall ?? true)
                     {
-                        sb.AppendItem(PTCL, "PTCL");
+                        Reflection?.Print(sb);
                     }
                 }
             }
@@ -207,7 +216,7 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? PTCL;
+            public MaskItem<Exception?, Reflection.ErrorMask?>? Reflection;
             #endregion
 
             #region IErrorMask
@@ -216,8 +225,8 @@ namespace Mutagen.Bethesda.Starfield
                 LightAnimFormComponent_FieldIndex enu = (LightAnimFormComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case LightAnimFormComponent_FieldIndex.PTCL:
-                        return PTCL;
+                    case LightAnimFormComponent_FieldIndex.Reflection:
+                        return Reflection;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -228,8 +237,8 @@ namespace Mutagen.Bethesda.Starfield
                 LightAnimFormComponent_FieldIndex enu = (LightAnimFormComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case LightAnimFormComponent_FieldIndex.PTCL:
-                        this.PTCL = ex;
+                    case LightAnimFormComponent_FieldIndex.Reflection:
+                        this.Reflection = new MaskItem<Exception?, Reflection.ErrorMask?>(ex, null);
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -242,8 +251,8 @@ namespace Mutagen.Bethesda.Starfield
                 LightAnimFormComponent_FieldIndex enu = (LightAnimFormComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case LightAnimFormComponent_FieldIndex.PTCL:
-                        this.PTCL = (Exception?)obj;
+                    case LightAnimFormComponent_FieldIndex.Reflection:
+                        this.Reflection = (MaskItem<Exception?, Reflection.ErrorMask?>?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -254,7 +263,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (PTCL != null) return true;
+                if (Reflection != null) return true;
                 return false;
             }
             #endregion
@@ -281,9 +290,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void PrintFillInternal(StructuredStringBuilder sb)
             {
                 base.PrintFillInternal(sb);
-                {
-                    sb.AppendItem(PTCL, "PTCL");
-                }
+                Reflection?.Print(sb);
             }
             #endregion
 
@@ -292,7 +299,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.PTCL = this.PTCL.Combine(rhs.PTCL);
+                ret.Reflection = this.Reflection.Combine(rhs.Reflection, (l, r) => l.Combine(r));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -315,7 +322,7 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool PTCL;
+            public Reflection.TranslationMask? Reflection;
             #endregion
 
             #region Ctors
@@ -324,7 +331,6 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.PTCL = defaultOn;
             }
 
             #endregion
@@ -332,7 +338,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((PTCL, null));
+                ret.Add((Reflection != null ? Reflection.OnOverall : DefaultOn, Reflection?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -341,6 +347,11 @@ namespace Mutagen.Bethesda.Starfield
             }
 
         }
+        #endregion
+
+        #region Mutagen
+        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => LightAnimFormComponentCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
+        public override void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => LightAnimFormComponentSetterCommon.Instance.RemapLinks(this, mapping);
         #endregion
 
         #region Binary Translation
@@ -401,19 +412,21 @@ namespace Mutagen.Bethesda.Starfield
     #region Interface
     public partial interface ILightAnimFormComponent :
         IAComponent,
+        IFormLinkContainer,
         ILightAnimFormComponentGetter,
         ILoquiObjectSetter<ILightAnimFormComponent>
     {
-        new MemorySlice<Byte>? PTCL { get; set; }
+        new Reflection? Reflection { get; set; }
     }
 
     public partial interface ILightAnimFormComponentGetter :
         IAComponentGetter,
         IBinaryItem,
+        IFormLinkContainerGetter,
         ILoquiObject<ILightAnimFormComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => LightAnimFormComponent_Registration.Instance;
-        ReadOnlyMemorySlice<Byte>? PTCL { get; }
+        IReflectionGetter? Reflection { get; }
 
     }
 
@@ -558,7 +571,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum LightAnimFormComponent_FieldIndex
     {
-        PTCL = 0,
+        Reflection = 0,
     }
     #endregion
 
@@ -604,11 +617,17 @@ namespace Mutagen.Bethesda.Starfield
             var triggers = RecordCollection.Factory(RecordTypes.BFCB);
             var all = RecordCollection.Factory(
                 RecordTypes.BFCB,
-                RecordTypes.PTCL);
+                RecordTypes.PTCL,
+                RecordTypes.REFL,
+                RecordTypes.XXXX);
             return new RecordTriggerSpecs(
                 allRecordTypes: all,
                 triggeringRecordTypes: triggers);
         });
+        public static RecordTypeConverter ReflectionConverter = new RecordTypeConverter(
+            new KeyValuePair<RecordType, RecordType>(
+                RecordTypes.REFL,
+                RecordTypes.PTCL));
         public static readonly Type BinaryWriteTranslation = typeof(LightAnimFormComponentBinaryWriteTranslation);
         #region Interface
         ProtocolKey ILoquiRegistration.ProtocolKey => ProtocolKey;
@@ -649,7 +668,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ILightAnimFormComponent item)
         {
             ClearPartial();
-            item.PTCL = default;
+            item.Reflection = null;
             base.Clear(item);
         }
         
@@ -662,6 +681,7 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(ILightAnimFormComponent obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             base.RemapLinks(obj, mapping);
+            obj.Reflection?.RemapLinks(mapping);
         }
         
         #endregion
@@ -717,7 +737,11 @@ namespace Mutagen.Bethesda.Starfield
             LightAnimFormComponent.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.PTCL = MemorySliceExt.SequenceEqual(item.PTCL, rhs.PTCL);
+            ret.Reflection = EqualsMaskHelper.EqualsHelper(
+                item.Reflection,
+                rhs.Reflection,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -767,10 +791,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.PTCL ?? true)
-                && item.PTCL is {} PTCLItem)
+            if ((printMask?.Reflection?.Overall ?? true)
+                && item.Reflection is {} ReflectionItem)
             {
-                sb.AppendLine($"PTCL => {SpanExt.ToHexString(PTCLItem)}");
+                ReflectionItem?.Print(sb, "Reflection");
             }
         }
         
@@ -791,9 +815,13 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IAComponentGetter)lhs, (IAComponentGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)LightAnimFormComponent_FieldIndex.PTCL) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)LightAnimFormComponent_FieldIndex.Reflection) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.PTCL, rhs.PTCL)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.Reflection, rhs.Reflection, out var lhsReflection, out var rhsReflection, out var isReflectionEqual))
+                {
+                    if (!((ReflectionCommon)((IReflectionGetter)lhsReflection).CommonInstance()!).Equals(lhsReflection, rhsReflection, equalsMask?.GetSubCrystal((int)LightAnimFormComponent_FieldIndex.Reflection))) return false;
+                }
+                else if (!isReflectionEqual) return false;
             }
             return true;
         }
@@ -812,9 +840,9 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ILightAnimFormComponentGetter item)
         {
             var hash = new HashCode();
-            if (item.PTCL is {} PTCLItem)
+            if (item.Reflection is {} Reflectionitem)
             {
-                hash.AddBytes(PTCLItem);
+                hash.Add(Reflectionitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -840,6 +868,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
+            if (obj.Reflection is {} ReflectionItems)
+            {
+                foreach (var item in ReflectionItems.EnumerateFormLinks(iterateNestedRecords))
+                {
+                    yield return item;
+                }
+            }
             yield break;
         }
         
@@ -864,15 +899,30 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)LightAnimFormComponent_FieldIndex.PTCL) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)LightAnimFormComponent_FieldIndex.Reflection) ?? true))
             {
-                if(rhs.PTCL is {} PTCLrhs)
+                errorMask?.PushIndex((int)LightAnimFormComponent_FieldIndex.Reflection);
+                try
                 {
-                    item.PTCL = PTCLrhs.ToArray();
+                    if(rhs.Reflection is {} rhsReflection)
+                    {
+                        item.Reflection = rhsReflection.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)LightAnimFormComponent_FieldIndex.Reflection));
+                    }
+                    else
+                    {
+                        item.Reflection = default;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.PTCL = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             DeepCopyInCustom(
@@ -1000,10 +1050,13 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.PTCL,
-                header: translationParams.ConvertToCustom(RecordTypes.PTCL));
+            if (item.Reflection is {} ReflectionItem)
+            {
+                ((ReflectionBinaryWriteTranslation)((IBinaryItem)ReflectionItem).BinaryWriteTranslator).Write(
+                    item: ReflectionItem,
+                    writer: writer,
+                    translationParams: translationParams.With(LightAnimFormComponent_Registration.ReflectionConverter, RecordTypes.XXXX));
+            }
         }
 
         public void Write(
@@ -1059,10 +1112,17 @@ namespace Mutagen.Bethesda.Starfield
             switch (nextRecordType.TypeInt)
             {
                 case RecordTypeInts.PTCL:
+                case RecordTypeInts.REFL:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.PTCL = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)LightAnimFormComponent_FieldIndex.PTCL;
+                    item.Reflection = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
+                        frame: frame,
+                        translationParams: translationParams.With(LightAnimFormComponent_Registration.ReflectionConverter, lastParsed.LengthOverride).DoNotShortCircuit());
+                    return (int)LightAnimFormComponent_FieldIndex.Reflection;
+                }
+                case RecordTypeInts.XXXX:
+                {
+                    var overflowHeader = frame.ReadSubrecord();
+                    return ParseResult.OverrideLength(lastParsed, BinaryPrimitives.ReadUInt32LittleEndian(overflowHeader.Content));
                 }
                 default:
                     return AComponentBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1108,6 +1168,7 @@ namespace Mutagen.Bethesda.Starfield
 
         void IPrintable.Print(StructuredStringBuilder sb, string? name) => this.Print(sb, name);
 
+        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => LightAnimFormComponentCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected override object BinaryWriteTranslator => LightAnimFormComponentBinaryWriteTranslation.Instance;
         void IBinaryItem.WriteToBinary(
@@ -1120,9 +1181,10 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region PTCL
-        private int? _PTCLLocation;
-        public ReadOnlyMemorySlice<Byte>? PTCL => _PTCLLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _PTCLLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Reflection
+        private int? _ReflectionLengthOverride;
+        private RangeInt32? _ReflectionLocation;
+        public IReflectionGetter? Reflection => _ReflectionLocation.HasValue ? ReflectionBinaryOverlay.ReflectionFactory(_recordData.Slice(_ReflectionLocation!.Value.Min), _package, TypedParseParams.FromLengthOverride(_ReflectionLengthOverride).With(LightAnimFormComponent_Registration.ReflectionConverter)) : default;
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1188,9 +1250,20 @@ namespace Mutagen.Bethesda.Starfield
             switch (type.TypeInt)
             {
                 case RecordTypeInts.PTCL:
+                case RecordTypeInts.REFL:
                 {
-                    _PTCLLocation = (stream.Position - offset);
-                    return (int)LightAnimFormComponent_FieldIndex.PTCL;
+                    _ReflectionLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
+                    _ReflectionLengthOverride = lastParsed.LengthOverride;
+                    if (lastParsed.LengthOverride.HasValue)
+                    {
+                        stream.Position += lastParsed.LengthOverride.Value;
+                    }
+                    return (int)LightAnimFormComponent_FieldIndex.Reflection;
+                }
+                case RecordTypeInts.XXXX:
+                {
+                    var overflowHeader = stream.ReadSubrecord();
+                    return ParseResult.OverrideLength(lastParsed, BinaryPrimitives.ReadUInt32LittleEndian(overflowHeader.Content));
                 }
                 default:
                     return base.FillRecordType(
