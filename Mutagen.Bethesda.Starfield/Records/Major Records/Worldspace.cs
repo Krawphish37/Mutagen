@@ -30,6 +30,17 @@ partial class Worldspace
         FixedDimensions = 0x40,
         NoGrass = 0x80,
     }
+
+    // FNAM, xEdit's second "Flags" (bits 0-4)
+    [Flags]
+    public enum Flag2
+    {
+        PlayerFollowersCannotWarpHere = 0x01,
+        ShowSpace = 0x02,
+        PreventMergeCellContent = 0x04,
+        AllowProcGen = 0x08,
+        AllowCellContent = 0x10,
+    }
 }
 
 partial class WorldspaceBinaryCreateTranslation

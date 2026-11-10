@@ -19,7 +19,7 @@
       <RefDirect name="WorldMapOffset" refName="WorldspaceWorldMapOffset" />
       <Float name="DistantLodMultiplier" recordType="NAMA" />
       <Enum name="Flags" enumName="Worldspace.Flag" byteLength="1" recordType="DATA" />
-      <ByteArray name="FNAM" recordType="FNAM" unknown="true" />
+      <Enum name="Flags2" enumName="Worldspace.Flag2" byteLength="1" recordType="FNAM" />
       <Data recordType="NAM0">
         <Fields>
           <P2Float name="ObjectBoundsMin" binary="Custom" />
@@ -45,7 +45,7 @@
       <List name="WaterHeights" recordType="WHGT" >
         <Float />
       </List>
-      <ByteArray name="HNAM" recordType="HNAM" unknown="true" />
+      <UInt8 name="HNAM" recordType="HNAM" unknown="true" />
       <ByteArray name="OffsetData" recordType="OFST" overflowRecordType="XXXX" />
       <ByteArray name="CellSizeData" recordType="CLSZ" overflowRecordType="XXXX" />
       <RefDirect name="TopCell" refName="Cell" binary="NoGeneration" />
