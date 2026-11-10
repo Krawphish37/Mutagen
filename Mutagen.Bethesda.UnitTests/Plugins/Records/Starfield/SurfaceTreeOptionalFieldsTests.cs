@@ -127,7 +127,7 @@ public class SurfaceTreeOptionalFieldsTests
         {
             surfaceTree.EditorID.ShouldBe("TestSurfaceTree");
             surfaceTree.CNAM.ShouldBeNull();
-            surfaceTree.DNAM.ShouldBeNull();
+            surfaceTree.EdgeSize.ShouldBeNull();
             surfaceTree.SurfacePatterns.ShouldBeNull();
             surfaceTree.SurfacePatterns2.ShouldBeNull();
             surfaceTree.Filter.ShouldBeNull();
@@ -165,8 +165,8 @@ public class SurfaceTreeOptionalFieldsTests
 
         foreach (var surfaceTree in ReadBoth(bytes))
         {
-            surfaceTree.CNAM!.Value.ToArray().ShouldBe(BitConverter.GetBytes(2));
-            surfaceTree.DNAM!.Value.ToArray().ShouldBe(BitConverter.GetBytes(256));
+            surfaceTree.CNAM.ShouldBe(2u);
+            surfaceTree.EdgeSize.ShouldBe(256u);
             surfaceTree.SurfacePatterns!.Value.Length.ShouldBe(PatternCount);
             surfaceTree.SurfacePatterns.Value[0].FormKey.ShouldBe(new FormKey(TestModKey, 0x801));
             surfaceTree.SurfacePatterns.Value[1].IsNull.ShouldBeTrue();
