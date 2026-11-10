@@ -338,16 +338,8 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IAObjectModificationGetter> IWeaponGetter.EmbeddedWeaponMod => this.EmbeddedWeaponMod;
         #endregion
-        #region BNAM
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _BNAM;
-        public MemorySlice<Byte>? BNAM
-        {
-            get => this._BNAM;
-            set => this._BNAM = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IWeaponGetter.BNAM => this.BNAM;
+        #region IsEmbeddedWeapon
+        public Boolean IsEmbeddedWeapon { get; set; } = default(Boolean);
         #endregion
         #region SightedTransitionSeconds
         public Single SightedTransitionSeconds { get; set; } = default(Single);
@@ -924,14 +916,8 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFirstPersonModelGetter? IWeaponGetter.FirstPersonModel => this.FirstPersonModel;
         #endregion
-        #region WVISUnknown1
-        public UInt32 WVISUnknown1 { get; set; } = default(UInt32);
-        #endregion
-        #region WVISUnknown2
-        public UInt32 WVISUnknown2 { get; set; } = default(UInt32);
-        #endregion
-        #region WVISUnknown3
-        public UInt32 WVISUnknown3 { get; set; } = default(UInt32);
+        #region FirstPersonOffset
+        public P3Float FirstPersonOffset { get; set; } = default(P3Float);
         #endregion
         #region ImpactDataSet
         private readonly IFormLink<IImpactDataSetGetter> _ImpactDataSet = new FormLink<IImpactDataSetGetter>();
@@ -1018,7 +1004,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.AttachParentSlots = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.ObjectTemplates = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectTemplate.Mask<TItem>?>>?>(initialValue, []);
                 this.EmbeddedWeaponMod = initialValue;
-                this.BNAM = initialValue;
+                this.IsEmbeddedWeapon = initialValue;
                 this.SightedTransitionSeconds = initialValue;
                 this.AimDownSightTemplate = initialValue;
                 this.AimModel = initialValue;
@@ -1154,9 +1140,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DistanceDeceleration = initialValue;
                 this.UseVariableRange = initialValue;
                 this.FirstPersonModel = new MaskItem<TItem, FirstPersonModel.Mask<TItem>?>(initialValue, new FirstPersonModel.Mask<TItem>(initialValue));
-                this.WVISUnknown1 = initialValue;
-                this.WVISUnknown2 = initialValue;
-                this.WVISUnknown3 = initialValue;
+                this.FirstPersonOffset = initialValue;
                 this.ImpactDataSet = initialValue;
                 this.ColorRemappingIndex = initialValue;
                 this.ImageSpaceAdapter = initialValue;
@@ -1197,7 +1181,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem AttachParentSlots,
                 TItem ObjectTemplates,
                 TItem EmbeddedWeaponMod,
-                TItem BNAM,
+                TItem IsEmbeddedWeapon,
                 TItem SightedTransitionSeconds,
                 TItem AimDownSightTemplate,
                 TItem AimModel,
@@ -1333,9 +1317,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem DistanceDeceleration,
                 TItem UseVariableRange,
                 TItem FirstPersonModel,
-                TItem WVISUnknown1,
-                TItem WVISUnknown2,
-                TItem WVISUnknown3,
+                TItem FirstPersonOffset,
                 TItem ImpactDataSet,
                 TItem ColorRemappingIndex,
                 TItem ImageSpaceAdapter,
@@ -1375,7 +1357,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.AttachParentSlots = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(AttachParentSlots, []);
                 this.ObjectTemplates = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectTemplate.Mask<TItem>?>>?>(ObjectTemplates, []);
                 this.EmbeddedWeaponMod = EmbeddedWeaponMod;
-                this.BNAM = BNAM;
+                this.IsEmbeddedWeapon = IsEmbeddedWeapon;
                 this.SightedTransitionSeconds = SightedTransitionSeconds;
                 this.AimDownSightTemplate = AimDownSightTemplate;
                 this.AimModel = AimModel;
@@ -1511,9 +1493,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DistanceDeceleration = DistanceDeceleration;
                 this.UseVariableRange = UseVariableRange;
                 this.FirstPersonModel = new MaskItem<TItem, FirstPersonModel.Mask<TItem>?>(FirstPersonModel, new FirstPersonModel.Mask<TItem>(FirstPersonModel));
-                this.WVISUnknown1 = WVISUnknown1;
-                this.WVISUnknown2 = WVISUnknown2;
-                this.WVISUnknown3 = WVISUnknown3;
+                this.FirstPersonOffset = FirstPersonOffset;
                 this.ImpactDataSet = ImpactDataSet;
                 this.ColorRemappingIndex = ColorRemappingIndex;
                 this.ImageSpaceAdapter = ImageSpaceAdapter;
@@ -1555,7 +1535,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? AttachParentSlots;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectTemplate.Mask<TItem>?>>?>? ObjectTemplates;
             public TItem EmbeddedWeaponMod;
-            public TItem BNAM;
+            public TItem IsEmbeddedWeapon;
             public TItem SightedTransitionSeconds;
             public TItem AimDownSightTemplate;
             public TItem AimModel;
@@ -1691,9 +1671,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem DistanceDeceleration;
             public TItem UseVariableRange;
             public MaskItem<TItem, FirstPersonModel.Mask<TItem>?>? FirstPersonModel { get; set; }
-            public TItem WVISUnknown1;
-            public TItem WVISUnknown2;
-            public TItem WVISUnknown3;
+            public TItem FirstPersonOffset;
             public TItem ImpactDataSet;
             public TItem ColorRemappingIndex;
             public TItem ImageSpaceAdapter;
@@ -1737,7 +1715,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.AttachParentSlots, rhs.AttachParentSlots)) return false;
                 if (!object.Equals(this.ObjectTemplates, rhs.ObjectTemplates)) return false;
                 if (!object.Equals(this.EmbeddedWeaponMod, rhs.EmbeddedWeaponMod)) return false;
-                if (!object.Equals(this.BNAM, rhs.BNAM)) return false;
+                if (!object.Equals(this.IsEmbeddedWeapon, rhs.IsEmbeddedWeapon)) return false;
                 if (!object.Equals(this.SightedTransitionSeconds, rhs.SightedTransitionSeconds)) return false;
                 if (!object.Equals(this.AimDownSightTemplate, rhs.AimDownSightTemplate)) return false;
                 if (!object.Equals(this.AimModel, rhs.AimModel)) return false;
@@ -1873,9 +1851,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.DistanceDeceleration, rhs.DistanceDeceleration)) return false;
                 if (!object.Equals(this.UseVariableRange, rhs.UseVariableRange)) return false;
                 if (!object.Equals(this.FirstPersonModel, rhs.FirstPersonModel)) return false;
-                if (!object.Equals(this.WVISUnknown1, rhs.WVISUnknown1)) return false;
-                if (!object.Equals(this.WVISUnknown2, rhs.WVISUnknown2)) return false;
-                if (!object.Equals(this.WVISUnknown3, rhs.WVISUnknown3)) return false;
+                if (!object.Equals(this.FirstPersonOffset, rhs.FirstPersonOffset)) return false;
                 if (!object.Equals(this.ImpactDataSet, rhs.ImpactDataSet)) return false;
                 if (!object.Equals(this.ColorRemappingIndex, rhs.ColorRemappingIndex)) return false;
                 if (!object.Equals(this.ImageSpaceAdapter, rhs.ImageSpaceAdapter)) return false;
@@ -1911,7 +1887,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.AttachParentSlots);
                 hash.Add(this.ObjectTemplates);
                 hash.Add(this.EmbeddedWeaponMod);
-                hash.Add(this.BNAM);
+                hash.Add(this.IsEmbeddedWeapon);
                 hash.Add(this.SightedTransitionSeconds);
                 hash.Add(this.AimDownSightTemplate);
                 hash.Add(this.AimModel);
@@ -2047,9 +2023,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.DistanceDeceleration);
                 hash.Add(this.UseVariableRange);
                 hash.Add(this.FirstPersonModel);
-                hash.Add(this.WVISUnknown1);
-                hash.Add(this.WVISUnknown2);
-                hash.Add(this.WVISUnknown3);
+                hash.Add(this.FirstPersonOffset);
                 hash.Add(this.ImpactDataSet);
                 hash.Add(this.ColorRemappingIndex);
                 hash.Add(this.ImageSpaceAdapter);
@@ -2160,7 +2134,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.EmbeddedWeaponMod)) return false;
-                if (!eval(this.BNAM)) return false;
+                if (!eval(this.IsEmbeddedWeapon)) return false;
                 if (!eval(this.SightedTransitionSeconds)) return false;
                 if (!eval(this.AimDownSightTemplate)) return false;
                 if (!eval(this.AimModel)) return false;
@@ -2339,9 +2313,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.FirstPersonModel.Overall)) return false;
                     if (this.FirstPersonModel.Specific != null && !this.FirstPersonModel.Specific.All(eval)) return false;
                 }
-                if (!eval(this.WVISUnknown1)) return false;
-                if (!eval(this.WVISUnknown2)) return false;
-                if (!eval(this.WVISUnknown3)) return false;
+                if (!eval(this.FirstPersonOffset)) return false;
                 if (!eval(this.ImpactDataSet)) return false;
                 if (!eval(this.ColorRemappingIndex)) return false;
                 if (!eval(this.ImageSpaceAdapter)) return false;
@@ -2450,7 +2422,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.EmbeddedWeaponMod)) return true;
-                if (eval(this.BNAM)) return true;
+                if (eval(this.IsEmbeddedWeapon)) return true;
                 if (eval(this.SightedTransitionSeconds)) return true;
                 if (eval(this.AimDownSightTemplate)) return true;
                 if (eval(this.AimModel)) return true;
@@ -2629,9 +2601,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.FirstPersonModel.Overall)) return true;
                     if (this.FirstPersonModel.Specific != null && this.FirstPersonModel.Specific.Any(eval)) return true;
                 }
-                if (eval(this.WVISUnknown1)) return true;
-                if (eval(this.WVISUnknown2)) return true;
-                if (eval(this.WVISUnknown3)) return true;
+                if (eval(this.FirstPersonOffset)) return true;
                 if (eval(this.ImpactDataSet)) return true;
                 if (eval(this.ColorRemappingIndex)) return true;
                 if (eval(this.ImageSpaceAdapter)) return true;
@@ -2731,7 +2701,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.EmbeddedWeaponMod = eval(this.EmbeddedWeaponMod);
-                obj.BNAM = eval(this.BNAM);
+                obj.IsEmbeddedWeapon = eval(this.IsEmbeddedWeapon);
                 obj.SightedTransitionSeconds = eval(this.SightedTransitionSeconds);
                 obj.AimDownSightTemplate = eval(this.AimDownSightTemplate);
                 obj.AimModel = eval(this.AimModel);
@@ -2881,9 +2851,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.DistanceDeceleration = eval(this.DistanceDeceleration);
                 obj.UseVariableRange = eval(this.UseVariableRange);
                 obj.FirstPersonModel = this.FirstPersonModel == null ? null : new MaskItem<R, FirstPersonModel.Mask<R>?>(eval(this.FirstPersonModel.Overall), this.FirstPersonModel.Specific?.Translate(eval));
-                obj.WVISUnknown1 = eval(this.WVISUnknown1);
-                obj.WVISUnknown2 = eval(this.WVISUnknown2);
-                obj.WVISUnknown3 = eval(this.WVISUnknown3);
+                obj.FirstPersonOffset = eval(this.FirstPersonOffset);
                 obj.ImpactDataSet = eval(this.ImpactDataSet);
                 obj.ColorRemappingIndex = eval(this.ColorRemappingIndex);
                 obj.ImageSpaceAdapter = eval(this.ImageSpaceAdapter);
@@ -3062,9 +3030,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(EmbeddedWeaponMod, "EmbeddedWeaponMod");
                     }
-                    if (printMask?.BNAM ?? true)
+                    if (printMask?.IsEmbeddedWeapon ?? true)
                     {
-                        sb.AppendItem(BNAM, "BNAM");
+                        sb.AppendItem(IsEmbeddedWeapon, "IsEmbeddedWeapon");
                     }
                     if (printMask?.SightedTransitionSeconds ?? true)
                     {
@@ -3621,17 +3589,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         FirstPersonModel?.Print(sb);
                     }
-                    if (printMask?.WVISUnknown1 ?? true)
+                    if (printMask?.FirstPersonOffset ?? true)
                     {
-                        sb.AppendItem(WVISUnknown1, "WVISUnknown1");
-                    }
-                    if (printMask?.WVISUnknown2 ?? true)
-                    {
-                        sb.AppendItem(WVISUnknown2, "WVISUnknown2");
-                    }
-                    if (printMask?.WVISUnknown3 ?? true)
-                    {
-                        sb.AppendItem(WVISUnknown3, "WVISUnknown3");
+                        sb.AppendItem(FirstPersonOffset, "FirstPersonOffset");
                     }
                     if (printMask?.ImpactDataSet ?? true)
                     {
@@ -3698,7 +3658,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? AttachParentSlots;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectTemplate.ErrorMask?>>?>? ObjectTemplates;
             public Exception? EmbeddedWeaponMod;
-            public Exception? BNAM;
+            public Exception? IsEmbeddedWeapon;
             public Exception? SightedTransitionSeconds;
             public Exception? AimDownSightTemplate;
             public Exception? AimModel;
@@ -3834,9 +3794,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? DistanceDeceleration;
             public Exception? UseVariableRange;
             public MaskItem<Exception?, FirstPersonModel.ErrorMask?>? FirstPersonModel;
-            public Exception? WVISUnknown1;
-            public Exception? WVISUnknown2;
-            public Exception? WVISUnknown3;
+            public Exception? FirstPersonOffset;
             public Exception? ImpactDataSet;
             public Exception? ColorRemappingIndex;
             public Exception? ImageSpaceAdapter;
@@ -3897,8 +3855,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ObjectTemplates;
                     case Weapon_FieldIndex.EmbeddedWeaponMod:
                         return EmbeddedWeaponMod;
-                    case Weapon_FieldIndex.BNAM:
-                        return BNAM;
+                    case Weapon_FieldIndex.IsEmbeddedWeapon:
+                        return IsEmbeddedWeapon;
                     case Weapon_FieldIndex.SightedTransitionSeconds:
                         return SightedTransitionSeconds;
                     case Weapon_FieldIndex.AimDownSightTemplate:
@@ -4169,12 +4127,8 @@ namespace Mutagen.Bethesda.Starfield
                         return UseVariableRange;
                     case Weapon_FieldIndex.FirstPersonModel:
                         return FirstPersonModel;
-                    case Weapon_FieldIndex.WVISUnknown1:
-                        return WVISUnknown1;
-                    case Weapon_FieldIndex.WVISUnknown2:
-                        return WVISUnknown2;
-                    case Weapon_FieldIndex.WVISUnknown3:
-                        return WVISUnknown3;
+                    case Weapon_FieldIndex.FirstPersonOffset:
+                        return FirstPersonOffset;
                     case Weapon_FieldIndex.ImpactDataSet:
                         return ImpactDataSet;
                     case Weapon_FieldIndex.ColorRemappingIndex:
@@ -4267,8 +4221,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.EmbeddedWeaponMod:
                         this.EmbeddedWeaponMod = ex;
                         break;
-                    case Weapon_FieldIndex.BNAM:
-                        this.BNAM = ex;
+                    case Weapon_FieldIndex.IsEmbeddedWeapon:
+                        this.IsEmbeddedWeapon = ex;
                         break;
                     case Weapon_FieldIndex.SightedTransitionSeconds:
                         this.SightedTransitionSeconds = ex;
@@ -4675,14 +4629,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.FirstPersonModel:
                         this.FirstPersonModel = new MaskItem<Exception?, FirstPersonModel.ErrorMask?>(ex, null);
                         break;
-                    case Weapon_FieldIndex.WVISUnknown1:
-                        this.WVISUnknown1 = ex;
-                        break;
-                    case Weapon_FieldIndex.WVISUnknown2:
-                        this.WVISUnknown2 = ex;
-                        break;
-                    case Weapon_FieldIndex.WVISUnknown3:
-                        this.WVISUnknown3 = ex;
+                    case Weapon_FieldIndex.FirstPersonOffset:
+                        this.FirstPersonOffset = ex;
                         break;
                     case Weapon_FieldIndex.ImpactDataSet:
                         this.ImpactDataSet = ex;
@@ -4785,8 +4733,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.EmbeddedWeaponMod:
                         this.EmbeddedWeaponMod = (Exception?)obj;
                         break;
-                    case Weapon_FieldIndex.BNAM:
-                        this.BNAM = (Exception?)obj;
+                    case Weapon_FieldIndex.IsEmbeddedWeapon:
+                        this.IsEmbeddedWeapon = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.SightedTransitionSeconds:
                         this.SightedTransitionSeconds = (Exception?)obj;
@@ -5193,14 +5141,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Weapon_FieldIndex.FirstPersonModel:
                         this.FirstPersonModel = (MaskItem<Exception?, FirstPersonModel.ErrorMask?>?)obj;
                         break;
-                    case Weapon_FieldIndex.WVISUnknown1:
-                        this.WVISUnknown1 = (Exception?)obj;
-                        break;
-                    case Weapon_FieldIndex.WVISUnknown2:
-                        this.WVISUnknown2 = (Exception?)obj;
-                        break;
-                    case Weapon_FieldIndex.WVISUnknown3:
-                        this.WVISUnknown3 = (Exception?)obj;
+                    case Weapon_FieldIndex.FirstPersonOffset:
+                        this.FirstPersonOffset = (Exception?)obj;
                         break;
                     case Weapon_FieldIndex.ImpactDataSet:
                         this.ImpactDataSet = (Exception?)obj;
@@ -5257,7 +5199,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (AttachParentSlots != null) return true;
                 if (ObjectTemplates != null) return true;
                 if (EmbeddedWeaponMod != null) return true;
-                if (BNAM != null) return true;
+                if (IsEmbeddedWeapon != null) return true;
                 if (SightedTransitionSeconds != null) return true;
                 if (AimDownSightTemplate != null) return true;
                 if (AimModel != null) return true;
@@ -5393,9 +5335,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (DistanceDeceleration != null) return true;
                 if (UseVariableRange != null) return true;
                 if (FirstPersonModel != null) return true;
-                if (WVISUnknown1 != null) return true;
-                if (WVISUnknown2 != null) return true;
-                if (WVISUnknown3 != null) return true;
+                if (FirstPersonOffset != null) return true;
                 if (ImpactDataSet != null) return true;
                 if (ColorRemappingIndex != null) return true;
                 if (ImageSpaceAdapter != null) return true;
@@ -5547,7 +5487,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(EmbeddedWeaponMod, "EmbeddedWeaponMod");
                 }
                 {
-                    sb.AppendItem(BNAM, "BNAM");
+                    sb.AppendItem(IsEmbeddedWeapon, "IsEmbeddedWeapon");
                 }
                 {
                     sb.AppendItem(SightedTransitionSeconds, "SightedTransitionSeconds");
@@ -5954,13 +5894,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 FirstPersonModel?.Print(sb);
                 {
-                    sb.AppendItem(WVISUnknown1, "WVISUnknown1");
-                }
-                {
-                    sb.AppendItem(WVISUnknown2, "WVISUnknown2");
-                }
-                {
-                    sb.AppendItem(WVISUnknown3, "WVISUnknown3");
+                    sb.AppendItem(FirstPersonOffset, "FirstPersonOffset");
                 }
                 {
                     sb.AppendItem(ImpactDataSet, "ImpactDataSet");
@@ -6016,7 +5950,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.AttachParentSlots = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.AttachParentSlots?.Overall, rhs.AttachParentSlots?.Overall), Noggog.ExceptionExt.Combine(this.AttachParentSlots?.Specific, rhs.AttachParentSlots?.Specific));
                 ret.ObjectTemplates = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectTemplate.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.ObjectTemplates?.Overall, rhs.ObjectTemplates?.Overall), Noggog.ExceptionExt.Combine(this.ObjectTemplates?.Specific, rhs.ObjectTemplates?.Specific));
                 ret.EmbeddedWeaponMod = this.EmbeddedWeaponMod.Combine(rhs.EmbeddedWeaponMod);
-                ret.BNAM = this.BNAM.Combine(rhs.BNAM);
+                ret.IsEmbeddedWeapon = this.IsEmbeddedWeapon.Combine(rhs.IsEmbeddedWeapon);
                 ret.SightedTransitionSeconds = this.SightedTransitionSeconds.Combine(rhs.SightedTransitionSeconds);
                 ret.AimDownSightTemplate = this.AimDownSightTemplate.Combine(rhs.AimDownSightTemplate);
                 ret.AimModel = this.AimModel.Combine(rhs.AimModel);
@@ -6152,9 +6086,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.DistanceDeceleration = this.DistanceDeceleration.Combine(rhs.DistanceDeceleration);
                 ret.UseVariableRange = this.UseVariableRange.Combine(rhs.UseVariableRange);
                 ret.FirstPersonModel = this.FirstPersonModel.Combine(rhs.FirstPersonModel, (l, r) => l.Combine(r));
-                ret.WVISUnknown1 = this.WVISUnknown1.Combine(rhs.WVISUnknown1);
-                ret.WVISUnknown2 = this.WVISUnknown2.Combine(rhs.WVISUnknown2);
-                ret.WVISUnknown3 = this.WVISUnknown3.Combine(rhs.WVISUnknown3);
+                ret.FirstPersonOffset = this.FirstPersonOffset.Combine(rhs.FirstPersonOffset);
                 ret.ImpactDataSet = this.ImpactDataSet.Combine(rhs.ImpactDataSet);
                 ret.ColorRemappingIndex = this.ColorRemappingIndex.Combine(rhs.ColorRemappingIndex);
                 ret.ImageSpaceAdapter = this.ImageSpaceAdapter.Combine(rhs.ImageSpaceAdapter);
@@ -6207,7 +6139,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool AttachParentSlots;
             public ObjectTemplate.TranslationMask? ObjectTemplates;
             public bool EmbeddedWeaponMod;
-            public bool BNAM;
+            public bool IsEmbeddedWeapon;
             public bool SightedTransitionSeconds;
             public bool AimDownSightTemplate;
             public bool AimModel;
@@ -6343,9 +6275,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool DistanceDeceleration;
             public bool UseVariableRange;
             public FirstPersonModel.TranslationMask? FirstPersonModel;
-            public bool WVISUnknown1;
-            public bool WVISUnknown2;
-            public bool WVISUnknown3;
+            public bool FirstPersonOffset;
             public bool ImpactDataSet;
             public bool ColorRemappingIndex;
             public bool ImageSpaceAdapter;
@@ -6375,7 +6305,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.InstanceNaming = defaultOn;
                 this.AttachParentSlots = defaultOn;
                 this.EmbeddedWeaponMod = defaultOn;
-                this.BNAM = defaultOn;
+                this.IsEmbeddedWeapon = defaultOn;
                 this.SightedTransitionSeconds = defaultOn;
                 this.AimDownSightTemplate = defaultOn;
                 this.AimModel = defaultOn;
@@ -6502,9 +6432,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DistanceAcceleration = defaultOn;
                 this.DistanceDeceleration = defaultOn;
                 this.UseVariableRange = defaultOn;
-                this.WVISUnknown1 = defaultOn;
-                this.WVISUnknown2 = defaultOn;
-                this.WVISUnknown3 = defaultOn;
+                this.FirstPersonOffset = defaultOn;
                 this.ImpactDataSet = defaultOn;
                 this.ColorRemappingIndex = defaultOn;
                 this.ImageSpaceAdapter = defaultOn;
@@ -6542,7 +6470,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((AttachParentSlots, null));
                 ret.Add((ObjectTemplates == null ? DefaultOn : !ObjectTemplates.GetCrystal().CopyNothing, ObjectTemplates?.GetCrystal()));
                 ret.Add((EmbeddedWeaponMod, null));
-                ret.Add((BNAM, null));
+                ret.Add((IsEmbeddedWeapon, null));
                 ret.Add((SightedTransitionSeconds, null));
                 ret.Add((AimDownSightTemplate, null));
                 ret.Add((AimModel, null));
@@ -6678,9 +6606,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((DistanceDeceleration, null));
                 ret.Add((UseVariableRange, null));
                 ret.Add((FirstPersonModel != null ? FirstPersonModel.OnOverall : DefaultOn, FirstPersonModel?.GetCrystal()));
-                ret.Add((WVISUnknown1, null));
-                ret.Add((WVISUnknown2, null));
-                ret.Add((WVISUnknown3, null));
+                ret.Add((FirstPersonOffset, null));
                 ret.Add((ImpactDataSet, null));
                 ret.Add((ColorRemappingIndex, null));
                 ret.Add((ImageSpaceAdapter, null));
@@ -6901,7 +6827,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? AttachParentSlots { get; set; }
         new ExtendedList<ObjectTemplate<Weapon.Property>>? ObjectTemplates { get; set; }
         new IFormLinkNullable<IAObjectModificationGetter> EmbeddedWeaponMod { get; set; }
-        new MemorySlice<Byte>? BNAM { get; set; }
+        new Boolean IsEmbeddedWeapon { get; set; }
         new Single SightedTransitionSeconds { get; set; }
         new IFormLink<IZoomGetter> AimDownSightTemplate { get; set; }
         new IFormLink<IAimModelGetter> AimModel { get; set; }
@@ -7037,9 +6963,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single DistanceDeceleration { get; set; }
         new Boolean UseVariableRange { get; set; }
         new FirstPersonModel? FirstPersonModel { get; set; }
-        new UInt32 WVISUnknown1 { get; set; }
-        new UInt32 WVISUnknown2 { get; set; }
-        new UInt32 WVISUnknown3 { get; set; }
+        new P3Float FirstPersonOffset { get; set; }
         new IFormLink<IImpactDataSetGetter> ImpactDataSet { get; set; }
         new Single ColorRemappingIndex { get; set; }
         new IFormLink<IImageSpaceAdapterGetter> ImageSpaceAdapter { get; set; }
@@ -7136,7 +7060,7 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? AttachParentSlots { get; }
         IReadOnlyList<IObjectTemplateGetter<Weapon.Property>>? ObjectTemplates { get; }
         IFormLinkNullableGetter<IAObjectModificationGetter> EmbeddedWeaponMod { get; }
-        ReadOnlyMemorySlice<Byte>? BNAM { get; }
+        Boolean IsEmbeddedWeapon { get; }
         Single SightedTransitionSeconds { get; }
         IFormLinkGetter<IZoomGetter> AimDownSightTemplate { get; }
         IFormLinkGetter<IAimModelGetter> AimModel { get; }
@@ -7272,9 +7196,7 @@ namespace Mutagen.Bethesda.Starfield
         Single DistanceDeceleration { get; }
         Boolean UseVariableRange { get; }
         IFirstPersonModelGetter? FirstPersonModel { get; }
-        UInt32 WVISUnknown1 { get; }
-        UInt32 WVISUnknown2 { get; }
-        UInt32 WVISUnknown3 { get; }
+        P3Float FirstPersonOffset { get; }
         IFormLinkGetter<IImpactDataSetGetter> ImpactDataSet { get; }
         Single ColorRemappingIndex { get; }
         IFormLinkGetter<IImageSpaceAdapterGetter> ImageSpaceAdapter { get; }
@@ -7485,7 +7407,7 @@ namespace Mutagen.Bethesda.Starfield
         AttachParentSlots = 26,
         ObjectTemplates = 27,
         EmbeddedWeaponMod = 28,
-        BNAM = 29,
+        IsEmbeddedWeapon = 29,
         SightedTransitionSeconds = 30,
         AimDownSightTemplate = 31,
         AimModel = 32,
@@ -7621,17 +7543,15 @@ namespace Mutagen.Bethesda.Starfield
         DistanceDeceleration = 162,
         UseVariableRange = 163,
         FirstPersonModel = 164,
-        WVISUnknown1 = 165,
-        WVISUnknown2 = 166,
-        WVISUnknown3 = 167,
-        ImpactDataSet = 168,
-        ColorRemappingIndex = 169,
-        ImageSpaceAdapter = 170,
-        AttackActionPointCost = 171,
-        OverrideDefaultCameraShake = 172,
-        FiringCameraShakeIntensity = 173,
-        FiringCameraShakeDuration = 174,
-        AiFiringArc = 175,
+        FirstPersonOffset = 165,
+        ImpactDataSet = 166,
+        ColorRemappingIndex = 167,
+        ImageSpaceAdapter = 168,
+        AttackActionPointCost = 169,
+        OverrideDefaultCameraShake = 170,
+        FiringCameraShakeIntensity = 171,
+        FiringCameraShakeDuration = 172,
+        AiFiringArc = 173,
     }
     #endregion
 
@@ -7642,9 +7562,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 169;
+        public const ushort AdditionalFieldCount = 167;
 
-        public const ushort FieldCount = 176;
+        public const ushort FieldCount = 174;
 
         public static readonly Type MaskType = typeof(Weapon.Mask<>);
 
@@ -7800,7 +7720,7 @@ namespace Mutagen.Bethesda.Starfield
             item.AttachParentSlots = null;
             item.ObjectTemplates = null;
             item.EmbeddedWeaponMod.Clear();
-            item.BNAM = default;
+            item.IsEmbeddedWeapon = default(Boolean);
             item.SightedTransitionSeconds = default(Single);
             item.AimDownSightTemplate.Clear();
             item.AimModel.Clear();
@@ -7936,9 +7856,7 @@ namespace Mutagen.Bethesda.Starfield
             item.DistanceDeceleration = default(Single);
             item.UseVariableRange = default(Boolean);
             item.FirstPersonModel = null;
-            item.WVISUnknown1 = default(UInt32);
-            item.WVISUnknown2 = default(UInt32);
-            item.WVISUnknown3 = default(UInt32);
+            item.FirstPersonOffset = default(P3Float);
             item.ImpactDataSet.Clear();
             item.ColorRemappingIndex = default(Single);
             item.ImageSpaceAdapter.Clear();
@@ -8172,7 +8090,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             ret.EmbeddedWeaponMod = item.EmbeddedWeaponMod.Equals(rhs.EmbeddedWeaponMod);
-            ret.BNAM = MemorySliceExt.SequenceEqual(item.BNAM, rhs.BNAM);
+            ret.IsEmbeddedWeapon = item.IsEmbeddedWeapon == rhs.IsEmbeddedWeapon;
             ret.SightedTransitionSeconds = item.SightedTransitionSeconds.EqualsWithin(rhs.SightedTransitionSeconds);
             ret.AimDownSightTemplate = item.AimDownSightTemplate.Equals(rhs.AimDownSightTemplate);
             ret.AimModel = item.AimModel.Equals(rhs.AimModel);
@@ -8315,9 +8233,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.FirstPersonModel,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.WVISUnknown1 = item.WVISUnknown1 == rhs.WVISUnknown1;
-            ret.WVISUnknown2 = item.WVISUnknown2 == rhs.WVISUnknown2;
-            ret.WVISUnknown3 = item.WVISUnknown3 == rhs.WVISUnknown3;
+            ret.FirstPersonOffset = item.FirstPersonOffset.Equals(rhs.FirstPersonOffset);
             ret.ImpactDataSet = item.ImpactDataSet.Equals(rhs.ImpactDataSet);
             ret.ColorRemappingIndex = item.ColorRemappingIndex.EqualsWithin(rhs.ColorRemappingIndex);
             ret.ImageSpaceAdapter = item.ImageSpaceAdapter.Equals(rhs.ImageSpaceAdapter);
@@ -8516,10 +8432,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.EmbeddedWeaponMod.FormKeyNullable, "EmbeddedWeaponMod");
             }
-            if ((printMask?.BNAM ?? true)
-                && item.BNAM is {} BNAMItem)
+            if (printMask?.IsEmbeddedWeapon ?? true)
             {
-                sb.AppendLine($"BNAM => {SpanExt.ToHexString(BNAMItem)}");
+                sb.AppendItem(item.IsEmbeddedWeapon, "IsEmbeddedWeapon");
             }
             if (printMask?.SightedTransitionSeconds ?? true)
             {
@@ -9076,17 +8991,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 FirstPersonModelItem?.Print(sb, "FirstPersonModel");
             }
-            if (printMask?.WVISUnknown1 ?? true)
+            if (printMask?.FirstPersonOffset ?? true)
             {
-                sb.AppendItem(item.WVISUnknown1, "WVISUnknown1");
-            }
-            if (printMask?.WVISUnknown2 ?? true)
-            {
-                sb.AppendItem(item.WVISUnknown2, "WVISUnknown2");
-            }
-            if (printMask?.WVISUnknown3 ?? true)
-            {
-                sb.AppendItem(item.WVISUnknown3, "WVISUnknown3");
+                sb.AppendItem(item.FirstPersonOffset, "FirstPersonOffset");
             }
             if (printMask?.ImpactDataSet ?? true)
             {
@@ -9286,9 +9193,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.EmbeddedWeaponMod.Equals(rhs.EmbeddedWeaponMod)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.BNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.IsEmbeddedWeapon) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.BNAM, rhs.BNAM)) return false;
+                if (lhs.IsEmbeddedWeapon != rhs.IsEmbeddedWeapon) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.SightedTransitionSeconds) ?? true))
             {
@@ -9862,17 +9769,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isFirstPersonModelEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WVISUnknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.FirstPersonOffset) ?? true))
             {
-                if (lhs.WVISUnknown1 != rhs.WVISUnknown1) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WVISUnknown2) ?? true))
-            {
-                if (lhs.WVISUnknown2 != rhs.WVISUnknown2) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.WVISUnknown3) ?? true))
-            {
-                if (lhs.WVISUnknown3 != rhs.WVISUnknown3) return false;
+                if (!lhs.FirstPersonOffset.Equals(rhs.FirstPersonOffset)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Weapon_FieldIndex.ImpactDataSet) ?? true))
             {
@@ -10007,10 +9906,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             hash.Add(item.EmbeddedWeaponMod);
-            if (item.BNAM is {} BNAMItem)
-            {
-                hash.AddBytes(BNAMItem);
-            }
+            hash.Add(item.IsEmbeddedWeapon);
             hash.Add(item.SightedTransitionSeconds);
             hash.Add(item.AimDownSightTemplate);
             hash.Add(item.AimModel);
@@ -10164,9 +10060,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(FirstPersonModelitem);
             }
-            hash.Add(item.WVISUnknown1);
-            hash.Add(item.WVISUnknown2);
-            hash.Add(item.WVISUnknown3);
+            hash.Add(item.FirstPersonOffset);
             hash.Add(item.ImpactDataSet);
             hash.Add(item.ColorRemappingIndex);
             hash.Add(item.ImageSpaceAdapter);
@@ -10806,16 +10700,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.EmbeddedWeaponMod.SetTo(rhs.EmbeddedWeaponMod.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.BNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.IsEmbeddedWeapon) ?? true))
             {
-                if(rhs.BNAM is {} BNAMrhs)
-                {
-                    item.BNAM = BNAMrhs.ToArray();
-                }
-                else
-                {
-                    item.BNAM = default;
-                }
+                item.IsEmbeddedWeapon = rhs.IsEmbeddedWeapon;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.SightedTransitionSeconds) ?? true))
             {
@@ -11547,17 +11434,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WVISUnknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.FirstPersonOffset) ?? true))
             {
-                item.WVISUnknown1 = rhs.WVISUnknown1;
-            }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WVISUnknown2) ?? true))
-            {
-                item.WVISUnknown2 = rhs.WVISUnknown2;
-            }
-            if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.WVISUnknown3) ?? true))
-            {
-                item.WVISUnknown3 = rhs.WVISUnknown3;
+                item.FirstPersonOffset = rhs.FirstPersonOffset;
             }
             if ((copyMask?.GetShouldTranslate((int)Weapon_FieldIndex.ImpactDataSet) ?? true))
             {
@@ -11908,9 +11787,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.EmbeddedWeaponMod,
                 header: translationParams.ConvertToCustom(RecordTypes.NNAM));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.BNAM,
+                item: item.IsEmbeddedWeapon,
                 header: translationParams.ConvertToCustom(RecordTypes.BNAM));
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.WAIM)))
             {
@@ -12312,9 +12191,9 @@ namespace Mutagen.Bethesda.Starfield
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.WVIS)))
             {
-                writer.Write(item.WVISUnknown1);
-                writer.Write(item.WVISUnknown2);
-                writer.Write(item.WVISUnknown3);
+                P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer: writer,
+                    item: item.FirstPersonOffset);
                 FormLinkBinaryTranslation.Instance.Write(
                     writer: writer,
                     item: item.ImpactDataSet);
@@ -12614,9 +12493,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BNAM:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.BNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)Weapon_FieldIndex.BNAM;
+                    item.IsEmbeddedWeapon = true;
+                    return (int)Weapon_FieldIndex.IsEmbeddedWeapon;
                 }
                 case RecordTypeInts.WAIM:
                 {
@@ -13018,12 +12896,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
-                    if (dataFrame.Remaining < 4) return null;
-                    item.WVISUnknown1 = dataFrame.ReadUInt32();
-                    if (dataFrame.Remaining < 4) return null;
-                    item.WVISUnknown2 = dataFrame.ReadUInt32();
-                    if (dataFrame.Remaining < 4) return null;
-                    item.WVISUnknown3 = dataFrame.ReadUInt32();
+                    if (dataFrame.Remaining < 12) return null;
+                    item.FirstPersonOffset = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.ImpactDataSet.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     if (dataFrame.Remaining < 4) return null;
@@ -13195,9 +13069,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _EmbeddedWeaponModLocation;
         public IFormLinkNullableGetter<IAObjectModificationGetter> EmbeddedWeaponMod => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IAObjectModificationGetter>(_package, _recordData, _EmbeddedWeaponModLocation);
         #endregion
-        #region BNAM
-        private int? _BNAMLocation;
-        public ReadOnlyMemorySlice<Byte>? BNAM => _BNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _BNAMLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region IsEmbeddedWeapon
+        private int? _IsEmbeddedWeaponLocation;
+        public Boolean IsEmbeddedWeapon => _IsEmbeddedWeaponLocation.HasValue ? true : default(Boolean);
         #endregion
         private RangeInt32? _WAIMLocation;
         #region SightedTransitionSeconds
@@ -13884,20 +13758,10 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         public IFirstPersonModelGetter? FirstPersonModel { get; private set; }
         private RangeInt32? _WVISLocation;
-        #region WVISUnknown1
-        private int _WVISUnknown1Location => _WVISLocation!.Value.Min;
-        private bool _WVISUnknown1_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _WVISUnknown1Location + 1 >= 4;
-        public UInt32 WVISUnknown1 => _WVISUnknown1_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WVISUnknown1Location, 4)) : default(UInt32);
-        #endregion
-        #region WVISUnknown2
-        private int _WVISUnknown2Location => _WVISLocation!.Value.Min + 0x4;
-        private bool _WVISUnknown2_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _WVISUnknown2Location + 1 >= 4;
-        public UInt32 WVISUnknown2 => _WVISUnknown2_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WVISUnknown2Location, 4)) : default(UInt32);
-        #endregion
-        #region WVISUnknown3
-        private int _WVISUnknown3Location => _WVISLocation!.Value.Min + 0x8;
-        private bool _WVISUnknown3_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _WVISUnknown3Location + 1 >= 4;
-        public UInt32 WVISUnknown3 => _WVISUnknown3_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_WVISUnknown3Location, 4)) : default(UInt32);
+        #region FirstPersonOffset
+        private int _FirstPersonOffsetLocation => _WVISLocation!.Value.Min;
+        private bool _FirstPersonOffset_IsSet => _WVISLocation.HasValue && _WVISLocation!.Value.Max - _FirstPersonOffsetLocation + 1 >= 12;
+        public P3Float FirstPersonOffset => _FirstPersonOffset_IsSet ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_recordData.Slice(_FirstPersonOffsetLocation, 12)) : default(P3Float);
         #endregion
         #region ImpactDataSet
         private int _ImpactDataSetLocation => _WVISLocation!.Value.Min + 0xC;
@@ -14209,8 +14073,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.BNAM:
                 {
-                    _BNAMLocation = (stream.Position - offset);
-                    return (int)Weapon_FieldIndex.BNAM;
+                    _IsEmbeddedWeaponLocation = (stream.Position - offset);
+                    return (int)Weapon_FieldIndex.IsEmbeddedWeapon;
                 }
                 case RecordTypeInts.WAIM:
                 {

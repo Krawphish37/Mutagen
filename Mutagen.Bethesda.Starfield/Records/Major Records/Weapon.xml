@@ -35,7 +35,7 @@
       </List>
       <Marker name="STOP" recordType="STOP" />
       <FormLink name="EmbeddedWeaponMod" refName="AObjectModification" recordType="NNAM" />
-      <ByteArray name="BNAM" recordType="BNAM" unknown="true" />
+      <Bool name="IsEmbeddedWeapon" recordType="BNAM" boolAsMarker="True" />
       <Data recordType="WAIM" >
         <Fields>
           <Float name="SightedTransitionSeconds" />
@@ -225,9 +225,7 @@
       <RefDirect name="FirstPersonModel" refName="FirstPersonModel" />
       <Data recordType="WVIS" >
         <Fields>
-          <UInt32 name="WVISUnknown1" unknown="true" />
-          <UInt32 name="WVISUnknown2" unknown="true" />
-          <UInt32 name="WVISUnknown3" unknown="true" />
+          <P3Float name="FirstPersonOffset" />
           <FormLink name="ImpactDataSet" refName="ImpactDataSet" />
           <Float name="ColorRemappingIndex" />
           <FormLink name="ImageSpaceAdapter" refName="ImageSpaceAdapter" />
