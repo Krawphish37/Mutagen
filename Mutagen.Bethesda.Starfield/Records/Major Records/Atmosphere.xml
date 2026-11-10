@@ -4,7 +4,11 @@
     <Fields>
       <ByteArray name="REFL" recordType="REFL" unknown="true" overflowRecordType="XXXX" />
       <FormLink name="ReflectionParent" recordType="RFDP" refName="Atmosphere" />
-      <ByteArray name="ReflectionDiff" recordType="RDIF" unknown="true" />
+      <RefDirect name="ReflectionDiff" refName="Reflection" overflowRecordType="XXXX">
+        <RecordTypeOverrides>
+          <Mapping From="REFL" To="RDIF" />
+        </RecordTypeOverrides>
+      </RefDirect>
     </Fields>
   </Object>
 </Loqui>

@@ -166,7 +166,7 @@ public class ReflectionOverflowTests
             atmosphere.REFL.ShouldNotBeNull();
             atmosphere.REFL!.Value.ToArray().ShouldBe(payload);
             atmosphere.ReflectionParent.FormKey.ShouldBe(new FormKey(TestModKey, 0x801));
-            atmosphere.ReflectionDiff!.Value.ToArray().ShouldBe(new byte[] { 1, 2, 3 });
+            atmosphere.ReflectionDiff!.Data.ToArray().ShouldBe(new byte[] { 1, 2, 3 });
         }
     }
 
