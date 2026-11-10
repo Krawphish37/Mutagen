@@ -11,7 +11,9 @@
           <Float name="WeaponAdjust" />
           <UInt8 name="MalePriority" />
           <UInt8 name="FemalePriority" />
-          <UInt16 name="Unknown" />
+          <!-- C132: one byte per sex, like Fallout 4/Skyrim WeightSliderEnabled; 01 01 in svc3holsters, 0 in every official plugin -->
+          <UInt8 name="UnknownMale" />
+          <UInt8 name="UnknownFemale" />
           <UInt8 name="DetectionSoundValue" />
           <Float name="HealthBarOffset" />
         </Fields>

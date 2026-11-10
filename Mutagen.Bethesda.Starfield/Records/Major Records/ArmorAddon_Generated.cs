@@ -116,8 +116,11 @@ namespace Mutagen.Bethesda.Starfield
         #region FemalePriority
         public Byte FemalePriority { get; set; } = default(Byte);
         #endregion
-        #region Unknown
-        public UInt16 Unknown { get; set; } = default(UInt16);
+        #region UnknownMale
+        public Byte UnknownMale { get; set; } = default(Byte);
+        #endregion
+        #region UnknownFemale
+        public Byte UnknownFemale { get; set; } = default(Byte);
         #endregion
         #region DetectionSoundValue
         public Byte DetectionSoundValue { get; set; } = default(Byte);
@@ -259,7 +262,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.WeaponAdjust = initialValue;
                 this.MalePriority = initialValue;
                 this.FemalePriority = initialValue;
-                this.Unknown = initialValue;
+                this.UnknownMale = initialValue;
+                this.UnknownFemale = initialValue;
                 this.DetectionSoundValue = initialValue;
                 this.HealthBarOffset = initialValue;
                 this.WorldModel = new MaskItem<TItem, GenderedItem<MaskItem<TItem, Model.Mask<TItem>?>?>?>(initialValue, default);
@@ -294,7 +298,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem WeaponAdjust,
                 TItem MalePriority,
                 TItem FemalePriority,
-                TItem Unknown,
+                TItem UnknownMale,
+                TItem UnknownFemale,
                 TItem DetectionSoundValue,
                 TItem HealthBarOffset,
                 TItem WorldModel,
@@ -328,7 +333,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.WeaponAdjust = WeaponAdjust;
                 this.MalePriority = MalePriority;
                 this.FemalePriority = FemalePriority;
-                this.Unknown = Unknown;
+                this.UnknownMale = UnknownMale;
+                this.UnknownFemale = UnknownFemale;
                 this.DetectionSoundValue = DetectionSoundValue;
                 this.HealthBarOffset = HealthBarOffset;
                 this.WorldModel = new MaskItem<TItem, GenderedItem<MaskItem<TItem, Model.Mask<TItem>?>?>?>(WorldModel, default);
@@ -364,7 +370,8 @@ namespace Mutagen.Bethesda.Starfield
             public TItem WeaponAdjust;
             public TItem MalePriority;
             public TItem FemalePriority;
-            public TItem Unknown;
+            public TItem UnknownMale;
+            public TItem UnknownFemale;
             public TItem DetectionSoundValue;
             public TItem HealthBarOffset;
             public MaskItem<TItem, GenderedItem<MaskItem<TItem, Model.Mask<TItem>?>?>?>? WorldModel;
@@ -402,7 +409,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.WeaponAdjust, rhs.WeaponAdjust)) return false;
                 if (!object.Equals(this.MalePriority, rhs.MalePriority)) return false;
                 if (!object.Equals(this.FemalePriority, rhs.FemalePriority)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.UnknownMale, rhs.UnknownMale)) return false;
+                if (!object.Equals(this.UnknownFemale, rhs.UnknownFemale)) return false;
                 if (!object.Equals(this.DetectionSoundValue, rhs.DetectionSoundValue)) return false;
                 if (!object.Equals(this.HealthBarOffset, rhs.HealthBarOffset)) return false;
                 if (!object.Equals(this.WorldModel, rhs.WorldModel)) return false;
@@ -432,7 +440,8 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.WeaponAdjust);
                 hash.Add(this.MalePriority);
                 hash.Add(this.FemalePriority);
-                hash.Add(this.Unknown);
+                hash.Add(this.UnknownMale);
+                hash.Add(this.UnknownFemale);
                 hash.Add(this.DetectionSoundValue);
                 hash.Add(this.HealthBarOffset);
                 hash.Add(this.WorldModel);
@@ -482,7 +491,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.WeaponAdjust)) return false;
                 if (!eval(this.MalePriority)) return false;
                 if (!eval(this.FemalePriority)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.UnknownMale)) return false;
+                if (!eval(this.UnknownFemale)) return false;
                 if (!eval(this.DetectionSoundValue)) return false;
                 if (!eval(this.HealthBarOffset)) return false;
                 if (!GenderedItem.AllMask(
@@ -560,7 +570,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.WeaponAdjust)) return true;
                 if (eval(this.MalePriority)) return true;
                 if (eval(this.FemalePriority)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.UnknownMale)) return true;
+                if (eval(this.UnknownFemale)) return true;
                 if (eval(this.DetectionSoundValue)) return true;
                 if (eval(this.HealthBarOffset)) return true;
                 if (GenderedItem.AnyMask(
@@ -644,7 +655,8 @@ namespace Mutagen.Bethesda.Starfield
                 obj.WeaponAdjust = eval(this.WeaponAdjust);
                 obj.MalePriority = eval(this.MalePriority);
                 obj.FemalePriority = eval(this.FemalePriority);
-                obj.Unknown = eval(this.Unknown);
+                obj.UnknownMale = eval(this.UnknownMale);
+                obj.UnknownFemale = eval(this.UnknownFemale);
                 obj.DetectionSoundValue = eval(this.DetectionSoundValue);
                 obj.HealthBarOffset = eval(this.HealthBarOffset);
                 obj.WorldModel = GenderedItem.TranslateHelper(
@@ -765,9 +777,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(FemalePriority, "FemalePriority");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.UnknownMale ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(UnknownMale, "UnknownMale");
+                    }
+                    if (printMask?.UnknownFemale ?? true)
+                    {
+                        sb.AppendItem(UnknownFemale, "UnknownFemale");
                     }
                     if (printMask?.DetectionSoundValue ?? true)
                     {
@@ -894,7 +910,8 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? WeaponAdjust;
             public Exception? MalePriority;
             public Exception? FemalePriority;
-            public Exception? Unknown;
+            public Exception? UnknownMale;
+            public Exception? UnknownFemale;
             public Exception? DetectionSoundValue;
             public Exception? HealthBarOffset;
             public MaskItem<Exception?, GenderedItem<Exception?>?>? WorldModel;
@@ -934,8 +951,10 @@ namespace Mutagen.Bethesda.Starfield
                         return MalePriority;
                     case ArmorAddon_FieldIndex.FemalePriority:
                         return FemalePriority;
-                    case ArmorAddon_FieldIndex.Unknown:
-                        return Unknown;
+                    case ArmorAddon_FieldIndex.UnknownMale:
+                        return UnknownMale;
+                    case ArmorAddon_FieldIndex.UnknownFemale:
+                        return UnknownFemale;
                     case ArmorAddon_FieldIndex.DetectionSoundValue:
                         return DetectionSoundValue;
                     case ArmorAddon_FieldIndex.HealthBarOffset:
@@ -1001,8 +1020,11 @@ namespace Mutagen.Bethesda.Starfield
                     case ArmorAddon_FieldIndex.FemalePriority:
                         this.FemalePriority = ex;
                         break;
-                    case ArmorAddon_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case ArmorAddon_FieldIndex.UnknownMale:
+                        this.UnknownMale = ex;
+                        break;
+                    case ArmorAddon_FieldIndex.UnknownFemale:
+                        this.UnknownFemale = ex;
                         break;
                     case ArmorAddon_FieldIndex.DetectionSoundValue:
                         this.DetectionSoundValue = ex;
@@ -1087,8 +1109,11 @@ namespace Mutagen.Bethesda.Starfield
                     case ArmorAddon_FieldIndex.FemalePriority:
                         this.FemalePriority = (Exception?)obj;
                         break;
-                    case ArmorAddon_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case ArmorAddon_FieldIndex.UnknownMale:
+                        this.UnknownMale = (Exception?)obj;
+                        break;
+                    case ArmorAddon_FieldIndex.UnknownFemale:
+                        this.UnknownFemale = (Exception?)obj;
                         break;
                     case ArmorAddon_FieldIndex.DetectionSoundValue:
                         this.DetectionSoundValue = (Exception?)obj;
@@ -1157,7 +1182,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (WeaponAdjust != null) return true;
                 if (MalePriority != null) return true;
                 if (FemalePriority != null) return true;
-                if (Unknown != null) return true;
+                if (UnknownMale != null) return true;
+                if (UnknownFemale != null) return true;
                 if (DetectionSoundValue != null) return true;
                 if (HealthBarOffset != null) return true;
                 if (WorldModel != null) return true;
@@ -1236,7 +1262,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(FemalePriority, "FemalePriority");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(UnknownMale, "UnknownMale");
+                }
+                {
+                    sb.AppendItem(UnknownFemale, "UnknownFemale");
                 }
                 {
                     sb.AppendItem(DetectionSoundValue, "DetectionSoundValue");
@@ -1343,7 +1372,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.WeaponAdjust = this.WeaponAdjust.Combine(rhs.WeaponAdjust);
                 ret.MalePriority = this.MalePriority.Combine(rhs.MalePriority);
                 ret.FemalePriority = this.FemalePriority.Combine(rhs.FemalePriority);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.UnknownMale = this.UnknownMale.Combine(rhs.UnknownMale);
+                ret.UnknownFemale = this.UnknownFemale.Combine(rhs.UnknownFemale);
                 ret.DetectionSoundValue = this.DetectionSoundValue.Combine(rhs.DetectionSoundValue);
                 ret.HealthBarOffset = this.HealthBarOffset.Combine(rhs.HealthBarOffset);
                 ret.WorldModel = new MaskItem<Exception?, GenderedItem<Exception?>?>(Noggog.ExceptionExt.Combine(this.WorldModel?.Overall, rhs.WorldModel?.Overall), GenderedItem.Combine(this.WorldModel?.Specific, rhs.WorldModel?.Specific));
@@ -1390,7 +1420,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool WeaponAdjust;
             public bool MalePriority;
             public bool FemalePriority;
-            public bool Unknown;
+            public bool UnknownMale;
+            public bool UnknownFemale;
             public bool DetectionSoundValue;
             public bool HealthBarOffset;
             public GenderedItem<Model.TranslationMask>? WorldModel;
@@ -1421,7 +1452,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.WeaponAdjust = defaultOn;
                 this.MalePriority = defaultOn;
                 this.FemalePriority = defaultOn;
-                this.Unknown = defaultOn;
+                this.UnknownMale = defaultOn;
+                this.UnknownFemale = defaultOn;
                 this.DetectionSoundValue = defaultOn;
                 this.HealthBarOffset = defaultOn;
                 this.ExtraLightLayers = defaultOn;
@@ -1447,7 +1479,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((WeaponAdjust, null));
                 ret.Add((MalePriority, null));
                 ret.Add((FemalePriority, null));
-                ret.Add((Unknown, null));
+                ret.Add((UnknownMale, null));
+                ret.Add((UnknownFemale, null));
                 ret.Add((DetectionSoundValue, null));
                 ret.Add((HealthBarOffset, null));
                 ret.Add(GenderedItem.GetCrystalMask(WorldModel, DefaultOn, m => m.OnOverall));
@@ -1634,7 +1667,8 @@ namespace Mutagen.Bethesda.Starfield
         new Single WeaponAdjust { get; set; }
         new Byte MalePriority { get; set; }
         new Byte FemalePriority { get; set; }
-        new UInt16 Unknown { get; set; }
+        new Byte UnknownMale { get; set; }
+        new Byte UnknownFemale { get; set; }
         new Byte DetectionSoundValue { get; set; }
         new Single HealthBarOffset { get; set; }
         new IGenderedItem<Model?>? WorldModel { get; set; }
@@ -1695,7 +1729,8 @@ namespace Mutagen.Bethesda.Starfield
         Single WeaponAdjust { get; }
         Byte MalePriority { get; }
         Byte FemalePriority { get; }
-        UInt16 Unknown { get; }
+        Byte UnknownMale { get; }
+        Byte UnknownFemale { get; }
         Byte DetectionSoundValue { get; }
         Single HealthBarOffset { get; }
         IGenderedItemGetter<IModelGetter?>? WorldModel { get; }
@@ -1900,24 +1935,25 @@ namespace Mutagen.Bethesda.Starfield
         WeaponAdjust = 11,
         MalePriority = 12,
         FemalePriority = 13,
-        Unknown = 14,
-        DetectionSoundValue = 15,
-        HealthBarOffset = 16,
-        WorldModel = 17,
-        FirstPersonModel = 18,
-        AltSkeleton = 19,
-        ExtraLightLayers = 20,
-        SkinTexture = 21,
-        Morphs = 22,
-        AdditionalRaces = 23,
-        FootstepSound = 24,
-        ArtObject = 25,
-        BodyPartData = 26,
-        ActorValueModulationGroupType = 27,
-        ActorValueModulationEntryType = 28,
-        ActorValueModulationSubType = 29,
-        ActorValueModulationEntryValue = 30,
-        BoneDataModifiers = 31,
+        UnknownMale = 14,
+        UnknownFemale = 15,
+        DetectionSoundValue = 16,
+        HealthBarOffset = 17,
+        WorldModel = 18,
+        FirstPersonModel = 19,
+        AltSkeleton = 20,
+        ExtraLightLayers = 21,
+        SkinTexture = 22,
+        Morphs = 23,
+        AdditionalRaces = 24,
+        FootstepSound = 25,
+        ArtObject = 26,
+        BodyPartData = 27,
+        ActorValueModulationGroupType = 28,
+        ActorValueModulationEntryType = 29,
+        ActorValueModulationSubType = 30,
+        ActorValueModulationEntryValue = 31,
+        BoneDataModifiers = 32,
     }
     #endregion
 
@@ -1928,9 +1964,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 25;
+        public const ushort AdditionalFieldCount = 26;
 
-        public const ushort FieldCount = 32;
+        public const ushort FieldCount = 33;
 
         public static readonly Type MaskType = typeof(ArmorAddon.Mask<>);
 
@@ -2141,7 +2177,8 @@ namespace Mutagen.Bethesda.Starfield
             item.WeaponAdjust = default(Single);
             item.MalePriority = default(Byte);
             item.FemalePriority = default(Byte);
-            item.Unknown = default(UInt16);
+            item.UnknownMale = default(Byte);
+            item.UnknownFemale = default(Byte);
             item.DetectionSoundValue = default(Byte);
             item.HealthBarOffset = default(Single);
             item.WorldModel = null;
@@ -2309,7 +2346,8 @@ namespace Mutagen.Bethesda.Starfield
             ret.WeaponAdjust = item.WeaponAdjust.EqualsWithin(rhs.WeaponAdjust);
             ret.MalePriority = item.MalePriority == rhs.MalePriority;
             ret.FemalePriority = item.FemalePriority == rhs.FemalePriority;
-            ret.Unknown = item.Unknown == rhs.Unknown;
+            ret.UnknownMale = item.UnknownMale == rhs.UnknownMale;
+            ret.UnknownFemale = item.UnknownFemale == rhs.UnknownFemale;
             ret.DetectionSoundValue = item.DetectionSoundValue == rhs.DetectionSoundValue;
             ret.HealthBarOffset = item.HealthBarOffset.EqualsWithin(rhs.HealthBarOffset);
             ret.WorldModel = GenderedItem.EqualityMaskHelper(
@@ -2444,9 +2482,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.FemalePriority, "FemalePriority");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.UnknownMale ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.UnknownMale, "UnknownMale");
+            }
+            if (printMask?.UnknownFemale ?? true)
+            {
+                sb.AppendItem(item.UnknownFemale, "UnknownFemale");
             }
             if (printMask?.DetectionSoundValue ?? true)
             {
@@ -2627,9 +2669,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.FemalePriority != rhs.FemalePriority) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.UnknownMale) ?? true))
             {
-                if (lhs.Unknown != rhs.Unknown) return false;
+                if (lhs.UnknownMale != rhs.UnknownMale) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.UnknownFemale) ?? true))
+            {
+                if (lhs.UnknownFemale != rhs.UnknownFemale) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.DetectionSoundValue) ?? true))
             {
@@ -2743,7 +2789,8 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.WeaponAdjust);
             hash.Add(item.MalePriority);
             hash.Add(item.FemalePriority);
-            hash.Add(item.Unknown);
+            hash.Add(item.UnknownMale);
+            hash.Add(item.UnknownFemale);
             hash.Add(item.DetectionSoundValue);
             hash.Add(item.HealthBarOffset);
             if (item.WorldModel is {} WorldModelitem)
@@ -3077,9 +3124,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.FemalePriority = rhs.FemalePriority;
             }
-            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.UnknownMale) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.UnknownMale = rhs.UnknownMale;
+            }
+            if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.UnknownFemale) ?? true))
+            {
+                item.UnknownFemale = rhs.UnknownFemale;
             }
             if ((copyMask?.GetShouldTranslate((int)ArmorAddon_FieldIndex.DetectionSoundValue) ?? true))
             {
@@ -3473,7 +3524,8 @@ namespace Mutagen.Bethesda.Starfield
                     item: item.WeaponAdjust);
                 writer.Write(item.MalePriority);
                 writer.Write(item.FemalePriority);
-                writer.Write(item.Unknown);
+                writer.Write(item.UnknownMale);
+                writer.Write(item.UnknownFemale);
                 writer.Write(item.DetectionSoundValue);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
@@ -3722,8 +3774,10 @@ namespace Mutagen.Bethesda.Starfield
                     item.MalePriority = dataFrame.ReadUInt8();
                     if (dataFrame.Remaining < 1) return null;
                     item.FemalePriority = dataFrame.ReadUInt8();
-                    if (dataFrame.Remaining < 2) return null;
-                    item.Unknown = dataFrame.ReadUInt16();
+                    if (dataFrame.Remaining < 1) return null;
+                    item.UnknownMale = dataFrame.ReadUInt8();
+                    if (dataFrame.Remaining < 1) return null;
+                    item.UnknownFemale = dataFrame.ReadUInt8();
                     if (dataFrame.Remaining < 1) return null;
                     item.DetectionSoundValue = dataFrame.ReadUInt8();
                     if (dataFrame.Remaining < 4) return null;
@@ -4055,10 +4109,15 @@ namespace Mutagen.Bethesda.Starfield
         private bool _FemalePriority_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _FemalePriorityLocation + 1 >= 1;
         public Byte FemalePriority => _FemalePriority_IsSet ? _recordData.Span[_FemalePriorityLocation] : default(Byte);
         #endregion
-        #region Unknown
-        private int _UnknownLocation => _DNAMLocation!.Value.Min + 0x6;
-        private bool _Unknown_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _UnknownLocation + 1 >= 2;
-        public UInt16 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadUInt16LittleEndian(_recordData.Slice(_UnknownLocation, 2)) : default(UInt16);
+        #region UnknownMale
+        private int _UnknownMaleLocation => _DNAMLocation!.Value.Min + 0x6;
+        private bool _UnknownMale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _UnknownMaleLocation + 1 >= 1;
+        public Byte UnknownMale => _UnknownMale_IsSet ? _recordData.Span[_UnknownMaleLocation] : default(Byte);
+        #endregion
+        #region UnknownFemale
+        private int _UnknownFemaleLocation => _DNAMLocation!.Value.Min + 0x7;
+        private bool _UnknownFemale_IsSet => _DNAMLocation.HasValue && _DNAMLocation!.Value.Max - _UnknownFemaleLocation + 1 >= 1;
+        public Byte UnknownFemale => _UnknownFemale_IsSet ? _recordData.Span[_UnknownFemaleLocation] : default(Byte);
         #endregion
         #region DetectionSoundValue
         private int _DetectionSoundValueLocation => _DNAMLocation!.Value.Min + 0x8;
