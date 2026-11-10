@@ -405,7 +405,7 @@
   <Object name="CrowdComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
       <Float name="Density" recordType="CDND" />
-      <RefList name="Items" refName="CrowdComponentItem" counterRecType="CDNS" binary="Custom" />
+      <RefList name="Items" refName="CrowdComponentItem" counterRecType="CDNS" />
     </Fields>
   </Object>
   <Object name="CrowdComponentItem" objType="Subrecord" >

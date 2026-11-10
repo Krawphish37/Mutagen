@@ -333,7 +333,16 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
             }
             lastParsed = parsed;
         }
+        LastTypelessEnd = stream.Position;
     }
+
+    /// <summary>
+    /// Where the last <see cref="FillTypelessSubrecordTypes"/> on this thread stopped (its stream's position).
+    /// A typeless object's factory ends with that call, so right after the factory returns this is how far the object
+    /// read (see BinaryOverlayList.FactoryByCountPerItem).
+    /// </summary>
+    [ThreadStatic]
+    internal static int? LastTypelessEnd;
 
     public static IReadOnlyList<int> ParseRecordLocations(
         OverlayStream stream,
