@@ -708,16 +708,16 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IPlacedObjectSplineGetter? IPlacedObjectGetter.Spline => this.Spline;
         #endregion
-        #region XNSE
+        #region NavMeshSplineExtraData
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _XNSE;
-        public MemorySlice<Byte>? XNSE
+        private Reflection? _NavMeshSplineExtraData;
+        public Reflection? NavMeshSplineExtraData
         {
-            get => this._XNSE;
-            set => this._XNSE = value;
+            get => _NavMeshSplineExtraData;
+            set => _NavMeshSplineExtraData = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IPlacedObjectGetter.XNSE => this.XNSE;
+        IReflectionGetter? IPlacedObjectGetter.NavMeshSplineExtraData => this.NavMeshSplineExtraData;
         #endregion
         #region AttachRef
         private readonly IFormLinkNullable<IPlacedGetter> _AttachRef = new FormLinkNullable<IPlacedGetter>();
@@ -927,7 +927,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ExternalEmittance = new MaskItem<TItem, ExternalEmittance.Mask<TItem>?>(initialValue, new ExternalEmittance.Mask<TItem>(initialValue));
                 this.HeadTrackingWeight = initialValue;
                 this.Spline = new MaskItem<TItem, PlacedObjectSpline.Mask<TItem>?>(initialValue, new PlacedObjectSpline.Mask<TItem>(initialValue));
-                this.XNSE = initialValue;
+                this.NavMeshSplineExtraData = new MaskItem<TItem, Reflection.Mask<TItem>?>(initialValue, new Reflection.Mask<TItem>(initialValue));
                 this.AttachRef = initialValue;
                 this.RagdollBipedRotation = initialValue;
                 this.HealthPercent = initialValue;
@@ -1022,7 +1022,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ExternalEmittance,
                 TItem HeadTrackingWeight,
                 TItem Spline,
-                TItem XNSE,
+                TItem NavMeshSplineExtraData,
                 TItem AttachRef,
                 TItem RagdollBipedRotation,
                 TItem HealthPercent,
@@ -1116,7 +1116,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ExternalEmittance = new MaskItem<TItem, ExternalEmittance.Mask<TItem>?>(ExternalEmittance, new ExternalEmittance.Mask<TItem>(ExternalEmittance));
                 this.HeadTrackingWeight = HeadTrackingWeight;
                 this.Spline = new MaskItem<TItem, PlacedObjectSpline.Mask<TItem>?>(Spline, new PlacedObjectSpline.Mask<TItem>(Spline));
-                this.XNSE = XNSE;
+                this.NavMeshSplineExtraData = new MaskItem<TItem, Reflection.Mask<TItem>?>(NavMeshSplineExtraData, new Reflection.Mask<TItem>(NavMeshSplineExtraData));
                 this.AttachRef = AttachRef;
                 this.RagdollBipedRotation = RagdollBipedRotation;
                 this.HealthPercent = HealthPercent;
@@ -1212,7 +1212,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, ExternalEmittance.Mask<TItem>?>? ExternalEmittance { get; set; }
             public TItem HeadTrackingWeight;
             public MaskItem<TItem, PlacedObjectSpline.Mask<TItem>?>? Spline { get; set; }
-            public TItem XNSE;
+            public MaskItem<TItem, Reflection.Mask<TItem>?>? NavMeshSplineExtraData { get; set; }
             public TItem AttachRef;
             public TItem RagdollBipedRotation;
             public TItem HealthPercent;
@@ -1310,7 +1310,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ExternalEmittance, rhs.ExternalEmittance)) return false;
                 if (!object.Equals(this.HeadTrackingWeight, rhs.HeadTrackingWeight)) return false;
                 if (!object.Equals(this.Spline, rhs.Spline)) return false;
-                if (!object.Equals(this.XNSE, rhs.XNSE)) return false;
+                if (!object.Equals(this.NavMeshSplineExtraData, rhs.NavMeshSplineExtraData)) return false;
                 if (!object.Equals(this.AttachRef, rhs.AttachRef)) return false;
                 if (!object.Equals(this.RagdollBipedRotation, rhs.RagdollBipedRotation)) return false;
                 if (!object.Equals(this.HealthPercent, rhs.HealthPercent)) return false;
@@ -1400,7 +1400,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ExternalEmittance);
                 hash.Add(this.HeadTrackingWeight);
                 hash.Add(this.Spline);
-                hash.Add(this.XNSE);
+                hash.Add(this.NavMeshSplineExtraData);
                 hash.Add(this.AttachRef);
                 hash.Add(this.RagdollBipedRotation);
                 hash.Add(this.HealthPercent);
@@ -1712,7 +1712,11 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.Spline.Overall)) return false;
                     if (this.Spline.Specific != null && !this.Spline.Specific.All(eval)) return false;
                 }
-                if (!eval(this.XNSE)) return false;
+                if (NavMeshSplineExtraData != null)
+                {
+                    if (!eval(this.NavMeshSplineExtraData.Overall)) return false;
+                    if (this.NavMeshSplineExtraData.Specific != null && !this.NavMeshSplineExtraData.Specific.All(eval)) return false;
+                }
                 if (!eval(this.AttachRef)) return false;
                 if (!eval(this.RagdollBipedRotation)) return false;
                 if (!eval(this.HealthPercent)) return false;
@@ -2049,7 +2053,11 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.Spline.Overall)) return true;
                     if (this.Spline.Specific != null && this.Spline.Specific.Any(eval)) return true;
                 }
-                if (eval(this.XNSE)) return true;
+                if (NavMeshSplineExtraData != null)
+                {
+                    if (eval(this.NavMeshSplineExtraData.Overall)) return true;
+                    if (this.NavMeshSplineExtraData.Specific != null && this.NavMeshSplineExtraData.Specific.Any(eval)) return true;
+                }
                 if (eval(this.AttachRef)) return true;
                 if (eval(this.RagdollBipedRotation)) return true;
                 if (eval(this.HealthPercent)) return true;
@@ -2341,7 +2349,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.ExternalEmittance = this.ExternalEmittance == null ? null : new MaskItem<R, ExternalEmittance.Mask<R>?>(eval(this.ExternalEmittance.Overall), this.ExternalEmittance.Specific?.Translate(eval));
                 obj.HeadTrackingWeight = eval(this.HeadTrackingWeight);
                 obj.Spline = this.Spline == null ? null : new MaskItem<R, PlacedObjectSpline.Mask<R>?>(eval(this.Spline.Overall), this.Spline.Specific?.Translate(eval));
-                obj.XNSE = eval(this.XNSE);
+                obj.NavMeshSplineExtraData = this.NavMeshSplineExtraData == null ? null : new MaskItem<R, Reflection.Mask<R>?>(eval(this.NavMeshSplineExtraData.Overall), this.NavMeshSplineExtraData.Specific?.Translate(eval));
                 obj.AttachRef = eval(this.AttachRef);
                 obj.RagdollBipedRotation = eval(this.RagdollBipedRotation);
                 obj.HealthPercent = eval(this.HealthPercent);
@@ -2845,9 +2853,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         Spline?.Print(sb);
                     }
-                    if (printMask?.XNSE ?? true)
+                    if (printMask?.NavMeshSplineExtraData?.Overall ?? true)
                     {
-                        sb.AppendItem(XNSE, "XNSE");
+                        NavMeshSplineExtraData?.Print(sb);
                     }
                     if (printMask?.AttachRef ?? true)
                     {
@@ -3010,7 +3018,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, ExternalEmittance.ErrorMask?>? ExternalEmittance;
             public Exception? HeadTrackingWeight;
             public MaskItem<Exception?, PlacedObjectSpline.ErrorMask?>? Spline;
-            public Exception? XNSE;
+            public MaskItem<Exception?, Reflection.ErrorMask?>? NavMeshSplineExtraData;
             public Exception? AttachRef;
             public Exception? RagdollBipedRotation;
             public Exception? HealthPercent;
@@ -3170,8 +3178,8 @@ namespace Mutagen.Bethesda.Starfield
                         return HeadTrackingWeight;
                     case PlacedObject_FieldIndex.Spline:
                         return Spline;
-                    case PlacedObject_FieldIndex.XNSE:
-                        return XNSE;
+                    case PlacedObject_FieldIndex.NavMeshSplineExtraData:
+                        return NavMeshSplineExtraData;
                     case PlacedObject_FieldIndex.AttachRef:
                         return AttachRef;
                     case PlacedObject_FieldIndex.RagdollBipedRotation:
@@ -3417,8 +3425,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.Spline:
                         this.Spline = new MaskItem<Exception?, PlacedObjectSpline.ErrorMask?>(ex, null);
                         break;
-                    case PlacedObject_FieldIndex.XNSE:
-                        this.XNSE = ex;
+                    case PlacedObject_FieldIndex.NavMeshSplineExtraData:
+                        this.NavMeshSplineExtraData = new MaskItem<Exception?, Reflection.ErrorMask?>(ex, null);
                         break;
                     case PlacedObject_FieldIndex.AttachRef:
                         this.AttachRef = ex;
@@ -3683,8 +3691,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObject_FieldIndex.Spline:
                         this.Spline = (MaskItem<Exception?, PlacedObjectSpline.ErrorMask?>?)obj;
                         break;
-                    case PlacedObject_FieldIndex.XNSE:
-                        this.XNSE = (Exception?)obj;
+                    case PlacedObject_FieldIndex.NavMeshSplineExtraData:
+                        this.NavMeshSplineExtraData = (MaskItem<Exception?, Reflection.ErrorMask?>?)obj;
                         break;
                     case PlacedObject_FieldIndex.AttachRef:
                         this.AttachRef = (Exception?)obj;
@@ -3813,7 +3821,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ExternalEmittance != null) return true;
                 if (HeadTrackingWeight != null) return true;
                 if (Spline != null) return true;
-                if (XNSE != null) return true;
+                if (NavMeshSplineExtraData != null) return true;
                 if (AttachRef != null) return true;
                 if (RagdollBipedRotation != null) return true;
                 if (HealthPercent != null) return true;
@@ -4200,9 +4208,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(HeadTrackingWeight, "HeadTrackingWeight");
                 }
                 Spline?.Print(sb);
-                {
-                    sb.AppendItem(XNSE, "XNSE");
-                }
+                NavMeshSplineExtraData?.Print(sb);
                 {
                     sb.AppendItem(AttachRef, "AttachRef");
                 }
@@ -4336,7 +4342,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ExternalEmittance = this.ExternalEmittance.Combine(rhs.ExternalEmittance, (l, r) => l.Combine(r));
                 ret.HeadTrackingWeight = this.HeadTrackingWeight.Combine(rhs.HeadTrackingWeight);
                 ret.Spline = this.Spline.Combine(rhs.Spline, (l, r) => l.Combine(r));
-                ret.XNSE = this.XNSE.Combine(rhs.XNSE);
+                ret.NavMeshSplineExtraData = this.NavMeshSplineExtraData.Combine(rhs.NavMeshSplineExtraData, (l, r) => l.Combine(r));
                 ret.AttachRef = this.AttachRef.Combine(rhs.AttachRef);
                 ret.RagdollBipedRotation = this.RagdollBipedRotation.Combine(rhs.RagdollBipedRotation);
                 ret.HealthPercent = this.HealthPercent.Combine(rhs.HealthPercent);
@@ -4443,7 +4449,7 @@ namespace Mutagen.Bethesda.Starfield
             public ExternalEmittance.TranslationMask? ExternalEmittance;
             public bool HeadTrackingWeight;
             public PlacedObjectSpline.TranslationMask? Spline;
-            public bool XNSE;
+            public Reflection.TranslationMask? NavMeshSplineExtraData;
             public bool AttachRef;
             public bool RagdollBipedRotation;
             public bool HealthPercent;
@@ -4505,7 +4511,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.EncounterZone = defaultOn;
                 this.GeometryDirtinessScale = defaultOn;
                 this.HeadTrackingWeight = defaultOn;
-                this.XNSE = defaultOn;
                 this.AttachRef = defaultOn;
                 this.RagdollBipedRotation = defaultOn;
                 this.HealthPercent = defaultOn;
@@ -4592,7 +4597,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ExternalEmittance != null ? ExternalEmittance.OnOverall : DefaultOn, ExternalEmittance?.GetCrystal()));
                 ret.Add((HeadTrackingWeight, null));
                 ret.Add((Spline != null ? Spline.OnOverall : DefaultOn, Spline?.GetCrystal()));
-                ret.Add((XNSE, null));
+                ret.Add((NavMeshSplineExtraData != null ? NavMeshSplineExtraData.OnOverall : DefaultOn, NavMeshSplineExtraData?.GetCrystal()));
                 ret.Add((AttachRef, null));
                 ret.Add((RagdollBipedRotation, null));
                 ret.Add((HealthPercent, null));
@@ -4842,7 +4847,7 @@ namespace Mutagen.Bethesda.Starfield
         new ExternalEmittance? ExternalEmittance { get; set; }
         new Single? HeadTrackingWeight { get; set; }
         new PlacedObjectSpline? Spline { get; set; }
-        new MemorySlice<Byte>? XNSE { get; set; }
+        new Reflection? NavMeshSplineExtraData { get; set; }
         new IFormLinkNullable<IPlacedGetter> AttachRef { get; set; }
         new P3Float? RagdollBipedRotation { get; set; }
         new Percent? HealthPercent { get; set; }
@@ -4961,7 +4966,7 @@ namespace Mutagen.Bethesda.Starfield
         IExternalEmittanceGetter? ExternalEmittance { get; }
         Single? HeadTrackingWeight { get; }
         IPlacedObjectSplineGetter? Spline { get; }
-        ReadOnlyMemorySlice<Byte>? XNSE { get; }
+        IReflectionGetter? NavMeshSplineExtraData { get; }
         IFormLinkNullableGetter<IPlacedGetter> AttachRef { get; }
         P3Float? RagdollBipedRotation { get; }
         Percent? HealthPercent { get; }
@@ -5222,7 +5227,7 @@ namespace Mutagen.Bethesda.Starfield
         ExternalEmittance = 71,
         HeadTrackingWeight = 72,
         Spline = 73,
-        XNSE = 74,
+        NavMeshSplineExtraData = 74,
         AttachRef = 75,
         RagdollBipedRotation = 76,
         HealthPercent = 77,
@@ -5358,6 +5363,7 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.XHTW,
                 RecordTypes.XBSD,
                 RecordTypes.XNSE,
+                RecordTypes.REFL,
                 RecordTypes.XATR,
                 RecordTypes.XRGB,
                 RecordTypes.XHLT,
@@ -5376,6 +5382,10 @@ namespace Mutagen.Bethesda.Starfield
                 allRecordTypes: all,
                 triggeringRecordTypes: triggers);
         });
+        public static RecordTypeConverter NavMeshSplineExtraDataConverter = new RecordTypeConverter(
+            new KeyValuePair<RecordType, RecordType>(
+                RecordTypes.REFL,
+                RecordTypes.XNSE));
         public static readonly Type BinaryWriteTranslation = typeof(PlacedObjectBinaryWriteTranslation);
         #region Interface
         ProtocolKey ILoquiRegistration.ProtocolKey => ProtocolKey;
@@ -5483,7 +5493,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ExternalEmittance = null;
             item.HeadTrackingWeight = default;
             item.Spline = null;
-            item.XNSE = default;
+            item.NavMeshSplineExtraData = null;
             item.AttachRef.Clear();
             item.RagdollBipedRotation = default;
             item.HealthPercent = default;
@@ -5551,6 +5561,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.EncounterZone.Relink(mapping);
             obj.Lock?.RemapLinks(mapping);
             obj.Properties?.RemapLinks(mapping);
+            obj.NavMeshSplineExtraData?.RemapLinks(mapping);
             obj.AttachRef.Relink(mapping);
             obj.TimeOfDay.Relink(mapping);
             obj.EnableParent?.RemapLinks(mapping);
@@ -5840,7 +5851,11 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Spline,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.XNSE = MemorySliceExt.SequenceEqual(item.XNSE, rhs.XNSE);
+            ret.NavMeshSplineExtraData = EqualsMaskHelper.EqualsHelper(
+                item.NavMeshSplineExtraData,
+                rhs.NavMeshSplineExtraData,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
             ret.AttachRef = item.AttachRef.Equals(rhs.AttachRef);
             ret.RagdollBipedRotation = item.RagdollBipedRotation.Equals(rhs.RagdollBipedRotation);
             ret.HealthPercent = item.HealthPercent.Equals(rhs.HealthPercent);
@@ -6360,10 +6375,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 SplineItem?.Print(sb, "Spline");
             }
-            if ((printMask?.XNSE ?? true)
-                && item.XNSE is {} XNSEItem)
+            if ((printMask?.NavMeshSplineExtraData?.Overall ?? true)
+                && item.NavMeshSplineExtraData is {} NavMeshSplineExtraDataItem)
             {
-                sb.AppendLine($"XNSE => {SpanExt.ToHexString(XNSEItem)}");
+                NavMeshSplineExtraDataItem?.Print(sb, "NavMeshSplineExtraData");
             }
             if (printMask?.AttachRef ?? true)
             {
@@ -6858,9 +6873,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isSplineEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.XNSE) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.NavMeshSplineExtraData) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.XNSE, rhs.XNSE)) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.NavMeshSplineExtraData, rhs.NavMeshSplineExtraData, out var lhsNavMeshSplineExtraData, out var rhsNavMeshSplineExtraData, out var isNavMeshSplineExtraDataEqual))
+                {
+                    if (!((ReflectionCommon)((IReflectionGetter)lhsNavMeshSplineExtraData).CommonInstance()!).Equals(lhsNavMeshSplineExtraData, rhsNavMeshSplineExtraData, equalsMask?.GetSubCrystal((int)PlacedObject_FieldIndex.NavMeshSplineExtraData))) return false;
+                }
+                else if (!isNavMeshSplineExtraDataEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.AttachRef) ?? true))
             {
@@ -7215,9 +7234,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Splineitem);
             }
-            if (item.XNSE is {} XNSEItem)
+            if (item.NavMeshSplineExtraData is {} NavMeshSplineExtraDataitem)
             {
-                hash.AddBytes(XNSEItem);
+                hash.Add(NavMeshSplineExtraDataitem);
             }
             hash.Add(item.AttachRef);
             if (item.RagdollBipedRotation is {} RagdollBipedRotationitem)
@@ -7468,6 +7487,13 @@ namespace Mutagen.Bethesda.Starfield
                 foreach (var item in PropertiesItem.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
                 {
                     yield return FormLinkInformation.Factory(item);
+                }
+            }
+            if (obj.NavMeshSplineExtraData is {} NavMeshSplineExtraDataItems)
+            {
+                foreach (var item in NavMeshSplineExtraDataItems.EnumerateFormLinks(iterateNestedRecords))
+                {
+                    yield return item;
                 }
             }
             if (FormLinkInformation.TryFactory(obj.AttachRef, out var AttachRefInfo))
@@ -8649,15 +8675,30 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.XNSE) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.NavMeshSplineExtraData) ?? true))
             {
-                if(rhs.XNSE is {} XNSErhs)
+                errorMask?.PushIndex((int)PlacedObject_FieldIndex.NavMeshSplineExtraData);
+                try
                 {
-                    item.XNSE = XNSErhs.ToArray();
+                    if(rhs.NavMeshSplineExtraData is {} rhsNavMeshSplineExtraData)
+                    {
+                        item.NavMeshSplineExtraData = rhsNavMeshSplineExtraData.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)PlacedObject_FieldIndex.NavMeshSplineExtraData));
+                    }
+                    else
+                    {
+                        item.NavMeshSplineExtraData = default;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.XNSE = default;
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
                 }
             }
             if ((copyMask?.GetShouldTranslate((int)PlacedObject_FieldIndex.AttachRef) ?? true))
@@ -9456,10 +9497,13 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     translationParams: translationParams);
             }
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.XNSE,
-                header: translationParams.ConvertToCustom(RecordTypes.XNSE));
+            if (item.NavMeshSplineExtraData is {} NavMeshSplineExtraDataItem)
+            {
+                ((ReflectionBinaryWriteTranslation)((IBinaryItem)NavMeshSplineExtraDataItem).BinaryWriteTranslator).Write(
+                    item: NavMeshSplineExtraDataItem,
+                    writer: writer,
+                    translationParams: translationParams.With(PlacedObject_Registration.NavMeshSplineExtraDataConverter, RecordTypes.XXXX));
+            }
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.AttachRef,
@@ -10090,10 +10134,12 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)PlacedObject_FieldIndex.Spline;
                 }
                 case RecordTypeInts.XNSE:
+                case RecordTypeInts.REFL:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.XNSE = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)PlacedObject_FieldIndex.XNSE;
+                    item.NavMeshSplineExtraData = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
+                        frame: frame,
+                        translationParams: translationParams.With(PlacedObject_Registration.NavMeshSplineExtraDataConverter, lastParsed.LengthOverride).DoNotShortCircuit());
+                    return (int)PlacedObject_FieldIndex.NavMeshSplineExtraData;
                 }
                 case RecordTypeInts.XATR:
                 {
@@ -10472,9 +10518,10 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _SplineLocation;
         public IPlacedObjectSplineGetter? Spline => _SplineLocation.HasValue ? PlacedObjectSplineBinaryOverlay.PlacedObjectSplineFactory(_recordData.Slice(_SplineLocation!.Value.Min), _package) : default;
         #endregion
-        #region XNSE
-        private int? _XNSELocation;
-        public ReadOnlyMemorySlice<Byte>? XNSE => _XNSELocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _XNSELocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region NavMeshSplineExtraData
+        private int? _NavMeshSplineExtraDataLengthOverride;
+        private RangeInt32? _NavMeshSplineExtraDataLocation;
+        public IReflectionGetter? NavMeshSplineExtraData => _NavMeshSplineExtraDataLocation.HasValue ? ReflectionBinaryOverlay.ReflectionFactory(_recordData.Slice(_NavMeshSplineExtraDataLocation!.Value.Min), _package, TypedParseParams.FromLengthOverride(_NavMeshSplineExtraDataLengthOverride).With(PlacedObject_Registration.NavMeshSplineExtraDataConverter)) : default;
         #endregion
         #region AttachRef
         private int? _AttachRefLocation;
@@ -11050,9 +11097,15 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)PlacedObject_FieldIndex.Spline;
                 }
                 case RecordTypeInts.XNSE:
+                case RecordTypeInts.REFL:
                 {
-                    _XNSELocation = (stream.Position - offset);
-                    return (int)PlacedObject_FieldIndex.XNSE;
+                    _NavMeshSplineExtraDataLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
+                    _NavMeshSplineExtraDataLengthOverride = lastParsed.LengthOverride;
+                    if (lastParsed.LengthOverride.HasValue)
+                    {
+                        stream.Position += lastParsed.LengthOverride.Value;
+                    }
+                    return (int)PlacedObject_FieldIndex.NavMeshSplineExtraData;
                 }
                 case RecordTypeInts.XATR:
                 {
